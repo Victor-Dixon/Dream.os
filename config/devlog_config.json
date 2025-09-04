@@ -1,5 +1,5 @@
 {
-  "discord_webhook_url": "https://discordapp.com/api/webhooks/1404867570510725120/***REMOVED***",
+  "discord_webhook_url": "",
   "enable_discord": true,
   "agent_name": "Agent-4",
   "default_channel": "devlog",
