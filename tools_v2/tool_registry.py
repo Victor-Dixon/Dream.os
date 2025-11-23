@@ -58,6 +58,8 @@ TOOL_REGISTRY: dict[str, tuple[str, str]] = {
     "infra.file_lines": ("tools_v2.categories.infrastructure_tools", "FileLineCounterTool"),
     "infra.extract_planner": ("tools_v2.categories.infrastructure_tools", "ModuleExtractorPlannerTool"),
     "infra.roi_calc": ("tools_v2.categories.infrastructure_tools", "ROICalculatorTool"),
+    "infra.workspace_health": ("tools_v2.categories.infrastructure_tools", "WorkspaceHealthMonitorTool"),
+    "infra.workspace_cleanup": ("tools_v2.categories.infrastructure_tools", "WorkspaceAutoCleanerTool"),
     
     # Discord tools (Agent-3 additions)
     "discord.health": ("tools_v2.categories.discord_tools", "DiscordBotHealthTool"),
@@ -138,6 +140,7 @@ TOOL_REGISTRY: dict[str, tuple[str, str]] = {
     "val.flags": ("tools_v2.categories.validation_tools", "FeatureFlagTool"),
     "val.rollback": ("tools_v2.categories.validation_tools", "RollbackTool"),
     "val.report": ("tools_v2.categories.validation_tools", "ValidationReportTool"),
+    "validation.integrity": ("tools_v2.categories.validation_tools", "IntegrityValidatorTool"),
     
     # Captain Operations (NEW - Session 2025-10-13 Critical Tools)
     "captain.status_check": ("tools_v2.categories.captain_tools", "StatusCheckTool"),
@@ -151,11 +154,24 @@ TOOL_REGISTRY: dict[str, tuple[str, str]] = {
     "captain.markov_optimize": ("tools_v2.categories.captain_tools", "MarkovOptimizerTool"),
     "captain.integrity_check": ("tools_v2.categories.captain_tools", "IntegrityCheckTool"),
     
+    # Captain Coordination Tools (Fixed by Agent-8 - 2025-01-27)
+    "captain.process_completion": ("tools_v2.categories.captain_coordination_tools", "CompletionProcessorTool"),
+    "captain.update_leaderboard_coord": ("tools_v2.categories.captain_coordination_tools", "LeaderboardUpdaterTool"),
+    "captain.pick_next_task": ("tools_v2.categories.captain_coordination_tools", "NextTaskPickerTool"),
+    "captain.calculate_roi": ("tools_v2.categories.captain_coordination_tools", "ROIQuickCalculatorTool"),
+    
+    # Captain Extension Tools (High Priority Migration - Agent-8 - 2025-01-27, Agent-2 - 2025-01-27)
+    "captain.self_message": ("tools_v2.categories.captain_tools_extension", "SelfMessageTool"),
+    "captain.find_idle": ("tools_v2.categories.captain_tools_extension", "FindIdleAgentsTool"),
+    "captain.gas_check": ("tools_v2.categories.captain_tools_extension", "GasCheckTool"),
+    "captain.message_all": ("tools_v2.categories.captain_tools_extension", "MessageAllAgentsTool"),
+    
     # Integration Tools (NEW - Session 2025-10-14 Agent-1)
     "integration.find-ssot-violations": ("tools_v2.categories.integration_tools", "FindSSOTViolationsAdapter"),
     "integration.find-duplicates": ("tools_v2.categories.integration_tools", "FindDuplicateFunctionalityAdapter"),
     "integration.find-opportunities": ("tools_v2.categories.integration_tools", "FindIntegrationOpportunitiesAdapter"),
     "integration.check-imports": ("tools_v2.categories.integration_tools", "CheckImportDependenciesAdapter"),
+    "integration.import_chain": ("tools_v2.categories.import_fix_tools", "ImportChainValidatorTool"),
     
     # Coordination Tools (NEW - Session 2025-10-14 Agent-1 - Pattern #5)
     "coord.find-expert": ("tools_v2.categories.coordination_tools", "FindDomainExpertAdapter"),
@@ -181,6 +197,23 @@ TOOL_REGISTRY: dict[str, tuple[str, str]] = {
     "refactor.validate_imports": ("tools_v2.categories.import_fix_tools", "ImportValidatorTool"),
     "refactor.extract_module": ("tools_v2.categories.import_fix_tools", "ModuleExtractorTool"),
     "refactor.quick_line_count": ("tools_v2.categories.import_fix_tools", "QuickLineCountTool"),
+    
+    # Business Intelligence Tools (NEW - Session 2025-01-27 Agent-5 V2 Tools Flattening)
+    "bi.metrics": ("tools_v2.categories.bi_tools", "QuickMetricsTool"),
+    "bi.roi.repo": ("tools_v2.categories.bi_tools", "RepoROICalculatorTool"),
+    "bi.roi.task": ("tools_v2.categories.bi_tools", "TaskROICalculatorTool"),
+    "bi.roi.optimize": ("tools_v2.categories.bi_tools", "MarkovROIOptimizerTool"),
+    
+    # Dashboard Tools (NEW - Session 2025-01-27 Agent-7 V2 Tools Flattening)
+    "dashboard.generate": ("tools_v2.categories.dashboard_tools", "DashboardGenerateTool"),
+    "dashboard.data": ("tools_v2.categories.dashboard_tools", "DashboardDataAggregateTool"),
+    "dashboard.html": ("tools_v2.categories.dashboard_tools", "DashboardHTMLTool"),
+    "dashboard.charts": ("tools_v2.categories.dashboard_tools", "DashboardChartsTool"),
+    "dashboard.styles": ("tools_v2.categories.dashboard_tools", "DashboardStylesTool"),
+    "dashboard.discord": ("tools_v2.categories.dashboard_tools", "DiscordStatusDashboardTool"),
+    
+    # Browser Tools (NEW - Session 2025-01-27 Agent-7 V2 Tools Flattening)
+    "browser.pool": ("tools_v2.categories.infrastructure_tools", "BrowserPoolManagerTool"),
 }
 
 

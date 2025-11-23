@@ -261,10 +261,15 @@ class MessageCoordinator:
 
     @staticmethod
     def send_to_agent(
-        agent: str, message: str, priority=UnifiedMessagePriority.REGULAR, use_pyautogui=False
+        agent: str,
+        message: str,
+        priority=UnifiedMessagePriority.REGULAR,
+        use_pyautogui=False,
+        stalled: bool = False,
     ):
         try:
-            # Always use inbox delivery since PyAutoGUI module missing
+            # Pass stalled flag in metadata for Ctrl+Enter behavior
+            metadata = {"stalled": stalled} if stalled else {}
             return send_message(
                 content=message,
                 sender="CAPTAIN",
@@ -272,12 +277,17 @@ class MessageCoordinator:
                 message_type=UnifiedMessageType.CAPTAIN_TO_AGENT,
                 priority=priority,
                 tags=[UnifiedMessageTag.SYSTEM],
+                metadata=metadata,
             )
         except Exception:
             return False
 
     @staticmethod
-    def broadcast_to_all(message: str, priority=UnifiedMessagePriority.REGULAR):
+    def broadcast_to_all(
+        message: str, priority=UnifiedMessagePriority.REGULAR, stalled: bool = False
+    ):
+        # Pass stalled flag in metadata for Ctrl+Enter behavior
+        metadata = {"stalled": stalled} if stalled else {}
         return sum(
             1
             for agent in SWARM_AGENTS
@@ -288,6 +298,7 @@ class MessageCoordinator:
                 message_type=UnifiedMessageType.BROADCAST,
                 priority=priority,
                 tags=[UnifiedMessageTag.SYSTEM, UnifiedMessageTag.COORDINATION],
+                metadata=metadata,
             )
         )
 
@@ -334,8 +345,13 @@ def handle_message(args, parser) -> int:
             else UnifiedMessagePriority.REGULAR
         )
 
+        # Get stalled flag from args (defaults to False if not present)
+        stalled = getattr(args, "stalled", False)
+
         if args.broadcast:
-            success_count = MessageCoordinator.broadcast_to_all(args.message, priority)
+            success_count = MessageCoordinator.broadcast_to_all(
+                args.message, priority, stalled=stalled
+            )
             if success_count > 0:
                 print(f"✅ Broadcast to {success_count} agents successful")
                 return 0
@@ -343,7 +359,9 @@ def handle_message(args, parser) -> int:
                 print("❌ Broadcast failed")
                 return 1
         else:
-            if MessageCoordinator.send_to_agent(args.agent, args.message, priority):
+            if MessageCoordinator.send_to_agent(
+                args.agent, args.message, priority, stalled=stalled
+            ):
                 print(f"✅ Message sent to {args.agent}")
                 return 0
             else:
