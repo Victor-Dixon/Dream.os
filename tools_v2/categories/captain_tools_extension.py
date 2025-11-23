@@ -380,6 +380,322 @@ class ActivateAgentTool(IToolAdapter):
             raise ToolExecutionError(f"Agent activation failed: {e}")
 
 
+class SelfMessageTool(IToolAdapter):
+    """Send self-message to Captain (Agent-4) as reminder."""
+
+    def get_spec(self) -> ToolSpec:
+        """Get tool specification."""
+        return ToolSpec(
+            name="captain.self_message",
+            version="1.0.0",
+            category="captain",
+            summary="Send self-message to Captain (Agent-4) as reminder",
+            required_params=["message"],
+            optional_params={"priority": "regular"},
+        )
+
+    def validate(self, params: dict[str, Any]) -> tuple[bool, list[str]]:
+        """Validate parameters."""
+        errors = []
+        if "message" not in params:
+            errors.append("message is required")
+        return len(errors) == 0, errors
+
+    def execute(
+        self, params: dict[str, Any], context: dict[str, Any] | None = None
+    ) -> ToolResult:
+        """Send self-message to Captain."""
+        try:
+            message = params["message"]
+            priority = params.get("priority", "regular")
+
+            # Send message to Agent-4 (Captain)
+            cmd = [
+                "python",
+                "-m",
+                "src.services.messaging_cli",
+                "--agent",
+                "Agent-4",
+                "--message",
+                f"[SELF-REMINDER] {message}",
+                "--priority",
+                priority,
+                "--mode",
+                "pyautogui",
+            ]
+
+            result = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
+
+            return ToolResult(
+                success=result.returncode == 0,
+                output={
+                    "message_sent": result.returncode == 0,
+                    "message": message,
+                    "priority": priority,
+                    "stdout": result.stdout,
+                },
+                exit_code=result.returncode,
+                execution_time=0.0,
+            )
+        except Exception as e:
+            logger.error(f"Error sending self-message: {e}")
+            raise ToolExecutionError(str(e), tool_name="captain.self_message")
+
+
+class FindIdleAgentsTool(IToolAdapter):
+    """Find agents that are idle or need new tasks."""
+
+    def get_spec(self) -> ToolSpec:
+        """Get tool specification."""
+        return ToolSpec(
+            name="captain.find_idle",
+            version="1.0.0",
+            category="captain",
+            summary="Find agents that are idle or need new tasks",
+            required_params=[],
+            optional_params={"hours_threshold": 1},
+        )
+
+    def validate(self, params: dict[str, Any]) -> tuple[bool, list[str]]:
+        """Validate parameters."""
+        return (True, [])
+
+    def execute(
+        self, params: dict[str, Any], context: dict[str, Any] | None = None
+    ) -> ToolResult:
+        """Find idle agents."""
+        try:
+            hours_threshold = params.get("hours_threshold", 1)
+
+            idle_agents = []
+            active_agents = []
+
+            for agent_id in SWARM_AGENTS:
+                status_file = Path(f"agent_workspaces/{agent_id}/status.json")
+
+                if not status_file.exists():
+                    idle_agents.append(
+                        {"agent": agent_id, "reason": "No status.json", "urgency": "HIGH"}
+                    )
+                    continue
+
+                try:
+                    with open(status_file) as f:
+                        status = json.load(f)
+
+                    current_task = status.get("current_task", "")
+                    agent_status = status.get("status", "").lower()
+
+                    # Check if idle
+                    if not current_task or current_task == "None" or "idle" in agent_status:
+                        idle_agents.append(
+                            {
+                                "agent": agent_id,
+                                "reason": f"Status: {agent_status}, Task: {current_task}",
+                                "urgency": "HIGH",
+                            }
+                        )
+                    else:
+                        active_agents.append(agent_id)
+
+                except Exception as e:
+                    idle_agents.append(
+                        {"agent": agent_id, "reason": f"Error: {e}", "urgency": "MEDIUM"}
+                    )
+
+            return ToolResult(
+                success=True,
+                output={
+                    "idle_agents": idle_agents,
+                    "active_agents": active_agents,
+                    "idle_count": len(idle_agents),
+                    "active_count": len(active_agents),
+                    "total_agents": len(SWARM_AGENTS),
+                },
+                exit_code=0,
+                execution_time=0.0,
+            )
+        except Exception as e:
+            logger.error(f"Error finding idle agents: {e}")
+            raise ToolExecutionError(str(e), tool_name="captain.find_idle")
+
+
+class GasCheckTool(IToolAdapter):
+    """Check when agents last received messages (GAS levels)."""
+
+    def get_spec(self) -> ToolSpec:
+        """Get tool specification."""
+        return ToolSpec(
+            name="captain.gas_check",
+            version="1.0.0",
+            category="captain",
+            summary="Check when agents last received messages (GAS levels)",
+            required_params=[],
+            optional_params={"hours_threshold": 2},
+        )
+
+    def validate(self, params: dict[str, Any]) -> tuple[bool, list[str]]:
+        """Validate parameters."""
+        return (True, [])
+
+    def execute(
+        self, params: dict[str, Any], context: dict[str, Any] | None = None
+    ) -> ToolResult:
+        """Check agent gas levels."""
+        try:
+            hours_threshold = params.get("hours_threshold", 2)
+
+            low_gas = []
+            good_gas = []
+            gas_levels = {}
+
+            for agent_id in SWARM_AGENTS:
+                inbox_path = Path(f"agent_workspaces/{agent_id}/inbox")
+
+                if not inbox_path.exists():
+                    low_gas.append(agent_id)
+                    gas_levels[agent_id] = {"status": "NO_INBOX", "age_hours": None}
+                    continue
+
+                # Find most recent message
+                message_files = list(inbox_path.glob("*.md")) + list(inbox_path.glob("*.txt"))
+
+                if not message_files:
+                    low_gas.append(agent_id)
+                    gas_levels[agent_id] = {"status": "EMPTY_INBOX", "age_hours": None}
+                    continue
+
+                # Get most recent
+                most_recent = max(message_files, key=lambda p: p.stat().st_mtime)
+                modified_time = datetime.fromtimestamp(most_recent.st_mtime)
+                age_hours = (datetime.now() - modified_time).total_seconds() / 3600
+
+                gas_levels[agent_id] = {
+                    "status": "GOOD" if age_hours <= hours_threshold else "LOW",
+                    "age_hours": round(age_hours, 1),
+                    "last_message": most_recent.name,
+                }
+
+                if age_hours > hours_threshold:
+                    low_gas.append(agent_id)
+                else:
+                    good_gas.append(agent_id)
+
+            return ToolResult(
+                success=True,
+                output={
+                    "low_gas_agents": low_gas,
+                    "good_gas_agents": good_gas,
+                    "low_gas_count": len(low_gas),
+                    "good_gas_count": len(good_gas),
+                    "gas_levels": gas_levels,
+                    "threshold_hours": hours_threshold,
+                },
+                exit_code=0,
+                execution_time=0.0,
+            )
+        except Exception as e:
+            logger.error(f"Error checking gas levels: {e}")
+            raise ToolExecutionError(str(e), tool_name="captain.gas_check")
+
+
+class MessageAllAgentsTool(IToolAdapter):
+    """Send message to all swarm agents including Captain."""
+
+    def get_spec(self) -> ToolSpec:
+        """Get tool specification."""
+        return ToolSpec(
+            name="captain.message_all",
+            version="1.0.0",
+            category="captain",
+            summary="Send message to all swarm agents",
+            required_params=["message"],
+            optional_params={
+                "priority": "regular",
+                "include_captain": True,
+                "tags": [],
+            },
+        )
+
+    def validate(self, params: dict[str, Any]) -> tuple[bool, list[str]]:
+        """Validate parameters."""
+        errors = []
+        if "message" not in params:
+            errors.append("message is required")
+        return len(errors) == 0, errors
+
+    def execute(
+        self, params: dict[str, Any], context: dict[str, Any] | None = None
+    ) -> ToolResult:
+        """Send message to all agents."""
+        try:
+            message = params["message"]
+            priority = params.get("priority", "regular")
+            include_captain = params.get("include_captain", True)
+            tags = params.get("tags", [])
+
+            agents_to_message = (
+                SWARM_AGENTS if include_captain else [a for a in SWARM_AGENTS if a != "Agent-4"]
+            )
+
+            results = {}
+            successful = 0
+            failed = 0
+
+            for agent_id in agents_to_message:
+                cmd = [
+                    "python",
+                    "-m",
+                    "src.services.messaging_cli",
+                    "--agent",
+                    agent_id,
+                    "--message",
+                    message,
+                    "--priority",
+                    priority,
+                    "--mode",
+                    "pyautogui",
+                ]
+
+                if tags:
+                    cmd.extend(["--tags"] + tags)
+
+                try:
+                    result = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
+                    success = result.returncode == 0
+                    results[agent_id] = {
+                        "success": success,
+                        "stdout": result.stdout,
+                        "stderr": result.stderr if not success else None,
+                    }
+
+                    if success:
+                        successful += 1
+                    else:
+                        failed += 1
+
+                except Exception as e:
+                    results[agent_id] = {"success": False, "error": str(e)}
+                    failed += 1
+
+            return ToolResult(
+                success=successful > 0,
+                output={
+                    "total_agents": len(agents_to_message),
+                    "successful": successful,
+                    "failed": failed,
+                    "results": results,
+                    "message": message,
+                    "priority": priority,
+                },
+                exit_code=0 if failed == 0 else 1,
+                execution_time=0.0,
+            )
+        except Exception as e:
+            logger.error(f"Error messaging all agents: {e}")
+            raise ToolExecutionError(str(e), tool_name="captain.message_all")
+
+
 # Export all tools
 __all__ = [
     "ProgressTrackerTool",
@@ -387,5 +703,9 @@ __all__ = [
     "BatchOnboardTool",
     "SwarmStatusTool",
     "ActivateAgentTool",
+    "SelfMessageTool",
+    "FindIdleAgentsTool",
+    "GasCheckTool",
+    "MessageAllAgentsTool",
 ]
 

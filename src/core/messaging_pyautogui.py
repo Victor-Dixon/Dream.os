@@ -7,11 +7,19 @@ RACE CONDITION FIXES (2025-10-15):
 - Clipboard locking to prevent concurrent overwrites
 - Increased delays (0.5s→1.0s) for slow systems
 - 3-attempt retry mechanism for reliability
+
+CRITICAL FIX (2025-01-27): Global keyboard control lock
+- Prevents "9 ppl controlling my keyboard" scenario
+- Synchronizes Discord + computer + agents
+- Single lock for entire PyAutoGUI operation sequence
 """
 
 import logging
 import time
 import threading
+
+# Import global keyboard control lock
+from .keyboard_control_lock import keyboard_control
 
 logger = logging.getLogger(__name__)
 
@@ -92,13 +100,15 @@ def format_c2a_message(recipient: str, content: str, priority: str | None = None
     # Get correct message tag based on sender
     tag = get_message_tag(sender, recipient)
 
-    # Lean format: [Tag] Recipient | Priority (if urgent/high)
-    if priority in ("urgent", "high"):
-        header = f"{tag} {recipient} | {priority.upper()}"
-    else:
-        header = f"{tag} {recipient}"
+    # Add "URGENT MESSAGE" prefix for urgent priority
+    urgent_prefix = ""
+    if priority == "urgent":
+        urgent_prefix = "🚨 URGENT MESSAGE 🚨\n\n"
 
-    return f"{header}\n\n{content}"
+    # Lean format: [Tag] Recipient (no priority in header for urgent)
+    header = f"{tag} {recipient}"
+
+    return f"{urgent_prefix}{header}\n\n{content}"
 
 
 class PyAutoGUIMessagingDelivery:
@@ -162,61 +172,72 @@ class PyAutoGUIMessagingDelivery:
     
     def _send_message_attempt(self, message, attempt_num: int) -> bool:
         """Single message delivery attempt with all race condition fixes."""
-        try:
-            # Get coordinates for agent
-            from .coordinate_loader import get_coordinate_loader
+        # Get sender for lock identifier
+        sender = "CAPTAIN"  # default
+        if hasattr(message, 'sender'):
+            sender = message.sender
+        if isinstance(message.metadata, dict):
+            sender = message.metadata.get('sender', sender)
+        
+        # CRITICAL: Global keyboard control lock - prevents "9 ppl controlling keyboard"
+        # This ensures only ONE source can control keyboard at a time
+        source = message.metadata.get('source', 'unknown') if isinstance(message.metadata, dict) else 'unknown'
+        lock_source = f"{source}:{sender}:{message.recipient}"
+        
+        with keyboard_control(lock_source):
+            try:
+                # Get coordinates for agent
+                from .coordinate_loader import get_coordinate_loader
 
-            coord_loader = get_coordinate_loader()
+                coord_loader = get_coordinate_loader()
 
-            coords = coord_loader.get_chat_coordinates(message.recipient)
-            if not coords:
-                logger.error(f"No coordinates for {message.recipient}")
-                return False
+                coords = coord_loader.get_chat_coordinates(message.recipient)
+                if not coords:
+                    logger.error(f"No coordinates for {message.recipient}")
+                    return False
 
-            x, y = coords
+                x, y = coords
 
-            # Get sender from message (check metadata first, then sender attribute)
-            sender = "CAPTAIN"  # default
-            if hasattr(message, 'sender'):
-                sender = message.sender
-            if isinstance(message.metadata, dict):
-                sender = message.metadata.get('sender', sender)
-            
-            # Format message content using lean compact formatter with sender
-            msg_content = format_c2a_message(
-                recipient=message.recipient,
-                content=message.content,
-                priority=message.priority.value,
-                sender=sender  # NEW: Pass sender for correct tagging!
-            )
+                # Format message content using lean compact formatter with sender
+                msg_content = format_c2a_message(
+                    recipient=message.recipient,
+                    content=message.content,
+                    priority=message.priority.value,
+                    sender=sender  # NEW: Pass sender for correct tagging!
+                )
 
-            # Click agent chat input
-            self.pyautogui.moveTo(x, y)
-            self.pyautogui.click()
-            time.sleep(1.0)  # RACE CONDITION FIX #2: Increased from 0.3s
+                # Click agent chat input
+                self.pyautogui.moveTo(x, y)
+                self.pyautogui.click()
+                time.sleep(1.0)  # RACE CONDITION FIX #2: Increased from 0.3s
 
-            # RACE CONDITION FIX #1: Clipboard lock (prevents concurrent overwrites!)
-            with _clipboard_lock:
-                # Paste message (clipboard locked during this entire block!)
-                pyperclip.copy(msg_content)
-                time.sleep(1.0)  # RACE CONDITION FIX #2: Increased from 0.2s
+                # RACE CONDITION FIX #1: Clipboard lock (prevents concurrent overwrites!)
+                with _clipboard_lock:
+                    # Paste message (clipboard locked during this entire block!)
+                    pyperclip.copy(msg_content)
+                    time.sleep(1.0)  # RACE CONDITION FIX #2: Increased from 0.2s
+                    
+                    self.pyautogui.hotkey("ctrl", "v")
+                    time.sleep(1.0)  # RACE CONDITION FIX #2: Increased from 0.5s (wait for paste)
+
+                # Send message (use Ctrl+Enter for stalled flag, regular enter for all others)
+                # Check metadata for stalled flag
+                is_stalled = False
+                if isinstance(message.metadata, dict):
+                    is_stalled = message.metadata.get("stalled", False)
                 
-                self.pyautogui.hotkey("ctrl", "v")
-                time.sleep(1.0)  # RACE CONDITION FIX #2: Increased from 0.5s (wait for paste)
+                if is_stalled:
+                    self.pyautogui.hotkey("ctrl", "enter")
+                else:
+                    self.pyautogui.press("enter")
+                time.sleep(1.0)  # RACE CONDITION FIX #2: Increased from 0.5s
 
-            # Send message (use Ctrl+Enter for urgent priority)
-            if message.priority.value == "urgent":
-                self.pyautogui.hotkey("ctrl", "enter")
-            else:
-                self.pyautogui.press("enter")
-            time.sleep(1.0)  # RACE CONDITION FIX #2: Increased from 0.5s
+                logger.info(f"✅ Message sent to {message.recipient} at {coords} (attempt {attempt_num})")
+                return True
 
-            logger.info(f"✅ Message sent to {message.recipient} at {coords} (attempt {attempt_num})")
-            return True
-
-        except Exception as e:
-            logger.error(f"❌ PyAutoGUI delivery failed (attempt {attempt_num}): {e}")
-            return False
+            except Exception as e:
+                logger.error(f"❌ PyAutoGUI delivery failed (attempt {attempt_num}): {e}")
+                return False
 
 
 def send_message_pyautogui(agent_id: str, message: str, timeout: int = 30) -> bool:

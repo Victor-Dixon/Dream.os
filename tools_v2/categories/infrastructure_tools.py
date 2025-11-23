@@ -281,56 +281,189 @@ class ROICalculatorTool(IToolAdapter):
         return "Calculate ROI for refactoring tasks (points/complexity)"
 
     def get_spec(self) -> ToolSpec:
-        """Get tool specification."""
         return ToolSpec(
-            name="roi_calculator",
-            version="1.0.0",
-            category="infrastructure",
-            summary="Calculate ROI for refactoring tasks (points/complexity)",
+            name="roi_calculator", version="1.0.0", category="infrastructure",
+            summary="Calculate ROI for refactoring tasks",
             required_params=["points", "complexity"],
             optional_params={"v2_impact": 0, "autonomy_impact": 0},
         )
 
     def validate(self, params: dict[str, Any]) -> tuple[bool, list[str]]:
-        """Validate parameters."""
-        spec = self.get_spec()
-        return spec.validate_params(params)
+        return self.get_spec().validate_params(params)
 
     def execute(
         self, params: dict[str, Any] = None, context: dict[str, Any] | None = None
     ) -> ToolResult:
-        """Calculate ROI."""
         try:
-            if params is None:
-                params = {}
-            points = params.get("points", 0)
-            complexity = params.get("complexity", 1)
-            v2_impact = params.get("v2_impact", 0)
-            autonomy_impact = params.get("autonomy_impact", 0)
-
-            # ROI formula from Markov optimizer
-            reward = points + (v2_impact * 100) + (autonomy_impact * 200)
-            difficulty = max(complexity, 1)  # Avoid division by zero
-            roi = reward / difficulty
-
-            output = {
-                "points": points,
-                "complexity": complexity,
-                "v2_impact": v2_impact,
-                "autonomy_impact": autonomy_impact,
-                "reward": reward,
-                "difficulty": difficulty,
-                "roi": round(roi, 2),
-                "rating": (
-                    "EXCELLENT"
-                    if roi > 20
-                    else "GOOD" if roi > 15 else "FAIR" if roi > 10 else "LOW"
-                ),
-            }
-            return ToolResult(success=True, output=output)
-
+            params = params or {}
+            reward = params.get("points", 0) + (params.get("v2_impact", 0) * 100) + (params.get("autonomy_impact", 0) * 200)
+            roi = reward / max(params.get("complexity", 1), 1)
+            return ToolResult(success=True, output={
+                **params, "reward": reward, "roi": round(roi, 2),
+                "rating": "EXCELLENT" if roi > 20 else "GOOD" if roi > 15 else "FAIR" if roi > 10 else "LOW"
+            })
         except Exception as e:
             return ToolResult(success=False, output=None, error_message=str(e), exit_code=1)
+
+
+class WorkspaceHealthMonitorTool(IToolAdapter):
+    """Monitor workspace health for agent workspaces."""
+    def get_name(self) -> str:
+        return "workspace_health_monitor"
+    def get_description(self) -> str:
+        return "Monitor agent workspace health (inbox, status, recommendations)"
+    def get_spec(self) -> ToolSpec:
+        return ToolSpec(name="workspace_health_monitor", version="1.0.0", category="infrastructure",
+            summary="Monitor agent workspace health", required_params=[],
+            optional_params={"agent_id": None, "check_all": False})
+    def validate(self, params: dict[str, Any]) -> tuple[bool, list[str]]:
+        return (True, [])
+    def execute(self, params: dict[str, Any] = None, context: dict[str, Any] | None = None) -> ToolResult:
+        try:
+            import sys
+            from pathlib import Path
+            sys.path.insert(0, str(Path(__file__).parent.parent.parent / "tools"))
+            from workspace_health_monitor import WorkspaceHealthMonitor
+            params = params or {}
+            monitor = WorkspaceHealthMonitor()
+            if params.get("check_all"):
+                results = monitor.check_all_workspaces()
+                output = {"mode": "all", "results": {k: {"score": v.health_score, "inbox": v.inbox_count,
+                    "old": v.old_messages, "status_ok": v.status_file_current, "recs": v.recommendations}
+                    for k, v in results.items()}}
+            elif params.get("agent_id"):
+                h = monitor.check_agent_workspace(params["agent_id"])
+                output = {"agent_id": params["agent_id"], "score": h.health_score,
+                    "inbox": h.inbox_count, "old": h.old_messages, "recs": h.recommendations}
+            else:
+                return ToolResult(success=False, output=None,
+                    error_message="Must specify agent_id or check_all=True", exit_code=1)
+            return ToolResult(success=True, output=output)
+        except Exception as e:
+            logger.error(f"Workspace health monitor failed: {e}")
+            return ToolResult(success=False, output=None, error_message=str(e), exit_code=1)
+
+class WorkspaceAutoCleanerTool(IToolAdapter):
+    """Automated workspace cleanup tool."""
+    def get_name(self) -> str:
+        return "workspace_auto_cleaner"
+    def get_description(self) -> str:
+        return "Automated workspace cleanup (archive old messages, clean temp files)"
+    def get_spec(self) -> ToolSpec:
+        return ToolSpec(name="workspace_auto_cleaner", version="1.0.0", category="infrastructure",
+            summary="Automated workspace cleanup", required_params=["agent_id"],
+            optional_params={"archive": False, "clean_temp": False, "full": False, "dry_run": True})
+    def validate(self, params: dict[str, Any]) -> tuple[bool, list[str]]:
+        return self.get_spec().validate_params(params)
+    def execute(self, params: dict[str, Any] = None, context: dict[str, Any] | None = None) -> ToolResult:
+        try:
+            import sys
+            from pathlib import Path
+            sys.path.insert(0, str(Path(__file__).parent.parent.parent / "tools"))
+            from workspace_auto_cleaner import archive_old_messages, clean_temp_files, organize_workspace
+            params = params or {}
+            agent_id = params.get("agent_id")
+            if not agent_id:
+                return ToolResult(success=False, output=None, error_message="agent_id required", exit_code=1)
+            dry_run = params.get("dry_run", True)
+            full = params.get("full", False)
+            results = {}
+            if params.get("archive") or full:
+                results["archived"] = archive_old_messages(agent_id, dry_run=dry_run)
+            if params.get("clean_temp") or full:
+                results["cleaned"] = clean_temp_files(agent_id, dry_run=dry_run)
+            if full:
+                results["organized"] = organize_workspace(agent_id, dry_run=dry_run)
+            return ToolResult(success=True, output={"agent_id": agent_id, "dry_run": dry_run, "results": results})
+        except Exception as e:
+            logger.error(f"Workspace auto cleaner failed: {e}")
+            return ToolResult(success=False, output=None, error_message=str(e), exit_code=1)
+
+
+class BrowserPoolManagerTool(IToolAdapter):
+    """Manage browser instance pool for performance optimization."""
+
+    def get_spec(self) -> ToolSpec:
+        """Get tool specification."""
+        return ToolSpec(
+            name="browser.pool",
+            version="1.0.0",
+            category="infrastructure",
+            summary="Manage browser instance pool for 20%+ performance improvement",
+            required_params=[],
+            optional_params={
+                "pool_size": 3,
+                "max_lifetime_minutes": 60,
+                "max_usage_per_instance": 100,
+                "headless": True,
+                "action": "get",  # get, cleanup, status
+            },
+        )
+
+    def validate(self, params: dict[str, Any]) -> tuple[bool, list[str]]:
+        """Validate parameters."""
+        return (True, [])  # No required params
+
+    def execute(
+        self, params: dict[str, Any], context: dict[str, Any] | None = None
+    ) -> ToolResult:
+        """Execute browser pool management."""
+        try:
+            import sys
+            from pathlib import Path
+
+            tools_path = Path(__file__).parent.parent.parent / "tools"
+            sys.path.insert(0, str(tools_path))
+
+            from browser_pool_manager import BrowserPoolManager
+
+            pool_size = params.get("pool_size", 3)
+            max_lifetime = params.get("max_lifetime_minutes", 60)
+            max_usage = params.get("max_usage_per_instance", 100)
+            headless = params.get("headless", True)
+            action = params.get("action", "get")
+
+            manager = BrowserPoolManager(
+                pool_size=pool_size,
+                max_lifetime_minutes=max_lifetime,
+                max_usage_per_instance=max_usage,
+                headless=headless,
+            )
+
+            if action == "get":
+                browser = manager.get_browser()
+                return ToolResult(
+                    success=True,
+                    output=f"Browser instance obtained from pool (size: {pool_size})",
+                    exit_code=0,
+                )
+            elif action == "cleanup":
+                manager.cleanup_expired()
+                return ToolResult(
+                    success=True,
+                    output="Expired browser instances cleaned up",
+                    exit_code=0,
+                )
+            elif action == "status":
+                status = {
+                    "pool_size": pool_size,
+                    "active_instances": len(manager._pool),
+                    "max_lifetime_minutes": max_lifetime,
+                    "max_usage_per_instance": max_usage,
+                }
+                return ToolResult(success=True, output=status, exit_code=0)
+            else:
+                return ToolResult(
+                    success=False,
+                    output=None,
+                    error_message=f"Unknown action: {action}",
+                    exit_code=1,
+                )
+        except Exception as e:
+            logger.error(f"Browser pool manager failed: {e}")
+            return ToolResult(
+                success=False, output=None, error_message=str(e), exit_code=1
+            )
 
 
 __all__ = [
@@ -338,4 +471,7 @@ __all__ = [
     "FileLineCounterTool",
     "ModuleExtractorPlannerTool",
     "ROICalculatorTool",
+    "WorkspaceHealthMonitorTool",
+    "WorkspaceAutoCleanerTool",
+    "BrowserPoolManagerTool",
 ]

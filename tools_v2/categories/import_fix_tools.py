@@ -258,3 +258,95 @@ class QuickLineCountTool(IToolAdapter):
             logger.error(f"Error in quick line count: {e}")
             raise ToolExecutionError(str(e), tool_name="refactor.quick_line_count")
 
+
+class ImportChainValidatorTool(IToolAdapter):
+    """Validate import chains and identify missing modules."""
+
+    def get_spec(self) -> ToolSpec:
+        """Get tool specification."""
+        return ToolSpec(
+            name="integration.import_chain",
+            version="1.0.0",
+            category="integration",
+            summary="Validate import chains and find missing modules",
+            required_params=["file"],
+            optional_params={"fix_suggestions": False},
+        )
+
+    def validate(self, params: dict[str, Any]) -> tuple[bool, list[str]]:
+        """Validate parameters."""
+        spec = self.get_spec()
+        return spec.validate_params(params)
+
+    def execute(
+        self, params: dict[str, Any], context: dict[str, Any] | None = None
+    ) -> ToolResult:
+        """Execute import chain validation."""
+        try:
+            import sys
+            import importlib.util
+            from pathlib import Path
+
+            file_path = Path(params["file"])
+            if not file_path.exists():
+                return ToolResult(
+                    success=False,
+                    output={"error": f"File not found: {file_path}"},
+                    exit_code=1,
+                )
+
+            # Import the tool function
+            sys.path.insert(0, str(Path(__file__).parent.parent.parent / "tools"))
+            from import_chain_validator import test_import, find_import_statements
+
+            # Test import
+            result = test_import(str(file_path))
+
+            if result["success"]:
+                return ToolResult(
+                    success=True,
+                    output={
+                        "file": str(file_path),
+                        "status": "all_imports_valid",
+                        "missing_modules": [],
+                    },
+                    exit_code=0,
+                )
+
+            # Get imports
+            imports = find_import_statements(file_path)
+
+            output = {
+                "file": str(file_path),
+                "status": "import_errors_found",
+                "error": result["error"],
+                "missing_modules": result["missing_modules"],
+                "imports_found": len(imports),
+                "imports": imports[:10],  # First 10
+            }
+
+            if params.get("fix_suggestions") and result["missing_modules"]:
+                suggestions = []
+                for module in result["missing_modules"]:
+                    suggestions.append(
+                        {
+                            "missing": module,
+                            "suggestions": [
+                                f"Check if module exists: find . -name '{module}.py'",
+                                "Check __init__.py exports",
+                                "Consider creating the module if needed",
+                                "Update imports to use correct path",
+                            ],
+                        }
+                    )
+                output["fix_suggestions"] = suggestions
+
+            return ToolResult(
+                success=False,
+                output=output,
+                exit_code=1,
+            )
+
+        except Exception as e:
+            logger.error(f"Error validating import chain: {e}")
+            raise ToolExecutionError(str(e), tool_name="integration.import_chain")

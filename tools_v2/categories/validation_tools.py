@@ -221,3 +221,69 @@ class ValidationReportTool(IToolAdapter):
 
         except Exception as e:
             return ToolResult(success=False, output=None, exit_code=1, error_message=str(e))
+
+
+class IntegrityValidatorTool(IToolAdapter):
+    """Validate agent task claims against evidence (git, files, status)."""
+
+    def get_spec(self) -> ToolSpec:
+        return ToolSpec(
+            name="validation.integrity",
+            version="1.0.0",
+            category="validation",
+            summary="Validate agent task claims against evidence",
+            required_params=["agent", "task_id", "claimed_work", "files_claimed"],
+            optional_params={"hours_ago": 24, "repo_path": "."}
+        )
+
+    def validate(self, params: dict) -> tuple[bool, list[str]]:
+        spec = self.get_spec()
+        return spec.validate_params(params)
+
+    def execute(self, params: dict, context: dict | None = None) -> ToolResult:
+        """Execute integrity validation."""
+        try:
+            import sys
+            from pathlib import Path
+
+            # Add tools to path
+            tools_path = Path(__file__).parent.parent.parent / "tools"
+            sys.path.insert(0, str(tools_path))
+
+            # Import integrity validator
+            from integrity_validator import IntegrityValidator
+
+            # Initialize validator
+            repo_path = params.get("repo_path", ".")
+            validator = IntegrityValidator(repo_path=repo_path)
+
+            # Validate task completion
+            result = validator.validate_task_completion(
+                agent=params["agent"],
+                task_id=params["task_id"],
+                claimed_work=params["claimed_work"],
+                files_claimed=params["files_claimed"],
+                hours_ago=params.get("hours_ago", 24)
+            )
+
+            # Convert to dict
+            from dataclasses import asdict
+            result_dict = asdict(result)
+
+            return ToolResult(
+                success=result.validated,
+                output={
+                    "validation": result_dict,
+                    "recommendation": result.recommendation,
+                    "confidence": result.confidence,
+                },
+                exit_code=0 if result.validated else 1,
+            )
+
+        except Exception as e:
+            return ToolResult(
+                success=False,
+                output=None,
+                exit_code=1,
+                error_message=str(e)
+            )

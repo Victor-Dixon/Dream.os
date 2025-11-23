@@ -1,0 +1,161 @@
+{
+  "timestamp": "2025-11-23T09:39:16.810860",
+  "summary": {
+    "total_files": 5,
+    "total_commands": 23,
+    "commands_with_handling": 15,
+    "files_with_error_handler": 0,
+    "error_handling_coverage": "65.2%"
+  },
+  "files": [
+    {
+      "file": "src\\discord_commander\\discord_commander_bot.py",
+      "commands": [],
+      "error_handling": {},
+      "has_error_handler": false,
+      "total_commands": 0,
+      "commands_with_handling": 0
+    },
+    {
+      "file": "src\\discord_commander\\messaging_commands.py",
+      "commands": [
+        "message_agent",
+        "agent_interact",
+        "swarm_status",
+        "broadcast",
+        "agent_list",
+        "agent",
+        "help_messaging"
+      ],
+      "error_handling": {
+        "message_agent": {
+          "has_try_except": true,
+          "has_error_response": true,
+          "complete": true
+        },
+        "agent_interact": {
+          "has_try_except": true,
+          "has_error_response": true,
+          "complete": true
+        },
+        "swarm_status": {
+          "has_try_except": true,
+          "has_error_response": true,
+          "complete": true
+        },
+        "broadcast": {
+          "has_try_except": true,
+          "has_error_response": true,
+          "complete": true
+        },
+        "agent_list": {
+          "has_try_except": true,
+          "has_error_response": true,
+          "complete": true
+        },
+        "help_messaging": {
+          "has_try_except": true,
+          "has_error_response": true,
+          "complete": true
+        }
+      },
+      "has_error_handler": false,
+      "total_commands": 7,
+      "commands_with_handling": 6
+    },
+    {
+      "file": "src\\discord_commander\\swarm_showcase_commands.py",
+      "commands": [
+        "swarm_tasks",
+        "swarm_roadmap",
+        "swarm_excellence",
+        "swarm_overview"
+      ],
+      "error_handling": {},
+      "has_error_handler": false,
+      "total_commands": 4,
+      "commands_with_handling": 0
+    },
+    {
+      "file": "src\\discord_commander\\unified_discord_bot.py",
+      "commands": [
+        "gui",
+        "status",
+        "message",
+        "broadcast",
+        "help",
+        "shutdown",
+        "restart"
+      ],
+      "error_handling": {
+        "gui": {
+          "has_try_except": true,
+          "has_error_response": true,
+          "complete": true
+        },
+        "status": {
+          "has_try_except": true,
+          "has_error_response": true,
+          "complete": true
+        },
+        "message": {
+          "has_try_except": true,
+          "has_error_response": true,
+          "complete": true
+        },
+        "broadcast": {
+          "has_try_except": true,
+          "has_error_response": true,
+          "complete": true
+        }
+      },
+      "has_error_handler": false,
+      "total_commands": 7,
+      "commands_with_handling": 4
+    },
+    {
+      "file": "src\\discord_commander\\webhook_commands.py",
+      "commands": [
+        "create_webhook",
+        "list_webhooks",
+        "delete_webhook",
+        "test_webhook",
+        "webhook_info"
+      ],
+      "error_handling": {
+        "create_webhook": {
+          "has_try_except": true,
+          "has_error_response": true,
+          "complete": true
+        },
+        "list_webhooks": {
+          "has_try_except": true,
+          "has_error_response": true,
+          "complete": true
+        },
+        "delete_webhook": {
+          "has_try_except": true,
+          "has_error_response": true,
+          "complete": true
+        },
+        "test_webhook": {
+          "has_try_except": true,
+          "has_error_response": true,
+          "complete": true
+        },
+        "webhook_info": {
+          "has_try_except": true,
+          "has_error_response": true,
+          "complete": true
+        }
+      },
+      "has_error_handler": false,
+      "total_commands": 5,
+      "commands_with_handling": 5
+    }
+  ],
+  "recommendations": [
+    "\u26a0\ufe0f  8 commands need error handling",
+    "\u26a0\ufe0f  Some files missing global error handlers"
+  ]
+}
