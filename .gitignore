@@ -1,10 +1,16 @@
 # Environment variables and secrets
 .env
+.env.*
+!.env.example
 .env.local
 .env.development
 .env.test
 .env.production
 .env.*.local
+*.env
+*.env.*
+!.env.example
+!.env.template
 
 # Python
 __pycache__/
@@ -116,5 +122,136 @@ reporting_archive/*
 # Audit heavy artifacts (keep diffs slim)
 reports/metrics/
 
+# Message system runtime data (sensitive - do not commit)
+data/message_history.json
+message_queue/*.json
+message_queue/*.txt
+message_queue/*.lock
+runtime/*.json
+*.queue.json
+
+# Runtime data directories
+data/agent_activity.json
+data/checkins/
+data/knowledge/*.jsonl
+
+# Vector database data (already has data/vector_db/ but be explicit)
+data/vector_db/
+*.vectordb
+chroma.sqlite3
+
+# Temporary runtime files
+*.lock
+*_lock.json
+*_incoming.txt
+
+# Import/export JSONs with sensitive data
+*-import.json
+*-export.json
+*_import.json
+*_export.json
+
 # Corrupted/unreadable files
 src/web/static/js/framework/system-integration-test-core.js
+
+# Sensitive data files - CRITICAL: Never commit these
+# Cookies and session data
+*_cookies.json
+thea_cookies.json
+**/thea_cookies.json
+*.cookies.json
+cookies.json
+session.json
+*.session.json
+
+# API keys and tokens
+*_token.txt
+*_token.json
+*_key.txt
+*_key.json
+*_secret.txt
+*_secret.json
+*_credentials.json
+*_credentials.txt
+credentials.json
+credentials.txt
+api_keys.json
+api_keys.txt
+secrets.json
+secrets.txt
+config/github_token.txt
+config/discord_token.txt
+config/*_token.txt
+config/*_key.txt
+config/*_secret.txt
+
+# Discord tokens and webhooks
+discord_token.json
+discord_token.txt
+discord_webhook.json
+discord_webhook.txt
+discord_config.json
+discord_channels.json
+!config/discord_channels_template.json
+
+# GitHub tokens
+github_token.json
+github_token.txt
+github_token.py
+.github_token
+
+# Database files with sensitive data
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm
+
+# Backup files that might contain secrets
+*.bak
+*.backup
+*_backup.json
+*_backup.txt
+backup_*.json
+backup_*.txt
+
+# Temporary files that might contain secrets
+*.tmp
+*.temp
+temp_*.json
+temp_*.txt
+*_temp.json
+*_temp.txt
+
+# Log files that might contain sensitive data
+*.log
+*.log.*
+logs/**/*.log
+**/logs/*.log
+
+# Runtime data that might contain secrets
+runtime/**/*.json
+runtime/**/*.txt
+!runtime/**/*.config.json
+!runtime/**/*.template.json
+
+# Message history and queue data (may contain sensitive info)
+message_queue/**/*.json
+message_queue/**/*.txt
+message_queue/**/*.lock
+data/message_history.json
+data/message_history_archive/
+data/agent_activity.json
+data/agent_activity_history.json
+data/metrics_history.json
+
+# Vector database (may contain sensitive embeddings)
+data/vector_db/
+vector_db/
+*.vectordb
+chroma.sqlite3
+*.chroma.db
+
+# Check for accidentally tracked sensitive files
+# Run: git ls-files | grep -E "\.env|secret|key|token|password|credential"
