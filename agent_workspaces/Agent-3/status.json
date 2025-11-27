@@ -9,7 +9,7 @@
   "mission_priority": "CRITICAL",
   "current_tasks": [
     "GitHub Consolidation Execution - ⏳ RATE LIMITED: All 3 tasks executed (Case Variations 12 repos, Trading Repos 4→1, Content/Blog 2 repos). All merges prepared (backups, verification, no conflicts). Blocked by GitHub API rate limit (60min reset). Status: GITHUB_CONSOLIDATION_EXECUTION_STATUS.md",
-    "Test Coverage Creation - ✅ PROGRESS: Created 3 test files (onboarding_template_loader: 12 tests, role_command_handler: 9 tests, message_identity_clarification: 12 tests) - 33 tests total, 3/44 files covered (6.8% progress)",
+    "Test Coverage Creation - ✅ PROGRESS: Created 5 test files (onboarding_template_loader: 12 tests, role_command_handler: 9 tests, message_identity_clarification: 12 tests, status_embedding_indexer: 6 tests, messaging_cli_parser: 29 tests) - 68 tests total, 5/44 files covered (11.4% progress)",
     "Unused Code Analysis - ✅ COMPLETE: Report shows 44 files without tests, but most code is USED - needs tests not removal",
     "Stage 1 Integration Support - PENDING: Use integration tools to complete Stage 1 work (Streamertools, DaDudeKC-Website)"
   ],
@@ -33,6 +33,8 @@
     "Test Coverage - onboarding_template_loader.py - ✅ COMPLETE: Created test_onboarding_template_loader.py with 12 comprehensive tests (100% passing), covers all methods including edge cases",
     "Test Coverage - role_command_handler.py - ✅ COMPLETE: Created test_role_command_handler.py with 9 comprehensive tests covering can_handle and handle methods",
     "Test Coverage - message_identity_clarification.py - ✅ COMPLETE: Created test_message_identity_clarification.py with 12 comprehensive tests covering all message types and priority handling",
+    "Test Coverage - status_embedding_indexer.py - ✅ COMPLETE: Created test_status_embedding_indexer.py with 6 comprehensive tests covering file operations and status data handling",
+    "Test Coverage - messaging_cli_parser.py - ✅ COMPLETE: Created test_messaging_cli_parser.py with 29 comprehensive tests covering all CLI arguments and parser functionality",
     "Discord Status Display Fix - ✅ COMPLETE: Fixed status emoji detection, updated SwarmStatusGUIView, AgentMessagingView, messaging_controller_views.py",
     "Documentation Cleanup - ✅ COMPLETE: Removed 141 obsolete documentation files, updated CODE_OF_CONDUCT.md (v2.1), CAPTAINS_HANDBOOK.md (v2.1), SWARM_BRAIN_GUIDE.md with current project state"
   ],
