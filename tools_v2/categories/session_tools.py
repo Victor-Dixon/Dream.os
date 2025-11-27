@@ -190,8 +190,13 @@ class PassdownTool(IToolAdapter):
             raise ToolExecutionError(str(e), tool_name="session.passdown")
 
 
-class PointsCalculatorTool(IToolAdapter):
-    """Calculate and track agent points."""
+class SessionPointsCalculatorTool(IToolAdapter):
+    """
+    Calculate and track agent points from completed work.
+    
+    Different from captain.calc_points which calculates points for task assignment.
+    This tool calculates points from actual completed work (lines reduced, files, etc.).
+    """
 
     def get_spec(self) -> ToolSpec:
         """Get tool specification."""
@@ -199,7 +204,7 @@ class PointsCalculatorTool(IToolAdapter):
             name="agent.points",
             version="1.0.0",
             category="session",
-            summary="Calculate and track agent points from completed work",
+            summary="Calculate agent points from completed work (lines reduced, files, etc.)",
             required_params=["agent_id"],
             optional_params={"task_type": None, "lines_reduced": 0, "files_count": 0},
         )

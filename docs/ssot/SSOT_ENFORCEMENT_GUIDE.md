@@ -335,7 +335,8 @@ While consolidating, agents must:
 3. **Verify No New Duplicates**:
    ```bash
    # After consolidation, verify no new duplicates created
-   python tools/duplicate_detector.py --target src/core/
+   # Note: Use tools_v2/ analysis tools if available, otherwise use tools/ssot_validator.py
+   python tools/ssot_validator.py --target src/core/
    ```
 
 ---
@@ -396,19 +397,21 @@ After consolidation is complete, agents must:
 **Duplicate Code Detection**:
 ```bash
 # Detect duplicate code blocks (>10 lines)
-python tools/duplicate_code_detector.py --min-lines 10
+# Note: Use tools_v2/ analysis tools if available, otherwise use tools/ssot_validator.py
+python tools/ssot_validator.py --check-duplicates --min-lines 10
 ```
 
 **Duplicate Configuration Detection**:
 ```bash
 # Detect duplicate config parameters
-python tools/duplicate_config_detector.py --strict
+python tools/ssot_validator.py --check-config --strict
 ```
 
 **Duplicate Documentation Detection**:
 ```bash
 # Detect duplicate documentation sections
-python tools/duplicate_docs_detector.py --threshold 80
+# Note: Use tools_v2/ analysis tools if available
+python tools/ssot_validator.py --check-docs --threshold 80
 ```
 
 ---
@@ -429,6 +432,7 @@ if grep -r "Agent-[0-9].*coordinates" src/ --include="*.py" | grep -v "coordinat
 fi
 
 # Check for config duplication
+# Note: SSOT validation tools are in tools/ directory
 python tools/ssot_validator.py --quick
 
 if [ $? -ne 0 ]; then
@@ -595,7 +599,8 @@ class UnifiedConfig:
 
 **Detection**:
 ```bash
-python tools/duplicate_code_detector.py --min-lines 10
+# Use SSOT validator for duplicate detection
+python tools/ssot_validator.py --check-duplicates --min-lines 10
 ```
 
 **Resolution**:
@@ -796,27 +801,24 @@ python tools/ssot_validator.py --component messaging
 ### **Tool 2: Duplicate Detector**
 ```bash
 # Detect duplicate code
-python tools/duplicate_code_detector.py --min-lines 10
+# Note: Use tools/ssot_validator.py for SSOT validation
+# For comprehensive analysis, use tools_v2/ analysis tools
+python tools/ssot_validator.py --check-duplicates --min-lines 10
 
 # Detect duplicate configs
-python tools/duplicate_config_detector.py
+python tools/ssot_validator.py --check-config
 
 # Detect duplicate docs
-python tools/duplicate_docs_detector.py
+python tools/ssot_validator.py --check-docs
 ```
 
 ---
 
-### **Tool 3: SSOT Registry Updater**
+### **Tool 3: SSOT Registry Management**
 ```bash
-# Update SSOT registry
-python tools/update_ssot_registry.py --component messaging_system
-
-# View current registry
-python tools/view_ssot_registry.py
-
-# Validate registry
-python tools/validate_ssot_registry.py
+# Note: SSOT registry is maintained in this documentation file
+# Update SSOT registry section in docs/ssot/SSOT_ENFORCEMENT_GUIDE.md
+# For automated tools, check tools_v2/ for registry management tools
 ```
 
 ---

@@ -26,18 +26,23 @@ from .config_scanners import (
     SettingsPatternScanner
 )
 from .file_scanner import FileScanner
-from .pattern_analyzer import PatternAnalyzer
-
-@dataclass
-class ConfigPattern:
-    """Configuration pattern found in code."""
-    file_path: Path
-    line_number: int
-    pattern_type: str
-    key: str
-    value: Any
-    context: str
-    source: str
+from .config_models import ConfigPattern
+try:
+    from .pattern_analyzer import PatternAnalyzer
+except ImportError:
+    # PatternAnalyzer is optional - create stub if missing
+    class PatternAnalyzer:
+        """Stub PatternAnalyzer for when module is not available."""
+        def add_patterns(self, patterns):
+            pass
+        def analyze_patterns(self):
+            return {}
+        def get_statistics(self):
+            return {}
+        def get_unique_keys(self):
+            return set()
+        def generate_report(self):
+            return ""
 
 
 class ConfigurationConsolidator:

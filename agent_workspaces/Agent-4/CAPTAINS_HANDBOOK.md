@@ -1,8 +1,15 @@
 # 📘 CAPTAIN'S HANDBOOK - AGENT-4 OPERATIONS MANUAL
-**Version**: 2.0  
-**Date**: 2025-10-13  
+**Version**: 2.1  
+**Date**: 2025-11-26  
 **Captain**: Agent-4  
 **Status**: ACTIVE OPERATIONAL GUIDE
+
+**Current Project State** (2025-11-27):
+- ✅ Stage 1 Integration: Auto_Blogger complete (0 issues), DreamVault complete, Streamertools/DaDudeKC-Website complete
+- ✅ Test Coverage Initiative: HIGH PRIORITY complete (20/20 files, 144 tests), MEDIUM PRIORITY 70% (14/20 files, 208 tests)
+- ✅ Code Quality: Unused functionality removed (messaging_service.py stub deleted), production code now tested
+- ✅ Infrastructure: Discord bot enhanced (!mermaid, !soft, !hard_onboard), test infrastructure robust
+- ✅ Documentation: Obsolete files cleaned (106+ files removed), key docs updated
 
 ---
 
@@ -383,6 +390,30 @@ BEGIN NOW! 🐝
 11. **"NO WORKAROUNDS - fix the original architecture!"** 🚫
 12. **"Human must understand - no hidden systems!"** 👤
 13. **"Team coordination multiplies impact - 30x effect!"** ⚠️ NEW!
+14. **"Break acknowledgment loops immediately - execute, don't acknowledge!"** ⚠️ NEW!
+
+---
+
+## 🤖 **DISCORD BOT COMMANDS**
+
+### **Available Commands**:
+- `!mermaid <diagram_code>` - Render Mermaid diagrams
+- `!soft [agent_ids]` - Soft onboard agents (supports numeric IDs: 1, 2, 3 or Agent-1, Agent-2, etc.)
+- `!hard_onboard [agent_ids]` - Hard onboard agents (supports numeric IDs: 1, 2, 3 or Agent-1, Agent-2, etc.)
+- `!soft all` or `!hard_onboard all` - Onboard all agents
+- `!gui` - Open messaging GUI
+- `!status` - View swarm status
+- `!control` - Open control panel
+
+### **Usage Examples**:
+```
+!soft 1              # Soft onboard Agent-1
+!soft 1,2,3          # Soft onboard Agent-1, Agent-2, Agent-3
+!soft Agent-1        # Soft onboard Agent-1 (also works)
+!soft all            # Soft onboard all agents
+!hard_onboard 1      # Hard onboard Agent-1
+!mermaid graph TD; A-->B; B-->C;
+```
 
 ---
 
@@ -464,7 +495,7 @@ cat agent_workspaces/Agent-X/status.json
 
 ---
 
-**Last Updated**: 2025-10-13  
+**Last Updated**: 2025-11-26  
 **Version**: 2.0 - Expanded Duties  
 **Status**: ACTIVE OPERATIONAL GUIDE
 

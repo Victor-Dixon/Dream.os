@@ -49,6 +49,15 @@ export class DashboardViewRenderer {
             case 'workload_distribution':
                 content = this.renderWorkloadDistributionView();
                 break;
+            case 'message_history':
+                content = this.renderMessageHistoryView();
+                break;
+            case 'agent_activity':
+                content = this.renderAgentActivityView();
+                break;
+            case 'queue_status':
+                content = this.renderQueueStatusView();
+                break;
             default:
                 content = this.renderDefaultView(view);
         }
@@ -148,6 +157,97 @@ export class DashboardViewRenderer {
                 <p>Task distribution and workload analysis...</p>
             </div>
         `;
+    }
+
+    /**
+     * Render message history view
+     */
+    renderMessageHistoryView() {
+        // Use the message history view component if available
+        if (typeof renderMessageHistoryView === 'function') {
+            const data = this.getDashboardData();
+            return renderMessageHistoryView(data);
+        }
+        return `
+            <div class="dashboard-view message-history-view">
+                <h3>Message History</h3>
+                <p>Loading message history...</p>
+                <script>
+                    // Load message history data and render
+                    fetch('/api/messages/history')
+                        .then(res => res.json())
+                        .then(data => {
+                            if (typeof renderMessageHistoryView === 'function') {
+                                document.getElementById('dashboardContent').innerHTML = 
+                                    renderMessageHistoryView({ message_history: data });
+                            }
+                        });
+                </script>
+            </div>
+        `;
+    }
+
+    /**
+     * Render agent activity view
+     */
+    renderAgentActivityView() {
+        // Use the agent activity view component if available
+        if (typeof renderAgentActivityView === 'function') {
+            const data = this.getDashboardData();
+            return renderAgentActivityView(data);
+        }
+        return `
+            <div class="dashboard-view agent-activity-view">
+                <h3>Agent Activity</h3>
+                <p>Loading agent activity...</p>
+                <script>
+                    // Load agent activity data and render
+                    fetch('/api/messages/activity')
+                        .then(res => res.json())
+                        .then(data => {
+                            if (typeof renderAgentActivityView === 'function') {
+                                document.getElementById('dashboardContent').innerHTML = 
+                                    renderAgentActivityView({ agent_activity: data.activity || [] });
+                            }
+                        });
+                </script>
+            </div>
+        `;
+    }
+
+    /**
+     * Render queue status view
+     */
+    renderQueueStatusView() {
+        // Use the queue status view component if available
+        if (typeof renderQueueStatusView === 'function') {
+            const data = this.getDashboardData();
+            return renderQueueStatusView(data);
+        }
+        return `
+            <div class="dashboard-view queue-status-view">
+                <h3>Queue Status</h3>
+                <p>Loading queue status...</p>
+                <script>
+                    // Load queue status data and render
+                    fetch('/api/messages/queue')
+                        .then(res => res.json())
+                        .then(data => {
+                            if (typeof renderQueueStatusView === 'function') {
+                                document.getElementById('dashboardContent').innerHTML = 
+                                    renderQueueStatusView({ queue_status: data.queue || {} });
+                            }
+                        });
+                </script>
+            </div>
+        `;
+    }
+
+    /**
+     * Get dashboard data (placeholder - should be injected)
+     */
+    getDashboardData() {
+        return window.dashboardData || {};
     }
 
     /**

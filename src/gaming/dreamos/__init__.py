@@ -1,16 +1,16 @@
-"""
-Dream.OS - MMORPG Gamification System.
+# AUTO-GENERATED __init__.py
+# DO NOT EDIT MANUALLY - changes may be overwritten
 
-V2 Compliance: Ported from Agent_Cellphone dreamos
-Author: Agent-7 - Repository Cloning Specialist
-License: MIT
-"""
-
-from .fsm_orchestrator import AgentReport, FSMOrchestrator, Task, TaskState
+from . import fsm_file_operations
+from . import fsm_models
+from . import fsm_monitoring
+from . import fsm_orchestrator
+from . import ui_integration
 
 __all__ = [
-    "FSMOrchestrator",
-    "TaskState",
-    "Task",
-    "AgentReport",
+    'fsm_file_operations',
+    'fsm_models',
+    'fsm_monitoring',
+    'fsm_orchestrator',
+    'ui_integration',
 ]

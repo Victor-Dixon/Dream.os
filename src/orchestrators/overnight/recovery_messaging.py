@@ -81,9 +81,17 @@ Timestamp: {time.time()}
 
             rescue_message = f"[RESCUE] {agent_id} - Reset and resume operations. Report status."
 
+            # Send via PyAutoGUI (primary method)
             await asyncio.get_event_loop().run_in_executor(
                 None, send_message_to_agent, agent_id, rescue_message
             )
+
+            # Also send Discord alert (enhancement - Agent-2 - 2025-01-27)
+            try:
+                from .monitor_discord_alerts import send_recovery_alert
+                send_recovery_alert(agent_id, "attempted", "Rescue message sent via PyAutoGUI")
+            except Exception as discord_error:
+                self.logger.warning(f"Discord alert failed for {agent_id}: {discord_error}")
 
             self.logger.info(f"Rescue message sent to {agent_id}")
 

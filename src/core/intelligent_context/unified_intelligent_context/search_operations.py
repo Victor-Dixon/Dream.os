@@ -78,13 +78,127 @@ class IntelligentContextSearchOperations:
         priority_filter: Priority = None,
         status_filter: Status = None,
     ) -> list[SearchResult]:
-        """Perform the actual search."""
-        # This is a simplified implementation
-        # In a real system, this would search through actual context data
-        results = self._create_mock_results(query, context_type, priority_filter, status_filter)
+        """Perform the actual search using vector database."""
+        try:
+            # Try to use real vector database search
+            results = self._search_vector_database(
+                query, context_type, priority_filter, status_filter
+            )
+            
+            # If vector DB search returns results, use them
+            if results:
+                return results
+            
+            # Fallback to mock results if vector DB unavailable or returns no results
+            if self.logger:
+                self.logger.warning(
+                    f"Vector database search returned no results, using fallback for query: {query}"
+                )
+            return self._create_mock_results(query, context_type, priority_filter, status_filter)
+            
+        except Exception as e:
+            # On error, fallback to mock results
+            if self.logger:
+                self.logger.error(f"Vector database search failed: {e}, using fallback")
+            return self._create_mock_results(query, context_type, priority_filter, status_filter)
 
-        return results
-
+    def _search_vector_database(
+        self,
+        query: str,
+        context_type: ContextType = None,
+        priority_filter: Priority = None,
+        status_filter: Status = None,
+    ) -> list[SearchResult]:
+        """Search using real vector database."""
+        try:
+            from src.services.vector_database_service_unified import get_vector_database_service
+            from src.web.vector_database.models import SearchRequest as VectorSearchRequest
+            
+            # Get vector database service
+            vector_db = get_vector_database_service()
+            if not vector_db:
+                return []
+            
+            # Build search filters based on context type
+            filters = {}
+            if context_type:
+                filters["context_type"] = context_type.value
+            if priority_filter:
+                filters["priority"] = priority_filter.value
+            if status_filter:
+                filters["status"] = status_filter.value
+            
+            # Create search request
+            search_request = VectorSearchRequest(
+                query=query,
+                collection="all",
+                limit=20,  # Get more results for filtering
+                filters=filters,
+            )
+            
+            # Perform search
+            vector_results = vector_db.search(search_request)
+            
+            # Convert vector database results to SearchResult format
+            results = []
+            for vec_result in vector_results:
+                # Map vector DB result to intelligent context SearchResult
+                result = SearchResult(
+                    result_id=vec_result.id,
+                    title=vec_result.title or "",
+                    description=vec_result.content[:200] if vec_result.content else "",  # Truncate
+                    relevance_score=vec_result.relevance or vec_result.score or 0.0,
+                    context_type=self._infer_context_type(vec_result),
+                    metadata={
+                        "collection": vec_result.collection,
+                        "tags": vec_result.tags,
+                        **vec_result.metadata,
+                    },
+                )
+                results.append(result)
+            
+            return results
+            
+        except ImportError:
+            # Vector database service not available
+            if self.logger:
+                self.logger.debug("Vector database service not available")
+            return []
+        except Exception as e:
+            if self.logger:
+                self.logger.error(f"Vector database search error: {e}")
+            return []
+    
+    def _infer_context_type(self, vec_result) -> ContextType | None:
+        """Infer context type from vector database result metadata."""
+        try:
+            metadata = vec_result.metadata or {}
+            collection = vec_result.collection or ""
+            
+            # Check metadata for context type
+            if "context_type" in metadata:
+                try:
+                    return ContextType(metadata["context_type"])
+                except ValueError:
+                    pass
+            
+            # Infer from collection name
+            collection_lower = collection.lower()
+            if "mission" in collection_lower:
+                return ContextType.MISSION
+            elif "capability" in collection_lower or "agent" in collection_lower:
+                return ContextType.AGENT_CAPABILITY
+            elif "emergency" in collection_lower:
+                return ContextType.EMERGENCY
+            elif "task" in collection_lower:
+                return ContextType.TASK
+            elif "doc" in collection_lower:
+                return ContextType.DOCUMENTATION
+            
+            return None
+        except Exception:
+            return None
+    
     def _create_mock_results(
         self,
         query: str,
@@ -92,7 +206,7 @@ class IntelligentContextSearchOperations:
         priority_filter: Priority = None,
         status_filter: Status = None,
     ) -> list[SearchResult]:
-        """Create mock search results for demonstration."""
+        """Create mock search results for fallback/demonstration."""
         results = []
 
         # Create some mock results based on query

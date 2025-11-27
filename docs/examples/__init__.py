@@ -4,5 +4,5 @@
 from . import gaming_integration_core_examples
 
 __all__ = [
-    "gaming_integration_core_examples",
+    'gaming_integration_core_examples',
 ]

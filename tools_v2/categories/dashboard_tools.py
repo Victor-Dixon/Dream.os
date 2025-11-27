@@ -303,3 +303,13 @@ class DiscordStatusDashboardTool(IToolAdapter):
             logger.error(f"Error generating Discord dashboard: {e}")
             raise ToolExecutionError(str(e), tool_name="dashboard.discord")
 
+
+__all__ = [
+    "DashboardGenerateTool",
+    "DashboardDataAggregateTool",
+    "DashboardHTMLTool",
+    "DashboardChartsTool",
+    "DashboardStylesTool",
+    "DiscordStatusDashboardTool",
+]
+

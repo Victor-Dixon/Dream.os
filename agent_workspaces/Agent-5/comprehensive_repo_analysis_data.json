@@ -1,0 +1,1274 @@
+{
+  "analysis_date": "2025-01-27",
+  "analyzer": "Agent-5",
+  "total_repos_analyzed": 48,
+  "missing_repos": [
+    10,
+    14,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75
+  ],
+  "categories": {
+    "ml": 8,
+    "other": 2,
+    "automation": 8,
+    "trading": 22,
+    "discord": 6,
+    "web": 1,
+    "gaming": 1
+  },
+  "similarity_matrix_size": 240,
+  "consolidation_groups": {
+    "high_similarity": [
+      {
+        "target_repo": 27,
+        "target_name": "Analysis: MeTuber (Repo #27)",
+        "merge_from": [
+          26
+        ],
+        "merge_from_names": [
+          "Analysis: TBOWTactics (Repo #26)"
+        ],
+        "similarity_score": 0.7499389499389498,
+        "name_similarity": 0.6923076923076923,
+        "tech_match": true,
+        "category_match": true
+      }
+    ],
+    "medium_similarity": [
+      {
+        "target_repo": 27,
+        "target_name": "Analysis: MeTuber (Repo #27)",
+        "merge_from": [
+          26
+        ],
+        "merge_from_names": [
+          "Analysis: TBOWTactics (Repo #26)"
+        ],
+        "similarity_score": 0.7499389499389498,
+        "name_similarity": 0.6923076923076923,
+        "tech_match": true,
+        "category_match": true
+      },
+      {
+        "target_repo": 4,
+        "target_name": " trade_analyzer",
+        "merge_from": [
+          5
+        ],
+        "merge_from_names": [
+          " UltimateOptionsTradingRobot"
+        ],
+        "similarity_score": 0.6596657633242998,
+        "name_similarity": 0.2926829268292683,
+        "tech_match": true,
+        "category_match": true
+      },
+      {
+        "target_repo": 23,
+        "target_name": "Analysis: langchain-google (Repo #23)",
+        "merge_from": [
+          21
+        ],
+        "merge_from_names": [
+          "Analysis: fastapi (Repo #21)"
+        ],
+        "similarity_score": 0.6373015873015873,
+        "name_similarity": 0.6666666666666666,
+        "tech_match": true,
+        "category_match": true
+      },
+      {
+        "target_repo": 30,
+        "target_name": "Analysis: Superpowered-TTRPG (Repo #30)",
+        "merge_from": [
+          25
+        ],
+        "merge_from_names": [
+          "Analysis: Streamertools (Repo #25)"
+        ],
+        "similarity_score": 0.6215384615384615,
+        "name_similarity": 0.5846153846153846,
+        "tech_match": true,
+        "category_match": false
+      },
+      {
+        "target_repo": 2,
+        "target_name": " machinelearningmodelmaker",
+        "merge_from": [
+          7
+        ],
+        "merge_from_names": [
+          " AutoDream.Os \u2b50 LARGE"
+        ],
+        "similarity_score": 0.6203387083704723,
+        "name_similarity": 0.27906976744186046,
+        "tech_match": true,
+        "category_match": true
+      },
+      {
+        "target_repo": 20,
+        "target_name": "contract-leads",
+        "merge_from": [
+          17
+        ],
+        "merge_from_names": [
+          "trading-leads-bot"
+        ],
+        "similarity_score": 0.6140762463343109,
+        "name_similarity": 0.5806451612903226,
+        "tech_match": true,
+        "category_match": true
+      },
+      {
+        "target_repo": 52,
+        "target_name": "Analysis: NewSims4ModProject",
+        "merge_from": [
+          59
+        ],
+        "merge_from_names": [
+          "DigitalDreamscape"
+        ],
+        "similarity_score": 0.5892653471989265,
+        "name_similarity": 0.3181818181818182,
+        "tech_match": true,
+        "category_match": true
+      },
+      {
+        "target_repo": 57,
+        "target_name": "gpt_automation",
+        "merge_from": [
+          8
+        ],
+        "merge_from_names": [
+          " projectscanner \u2b50 OUR TOOL!"
+        ],
+        "similarity_score": 0.5792702615434291,
+        "name_similarity": 0.3684210526315789,
+        "tech_match": true,
+        "category_match": true
+      },
+      {
+        "target_repo": 51,
+        "target_name": "Analysis: practice",
+        "merge_from": [
+          12
+        ],
+        "merge_from_names": [
+          "Analysis: my-resume"
+        ],
+        "similarity_score": 0.5755088389870998,
+        "name_similarity": 0.6285714285714286,
+        "tech_match": true,
+        "category_match": true
+      },
+      {
+        "target_repo": 55,
+        "target_name": "LSTMmodel_trainer",
+        "merge_from": [
+          18
+        ],
+        "merge_from_names": [
+          "LSTMmodel_trainer"
+        ],
+        "similarity_score": 0.5684971098265896,
+        "name_similarity": 1.0,
+        "tech_match": true,
+        "category_match": false
+      },
+      {
+        "target_repo": 32,
+        "target_name": "(Agent-5: Repos 31-40)",
+        "merge_from": [
+          31
+        ],
+        "merge_from_names": [
+          "(Agent-5: Repos 31-40)"
+        ],
+        "similarity_score": 0.5455516014234876,
+        "name_similarity": 1.0,
+        "tech_match": true,
+        "category_match": false
+      },
+      {
+        "target_repo": 9,
+        "target_name": "(network-scanner):** \u2705 HAS tests + CI/CD!",
+        "merge_from": [
+          3
+        ],
+        "merge_from_names": [
+          " dreambank (#3 in list)  "
+        ],
+        "similarity_score": 0.5013579646734727,
+        "name_similarity": 0.27450980392156865,
+        "tech_match": true,
+        "category_match": true
+      }
+    ],
+    "low_similarity": [
+      {
+        "target_repo": 27,
+        "target_name": "Analysis: MeTuber (Repo #27)",
+        "merge_from": [
+          26
+        ],
+        "merge_from_names": [
+          "Analysis: TBOWTactics (Repo #26)"
+        ],
+        "similarity_score": 0.7499389499389498,
+        "name_similarity": 0.6923076923076923,
+        "tech_match": true,
+        "category_match": true
+      },
+      {
+        "target_repo": 4,
+        "target_name": " trade_analyzer",
+        "merge_from": [
+          5
+        ],
+        "merge_from_names": [
+          " UltimateOptionsTradingRobot"
+        ],
+        "similarity_score": 0.6596657633242998,
+        "name_similarity": 0.2926829268292683,
+        "tech_match": true,
+        "category_match": true
+      },
+      {
+        "target_repo": 23,
+        "target_name": "Analysis: langchain-google (Repo #23)",
+        "merge_from": [
+          21
+        ],
+        "merge_from_names": [
+          "Analysis: fastapi (Repo #21)"
+        ],
+        "similarity_score": 0.6373015873015873,
+        "name_similarity": 0.6666666666666666,
+        "tech_match": true,
+        "category_match": true
+      },
+      {
+        "target_repo": 30,
+        "target_name": "Analysis: Superpowered-TTRPG (Repo #30)",
+        "merge_from": [
+          25
+        ],
+        "merge_from_names": [
+          "Analysis: Streamertools (Repo #25)"
+        ],
+        "similarity_score": 0.6215384615384615,
+        "name_similarity": 0.5846153846153846,
+        "tech_match": true,
+        "category_match": false
+      },
+      {
+        "target_repo": 2,
+        "target_name": " machinelearningmodelmaker",
+        "merge_from": [
+          7
+        ],
+        "merge_from_names": [
+          " AutoDream.Os \u2b50 LARGE"
+        ],
+        "similarity_score": 0.6203387083704723,
+        "name_similarity": 0.27906976744186046,
+        "tech_match": true,
+        "category_match": true
+      },
+      {
+        "target_repo": 20,
+        "target_name": "contract-leads",
+        "merge_from": [
+          17
+        ],
+        "merge_from_names": [
+          "trading-leads-bot"
+        ],
+        "similarity_score": 0.6140762463343109,
+        "name_similarity": 0.5806451612903226,
+        "tech_match": true,
+        "category_match": true
+      },
+      {
+        "target_repo": 52,
+        "target_name": "Analysis: NewSims4ModProject",
+        "merge_from": [
+          59
+        ],
+        "merge_from_names": [
+          "DigitalDreamscape"
+        ],
+        "similarity_score": 0.5892653471989265,
+        "name_similarity": 0.3181818181818182,
+        "tech_match": true,
+        "category_match": true
+      },
+      {
+        "target_repo": 57,
+        "target_name": "gpt_automation",
+        "merge_from": [
+          8
+        ],
+        "merge_from_names": [
+          " projectscanner \u2b50 OUR TOOL!"
+        ],
+        "similarity_score": 0.5792702615434291,
+        "name_similarity": 0.3684210526315789,
+        "tech_match": true,
+        "category_match": true
+      },
+      {
+        "target_repo": 51,
+        "target_name": "Analysis: practice",
+        "merge_from": [
+          12
+        ],
+        "merge_from_names": [
+          "Analysis: my-resume"
+        ],
+        "similarity_score": 0.5755088389870998,
+        "name_similarity": 0.6285714285714286,
+        "tech_match": true,
+        "category_match": true
+      },
+      {
+        "target_repo": 55,
+        "target_name": "LSTMmodel_trainer",
+        "merge_from": [
+          18
+        ],
+        "merge_from_names": [
+          "LSTMmodel_trainer"
+        ],
+        "similarity_score": 0.5684971098265896,
+        "name_similarity": 1.0,
+        "tech_match": true,
+        "category_match": false
+      },
+      {
+        "target_repo": 32,
+        "target_name": "(Agent-5: Repos 31-40)",
+        "merge_from": [
+          31
+        ],
+        "merge_from_names": [
+          "(Agent-5: Repos 31-40)"
+        ],
+        "similarity_score": 0.5455516014234876,
+        "name_similarity": 1.0,
+        "tech_match": true,
+        "category_match": false
+      },
+      {
+        "target_repo": 9,
+        "target_name": "(network-scanner):** \u2705 HAS tests + CI/CD!",
+        "merge_from": [
+          3
+        ],
+        "merge_from_names": [
+          " dreambank (#3 in list)  "
+        ],
+        "similarity_score": 0.5013579646734727,
+        "name_similarity": 0.27450980392156865,
+        "tech_match": true,
+        "category_match": true
+      },
+      {
+        "target_repo": 16,
+        "target_name": "TROOP",
+        "merge_from": [
+          60
+        ],
+        "merge_from_names": [
+          "TROOP"
+        ],
+        "similarity_score": 0.46424751718869367,
+        "name_similarity": 1.0,
+        "tech_match": true,
+        "category_match": false
+      },
+      {
+        "target_repo": 56,
+        "target_name": "IT_help_desk",
+        "merge_from": [
+          6
+        ],
+        "merge_from_names": [
+          " Agent_Cellphone \u2b50 CRITICAL"
+        ],
+        "similarity_score": 0.4307585363140919,
+        "name_similarity": 0.16216216216216217,
+        "tech_match": true,
+        "category_match": true
+      },
+      {
+        "target_repo": 28,
+        "target_name": "Analysis: DaDudeKC-Website (Repo #28)",
+        "merge_from": [
+          11
+        ],
+        "merge_from_names": [
+          "Analysis: prompt-library"
+        ],
+        "similarity_score": 0.40003681885125186,
+        "name_similarity": 0.39285714285714285,
+        "tech_match": true,
+        "category_match": true
+      },
+      {
+        "target_repo": 24,
+        "target_name": "Analysis: FocusForge (Repo #24)",
+        "merge_from": [
+          22
+        ],
+        "merge_from_names": [
+          "Analysis: transformers (Repo #22)"
+        ],
+        "similarity_score": 0.3708826205641493,
+        "name_similarity": 0.75,
+        "tech_match": true,
+        "category_match": false
+      },
+      {
+        "target_repo": 53,
+        "target_name": "my-resume",
+        "merge_from": [
+          54
+        ],
+        "merge_from_names": [
+          "my-personal-templates"
+        ],
+        "similarity_score": 0.35203539823008856,
+        "name_similarity": 0.4,
+        "tech_match": false,
+        "category_match": true
+      },
+      {
+        "target_repo": 35,
+        "target_name": "DaDudeKC-Website",
+        "merge_from": [
+          36
+        ],
+        "merge_from_names": [
+          "DaDudekC"
+        ],
+        "similarity_score": 0.3263681592039801,
+        "name_similarity": 0.6666666666666666,
+        "tech_match": false,
+        "category_match": false
+      }
+    ]
+  },
+  "all_repos": {
+    "6": {
+      "name": " Agent_Cellphone \u2b50 CRITICAL",
+      "category": "ml",
+      "tech_stack": [
+        "Python"
+      ],
+      "purpose": "Utility:** \ud83d\udd34 **CRITICAL HISTORICAL VALUE!** Contains V1 architecture, legacy integrations, and evolutionary code history. Reference material for V2 development."
+    },
+    "1": {
+      "name": "Analysis - network-scanner",
+      "category": "other",
+      "tech_stack": [
+        "Python"
+      ],
+      "purpose": "(1 sentence)"
+    },
+    "2": {
+      "name": " machinelearningmodelmaker",
+      "category": "automation",
+      "tech_stack": [
+        "Python"
+      ],
+      "purpose": "Utility in THIS project:** Could integrate with `src/ai_training/` and `src/analytics/` for automated ML model generation and training workflows."
+    },
+    "3": {
+      "name": " dreambank (#3 in list)  ",
+      "category": "trading",
+      "tech_stack": [
+        "PyQt",
+        "Python",
+        "PyQt5"
+      ],
+      "purpose": "Utility in THIS project:** Could integrate with `src/trading_robot/` for portfolio tracking and provide real-time price monitoring for our trading automation systems."
+    },
+    "4": {
+      "name": " trade_analyzer",
+      "category": "trading",
+      "tech_stack": [
+        "Python"
+      ],
+      "purpose": "Utility:** DIRECT integration with `src/trading_robot/` - likely contains analysis algorithms we could reuse."
+    },
+    "5": {
+      "name": " UltimateOptionsTradingRobot",
+      "category": "trading",
+      "tech_stack": [
+        "Python"
+      ],
+      "purpose": "Utility:** DIRECT integration with `src/trading_robot/` - options-specific logic our system could leverage."
+    },
+    "7": {
+      "name": " AutoDream.Os \u2b50 LARGE",
+      "category": "automation",
+      "tech_stack": [
+        "Python"
+      ],
+      "purpose": "Utility:** Could integrate with `src/gaming/` Dream.OS FSM system - contains automation patterns and OS-level orchestration we might leverage."
+    },
+    "8": {
+      "name": " projectscanner \u2b50 OUR TOOL!",
+      "category": "automation",
+      "tech_stack": [
+        "Python"
+      ],
+      "purpose": "Utility:** \ud83d\udd34 **WE LITERALLY USE THIS!** This IS our projectscanner tool! Core to our workflow!"
+    },
+    "9": {
+      "name": "(network-scanner):** \u2705 HAS tests + CI/CD!",
+      "category": "trading",
+      "tech_stack": [
+        "Python",
+        "PyQt5",
+        "PyQt",
+        "Discord",
+        "GUI"
+      ],
+      "purpose": "Utility:** Integrate with `src/core/health/monitoring/` for network security"
+    },
+    "11": {
+      "name": "Analysis: prompt-library",
+      "category": "trading",
+      "tech_stack": [
+        "React",
+        "Python",
+        "GUI"
+      ],
+      "purpose": "prompt-library** is a curated collection of AI/LLM prompts specifically designed for **financial and trading UI/UX development**."
+    },
+    "12": {
+      "name": "Analysis: my-resume",
+      "category": "trading",
+      "tech_stack": [
+        "Python",
+        "GUI"
+      ],
+      "purpose": "Actual Content:** NOT a resume! This is an **OSRSBot AI Development Strategy Repository**!"
+    },
+    "13": {
+      "name": "bible-application",
+      "category": "discord",
+      "tech_stack": [
+        "Python",
+        "requests",
+        "Discord",
+        "Tkinter",
+        "JavaScript",
+        "GUI"
+      ],
+      "purpose": "Architecture Overview:"
+    },
+    "15": {
+      "name": "DreamVault",
+      "category": "trading",
+      "tech_stack": [
+        "Python",
+        "FastAPI",
+        "PostgreSQL",
+        "SQLite",
+        "Flask",
+        "React",
+        "Selenium"
+      ],
+      "purpose": "Core Mission:** Transform ChatGPT conversations into:"
+    },
+    "16": {
+      "name": "TROOP",
+      "category": "trading",
+      "tech_stack": [
+        "GCP",
+        "Python",
+        "sklearn",
+        "Azure",
+        "AWS",
+        "Express",
+        "Redis",
+        "PostgreSQL",
+        "SQLite",
+        "MySQL",
+        "GUI"
+      ],
+      "purpose": "Core Mission:"
+    },
+    "17": {
+      "name": "trading-leads-bot",
+      "category": "trading",
+      "tech_stack": [
+        "Python",
+        "BeautifulSoup",
+        "Discord",
+        "discord.py",
+        "PostgreSQL",
+        "Discord.py",
+        "SQLite",
+        "Flask",
+        "MySQL",
+        "Selenium"
+      ],
+      "purpose": "Core Mission:"
+    },
+    "18": {
+      "name": "LSTMmodel_trainer",
+      "category": "automation",
+      "tech_stack": [
+        "TensorFlow",
+        "Python",
+        "PyQt5",
+        "scikit-learn",
+        "PyQt",
+        "GUI"
+      ],
+      "purpose": "Core Mission:"
+    },
+    "19": {
+      "name": "FreeWork (freemail-management)",
+      "category": "ml",
+      "tech_stack": [
+        "Python",
+        "Node.js",
+        "MongoDB",
+        "Express",
+        "Node",
+        "React"
+      ],
+      "purpose": "Core Features:"
+    },
+    "20": {
+      "name": "contract-leads",
+      "category": "trading",
+      "tech_stack": [
+        "requests",
+        "Discord",
+        "Python",
+        "BeautifulSoup"
+      ],
+      "purpose": "Core Mission:"
+    },
+    "31": {
+      "name": "(Agent-5: Repos 31-40)",
+      "category": "trading",
+      "tech_stack": [
+        "Discord",
+        "Python"
+      ],
+      "purpose": "The OBS Live Filter and Overlay Library** - A Python toolkit for adding real-time filters and overlays to Twitch streams via OBS. Modular and customizable, designed to expand into bots, agents, workfl"
+    },
+    "32": {
+      "name": "(Agent-5: Repos 31-40)",
+      "category": "ml",
+      "tech_stack": [
+        "Python",
+        "GUI"
+      ],
+      "purpose": "\"Your solo battle OS for deep focus and productivity.\""
+    },
+    "33": {
+      "name": "TBOWTactics",
+      "category": "trading",
+      "tech_stack": [],
+      "purpose": "\"Where small-account traders master the game. Packed with REST APIs, real-time market data, and AI-powered insights... TBOWTactics is the ultimate toolkit to sharpen your edge, execute smarter trades,"
+    },
+    "34": {
+      "name": "fastapi",
+      "category": "web",
+      "tech_stack": [
+        "FastAPI"
+      ],
+      "purpose": "\"FastAPI framework, high performance, easy to learn, fast to code, ready for production\""
+    },
+    "35": {
+      "name": "DaDudeKC-Website",
+      "category": "trading",
+      "tech_stack": [],
+      "purpose": "\"my website\" - Personal portfolio/website for Commander"
+    },
+    "36": {
+      "name": "DaDudekC",
+      "category": "other",
+      "tech_stack": [],
+      "purpose": "Personal profile repository (GitHub special repo that displays on profile page)"
+    },
+    "37": {
+      "name": "Superpowered-TTRPG",
+      "category": "gaming",
+      "tech_stack": [],
+      "purpose": "Tabletop RPG game system for superpowered characters"
+    },
+    "38": {
+      "name": "TheTradingRobotPlug",
+      "category": "trading",
+      "tech_stack": [],
+      "purpose": "Trading robot/bot for automated trading strategies"
+    },
+    "39": {
+      "name": "self-evolving-ai",
+      "category": "ml",
+      "tech_stack": [],
+      "purpose": "Self-evolving AI system - adaptive machine learning that improves itself"
+    },
+    "40": {
+      "name": "osrsbot",
+      "category": "discord",
+      "tech_stack": [],
+      "purpose": "Old School RuneScape (OSRS) gaming bot for automation"
+    },
+    "51": {
+      "name": "Analysis: practice",
+      "category": "trading",
+      "tech_stack": [
+        "Python",
+        "Tkinter",
+        "GUI"
+      ],
+      "purpose": "Practice** is a comprehensive financial/trading experimentation repository created for learning and testing trading algorithms, backtesting strategies, and machine learning model development for stock"
+    },
+    "52": {
+      "name": "Analysis: NewSims4ModProject",
+      "category": "discord",
+      "tech_stack": [
+        "Python"
+      ],
+      "purpose": "NewSims4ModProject** is a game modding framework for The Sims 4, implementing an event-driven architecture for managing game events, sim lifecycles, and state management."
+    },
+    "53": {
+      "name": "my-resume",
+      "category": "trading",
+      "tech_stack": [],
+      "purpose": "Personal resume/portfolio repository containing project summaries, skills documentation, and career achievements."
+    },
+    "54": {
+      "name": "my-personal-templates",
+      "category": "trading",
+      "tech_stack": [],
+      "purpose": "Personal template repository containing trading research and strategy templates (Tbow Tactics, Trading Research)."
+    },
+    "55": {
+      "name": "LSTMmodel_trainer",
+      "category": "trading",
+      "tech_stack": [
+        "PyQt",
+        "Python",
+        "GUI"
+      ],
+      "purpose": "PyQt-based desktop app for training LSTM neural networks for financial/trading predictions. User-friendly GUI for data prep, model config, training, evaluation."
+    },
+    "56": {
+      "name": "IT_help_desk",
+      "category": "ml",
+      "tech_stack": [
+        "PyQt",
+        "Python"
+      ],
+      "purpose": "Desktop help desk ticketing system - PyQt app with database, ticket management, UI."
+    },
+    "57": {
+      "name": "gpt_automation",
+      "category": "automation",
+      "tech_stack": [
+        "Python"
+      ],
+      "purpose": "GPT automation tools and scripts for automating ChatGPT interactions."
+    },
+    "58": {
+      "name": "FreeRideInvestor",
+      "category": "trading",
+      "tech_stack": [],
+      "purpose": "WordPress theme for trading/investing blog with auto-blogging capabilities, custom PHP templates, plugins."
+    },
+    "59": {
+      "name": "DigitalDreamscape",
+      "category": "discord",
+      "tech_stack": [
+        "Python"
+      ],
+      "purpose": "AI-powered Dungeon Master game - Python game engine with AI storytelling, game core, data management."
+    },
+    "60": {
+      "name": "TROOP",
+      "category": "automation",
+      "tech_stack": [
+        "Python"
+      ],
+      "purpose": "IT automation and infrastructure management toolkit - Scripts for IT operations, testing, CI/CD workflows."
+    },
+    "21": {
+      "name": "Analysis: fastapi (Repo #21)",
+      "category": "ml",
+      "tech_stack": [
+        "Flask",
+        "Python",
+        "FastAPI",
+        "Node"
+      ],
+      "purpose": "This is a FORK of the official FastAPI framework** (https://github.com/fastapi/fastapi)"
+    },
+    "22": {
+      "name": "Analysis: transformers (Repo #22)",
+      "category": "discord",
+      "tech_stack": [
+        "PyTorch",
+        "TensorFlow",
+        "Python",
+        "FastAPI"
+      ],
+      "purpose": "This is a FORK of Hugging Face's Transformers library** (https://github.com/huggingface/transformers)"
+    },
+    "23": {
+      "name": "Analysis: langchain-google (Repo #23)",
+      "category": "ml",
+      "tech_stack": [
+        "Python",
+        "FastAPI"
+      ],
+      "purpose": "This is a FORK of LangChain's Google integrations** (https://github.com/langchain-ai/langchain-google)"
+    },
+    "24": {
+      "name": "Analysis: FocusForge (Repo #24)",
+      "category": "automation",
+      "tech_stack": [
+        "GUI",
+        "Python",
+        "Docker",
+        "SQLite"
+      ],
+      "purpose": "CUSTOM Commander Project - Productivity Operating System"
+    },
+    "25": {
+      "name": "Analysis: Streamertools (Repo #25)",
+      "category": "discord",
+      "tech_stack": [
+        "Python"
+      ],
+      "purpose": "CUSTOM Commander Project - OBS/Twitch Streaming Tools"
+    },
+    "26": {
+      "name": "Analysis: TBOWTactics (Repo #26)",
+      "category": "trading",
+      "tech_stack": [
+        "Python",
+        "GUI"
+      ],
+      "purpose": "CUSTOM Trading Toolkit - \"Where small-account traders master the game\""
+    },
+    "27": {
+      "name": "Analysis: MeTuber (Repo #27)",
+      "category": "trading",
+      "tech_stack": [
+        "Python",
+        "GUI"
+      ],
+      "purpose": "Part of Streamertools Family - Core Video Filter Library"
+    },
+    "28": {
+      "name": "Analysis: DaDudeKC-Website (Repo #28)",
+      "category": "trading",
+      "tech_stack": [
+        "Python",
+        "JavaScript"
+      ],
+      "purpose": "Personal Website/Portfolio Project - Commander's Digital Presence"
+    },
+    "29": {
+      "name": " Commander's User Profile/Special Repo",
+      "category": "ml",
+      "tech_stack": [],
+      "purpose": "Personal Repository - Commander's User Profile/Special Repo"
+    },
+    "30": {
+      "name": "Analysis: Superpowered-TTRPG (Repo #30)",
+      "category": "automation",
+      "tech_stack": [
+        "Python"
+      ],
+      "purpose": "Tabletop RPG Gaming Project - Digital Game Master Tools"
+    }
+  },
+  "top_similar_pairs": [
+    [
+      [
+        26,
+        27
+      ],
+      0.7499389499389498
+    ],
+    [
+      [
+        12,
+        27
+      ],
+      0.6887149380300065
+    ],
+    [
+      [
+        4,
+        5
+      ],
+      0.6596657633242998
+    ],
+    [
+      [
+        12,
+        26
+      ],
+      0.648695652173913
+    ],
+    [
+      [
+        21,
+        23
+      ],
+      0.6373015873015873
+    ],
+    [
+      [
+        25,
+        30
+      ],
+      0.6215384615384615
+    ],
+    [
+      [
+        2,
+        7
+      ],
+      0.6203387083704723
+    ],
+    [
+      [
+        7,
+        57
+      ],
+      0.6144549763033175
+    ],
+    [
+      [
+        17,
+        20
+      ],
+      0.6140762463343109
+    ],
+    [
+      [
+        52,
+        59
+      ],
+      0.5892653471989265
+    ],
+    [
+      [
+        8,
+        57
+      ],
+      0.5792702615434291
+    ],
+    [
+      [
+        12,
+        51
+      ],
+      0.5755088389870998
+    ],
+    [
+      [
+        8,
+        30
+      ],
+      0.5703560459560915
+    ],
+    [
+      [
+        18,
+        55
+      ],
+      0.5684971098265896
+    ],
+    [
+      [
+        11,
+        12
+      ],
+      0.5676021828711438
+    ],
+    [
+      [
+        7,
+        8
+      ],
+      0.5600484261501211
+    ],
+    [
+      [
+        7,
+        59
+      ],
+      0.5583891828336273
+    ],
+    [
+      [
+        7,
+        60
+      ],
+      0.5575736325385694
+    ],
+    [
+      [
+        2,
+        57
+      ],
+      0.5568176371914689
+    ],
+    [
+      [
+        7,
+        30
+      ],
+      0.5564217986782876
+    ],
+    [
+      [
+        31,
+        32
+      ],
+      0.5455516014234876
+    ],
+    [
+      [
+        57,
+        60
+      ],
+      0.5403909774436091
+    ],
+    [
+      [
+        2,
+        8
+      ],
+      0.5355990094782683
+    ],
+    [
+      [
+        8,
+        60
+      ],
+      0.5347586206896552
+    ],
+    [
+      [
+        11,
+        51
+      ],
+      0.5336686390532545
+    ],
+    [
+      [
+        6,
+        8
+      ],
+      0.5335529487385506
+    ],
+    [
+      [
+        11,
+        27
+      ],
+      0.5323634272570442
+    ],
+    [
+      [
+        22,
+        23
+      ],
+      0.5302320038137613
+    ],
+    [
+      [
+        11,
+        26
+      ],
+      0.5244161986402601
+    ],
+    [
+      [
+        2,
+        5
+      ],
+      0.5241758241758242
+    ],
+    [
+      [
+        27,
+        28
+      ],
+      0.5228650137741047
+    ],
+    [
+      [
+        7,
+        25
+      ],
+      0.52
+    ],
+    [
+      [
+        2,
+        4
+      ],
+      0.5191399152029074
+    ],
+    [
+      [
+        22,
+        25
+      ],
+      0.5180332379484922
+    ],
+    [
+      [
+        2,
+        30
+      ],
+      0.5173333333333333
+    ],
+    [
+      [
+        1,
+        25
+      ],
+      0.5164835164835164
+    ],
+    [
+      [
+        2,
+        60
+      ],
+      0.5122974767596281
+    ],
+    [
+      [
+        5,
+        57
+      ],
+      0.5106430155210643
+    ],
+    [
+      [
+        4,
+        7
+      ],
+      0.5083665338645419
+    ],
+    [
+      [
+        12,
+        32
+      ],
+      0.5041291291291291
+    ],
+    [
+      [
+        3,
+        9
+      ],
+      0.5013579646734727
+    ],
+    [
+      [
+        1,
+        52
+      ],
+      0.5009122952519179
+    ],
+    [
+      [
+        24,
+        30
+      ],
+      0.4973481546062192
+    ],
+    [
+      [
+        21,
+        22
+      ],
+      0.4972300281011641
+    ],
+    [
+      [
+        25,
+        27
+      ],
+      0.4938668025823989
+    ],
+    [
+      [
+        24,
+        26
+      ],
+      0.49303030303030304
+    ],
+    [
+      [
+        6,
+        32
+      ],
+      0.4929906542056075
+    ],
+    [
+      [
+        4,
+        25
+      ],
+      0.4914702581369248
+    ],
+    [
+      [
+        26,
+        28
+      ],
+      0.4910989678202793
+    ],
+    [
+      [
+        5,
+        25
+      ],
+      0.4888157894736842
+    ]
+  ]
+}

@@ -121,11 +121,18 @@ class CompletionProcessorTool(IToolAdapter):
             logger.warning(f"Could not log to swarm brain: {e}")
 
 
+# DEPRECATED: LeaderboardUpdaterTool consolidated into captain_tools.py
+# Use captain.update_leaderboard instead (supports both batch and single-agent modes)
+# This class kept for backward compatibility but delegates to consolidated tool
+#
+# Agent-8 SSOT Consolidation - 2025-01-27
+
 class LeaderboardUpdaterTool(IToolAdapter):
     """
-    Update agent leaderboard with points and achievements.
+    DEPRECATED: Use captain.update_leaderboard instead.
     
-    Migrated from: tools/captain_leaderboard_update.py
+    This tool has been consolidated into captain_tools.py → LeaderboardUpdateTool.
+    Delegates to consolidated implementation for backward compatibility.
     """
 
     def get_spec(self) -> ToolSpec:
@@ -134,7 +141,7 @@ class LeaderboardUpdaterTool(IToolAdapter):
             name="captain.update_leaderboard_coord",
             version="1.0.0",
             category="captain.coordination",
-            summary="Update agent leaderboard with points/achievements (coordination variant)",
+            summary="DEPRECATED: Use captain.update_leaderboard instead",
             required_params=["agent_id", "points"],
             optional_params={"achievement": None},
         )
@@ -145,55 +152,24 @@ class LeaderboardUpdaterTool(IToolAdapter):
         return spec.validate_params(params)
 
     def execute(self, params: dict[str, Any], context: dict[str, Any] | None = None) -> ToolResult:
-        """Execute leaderboard update."""
-        try:
-            agent_id = params["agent_id"]
-            points = params["points"]
-            achievement = params.get("achievement")
+        """Execute leaderboard update - delegates to consolidated tool."""
+        logger.warning(
+            "captain.update_leaderboard_coord is deprecated. "
+            "Use captain.update_leaderboard instead."
+        )
 
-            leaderboard_file = Path("agent_workspaces/leaderboard.json")
+        # Delegate to consolidated tool via toolbelt
+        from ..toolbelt_core import get_toolbelt_core
 
-            # Load or create leaderboard
-            if leaderboard_file.exists():
-                with open(leaderboard_file, "r") as f:
-                    leaderboard = json.load(f)
-            else:
-                leaderboard = {"agents": {}, "last_updated": None}
+        toolbelt = get_toolbelt_core()
+        # Convert params to consolidated format
+        consolidated_params = {
+            "agent_id": params["agent_id"],
+            "points": params["points"],
+            "achievement": params.get("achievement"),
+        }
 
-            # Update agent entry
-            if agent_id not in leaderboard["agents"]:
-                leaderboard["agents"][agent_id] = {"total_points": 0, "achievements": []}
-
-            leaderboard["agents"][agent_id]["total_points"] += points
-
-            if achievement:
-                leaderboard["agents"][agent_id]["achievements"].append(
-                    {
-                        "achievement": achievement,
-                        "points": points,
-                        "timestamp": datetime.now().isoformat(),
-                    }
-                )
-
-            leaderboard["last_updated"] = datetime.now().isoformat()
-
-            # Save leaderboard
-            with open(leaderboard_file, "w") as f:
-                json.dump(leaderboard, f, indent=2)
-
-            return ToolResult(
-                success=True,
-                output={
-                    "agent_id": agent_id,
-                    "points_added": points,
-                    "new_total": leaderboard["agents"][agent_id]["total_points"],
-                    "achievement": achievement,
-                },
-                exit_code=0,
-            )
-        except Exception as e:
-            logger.error(f"Error updating leaderboard: {e}")
-            raise ToolExecutionError(str(e), tool_name="captain.update_leaderboard_coord")
+        return toolbelt.run("captain.update_leaderboard", consolidated_params, context)
 
 
 class NextTaskPickerTool(IToolAdapter):

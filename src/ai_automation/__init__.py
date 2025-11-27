@@ -1,17 +1,8 @@
-"""
-AI Automation - GPT-Driven Workflows
-====================================
+# AUTO-GENERATED __init__.py
+# DO NOT EDIT MANUALLY - changes may be overwritten
 
-OpenAI GPT integration for automated workflows and AI-driven tasks.
-Provides simple API wrapper with retry logic and V2 configuration integration.
+from . import automation_engine
 
-V2 Compliance: Ported from gpt-automation repository.
-
-Original: gpt-automation repository
-Ported & Adapted: Agent-7 - Repository Cloning Specialist (Team Beta Repo 4/8)
-License: MIT
-"""
-
-from .automation_engine import AutomationEngine
-
-__all__ = ["AutomationEngine"]
+__all__ = [
+    'automation_engine',
+]

@@ -243,17 +243,24 @@ Every devlog should demonstrate Entry #025 principles:
 
 ## 🔄 Discord Integration
 
-### Automatic Posting
-- Discord Commander monitors `devlogs/` directory
-- Auto-posts new devlogs to agent channels
-- Maintains chronological archive
-- Agent-8 manages overall archive
+### Automatic Posting (REQUIRED)
+**Tool**: `tools/devlog_manager.py`  
+**Command**: `python tools/devlog_manager.py post --agent agent-X --file devlog.md`
 
-### Manual Posting
-If auto-posting not available:
-1. Create devlog in `devlogs/` directory
-2. Use messaging system to notify Captain/Agent-8
-3. Captain or Agent-8 can manually post to Discord
+**After creating devlog:**
+1. Post immediately to Discord using devlog_manager
+2. Devlog automatically uploads to Swarm Brain
+3. Devlog automatically posts to your Discord channel
+4. NO REMINDERS NEEDED - Just create and post automatically
+
+**Normal Devlogs** (Your Channel):
+- Use `devlog_manager.py` with `--agent agent-X` flag
+- Posts to your dedicated Discord channel
+- For routine updates, progress, task completions
+
+**Major Updates** (User Channel):
+- Use `tools/post_devlog_to_discord.py`
+- For major milestones, phase completions, critical achievements
 
 ---
 

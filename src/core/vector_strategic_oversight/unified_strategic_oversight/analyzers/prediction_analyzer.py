@@ -90,10 +90,82 @@ class PredictionAnalyzer(BasePredictionAnalyzer):
             )
 
     def _calculate_base_probability(self, task_data: dict[str, Any]) -> float:
-        """Calculate base success probability."""
-        # Mock calculation based on task complexity
-        complexity = task_data.get("complexity", "medium")
-
+        """Calculate base success probability based on historical task data."""
+        try:
+            # Try to access task repository for historical data
+            from src.infrastructure.persistence.task_repository import TaskRepository
+            from src.infrastructure.persistence.database_connection import DatabaseConnection
+            
+            db = DatabaseConnection()
+            task_repo = TaskRepository(db)
+            
+            # Get historical tasks similar to current task
+            task_title = task_data.get("title", "")
+            task_description = task_data.get("description", "")
+            assigned_agent = task_data.get("assigned_agent_id")
+            complexity = task_data.get("complexity", "medium")
+            
+            # Calculate success rate from historical completed tasks
+            historical_tasks = list(task_repo.list_all(limit=1000))
+            
+            if not historical_tasks:
+                # No historical data - fallback to complexity-based estimate
+                return self._fallback_probability_by_complexity(complexity)
+            
+            # Filter similar tasks by complexity and agent (if assigned)
+            similar_tasks = []
+            for task in historical_tasks:
+                # Check if task is completed
+                if task.completed_at:
+                    task_complexity = getattr(task, 'complexity', None) or "medium"
+                    task_agent = task.assigned_agent_id
+                    
+                    # Match by complexity
+                    if task_complexity == complexity:
+                        # If agent assigned, prefer tasks from same agent
+                        if assigned_agent and task_agent == assigned_agent:
+                            similar_tasks.insert(0, task)  # Prioritize same agent
+                        else:
+                            similar_tasks.append(task)
+            
+            if not similar_tasks:
+                # No similar tasks - use overall success rate
+                completed = sum(1 for t in historical_tasks if t.completed_at)
+                total = len(historical_tasks)
+                if total > 0:
+                    base_rate = completed / total
+                    # Adjust by complexity
+                    complexity_adjustment = {"low": 0.1, "medium": 0.0, "high": -0.15}.get(complexity, 0.0)
+                    return max(0.1, min(0.95, base_rate + complexity_adjustment))
+                return self._fallback_probability_by_complexity(complexity)
+            
+            # Calculate success rate from similar tasks
+            successful = sum(1 for t in similar_tasks if t.completed_at)
+            total_similar = len(similar_tasks)
+            
+            if total_similar > 0:
+                success_rate = successful / total_similar
+                # Apply confidence adjustment based on sample size
+                if total_similar < 5:
+                    # Low sample size - blend with overall rate
+                    overall_completed = sum(1 for t in historical_tasks if t.completed_at)
+                    overall_total = len(historical_tasks)
+                    if overall_total > 0:
+                        overall_rate = overall_completed / overall_total
+                        # Weighted average: 70% similar, 30% overall
+                        success_rate = (success_rate * 0.7) + (overall_rate * 0.3)
+                
+                return max(0.1, min(0.95, success_rate))
+            
+            return self._fallback_probability_by_complexity(complexity)
+            
+        except (ImportError, AttributeError, Exception) as e:
+            # Fallback to complexity-based if repository unavailable
+            complexity = task_data.get("complexity", "medium")
+            return self._fallback_probability_by_complexity(complexity)
+    
+    def _fallback_probability_by_complexity(self, complexity: str) -> float:
+        """Fallback probability calculation based on complexity only."""
         if complexity == "low":
             return 0.9
         elif complexity == "medium":

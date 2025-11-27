@@ -1,32 +1,10 @@
-"""
-Tool Adapters Package
-=====================
+# AUTO-GENERATED __init__.py
+# DO NOT EDIT MANUALLY - changes may be overwritten
 
-Base adapter infrastructure for Agent Toolbelt.
-
-Author: Agent-7 - Repository Cloning Specialist
-"""
-
-from .base_adapter import IToolAdapter, ToolResult, ToolSpec
-from .error_types import (
-    ToolbeltError,
-    ToolConfigurationError,
-    ToolDependencyError,
-    ToolExecutionError,
-    ToolNotFoundError,
-    ToolValidationError,
-    format_toolbelt_error,
-)
+from . import base_adapter
+from . import error_types
 
 __all__ = [
-    "IToolAdapter",
-    "ToolResult",
-    "ToolSpec",
-    "ToolbeltError",
-    "ToolNotFoundError",
-    "ToolValidationError",
-    "ToolExecutionError",
-    "ToolDependencyError",
-    "ToolConfigurationError",
-    "format_toolbelt_error",
+    'base_adapter',
+    'error_types',
 ]

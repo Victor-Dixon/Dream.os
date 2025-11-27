@@ -4,18 +4,27 @@ Discord Commands Tester
 =======================
 
 Tests all Discord bot commands and verifies error handling.
-Creates comprehensive test report for debugging.
+Can also test commands directly in Discord via PyAutoGUI.
 
 Usage:
+    # Static analysis only
     python tools/coordination/discord_commands_tester.py
+    
+    # Test commands in Discord (interactive)
+    python tools/coordination/discord_commands_tester.py --test-in-discord
+    
+    # Test specific commands
+    python tools/coordination/discord_commands_tester.py --test-in-discord --commands "!help !status !control"
 """
 
 import asyncio
+import argparse
 import json
 import sys
+import time
 from pathlib import Path
 from datetime import datetime
-from typing import Dict, List, Any
+from typing import Dict, List, Any, Optional
 
 # Try to import discord (may not be available)
 try:
@@ -24,7 +33,13 @@ try:
     DISCORD_AVAILABLE = True
 except ImportError:
     DISCORD_AVAILABLE = False
-    print("⚠️  discord.py not available - running in analysis mode")
+
+# Try to import PyAutoGUI for Discord testing
+try:
+    import pyautogui
+    PYAUTOGUI_AVAILABLE = True
+except ImportError:
+    PYAUTOGUI_AVAILABLE = False
 
 def find_discord_command_files() -> List[Path]:
     """Find all Discord command files."""
@@ -118,10 +133,11 @@ def generate_test_report(analyses: List[Dict[str, Any]]) -> Dict[str, Any]:
         coverage = (commands_with_handling / total_commands) * 100
         report["summary"]["error_handling_coverage"] = f"{coverage:.1f}%"
     else:
+        coverage = 0.0
         report["summary"]["error_handling_coverage"] = "0%"
     
     # Generate recommendations
-    if coverage < 100:
+    if total_commands > 0 and coverage < 100:
         report["recommendations"].append(
             f"⚠️  {total_commands - commands_with_handling} commands need error handling"
         )
@@ -183,8 +199,143 @@ def print_report(report: Dict[str, Any]):
     
     print("=" * 70)
 
+def test_commands_in_discord(commands: Optional[List[str]] = None) -> Dict[str, Any]:
+    """
+    Test Discord commands directly in Discord using PyAutoGUI.
+    
+    Args:
+        commands: List of commands to test. If None, tests all found commands.
+        
+    Returns:
+        Test results dictionary
+    """
+    if not PYAUTOGUI_AVAILABLE:
+        print("❌ PyAutoGUI not available!")
+        print("   Install with: pip install pyautogui")
+        return {"error": "PyAutoGUI not available"}
+    
+    print("\n" + "=" * 70)
+    print("🤖 TESTING DISCORD COMMANDS DIRECTLY")
+    print("=" * 70)
+    print("\n⚠️  IMPORTANT:")
+    print("   1. Make sure Discord bot is running")
+    print("   2. Open Discord (web or desktop) in another window")
+    print("   3. Navigate to your test channel")
+    print("   4. Focus the message input box")
+    print("\n⏳ Starting in 5 seconds...")
+    time.sleep(5)
+    
+    # Get commands to test
+    if not commands:
+        # Extract all commands from files
+        command_files = find_discord_command_files()
+        all_commands = set()
+        for file_path in command_files:
+            analysis = analyze_command_file(file_path)
+            all_commands.update(analysis.get("commands", []))
+        commands = sorted([f"!{cmd}" for cmd in all_commands if cmd])
+    
+    print(f"\n🧪 Testing {len(commands)} commands in Discord...")
+    print(f"   Commands: {', '.join(commands[:5])}{'...' if len(commands) > 5 else ''}\n")
+    
+    results = []
+    for i, command in enumerate(commands, 1):
+        print(f"[{i}/{len(commands)}] Testing: {command}")
+        try:
+            # Type command
+            pyautogui.write(command, interval=0.05)
+            time.sleep(0.5)
+            
+            # Press Enter
+            pyautogui.press('enter')
+            time.sleep(2)  # Wait for bot response
+            
+            results.append({
+                "command": command,
+                "sent": True,
+                "success": True,
+            })
+            print(f"   ✅ Sent: {command}")
+            
+        except Exception as e:
+            results.append({
+                "command": command,
+                "sent": False,
+                "success": False,
+                "error": str(e),
+            })
+            print(f"   ❌ Error: {e}")
+        
+        time.sleep(1)  # Wait between commands
+    
+    # Summary
+    print("\n" + "=" * 70)
+    print("📊 Test Results Summary")
+    print("=" * 70)
+    
+    passed = sum(1 for r in results if r.get("success"))
+    total = len(results)
+    
+    print(f"\n✅ Passed: {passed}/{total}")
+    print(f"❌ Failed: {total - passed}/{total}")
+    print(f"📈 Success Rate: {(passed/total*100):.1f}%")
+    
+    print("\n" + "-" * 70)
+    print("Detailed Results:")
+    print("-" * 70)
+    
+    for result in results:
+        status = "✅" if result.get("success") else "❌"
+        print(f"{status} {result['command']}")
+        if result.get("error"):
+            print(f"   Error: {result['error']}")
+    
+    print("=" * 70 + "\n")
+    
+    return {
+        "commands_tested": len(commands),
+        "passed": passed,
+        "failed": total - passed,
+        "success_rate": f"{(passed/total*100):.1f}%",
+        "results": results,
+    }
+
+
 def main():
     """Main test execution."""
+    parser = argparse.ArgumentParser(description="Test Discord bot commands")
+    parser.add_argument(
+        "--test-in-discord",
+        action="store_true",
+        help="Test commands directly in Discord using PyAutoGUI"
+    )
+    parser.add_argument(
+        "--commands",
+        type=str,
+        help="Comma-separated list of commands to test (e.g., '!help,!status,!control')"
+    )
+    
+    args = parser.parse_args()
+    
+    # Test commands in Discord if requested
+    if args.test_in_discord:
+        commands = None
+        if args.commands:
+            commands = [cmd.strip() for cmd in args.commands.split(",")]
+        
+        results = test_commands_in_discord(commands)
+        
+        # Save results
+        report_file = Path("data/discord_commands_test_results.json")
+        report_file.parent.mkdir(parents=True, exist_ok=True)
+        with open(report_file, 'w') as f:
+            json.dump(results, f, indent=2)
+        
+        print(f"💾 Results saved to: {report_file}\n")
+        
+        return 0 if results.get("passed", 0) == results.get("commands_tested", 0) else 1
+    
+    # Otherwise, do static analysis
     print("🔍 Analyzing Discord Command Files...")
     print()
     

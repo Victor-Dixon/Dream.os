@@ -1,0 +1,70 @@
+{
+  "total_standalone": 9,
+  "standalone_repos": [
+    {
+      "num": 1,
+      "name": "network-scanner",
+      "analyzed": true,
+      "agent": "Agent-1",
+      "goldmine": false
+    },
+    {
+      "num": 11,
+      "name": "prompt-library",
+      "analyzed": true,
+      "agent": "Agent-2",
+      "goldmine": false
+    },
+    {
+      "num": 20,
+      "name": "contract-leads",
+      "analyzed": true,
+      "agent": "Agent-2",
+      "goldmine": true
+    },
+    {
+      "num": 22,
+      "name": "transformers",
+      "analyzed": true,
+      "agent": "Agent-3",
+      "goldmine": false
+    },
+    {
+      "num": 43,
+      "name": "ideas",
+      "analyzed": false,
+      "agent": "Agent-6",
+      "goldmine": true
+    },
+    {
+      "num": 52,
+      "name": "NewSims4ModProject",
+      "analyzed": true,
+      "agent": "Agent-7",
+      "goldmine": false
+    },
+    {
+      "num": 54,
+      "name": "my_personal_templates",
+      "analyzed": true,
+      "agent": "Agent-7",
+      "goldmine": false
+    },
+    {
+      "num": 56,
+      "name": "IT_help_desk",
+      "analyzed": true,
+      "agent": "Agent-7",
+      "goldmine": false
+    },
+    {
+      "num": 58,
+      "name": "FreeRideInvestor",
+      "analyzed": true,
+      "agent": "Agent-7",
+      "goldmine": false
+    }
+  ],
+  "repos_in_groups_count": 37,
+  "validation_date": "2025-01-27"
+}

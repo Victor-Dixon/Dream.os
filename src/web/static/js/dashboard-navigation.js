@@ -56,7 +56,10 @@ function setupBreadcrumbs() {
         'contract_status': ['Dashboard', 'Contract Status'],
         'system_health': ['Dashboard', 'System Health'],
         'performance_metrics': ['Dashboard', 'Performance Metrics'],
-        'workload_distribution': ['Dashboard', 'Workload Distribution']
+        'workload_distribution': ['Dashboard', 'Workload Distribution'],
+        'message_history': ['Dashboard', 'Message History'],
+        'agent_activity': ['Dashboard', 'Agent Activity'],
+        'queue_status': ['Dashboard', 'Queue Status']
     };
 
     function updateBreadcrumbs(view) {

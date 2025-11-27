@@ -2,7 +2,30 @@
 """
 Hard Onboard Any Agent - Quick Captain Tool
 Generalized hard onboarding with custom messages.
+
+⚠️ DEPRECATED: This tool has been migrated to tools_v2.
+Use 'python -m tools_v2.toolbelt onboard.hard' instead.
+This file will be removed in future version.
+
+Migrated to: tools_v2/categories/onboarding_tools.py → HardOnboardTool
+Registry: onboard.hard
+
+Author: Agent-4 (Captain)
+Deprecated: 2025-01-27 (Agent-6 - V2 Tools Flattening)
 """
+
+import warnings
+
+warnings.warn(
+    "⚠️ DEPRECATED: This tool has been migrated to tools_v2. "
+    "Use 'python -m tools_v2.toolbelt onboard.hard' instead. "
+    "This file will be removed in future version.",
+    DeprecationWarning,
+    stacklevel=2
+)
+
+# Legacy compatibility - delegate to tools_v2
+# For migration path, use: python -m tools_v2.toolbelt onboard.hard
 
 import sys
 from pathlib import Path
@@ -20,6 +43,7 @@ def main():
         print("\nExamples:")
         print("  python captain_hard_onboard_agent.py Agent-1")
         print("  python captain_hard_onboard_agent.py Agent-2 agent_workspaces/Agent-2/onboarding.md")
+        print("\n⚠️  DEPRECATED: Use 'python -m tools_v2.toolbelt onboard.hard' instead")
         return 1
     
     agent_id = sys.argv[1]
@@ -61,4 +85,3 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
-

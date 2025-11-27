@@ -73,15 +73,15 @@ class CoreMonitoringManager(MonitoringManager):
                 return ManagerResult(
                     success=False,
                     data={},
-                    message=f"Unknown operation: {operation}",
-                    errors=[f"Unknown operation: {operation}"],
+                    metrics={},
+                    error=f"Unknown operation: {operation}",
                 )
         except Exception as e:
             return ManagerResult(
                 success=False,
                 data={},
-                message=f"Monitoring operation error: {e}",
-                errors=[str(e)],
+                metrics={},
+                error=f"Monitoring operation error: {e}",
             )
 
     def create_alert(self, context: ManagerContext, alert_data: dict[str, Any]) -> ManagerResult:

@@ -1,201 +1,62 @@
-"""
-Error Handling Module - V2 Compliant Consolidated Version
-==========================================================
+# AUTO-GENERATED __init__.py
+# DO NOT EDIT MANUALLY - changes may be overwritten
 
-Agent-3 C-055-3 Consolidation:
-- 5 files consolidated into 2 unified modules
-- error_handling_core.py: Models, enums, configurations
-- error_handling_system.py: Orchestrator, retry, recovery, circuit breaker
-
-Backward compatibility maintained through re-exports.
-"""
-
-# ============================================================================
-# CORE EXPORTS - New Consolidated Modules
-# ============================================================================
-
-from .error_handling_core import (
-    AgentErrorResponse,
-    CircuitBreakerConfig,
-    CircuitBreakerError,
-    CircuitState,
-    ConfigurationErrorResponse,
-    CoordinationErrorResponse,
-    DatabaseErrorResponse,
-    ErrorCategory,
-    ErrorContext,
-    ErrorSeverity,
-    ErrorSeverityMapping,
-    ErrorSummary,
-    FileErrorResponse,
-    NetworkErrorResponse,
-    RecoverableErrors,
-    RetryConfig,
-    RetryException,
-    StandardErrorResponse,
-    ValidationErrorResponse,
-)
-from .error_handling_system import (
-    CircuitBreaker,
-    ConfigurationResetStrategy,
-    ErrorRecoveryManager,
-    RecoveryStrategy,
-    ResourceCleanupStrategy,
-    RetryMechanism,
-    ServiceRestartStrategy,
-    UnifiedErrorHandlingOrchestrator,
-    get_error_handling_orchestrator,
-    retry_on_exception,
-    with_error_recovery,
-    with_exponential_backoff,
-)
-
-# ============================================================================
-# BACKWARD COMPATIBILITY - Legacy Module Imports
-# ============================================================================
-
-# These imports maintain compatibility with existing code
-# Import remaining specialized modules that weren't consolidated
-
-try:
-    from . import circuit_breaker
-except ImportError:
-    circuit_breaker = None
-
-try:
-    from . import error_analysis_engine
-except ImportError:
-    error_analysis_engine = None
-
-try:
-    from . import error_reporting_core
-except ImportError:
-    error_reporting_core = None
-
-try:
-    from . import error_reporting_reporter
-except ImportError:
-    error_reporting_reporter = None
-
-try:
-    from . import error_reporting_utilities
-except ImportError:
-    error_reporting_utilities = None
-
-try:
-    from . import retry_safety_engine
-except ImportError:
-    retry_safety_engine = None
-
-try:
-    from . import specialized_handlers
-except ImportError:
-    specialized_handlers = None
-
-# ============================================================================
-# LEGACY ALIASES - For Backward Compatibility
-# ============================================================================
-
-# Alias old module names to new consolidated exports
-error_handling_models = type(
-    "error_handling_models",
-    (),
-    {
-        "ErrorSeverity": ErrorSeverity,
-        "ErrorCategory": ErrorCategory,
-        "StandardErrorResponse": StandardErrorResponse,
-        "RetryConfiguration": RetryConfig,  # Old name
-        "ErrorContext": ErrorContext,
-    },
-)
-
-error_recovery = type(
-    "error_recovery",
-    (),
-    {
-        "RecoveryStrategy": RecoveryStrategy,
-        "ErrorRecoveryManager": ErrorRecoveryManager,
-        "ServiceRestartStrategy": ServiceRestartStrategy,
-    },
-)
-
-retry_mechanisms = type(
-    "retry_mechanisms",
-    (),
-    {
-        "RetryMechanism": RetryMechanism,
-        "RetryConfig": RetryConfig,
-        "retry_on_exception": retry_on_exception,
-        "with_exponential_backoff": with_exponential_backoff,
-    },
-)
-
-error_handling_orchestrator = type(
-    "error_handling_orchestrator",
-    (),
-    {
-        "UnifiedErrorHandlingOrchestrator": UnifiedErrorHandlingOrchestrator,
-        "get_error_handling_orchestrator": get_error_handling_orchestrator,
-    },
-)
-
-# ============================================================================
-# PUBLIC API
-# ============================================================================
+from . import circuit_breaker
+from . import component_management
+from . import coordination_decorator
+from . import coordination_error_handler
+from . import coordination_strategies
+from . import error_analysis_engine
+from . import error_classification
+from . import error_config
+from . import error_context_models
+from . import error_decision_models
+from . import error_exceptions
+from . import error_execution
+from . import error_handling_core
+from . import error_handling_models
+from . import error_handling_system
+from . import error_intelligence
+from . import error_models_core
+from . import error_models_enums
+from . import error_reporting_core
+from . import error_reporting_reporter
+from . import error_reporting_utilities
+from . import error_response_models
+from . import error_responses
+from . import error_responses_specialized
+from . import recovery_strategies
+from . import retry_mechanisms
+from . import retry_safety_engine
+from . import specialized_handlers
 
 __all__ = [
-    # Core models and enums
-    "ErrorSeverity",
-    "ErrorCategory",
-    "ErrorContext",
-    "CircuitState",
-    # Response classes
-    "StandardErrorResponse",
-    "FileErrorResponse",
-    "NetworkErrorResponse",
-    "DatabaseErrorResponse",
-    "ValidationErrorResponse",
-    "ConfigurationErrorResponse",
-    "AgentErrorResponse",
-    "CoordinationErrorResponse",
-    # Summary and statistics
-    "ErrorSummary",
-    # Configuration
-    "RetryConfig",
-    "CircuitBreakerConfig",
-    # Error mappings
-    "RecoverableErrors",
-    "ErrorSeverityMapping",
-    # Exceptions
-    "RetryException",
-    "CircuitBreakerError",
-    # Retry mechanism
-    "RetryMechanism",
-    "retry_on_exception",
-    "with_exponential_backoff",
-    # Circuit breaker
-    "CircuitBreaker",
-    # Recovery strategies
-    "RecoveryStrategy",
-    "ServiceRestartStrategy",
-    "ConfigurationResetStrategy",
-    "ResourceCleanupStrategy",
-    "ErrorRecoveryManager",
-    "with_error_recovery",
-    # Orchestrator
-    "UnifiedErrorHandlingOrchestrator",
-    "get_error_handling_orchestrator",
-    # Legacy module aliases
-    "error_handling_models",
-    "error_recovery",
-    "retry_mechanisms",
-    "error_handling_orchestrator",
-    # Remaining specialized modules
-    "circuit_breaker",
-    "error_analysis_engine",
-    "error_reporting_core",
-    "error_reporting_reporter",
-    "error_reporting_utilities",
-    "retry_safety_engine",
-    "specialized_handlers",
+    'circuit_breaker',
+    'component_management',
+    'coordination_decorator',
+    'coordination_error_handler',
+    'coordination_strategies',
+    'error_analysis_engine',
+    'error_classification',
+    'error_config',
+    'error_context_models',
+    'error_decision_models',
+    'error_exceptions',
+    'error_execution',
+    'error_handling_core',
+    'error_handling_models',
+    'error_handling_system',
+    'error_intelligence',
+    'error_models_core',
+    'error_models_enums',
+    'error_reporting_core',
+    'error_reporting_reporter',
+    'error_reporting_utilities',
+    'error_response_models',
+    'error_responses',
+    'error_responses_specialized',
+    'recovery_strategies',
+    'retry_mechanisms',
+    'retry_safety_engine',
+    'specialized_handlers',
 ]

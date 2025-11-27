@@ -71,6 +71,25 @@ def main():
     parser.add_argument(
         "--dry-run", action="store_true", help="Show what would be done without executing"
     )
+    
+    # Cycle report
+    parser.add_argument(
+        "--generate-cycle-report",
+        action="store_true",
+        default=True,
+        help="Generate cycle accomplishments report after onboarding (default: True)"
+    )
+    parser.add_argument(
+        "--no-cycle-report",
+        dest="generate_cycle_report",
+        action="store_false",
+        help="Skip cycle accomplishments report generation"
+    )
+    parser.add_argument(
+        "--cycle-id",
+        type=str,
+        help="Cycle identifier for report (e.g., C-XXX)"
+    )
 
     args = parser.parse_args()
 
@@ -116,7 +135,7 @@ def main():
         if args.agent:
             # Single agent
             logger.info(f"🚀 Soft onboarding {args.agent}")
-            success = soft_onboard_agent(args.agent, args.message, args.role)
+            success = soft_onboard_agent(args.agent, args.message, role=args.role)
             if success:
                 logger.info(f"✅ Soft onboarding complete for {args.agent}!")
                 return 0
@@ -132,7 +151,11 @@ def main():
             # Create list of (agent_id, message) tuples
             agents_with_messages = [(agent_id, args.message) for agent_id in agent_list]
 
-            results = soft_onboard_multiple_agents(agents_with_messages, args.role)
+            results = soft_onboard_multiple_agents(
+                agents_with_messages,
+                args.role,
+                generate_cycle_report=args.generate_cycle_report
+            )
 
             # Report results
             successful = [aid for aid, success in results.items() if success]
@@ -143,6 +166,16 @@ def main():
                 logger.info(f"✅ Success: {', '.join(successful)}")
             if failed:
                 logger.error(f"❌ Failed: {', '.join(failed)}")
+            
+            # Generate cycle report if requested (and not already generated)
+            if args.generate_cycle_report:
+                try:
+                    from src.services.soft_onboarding_service import generate_cycle_accomplishments_report
+                    report_path = generate_cycle_accomplishments_report(cycle_id=args.cycle_id)
+                    if report_path:
+                        logger.info(f"📊 Cycle report available at: {report_path}")
+                except Exception as e:
+                    logger.warning(f"⚠️  Failed to generate cycle report: {e}")
 
             return 0 if len(failed) == 0 else 1
 

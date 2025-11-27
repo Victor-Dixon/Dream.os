@@ -11,65 +11,41 @@ Author: Agent-3 - Infrastructure & DevOps Specialist
 from datetime import datetime, timedelta
 from typing import Any
 
+from src.core.unified_logging_system import get_logger
+from src.services.vector_database_service_unified import get_vector_database_service
+
 from .models import Document, DocumentRequest, PaginationRequest
 
 
 class DocumentUtils:
     """Utility functions for document operations."""
 
+    def __init__(self):
+        self.logger = get_logger(__name__)
+        self.service = get_vector_database_service()
+
+    def get_documents(self, request: PaginationRequest) -> dict[str, Any]:
+        """Retrieve documents with pagination from the vector database."""
+        try:
+            return self.service.get_documents(request)
+        except Exception as exc:  # pragma: no cover - defensive logging
+            self.logger.error("Failed to get documents: %s", exc)
+            return {
+                "documents": [],
+                "pagination": {
+                    "page": request.page,
+                    "per_page": request.per_page,
+                    "total": 0,
+                    "total_pages": 0,
+                    "has_prev": False,
+                    "has_next": False,
+                },
+                "total": 0,
+            }
+
     def simulate_get_documents(self, request: PaginationRequest) -> dict[str, Any]:
-        """Simulate document retrieval with pagination."""
-        # Mock documents
-        all_documents = [
-            Document(
-                id=f"doc_{i}",
-                title=f"Document {i}",
-                content=f"Content for document {i}",
-                collection=(
-                    "agent_system"
-                    if i % 4 == 0
-                    else (
-                        "project_docs"
-                        if i % 4 == 1
-                        else "development" if i % 4 == 2 else "strategic_oversight"
-                    )
-                ),
-                tags=[f"tag_{i % 3}"],
-                size=f"{2 + (i % 5)}.{i % 10} KB",
-                created_at=(datetime.now() - timedelta(days=i)).isoformat(),
-                updated_at=(datetime.now() - timedelta(hours=i)).isoformat(),
-            )
-            for i in range(1, 101)  # 100 mock documents
-        ]
-
-        # Filter by collection
-        if request.collection != "all":
-            all_documents = [doc for doc in all_documents if doc.collection == request.collection]
-
-        # Sort documents
-        reverse = request.sort_order == "desc"
-        all_documents.sort(key=lambda x: getattr(x, request.sort_by), reverse=reverse)
-
-        # Paginate
-        start = (request.page - 1) * request.per_page
-        end = start + request.per_page
-        documents = all_documents[start:end]
-
-        total = len(all_documents)
-        total_pages = (total + request.per_page - 1) // request.per_page
-
-        return {
-            "documents": [doc.__dict__ for doc in documents],
-            "pagination": {
-                "page": request.page,
-                "per_page": request.per_page,
-                "total": total,
-                "total_pages": total_pages,
-                "has_prev": request.page > 1,
-                "has_next": request.page < total_pages,
-            },
-            "total": total,
-        }
+        """Alias maintained for compatibility with previous mock implementation."""
+        return self.get_documents(request)
 
     def simulate_add_document(self, request: DocumentRequest) -> Document:
         """Simulate adding a document."""

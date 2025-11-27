@@ -1,0 +1,18 @@
+{
+  "_comment": "Discord User ID to Developer Name Mapping",
+  "_instructions": [
+    "1. Enable Developer Mode in Discord (Settings → Advanced → Developer Mode)",
+    "2. Right-click your username → Copy ID",
+    "3. Add your Discord user ID and developer name below",
+    "4. Valid developer names: CHRIS, ARIA, VICTOR, CARYMN, CHARLES",
+    "5. Restart Discord bot after adding mappings"
+  ],
+  "_format": {
+    "discord_user_id": "DEVELOPER_NAME"
+  },
+  "_example": {
+    "123456789012345678": "VICTOR",
+    "987654321098765432": "ARIA"
+  }
+}
+

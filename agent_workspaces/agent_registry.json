@@ -6,8 +6,8 @@
       "name": "Web Development Implementation Specialist",
       "status": "ACTIVE",
       "coordinates": [
-        920,
-        851
+        653,
+        960
       ],
       "capabilities": [
         "web_development",
@@ -25,7 +25,7 @@
       "status": "ACTIVE",
       "coordinates": [
         1611,
-        941
+        956
       ],
       "capabilities": [
         "ssot_management",
@@ -46,7 +46,7 @@
       "status": "INACTIVE",
       "coordinates": [
         -1269,
-        481
+        496
       ],
       "capabilities": [
         "integration",
@@ -64,7 +64,7 @@
       "status": "INACTIVE",
       "coordinates": [
         -308,
-        480
+        500
       ],
       "capabilities": [
         "architecture",
@@ -83,7 +83,7 @@
       "status": "ACTIVE",
       "coordinates": [
         -308,
-        1000
+        1020
       ],
       "capabilities": [
         "strategic_oversight",
@@ -101,7 +101,7 @@
       "status": "ACTIVE",
       "coordinates": [
         652,
-        421
+        431
       ],
       "capabilities": [
         "data_analysis",
@@ -119,7 +119,7 @@
       "status": "ACTIVE",
       "coordinates": [
         1612,
-        419
+        429
       ],
       "capabilities": [
         "communication",

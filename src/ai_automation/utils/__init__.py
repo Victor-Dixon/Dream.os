@@ -1,15 +1,8 @@
-"""
-AI Automation Utilities
-=======================
+# AUTO-GENERATED __init__.py
+# DO NOT EDIT MANUALLY - changes may be overwritten
 
-Utility functions for GPT automation workflows.
+from . import filesystem
 
-V2 Compliance: Clean module structure.
-
-Author: Agent-7 - Repository Cloning Specialist
-License: MIT
-"""
-
-from .filesystem import make_executable
-
-__all__ = ["make_executable"]
+__all__ = [
+    'filesystem',
+]

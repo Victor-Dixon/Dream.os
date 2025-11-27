@@ -122,7 +122,7 @@ git commit --no-verify -m "status(Agent-X): Cycle N complete"
 lifecycle.end_cycle()  # Auto-commits!
 ```
 
-### **Step 3: CREATE DEVLOG** (if significant work)
+### **Step 3: CREATE & POST DEVLOG** (AUTOMATIC - for all significant work)
 ```bash
 echo "# Agent-X Cycle N..." > devlogs/YYYY-MM-DD_agentX_topic.md
 ```
@@ -180,7 +180,8 @@ echo "# Agent-X Cycle N..." > devlogs/YYYY-MM-DD_agentX_topic.md
 ✅ END OF CYCLE:
   [ ] Update completed_tasks
   [ ] Commit status.json to git
-  [ ] Create devlog (if significant)
+  [ ] Create devlog automatically (for all significant work)
+  [ ] Post to Discord: `python tools/devlog_manager.py post --agent agent-X --file devlog.md`
   [ ] Report to Captain/Co-Captain
 ```
 

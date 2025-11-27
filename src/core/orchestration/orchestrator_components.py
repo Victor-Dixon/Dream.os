@@ -47,10 +47,6 @@ class OrchestratorComponents:
         """Check if a component is registered."""
         return name in self.components
 
-    def get_all_components(self) -> dict[str, Any]:
-        """Get all registered components."""
-        return self.components.copy()
-
     def unregister_component(self, name: str) -> bool:
         """Unregister a component."""
         if name in self.components:

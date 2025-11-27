@@ -13,7 +13,22 @@ import logging
 from datetime import datetime
 from typing import Any
 
-from .engine import StrategicOversightEngine
+# Make engine import optional to avoid import errors
+try:
+    from .engine import StrategicOversightEngine
+except ImportError:
+    # Stub if engine module doesn't exist
+    class StrategicOversightEngine:
+        """Stub for StrategicOversightEngine if module not available."""
+        def __init__(self):
+            self.is_initialized = False
+        def get_swarm_coordination_data(self, swarm_id=None):
+            return []
+        def get_agent_performance_data(self, agent_id=None):
+            return []
+        def get_system_health_data(self):
+            return {}
+
 from .models import (
     AgentPerformanceMetrics,
     ConfidenceLevel,

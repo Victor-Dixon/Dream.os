@@ -8,7 +8,7 @@ from decimal import Decimal
 import pandas as pd
 from loguru import logger
 
-from core.alpaca_client import AlpacaClient
+from core.broker_interface import BrokerInterface
 from core.risk_manager import RiskManager
 from strategies.base_strategy import StrategyManager, StrategyResult, Signal
 
@@ -16,9 +16,9 @@ from strategies.base_strategy import StrategyManager, StrategyResult, Signal
 class LiveExecutor:
     """Live trading execution engine"""
 
-    def __init__(self, alpaca_client: AlpacaClient, risk_manager: RiskManager,
+    def __init__(self, broker_client: BrokerInterface, risk_manager: RiskManager,
                  strategy_manager: StrategyManager):
-        self.alpaca_client = alpaca_client
+        self.broker_client = broker_client
         self.risk_manager = risk_manager
         self.strategy_manager = strategy_manager
         self.is_running = False
@@ -95,7 +95,7 @@ class LiveExecutor:
                 return
 
             # Get recent market data
-            market_data = self.alpaca_client.get_historical_data(
+            market_data = self.broker_client.get_historical_data(
                 symbol=symbol,
                 timeframe="1Min",
                 limit=100
@@ -132,7 +132,7 @@ class LiveExecutor:
                 side = "buy"
             elif signal == Signal.SELL:
                 # Check if we have position to sell
-                positions = self.alpaca_client.get_positions()
+                positions = self.broker_client.get_positions()
                 symbol_position = next((p for p in positions if p['symbol'] == symbol), None)
 
                 if not symbol_position or symbol_position['qty'] <= 0:
@@ -156,10 +156,7 @@ class LiveExecutor:
                 return
 
             # Execute trade
-            if side == "buy":
-                order = self.alpaca_client.submit_market_order(symbol, quantity, side)
-            else:
-                order = self.alpaca_client.submit_market_order(symbol, quantity, side)
+            order = self.broker_client.submit_market_order(symbol, quantity, side)
 
             if order:
                 # Record trade
@@ -182,7 +179,7 @@ class LiveExecutor:
         """Monitor positions and manage risk"""
         while self.is_running:
             try:
-                positions = self.alpaca_client.get_positions()
+                positions = self.broker_client.get_positions()
 
                 # Update risk manager with current positions
                 for position in positions:
@@ -223,7 +220,7 @@ class LiveExecutor:
     async def _close_position(self, symbol: str, quantity: int, reason: str):
         """Close a position"""
         try:
-            order = self.alpaca_client.submit_market_order(symbol, quantity, "sell")
+            order = self.broker_client.submit_market_order(symbol, quantity, "sell")
             if order:
                 logger.info(f"📈 Position closed: {symbol} ({reason})")
 
@@ -242,7 +239,7 @@ class LiveExecutor:
     async def _get_current_price(self, symbol: str) -> float:
         """Get current price for a symbol"""
         try:
-            bars = self.alpaca_client.get_historical_data(symbol, "1Min", limit=1)
+            bars = self.broker_client.get_historical_data(symbol, "1Min", limit=1)
             if not bars.empty:
                 return bars.iloc[-1]['close']
             return 0.0
@@ -270,10 +267,10 @@ class LiveExecutor:
     async def _cancel_all_orders(self):
         """Cancel all open orders"""
         try:
-            orders = self.alpaca_client.get_orders(status="open")
+            orders = self.broker_client.get_orders(status="open")
             for order in orders:
                 try:
-                    self.alpaca_client.cancel_order(order['id'])
+                    self.broker_client.cancel_order(order['id'])
                     logger.info(f"❌ Order cancelled: {order['id']}")
                 except Exception as e:
                     logger.error(f"❌ Error cancelling order {order['id']}: {e}")

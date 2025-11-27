@@ -87,6 +87,7 @@ class DevlogPublishingHistory:
         """Initialize history tracker."""
         self.history_file = history_file
         self.history = []
+        self._load_history()
     
     def record_publish(
         self,
@@ -138,8 +139,39 @@ class DevlogPublishingHistory:
     
     def _save_history(self):
         """Save history to file (implement based on storage preference)."""
-        # TODO: Implement JSON persistence
-        pass
+        try:
+            import json
+            import os
+            
+            # Ensure directory exists
+            history_dir = os.path.dirname(self.history_file)
+            if history_dir and not os.path.exists(history_dir):
+                os.makedirs(history_dir, exist_ok=True)
+            
+            # Write history to JSON file
+            with open(self.history_file, 'w', encoding='utf-8') as f:
+                json.dump(self.history, f, indent=2, ensure_ascii=False)
+        except Exception as e:
+            # Log error but don't fail silently
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.error(f"Failed to save publishing history to {self.history_file}: {e}")
+    
+    def _load_history(self):
+        """Load history from file if it exists."""
+        try:
+            import json
+            import os
+            
+            if os.path.exists(self.history_file):
+                with open(self.history_file, 'r', encoding='utf-8') as f:
+                    self.history = json.load(f)
+        except Exception as e:
+            # If loading fails, start with empty history
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.warning(f"Failed to load publishing history from {self.history_file}: {e}")
+            self.history = []
     
     def _current_timestamp(self) -> str:
         """Get current timestamp."""

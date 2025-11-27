@@ -128,9 +128,12 @@ def handle_message(args, parser):
     """Handle message sending."""
     if not args.message and not args.broadcast:
         return 1
+    # Normalize "normal" to "regular" for consistency
+    normalized_priority = "regular" if args.priority == "normal" else args.priority
+    
     priority = (
         UnifiedMessagePriority.URGENT
-        if args.priority == "urgent"
+        if normalized_priority == "urgent"
         else UnifiedMessagePriority.REGULAR
     )
     if args.broadcast:

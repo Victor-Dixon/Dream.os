@@ -1,39 +1,64 @@
 """
-Core Trading Engine for Alpaca Trading Robot
+Core Trading Engine for Multi-Broker Trading Robot
 """
 import asyncio
 from datetime import datetime, time
 from typing import Dict, List, Optional, Any
 from decimal import Decimal
-import alpaca_trade_api as tradeapi
 from loguru import logger
 
 from config.settings import config
+from .broker_factory import create_broker_client
+from .broker_interface import BrokerInterface
 
 
 class TradingEngine:
-    """Core trading engine managing Alpaca API interactions"""
+    """Core trading engine managing broker API interactions"""
 
-    def __init__(self):
-        self.api = None
+    def __init__(self, broker_client: Optional[BrokerInterface] = None):
+        self.broker: BrokerInterface = broker_client or create_broker_client()
         self.account = None
         self.positions = {}
         self.orders = {}
         self.is_running = False
         self.market_open = False
 
-    async def initialize(self):
-        """Initialize Alpaca API connection"""
+    async def initialize(self, skip_preflight: bool = False):
+        """Initialize broker API connection with pre-flight validation"""
         try:
-            logger.info("🔗 Connecting to Alpaca API...")
+            broker_name = config.broker.upper()
+            logger.info(f"🔗 Connecting to {broker_name} API...")
 
-            # Initialize Alpaca API
-            self.api = tradeapi.REST(
-                key_id=config.alpaca_api_key,
-                secret_key=config.alpaca_secret_key,
-                base_url=config.alpaca_base_url,
-                api_version='v2'
-            )
+            # Pre-flight validation (unless explicitly skipped)
+            if not skip_preflight:
+                from core.preflight_validator import PreFlightValidator
+                validator = PreFlightValidator(self.broker)
+                passed, results = await validator.validate_all()
+
+                if not passed:
+                    error_msg = f"Pre-flight validation failed:\n{validator.get_validation_report()}"
+                    logger.error(f"❌ {error_msg}")
+                    raise ValueError(error_msg)
+
+                logger.info("✅ Pre-flight validation passed")
+
+            # Validate configuration
+            config_valid, config_errors = config.validate_config()
+            if not config_valid:
+                error_msg = f"Configuration validation failed: {', '.join(config_errors)}"
+                logger.error(f"❌ {error_msg}")
+                raise ValueError(error_msg)
+
+            # Warn if live trading mode
+            if config.is_live_trading():
+                logger.warning("⚠️ LIVE TRADING MODE ENABLED - Real money at risk!")
+                logger.warning("⚠️ Ensure all risk limits are properly configured")
+            else:
+                logger.info("📄 Paper trading mode enabled")
+
+            # Connect to broker
+            if not self.broker.connect():
+                raise ConnectionError(f"Failed to connect to {broker_name} API")
 
             # Test connection
             await self._test_connection()
@@ -41,31 +66,33 @@ class TradingEngine:
             # Get account information
             await self._update_account_info()
 
-            logger.info("✅ Alpaca API connection established")
+            logger.info(f"✅ {broker_name} API connection established")
 
         except Exception as e:
-            logger.error(f"❌ Failed to initialize Alpaca API: {e}")
+            logger.error(f"❌ Failed to initialize {config.broker.upper()} API: {e}")
             raise
 
     async def _test_connection(self):
-        """Test Alpaca API connection"""
+        """Test broker API connection"""
         try:
             # Test API connectivity
-            clock = self.api.get_clock()
+            clock = self.broker.get_market_clock()
             logger.info(f"🕒 Market clock: {clock}")
 
             # Check if market is open
-            self.market_open = clock.is_open
+            self.market_open = clock.get('is_open', False)
 
         except Exception as e:
-            logger.error(f"❌ Alpaca API connection test failed: {e}")
+            logger.error(f"❌ {config.broker.upper()} API connection test failed: {e}")
             raise
 
     async def _update_account_info(self):
         """Update account information"""
         try:
-            self.account = self.api.get_account()
-            logger.info(f"💰 Account: {self.account.cash} cash, {self.account.portfolio_value} portfolio value")
+            self.account = self.broker.get_account_info()
+            cash = self.account.get('cash', 0)
+            portfolio_value = self.account.get('portfolio_value', 0)
+            logger.info(f"💰 Account: ${cash:.2f} cash, ${portfolio_value:.2f} portfolio value")
 
         except Exception as e:
             logger.error(f"❌ Failed to get account info: {e}")
@@ -107,9 +134,9 @@ class TradingEngine:
         """Monitor market open/close status"""
         while self.is_running:
             try:
-                clock = self.api.get_clock()
+                clock = self.broker.get_market_clock()
                 market_was_open = self.market_open
-                self.market_open = clock.is_open
+                self.market_open = clock.get('is_open', False)
 
                 if market_was_open != self.market_open:
                     status = "🟢 OPEN" if self.market_open else "🔴 CLOSED"
@@ -125,11 +152,11 @@ class TradingEngine:
         """Monitor current positions"""
         while self.is_running:
             try:
-                positions = self.api.list_positions()
-                self.positions = {pos.symbol: pos for pos in positions}
+                positions = self.broker.get_positions()
+                self.positions = {pos['symbol']: pos for pos in positions}
 
                 if positions:
-                    logger.debug(f"📊 Current positions: {[f'{p.symbol}:{p.qty}' for p in positions]}")
+                    logger.debug(f"📊 Current positions: {[f\"{p['symbol']}:{p['qty']}\" for p in positions]}")
 
                 await asyncio.sleep(30)  # Update every 30 seconds
 
@@ -140,21 +167,13 @@ class TradingEngine:
     async def get_market_data(self, symbol: str, timeframe: str = "1Min", limit: int = 100):
         """Get market data for a symbol"""
         try:
-            bars = self.api.get_bars(
-                symbol=symbol,
-                timeframe=timeframe,
-                limit=limit,
-                adjustment='raw'
-            )
+            df = self.broker.get_historical_data(symbol, timeframe, limit=limit)
+            
+            if df.empty:
+                return []
 
-            return [{
-                'timestamp': bar.t,
-                'open': bar.o,
-                'high': bar.h,
-                'low': bar.l,
-                'close': bar.c,
-                'volume': bar.v
-            } for bar in bars]
+            # Convert DataFrame to list of dicts
+            return df.reset_index().to_dict('records')
 
         except Exception as e:
             logger.error(f"❌ Error getting market data for {symbol}: {e}")
@@ -169,19 +188,22 @@ class TradingEngine:
                 order_type = "limit"
                 limit_price = limit_price or await self._get_current_price(symbol)
 
-            order = self.api.submit_order(
-                symbol=symbol,
-                qty=qty,
-                side=side,
-                type=order_type,
-                time_in_force=time_in_force,
-                limit_price=limit_price
-            )
+            if order_type == "market":
+                order = self.broker.submit_market_order(symbol, qty, side, time_in_force)
+            elif order_type == "limit":
+                if limit_price is None:
+                    limit_price = await self._get_current_price(symbol)
+                order = self.broker.submit_limit_order(symbol, qty, side, limit_price, time_in_force)
+            else:
+                raise ValueError(f"Unsupported order type: {order_type}")
 
-            self.orders[order.id] = order
-            logger.info(f"📋 Order placed: {side} {qty} {symbol} @ {order_type}")
+            if order:
+                order_id = order.get('id', '')
+                self.orders[order_id] = order
+                logger.info(f"📋 Order placed: {side} {qty} {symbol} @ {order_type}")
+                return order
 
-            return order
+            return None
 
         except Exception as e:
             logger.error(f"❌ Error placing order for {symbol}: {e}")
@@ -201,10 +223,12 @@ class TradingEngine:
     async def cancel_order(self, order_id: str):
         """Cancel an order"""
         try:
-            self.api.cancel_order(order_id)
-            if order_id in self.orders:
-                del self.orders[order_id]
-            logger.info(f"❌ Order cancelled: {order_id}")
+            if self.broker.cancel_order(order_id):
+                if order_id in self.orders:
+                    del self.orders[order_id]
+                logger.info(f"❌ Order cancelled: {order_id}")
+            else:
+                logger.warning(f"⚠️ Failed to cancel order: {order_id}")
 
         except Exception as e:
             logger.error(f"❌ Error cancelling order {order_id}: {e}")
@@ -212,9 +236,9 @@ class TradingEngine:
     async def _cancel_all_orders(self):
         """Cancel all open orders"""
         try:
-            orders = self.api.list_orders(status="open")
+            orders = self.broker.get_orders(status="open")
             for order in orders:
-                await self.cancel_order(order.id)
+                await self.cancel_order(order.get('id', ''))
             logger.info("❌ All open orders cancelled")
 
         except Exception as e:
@@ -224,7 +248,7 @@ class TradingEngine:
         """Get current portfolio value"""
         try:
             await self._update_account_info()
-            return float(self.account.portfolio_value)
+            return float(self.account.get('portfolio_value', 0))
         except Exception as e:
             logger.error(f"❌ Error getting portfolio value: {e}")
             return 0.0
@@ -233,7 +257,7 @@ class TradingEngine:
         """Get account cash balance"""
         try:
             await self._update_account_info()
-            return float(self.account.cash)
+            return float(self.account.get('cash', 0))
         except Exception as e:
             logger.error(f"❌ Error getting account balance: {e}")
             return 0.0

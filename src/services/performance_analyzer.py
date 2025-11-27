@@ -12,8 +12,28 @@ import logging
 from typing import Any
 from datetime import datetime
 
-from .vector_database import get_vector_database_service, search_vector_database
-from .vector_database.vector_database_models import SearchQuery
+# Optional vector database imports
+try:
+    from .vector_database_service_unified import (
+        get_vector_database_service,
+        search_vector_database,
+    )
+    from .vector_database.vector_database_models import SearchQuery
+    VECTOR_DB_AVAILABLE = True
+except ImportError:
+    VECTOR_DB_AVAILABLE = False
+    def get_vector_database_service():
+        return None
+    def search_vector_database(query):
+        return []
+    from dataclasses import dataclass
+    from typing import Any
+    @dataclass
+    class SearchQuery:
+        query: str
+        limit: int = 10
+        agent_id: str | None = None
+        metadata: dict[str, Any] | None = None
 
 
 class PerformanceAnalyzer:

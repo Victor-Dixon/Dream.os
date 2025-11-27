@@ -1,5 +1,3 @@
-import logging
-logger = logging.getLogger(__name__)
 """
 Captain Snapshot Tool - Multi-Agent Status Overview
 ==================================================
@@ -7,8 +5,29 @@ Captain Snapshot Tool - Multi-Agent Status Overview
 Provides aggregated view of all agent statuses with staleness detection.
 Reads from runtime/agents_index.json and presents a concise table.
 
+⚠️ DEPRECATED: This tool has been migrated to tools_v2.
+Use 'python -m tools_v2.toolbelt health.snapshot' instead.
+This file will be removed in future version.
+
+Migrated to: tools_v2/categories/health_tools.py → SnapshotTool
+Registry: health.snapshot
+
 Author: Agent-4 - Strategic Oversight & Emergency Intervention Manager
+Deprecated: 2025-01-27 (Agent-8 - V2 Tools Flattening)
 """
+
+import warnings
+import logging
+
+warnings.warn(
+    "⚠️ DEPRECATED: This tool has been migrated to tools_v2. "
+    "Use 'python -m tools_v2.toolbelt health.snapshot' instead. "
+    "This file will be removed in future version.",
+    DeprecationWarning,
+    stacklevel=2
+)
+
+logger = logging.getLogger(__name__)
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any

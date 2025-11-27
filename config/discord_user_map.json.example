@@ -1,0 +1,14 @@
+{
+  "_comment": "Discord User ID to Developer Name Mapping",
+  "_instructions": "Add Discord user IDs and corresponding developer names here",
+  "_format": {
+    "discord_user_id": "DEVELOPER_NAME"
+  },
+  "_valid_names": ["CHRIS", "ARIA", "VICTOR", "CARYMN", "CHARLES"],
+  "_example": {
+    "123456789012345678": "VICTOR",
+    "987654321098765432": "ARIA",
+    "111222333444555666": "CHRIS"
+  }
+}
+

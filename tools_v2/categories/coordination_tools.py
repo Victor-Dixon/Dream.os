@@ -227,9 +227,249 @@ Returns: List of coordination patterns
             return ToolResult(success=False, output=None, exit_code=1, error_message=str(e))
 
 
+class SwarmOrchestratorAdapter(IToolAdapter):
+    """Autonomous swarm orchestrator - 'The Gas Station'."""
+
+    def get_spec(self):
+        from ..adapters.base_adapter import ToolSpec
+
+        return ToolSpec(
+            name="coord.swarm_orchestrate",
+            version="1.0.0",
+            category="coordination",
+            summary="Run autonomous swarm orchestration cycle (gas delivery)",
+            required_params=[],
+            optional_params={"cycles": 1, "interval": 300},
+        )
+
+    def validate(self, params: dict) -> tuple[bool, list[str]]:
+        return True, []
+
+    def execute(self, params: dict, context: dict | None = None) -> ToolResult:
+        """Run orchestration cycle."""
+        try:
+            import subprocess
+            import sys
+            from pathlib import Path
+
+            cycles = params.get("cycles", 1)
+            interval = params.get("interval", 300)
+
+            project_root = Path.cwd()
+
+            cmd = [
+                sys.executable,
+                str(project_root / "tools" / "swarm_orchestrator.py"),
+                "--cycles",
+                str(cycles),
+                "--interval",
+                str(interval),
+            ]
+
+            result = subprocess.run(cmd, capture_output=True, text=True, timeout=600)
+
+            return ToolResult(
+                success=result.returncode == 0,
+                output={
+                    "cycles_run": cycles,
+                    "stdout": result.stdout,
+                    "stderr": result.stderr,
+                },
+                exit_code=result.returncode,
+                error_message=result.stderr if result.returncode != 0 else None,
+            )
+        except Exception as e:
+            return ToolResult(success=False, output=None, exit_code=1, error_message=str(e))
+
+
+class SwarmStatusBroadcasterAdapter(IToolAdapter):
+    """Broadcast status messages to multiple agents."""
+
+    def get_spec(self):
+        from ..adapters.base_adapter import ToolSpec
+
+        return ToolSpec(
+            name="coord.broadcast_status",
+            version="1.0.0",
+            category="coordination",
+            summary="Broadcast status message to multiple agents",
+            required_params=["message"],
+            optional_params={
+                "priority": "regular",
+                "exclude_agents": [],
+                "include_only": None,
+                "use_pyautogui": False,
+            },
+        )
+
+    def validate(self, params: dict) -> tuple[bool, list[str]]:
+        if "message" not in params:
+            return False, ["message"]
+        return True, []
+
+    def execute(self, params: dict, context: dict | None = None) -> ToolResult:
+        """Broadcast status message."""
+        try:
+            import subprocess
+            import sys
+            from pathlib import Path
+
+            message = params["message"]
+            priority = params.get("priority", "regular")
+            exclude_agents = params.get("exclude_agents", [])
+            include_only = params.get("include_only")
+            use_pyautogui = params.get("use_pyautogui", False)
+
+            project_root = Path.cwd()
+            broadcaster_path = project_root / "tools" / "swarm_status_broadcaster.py"
+
+            # Use Python to import and execute
+            import sys
+
+            sys.path.insert(0, str(project_root / "tools"))
+
+            from swarm_status_broadcaster import SwarmStatusBroadcaster
+
+            broadcaster = SwarmStatusBroadcaster()
+
+            results = broadcaster.broadcast(
+                message=message,
+                priority=priority,
+                exclude_agents=exclude_agents if exclude_agents else None,
+                include_only=include_only,
+                use_pyautogui=use_pyautogui,
+            )
+
+            success_count = sum(1 for v in results.values() if v)
+            total_count = len(results)
+
+            return ToolResult(
+                success=success_count > 0,
+                output={
+                    "results": results,
+                    "success_count": success_count,
+                    "total_count": total_count,
+                    "success_rate": success_count / total_count if total_count > 0 else 0,
+                },
+                exit_code=0 if success_count == total_count else 1,
+            )
+        except Exception as e:
+            return ToolResult(success=False, output=None, exit_code=1, error_message=str(e))
+
+
+class MissionControlAdapter(IToolAdapter):
+    """Autonomous mission generator for swarm agents."""
+
+    def get_spec(self):
+        from ..adapters.base_adapter import ToolSpec
+
+        return ToolSpec(
+            name="coord.generate_mission",
+            version="1.0.0",
+            category="coordination",
+            summary="Generate autonomous mission for agent",
+            required_params=["agent_id"],
+            optional_params={"force": False},
+        )
+
+    def validate(self, params: dict) -> tuple[bool, list[str]]:
+        if "agent_id" not in params:
+            return False, ["agent_id"]
+        return True, []
+
+    def execute(self, params: dict, context: dict | None = None) -> ToolResult:
+        """Generate mission for agent."""
+        try:
+            import subprocess
+            import sys
+            from pathlib import Path
+
+            agent_id = params["agent_id"]
+            force = params.get("force", False)
+
+            project_root = Path.cwd()
+            mission_control_path = project_root / "tools" / "mission_control.py"
+
+            cmd = [sys.executable, str(mission_control_path), "--agent", agent_id]
+
+            if force:
+                cmd.append("--force")
+
+            result = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
+
+            return ToolResult(
+                success=result.returncode == 0,
+                output={
+                    "agent_id": agent_id,
+                    "mission_generated": result.returncode == 0,
+                    "stdout": result.stdout,
+                    "stderr": result.stderr,
+                },
+                exit_code=result.returncode,
+                error_message=result.stderr if result.returncode != 0 else None,
+            )
+        except Exception as e:
+            return ToolResult(success=False, output=None, exit_code=1, error_message=str(e))
+
+
+class CoordinateValidatorAdapter(IToolAdapter):
+    """Validate agent coordinates before PyAutoGUI operations."""
+
+    def get_spec(self):
+        from ..adapters.base_adapter import ToolSpec
+
+        return ToolSpec(
+            name="coord.validate_coordinates",
+            version="1.0.0",
+            category="coordination",
+            summary="Validate agent coordinates for PyAutoGUI operations",
+            required_params=[],
+            optional_params={"agent_id": None},
+        )
+
+    def validate(self, params: dict) -> tuple[bool, list[str]]:
+        return True, []
+
+    def execute(self, params: dict, context: dict | None = None) -> ToolResult:
+        """Validate coordinates."""
+        try:
+            import subprocess
+            import sys
+            from pathlib import Path
+
+            agent_id = params.get("agent_id")
+
+            project_root = Path.cwd()
+            validator_path = project_root / "tools" / "captain_coordinate_validator.py"
+
+            cmd = [sys.executable, str(validator_path)]
+
+            if agent_id:
+                cmd.extend(["--agent", agent_id])
+
+            result = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
+
+            return ToolResult(
+                success=result.returncode == 0,
+                output={
+                    "coordinates_valid": result.returncode == 0,
+                    "stdout": result.stdout,
+                    "stderr": result.stderr,
+                },
+                exit_code=result.returncode,
+                error_message=result.stderr if result.returncode != 0 else None,
+            )
+        except Exception as e:
+            return ToolResult(success=False, output=None, exit_code=1, error_message=str(e))
+
+
 # Registration dictionary
 COORDINATION_TOOLS = {
     "coord.find-expert": FindDomainExpertAdapter,
     "coord.request-review": RequestExpertReviewAdapter,
     "coord.check-patterns": CheckCoordinationPatternsAdapter,
+    "coord.swarm_orchestrate": SwarmOrchestratorAdapter,
+    "coord.broadcast_status": SwarmStatusBroadcasterAdapter,
+    "coord.generate_mission": MissionControlAdapter,
+    "coord.validate_coordinates": CoordinateValidatorAdapter,
 }

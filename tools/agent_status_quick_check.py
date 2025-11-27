@@ -56,6 +56,57 @@ class AgentStatusChecker:
             print(f"❌ Error reading {agent_id} status: {e}")
             return None
 
+    def check_devlog_created(self, agent_id: str) -> dict[str, Any]:
+        """
+        Check if agent has created devlog recently.
+        
+        Args:
+            agent_id: Agent identifier (e.g., "Agent-2")
+            
+        Returns:
+            Dict with devlog status information
+        """
+        from datetime import datetime, timedelta
+        
+        devlog_info = {
+            "has_recent_devlog": False,
+            "last_devlog": None,
+            "devlog_age_hours": None,
+            "devlog_count": 0,
+        }
+        
+        # Check both locations: devlogs/ and agent_workspaces/{agent_id}/devlogs/
+        devlog_dirs = [
+            self.workspace_root / "devlogs",
+            self.agent_workspaces / agent_id / "devlogs",
+        ]
+        
+        all_devlogs = []
+        for devlog_dir in devlog_dirs:
+            if devlog_dir.exists():
+                # Find devlogs matching agent pattern
+                agent_patterns = [
+                    f"*{agent_id.lower()}*",
+                    f"*{agent_id.replace('-', '_').lower()}*",
+                    f"*{agent_id}*",
+                ]
+                for pattern in agent_patterns:
+                    all_devlogs.extend(list(devlog_dir.glob(f"{pattern}.md")))
+        
+        if all_devlogs:
+            # Get most recent devlog
+            latest_devlog = max(all_devlogs, key=lambda p: p.stat().st_mtime)
+            devlog_info["last_devlog"] = latest_devlog.name
+            devlog_info["devlog_count"] = len(all_devlogs)
+            
+            # Check if recent (within last 7 days)
+            mtime = datetime.fromtimestamp(latest_devlog.stat().st_mtime)
+            age_hours = (datetime.now() - mtime).total_seconds() / 3600
+            devlog_info["devlog_age_hours"] = round(age_hours, 1)
+            devlog_info["has_recent_devlog"] = age_hours <= (7 * 24)  # 7 days
+        
+        return devlog_info
+
     def format_quick_status(self, agent_id: str, status: dict[str, Any]) -> str:
         """Format quick status summary."""
         output = []
@@ -82,6 +133,16 @@ class AgentStatusChecker:
         # Last update
         last_update = status.get("last_update", "Unknown")
         output.append(f"🕒 Last Update: {last_update}")
+        
+        # Devlog check (NEW FEATURE - Agent-2 implementation)
+        devlog_info = self.check_devlog_created(agent_id)
+        if devlog_info["has_recent_devlog"]:
+            output.append(f"📝 Devlog: ✅ Recent ({devlog_info['last_devlog']}, {devlog_info['devlog_age_hours']:.1f}h ago)")
+        else:
+            if devlog_info["last_devlog"]:
+                output.append(f"📝 Devlog: ⚠️ Stale ({devlog_info['last_devlog']}, {devlog_info['devlog_age_hours']:.1f}h ago)")
+            else:
+                output.append(f"📝 Devlog: ❌ None found")
 
         return "\n".join(output)
 
@@ -149,9 +210,9 @@ class AgentStatusChecker:
             print("❌ No agent status files found!")
             return
 
-        # Summary table
-        print(f"\n{'Agent':<12} {'Mission':<30} {'Status':<15} {'Points':<8}")
-        print(f"{'-'*12} {'-'*30} {'-'*15} {'-'*8}")
+        # Summary table (with devlog check)
+        print(f"\n{'Agent':<12} {'Mission':<30} {'Status':<15} {'Points':<8} {'Devlog':<10}")
+        print(f"{'-'*12} {'-'*30} {'-'*15} {'-'*8} {'-'*10}")
 
         total_points = 0
         for agent_id, status in agents:
@@ -159,11 +220,20 @@ class AgentStatusChecker:
             agent_status = status.get("status", "Unknown")[:13]
             points = status.get("total_points_earned", 0)
             total_points += points
+            
+            # Devlog check (NEW FEATURE - Agent-2 implementation)
+            devlog_info = self.check_devlog_created(agent_id)
+            if devlog_info["has_recent_devlog"]:
+                devlog_status = "✅ Recent"
+            elif devlog_info["last_devlog"]:
+                devlog_status = "⚠️ Stale"
+            else:
+                devlog_status = "❌ None"
 
-            print(f"{agent_id:<12} {mission:<30} {agent_status:<15} {points:<8}")
+            print(f"{agent_id:<12} {mission:<30} {agent_status:<15} {points:<8} {devlog_status:<10}")
 
-        print(f"{'-'*12} {'-'*30} {'-'*15} {'-'*8}")
-        print(f"{'TOTAL':<12} {'':<30} {'':<15} {total_points:<8}")
+        print(f"{'-'*12} {'-'*30} {'-'*15} {'-'*8} {'-'*10}")
+        print(f"{'TOTAL':<12} {'':<30} {'':<15} {total_points:<8} {'':<10}")
         print(f"\n🏆 Swarm Total: {total_points} points")
 
 

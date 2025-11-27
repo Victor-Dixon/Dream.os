@@ -3,10 +3,8 @@
 
 from . import gaming_alert_models
 from . import gaming_models
-from . import test_models
 
 __all__ = [
     'gaming_alert_models',
     'gaming_models',
-    'test_models',
 ]

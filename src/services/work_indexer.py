@@ -12,8 +12,36 @@ import logging
 from pathlib import Path
 from datetime import datetime
 
-from .vector_database import get_vector_database_service, add_document_to_vector_db
-from .vector_database.vector_database_models import VectorDocument, DocumentType
+# Optional vector database imports
+try:
+    from .vector_database_service_unified import (
+        get_vector_database_service,
+    )
+    from .vector_database.vector_database_models import VectorDocument, DocumentType
+    def add_document_to_vector_db(doc: VectorDocument):
+        service = get_vector_database_service()
+        if service:
+            return service.add_document(doc)
+        return False
+    VECTOR_DB_AVAILABLE = True
+except ImportError:
+    VECTOR_DB_AVAILABLE = False
+    def get_vector_database_service():
+        return None
+    def add_document_to_vector_db(doc):
+        return False
+    from enum import Enum
+    from dataclasses import dataclass
+    class DocumentType(Enum):
+        MESSAGE = "message"
+        DEVLOG = "devlog"
+        CONTRACT = "contract"
+    @dataclass
+    class VectorDocument:
+        id: str
+        content: str
+        embedding: list
+        metadata: dict
 
 
 class WorkIndexer:

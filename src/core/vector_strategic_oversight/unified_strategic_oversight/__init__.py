@@ -3,7 +3,6 @@
 
 from . import analyzer_core
 from . import analyzer_orchestrator
-from . import engine_core_base
 from . import engine_core_insights
 from . import engine_core_metrics
 from . import engine_core_missions
@@ -17,7 +16,6 @@ from . import factory_methods
 __all__ = [
     'analyzer_core',
     'analyzer_orchestrator',
-    'engine_core_base',
     'engine_core_insights',
     'engine_core_metrics',
     'engine_core_missions',

@@ -1,28 +1,20 @@
-"""
-Jarvis AI Assistant Integration
-================================
+# AUTO-GENERATED __init__.py
+# DO NOT EDIT MANUALLY - changes may be overwritten
 
-Integration of Jarvis AI assistant capabilities including memory management,
-conversation handling, vision processing, and LLM integration.
-
-Modules:
-    - memory_system: Memory management and persistence
-    - conversation_engine: Conversation flow management
-    - ollama_integration: Ollama LLM integration (optional dependency)
-    - vision_system: Vision and image processing (optional dependency)
-
-Usage:
-    from src.integrations.jarvis import memory_system
-    from src.integrations.jarvis import conversation_engine
-
-Optional Dependencies:
-    - ollama: For LLM integration
-    - PIL/opencv: For vision processing
-"""
+from . import conversation_engine
+from . import conversation_pattern_data
+from . import conversation_patterns
+from . import memory_database
+from . import memory_system
+from . import ollama_integration
+from . import vision_system
 
 __all__ = [
-    "memory_system",
-    "conversation_engine",
-    "ollama_integration",
-    "vision_system",
+    'conversation_engine',
+    'conversation_pattern_data',
+    'conversation_patterns',
+    'memory_database',
+    'memory_system',
+    'ollama_integration',
+    'vision_system',
 ]

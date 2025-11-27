@@ -89,7 +89,7 @@ Improvement: 70% faster ⚡
 - Memory thrashing from repeated browser creation
 - No connection pooling
 
-**Solution:** `tools/browser_pool_manager.py`
+**Solution:** `tools/browser_pool_manager.py` (Also available via `tools_v2` as `infra.browser_pool`)
 - Browser instance pooling (configurable size)
 - Automatic session cleanup and isolation
 - Instance lifecycle management
@@ -129,7 +129,7 @@ Improvement: 20-30% faster ⚡
 - No parallel execution configured
 - Coverage overhead on every test
 
-**Solution:** `tools/pytest_performance_config.ini`
+**Solution:** `tools/pytest_performance_config.ini` (Legacy location - consider migrating to `tools_v2/` structure)
 - Parallel test execution with pytest-xdist (-n auto)
 - Fail-fast with --maxfail=3
 - Skip coverage on failures
@@ -168,7 +168,7 @@ Improvement: 40-60% faster ⚡
 ### Files Created:
 1. `.github/workflows/ci-optimized.yml` - Optimized CI/CD pipeline
 2. `.pre-commit-config-optimized.yaml` - Fast pre-commit hooks
-3. `tools/browser_pool_manager.py` - Browser instance pooling
+3. `tools/browser_pool_manager.py` - Browser instance pooling (Note: Also available via `tools_v2` as `infra.browser_pool`)
 4. `tools/pytest_performance_config.ini` - Parallel test execution config
 
 ### V2 Compliance:

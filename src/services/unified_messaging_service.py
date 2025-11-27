@@ -10,7 +10,7 @@ V2 Compliance: Wrapper pattern, <400 lines
 
 import logging
 
-from .messaging_service import ConsolidatedMessagingService
+from .messaging_infrastructure import ConsolidatedMessagingService
 
 logger = logging.getLogger(__name__)
 

@@ -243,10 +243,30 @@ class CycleHealthCheck:
             return False
     
     def _check_db_sync(self, agent_id: str) -> bool:
-        """Check if database is synchronized"""
-        # TODO: Implement actual DB sync check
-        # For now, assume synced (placeholder)
-        return True
+        """Check if database is synchronized with status.json."""
+        try:
+            from .database_sync_lifecycle import DatabaseSyncLifecycle
+            
+            sync = DatabaseSyncLifecycle(agent_id)
+            checks = sync.validate_consistency()
+            
+            # Check if key validations pass
+            db_connected = checks.get('db_connection', False)
+            fields_match = checks.get('fields_match', False)
+            no_conflicts = checks.get('no_conflicts', False)
+            
+            is_synced = db_connected and fields_match and no_conflicts
+            
+            if not is_synced:
+                logger.warning(
+                    f"[{agent_id}] Database sync check failed: "
+                    f"connected={db_connected}, fields={fields_match}, conflicts={no_conflicts}"
+                )
+            
+            return is_synced
+        except Exception as e:
+            logger.error(f"[{agent_id}] DB sync check failed: {e}")
+            return False
     
     def _check_no_active_violations(self, agent_id: str) -> bool:
         """Check for active protocol violations"""

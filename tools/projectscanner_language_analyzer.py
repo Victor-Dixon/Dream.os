@@ -57,7 +57,10 @@ class LanguageAnalyzer:
 
         grammar_path = grammar_paths[lang_name]
         if not Path(grammar_path).exists():
-            logger.warning(f"⚠️ {lang_name} grammar not found at {grammar_path}")
+            # Suppress warning for placeholder paths - these are expected if tree-sitter not configured
+            if "path/to" not in grammar_path:
+                logger.warning(
+                    f"⚠️ {lang_name} grammar not found at {grammar_path}")
             return None
 
         try:
@@ -66,7 +69,8 @@ class LanguageAnalyzer:
             parser.set_language(lang_lib)
             return parser
         except Exception as e:
-            logger.error(f"⚠️ Failed to initialize tree-sitter {lang_name} parser: {e}")
+            logger.error(
+                f"⚠️ Failed to initialize tree-sitter {lang_name} parser: {e}")
             return None
 
     def analyze_file(self, file_path: Path, source_code: str) -> dict:
@@ -127,17 +131,20 @@ class LanguageAnalyzer:
                                     extracted_methods = []
                                     for elt in kw.value.elts:
                                         if isinstance(elt, ast.Str):
-                                            extracted_methods.append(elt.s.upper())
+                                            extracted_methods.append(
+                                                elt.s.upper())
                                     if extracted_methods:
                                         methods = extracted_methods
                             for m in methods:
                                 routes.append(
-                                    {"function": node.name, "method": m, "path": path_arg}
+                                    {"function": node.name,
+                                        "method": m, "path": path_arg}
                                 )
 
             elif isinstance(node, ast.ClassDef):
                 docstring = ast.get_docstring(node)
-                method_names = [n.name for n in node.body if isinstance(n, ast.FunctionDef)]
+                method_names = [
+                    n.name for n in node.body if isinstance(n, ast.FunctionDef)]
                 base_classes = []
                 for base in node.bases:
                     if isinstance(base, ast.Name):
@@ -160,7 +167,8 @@ class LanguageAnalyzer:
                 }
 
         # Complexity = function count + sum of class methods
-        complexity = len(functions) + sum(len(c["methods"]) for c in classes.values())
+        complexity = len(functions) + \
+            sum(len(c["methods"]) for c in classes.values())
         return {
             "language": ".py",
             "functions": functions,
@@ -203,7 +211,8 @@ class LanguageAnalyzer:
                         if child.type == "function_item":
                             method_node = child.child_by_field_name("name")
                             if method_node:
-                                classes[impl_name].append(method_node.text.decode("utf-8"))
+                                classes[impl_name].append(
+                                    method_node.text.decode("utf-8"))
             for child in node.children:
                 _traverse(child)
 
@@ -269,9 +278,11 @@ class LanguageAnalyzer:
                                 if args_node and args_node.child_count > 0:
                                     first_arg = args_node.child(0)
                                     if first_arg.type == "string":
-                                        path_str = get_node_text(first_arg).strip("\"'")
+                                        path_str = get_node_text(
+                                            first_arg).strip("\"'")
                                 routes.append(
-                                    {"object": obj, "method": method.upper(), "path": path_str}
+                                    {"object": obj, "method": method.upper(),
+                                     "path": path_str}
                                 )
             for child in node.children:
                 _traverse(child)

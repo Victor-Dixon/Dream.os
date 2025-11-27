@@ -124,7 +124,8 @@ python tools/sync_status_to_db.py --agent Agent-X
 **END:**
 - [ ] Update next_actions
 - [ ] Commit: `lifecycle.end_cycle(commit=True)`
-- [ ] Create devlog (if needed)
+- [ ] Create devlog automatically (for all significant work)
+- [ ] Post to Discord: `python tools/devlog_manager.py post --agent agent-X --file devlog.md`
 
 ---
 

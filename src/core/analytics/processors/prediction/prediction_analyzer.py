@@ -13,7 +13,7 @@ import logging
 from datetime import datetime
 from typing import Any
 
-from core.analytics.prediction.base_analyzer import BasePredictionAnalyzer
+from ...prediction.base_analyzer import BasePredictionAnalyzer
 
 logger = logging.getLogger(__name__)
 

@@ -1,0 +1,237 @@
+{
+  "total_tools": 823,
+  "categories": {
+    "monitoring": {
+      "count": 177,
+      "tools": [
+        "github_create_and_push_repo",
+        "add_remaining_swarm_knowledge",
+        "agent_checkin",
+        "agent_fuel_monitor",
+        "agent_lifecycle_automator",
+        "agent_message_history",
+        "agent_mission_controller",
+        "agent_orient",
+        "agent_status_quick_check",
+        "agent_task_finder"
+      ],
+      "total_lines": 37631
+    },
+    "validation": {
+      "count": 171,
+      "tools": [
+        "github_create_and_push_repo",
+        "add_remaining_swarm_knowledge",
+        "agent_checkin",
+        "agent_fuel_monitor",
+        "agent_lifecycle_automator",
+        "agent_message_history",
+        "agent_mission_controller",
+        "agent_orient",
+        "agent_status_quick_check",
+        "agent_task_finder"
+      ],
+      "total_lines": 37331
+    },
+    "automation": {
+      "count": 98,
+      "tools": [
+        "github_create_and_push_repo",
+        "add_remaining_swarm_knowledge",
+        "agent_fuel_monitor",
+        "agent_lifecycle_automator",
+        "agent_mission_controller",
+        "agent_orient",
+        "agent_task_finder",
+        "arch_pattern_validator",
+        "audit_project_components",
+        "auto_inbox_processor"
+      ],
+      "total_lines": 23841
+    },
+    "analysis": {
+      "count": 144,
+      "tools": [
+        "add_remaining_swarm_knowledge",
+        "agent_fuel_monitor",
+        "agent_lifecycle_automator",
+        "agent_mission_controller",
+        "agent_orient",
+        "agent_task_finder",
+        "analysis_cli",
+        "analyze_init_files",
+        "arch_pattern_validator",
+        "audit_broken_tools"
+      ],
+      "total_lines": 34217
+    },
+    "consolidation": {
+      "count": 67,
+      "tools": [
+        "add_remaining_swarm_knowledge",
+        "agent_orient",
+        "agent_toolbelt_executors",
+        "analyze_init_files",
+        "architecture_review",
+        "captain_snapshot",
+        "cleanup_documentation_deduplicator",
+        "cleanup_documentation_refactored",
+        "consolidation_runner",
+        "duplication_analysis"
+      ],
+      "total_lines": 16196
+    },
+    "messaging": {
+      "count": 100,
+      "tools": [
+        "add_remaining_swarm_knowledge",
+        "agent_fuel_monitor",
+        "agent_lifecycle_automator",
+        "agent_message_history",
+        "agent_orient",
+        "agent_toolbelt",
+        "analysis_cli",
+        "audit_broken_tools",
+        "audit_cleanup",
+        "audit_imports"
+      ],
+      "total_lines": 20952
+    },
+    "captain": {
+      "count": 62,
+      "tools": [
+        "agent_fuel_monitor",
+        "agent_lifecycle_automator",
+        "agent_message_history",
+        "agent_orient",
+        "audit_project_components",
+        "autonomous_leaderboard",
+        "autonomous_task_engine",
+        "captain_architectural_checker",
+        "captain_check_agent_status",
+        "captain_completion_processor"
+      ],
+      "total_lines": 14062
+    },
+    "other": {
+      "count": 4,
+      "tools": [
+        "dashboard_charts",
+        "generate_utils_catalog",
+        "refactoring_models",
+        "show_quarantine"
+      ],
+      "total_lines": 304
+    }
+  },
+  "duplicates": [
+    {
+      "tools": [
+        "agent_toolbelt",
+        "toolbelt"
+      ],
+      "count": 2,
+      "total_lines": 280
+    },
+    {
+      "tools": [
+        "captain_toolbelt_help",
+        "toolbelt_help"
+      ],
+      "count": 2,
+      "total_lines": 214
+    },
+    {
+      "tools": [
+        "test_imports",
+        "validate_imports"
+      ],
+      "count": 2,
+      "total_lines": 274
+    },
+    {
+      "tools": [
+        "repo_consolidation_enhanced",
+        "enhanced_repo_consolidation_analyzer"
+      ],
+      "count": 2,
+      "total_lines": 714
+    }
+  ],
+  "recommendations": [
+    {
+      "category": "monitoring",
+      "action": "consolidate",
+      "tools_count": 177,
+      "suggestion": "Consider consolidating 177 monitoring tools into unified implementation"
+    },
+    {
+      "category": "validation",
+      "action": "consolidate",
+      "tools_count": 171,
+      "suggestion": "Consider consolidating 171 validation tools into unified implementation"
+    },
+    {
+      "category": "automation",
+      "action": "consolidate",
+      "tools_count": 98,
+      "suggestion": "Consider consolidating 98 automation tools into unified implementation"
+    },
+    {
+      "category": "analysis",
+      "action": "consolidate",
+      "tools_count": 144,
+      "suggestion": "Consider consolidating 144 analysis tools into unified implementation"
+    },
+    {
+      "category": "consolidation",
+      "action": "consolidate",
+      "tools_count": 67,
+      "suggestion": "Consider consolidating 67 consolidation tools into unified implementation"
+    },
+    {
+      "category": "messaging",
+      "action": "consolidate",
+      "tools_count": 100,
+      "suggestion": "Consider consolidating 100 messaging tools into unified implementation"
+    },
+    {
+      "category": "captain",
+      "action": "consolidate",
+      "tools_count": 62,
+      "suggestion": "Consider consolidating 62 captain tools into unified implementation"
+    },
+    {
+      "action": "merge",
+      "tools": [
+        "agent_toolbelt",
+        "toolbelt"
+      ],
+      "suggestion": "Merge 2 duplicate tools: agent_toolbelt, toolbelt"
+    },
+    {
+      "action": "merge",
+      "tools": [
+        "captain_toolbelt_help",
+        "toolbelt_help"
+      ],
+      "suggestion": "Merge 2 duplicate tools: captain_toolbelt_help, toolbelt_help"
+    },
+    {
+      "action": "merge",
+      "tools": [
+        "test_imports",
+        "validate_imports"
+      ],
+      "suggestion": "Merge 2 duplicate tools: test_imports, validate_imports"
+    },
+    {
+      "action": "merge",
+      "tools": [
+        "repo_consolidation_enhanced",
+        "enhanced_repo_consolidation_analyzer"
+      ],
+      "suggestion": "Merge 2 duplicate tools: repo_consolidation_enhanced, enhanced_repo_consolidation_analyzer"
+    }
+  ]
+}

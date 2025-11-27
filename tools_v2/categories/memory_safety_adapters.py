@@ -120,8 +120,13 @@ class UnboundedScanTool(IToolAdapter):
             raise ToolExecutionError(str(e), tool_name="mem.scan")
 
 
-class ImportValidatorTool(IToolAdapter):
-    """Validate Python file imports."""
+class MemorySafetyImportValidatorTool(IToolAdapter):
+    """
+    Validate Python file imports for memory safety.
+    
+    SSOT: This is the memory safety-specific import validator.
+    For refactoring import validation, use refactor.validate_imports (import_fix_tools.py).
+    """
 
     def get_spec(self) -> ToolSpec:
         return ToolSpec(

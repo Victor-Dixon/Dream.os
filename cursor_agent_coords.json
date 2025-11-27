@@ -9,49 +9,49 @@
   },
   "agents": {
     "Agent-1": {
-      "chat_input_coordinates": [-1269, 481],
+      "chat_input_coordinates": [-1269, 496],
       "onboarding_input_coords": [-1265, 171],
       "description": "Integration & Core Systems Specialist",
       "active": true
     },
     "Agent-2": {
-      "chat_input_coordinates": [-308, 480],
+      "chat_input_coordinates": [-308, 500],
       "onboarding_input_coords": [-296, 180],
       "description": "Architecture & Design Specialist",
       "active": true
     },
     "Agent-3": {
-      "chat_input_coordinates": [-1269, 1001],
+      "chat_input_coordinates": [-1269, 1021],
       "onboarding_input_coords": [-1276, 698],
       "description": "Infrastructure & DevOps Specialist",
       "active": true
     },
     "Agent-4": {
-      "chat_input_coordinates": [-308, 1000],
+      "chat_input_coordinates": [-308, 1020],
       "onboarding_input_coords": [-304, 700],
       "description": "Quality Assurance Specialist (CAPTAIN)",
       "active": true
     },
     "Agent-5": {
-      "chat_input_coordinates": [652, 421],
+      "chat_input_coordinates": [652, 431],
       "onboarding_input_coords": [691, 105],
       "description": "Business Intelligence Specialist",
       "active": true
     },
     "Agent-6": {
-      "chat_input_coordinates": [1612, 419],
+      "chat_input_coordinates": [1612, 429],
       "onboarding_input_coords": [1674, 112],
       "description": "Coordination & Communication Specialist",
       "active": true
     },
     "Agent-7": {
-      "chat_input_coordinates": [698, 936],
-      "onboarding_input_coords": [697, 630],
+      "chat_input_coordinates": [653, 960],
+      "onboarding_input_coords": [653, 630],
       "description": "Web Development Specialist",
       "active": true
     },
     "Agent-8": {
-      "chat_input_coordinates": [1611, 941],
+      "chat_input_coordinates": [1611, 956],
       "onboarding_input_coords": [1673, 639],
       "description": "Operations & Support Specialist",
       "active": true

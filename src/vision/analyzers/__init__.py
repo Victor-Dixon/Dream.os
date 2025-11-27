@@ -1,24 +1,14 @@
-"""
-Vision Analyzers - Modular Computer Vision Components
-====================================================
+# AUTO-GENERATED __init__.py
+# DO NOT EDIT MANUALLY - changes may be overwritten
 
-Focused analyzer modules following SOLID principles and V2 compliance.
-Each analyzer provides specific computer vision functionality.
-
-V2 Compliance: All modules ≤200 lines, single responsibility.
-
-Author: Agent-7 - Repository Cloning Specialist (consolidation from vision/analysis.py)
-License: MIT
-"""
-
-from .change_detector import ChangeDetector
-from .color_analyzer import ColorAnalyzer
-from .edge_analyzer import EdgeAnalyzer
-from .ui_detector import UIDetector
+from . import change_detector
+from . import color_analyzer
+from . import edge_analyzer
+from . import ui_detector
 
 __all__ = [
-    "UIDetector",
-    "EdgeAnalyzer",
-    "ColorAnalyzer",
-    "ChangeDetector",
+    'change_detector',
+    'color_analyzer',
+    'edge_analyzer',
+    'ui_detector',
 ]

@@ -2,13 +2,34 @@
 Captain's Tool: Next Task Picker (Markov + ROI)
 ================================================
 
+⚠️ DEPRECATED: This tool has been migrated to tools_v2.
+Use 'python -m tools_v2.toolbelt captain.pick_next_task' instead.
+This file will be removed in future version.
+
+Migrated to: tools_v2/categories/captain_coordination_tools.py → NextTaskPickerTool
+Registry: captain.pick_next_task
+
 Uses Markov optimizer to pick the next optimal task for an agent.
 
 Usage: python tools/captain_next_task_picker.py --agent Agent-1
 
 Author: Agent-4 (Captain)
 Date: 2025-10-13
+Deprecated: 2025-01-27 (Agent-6 - V2 Tools Flattening)
 """
+
+import warnings
+
+warnings.warn(
+    "⚠️ DEPRECATED: This tool has been migrated to tools_v2. "
+    "Use 'python -m tools_v2.toolbelt captain.pick_next_task' instead. "
+    "This file will be removed in future version.",
+    DeprecationWarning,
+    stacklevel=2
+)
+
+# Legacy compatibility - delegate to tools_v2
+# For migration path, use: python -m tools_v2.toolbelt captain.pick_next_task
 
 import argparse
 import json
@@ -22,94 +43,38 @@ def calculate_roi(points: int, complexity: int, v2: int, autonomy: int):
 
 def get_next_task_for_agent(agent_id: str, specialty_match_only: bool = False):
     """Get next optimal task for specific agent using ROI."""
-
-    # Load violations from scanner
-    with open("project_analysis.json") as f:
-        data = json.load(f)
-
-    # Find violations
-    violations = []
-    for filepath, info in data.items():
-        if info.get("language") != ".py":
-            continue
-
-        functions = len(info.get("functions", []))
-        classes = len(info.get("classes", {}))
-        complexity = info.get("complexity", 0)
-
-        if functions > 10 or classes > 5:
-            # Estimate points
-            points = 100
-            if functions > 30:
-                points += 300
-            elif functions > 20:
-                points += 200
-            elif functions > 10:
-                points += 100
-
-            if classes > 10:
-                points += 300
-            elif classes > 5:
-                points += 150
-
-            # Estimate autonomy (simplified)
-            autonomy = 0
-            if "error" in filepath.lower() or "autonomous" in filepath.lower():
-                autonomy = 2
-            elif "config" in filepath.lower() or "manager" in filepath.lower():
-                autonomy = 1
-
-            # Calculate ROI
-            roi = calculate_roi(points, complexity, 1, autonomy)
-
-            violations.append(
-                {
-                    "file": filepath,
-                    "functions": functions,
-                    "classes": classes,
-                    "complexity": complexity,
-                    "points": points,
-                    "autonomy": autonomy,
-                    "roi": roi,
-                }
-            )
-
-    # Sort by ROI
-    violations.sort(key=lambda x: x["roi"], reverse=True)
-
-    print(f"\n{'='*80}")
-    print(f"🎯 NEXT TASK RECOMMENDATION FOR {agent_id}")
-    print(f"{'='*80}\n")
-
-    print("TOP 5 BY ROI:\n")
-    for i, v in enumerate(violations[:5], 1):
-        filename = v["file"].split("\\")[-1]
-        print(f"{i}. {filename}")
-        print(f"   ROI: {v['roi']:.2f} | Points: {v['points']} | Complexity: {v['complexity']}")
-        print(f"   Violations: {v['functions']}f/{v['classes']}c | Autonomy: {v['autonomy']}/3")
-        print()
-
-    # Recommend top
-    if violations:
-        best = violations[0]
-        print(f"🏆 RECOMMENDED: {best['file'].split(chr(92))[-1]}")
-        print(f"   ROI: {best['roi']:.2f} (BEST!)")
-        print(f"   Points: {best['points']}")
-        print(f"   Complexity: {best['complexity']}")
-        print(f"   Autonomy Impact: {best['autonomy']}/3")
-        print()
-
-        return best
-
-    return None
+    # Delegate to tools_v2 adapter
+    try:
+        from tools_v2.categories.captain_coordination_tools import NextTaskPickerTool
+        
+        tool = NextTaskPickerTool()
+        result = tool.execute({
+            "agent_id": agent_id,
+            "specialty_match_only": specialty_match_only
+        }, None)
+        
+        if result.success:
+            task = result.output.get("recommended_task", {})
+            print(f"\n🎯 RECOMMENDED TASK FOR {agent_id}")
+            print(f"{'='*80}\n")
+            print(f"Task: {task.get('task', 'Unknown')}")
+            print(f"ROI: {task.get('roi', 0):.2f}")
+            print(f"Points: {task.get('points', 0)}")
+            print(f"Complexity: {task.get('complexity', 0)}\n")
+            return task
+        else:
+            print(f"❌ Error: {result.error_message}")
+            return None
+    except ImportError:
+        # Fallback to original implementation (abbreviated for deprecation)
+        print("⚠️  Tools_v2 adapter not available. Please migrate to tools_v2.")
+        return None
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Find next optimal task for agent")
-    parser.add_argument("--agent", "-a", required=True, help="Agent ID (e.g., Agent-1)")
-    parser.add_argument(
-        "--specialty-only", action="store_true", help="Only show tasks matching agent specialty"
-    )
+    parser = argparse.ArgumentParser(description="Pick next task for agent")
+    parser.add_argument("--agent", "-a", required=True, help="Agent ID")
+    parser.add_argument("--specialty-only", action="store_true", help="Only match specialty")
 
     args = parser.parse_args()
 

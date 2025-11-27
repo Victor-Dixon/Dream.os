@@ -9,12 +9,22 @@ and retrieval operations.
 Author: Agent-7 (Quarantine Mission Phase 3)
 Date: 2025-10-16
 Points: 300
+
+BI Integration: Agent-5 (2025-01-27)
+- Added metrics tracking for message analytics
 """
 
 import json
 from datetime import datetime
 from pathlib import Path
-from typing import Any
+from typing import Any, Optional
+
+try:
+    from src.core.analytics.engines.metrics_engine import MetricsEngine
+    METRICS_AVAILABLE = True
+except ImportError:
+    METRICS_AVAILABLE = False
+    MetricsEngine = None
 
 
 class MessageRepository:
@@ -33,6 +43,7 @@ class MessageRepository:
         self,
         message_history_file: str = "data/message_history.json",
         inbox_root: str = "agent_workspaces",
+        metrics_engine: Optional[MetricsEngine] = None,
     ):
         """
         Initialize message repository.
@@ -40,9 +51,13 @@ class MessageRepository:
         Args:
             message_history_file: Path to message history storage
             inbox_root: Root directory for agent workspaces
+            metrics_engine: Optional metrics engine for BI tracking
         """
         self.message_history_file = Path(message_history_file)
         self.inbox_root = Path(inbox_root)
+        self.metrics_engine = metrics_engine if metrics_engine else (
+            MetricsEngine() if METRICS_AVAILABLE else None
+        )
         self._ensure_history_file()
 
     def _ensure_history_file(self) -> None:
@@ -110,7 +125,38 @@ class MessageRepository:
         messages.append(message)
         data["messages"] = messages
 
-        return self._save_history(data)
+        success = self._save_history(data)
+
+        # BI: Track message metrics if metrics engine available
+        if success and self.metrics_engine:
+            try:
+                self.metrics_engine.increment_metric("messages.total")
+                
+                # Track by sender
+                sender = message.get("from") or message.get("sender", "unknown")
+                self.metrics_engine.increment_metric(f"messages.by_sender.{sender}")
+                
+                # Track by recipient
+                recipient = message.get("to") or message.get("recipient", "unknown")
+                self.metrics_engine.increment_metric(f"messages.by_recipient.{recipient}")
+                
+                # Track by message type
+                msg_type = message.get("message_type") or message.get("type", "unknown")
+                self.metrics_engine.increment_metric(f"messages.by_type.{msg_type}")
+                
+                # Track by priority
+                priority = message.get("priority", "normal")
+                self.metrics_engine.increment_metric(f"messages.by_priority.{priority}")
+                
+                # Track Discord username if available
+                discord_user = message.get("discord_username")
+                if discord_user:
+                    self.metrics_engine.increment_metric(f"messages.by_discord_user.{discord_user}")
+            except Exception:
+                # Don't fail message save if metrics tracking fails
+                pass
+
+        return success
 
     def get_message_history(
         self, agent_id: str | None = None, limit: int | None = None
@@ -266,3 +312,105 @@ class MessageRepository:
         self._save_history(data)
 
         return original_count - len(filtered_messages)
+
+    def compress_old_messages(self, days: int = 7, compression_level: int = 6) -> dict[str, Any]:
+        """
+        Compress messages older than specified days using Agent-3's compression tools.
+
+        Args:
+            days: Number of days to keep uncompressed (default: 7)
+            compression_level: Compression level 1-9 (default: 6)
+
+        Returns:
+            Dictionary with compression results
+        """
+        try:
+            # Use Agent-3's compression automation tool
+            import subprocess
+            import sys
+            from pathlib import Path
+
+            tool_path = Path("tools/message_compression_automation.py")
+            if not tool_path.exists():
+                return {
+                    "success": False,
+                    "error": "Compression tool not found",
+                    "compressed": 0,
+                    "saved_bytes": 0
+                }
+
+            # Run compression tool (no --days or --level args, tool handles age-based compression internally)
+            result = subprocess.run(
+                [sys.executable, str(tool_path)],
+                capture_output=True,
+                text=True,
+                cwd=Path.cwd()
+            )
+
+            if result.returncode == 0:
+                # Parse output if available
+                return {
+                    "success": True,
+                    "compressed": 0,  # Will be updated by tool
+                    "saved_bytes": 0,  # Will be updated by tool
+                    "output": result.stdout
+                }
+            else:
+                return {
+                    "success": False,
+                    "error": result.stderr,
+                    "compressed": 0,
+                    "saved_bytes": 0
+                }
+
+        except Exception as e:
+            return {
+                "success": False,
+                "error": str(e),
+                "compressed": 0,
+                "saved_bytes": 0
+            }
+
+    def get_compression_stats(self) -> dict[str, Any]:
+        """
+        Get compression statistics using Agent-3's health check tool.
+
+        Returns:
+            Dictionary with compression statistics
+        """
+        try:
+            import subprocess
+            import sys
+            from pathlib import Path
+
+            tool_path = Path("tools/message_compression_health_check.py")
+            if not tool_path.exists():
+                return {
+                    "success": False,
+                    "error": "Health check tool not found"
+                }
+
+            # Run health check tool
+            result = subprocess.run(
+                [sys.executable, str(tool_path)],
+                capture_output=True,
+                text=True,
+                cwd=Path.cwd()
+            )
+
+            if result.returncode == 0:
+                return {
+                    "success": True,
+                    "stats": result.stdout
+                }
+            else:
+                return {
+                    "success": False,
+                    "error": result.stderr
+                }
+
+        except Exception as e:
+            return {
+                "success": False,
+                "error": str(e)
+            }

@@ -3,7 +3,7 @@
 from dataclasses import dataclass
 from typing import Any
 
-from .config_core import get_config
+from .config_ssot import get_config
 
 
 @dataclass

@@ -35,25 +35,33 @@ Already included! No setup required.
 
 **Prerequisites**:
 - Python 3.8+
+- tools_v2 toolbelt system (recommended)
 - All three quality tools (v2_compliance_checker, complexity_analyzer, refactoring_suggestion_engine)
+
+**Note**: Dashboard tools have been migrated to `tools_v2/categories/dashboard_tools.py`. Use `dashboard.generate` via toolbelt for best experience.
 
 ---
 
 ## 💻 **Usage**
 
-### **Generate Dashboard for Directory**:
+### **Generate Dashboard for Directory** (Recommended - tools_v2):
+```bash
+python -m tools_v2.toolbelt dashboard.generate --directory src
+```
+
+### **Legacy Method** (Still supported):
 ```bash
 python tools/compliance_dashboard.py src
 ```
 
 ### **Custom Output Location**:
 ```bash
-python tools/compliance_dashboard.py src --output reports/quality
+python -m tools_v2.toolbelt dashboard.generate --directory src --output_dir reports/quality
 ```
 
 ### **Custom File Pattern**:
 ```bash
-python tools/compliance_dashboard.py src --pattern "**/*service*.py"
+python -m tools_v2.toolbelt dashboard.generate --directory src --pattern "**/*service*.py"
 ```
 
 ---
@@ -121,9 +129,9 @@ Shows top 10 files with suggestions:
 
 ## 📖 **Examples**
 
-### **Example 1: Quick Quality Check**:
+### **Example 1: Quick Quality Check** (Recommended):
 ```bash
-$ python tools/compliance_dashboard.py src/services
+$ python -m tools_v2.toolbelt dashboard.generate --directory src/services
 
 🔄 Collecting compliance data...
 📊 Generating dashboard...
@@ -135,7 +143,7 @@ $ python tools/compliance_dashboard.py src/services
 
 ### **Example 2: Team Report**:
 ```bash
-$ python tools/compliance_dashboard.py src --output reports/weekly
+$ python -m tools_v2.toolbelt dashboard.generate --directory src --output_dir reports/weekly
 
 # Opens dashboard in browser showing:
 Overall Quality Score: 87.5 (GOOD)
@@ -151,7 +159,7 @@ Complexity Compliance: 92.3%
 ### **Use Case 1: Weekly Team Review**
 Generate dashboard for weekly quality review:
 ```bash
-python tools/compliance_dashboard.py src --output reports/weekly_$(date +%Y%m%d)
+python -m tools_v2.toolbelt dashboard.generate --directory src --output_dir reports/weekly_$(date +%Y%m%d)
 ```
 
 Present dashboard to team showing progress.
@@ -159,7 +167,7 @@ Present dashboard to team showing progress.
 ### **Use Case 2: Module Quality Report**
 Check quality of specific module:
 ```bash
-python tools/compliance_dashboard.py src/services --output reports/services_quality
+python -m tools_v2.toolbelt dashboard.generate --directory src/services --output_dir reports/services_quality
 ```
 
 ### **Use Case 3: CI/CD Artifact**
@@ -167,7 +175,7 @@ Generate dashboard in CI pipeline:
 ```yaml
 - name: Generate Quality Dashboard
   run: |
-    python tools/compliance_dashboard.py src
+    python -m tools_v2.toolbelt dashboard.generate --directory src
     # Publish as build artifact
 ```
 
@@ -295,17 +303,20 @@ Dashboard is self-contained HTML - easy to share via email or Slack.
 ## 📚 **Quick Reference**
 
 ```bash
-# Basic usage
-python tools/compliance_dashboard.py src
+# Basic usage (Recommended - tools_v2)
+python -m tools_v2.toolbelt dashboard.generate --directory src
 
 # Custom output
-python tools/compliance_dashboard.py src --output reports/custom
+python -m tools_v2.toolbelt dashboard.generate --directory src --output_dir reports/custom
 
 # Specific module
-python tools/compliance_dashboard.py src/services
+python -m tools_v2.toolbelt dashboard.generate --directory src/services
 
 # With pattern
-python tools/compliance_dashboard.py src --pattern "**/*manager*.py"
+python -m tools_v2.toolbelt dashboard.generate --directory src --pattern "**/*manager*.py"
+
+# Legacy method (still supported)
+python tools/compliance_dashboard.py src
 
 # View dashboard
 # Opens automatically or navigate to:
@@ -320,4 +331,5 @@ python tools/compliance_dashboard.py src --pattern "**/*manager*.py"
 
 **Agent-6 Signature**: Quality Gates & V2 Compliance Specialist  
 **Tool Version**: 1.0  
-**Last Updated**: 2025-10-10
+**Last Updated**: 2025-10-10  
+**Updated for tools_v2**: 2025-01-27 (Agent-7 - Documentation Cleanup)

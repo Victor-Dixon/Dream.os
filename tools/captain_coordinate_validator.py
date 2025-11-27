@@ -2,7 +2,27 @@
 """
 Coordinate Validator - Validate Agent Coordinates Before Operations
 Ensures all agent coordinates are valid before PyAutoGUI operations.
+
+⚠️ DEPRECATED: This tool has been migrated to tools_v2.
+Use 'python -m tools_v2.toolbelt coord.validate_coordinates' instead.
+This file will be removed in future version.
+
+Migrated to: tools_v2/categories/coordination_tools.py → CoordinateValidatorAdapter
+Registry: coord.validate_coordinates
+
+Author: Agent-4 (Captain)
+Deprecated: 2025-01-27 (Agent-8 - V2 Tools Flattening)
 """
+
+import warnings
+
+warnings.warn(
+    "⚠️ DEPRECATED: This tool has been migrated to tools_v2. "
+    "Use 'python -m tools_v2.toolbelt coord.validate_coordinates' instead. "
+    "This file will be removed in future version.",
+    DeprecationWarning,
+    stacklevel=2
+)
 
 import sys
 import json

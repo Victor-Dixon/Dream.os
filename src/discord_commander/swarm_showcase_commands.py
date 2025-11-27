@@ -70,11 +70,22 @@ class SwarmShowcaseCommands(commands.Cog if DISCORD_AVAILABLE else object):
         - Completion status
         """
         try:
-            embed = await self._create_tasks_embed()
-            await ctx.send(embed=embed)
+            # Use the new controller view for full functionality with pagination
+            from .controllers.swarm_tasks_controller_view import SwarmTasksControllerView
+            
+            view = SwarmTasksControllerView(messaging_service=None)
+            embed = view.create_initial_embed()
+            
+            await ctx.send(embed=embed, view=view)
         except Exception as e:
-            self.logger.error(f"Error displaying swarm tasks: {e}")
-            await ctx.send(f"❌ Error loading swarm tasks: {e}")
+            self.logger.error(f"Error displaying swarm tasks: {e}", exc_info=True)
+            # Fallback to old method if controller fails
+            try:
+                embed = await self._create_tasks_embed()
+                await ctx.send(embed=embed)
+            except Exception as fallback_error:
+                self.logger.error(f"Fallback also failed: {fallback_error}", exc_info=True)
+                await ctx.send(f"❌ Error loading swarm tasks: {e}")
 
     async def _create_tasks_embed(self) -> discord.Embed:
         """Create beautiful embed for tasks and directives."""
@@ -111,21 +122,36 @@ class SwarmShowcaseCommands(commands.Cog if DISCORD_AVAILABLE else object):
                 "LOW": "⚪"
             }.get(priority, "🔵")
             
-            # Format tasks (max 3 for brevity)
-            task_list = "\n".join([f"• {task[:60]}" for task in tasks[:3]])
-            if len(tasks) > 3:
-                task_list += f"\n• ...and {len(tasks) - 3} more"
+            # Format tasks with FULL content (no truncation)
+            # Use chunking utility to handle long task lists
+            from .utils.message_chunking import chunk_field_value
             
-            if not task_list:
+            if tasks:
+                # Create full task list
+                task_list = "\n".join([f"• {task}" for task in tasks])
+            else:
                 task_list = "No specific tasks listed"
             
-            value = f"**Mission:** {mission[:80]}\n\n**Tasks:**\n{task_list}"
+            # Build field value
+            base_value = f"**Mission:** {mission}\n\n**Tasks:**\n{task_list}"
             
+            # Chunk if needed
+            value_chunks = chunk_field_value(base_value)
+            
+            # Add first chunk as main field
             embed.add_field(
                 name=f"{priority_emoji} {agent_id} - {priority}",
-                value=value[:1024],  # Discord limit
+                value=value_chunks[0],
                 inline=False
             )
+            
+            # Add continuation fields if needed
+            for i, chunk in enumerate(value_chunks[1:], 2):
+                embed.add_field(
+                    name=f"  └─ {agent_id} (continued {i}/{len(value_chunks)})",
+                    value=chunk,
+                    inline=False
+                )
 
         # Add footer with statistics
         total_tasks = sum(len(agent.get("current_tasks", [])) for agent in agents_data)

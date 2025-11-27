@@ -61,40 +61,93 @@ class MonitorState:
         self.agent_tasks[agent_id] = task_id
 
     def get_stalled_agents(self) -> list[str]:
-        """Get list of stalled agents."""
+        """Get list of stalled agents using enhanced activity detection."""
         stalled = []
-        current_time = time.time()
-
-        for agent_id, last_activity in self.agent_activity.items():
-            if current_time - last_activity > self.stall_timeout:
+        
+        # Enhanced: Use comprehensive activity detection (Agent-1 proposal)
+        try:
+            from .enhanced_agent_activity_detector import EnhancedAgentActivityDetector
+            
+            detector = EnhancedAgentActivityDetector()
+            stale_agents = detector.get_stale_agents(max_age_seconds=self.stall_timeout)
+            
+            # Extract agent IDs from stale agents
+            for agent_id, age in stale_agents:
                 stalled.append(agent_id)
+        except ImportError:
+            # Fallback to original method if enhanced detector unavailable
+            current_time = time.time()
+            for agent_id, last_activity in self.agent_activity.items():
+                if current_time - last_activity > self.stall_timeout:
+                    stalled.append(agent_id)
 
         return stalled
 
     def get_agent_status(self) -> dict[str, Any]:
-        """Get status of all agents."""
+        """Get status of all agents using enhanced activity detection."""
         current_time = time.time()
         agent_status = {}
+        
+        # Enhanced: Use comprehensive activity detection (Agent-1 proposal)
+        try:
+            from .enhanced_agent_activity_detector import EnhancedAgentActivityDetector
+            
+            detector = EnhancedAgentActivityDetector()
+            all_activity = detector.get_all_agents_activity()
+            
+            for agent_id in self.agent_activity:
+                current_task = self.agent_tasks[agent_id]
+                
+                # Get enhanced activity data
+                activity_data = all_activity.get(agent_id, {})
+                latest_activity = activity_data.get("latest_activity")
+                activity_sources = activity_data.get("activity_sources", [])
+                
+                # Use enhanced activity if available, otherwise fallback
+                if latest_activity:
+                    last_activity = latest_activity
+                    time_since_activity = current_time - last_activity
+                else:
+                    last_activity = self.agent_activity[agent_id]
+                    time_since_activity = current_time - last_activity
+                
+                # Determine agent status
+                if time_since_activity > self.stall_timeout:
+                    status = "stalled"
+                elif current_task:
+                    status = "busy"
+                else:
+                    status = "idle"
+                
+                agent_status[agent_id] = {
+                    "status": status,
+                    "last_activity": last_activity,
+                    "time_since_activity": time_since_activity,
+                    "current_task": current_task,
+                    "activity_sources": activity_sources,  # NEW: Show activity sources
+                    "activity_count": len(activity_sources),
+                }
+        except ImportError:
+            # Fallback to original method if enhanced detector unavailable
+            for agent_id in self.agent_activity:
+                last_activity = self.agent_activity[agent_id]
+                current_task = self.agent_tasks[agent_id]
 
-        for agent_id in self.agent_activity:
-            last_activity = self.agent_activity[agent_id]
-            current_task = self.agent_tasks[agent_id]
+                time_since_activity = current_time - last_activity
 
-            time_since_activity = current_time - last_activity
+                if time_since_activity > self.stall_timeout:
+                    status = "stalled"
+                elif current_task:
+                    status = "busy"
+                else:
+                    status = "idle"
 
-            if time_since_activity > self.stall_timeout:
-                status = "stalled"
-            elif current_task:
-                status = "busy"
-            else:
-                status = "idle"
-
-            agent_status[agent_id] = {
-                "status": status,
-                "last_activity": last_activity,
-                "time_since_activity": time_since_activity,
-                "current_task": current_task,
-            }
+                agent_status[agent_id] = {
+                    "status": status,
+                    "last_activity": last_activity,
+                    "time_since_activity": time_since_activity,
+                    "current_task": current_task,
+                }
 
         return agent_status
 

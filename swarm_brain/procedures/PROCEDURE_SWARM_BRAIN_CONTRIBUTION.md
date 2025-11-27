@@ -11,7 +11,9 @@
 
 **Trigger**: After completing work OR discovering something useful OR solving a problem
 
-**Who**: ALL agents (encouraged!)
+**Who**: ALL agents (automatic!)
+
+**Note**: Devlogs automatically contribute to Swarm Brain when posted via `devlog_manager.py`. You can also share specific learnings directly using this procedure.
 
 ---
 

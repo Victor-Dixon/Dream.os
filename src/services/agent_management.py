@@ -18,8 +18,36 @@ from typing import Any
 
 from .agent_vector_utils import format_search_result, generate_recommendations
 from .architectural_models import ArchitecturalPrinciple
-from .vector_database import get_vector_database_service, search_vector_database
-from .vector_database.vector_database_models import SearchQuery
+
+# Optional vector database imports (for Discord bot compatibility)
+try:
+    from src.services.vector_database_service_unified import (
+        get_vector_database_service,
+        search_vector_database,
+    )
+    VECTOR_DB_AVAILABLE = True
+except ImportError:
+    VECTOR_DB_AVAILABLE = False
+    # Stub functions for when vector DB is not available
+    def get_vector_database_service():
+        return None
+    
+    def search_vector_database(query):
+        return []
+
+try:
+    from .vector_database.vector_database_models import SearchQuery
+except ImportError:
+    # Stub SearchQuery if not available
+    from dataclasses import dataclass
+    from typing import Any
+    
+    @dataclass
+    class SearchQuery:
+        query: str
+        limit: int = 10
+        agent_id: str | None = None
+        metadata: dict[str, Any] | None = None
 
 
 class AgentAssignmentManager:

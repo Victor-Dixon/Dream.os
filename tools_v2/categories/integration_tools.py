@@ -280,10 +280,89 @@ Returns: Dependency analysis
             return ToolResult(success=False, output=None, exit_code=1, error_message=str(e))
 
 
+class AuditImportsTool(IToolAdapter):
+    """Audit all imports in a directory to identify broken components."""
+
+    def get_spec(self):
+        from ..adapters.base_adapter import ToolSpec
+
+        return ToolSpec(
+            name="integration.audit_imports",
+            version="1.0.0",
+            category="integration",
+            summary="Audit all imports in a directory to identify broken components",
+            required_params=[],
+            optional_params={"base_path": "src", "output_file": None},
+        )
+
+    def get_help(self) -> str:
+        return """
+Audit Imports
+=============
+Systematically test all Python imports to identify broken components.
+
+Parameters:
+  base_path: Directory to audit (default: src/)
+  output_file: Optional file to save results (default: None)
+  
+Returns: Dictionary with working, broken, and skipped imports
+        """
+
+    def validate(self, params: dict) -> tuple[bool, list[str]]:
+        return True, []
+
+    def execute(self, params: dict, context: dict | None = None) -> ToolResult:
+        """Execute import audit."""
+        try:
+            import sys
+            from pathlib import Path
+
+            # Add tools to path
+            tools_path = Path(__file__).parent.parent.parent / "tools"
+            sys.path.insert(0, str(tools_path))
+
+            # Import audit_imports
+            from audit_imports import audit_imports
+
+            # Get parameters
+            base_path = params.get("base_path", "src")
+            output_file = params.get("output_file")
+
+            # Run audit
+            results = audit_imports(base_path)
+
+            # Save to file if requested
+            if output_file:
+                output_path = Path(output_file)
+                import json
+                output_path.write_text(json.dumps(results, indent=2), encoding="utf-8")
+
+            # Format output
+            output = {
+                "base_path": base_path,
+                "total_files": results.get("total", 0),
+                "working": len(results.get("working", [])),
+                "broken": len(results.get("broken", [])),
+                "skipped": len(results.get("skipped", [])),
+                "broken_details": results.get("broken", [])[:20],  # Limit to first 20
+                "output_file": str(output_file) if output_file else None,
+            }
+
+            return ToolResult(
+                success=len(results.get("broken", [])) == 0,
+                output=output,
+                exit_code=0 if len(results.get("broken", [])) == 0 else 1,
+            )
+
+        except Exception as e:
+            return ToolResult(success=False, output=None, exit_code=1, error_message=str(e))
+
+
 # Registration dictionary
 INTEGRATION_TOOLS = {
     "integration.find-ssot-violations": FindSSOTViolationsAdapter,
     "integration.find-duplicates": FindDuplicateFunctionalityAdapter,
     "integration.find-opportunities": FindIntegrationOpportunitiesAdapter,
     "integration.check-imports": CheckImportDependenciesAdapter,
+    "integration.audit_imports": AuditImportsTool,
 }

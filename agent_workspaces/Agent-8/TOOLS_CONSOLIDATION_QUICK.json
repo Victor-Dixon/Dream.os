@@ -1,0 +1,82 @@
+{
+  "total_tools": 234,
+  "categories": {
+    "other": 94,
+    "monitoring": 33,
+    "captain": 20,
+    "automation": 16,
+    "messaging": 14,
+    "analysis": 45,
+    "consolidation": 15,
+    "validation": 19
+  },
+  "duplicate_groups": 1,
+  "top_consolidation_opportunities": {
+    "other": [
+      "github_create_and_push_repo",
+      "add_remaining_swarm_knowledge",
+      "agent_mission_controller",
+      "agent_orient",
+      "agent_task_finder",
+      "agent_toolbelt_executors",
+      "arch_pattern_validator",
+      "architecture_review",
+      "browser_pool_manager",
+      "cache_invalidator"
+    ],
+    "analysis": [
+      "analysis_cli",
+      "analyze_init_files",
+      "audit_broken_tools",
+      "audit_cleanup",
+      "audit_imports",
+      "audit_project_components",
+      "audit_toolbelt",
+      "cleanup_documentation_reference_scanner",
+      "complexity_analyzer",
+      "complexity_analyzer_cli"
+    ],
+    "monitoring": [
+      "agent_checkin",
+      "agent_fuel_monitor",
+      "agent_status_quick_check",
+      "auto_status_updater",
+      "captain_architectural_checker",
+      "captain_check_agent_status",
+      "captain_gas_check",
+      "check_file_size",
+      "check_snapshot_up_to_date",
+      "discord_status_dashboard"
+    ],
+    "captain": [
+      "agent_fuel_monitor",
+      "captain_architectural_checker",
+      "captain_check_agent_status",
+      "captain_completion_processor",
+      "captain_coordinate_validator",
+      "captain_find_idle_agents",
+      "captain_gas_check",
+      "captain_hard_onboard_agent",
+      "captain_import_validator",
+      "captain_leaderboard_update"
+    ],
+    "validation": [
+      "extension_test_runner",
+      "functionality_tests",
+      "test_consolidation_comprehensive",
+      "test_imports",
+      "test_pyramid_analyzer",
+      "validate_imports",
+      "verify_task",
+      "test_new_tools",
+      "verify_discord_messaging",
+      "verify_discord_running"
+    ]
+  },
+  "duplicates": [
+    [
+      "test_imports",
+      "validate_imports"
+    ]
+  ]
+}

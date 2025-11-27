@@ -1,0 +1,7407 @@
+{
+  "tools": [
+    {
+      "name": "add_license_automation",
+      "path": "tools\\add_license_automation.py",
+      "lines": 165,
+      "description": "GitHub LICENSE Automation",
+      "functions": [
+        "add_license_to_repo",
+        "main"
+      ],
+      "classes": [],
+      "category": "automation",
+      "score": 31
+    },
+    {
+      "name": "add_remaining_swarm_knowledge",
+      "path": "tools\\add_remaining_swarm_knowledge.py",
+      "lines": 198,
+      "description": "Add remaining knowledge from Agent-2 mission to Swarm Brain",
+      "functions": [
+        "main",
+        "generate_dashboard"
+      ],
+      "classes": [
+        "SwarmKPITracker"
+      ],
+      "category": "other",
+      "score": 24
+    },
+    {
+      "name": "add_signal_tools_to_toolbelt",
+      "path": "tools\\add_signal_tools_to_toolbelt.py",
+      "lines": 380,
+      "description": "Add Signal Tools to Toolbelt Registry",
+      "functions": [
+        "add_tools_to_registry",
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 19
+    },
+    {
+      "name": "agent_checkin",
+      "path": "tools\\agent_checkin.py",
+      "lines": 103,
+      "description": "Load JSON from a file path or stdin ('-').",
+      "functions": [
+        "_iso_now",
+        "ensure_dirs",
+        "load_json_arg",
+        "validate_minimum",
+        "append_jsonl"
+      ],
+      "classes": [],
+      "category": "agent",
+      "score": 40
+    },
+    {
+      "name": "agent_fuel_monitor",
+      "path": "tools\\agent_fuel_monitor.py",
+      "lines": 357,
+      "description": "Agent Fuel Monitor - Automated GAS Delivery System",
+      "functions": [
+        "__init__",
+        "load_fuel_log",
+        "save_fuel_log",
+        "check_agent_activity",
+        "needs_refuel"
+      ],
+      "classes": [
+        "AgentFuelMonitor"
+      ],
+      "category": "agent",
+      "score": 35
+    },
+    {
+      "name": "agent_lifecycle_automator",
+      "path": "tools\\agent_lifecycle_automator.py",
+      "lines": 241,
+      "description": "Agent Lifecycle Automator - Complete Automation Suite",
+      "functions": [
+        "__init__",
+        "update",
+        "__init__",
+        "check",
+        "_send"
+      ],
+      "classes": [
+        "StatusUpdater",
+        "PipelineGas",
+        "AgentLifecycleAutomator"
+      ],
+      "category": "agent",
+      "score": 35
+    },
+    {
+      "name": "agent_message_history",
+      "path": "tools\\agent_message_history.py",
+      "lines": 289,
+      "description": "Agent Message History - Recent Message Viewer",
+      "functions": [
+        "__init__",
+        "get_agent_inbox",
+        "get_sent_messages",
+        "_extract_sender",
+        "_extract_recipient"
+      ],
+      "classes": [
+        "MessageHistoryViewer"
+      ],
+      "category": "agent",
+      "score": 35
+    },
+    {
+      "name": "agent_mission_controller",
+      "path": "tools\\agent_mission_controller.py",
+      "lines": 593,
+      "description": "AGENT MISSION CONTROLLER - The Masterpiece Tool",
+      "functions": [
+        "load",
+        "matches_specialty",
+        "__init__",
+        "_load_patterns_db",
+        "analyze_file_for_mission"
+      ],
+      "classes": [
+        "from",
+        "class",
+        "class"
+      ],
+      "category": "agent",
+      "score": 51
+    },
+    {
+      "name": "agent_orient",
+      "path": "tools\\agent_orient.py",
+      "lines": 212,
+      "description": "Agent Orientation Tool - Quick Discovery & Reference",
+      "functions": [
+        "quick_start",
+        "list_systems",
+        "list_tools",
+        "search",
+        "show_help"
+      ],
+      "classes": [],
+      "category": "agent",
+      "score": 35
+    },
+    {
+      "name": "agent_status_quick_check",
+      "path": "tools\\agent_status_quick_check.py",
+      "lines": 297,
+      "description": "Agent Status Quick Check - Fast Agent Progress Verification",
+      "functions": [
+        "__init__",
+        "get_agent_status",
+        "check_devlog_created",
+        "format_quick_status",
+        "format_detailed_status"
+      ],
+      "classes": [
+        "AgentStatusChecker"
+      ],
+      "category": "agent",
+      "score": 55
+    },
+    {
+      "name": "agent_task_finder",
+      "path": "tools\\agent_task_finder.py",
+      "lines": 142,
+      "description": "Agent Task Finder - Discover Available High-Value Tasks",
+      "functions": [
+        "load_project_analysis",
+        "calculate_roi",
+        "find_violations",
+        "rank_tasks_by_roi",
+        "main"
+      ],
+      "classes": [],
+      "category": "agent",
+      "score": 40
+    },
+    {
+      "name": "agent_toolbelt",
+      "path": "tools\\agent_toolbelt.py",
+      "lines": 160,
+      "description": "No description",
+      "functions": [
+        "_append_jsonl",
+        "_iter_jsonl",
+        "brain_note",
+        "brain_search",
+        "brain_share"
+      ],
+      "classes": [
+        "class"
+      ],
+      "category": "agent",
+      "score": 35
+    },
+    {
+      "name": "agent_toolbelt_executors",
+      "path": "tools\\agent_toolbelt_executors.py",
+      "lines": 65,
+      "description": "Agent Toolbelt Command Executors - Facade",
+      "functions": [],
+      "classes": [],
+      "category": "agent",
+      "score": 30
+    },
+    {
+      "name": "analysis_cli",
+      "path": "tools\\analysis_cli.py",
+      "lines": 282,
+      "description": "V2 Compliance Analysis CLI Tool",
+      "functions": [
+        "should_exclude_file",
+        "count_lines",
+        "analyze_python_file",
+        "analyze_project",
+        "ci_gate_check"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 30
+    },
+    {
+      "name": "analyze_development_journey",
+      "path": "tools\\analyze_development_journey.py",
+      "lines": 464,
+      "description": "Development Journey Analyzer - Chronological Blog Journey",
+      "functions": [
+        "load_master_list",
+        "load_chronology",
+        "load_comprehensive_analysis",
+        "analyze_technology_evolution",
+        "analyze_skill_progression"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 26
+    },
+    {
+      "name": "analyze_init_files",
+      "path": "tools\\analyze_init_files.py",
+      "lines": 254,
+      "description": "__init__.py Files Analysis Tool",
+      "functions": [
+        "analyze_init_files",
+        "print_analysis",
+        "generate_consolidation_plan",
+        "main"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 28
+    },
+    {
+      "name": "arch_pattern_validator",
+      "path": "tools\\arch_pattern_validator.py",
+      "lines": 412,
+      "description": "Architecture Pattern Validator",
+      "functions": [
+        "__init__",
+        "validate_file",
+        "_analyze_patterns",
+        "_has_repository_pattern",
+        "_has_service_pattern"
+      ],
+      "classes": [
+        "from",
+        "class",
+        "ArchitectureValidator"
+      ],
+      "category": "quality",
+      "score": 26
+    },
+    {
+      "name": "architectural_pattern_analyzer",
+      "path": "tools\\architectural_pattern_analyzer.py",
+      "lines": 530,
+      "description": "Architectural Pattern Analyzer for Repo Consolidation",
+      "functions": [
+        "load_master_repo_list",
+        "load_repo_analyses",
+        "extract_architectural_patterns",
+        "find_architectural_similarities",
+        "_is_in_existing_plan"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 26
+    },
+    {
+      "name": "architecture_review",
+      "path": "tools\\architecture_review.py",
+      "lines": 128,
+      "description": "Architecture Review Tool",
+      "functions": [
+        "request_review",
+        "provide_review",
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 26
+    },
+    {
+      "name": "audit_broken_tools",
+      "path": "tools\\audit_broken_tools.py",
+      "lines": 402,
+      "description": "Broken Tools Audit - Systematic Testing & Quarantine",
+      "functions": [
+        "__init__",
+        "audit_directory",
+        "_should_skip",
+        "_test_file",
+        "_check_syntax"
+      ],
+      "classes": [
+        "ToolAuditor"
+      ],
+      "category": "analysis",
+      "score": 26
+    },
+    {
+      "name": "audit_cleanup",
+      "path": "tools\\audit_cleanup.py",
+      "lines": 260,
+      "description": "Authoritative cleanup auditor.",
+      "functions": [
+        "load_config",
+        "load_ignores",
+        "path_ignored_by_patterns",
+        "is_ignored_dir",
+        "sha256_file"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 30
+    },
+    {
+      "name": "audit_imports",
+      "path": "tools\\audit_imports.py",
+      "lines": 149,
+      "description": "Project Import Audit Tool",
+      "functions": [
+        "test_import",
+        "file_to_module_path",
+        "audit_imports",
+        "main"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 33
+    },
+    {
+      "name": "audit_project_components",
+      "path": "tools\\audit_project_components.py",
+      "lines": 126,
+      "description": "Project Component Audit - Identify Non-Working Components",
+      "functions": [
+        "test_import",
+        "main"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 29
+    },
+    {
+      "name": "audit_toolbelt",
+      "path": "tools\\audit_toolbelt.py",
+      "lines": 138,
+      "description": "Toolbelt Auditor",
+      "functions": [
+        "audit_all_tools"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 27
+    },
+    {
+      "name": "auto_inbox_processor",
+      "path": "tools\\auto_inbox_processor.py",
+      "lines": 328,
+      "description": "Auto-Inbox Processor",
+      "functions": [
+        "__init__",
+        "parse_message_metadata",
+        "categorize_message",
+        "process_inbox",
+        "process_all_inboxes"
+      ],
+      "classes": [
+        "AutoInboxProcessor"
+      ],
+      "category": "automation",
+      "score": 32
+    },
+    {
+      "name": "auto_remediate_loc",
+      "path": "tools\\auto_remediate_loc.py",
+      "lines": 292,
+      "description": "Auto-Remediate LOC Violations",
+      "functions": [
+        "should_exclude",
+        "count_lines",
+        "analyze_file_loc",
+        "analyze_class_loc",
+        "analyze_function_loc"
+      ],
+      "classes": [
+        "splitting"
+      ],
+      "category": "automation",
+      "score": 32
+    },
+    {
+      "name": "auto_status_updater",
+      "path": "tools\\auto_status_updater.py",
+      "lines": 302,
+      "description": "Auto-Status Updater",
+      "functions": [
+        "__init__",
+        "get_current_status",
+        "update_status",
+        "commit_status_update",
+        "auto_detect_activity"
+      ],
+      "classes": [
+        "AutoStatusUpdater"
+      ],
+      "category": "monitoring",
+      "score": 35
+    },
+    {
+      "name": "auto_workspace_cleanup",
+      "path": "tools\\auto_workspace_cleanup.py",
+      "lines": 244,
+      "description": "Auto-Workspace Cleanup Tool",
+      "functions": [
+        "__init__",
+        "get_file_age",
+        "should_archive",
+        "cleanup_agent_workspace",
+        "cleanup_all_agents"
+      ],
+      "classes": [
+        "AutoWorkspaceCleanup"
+      ],
+      "category": "automation",
+      "score": 32
+    },
+    {
+      "name": "autonomous_leaderboard",
+      "path": "tools\\autonomous_leaderboard.py",
+      "lines": 173,
+      "description": "Autonomous Development Leaderboard",
+      "functions": [
+        "show_leaderboard",
+        "award_achievement_cli",
+        "show_agent_details",
+        "main"
+      ],
+      "classes": [],
+      "category": "automation",
+      "score": 35
+    },
+    {
+      "name": "autonomous_task_engine",
+      "path": "tools\\autonomous_task_engine.py",
+      "lines": 798,
+      "description": "Autonomous Task Engine - The Masterpiece Tool for Swarm Intelligence",
+      "functions": [
+        "__init__",
+        "discover_tasks",
+        "get_optimal_task_for_agent",
+        "get_top_n_tasks_for_agent",
+        "claim_task"
+      ],
+      "classes": [
+        "class",
+        "class",
+        "class"
+      ],
+      "category": "automation",
+      "score": 48
+    },
+    {
+      "name": "browser_pool_manager",
+      "path": "tools\\browser_pool_manager.py",
+      "lines": 268,
+      "description": "Browser Pool Manager - Infrastructure Optimization",
+      "functions": [
+        "is_expired",
+        "mark_used",
+        "__init__",
+        "_create_browser",
+        "acquire"
+      ],
+      "classes": [
+        "from",
+        "class",
+        "BrowserPoolManager"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "cache_invalidator",
+      "path": "tools\\cache_invalidator.py",
+      "lines": 228,
+      "description": "Cache Invalidator Tool - Project Scanner Cache Management",
+      "functions": [
+        "__init__",
+        "check_cache_age",
+        "clear_cache_file",
+        "clear_all_caches",
+        "clear_analysis_chunks"
+      ],
+      "classes": [
+        "CacheInvalidator"
+      ],
+      "category": "quality",
+      "score": 30
+    },
+    {
+      "name": "captain_architectural_checker",
+      "path": "tools\\captain_architectural_checker.py",
+      "lines": 208,
+      "description": "Architectural Checker - Detect Architectural Issues Before Runtime",
+      "functions": [
+        "extract_method_calls",
+        "extract_class_methods",
+        "find_missing_methods",
+        "find_circular_imports",
+        "main"
+      ],
+      "classes": [
+        "definitions",
+        "this"
+      ],
+      "category": "captain",
+      "score": 40
+    },
+    {
+      "name": "captain_check_agent_status",
+      "path": "tools\\captain_check_agent_status.py",
+      "lines": 119,
+      "description": "Captain's Tool: Check All Agent Status",
+      "functions": [
+        "check_all_agent_status"
+      ],
+      "classes": [],
+      "category": "captain",
+      "score": 37
+    },
+    {
+      "name": "captain_completion_processor",
+      "path": "tools\\captain_completion_processor.py",
+      "lines": 148,
+      "description": "Captain Completion Processor - Automated Agent Completion Processing",
+      "functions": [
+        "extract_completion_info",
+        "process_completion"
+      ],
+      "classes": [],
+      "category": "captain",
+      "score": 39
+    },
+    {
+      "name": "captain_coordinate_validator",
+      "path": "tools\\captain_coordinate_validator.py",
+      "lines": 158,
+      "description": "Coordinate Validator - Validate Agent Coordinates Before Operations",
+      "functions": [
+        "load_coordinates",
+        "validate_coordinate",
+        "main"
+      ],
+      "classes": [],
+      "category": "captain",
+      "score": 41
+    },
+    {
+      "name": "captain_find_idle_agents",
+      "path": "tools\\captain_find_idle_agents.py",
+      "lines": 160,
+      "description": "Captain's Tool: Find Idle Agents",
+      "functions": [
+        "find_idle_agents"
+      ],
+      "classes": [],
+      "category": "captain",
+      "score": 37
+    },
+    {
+      "name": "captain_gas_check",
+      "path": "tools\\captain_gas_check.py",
+      "lines": 150,
+      "description": "Captain's Tool: Gas Check (Message Status)",
+      "functions": [
+        "check_agent_gas_levels"
+      ],
+      "classes": [],
+      "category": "captain",
+      "score": 37
+    },
+    {
+      "name": "captain_hard_onboard_agent",
+      "path": "tools\\captain_hard_onboard_agent.py",
+      "lines": 87,
+      "description": "Hard Onboard Any Agent - Quick Captain Tool",
+      "functions": [
+        "main"
+      ],
+      "classes": [],
+      "category": "captain",
+      "score": 37
+    },
+    {
+      "name": "captain_import_validator",
+      "path": "tools\\captain_import_validator.py",
+      "lines": 166,
+      "description": "Import Validator - Detect Missing Imports Before Runtime",
+      "functions": [
+        "extract_imports",
+        "validate_import",
+        "validate_file_imports",
+        "main"
+      ],
+      "classes": [],
+      "category": "captain",
+      "score": 43
+    },
+    {
+      "name": "captain_leaderboard_update",
+      "path": "tools\\captain_leaderboard_update.py",
+      "lines": 122,
+      "description": "Captain's Tool: Quick Leaderboard Update",
+      "functions": [
+        "update_leaderboard"
+      ],
+      "classes": [],
+      "category": "captain",
+      "score": 37
+    },
+    {
+      "name": "captain_message_all_agents",
+      "path": "tools\\captain_message_all_agents.py",
+      "lines": 133,
+      "description": "Captain's Tool: Message All Agents",
+      "functions": [
+        "message_all_agents"
+      ],
+      "classes": [],
+      "category": "captain",
+      "score": 37
+    },
+    {
+      "name": "captain_morning_briefing",
+      "path": "tools\\captain_morning_briefing.py",
+      "lines": 208,
+      "description": "Captain Morning Briefing - Daily Status Summary",
+      "functions": [
+        "get_agent_last_activity",
+        "get_recent_completions",
+        "get_pending_tasks",
+        "main"
+      ],
+      "classes": [],
+      "category": "captain",
+      "score": 38
+    },
+    {
+      "name": "captain_next_task_picker",
+      "path": "tools\\captain_next_task_picker.py",
+      "lines": 81,
+      "description": "Captain's Tool: Next Task Picker (Markov + ROI)",
+      "functions": [
+        "calculate_roi",
+        "get_next_task_for_agent"
+      ],
+      "classes": [],
+      "category": "captain",
+      "score": 39
+    },
+    {
+      "name": "captain_roi_quick_calc",
+      "path": "tools\\captain_roi_quick_calc.py",
+      "lines": 125,
+      "description": "Captain's Tool: Quick ROI Calculator",
+      "functions": [
+        "calculate_task_roi"
+      ],
+      "classes": [],
+      "category": "captain",
+      "score": 37
+    },
+    {
+      "name": "captain_self_message",
+      "path": "tools\\captain_self_message.py",
+      "lines": 115,
+      "description": "Captain's Tool: Self-Message Reminder",
+      "functions": [
+        "send_self_message"
+      ],
+      "classes": [],
+      "category": "captain",
+      "score": 37
+    },
+    {
+      "name": "captain_snapshot",
+      "path": "tools\\captain_snapshot.py",
+      "lines": 112,
+      "description": "Captain Snapshot Tool - Multi-Agent Status Overview",
+      "functions": [
+        "load_agents_index",
+        "calculate_staleness",
+        "get_status_priority",
+        "format_agent_row",
+        "main"
+      ],
+      "classes": [],
+      "category": "captain",
+      "score": 45
+    },
+    {
+      "name": "captain_toolbelt_help",
+      "path": "tools\\captain_toolbelt_help.py",
+      "lines": 100,
+      "description": "Captain's Toolbelt - Quick Reference",
+      "functions": [
+        "show_toolbelt"
+      ],
+      "classes": [],
+      "category": "captain",
+      "score": 37
+    },
+    {
+      "name": "captain_update_log",
+      "path": "tools\\captain_update_log.py",
+      "lines": 60,
+      "description": "Captain's Tool: Quick Log Update",
+      "functions": [
+        "update_captains_log"
+      ],
+      "classes": [],
+      "category": "captain",
+      "score": 37
+    },
+    {
+      "name": "carmyn_workflow_helper",
+      "path": "tools\\carmyn_workflow_helper.py",
+      "lines": 102,
+      "description": "Carmyn Workflow Helper - Discord-First Communication Assistant",
+      "functions": [
+        "post_to_discord",
+        "create_discord_message",
+        "workflow_action",
+        "main"
+      ],
+      "classes": [],
+      "category": "task",
+      "score": 31
+    },
+    {
+      "name": "check_debug_test",
+      "path": "tools\\check_debug_test.py",
+      "lines": 32,
+      "description": "Check for DEBUG TEST message in queue.",
+      "functions": [],
+      "classes": [],
+      "category": "monitoring",
+      "score": 30
+    },
+    {
+      "name": "check_discord_dependencies",
+      "path": "tools\\check_discord_dependencies.py",
+      "lines": 87,
+      "description": "Check Discord Dependencies",
+      "functions": [
+        "check_discord",
+        "check_test_requirements",
+        "main"
+      ],
+      "classes": [],
+      "category": "monitoring",
+      "score": 36
+    },
+    {
+      "name": "check_file_size",
+      "path": "tools\\check_file_size.py",
+      "lines": 48,
+      "description": "File Size Cap Enforcer (Lean Excellence Framework)",
+      "functions": [
+        "check_file_size",
+        "main"
+      ],
+      "classes": [],
+      "category": "monitoring",
+      "score": 34
+    },
+    {
+      "name": "check_queue_errors",
+      "path": "tools\\check_queue_errors.py",
+      "lines": 24,
+      "description": "Check queue errors for diagnostics.",
+      "functions": [],
+      "classes": [],
+      "category": "monitoring",
+      "score": 30
+    },
+    {
+      "name": "check_queue_processor",
+      "path": "tools\\check_queue_processor.py",
+      "lines": 87,
+      "description": "Check Queue Processor Status",
+      "functions": [
+        "check_queue_status"
+      ],
+      "classes": [],
+      "category": "monitoring",
+      "score": 32
+    },
+    {
+      "name": "check_queue_status",
+      "path": "tools\\check_queue_status.py",
+      "lines": 29,
+      "description": "Quick queue status check.",
+      "functions": [],
+      "classes": [],
+      "category": "monitoring",
+      "score": 30
+    },
+    {
+      "name": "check_recent_message",
+      "path": "tools\\check_recent_message.py",
+      "lines": 30,
+      "description": "Check for recent REAL TEST message.",
+      "functions": [],
+      "classes": [],
+      "category": "monitoring",
+      "score": 30
+    },
+    {
+      "name": "check_sensitive_files",
+      "path": "tools\\check_sensitive_files.py",
+      "lines": 169,
+      "description": "Check for Sensitive Files in Git - Security Audit Tool",
+      "functions": [
+        "run_git_command",
+        "check_tracked_sensitive_files",
+        "check_gitignore_coverage",
+        "print_security_report",
+        "main"
+      ],
+      "classes": [],
+      "category": "monitoring",
+      "score": 40
+    },
+    {
+      "name": "check_snapshot_up_to_date",
+      "path": "tools\\check_snapshot_up_to_date.py",
+      "lines": 66,
+      "description": "Pre-push enforcement:",
+      "functions": [
+        "git_diff_has_changes",
+        "main"
+      ],
+      "classes": [],
+      "category": "monitoring",
+      "score": 34
+    },
+    {
+      "name": "check_verbose_test",
+      "path": "tools\\check_verbose_test.py",
+      "lines": 32,
+      "description": "Check for VERBOSE TEST message in queue.",
+      "functions": [],
+      "classes": [],
+      "category": "monitoring",
+      "score": 30
+    },
+    {
+      "name": "classify_tools",
+      "path": "tools\\classify_tools.py",
+      "lines": 274,
+      "description": "Tool Classification Script",
+      "functions": [
+        "__init__",
+        "load_toolbelt_registry",
+        "analyze_tool_file",
+        "classify_tool",
+        "classify_all_tools"
+      ],
+      "classes": [
+        "ToolClassifier"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "cleanup_documentation",
+      "path": "tools\\cleanup_documentation.py",
+      "lines": 44,
+      "description": "Documentation Cleanup Tool - WRAPPER (V2 COMPLIANT)",
+      "functions": [
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 22
+    },
+    {
+      "name": "cleanup_documentation_deduplicator",
+      "path": "tools\\cleanup_documentation_deduplicator.py",
+      "lines": 113,
+      "description": "Documentation Cleanup - Deduplication Module",
+      "functions": [
+        "__init__",
+        "apply_deduplication",
+        "_normalize_topic",
+        "_select_preferred_file"
+      ],
+      "classes": [
+        "DocumentationDeduplicator"
+      ],
+      "category": "other",
+      "score": 28
+    },
+    {
+      "name": "cleanup_documentation_refactored",
+      "path": "tools\\cleanup_documentation_refactored.py",
+      "lines": 337,
+      "description": "Documentation Cleanup Tool - V2 COMPLIANT REFACTORED",
+      "functions": [
+        "__init__",
+        "run",
+        "scan_documentation_files",
+        "apply_criteria",
+        "_is_agent_chatter"
+      ],
+      "classes": [
+        "DocumentationCleanup"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "cleanup_documentation_reference_scanner",
+      "path": "tools\\cleanup_documentation_reference_scanner.py",
+      "lines": 116,
+      "description": "Documentation Cleanup - Reference Scanner Module",
+      "functions": [
+        "__init__",
+        "scan_references",
+        "_glob_files",
+        "_is_referenced"
+      ],
+      "classes": [
+        "ReferenceScanner"
+      ],
+      "category": "analysis",
+      "score": 33
+    },
+    {
+      "name": "complexity_analyzer",
+      "path": "tools\\complexity_analyzer.py",
+      "lines": 37,
+      "description": "Complexity Analyzer - Intelligent Quality Automation",
+      "functions": [],
+      "classes": [],
+      "category": "analysis",
+      "score": 25
+    },
+    {
+      "name": "complexity_analyzer_cli",
+      "path": "tools\\complexity_analyzer_cli.py",
+      "lines": 60,
+      "description": "Complexity Analyzer CLI - Command Line Interface",
+      "functions": [
+        "main"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 27
+    },
+    {
+      "name": "complexity_analyzer_core",
+      "path": "tools\\complexity_analyzer_core.py",
+      "lines": 385,
+      "description": "Complexity Analyzer Core - Main Analysis Logic",
+      "functions": [
+        "has_violations",
+        "__init__",
+        "visit_If",
+        "visit_While",
+        "visit_For"
+      ],
+      "classes": [
+        "from",
+        "class",
+        "class"
+      ],
+      "category": "analysis",
+      "score": 30
+    },
+    {
+      "name": "complexity_analyzer_formatters",
+      "path": "tools\\complexity_analyzer_formatters.py",
+      "lines": 108,
+      "description": "Complexity Analyzer Formatters - Report Formatting",
+      "functions": [
+        "format_report",
+        "generate_summary_report"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 29
+    },
+    {
+      "name": "compliance_dashboard",
+      "path": "tools\\compliance_dashboard.py",
+      "lines": 131,
+      "description": "Compliance Dashboard - Intelligent Quality Automation",
+      "functions": [
+        "__init__",
+        "generate_dashboard",
+        "main"
+      ],
+      "classes": [
+        "ComplianceDashboard"
+      ],
+      "category": "quality",
+      "score": 31
+    },
+    {
+      "name": "compliance_history_database",
+      "path": "tools\\compliance_history_database.py",
+      "lines": 129,
+      "description": "Compliance History Database",
+      "functions": [
+        "__init__",
+        "_ensure_database",
+        "save_snapshot",
+        "get_recent_snapshots",
+        "get_all_snapshots"
+      ],
+      "classes": [
+        "ComplianceDatabase"
+      ],
+      "category": "quality",
+      "score": 35
+    },
+    {
+      "name": "compliance_history_models",
+      "path": "tools\\compliance_history_models.py",
+      "lines": 41,
+      "description": "Compliance History Models",
+      "functions": [],
+      "classes": [
+        "class",
+        "class"
+      ],
+      "category": "quality",
+      "score": 25
+    },
+    {
+      "name": "compliance_history_reports",
+      "path": "tools\\compliance_history_reports.py",
+      "lines": 199,
+      "description": "Compliance History Reports",
+      "functions": [
+        "get_trend_data",
+        "get_week_comparison",
+        "generate_trend_report",
+        "_generate_recommendations",
+        "format_trend_report"
+      ],
+      "classes": [
+        "ComplianceReports"
+      ],
+      "category": "quality",
+      "score": 35
+    },
+    {
+      "name": "compliance_history_tracker",
+      "path": "tools\\compliance_history_tracker.py",
+      "lines": 179,
+      "description": "Compliance History Tracker - Trend Analysis",
+      "functions": [
+        "__init__",
+        "record_snapshot",
+        "get_recent_snapshots",
+        "get_all_snapshots",
+        "get_trend_data"
+      ],
+      "classes": [
+        "ComplianceHistoryTracker"
+      ],
+      "category": "quality",
+      "score": 35
+    },
+    {
+      "name": "comprehensive_project_analyzer",
+      "path": "tools\\comprehensive_project_analyzer.py",
+      "lines": 68,
+      "description": "Comprehensive Project Analyzer - WRAPPER (V2 COMPLIANT)",
+      "functions": [
+        "main"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 27
+    },
+    {
+      "name": "comprehensive_project_analyzer_BACKUP_PRE_REFACTOR",
+      "path": "tools\\comprehensive_project_analyzer_BACKUP_PRE_REFACTOR.py",
+      "lines": 670,
+      "description": "Comprehensive Project Analyzer - Modular Chunked Analysis",
+      "functions": [
+        "__init__",
+        "analyze_python_file",
+        "analyze_js_file",
+        "analyze_md_file",
+        "analyze_yaml_file"
+      ],
+      "classes": [
+        "ProjectAnalyzer"
+      ],
+      "category": "analysis",
+      "score": 26
+    },
+    {
+      "name": "comprehensive_repo_analysis",
+      "path": "tools\\comprehensive_repo_analysis.py",
+      "lines": 406,
+      "description": "Comprehensive Repository Consolidation Analysis",
+      "functions": [
+        "similarity_score",
+        "normalize_name",
+        "extract_repo_number_from_filename",
+        "load_all_repos",
+        "extract_repo_name"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 26
+    },
+    {
+      "name": "comprehensive_tool_runtime_audit",
+      "path": "tools\\comprehensive_tool_runtime_audit.py",
+      "lines": 213,
+      "description": "Comprehensive Tool Runtime Audit",
+      "functions": [
+        "__init__",
+        "is_cli_tool",
+        "main",
+        "test_cli_tool",
+        "audit_directory"
+      ],
+      "classes": [
+        "RuntimeAuditor"
+      ],
+      "category": "analysis",
+      "score": 30
+    },
+    {
+      "name": "consolidation_executor",
+      "path": "tools\\consolidation_executor.py",
+      "lines": 365,
+      "description": "Consolidation Executor",
+      "functions": [
+        "__init__",
+        "_load_phase1_plan",
+        "load_progress",
+        "save_progress",
+        "execute_group"
+      ],
+      "classes": [
+        "ConsolidationExecutor"
+      ],
+      "category": "consolidation",
+      "score": 28
+    },
+    {
+      "name": "consolidation_runner",
+      "path": "tools\\consolidation_runner.py",
+      "lines": 236,
+      "description": "Consolidation Runner - Unified Consolidation Tool",
+      "functions": [
+        "__init__",
+        "analyze_structure",
+        "create_plan",
+        "execute_plan",
+        "list_plans"
+      ],
+      "classes": [
+        "class",
+        "ConsolidationRunner"
+      ],
+      "category": "consolidation",
+      "score": 28
+    },
+    {
+      "name": "coverage_validator",
+      "path": "tools\\coverage_validator.py",
+      "lines": 119,
+      "description": "Coverage Threshold Validator",
+      "functions": [
+        "parse_jest_coverage_summary",
+        "validate_coverage"
+      ],
+      "classes": [],
+      "category": "quality",
+      "score": 29
+    },
+    {
+      "name": "create_tools_debate",
+      "path": "tools\\create_tools_debate.py",
+      "lines": 114,
+      "description": "Create Tools Debate - Rank Toolbelt Tools",
+      "functions": [
+        "get_all_toolbelt_tools",
+        "create_tools_debate",
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 26
+    },
+    {
+      "name": "cross_reference_analysis",
+      "path": "tools\\cross_reference_analysis.py",
+      "lines": 317,
+      "description": "Cross-Reference Analysis Tool - Repo Analysis Improvement",
+      "functions": [
+        "load_master_list",
+        "load_comprehensive_analysis",
+        "load_consolidation_plan",
+        "extract_repo_info_from_tracker",
+        "cross_reference_analysis"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 30
+    },
+    {
+      "name": "cycle_1_backup_partial",
+      "path": "tools\\cycle_1_backup_partial.py",
+      "lines": 208,
+      "description": "Cycle 1: Partial Backup with Error Handling",
+      "functions": [
+        "copy_file_safely",
+        "copy_tree_safely",
+        "create_partial_backup"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 21
+    },
+    {
+      "name": "cycle_1_dependency_progress",
+      "path": "tools\\cycle_1_dependency_progress.py",
+      "lines": 246,
+      "description": "Cycle 1: Dependency Analysis Progress Update",
+      "functions": [
+        "load_coordinates",
+        "load_dependency_summary",
+        "send_dependency_progress_update"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 21
+    },
+    {
+      "name": "dashboard_charts",
+      "path": "tools\\dashboard_charts.py",
+      "lines": 186,
+      "description": "Dashboard Charts - JavaScript Chart Generation",
+      "functions": [
+        "generate_chart_scripts"
+      ],
+      "classes": [
+        "DashboardCharts"
+      ],
+      "category": "other",
+      "score": 22
+    },
+    {
+      "name": "dashboard_data_aggregator",
+      "path": "tools\\dashboard_data_aggregator.py",
+      "lines": 165,
+      "description": "Dashboard Data Aggregator - Compliance Dashboard",
+      "functions": [
+        "aggregate_data",
+        "identify_top_violators",
+        "calculate_overall_score"
+      ],
+      "classes": [
+        "from",
+        "class",
+        "DashboardDataAggregator"
+      ],
+      "category": "other",
+      "score": 26
+    },
+    {
+      "name": "dashboard_html_generator_refactored",
+      "path": "tools\\dashboard_html_generator_refactored.py",
+      "lines": 381,
+      "description": "Dashboard HTML Generator - V2 COMPLIANT REFACTORED VERSION",
+      "functions": [
+        "__init__",
+        "generate_html",
+        "generate_header",
+        "generate_score_card",
+        "generate_metrics_grid"
+      ],
+      "classes": [
+        "DashboardHTMLGenerator",
+        "for"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "dashboard_styles",
+      "path": "tools\\dashboard_styles.py",
+      "lines": 80,
+      "description": "Dashboard Styles - CSS Generation",
+      "functions": [
+        "get_css"
+      ],
+      "classes": [
+        "DashboardStyles"
+      ],
+      "category": "other",
+      "score": 22
+    },
+    {
+      "name": "devlog_auto_poster",
+      "path": "tools\\devlog_auto_poster.py",
+      "lines": 169,
+      "description": "Devlog Auto-Poster - Automated Discord Posting",
+      "functions": [
+        "load_webhook_url",
+        "parse_devlog_file",
+        "main"
+      ],
+      "classes": [],
+      "category": "automation",
+      "score": 33
+    },
+    {
+      "name": "devlog_manager",
+      "path": "tools\\devlog_manager.py",
+      "lines": 335,
+      "description": "Devlog Manager - Automatic Swarm Brain & Discord Integration",
+      "functions": [
+        "__init__",
+        "categorize_devlog",
+        "upload_to_swarm_brain",
+        "post_to_discord",
+        "update_index"
+      ],
+      "classes": [
+        "DevlogManager"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "diagnose_queue",
+      "path": "tools\\diagnose_queue.py",
+      "lines": 69,
+      "description": "Queue Diagnostic Tool",
+      "functions": [
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 22
+    },
+    {
+      "name": "diagnose_stuck_messages",
+      "path": "tools\\diagnose_stuck_messages.py",
+      "lines": 129,
+      "description": "Diagnose and Fix Stuck Messages in Queue",
+      "functions": [
+        "diagnose_stuck_messages"
+      ],
+      "classes": [],
+      "category": "coordination",
+      "score": 25
+    },
+    {
+      "name": "discord_mermaid_renderer",
+      "path": "tools\\discord_mermaid_renderer.py",
+      "lines": 255,
+      "description": "Discord Mermaid Renderer",
+      "functions": [
+        "__init__",
+        "extract_mermaid_diagrams",
+        "render_mermaid_to_image_url",
+        "render_mermaid_to_file",
+        "replace_mermaid_with_images"
+      ],
+      "classes": [
+        "DiscordMermaidRenderer"
+      ],
+      "category": "coordination",
+      "score": 28
+    },
+    {
+      "name": "discord_status_dashboard",
+      "path": "tools\\discord_status_dashboard.py",
+      "lines": 187,
+      "description": "Discord Status Dashboard - WOW Factor Display",
+      "functions": [
+        "create_wow_factor_status",
+        "post_to_discord",
+        "main"
+      ],
+      "classes": [],
+      "category": "monitoring",
+      "score": 36
+    },
+    {
+      "name": "discord_status_updater",
+      "path": "tools\\discord_status_updater.py",
+      "lines": 139,
+      "description": "Discord Status Updater",
+      "functions": [
+        "__init__",
+        "post_status_update",
+        "post_update_sync",
+        "post_infrastructure_update",
+        "main"
+      ],
+      "classes": [
+        "DiscordStatusUpdater"
+      ],
+      "category": "monitoring",
+      "score": 40
+    },
+    {
+      "name": "discord_system_diagnostics",
+      "path": "tools\\discord_system_diagnostics.py",
+      "lines": 297,
+      "description": "Discord System Diagnostics",
+      "functions": [
+        "check_discord_bot_token",
+        "check_discord_library",
+        "check_queue_processor",
+        "check_message_queue",
+        "check_discord_bot_process"
+      ],
+      "classes": [],
+      "category": "coordination",
+      "score": 28
+    },
+    {
+      "name": "doc_templates_achievements",
+      "path": "tools\\doc_templates_achievements.py",
+      "lines": 208,
+      "description": "Documentation Templates - Achievements & Enhancements",
+      "functions": [
+        "create_milestone_template",
+        "create_enhancement_request_template"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 19
+    },
+    {
+      "name": "doc_templates_mission",
+      "path": "tools\\doc_templates_mission.py",
+      "lines": 184,
+      "description": "Documentation Templates - Mission Documentation",
+      "functions": [
+        "create_mission_tracking_template",
+        "create_completion_report_template"
+      ],
+      "classes": [],
+      "category": "task",
+      "score": 27
+    },
+    {
+      "name": "documentation_assistant",
+      "path": "tools\\documentation_assistant.py",
+      "lines": 208,
+      "description": "Documentation Assistant Tool",
+      "functions": [
+        "__init__",
+        "create_mission_doc",
+        "create_completion_report",
+        "create_milestone_doc",
+        "create_enhancement_request"
+      ],
+      "classes": [
+        "DocumentationAssistant"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "duplication_analysis",
+      "path": "tools\\duplication_analysis.py",
+      "lines": 139,
+      "description": "Duplication Analysis - V2 Compliant",
+      "functions": [
+        "analyze_duplicates",
+        "_categorize_function_duplicates",
+        "_categorize_class_duplicates",
+        "_get_file_domain",
+        "_are_contents_identical"
+      ],
+      "classes": [
+        "DuplicationAnalysis",
+        "duplicates"
+      ],
+      "category": "analysis",
+      "score": 35
+    },
+    {
+      "name": "duplication_analyzer",
+      "path": "tools\\duplication_analyzer.py",
+      "lines": 89,
+      "description": "Duplication Analysis Tool - V2 Compliant",
+      "functions": [
+        "__init__",
+        "scan_codebase",
+        "analyze_duplicates",
+        "generate_report",
+        "main"
+      ],
+      "classes": [
+        "DuplicationAnalyzer"
+      ],
+      "category": "analysis",
+      "score": 35
+    },
+    {
+      "name": "duplication_planner",
+      "path": "tools\\duplication_planner.py",
+      "lines": 88,
+      "description": "Duplication Consolidation Planner - V2 Compliant",
+      "functions": [
+        "generate_consolidation_plan",
+        "_choose_target_file",
+        "_get_file_domain"
+      ],
+      "classes": [
+        "DuplicationPlanner"
+      ],
+      "category": "other",
+      "score": 26
+    },
+    {
+      "name": "duplication_reporter",
+      "path": "tools\\duplication_reporter.py",
+      "lines": 66,
+      "description": "Duplication Reporter - V2 Compliant",
+      "functions": [
+        "generate_report"
+      ],
+      "classes": [
+        "DuplicationReporter"
+      ],
+      "category": "other",
+      "score": 22
+    },
+    {
+      "name": "duplication_scanner",
+      "path": "tools\\duplication_scanner.py",
+      "lines": 127,
+      "description": "Duplication Scanner - V2 Compliant",
+      "functions": [
+        "__init__",
+        "scan_codebase",
+        "_should_include_file",
+        "_get_function_hash",
+        "_get_class_hash"
+      ],
+      "classes": [
+        "DuplicationScanner",
+        "content"
+      ],
+      "category": "analysis",
+      "score": 35
+    },
+    {
+      "name": "enhanced_repo_consolidation_analyzer",
+      "path": "tools\\enhanced_repo_consolidation_analyzer.py",
+      "lines": 234,
+      "description": "Enhanced Repository Consolidation Analyzer",
+      "functions": [
+        "similarity_score",
+        "normalize_repo_name",
+        "load_all_75_repos",
+        "extract_repo_number",
+        "extract_repo_name_from_file"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 30
+    },
+    {
+      "name": "extension_test_runner",
+      "path": "tools\\extension_test_runner.py",
+      "lines": 279,
+      "description": "Extension Test Runner - VSCode Extension Testing Tool",
+      "functions": [
+        "__init__",
+        "get_extension_path",
+        "run_tests",
+        "_parse_test_output",
+        "format_results"
+      ],
+      "classes": [
+        "ExtensionTestRunner"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "extract_all_75_repos",
+      "path": "tools\\extract_all_75_repos.py",
+      "lines": 102,
+      "description": "Extract All 75 Repos from GitHub Book",
+      "functions": [
+        "extract_repos_from_book"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 22
+    },
+    {
+      "name": "extraction_roadmap_generator",
+      "path": "tools\\extraction_roadmap_generator.py",
+      "lines": 210,
+      "description": "Extraction Roadmap Generator - Automated Implementation Planning",
+      "functions": [
+        "__init__",
+        "add_pattern",
+        "generate_roadmap",
+        "load_from_analysis_file",
+        "main"
+      ],
+      "classes": [
+        "ExtractionRoadmapGenerator"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "fetch_repo_names",
+      "path": "tools\\fetch_repo_names.py",
+      "lines": 318,
+      "description": "Fetch Repo Names via GitHub API - Repo Analysis Improvement Tool",
+      "functions": [
+        "get_github_token",
+        "fetch_repo_info",
+        "load_master_list",
+        "get_github_owner",
+        "list_all_repos"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "file_refactor_detector",
+      "path": "tools\\file_refactor_detector.py",
+      "lines": 252,
+      "description": "File Refactor Detector - Quick Refactor History Checker",
+      "functions": [
+        "__init__",
+        "check_file",
+        "_check_file_header",
+        "_check_git_history",
+        "_get_warning"
+      ],
+      "classes": [
+        "RefactorDetector"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "find_file_size_violations",
+      "path": "tools\\find_file_size_violations.py",
+      "lines": 57,
+      "description": "Find all Python files exceeding size limits.",
+      "functions": [
+        "count_lines",
+        "scan_violations"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 24
+    },
+    {
+      "name": "fix_stuck_message",
+      "path": "tools\\fix_stuck_message.py",
+      "lines": 47,
+      "description": "Fix Stuck Message in Queue",
+      "functions": [],
+      "classes": [],
+      "category": "coordination",
+      "score": 23
+    },
+    {
+      "name": "functionality_comparison",
+      "path": "tools\\functionality_comparison.py",
+      "lines": 106,
+      "description": "Functionality Comparison Engine",
+      "functions": [
+        "__init__",
+        "save_baseline",
+        "load_baseline",
+        "compare_with_baseline"
+      ],
+      "classes": [
+        "FunctionalityComparison"
+      ],
+      "category": "other",
+      "score": 28
+    },
+    {
+      "name": "functionality_reports",
+      "path": "tools\\functionality_reports.py",
+      "lines": 96,
+      "description": "Functionality Verification Reports",
+      "functions": [
+        "generate_report"
+      ],
+      "classes": [
+        "FunctionalityReports"
+      ],
+      "category": "other",
+      "score": 22
+    },
+    {
+      "name": "functionality_signature",
+      "path": "tools\\functionality_signature.py",
+      "lines": 110,
+      "description": "Functionality Signature Generator",
+      "functions": [
+        "__init__",
+        "generate_signature",
+        "_should_include_file",
+        "extract_functions",
+        "extract_classes"
+      ],
+      "classes": [
+        "SignatureGenerator",
+        "definitions"
+      ],
+      "category": "other",
+      "score": 30
+    },
+    {
+      "name": "functionality_tests",
+      "path": "tools\\functionality_tests.py",
+      "lines": 113,
+      "description": "Functionality Test Runner",
+      "functions": [
+        "run_agent_tests",
+        "_get_agent_tests"
+      ],
+      "classes": [
+        "FunctionalityTests"
+      ],
+      "category": "other",
+      "score": 24
+    },
+    {
+      "name": "functionality_verification",
+      "path": "tools\\functionality_verification.py",
+      "lines": 238,
+      "description": "Functionality Verification Tool",
+      "functions": [
+        "__init__",
+        "generate_functionality_signature",
+        "save_baseline",
+        "load_baseline",
+        "compare_with_baseline"
+      ],
+      "classes": [
+        "FunctionalityVerifier"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "gas_messaging",
+      "path": "tools\\gas_messaging.py",
+      "lines": 71,
+      "description": "Gas Messaging - Extracted from Swarm Orchestrator",
+      "functions": [
+        "send_gas_message"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 22
+    },
+    {
+      "name": "generate_blog_post",
+      "path": "tools\\generate_blog_post.py",
+      "lines": 351,
+      "description": "Blog Post Generator - \"An Honest Review\" Series",
+      "functions": [
+        "__init__",
+        "load_style_guide",
+        "load_repos",
+        "find_overlaps",
+        "_names_similar"
+      ],
+      "classes": [
+        "BlogPostGenerator"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "generate_chronological_blog",
+      "path": "tools\\generate_chronological_blog.py",
+      "lines": 518,
+      "description": "Enhanced Chronological Blog Generator",
+      "functions": [
+        "__init__",
+        "load_style_guide",
+        "load_repos",
+        "load_chronology",
+        "_order_by_chronology"
+      ],
+      "classes": [
+        "ChronologicalBlogGenerator"
+      ],
+      "category": "other",
+      "score": 21
+    },
+    {
+      "name": "generate_utils_catalog",
+      "path": "tools\\generate_utils_catalog.py",
+      "lines": 38,
+      "description": "Generate a concise catalog of functions in all utils directories.",
+      "functions": [],
+      "classes": [],
+      "category": "other",
+      "score": 20
+    },
+    {
+      "name": "generate_utils_catalog_enhanced",
+      "path": "tools\\generate_utils_catalog_enhanced.py",
+      "lines": 244,
+      "description": "Enhanced Utils Function Catalog Generator",
+      "functions": [
+        "__init__",
+        "analyze_file",
+        "scan_utils_directories",
+        "generate_markdown",
+        "main"
+      ],
+      "classes": [
+        "UtilsAnalyzer"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "get_repo_chronology",
+      "path": "tools\\get_repo_chronology.py",
+      "lines": 397,
+      "description": "Repository Chronology Tool - Chronological Blog Journey",
+      "functions": [
+        "get_github_token",
+        "get_github_owner",
+        "fetch_repo_info",
+        "list_all_repos",
+        "load_master_list"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "git_commit_verifier",
+      "path": "tools\\git_commit_verifier.py",
+      "lines": 144,
+      "description": "Git Commit Verifier - Prevent Validation of Non-Existent Work",
+      "functions": [
+        "run_git_command",
+        "check_commits_today",
+        "verify_work_exists",
+        "check_file_exists"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 28
+    },
+    {
+      "name": "git_work_verifier",
+      "path": "tools\\git_work_verifier.py",
+      "lines": 318,
+      "description": "Git Work Verifier - Validates claimed work against actual git commits",
+      "functions": [
+        "__init__",
+        "verify_claim",
+        "_get_git_evidence",
+        "_parse_git_log",
+        "verify_multiple_claims"
+      ],
+      "classes": [
+        "class",
+        "class",
+        "class"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "github_create_and_push_repo",
+      "path": "tools\\github_create_and_push_repo.py",
+      "lines": 340,
+      "description": "GitHub Create Repository and Push Tool",
+      "functions": [
+        "get_github_token",
+        "create_github_repo",
+        "push_to_github",
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 23
+    },
+    {
+      "name": "github_repo_roi_calculator",
+      "path": "tools\\github_repo_roi_calculator.py",
+      "lines": 283,
+      "description": "GitHub Repository ROI Calculator",
+      "functions": [
+        "__post_init__",
+        "calculate_value_score",
+        "calculate_maintenance_effort",
+        "calculate_roi",
+        "analyze_repository_portfolio"
+      ],
+      "classes": [
+        "from",
+        "class"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "hard_onboard_captain",
+      "path": "tools\\hard_onboard_captain.py",
+      "lines": 49,
+      "description": "Hard onboard Captain (Agent-4) with complete session context.",
+      "functions": [
+        "main"
+      ],
+      "classes": [],
+      "category": "captain",
+      "score": 37
+    },
+    {
+      "name": "import_chain_validator",
+      "path": "tools\\import_chain_validator.py",
+      "lines": 138,
+      "description": "Import Chain Validator - Find Missing Imports",
+      "functions": [
+        "test_import",
+        "find_import_statements",
+        "main"
+      ],
+      "classes": [],
+      "category": "quality",
+      "score": 31
+    },
+    {
+      "name": "independent_architecture_review",
+      "path": "tools\\independent_architecture_review.py",
+      "lines": 238,
+      "description": "Agent-2 Independent Architecture Review",
+      "functions": [
+        "get_repo_list",
+        "assess_architecture",
+        "clone_and_assess_deep",
+        "assess_from_audit_data",
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "infrastructure_automation_suite",
+      "path": "tools\\infrastructure_automation_suite.py",
+      "lines": 169,
+      "description": "Infrastructure Automation Suite",
+      "functions": [
+        "__init__",
+        "run_compression_automation",
+        "check_infrastructure_health",
+        "analyze_repo_consolidation",
+        "run_full_automation"
+      ],
+      "classes": [
+        "InfrastructureAutomationSuite"
+      ],
+      "category": "automation",
+      "score": 37
+    },
+    {
+      "name": "infrastructure_health_dashboard",
+      "path": "tools\\infrastructure_health_dashboard.py",
+      "lines": 168,
+      "description": "Infrastructure Health Dashboard",
+      "functions": [
+        "__init__",
+        "check_all_systems",
+        "print_dashboard",
+        "main"
+      ],
+      "classes": [
+        "InfrastructureHealthDashboard"
+      ],
+      "category": "monitoring",
+      "score": 38
+    },
+    {
+      "name": "infrastructure_monitoring_enhancement",
+      "path": "tools\\infrastructure_monitoring_enhancement.py",
+      "lines": 181,
+      "description": "Infrastructure Monitoring Enhancement",
+      "functions": [
+        "__init__",
+        "check_message_compression_health",
+        "check_discord_bot_status",
+        "check_message_history_size",
+        "comprehensive_monitoring_report"
+      ],
+      "classes": [
+        "InfrastructureMonitoringEnhancement"
+      ],
+      "category": "monitoring",
+      "score": 40
+    },
+    {
+      "name": "integration_pattern_analyzer",
+      "path": "tools\\integration_pattern_analyzer.py",
+      "lines": 351,
+      "description": "Integration Pattern Analyzer",
+      "functions": [
+        "load_master_repo_list",
+        "check_repo_integrated_into_v2",
+        "categorize_by_integration_pattern",
+        "find_shared_integration_code",
+        "find_core_system_merges"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 30
+    },
+    {
+      "name": "integrity_validator",
+      "path": "tools\\integrity_validator.py",
+      "lines": 363,
+      "description": "Integrity Validator - Cross-check task claims against actual evidence",
+      "functions": [
+        "__init__",
+        "validate_task_completion",
+        "validate_agent_status",
+        "validate_points_claim",
+        "generate_integrity_report"
+      ],
+      "classes": [
+        "class",
+        "IntegrityValidator"
+      ],
+      "category": "quality",
+      "score": 30
+    },
+    {
+      "name": "markov_8agent_roi_optimizer",
+      "path": "tools\\markov_8agent_roi_optimizer.py",
+      "lines": 364,
+      "description": "8-Agent ROI-Based Task Assignment using Markov Optimization",
+      "functions": [
+        "calculate_roi",
+        "load_top_violations",
+        "create_roi_optimized_tasks",
+        "assign_tasks_to_8_agents"
+      ],
+      "classes": [],
+      "category": "agent",
+      "score": 33
+    },
+    {
+      "name": "markov_cycle_simulator",
+      "path": "tools\\markov_cycle_simulator.py",
+      "lines": 367,
+      "description": "Markov Cycle Simulator - 4-Cycle Efficiency Demonstration",
+      "functions": [
+        "load_real_violations_from_scanner",
+        "create_tasks_from_violations",
+        "simulate_cycle",
+        "run_4_cycle_simulation"
+      ],
+      "classes": [
+        "violations"
+      ],
+      "category": "other",
+      "score": 23
+    },
+    {
+      "name": "markov_task_optimizer",
+      "path": "tools\\markov_task_optimizer.py",
+      "lines": 447,
+      "description": "Markov Chain Task Optimizer - Proof of Concept",
+      "functions": [
+        "__init__",
+        "select_next_task",
+        "_calculate_transition_probability",
+        "_dependency_score",
+        "_agent_match_score"
+      ],
+      "classes": [
+        "from",
+        "class",
+        "class"
+      ],
+      "category": "task",
+      "score": 24
+    },
+    {
+      "name": "memory_leak_scanner",
+      "path": "tools\\memory_leak_scanner.py",
+      "lines": 161,
+      "description": "Memory Leak Scanner - Automated Detection",
+      "functions": [
+        "__init__",
+        "scan_file",
+        "scan_directory",
+        "print_report"
+      ],
+      "classes": [
+        "MemoryLeakPattern"
+      ],
+      "category": "analysis",
+      "score": 33
+    },
+    {
+      "name": "message_compression_automation",
+      "path": "tools\\message_compression_automation.py",
+      "lines": 269,
+      "description": "Message Compression Automation Tool",
+      "functions": [
+        "__init__",
+        "compress_message",
+        "aggregate_messages",
+        "calculate_age_days",
+        "compress_history"
+      ],
+      "classes": [
+        "MessageCompressionAutomation"
+      ],
+      "category": "automation",
+      "score": 32
+    },
+    {
+      "name": "message_compression_health_check",
+      "path": "tools\\message_compression_health_check.py",
+      "lines": 242,
+      "description": "Message Compression Health Check Tool",
+      "functions": [
+        "__init__",
+        "calculate_age_days",
+        "check_compression_health",
+        "print_health_report",
+        "main"
+      ],
+      "classes": [
+        "MessageCompressionHealthCheck"
+      ],
+      "category": "monitoring",
+      "score": 35
+    },
+    {
+      "name": "mission_control",
+      "path": "tools\\mission_control.py",
+      "lines": 392,
+      "description": "Mission Control - Autonomous Mission Generator",
+      "functions": [
+        "__init__",
+        "check_task_queue",
+        "run_scanner_analysis",
+        "consult_swarm_brain",
+        "check_agent_statuses"
+      ],
+      "classes": [
+        "MissionControl"
+      ],
+      "category": "task",
+      "score": 28
+    },
+    {
+      "name": "module_extractor",
+      "path": "tools\\module_extractor.py",
+      "lines": 176,
+      "description": "Module Extractor - Automated Function Extraction",
+      "functions": [
+        "extract_function_or_class",
+        "list_extractable_items",
+        "main"
+      ],
+      "classes": [
+        "from",
+        "code",
+        "to"
+      ],
+      "category": "other",
+      "score": 26
+    },
+    {
+      "name": "opportunity_scanners",
+      "path": "tools\\opportunity_scanners.py",
+      "lines": 177,
+      "description": "Opportunity Scanners - Extracted from Swarm Orchestrator",
+      "functions": [
+        "scan_todo_comments",
+        "scan_v2_violations",
+        "scan_memory_leaks",
+        "scan_linter_errors",
+        "scan_test_coverage"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 35
+    },
+    {
+      "name": "organize_repo_consolidation_groups",
+      "path": "tools\\organize_repo_consolidation_groups.py",
+      "lines": 237,
+      "description": "Repository Consolidation Group Organizer",
+      "functions": [
+        "find_analysis_file",
+        "find_analysis_by_name",
+        "organize_consolidation_groups",
+        "main"
+      ],
+      "classes": [],
+      "category": "consolidation",
+      "score": 26
+    },
+    {
+      "name": "pattern_extractor",
+      "path": "tools\\pattern_extractor.py",
+      "lines": 208,
+      "description": "Pattern Extractor - Semi-Automated Code Pattern Extraction",
+      "functions": [
+        "__init__",
+        "visit_ClassDef",
+        "visit_FunctionDef",
+        "visit_Import",
+        "visit_ImportFrom"
+      ],
+      "classes": [
+        "PatternAnalyzer",
+        "information",
+        "to"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "pattern_suggester",
+      "path": "tools\\pattern_suggester.py",
+      "lines": 155,
+      "description": "Pattern Suggester - Consolidation Pattern Recommendations",
+      "functions": [
+        "analyze_file_structure",
+        "suggest_pattern",
+        "main"
+      ],
+      "classes": [
+        "methods",
+        "per"
+      ],
+      "category": "other",
+      "score": 26
+    },
+    {
+      "name": "pipeline_gas_scheduler",
+      "path": "tools\\pipeline_gas_scheduler.py",
+      "lines": 275,
+      "description": "Pipeline Gas Scheduler - Automated Gas Delivery System",
+      "functions": [
+        "__init__",
+        "check_progress",
+        "_send_gas_at_checkpoint",
+        "_send_early_gas",
+        "_send_safety_gas"
+      ],
+      "classes": [
+        "PipelineGasScheduler"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "post_devlog_to_discord",
+      "path": "tools\\post_devlog_to_discord.py",
+      "lines": 60,
+      "description": "Quick script to post devlog to Discord.",
+      "functions": [
+        "post_devlog_to_discord"
+      ],
+      "classes": [],
+      "category": "coordination",
+      "score": 25
+    },
+    {
+      "name": "post_infrastructure_update_to_discord",
+      "path": "tools\\post_infrastructure_update_to_discord.py",
+      "lines": 147,
+      "description": "Post Infrastructure Update to Discord",
+      "functions": [
+        "post_update_to_discord",
+        "on_ready",
+        "main"
+      ],
+      "classes": [],
+      "category": "coordination",
+      "score": 29
+    },
+    {
+      "name": "progress_auto_tracker",
+      "path": "tools\\progress_auto_tracker.py",
+      "lines": 215,
+      "description": "Progress Auto-Tracker - Automatic status.json Updates",
+      "functions": [
+        "get_recent_commits",
+        "extract_tasks_from_commits",
+        "update_status_json",
+        "show_status",
+        "main"
+      ],
+      "classes": [],
+      "category": "automation",
+      "score": 32
+    },
+    {
+      "name": "projectscanner",
+      "path": "tools\\projectscanner.py",
+      "lines": 85,
+      "description": "Project Scanner - REFACTORED FOR V2 COMPLIANCE",
+      "functions": [
+        "main"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 47
+    },
+    {
+      "name": "projectscanner_core",
+      "path": "tools\\projectscanner_core.py",
+      "lines": 218,
+      "description": "Project Scanner - Core Orchestrator",
+      "functions": [
+        "__init__",
+        "load_cache",
+        "save_cache",
+        "scan_project",
+        "_process_file"
+      ],
+      "classes": [
+        "that",
+        "ProjectScanner"
+      ],
+      "category": "analysis",
+      "score": 50
+    },
+    {
+      "name": "projectscanner_language_analyzer",
+      "path": "tools\\projectscanner_language_analyzer.py",
+      "lines": 287,
+      "description": "Project Scanner - Language Analyzer Module",
+      "functions": [
+        "__init__",
+        "_init_tree_sitter_language",
+        "analyze_file",
+        "_analyze_python",
+        "_analyze_rust"
+      ],
+      "classes": [
+        "LanguageAnalyzer",
+        "methods"
+      ],
+      "category": "analysis",
+      "score": 50
+    },
+    {
+      "name": "projectscanner_legacy_reports",
+      "path": "tools\\projectscanner_legacy_reports.py",
+      "lines": 177,
+      "description": "Project Scanner - Legacy Report Generator",
+      "functions": [
+        "__init__",
+        "load_existing_report",
+        "save_report",
+        "generate_init_files",
+        "load_existing_chatgpt_context"
+      ],
+      "classes": [
+        "ReportGenerator"
+      ],
+      "category": "analysis",
+      "score": 55
+    },
+    {
+      "name": "projectscanner_modular_reports",
+      "path": "tools\\projectscanner_modular_reports.py",
+      "lines": 306,
+      "description": "Project Scanner - Modular Report Generator",
+      "functions": [
+        "__init__",
+        "generate_modular_reports",
+        "_generate_agent_analysis",
+        "_generate_module_analysis",
+        "_generate_file_type_analysis"
+      ],
+      "classes": [
+        "ModularReportGenerator"
+      ],
+      "category": "analysis",
+      "score": 50
+    },
+    {
+      "name": "projectscanner_workers",
+      "path": "tools\\projectscanner_workers.py",
+      "lines": 201,
+      "description": "Project Scanner - Workers & File Processing Module",
+      "functions": [
+        "__init__",
+        "run",
+        "__init__",
+        "add_task",
+        "wait_for_completion"
+      ],
+      "classes": [
+        "BotWorker",
+        "MultibotManager",
+        "FileProcessor"
+      ],
+      "category": "analysis",
+      "score": 50
+    },
+    {
+      "name": "qa_validation_checklist",
+      "path": "tools\\qa_validation_checklist.py",
+      "lines": 145,
+      "description": "QA Validation Checklist - Automated Quality Gates",
+      "functions": [
+        "__init__",
+        "check",
+        "run_git_command",
+        "verify_git_commits_exist",
+        "verify_files_exist"
+      ],
+      "classes": [
+        "QAChecklist"
+      ],
+      "category": "monitoring",
+      "score": 40
+    },
+    {
+      "name": "quarantine_manager",
+      "path": "tools\\quarantine_manager.py",
+      "lines": 236,
+      "description": "Quarantine Manager - Systematic Tool Repair Coordination",
+      "functions": [
+        "__init__",
+        "_load_manifest",
+        "_save_manifest",
+        "quarantine_tool",
+        "list_quarantined"
+      ],
+      "classes": [
+        "QuarantineManager"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "quick_broken_tools_audit",
+      "path": "tools\\quick_broken_tools_audit.py",
+      "lines": 101,
+      "description": "Quick Broken Tools Audit - Fast Syntax-Only Check",
+      "functions": [
+        "check_syntax",
+        "audit_tools",
+        "main"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 31
+    },
+    {
+      "name": "quick_line_counter",
+      "path": "tools\\quick_line_counter.py",
+      "lines": 72,
+      "description": "Quick Line Counter - Essential Tool",
+      "functions": [
+        "count_lines",
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 24
+    },
+    {
+      "name": "quick_linecount",
+      "path": "tools\\quick_linecount.py",
+      "lines": 150,
+      "description": "Quick Line Count Tool",
+      "functions": [
+        "count_lines",
+        "format_result",
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 26
+    },
+    {
+      "name": "quick_metrics",
+      "path": "tools\\quick_metrics.py",
+      "lines": 211,
+      "description": "Quick File Metrics Tool",
+      "functions": [
+        "analyze_file",
+        "analyze_multiple",
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 21
+    },
+    {
+      "name": "real_violation_scanner",
+      "path": "tools\\real_violation_scanner.py",
+      "lines": 144,
+      "description": "Real Violation Scanner - Intelligent Verification",
+      "functions": [
+        "scan_file",
+        "find_real_violations",
+        "verify_claimed_files",
+        "main"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 33
+    },
+    {
+      "name": "refactor_analyzer",
+      "path": "tools\\refactor_analyzer.py",
+      "lines": 157,
+      "description": "Refactor Analyzer - Smart Refactoring Suggestions",
+      "functions": [
+        "analyze_file",
+        "print_report",
+        "main"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 31
+    },
+    {
+      "name": "refactor_validator",
+      "path": "tools\\refactor_validator.py",
+      "lines": 153,
+      "description": "Refactor Validator",
+      "functions": [
+        "validate_imports",
+        "validate_backwards_compatibility",
+        "run_basic_functionality_test",
+        "main"
+      ],
+      "classes": [],
+      "category": "quality",
+      "score": 33
+    },
+    {
+      "name": "refactoring_ast_analyzer",
+      "path": "tools\\refactoring_ast_analyzer.py",
+      "lines": 217,
+      "description": "Refactoring AST Analyzer - Code Structure Analysis",
+      "functions": [
+        "__init__",
+        "analyze_file",
+        "_extract_entities",
+        "_extract_class",
+        "_extract_function"
+      ],
+      "classes": [
+        "ASTAnalyzer",
+        "entity",
+        "category"
+      ],
+      "category": "analysis",
+      "score": 30
+    },
+    {
+      "name": "refactoring_cli",
+      "path": "tools\\refactoring_cli.py",
+      "lines": 140,
+      "description": "Refactoring CLI - Command Line Interface",
+      "functions": [
+        "format_suggestion",
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 24
+    },
+    {
+      "name": "refactoring_models",
+      "path": "tools\\refactoring_models.py",
+      "lines": 55,
+      "description": "Refactoring Models - Data Structures for Refactoring Analysis",
+      "functions": [],
+      "classes": [
+        "class",
+        "class",
+        "class"
+      ],
+      "category": "other",
+      "score": 20
+    },
+    {
+      "name": "refactoring_suggestion_engine",
+      "path": "tools\\refactoring_suggestion_engine.py",
+      "lines": 324,
+      "description": "Refactoring Suggestion Engine - Intelligent Quality Automation",
+      "functions": [
+        "__init__",
+        "suggest_refactoring",
+        "_group_entities_by_category",
+        "_generate_module_suggestions",
+        "_estimate_main_file_size"
+      ],
+      "classes": [
+        "RefactoringSuggestionEngine",
+        "RefactoringSuggestionService"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "refresh_cache",
+      "path": "tools\\refresh_cache.py",
+      "lines": 227,
+      "description": "Cache Refresh Tool",
+      "functions": [
+        "check_cache_freshness",
+        "delete_cache_files",
+        "refresh_cache",
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 23
+    },
+    {
+      "name": "repo_analysis_enforcer",
+      "path": "tools\\repo_analysis_enforcer.py",
+      "lines": 245,
+      "description": "Repository Analysis Completion Enforcer",
+      "functions": [
+        "load_tracker",
+        "save_tracker",
+        "show_status",
+        "get_next_repo",
+        "mark_started"
+      ],
+      "classes": [
+        "Colors"
+      ],
+      "category": "analysis",
+      "score": 30
+    },
+    {
+      "name": "repo_batch_analyzer",
+      "path": "tools\\repo_batch_analyzer.py",
+      "lines": 287,
+      "description": "Repository Batch Analyzer - Automated Multi-Repo Analysis",
+      "functions": [
+        "__init__",
+        "clone_repos",
+        "analyze_repo_metadata",
+        "generate_analysis_report",
+        "batch_analyze"
+      ],
+      "classes": [
+        "RepoBatchAnalyzer"
+      ],
+      "category": "analysis",
+      "score": 30
+    },
+    {
+      "name": "repo_consolidation_analyzer",
+      "path": "tools\\repo_consolidation_analyzer.py",
+      "lines": 267,
+      "description": "Repository Consolidation Analyzer",
+      "functions": [
+        "__init__",
+        "load_all_repos",
+        "_parse_repo_analysis",
+        "_extract_repo_name",
+        "_extract_agent"
+      ],
+      "classes": [
+        "RepoConsolidationAnalyzer"
+      ],
+      "category": "analysis",
+      "score": 30
+    },
+    {
+      "name": "repo_consolidation_continuation",
+      "path": "tools\\repo_consolidation_continuation.py",
+      "lines": 343,
+      "description": "Repository Consolidation Continuation Tool",
+      "functions": [
+        "load_existing_consolidation_plan",
+        "load_master_repo_list",
+        "load_repo_analyses",
+        "find_additional_overlaps",
+        "identify_unanalyzed_consolidation_opportunities"
+      ],
+      "classes": [],
+      "category": "consolidation",
+      "score": 28
+    },
+    {
+      "name": "repo_consolidation_enhanced",
+      "path": "tools\\repo_consolidation_enhanced.py",
+      "lines": 480,
+      "description": "Enhanced Repository Consolidation Analyzer",
+      "functions": [
+        "normalize_repo_name",
+        "similarity_score",
+        "load_master_repo_list",
+        "load_existing_consolidation_plan",
+        "find_duplicate_names"
+      ],
+      "classes": [],
+      "category": "consolidation",
+      "score": 24
+    },
+    {
+      "name": "repo_overlap_analyzer",
+      "path": "tools\\repo_overlap_analyzer.py",
+      "lines": 279,
+      "description": "Repository Overlap Analyzer",
+      "functions": [
+        "similarity_score",
+        "normalize_repo_name",
+        "extract_repo_info_from_devlog",
+        "analyze_overlaps",
+        "main"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 30
+    },
+    {
+      "name": "repo_safe_merge",
+      "path": "tools\\repo_safe_merge.py",
+      "lines": 261,
+      "description": "Safe Repository Merge Script",
+      "functions": [
+        "__init__",
+        "create_backup",
+        "verify_target_repo",
+        "check_conflicts",
+        "generate_merge_report"
+      ],
+      "classes": [
+        "SafeRepoMerge"
+      ],
+      "category": "consolidation",
+      "score": 28
+    },
+    {
+      "name": "reset_all_agent_status",
+      "path": "tools\\reset_all_agent_status.py",
+      "lines": 130,
+      "description": "Reset All Agent Status Files",
+      "functions": [
+        "create_clean_status",
+        "reset_agent_status",
+        "main"
+      ],
+      "classes": [],
+      "category": "agent",
+      "score": 36
+    },
+    {
+      "name": "reset_stuck_messages",
+      "path": "tools\\reset_stuck_messages.py",
+      "lines": 117,
+      "description": "Reset Stuck Messages in Queue",
+      "functions": [
+        "reset_stuck_messages"
+      ],
+      "classes": [],
+      "category": "coordination",
+      "score": 25
+    },
+    {
+      "name": "run_project_scan",
+      "path": "tools\\run_project_scan.py",
+      "lines": 63,
+      "description": "Runs the ProjectScanner from repo root and stages snapshot artifacts.",
+      "functions": [
+        "run"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 22
+    },
+    {
+      "name": "scheduled_compression_automation",
+      "path": "tools\\scheduled_compression_automation.py",
+      "lines": 71,
+      "description": "Scheduled Message Compression Automation",
+      "functions": [
+        "main"
+      ],
+      "classes": [],
+      "category": "automation",
+      "score": 29
+    },
+    {
+      "name": "session_transition_automator",
+      "path": "tools\\session_transition_automator.py",
+      "lines": 493,
+      "description": "Session Transition Automator - Streamline agent session handoff process.",
+      "functions": [
+        "__init__",
+        "generate_passdown",
+        "create_devlog_template",
+        "update_swarm_brain",
+        "update_state_report"
+      ],
+      "classes": [
+        "SessionTransitionAutomator"
+      ],
+      "category": "automation",
+      "score": 28
+    },
+    {
+      "name": "session_transition_helper",
+      "path": "tools\\session_transition_helper.py",
+      "lines": 248,
+      "description": "Session Transition Helper - Productivity Tool.",
+      "functions": [
+        "__init__",
+        "load_status",
+        "save_status",
+        "check_deliverable",
+        "get_completion_summary"
+      ],
+      "classes": [
+        "DeliverableStatus",
+        "SessionTransitionHelper"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "share_mission_to_swarm_brain",
+      "path": "tools\\share_mission_to_swarm_brain.py",
+      "lines": 244,
+      "description": "Share Agent-2's Mission Completion Knowledge to Swarm Brain",
+      "functions": [
+        "main",
+        "monitor_agent_health"
+      ],
+      "classes": [
+        "ContinuousSwarmMonitor"
+      ],
+      "category": "task",
+      "score": 22
+    },
+    {
+      "name": "share_repo_consolidation_findings",
+      "path": "tools\\share_repo_consolidation_findings.py",
+      "lines": 42,
+      "description": "Share repo consolidation findings to Swarm Brain.",
+      "functions": [],
+      "classes": [],
+      "category": "consolidation",
+      "score": 23
+    },
+    {
+      "name": "show_quarantine",
+      "path": "tools\\show_quarantine.py",
+      "lines": 25,
+      "description": "Show quarantined tools summary.",
+      "functions": [],
+      "classes": [],
+      "category": "other",
+      "score": 20
+    },
+    {
+      "name": "soft_onboard_cli",
+      "path": "tools\\soft_onboard_cli.py",
+      "lines": 208,
+      "description": "Soft Onboarding CLI Tool",
+      "functions": [
+        "main",
+        "execute_single_step"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 19
+    },
+    {
+      "name": "ssot_validator",
+      "path": "tools\\ssot_validator.py",
+      "lines": 144,
+      "description": "SSOT Validator - Documentation-Code Alignment Checker",
+      "functions": [
+        "extract_code_flags",
+        "extract_documented_flags",
+        "validate_ssot",
+        "main"
+      ],
+      "classes": [],
+      "category": "quality",
+      "score": 33
+    },
+    {
+      "name": "start_discord_system",
+      "path": "tools\\start_discord_system.py",
+      "lines": 139,
+      "description": "Start Complete Discord System",
+      "functions": [
+        "check_token",
+        "start_discord_bot",
+        "start_queue_processor",
+        "main"
+      ],
+      "classes": [],
+      "category": "coordination",
+      "score": 31
+    },
+    {
+      "name": "start_message_queue_processor",
+      "path": "tools\\start_message_queue_processor.py",
+      "lines": 76,
+      "description": "Start Message Queue Processor",
+      "functions": [
+        "main"
+      ],
+      "classes": [],
+      "category": "coordination",
+      "score": 25
+    },
+    {
+      "name": "start_tools_ranking_debate",
+      "path": "tools\\start_tools_ranking_debate.py",
+      "lines": 71,
+      "description": "Start Tools Ranking Debate - Direct Import",
+      "functions": [
+        "start_tools_ranking_debate"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 22
+    },
+    {
+      "name": "start_tools_ranking_debate_proper",
+      "path": "tools\\start_tools_ranking_debate_proper.py",
+      "lines": 72,
+      "description": "Start Tools Ranking Debate - Proper Format",
+      "functions": [
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 22
+    },
+    {
+      "name": "status_monitor_recovery_trigger",
+      "path": "tools\\status_monitor_recovery_trigger.py",
+      "lines": 187,
+      "description": "Status Monitor Recovery Trigger - Standalone Recovery System",
+      "functions": [
+        "trigger_recovery_for_stalled_agents",
+        "check_agent_status",
+        "main"
+      ],
+      "classes": [],
+      "category": "monitoring",
+      "score": 56
+    },
+    {
+      "name": "swarm_brain_cli",
+      "path": "tools\\swarm_brain_cli.py",
+      "lines": 158,
+      "description": "Swarm Brain CLI - Easy Knowledge Sharing",
+      "functions": [
+        "share_learning",
+        "record_decision",
+        "search_knowledge",
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 28
+    },
+    {
+      "name": "swarm_orchestrator",
+      "path": "tools\\swarm_orchestrator.py",
+      "lines": 316,
+      "description": "Swarm Autonomous Orchestrator - \"The Gas Station\"",
+      "functions": [
+        "__init__",
+        "_discover_agents",
+        "get_agent_status",
+        "scan_all_opportunities",
+        "calculate_roi"
+      ],
+      "classes": [
+        "SwarmOrchestrator"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "swarm_status_broadcaster",
+      "path": "tools\\swarm_status_broadcaster.py",
+      "lines": 300,
+      "description": "Swarm Status Broadcaster - Automated messaging to multiple agents",
+      "functions": [
+        "__init__",
+        "broadcast",
+        "broadcast_c055_status",
+        "broadcast_v2_progress",
+        "broadcast_achievement"
+      ],
+      "classes": [
+        "from",
+        "class",
+        "SwarmStatusBroadcaster"
+      ],
+      "category": "monitoring",
+      "score": 35
+    },
+    {
+      "name": "task_cli",
+      "path": "tools\\task_cli.py",
+      "lines": 87,
+      "description": "Task CLI - Quick Task Management",
+      "functions": [
+        "run_messaging_cli",
+        "main"
+      ],
+      "classes": [],
+      "category": "task",
+      "score": 27
+    },
+    {
+      "name": "task_creator",
+      "path": "tools\\task_creator.py",
+      "lines": 100,
+      "description": "Task Creator - Extracted from Swarm Orchestrator",
+      "functions": [
+        "create_inbox_task"
+      ],
+      "classes": [],
+      "category": "task",
+      "score": 25
+    },
+    {
+      "name": "task_verification_tool",
+      "path": "tools\\task_verification_tool.py",
+      "lines": 250,
+      "description": "Task Verification Tool - Pre-Execution Validator",
+      "functions": [
+        "__init__",
+        "verify_all",
+        "_get_metrics",
+        "_check_git_history",
+        "_check_refactor_headers"
+      ],
+      "classes": [
+        "TaskVerifier"
+      ],
+      "category": "task",
+      "score": 28
+    },
+    {
+      "name": "test_all_discord_commands",
+      "path": "tools\\test_all_discord_commands.py",
+      "lines": 422,
+      "description": "Comprehensive Discord Commands Test Script",
+      "functions": [
+        "__init__",
+        "_mock_send",
+        "get_last_message",
+        "__init__",
+        "test_command_registration"
+      ],
+      "classes": [
+        "MockContext",
+        "DiscordCommandsTester"
+      ],
+      "category": "coordination",
+      "score": 24
+    },
+    {
+      "name": "test_consolidation_comprehensive",
+      "path": "tools\\test_consolidation_comprehensive.py",
+      "lines": 244,
+      "description": "Comprehensive Consolidation Testing - C-048-2",
+      "functions": [
+        "test_discord_consolidation",
+        "test_browser_consolidation",
+        "test_v2_compliance",
+        "test_gui_imports",
+        "main"
+      ],
+      "classes": [],
+      "category": "consolidation",
+      "score": 28
+    },
+    {
+      "name": "test_discord_commands",
+      "path": "tools\\test_discord_commands.py",
+      "lines": 344,
+      "description": "Test Discord Commands - End-to-End Verification",
+      "functions": [
+        "print_test_header",
+        "print_result",
+        "test_message_queue_available",
+        "test_send_message_to_agent",
+        "test_broadcast_message"
+      ],
+      "classes": [],
+      "category": "coordination",
+      "score": 28
+    },
+    {
+      "name": "test_enhanced_activity_detector",
+      "path": "tools\\test_enhanced_activity_detector.py",
+      "lines": 22,
+      "description": "Test enhanced activity detector.",
+      "functions": [],
+      "classes": [],
+      "category": "other",
+      "score": 20
+    },
+    {
+      "name": "test_imports",
+      "path": "tools\\test_imports.py",
+      "lines": 92,
+      "description": "Import Testing Tool - C-007",
+      "functions": [
+        "test_imports"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 22
+    },
+    {
+      "name": "test_new_tools",
+      "path": "tools\\test_new_tools.py",
+      "lines": 142,
+      "description": "Test New Tools - Quick Test Script",
+      "functions": [
+        "test_system_datetime",
+        "test_queue_status",
+        "test_agent_activity",
+        "test_message_history_view",
+        "test_checkin"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 30
+    },
+    {
+      "name": "test_pyramid_analyzer",
+      "path": "tools\\test_pyramid_analyzer.py",
+      "lines": 165,
+      "description": "Test Pyramid Analyzer",
+      "functions": [
+        "count_tests_in_file",
+        "analyze_pyramid",
+        "print_pyramid_report"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 31
+    },
+    {
+      "name": "test_vector_db_service",
+      "path": "tools\\test_vector_db_service.py",
+      "lines": 178,
+      "description": "Basic Test Script for Vector Database Service",
+      "functions": [
+        "test_service_initialization",
+        "test_collection_listing",
+        "test_search_functionality",
+        "test_document_retrieval",
+        "test_export_functionality"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 30
+    },
+    {
+      "name": "toolbelt",
+      "path": "tools\\toolbelt.py",
+      "lines": 120,
+      "description": "CLI Toolbelt - Unified Tool Launcher",
+      "functions": [
+        "create_parser",
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 24
+    },
+    {
+      "name": "toolbelt_help",
+      "path": "tools\\toolbelt_help.py",
+      "lines": 114,
+      "description": "CLI Toolbelt Help System - Auto-Generated Help",
+      "functions": [
+        "__init__",
+        "generate_help",
+        "show_tool_help"
+      ],
+      "classes": [
+        "HelpGenerator"
+      ],
+      "category": "other",
+      "score": 26
+    },
+    {
+      "name": "toolbelt_registry",
+      "path": "tools\\toolbelt_registry.py",
+      "lines": 579,
+      "description": "CLI Toolbelt Registry - Tool Discovery and Registration",
+      "functions": [
+        "__init__",
+        "_build_flag_map",
+        "get_tool_for_flag",
+        "get_tool_by_name",
+        "list_tools"
+      ],
+      "classes": [
+        "ToolRegistry"
+      ],
+      "category": "other",
+      "score": 21
+    },
+    {
+      "name": "toolbelt_runner",
+      "path": "tools\\toolbelt_runner.py",
+      "lines": 95,
+      "description": "CLI Toolbelt Runner - Tool Execution Engine",
+      "functions": [
+        "__init__",
+        "execute_tool"
+      ],
+      "classes": [
+        "ToolRunner"
+      ],
+      "category": "other",
+      "score": 24
+    },
+    {
+      "name": "tools_consolidation_and_ranking_complete",
+      "path": "tools\\tools_consolidation_and_ranking_complete.py",
+      "lines": 493,
+      "description": "Tools Consolidation & Ranking - Complete Analysis",
+      "functions": [
+        "get_all_tools",
+        "_categorize_tool",
+        "find_duplicates",
+        "rank_tools",
+        "generate_consolidation_plan"
+      ],
+      "classes": [],
+      "category": "consolidation",
+      "score": 24
+    },
+    {
+      "name": "tools_ranking_debate",
+      "path": "tools\\tools_ranking_debate.py",
+      "lines": 219,
+      "description": "Tools Ranking Debate - Rank Consolidated Tools Directory",
+      "functions": [
+        "get_all_tools",
+        "start_tools_ranking_debate",
+        "create_tools_ranking_report",
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 23
+    },
+    {
+      "name": "update_master_consolidation_plan",
+      "path": "tools\\update_master_consolidation_plan.py",
+      "lines": 177,
+      "description": "Update Master Consolidation Plan with Comprehensive Analysis",
+      "functions": [
+        "load_comprehensive_analysis",
+        "load_master_plan",
+        "update_plan_with_comprehensive_findings",
+        "main"
+      ],
+      "classes": [],
+      "category": "consolidation",
+      "score": 31
+    },
+    {
+      "name": "update_master_list_from_analysis",
+      "path": "tools\\update_master_list_from_analysis.py",
+      "lines": 123,
+      "description": "Update Master Repo List from Comprehensive Analysis",
+      "functions": [
+        "load_master_list",
+        "update_from_agent8_analysis",
+        "update_from_comprehensive_book",
+        "update_from_vision_analysis",
+        "update_master_list"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 35
+    },
+    {
+      "name": "update_swarm_brain",
+      "path": "tools\\update_swarm_brain.py",
+      "lines": 264,
+      "description": "Swarm Brain Database Updater",
+      "functions": [
+        "__init__",
+        "_load_brain",
+        "add_insight",
+        "add_lesson",
+        "add_recommendation"
+      ],
+      "classes": [
+        "SwarmBrainUpdater"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "v2_checker_cli",
+      "path": "tools\\v2_checker_cli.py",
+      "lines": 77,
+      "description": "V2 Checker CLI - Command Line Interface",
+      "functions": [
+        "main"
+      ],
+      "classes": [],
+      "category": "monitoring",
+      "score": 32
+    },
+    {
+      "name": "v2_checker_formatters",
+      "path": "tools\\v2_checker_formatters.py",
+      "lines": 173,
+      "description": "V2 Checker Formatters - Report Formatting",
+      "functions": [
+        "get_file_suggestions",
+        "get_complexity_analysis",
+        "format_report"
+      ],
+      "classes": [],
+      "category": "monitoring",
+      "score": 36
+    },
+    {
+      "name": "v2_checker_models",
+      "path": "tools\\v2_checker_models.py",
+      "lines": 56,
+      "description": "V2 Checker Models - Data Structures",
+      "functions": [
+        "has_violations",
+        "critical_violations",
+        "major_violations",
+        "minor_violations"
+      ],
+      "classes": [
+        "class",
+        "class"
+      ],
+      "category": "monitoring",
+      "score": 38
+    },
+    {
+      "name": "v2_compliance_batch_checker",
+      "path": "tools\\v2_compliance_batch_checker.py",
+      "lines": 141,
+      "description": "V2 Compliance Batch Checker",
+      "functions": [
+        "check_file_compliance",
+        "batch_check",
+        "print_report"
+      ],
+      "classes": [],
+      "category": "monitoring",
+      "score": 36
+    },
+    {
+      "name": "v2_compliance_checker",
+      "path": "tools\\v2_compliance_checker.py",
+      "lines": 353,
+      "description": "\u26a0\ufe0f DEPRECATED - Use modular v2_checker system instead!",
+      "functions": [
+        "__init__",
+        "scan_file",
+        "_check_ast_compliance",
+        "_get_node_line_count",
+        "scan_directory"
+      ],
+      "classes": [
+        "V2ComplianceChecker"
+      ],
+      "category": "monitoring",
+      "score": 55
+    },
+    {
+      "name": "validate_imports",
+      "path": "tools\\validate_imports.py",
+      "lines": 182,
+      "description": "Import Validator Tool",
+      "functions": [
+        "validate_module_imports",
+        "validate_directory",
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 26
+    },
+    {
+      "name": "verify_discord_messaging",
+      "path": "tools\\verify_discord_messaging.py",
+      "lines": 65,
+      "description": "Verify Discord Messaging System",
+      "functions": [
+        "check_queue_processor",
+        "check_messaging_service",
+        "main"
+      ],
+      "classes": [],
+      "category": "coordination",
+      "score": 29
+    },
+    {
+      "name": "verify_discord_running",
+      "path": "tools\\verify_discord_running.py",
+      "lines": 48,
+      "description": "Quick verification that Discord bot is running and accessible.",
+      "functions": [],
+      "classes": [],
+      "category": "coordination",
+      "score": 23
+    },
+    {
+      "name": "verify_master_list",
+      "path": "tools\\verify_master_list.py",
+      "lines": 153,
+      "description": "Verify Master List Accuracy - Repo Analysis Improvement Tool",
+      "functions": [
+        "load_master_list",
+        "analyze_master_list",
+        "print_analysis_report",
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 28
+    },
+    {
+      "name": "verify_phase1_repos",
+      "path": "tools\\verify_phase1_repos.py",
+      "lines": 246,
+      "description": "Phase 1 Repo Verification Script",
+      "functions": [
+        "load_master_list",
+        "get_repo_info",
+        "verify_phase1_repos",
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 23
+    },
+    {
+      "name": "verify_task",
+      "path": "tools\\verify_task.py",
+      "lines": 234,
+      "description": "Task Verification Tool",
+      "functions": [
+        "get_file_metrics",
+        "search_file",
+        "verify_task",
+        "main"
+      ],
+      "classes": [],
+      "category": "task",
+      "score": 26
+    },
+    {
+      "name": "work_attribution_tool",
+      "path": "tools\\work_attribution_tool.py",
+      "lines": 316,
+      "description": "Work Attribution Tool - Properly attribute work to agents based on git history",
+      "functions": [
+        "__init__",
+        "get_agent_work",
+        "get_all_agents_work",
+        "verify_agent_did_work",
+        "who_worked_on_file"
+      ],
+      "classes": [
+        "class",
+        "WorkAttributionTool"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "work_completion_verifier",
+      "path": "tools\\work_completion_verifier.py",
+      "lines": 318,
+      "description": "Work Completion Verifier - Pre-Message Validation Tool",
+      "functions": [
+        "__init__",
+        "verify_extension",
+        "verify_python_module",
+        "_parse_coverage",
+        "format_results"
+      ],
+      "classes": [
+        "WorkCompletionVerifier"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "workspace_auto_cleaner",
+      "path": "tools\\workspace_auto_cleaner.py",
+      "lines": 226,
+      "description": "Workspace Auto-Cleaner - Automated Workspace Maintenance",
+      "functions": [
+        "archive_old_messages",
+        "clean_temp_files",
+        "organize_workspace",
+        "generate_cleanup_report",
+        "main"
+      ],
+      "classes": [],
+      "category": "automation",
+      "score": 32
+    },
+    {
+      "name": "workspace_health_checker",
+      "path": "tools\\workspace_health_checker.py",
+      "lines": 403,
+      "description": "Workspace Health Checker",
+      "functions": [
+        "check_inbox_health",
+        "check_workspace_cleanliness",
+        "check_status_files_consistency",
+        "identify_issues",
+        "check_devlog_status"
+      ],
+      "classes": [
+        "class"
+      ],
+      "category": "monitoring",
+      "score": 31
+    },
+    {
+      "name": "workspace_health_monitor",
+      "path": "tools\\workspace_health_monitor.py",
+      "lines": 305,
+      "description": "Workspace Health Monitor - Check agent workspace health.",
+      "functions": [
+        "__init__",
+        "check_agent_workspace",
+        "_calculate_health_score",
+        "_generate_recommendations",
+        "check_all_workspaces"
+      ],
+      "classes": [
+        "class",
+        "WorkspaceHealthMonitor"
+      ],
+      "category": "monitoring",
+      "score": 35
+    }
+  ],
+  "ranked": [
+    {
+      "name": "status_monitor_recovery_trigger",
+      "path": "tools\\status_monitor_recovery_trigger.py",
+      "lines": 187,
+      "description": "Status Monitor Recovery Trigger - Standalone Recovery System",
+      "functions": [
+        "trigger_recovery_for_stalled_agents",
+        "check_agent_status",
+        "main"
+      ],
+      "classes": [],
+      "category": "monitoring",
+      "score": 56
+    },
+    {
+      "name": "agent_status_quick_check",
+      "path": "tools\\agent_status_quick_check.py",
+      "lines": 297,
+      "description": "Agent Status Quick Check - Fast Agent Progress Verification",
+      "functions": [
+        "__init__",
+        "get_agent_status",
+        "check_devlog_created",
+        "format_quick_status",
+        "format_detailed_status"
+      ],
+      "classes": [
+        "AgentStatusChecker"
+      ],
+      "category": "agent",
+      "score": 55
+    },
+    {
+      "name": "projectscanner_legacy_reports",
+      "path": "tools\\projectscanner_legacy_reports.py",
+      "lines": 177,
+      "description": "Project Scanner - Legacy Report Generator",
+      "functions": [
+        "__init__",
+        "load_existing_report",
+        "save_report",
+        "generate_init_files",
+        "load_existing_chatgpt_context"
+      ],
+      "classes": [
+        "ReportGenerator"
+      ],
+      "category": "analysis",
+      "score": 55
+    },
+    {
+      "name": "v2_compliance_checker",
+      "path": "tools\\v2_compliance_checker.py",
+      "lines": 353,
+      "description": "\u26a0\ufe0f DEPRECATED - Use modular v2_checker system instead!",
+      "functions": [
+        "__init__",
+        "scan_file",
+        "_check_ast_compliance",
+        "_get_node_line_count",
+        "scan_directory"
+      ],
+      "classes": [
+        "V2ComplianceChecker"
+      ],
+      "category": "monitoring",
+      "score": 55
+    },
+    {
+      "name": "agent_mission_controller",
+      "path": "tools\\agent_mission_controller.py",
+      "lines": 593,
+      "description": "AGENT MISSION CONTROLLER - The Masterpiece Tool",
+      "functions": [
+        "load",
+        "matches_specialty",
+        "__init__",
+        "_load_patterns_db",
+        "analyze_file_for_mission"
+      ],
+      "classes": [
+        "from",
+        "class",
+        "class"
+      ],
+      "category": "agent",
+      "score": 51
+    },
+    {
+      "name": "projectscanner_core",
+      "path": "tools\\projectscanner_core.py",
+      "lines": 218,
+      "description": "Project Scanner - Core Orchestrator",
+      "functions": [
+        "__init__",
+        "load_cache",
+        "save_cache",
+        "scan_project",
+        "_process_file"
+      ],
+      "classes": [
+        "that",
+        "ProjectScanner"
+      ],
+      "category": "analysis",
+      "score": 50
+    },
+    {
+      "name": "projectscanner_language_analyzer",
+      "path": "tools\\projectscanner_language_analyzer.py",
+      "lines": 287,
+      "description": "Project Scanner - Language Analyzer Module",
+      "functions": [
+        "__init__",
+        "_init_tree_sitter_language",
+        "analyze_file",
+        "_analyze_python",
+        "_analyze_rust"
+      ],
+      "classes": [
+        "LanguageAnalyzer",
+        "methods"
+      ],
+      "category": "analysis",
+      "score": 50
+    },
+    {
+      "name": "projectscanner_modular_reports",
+      "path": "tools\\projectscanner_modular_reports.py",
+      "lines": 306,
+      "description": "Project Scanner - Modular Report Generator",
+      "functions": [
+        "__init__",
+        "generate_modular_reports",
+        "_generate_agent_analysis",
+        "_generate_module_analysis",
+        "_generate_file_type_analysis"
+      ],
+      "classes": [
+        "ModularReportGenerator"
+      ],
+      "category": "analysis",
+      "score": 50
+    },
+    {
+      "name": "projectscanner_workers",
+      "path": "tools\\projectscanner_workers.py",
+      "lines": 201,
+      "description": "Project Scanner - Workers & File Processing Module",
+      "functions": [
+        "__init__",
+        "run",
+        "__init__",
+        "add_task",
+        "wait_for_completion"
+      ],
+      "classes": [
+        "BotWorker",
+        "MultibotManager",
+        "FileProcessor"
+      ],
+      "category": "analysis",
+      "score": 50
+    },
+    {
+      "name": "autonomous_task_engine",
+      "path": "tools\\autonomous_task_engine.py",
+      "lines": 798,
+      "description": "Autonomous Task Engine - The Masterpiece Tool for Swarm Intelligence",
+      "functions": [
+        "__init__",
+        "discover_tasks",
+        "get_optimal_task_for_agent",
+        "get_top_n_tasks_for_agent",
+        "claim_task"
+      ],
+      "classes": [
+        "class",
+        "class",
+        "class"
+      ],
+      "category": "automation",
+      "score": 48
+    },
+    {
+      "name": "projectscanner",
+      "path": "tools\\projectscanner.py",
+      "lines": 85,
+      "description": "Project Scanner - REFACTORED FOR V2 COMPLIANCE",
+      "functions": [
+        "main"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 47
+    },
+    {
+      "name": "captain_snapshot",
+      "path": "tools\\captain_snapshot.py",
+      "lines": 112,
+      "description": "Captain Snapshot Tool - Multi-Agent Status Overview",
+      "functions": [
+        "load_agents_index",
+        "calculate_staleness",
+        "get_status_priority",
+        "format_agent_row",
+        "main"
+      ],
+      "classes": [],
+      "category": "captain",
+      "score": 45
+    },
+    {
+      "name": "captain_import_validator",
+      "path": "tools\\captain_import_validator.py",
+      "lines": 166,
+      "description": "Import Validator - Detect Missing Imports Before Runtime",
+      "functions": [
+        "extract_imports",
+        "validate_import",
+        "validate_file_imports",
+        "main"
+      ],
+      "classes": [],
+      "category": "captain",
+      "score": 43
+    },
+    {
+      "name": "captain_coordinate_validator",
+      "path": "tools\\captain_coordinate_validator.py",
+      "lines": 158,
+      "description": "Coordinate Validator - Validate Agent Coordinates Before Operations",
+      "functions": [
+        "load_coordinates",
+        "validate_coordinate",
+        "main"
+      ],
+      "classes": [],
+      "category": "captain",
+      "score": 41
+    },
+    {
+      "name": "agent_checkin",
+      "path": "tools\\agent_checkin.py",
+      "lines": 103,
+      "description": "Load JSON from a file path or stdin ('-').",
+      "functions": [
+        "_iso_now",
+        "ensure_dirs",
+        "load_json_arg",
+        "validate_minimum",
+        "append_jsonl"
+      ],
+      "classes": [],
+      "category": "agent",
+      "score": 40
+    },
+    {
+      "name": "agent_task_finder",
+      "path": "tools\\agent_task_finder.py",
+      "lines": 142,
+      "description": "Agent Task Finder - Discover Available High-Value Tasks",
+      "functions": [
+        "load_project_analysis",
+        "calculate_roi",
+        "find_violations",
+        "rank_tasks_by_roi",
+        "main"
+      ],
+      "classes": [],
+      "category": "agent",
+      "score": 40
+    },
+    {
+      "name": "captain_architectural_checker",
+      "path": "tools\\captain_architectural_checker.py",
+      "lines": 208,
+      "description": "Architectural Checker - Detect Architectural Issues Before Runtime",
+      "functions": [
+        "extract_method_calls",
+        "extract_class_methods",
+        "find_missing_methods",
+        "find_circular_imports",
+        "main"
+      ],
+      "classes": [
+        "definitions",
+        "this"
+      ],
+      "category": "captain",
+      "score": 40
+    },
+    {
+      "name": "check_sensitive_files",
+      "path": "tools\\check_sensitive_files.py",
+      "lines": 169,
+      "description": "Check for Sensitive Files in Git - Security Audit Tool",
+      "functions": [
+        "run_git_command",
+        "check_tracked_sensitive_files",
+        "check_gitignore_coverage",
+        "print_security_report",
+        "main"
+      ],
+      "classes": [],
+      "category": "monitoring",
+      "score": 40
+    },
+    {
+      "name": "discord_status_updater",
+      "path": "tools\\discord_status_updater.py",
+      "lines": 139,
+      "description": "Discord Status Updater",
+      "functions": [
+        "__init__",
+        "post_status_update",
+        "post_update_sync",
+        "post_infrastructure_update",
+        "main"
+      ],
+      "classes": [
+        "DiscordStatusUpdater"
+      ],
+      "category": "monitoring",
+      "score": 40
+    },
+    {
+      "name": "infrastructure_monitoring_enhancement",
+      "path": "tools\\infrastructure_monitoring_enhancement.py",
+      "lines": 181,
+      "description": "Infrastructure Monitoring Enhancement",
+      "functions": [
+        "__init__",
+        "check_message_compression_health",
+        "check_discord_bot_status",
+        "check_message_history_size",
+        "comprehensive_monitoring_report"
+      ],
+      "classes": [
+        "InfrastructureMonitoringEnhancement"
+      ],
+      "category": "monitoring",
+      "score": 40
+    },
+    {
+      "name": "qa_validation_checklist",
+      "path": "tools\\qa_validation_checklist.py",
+      "lines": 145,
+      "description": "QA Validation Checklist - Automated Quality Gates",
+      "functions": [
+        "__init__",
+        "check",
+        "run_git_command",
+        "verify_git_commits_exist",
+        "verify_files_exist"
+      ],
+      "classes": [
+        "QAChecklist"
+      ],
+      "category": "monitoring",
+      "score": 40
+    },
+    {
+      "name": "captain_completion_processor",
+      "path": "tools\\captain_completion_processor.py",
+      "lines": 148,
+      "description": "Captain Completion Processor - Automated Agent Completion Processing",
+      "functions": [
+        "extract_completion_info",
+        "process_completion"
+      ],
+      "classes": [],
+      "category": "captain",
+      "score": 39
+    },
+    {
+      "name": "captain_next_task_picker",
+      "path": "tools\\captain_next_task_picker.py",
+      "lines": 81,
+      "description": "Captain's Tool: Next Task Picker (Markov + ROI)",
+      "functions": [
+        "calculate_roi",
+        "get_next_task_for_agent"
+      ],
+      "classes": [],
+      "category": "captain",
+      "score": 39
+    },
+    {
+      "name": "captain_morning_briefing",
+      "path": "tools\\captain_morning_briefing.py",
+      "lines": 208,
+      "description": "Captain Morning Briefing - Daily Status Summary",
+      "functions": [
+        "get_agent_last_activity",
+        "get_recent_completions",
+        "get_pending_tasks",
+        "main"
+      ],
+      "classes": [],
+      "category": "captain",
+      "score": 38
+    },
+    {
+      "name": "infrastructure_health_dashboard",
+      "path": "tools\\infrastructure_health_dashboard.py",
+      "lines": 168,
+      "description": "Infrastructure Health Dashboard",
+      "functions": [
+        "__init__",
+        "check_all_systems",
+        "print_dashboard",
+        "main"
+      ],
+      "classes": [
+        "InfrastructureHealthDashboard"
+      ],
+      "category": "monitoring",
+      "score": 38
+    },
+    {
+      "name": "v2_checker_models",
+      "path": "tools\\v2_checker_models.py",
+      "lines": 56,
+      "description": "V2 Checker Models - Data Structures",
+      "functions": [
+        "has_violations",
+        "critical_violations",
+        "major_violations",
+        "minor_violations"
+      ],
+      "classes": [
+        "class",
+        "class"
+      ],
+      "category": "monitoring",
+      "score": 38
+    },
+    {
+      "name": "captain_check_agent_status",
+      "path": "tools\\captain_check_agent_status.py",
+      "lines": 119,
+      "description": "Captain's Tool: Check All Agent Status",
+      "functions": [
+        "check_all_agent_status"
+      ],
+      "classes": [],
+      "category": "captain",
+      "score": 37
+    },
+    {
+      "name": "captain_find_idle_agents",
+      "path": "tools\\captain_find_idle_agents.py",
+      "lines": 160,
+      "description": "Captain's Tool: Find Idle Agents",
+      "functions": [
+        "find_idle_agents"
+      ],
+      "classes": [],
+      "category": "captain",
+      "score": 37
+    },
+    {
+      "name": "captain_gas_check",
+      "path": "tools\\captain_gas_check.py",
+      "lines": 150,
+      "description": "Captain's Tool: Gas Check (Message Status)",
+      "functions": [
+        "check_agent_gas_levels"
+      ],
+      "classes": [],
+      "category": "captain",
+      "score": 37
+    },
+    {
+      "name": "captain_hard_onboard_agent",
+      "path": "tools\\captain_hard_onboard_agent.py",
+      "lines": 87,
+      "description": "Hard Onboard Any Agent - Quick Captain Tool",
+      "functions": [
+        "main"
+      ],
+      "classes": [],
+      "category": "captain",
+      "score": 37
+    },
+    {
+      "name": "captain_leaderboard_update",
+      "path": "tools\\captain_leaderboard_update.py",
+      "lines": 122,
+      "description": "Captain's Tool: Quick Leaderboard Update",
+      "functions": [
+        "update_leaderboard"
+      ],
+      "classes": [],
+      "category": "captain",
+      "score": 37
+    },
+    {
+      "name": "captain_message_all_agents",
+      "path": "tools\\captain_message_all_agents.py",
+      "lines": 133,
+      "description": "Captain's Tool: Message All Agents",
+      "functions": [
+        "message_all_agents"
+      ],
+      "classes": [],
+      "category": "captain",
+      "score": 37
+    },
+    {
+      "name": "captain_roi_quick_calc",
+      "path": "tools\\captain_roi_quick_calc.py",
+      "lines": 125,
+      "description": "Captain's Tool: Quick ROI Calculator",
+      "functions": [
+        "calculate_task_roi"
+      ],
+      "classes": [],
+      "category": "captain",
+      "score": 37
+    },
+    {
+      "name": "captain_self_message",
+      "path": "tools\\captain_self_message.py",
+      "lines": 115,
+      "description": "Captain's Tool: Self-Message Reminder",
+      "functions": [
+        "send_self_message"
+      ],
+      "classes": [],
+      "category": "captain",
+      "score": 37
+    },
+    {
+      "name": "captain_toolbelt_help",
+      "path": "tools\\captain_toolbelt_help.py",
+      "lines": 100,
+      "description": "Captain's Toolbelt - Quick Reference",
+      "functions": [
+        "show_toolbelt"
+      ],
+      "classes": [],
+      "category": "captain",
+      "score": 37
+    },
+    {
+      "name": "captain_update_log",
+      "path": "tools\\captain_update_log.py",
+      "lines": 60,
+      "description": "Captain's Tool: Quick Log Update",
+      "functions": [
+        "update_captains_log"
+      ],
+      "classes": [],
+      "category": "captain",
+      "score": 37
+    },
+    {
+      "name": "hard_onboard_captain",
+      "path": "tools\\hard_onboard_captain.py",
+      "lines": 49,
+      "description": "Hard onboard Captain (Agent-4) with complete session context.",
+      "functions": [
+        "main"
+      ],
+      "classes": [],
+      "category": "captain",
+      "score": 37
+    },
+    {
+      "name": "infrastructure_automation_suite",
+      "path": "tools\\infrastructure_automation_suite.py",
+      "lines": 169,
+      "description": "Infrastructure Automation Suite",
+      "functions": [
+        "__init__",
+        "run_compression_automation",
+        "check_infrastructure_health",
+        "analyze_repo_consolidation",
+        "run_full_automation"
+      ],
+      "classes": [
+        "InfrastructureAutomationSuite"
+      ],
+      "category": "automation",
+      "score": 37
+    },
+    {
+      "name": "check_discord_dependencies",
+      "path": "tools\\check_discord_dependencies.py",
+      "lines": 87,
+      "description": "Check Discord Dependencies",
+      "functions": [
+        "check_discord",
+        "check_test_requirements",
+        "main"
+      ],
+      "classes": [],
+      "category": "monitoring",
+      "score": 36
+    },
+    {
+      "name": "discord_status_dashboard",
+      "path": "tools\\discord_status_dashboard.py",
+      "lines": 187,
+      "description": "Discord Status Dashboard - WOW Factor Display",
+      "functions": [
+        "create_wow_factor_status",
+        "post_to_discord",
+        "main"
+      ],
+      "classes": [],
+      "category": "monitoring",
+      "score": 36
+    },
+    {
+      "name": "reset_all_agent_status",
+      "path": "tools\\reset_all_agent_status.py",
+      "lines": 130,
+      "description": "Reset All Agent Status Files",
+      "functions": [
+        "create_clean_status",
+        "reset_agent_status",
+        "main"
+      ],
+      "classes": [],
+      "category": "agent",
+      "score": 36
+    },
+    {
+      "name": "v2_checker_formatters",
+      "path": "tools\\v2_checker_formatters.py",
+      "lines": 173,
+      "description": "V2 Checker Formatters - Report Formatting",
+      "functions": [
+        "get_file_suggestions",
+        "get_complexity_analysis",
+        "format_report"
+      ],
+      "classes": [],
+      "category": "monitoring",
+      "score": 36
+    },
+    {
+      "name": "v2_compliance_batch_checker",
+      "path": "tools\\v2_compliance_batch_checker.py",
+      "lines": 141,
+      "description": "V2 Compliance Batch Checker",
+      "functions": [
+        "check_file_compliance",
+        "batch_check",
+        "print_report"
+      ],
+      "classes": [],
+      "category": "monitoring",
+      "score": 36
+    },
+    {
+      "name": "agent_fuel_monitor",
+      "path": "tools\\agent_fuel_monitor.py",
+      "lines": 357,
+      "description": "Agent Fuel Monitor - Automated GAS Delivery System",
+      "functions": [
+        "__init__",
+        "load_fuel_log",
+        "save_fuel_log",
+        "check_agent_activity",
+        "needs_refuel"
+      ],
+      "classes": [
+        "AgentFuelMonitor"
+      ],
+      "category": "agent",
+      "score": 35
+    },
+    {
+      "name": "agent_lifecycle_automator",
+      "path": "tools\\agent_lifecycle_automator.py",
+      "lines": 241,
+      "description": "Agent Lifecycle Automator - Complete Automation Suite",
+      "functions": [
+        "__init__",
+        "update",
+        "__init__",
+        "check",
+        "_send"
+      ],
+      "classes": [
+        "StatusUpdater",
+        "PipelineGas",
+        "AgentLifecycleAutomator"
+      ],
+      "category": "agent",
+      "score": 35
+    },
+    {
+      "name": "agent_message_history",
+      "path": "tools\\agent_message_history.py",
+      "lines": 289,
+      "description": "Agent Message History - Recent Message Viewer",
+      "functions": [
+        "__init__",
+        "get_agent_inbox",
+        "get_sent_messages",
+        "_extract_sender",
+        "_extract_recipient"
+      ],
+      "classes": [
+        "MessageHistoryViewer"
+      ],
+      "category": "agent",
+      "score": 35
+    },
+    {
+      "name": "agent_orient",
+      "path": "tools\\agent_orient.py",
+      "lines": 212,
+      "description": "Agent Orientation Tool - Quick Discovery & Reference",
+      "functions": [
+        "quick_start",
+        "list_systems",
+        "list_tools",
+        "search",
+        "show_help"
+      ],
+      "classes": [],
+      "category": "agent",
+      "score": 35
+    },
+    {
+      "name": "agent_toolbelt",
+      "path": "tools\\agent_toolbelt.py",
+      "lines": 160,
+      "description": "No description",
+      "functions": [
+        "_append_jsonl",
+        "_iter_jsonl",
+        "brain_note",
+        "brain_search",
+        "brain_share"
+      ],
+      "classes": [
+        "class"
+      ],
+      "category": "agent",
+      "score": 35
+    },
+    {
+      "name": "auto_status_updater",
+      "path": "tools\\auto_status_updater.py",
+      "lines": 302,
+      "description": "Auto-Status Updater",
+      "functions": [
+        "__init__",
+        "get_current_status",
+        "update_status",
+        "commit_status_update",
+        "auto_detect_activity"
+      ],
+      "classes": [
+        "AutoStatusUpdater"
+      ],
+      "category": "monitoring",
+      "score": 35
+    },
+    {
+      "name": "autonomous_leaderboard",
+      "path": "tools\\autonomous_leaderboard.py",
+      "lines": 173,
+      "description": "Autonomous Development Leaderboard",
+      "functions": [
+        "show_leaderboard",
+        "award_achievement_cli",
+        "show_agent_details",
+        "main"
+      ],
+      "classes": [],
+      "category": "automation",
+      "score": 35
+    },
+    {
+      "name": "compliance_history_database",
+      "path": "tools\\compliance_history_database.py",
+      "lines": 129,
+      "description": "Compliance History Database",
+      "functions": [
+        "__init__",
+        "_ensure_database",
+        "save_snapshot",
+        "get_recent_snapshots",
+        "get_all_snapshots"
+      ],
+      "classes": [
+        "ComplianceDatabase"
+      ],
+      "category": "quality",
+      "score": 35
+    },
+    {
+      "name": "compliance_history_reports",
+      "path": "tools\\compliance_history_reports.py",
+      "lines": 199,
+      "description": "Compliance History Reports",
+      "functions": [
+        "get_trend_data",
+        "get_week_comparison",
+        "generate_trend_report",
+        "_generate_recommendations",
+        "format_trend_report"
+      ],
+      "classes": [
+        "ComplianceReports"
+      ],
+      "category": "quality",
+      "score": 35
+    },
+    {
+      "name": "compliance_history_tracker",
+      "path": "tools\\compliance_history_tracker.py",
+      "lines": 179,
+      "description": "Compliance History Tracker - Trend Analysis",
+      "functions": [
+        "__init__",
+        "record_snapshot",
+        "get_recent_snapshots",
+        "get_all_snapshots",
+        "get_trend_data"
+      ],
+      "classes": [
+        "ComplianceHistoryTracker"
+      ],
+      "category": "quality",
+      "score": 35
+    },
+    {
+      "name": "duplication_analysis",
+      "path": "tools\\duplication_analysis.py",
+      "lines": 139,
+      "description": "Duplication Analysis - V2 Compliant",
+      "functions": [
+        "analyze_duplicates",
+        "_categorize_function_duplicates",
+        "_categorize_class_duplicates",
+        "_get_file_domain",
+        "_are_contents_identical"
+      ],
+      "classes": [
+        "DuplicationAnalysis",
+        "duplicates"
+      ],
+      "category": "analysis",
+      "score": 35
+    },
+    {
+      "name": "duplication_analyzer",
+      "path": "tools\\duplication_analyzer.py",
+      "lines": 89,
+      "description": "Duplication Analysis Tool - V2 Compliant",
+      "functions": [
+        "__init__",
+        "scan_codebase",
+        "analyze_duplicates",
+        "generate_report",
+        "main"
+      ],
+      "classes": [
+        "DuplicationAnalyzer"
+      ],
+      "category": "analysis",
+      "score": 35
+    },
+    {
+      "name": "duplication_scanner",
+      "path": "tools\\duplication_scanner.py",
+      "lines": 127,
+      "description": "Duplication Scanner - V2 Compliant",
+      "functions": [
+        "__init__",
+        "scan_codebase",
+        "_should_include_file",
+        "_get_function_hash",
+        "_get_class_hash"
+      ],
+      "classes": [
+        "DuplicationScanner",
+        "content"
+      ],
+      "category": "analysis",
+      "score": 35
+    },
+    {
+      "name": "message_compression_health_check",
+      "path": "tools\\message_compression_health_check.py",
+      "lines": 242,
+      "description": "Message Compression Health Check Tool",
+      "functions": [
+        "__init__",
+        "calculate_age_days",
+        "check_compression_health",
+        "print_health_report",
+        "main"
+      ],
+      "classes": [
+        "MessageCompressionHealthCheck"
+      ],
+      "category": "monitoring",
+      "score": 35
+    },
+    {
+      "name": "opportunity_scanners",
+      "path": "tools\\opportunity_scanners.py",
+      "lines": 177,
+      "description": "Opportunity Scanners - Extracted from Swarm Orchestrator",
+      "functions": [
+        "scan_todo_comments",
+        "scan_v2_violations",
+        "scan_memory_leaks",
+        "scan_linter_errors",
+        "scan_test_coverage"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 35
+    },
+    {
+      "name": "swarm_status_broadcaster",
+      "path": "tools\\swarm_status_broadcaster.py",
+      "lines": 300,
+      "description": "Swarm Status Broadcaster - Automated messaging to multiple agents",
+      "functions": [
+        "__init__",
+        "broadcast",
+        "broadcast_c055_status",
+        "broadcast_v2_progress",
+        "broadcast_achievement"
+      ],
+      "classes": [
+        "from",
+        "class",
+        "SwarmStatusBroadcaster"
+      ],
+      "category": "monitoring",
+      "score": 35
+    },
+    {
+      "name": "update_master_list_from_analysis",
+      "path": "tools\\update_master_list_from_analysis.py",
+      "lines": 123,
+      "description": "Update Master Repo List from Comprehensive Analysis",
+      "functions": [
+        "load_master_list",
+        "update_from_agent8_analysis",
+        "update_from_comprehensive_book",
+        "update_from_vision_analysis",
+        "update_master_list"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 35
+    },
+    {
+      "name": "workspace_health_monitor",
+      "path": "tools\\workspace_health_monitor.py",
+      "lines": 305,
+      "description": "Workspace Health Monitor - Check agent workspace health.",
+      "functions": [
+        "__init__",
+        "check_agent_workspace",
+        "_calculate_health_score",
+        "_generate_recommendations",
+        "check_all_workspaces"
+      ],
+      "classes": [
+        "class",
+        "WorkspaceHealthMonitor"
+      ],
+      "category": "monitoring",
+      "score": 35
+    },
+    {
+      "name": "check_file_size",
+      "path": "tools\\check_file_size.py",
+      "lines": 48,
+      "description": "File Size Cap Enforcer (Lean Excellence Framework)",
+      "functions": [
+        "check_file_size",
+        "main"
+      ],
+      "classes": [],
+      "category": "monitoring",
+      "score": 34
+    },
+    {
+      "name": "check_snapshot_up_to_date",
+      "path": "tools\\check_snapshot_up_to_date.py",
+      "lines": 66,
+      "description": "Pre-push enforcement:",
+      "functions": [
+        "git_diff_has_changes",
+        "main"
+      ],
+      "classes": [],
+      "category": "monitoring",
+      "score": 34
+    },
+    {
+      "name": "audit_imports",
+      "path": "tools\\audit_imports.py",
+      "lines": 149,
+      "description": "Project Import Audit Tool",
+      "functions": [
+        "test_import",
+        "file_to_module_path",
+        "audit_imports",
+        "main"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 33
+    },
+    {
+      "name": "cleanup_documentation_reference_scanner",
+      "path": "tools\\cleanup_documentation_reference_scanner.py",
+      "lines": 116,
+      "description": "Documentation Cleanup - Reference Scanner Module",
+      "functions": [
+        "__init__",
+        "scan_references",
+        "_glob_files",
+        "_is_referenced"
+      ],
+      "classes": [
+        "ReferenceScanner"
+      ],
+      "category": "analysis",
+      "score": 33
+    },
+    {
+      "name": "devlog_auto_poster",
+      "path": "tools\\devlog_auto_poster.py",
+      "lines": 169,
+      "description": "Devlog Auto-Poster - Automated Discord Posting",
+      "functions": [
+        "load_webhook_url",
+        "parse_devlog_file",
+        "main"
+      ],
+      "classes": [],
+      "category": "automation",
+      "score": 33
+    },
+    {
+      "name": "markov_8agent_roi_optimizer",
+      "path": "tools\\markov_8agent_roi_optimizer.py",
+      "lines": 364,
+      "description": "8-Agent ROI-Based Task Assignment using Markov Optimization",
+      "functions": [
+        "calculate_roi",
+        "load_top_violations",
+        "create_roi_optimized_tasks",
+        "assign_tasks_to_8_agents"
+      ],
+      "classes": [],
+      "category": "agent",
+      "score": 33
+    },
+    {
+      "name": "memory_leak_scanner",
+      "path": "tools\\memory_leak_scanner.py",
+      "lines": 161,
+      "description": "Memory Leak Scanner - Automated Detection",
+      "functions": [
+        "__init__",
+        "scan_file",
+        "scan_directory",
+        "print_report"
+      ],
+      "classes": [
+        "MemoryLeakPattern"
+      ],
+      "category": "analysis",
+      "score": 33
+    },
+    {
+      "name": "real_violation_scanner",
+      "path": "tools\\real_violation_scanner.py",
+      "lines": 144,
+      "description": "Real Violation Scanner - Intelligent Verification",
+      "functions": [
+        "scan_file",
+        "find_real_violations",
+        "verify_claimed_files",
+        "main"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 33
+    },
+    {
+      "name": "refactor_validator",
+      "path": "tools\\refactor_validator.py",
+      "lines": 153,
+      "description": "Refactor Validator",
+      "functions": [
+        "validate_imports",
+        "validate_backwards_compatibility",
+        "run_basic_functionality_test",
+        "main"
+      ],
+      "classes": [],
+      "category": "quality",
+      "score": 33
+    },
+    {
+      "name": "ssot_validator",
+      "path": "tools\\ssot_validator.py",
+      "lines": 144,
+      "description": "SSOT Validator - Documentation-Code Alignment Checker",
+      "functions": [
+        "extract_code_flags",
+        "extract_documented_flags",
+        "validate_ssot",
+        "main"
+      ],
+      "classes": [],
+      "category": "quality",
+      "score": 33
+    },
+    {
+      "name": "auto_inbox_processor",
+      "path": "tools\\auto_inbox_processor.py",
+      "lines": 328,
+      "description": "Auto-Inbox Processor",
+      "functions": [
+        "__init__",
+        "parse_message_metadata",
+        "categorize_message",
+        "process_inbox",
+        "process_all_inboxes"
+      ],
+      "classes": [
+        "AutoInboxProcessor"
+      ],
+      "category": "automation",
+      "score": 32
+    },
+    {
+      "name": "auto_remediate_loc",
+      "path": "tools\\auto_remediate_loc.py",
+      "lines": 292,
+      "description": "Auto-Remediate LOC Violations",
+      "functions": [
+        "should_exclude",
+        "count_lines",
+        "analyze_file_loc",
+        "analyze_class_loc",
+        "analyze_function_loc"
+      ],
+      "classes": [
+        "splitting"
+      ],
+      "category": "automation",
+      "score": 32
+    },
+    {
+      "name": "auto_workspace_cleanup",
+      "path": "tools\\auto_workspace_cleanup.py",
+      "lines": 244,
+      "description": "Auto-Workspace Cleanup Tool",
+      "functions": [
+        "__init__",
+        "get_file_age",
+        "should_archive",
+        "cleanup_agent_workspace",
+        "cleanup_all_agents"
+      ],
+      "classes": [
+        "AutoWorkspaceCleanup"
+      ],
+      "category": "automation",
+      "score": 32
+    },
+    {
+      "name": "check_queue_processor",
+      "path": "tools\\check_queue_processor.py",
+      "lines": 87,
+      "description": "Check Queue Processor Status",
+      "functions": [
+        "check_queue_status"
+      ],
+      "classes": [],
+      "category": "monitoring",
+      "score": 32
+    },
+    {
+      "name": "message_compression_automation",
+      "path": "tools\\message_compression_automation.py",
+      "lines": 269,
+      "description": "Message Compression Automation Tool",
+      "functions": [
+        "__init__",
+        "compress_message",
+        "aggregate_messages",
+        "calculate_age_days",
+        "compress_history"
+      ],
+      "classes": [
+        "MessageCompressionAutomation"
+      ],
+      "category": "automation",
+      "score": 32
+    },
+    {
+      "name": "progress_auto_tracker",
+      "path": "tools\\progress_auto_tracker.py",
+      "lines": 215,
+      "description": "Progress Auto-Tracker - Automatic status.json Updates",
+      "functions": [
+        "get_recent_commits",
+        "extract_tasks_from_commits",
+        "update_status_json",
+        "show_status",
+        "main"
+      ],
+      "classes": [],
+      "category": "automation",
+      "score": 32
+    },
+    {
+      "name": "v2_checker_cli",
+      "path": "tools\\v2_checker_cli.py",
+      "lines": 77,
+      "description": "V2 Checker CLI - Command Line Interface",
+      "functions": [
+        "main"
+      ],
+      "classes": [],
+      "category": "monitoring",
+      "score": 32
+    },
+    {
+      "name": "workspace_auto_cleaner",
+      "path": "tools\\workspace_auto_cleaner.py",
+      "lines": 226,
+      "description": "Workspace Auto-Cleaner - Automated Workspace Maintenance",
+      "functions": [
+        "archive_old_messages",
+        "clean_temp_files",
+        "organize_workspace",
+        "generate_cleanup_report",
+        "main"
+      ],
+      "classes": [],
+      "category": "automation",
+      "score": 32
+    },
+    {
+      "name": "add_license_automation",
+      "path": "tools\\add_license_automation.py",
+      "lines": 165,
+      "description": "GitHub LICENSE Automation",
+      "functions": [
+        "add_license_to_repo",
+        "main"
+      ],
+      "classes": [],
+      "category": "automation",
+      "score": 31
+    },
+    {
+      "name": "carmyn_workflow_helper",
+      "path": "tools\\carmyn_workflow_helper.py",
+      "lines": 102,
+      "description": "Carmyn Workflow Helper - Discord-First Communication Assistant",
+      "functions": [
+        "post_to_discord",
+        "create_discord_message",
+        "workflow_action",
+        "main"
+      ],
+      "classes": [],
+      "category": "task",
+      "score": 31
+    },
+    {
+      "name": "compliance_dashboard",
+      "path": "tools\\compliance_dashboard.py",
+      "lines": 131,
+      "description": "Compliance Dashboard - Intelligent Quality Automation",
+      "functions": [
+        "__init__",
+        "generate_dashboard",
+        "main"
+      ],
+      "classes": [
+        "ComplianceDashboard"
+      ],
+      "category": "quality",
+      "score": 31
+    },
+    {
+      "name": "import_chain_validator",
+      "path": "tools\\import_chain_validator.py",
+      "lines": 138,
+      "description": "Import Chain Validator - Find Missing Imports",
+      "functions": [
+        "test_import",
+        "find_import_statements",
+        "main"
+      ],
+      "classes": [],
+      "category": "quality",
+      "score": 31
+    },
+    {
+      "name": "quick_broken_tools_audit",
+      "path": "tools\\quick_broken_tools_audit.py",
+      "lines": 101,
+      "description": "Quick Broken Tools Audit - Fast Syntax-Only Check",
+      "functions": [
+        "check_syntax",
+        "audit_tools",
+        "main"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 31
+    },
+    {
+      "name": "refactor_analyzer",
+      "path": "tools\\refactor_analyzer.py",
+      "lines": 157,
+      "description": "Refactor Analyzer - Smart Refactoring Suggestions",
+      "functions": [
+        "analyze_file",
+        "print_report",
+        "main"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 31
+    },
+    {
+      "name": "start_discord_system",
+      "path": "tools\\start_discord_system.py",
+      "lines": 139,
+      "description": "Start Complete Discord System",
+      "functions": [
+        "check_token",
+        "start_discord_bot",
+        "start_queue_processor",
+        "main"
+      ],
+      "classes": [],
+      "category": "coordination",
+      "score": 31
+    },
+    {
+      "name": "test_pyramid_analyzer",
+      "path": "tools\\test_pyramid_analyzer.py",
+      "lines": 165,
+      "description": "Test Pyramid Analyzer",
+      "functions": [
+        "count_tests_in_file",
+        "analyze_pyramid",
+        "print_pyramid_report"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 31
+    },
+    {
+      "name": "update_master_consolidation_plan",
+      "path": "tools\\update_master_consolidation_plan.py",
+      "lines": 177,
+      "description": "Update Master Consolidation Plan with Comprehensive Analysis",
+      "functions": [
+        "load_comprehensive_analysis",
+        "load_master_plan",
+        "update_plan_with_comprehensive_findings",
+        "main"
+      ],
+      "classes": [],
+      "category": "consolidation",
+      "score": 31
+    },
+    {
+      "name": "workspace_health_checker",
+      "path": "tools\\workspace_health_checker.py",
+      "lines": 403,
+      "description": "Workspace Health Checker",
+      "functions": [
+        "check_inbox_health",
+        "check_workspace_cleanliness",
+        "check_status_files_consistency",
+        "identify_issues",
+        "check_devlog_status"
+      ],
+      "classes": [
+        "class"
+      ],
+      "category": "monitoring",
+      "score": 31
+    },
+    {
+      "name": "agent_toolbelt_executors",
+      "path": "tools\\agent_toolbelt_executors.py",
+      "lines": 65,
+      "description": "Agent Toolbelt Command Executors - Facade",
+      "functions": [],
+      "classes": [],
+      "category": "agent",
+      "score": 30
+    },
+    {
+      "name": "analysis_cli",
+      "path": "tools\\analysis_cli.py",
+      "lines": 282,
+      "description": "V2 Compliance Analysis CLI Tool",
+      "functions": [
+        "should_exclude_file",
+        "count_lines",
+        "analyze_python_file",
+        "analyze_project",
+        "ci_gate_check"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 30
+    },
+    {
+      "name": "audit_cleanup",
+      "path": "tools\\audit_cleanup.py",
+      "lines": 260,
+      "description": "Authoritative cleanup auditor.",
+      "functions": [
+        "load_config",
+        "load_ignores",
+        "path_ignored_by_patterns",
+        "is_ignored_dir",
+        "sha256_file"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 30
+    },
+    {
+      "name": "cache_invalidator",
+      "path": "tools\\cache_invalidator.py",
+      "lines": 228,
+      "description": "Cache Invalidator Tool - Project Scanner Cache Management",
+      "functions": [
+        "__init__",
+        "check_cache_age",
+        "clear_cache_file",
+        "clear_all_caches",
+        "clear_analysis_chunks"
+      ],
+      "classes": [
+        "CacheInvalidator"
+      ],
+      "category": "quality",
+      "score": 30
+    },
+    {
+      "name": "check_debug_test",
+      "path": "tools\\check_debug_test.py",
+      "lines": 32,
+      "description": "Check for DEBUG TEST message in queue.",
+      "functions": [],
+      "classes": [],
+      "category": "monitoring",
+      "score": 30
+    },
+    {
+      "name": "check_queue_errors",
+      "path": "tools\\check_queue_errors.py",
+      "lines": 24,
+      "description": "Check queue errors for diagnostics.",
+      "functions": [],
+      "classes": [],
+      "category": "monitoring",
+      "score": 30
+    },
+    {
+      "name": "check_queue_status",
+      "path": "tools\\check_queue_status.py",
+      "lines": 29,
+      "description": "Quick queue status check.",
+      "functions": [],
+      "classes": [],
+      "category": "monitoring",
+      "score": 30
+    },
+    {
+      "name": "check_recent_message",
+      "path": "tools\\check_recent_message.py",
+      "lines": 30,
+      "description": "Check for recent REAL TEST message.",
+      "functions": [],
+      "classes": [],
+      "category": "monitoring",
+      "score": 30
+    },
+    {
+      "name": "check_verbose_test",
+      "path": "tools\\check_verbose_test.py",
+      "lines": 32,
+      "description": "Check for VERBOSE TEST message in queue.",
+      "functions": [],
+      "classes": [],
+      "category": "monitoring",
+      "score": 30
+    },
+    {
+      "name": "complexity_analyzer_core",
+      "path": "tools\\complexity_analyzer_core.py",
+      "lines": 385,
+      "description": "Complexity Analyzer Core - Main Analysis Logic",
+      "functions": [
+        "has_violations",
+        "__init__",
+        "visit_If",
+        "visit_While",
+        "visit_For"
+      ],
+      "classes": [
+        "from",
+        "class",
+        "class"
+      ],
+      "category": "analysis",
+      "score": 30
+    },
+    {
+      "name": "comprehensive_tool_runtime_audit",
+      "path": "tools\\comprehensive_tool_runtime_audit.py",
+      "lines": 213,
+      "description": "Comprehensive Tool Runtime Audit",
+      "functions": [
+        "__init__",
+        "is_cli_tool",
+        "main",
+        "test_cli_tool",
+        "audit_directory"
+      ],
+      "classes": [
+        "RuntimeAuditor"
+      ],
+      "category": "analysis",
+      "score": 30
+    },
+    {
+      "name": "cross_reference_analysis",
+      "path": "tools\\cross_reference_analysis.py",
+      "lines": 317,
+      "description": "Cross-Reference Analysis Tool - Repo Analysis Improvement",
+      "functions": [
+        "load_master_list",
+        "load_comprehensive_analysis",
+        "load_consolidation_plan",
+        "extract_repo_info_from_tracker",
+        "cross_reference_analysis"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 30
+    },
+    {
+      "name": "enhanced_repo_consolidation_analyzer",
+      "path": "tools\\enhanced_repo_consolidation_analyzer.py",
+      "lines": 234,
+      "description": "Enhanced Repository Consolidation Analyzer",
+      "functions": [
+        "similarity_score",
+        "normalize_repo_name",
+        "load_all_75_repos",
+        "extract_repo_number",
+        "extract_repo_name_from_file"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 30
+    },
+    {
+      "name": "functionality_signature",
+      "path": "tools\\functionality_signature.py",
+      "lines": 110,
+      "description": "Functionality Signature Generator",
+      "functions": [
+        "__init__",
+        "generate_signature",
+        "_should_include_file",
+        "extract_functions",
+        "extract_classes"
+      ],
+      "classes": [
+        "SignatureGenerator",
+        "definitions"
+      ],
+      "category": "other",
+      "score": 30
+    },
+    {
+      "name": "integration_pattern_analyzer",
+      "path": "tools\\integration_pattern_analyzer.py",
+      "lines": 351,
+      "description": "Integration Pattern Analyzer",
+      "functions": [
+        "load_master_repo_list",
+        "check_repo_integrated_into_v2",
+        "categorize_by_integration_pattern",
+        "find_shared_integration_code",
+        "find_core_system_merges"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 30
+    },
+    {
+      "name": "integrity_validator",
+      "path": "tools\\integrity_validator.py",
+      "lines": 363,
+      "description": "Integrity Validator - Cross-check task claims against actual evidence",
+      "functions": [
+        "__init__",
+        "validate_task_completion",
+        "validate_agent_status",
+        "validate_points_claim",
+        "generate_integrity_report"
+      ],
+      "classes": [
+        "class",
+        "IntegrityValidator"
+      ],
+      "category": "quality",
+      "score": 30
+    },
+    {
+      "name": "refactoring_ast_analyzer",
+      "path": "tools\\refactoring_ast_analyzer.py",
+      "lines": 217,
+      "description": "Refactoring AST Analyzer - Code Structure Analysis",
+      "functions": [
+        "__init__",
+        "analyze_file",
+        "_extract_entities",
+        "_extract_class",
+        "_extract_function"
+      ],
+      "classes": [
+        "ASTAnalyzer",
+        "entity",
+        "category"
+      ],
+      "category": "analysis",
+      "score": 30
+    },
+    {
+      "name": "repo_analysis_enforcer",
+      "path": "tools\\repo_analysis_enforcer.py",
+      "lines": 245,
+      "description": "Repository Analysis Completion Enforcer",
+      "functions": [
+        "load_tracker",
+        "save_tracker",
+        "show_status",
+        "get_next_repo",
+        "mark_started"
+      ],
+      "classes": [
+        "Colors"
+      ],
+      "category": "analysis",
+      "score": 30
+    },
+    {
+      "name": "repo_batch_analyzer",
+      "path": "tools\\repo_batch_analyzer.py",
+      "lines": 287,
+      "description": "Repository Batch Analyzer - Automated Multi-Repo Analysis",
+      "functions": [
+        "__init__",
+        "clone_repos",
+        "analyze_repo_metadata",
+        "generate_analysis_report",
+        "batch_analyze"
+      ],
+      "classes": [
+        "RepoBatchAnalyzer"
+      ],
+      "category": "analysis",
+      "score": 30
+    },
+    {
+      "name": "repo_consolidation_analyzer",
+      "path": "tools\\repo_consolidation_analyzer.py",
+      "lines": 267,
+      "description": "Repository Consolidation Analyzer",
+      "functions": [
+        "__init__",
+        "load_all_repos",
+        "_parse_repo_analysis",
+        "_extract_repo_name",
+        "_extract_agent"
+      ],
+      "classes": [
+        "RepoConsolidationAnalyzer"
+      ],
+      "category": "analysis",
+      "score": 30
+    },
+    {
+      "name": "repo_overlap_analyzer",
+      "path": "tools\\repo_overlap_analyzer.py",
+      "lines": 279,
+      "description": "Repository Overlap Analyzer",
+      "functions": [
+        "similarity_score",
+        "normalize_repo_name",
+        "extract_repo_info_from_devlog",
+        "analyze_overlaps",
+        "main"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 30
+    },
+    {
+      "name": "test_new_tools",
+      "path": "tools\\test_new_tools.py",
+      "lines": 142,
+      "description": "Test New Tools - Quick Test Script",
+      "functions": [
+        "test_system_datetime",
+        "test_queue_status",
+        "test_agent_activity",
+        "test_message_history_view",
+        "test_checkin"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 30
+    },
+    {
+      "name": "test_vector_db_service",
+      "path": "tools\\test_vector_db_service.py",
+      "lines": 178,
+      "description": "Basic Test Script for Vector Database Service",
+      "functions": [
+        "test_service_initialization",
+        "test_collection_listing",
+        "test_search_functionality",
+        "test_document_retrieval",
+        "test_export_functionality"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 30
+    },
+    {
+      "name": "audit_project_components",
+      "path": "tools\\audit_project_components.py",
+      "lines": 126,
+      "description": "Project Component Audit - Identify Non-Working Components",
+      "functions": [
+        "test_import",
+        "main"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 29
+    },
+    {
+      "name": "complexity_analyzer_formatters",
+      "path": "tools\\complexity_analyzer_formatters.py",
+      "lines": 108,
+      "description": "Complexity Analyzer Formatters - Report Formatting",
+      "functions": [
+        "format_report",
+        "generate_summary_report"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 29
+    },
+    {
+      "name": "coverage_validator",
+      "path": "tools\\coverage_validator.py",
+      "lines": 119,
+      "description": "Coverage Threshold Validator",
+      "functions": [
+        "parse_jest_coverage_summary",
+        "validate_coverage"
+      ],
+      "classes": [],
+      "category": "quality",
+      "score": 29
+    },
+    {
+      "name": "post_infrastructure_update_to_discord",
+      "path": "tools\\post_infrastructure_update_to_discord.py",
+      "lines": 147,
+      "description": "Post Infrastructure Update to Discord",
+      "functions": [
+        "post_update_to_discord",
+        "on_ready",
+        "main"
+      ],
+      "classes": [],
+      "category": "coordination",
+      "score": 29
+    },
+    {
+      "name": "scheduled_compression_automation",
+      "path": "tools\\scheduled_compression_automation.py",
+      "lines": 71,
+      "description": "Scheduled Message Compression Automation",
+      "functions": [
+        "main"
+      ],
+      "classes": [],
+      "category": "automation",
+      "score": 29
+    },
+    {
+      "name": "verify_discord_messaging",
+      "path": "tools\\verify_discord_messaging.py",
+      "lines": 65,
+      "description": "Verify Discord Messaging System",
+      "functions": [
+        "check_queue_processor",
+        "check_messaging_service",
+        "main"
+      ],
+      "classes": [],
+      "category": "coordination",
+      "score": 29
+    },
+    {
+      "name": "analyze_init_files",
+      "path": "tools\\analyze_init_files.py",
+      "lines": 254,
+      "description": "__init__.py Files Analysis Tool",
+      "functions": [
+        "analyze_init_files",
+        "print_analysis",
+        "generate_consolidation_plan",
+        "main"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 28
+    },
+    {
+      "name": "cleanup_documentation_deduplicator",
+      "path": "tools\\cleanup_documentation_deduplicator.py",
+      "lines": 113,
+      "description": "Documentation Cleanup - Deduplication Module",
+      "functions": [
+        "__init__",
+        "apply_deduplication",
+        "_normalize_topic",
+        "_select_preferred_file"
+      ],
+      "classes": [
+        "DocumentationDeduplicator"
+      ],
+      "category": "other",
+      "score": 28
+    },
+    {
+      "name": "consolidation_executor",
+      "path": "tools\\consolidation_executor.py",
+      "lines": 365,
+      "description": "Consolidation Executor",
+      "functions": [
+        "__init__",
+        "_load_phase1_plan",
+        "load_progress",
+        "save_progress",
+        "execute_group"
+      ],
+      "classes": [
+        "ConsolidationExecutor"
+      ],
+      "category": "consolidation",
+      "score": 28
+    },
+    {
+      "name": "consolidation_runner",
+      "path": "tools\\consolidation_runner.py",
+      "lines": 236,
+      "description": "Consolidation Runner - Unified Consolidation Tool",
+      "functions": [
+        "__init__",
+        "analyze_structure",
+        "create_plan",
+        "execute_plan",
+        "list_plans"
+      ],
+      "classes": [
+        "class",
+        "ConsolidationRunner"
+      ],
+      "category": "consolidation",
+      "score": 28
+    },
+    {
+      "name": "discord_mermaid_renderer",
+      "path": "tools\\discord_mermaid_renderer.py",
+      "lines": 255,
+      "description": "Discord Mermaid Renderer",
+      "functions": [
+        "__init__",
+        "extract_mermaid_diagrams",
+        "render_mermaid_to_image_url",
+        "render_mermaid_to_file",
+        "replace_mermaid_with_images"
+      ],
+      "classes": [
+        "DiscordMermaidRenderer"
+      ],
+      "category": "coordination",
+      "score": 28
+    },
+    {
+      "name": "discord_system_diagnostics",
+      "path": "tools\\discord_system_diagnostics.py",
+      "lines": 297,
+      "description": "Discord System Diagnostics",
+      "functions": [
+        "check_discord_bot_token",
+        "check_discord_library",
+        "check_queue_processor",
+        "check_message_queue",
+        "check_discord_bot_process"
+      ],
+      "classes": [],
+      "category": "coordination",
+      "score": 28
+    },
+    {
+      "name": "functionality_comparison",
+      "path": "tools\\functionality_comparison.py",
+      "lines": 106,
+      "description": "Functionality Comparison Engine",
+      "functions": [
+        "__init__",
+        "save_baseline",
+        "load_baseline",
+        "compare_with_baseline"
+      ],
+      "classes": [
+        "FunctionalityComparison"
+      ],
+      "category": "other",
+      "score": 28
+    },
+    {
+      "name": "git_commit_verifier",
+      "path": "tools\\git_commit_verifier.py",
+      "lines": 144,
+      "description": "Git Commit Verifier - Prevent Validation of Non-Existent Work",
+      "functions": [
+        "run_git_command",
+        "check_commits_today",
+        "verify_work_exists",
+        "check_file_exists"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 28
+    },
+    {
+      "name": "mission_control",
+      "path": "tools\\mission_control.py",
+      "lines": 392,
+      "description": "Mission Control - Autonomous Mission Generator",
+      "functions": [
+        "__init__",
+        "check_task_queue",
+        "run_scanner_analysis",
+        "consult_swarm_brain",
+        "check_agent_statuses"
+      ],
+      "classes": [
+        "MissionControl"
+      ],
+      "category": "task",
+      "score": 28
+    },
+    {
+      "name": "repo_consolidation_continuation",
+      "path": "tools\\repo_consolidation_continuation.py",
+      "lines": 343,
+      "description": "Repository Consolidation Continuation Tool",
+      "functions": [
+        "load_existing_consolidation_plan",
+        "load_master_repo_list",
+        "load_repo_analyses",
+        "find_additional_overlaps",
+        "identify_unanalyzed_consolidation_opportunities"
+      ],
+      "classes": [],
+      "category": "consolidation",
+      "score": 28
+    },
+    {
+      "name": "repo_safe_merge",
+      "path": "tools\\repo_safe_merge.py",
+      "lines": 261,
+      "description": "Safe Repository Merge Script",
+      "functions": [
+        "__init__",
+        "create_backup",
+        "verify_target_repo",
+        "check_conflicts",
+        "generate_merge_report"
+      ],
+      "classes": [
+        "SafeRepoMerge"
+      ],
+      "category": "consolidation",
+      "score": 28
+    },
+    {
+      "name": "session_transition_automator",
+      "path": "tools\\session_transition_automator.py",
+      "lines": 493,
+      "description": "Session Transition Automator - Streamline agent session handoff process.",
+      "functions": [
+        "__init__",
+        "generate_passdown",
+        "create_devlog_template",
+        "update_swarm_brain",
+        "update_state_report"
+      ],
+      "classes": [
+        "SessionTransitionAutomator"
+      ],
+      "category": "automation",
+      "score": 28
+    },
+    {
+      "name": "swarm_brain_cli",
+      "path": "tools\\swarm_brain_cli.py",
+      "lines": 158,
+      "description": "Swarm Brain CLI - Easy Knowledge Sharing",
+      "functions": [
+        "share_learning",
+        "record_decision",
+        "search_knowledge",
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 28
+    },
+    {
+      "name": "task_verification_tool",
+      "path": "tools\\task_verification_tool.py",
+      "lines": 250,
+      "description": "Task Verification Tool - Pre-Execution Validator",
+      "functions": [
+        "__init__",
+        "verify_all",
+        "_get_metrics",
+        "_check_git_history",
+        "_check_refactor_headers"
+      ],
+      "classes": [
+        "TaskVerifier"
+      ],
+      "category": "task",
+      "score": 28
+    },
+    {
+      "name": "test_consolidation_comprehensive",
+      "path": "tools\\test_consolidation_comprehensive.py",
+      "lines": 244,
+      "description": "Comprehensive Consolidation Testing - C-048-2",
+      "functions": [
+        "test_discord_consolidation",
+        "test_browser_consolidation",
+        "test_v2_compliance",
+        "test_gui_imports",
+        "main"
+      ],
+      "classes": [],
+      "category": "consolidation",
+      "score": 28
+    },
+    {
+      "name": "test_discord_commands",
+      "path": "tools\\test_discord_commands.py",
+      "lines": 344,
+      "description": "Test Discord Commands - End-to-End Verification",
+      "functions": [
+        "print_test_header",
+        "print_result",
+        "test_message_queue_available",
+        "test_send_message_to_agent",
+        "test_broadcast_message"
+      ],
+      "classes": [],
+      "category": "coordination",
+      "score": 28
+    },
+    {
+      "name": "verify_master_list",
+      "path": "tools\\verify_master_list.py",
+      "lines": 153,
+      "description": "Verify Master List Accuracy - Repo Analysis Improvement Tool",
+      "functions": [
+        "load_master_list",
+        "analyze_master_list",
+        "print_analysis_report",
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 28
+    },
+    {
+      "name": "audit_toolbelt",
+      "path": "tools\\audit_toolbelt.py",
+      "lines": 138,
+      "description": "Toolbelt Auditor",
+      "functions": [
+        "audit_all_tools"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 27
+    },
+    {
+      "name": "complexity_analyzer_cli",
+      "path": "tools\\complexity_analyzer_cli.py",
+      "lines": 60,
+      "description": "Complexity Analyzer CLI - Command Line Interface",
+      "functions": [
+        "main"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 27
+    },
+    {
+      "name": "comprehensive_project_analyzer",
+      "path": "tools\\comprehensive_project_analyzer.py",
+      "lines": 68,
+      "description": "Comprehensive Project Analyzer - WRAPPER (V2 COMPLIANT)",
+      "functions": [
+        "main"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 27
+    },
+    {
+      "name": "doc_templates_mission",
+      "path": "tools\\doc_templates_mission.py",
+      "lines": 184,
+      "description": "Documentation Templates - Mission Documentation",
+      "functions": [
+        "create_mission_tracking_template",
+        "create_completion_report_template"
+      ],
+      "classes": [],
+      "category": "task",
+      "score": 27
+    },
+    {
+      "name": "task_cli",
+      "path": "tools\\task_cli.py",
+      "lines": 87,
+      "description": "Task CLI - Quick Task Management",
+      "functions": [
+        "run_messaging_cli",
+        "main"
+      ],
+      "classes": [],
+      "category": "task",
+      "score": 27
+    },
+    {
+      "name": "analyze_development_journey",
+      "path": "tools\\analyze_development_journey.py",
+      "lines": 464,
+      "description": "Development Journey Analyzer - Chronological Blog Journey",
+      "functions": [
+        "load_master_list",
+        "load_chronology",
+        "load_comprehensive_analysis",
+        "analyze_technology_evolution",
+        "analyze_skill_progression"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 26
+    },
+    {
+      "name": "arch_pattern_validator",
+      "path": "tools\\arch_pattern_validator.py",
+      "lines": 412,
+      "description": "Architecture Pattern Validator",
+      "functions": [
+        "__init__",
+        "validate_file",
+        "_analyze_patterns",
+        "_has_repository_pattern",
+        "_has_service_pattern"
+      ],
+      "classes": [
+        "from",
+        "class",
+        "ArchitectureValidator"
+      ],
+      "category": "quality",
+      "score": 26
+    },
+    {
+      "name": "architectural_pattern_analyzer",
+      "path": "tools\\architectural_pattern_analyzer.py",
+      "lines": 530,
+      "description": "Architectural Pattern Analyzer for Repo Consolidation",
+      "functions": [
+        "load_master_repo_list",
+        "load_repo_analyses",
+        "extract_architectural_patterns",
+        "find_architectural_similarities",
+        "_is_in_existing_plan"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 26
+    },
+    {
+      "name": "architecture_review",
+      "path": "tools\\architecture_review.py",
+      "lines": 128,
+      "description": "Architecture Review Tool",
+      "functions": [
+        "request_review",
+        "provide_review",
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 26
+    },
+    {
+      "name": "audit_broken_tools",
+      "path": "tools\\audit_broken_tools.py",
+      "lines": 402,
+      "description": "Broken Tools Audit - Systematic Testing & Quarantine",
+      "functions": [
+        "__init__",
+        "audit_directory",
+        "_should_skip",
+        "_test_file",
+        "_check_syntax"
+      ],
+      "classes": [
+        "ToolAuditor"
+      ],
+      "category": "analysis",
+      "score": 26
+    },
+    {
+      "name": "comprehensive_project_analyzer_BACKUP_PRE_REFACTOR",
+      "path": "tools\\comprehensive_project_analyzer_BACKUP_PRE_REFACTOR.py",
+      "lines": 670,
+      "description": "Comprehensive Project Analyzer - Modular Chunked Analysis",
+      "functions": [
+        "__init__",
+        "analyze_python_file",
+        "analyze_js_file",
+        "analyze_md_file",
+        "analyze_yaml_file"
+      ],
+      "classes": [
+        "ProjectAnalyzer"
+      ],
+      "category": "analysis",
+      "score": 26
+    },
+    {
+      "name": "comprehensive_repo_analysis",
+      "path": "tools\\comprehensive_repo_analysis.py",
+      "lines": 406,
+      "description": "Comprehensive Repository Consolidation Analysis",
+      "functions": [
+        "similarity_score",
+        "normalize_name",
+        "extract_repo_number_from_filename",
+        "load_all_repos",
+        "extract_repo_name"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 26
+    },
+    {
+      "name": "create_tools_debate",
+      "path": "tools\\create_tools_debate.py",
+      "lines": 114,
+      "description": "Create Tools Debate - Rank Toolbelt Tools",
+      "functions": [
+        "get_all_toolbelt_tools",
+        "create_tools_debate",
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 26
+    },
+    {
+      "name": "dashboard_data_aggregator",
+      "path": "tools\\dashboard_data_aggregator.py",
+      "lines": 165,
+      "description": "Dashboard Data Aggregator - Compliance Dashboard",
+      "functions": [
+        "aggregate_data",
+        "identify_top_violators",
+        "calculate_overall_score"
+      ],
+      "classes": [
+        "from",
+        "class",
+        "DashboardDataAggregator"
+      ],
+      "category": "other",
+      "score": 26
+    },
+    {
+      "name": "duplication_planner",
+      "path": "tools\\duplication_planner.py",
+      "lines": 88,
+      "description": "Duplication Consolidation Planner - V2 Compliant",
+      "functions": [
+        "generate_consolidation_plan",
+        "_choose_target_file",
+        "_get_file_domain"
+      ],
+      "classes": [
+        "DuplicationPlanner"
+      ],
+      "category": "other",
+      "score": 26
+    },
+    {
+      "name": "module_extractor",
+      "path": "tools\\module_extractor.py",
+      "lines": 176,
+      "description": "Module Extractor - Automated Function Extraction",
+      "functions": [
+        "extract_function_or_class",
+        "list_extractable_items",
+        "main"
+      ],
+      "classes": [
+        "from",
+        "code",
+        "to"
+      ],
+      "category": "other",
+      "score": 26
+    },
+    {
+      "name": "organize_repo_consolidation_groups",
+      "path": "tools\\organize_repo_consolidation_groups.py",
+      "lines": 237,
+      "description": "Repository Consolidation Group Organizer",
+      "functions": [
+        "find_analysis_file",
+        "find_analysis_by_name",
+        "organize_consolidation_groups",
+        "main"
+      ],
+      "classes": [],
+      "category": "consolidation",
+      "score": 26
+    },
+    {
+      "name": "pattern_suggester",
+      "path": "tools\\pattern_suggester.py",
+      "lines": 155,
+      "description": "Pattern Suggester - Consolidation Pattern Recommendations",
+      "functions": [
+        "analyze_file_structure",
+        "suggest_pattern",
+        "main"
+      ],
+      "classes": [
+        "methods",
+        "per"
+      ],
+      "category": "other",
+      "score": 26
+    },
+    {
+      "name": "quick_linecount",
+      "path": "tools\\quick_linecount.py",
+      "lines": 150,
+      "description": "Quick Line Count Tool",
+      "functions": [
+        "count_lines",
+        "format_result",
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 26
+    },
+    {
+      "name": "toolbelt_help",
+      "path": "tools\\toolbelt_help.py",
+      "lines": 114,
+      "description": "CLI Toolbelt Help System - Auto-Generated Help",
+      "functions": [
+        "__init__",
+        "generate_help",
+        "show_tool_help"
+      ],
+      "classes": [
+        "HelpGenerator"
+      ],
+      "category": "other",
+      "score": 26
+    },
+    {
+      "name": "validate_imports",
+      "path": "tools\\validate_imports.py",
+      "lines": 182,
+      "description": "Import Validator Tool",
+      "functions": [
+        "validate_module_imports",
+        "validate_directory",
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 26
+    },
+    {
+      "name": "verify_task",
+      "path": "tools\\verify_task.py",
+      "lines": 234,
+      "description": "Task Verification Tool",
+      "functions": [
+        "get_file_metrics",
+        "search_file",
+        "verify_task",
+        "main"
+      ],
+      "classes": [],
+      "category": "task",
+      "score": 26
+    },
+    {
+      "name": "browser_pool_manager",
+      "path": "tools\\browser_pool_manager.py",
+      "lines": 268,
+      "description": "Browser Pool Manager - Infrastructure Optimization",
+      "functions": [
+        "is_expired",
+        "mark_used",
+        "__init__",
+        "_create_browser",
+        "acquire"
+      ],
+      "classes": [
+        "from",
+        "class",
+        "BrowserPoolManager"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "classify_tools",
+      "path": "tools\\classify_tools.py",
+      "lines": 274,
+      "description": "Tool Classification Script",
+      "functions": [
+        "__init__",
+        "load_toolbelt_registry",
+        "analyze_tool_file",
+        "classify_tool",
+        "classify_all_tools"
+      ],
+      "classes": [
+        "ToolClassifier"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "cleanup_documentation_refactored",
+      "path": "tools\\cleanup_documentation_refactored.py",
+      "lines": 337,
+      "description": "Documentation Cleanup Tool - V2 COMPLIANT REFACTORED",
+      "functions": [
+        "__init__",
+        "run",
+        "scan_documentation_files",
+        "apply_criteria",
+        "_is_agent_chatter"
+      ],
+      "classes": [
+        "DocumentationCleanup"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "complexity_analyzer",
+      "path": "tools\\complexity_analyzer.py",
+      "lines": 37,
+      "description": "Complexity Analyzer - Intelligent Quality Automation",
+      "functions": [],
+      "classes": [],
+      "category": "analysis",
+      "score": 25
+    },
+    {
+      "name": "compliance_history_models",
+      "path": "tools\\compliance_history_models.py",
+      "lines": 41,
+      "description": "Compliance History Models",
+      "functions": [],
+      "classes": [
+        "class",
+        "class"
+      ],
+      "category": "quality",
+      "score": 25
+    },
+    {
+      "name": "dashboard_html_generator_refactored",
+      "path": "tools\\dashboard_html_generator_refactored.py",
+      "lines": 381,
+      "description": "Dashboard HTML Generator - V2 COMPLIANT REFACTORED VERSION",
+      "functions": [
+        "__init__",
+        "generate_html",
+        "generate_header",
+        "generate_score_card",
+        "generate_metrics_grid"
+      ],
+      "classes": [
+        "DashboardHTMLGenerator",
+        "for"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "devlog_manager",
+      "path": "tools\\devlog_manager.py",
+      "lines": 335,
+      "description": "Devlog Manager - Automatic Swarm Brain & Discord Integration",
+      "functions": [
+        "__init__",
+        "categorize_devlog",
+        "upload_to_swarm_brain",
+        "post_to_discord",
+        "update_index"
+      ],
+      "classes": [
+        "DevlogManager"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "diagnose_stuck_messages",
+      "path": "tools\\diagnose_stuck_messages.py",
+      "lines": 129,
+      "description": "Diagnose and Fix Stuck Messages in Queue",
+      "functions": [
+        "diagnose_stuck_messages"
+      ],
+      "classes": [],
+      "category": "coordination",
+      "score": 25
+    },
+    {
+      "name": "documentation_assistant",
+      "path": "tools\\documentation_assistant.py",
+      "lines": 208,
+      "description": "Documentation Assistant Tool",
+      "functions": [
+        "__init__",
+        "create_mission_doc",
+        "create_completion_report",
+        "create_milestone_doc",
+        "create_enhancement_request"
+      ],
+      "classes": [
+        "DocumentationAssistant"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "extension_test_runner",
+      "path": "tools\\extension_test_runner.py",
+      "lines": 279,
+      "description": "Extension Test Runner - VSCode Extension Testing Tool",
+      "functions": [
+        "__init__",
+        "get_extension_path",
+        "run_tests",
+        "_parse_test_output",
+        "format_results"
+      ],
+      "classes": [
+        "ExtensionTestRunner"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "extraction_roadmap_generator",
+      "path": "tools\\extraction_roadmap_generator.py",
+      "lines": 210,
+      "description": "Extraction Roadmap Generator - Automated Implementation Planning",
+      "functions": [
+        "__init__",
+        "add_pattern",
+        "generate_roadmap",
+        "load_from_analysis_file",
+        "main"
+      ],
+      "classes": [
+        "ExtractionRoadmapGenerator"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "fetch_repo_names",
+      "path": "tools\\fetch_repo_names.py",
+      "lines": 318,
+      "description": "Fetch Repo Names via GitHub API - Repo Analysis Improvement Tool",
+      "functions": [
+        "get_github_token",
+        "fetch_repo_info",
+        "load_master_list",
+        "get_github_owner",
+        "list_all_repos"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "file_refactor_detector",
+      "path": "tools\\file_refactor_detector.py",
+      "lines": 252,
+      "description": "File Refactor Detector - Quick Refactor History Checker",
+      "functions": [
+        "__init__",
+        "check_file",
+        "_check_file_header",
+        "_check_git_history",
+        "_get_warning"
+      ],
+      "classes": [
+        "RefactorDetector"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "functionality_verification",
+      "path": "tools\\functionality_verification.py",
+      "lines": 238,
+      "description": "Functionality Verification Tool",
+      "functions": [
+        "__init__",
+        "generate_functionality_signature",
+        "save_baseline",
+        "load_baseline",
+        "compare_with_baseline"
+      ],
+      "classes": [
+        "FunctionalityVerifier"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "generate_blog_post",
+      "path": "tools\\generate_blog_post.py",
+      "lines": 351,
+      "description": "Blog Post Generator - \"An Honest Review\" Series",
+      "functions": [
+        "__init__",
+        "load_style_guide",
+        "load_repos",
+        "find_overlaps",
+        "_names_similar"
+      ],
+      "classes": [
+        "BlogPostGenerator"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "generate_utils_catalog_enhanced",
+      "path": "tools\\generate_utils_catalog_enhanced.py",
+      "lines": 244,
+      "description": "Enhanced Utils Function Catalog Generator",
+      "functions": [
+        "__init__",
+        "analyze_file",
+        "scan_utils_directories",
+        "generate_markdown",
+        "main"
+      ],
+      "classes": [
+        "UtilsAnalyzer"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "get_repo_chronology",
+      "path": "tools\\get_repo_chronology.py",
+      "lines": 397,
+      "description": "Repository Chronology Tool - Chronological Blog Journey",
+      "functions": [
+        "get_github_token",
+        "get_github_owner",
+        "fetch_repo_info",
+        "list_all_repos",
+        "load_master_list"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "git_work_verifier",
+      "path": "tools\\git_work_verifier.py",
+      "lines": 318,
+      "description": "Git Work Verifier - Validates claimed work against actual git commits",
+      "functions": [
+        "__init__",
+        "verify_claim",
+        "_get_git_evidence",
+        "_parse_git_log",
+        "verify_multiple_claims"
+      ],
+      "classes": [
+        "class",
+        "class",
+        "class"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "github_repo_roi_calculator",
+      "path": "tools\\github_repo_roi_calculator.py",
+      "lines": 283,
+      "description": "GitHub Repository ROI Calculator",
+      "functions": [
+        "__post_init__",
+        "calculate_value_score",
+        "calculate_maintenance_effort",
+        "calculate_roi",
+        "analyze_repository_portfolio"
+      ],
+      "classes": [
+        "from",
+        "class"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "independent_architecture_review",
+      "path": "tools\\independent_architecture_review.py",
+      "lines": 238,
+      "description": "Agent-2 Independent Architecture Review",
+      "functions": [
+        "get_repo_list",
+        "assess_architecture",
+        "clone_and_assess_deep",
+        "assess_from_audit_data",
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "pattern_extractor",
+      "path": "tools\\pattern_extractor.py",
+      "lines": 208,
+      "description": "Pattern Extractor - Semi-Automated Code Pattern Extraction",
+      "functions": [
+        "__init__",
+        "visit_ClassDef",
+        "visit_FunctionDef",
+        "visit_Import",
+        "visit_ImportFrom"
+      ],
+      "classes": [
+        "PatternAnalyzer",
+        "information",
+        "to"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "pipeline_gas_scheduler",
+      "path": "tools\\pipeline_gas_scheduler.py",
+      "lines": 275,
+      "description": "Pipeline Gas Scheduler - Automated Gas Delivery System",
+      "functions": [
+        "__init__",
+        "check_progress",
+        "_send_gas_at_checkpoint",
+        "_send_early_gas",
+        "_send_safety_gas"
+      ],
+      "classes": [
+        "PipelineGasScheduler"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "post_devlog_to_discord",
+      "path": "tools\\post_devlog_to_discord.py",
+      "lines": 60,
+      "description": "Quick script to post devlog to Discord.",
+      "functions": [
+        "post_devlog_to_discord"
+      ],
+      "classes": [],
+      "category": "coordination",
+      "score": 25
+    },
+    {
+      "name": "quarantine_manager",
+      "path": "tools\\quarantine_manager.py",
+      "lines": 236,
+      "description": "Quarantine Manager - Systematic Tool Repair Coordination",
+      "functions": [
+        "__init__",
+        "_load_manifest",
+        "_save_manifest",
+        "quarantine_tool",
+        "list_quarantined"
+      ],
+      "classes": [
+        "QuarantineManager"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "refactoring_suggestion_engine",
+      "path": "tools\\refactoring_suggestion_engine.py",
+      "lines": 324,
+      "description": "Refactoring Suggestion Engine - Intelligent Quality Automation",
+      "functions": [
+        "__init__",
+        "suggest_refactoring",
+        "_group_entities_by_category",
+        "_generate_module_suggestions",
+        "_estimate_main_file_size"
+      ],
+      "classes": [
+        "RefactoringSuggestionEngine",
+        "RefactoringSuggestionService"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "reset_stuck_messages",
+      "path": "tools\\reset_stuck_messages.py",
+      "lines": 117,
+      "description": "Reset Stuck Messages in Queue",
+      "functions": [
+        "reset_stuck_messages"
+      ],
+      "classes": [],
+      "category": "coordination",
+      "score": 25
+    },
+    {
+      "name": "session_transition_helper",
+      "path": "tools\\session_transition_helper.py",
+      "lines": 248,
+      "description": "Session Transition Helper - Productivity Tool.",
+      "functions": [
+        "__init__",
+        "load_status",
+        "save_status",
+        "check_deliverable",
+        "get_completion_summary"
+      ],
+      "classes": [
+        "DeliverableStatus",
+        "SessionTransitionHelper"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "start_message_queue_processor",
+      "path": "tools\\start_message_queue_processor.py",
+      "lines": 76,
+      "description": "Start Message Queue Processor",
+      "functions": [
+        "main"
+      ],
+      "classes": [],
+      "category": "coordination",
+      "score": 25
+    },
+    {
+      "name": "swarm_orchestrator",
+      "path": "tools\\swarm_orchestrator.py",
+      "lines": 316,
+      "description": "Swarm Autonomous Orchestrator - \"The Gas Station\"",
+      "functions": [
+        "__init__",
+        "_discover_agents",
+        "get_agent_status",
+        "scan_all_opportunities",
+        "calculate_roi"
+      ],
+      "classes": [
+        "SwarmOrchestrator"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "task_creator",
+      "path": "tools\\task_creator.py",
+      "lines": 100,
+      "description": "Task Creator - Extracted from Swarm Orchestrator",
+      "functions": [
+        "create_inbox_task"
+      ],
+      "classes": [],
+      "category": "task",
+      "score": 25
+    },
+    {
+      "name": "update_swarm_brain",
+      "path": "tools\\update_swarm_brain.py",
+      "lines": 264,
+      "description": "Swarm Brain Database Updater",
+      "functions": [
+        "__init__",
+        "_load_brain",
+        "add_insight",
+        "add_lesson",
+        "add_recommendation"
+      ],
+      "classes": [
+        "SwarmBrainUpdater"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "work_attribution_tool",
+      "path": "tools\\work_attribution_tool.py",
+      "lines": 316,
+      "description": "Work Attribution Tool - Properly attribute work to agents based on git history",
+      "functions": [
+        "__init__",
+        "get_agent_work",
+        "get_all_agents_work",
+        "verify_agent_did_work",
+        "who_worked_on_file"
+      ],
+      "classes": [
+        "class",
+        "WorkAttributionTool"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "work_completion_verifier",
+      "path": "tools\\work_completion_verifier.py",
+      "lines": 318,
+      "description": "Work Completion Verifier - Pre-Message Validation Tool",
+      "functions": [
+        "__init__",
+        "verify_extension",
+        "verify_python_module",
+        "_parse_coverage",
+        "format_results"
+      ],
+      "classes": [
+        "WorkCompletionVerifier"
+      ],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "add_remaining_swarm_knowledge",
+      "path": "tools\\add_remaining_swarm_knowledge.py",
+      "lines": 198,
+      "description": "Add remaining knowledge from Agent-2 mission to Swarm Brain",
+      "functions": [
+        "main",
+        "generate_dashboard"
+      ],
+      "classes": [
+        "SwarmKPITracker"
+      ],
+      "category": "other",
+      "score": 24
+    },
+    {
+      "name": "find_file_size_violations",
+      "path": "tools\\find_file_size_violations.py",
+      "lines": 57,
+      "description": "Find all Python files exceeding size limits.",
+      "functions": [
+        "count_lines",
+        "scan_violations"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 24
+    },
+    {
+      "name": "functionality_tests",
+      "path": "tools\\functionality_tests.py",
+      "lines": 113,
+      "description": "Functionality Test Runner",
+      "functions": [
+        "run_agent_tests",
+        "_get_agent_tests"
+      ],
+      "classes": [
+        "FunctionalityTests"
+      ],
+      "category": "other",
+      "score": 24
+    },
+    {
+      "name": "markov_task_optimizer",
+      "path": "tools\\markov_task_optimizer.py",
+      "lines": 447,
+      "description": "Markov Chain Task Optimizer - Proof of Concept",
+      "functions": [
+        "__init__",
+        "select_next_task",
+        "_calculate_transition_probability",
+        "_dependency_score",
+        "_agent_match_score"
+      ],
+      "classes": [
+        "from",
+        "class",
+        "class"
+      ],
+      "category": "task",
+      "score": 24
+    },
+    {
+      "name": "quick_line_counter",
+      "path": "tools\\quick_line_counter.py",
+      "lines": 72,
+      "description": "Quick Line Counter - Essential Tool",
+      "functions": [
+        "count_lines",
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 24
+    },
+    {
+      "name": "refactoring_cli",
+      "path": "tools\\refactoring_cli.py",
+      "lines": 140,
+      "description": "Refactoring CLI - Command Line Interface",
+      "functions": [
+        "format_suggestion",
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 24
+    },
+    {
+      "name": "repo_consolidation_enhanced",
+      "path": "tools\\repo_consolidation_enhanced.py",
+      "lines": 480,
+      "description": "Enhanced Repository Consolidation Analyzer",
+      "functions": [
+        "normalize_repo_name",
+        "similarity_score",
+        "load_master_repo_list",
+        "load_existing_consolidation_plan",
+        "find_duplicate_names"
+      ],
+      "classes": [],
+      "category": "consolidation",
+      "score": 24
+    },
+    {
+      "name": "test_all_discord_commands",
+      "path": "tools\\test_all_discord_commands.py",
+      "lines": 422,
+      "description": "Comprehensive Discord Commands Test Script",
+      "functions": [
+        "__init__",
+        "_mock_send",
+        "get_last_message",
+        "__init__",
+        "test_command_registration"
+      ],
+      "classes": [
+        "MockContext",
+        "DiscordCommandsTester"
+      ],
+      "category": "coordination",
+      "score": 24
+    },
+    {
+      "name": "toolbelt",
+      "path": "tools\\toolbelt.py",
+      "lines": 120,
+      "description": "CLI Toolbelt - Unified Tool Launcher",
+      "functions": [
+        "create_parser",
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 24
+    },
+    {
+      "name": "toolbelt_runner",
+      "path": "tools\\toolbelt_runner.py",
+      "lines": 95,
+      "description": "CLI Toolbelt Runner - Tool Execution Engine",
+      "functions": [
+        "__init__",
+        "execute_tool"
+      ],
+      "classes": [
+        "ToolRunner"
+      ],
+      "category": "other",
+      "score": 24
+    },
+    {
+      "name": "tools_consolidation_and_ranking_complete",
+      "path": "tools\\tools_consolidation_and_ranking_complete.py",
+      "lines": 493,
+      "description": "Tools Consolidation & Ranking - Complete Analysis",
+      "functions": [
+        "get_all_tools",
+        "_categorize_tool",
+        "find_duplicates",
+        "rank_tools",
+        "generate_consolidation_plan"
+      ],
+      "classes": [],
+      "category": "consolidation",
+      "score": 24
+    },
+    {
+      "name": "fix_stuck_message",
+      "path": "tools\\fix_stuck_message.py",
+      "lines": 47,
+      "description": "Fix Stuck Message in Queue",
+      "functions": [],
+      "classes": [],
+      "category": "coordination",
+      "score": 23
+    },
+    {
+      "name": "github_create_and_push_repo",
+      "path": "tools\\github_create_and_push_repo.py",
+      "lines": 340,
+      "description": "GitHub Create Repository and Push Tool",
+      "functions": [
+        "get_github_token",
+        "create_github_repo",
+        "push_to_github",
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 23
+    },
+    {
+      "name": "markov_cycle_simulator",
+      "path": "tools\\markov_cycle_simulator.py",
+      "lines": 367,
+      "description": "Markov Cycle Simulator - 4-Cycle Efficiency Demonstration",
+      "functions": [
+        "load_real_violations_from_scanner",
+        "create_tasks_from_violations",
+        "simulate_cycle",
+        "run_4_cycle_simulation"
+      ],
+      "classes": [
+        "violations"
+      ],
+      "category": "other",
+      "score": 23
+    },
+    {
+      "name": "refresh_cache",
+      "path": "tools\\refresh_cache.py",
+      "lines": 227,
+      "description": "Cache Refresh Tool",
+      "functions": [
+        "check_cache_freshness",
+        "delete_cache_files",
+        "refresh_cache",
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 23
+    },
+    {
+      "name": "share_repo_consolidation_findings",
+      "path": "tools\\share_repo_consolidation_findings.py",
+      "lines": 42,
+      "description": "Share repo consolidation findings to Swarm Brain.",
+      "functions": [],
+      "classes": [],
+      "category": "consolidation",
+      "score": 23
+    },
+    {
+      "name": "tools_ranking_debate",
+      "path": "tools\\tools_ranking_debate.py",
+      "lines": 219,
+      "description": "Tools Ranking Debate - Rank Consolidated Tools Directory",
+      "functions": [
+        "get_all_tools",
+        "start_tools_ranking_debate",
+        "create_tools_ranking_report",
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 23
+    },
+    {
+      "name": "verify_discord_running",
+      "path": "tools\\verify_discord_running.py",
+      "lines": 48,
+      "description": "Quick verification that Discord bot is running and accessible.",
+      "functions": [],
+      "classes": [],
+      "category": "coordination",
+      "score": 23
+    },
+    {
+      "name": "verify_phase1_repos",
+      "path": "tools\\verify_phase1_repos.py",
+      "lines": 246,
+      "description": "Phase 1 Repo Verification Script",
+      "functions": [
+        "load_master_list",
+        "get_repo_info",
+        "verify_phase1_repos",
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 23
+    },
+    {
+      "name": "cleanup_documentation",
+      "path": "tools\\cleanup_documentation.py",
+      "lines": 44,
+      "description": "Documentation Cleanup Tool - WRAPPER (V2 COMPLIANT)",
+      "functions": [
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 22
+    },
+    {
+      "name": "dashboard_charts",
+      "path": "tools\\dashboard_charts.py",
+      "lines": 186,
+      "description": "Dashboard Charts - JavaScript Chart Generation",
+      "functions": [
+        "generate_chart_scripts"
+      ],
+      "classes": [
+        "DashboardCharts"
+      ],
+      "category": "other",
+      "score": 22
+    },
+    {
+      "name": "dashboard_styles",
+      "path": "tools\\dashboard_styles.py",
+      "lines": 80,
+      "description": "Dashboard Styles - CSS Generation",
+      "functions": [
+        "get_css"
+      ],
+      "classes": [
+        "DashboardStyles"
+      ],
+      "category": "other",
+      "score": 22
+    },
+    {
+      "name": "diagnose_queue",
+      "path": "tools\\diagnose_queue.py",
+      "lines": 69,
+      "description": "Queue Diagnostic Tool",
+      "functions": [
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 22
+    },
+    {
+      "name": "duplication_reporter",
+      "path": "tools\\duplication_reporter.py",
+      "lines": 66,
+      "description": "Duplication Reporter - V2 Compliant",
+      "functions": [
+        "generate_report"
+      ],
+      "classes": [
+        "DuplicationReporter"
+      ],
+      "category": "other",
+      "score": 22
+    },
+    {
+      "name": "extract_all_75_repos",
+      "path": "tools\\extract_all_75_repos.py",
+      "lines": 102,
+      "description": "Extract All 75 Repos from GitHub Book",
+      "functions": [
+        "extract_repos_from_book"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 22
+    },
+    {
+      "name": "functionality_reports",
+      "path": "tools\\functionality_reports.py",
+      "lines": 96,
+      "description": "Functionality Verification Reports",
+      "functions": [
+        "generate_report"
+      ],
+      "classes": [
+        "FunctionalityReports"
+      ],
+      "category": "other",
+      "score": 22
+    },
+    {
+      "name": "gas_messaging",
+      "path": "tools\\gas_messaging.py",
+      "lines": 71,
+      "description": "Gas Messaging - Extracted from Swarm Orchestrator",
+      "functions": [
+        "send_gas_message"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 22
+    },
+    {
+      "name": "run_project_scan",
+      "path": "tools\\run_project_scan.py",
+      "lines": 63,
+      "description": "Runs the ProjectScanner from repo root and stages snapshot artifacts.",
+      "functions": [
+        "run"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 22
+    },
+    {
+      "name": "share_mission_to_swarm_brain",
+      "path": "tools\\share_mission_to_swarm_brain.py",
+      "lines": 244,
+      "description": "Share Agent-2's Mission Completion Knowledge to Swarm Brain",
+      "functions": [
+        "main",
+        "monitor_agent_health"
+      ],
+      "classes": [
+        "ContinuousSwarmMonitor"
+      ],
+      "category": "task",
+      "score": 22
+    },
+    {
+      "name": "start_tools_ranking_debate",
+      "path": "tools\\start_tools_ranking_debate.py",
+      "lines": 71,
+      "description": "Start Tools Ranking Debate - Direct Import",
+      "functions": [
+        "start_tools_ranking_debate"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 22
+    },
+    {
+      "name": "start_tools_ranking_debate_proper",
+      "path": "tools\\start_tools_ranking_debate_proper.py",
+      "lines": 72,
+      "description": "Start Tools Ranking Debate - Proper Format",
+      "functions": [
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 22
+    },
+    {
+      "name": "test_imports",
+      "path": "tools\\test_imports.py",
+      "lines": 92,
+      "description": "Import Testing Tool - C-007",
+      "functions": [
+        "test_imports"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 22
+    },
+    {
+      "name": "cycle_1_backup_partial",
+      "path": "tools\\cycle_1_backup_partial.py",
+      "lines": 208,
+      "description": "Cycle 1: Partial Backup with Error Handling",
+      "functions": [
+        "copy_file_safely",
+        "copy_tree_safely",
+        "create_partial_backup"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 21
+    },
+    {
+      "name": "cycle_1_dependency_progress",
+      "path": "tools\\cycle_1_dependency_progress.py",
+      "lines": 246,
+      "description": "Cycle 1: Dependency Analysis Progress Update",
+      "functions": [
+        "load_coordinates",
+        "load_dependency_summary",
+        "send_dependency_progress_update"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 21
+    },
+    {
+      "name": "generate_chronological_blog",
+      "path": "tools\\generate_chronological_blog.py",
+      "lines": 518,
+      "description": "Enhanced Chronological Blog Generator",
+      "functions": [
+        "__init__",
+        "load_style_guide",
+        "load_repos",
+        "load_chronology",
+        "_order_by_chronology"
+      ],
+      "classes": [
+        "ChronologicalBlogGenerator"
+      ],
+      "category": "other",
+      "score": 21
+    },
+    {
+      "name": "quick_metrics",
+      "path": "tools\\quick_metrics.py",
+      "lines": 211,
+      "description": "Quick File Metrics Tool",
+      "functions": [
+        "analyze_file",
+        "analyze_multiple",
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 21
+    },
+    {
+      "name": "toolbelt_registry",
+      "path": "tools\\toolbelt_registry.py",
+      "lines": 579,
+      "description": "CLI Toolbelt Registry - Tool Discovery and Registration",
+      "functions": [
+        "__init__",
+        "_build_flag_map",
+        "get_tool_for_flag",
+        "get_tool_by_name",
+        "list_tools"
+      ],
+      "classes": [
+        "ToolRegistry"
+      ],
+      "category": "other",
+      "score": 21
+    },
+    {
+      "name": "generate_utils_catalog",
+      "path": "tools\\generate_utils_catalog.py",
+      "lines": 38,
+      "description": "Generate a concise catalog of functions in all utils directories.",
+      "functions": [],
+      "classes": [],
+      "category": "other",
+      "score": 20
+    },
+    {
+      "name": "refactoring_models",
+      "path": "tools\\refactoring_models.py",
+      "lines": 55,
+      "description": "Refactoring Models - Data Structures for Refactoring Analysis",
+      "functions": [],
+      "classes": [
+        "class",
+        "class",
+        "class"
+      ],
+      "category": "other",
+      "score": 20
+    },
+    {
+      "name": "show_quarantine",
+      "path": "tools\\show_quarantine.py",
+      "lines": 25,
+      "description": "Show quarantined tools summary.",
+      "functions": [],
+      "classes": [],
+      "category": "other",
+      "score": 20
+    },
+    {
+      "name": "test_enhanced_activity_detector",
+      "path": "tools\\test_enhanced_activity_detector.py",
+      "lines": 22,
+      "description": "Test enhanced activity detector.",
+      "functions": [],
+      "classes": [],
+      "category": "other",
+      "score": 20
+    },
+    {
+      "name": "add_signal_tools_to_toolbelt",
+      "path": "tools\\add_signal_tools_to_toolbelt.py",
+      "lines": 380,
+      "description": "Add Signal Tools to Toolbelt Registry",
+      "functions": [
+        "add_tools_to_registry",
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 19
+    },
+    {
+      "name": "doc_templates_achievements",
+      "path": "tools\\doc_templates_achievements.py",
+      "lines": 208,
+      "description": "Documentation Templates - Achievements & Enhancements",
+      "functions": [
+        "create_milestone_template",
+        "create_enhancement_request_template"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 19
+    },
+    {
+      "name": "soft_onboard_cli",
+      "path": "tools\\soft_onboard_cli.py",
+      "lines": 208,
+      "description": "Soft Onboarding CLI Tool",
+      "functions": [
+        "main",
+        "execute_single_step"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 19
+    }
+  ],
+  "duplicates": [
+    [
+      "linecount",
+      [
+        "quick_linecount",
+        "quick_line_counter"
+      ]
+    ],
+    [
+      "projectscanner",
+      [
+        "projectscanner",
+        "projectscanner_core",
+        "projectscanner_language_analyzer",
+        "projectscanner_modular_reports",
+        "projectscanner_workers",
+        "projectscanner_legacy_reports",
+        "comprehensive_project_analyzer"
+      ]
+    ],
+    [
+      "v2_compliance",
+      [
+        "v2_compliance_checker",
+        "v2_compliance_batch_checker",
+        "v2_checker_cli"
+      ]
+    ],
+    [
+      "toolbelt",
+      [
+        "toolbelt",
+        "agent_toolbelt"
+      ]
+    ],
+    [
+      "toolbelt_help",
+      [
+        "toolbelt_help",
+        "captain_toolbelt_help"
+      ]
+    ],
+    [
+      "refactor",
+      [
+        "refactor_analyzer",
+        "refactor_validator"
+      ]
+    ],
+    [
+      "duplication",
+      [
+        "duplication_analyzer",
+        "duplication_reporter"
+      ]
+    ]
+  ],
+  "plan": {
+    "duplicates": [
+      {
+        "base_name": "linecount",
+        "tools": [
+          "quick_linecount",
+          "quick_line_counter"
+        ],
+        "keep": "quick_linecount",
+        "deprecate": [
+          "quick_line_counter"
+        ],
+        "reason": "Keep quick_linecount (better description, smaller size, or V2 compliant)"
+      },
+      {
+        "base_name": "projectscanner",
+        "tools": [
+          "projectscanner",
+          "projectscanner_core",
+          "projectscanner_language_analyzer",
+          "projectscanner_modular_reports",
+          "projectscanner_workers",
+          "projectscanner_legacy_reports",
+          "comprehensive_project_analyzer"
+        ],
+        "keep": "projectscanner_core",
+        "deprecate": [
+          "projectscanner",
+          "projectscanner_language_analyzer",
+          "projectscanner_modular_reports",
+          "projectscanner_workers",
+          "projectscanner_legacy_reports",
+          "comprehensive_project_analyzer"
+        ],
+        "reason": "Keep projectscanner_core (better description, smaller size, or V2 compliant)"
+      },
+      {
+        "base_name": "v2_compliance",
+        "tools": [
+          "v2_compliance_checker",
+          "v2_compliance_batch_checker",
+          "v2_checker_cli"
+        ],
+        "keep": "v2_checker_cli",
+        "deprecate": [
+          "v2_compliance_checker",
+          "v2_compliance_batch_checker"
+        ],
+        "reason": "Keep v2_checker_cli (better description, smaller size, or V2 compliant)"
+      },
+      {
+        "base_name": "toolbelt",
+        "tools": [
+          "toolbelt",
+          "agent_toolbelt"
+        ],
+        "keep": "toolbelt",
+        "deprecate": [
+          "agent_toolbelt"
+        ],
+        "reason": "Keep toolbelt (better description, smaller size, or V2 compliant)"
+      },
+      {
+        "base_name": "toolbelt_help",
+        "tools": [
+          "toolbelt_help",
+          "captain_toolbelt_help"
+        ],
+        "keep": "toolbelt_help",
+        "deprecate": [
+          "captain_toolbelt_help"
+        ],
+        "reason": "Keep toolbelt_help (better description, smaller size, or V2 compliant)"
+      },
+      {
+        "base_name": "refactor",
+        "tools": [
+          "refactor_analyzer",
+          "refactor_validator"
+        ],
+        "keep": "refactor_analyzer",
+        "deprecate": [
+          "refactor_validator"
+        ],
+        "reason": "Keep refactor_analyzer (better description, smaller size, or V2 compliant)"
+      },
+      {
+        "base_name": "duplication",
+        "tools": [
+          "duplication_analyzer",
+          "duplication_reporter"
+        ],
+        "keep": "duplication_analyzer",
+        "deprecate": [
+          "duplication_reporter"
+        ],
+        "reason": "Keep duplication_analyzer (better description, smaller size, or V2 compliant)"
+      }
+    ],
+    "recommendations": []
+  },
+  "timestamp": "2025-11-24T05:47:02.471984"
+}

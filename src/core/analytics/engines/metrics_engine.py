@@ -13,16 +13,30 @@ import logging
 import time
 from collections import defaultdict, deque
 from datetime import datetime
-from typing import Any
+from typing import Any, Optional
 
 logger = logging.getLogger(__name__)
+
+# Optional persistence integration
+try:
+    from src.repositories.metrics_repository import MetricsRepository
+    METRICS_REPOSITORY_AVAILABLE = True
+except ImportError:
+    METRICS_REPOSITORY_AVAILABLE = False
+    MetricsRepository = None
 
 
 class MetricsEngine:
     """Simple metrics collection and monitoring engine."""
 
-    def __init__(self, config=None):
-        """Initialize metrics engine."""
+    def __init__(self, config=None, metrics_repository: Optional[MetricsRepository] = None):
+        """
+        Initialize metrics engine.
+        
+        Args:
+            config: Optional configuration dictionary
+            metrics_repository: Optional MetricsRepository for persistence
+        """
         self.config = config or {}
         self.logger = logger
 
@@ -31,6 +45,16 @@ class MetricsEngine:
         self.performance_history = deque(maxlen=100)
         self.error_history = deque(maxlen=50)
         self.start_time = time.time()
+        
+        # Optional persistence
+        self.metrics_repository = metrics_repository
+        if metrics_repository is None and METRICS_REPOSITORY_AVAILABLE:
+            try:
+                self.metrics_repository = MetricsRepository()
+                self.logger.debug("MetricsRepository initialized for persistence")
+            except Exception as e:
+                self.logger.warning(f"Could not initialize MetricsRepository: {e}")
+                self.metrics_repository = None
 
     def record_metric(self, name: str, value: Any) -> None:
         """Record a metric value."""
@@ -144,8 +168,74 @@ class MetricsEngine:
             "metrics_count": len(self.metrics),
             "performance_records": len(self.performance_history),
             "error_records": len(self.error_history),
+            "persistence_enabled": self.metrics_repository is not None,
             "timestamp": datetime.now().isoformat(),
         }
+    
+    def save_snapshot(self, source: str = "metrics_engine") -> bool:
+        """
+        Save current metrics snapshot to repository.
+        
+        Args:
+            source: Source identifier for the snapshot
+            
+        Returns:
+            True if saved successfully, False otherwise
+        """
+        if not self.metrics_repository:
+            self.logger.debug("MetricsRepository not available, skipping snapshot")
+            return False
+        
+        try:
+            all_metrics = self.get_all_metrics()
+            success = self.metrics_repository.save_metrics_snapshot(all_metrics, source=source)
+            if success:
+                self.logger.debug(f"Metrics snapshot saved: {source} ({len(all_metrics)} metrics)")
+            return success
+        except Exception as e:
+            self.logger.error(f"Error saving metrics snapshot: {e}")
+            return False
+    
+    def get_metrics_history(self, source: Optional[str] = None, limit: Optional[int] = None) -> list[dict[str, Any]]:
+        """
+        Get metrics history from repository.
+        
+        Args:
+            source: Optional source filter
+            limit: Optional limit on number of snapshots
+            
+        Returns:
+            List of metrics snapshot dictionaries
+        """
+        if not self.metrics_repository:
+            return []
+        
+        try:
+            return self.metrics_repository.get_metrics_history(source=source, limit=limit)
+        except Exception as e:
+            self.logger.error(f"Error getting metrics history: {e}")
+            return []
+    
+    def get_metrics_trend(self, metric_name: str, source: Optional[str] = None, limit: int = 100) -> list[float]:
+        """
+        Get trend data for a specific metric over time.
+        
+        Args:
+            metric_name: Name of metric to track
+            source: Optional source filter
+            limit: Maximum snapshots to analyze
+            
+        Returns:
+            List of metric values over time
+        """
+        if not self.metrics_repository:
+            return []
+        
+        try:
+            return self.metrics_repository.get_metrics_trend(metric_name, source=source, limit=limit)
+        except Exception as e:
+            self.logger.error(f"Error getting metrics trend: {e}")
+            return []
 
 
 # Simple factory function

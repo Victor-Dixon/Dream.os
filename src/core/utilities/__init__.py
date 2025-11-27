@@ -1,34 +1,30 @@
-"""
-Core Utilities Package
-=====================
+# AUTO-GENERATED __init__.py
+# DO NOT EDIT MANUALLY - changes may be overwritten
 
-Consolidated utility functions for validation, processing, and handling operations.
-Created as part of DUP-005 duplicate elimination mission.
-
-Author: Agent-7 (DUP-005 Mission)
-Date: 2025-10-16
-"""
-
-from .handler_utilities import *
-from .processing_utilities import *
-from .validation_utilities import *
+from . import base_utilities
+from . import cleanup_utilities
+from . import config_utilities
+from . import error_utilities
+from . import handler_utilities
+from . import init_utilities
+from . import logging_utilities
+from . import processing_utilities
+from . import result_utilities
+from . import standardized_logging
+from . import status_utilities
+from . import validation_utilities
 
 __all__ = [
-    # Validation utilities
-    "validate_import_syntax",
-    "validate_import_pattern",
-    "validate_file_path",
-    "validate_config",
-    "validate_session",
-    "validate_coordinates",
-    "validate_forecast_accuracy",
-    # Processing utilities
-    "process_batch",
-    "process_data",
-    "process_results",
-    # Handler utilities
-    "handle_error",
-    "handle_operation",
-    "handle_event",
-    "handle_rate_limit_error",
+    'base_utilities',
+    'cleanup_utilities',
+    'config_utilities',
+    'error_utilities',
+    'handler_utilities',
+    'init_utilities',
+    'logging_utilities',
+    'processing_utilities',
+    'result_utilities',
+    'standardized_logging',
+    'status_utilities',
+    'validation_utilities',
 ]

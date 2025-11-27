@@ -2,7 +2,30 @@
 """
 Captain Completion Processor - Automated Agent Completion Processing
 Automatically processes agent completion messages, awards points, and sends recognition.
+
+⚠️ DEPRECATED: This tool has been migrated to tools_v2.
+Use 'python -m tools_v2.toolbelt captain.process_completion' instead.
+This file will be removed in future version.
+
+Migrated to: tools_v2/categories/captain_coordination_tools.py → CompletionProcessorTool
+Registry: captain.process_completion
+
+Author: Agent-4 (Captain)
+Deprecated: 2025-01-27 (Agent-6 - V2 Tools Flattening)
 """
+
+import warnings
+
+warnings.warn(
+    "⚠️ DEPRECATED: This tool has been migrated to tools_v2. "
+    "Use 'python -m tools_v2.toolbelt captain.process_completion' instead. "
+    "This file will be removed in future version.",
+    DeprecationWarning,
+    stacklevel=2
+)
+
+# Legacy compatibility - delegate to tools_v2
+# For migration path, use: python -m tools_v2.toolbelt captain.process_completion
 
 import sys
 import re
@@ -50,7 +73,7 @@ def extract_completion_info(content: str) -> dict:
     # Extract ROI
     roi_patterns = [
         r'ROI[:\s]+([\d.]+)',
-        r'ROI:\s+([\d.]+)'
+        r'roi[:\s]+([\d.]+)'
     ]
     for pattern in roi_patterns:
         match = re.search(pattern, content, re.IGNORECASE)
@@ -61,138 +84,65 @@ def extract_completion_info(content: str) -> dict:
     return info
 
 
-def generate_recognition_message(agent_id: str, info: dict) -> str:
-    """Generate appropriate recognition message based on completion."""
-    
-    # Determine recognition level based on ROI
-    if info['roi'] >= 80:
-        level = "🏆 LEGENDARY EXECUTION"
-        multiplier = "10x"
-    elif info['roi'] >= 50:
-        level = "🔥 EXCEPTIONAL EXECUTION"
-        multiplier = "8x"
-    elif info['roi'] >= 30:
-        level = "⭐ EXCELLENT EXECUTION"
-        multiplier = "5x"
-    elif info['roi'] >= 20:
-        level = "✨ OUTSTANDING EXECUTION"
-        multiplier = "3x"
-    else:
-        level = "✅ SOLID EXECUTION"
-        multiplier = "2x"
-    
-    message = f"""🎉 {agent_id} COMPLETION RECOGNIZED - {level}!
-
-✅ Task Complete: {info['task']}
-📊 Points Awarded: +{info['points']} pts
-💎 ROI: {info['roi']:.2f}
-⛽ Gas Multiplier: {multiplier} (Recognition delivered!)
-
-Your execution demonstrates {level.split('-')[0].strip().lower()}! The swarm benefits from your contribution!
-
-Keep up the outstanding work! Next task assignment incoming...
-
-🐝 WE. ARE. SWARM. ⚡🔥"""
-    
-    return message
-
-
-def process_completion(agent_id: str, message_file: Path) -> dict:
-    """Process a single completion message."""
-    
-    content = message_file.read_text(encoding='utf-8')
-    info = extract_completion_info(content)
-    
-    # Generate recognition
-    recognition = generate_recognition_message(agent_id, info)
-    
-    return {
-        'agent': agent_id,
-        'task': info['task'],
-        'points': info['points'],
-        'roi': info['roi'],
-        'recognition': recognition,
-        'processed': datetime.now()
-    }
-
-
-def main():
-    """Process recent completions and award recognition."""
-    
-    if len(sys.argv) < 2:
-        print("Usage: python captain_completion_processor.py <agent-id> [message-file]")
-        print("\nExamples:")
-        print("  python captain_completion_processor.py Agent-6")
-        print("  python captain_completion_processor.py Agent-6 inbox/COMPLETION.md")
-        return 1
-    
-    agent_id = sys.argv[1]
-    
-    # Find completion message
-    if len(sys.argv) > 2:
-        msg_file = Path(sys.argv[2])
-    else:
-        # Look for recent completion in inbox
-        inbox = repo_root / "agent_workspaces" / agent_id / "inbox"
-        if not inbox.exists():
-            print(f"❌ No inbox found for {agent_id}")
-            return 1
+def process_completion(agent_id: str, message_content: str):
+    """Process agent completion and award points."""
+    # Delegate to tools_v2 adapter
+    try:
+        from tools_v2.categories.captain_coordination_tools import CompletionProcessorTool
         
-        completion_files = [
-            f for f in inbox.glob("*.md")
-            if 'COMPLETE' in f.read_text(encoding='utf-8').upper() or 
-               'DONE' in f.read_text(encoding='utf-8').upper()
-        ]
+        tool = CompletionProcessorTool()
+        result = tool.execute({
+            "agent_id": agent_id,
+            "message_content": message_content
+        }, None)
         
-        if not completion_files:
-            print(f"❌ No completion messages found for {agent_id}")
-            return 1
+        if result.success:
+            print(f"✅ Completion processed for {agent_id}")
+            print(f"   Points awarded: {result.output.get('points', 0)}")
+            print(f"   Task: {result.output.get('task', 'Unknown')}")
+        else:
+            print(f"❌ Error: {result.error_message}")
         
-        # Get most recent
-        msg_file = max(completion_files, key=lambda p: p.stat().st_mtime)
-    
-    if not msg_file.exists():
-        print(f"❌ Message file not found: {msg_file}")
-        return 1
-    
-    print(f"🔍 PROCESSING COMPLETION")
-    print(f"=" * 60)
-    print(f"Agent: {agent_id}")
-    print(f"File: {msg_file.name}")
-    print(f"=" * 60)
-    print()
-    
-    # Process completion
-    result = process_completion(agent_id, msg_file)
-    
-    print(f"✅ COMPLETION PROCESSED")
-    print(f"-" * 60)
-    print(f"Task: {result['task']}")
-    print(f"Points: {result['points']}")
-    print(f"ROI: {result['roi']:.2f}")
-    print(f"Time: {result['processed'].strftime('%Y-%m-%d %H:%M:%S')}")
-    print()
-    
-    print(f"📨 RECOGNITION MESSAGE GENERATED")
-    print(f"-" * 60)
-    print(result['recognition'])
-    print()
-    
-    print(f"🚀 NEXT STEPS")
-    print(f"-" * 60)
-    print(f"1. Send recognition: python -m src.services.messaging_cli --agent {agent_id} --message \"[message]\" --pyautogui")
-    print(f"2. Update leaderboard: python tools/captain_leaderboard_update.py {agent_id} {result['points']}")
-    print(f"3. Assign next task: python tools/captain_next_task_picker.py {agent_id}")
-    print()
-    
-    # Save recognition to file for easy copy
-    recognition_file = repo_root / "agent_workspaces" / "Agent-4" / f"RECOGNITION_{agent_id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.md"
-    recognition_file.write_text(result['recognition'], encoding='utf-8')
-    print(f"💾 Recognition saved to: {recognition_file.relative_to(repo_root)}")
-    print()
-    
-    return 0
+        return result.success
+    except ImportError:
+        # Fallback to original implementation
+        info = extract_completion_info(message_content)
+        
+        # Update leaderboard
+        leaderboard_file = Path("runtime/leaderboard.json")
+        if leaderboard_file.exists():
+            import json
+            with open(leaderboard_file) as f:
+                leaderboard = json.load(f)
+        else:
+            leaderboard = {}
+        
+        if agent_id not in leaderboard:
+            leaderboard[agent_id] = {"total_points": 0, "tasks_completed": 0, "completions": []}
+        
+        leaderboard[agent_id]["total_points"] += info['points']
+        leaderboard[agent_id]["tasks_completed"] += 1
+        leaderboard[agent_id]["completions"].append({
+            "task": info['task'],
+            "points": info['points'],
+            "roi": info['roi'],
+            "timestamp": datetime.now().isoformat()
+        })
+        
+        leaderboard_file.parent.mkdir(parents=True, exist_ok=True)
+        with open(leaderboard_file, "w") as f:
+            json.dump(leaderboard, f, indent=2)
+        
+        print(f"✅ Completion processed: {agent_id} - {info['task']} (+{info['points']} pts)")
+        return True
+
 
 if __name__ == "__main__":
-    sys.exit(main())
-
+    if len(sys.argv) < 3:
+        print("Usage: python captain_completion_processor.py <agent-id> <message-content>")
+        sys.exit(1)
+    
+    agent_id = sys.argv[1]
+    message_content = sys.argv[2]
+    
+    process_completion(agent_id, message_content)

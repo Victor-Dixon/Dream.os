@@ -110,7 +110,32 @@ mv responded_messages/*.md archive/2025-10/
 
 ---
 
-### **STEP 6: END-OF-CYCLE REPORT (5 minutes)**
+### **STEP 6: CREATE & POST DEVLOG (5 minutes)**
+
+**Automatic Devlog Creation:**
+- Create devlog in `devlogs/` directory for all significant work
+- Post to Discord immediately using `devlog_manager.py`
+- NO REMINDERS NEEDED - Just create and post automatically
+
+**Command:**
+```bash
+# After completing work, create devlog and post
+python tools/devlog_manager.py post --agent agent-X --file devlogs/YYYY-MM-DD_agent-X_task.md
+```
+
+**When to Create Devlogs:**
+- ✅ After completing any task
+- ✅ After making significant progress
+- ✅ After fixing bugs or issues
+- ✅ After responding to coordination requests
+- ✅ After completing analysis or research
+
+**Devlog automatically:**
+- Uploads to Swarm Brain
+- Posts to your Discord channel
+- Updates devlog index
+
+### **STEP 7: END-OF-CYCLE REPORT (2 minutes)**
 
 **Update Captain:**
 - Progress this cycle

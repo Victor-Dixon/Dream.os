@@ -2,6 +2,10 @@
 8-Agent ROI-Based Task Assignment using Markov Optimization
 ===========================================================
 
+⚠️ DEPRECATED: This tool has been migrated to tools_v2.
+Use: python -m tools_v2.toolbelt bi.roi.optimize
+See: tools_v2/categories/bi_tools.py for the adapter.
+
 Assigns optimal tasks to ALL 8 agents based on:
 1. ROI (Return on Investment) = Reward / Difficulty
 2. Long-term goal alignment (efficient autonomous development)

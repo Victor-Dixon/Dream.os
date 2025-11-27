@@ -8,9 +8,10 @@ from loguru import logger
 import pandas as pd
 
 from config.settings import config
+from .broker_interface import BrokerInterface
 
 
-class AlpacaClient:
+class AlpacaClient(BrokerInterface):
     """Wrapper for Alpaca API interactions"""
 
     def __init__(self):

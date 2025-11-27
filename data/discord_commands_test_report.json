@@ -1,21 +1,13 @@
 {
-  "timestamp": "2025-11-23T09:39:16.810860",
+  "timestamp": "2025-11-24T00:18:53.546528",
   "summary": {
-    "total_files": 5,
-    "total_commands": 23,
+    "total_files": 4,
+    "total_commands": 24,
     "commands_with_handling": 15,
     "files_with_error_handler": 0,
-    "error_handling_coverage": "65.2%"
+    "error_handling_coverage": "62.5%"
   },
   "files": [
-    {
-      "file": "src\\discord_commander\\discord_commander_bot.py",
-      "commands": [],
-      "error_handling": {},
-      "has_error_handler": false,
-      "total_commands": 0,
-      "commands_with_handling": 0
-    },
     {
       "file": "src\\discord_commander\\messaging_commands.py",
       "commands": [
@@ -79,6 +71,7 @@
     {
       "file": "src\\discord_commander\\unified_discord_bot.py",
       "commands": [
+        "control",
         "gui",
         "status",
         "message",
@@ -110,7 +103,7 @@
         }
       },
       "has_error_handler": false,
-      "total_commands": 7,
+      "total_commands": 8,
       "commands_with_handling": 4
     },
     {
@@ -155,7 +148,7 @@
     }
   ],
   "recommendations": [
-    "\u26a0\ufe0f  8 commands need error handling",
+    "\u26a0\ufe0f  9 commands need error handling",
     "\u26a0\ufe0f  Some files missing global error handlers"
   ]
 }

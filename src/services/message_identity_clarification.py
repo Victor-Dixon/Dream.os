@@ -9,7 +9,7 @@ Author: V2 SWARM CAPTAIN
 License: MIT
 """
 
-from .models.messaging_models import UnifiedMessage
+from src.core.messaging_core import UnifiedMessage
 
 
 class MessageIdentityClarification:

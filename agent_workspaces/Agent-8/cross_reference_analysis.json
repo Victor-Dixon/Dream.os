@@ -1,0 +1,17 @@
+{
+  "total_repos": 75,
+  "sources_checked": [
+    "master_list",
+    "consolidation_plan",
+    "agent5_analysis"
+  ],
+  "discrepancies": [],
+  "verified_repos": [],
+  "unverified_repos": [
+    {
+      "repo_num": 14,
+      "name": "unknown",
+      "reason": "Not found in consolidation plan"
+    }
+  ]
+}

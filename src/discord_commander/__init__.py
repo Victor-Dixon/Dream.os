@@ -1,82 +1,50 @@
-# Discord Commander V2 - Consolidated Integration
-# ================================================
-# Consolidated from 9→4 files (Agent-3, C-003 Consolidation)
+# AUTO-GENERATED __init__.py
+# DO NOT EDIT MANUALLY - changes may be overwritten
 
-import sys
-from pathlib import Path
-
-# Ensure src is in path for imports
-if str(Path(__file__).parent.parent.parent) not in sys.path:
-    sys.path.insert(0, str(Path(__file__).parent.parent.parent))
-
-try:
-    # Consolidated modules (V2 compliant)
-    from src.discord_commander.discord_agent_communication import (
-        AgentCommunicationEngine,
-        create_agent_communication_engine,
-    )
-    from src.discord_commander.discord_models import (
-        AgentCommand,
-        CommandResult,
-        CommunicationStats,
-        DiscordMessage,
-        create_command_result,
-    )
-    from src.discord_commander.discord_service import (
-        DiscordService,
-        get_discord_service,
-        start_discord_devlog_monitoring,
-    )
-except ImportError:
-    # Try relative imports
-    try:
-        from .discord_agent_communication import (
-            AgentCommunicationEngine,
-            create_agent_communication_engine,
-        )
-        from .discord_models import (
-            AgentCommand,
-            CommandResult,
-            CommunicationStats,
-            DiscordMessage,
-            create_command_result,
-        )
-        from .discord_service import (
-            DiscordService,
-            get_discord_service,
-            start_discord_devlog_monitoring,
-        )
-    except ImportError:
-        # Last resort: direct imports
-        from discord_agent_communication import (
-            AgentCommunicationEngine,
-            create_agent_communication_engine,
-        )
-        from discord_models import (
-            AgentCommand,
-            CommandResult,
-            CommunicationStats,
-            DiscordMessage,
-            create_command_result,
-        )
-        from discord_service import (
-            DiscordService,
-            get_discord_service,
-            start_discord_devlog_monitoring,
-        )
+from . import approval_commands
+from . import contract_notifications
+from . import core
+from . import debate_discord_integration
+from . import discord_agent_communication
+from . import discord_embeds
+from . import discord_gui_controller
+from . import discord_gui_modals
+from . import discord_gui_views
+from . import discord_models
+from . import discord_service
+from . import enhanced_bot
+from . import github_book_viewer
+from . import messaging_commands
+from . import messaging_controller
+from . import messaging_controller_modals
+from . import messaging_controller_refactored
+from . import messaging_controller_views
+from . import status_reader
+from . import swarm_showcase_commands
+from . import unified_discord_bot
+from . import webhook_commands
 
 __all__ = [
-    # Agent Communication
-    "AgentCommunicationEngine",
-    "create_agent_communication_engine",
-    # Data Models
-    "CommandResult",
-    "DiscordMessage",
-    "AgentCommand",
-    "CommunicationStats",
-    "create_command_result",
-    # Discord Service
-    "DiscordService",
-    "get_discord_service",
-    "start_discord_devlog_monitoring",
+    'approval_commands',
+    'contract_notifications',
+    'core',
+    'debate_discord_integration',
+    'discord_agent_communication',
+    'discord_embeds',
+    'discord_gui_controller',
+    'discord_gui_modals',
+    'discord_gui_views',
+    'discord_models',
+    'discord_service',
+    'enhanced_bot',
+    'github_book_viewer',
+    'messaging_commands',
+    'messaging_controller',
+    'messaging_controller_modals',
+    'messaging_controller_refactored',
+    'messaging_controller_views',
+    'status_reader',
+    'swarm_showcase_commands',
+    'unified_discord_bot',
+    'webhook_commands',
 ]
