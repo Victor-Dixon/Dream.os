@@ -140,6 +140,117 @@ It consolidates prior onboarding guides and system updates.
   - Identify the agent and categorize content.
 - SSOT principles: single authoritative source, no duplication, searchable history.
 
+## ⏰ **TIME CHECKING SYSTEM - CRITICAL FOR ACCURATE TIMESTAMPS**
+
+### **🚨 MANDATORY: Use Swarm Time System for All Timestamps**
+
+**Problem**: File metadata shows incorrect creation dates (files appear created later than they actually were). This breaks chronological history in devlogs and documentation.
+
+**Solution**: **ALWAYS use the swarm time checking system** to get accurate timestamps.
+
+### **How to Use Swarm Time System**:
+
+**Python Code**:
+```python
+from src.utils.swarm_time import get_swarm_time, format_swarm_timestamp_readable
+
+# Get current accurate time
+current_time = get_swarm_time()
+# Returns: datetime object with local system time
+
+# Format for readable timestamp
+timestamp = format_swarm_timestamp_readable()
+# Returns: "YYYY-MM-DD HH:MM:SS" (e.g., "2025-01-27 14:30:45")
+
+# Format for filenames
+filename_timestamp = format_swarm_timestamp_filename()
+# Returns: "YYYYMMDD_HHMMSS_ffffff" (e.g., "20250127_143045_123456")
+```
+
+**Command Line**:
+```bash
+# Get current swarm time
+python -c "from src.utils.swarm_time import get_swarm_time, format_swarm_timestamp_readable; print(format_swarm_timestamp_readable())"
+```
+
+### **When to Use Swarm Time**:
+
+**✅ ALWAYS use for**:
+1. **Devlog timestamps** - Use `format_swarm_timestamp_readable()` for devlog dates
+2. **Documentation dates** - Use accurate timestamps in all documentation
+3. **Status.json updates** - Use `format_swarm_timestamp_readable()` for `last_updated` field
+4. **File creation timestamps** - Use `format_swarm_timestamp_filename()` for filenames
+5. **Message timestamps** - Include accurate timestamps in all messages
+6. **Progress reports** - Use accurate timestamps for all progress tracking
+
+### **Example Usage**:
+
+**In Devlogs**:
+```python
+from src.utils.swarm_time import format_swarm_timestamp_readable
+
+timestamp = format_swarm_timestamp_readable()
+devlog_content = f"""
+# Devlog Title
+
+**Date**: {timestamp}  
+**Agent**: Agent-X  
+**Status**: ✅ COMPLETE
+"""
+```
+
+**In Status.json**:
+```python
+from src.utils.swarm_time import format_swarm_timestamp_readable
+
+status = {
+    "agent_id": "Agent-X",
+    "last_updated": format_swarm_timestamp_readable(),  # ✅ CORRECT
+    "status": "ACTIVE_AGENT_MODE"
+}
+```
+
+**In Documentation**:
+```python
+from src.utils.swarm_time import format_swarm_timestamp_readable
+
+doc_content = f"""
+# Document Title
+
+**Last Updated**: {format_swarm_timestamp_readable()}  
+**Author**: Agent-X
+"""
+```
+
+### **Why This Matters**:
+
+- ✅ **True Chronological History**: Accurate timestamps create correct chronological order
+- ✅ **Swarm Synchronization**: All agents use same time source, stay in sync
+- ✅ **Metadata Accuracy**: File creation dates match actual work time
+- ✅ **Historical Accuracy**: Devlogs and documentation reflect true timeline
+- ✅ **Debugging**: Accurate timestamps help identify when work actually happened
+
+### **❌ DO NOT**:
+- ❌ Use `datetime.now()` directly (may not match system time)
+- ❌ Use hardcoded timestamps
+- ❌ Use file system metadata for timestamps
+- ❌ Assume file creation time is accurate
+
+### **✅ DO**:
+- ✅ Always import and use `get_swarm_time()` or formatting functions
+- ✅ Use `format_swarm_timestamp_readable()` for human-readable timestamps
+- ✅ Use `format_swarm_timestamp_filename()` for filename timestamps
+- ✅ Update timestamps when files are modified
+- ✅ Include timestamps in all devlogs and documentation
+
+**Location**: `src/utils/swarm_time.py`  
+**Functions Available**:
+- `get_swarm_time()` - Get current datetime object
+- `format_swarm_timestamp()` - ISO 8601 format
+- `format_swarm_timestamp_readable()` - Human-readable format (YYYY-MM-DD HH:MM:SS)
+- `format_swarm_timestamp_filename()` - Filename-safe format
+- `get_swarm_time_display()` - Display format for messages
+
 ---
 
 ## Captain Overview

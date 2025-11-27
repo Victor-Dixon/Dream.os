@@ -33,8 +33,69 @@ try:
     DISCORD_AVAILABLE = True
 except ImportError:
     DISCORD_AVAILABLE = False
-    discord = None
-    commands = None
+    # Create mock discord module for when discord.py is not available
+
+    class MockView:
+        def __init__(self, *args, **kwargs):
+            pass
+
+        def add_item(self, item):
+            pass
+
+    class MockSelect:
+        def __init__(self, *args, **kwargs):
+            pass
+
+    class MockButton:
+        def __init__(self, *args, **kwargs):
+            pass
+
+    class MockSelectOption:
+        def __init__(self, *args, **kwargs):
+            pass
+
+    class MockUI:
+        View = MockView
+        Select = MockSelect
+        Button = MockButton
+        SelectOption = MockSelectOption
+
+    class MockButtonStyle:
+        primary = "primary"
+        secondary = "secondary"
+
+    class MockCog:
+        def __init__(self, *args, **kwargs):
+            pass
+
+    def mock_command(*args, **kwargs):
+        def decorator(func):
+            return func
+        return decorator
+
+    class MockCommands:
+        Cog = MockCog
+        command = mock_command
+        Context = type('Context', (), {})()
+
+    class MockExt:
+        commands = MockCommands()
+
+    class MockDiscord:
+        class ui:
+            View = MockView
+            Select = MockSelect
+            Button = MockButton
+            SelectOption = MockSelectOption
+        SelectOption = MockSelectOption
+        ButtonStyle = MockButtonStyle
+        Interaction = type('Interaction', (), {})()
+        Embed = type('Embed', (), {})()
+        Color = type('Color', (), {'blue': lambda: None})()
+        ext = MockExt()
+
+    discord = MockDiscord()
+    commands = MockCommands()
 
 logger = logging.getLogger(__name__)
 
@@ -50,29 +111,106 @@ class GitHubBookData:
     def __init__(self):
         self.devlogs_path = Path("swarm_brain/devlogs/repository_analysis")
         self.book_path = Path("GITHUB_75_REPOS_COMPREHENSIVE_ANALYSIS_BOOK.md")
+        self.master_list_paths = [
+            Path("data/github_75_repos_master_list.json"),
+            Path("github_75_repos_master_list.json"),
+            Path("config/github_75_repos_master_list.json"),
+        ]
+        self.master_list = self._load_master_list()
         self.repos_data = self._load_all_repos()
 
+    def _load_master_list(self) -> dict[int, dict[str, Any]]:
+        """Load master list of all 75 repos."""
+        master_list = {}
+        
+        for path in self.master_list_paths:
+            if path.exists():
+                try:
+                    import json
+                    data = json.loads(path.read_text(encoding="utf-8"))
+                    if "repos" in data:
+                        for repo in data["repos"]:
+                            num = repo.get("num")
+                            if num:
+                                master_list[num] = {
+                                    "name": repo.get("name", f"Repo-{num}"),
+                                    "analyzed": repo.get("analyzed", False),
+                                    "agent": repo.get("agent", "Unknown"),
+                                    "goldmine": repo.get("goldmine", False),
+                                }
+                        logger.info(f"✅ Loaded {len(master_list)} repos from master list: {path}")
+                        break
+                except Exception as e:
+                    logger.warning(f"⚠️ Error loading master list {path}: {e}")
+        
+        # Ensure all 75 repos exist in master list
+        for i in range(1, 76):
+            if i not in master_list:
+                master_list[i] = {
+                    "name": f"Repo-{i}",
+                    "analyzed": False,
+                    "agent": "Unknown",
+                    "goldmine": False,
+                }
+        
+        return master_list
+
     def _load_all_repos(self) -> dict[int, dict[str, Any]]:
-        """Load all repo data from devlogs."""
+        """Load all repo data from devlogs and merge with master list."""
         repos = {}
 
-        # Load from devlogs directory
+        # Start with master list data (ensures all 75 repos are present)
+        for repo_num, master_data in self.master_list.items():
+            repos[repo_num] = {
+                "name": master_data["name"],
+                "analyzed": master_data["analyzed"],
+                "agent": master_data["agent"],
+                "goldmine": master_data.get("goldmine", False),
+                "devlog_path": None,
+                "purpose": "Repository analysis pending" if not master_data["analyzed"] else "See devlog for details",
+                "roi": "N/A",
+                "integration_hours": "N/A",
+                "quality_rating": "N/A",
+                "key_features": [],
+                "integration_value": "N/A",
+                "recommendations": [],
+                "content": "",
+                "full_content": "",
+            }
+
+        # Load detailed data from devlogs directory and merge
         if self.devlogs_path.exists():
             for devlog_file in sorted(self.devlogs_path.glob("*.md")):
                 repo_num = self._extract_repo_number(devlog_file.name)
-                if repo_num:
-                    repos[repo_num] = self._parse_devlog(devlog_file)
+                if repo_num and repo_num in repos:
+                    # Merge devlog data with master list data
+                    devlog_data = self._parse_devlog(devlog_file)
+                    repos[repo_num].update(devlog_data)
+                    # Preserve master list name if devlog name extraction failed
+                    if devlog_data.get("name") not in ["Unknown", "Unknown Repository", ""]:
+                        repos[repo_num]["name"] = devlog_data["name"]
+                    repos[repo_num]["analyzed"] = True
+                    repos[repo_num]["devlog_path"] = str(devlog_file)
 
         return repos
 
     def _extract_repo_number(self, filename: str) -> int | None:
         """Extract repo number from filename."""
-        # Patterns: Repo_21_..., github_repo_analysis_51_..., github_analysis_11_...
+        # Updated patterns to handle all current naming conventions
         import re
 
-        patterns = [r"Repo_(\d+)_", r"github_repo_analysis_(\d+)_", r"github_analysis_(\d+)_"]
+        patterns = [
+            r"Repo_(\d+)_",                    # Repo_21_...
+            r"github_repo_analysis_(\d+)_",     # github_repo_analysis_51_...
+            r"github_analysis_(\d+)_",         # github_analysis_11_...
+            r"repo_(\d+)_",                    # repo_01_... (lowercase)
+            r"repo-(\d+)-",                    # repo-4-... (hyphenated)
+            r"agent\d+_repo(\d+)_",            # agent5_repo31_...
+            r"agent-\d+_repo_(\d+)_",         # agent-1_repo_01_...
+            r"agent-\d+_repo-(\d+)-",         # agent-7_repo-4-...
+        ]
         for pattern in patterns:
-            match = re.search(pattern, filename)
+            match = re.search(pattern, filename, re.IGNORECASE)
             if match:
                 return int(match.group(1))
         return None
@@ -108,19 +246,56 @@ class GitHubBookData:
 
     def _extract_repo_name(self, filename: str, content: str) -> str:
         """Extract repo name from filename or content."""
-        # Try filename first
-        parts = filename.split("_")
-        if len(parts) > 1:
-            return parts[-1].replace("-", " ").title()
+        import re
+        
+        # Try to extract from filename patterns
+        # Pattern: agent-X_repo_XX_reponame.md or agentX_repoXX_reponame.md
+        patterns = [
+            r"repo[-_]?\d+[-_]?([a-zA-Z0-9_-]+)\.md",  # repo_01_network_scanner.md
+            r"repo[-_]?\d+[-_]?([a-zA-Z0-9_-]+)-",      # repo-4-gpt-automation
+            r"analysis_(\d+)_([a-zA-Z0-9_-]+)",         # analysis_51_practice
+        ]
+        
+        for pattern in patterns:
+            match = re.search(pattern, filename, re.IGNORECASE)
+            if match:
+                name = match.group(-1)  # Get last group (repo name)
+                # Clean up the name
+                name = name.replace("-", " ").replace("_", " ").title()
+                # Remove common suffixes
+                name = re.sub(r'\s+(complete|analysis|final)$', '', name, flags=re.IGNORECASE)
+                if name and len(name) > 2:
+                    return name
 
-        # Try content
-        for line in content.split("\n")[:20]:
-            if "Repo" in line and "#" in line:
-                # Extract from "Repo #21: fastapi" patterns
+        # Try content extraction
+        for line in content.split("\n")[:30]:
+            # Look for "Repo #XX: name" or "Repository: name" patterns
+            if "Repo" in line and ("#" in line or ":" in line):
                 if ":" in line:
-                    return line.split(":")[-1].strip()
+                    name = line.split(":")[-1].strip()
+                    # Remove markdown formatting
+                    name = re.sub(r'[#*`]', '', name).strip()
+                    if name and len(name) > 2:
+                        return name
+            # Look for title patterns
+            if line.startswith("#") and ("repo" in line.lower() or "repository" in line.lower()):
+                name = re.sub(r'^#+\s*', '', line)
+                name = re.sub(r'[#*`]', '', name).strip()
+                if name and len(name) > 2:
+                    return name
 
-        return filename
+        # Fallback: use filename stem (without extension)
+        name = Path(filename).stem
+        # Remove date prefix if present
+        name = re.sub(r'^\d{4}-\d{2}-\d{2}_', '', name)
+        # Remove agent prefix
+        name = re.sub(r'^agent[-_]?\d+[-_]?', '', name, flags=re.IGNORECASE)
+        # Remove repo number
+        name = re.sub(r'repo[-_]?\d+[-_]?', '', name, flags=re.IGNORECASE)
+        # Clean up
+        name = name.replace("-", " ").replace("_", " ").title().strip()
+        
+        return name if name else "Unknown Repository"
 
     def _extract_agent(self, content: str) -> str:
         """Extract analyzing agent."""
@@ -162,7 +337,7 @@ class GitHubBookData:
         patterns = [r"(\d+-?\d*)\s*hours?", r"(\d+)hr", r"Integration.*?(\d+)"]
         for pattern in patterns:
             match = re.search(pattern, content, re.IGNORECASE)
-            if match and "Integration" in content[max(0, match.start() - 50) : match.end() + 50]:
+            if match and "Integration" in content[max(0, match.start() - 50): match.end() + 50]:
                 return match.group(1)
         return "N/A"
 
@@ -175,7 +350,8 @@ class GitHubBookData:
         if star_match:
             return star_match.group(1)
 
-        score_match = re.search(r"Quality[:\s]+(\d+)/10", content, re.IGNORECASE)
+        score_match = re.search(
+            r"Quality[:\s]+(\d+)/10", content, re.IGNORECASE)
         if score_match:
             return f"{score_match.group(1)}/10"
 
@@ -225,7 +401,8 @@ class GitHubBookData:
     def get_goldmines(self) -> list[tuple[int, dict[str, Any]]]:
         """Get all goldmine/jackpot repos."""
         goldmines = []
-        goldmine_keywords = ["GOLDMINE", "JACKPOT", "goldmine", "jackpot", "⭐⭐⭐⭐⭐", "⭐⭐⭐⭐"]
+        goldmine_keywords = ["GOLDMINE", "JACKPOT",
+                             "goldmine", "jackpot", "⭐⭐⭐⭐⭐", "⭐⭐⭐⭐"]
 
         for repo_num, data in self.repos_data.items():
             content = data.get("full_content", "")
@@ -258,22 +435,31 @@ class GitHubBookNavigator(discord.ui.View):
         """Setup Previous/Next navigation buttons."""
         # Previous button
         prev_btn = discord.ui.Button(
-            label="⬅️ Previous", style=discord.ButtonStyle.secondary, custom_id="prev_btn", row=0
+            label="Previous",
+            style=discord.ButtonStyle.secondary,
+            emoji="⬅️",
+            custom_id="prev_btn",
+            row=0
         )
         prev_btn.callback = self.on_previous
         self.add_item(prev_btn)
 
         # Next button
         next_btn = discord.ui.Button(
-            label="Next ➡️", style=discord.ButtonStyle.primary, custom_id="next_btn", row=0
+            label="Next",
+            style=discord.ButtonStyle.primary,
+            emoji="➡️",
+            custom_id="next_btn",
+            row=0
         )
         next_btn.callback = self.on_next
         self.add_item(next_btn)
 
         # Goldmines button
         goldmines_btn = discord.ui.Button(
-            label="💎 Goldmines",
-            style=discord.ButtonStyle.success,
+            label="Goldmines",
+            style=discord.ButtonStyle.primary,  # Fixed: success doesn't exist, use primary
+            emoji="💎",
             custom_id="goldmines_btn",
             row=0,
         )
@@ -282,7 +468,11 @@ class GitHubBookNavigator(discord.ui.View):
 
         # Table of Contents button
         toc_btn = discord.ui.Button(
-            label="📑 Contents", style=discord.ButtonStyle.secondary, custom_id="toc_btn", row=0
+            label="Contents",
+            style=discord.ButtonStyle.secondary,
+            emoji="📑",
+            custom_id="toc_btn",
+            row=0
         )
         toc_btn.callback = self.on_table_of_contents
         self.add_item(toc_btn)
@@ -316,49 +506,125 @@ class GitHubBookNavigator(discord.ui.View):
 
     async def on_previous(self, interaction: discord.Interaction):
         """Navigate to previous repo."""
-        # Find previous analyzed repo
-        analyzed = sorted(self.book_data.repos_data.keys())
         try:
-            current_idx = analyzed.index(self.current_repo)
-            if current_idx > 0:
-                self.current_repo = analyzed[current_idx - 1]
-        except (ValueError, IndexError):
-            self.current_repo = analyzed[0] if analyzed else 1
+            # Find previous analyzed repo
+            analyzed = sorted(self.book_data.repos_data.keys())
+            try:
+                current_idx = analyzed.index(self.current_repo)
+                if current_idx > 0:
+                    self.current_repo = analyzed[current_idx - 1]
+            except (ValueError, IndexError):
+                self.current_repo = analyzed[0] if analyzed else 1
 
-        embed = self._create_repo_embed()
-        await interaction.response.edit_message(embed=embed, view=self)
+            embed = self._create_repo_embed()
+            await interaction.response.edit_message(embed=embed, view=self)
+        except Exception as e:
+            logger.error(f"Error navigating previous: {e}", exc_info=True)
+            try:
+                if not interaction.response.is_done():
+                    await interaction.response.send_message(
+                        f"❌ Error: {e}", ephemeral=True
+                    )
+                else:
+                    await interaction.followup.send(
+                        f"❌ Error: {e}", ephemeral=True
+                    )
+            except Exception as followup_error:
+                logger.error(
+                    f"Error sending error message: {followup_error}", exc_info=True)
 
     async def on_next(self, interaction: discord.Interaction):
         """Navigate to next repo."""
-        # Find next analyzed repo
-        analyzed = sorted(self.book_data.repos_data.keys())
         try:
-            current_idx = analyzed.index(self.current_repo)
-            if current_idx < len(analyzed) - 1:
-                self.current_repo = analyzed[current_idx + 1]
-        except (ValueError, IndexError):
-            self.current_repo = analyzed[0] if analyzed else 1
+            # Find next analyzed repo
+            analyzed = sorted(self.book_data.repos_data.keys())
+            try:
+                current_idx = analyzed.index(self.current_repo)
+                if current_idx < len(analyzed) - 1:
+                    self.current_repo = analyzed[current_idx + 1]
+            except (ValueError, IndexError):
+                self.current_repo = analyzed[0] if analyzed else 1
 
-        embed = self._create_repo_embed()
-        await interaction.response.edit_message(embed=embed, view=self)
+            embed = self._create_repo_embed()
+            await interaction.response.edit_message(embed=embed, view=self)
+        except Exception as e:
+            logger.error(f"Error navigating next: {e}", exc_info=True)
+            try:
+                if not interaction.response.is_done():
+                    await interaction.response.send_message(
+                        f"❌ Error: {e}", ephemeral=True
+                    )
+                else:
+                    await interaction.followup.send(
+                        f"❌ Error: {e}", ephemeral=True
+                    )
+            except Exception as followup_error:
+                logger.error(
+                    f"Error sending error message: {followup_error}", exc_info=True)
 
     async def on_jump(self, interaction: discord.Interaction):
         """Jump to selected repo."""
-        selected = interaction.data["values"][0]
-        self.current_repo = int(selected)
+        try:
+            selected = interaction.data["values"][0]
+            self.current_repo = int(selected)
 
-        embed = self._create_repo_embed()
-        await interaction.response.edit_message(embed=embed, view=self)
+            embed = self._create_repo_embed()
+            await interaction.response.edit_message(embed=embed, view=self)
+        except Exception as e:
+            logger.error(f"Error jumping to repo: {e}", exc_info=True)
+            try:
+                if not interaction.response.is_done():
+                    await interaction.response.send_message(
+                        f"❌ Error: {e}", ephemeral=True
+                    )
+                else:
+                    await interaction.followup.send(
+                        f"❌ Error: {e}", ephemeral=True
+                    )
+            except Exception as followup_error:
+                logger.error(
+                    f"Error sending error message: {followup_error}", exc_info=True)
 
     async def on_goldmines(self, interaction: discord.Interaction):
         """Show goldmines showcase."""
-        embed = self._create_goldmines_embed()
-        await interaction.response.edit_message(embed=embed, view=self)
+        try:
+            embed = self._create_goldmines_embed()
+            await interaction.response.edit_message(embed=embed, view=self)
+        except Exception as e:
+            logger.error(f"Error showing goldmines: {e}", exc_info=True)
+            try:
+                if not interaction.response.is_done():
+                    await interaction.response.send_message(
+                        f"❌ Error: {e}", ephemeral=True
+                    )
+                else:
+                    await interaction.followup.send(
+                        f"❌ Error: {e}", ephemeral=True
+                    )
+            except Exception as followup_error:
+                logger.error(
+                    f"Error sending error message: {followup_error}", exc_info=True)
 
     async def on_table_of_contents(self, interaction: discord.Interaction):
         """Show table of contents."""
-        embed = self._create_toc_embed()
-        await interaction.response.edit_message(embed=embed, view=self)
+        try:
+            embed = self._create_toc_embed()
+            await interaction.response.edit_message(embed=embed, view=self)
+        except Exception as e:
+            logger.error(
+                f"Error showing table of contents: {e}", exc_info=True)
+            try:
+                if not interaction.response.is_done():
+                    await interaction.response.send_message(
+                        f"❌ Error: {e}", ephemeral=True
+                    )
+                else:
+                    await interaction.followup.send(
+                        f"❌ Error: {e}", ephemeral=True
+                    )
+            except Exception as followup_error:
+                logger.error(
+                    f"Error sending error message: {followup_error}", exc_info=True)
 
     def _create_repo_embed(self) -> discord.Embed:
         """Create beautiful embed for current repo."""
@@ -387,7 +653,8 @@ class GitHubBookNavigator(discord.ui.View):
 
         embed = discord.Embed(
             title=f"{title_prefix} Repo #{self.current_repo}: {repo_data['name']}",
-            description=repo_data.get("purpose", self._extract_description(content)),
+            description=repo_data.get(
+                "purpose", self._extract_description(content)),
             color=color,
             timestamp=discord.utils.utcnow(),
         )
@@ -418,15 +685,18 @@ class GitHubBookNavigator(discord.ui.View):
         """Add comprehensive fields from parsed repo data."""
         # Agent who analyzed
         if repo_data.get("agent"):
-            embed.add_field(name="👤 Analyzed By", value=repo_data["agent"], inline=True)
+            embed.add_field(name="👤 Analyzed By",
+                            value=repo_data["agent"], inline=True)
 
         # Quality rating
         if repo_data.get("quality_rating") and repo_data["quality_rating"] != "N/A":
-            embed.add_field(name="⭐ Quality", value=repo_data["quality_rating"], inline=True)
+            embed.add_field(name="⭐ Quality",
+                            value=repo_data["quality_rating"], inline=True)
 
         # ROI
         if repo_data.get("roi") and repo_data["roi"] != "N/A":
-            embed.add_field(name="📈 ROI", value=f"{repo_data['roi']}x", inline=True)
+            embed.add_field(
+                name="📈 ROI", value=f"{repo_data['roi']}x", inline=True)
 
         # Integration hours
         if repo_data.get("integration_hours") and repo_data["integration_hours"] != "N/A":
@@ -436,13 +706,16 @@ class GitHubBookNavigator(discord.ui.View):
 
         # Purpose
         if repo_data.get("purpose"):
-            embed.add_field(name="🎯 Purpose", value=repo_data["purpose"], inline=False)
+            embed.add_field(name="🎯 Purpose",
+                            value=repo_data["purpose"], inline=False)
 
         # Key features
         if repo_data.get("key_features"):
-            features_text = "\n".join(f"• {f}" for f in repo_data["key_features"])
+            features_text = "\n".join(
+                f"• {f}" for f in repo_data["key_features"])
             if features_text:
-                embed.add_field(name="✨ Key Features", value=features_text[:1024], inline=False)
+                embed.add_field(name="✨ Key Features",
+                                value=features_text[:1024], inline=False)
 
         # Integration value
         if repo_data.get("integration_value"):
@@ -461,7 +734,8 @@ class GitHubBookNavigator(discord.ui.View):
         # Goldmine status
         content = repo_data.get("full_content", "")
         if "GOLDMINE" in content or "JACKPOT" in content:
-            embed.add_field(name="🏆 Status", value="**GOLDMINE DISCOVERY!**", inline=False)
+            embed.add_field(name="🏆 Status",
+                            value="**GOLDMINE DISCOVERY!**", inline=False)
 
     def _extract_integration_effort(self, content: str) -> str:
         """Extract integration effort estimates."""
@@ -541,7 +815,8 @@ class GitHubBookNavigator(discord.ui.View):
             inline=False,
         )
 
-        embed.set_footer(text=f"💎 {len(goldmines)} goldmines found | Use buttons to explore")
+        embed.set_footer(
+            text=f"💎 {len(goldmines)} goldmines found | Use buttons to explore")
 
         return embed
 
@@ -612,7 +887,8 @@ class GitHubBookNavigator(discord.ui.View):
             inline=True,
         )
 
-        embed.set_footer(text="📖 Use dropdown to jump to specific repo | Use Next/Prev to browse")
+        embed.set_footer(
+            text="📖 Use dropdown to jump to specific repo | Use Next/Prev to browse")
 
         return embed
 
@@ -804,7 +1080,8 @@ class GitHubBookCommands(commands.Cog if DISCORD_AVAILABLE else object):
                 )
 
             if len(agent_repos) > 15:
-                embed.set_footer(text=f"Showing 15 of {len(agent_repos)} repos")
+                embed.set_footer(
+                    text=f"Showing 15 of {len(agent_repos)} repos")
 
             await ctx.send(embed=embed)
 
@@ -909,7 +1186,8 @@ class GitHubBookCommands(commands.Cog if DISCORD_AVAILABLE else object):
             inline=False,
         )
 
-        embed.set_footer(text="🐝 Swarm collective intelligence | Use !github_book to explore")
+        embed.set_footer(
+            text="🐝 Swarm collective intelligence | Use !github_book to explore")
 
         return embed
 
@@ -920,4 +1198,5 @@ async def setup(bot):
         await bot.add_cog(GitHubBookCommands(bot))
         logger.info("✅ GitHubBookCommands cog loaded - WOW FACTOR READY!")
     else:
-        logger.warning("⚠️ Discord not available - GitHubBookCommands not loaded")
+        logger.warning(
+            "⚠️ Discord not available - GitHubBookCommands not loaded")

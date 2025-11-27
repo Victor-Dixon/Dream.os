@@ -53,8 +53,10 @@ class ProjectScanner:
         self.file_processor = FileProcessor(
             self.project_root, self.cache, self.cache_lock, self.additional_ignore_dirs
         )
-        self.report_generator = ReportGenerator(self.project_root, self.analysis)
-        self.modular_report_generator = ModularReportGenerator(self.project_root, self.analysis)
+        self.report_generator = ReportGenerator(
+            self.project_root, self.analysis)
+        self.modular_report_generator = ModularReportGenerator(
+            self.project_root, self.analysis)
 
     def load_cache(self) -> dict:
         """Loads JSON cache from disk if present. Otherwise returns empty."""
@@ -107,20 +109,30 @@ class ProjectScanner:
         processed_count = 0
 
         previous_files = set(self.cache.keys())
-        current_files = {str(f.relative_to(self.project_root)) for f in valid_files}
+        current_files = {str(f.relative_to(self.project_root))
+                         for f in valid_files}
         moved_files = {}
         missing_files = previous_files - current_files
 
-        # Detect moved files by matching file hashes
+        # Detect moved files by matching file hashes (OPTIMIZED: O(n) instead of O(n²))
+        # Build hash map of new files first (O(n))
+        new_file_hashes = {}
+        for new_path in current_files:
+            new_file = self.project_root / new_path
+            file_hash = self.file_processor.hash_file(new_file)
+            if file_hash:
+                # Handle hash collisions by keeping first match
+                if file_hash not in new_file_hashes:
+                    new_file_hashes[file_hash] = new_path
+
+        # Lookup moved files using hash map (O(n))
         for old_path in previous_files:
             old_hash = self.cache.get(old_path, {}).get("hash")
-            if not old_hash:
-                continue
-            for new_path in current_files:
-                new_file = self.project_root / new_path
-                if self.file_processor.hash_file(new_file) == old_hash:
+            if old_hash and old_hash in new_file_hashes:
+                new_path = new_file_hashes[old_hash]
+                # Only mark as moved if path actually changed
+                if old_path != new_path:
                     moved_files[old_path] = new_path
-                    break
 
         # Remove truly missing files from cache
         for missing_file in missing_files:
@@ -176,7 +188,8 @@ class ProjectScanner:
         self, template_path: str | None = None, output_path: str | None = None
     ):
         """Merges new analysis into old chatgpt_project_context.json or uses a Jinja template, preserving existing data."""
-        self.report_generator.export_chatgpt_context(template_path, output_path)
+        self.report_generator.export_chatgpt_context(
+            template_path, output_path)
 
     def generate_modular_reports(self):
         """Generate multiple smaller, agent-digestible analysis files."""
@@ -190,8 +203,10 @@ class ProjectScanner:
         for file_path, result in self.analysis.items():
             if file_path.endswith(".py"):
                 for class_name, class_data in result.get("classes", {}).items():
-                    class_data["maturity"] = self._maturity_level(class_name, class_data)
-                    class_data["agent_type"] = self._agent_type(class_name, class_data)
+                    class_data["maturity"] = self._maturity_level(
+                        class_name, class_data)
+                    class_data["agent_type"] = self._agent_type(
+                        class_name, class_data)
 
     def _maturity_level(self, class_name: str, class_data: dict[str, Any]) -> str:
         score = 0

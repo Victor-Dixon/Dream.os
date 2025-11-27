@@ -153,4 +153,59 @@ class BaseExecutionManager(BaseManager):
 
     def _start_task_processor(self) -> None:
         """Start background task processor."""
-        pass  # Placeholder
+        try:
+            # Start background thread to process tasks from queue
+            def process_tasks():
+                """Background task processing loop."""
+                while True:
+                    try:
+                        # Check if there are tasks in queue
+                        if self.task_queue:
+                            task_id = self.task_queue[0]  # Get first task
+                            if task_id in self.tasks:
+                                task = self.tasks[task_id]
+                                
+                                # Update task status
+                                task['status'] = 'running'
+                                
+                                # Execute task using task executor
+                                try:
+                                    # Determine task type and execute
+                                    task_type = task.get('type', 'general')
+                                    task_data = task.get('data', {})
+                                    
+                                    if task_type == 'file':
+                                        result = self.task_executor.execute_file_task(task_data)
+                                    elif task_type == 'data':
+                                        result = self.task_executor.execute_data_task(task_data)
+                                    elif task_type == 'api':
+                                        result = self.task_executor.execute_api_task(task_data)
+                                    else:
+                                        result = {'status': 'completed', 'message': 'Task executed'}
+                                    
+                                    if result.get('status') == 'completed':
+                                        task['status'] = 'completed'
+                                    else:
+                                        task['status'] = 'failed'
+                                except Exception as e:
+                                    self.logger.error(f"Task {task_id} execution failed: {e}")
+                                    task['status'] = 'failed'
+                                
+                                # Remove from queue
+                                if task_id in self.task_queue:
+                                    self.task_queue.remove(task_id)
+                        
+                        # Sleep to avoid busy waiting
+                        import time
+                        time.sleep(0.5)
+                    except Exception as e:
+                        self.logger.error(f"Error in task processor loop: {e}")
+                        import time
+                        time.sleep(1.0)
+            
+            # Start background thread
+            processor_thread = threading.Thread(target=process_tasks, daemon=True)
+            processor_thread.start()
+            self.logger.info("Background task processor started")
+        except Exception as e:
+            self.logger.error(f"Failed to start task processor: {e}")

@@ -365,28 +365,42 @@ class WebhookDeleteConfirmView(discord.ui.View):
     @discord.ui.button(label="✅ Confirm Delete", style=discord.ButtonStyle.danger)
     async def confirm(self, interaction: discord.Interaction, button: discord.ui.Button):
         """Confirm deletion."""
-        if interaction.user.id != self.user.id:
-            await interaction.response.send_message(
-                "❌ Only the command issuer can confirm this action.", ephemeral=True
-            )
-            return
+        try:
+            if interaction.user.id != self.user.id:
+                await interaction.response.send_message(
+                    "❌ Only the command issuer can confirm this action.", ephemeral=True
+                )
+                return
 
-        self.confirmed = True
-        await interaction.response.send_message("✅ Confirmed", ephemeral=True)
-        self.stop()
+            self.confirmed = True
+            await interaction.response.send_message("✅ Confirmed", ephemeral=True)
+            self.stop()
+        except Exception as e:
+            logger.error(f"Error in webhook delete confirm: {e}", exc_info=True)
+            if not interaction.response.is_done():
+                await interaction.response.send_message(
+                    f"❌ Error: {e}", ephemeral=True
+                )
 
     @discord.ui.button(label="❌ Cancel", style=discord.ButtonStyle.secondary)
     async def cancel(self, interaction: discord.Interaction, button: discord.ui.Button):
         """Cancel deletion."""
-        if interaction.user.id != self.user.id:
-            await interaction.response.send_message(
-                "❌ Only the command issuer can cancel this action.", ephemeral=True
-            )
-            return
+        try:
+            if interaction.user.id != self.user.id:
+                await interaction.response.send_message(
+                    "❌ Only the command issuer can cancel this action.", ephemeral=True
+                )
+                return
 
-        self.confirmed = False
-        await interaction.response.send_message("❌ Cancelled", ephemeral=True)
-        self.stop()
+            self.confirmed = False
+            await interaction.response.send_message("❌ Cancelled", ephemeral=True)
+            self.stop()
+        except Exception as e:
+            logger.error(f"Error in webhook delete cancel: {e}", exc_info=True)
+            if not interaction.response.is_done():
+                await interaction.response.send_message(
+                    f"❌ Error: {e}", ephemeral=True
+                )
 
 
 async def setup(bot: commands.Bot):

@@ -1,8 +1,23 @@
-# AUTO-GENERATED __init__.py
-# DO NOT EDIT MANUALLY - changes may be overwritten
+"""
+OBS Integration
+==============
 
-from . import metrics
+OBS caption capture and interpretation.
+"""
+
+from .caption_interpreter import (
+    CaptionIntent,
+    CaptionInterpreter,
+    InterpretedCaption,
+)
+from .caption_listener import OBSCaptionFileListener, OBSCaptionListener
+from .speech_log_manager import SpeechLogManager
 
 __all__ = [
-    "metrics",
+    "OBSCaptionListener",
+    "OBSCaptionFileListener",
+    "CaptionInterpreter",
+    "InterpretedCaption",
+    "CaptionIntent",
+    "SpeechLogManager",
 ]

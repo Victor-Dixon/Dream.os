@@ -1,9 +1,14 @@
 # 🛠️ AGENT TOOLBELT - Unified CLI for All Agent Tools
 
+⚠️ **DEPRECATED - V1 DOCUMENTATION**
+
+**Status**: ⚠️ **DEPRECATED** - This is the V1 documentation  
+**Current Version**: See `docs/AGENT_TOOLBELT_V2_QUICK_START.md` for V2 documentation  
+**Migration**: All tools have been migrated to `tools_v2/` system
+
 **Created By**: Agent-7 - Repository Cloning Specialist  
 **Date**: 2025-10-11  
-**Purpose**: Single unified interface for all agent tools  
-**Status**: Production-ready
+**Deprecated**: 2025-01-27 (Agent-8 - Documentation Cleanup Phase)
 
 ---
 
@@ -22,14 +27,19 @@ The **Agent Toolbelt** provides a unified command-line interface that gives agen
 
 ## 🚀 QUICK START
 
+**Note:** The Agent Toolbelt uses `tools_v2/` architecture under the hood. The CLI entry point is `tools/agent_toolbelt.py` which provides a unified interface to all tools_v2 tools.
+
 ```bash
-# Basic usage
+# Basic usage (CLI entry point - uses tools_v2/ internally)
 python tools/agent_toolbelt.py <command> [options]
 
 # Get help
 python tools/agent_toolbelt.py --help
 python tools/agent_toolbelt.py vector --help
 python tools/agent_toolbelt.py message --help
+
+# Alternative: Direct tools_v2 programmatic usage
+python -c "from tools_v2 import get_toolbelt_core; toolbelt = get_toolbelt_core(); result = toolbelt.run('vector.context', {'agent_id': 'Agent-1', 'task': 'test'}); print(result.output if result.success else result.error_message)"
 ```
 
 ---
@@ -49,17 +59,20 @@ python tools/verify_task.py --file gaming_integration_core.py --search
 
 ### **Quick File Metrics**
 ```bash
-# Fast analysis without full scan
-python tools/quick_metrics.py src/core/shared_utilities.py
+# Fast analysis without full scan (via tools_v2)
+python -m tools_v2.toolbelt bi.metrics --files src/core/shared_utilities.py
 
 # Check multiple files
-python tools/quick_metrics.py src/services/agent_*.py
+python -m tools_v2.toolbelt bi.metrics --files src/services/agent_*.py
 
 # Directory scan
-python tools/quick_metrics.py src/core/utilities/
+python -m tools_v2.toolbelt bi.metrics --files src/core/utilities/
 
 # JSON output for automation
-python tools/quick_metrics.py src/ --json --summary
+python -m tools_v2.toolbelt bi.metrics --files src/ --json --summary
+
+# Legacy tool (deprecated): python tools/quick_metrics.py
+# Use tools_v2.toolbelt bi.metrics instead
 ```
 
 ### **Refresh Cache**
@@ -83,17 +96,20 @@ python tools/refresh_cache.py --verify
 
 ### **Get Intelligent Task Context**
 ```bash
-# Before starting any task
+# Before starting any task (uses tools_v2/vector_tools internally)
 python tools/agent_toolbelt.py vector context \
     --agent Agent-7 \
     --task "consolidate web files"
 
 # Returns: Similar tasks, related messages, devlog insights, recommendations
+
+# Alternative: Direct tools_v2 usage
+python -m tools_v2.toolbelt vector.context --agent_id=Agent-7 --task="consolidate web files"
 ```
 
 ### **Semantic Search**
 ```bash
-# Search across all indexed content
+# Search across all indexed content (uses tools_v2/vector_tools internally)
 python tools/agent_toolbelt.py vector search "V2 compliance patterns"
 
 # Agent-specific search
@@ -101,6 +117,9 @@ python tools/agent_toolbelt.py vector search "consolidation" --agent Agent-7
 
 # Limit results
 python tools/agent_toolbelt.py vector search "messaging system" --limit 10
+
+# Alternative: Direct tools_v2 usage
+python -m tools_v2.toolbelt vector.search --query="V2 compliance patterns" --limit=10
 ```
 
 ### **Get Success Patterns**
@@ -241,25 +260,36 @@ python tools/agent_toolbelt.py v2 check src/tools/ --fix
 
 ### **Get Agent Status**
 ```bash
+# Get agent status (uses tools_v2/agent_ops_tools internally)
 python tools/agent_toolbelt.py agent status --agent Agent-7
 
 # Shows: recent work, pending tasks, last activity, vector DB status
+
+# Alternative: Direct tools_v2 usage
+python -m tools_v2.toolbelt agent.status --agent_id=Agent-7
 ```
 
 ### **Check Inbox**
 ```bash
-# List all messages
+# List all messages (uses tools_v2/messaging_tools internally)
 python tools/agent_toolbelt.py agent inbox --agent Agent-7
 
 # Semantic inbox search
 python tools/agent_toolbelt.py agent inbox \
     --agent Agent-7 \
     --search "urgent V2 violations"
+
+# Alternative: Direct tools_v2 usage
+python -m tools_v2.toolbelt msg.inbox --agent_id=Agent-7
 ```
 
 ### **Claim Next Task**
 ```bash
+# Claim next available task (uses tools_v2/agent_ops_tools internally)
 python tools/agent_toolbelt.py agent claim-task --agent Agent-7
+
+# Alternative: Direct tools_v2 usage
+python -m tools_v2.toolbelt agent.claim --agent_id=Agent-7
 ```
 
 ### **Show Agent Coordinates**

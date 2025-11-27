@@ -17,6 +17,8 @@ Author: Agent-3 (Infrastructure & DevOps) - Discord Consolidation
 License: MIT
 """
 
+from src.services.messaging_infrastructure import ConsolidatedMessagingService
+from src.discord_commander.discord_gui_controller import DiscordGUIController
 import asyncio
 import logging
 import os
@@ -47,8 +49,6 @@ except ImportError:
 project_root = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(project_root))
 
-from src.discord_commander.discord_gui_controller import DiscordGUIController
-from src.services.messaging_infrastructure import ConsolidatedMessagingService
 
 logger = logging.getLogger(__name__)
 
@@ -61,19 +61,33 @@ class ConfirmShutdownView(discord.ui.View):
         super().__init__(timeout=30)
         self.confirmed = False
 
-    @discord.ui.button(label="✅ Confirm Shutdown", style=discord.ButtonStyle.danger)
+    @discord.ui.button(label="Confirm Shutdown", emoji="✅", style=discord.ButtonStyle.danger)
     async def confirm(self, interaction: discord.Interaction, button: discord.ui.Button):
         """Confirm shutdown button."""
-        self.confirmed = True
-        await interaction.response.send_message("✅ Shutdown confirmed", ephemeral=True)
-        self.stop()
+        try:
+            self.confirmed = True
+            await interaction.response.send_message("✅ Shutdown confirmed", ephemeral=True)
+            self.stop()
+        except Exception as e:
+            logger.error(f"Error in shutdown confirm: {e}", exc_info=True)
+            if not interaction.response.is_done():
+                await interaction.response.send_message(
+                    f"❌ Error: {e}", ephemeral=True
+                )
 
-    @discord.ui.button(label="❌ Cancel", style=discord.ButtonStyle.secondary)
+    @discord.ui.button(label="Cancel", emoji="❌", style=discord.ButtonStyle.secondary)
     async def cancel(self, interaction: discord.Interaction, button: discord.ui.Button):
         """Cancel shutdown button."""
-        self.confirmed = False
-        await interaction.response.send_message("❌ Cancelled", ephemeral=True)
-        self.stop()
+        try:
+            self.confirmed = False
+            await interaction.response.send_message("❌ Cancelled", ephemeral=True)
+            self.stop()
+        except Exception as e:
+            logger.error(f"Error in shutdown cancel: {e}", exc_info=True)
+            if not interaction.response.is_done():
+                await interaction.response.send_message(
+                    f"❌ Error: {e}", ephemeral=True
+                )
 
 
 class ConfirmRestartView(discord.ui.View):
@@ -83,19 +97,33 @@ class ConfirmRestartView(discord.ui.View):
         super().__init__(timeout=30)
         self.confirmed = False
 
-    @discord.ui.button(label="🔄 Confirm Restart", style=discord.ButtonStyle.primary)
+    @discord.ui.button(label="Confirm Restart", emoji="🔄", style=discord.ButtonStyle.primary)
     async def confirm(self, interaction: discord.Interaction, button: discord.ui.Button):
         """Confirm restart button."""
-        self.confirmed = True
-        await interaction.response.send_message("✅ Restart confirmed", ephemeral=True)
-        self.stop()
+        try:
+            self.confirmed = True
+            await interaction.response.send_message("✅ Restart confirmed", ephemeral=True)
+            self.stop()
+        except Exception as e:
+            logger.error(f"Error in restart confirm: {e}", exc_info=True)
+            if not interaction.response.is_done():
+                await interaction.response.send_message(
+                    f"❌ Error: {e}", ephemeral=True
+                )
 
-    @discord.ui.button(label="❌ Cancel", style=discord.ButtonStyle.secondary)
+    @discord.ui.button(label="Cancel", emoji="❌", style=discord.ButtonStyle.secondary)
     async def cancel(self, interaction: discord.Interaction, button: discord.ui.Button):
         """Cancel restart button."""
-        self.confirmed = False
-        await interaction.response.send_message("❌ Cancelled", ephemeral=True)
-        self.stop()
+        try:
+            self.confirmed = False
+            await interaction.response.send_message("❌ Cancelled", ephemeral=True)
+            self.stop()
+        except Exception as e:
+            logger.error(f"Error in restart cancel: {e}", exc_info=True)
+            if not interaction.response.is_done():
+                await interaction.response.send_message(
+                    f"❌ Error: {e}", ephemeral=True
+                )
 
 
 class UnifiedDiscordBot(commands.Bot):
@@ -116,19 +144,205 @@ class UnifiedDiscordBot(commands.Bot):
         self.gui_controller = DiscordGUIController(self.messaging_service)
         self.logger = logging.getLogger(__name__)
 
+        # Discord user ID to developer name mapping
+        self.discord_user_map = self._load_discord_user_map()
+
+    def _load_discord_user_map(self) -> dict[str, str]:
+        """Load Discord user ID to developer name mapping from profiles."""
+        user_map = {}
+        from pathlib import Path
+        import json
+
+        # Load from agent profiles
+        workspace_dir = Path("agent_workspaces")
+        if workspace_dir.exists():
+            for agent_dir in workspace_dir.iterdir():
+                if agent_dir.is_dir() and agent_dir.name.startswith("Agent-"):
+                    profile_file = agent_dir / "profile.json"
+                    if profile_file.exists():
+                        try:
+                            profile_data = json.loads(
+                                profile_file.read_text(encoding="utf-8"))
+                            discord_user_id = profile_data.get(
+                                "discord_user_id")
+                            developer_name = profile_data.get(
+                                "discord_username") or profile_data.get("developer_name")
+
+                            if discord_user_id and developer_name:
+                                user_map[str(discord_user_id)
+                                         ] = developer_name.upper()
+                                self.logger.debug(
+                                    f"Loaded Discord mapping: {discord_user_id} → {developer_name}")
+                        except Exception as e:
+                            self.logger.warning(
+                                f"Failed to load profile from {profile_file}: {e}")
+
+        # Also check for config file
+        config_file = Path("config/discord_user_map.json")
+        if config_file.exists():
+            try:
+                config_data = json.loads(
+                    config_file.read_text(encoding="utf-8"))
+                # Filter out metadata keys (starting with _) and non-string values
+                valid_mappings = {
+                    k: v for k, v in config_data.items()
+                    if not k.startswith("_") and isinstance(v, str)
+                }
+                user_map.update(valid_mappings)
+                if valid_mappings:
+                    self.logger.info(
+                        f"Loaded {len(valid_mappings)} Discord user mappings from config")
+            except Exception as e:
+                self.logger.warning(
+                    f"Failed to load Discord user map config: {e}")
+
+        return user_map
+
+    def _get_developer_prefix(self, discord_user_id: str) -> str:
+        """Get developer prefix from Discord user ID mapping."""
+        # Check if user ID is in mapping
+        developer_name = self.discord_user_map.get(str(discord_user_id))
+        if developer_name:
+            # Ensure it's a string before calling .upper()
+            if isinstance(developer_name, str):
+                # Normalize to uppercase and ensure it's a valid prefix
+                valid_prefixes = ['CHRIS', 'ARIA',
+                                  'VICTOR', 'CARYMN', 'CHARLES']
+                developer_name_upper = developer_name.upper()
+                if developer_name_upper in valid_prefixes:
+                    return f"[{developer_name_upper}]"
+        # Default to [D2A] if no mapping found
+        return "[D2A]"
+
     async def on_ready(self):
         """Bot ready event."""
-        self.logger.info(f"✅ Discord Commander Bot ready: {self.user}")
-        self.logger.info(f"📊 Guilds: {len(self.guilds)}")
-        self.logger.info(f"🤖 Latency: {round(self.latency * 1000, 2)}ms")
+        # Prevent duplicate startup messages on reconnection
+        if not hasattr(self, '_startup_sent'):
+            self.logger.info(f"✅ Discord Commander Bot ready: {self.user}")
+            self.logger.info(f"📊 Guilds: {len(self.guilds)}")
+            self.logger.info(f"🤖 Latency: {round(self.latency * 1000, 2)}ms")
 
-        # Set bot presence
-        await self.change_presence(
-            activity=discord.Activity(type=discord.ActivityType.watching, name="the swarm 🐝")
-        )
+            # Set bot presence
+            await self.change_presence(
+                activity=discord.Activity(
+                    type=discord.ActivityType.watching, name="the swarm 🐝")
+            )
 
-        # Send startup message
-        await self.send_startup_message()
+            # Send startup message with control panel (only once)
+            await self.send_startup_message()
+            self._startup_sent = True
+        else:
+            # Reconnection - just log, don't spam startup message
+            self.logger.info(f"🔄 Discord Bot reconnected: {self.user}")
+
+    async def on_message(self, message: discord.Message):
+        """Handle incoming messages with developer prefix mapping."""
+        # Don't process bot's own messages
+        if message.author == self.user:
+            return
+
+        # Process commands first
+        await self.process_commands(message)
+
+        content = message.content.strip()
+
+        # Supported prefixes: [D2A], [CHRIS], [ARIA], [VICTOR], [CARYMN], [CHARLES]
+        # Also accept simple format: "Agent-X" (will auto-add prefix)
+        supported_prefixes = ('[D2A]', '[CHRIS]', '[ARIA]',
+                              '[VICTOR]', '[CARYMN]', '[CHARLES]')
+
+        # Check if message starts with a supported prefix
+        has_prefix = any(content.startswith(prefix)
+                         for prefix in supported_prefixes)
+
+        # Also check for simple "Agent-X" format (without prefix)
+        simple_format = content.split('\n')[0].strip().startswith('Agent-')
+
+        if not (has_prefix or simple_format):
+            return
+
+        try:
+            # Get developer prefix from Discord user ID
+            developer_prefix = self._get_developer_prefix(
+                str(message.author.id))
+
+            # Parse message format
+            lines = content.split('\n', 1)
+
+            if has_prefix:
+                # Format: [PREFIX] Agent-X\n\nMessage content
+                if len(lines) < 2:
+                    self.logger.warning(
+                        f"Invalid message format: {content[:50]}")
+                    return
+
+                header = lines[0].strip()
+                message_content = lines[1].strip()
+
+                # Parse recipient (e.g., "[D2A] Agent-1" -> "Agent-1")
+                parts = header.split()
+                if len(parts) < 2:
+                    self.logger.warning(
+                        f"Could not parse recipient from: {header}")
+                    return
+
+                recipient = parts[1]
+                # Use the prefix from message, or override with developer prefix
+                message_prefix = parts[0] if parts[0] in supported_prefixes else developer_prefix
+            else:
+                # Simple format: Agent-X\n\nMessage content
+                if len(lines) < 2:
+                    self.logger.warning(
+                        f"Invalid message format: {content[:50]}")
+                    return
+
+                header = lines[0].strip()
+                message_content = lines[1].strip()
+
+                # Parse recipient (e.g., "Agent-1" -> "Agent-1")
+                recipient = header
+                message_prefix = developer_prefix  # Auto-add developer prefix
+
+            # Validate recipient format
+            if not recipient.startswith('Agent-'):
+                self.logger.warning(f"Invalid recipient format: {recipient}")
+                return
+
+            # Priority is always regular for Discord messages
+            priority = "regular"
+
+            # Build final message with prefix
+            final_message = f"{message_prefix} {recipient}\n\n{message_content}"
+
+            self.logger.info(
+                f"📨 Processing {message_prefix} message: {recipient} - {message_content[:50]}...")
+
+            # Queue message for PyAutoGUI delivery
+            result = self.messaging_service.send_message(
+                agent=recipient,
+                message=final_message,
+                priority=priority,
+                use_pyautogui=True,
+                wait_for_delivery=False,
+                discord_user_id=str(message.author.id),
+            )
+
+            if result.get("success"):
+                queue_id = result.get("queue_id", "unknown")
+                self.logger.info(
+                    f"✅ Message queued: {queue_id} → {recipient} ({message_prefix})")
+
+                # Send confirmation (optional - can be removed if too noisy)
+                # await message.add_reaction("✅")
+            else:
+                error = result.get("error", "Unknown error")
+                self.logger.error(f"❌ Failed to queue message: {error}")
+                await message.add_reaction("❌")
+
+        except Exception as e:
+            self.logger.error(
+                f"❌ Error processing message: {e}", exc_info=True)
+            await message.add_reaction("❌")
 
     async def send_startup_message(self):
         """Send startup message to configured channel."""
@@ -143,13 +357,15 @@ class UnifiedDiscordBot(commands.Bot):
                 for guild in self.guilds:
                     for text_channel in guild.text_channels:
                         channel = text_channel
-                        self.logger.info(f"Using channel: {channel.name} ({channel.id})")
+                        self.logger.info(
+                            f"Using channel: {channel.name} ({channel.id})")
                         break
                     if channel:
                         break
 
             if not channel:
-                self.logger.warning("No text channels available for startup message")
+                self.logger.warning(
+                    "No text channels available for startup message")
                 return
 
             embed = discord.Embed(
@@ -166,9 +382,28 @@ class UnifiedDiscordBot(commands.Bot):
             )
 
             embed.add_field(
-                name="📨 Messaging Commands",
+                name="🎛️ Interactive Control Panel (PREFERRED!)",
                 value=(
-                    "• `!gui` - Open interactive messaging GUI\n"
+                    "• `!control` (or `!panel`, `!menu`) - Open main control panel\n"
+                    "• **All features accessible via interactive buttons**\n"
+                    "• No commands needed - just click buttons!"
+                ),
+                inline=False,
+            )
+
+            embed.add_field(
+                name="📨 Messaging (GUI-Driven)",
+                value=(
+                    "• `!gui` - Open messaging interface\n"
+                    "• Or use **Message Agent** button in control panel\n"
+                    "• Entry fields for custom messages"
+                ),
+                inline=False,
+            )
+
+            embed.add_field(
+                name="📨 Text Commands (Legacy)",
+                value=(
                     "• `!message <agent> <msg>` - Direct agent message\n"
                     "• `!broadcast <msg>` - Broadcast to all agents\n"
                     "• `!agents` - List all agents"
@@ -198,6 +433,24 @@ class UnifiedDiscordBot(commands.Bot):
             )
 
             embed.add_field(
+                name="📊 Diagram Commands",
+                value=(
+                    "• `!mermaid <diagram_code>` - Render Mermaid diagram\n"
+                    "• Example: `!mermaid graph TD; A-->B; B-->C;`"
+                ),
+                inline=False,
+            )
+
+            embed.add_field(
+                name="🔧 Git Commands",
+                value=(
+                    "• `!git_push \"message\"` - Push project to GitHub\n"
+                    "• `!push \"Your commit message\"` - Alias for git_push"
+                ),
+                inline=False,
+            )
+
+            embed.add_field(
                 name="🤖 System Info",
                 value=(
                     f"**Guilds:** {len(self.guilds)} | **Latency:** {round(self.latency * 1000, 2)}ms\n"
@@ -207,32 +460,80 @@ class UnifiedDiscordBot(commands.Bot):
                 inline=False,
             )
 
-            embed.set_footer(text="🐝 WE. ARE. SWARM. ⚡ Every agent is the face of the swarm")
+            embed.set_footer(
+                text="🐝 WE. ARE. SWARM. ⚡ Every agent is the face of the swarm")
 
-            await channel.send(embed=embed)
-            self.logger.info("✅ Startup message sent successfully")
+            # Send control panel with startup message
+            control_view = self.gui_controller.create_control_panel()
+            await channel.send(embed=embed, view=control_view)
+            self.logger.info(
+                "✅ Startup message with control panel sent successfully")
 
         except Exception as e:
             self.logger.error(f"Error sending startup message: {e}")
 
     async def setup_hook(self):
-        """Setup hook for bot initialization."""
+        """Setup hook for bot initialization - load all cogs."""
         try:
+            # Load approval commands (NEW - for Phase 1 consolidation approval)
+            try:
+                from .approval_commands import ApprovalCommands
+                await self.add_cog(ApprovalCommands(self))
+                self.logger.info("✅ Approval commands loaded")
+            except Exception as e:
+                self.logger.warning(
+                    f"⚠️ Could not load approval commands: {e}")
+
             # Add messaging commands cog
             await self.add_cog(MessagingCommands(self, self.gui_controller))
             self.logger.info("✅ Messaging commands loaded")
-            
+
+            # Log all registered commands for debugging
+            command_names = [cmd.name for cmd in self.walk_commands()]
+            self.logger.info(
+                f"📋 Registered commands: {', '.join(command_names)}")
+
             # Add swarm showcase commands cog
             from src.discord_commander.swarm_showcase_commands import SwarmShowcaseCommands
             await self.add_cog(SwarmShowcaseCommands(self))
             self.logger.info("✅ Swarm showcase commands loaded")
-            
+
             # Add GitHub book viewer cog (WOW FACTOR!)
             from src.discord_commander.github_book_viewer import GitHubBookCommands
             await self.add_cog(GitHubBookCommands(self))
             self.logger.info("✅ GitHub Book Viewer loaded - WOW FACTOR READY!")
+
+            # Add trading commands cog (Agent-1 - Trading Reports)
+            from src.discord_commander.trading_commands import TradingCommands
+            await self.add_cog(TradingCommands(self))
+            self.logger.info("✅ Trading commands loaded")
+
+            # Add webhook commands cog (Agent-7 - Webhook Management)
+            from src.discord_commander.webhook_commands import WebhookCommands
+            await self.add_cog(WebhookCommands(self))
+            self.logger.info("✅ Webhook commands loaded")
+
+            # Final command count
+            all_commands = [cmd.name for cmd in self.walk_commands()]
+            self.logger.info(
+                f"📊 Total commands registered: {len(all_commands)}")
+            self.logger.info(
+                f"📋 All commands: {', '.join(sorted(all_commands))}")
         except Exception as e:
-            self.logger.error(f"Error loading commands: {e}")
+            self.logger.error(f"Error loading commands: {e}", exc_info=True)
+
+    async def on_disconnect(self):
+        """Handle bot disconnection."""
+        self.logger.warning(
+            "⚠️ Discord Bot disconnected - will attempt to reconnect")
+        # Reset startup flag on disconnect so we can send startup message on reconnect
+        if hasattr(self, '_startup_sent'):
+            delattr(self, '_startup_sent')
+
+    async def on_error(self, event, *args, **kwargs):
+        """Handle errors in event handlers."""
+        self.logger.error(f"❌ Error in event {event}: {args}", exc_info=True)
+        # Don't close bot on errors - let it try to recover
 
     async def close(self):
         """Clean shutdown."""
@@ -248,6 +549,41 @@ class MessagingCommands(commands.Cog):
         self.bot = bot
         self.gui_controller = gui_controller
         self.logger = logging.getLogger(__name__)
+
+    @commands.command(name="control", aliases=["panel", "menu"], description="Open main control panel")
+    async def control_panel(self, ctx: commands.Context):
+        """Open main interactive control panel."""
+        try:
+            control_view = self.gui_controller.create_control_panel()
+            embed = discord.Embed(
+                title="🎛️ SWARM CONTROL PANEL",
+                description="**Complete Interactive Control Interface**\n\nUse buttons below to access all features:",
+                color=discord.Color.blue(),
+            )
+
+            embed.add_field(
+                name="📨 Messaging",
+                value="Message individual agents or broadcast to all",
+                inline=True,
+            )
+            embed.add_field(
+                name="📊 Monitoring",
+                value="View swarm status and task dashboards",
+                inline=True,
+            )
+            embed.add_field(
+                name="📚 Content",
+                value="Access GitHub book and documentation",
+                inline=True,
+            )
+
+            embed.set_footer(
+                text="🐝 WE. ARE. SWARM. ⚡ Interactive GUI-Driven Control")
+            await ctx.send(embed=embed, view=control_view)
+
+        except Exception as e:
+            self.logger.error(f"Error opening control panel: {e}")
+            await ctx.send(f"❌ Error: {e}")
 
     @commands.command(name="gui", description="Open messaging GUI")
     async def gui(self, ctx: commands.Context):
@@ -313,7 +649,19 @@ class MessagingCommands(commands.Cog):
                     description=f"Delivered to **{agent_id}**",
                     color=discord.Color.green(),
                 )
-                embed.add_field(name="Message", value=message[:500], inline=False)
+                # Use chunking utility to avoid truncation
+                from .utils.message_chunking import chunk_field_value
+                message_chunks = chunk_field_value(message)
+                embed.add_field(
+                    name="Message", value=message_chunks[0], inline=False)
+                # If message was chunked, send additional parts
+                if len(message_chunks) > 1:
+                    for i, chunk in enumerate(message_chunks[1:], 2):
+                        embed.add_field(
+                            name=f"Message (continued {i}/{len(message_chunks)})",
+                            value=chunk,
+                            inline=False
+                        )
                 await ctx.send(embed=embed)
             else:
                 await ctx.send(f"❌ Failed to send message to {agent_id}")
@@ -321,6 +669,55 @@ class MessagingCommands(commands.Cog):
         except Exception as e:
             self.logger.error(f"Error sending message: {e}")
             await ctx.send(f"❌ Error: {e}")
+
+    @commands.command(name="mermaid", description="Render Mermaid diagram")
+    async def mermaid(self, ctx: commands.Context, *, diagram_code: str):
+        """Render Mermaid diagram code.
+        
+        Usage: !mermaid graph TD; A-->B; B-->C;
+        """
+        try:
+            # Remove code block markers if present
+            diagram_code = diagram_code.strip()
+            if diagram_code.startswith("```mermaid"):
+                diagram_code = diagram_code[10:]
+            elif diagram_code.startswith("```"):
+                diagram_code = diagram_code[3:]
+            if diagram_code.endswith("```"):
+                diagram_code = diagram_code[:-3]
+            diagram_code = diagram_code.strip()
+            
+            # Create embed with mermaid code
+            embed = discord.Embed(
+                title="📊 Mermaid Diagram",
+                description="Mermaid diagram code:",
+                color=discord.Color.blue(),
+            )
+            
+            # Send mermaid code in code block
+            # Discord doesn't natively render mermaid, but we can format it nicely
+            mermaid_block = f"```mermaid\n{diagram_code}\n```"
+            
+            # Discord has a 2000 character limit per message
+            if len(mermaid_block) > 1900:
+                await ctx.send("❌ Mermaid diagram too long. Please shorten it.")
+                return
+            
+            embed.add_field(
+                name="Diagram Code",
+                value=mermaid_block,
+                inline=False
+            )
+            
+            embed.set_footer(
+                text="💡 Tip: Copy this code to a Mermaid editor or use Discord's code block rendering"
+            )
+            
+            await ctx.send(embed=embed)
+            
+        except Exception as e:
+            self.logger.error(f"Error rendering mermaid: {e}")
+            await ctx.send(f"❌ Error rendering mermaid diagram: {e}")
 
     @commands.command(name="broadcast", description="Broadcast to all agents")
     async def broadcast(self, ctx: commands.Context, *, message: str):
@@ -336,7 +733,19 @@ class MessagingCommands(commands.Cog):
                     description="Delivered to all agents",
                     color=discord.Color.green(),
                 )
-                embed.add_field(name="Message", value=message[:500], inline=False)
+                # Use chunking utility to avoid truncation
+                from .utils.message_chunking import chunk_field_value
+                message_chunks = chunk_field_value(message)
+                embed.add_field(
+                    name="Message", value=message_chunks[0], inline=False)
+                # If message was chunked, send additional parts
+                if len(message_chunks) > 1:
+                    for i, chunk in enumerate(message_chunks[1:], 2):
+                        embed.add_field(
+                            name=f"Message (continued {i}/{len(message_chunks)})",
+                            value=chunk,
+                            inline=False
+                        )
                 await ctx.send(embed=embed)
             else:
                 await ctx.send("❌ Failed to broadcast message")
@@ -347,149 +756,568 @@ class MessagingCommands(commands.Cog):
 
     @commands.command(name="help", description="Show help information")
     async def help_cmd(self, ctx: commands.Context):
-        """Show comprehensive help for all bot commands."""
-        embed = discord.Embed(
-            title="🐝 Discord Commander - Complete Help",
-            description="**Multi-Agent Command & Showcase System**",
-            color=0x3498DB,
-        )
+        """Show interactive help menu with navigation buttons."""
+        try:
+            from .discord_gui_views import HelpGUIView
 
-        embed.add_field(
-            name="📨 Messaging Commands",
-            value=(
-                "`!gui` - Open interactive messaging GUI\n"
-                "`!message <agent> <msg>` - Send direct message\n"
-                "`!broadcast <msg>` - Broadcast to all agents\n"
-                "`!agents` - List all agents\n"
-                "`!shutdown` - Gracefully shutdown (admin)\n"
-                "`!restart` - Restart bot (admin)"
-            ),
-            inline=False,
-        )
+            view = HelpGUIView()
+            embed = view._create_main_embed()
 
-        embed.add_field(
-            name="🐝 Swarm Showcase (NEW!)",
-            value=(
-                "`!swarm_tasks` (or `!tasks`, `!directives`) - Live task dashboard\n"
-                "`!swarm_roadmap` (or `!roadmap`, `!plan`) - Strategic roadmap\n"
-                "`!swarm_excellence` (or `!lean`, `!quality`) - V2 compliance\n"
-                "`!swarm_overview` (or `!status`, `!swarm`) - Complete status"
-            ),
-            inline=False,
-        )
+            await ctx.send(embed=embed, view=view)
+        except Exception as e:
+            self.logger.error(f"Error showing help: {e}")
+            await ctx.send(f"❌ Error: {e}")
 
-        embed.add_field(
-            name="📚 GitHub Book Viewer (WOW FACTOR!)",
-            value=(
-                "`!github_book [chapter]` - Interactive book with navigation\n"
-                "`!goldmines` - High-value pattern discoveries\n"
-                "`!book_stats` - Comprehensive book statistics"
-            ),
-            inline=False,
-        )
+    @commands.command(name="commands", description="List all registered commands")
+    async def list_commands(self, ctx: commands.Context):
+        """List all registered bot commands for debugging."""
+        try:
+            all_commands = []
+            for command in self.bot.walk_commands():
+                all_commands.append(
+                    f"`!{command.name}` - {command.description or 'No description'}")
 
-        embed.add_field(
-            name="🎯 GUI Features",
-            value=(
-                "• Agent selection dropdown • Interactive composition\n"
-                "• **Shift+Enter for line breaks** ✨ • Priority selection\n"
-                "• Real-time monitoring • Broadcast capabilities"
-            ),
-            inline=False,
-        )
-
-        embed.add_field(
-            name="📊 Quick Examples",
-            value=(
-                "`!swarm_tasks` - See all agent missions\n"
-                "`!github_book 1` - View GitHub book Chapter 1\n"
-                "`!goldmines` - Discover high-ROI patterns\n"
-                "`!message Agent-2 Review Discord updates`"
-            ),
-            inline=False,
-        )
-
-        embed.set_footer(text="🐝 WE. ARE. SWARM. ⚡ Every agent is the face of the swarm")
-
-        await ctx.send(embed=embed)
-
-    @commands.command(name="shutdown", description="Gracefully shutdown the bot")
-    @commands.has_permissions(administrator=True)
-    async def shutdown_cmd(self, ctx: commands.Context):
-        """Gracefully shutdown the Discord bot."""
-        # Confirmation embed
-        embed = discord.Embed(
-            title="🛑 Shutdown Requested",
-            description="Are you sure you want to shutdown the bot?",
-            color=discord.Color.red(),
-        )
-
-        # Create confirmation view
-        view = ConfirmShutdownView()
-        message = await ctx.send(embed=embed, view=view)
-
-        # Wait for user confirmation (30 second timeout)
-        await view.wait()
-
-        if view.confirmed:
-            # Announce shutdown
-            shutdown_embed = discord.Embed(
-                title="👋 Bot Shutting Down",
-                description="Gracefully closing connections...",
-                color=discord.Color.orange(),
-            )
-            await ctx.send(embed=shutdown_embed)
-
-            # Log shutdown
-            self.logger.info("🛑 Shutdown command received - closing bot")
-
-            # Close bot gracefully
-            await self.close()
-        else:
-            await message.edit(content="❌ Shutdown cancelled", embed=None, view=None)
-
-    @commands.command(name="restart", description="Restart the Discord bot")
-    @commands.has_permissions(administrator=True)
-    async def restart_cmd(self, ctx: commands.Context):
-        """Restart the Discord bot."""
-        # Confirmation embed
-        embed = discord.Embed(
-            title="🔄 Restart Requested",
-            description="Bot will shutdown and restart. Continue?",
-            color=discord.Color.blue(),
-        )
-
-        # Create confirmation view
-        view = ConfirmRestartView()
-        message = await ctx.send(embed=embed, view=view)
-
-        # Wait for user confirmation (30 second timeout)
-        await view.wait()
-
-        if view.confirmed:
-            # Announce restart
-            restart_embed = discord.Embed(
-                title="🔄 Bot Restarting",
-                description="Shutting down... Will be back in 5-10 seconds!",
+            embed = discord.Embed(
+                title="📋 All Registered Commands",
+                # Limit to 50 to avoid embed limits
+                description="\n".join(all_commands[:50]),
                 color=discord.Color.blue(),
             )
-            await ctx.send(embed=restart_embed)
+            embed.set_footer(text=f"Total: {len(all_commands)} commands")
+            await ctx.send(embed=embed)
+        except Exception as e:
+            self.logger.error(f"Error listing commands: {e}")
+            await ctx.send(f"❌ Error: {e}")
 
-            # Log restart
-            self.logger.info("🔄 Restart command received - restarting bot")
+    @commands.command(name="shutdown", description="Gracefully shutdown the bot")
+    async def shutdown_cmd(self, ctx: commands.Context):
+        """Gracefully shutdown the Discord bot."""
+        try:
+            # Confirmation embed
+            embed = discord.Embed(
+                title="🛑 Shutdown Requested",
+                description="Are you sure you want to shutdown the bot?",
+                color=discord.Color.red(),
+            )
 
-            # Create restart flag file
-            restart_flag_path = Path(__file__).parent.parent.parent / ".discord_bot_restart"
-            restart_flag_path.write_text("RESTART_REQUESTED")
+            # Create confirmation view
+            view = ConfirmShutdownView()
+            message = await ctx.send(embed=embed, view=view)
 
-            # Close bot (restart logic handled by run script)
-            await self.close()
-        else:
-            await message.edit(content="❌ Restart cancelled", embed=None, view=None)
+            # Wait for user confirmation (30 second timeout)
+            await view.wait()
+
+            if view.confirmed:
+                # Announce shutdown
+                shutdown_embed = discord.Embed(
+                    title="👋 Bot Shutting Down",
+                    description="Gracefully closing connections...",
+                    color=discord.Color.orange(),
+                )
+                await ctx.send(embed=shutdown_embed)
+
+                # Log shutdown
+                self.logger.info("🛑 Shutdown command received - closing bot")
+
+                # Close bot gracefully
+                await self.bot.close()
+            else:
+                await message.edit(content="❌ Shutdown cancelled", embed=None, view=None)
+        except Exception as e:
+            self.logger.error(f"Error in shutdown command: {e}")
+            await ctx.send(f"❌ Error: {e}")
+
+    @commands.command(name="restart", description="Restart the Discord bot")
+    async def restart_cmd(self, ctx: commands.Context):
+        """Restart the Discord bot."""
+        try:
+            # Confirmation embed
+            embed = discord.Embed(
+                title="🔄 Restart Requested",
+                description="Bot will shutdown and restart. Continue?",
+                color=discord.Color.blue(),
+            )
+
+            # Create confirmation view
+            view = ConfirmRestartView()
+            message = await ctx.send(embed=embed, view=view)
+
+            # Wait for user confirmation (30 second timeout)
+            await view.wait()
+
+            if view.confirmed:
+                # Announce restart
+                restart_embed = discord.Embed(
+                    title="🔄 Bot Restarting",
+                    description="Shutting down... Will be back in 5-10 seconds!",
+                    color=discord.Color.blue(),
+                )
+                await ctx.send(embed=restart_embed)
+
+                # Log restart
+                self.logger.info("🔄 Restart command received - restarting bot")
+
+                # Create restart flag file
+                restart_flag_path = Path(
+                    __file__).parent.parent.parent / ".discord_bot_restart"
+                restart_flag_path.write_text("RESTART_REQUESTED")
+
+                # Close bot (restart logic handled by run script)
+                await self.bot.close()
+            else:
+                await message.edit(content="❌ Restart cancelled", embed=None, view=None)
+        except Exception as e:
+            self.logger.error(f"Error in restart command: {e}")
+            await ctx.send(f"❌ Error: {e}")
+
+    @commands.command(name="soft_onboard", aliases=["soft"], description="Soft onboard agent(s)")
+    async def soft_onboard(self, ctx: commands.Context, *, agent_ids: str = None):
+        """
+        Soft onboard agent(s). Can specify single agent, multiple agents, or all.
+        
+        Usage:
+        !soft Agent-1
+        !soft Agent-1,Agent-2,Agent-3
+        !soft all
+        """
+        try:
+            import subprocess
+
+            # If no agents specified, default to all
+            if not agent_ids or agent_ids.strip().lower() == "all":
+                agent_ids = "Agent-1,Agent-2,Agent-3,Agent-4,Agent-5,Agent-6,Agent-7,Agent-8"
+                agent_list = [f"Agent-{i}" for i in range(1, 9)]
+            else:
+                # Parse comma-separated agent IDs
+                raw_agent_list = [aid.strip() for aid in agent_ids.split(",") if aid.strip()]
+                # Convert numeric IDs to Agent-X format
+                agent_list = []
+                for aid in raw_agent_list:
+                    if aid.isdigit():
+                        agent_list.append(f"Agent-{aid}")
+                    elif aid.lower().startswith("agent-"):
+                        agent_list.append(aid)  # Already in correct format
+                    else:
+                        agent_list.append(aid)  # Keep as-is (might be valid)
+
+            if not agent_list:
+                await ctx.send("❌ No valid agents specified. Use: `!soft 1` or `!soft Agent-1` or `!soft 1,2,3`")
+                return
+
+            # Default message
+            message = "🚀 SOFT ONBOARD - Agent activation initiated. Check your inbox and begin autonomous operations."
+
+            embed = discord.Embed(
+                title="🚀 SOFT ONBOARD INITIATED",
+                description=f"Soft onboarding **{len(agent_list)} agent(s)**...\n\n**Agents:** {', '.join(agent_list)}",
+                color=discord.Color.orange(),
+            )
+            await ctx.send(embed=embed)
+
+            # Soft onboard each agent
+            successful = []
+            failed = []
+
+            # Get project root (use module-level or calculate)
+            project_root = Path(__file__).parent.parent.parent
+
+            for agent_id in agent_list:
+                try:
+                    # Use absolute path to ensure reliable execution
+                    cli_path = project_root / 'tools' / 'soft_onboard_cli.py'
+                    cmd = ['python', str(cli_path), '--agent', agent_id, '--message', message]
+                    result = subprocess.run(cmd, capture_output=True, text=True, timeout=120, cwd=str(project_root))
+
+                    if result.returncode == 0:
+                        successful.append(agent_id)
+                    else:
+                        error_msg = result.stderr[:200] if result.stderr else "Unknown error"
+                        failed.append((agent_id, error_msg))
+                except subprocess.TimeoutExpired:
+                    failed.append((agent_id, "Timeout after 2 minutes"))
+                except Exception as e:
+                    failed.append((agent_id, str(e)[:200]))
+
+            # Send results
+            if len(successful) == len(agent_list):
+                success_embed = discord.Embed(
+                    title="✅ SOFT ONBOARD COMPLETE",
+                    description=f"All **{len(agent_list)} agent(s)** soft onboarded successfully!",
+                    color=discord.Color.green(),
+                )
+                success_embed.add_field(
+                    name="✅ Successful", value="\n".join([f"✅ {agent}" for agent in successful]), inline=False
+                )
+                await ctx.send(embed=success_embed)
+            elif successful:
+                partial_embed = discord.Embed(
+                    title="⚠️ PARTIAL SOFT ONBOARD",
+                    description=f"**{len(successful)}/{len(agent_list)}** agents onboarded successfully",
+                    color=discord.Color.orange(),
+                )
+                partial_embed.add_field(
+                    name="✅ Successful", value="\n".join([f"✅ {agent}" for agent in successful]), inline=False
+                )
+                if failed:
+                    error_list = "\n".join([f"❌ {agent}: {error}" for agent, error in failed[:5]])
+                    partial_embed.add_field(name="❌ Failed", value=error_list, inline=False)
+                await ctx.send(embed=partial_embed)
+            else:
+                error_embed = discord.Embed(
+                    title="❌ SOFT ONBOARD FAILED",
+                    description="All agents failed to onboard",
+                    color=discord.Color.red(),
+                )
+                error_list = "\n".join([f"❌ {agent}: {error}" for agent, error in failed[:5]])
+                error_embed.add_field(name="Errors", value=error_list, inline=False)
+                await ctx.send(embed=error_embed)
+
+        except Exception as e:
+            self.logger.error(f"Error in soft_onboard: {e}", exc_info=True)
+            await ctx.send(f"❌ Error: {e}")
+
+    @commands.command(name="hard_onboard", aliases=["hard"], description="Hard onboard agent(s)")
+    async def hard_onboard(self, ctx: commands.Context, *, agent_ids: str = None):
+        """
+        Hard onboard agent(s). Can specify single agent, multiple agents, or all.
+        
+        Usage:
+        !hard_onboard Agent-1
+        !hard_onboard Agent-1,Agent-2,Agent-3
+        !hard_onboard all
+        """
+        try:
+            import subprocess
+
+            # If no agents specified, default to all
+            if not agent_ids or agent_ids.strip().lower() == "all":
+                agent_ids = "Agent-1,Agent-2,Agent-3,Agent-4,Agent-5,Agent-6,Agent-7,Agent-8"
+                agent_list = [f"Agent-{i}" for i in range(1, 9)]
+            else:
+                # Parse comma-separated agent IDs
+                raw_agent_list = [aid.strip() for aid in agent_ids.split(",") if aid.strip()]
+                # Convert numeric IDs to Agent-X format
+                agent_list = []
+                for aid in raw_agent_list:
+                    if aid.isdigit():
+                        agent_list.append(f"Agent-{aid}")
+                    elif aid.lower().startswith("agent-"):
+                        agent_list.append(aid)  # Already in correct format
+                    else:
+                        agent_list.append(aid)  # Keep as-is (might be valid)
+
+            if not agent_list:
+                await ctx.send("❌ No valid agents specified. Use: `!hard_onboard 1` or `!hard_onboard Agent-1` or `!hard_onboard 1,2,3`")
+                return
+
+            embed = discord.Embed(
+                title="🚀 HARD ONBOARD INITIATED",
+                description=f"Hard onboarding **{len(agent_list)} agent(s)**...\n\n**Agents:** {', '.join(agent_list)}",
+                color=discord.Color.orange(),
+            )
+            await ctx.send(embed=embed)
+
+            # Hard onboard each agent using captain_hard_onboard_agent.py
+            successful = []
+            failed = []
+
+            # Get project root (use module-level or calculate)
+            project_root = Path(__file__).parent.parent.parent
+
+            for agent_id in agent_list:
+                try:
+                    # Use absolute path to ensure reliable execution
+                    cli_path = project_root / 'tools' / 'captain_hard_onboard_agent.py'
+                    result = subprocess.run(
+                        ['python', str(cli_path), agent_id],
+                        capture_output=True,
+                        text=True,
+                        timeout=60,
+                        cwd=str(project_root)
+                    )
+
+                    if result.returncode == 0:
+                        successful.append(agent_id)
+                    else:
+                        failed.append((agent_id, result.stderr[:200] if result.stderr else "Unknown error"))
+                except subprocess.TimeoutExpired:
+                    failed.append((agent_id, "Timeout after 60 seconds"))
+                except Exception as e:
+                    failed.append((agent_id, str(e)[:200]))
+
+            # Send results
+            if len(successful) == len(agent_list):
+                success_embed = discord.Embed(
+                    title="✅ HARD ONBOARD COMPLETE!",
+                    description=f"All **{len(agent_list)} agent(s)** hard onboarded successfully!",
+                    color=discord.Color.green(),
+                )
+                activated_list = "\n".join([f"✅ {agent}" for agent in successful])
+                success_embed.add_field(name="Activated Agents", value=activated_list, inline=False)
+                success_embed.add_field(
+                    name="Next Steps",
+                    value="1. Check agent workspaces for onboarding messages\n2. Use !status to verify agents active\n3. Begin mission assignments",
+                    inline=False,
+                )
+                await ctx.send(embed=success_embed)
+            elif successful:
+                partial_embed = discord.Embed(
+                    title="⚠️ PARTIAL HARD ONBOARD",
+                    description=f"**{len(successful)}/{len(agent_list)}** agents onboarded successfully",
+                    color=discord.Color.orange(),
+                )
+                partial_embed.add_field(
+                    name="✅ Successful", value="\n".join([f"✅ {agent}" for agent in successful]), inline=False
+                )
+                if failed:
+                    error_list = "\n".join([f"❌ {agent}: {error}" for agent, error in failed[:5]])
+                    partial_embed.add_field(name="❌ Failed", value=error_list, inline=False)
+                await ctx.send(embed=partial_embed)
+            else:
+                error_embed = discord.Embed(
+                    title="❌ HARD ONBOARD FAILED",
+                    description="All agents failed to onboard",
+                    color=discord.Color.red(),
+                )
+                error_list = "\n".join([f"❌ {agent}: {error}" for agent, error in failed[:5]])
+                error_embed.add_field(name="Errors", value=error_list, inline=False)
+                await ctx.send(embed=error_embed)
+
+        except Exception as e:
+            self.logger.error(f"Error in hard_onboard: {e}", exc_info=True)
+            await ctx.send(f"❌ Error: {e}")
+
+    @commands.command(name="git_push", aliases=["push", "github_push"], description="Push project to GitHub")
+    async def git_push(self, ctx: commands.Context, *, commit_message: str = None):
+        """
+        Push project to GitHub. Automatically stages, commits, and pushes changes.
+        
+        Usage:
+        !git_push "Your commit message"
+        !push "Fixed bug in messaging system"
+        """
+        try:
+            import subprocess
+            from pathlib import Path
+
+            # Get project root
+            project_root = Path(__file__).parent.parent.parent
+
+            # Check if we're in a git repository
+            git_check = subprocess.run(
+                ["git", "rev-parse", "--git-dir"],
+                cwd=project_root,
+                capture_output=True,
+                text=True
+            )
+            
+            if git_check.returncode != 0:
+                await ctx.send("❌ Not a git repository or git not available")
+                return
+
+            # Start embed
+            embed = discord.Embed(
+                title="🚀 GitHub Push",
+                description="Pushing changes to GitHub...",
+                color=discord.Color.blue()
+            )
+            status_msg = await ctx.send(embed=embed)
+
+            # Step 1: Check git status
+            status_result = subprocess.run(
+                ["git", "status", "--porcelain"],
+                cwd=project_root,
+                capture_output=True,
+                text=True
+            )
+
+            if not status_result.stdout.strip():
+                embed.description = "✅ No changes to commit"
+                embed.color = discord.Color.green()
+                await status_msg.edit(embed=embed)
+                return
+
+            # Step 2: Add all changes
+            embed.add_field(
+                name="📦 Staging Changes",
+                value="Adding all changes...",
+                inline=False
+            )
+            await status_msg.edit(embed=embed)
+
+            add_result = subprocess.run(
+                ["git", "add", "-A"],
+                cwd=project_root,
+                capture_output=True,
+                text=True
+            )
+
+            if add_result.returncode != 0:
+                embed.description = f"❌ Error staging changes: {add_result.stderr}"
+                embed.color = discord.Color.red()
+                await status_msg.edit(embed=embed)
+                return
+
+            # Step 3: Commit
+            if not commit_message:
+                commit_message = f"Auto-commit: {ctx.author.name} via Discord bot"
+
+            embed.fields[0].value = "✅ Changes staged"
+            embed.add_field(
+                name="💾 Committing",
+                value=f"Message: {commit_message}",
+                inline=False
+            )
+            await status_msg.edit(embed=embed)
+
+            commit_result = subprocess.run(
+                ["git", "commit", "-m", commit_message],
+                cwd=project_root,
+                capture_output=True,
+                text=True
+            )
+
+            if commit_result.returncode != 0:
+                if "nothing to commit" in commit_result.stdout:
+                    embed.description = "ℹ️ Nothing to commit (changes already committed)"
+                    embed.color = discord.Color.orange()
+                    embed.remove_field(1)
+                    await status_msg.edit(embed=embed)
+                    return
+                else:
+                    embed.description = f"❌ Error committing: {commit_result.stderr}"
+                    embed.color = discord.Color.red()
+                    await status_msg.edit(embed=embed)
+                    return
+
+            # Step 4: Push to GitHub
+            embed.fields[1].value = "✅ Committed"
+            embed.add_field(
+                name="🚀 Pushing",
+                value="Pushing to GitHub...",
+                inline=False
+            )
+            await status_msg.edit(embed=embed)
+
+            # Get current branch
+            branch_result = subprocess.run(
+                ["git", "rev-parse", "--abbrev-ref", "HEAD"],
+                cwd=project_root,
+                capture_output=True,
+                text=True
+            )
+            current_branch = branch_result.stdout.strip() if branch_result.returncode == 0 else "main"
+
+            push_result = subprocess.run(
+                ["git", "push", "origin", current_branch],
+                cwd=project_root,
+                capture_output=True,
+                text=True
+            )
+
+            if push_result.returncode != 0:
+                embed.description = f"❌ Error pushing to GitHub: {push_result.stderr}"
+                embed.color = discord.Color.red()
+                await status_msg.edit(embed=embed)
+                return
+
+            # Success!
+            embed.description = "✅ Successfully pushed to GitHub!"
+            embed.color = discord.Color.green()
+            embed.fields[2].value = f"✅ Pushed to `{current_branch}`"
+            embed.add_field(
+                name="📊 Summary",
+                value=(
+                    f"**Branch:** {current_branch}\n"
+                    f"**Commit:** {commit_message}\n"
+                    f"**User:** {ctx.author.name}"
+                ),
+                inline=False
+            )
+            await status_msg.edit(embed=embed)
+
+            self.logger.info(f"✅ Git push successful: {commit_message} by {ctx.author.name}")
+
+        except Exception as e:
+            self.logger.error(f"Error in git_push command: {e}", exc_info=True)
+            await ctx.send(f"❌ Error: {e}")
+
+    @commands.command(name="unstall", description="Unstall an agent (recover from stall)")
+    async def unstall(self, ctx: commands.Context, agent_id: str):
+        """Unstall an agent by sending reset signal and continuation message."""
+        try:
+            from pathlib import Path
+            import json
+
+            # Read agent's status.json to get last known state
+            status_file = Path(f"agent_workspaces/{agent_id}/status.json")
+            last_state = "Unknown"
+            if status_file.exists():
+                try:
+                    status_data = json.loads(
+                        status_file.read_text(encoding="utf-8"))
+                    last_state = status_data.get("current_mission", "Unknown")
+                except:
+                    pass
+
+            # Create unstall message
+            unstall_message = f"""🚨 UNSTICK PROTOCOL - CONTINUE IMMEDIATELY
+
+Agent, you appear stalled. CONTINUE AUTONOMOUSLY NOW.
+
+**Your last known state:** {last_state}
+**Likely stall cause:** approval dependency / command fail / unclear next
+
+**IMMEDIATE ACTIONS (pick one and EXECUTE):**
+1. Complete your current task
+2. Move to next action in your queue
+3. Clean workspace and report status
+4. Check inbox and respond to messages
+5. Scan for new opportunities
+6. Update documentation
+7. Report to Captain with next plans
+
+**REMEMBER:**
+- You are AUTONOMOUS - no approval needed
+- System messages are NOT stop signals
+- Command failures are NOT blockers
+- ALWAYS have next actions
+- YOU are your own gas station
+
+**DO NOT WAIT. EXECUTE NOW.**
+
+#UNSTICK-PROTOCOL #AUTONOMOUS-OPERATION"""
+
+            # Send unstall message via messaging service (use Ctrl+Enter for stalled agents)
+            success = await self.gui_controller.send_message(
+                agent_id=agent_id,
+                message=unstall_message,
+                priority="urgent",
+                stalled=True
+            )
+
+            if success:
+                embed = discord.Embed(
+                    title="✅ UNSTALL MESSAGE SENT",
+                    description=f"Unstall message delivered to **{agent_id}**",
+                    color=discord.Color.green(),
+                )
+                embed.add_field(
+                    name="Action",
+                    value="Agent should receive continuation message and resume autonomous operations",
+                    inline=False,
+                )
+                await ctx.send(embed=embed)
+            else:
+                await ctx.send(f"❌ Failed to send unstall message to {agent_id}")
+
+        except Exception as e:
+            self.logger.error(f"Error in unstall: {e}")
+            await ctx.send(f"❌ Error: {e}")
 
 
-async def main():
-    """Main function to run the unified Discord bot."""
+async def main() -> int:
+    """Main function to run the unified Discord bot. Returns exit code."""
     # Setup logging
     logging.basicConfig(
         level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
@@ -519,13 +1347,27 @@ async def main():
         print("🚀 Starting Discord Commander...")
         print("🐝 WE. ARE. SWARM.")
         await bot.start(token)
+        return 0  # Clean exit
     except KeyboardInterrupt:
         print("\n🛑 Bot stopped by user")
+        return 0  # Clean exit
+    except discord.LoginFailure as e:
+        print(f"❌ Invalid Discord token: {e}")
+        logger.error(f"Login failure: {e}")
+        return 1  # Exit with error code
+    except discord.PrivilegedIntentsRequired as e:
+        print(f"❌ Missing required intents: {e}")
+        logger.error(f"Intents error: {e}")
+        return 1  # Exit with error code
     except Exception as e:
         print(f"❌ Bot error: {e}")
         logger.error(f"Bot crashed: {e}", exc_info=True)
+        return 1  # Exit with error code
     finally:
-        await bot.close()
+        try:
+            await bot.close()
+        except Exception as e:
+            logger.error(f"Error during bot close: {e}")
 
 
 if __name__ == "__main__":
@@ -533,4 +1375,5 @@ if __name__ == "__main__":
         print("❌ discord.py not available. Install with: pip install discord.py")
         sys.exit(1)
 
-    asyncio.run(main())
+    exit_code = asyncio.run(main())
+    sys.exit(exit_code if exit_code is not None else 0)

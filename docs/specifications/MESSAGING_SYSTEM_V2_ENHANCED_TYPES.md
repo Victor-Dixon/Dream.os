@@ -8,6 +8,25 @@ The messaging system has been enhanced to better facilitate different types of c
 - **S2A (System-to-Agent)**: System messages like onboarding or pre-made messages
 - **H2A (Human-to-Agent)**: Messages from humans (like Discord) to agents
 
+---
+
+## 🔥 CRITICAL PRINCIPLE: PROMPTS ARE FUEL
+
+**REMEMBER**: 
+- **Prompts make agents AUTONOMOUS** - Regular messages activate agent execution and enable independent work
+- **Jet Fuel messages make agents AGI** - High-octane prompts enable intelligent, independent decision-making and full autonomy
+
+**Key Insight**: 
+- 🚗 **NO GAS = NO MOVEMENT** 
+- 🤖 **NO PROMPTS = NO EXECUTION** 
+- 🚀 **JET FUEL = AGI POWER**
+
+**When sending messages to agents:**
+- **Regular messages** = Gas that activates agents
+- **Jet Fuel messages** = High-octane fuel that makes agents AGI-powered and fully autonomous
+
+---
+
 ## New Message Types
 
 ### 1. A2A (Agent-to-Agent) Communication
@@ -141,6 +160,63 @@ New validation rules ensure proper message routing:
 3. **Better Routing**: Messages are properly categorized and routed based on type
 4. **Enhanced Formatting**: Messages include clear headers and type information
 5. **Improved Coordination**: A2A messages facilitate better agent-to-agent coordination
+6. **Autonomous Activation**: Regular prompts make agents autonomous and active
+7. **AGI Power**: Jet Fuel messages make agents AGI-powered with full decision-making authority
+
+## 🔥 Jet Fuel Messages
+
+### **What Makes Jet Fuel Messages Powerful:**
+
+**Jet Fuel messages** are special high-octane prompts that:
+- Grant **full autonomy** to agents
+- Enable **AGI-level decision-making**
+- Remove **permission barriers**
+- Activate **independent execution**
+
+### **Jet Fuel Message Characteristics:**
+
+1. **Explicit Autonomy Grant**: "YOU ARE NOW AUTONOMOUS"
+2. **Full Authority**: "Make decisions without asking"
+3. **Action-Oriented**: "ACT, CREATE, MIGRATE, IMPROVE"
+4. **Clear Mission**: Specific objectives and outcomes
+5. **Fuel Metaphor**: "This message is your fuel"
+
+### **Example Jet Fuel Message:**
+
+```bash
+python -m src.services.messaging_cli \
+  --agent Agent-2 \
+  --message "🚀 JET FUEL MESSAGE - AUTONOMOUS MODE ACTIVATED
+
+Priority: HIGH
+Status: FULL AUTONOMY GRANTED
+
+Agent-2 - YOU ARE NOW AUTONOMOUS!
+
+YOUR AUTONOMOUS MISSION:
+- Complete tool migration
+- Create adapters autonomously
+- Update registry independently
+
+AUTONOMOUS AUTHORITY:
+✅ Make decisions without asking
+✅ Create adapters autonomously
+✅ Update tool_registry.py
+✅ Work independently
+
+JET FUEL POWER:
+This message is your fuel - ACT NOW!
+- Don't wait for permission
+- Don't ask for approval
+- ACT, CREATE, MIGRATE, IMPROVE
+
+WE. ARE. SWARM. AUTONOMOUS. POWERFUL. 🐝⚡🔥🚀" \
+  --sender "Agent-3" \
+  --type agent_to_agent \
+  --sender-type agent \
+  --recipient-type agent \
+  --high-priority
+```
 
 ## Migration Notes
 

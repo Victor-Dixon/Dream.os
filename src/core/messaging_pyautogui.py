@@ -163,11 +163,17 @@ class PyAutoGUIMessagingDelivery:
                     time.sleep(1.0)
             
             except Exception as e:
-                logger.error(f"❌ Attempt {attempt + 1} failed: {e}")
+                logger.error(
+                    f"❌ Attempt {attempt + 1} failed for {message.recipient}: {e}",
+                    exc_info=True
+                )
                 if attempt < 2:
                     time.sleep(1.0)
         
-        logger.error(f"❌ All 3 attempts failed for {message.recipient}")
+        logger.error(
+            f"❌ All 3 attempts failed for {message.recipient} - message not delivered",
+            exc_info=False
+        )
         return False
     
     def _send_message_attempt(self, message, attempt_num: int) -> bool:
@@ -179,65 +185,115 @@ class PyAutoGUIMessagingDelivery:
         if isinstance(message.metadata, dict):
             sender = message.metadata.get('sender', sender)
         
+        # CRITICAL: Check if keyboard lock is already held (e.g., by queue processor)
+        # If lock is already held, skip acquiring it again to prevent deadlock
+        from .keyboard_control_lock import is_locked
+        lock_already_held = is_locked()
+        
         # CRITICAL: Global keyboard control lock - prevents "9 ppl controlling keyboard"
         # This ensures only ONE source can control keyboard at a time
+        # BUT: Skip if lock already held (caller already has it, e.g., queue processor)
         source = message.metadata.get('source', 'unknown') if isinstance(message.metadata, dict) else 'unknown'
         lock_source = f"{source}:{sender}:{message.recipient}"
         
-        with keyboard_control(lock_source):
-            try:
-                # Get coordinates for agent
-                from .coordinate_loader import get_coordinate_loader
+        # Only acquire lock if not already held
+        if lock_already_held:
+            logger.debug(f"🔒 Keyboard lock already held, skipping lock acquisition for {message.recipient}")
+            # Execute delivery without acquiring lock (caller already has it)
+            return self._execute_delivery_operations(message, attempt_num, sender)
+        else:
+            # Acquire lock and execute delivery
+            with keyboard_control(lock_source):
+                return self._execute_delivery_operations(message, attempt_num, sender)
+    
+    def _execute_delivery_operations(self, message, attempt_num: int, sender: str) -> bool:
+        """Execute the actual PyAutoGUI delivery operations (no lock management)."""
+        try:
+            # Get coordinates for agent
+            from .coordinate_loader import get_coordinate_loader
 
-                coord_loader = get_coordinate_loader()
+            coord_loader = get_coordinate_loader()
 
-                coords = coord_loader.get_chat_coordinates(message.recipient)
-                if not coords:
-                    logger.error(f"No coordinates for {message.recipient}")
-                    return False
-
-                x, y = coords
-
-                # Format message content using lean compact formatter with sender
-                msg_content = format_c2a_message(
-                    recipient=message.recipient,
-                    content=message.content,
-                    priority=message.priority.value,
-                    sender=sender  # NEW: Pass sender for correct tagging!
-                )
-
-                # Click agent chat input
-                self.pyautogui.moveTo(x, y)
-                self.pyautogui.click()
-                time.sleep(1.0)  # RACE CONDITION FIX #2: Increased from 0.3s
-
-                # RACE CONDITION FIX #1: Clipboard lock (prevents concurrent overwrites!)
-                with _clipboard_lock:
-                    # Paste message (clipboard locked during this entire block!)
-                    pyperclip.copy(msg_content)
-                    time.sleep(1.0)  # RACE CONDITION FIX #2: Increased from 0.2s
-                    
-                    self.pyautogui.hotkey("ctrl", "v")
-                    time.sleep(1.0)  # RACE CONDITION FIX #2: Increased from 0.5s (wait for paste)
-
-                # Send message (use Ctrl+Enter for stalled flag, regular enter for all others)
-                # Check metadata for stalled flag
-                is_stalled = False
-                if isinstance(message.metadata, dict):
-                    is_stalled = message.metadata.get("stalled", False)
-                
-                if is_stalled:
-                    self.pyautogui.hotkey("ctrl", "enter")
-                else:
-                    self.pyautogui.press("enter")
-                time.sleep(1.0)  # RACE CONDITION FIX #2: Increased from 0.5s
-
-                logger.info(f"✅ Message sent to {message.recipient} at {coords} (attempt {attempt_num})")
-                return True
-
-            except Exception as e:
-                logger.error(f"❌ PyAutoGUI delivery failed (attempt {attempt_num}): {e}")
+            coords = coord_loader.get_chat_coordinates(message.recipient)
+            if not coords:
+                logger.error(f"No coordinates for {message.recipient}")
                 return False
+
+            x, y = coords
+
+            # Format message content using lean compact formatter with sender
+            msg_content = format_c2a_message(
+                recipient=message.recipient,
+                content=message.content,
+                priority=message.priority.value,
+                sender=sender  # NEW: Pass sender for correct tagging!
+            )
+
+            # Click agent chat input - ensure proper focus
+            logger.debug(f"📍 Moving to coordinates: ({x}, {y})")
+            self.pyautogui.moveTo(x, y, duration=0.5)
+            
+            # Click to focus window and input field
+            logger.debug("🖱️ Clicking to focus input field")
+            self.pyautogui.click()
+            time.sleep(0.5)  # Wait for initial focus
+            
+            # Click again to ensure input field is active
+            self.pyautogui.click()
+            time.sleep(0.5)  # Wait for input field to be ready
+            
+            # CRITICAL: Clear existing text in input field first
+            logger.debug("🧹 Clearing existing text")
+            self.pyautogui.hotkey("ctrl", "a")
+            time.sleep(0.2)
+            self.pyautogui.press("delete")
+            time.sleep(0.3)
+
+            # RACE CONDITION FIX #1: Clipboard lock (prevents concurrent overwrites!)
+            with _clipboard_lock:
+                # Paste message (clipboard locked during this entire block!)
+                logger.debug(f"📋 Copying message to clipboard: {msg_content[:50]}...")
+                pyperclip.copy(msg_content)
+                time.sleep(0.5)  # Wait for clipboard to be ready
+                
+                logger.debug("📥 Pasting message")
+                self.pyautogui.hotkey("ctrl", "v")
+                time.sleep(1.0)  # Wait for paste to complete
+                
+                # Verify paste worked by checking clipboard still matches
+                # (This is a sanity check, not a guarantee)
+                try:
+                    clipboard_check = pyperclip.paste()
+                    if clipboard_check == msg_content:
+                        logger.debug("✅ Clipboard verified")
+                except Exception:
+                    pass  # Non-critical check
+
+            # CRITICAL: Send message (use Ctrl+Enter for stalled flag, regular enter for all others)
+            # Check metadata for stalled flag
+            is_stalled = False
+            if isinstance(message.metadata, dict):
+                is_stalled = message.metadata.get("stalled", False)
+            
+            logger.debug(f"📤 Sending message (stalled={is_stalled})")
+            # CRITICAL: Use Enter for normal messages, Ctrl+Enter ONLY for stalled agents
+            if is_stalled:
+                logger.debug("⚠️ Using Ctrl+Enter for stalled agent")
+                self.pyautogui.hotkey("ctrl", "enter")
+            else:
+                logger.debug("✅ Using Enter for normal message")
+                self.pyautogui.press("enter")
+            time.sleep(1.0)  # Wait for message to be sent
+
+            logger.info(f"✅ Message sent to {message.recipient} at {coords} (attempt {attempt_num})")
+            return True
+
+        except Exception as e:
+            logger.error(
+                f"❌ PyAutoGUI delivery failed (attempt {attempt_num}) for {message.recipient}: {e}",
+                exc_info=True
+            )
+            return False
 
 
 def send_message_pyautogui(agent_id: str, message: str, timeout: int = 30) -> bool:

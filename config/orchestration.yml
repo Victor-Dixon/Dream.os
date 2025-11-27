@@ -33,7 +33,7 @@ orchestration:
 overnight:
   enabled: true
   cycle_interval: 10  # minutes per cycle (V2 cycle-based)
-  max_cycles: 60  # 10 hours total
+  max_cycles: 0  # 0 = infinite cycles (never stops - continuous operation)
   auto_restart: true
   
   # Task scheduling

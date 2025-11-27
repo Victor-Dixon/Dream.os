@@ -4,5 +4,5 @@
 from . import github_scanner
 
 __all__ = [
-    "github_scanner",
+    'github_scanner',
 ]

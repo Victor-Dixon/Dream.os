@@ -1,13 +1,18 @@
 # AUTO-GENERATED __init__.py
-# File operations module - V2 Compliance refactored by Agent-5
+# DO NOT EDIT MANUALLY - changes may be overwritten
 
-from .directory_operations import DirectoryOperations
-from .file_metadata import FileMetadataOperations, FileOperation
-from .file_serialization import DataSerializationOperations
+from . import backup_operations
+from . import directory_operations
+from . import file_metadata
+from . import file_serialization
+from . import scanner_operations
+from . import validation_operations
 
 __all__ = [
-    "FileOperation",
-    "FileMetadataOperations",
-    "DataSerializationOperations",
-    "DirectoryOperations",
+    'backup_operations',
+    'directory_operations',
+    'file_metadata',
+    'file_serialization',
+    'scanner_operations',
+    'validation_operations',
 ]

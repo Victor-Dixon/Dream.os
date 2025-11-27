@@ -1,29 +1,14 @@
-"""
-Shared Utilities - Unified Workspace Integration
-================================================
+# AUTO-GENERATED __init__.py
+# DO NOT EDIT MANUALLY - changes may be overwritten
 
-Shared utility functions for API clients, configuration, file hashing, and logging.
-Ported from unified-workspace repository (Team Beta Repo 5/8).
-
-V2 Compliance: Utilities integration.
-
-Original: unified-workspace repository
-Ported: Agent-7 - Repository Cloning Specialist
-License: MIT
-"""
-
-from .api_client import APIClient, AsyncAPIClient
-from .config import get_setting, get_workspace_root, load_env
-from .file_hash import compute_file_sha256, find_duplicate_files
-from .logger import setup_logger
+from . import api_client
+from . import config
+from . import file_hash
+from . import logger
 
 __all__ = [
-    "APIClient",
-    "AsyncAPIClient",
-    "get_setting",
-    "get_workspace_root",
-    "load_env",
-    "compute_file_sha256",
-    "find_duplicate_files",
-    "setup_logger",
+    'api_client',
+    'config',
+    'file_hash',
+    'logger',
 ]

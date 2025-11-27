@@ -14,7 +14,27 @@ from dataclasses import dataclass
 from enum import Enum
 
 from src.swarm_brain.swarm_memory import SwarmMemory
-from src.services.messaging_cli import send_message_to_agent
+
+# Optional messaging import (for Discord bot compatibility)
+try:
+    from src.core.messaging_core import send_message
+    # Alias for backward compatibility
+    def send_message_to_agent(agent_id: str, message: str, **kwargs):
+        """Send message to agent - wrapper for send_message."""
+        from src.core.messaging_core import UnifiedMessage, UnifiedMessageType, UnifiedMessagePriority
+        msg = UnifiedMessage(
+            sender="System",
+            recipient=agent_id,
+            content=message,
+            message_type=UnifiedMessageType.TEXT,
+            priority=UnifiedMessagePriority.NORMAL
+        )
+        return send_message(msg)
+except ImportError:
+    # Stub function if messaging not available
+    def send_message_to_agent(agent_id: str, message: str, **kwargs):
+        """Stub function when messaging is not available."""
+        return False
 
 
 class AgentState(Enum):

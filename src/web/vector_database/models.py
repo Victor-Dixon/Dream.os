@@ -32,7 +32,9 @@ class Collection:
 
     id: str
     name: str
-    count: int
+    document_count: int
+    description: str = ""
+    last_updated: str = ""
     metadata: dict[str, Any] = field(default_factory=dict)
 
 
@@ -41,9 +43,12 @@ class ExportData:
     """Export data model for vector database exports."""
 
     collection: str
-    documents: list[dict[str, Any]] = field(default_factory=list)
+    format: str
+    data: Any
+    filename: str
+    size: str
     metadata: dict[str, Any] = field(default_factory=dict)
-    timestamp: str = ""
+    generated_at: str = ""
 
 
 @dataclass
@@ -61,7 +66,7 @@ class SearchRequest:
     """Search request model."""
 
     query: str
-    collection: str = "default"
+    collection: str = "all"
     limit: int = 10
     filters: dict[str, Any] = field(default_factory=dict)
 
@@ -71,9 +76,16 @@ class SearchResult:
     """Search result model."""
 
     id: str
-    score: float
+    title: str
     content: str
+    collection: str
+    relevance: float
+    tags: list[str] = field(default_factory=list)
+    created_at: str = ""
+    updated_at: str = ""
+    size: str = ""
     metadata: dict[str, Any] = field(default_factory=dict)
+    score: float | None = None
 
 
 @dataclass
@@ -81,7 +93,13 @@ class Document:
     """Document model for vector database."""
 
     id: str
+    title: str
     content: str
+    collection: str
+    tags: list[str] = field(default_factory=list)
+    size: str = ""
+    created_at: str = ""
+    updated_at: str = ""
     metadata: dict[str, Any] = field(default_factory=dict)
     embedding: list[float] = field(default_factory=list)
 
@@ -101,4 +119,7 @@ class PaginationRequest:
 
     page: int = 1
     per_page: int = 25
-    collection: str = "default"
+    collection: str = "all"
+    sort_by: str = "created_at"
+    sort_order: str = "desc"
+    filters: dict[str, Any] = field(default_factory=dict)

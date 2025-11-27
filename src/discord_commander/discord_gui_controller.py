@@ -17,7 +17,12 @@ from typing import Any
 from src.services.messaging_infrastructure import ConsolidatedMessagingService
 
 from .discord_gui_modals import AgentMessageModal, BroadcastMessageModal
-from .discord_gui_views import AgentMessagingGUIView, SwarmStatusGUIView
+from .views import (
+    AgentMessagingGUIView,
+    SwarmStatusGUIView,
+    HelpGUIView,
+    MainControlPanelView,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -33,7 +38,7 @@ class DiscordGUIController:
     - Interactive GUI (views, modals, buttons)
 
     This is a lightweight facade that delegates to specialized components:
-    - discord_gui_views.py: UI views (AgentMessagingGUIView, SwarmStatusGUIView)
+    - views/: UI views (AgentMessagingGUIView, SwarmStatusGUIView)
     - discord_gui_modals.py: UI modals (AgentMessageModal, BroadcastMessageModal)
     """
 
@@ -50,6 +55,10 @@ class DiscordGUIController:
         """Create status monitoring GUI view."""
         return SwarmStatusGUIView(self.messaging_service)
 
+    def create_control_panel(self) -> MainControlPanelView:
+        """Create main control panel view."""
+        return MainControlPanelView(self.messaging_service)
+
     def create_agent_message_modal(self, agent_id: str) -> AgentMessageModal:
         """Create modal for messaging specific agent."""
         return AgentMessageModal(agent_id, self.messaging_service)
@@ -58,11 +67,16 @@ class DiscordGUIController:
         """Create modal for broadcasting to all agents."""
         return BroadcastMessageModal(self.messaging_service)
 
-    async def send_message(self, agent_id: str, message: str, priority: str = "regular") -> bool:
-        """Send message to specific agent."""
+    async def send_message(self, agent_id: str, message: str, priority: str = "regular", stalled: bool = False) -> bool:
+        """Send message to specific agent via PyAutoGUI chat input coordinates."""
         try:
             result = self.messaging_service.send_message(
-                agent=agent_id, message=message, priority=priority, use_pyautogui=True
+                agent=agent_id, 
+                message=message, 
+                priority=priority, 
+                use_pyautogui=True,
+                wait_for_delivery=False,  # Don't wait - queue processor will handle delivery
+                stalled=stalled,
             )
             return result.get("success", False)
         except Exception as e:
@@ -70,14 +84,18 @@ class DiscordGUIController:
             return False
 
     async def broadcast_message(self, message: str, priority: str = "regular") -> bool:
-        """Broadcast message to all agents."""
+        """Broadcast message to all agents via PyAutoGUI chat input coordinates."""
         try:
             agents = [f"Agent-{i}" for i in range(1, 9)]
             success_count = 0
 
             for agent in agents:
                 result = self.messaging_service.send_message(
-                    agent=agent, message=message, priority=priority, use_pyautogui=True
+                    agent=agent, 
+                    message=message, 
+                    priority=priority, 
+                    use_pyautogui=True,
+                    wait_for_delivery=False,  # Don't wait - queue processor will handle delivery
                 )
                 if result.get("success"):
                     success_count += 1
@@ -111,6 +129,8 @@ __all__ = [
     "DiscordGUIController",
     "AgentMessagingGUIView",
     "SwarmStatusGUIView",
+    "HelpGUIView",
+    "MainControlPanelView",
     "AgentMessageModal",
     "BroadcastMessageModal",
 ]

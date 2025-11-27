@@ -4,5 +4,5 @@
 from . import task_repo_loader
 
 __all__ = [
-    "task_repo_loader",
+    'task_repo_loader',
 ]

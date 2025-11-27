@@ -1,6 +1,8 @@
-"""GUI Styles and Themes - V2 Compliant"""
+# AUTO-GENERATED __init__.py
+# DO NOT EDIT MANUALLY - changes may be overwritten
 
-from .themes import DarkTheme, LightTheme
+from . import themes
 
-__all__ = ["DarkTheme", "LightTheme"]
-
+__all__ = [
+    'themes',
+]

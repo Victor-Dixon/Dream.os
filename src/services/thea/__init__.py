@@ -1,10 +1,8 @@
-"""
-Thea Service - V2 Compliant
-===========================
+# AUTO-GENERATED __init__.py
+# DO NOT EDIT MANUALLY - changes may be overwritten
 
-Autonomous Thea Manager communication service.
-"""
+from . import thea_service
 
-from .thea_service import TheaService, create_thea_service
-
-__all__ = ["TheaService", "create_thea_service"]
+__all__ = [
+    'thea_service',
+]

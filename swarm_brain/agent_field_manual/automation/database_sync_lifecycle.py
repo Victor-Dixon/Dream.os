@@ -40,6 +40,7 @@ USAGE:
 
 import json
 import os
+import sqlite3
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, Any, Optional, List
@@ -67,8 +68,10 @@ class DatabaseSyncLifecycle:
         self.status_path = Path(f"agent_workspaces/{agent_id}/status.json")
         self.backup_path = Path(f"agent_workspaces/{agent_id}/.status.backup.json")
         
-        # Database connection (placeholder - will integrate with actual DB)
-        self.db = None  # TODO: Initialize with AgentDatabase()
+        # Database connection - using SQLite for agent_workspaces table
+        self.db_path = Path("data/agent_workspaces.db")
+        self.db_path.parent.mkdir(parents=True, exist_ok=True)
+        self._init_database()
         
         logger.info(f"DatabaseSyncLifecycle initialized for {agent_id}")
     
@@ -230,28 +233,143 @@ class DatabaseSyncLifecycle:
             logger.error(f"Failed to restore backup: {e}")
             return False
     
+    def _init_database(self) -> None:
+        """Initialize agent_workspaces database table."""
+        try:
+            with sqlite3.connect(self.db_path) as conn:
+                conn.execute("""
+                    CREATE TABLE IF NOT EXISTS agent_workspaces (
+                        agent_id TEXT PRIMARY KEY,
+                        status_json TEXT NOT NULL,
+                        last_updated TEXT NOT NULL,
+                        status TEXT,
+                        current_mission TEXT,
+                        current_phase TEXT,
+                        mission_priority TEXT,
+                        cycle_count INTEGER,
+                        points_earned INTEGER,
+                        created_at TEXT,
+                        updated_at TEXT
+                    )
+                """)
+                conn.commit()
+                logger.debug(f"Database initialized: {self.db_path}")
+        except Exception as e:
+            logger.error(f"Failed to initialize database: {e}")
+    
     def _pull_from_database(self) -> Optional[Dict[str, Any]]:
         """
-        Pull agent status from database
+        Pull agent status from database.
         
-        TODO: Integrate with actual database
-        For now, returns None (no DB integration yet)
+        Returns:
+            Agent status dictionary from database, or None if not found
         """
-        # Placeholder for database integration
-        # Will be implemented once AgentDatabase class is available
-        logger.warning("Database integration not yet implemented")
-        return None
+        try:
+            with sqlite3.connect(self.db_path) as conn:
+                conn.row_factory = sqlite3.Row
+                cursor = conn.execute(
+                    "SELECT status_json, last_updated FROM agent_workspaces WHERE agent_id = ?",
+                    (self.agent_id,)
+                )
+                row = cursor.fetchone()
+                
+                if row:
+                    status_json_str = row['status_json']
+                    status = json.loads(status_json_str)
+                    logger.info(f"[{self.agent_id}] Pulled status from database (updated: {row['last_updated']})")
+                    return status
+                else:
+                    logger.debug(f"[{self.agent_id}] No database status found")
+                    return None
+        except Exception as e:
+            logger.error(f"[{self.agent_id}] Failed to pull from database: {e}")
+            return None
     
     def _push_to_database(self, status: Dict[str, Any]) -> bool:
         """
-        Push agent status to database
+        Push agent status to database.
         
-        TODO: Integrate with actual database
-        For now, returns True (simulated success)
+        Args:
+            status: Agent status dictionary to save
+            
+        Returns:
+            True if successful, False otherwise
         """
-        # Placeholder for database integration
-        logger.warning("Database integration not yet implemented")
-        return True
+        try:
+            now = datetime.now().isoformat()
+            status_json_str = json.dumps(status, ensure_ascii=False)
+            
+            # Extract key fields for indexed columns
+            status_value = status.get('status', 'UNKNOWN')
+            current_mission = status.get('current_mission', '')
+            current_phase = status.get('current_phase', '')
+            mission_priority = status.get('mission_priority', '')
+            cycle_count = status.get('cycle_count', 0)
+            points_earned = status.get('points_earned', 0)
+            last_updated = status.get('last_updated', now)
+            
+            with sqlite3.connect(self.db_path) as conn:
+                # Check if record exists
+                cursor = conn.execute(
+                    "SELECT agent_id FROM agent_workspaces WHERE agent_id = ?",
+                    (self.agent_id,)
+                )
+                exists = cursor.fetchone() is not None
+                
+                if exists:
+                    # Update existing record
+                    conn.execute("""
+                        UPDATE agent_workspaces SET
+                            status_json = ?,
+                            last_updated = ?,
+                            status = ?,
+                            current_mission = ?,
+                            current_phase = ?,
+                            mission_priority = ?,
+                            cycle_count = ?,
+                            points_earned = ?,
+                            updated_at = ?
+                        WHERE agent_id = ?
+                    """, (
+                        status_json_str,
+                        last_updated,
+                        status_value,
+                        current_mission,
+                        current_phase,
+                        mission_priority,
+                        cycle_count,
+                        points_earned,
+                        now,
+                        self.agent_id
+                    ))
+                else:
+                    # Insert new record
+                    conn.execute("""
+                        INSERT INTO agent_workspaces (
+                            agent_id, status_json, last_updated, status,
+                            current_mission, current_phase, mission_priority,
+                            cycle_count, points_earned, created_at, updated_at
+                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    """, (
+                        self.agent_id,
+                        status_json_str,
+                        last_updated,
+                        status_value,
+                        current_mission,
+                        current_phase,
+                        mission_priority,
+                        cycle_count,
+                        points_earned,
+                        now,
+                        now
+                    ))
+                
+                conn.commit()
+                logger.info(f"[{self.agent_id}] Pushed status to database")
+                return True
+        except Exception as e:
+            logger.error(f"[{self.agent_id}] Failed to push to database: {e}")
+            return False
     
     def _merge_with_local(self, db_status: Dict[str, Any]) -> Dict[str, Any]:
         """
@@ -303,14 +421,34 @@ class DatabaseSyncLifecycle:
         return self.status_path.exists()
     
     def _check_db_connection(self) -> bool:
-        """Check if database connection is available"""
-        # TODO: Implement actual DB connection check
-        return True
+        """Check if database connection is available."""
+        try:
+            with sqlite3.connect(self.db_path) as conn:
+                conn.execute("SELECT 1")
+                return True
+        except Exception:
+            return False
     
     def _compare_fields(self) -> bool:
-        """Compare status.json fields with database"""
-        # TODO: Implement field comparison
-        return True
+        """Compare status.json fields with database."""
+        try:
+            local_status = self._read_status_json()
+            db_status = self._pull_from_database()
+            
+            if not local_status or not db_status:
+                return False
+            
+            # Compare key fields
+            key_fields = ['agent_id', 'status', 'current_mission', 'last_updated']
+            for field in key_fields:
+                if local_status.get(field) != db_status.get(field):
+                    logger.debug(f"[{self.agent_id}] Field mismatch: {field}")
+                    return False
+            
+            return True
+        except Exception as e:
+            logger.error(f"[{self.agent_id}] Field comparison failed: {e}")
+            return False
     
     def _check_timestamps(self) -> bool:
         """Validate timestamp fields"""
@@ -330,9 +468,40 @@ class DatabaseSyncLifecycle:
         return False
     
     def _detect_conflicts(self) -> bool:
-        """Detect conflicts between local and database"""
-        # TODO: Implement conflict detection
-        return True
+        """Detect conflicts between local and database."""
+        try:
+            local_status = self._read_status_json()
+            db_status = self._pull_from_database()
+            
+            if not local_status or not db_status:
+                return False  # No conflict if one is missing
+            
+            # Check for timestamp conflicts
+            local_updated = local_status.get('last_updated', '')
+            db_updated = db_status.get('last_updated', '')
+            
+            # If timestamps are very close (< 1 second), consider synchronized
+            if local_updated and db_updated:
+                try:
+                    local_dt = datetime.fromisoformat(local_updated.replace('Z', '+00:00'))
+                    db_dt = datetime.fromisoformat(db_updated.replace('Z', '+00:00'))
+                    diff = abs((local_dt - db_dt).total_seconds())
+                    if diff < 1.0:
+                        return True  # No conflict, synchronized
+                except Exception:
+                    pass
+            
+            # Check for data conflicts in critical fields
+            critical_fields = ['status', 'current_mission', 'current_phase']
+            for field in critical_fields:
+                if local_status.get(field) != db_status.get(field):
+                    logger.warning(f"[{self.agent_id}] Conflict detected in field: {field}")
+                    return False  # Conflict detected
+            
+            return True  # No conflicts
+        except Exception as e:
+            logger.error(f"[{self.agent_id}] Conflict detection failed: {e}")
+            return False
     
     def _handle_sync_failure(self, error: Exception, restore_backup: bool = False):
         """Handle synchronization failure"""

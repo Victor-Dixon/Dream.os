@@ -4,5 +4,5 @@
 from . import messaging_server
 
 __all__ = [
-    "messaging_server",
+    'messaging_server',
 ]

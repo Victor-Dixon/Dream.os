@@ -2,13 +2,34 @@
 Captain's Tool: Quick ROI Calculator
 =====================================
 
+⚠️ DEPRECATED: This tool has been migrated to tools_v2.
+Use 'python -m tools_v2.toolbelt captain.calculate_roi' instead.
+This file will be removed in future version.
+
+Migrated to: tools_v2/categories/captain_coordination_tools.py → ROICalculatorTool
+Registry: captain.calculate_roi
+
 Quickly calculate ROI for a task to decide priority.
 
 Usage: python tools/captain_roi_quick_calc.py --points 1000 --complexity 50 --autonomy 2
 
 Author: Agent-4 (Captain)
 Date: 2025-10-13
+Deprecated: 2025-01-27 (Agent-6 - V2 Tools Flattening)
 """
+
+import warnings
+
+warnings.warn(
+    "⚠️ DEPRECATED: This tool has been migrated to tools_v2. "
+    "Use 'python -m tools_v2.toolbelt captain.calculate_roi' instead. "
+    "This file will be removed in future version.",
+    DeprecationWarning,
+    stacklevel=2
+)
+
+# Legacy compatibility - delegate to tools_v2
+# For migration path, use: python -m tools_v2.toolbelt captain.calculate_roi
 
 import argparse
 
@@ -24,60 +45,81 @@ def calculate_task_roi(points: int, complexity: int, v2_impact: int = 0, autonom
 
     Autonomy weighted 2x because long-term goal!
     """
-    reward = points + (v2_impact * 100) + (autonomy_impact * 200)
-    difficulty = max(complexity, 1)
-    roi = reward / difficulty
+    # Delegate to tools_v2 adapter
+    try:
+        from tools_v2.categories.captain_coordination_tools import ROICalculatorTool
+        
+        tool = ROICalculatorTool()
+        result = tool.execute({
+            "points": points,
+            "complexity": complexity,
+            "v2_impact": v2_impact,
+            "autonomy_impact": autonomy_impact
+        }, None)
+        
+        if result.success:
+            roi = result.output.get("roi", 0)
+            reward = result.output.get("reward", 0)
+            
+            print(f"\n{'='*60}")
+            print("ROI CALCULATION")
+            print(f"{'='*60}")
+            print(f"\n📊 INPUTS:")
+            print(f"  Base Points: {points}")
+            print(f"  Complexity: {complexity}")
+            print(f"  V2 Impact: {v2_impact} violations fixed")
+            print(f"  Autonomy Impact: {autonomy_impact}/3")
+            print(f"\n💰 REWARD: {reward}")
+            print(f"📈 ROI: {roi:.2f}\n")
+            
+            return roi
+        else:
+            print(f"❌ Error: {result.error_message}")
+            return 0.0
+    except ImportError:
+        # Fallback to original implementation
+        reward = points + (v2_impact * 100) + (autonomy_impact * 200)
+        difficulty = max(complexity, 1)
+        roi = reward / difficulty
 
-    print(f"\n{'='*60}")
-    print("ROI CALCULATION")
-    print(f"{'='*60}")
-    print("\n📊 INPUTS:")
-    print(f"  Base Points: {points}")
-    print(f"  Complexity: {complexity}")
-    print(f"  V2 Impact: {v2_impact} violations fixed")
-    print(f"  Autonomy Impact: {autonomy_impact}/3")
+        print(f"\n{'='*60}")
+        print("ROI CALCULATION")
+        print(f"{'='*60}")
+        print("\n📊 INPUTS:")
+        print(f"  Base Points: {points}")
+        print(f"  Complexity: {complexity}")
+        print(f"  V2 Impact: {v2_impact} violations fixed")
+        print(f"  Autonomy Impact: {autonomy_impact}/3")
 
-    print("\n💰 REWARD CALCULATION:")
-    print(f"  Base: {points}")
-    if v2_impact > 0:
-        print(f"  + V2 bonus: {v2_impact * 100} ({v2_impact} × 100)")
-    if autonomy_impact > 0:
-        print(f"  + Autonomy bonus: {autonomy_impact * 200} ({autonomy_impact} × 200)")
-    print(f"  = Total Reward: {reward}")
+        print("\n💰 REWARD CALCULATION:")
+        print(f"  Base: {points}")
+        if v2_impact > 0:
+            print(f"  + V2 bonus: {v2_impact * 100} ({v2_impact} × 100)")
+        if autonomy_impact > 0:
+            print(f"  + Autonomy bonus: {autonomy_impact * 200} ({autonomy_impact} × 200)")
+        print(f"  = Total Reward: {reward}")
 
-    print("\n📈 ROI:")
-    print(f"  ROI = {reward} / {difficulty}")
-    print(f"  ROI = {roi:.2f}")
+        print("\n📈 ROI:")
+        print(f"  ROI = {reward} / {difficulty}")
+        print(f"  ROI = {roi:.2f}")
 
-    # Interpret
-    print("\n🎯 INTERPRETATION:")
-    if roi >= 30:
-        print("  🏆 EXCELLENT! (ROI ≥30) - TOP PRIORITY!")
-    elif roi >= 20:
-        print("  ✅ VERY GOOD (ROI 20-30) - HIGH PRIORITY")
-    elif roi >= 15:
-        print("  👍 GOOD (ROI 15-20) - GOOD PRIORITY")
-    elif roi >= 10:
-        print("  📊 ACCEPTABLE (ROI 10-15) - MEDIUM PRIORITY")
-    else:
-        print("  ⚠️  LOW (ROI <10) - Consider if strategic value high")
+        if roi > 30:
+            print("\n🔥 HIGH ROI - Prioritize this task!")
+        elif roi > 15:
+            print("\n✅ GOOD ROI - Worth doing")
+        else:
+            print("\n⚠️  LOW ROI - Consider deprioritizing")
 
-    print(f"\n{'='*60}\n")
-
-    return roi
+        return roi
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Calculate task ROI")
-    parser.add_argument("--points", "-p", type=int, required=True, help="Task points")
-    parser.add_argument(
-        "--complexity", "-c", type=int, required=True, help="Task complexity (1-100)"
-    )
-    parser.add_argument("--v2", type=int, default=0, help="V2 violations fixed (0-5)")
+    parser.add_argument("--points", "-p", type=int, required=True, help="Base points")
+    parser.add_argument("--complexity", "-c", type=int, required=True, help="Complexity score")
+    parser.add_argument("--v2", "-v", type=int, default=0, help="V2 violations fixed")
     parser.add_argument("--autonomy", "-a", type=int, default=0, help="Autonomy impact (0-3)")
 
     args = parser.parse_args()
 
-    roi = calculate_task_roi(args.points, args.complexity, args.v2, args.autonomy)
-
-    print(f"Final ROI: {roi:.2f}")
+    calculate_task_roi(args.points, args.complexity, args.v2, args.autonomy)

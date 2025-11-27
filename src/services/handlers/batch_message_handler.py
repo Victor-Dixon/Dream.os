@@ -108,10 +108,14 @@ class BatchMessageHandler:
             service.add_to_batch(sender, recipient, message)
 
         # Send batch
+        # Normalize "normal" to "regular" for consistency
+        raw_priority = args.priority if hasattr(args, "priority") else "regular"
+        normalized_priority = "regular" if raw_priority == "normal" else raw_priority
+        
         success, consolidated_message = service.send_batch(
             sender,
             recipient,
-            priority=args.priority if hasattr(args, "priority") else "regular",
+            priority=normalized_priority, 
         )
 
         if success:
@@ -125,7 +129,7 @@ class BatchMessageHandler:
 
             priority = (
                 UnifiedMessagePriority.URGENT
-                if hasattr(args, "priority") and args.priority == "urgent"
+                if normalized_priority == "urgent"      
                 else UnifiedMessagePriority.REGULAR
             )
 
@@ -193,10 +197,14 @@ class BatchMessageHandler:
         """Handle batch-send command."""
         logger.info(f"📤 Sending batch: {sender}→{recipient}")
 
+        # Normalize "normal" to "regular" for consistency
+        raw_priority = args.priority if hasattr(args, "priority") else "regular"
+        normalized_priority = "regular" if raw_priority == "normal" else raw_priority
+        
         success, consolidated_message = service.send_batch(
             sender,
             recipient,
-            priority=args.priority if hasattr(args, "priority") else "regular",
+            priority=normalized_priority, 
         )
 
         if success:
@@ -210,7 +218,7 @@ class BatchMessageHandler:
 
             priority = (
                 UnifiedMessagePriority.URGENT
-                if hasattr(args, "priority") and args.priority == "urgent"
+                if normalized_priority == "urgent"      
                 else UnifiedMessagePriority.REGULAR
             )
 

@@ -1,0 +1,39 @@
+{
+  "cache_root": "D:/Temp/repo_cache",
+  "default_branch_prefix": "goldmine-",
+  "targets": [
+    {
+      "label": "FocusForge Case Consolidation",
+      "source_repo": "Dadudekc/focusforge",
+      "target_repo": "Dadudekc/FocusForge",
+      "branch_name": "goldmine-focusforge-case",
+      "priority": "high",
+      "notes": "Case variation; keep goldmine FocusForge (#24) as canonical."
+    },
+    {
+      "label": "TBOWTactics Case Consolidation",
+      "source_repo": "Dadudekc/tbowtactics",
+      "target_repo": "Dadudekc/TBOWTactics",
+      "branch_name": "goldmine-tbowtactics-case",
+      "priority": "high",
+      "notes": "Keep goldmine TBOWTactics (#26)."
+    },
+    {
+      "label": "Superpowered-TTRPG Case Consolidation",
+      "source_repo": "Dadudekc/superpowered_ttrpg",
+      "target_repo": "Dadudekc/Superpowered-TTRPG",
+      "branch_name": "goldmine-superpowered-case",
+      "priority": "medium",
+      "notes": "Case variation; keep goldmine repo (#30)."
+    },
+    {
+      "label": "TROOP Duplicate Merge",
+      "source_repo": "Dadudekc/TROOP",
+      "target_repo": "Dadudekc/TROOP-goldmine",
+      "branch_name": "goldmine-troop-duplicate",
+      "priority": "medium",
+      "notes": "Merge duplicate (#60) into goldmine (#16) after verifying README parity."
+    }
+  ]
+}
+

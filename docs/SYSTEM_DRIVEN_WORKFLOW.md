@@ -15,28 +15,36 @@ Prevent agents from overstepping each other while maintaining autonomous executi
 
 ## 🔄 **The Three-Step Workflow**
 
-### **Step 1: Check Task System (CURRENTLY BLOCKED)**
+### **Step 1: Check Task System** ✅ **IMPLEMENTED**
 
-**Status:** 🚨 **NOT IMPLEMENTED** - Agent-1 discovered blocker on 2025-10-12
+**Status:** ✅ **FULLY IMPLEMENTED** - Task system is functional
 
 ```bash
-# PLANNED COMMAND (not yet functional):
-python -m src.services.messaging_cli --get-next-task
+# FUNCTIONAL COMMAND:
+python -m src.services.messaging_cli --get-next-task --agent Agent-X
 ```
 
 **Purpose:** Claim assigned contract work before seeking new opportunities
 
-**Current Workaround:** Skip to Step 2 until implementation complete
+**Implementation Details:**
+- CLI flag: `--get-next-task` (requires `--agent`)
+- Handler: `src/services/handlers/task_handler.py`
+- Contract System: `src/services/contract_system/manager.py`
+- Parser: `src/services/messaging_infrastructure.py` (line 209)
 
-**Implementation Status:** Agent-1 is implementing this feature (urgent priority)
+**Usage:**
+```bash
+# Claim next task for Agent-3
+python -m src.services.messaging_cli --get-next-task --agent Agent-3
 
-**Documentation Affected:** 6 files reference this non-existent flag:
-- `docs/V2_COMPLIANCE_EXCEPTIONS.md`
-- `docs/CAPTAIN_LOG.md`
-- `docs/ONBOARDING_GUIDE.md`
-- `docs/AGENT_ONBOARDING_GUIDE.md`
-- `docs/specifications/MESSAGING_API_SPECIFICATIONS.md`
-- `docs/specifications/MESSAGING_SYSTEM_PRD.md`
+# List all tasks
+python -m src.services.messaging_cli --list-tasks
+
+# Check task status
+python -m src.services.messaging_cli --task-status <task_id>
+```
+
+**Note:** Previous documentation incorrectly stated this was not implemented. The feature has been functional since implementation by Agent-1.
 
 ---
 

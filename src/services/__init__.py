@@ -1,34 +1,78 @@
 # AUTO-GENERATED __init__.py
 # DO NOT EDIT MANUALLY - changes may be overwritten
 
-# Import only core modules that don't cause circular dependencies
+from . import agent_management
+from . import agent_vector_utils
+from . import architectural_models
+from . import architectural_principles
+from . import architectural_principles_data
+from . import compliance_validator
 from . import config
 from . import constants
-
-# Lazy imports for modules that may have circular dependencies
-def _lazy_import(module_name):
-    """Lazy import to avoid circular dependencies."""
-    import importlib
-    return importlib.import_module(f'src.services.{module_name}')
-
-# Define lazy import functions for complex modules
-def get_agent_status_manager():
-    return _lazy_import('agent_status_manager')
-
-def get_messaging_core():
-    return _lazy_import('messaging_core')
-
-def get_vector_database():
-    return _lazy_import('vector_database')
-
-def get_agent_registry():
-    return _lazy_import('messaging_agent_registry')
+from . import contract_service
+from . import coordinator
+from . import cursor_db
+from . import hard_onboarding_service
+from . import learning_recommender
+from . import message_batching_service
+from . import message_identity_clarification
+from . import messaging_cli
+from . import messaging_cli_formatters
+from . import messaging_cli_handlers
+from . import messaging_cli_parser
+from . import messaging_discord
+from . import messaging_handlers
+from . import messaging_infrastructure
+from . import onboarding_template_loader
+from . import overnight_command_handler
+from . import performance_analyzer
+from . import recommendation_engine
+from . import role_command_handler
+from . import soft_onboarding_service
+from . import status_embedding_indexer
+from . import swarm_intelligence_manager
+from . import unified_messaging_service
+from . import unified_onboarding_service
+from . import vector_database_service_unified
+from . import vector_integration_unified
+from . import vector_models_and_embedding_unified
+from . import work_indexer
 
 __all__ = [
+    'agent_management',
+    'agent_vector_utils',
+    'architectural_models',
+    'architectural_principles',
+    'architectural_principles_data',
+    'compliance_validator',
     'config',
     'constants',
-    'get_agent_status_manager',
-    'get_messaging_core',
-    'get_vector_database',
-    'get_agent_registry',
+    'contract_service',
+    'coordinator',
+    'cursor_db',
+    'hard_onboarding_service',
+    'learning_recommender',
+    'message_batching_service',
+    'message_identity_clarification',
+    'messaging_cli',
+    'messaging_cli_formatters',
+    'messaging_cli_handlers',
+    'messaging_cli_parser',
+    'messaging_discord',
+    'messaging_handlers',
+    'messaging_infrastructure',
+    'onboarding_template_loader',
+    'overnight_command_handler',
+    'performance_analyzer',
+    'recommendation_engine',
+    'role_command_handler',
+    'soft_onboarding_service',
+    'status_embedding_indexer',
+    'swarm_intelligence_manager',
+    'unified_messaging_service',
+    'unified_onboarding_service',
+    'vector_database_service_unified',
+    'vector_integration_unified',
+    'vector_models_and_embedding_unified',
+    'work_indexer',
 ]

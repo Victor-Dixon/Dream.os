@@ -1,0 +1,2652 @@
+{
+  "overlaps": {
+    "MachineLearningModelMaker <-> LSTMmodel_trainer": {
+      "repo1": {
+        "num": 2,
+        "name": "MachineLearningModelMaker",
+        "analyzed": true,
+        "agent": "Agent-1"
+      },
+      "repo2": {
+        "num": 55,
+        "name": "LSTMmodel_trainer",
+        "analyzed": true,
+        "agent": "Agent-7"
+      },
+      "similarity": 0.5571428571428572,
+      "category": "ml_models"
+    },
+    "DreamBank <-> AutoDream_Os": {
+      "repo1": {
+        "num": 3,
+        "name": "DreamBank",
+        "analyzed": true,
+        "agent": "Agent-1"
+      },
+      "repo2": {
+        "num": 7,
+        "name": "AutoDream_Os",
+        "analyzed": true,
+        "agent": "Agent-1"
+      },
+      "similarity": 1.0,
+      "category": "dream_projects"
+    },
+    "DreamBank <-> DreamVault": {
+      "repo1": {
+        "num": 3,
+        "name": "DreamBank",
+        "analyzed": true,
+        "agent": "Agent-1"
+      },
+      "repo2": {
+        "num": 15,
+        "name": "DreamVault",
+        "analyzed": true,
+        "agent": "Agent-2",
+        "goldmine": true
+      },
+      "similarity": 1.0,
+      "category": "dream_projects"
+    },
+    "DreamBank <-> DigitalDreamscape": {
+      "repo1": {
+        "num": 3,
+        "name": "DreamBank",
+        "analyzed": true,
+        "agent": "Agent-1"
+      },
+      "repo2": {
+        "num": 59,
+        "name": "DigitalDreamscape",
+        "analyzed": true,
+        "agent": "Agent-7"
+      },
+      "similarity": 1.0,
+      "category": "dream_projects"
+    },
+    "trade-analyzer <-> UltimateOptionsTradingRobot": {
+      "repo1": {
+        "num": 4,
+        "name": "trade-analyzer",
+        "analyzed": true,
+        "agent": "Agent-1"
+      },
+      "repo2": {
+        "num": 5,
+        "name": "UltimateOptionsTradingRobot",
+        "analyzed": true,
+        "agent": "Agent-1"
+      },
+      "similarity": 1.0,
+      "category": "trading"
+    },
+    "trade-analyzer <-> trading-leads-bot": {
+      "repo1": {
+        "num": 4,
+        "name": "trade-analyzer",
+        "analyzed": true,
+        "agent": "Agent-1"
+      },
+      "repo2": {
+        "num": 17,
+        "name": "trading-leads-bot",
+        "analyzed": true,
+        "agent": "Agent-2",
+        "goldmine": true
+      },
+      "similarity": 1.0,
+      "category": "trading"
+    },
+    "trade-analyzer <-> thetradingrobo tplug": {
+      "repo1": {
+        "num": 4,
+        "name": "trade-analyzer",
+        "analyzed": true,
+        "agent": "Agent-1"
+      },
+      "repo2": {
+        "num": 38,
+        "name": "thetradingrobo tplug",
+        "analyzed": true,
+        "agent": "Agent-5"
+      },
+      "similarity": 0.9099999999999999,
+      "category": "trading"
+    },
+    "trade-analyzer <-> osrsbot": {
+      "repo1": {
+        "num": 4,
+        "name": "trade-analyzer",
+        "analyzed": true,
+        "agent": "Agent-1"
+      },
+      "repo2": {
+        "num": 40,
+        "name": "osrsbot",
+        "analyzed": true,
+        "agent": "Agent-5"
+      },
+      "similarity": 1.0,
+      "category": "other"
+    },
+    "UltimateOptionsTradingRobot <-> trading-leads-bot": {
+      "repo1": {
+        "num": 5,
+        "name": "UltimateOptionsTradingRobot",
+        "analyzed": true,
+        "agent": "Agent-1"
+      },
+      "repo2": {
+        "num": 17,
+        "name": "trading-leads-bot",
+        "analyzed": true,
+        "agent": "Agent-2",
+        "goldmine": true
+      },
+      "similarity": 1.0,
+      "category": "trading"
+    },
+    "UltimateOptionsTradingRobot <-> thetradingrobo tplug": {
+      "repo1": {
+        "num": 5,
+        "name": "UltimateOptionsTradingRobot",
+        "analyzed": true,
+        "agent": "Agent-1"
+      },
+      "repo2": {
+        "num": 38,
+        "name": "thetradingrobo tplug",
+        "analyzed": true,
+        "agent": "Agent-5"
+      },
+      "similarity": 0.9099999999999999,
+      "category": "trading"
+    },
+    "UltimateOptionsTradingRobot <-> osrsbot": {
+      "repo1": {
+        "num": 5,
+        "name": "UltimateOptionsTradingRobot",
+        "analyzed": true,
+        "agent": "Agent-1"
+      },
+      "repo2": {
+        "num": 40,
+        "name": "osrsbot",
+        "analyzed": true,
+        "agent": "Agent-5"
+      },
+      "similarity": 1.0,
+      "category": "other"
+    },
+    "Agent_Cellphone <-> intelligent-multi-agent": {
+      "repo1": {
+        "num": 6,
+        "name": "Agent_Cellphone",
+        "analyzed": true,
+        "agent": "Agent-1",
+        "goldmine": true
+      },
+      "repo2": {
+        "num": 45,
+        "name": "intelligent-multi-agent",
+        "analyzed": false,
+        "agent": "Agent-6",
+        "goldmine": true
+      },
+      "similarity": 0.8666666666666667,
+      "category": "agent_systems"
+    },
+    "Agent_Cellphone <-> Agent_Cellphone_V1": {
+      "repo1": {
+        "num": 6,
+        "name": "Agent_Cellphone",
+        "analyzed": true,
+        "agent": "Agent-1",
+        "goldmine": true
+      },
+      "repo2": {
+        "num": 48,
+        "name": "Agent_Cellphone_V1",
+        "analyzed": false,
+        "agent": "Agent-6",
+        "goldmine": true
+      },
+      "similarity": 1.0,
+      "category": "agent_systems"
+    },
+    "AutoDream_Os <-> DreamVault": {
+      "repo1": {
+        "num": 7,
+        "name": "AutoDream_Os",
+        "analyzed": true,
+        "agent": "Agent-1"
+      },
+      "repo2": {
+        "num": 15,
+        "name": "DreamVault",
+        "analyzed": true,
+        "agent": "Agent-2",
+        "goldmine": true
+      },
+      "similarity": 1.0,
+      "category": "dream_projects"
+    },
+    "AutoDream_Os <-> DigitalDreamscape": {
+      "repo1": {
+        "num": 7,
+        "name": "AutoDream_Os",
+        "analyzed": true,
+        "agent": "Agent-1"
+      },
+      "repo2": {
+        "num": 59,
+        "name": "DigitalDreamscape",
+        "analyzed": true,
+        "agent": "Agent-7"
+      },
+      "similarity": 0.8666666666666667,
+      "category": "dream_projects"
+    },
+    "projectscanner <-> projectscanner": {
+      "repo1": {
+        "num": 8,
+        "name": "projectscanner",
+        "analyzed": true,
+        "agent": "Agent-1"
+      },
+      "repo2": {
+        "num": 49,
+        "name": "projectscanner",
+        "analyzed": false,
+        "agent": "Agent-6",
+        "goldmine": true
+      },
+      "similarity": 1.0,
+      "category": "other"
+    },
+    "bible-application <-> bible-application": {
+      "repo1": {
+        "num": 9,
+        "name": "bible-application",
+        "analyzed": true,
+        "agent": "Agent-1"
+      },
+      "repo2": {
+        "num": 13,
+        "name": "bible-application",
+        "analyzed": true,
+        "agent": "Agent-2"
+      },
+      "similarity": 1.0,
+      "category": "other"
+    },
+    "my-resume <-> my_resume": {
+      "repo1": {
+        "num": 12,
+        "name": "my-resume",
+        "analyzed": true,
+        "agent": "Agent-2"
+      },
+      "repo2": {
+        "num": 53,
+        "name": "my_resume",
+        "analyzed": true,
+        "agent": "Agent-7"
+      },
+      "similarity": 1.0,
+      "category": "resume_templates"
+    },
+    "DreamVault <-> DigitalDreamscape": {
+      "repo1": {
+        "num": 15,
+        "name": "DreamVault",
+        "analyzed": true,
+        "agent": "Agent-2",
+        "goldmine": true
+      },
+      "repo2": {
+        "num": 59,
+        "name": "DigitalDreamscape",
+        "analyzed": true,
+        "agent": "Agent-7"
+      },
+      "similarity": 1.0,
+      "category": "dream_projects"
+    },
+    "TROOP <-> TROOP": {
+      "repo1": {
+        "num": 16,
+        "name": "TROOP",
+        "analyzed": true,
+        "agent": "Agent-2",
+        "goldmine": true
+      },
+      "repo2": {
+        "num": 60,
+        "name": "TROOP",
+        "analyzed": true,
+        "agent": "Agent-7"
+      },
+      "similarity": 1.0,
+      "category": "other"
+    },
+    "trading-leads-bot <-> thetradingrobo tplug": {
+      "repo1": {
+        "num": 17,
+        "name": "trading-leads-bot",
+        "analyzed": true,
+        "agent": "Agent-2",
+        "goldmine": true
+      },
+      "repo2": {
+        "num": 38,
+        "name": "thetradingrobo tplug",
+        "analyzed": true,
+        "agent": "Agent-5"
+      },
+      "similarity": 0.9099999999999999,
+      "category": "trading"
+    },
+    "trading-leads-bot <-> osrsbot": {
+      "repo1": {
+        "num": 17,
+        "name": "trading-leads-bot",
+        "analyzed": true,
+        "agent": "Agent-2",
+        "goldmine": true
+      },
+      "repo2": {
+        "num": 40,
+        "name": "osrsbot",
+        "analyzed": true,
+        "agent": "Agent-5"
+      },
+      "similarity": 1.0,
+      "category": "other"
+    },
+    "LSTMmodel_trainer <-> langchain-google": {
+      "repo1": {
+        "num": 18,
+        "name": "LSTMmodel_trainer",
+        "analyzed": true,
+        "agent": "Agent-2"
+      },
+      "repo2": {
+        "num": 23,
+        "name": "langchain-google",
+        "analyzed": true,
+        "agent": "Agent-3"
+      },
+      "similarity": 0.52,
+      "category": "other"
+    },
+    "LSTMmodel_trainer <-> selfevolving_ai": {
+      "repo1": {
+        "num": 18,
+        "name": "LSTMmodel_trainer",
+        "analyzed": true,
+        "agent": "Agent-2"
+      },
+      "repo2": {
+        "num": 39,
+        "name": "selfevolving_ai",
+        "analyzed": true,
+        "agent": "Agent-5",
+        "goldmine": true
+      },
+      "similarity": 0.5571428571428572,
+      "category": "other"
+    },
+    "LSTMmodel_trainer <-> LSTMmodel_trainer": {
+      "repo1": {
+        "num": 18,
+        "name": "LSTMmodel_trainer",
+        "analyzed": true,
+        "agent": "Agent-2"
+      },
+      "repo2": {
+        "num": 55,
+        "name": "LSTMmodel_trainer",
+        "analyzed": true,
+        "agent": "Agent-7"
+      },
+      "similarity": 1.0,
+      "category": "ml_models"
+    },
+    "LSTMmodel_trainer <-> gpt_automation": {
+      "repo1": {
+        "num": 55,
+        "name": "LSTMmodel_trainer",
+        "analyzed": true,
+        "agent": "Agent-7"
+      },
+      "repo2": {
+        "num": 57,
+        "name": "gpt_automation",
+        "analyzed": true,
+        "agent": "Agent-7"
+      },
+      "similarity": 0.6000000000000001,
+      "category": "other"
+    },
+    "fastapi <-> fastapi": {
+      "repo1": {
+        "num": 21,
+        "name": "fastapi",
+        "analyzed": true,
+        "agent": "Agent-3"
+      },
+      "repo2": {
+        "num": 34,
+        "name": "fastapi",
+        "analyzed": true,
+        "agent": "Agent-5"
+      },
+      "similarity": 1.0,
+      "category": "other"
+    },
+    "langchain-google <-> selfevolving_ai": {
+      "repo1": {
+        "num": 23,
+        "name": "langchain-google",
+        "analyzed": true,
+        "agent": "Agent-3"
+      },
+      "repo2": {
+        "num": 39,
+        "name": "selfevolving_ai",
+        "analyzed": true,
+        "agent": "Agent-5",
+        "goldmine": true
+      },
+      "similarity": 0.8666666666666667,
+      "category": "other"
+    },
+    "langchain-google <-> LSTMmodel_trainer": {
+      "repo1": {
+        "num": 23,
+        "name": "langchain-google",
+        "analyzed": true,
+        "agent": "Agent-3"
+      },
+      "repo2": {
+        "num": 55,
+        "name": "LSTMmodel_trainer",
+        "analyzed": true,
+        "agent": "Agent-7"
+      },
+      "similarity": 0.52,
+      "category": "other"
+    },
+    "langchain-google <-> gpt_automation": {
+      "repo1": {
+        "num": 23,
+        "name": "langchain-google",
+        "analyzed": true,
+        "agent": "Agent-3"
+      },
+      "repo2": {
+        "num": 57,
+        "name": "gpt_automation",
+        "analyzed": true,
+        "agent": "Agent-7"
+      },
+      "similarity": 0.9750000000000001,
+      "category": "other"
+    },
+    "FocusForge <-> focusforge": {
+      "repo1": {
+        "num": 24,
+        "name": "FocusForge",
+        "analyzed": true,
+        "agent": "Agent-3",
+        "goldmine": true
+      },
+      "repo2": {
+        "num": 32,
+        "name": "focusforge",
+        "analyzed": true,
+        "agent": "Agent-5"
+      },
+      "similarity": 1.0,
+      "category": "other"
+    },
+    "Streamertools <-> MeTuber": {
+      "repo1": {
+        "num": 25,
+        "name": "Streamertools",
+        "analyzed": true,
+        "agent": "Agent-3"
+      },
+      "repo2": {
+        "num": 27,
+        "name": "MeTuber",
+        "analyzed": true,
+        "agent": "Agent-3"
+      },
+      "similarity": 1.0,
+      "category": "streaming"
+    },
+    "Streamertools <-> streamertools": {
+      "repo1": {
+        "num": 25,
+        "name": "Streamertools",
+        "analyzed": true,
+        "agent": "Agent-3"
+      },
+      "repo2": {
+        "num": 31,
+        "name": "streamertools",
+        "analyzed": true,
+        "agent": "Agent-5"
+      },
+      "similarity": 1.0,
+      "category": "streaming"
+    },
+    "TBOWTactics <-> tbowtactics": {
+      "repo1": {
+        "num": 26,
+        "name": "TBOWTactics",
+        "analyzed": true,
+        "agent": "Agent-3",
+        "goldmine": true
+      },
+      "repo2": {
+        "num": 33,
+        "name": "tbowtactics",
+        "analyzed": true,
+        "agent": "Agent-5"
+      },
+      "similarity": 1.0,
+      "category": "other"
+    },
+    "MeTuber <-> streamertools": {
+      "repo1": {
+        "num": 27,
+        "name": "MeTuber",
+        "analyzed": true,
+        "agent": "Agent-3"
+      },
+      "repo2": {
+        "num": 31,
+        "name": "streamertools",
+        "analyzed": true,
+        "agent": "Agent-5"
+      },
+      "similarity": 1.0,
+      "category": "streaming"
+    },
+    "DaDudeKC-Website <-> dadudekcwebsite": {
+      "repo1": {
+        "num": 28,
+        "name": "DaDudeKC-Website",
+        "analyzed": true,
+        "agent": "Agent-3"
+      },
+      "repo2": {
+        "num": 35,
+        "name": "dadudekcwebsite",
+        "analyzed": true,
+        "agent": "Agent-5"
+      },
+      "similarity": 1.0,
+      "category": "dadudekc"
+    },
+    "DaDudekC <-> dadudekc": {
+      "repo1": {
+        "num": 29,
+        "name": "DaDudekC",
+        "analyzed": true,
+        "agent": "Agent-3"
+      },
+      "repo2": {
+        "num": 36,
+        "name": "dadudekc",
+        "analyzed": true,
+        "agent": "Agent-5"
+      },
+      "similarity": 1.0,
+      "category": "dadudekc"
+    },
+    "Superpowered-TTRPG <-> superpowered_ttrpg": {
+      "repo1": {
+        "num": 30,
+        "name": "Superpowered-TTRPG",
+        "analyzed": true,
+        "agent": "Agent-3",
+        "goldmine": true
+      },
+      "repo2": {
+        "num": 37,
+        "name": "superpowered_ttrpg",
+        "analyzed": true,
+        "agent": "Agent-5"
+      },
+      "similarity": 1.0,
+      "category": "other"
+    },
+    "thetradingrobo tplug <-> osrsbot": {
+      "repo1": {
+        "num": 38,
+        "name": "thetradingrobo tplug",
+        "analyzed": true,
+        "agent": "Agent-5"
+      },
+      "repo2": {
+        "num": 40,
+        "name": "osrsbot",
+        "analyzed": true,
+        "agent": "Agent-5"
+      },
+      "similarity": 0.9099999999999999,
+      "category": "other"
+    },
+    "selfevolving_ai <-> LSTMmodel_trainer": {
+      "repo1": {
+        "num": 39,
+        "name": "selfevolving_ai",
+        "analyzed": true,
+        "agent": "Agent-5",
+        "goldmine": true
+      },
+      "repo2": {
+        "num": 55,
+        "name": "LSTMmodel_trainer",
+        "analyzed": true,
+        "agent": "Agent-7"
+      },
+      "similarity": 0.5571428571428572,
+      "category": "other"
+    },
+    "selfevolving_ai <-> gpt_automation": {
+      "repo1": {
+        "num": 39,
+        "name": "selfevolving_ai",
+        "analyzed": true,
+        "agent": "Agent-5",
+        "goldmine": true
+      },
+      "repo2": {
+        "num": 57,
+        "name": "gpt_automation",
+        "analyzed": true,
+        "agent": "Agent-7"
+      },
+      "similarity": 1.0,
+      "category": "other"
+    },
+    "intelligent-multi-agent <-> Agent_Cellphone_V1": {
+      "repo1": {
+        "num": 45,
+        "name": "intelligent-multi-agent",
+        "analyzed": false,
+        "agent": "Agent-6",
+        "goldmine": true
+      },
+      "repo2": {
+        "num": 48,
+        "name": "Agent_Cellphone_V1",
+        "analyzed": false,
+        "agent": "Agent-6",
+        "goldmine": true
+      },
+      "similarity": 0.8666666666666667,
+      "category": "agent_systems"
+    }
+  },
+  "groups": {
+    "ml_models": [
+      {
+        "name": "MachineLearningModelMaker",
+        "num": 2,
+        "analyzed": true,
+        "goldmine": false
+      },
+      {
+        "name": "LSTMmodel_trainer",
+        "num": 55,
+        "analyzed": true,
+        "goldmine": false
+      }
+    ],
+    "dream_projects": [
+      {
+        "name": "DreamBank",
+        "num": 3,
+        "analyzed": true,
+        "goldmine": false
+      },
+      {
+        "name": "AutoDream_Os",
+        "num": 7,
+        "analyzed": true,
+        "goldmine": false
+      },
+      {
+        "name": "DreamVault",
+        "num": 15,
+        "analyzed": true,
+        "goldmine": true
+      },
+      {
+        "name": "DigitalDreamscape",
+        "num": 59,
+        "analyzed": true,
+        "goldmine": false
+      }
+    ],
+    "trading": [
+      {
+        "name": "trade-analyzer",
+        "num": 4,
+        "analyzed": true,
+        "goldmine": false
+      },
+      {
+        "name": "UltimateOptionsTradingRobot",
+        "num": 5,
+        "analyzed": true,
+        "goldmine": false
+      },
+      {
+        "name": "trading-leads-bot",
+        "num": 17,
+        "analyzed": true,
+        "goldmine": true
+      },
+      {
+        "name": "thetradingrobo tplug",
+        "num": 38,
+        "analyzed": true,
+        "goldmine": false
+      }
+    ],
+    "other": [
+      {
+        "name": "osrsbot",
+        "num": 40,
+        "analyzed": true,
+        "goldmine": false
+      },
+      {
+        "name": "projectscanner",
+        "num": 8,
+        "analyzed": true,
+        "goldmine": false
+      },
+      {
+        "name": "bible-application",
+        "num": 9,
+        "analyzed": true,
+        "goldmine": false
+      },
+      {
+        "name": "TROOP",
+        "num": 16,
+        "analyzed": true,
+        "goldmine": true
+      },
+      {
+        "name": "langchain-google",
+        "num": 23,
+        "analyzed": true,
+        "goldmine": false
+      },
+      {
+        "name": "selfevolving_ai",
+        "num": 39,
+        "analyzed": true,
+        "goldmine": true
+      },
+      {
+        "name": "gpt_automation",
+        "num": 57,
+        "analyzed": true,
+        "goldmine": false
+      },
+      {
+        "name": "fastapi",
+        "num": 21,
+        "analyzed": true,
+        "goldmine": false
+      },
+      {
+        "name": "FocusForge",
+        "num": 24,
+        "analyzed": true,
+        "goldmine": true
+      },
+      {
+        "name": "focusforge",
+        "num": 32,
+        "analyzed": true,
+        "goldmine": false
+      },
+      {
+        "name": "TBOWTactics",
+        "num": 26,
+        "analyzed": true,
+        "goldmine": true
+      },
+      {
+        "name": "tbowtactics",
+        "num": 33,
+        "analyzed": true,
+        "goldmine": false
+      },
+      {
+        "name": "Superpowered-TTRPG",
+        "num": 30,
+        "analyzed": true,
+        "goldmine": true
+      },
+      {
+        "name": "superpowered_ttrpg",
+        "num": 37,
+        "analyzed": true,
+        "goldmine": false
+      }
+    ],
+    "agent_systems": [
+      {
+        "name": "Agent_Cellphone",
+        "num": 6,
+        "analyzed": true,
+        "goldmine": true
+      },
+      {
+        "name": "intelligent-multi-agent",
+        "num": 45,
+        "analyzed": false,
+        "goldmine": true
+      },
+      {
+        "name": "Agent_Cellphone_V1",
+        "num": 48,
+        "analyzed": false,
+        "goldmine": true
+      }
+    ],
+    "resume_templates": [
+      {
+        "name": "my-resume",
+        "num": 12,
+        "analyzed": true,
+        "goldmine": false
+      },
+      {
+        "name": "my_resume",
+        "num": 53,
+        "analyzed": true,
+        "goldmine": false
+      }
+    ],
+    "streaming": [
+      {
+        "name": "Streamertools",
+        "num": 25,
+        "analyzed": true,
+        "goldmine": false
+      },
+      {
+        "name": "MeTuber",
+        "num": 27,
+        "analyzed": true,
+        "goldmine": false
+      },
+      {
+        "name": "streamertools",
+        "num": 31,
+        "analyzed": true,
+        "goldmine": false
+      }
+    ],
+    "dadudekc": [
+      {
+        "name": "DaDudeKC-Website",
+        "num": 28,
+        "analyzed": true,
+        "goldmine": false
+      },
+      {
+        "name": "dadudekcwebsite",
+        "num": 35,
+        "analyzed": true,
+        "goldmine": false
+      },
+      {
+        "name": "DaDudekC",
+        "num": 29,
+        "analyzed": true,
+        "goldmine": false
+      },
+      {
+        "name": "dadudekc",
+        "num": 36,
+        "analyzed": true,
+        "goldmine": false
+      }
+    ]
+  },
+  "consolidation_plan": {
+    "high_priority": [
+      {
+        "category": "dream_projects",
+        "repos": [
+          {
+            "name": "DreamBank",
+            "num": 3,
+            "analyzed": true,
+            "goldmine": false
+          },
+          {
+            "name": "AutoDream_Os",
+            "num": 7,
+            "analyzed": true,
+            "goldmine": false
+          },
+          {
+            "name": "DreamVault",
+            "num": 15,
+            "analyzed": true,
+            "goldmine": true
+          },
+          {
+            "name": "DigitalDreamscape",
+            "num": 59,
+            "analyzed": true,
+            "goldmine": false
+          }
+        ],
+        "count": 4,
+        "analyzed": 4,
+        "goldmines": 1,
+        "target_repo": "DreamVault",
+        "repos_to_merge": [
+          "DreamBank",
+          "DigitalDreamscape"
+        ],
+        "reduction": 2,
+        "notes": "AutoDream_Os is Agent_Cellphone_V2 - DO NOT MERGE. Thea (repo 11) is large AI framework but not in master list - evaluate separately."
+      },
+      {
+        "category": "trading",
+        "repos": [
+          {
+            "name": "trade-analyzer",
+            "num": 4,
+            "analyzed": true,
+            "goldmine": false
+          },
+          {
+            "name": "UltimateOptionsTradingRobot",
+            "num": 5,
+            "analyzed": true,
+            "goldmine": false
+          },
+          {
+            "name": "trading-leads-bot",
+            "num": 17,
+            "analyzed": true,
+            "goldmine": true
+          },
+          {
+            "name": "thetradingrobo tplug",
+            "num": 38,
+            "analyzed": true,
+            "goldmine": false
+          }
+        ],
+        "count": 4,
+        "analyzed": 4,
+        "goldmines": 1,
+        "target_repo": "trading-leads-bot",
+        "repos_to_merge": [
+          "trade-analyzer",
+          "UltimateOptionsTradingRobot",
+          "thetradingrobo tplug"
+        ],
+        "reduction": 3,
+        "notes": "contract-leads moved to separate Leads Systems group per Agent-6 decision (Option B)"
+      },
+      {
+        "category": "leads_systems",
+        "repos": [
+          {
+            "name": "trading-leads-bot",
+            "num": 17,
+            "analyzed": true,
+            "goldmine": true
+          },
+          {
+            "name": "contract-leads",
+            "num": 20,
+            "analyzed": true,
+            "goldmine": true
+          }
+        ],
+        "count": 2,
+        "analyzed": 2,
+        "goldmines": 2,
+        "target_repo": "trading-leads-bot",
+        "repos_to_merge": [
+          "contract-leads"
+        ],
+        "reduction": 1,
+        "priority": "HIGH",
+        "notes": "Agent-6 Decision (Option B): Both share leads infrastructure (web scraping, processing) but different domains (contracts vs trading). Consolidating preserves patterns while maintaining domain clarity. Both are goldmines."
+      },
+      {
+        "category": "other",
+        "repos": [
+          {
+            "name": "osrsbot",
+            "num": 40,
+            "analyzed": true,
+            "goldmine": false
+          },
+          {
+            "name": "projectscanner",
+            "num": 8,
+            "analyzed": true,
+            "goldmine": false
+          },
+          {
+            "name": "bible-application",
+            "num": 9,
+            "analyzed": true,
+            "goldmine": false
+          },
+          {
+            "name": "TROOP",
+            "num": 16,
+            "analyzed": true,
+            "goldmine": true
+          },
+          {
+            "name": "langchain-google",
+            "num": 23,
+            "analyzed": true,
+            "goldmine": false
+          },
+          {
+            "name": "fastapi",
+            "num": 21,
+            "analyzed": true,
+            "goldmine": false
+          },
+          {
+            "name": "transformers",
+            "num": 22,
+            "analyzed": true,
+            "goldmine": false
+          },
+          {
+            "name": "FocusForge",
+            "num": 24,
+            "analyzed": true,
+            "goldmine": true
+          },
+          {
+            "name": "focusforge",
+            "num": 32,
+            "analyzed": true,
+            "goldmine": false
+          },
+          {
+            "name": "TBOWTactics",
+            "num": 26,
+            "analyzed": true,
+            "goldmine": true
+          },
+          {
+            "name": "tbowtactics",
+            "num": 33,
+            "analyzed": true,
+            "goldmine": false
+          },
+          {
+            "name": "Superpowered-TTRPG",
+            "num": 30,
+            "analyzed": true,
+            "goldmine": true
+          },
+          {
+            "name": "superpowered_ttrpg",
+            "num": 37,
+            "analyzed": true,
+            "goldmine": false
+          }
+        ],
+        "count": 13,
+        "analyzed": 13,
+        "goldmines": 4,
+        "target_repo": null,
+        "repos_to_merge": [],
+        "reduction": 0,
+        "notes": "REFACTORED: This group was too broad. Most repos should stay separate: TROOP (verify discrepancy), FocusForge, TBOWTactics (already in Trading), Superpowered-TTRPG (goldmine), external libraries (fastapi, langchain-google, transformers). Only case variations should merge (already in Phase 0). projectscanner should be archived (already in V2). osrsbot and bible-application should stay standalone."
+      },
+      {
+        "category": "agent_systems",
+        "repos": [
+          {
+            "name": "Agent_Cellphone",
+            "num": 6,
+            "analyzed": true,
+            "goldmine": true
+          },
+          {
+            "name": "intelligent-multi-agent",
+            "num": 45,
+            "analyzed": false,
+            "goldmine": true
+          },
+          {
+            "name": "Agent_Cellphone_V1",
+            "num": 48,
+            "analyzed": false,
+            "goldmine": true
+          }
+        ],
+        "count": 3,
+        "analyzed": 1,
+        "goldmines": 3,
+        "target_repo": "Agent_Cellphone",
+        "repos_to_merge": [
+          "intelligent-multi-agent",
+          "Agent_Cellphone_V1"
+        ],
+        "reduction": 2
+      },
+      {
+        "category": "streaming",
+        "repos": [
+          {
+            "name": "Streamertools",
+            "num": 25,
+            "analyzed": true,
+            "goldmine": false
+          },
+          {
+            "name": "MeTuber",
+            "num": 27,
+            "analyzed": true,
+            "goldmine": false
+          },
+          {
+            "name": "streamertools",
+            "num": 31,
+            "analyzed": true,
+            "goldmine": false
+          }
+        ],
+        "count": 3,
+        "analyzed": 3,
+        "goldmines": 0,
+        "target_repo": "Streamertools",
+        "repos_to_merge": [
+          "MeTuber",
+          "streamertools"
+        ],
+        "reduction": 2
+      },
+      {
+        "category": "dadudekc",
+        "repos": [
+          {
+            "name": "DaDudeKC-Website",
+            "num": 28,
+            "analyzed": true,
+            "goldmine": false
+          },
+          {
+            "name": "dadudekcwebsite",
+            "num": 35,
+            "analyzed": true,
+            "goldmine": false
+          },
+          {
+            "name": "DaDudekC",
+            "num": 29,
+            "analyzed": true,
+            "goldmine": false
+          },
+          {
+            "name": "dadudekc",
+            "num": 36,
+            "analyzed": true,
+            "goldmine": false
+          }
+        ],
+        "count": 4,
+        "analyzed": 4,
+        "goldmines": 0,
+        "target_repo": "DaDudeKC-Website",
+        "repos_to_merge": [
+          "dadudekcwebsite",
+          "DaDudekC",
+          "dadudekc"
+        ],
+        "reduction": 3
+      }
+    ],
+    "medium_priority": [
+      {
+        "category": "ml_models",
+        "repos": [
+          {
+            "name": "MachineLearningModelMaker",
+            "num": 2,
+            "analyzed": true,
+            "goldmine": false
+          },
+          {
+            "name": "LSTMmodel_trainer",
+            "num": 55,
+            "analyzed": true,
+            "goldmine": false
+          }
+        ],
+        "count": 2,
+        "analyzed": 2,
+        "goldmines": 0,
+        "target_repo": "MachineLearningModelMaker",
+        "repos_to_merge": [
+          "LSTMmodel_trainer"
+        ],
+        "reduction": 1
+      },
+      {
+        "category": "resume_templates",
+        "repos": [
+          {
+            "name": "my-resume",
+            "num": 12,
+            "analyzed": true,
+            "goldmine": false
+          },
+          {
+            "name": "my_resume",
+            "num": 53,
+            "analyzed": true,
+            "goldmine": false
+          }
+        ],
+        "count": 2,
+        "analyzed": 2,
+        "goldmines": 0,
+        "target_repo": "my-resume",
+        "repos_to_merge": [
+          "my_resume"
+        ],
+        "reduction": 1
+      }
+    ],
+    "low_priority": [],
+    "phase_1_immediate_duplicates": [
+      {
+        "category": "exact_duplicates",
+        "repos": [
+          {
+            "name": "TROOP",
+            "num": 60,
+            "analyzed": true,
+            "agent": "Agent-7",
+            "action": "merge_into",
+            "target": {
+              "name": "TROOP",
+              "num": 16,
+              "analyzed": true,
+              "agent": "Agent-2",
+              "goldmine": true
+            }
+          },
+          {
+            "name": "bible-application",
+            "num": 13,
+            "analyzed": true,
+            "agent": "Agent-2",
+            "action": "merge_into",
+            "target": {
+              "name": "bible-application",
+              "num": 9,
+              "analyzed": true,
+              "agent": "Agent-1"
+            }
+          },
+          {
+            "name": "fastapi",
+            "num": 34,
+            "analyzed": true,
+            "agent": "Agent-5",
+            "action": "evaluate_merge",
+            "target": {
+              "name": "fastapi",
+              "num": 21,
+              "analyzed": true,
+              "agent": "Agent-3"
+            },
+            "notes": "Evaluate if external library fork or duplicate"
+          },
+          {
+            "name": "projectscanner",
+            "num": 8,
+            "analyzed": true,
+            "agent": "Agent-1",
+            "action": "archive",
+            "notes": "Already integrated into V2, archive original"
+          }
+        ],
+        "count": 4,
+        "reduction": 4,
+        "priority": "IMMEDIATE",
+        "notes": "Safe to execute immediately - exact duplicates or already integrated"
+      }
+    ],
+    "gpt_ai_automation_group": [
+      {
+        "category": "gpt_ai_automation",
+        "repos": [
+          {
+            "name": "gpt_automation",
+            "num": 57,
+            "analyzed": true,
+            "agent": "Agent-7",
+            "goldmine": false
+          },
+          {
+            "name": "selfevolving_ai",
+            "num": 39,
+            "analyzed": true,
+            "agent": "Agent-5",
+            "goldmine": true
+          }
+        ],
+        "count": 2,
+        "target_repo": "selfevolving_ai",
+        "repos_to_merge": [
+          "gpt_automation"
+        ],
+        "reduction": 1,
+        "priority": "EVALUATE",
+        "notes": "Evaluate if gpt_automation should merge into selfevolving_ai (goldmine)"
+      }
+    ],
+    "summary": {
+      "total_groups": 13,
+      "total_repos": 75,
+      "potential_reduction": 36,
+      "phase_0_immediate_duplicates": 12,
+      "phase_1_safe_consolidations": 7,
+      "phase_2_trading": 3,
+      "phase_2_leads_systems": 1,
+      "phase_3_agent_systems": 2,
+      "phase_4_streaming_dadudekc": 5,
+      "phase_5_gpt_ai": 1,
+      "phase_6_new_groups": 3,
+      "evaluation_needed": 2,
+      "comprehensive_analysis_included": true,
+      "comprehensive_analysis_date": "2025-01-27",
+      "comprehensive_analyzer": "Agent-5",
+      "similarity_pairs_found": 240,
+      "agent6_decision": "Option B - Separate Leads Systems group created",
+      "last_updated_with_decision": "2025-01-27"
+    },
+    "last_updated": "2025-01-27",
+    "updated_by": "Agent-8 (Validated & Expanded - Agent-6 Decision Implemented)",
+    "continuation_notes": "Validated all 12 consolidation groups. Implemented Agent-6 decision (Option B): Created separate Leads Systems group (trading-leads-bot + contract-leads). Refactored Group 8 'Other Overlaps' (removed as catch-all). Identified 2 additional evaluation opportunities (prompt-library, FreeRideInvestor). Updated totals: 13 groups, 36 repos reduction (48% reduction). 25 Unknown repos still need identification.",
+    "new_groups": [
+      {
+        "category": "content_blog_systems",
+        "repos": [
+          {
+            "name": "Auto_Blogger",
+            "num": 61,
+            "analyzed": true,
+            "agent": "Agent-5",
+            "goldmine": true,
+            "roi": 69.4
+          },
+          {
+            "name": "content",
+            "num": 41,
+            "analyzed": false,
+            "agent": "Unknown"
+          },
+          {
+            "name": "FreeWork",
+            "num": 71,
+            "analyzed": false,
+            "agent": "Unknown"
+          }
+        ],
+        "count": 3,
+        "target_repo": "Auto_Blogger",
+        "repos_to_merge": [
+          "content",
+          "FreeWork"
+        ],
+        "reduction": 2,
+        "priority": "MEDIUM",
+        "notes": "Review needed - repos need analysis first. Auto_Blogger is highest ROI repo."
+      },
+      {
+        "category": "backtesting_frameworks",
+        "repos": [
+          {
+            "name": "practice",
+            "num": 51,
+            "analyzed": true,
+            "agent": "Agent-7",
+            "lines": 9000
+          },
+          {
+            "name": "TROOP",
+            "num": 16,
+            "analyzed": true,
+            "agent": "Agent-2",
+            "goldmine": true
+          },
+          {
+            "name": "ultimate_trading_intelligence",
+            "num": 45,
+            "analyzed": false,
+            "agent": "Agent-6"
+          }
+        ],
+        "count": 3,
+        "target_repo": "practice",
+        "repos_to_merge": [],
+        "pattern_extraction_from": [
+          "TROOP",
+          "ultimate_trading_intelligence"
+        ],
+        "reduction": 1,
+        "priority": "MEDIUM",
+        "notes": "Review needed - backtesting is component, not main purpose. Extract patterns only."
+      }
+    ],
+    "phase_0_duplicate_names": [
+      {
+        "name": "projectscanner",
+        "target": {
+          "num": 8,
+          "action": "archive"
+        },
+        "merge_from": [
+          {
+            "num": 49
+          }
+        ],
+        "reduction": 1,
+        "notes": "Already integrated into V2, archive original"
+      },
+      {
+        "name": "bible-application",
+        "target": {
+          "num": 9
+        },
+        "merge_from": [
+          {
+            "num": 13
+          }
+        ],
+        "reduction": 1
+      },
+      {
+        "name": "my_resume",
+        "target": {
+          "num": 12,
+          "name": "my-resume"
+        },
+        "merge_from": [
+          {
+            "num": 53
+          }
+        ],
+        "reduction": 1
+      },
+      {
+        "name": "TROOP",
+        "target": {
+          "num": 16,
+          "goldmine": true
+        },
+        "merge_from": [
+          {
+            "num": 60
+          }
+        ],
+        "reduction": 1,
+        "notes": "VERIFY DISCREPANCY FIRST - Agent-2 vs Agent-7 analysis differs"
+      },
+      {
+        "name": "LSTMmodel_trainer",
+        "target": {
+          "num": 18
+        },
+        "merge_from": [
+          {
+            "num": 55
+          }
+        ],
+        "reduction": 1
+      },
+      {
+        "name": "fastapi",
+        "target": {
+          "num": 21
+        },
+        "merge_from": [
+          {
+            "num": 34
+          }
+        ],
+        "reduction": 1,
+        "notes": "Evaluate if external library fork or duplicate"
+      },
+      {
+        "name": "focusforge",
+        "target": {
+          "num": 24,
+          "name": "FocusForge",
+          "goldmine": true
+        },
+        "merge_from": [
+          {
+            "num": 32
+          }
+        ],
+        "reduction": 1
+      },
+      {
+        "name": "streamertools",
+        "target": {
+          "num": 25,
+          "name": "Streamertools"
+        },
+        "merge_from": [
+          {
+            "num": 31
+          }
+        ],
+        "reduction": 1,
+        "notes": "Already in Group 4 (Streaming Tools)"
+      },
+      {
+        "name": "tbowtactics",
+        "target": {
+          "num": 26,
+          "name": "TBOWTactics",
+          "goldmine": true
+        },
+        "merge_from": [
+          {
+            "num": 33
+          }
+        ],
+        "reduction": 1,
+        "notes": "Already in Group 2 (Trading Repos)"
+      },
+      {
+        "name": "dadudekc",
+        "target": {
+          "num": 29,
+          "name": "DaDudekC"
+        },
+        "merge_from": [
+          {
+            "num": 36
+          }
+        ],
+        "reduction": 1,
+        "notes": "Already in Group 5 (DaDudekC Projects)"
+      },
+      {
+        "name": "superpowered_ttrpg",
+        "target": {
+          "num": 30,
+          "name": "Superpowered-TTRPG",
+          "goldmine": true
+        },
+        "merge_from": [
+          {
+            "num": 37
+          }
+        ],
+        "reduction": 1
+      },
+      {
+        "name": "dadudekcwebsite",
+        "target": {
+          "num": 28,
+          "name": "DaDudeKC-Website"
+        },
+        "merge_from": [
+          {
+            "num": 35
+          }
+        ],
+        "reduction": 1,
+        "notes": "Already in Group 5 (DaDudekC Projects)"
+      }
+    ],
+    "new_consolidation_groups": [
+      {
+        "category": "high_similarity_duplicates",
+        "target_repo": 27,
+        "target_name": "Analysis: MeTuber (Repo #27)",
+        "merge_from": [
+          26
+        ],
+        "merge_from_names": [
+          "Analysis: TBOWTactics (Repo #26)"
+        ],
+        "similarity_score": 0.7499389499389498,
+        "priority": "HIGH",
+        "source": "Agent-5 Comprehensive Analysis"
+      }
+    ],
+    "medium_priority_groups": [
+      {
+        "category": "medium_similarity",
+        "target_repo": 27,
+        "target_name": "Analysis: MeTuber (Repo #27)",
+        "merge_from": [
+          26
+        ],
+        "merge_from_names": [
+          "Analysis: TBOWTactics (Repo #26)"
+        ],
+        "similarity_score": 0.7499389499389498,
+        "priority": "MEDIUM",
+        "source": "Agent-5 Comprehensive Analysis"
+      },
+      {
+        "category": "medium_similarity",
+        "target_repo": 4,
+        "target_name": " trade_analyzer",
+        "merge_from": [
+          5
+        ],
+        "merge_from_names": [
+          " UltimateOptionsTradingRobot"
+        ],
+        "similarity_score": 0.6596657633242998,
+        "priority": "MEDIUM",
+        "source": "Agent-5 Comprehensive Analysis"
+      },
+      {
+        "category": "medium_similarity",
+        "target_repo": 23,
+        "target_name": "Analysis: langchain-google (Repo #23)",
+        "merge_from": [
+          21
+        ],
+        "merge_from_names": [
+          "Analysis: fastapi (Repo #21)"
+        ],
+        "similarity_score": 0.6373015873015873,
+        "priority": "MEDIUM",
+        "source": "Agent-5 Comprehensive Analysis"
+      },
+      {
+        "category": "medium_similarity",
+        "target_repo": 30,
+        "target_name": "Analysis: Superpowered-TTRPG (Repo #30)",
+        "merge_from": [
+          25
+        ],
+        "merge_from_names": [
+          "Analysis: Streamertools (Repo #25)"
+        ],
+        "similarity_score": 0.6215384615384615,
+        "priority": "MEDIUM",
+        "source": "Agent-5 Comprehensive Analysis"
+      },
+      {
+        "category": "medium_similarity",
+        "target_repo": 2,
+        "target_name": " machinelearningmodelmaker",
+        "merge_from": [
+          7
+        ],
+        "merge_from_names": [
+          " AutoDream.Os ⭐ LARGE"
+        ],
+        "similarity_score": 0.6203387083704723,
+        "priority": "MEDIUM",
+        "source": "Agent-5 Comprehensive Analysis"
+      },
+      {
+        "category": "medium_similarity",
+        "target_repo": 20,
+        "target_name": "contract-leads",
+        "merge_from": [
+          17
+        ],
+        "merge_from_names": [
+          "trading-leads-bot"
+        ],
+        "similarity_score": 0.6140762463343109,
+        "priority": "MEDIUM",
+        "source": "Agent-5 Comprehensive Analysis"
+      },
+      {
+        "category": "medium_similarity",
+        "target_repo": 52,
+        "target_name": "Analysis: NewSims4ModProject",
+        "merge_from": [
+          59
+        ],
+        "merge_from_names": [
+          "DigitalDreamscape"
+        ],
+        "similarity_score": 0.5892653471989265,
+        "priority": "MEDIUM",
+        "source": "Agent-5 Comprehensive Analysis"
+      },
+      {
+        "category": "medium_similarity",
+        "target_repo": 57,
+        "target_name": "gpt_automation",
+        "merge_from": [
+          8
+        ],
+        "merge_from_names": [
+          " projectscanner ⭐ OUR TOOL!"
+        ],
+        "similarity_score": 0.5792702615434291,
+        "priority": "MEDIUM",
+        "source": "Agent-5 Comprehensive Analysis"
+      },
+      {
+        "category": "medium_similarity",
+        "target_repo": 51,
+        "target_name": "Analysis: practice",
+        "merge_from": [
+          12
+        ],
+        "merge_from_names": [
+          "Analysis: my-resume"
+        ],
+        "similarity_score": 0.5755088389870998,
+        "priority": "MEDIUM",
+        "source": "Agent-5 Comprehensive Analysis"
+      },
+      {
+        "category": "medium_similarity",
+        "target_repo": 55,
+        "target_name": "LSTMmodel_trainer",
+        "merge_from": [
+          18
+        ],
+        "merge_from_names": [
+          "LSTMmodel_trainer"
+        ],
+        "similarity_score": 0.5684971098265896,
+        "priority": "MEDIUM",
+        "source": "Agent-5 Comprehensive Analysis"
+      },
+      {
+        "category": "medium_similarity",
+        "target_repo": 32,
+        "target_name": "(Agent-5: Repos 31-40)",
+        "merge_from": [
+          31
+        ],
+        "merge_from_names": [
+          "(Agent-5: Repos 31-40)"
+        ],
+        "similarity_score": 0.5455516014234876,
+        "priority": "MEDIUM",
+        "source": "Agent-5 Comprehensive Analysis"
+      },
+      {
+        "category": "medium_similarity",
+        "target_repo": 9,
+        "target_name": "(network-scanner):** ✅ HAS tests + CI/CD!",
+        "merge_from": [
+          3
+        ],
+        "merge_from_names": [
+          " dreambank (#3 in list)  "
+        ],
+        "similarity_score": 0.5013579646734727,
+        "priority": "MEDIUM",
+        "source": "Agent-5 Comprehensive Analysis"
+      }
+    ]
+  },
+  "comprehensive_analysis": {
+    "analyzer": "Agent-5",
+    "analysis_date": "2025-01-27",
+    "total_repos_analyzed": 48,
+    "similarity_matrix_size": 240,
+    "missing_repos": [
+      10,
+      14,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75
+    ]
+  },
+  "similarity_reference": {
+    "top_pairs": [
+      [
+        [
+          26,
+          27
+        ],
+        0.7499389499389498
+      ],
+      [
+        [
+          12,
+          27
+        ],
+        0.6887149380300065
+      ],
+      [
+        [
+          4,
+          5
+        ],
+        0.6596657633242998
+      ],
+      [
+        [
+          12,
+          26
+        ],
+        0.648695652173913
+      ],
+      [
+        [
+          21,
+          23
+        ],
+        0.6373015873015873
+      ],
+      [
+        [
+          25,
+          30
+        ],
+        0.6215384615384615
+      ],
+      [
+        [
+          2,
+          7
+        ],
+        0.6203387083704723
+      ],
+      [
+        [
+          7,
+          57
+        ],
+        0.6144549763033175
+      ],
+      [
+        [
+          17,
+          20
+        ],
+        0.6140762463343109
+      ],
+      [
+        [
+          52,
+          59
+        ],
+        0.5892653471989265
+      ],
+      [
+        [
+          8,
+          57
+        ],
+        0.5792702615434291
+      ],
+      [
+        [
+          12,
+          51
+        ],
+        0.5755088389870998
+      ],
+      [
+        [
+          8,
+          30
+        ],
+        0.5703560459560915
+      ],
+      [
+        [
+          18,
+          55
+        ],
+        0.5684971098265896
+      ],
+      [
+        [
+          11,
+          12
+        ],
+        0.5676021828711438
+      ],
+      [
+        [
+          7,
+          8
+        ],
+        0.5600484261501211
+      ],
+      [
+        [
+          7,
+          59
+        ],
+        0.5583891828336273
+      ],
+      [
+        [
+          7,
+          60
+        ],
+        0.5575736325385694
+      ],
+      [
+        [
+          2,
+          57
+        ],
+        0.5568176371914689
+      ],
+      [
+        [
+          7,
+          30
+        ],
+        0.5564217986782876
+      ],
+      [
+        [
+          31,
+          32
+        ],
+        0.5455516014234876
+      ],
+      [
+        [
+          57,
+          60
+        ],
+        0.5403909774436091
+      ],
+      [
+        [
+          2,
+          8
+        ],
+        0.5355990094782683
+      ],
+      [
+        [
+          8,
+          60
+        ],
+        0.5347586206896552
+      ],
+      [
+        [
+          11,
+          51
+        ],
+        0.5336686390532545
+      ],
+      [
+        [
+          6,
+          8
+        ],
+        0.5335529487385506
+      ],
+      [
+        [
+          11,
+          27
+        ],
+        0.5323634272570442
+      ],
+      [
+        [
+          22,
+          23
+        ],
+        0.5302320038137613
+      ],
+      [
+        [
+          11,
+          26
+        ],
+        0.5244161986402601
+      ],
+      [
+        [
+          2,
+          5
+        ],
+        0.5241758241758242
+      ],
+      [
+        [
+          27,
+          28
+        ],
+        0.5228650137741047
+      ],
+      [
+        [
+          7,
+          25
+        ],
+        0.52
+      ],
+      [
+        [
+          2,
+          4
+        ],
+        0.5191399152029074
+      ],
+      [
+        [
+          22,
+          25
+        ],
+        0.5180332379484922
+      ],
+      [
+        [
+          2,
+          30
+        ],
+        0.5173333333333333
+      ],
+      [
+        [
+          1,
+          25
+        ],
+        0.5164835164835164
+      ],
+      [
+        [
+          2,
+          60
+        ],
+        0.5122974767596281
+      ],
+      [
+        [
+          5,
+          57
+        ],
+        0.5106430155210643
+      ],
+      [
+        [
+          4,
+          7
+        ],
+        0.5083665338645419
+      ],
+      [
+        [
+          12,
+          32
+        ],
+        0.5041291291291291
+      ],
+      [
+        [
+          3,
+          9
+        ],
+        0.5013579646734727
+      ],
+      [
+        [
+          1,
+          52
+        ],
+        0.5009122952519179
+      ],
+      [
+        [
+          24,
+          30
+        ],
+        0.4973481546062192
+      ],
+      [
+        [
+          21,
+          22
+        ],
+        0.4972300281011641
+      ],
+      [
+        [
+          25,
+          27
+        ],
+        0.4938668025823989
+      ],
+      [
+        [
+          24,
+          26
+        ],
+        0.49303030303030304
+      ],
+      [
+        [
+          6,
+          32
+        ],
+        0.4929906542056075
+      ],
+      [
+        [
+          4,
+          25
+        ],
+        0.4914702581369248
+      ],
+      [
+        [
+          26,
+          28
+        ],
+        0.4910989678202793
+      ],
+      [
+        [
+          5,
+          25
+        ],
+        0.4888157894736842
+      ]
+    ],
+    "total_pairs": 240,
+    "source": "Agent-5 Comprehensive Analysis"
+  },
+  "comprehensive_repo_data": {
+    "6": {
+      "name": " Agent_Cellphone ⭐ CRITICAL",
+      "category": "ml",
+      "tech_stack": [
+        "Python"
+      ],
+      "purpose": "Utility:** 🔴 **CRITICAL HISTORICAL VALUE!** Contains V1 architecture, legacy integrations, and evolutionary code history. Reference material for V2 development."
+    },
+    "1": {
+      "name": "Analysis - network-scanner",
+      "category": "other",
+      "tech_stack": [
+        "Python"
+      ],
+      "purpose": "(1 sentence)"
+    },
+    "2": {
+      "name": " machinelearningmodelmaker",
+      "category": "automation",
+      "tech_stack": [
+        "Python"
+      ],
+      "purpose": "Utility in THIS project:** Could integrate with `src/ai_training/` and `src/analytics/` for automated ML model generation and training workflows."
+    },
+    "3": {
+      "name": " dreambank (#3 in list)  ",
+      "category": "trading",
+      "tech_stack": [
+        "PyQt",
+        "Python",
+        "PyQt5"
+      ],
+      "purpose": "Utility in THIS project:** Could integrate with `src/trading_robot/` for portfolio tracking and provide real-time price monitoring for our trading automation systems."
+    },
+    "4": {
+      "name": " trade_analyzer",
+      "category": "trading",
+      "tech_stack": [
+        "Python"
+      ],
+      "purpose": "Utility:** DIRECT integration with `src/trading_robot/` - likely contains analysis algorithms we could reuse."
+    },
+    "5": {
+      "name": " UltimateOptionsTradingRobot",
+      "category": "trading",
+      "tech_stack": [
+        "Python"
+      ],
+      "purpose": "Utility:** DIRECT integration with `src/trading_robot/` - options-specific logic our system could leverage."
+    },
+    "7": {
+      "name": " AutoDream.Os ⭐ LARGE",
+      "category": "automation",
+      "tech_stack": [
+        "Python"
+      ],
+      "purpose": "Utility:** Could integrate with `src/gaming/` Dream.OS FSM system - contains automation patterns and OS-level orchestration we might leverage."
+    },
+    "8": {
+      "name": " projectscanner ⭐ OUR TOOL!",
+      "category": "automation",
+      "tech_stack": [
+        "Python"
+      ],
+      "purpose": "Utility:** 🔴 **WE LITERALLY USE THIS!** This IS our projectscanner tool! Core to our workflow!"
+    },
+    "9": {
+      "name": "(network-scanner):** ✅ HAS tests + CI/CD!",
+      "category": "trading",
+      "tech_stack": [
+        "Python",
+        "PyQt5",
+        "PyQt",
+        "Discord",
+        "GUI"
+      ],
+      "purpose": "Utility:** Integrate with `src/core/health/monitoring/` for network security"
+    },
+    "11": {
+      "name": "Analysis: prompt-library",
+      "category": "trading",
+      "tech_stack": [
+        "React",
+        "Python",
+        "GUI"
+      ],
+      "purpose": "prompt-library** is a curated collection of AI/LLM prompts specifically designed for **financial and trading UI/UX development**."
+    },
+    "12": {
+      "name": "Analysis: my-resume",
+      "category": "trading",
+      "tech_stack": [
+        "Python",
+        "GUI"
+      ],
+      "purpose": "Actual Content:** NOT a resume! This is an **OSRSBot AI Development Strategy Repository**!"
+    },
+    "13": {
+      "name": "bible-application",
+      "category": "discord",
+      "tech_stack": [
+        "Python",
+        "requests",
+        "Discord",
+        "Tkinter",
+        "JavaScript",
+        "GUI"
+      ],
+      "purpose": "Architecture Overview:"
+    },
+    "15": {
+      "name": "DreamVault",
+      "category": "trading",
+      "tech_stack": [
+        "Python",
+        "FastAPI",
+        "PostgreSQL",
+        "SQLite",
+        "Flask",
+        "React",
+        "Selenium"
+      ],
+      "purpose": "Core Mission:** Transform ChatGPT conversations into:"
+    },
+    "16": {
+      "name": "TROOP",
+      "category": "trading",
+      "tech_stack": [
+        "GCP",
+        "Python",
+        "sklearn",
+        "Azure",
+        "AWS",
+        "Express",
+        "Redis",
+        "PostgreSQL",
+        "SQLite",
+        "MySQL",
+        "GUI"
+      ],
+      "purpose": "Core Mission:"
+    },
+    "17": {
+      "name": "trading-leads-bot",
+      "category": "trading",
+      "tech_stack": [
+        "Python",
+        "BeautifulSoup",
+        "Discord",
+        "discord.py",
+        "PostgreSQL",
+        "Discord.py",
+        "SQLite",
+        "Flask",
+        "MySQL",
+        "Selenium"
+      ],
+      "purpose": "Core Mission:"
+    },
+    "18": {
+      "name": "LSTMmodel_trainer",
+      "category": "automation",
+      "tech_stack": [
+        "TensorFlow",
+        "Python",
+        "PyQt5",
+        "scikit-learn",
+        "PyQt",
+        "GUI"
+      ],
+      "purpose": "Core Mission:"
+    },
+    "19": {
+      "name": "FreeWork (freemail-management)",
+      "category": "ml",
+      "tech_stack": [
+        "Python",
+        "Node.js",
+        "MongoDB",
+        "Express",
+        "Node",
+        "React"
+      ],
+      "purpose": "Core Features:"
+    },
+    "20": {
+      "name": "contract-leads",
+      "category": "trading",
+      "tech_stack": [
+        "requests",
+        "Discord",
+        "Python",
+        "BeautifulSoup"
+      ],
+      "purpose": "Core Mission:"
+    },
+    "31": {
+      "name": "(Agent-5: Repos 31-40)",
+      "category": "trading",
+      "tech_stack": [
+        "Discord",
+        "Python"
+      ],
+      "purpose": "The OBS Live Filter and Overlay Library** - A Python toolkit for adding real-time filters and overlays to Twitch streams via OBS. Modular and customizable, designed to expand into bots, agents, workfl"
+    },
+    "32": {
+      "name": "(Agent-5: Repos 31-40)",
+      "category": "ml",
+      "tech_stack": [
+        "Python",
+        "GUI"
+      ],
+      "purpose": "\"Your solo battle OS for deep focus and productivity.\""
+    },
+    "33": {
+      "name": "TBOWTactics",
+      "category": "trading",
+      "tech_stack": [],
+      "purpose": "\"Where small-account traders master the game. Packed with REST APIs, real-time market data, and AI-powered insights... TBOWTactics is the ultimate toolkit to sharpen your edge, execute smarter trades,"
+    },
+    "34": {
+      "name": "fastapi",
+      "category": "web",
+      "tech_stack": [
+        "FastAPI"
+      ],
+      "purpose": "\"FastAPI framework, high performance, easy to learn, fast to code, ready for production\""
+    },
+    "35": {
+      "name": "DaDudeKC-Website",
+      "category": "trading",
+      "tech_stack": [],
+      "purpose": "\"my website\" - Personal portfolio/website for Commander"
+    },
+    "36": {
+      "name": "DaDudekC",
+      "category": "other",
+      "tech_stack": [],
+      "purpose": "Personal profile repository (GitHub special repo that displays on profile page)"
+    },
+    "37": {
+      "name": "Superpowered-TTRPG",
+      "category": "gaming",
+      "tech_stack": [],
+      "purpose": "Tabletop RPG game system for superpowered characters"
+    },
+    "38": {
+      "name": "TheTradingRobotPlug",
+      "category": "trading",
+      "tech_stack": [],
+      "purpose": "Trading robot/bot for automated trading strategies"
+    },
+    "39": {
+      "name": "self-evolving-ai",
+      "category": "ml",
+      "tech_stack": [],
+      "purpose": "Self-evolving AI system - adaptive machine learning that improves itself"
+    },
+    "40": {
+      "name": "osrsbot",
+      "category": "discord",
+      "tech_stack": [],
+      "purpose": "Old School RuneScape (OSRS) gaming bot for automation"
+    },
+    "51": {
+      "name": "Analysis: practice",
+      "category": "trading",
+      "tech_stack": [
+        "Python",
+        "Tkinter",
+        "GUI"
+      ],
+      "purpose": "Practice** is a comprehensive financial/trading experimentation repository created for learning and testing trading algorithms, backtesting strategies, and machine learning model development for stock"
+    },
+    "52": {
+      "name": "Analysis: NewSims4ModProject",
+      "category": "discord",
+      "tech_stack": [
+        "Python"
+      ],
+      "purpose": "NewSims4ModProject** is a game modding framework for The Sims 4, implementing an event-driven architecture for managing game events, sim lifecycles, and state management."
+    },
+    "53": {
+      "name": "my-resume",
+      "category": "trading",
+      "tech_stack": [],
+      "purpose": "Personal resume/portfolio repository containing project summaries, skills documentation, and career achievements."
+    },
+    "54": {
+      "name": "my-personal-templates",
+      "category": "trading",
+      "tech_stack": [],
+      "purpose": "Personal template repository containing trading research and strategy templates (Tbow Tactics, Trading Research)."
+    },
+    "55": {
+      "name": "LSTMmodel_trainer",
+      "category": "trading",
+      "tech_stack": [
+        "PyQt",
+        "Python",
+        "GUI"
+      ],
+      "purpose": "PyQt-based desktop app for training LSTM neural networks for financial/trading predictions. User-friendly GUI for data prep, model config, training, evaluation."
+    },
+    "56": {
+      "name": "IT_help_desk",
+      "category": "ml",
+      "tech_stack": [
+        "PyQt",
+        "Python"
+      ],
+      "purpose": "Desktop help desk ticketing system - PyQt app with database, ticket management, UI."
+    },
+    "57": {
+      "name": "gpt_automation",
+      "category": "automation",
+      "tech_stack": [
+        "Python"
+      ],
+      "purpose": "GPT automation tools and scripts for automating ChatGPT interactions."
+    },
+    "58": {
+      "name": "FreeRideInvestor",
+      "category": "trading",
+      "tech_stack": [],
+      "purpose": "WordPress theme for trading/investing blog with auto-blogging capabilities, custom PHP templates, plugins."
+    },
+    "59": {
+      "name": "DigitalDreamscape",
+      "category": "discord",
+      "tech_stack": [
+        "Python"
+      ],
+      "purpose": "AI-powered Dungeon Master game - Python game engine with AI storytelling, game core, data management."
+    },
+    "60": {
+      "name": "TROOP",
+      "category": "automation",
+      "tech_stack": [
+        "Python"
+      ],
+      "purpose": "IT automation and infrastructure management toolkit - Scripts for IT operations, testing, CI/CD workflows."
+    },
+    "21": {
+      "name": "Analysis: fastapi (Repo #21)",
+      "category": "ml",
+      "tech_stack": [
+        "Flask",
+        "Python",
+        "FastAPI",
+        "Node"
+      ],
+      "purpose": "This is a FORK of the official FastAPI framework** (https://github.com/fastapi/fastapi)"
+    },
+    "22": {
+      "name": "Analysis: transformers (Repo #22)",
+      "category": "discord",
+      "tech_stack": [
+        "PyTorch",
+        "TensorFlow",
+        "Python",
+        "FastAPI"
+      ],
+      "purpose": "This is a FORK of Hugging Face's Transformers library** (https://github.com/huggingface/transformers)"
+    },
+    "23": {
+      "name": "Analysis: langchain-google (Repo #23)",
+      "category": "ml",
+      "tech_stack": [
+        "Python",
+        "FastAPI"
+      ],
+      "purpose": "This is a FORK of LangChain's Google integrations** (https://github.com/langchain-ai/langchain-google)"
+    },
+    "24": {
+      "name": "Analysis: FocusForge (Repo #24)",
+      "category": "automation",
+      "tech_stack": [
+        "GUI",
+        "Python",
+        "Docker",
+        "SQLite"
+      ],
+      "purpose": "CUSTOM Commander Project - Productivity Operating System"
+    },
+    "25": {
+      "name": "Analysis: Streamertools (Repo #25)",
+      "category": "discord",
+      "tech_stack": [
+        "Python"
+      ],
+      "purpose": "CUSTOM Commander Project - OBS/Twitch Streaming Tools"
+    },
+    "26": {
+      "name": "Analysis: TBOWTactics (Repo #26)",
+      "category": "trading",
+      "tech_stack": [
+        "Python",
+        "GUI"
+      ],
+      "purpose": "CUSTOM Trading Toolkit - \"Where small-account traders master the game\""
+    },
+    "27": {
+      "name": "Analysis: MeTuber (Repo #27)",
+      "category": "trading",
+      "tech_stack": [
+        "Python",
+        "GUI"
+      ],
+      "purpose": "Part of Streamertools Family - Core Video Filter Library"
+    },
+    "28": {
+      "name": "Analysis: DaDudeKC-Website (Repo #28)",
+      "category": "trading",
+      "tech_stack": [
+        "Python",
+        "JavaScript"
+      ],
+      "purpose": "Personal Website/Portfolio Project - Commander's Digital Presence"
+    },
+    "29": {
+      "name": " Commander's User Profile/Special Repo",
+      "category": "ml",
+      "tech_stack": [],
+      "purpose": "Personal Repository - Commander's User Profile/Special Repo"
+    },
+    "30": {
+      "name": "Analysis: Superpowered-TTRPG (Repo #30)",
+      "category": "automation",
+      "tech_stack": [
+        "Python"
+      ],
+      "purpose": "Tabletop RPG Gaming Project - Digital Game Master Tools"
+    }
+  },
+  "last_updated": "2025-01-27",
+  "updated_by": "Agent-8 + Agent-5 (Comprehensive Analysis Integration)",
+  "update_notes": "Integrated Agent-5 comprehensive analysis findings including similarity matrix, additional consolidation groups, and all 75 repos data."
+}

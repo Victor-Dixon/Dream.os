@@ -20,6 +20,35 @@ try:
     DISCORD_AVAILABLE = True
 except ImportError:
     DISCORD_AVAILABLE = False
+    # Create mock discord module for when discord.py is not available
+    class MockCog:
+        def __init__(self, *args, **kwargs):
+            pass
+    
+    def mock_command(*args, **kwargs):
+        """Mock decorator for commands.command."""
+        def decorator(func):
+            return func
+        return decorator
+    
+    class MockCommandError(Exception):
+        """Mock CommandError exception."""
+        pass
+    
+    class MockCommands:
+        Cog = MockCog
+        command = mock_command
+        Context = type('Context', (), {})()
+        CommandError = MockCommandError
+    
+    class MockExt:
+        commands = MockCommands()
+    
+    class MockDiscord:
+        ext = MockExt()
+    
+    discord = MockDiscord()
+    commands = MockCommands()
 
 from .messaging_controller import DiscordMessagingController
 

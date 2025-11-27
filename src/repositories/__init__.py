@@ -1,28 +1,16 @@
-"""
-Repository Layer - Data Access Pattern
-======================================
+# AUTO-GENERATED __init__.py
+# DO NOT EDIT MANUALLY - changes may be overwritten
 
-This package provides data access repositories following the repository pattern.
-All repositories handle data operations without business logic.
-
-Available Repositories:
-- AgentRepository: Agent data operations
-- ContractRepository: Contract data operations
-- MessageRepository: Message data operations
-
-Usage:
-    from src.repositories import AgentRepository, ContractRepository, MessageRepository
-
-    agent_repo = AgentRepository()
-    agents = agent_repo.get_all_agents()
-"""
-
-from .agent_repository import AgentRepository
-from .contract_repository import ContractRepository
-from .message_repository import MessageRepository
+from . import activity_repository
+from . import agent_repository
+from . import contract_repository
+from . import message_repository
+from . import metrics_repository
 
 __all__ = [
-    "AgentRepository",
-    "ContractRepository",
-    "MessageRepository",
+    'activity_repository',
+    'agent_repository',
+    'contract_repository',
+    'message_repository',
+    'metrics_repository',
 ]

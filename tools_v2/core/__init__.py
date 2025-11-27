@@ -1,13 +1,10 @@
-"""
-Tools V2 Core Module
-====================
+# AUTO-GENERATED __init__.py
+# DO NOT EDIT MANUALLY - changes may be overwritten
 
-Core functionality for tools_v2 system.
-Re-exports from main modules for backward compatibility.
-"""
+from . import tool_facade
+from . import tool_spec
 
-# Re-export from existing modules
-from ..tool_registry import *
-from ..toolbelt_core import *
-
-__all__ = ["ToolFacade", "ToolSpec"]
+__all__ = [
+    'tool_facade',
+    'tool_spec',
+]

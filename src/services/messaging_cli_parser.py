@@ -44,9 +44,9 @@ def create_messaging_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--priority",
         "-p",
-        choices=["regular", "urgent"],
+        choices=["normal", "regular", "urgent"],
         default="regular",
-        help="Message priority (default: regular). Urgent adds 'URGENT MESSAGE' prefix but uses regular enter.",
+        help="Message priority (default: regular). Accepts 'normal' or 'regular' (both are equivalent). Urgent adds 'URGENT MESSAGE' prefix but uses regular enter.",
     )
 
     parser.add_argument(

@@ -22,7 +22,23 @@ project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
 from tools.duplication_analysis import DuplicationAnalysis
-from tools.duplication_reporter import DuplicationReporter
+# NOTE: duplication_reporter is deprecated but still needed by this analyzer
+# TODO: Refactor to move DuplicationReporter functionality into this module
+try:
+    from tools.duplication_reporter import DuplicationReporter
+except ImportError:
+    # Fallback to deprecated location
+    import sys
+    from pathlib import Path
+    deprecated_path = Path(__file__).parent.parent / "tools" / "deprecated" / "duplication_reporter.py"
+    if deprecated_path.exists():
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("duplication_reporter", deprecated_path)
+        duplication_reporter_module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(duplication_reporter_module)
+        DuplicationReporter = duplication_reporter_module.DuplicationReporter
+    else:
+        raise ImportError("DuplicationReporter not found in tools or deprecated")
 from tools.duplication_scanner import DuplicationScanner
 
 

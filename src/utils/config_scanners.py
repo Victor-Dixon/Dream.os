@@ -12,7 +12,7 @@ import re
 from abc import ABC, abstractmethod
 from pathlib import Path
 from typing import List
-from .config_consolidator import ConfigPattern
+from .config_models import ConfigPattern
 
 
 class ConfigurationScanner(ABC):
@@ -176,3 +176,17 @@ class SettingsPatternScanner(ConfigurationScanner):
                         source='settings'
                     ))
         return patterns
+
+
+def create_default_scanners() -> List[ConfigurationScanner]:
+    """Create default set of configuration scanners.
+    
+    Returns:
+        List of default configuration scanners.
+    """
+    return [
+        EnvironmentVariableScanner(),
+        HardcodedValueScanner(),
+        ConfigConstantScanner(),
+        SettingsPatternScanner()
+    ]

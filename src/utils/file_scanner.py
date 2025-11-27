@@ -11,7 +11,7 @@ License: MIT
 import logging
 from pathlib import Path
 from typing import List, Set
-from .config_consolidator import ConfigPattern
+from .config_models import ConfigPattern
 from .config_scanners import ConfigurationScanner
 
 logger = logging.getLogger(__name__)

@@ -1,0 +1,263 @@
+#!/usr/bin/env python3
+"""
+Start Complete Discord System
+==============================
+
+Starts both Discord bot and message queue processor.
+Ensures .env file is loaded properly.
+
+Author: Agent-3 (Infrastructure & DevOps)
+Date: 2025-01-27
+Priority: CRITICAL
+"""
+
+import logging
+import os
+import subprocess
+import sys
+import time
+from pathlib import Path
+
+# Load .env file FIRST
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    print("⚠️  python-dotenv not installed. Install with: pip install python-dotenv")
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+
+def check_token():
+    """Check if Discord token is set."""
+    token = os.getenv("DISCORD_BOT_TOKEN")
+    if not token:
+        logger.error("❌ DISCORD_BOT_TOKEN not set!")
+        logger.error("   Set it in .env file or environment variable")
+        return False
+    if len(token) < 50:
+        logger.warning(f"⚠️  Token appears invalid (length: {len(token)})")
+        return False
+    logger.info("✅ Discord bot token found")
+    return True
+
+
+def start_discord_bot():
+    """Start Discord bot in background with auto-restart."""
+    logger.info("🚀 Starting Discord bot (with auto-restart)...")
+    try:
+        # Create log directory
+        log_dir = Path("logs")
+        log_dir.mkdir(exist_ok=True)
+
+        # Redirect output to log files so we can see errors
+        stdout_file = log_dir / "discord_bot.log"
+        stderr_file = log_dir / "discord_bot_errors.log"
+
+        with open(stdout_file, "w", encoding="utf-8") as stdout, \
+                open(stderr_file, "w", encoding="utf-8") as stderr:
+            process = subprocess.Popen(
+                [sys.executable, "tools/run_unified_discord_bot_with_restart.py"],
+                stdout=stdout,
+                stderr=stderr,
+                text=True,
+                cwd=str(Path(__file__).parent.parent)
+            )
+
+        # Give it a moment to start
+        time.sleep(2)
+
+        # Check if process is still alive
+        if process.poll() is not None:
+            logger.error(
+                f"❌ Discord bot exited immediately (exit code: {process.returncode})")
+            logger.error(f"   Check logs: {stdout_file} and {stderr_file}")
+            # Read error output
+            try:
+                with open(stderr_file, "r", encoding="utf-8") as f:
+                    error_output = f.read(1000)
+                    if error_output:
+                        logger.error(f"   Error output: {error_output[:500]}")
+            except:
+                pass
+            return None
+
+        logger.info(f"✅ Discord bot started (PID: {process.pid})")
+        logger.info(f"   Logs: {stdout_file}")
+        return process
+    except Exception as e:
+        logger.error(f"❌ Failed to start Discord bot: {e}", exc_info=True)
+        return None
+
+
+def start_queue_processor():
+    """Start queue processor in background."""
+    logger.info("📬 Starting message queue processor...")
+    try:
+        # Create log directory
+        log_dir = Path("logs")
+        log_dir.mkdir(exist_ok=True)
+
+        # Redirect output to log files
+        stdout_file = log_dir / "queue_processor.log"
+        stderr_file = log_dir / "queue_processor_errors.log"
+
+        with open(stdout_file, "w", encoding="utf-8") as stdout, \
+                open(stderr_file, "w", encoding="utf-8") as stderr:
+            process = subprocess.Popen(
+                [sys.executable, "tools/start_message_queue_processor.py"],
+                stdout=stdout,
+                stderr=stderr,
+                text=True,
+                cwd=str(Path(__file__).parent.parent)
+            )
+
+        # Give it a moment to start
+        time.sleep(1)
+
+        # Check if process is still alive
+        if process.poll() is not None:
+            logger.error(
+                f"❌ Queue processor exited immediately (exit code: {process.returncode})")
+            logger.error(f"   Check logs: {stdout_file} and {stderr_file}")
+            # Read error output
+            try:
+                with open(stderr_file, "r", encoding="utf-8") as f:
+                    error_output = f.read(1000)
+                    if error_output:
+                        logger.error(f"   Error output: {error_output[:500]}")
+            except:
+                pass
+            return None
+
+        logger.info(f"✅ Queue processor started (PID: {process.pid})")
+        logger.info(f"   Logs: {stdout_file}")
+        return process
+    except Exception as e:
+        logger.error(f"❌ Failed to start queue processor: {e}", exc_info=True)
+        return None
+
+
+def main():
+    """Start complete Discord system."""
+    print("\n" + "="*70)
+    print("🚀 STARTING COMPLETE DISCORD SYSTEM")
+    print("="*70 + "\n")
+
+    # Check token
+    if not check_token():
+        print("\n💡 To fix:")
+        print("   1. Create .env file in project root")
+        print("   2. Add: DISCORD_BOT_TOKEN=your_token_here")
+        print("   3. Run this script again\n")
+        return 1
+
+    # Start Discord bot
+    bot_process = start_discord_bot()
+    if not bot_process:
+        return 1
+
+    # Wait a bit for bot to initialize
+    time.sleep(3)
+
+    # Start queue processor
+    queue_process = start_queue_processor()
+    if not queue_process:
+        logger.warning(
+            "⚠️  Queue processor failed to start - messages won't be delivered")
+
+    print("\n" + "="*70)
+    print("✅ DISCORD SYSTEM STARTED")
+    print("="*70)
+    print(f"Discord Bot PID: {bot_process.pid if bot_process else 'FAILED'}")
+    print(
+        f"Queue Processor PID: {queue_process.pid if queue_process else 'FAILED'}")
+    print("\n💡 To stop:")
+    print("   Press Ctrl+C or kill the processes")
+    print("="*70 + "\n")
+
+    # Keep script running
+    try:
+        while True:
+            time.sleep(1)
+            # Check if bot process is still alive or needs restart
+            if bot_process is None:
+                # Process is None (failed restart or never started) - try to start
+                logger.warning(
+                    "⚠️  Discord bot process is None - attempting to start...")
+                bot_process = start_discord_bot()
+                if not bot_process:
+                    logger.error(
+                        "   Failed to start - will retry in next cycle")
+            elif bot_process.poll() is not None:
+                # Process died - log and attempt restart
+                exit_code = bot_process.returncode
+                logger.error(
+                    f"❌ Discord bot process died (exit code: {exit_code})")
+                logger.error(
+                    "   Check logs/discord_bot_errors.log for details")
+                # Try to restart
+                logger.info("   Attempting to restart Discord bot...")
+                bot_process = start_discord_bot()
+                if not bot_process:
+                    logger.error(
+                        "   Failed to restart - will retry in next cycle")
+
+            # Check if queue process is still alive or needs restart
+            if queue_process is None:
+                # Process is None (failed restart or never started) - try to start
+                logger.warning(
+                    "⚠️  Queue processor process is None - attempting to start...")
+                queue_process = start_queue_processor()
+                if not queue_process:
+                    logger.error(
+                        "   Failed to start - will retry in next cycle")
+            elif queue_process.poll() is not None:
+                # Process died - log and attempt restart
+                exit_code = queue_process.returncode
+                logger.error(
+                    f"❌ Queue processor process died (exit code: {exit_code})")
+                logger.error(
+                    "   Check logs/queue_processor_errors.log for details")
+                # Try to restart
+                logger.info("   Attempting to restart queue processor...")
+                queue_process = start_queue_processor()
+                if not queue_process:
+                    logger.error(
+                        "   Failed to restart - will retry in next cycle")
+    except KeyboardInterrupt:
+        logger.info("\n👋 Shutting down...")
+        if bot_process and bot_process.poll() is None:
+            logger.info("   Stopping Discord bot...")
+            try:
+                bot_process.terminate()
+                bot_process.wait(timeout=5)
+            except subprocess.TimeoutExpired:
+                logger.warning(
+                    "   Discord bot didn't terminate in time - forcing kill...")
+                bot_process.kill()
+                bot_process.wait()
+            except Exception as e:
+                logger.error(f"   Error stopping Discord bot: {e}")
+
+        if queue_process and queue_process.poll() is None:
+            logger.info("   Stopping queue processor...")
+            try:
+                queue_process.terminate()
+                queue_process.wait(timeout=5)
+            except subprocess.TimeoutExpired:
+                logger.warning(
+                    "   Queue processor didn't terminate in time - forcing kill...")
+                queue_process.kill()
+                queue_process.wait()
+            except Exception as e:
+                logger.error(f"   Error stopping queue processor: {e}")
+
+        logger.info("✅ Shutdown complete")
+
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

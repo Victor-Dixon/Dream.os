@@ -33,11 +33,15 @@ python -m tools.toolbelt --help           # Show all available tools
 ### Core Components
 
 ```
-tools/
-├── toolbelt.py              # Main entry point (NEW)
-├── toolbelt_registry.py     # Tool registry & discovery (NEW)
-├── toolbelt_runner.py       # Tool execution engine (NEW)
-└── toolbelt_help.py         # Help system generator (NEW)
+tools_v2/
+├── toolbelt.py              # Main entry point (if exists)
+├── toolbelt_registry.py     # Tool registry & discovery (if exists)
+├── toolbelt_runner.py       # Tool execution engine (if exists)
+└── toolbelt_help.py         # Help system generator (if exists)
+
+⚠️ NOTE: This architecture document describes a proposed toolbelt system.
+The current implementation uses tools_v2/ as the single source of truth.
+Legacy tools/ directory is deprecated in favor of tools_v2/ adapters.
 ```
 
 ### Architecture Diagram
@@ -380,21 +384,29 @@ TOOLS_REGISTRY = {
 
 ### Dynamic Discovery (Phase 2 - Future)
 
-**Approach:** Scan tools/ directory for CLI-compatible tools
+**Approach:** Scan tools_v2/ directory for CLI-compatible tools
 
 **Detection Criteria:**
 - Python files with `main()` function
 - Files ending in `_cli.py`
 - Tools declaring toolbelt compatibility
+- Tools implementing IToolAdapter pattern
 
 **Implementation (Future):**
 ```python
 def discover_tools():
-    """Dynamically discover tools in tools/ directory."""
-    for file in Path("tools").glob("*_cli.py"):
+    """Dynamically discover tools in tools_v2/ directory."""
+    for file in Path("tools_v2").glob("*_cli.py"):
         if has_toolbelt_metadata(file):
             register_tool_from_file(file)
+    
+    # Also discover tools_v2/categories/ adapters
+    for adapter_file in Path("tools_v2/categories").glob("*.py"):
+        if implements_itool_adapter(adapter_file):
+            register_adapter_from_file(adapter_file)
 ```
+
+⚠️ **NOTE:** Current system uses `tools_v2/` as SSOT. Legacy `tools/` directory is deprecated.
 
 **Decision:** Use static registry for now, design for dynamic future
 
@@ -478,10 +490,13 @@ python -m tools.toolbelt -d          # Same as --dashboard
 ### Phase 1: Core Infrastructure (Agent-1 - Cycle 2)
 
 **Files to Create:**
-1. `tools/toolbelt.py` (~80 lines)
-2. `tools/toolbelt_registry.py` (~120 lines)
-3. `tools/toolbelt_runner.py` (~100 lines)
-4. `tools/toolbelt_help.py` (~100 lines)
+1. `tools_v2/toolbelt.py` (~80 lines) - or integrate into existing toolbelt
+2. `tools_v2/toolbelt_registry.py` (~120 lines) - or use existing tool_registry.py
+3. `tools_v2/toolbelt_runner.py` (~100 lines)
+4. `tools_v2/toolbelt_help.py` (~100 lines)
+
+⚠️ **NOTE:** Current system uses `tools_v2/tool_registry.py` for tool registration.
+Consider integrating with existing registry rather than creating duplicate system.
 
 **Tasks:**
 - Create toolbelt.py entry point
@@ -537,9 +552,11 @@ def test_help_generation():
 
 **Documentation Deliverables:**
 - Update main README with toolbelt usage
-- Create tools/README_TOOLBELT.md
+- Create tools_v2/README_TOOLBELT.md (or update existing docs)
 - Add docstrings to all modules
 - Create usage examples
+
+⚠️ **NOTE:** Documentation should reference `tools_v2/` as SSOT, not legacy `tools/` directory.
 
 ---
 
@@ -613,9 +630,12 @@ def test_help_generation():
 ### Phase 4 (Future - After Initial Release)
 
 **Dynamic Tool Discovery:**
-- Scan tools/ directory automatically
+- Scan tools_v2/ directory automatically
 - Register tools with metadata decorators
 - Support plugin architecture
+- Integrate with existing tools_v2/tool_registry.py
+
+⚠️ **NOTE:** Current system uses `tools_v2/` as SSOT. Legacy `tools/` directory is deprecated.
 
 **Enhanced Features:**
 - Tool chaining (pipe output between tools)

@@ -20,8 +20,11 @@ License: MIT
 from __future__ import annotations
 
 import logging
+from datetime import datetime
 from pathlib import Path
 from typing import Any, Protocol
+
+from ..utils.swarm_time import format_swarm_timestamp, get_swarm_time_display
 
 # Import models from extracted module
 from .messaging_models_core import (
@@ -61,11 +64,23 @@ class UnifiedMessagingCore:
         self,
         delivery_service: IMessageDelivery | None = None,
         onboarding_service: IOnboardingService | None = None,
+        message_repository: Any | None = None,
     ):
         """Initialize the unified messaging core."""
         self.delivery_service = delivery_service
         self.onboarding_service = onboarding_service
         self.logger = logging.getLogger(__name__)
+
+        # Initialize message repository for history logging
+        if message_repository is None:
+            try:
+                from ..repositories.message_repository import MessageRepository
+                self.message_repository = MessageRepository()
+            except ImportError:
+                self.logger.warning("MessageRepository not available - history logging disabled")
+                self.message_repository = None
+        else:
+            self.message_repository = message_repository
 
         # Initialize subsystems
         self._initialize_subsystems()
@@ -87,8 +102,12 @@ class UnifiedMessagingCore:
 
             if not self.onboarding_service:
                 self.onboarding_service = OnboardingService()
-        except ImportError:
-            self.logger.warning("Onboarding service not available")
+                self.logger.info("✅ Onboarding service initialized")
+        except ImportError as e:
+            self.logger.debug(f"Onboarding service not available: {e}")
+
+        # SSOT: MessageRepository already initialized in __init__ (Agent-8 - 2025-01-27)
+        # Do NOT create duplicate instance here - use self.message_repository from __init__
 
     def send_message(
         self,
@@ -166,13 +185,80 @@ class UnifiedMessagingCore:
 
                 message.metadata["template"] = template  # type: ignore[index]
 
+            # Log message to history repository (Phase 1: Message History Logging - IMPLEMENTED)
+            if self.message_repository:
+                try:
+                    # Serialize metadata to ensure JSON compatibility (recursive)
+                    def serialize_value(value):
+                        """Recursively serialize values for JSON compatibility."""
+                        if isinstance(value, datetime):
+                            return value.isoformat()
+                        elif isinstance(value, dict):
+                            return {k: serialize_value(v) for k, v in value.items()}
+                        elif isinstance(value, (list, tuple)):
+                            return [serialize_value(item) for item in value]
+                        elif hasattr(value, '__dict__'):
+                            return str(value)
+                        else:
+                            return value
+                    
+                    metadata_serialized = serialize_value(message.metadata) if message.metadata else {}
+                    
+                    message_dict = {
+                        "from": message.sender,
+                        "to": message.recipient,
+                        "content": message.content[:200] + "..." if len(message.content) > 200 else message.content,
+                        "content_length": len(message.content),
+                        "message_type": message.message_type.value if hasattr(message.message_type, "value") else str(message.message_type),
+                        "priority": message.priority.value if hasattr(message.priority, "value") else str(message.priority),
+                        "tags": [tag.value if hasattr(tag, "value") else str(tag) for tag in message.tags],
+                        "metadata": metadata_serialized,
+                        "timestamp": format_swarm_timestamp(),
+                    }
+                    self.message_repository.save_message(message_dict)
+                    self.logger.debug(f"✅ Message logged to history: {message.sender} → {message.recipient}")
+                except Exception as e:
+                    self.logger.warning(f"⚠️ Failed to log message to history: {e}")
+            else:
+                # SSOT: Repository should be initialized in __init__ (Agent-8 - 2025-01-27)
+                # If not available, log warning but don't create duplicate instance
+                self.logger.warning(
+                    "MessageRepository not initialized - message history logging skipped. "
+                    "Repository should be initialized in __init__."
+                )
+
+
             if self.delivery_service:
-                return self.delivery_service.send_message(message)
+                success = self.delivery_service.send_message(message)
+                # Update history with delivery status (SSOT FIX - Agent-4 - 2025-01-27)
+                if self.message_repository and success:
+                    try:
+                        # Update message with delivery status
+                        message_dict["status"] = "delivered"
+                        self.message_repository.save_message(message_dict)
+                        self.logger.debug(f"✅ Delivery status logged: {message.sender} → {message.recipient}")
+                    except Exception as e:
+                        self.logger.warning(f"⚠️ Failed to log delivery status: {e}")
+                return success
             else:
                 self.logger.error("No delivery service configured - PyAutoGUI required")
                 return False
         except Exception as e:
             self.logger.error(f"Failed to send message: {e}")
+            # Log failure to history
+            if self.message_repository:
+                try:
+                    history_entry = {
+                        "from": message.sender,
+                        "to": message.recipient,
+                        "content": message.content[:500],
+                        "timestamp": message.timestamp,
+                        "status": "FAILED",
+                        "error": str(e)[:200],
+                    }
+                    self.message_repository.save_message(history_entry)
+                except Exception:
+                    pass  # Non-critical
             return False
 
     def send_message_to_inbox(self, message: UnifiedMessage, max_retries: int = 3) -> bool:
@@ -210,7 +296,9 @@ class UnifiedMessagingCore:
                 f.write(f"**From**: {message.sender}\n")
                 f.write(f"**To**: {message.recipient}\n")
                 f.write(f"**Priority**: {priority}\n")
-                f.write(f"**Timestamp**: {message.timestamp}\n")
+                # Format timestamp for display
+                timestamp_str = format_swarm_timestamp(message.timestamp) if isinstance(message.timestamp, datetime) else get_swarm_time_display()
+                f.write(f"**Timestamp**: {timestamp_str}\n")
                 if message.tags:
                     f.write(
                         f'**Tags**: {", ".join(tag.value if hasattr(tag, "value") else str(tag) for tag in message.tags)}\n'
@@ -250,17 +338,39 @@ class UnifiedMessagingCore:
         sender: str,
         priority: UnifiedMessagePriority = UnifiedMessagePriority.REGULAR,
     ) -> bool:
-        """Broadcast message to all agents."""
-        message = UnifiedMessage(
-            content=content,
-            sender=sender,
-            recipient="ALL_AGENTS",
-            message_type=UnifiedMessageType.BROADCAST,
-            priority=priority,
-            tags=[UnifiedMessageTag.SYSTEM],
-        )
-
-        return self.send_message_object(message)
+        """Broadcast message to all agents.
+        
+        CRITICAL FIX: Expands "ALL_AGENTS" into individual messages for each agent.
+        This ensures broadcast messages are properly queued and delivered to all agents.
+        """
+        # Get list of all agents
+        agents = [
+            "Agent-1",
+            "Agent-2",
+            "Agent-3",
+            "Agent-4",
+            "Agent-5",
+            "Agent-6",
+            "Agent-7",
+            "Agent-8",
+        ]
+        
+        # Send individual message to each agent (ensures proper queue processing)
+        success_count = 0
+        for agent in agents:
+            message = UnifiedMessage(
+                content=content,
+                sender=sender,
+                recipient=agent,
+                message_type=UnifiedMessageType.BROADCAST,
+                priority=priority,
+                tags=[UnifiedMessageTag.SYSTEM],
+            )
+            
+            if self.send_message_object(message):
+                success_count += 1
+        
+        return success_count > 0
 
     def list_agents(self):
         """List all available agents."""

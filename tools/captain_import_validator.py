@@ -2,7 +2,30 @@
 """
 Import Validator - Detect Missing Imports Before Runtime
 Validates all imports in a file or directory to prevent runtime errors.
+
+⚠️ DEPRECATED: This tool has been migrated to tools_v2.
+Use 'python -m tools_v2.toolbelt refactor.validate_imports' instead.
+This file will be removed in future version.
+
+Migrated to: tools_v2/categories/import_fix_tools.py → ImportValidatorTool
+Registry: refactor.validate_imports
+
+Author: Agent-4 (Captain)
+Deprecated: 2025-01-27 (Agent-6 - V2 Tools Flattening)
 """
+
+import warnings
+
+warnings.warn(
+    "⚠️ DEPRECATED: This tool has been migrated to tools_v2. "
+    "Use 'python -m tools_v2.toolbelt refactor.validate_imports' instead. "
+    "This file will be removed in future version.",
+    DeprecationWarning,
+    stacklevel=2
+)
+
+# Legacy compatibility - delegate to tools_v2
+# For migration path, use: python -m tools_v2.toolbelt refactor.validate_imports
 
 import sys
 import ast
@@ -51,31 +74,52 @@ def validate_import(import_name: str) -> Tuple[bool, str]:
 
 def validate_file_imports(file_path: Path) -> dict:
     """Validate all imports in a file."""
-    imports = extract_imports(file_path)
-    results = {
-        'file': str(file_path),
-        'total_imports': len(imports),
-        'valid': [],
-        'invalid': []
-    }
-    
-    for import_name, line_no in imports:
-        is_valid, message = validate_import(import_name)
+    # Delegate to tools_v2 adapter if available
+    try:
+        from tools_v2.categories.import_fix_tools import ImportValidatorTool
         
-        if is_valid:
-            results['valid'].append({
-                'import': import_name,
-                'line': line_no,
-                'status': message
-            })
+        tool = ImportValidatorTool()
+        result = tool.execute({"path": str(file_path)}, None)
+        
+        if result.success:
+            broken = result.output.get("broken_imports", [])
+            if broken:
+                print(f"❌ {len(broken)} broken imports found in {file_path}")
+                for imp in broken[:5]:
+                    print(f"  - {imp.get('import')}: {imp.get('error')}")
+            else:
+                print(f"✅ All imports valid in {file_path}")
+            return result.output
         else:
-            results['invalid'].append({
-                'import': import_name,
-                'line': line_no,
-                'status': message
-            })
-    
-    return results
+            print(f"❌ Error: {result.error_message}")
+            return {"broken_imports": []}
+    except ImportError:
+        # Fallback to original implementation
+        imports = extract_imports(file_path)
+        results = {
+            'file': str(file_path),
+            'total_imports': len(imports),
+            'valid': [],
+            'invalid': []
+        }
+        
+        for import_name, line_no in imports:
+            is_valid, message = validate_import(import_name)
+            
+            if is_valid:
+                results['valid'].append({
+                    'import': import_name,
+                    'line': line_no,
+                    'status': message
+                })
+            else:
+                results['invalid'].append({
+                    'import': import_name,
+                    'line': line_no,
+                    'status': message
+                })
+        
+        return results
 
 
 def main():
@@ -86,6 +130,7 @@ def main():
         print("\nExamples:")
         print("  python captain_import_validator.py src/core/messaging_pyautogui.py")
         print("  python captain_import_validator.py src/services/")
+        print("\n⚠️  DEPRECATED: Use 'python -m tools_v2.toolbelt refactor.validate_imports' instead")
         return 1
     
     target = Path(sys.argv[1])
@@ -99,49 +144,23 @@ def main():
     if target.is_file():
         files_to_check.append(target)
     else:
-        files_to_check.extend(target.rglob("*.py"))
+        files_to_check = list(target.rglob("*.py"))
     
-    print(f"🔍 IMPORT VALIDATION")
-    print(f"=" * 60)
-    print(f"Target: {target}")
-    print(f"Files to check: {len(files_to_check)}")
-    print(f"=" * 60)
-    print()
+    print(f"\n🔍 Validating imports in {len(files_to_check)} file(s)...\n")
     
-    total_issues = 0
-    files_with_issues = 0
-    
+    total_invalid = 0
     for file_path in files_to_check:
         results = validate_file_imports(file_path)
-        
-        if results['invalid']:
-            files_with_issues += 1
-            print(f"\n⚠️  {file_path.relative_to(repo_root)}")
-            print(f"   Total imports: {results['total_imports']}")
-            print(f"   Valid: {len(results['valid'])}")
-            print(f"   Invalid: {len(results['invalid'])}")
-            print()
-            
-            for issue in results['invalid']:
-                total_issues += 1
-                print(f"   Line {issue['line']}: {issue['import']}")
-                print(f"      {issue['status']}")
-            print()
+        invalid = results.get('invalid', [])
+        total_invalid += len(invalid)
     
-    print(f"=" * 60)
-    print(f"📊 SUMMARY")
-    print(f"=" * 60)
-    print(f"Files checked: {len(files_to_check)}")
-    print(f"Files with issues: {files_with_issues}")
-    print(f"Total import issues: {total_issues}")
-    
-    if total_issues == 0:
-        print("\n✅ All imports are valid!")
+    if total_invalid == 0:
+        print(f"\n✅ All imports valid across {len(files_to_check)} files!")
         return 0
     else:
-        print(f"\n❌ Found {total_issues} import issues in {files_with_issues} files!")
+        print(f"\n❌ {total_invalid} broken imports found across {len(files_to_check)} files")
         return 1
+
 
 if __name__ == "__main__":
     sys.exit(main())
-

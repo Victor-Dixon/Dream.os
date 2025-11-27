@@ -1,0 +1,81 @@
+{
+  "total_repos": 75,
+  "analyzed_repos": 70,
+  "unknown_repos": [
+    {
+      "num": 14,
+      "name": "Unknown",
+      "analyzed": false
+    }
+  ],
+  "missing_names": [],
+  "duplicate_names": {
+    "machinelearningmodelmaker": [
+      2,
+      46
+    ],
+    "projectscanner": [
+      8,
+      49
+    ],
+    "bible-application": [
+      9,
+      13
+    ],
+    "troop": [
+      16,
+      60
+    ],
+    "lstmmodel_trainer": [
+      18,
+      55
+    ],
+    "freework": [
+      19,
+      71
+    ],
+    "fastapi": [
+      21,
+      34
+    ],
+    "langchain-google": [
+      23,
+      44
+    ],
+    "focusforge": [
+      24,
+      32
+    ],
+    "streamertools": [
+      25,
+      31
+    ],
+    "tbowtactics": [
+      26,
+      33
+    ],
+    "metuber": [
+      27,
+      42
+    ],
+    "dadudekc": [
+      29,
+      36
+    ],
+    "superpowered-ttrpg": [
+      30,
+      50
+    ],
+    "stocktwits-analyzer": [
+      63,
+      75
+    ]
+  },
+  "discrepancies": [
+    {
+      "repo_num": 10,
+      "issue": "Repo #10 marked as 'Thea' in master list but may be marked Unknown elsewhere",
+      "master_list_name": "Thea"
+    }
+  ]
+}

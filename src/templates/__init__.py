@@ -4,5 +4,5 @@
 from . import onboarding_roles
 
 __all__ = [
-    "onboarding_roles",
+    'onboarding_roles',
 ]

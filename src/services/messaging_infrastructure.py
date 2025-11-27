@@ -16,6 +16,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+from ..utils.swarm_time import format_swarm_timestamp, get_swarm_time_display
+
 import pyautogui
 
 from src.core.coordinate_loader import get_coordinate_loader
@@ -149,9 +151,9 @@ def create_messaging_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--priority",
         "-p",
-        choices=["regular", "urgent"],
+        choices=["normal", "regular", "urgent"],
         default="regular",
-        help="Message priority (default: regular)",
+        help="Message priority (default: regular). Accepts 'normal' or 'regular' (both are equivalent).",
     )
 
     parser.add_argument("--tags", "-t", nargs="+", help="Message tags for categorization")
@@ -257,7 +259,22 @@ def send_message_to_onboarding_coords(agent_id: str, message: str, timeout: int 
 
 
 class MessageCoordinator:
-    """Unified message coordination system."""
+    """Unified message coordination system - ALL messages route through queue."""
+
+    _queue = None
+
+    @classmethod
+    def _get_queue(cls):
+        """Lazy initialization of message queue."""
+        if cls._queue is None:
+            try:
+                from ..core.message_queue import MessageQueue
+                cls._queue = MessageQueue()
+                logger.info("✅ MessageCoordinator initialized with message queue")
+            except Exception as e:
+                logger.error(f"⚠️ Failed to initialize message queue: {e}")
+                cls._queue = None
+        return cls._queue
 
     @staticmethod
     def send_to_agent(
@@ -267,40 +284,126 @@ class MessageCoordinator:
         use_pyautogui=False,
         stalled: bool = False,
     ):
+        """
+        Send message to agent via message queue (prevents race conditions).
+        
+        CRITICAL: All messages route through queue for proper PyAutoGUI orchestration.
+        Queue processor handles keyboard locks to prevent concurrent operations.
+        """
         try:
-            # Pass stalled flag in metadata for Ctrl+Enter behavior
-            metadata = {"stalled": stalled} if stalled else {}
-            return send_message(
-                content=message,
-                sender="CAPTAIN",
-                recipient=agent,
-                message_type=UnifiedMessageType.CAPTAIN_TO_AGENT,
-                priority=priority,
-                tags=[UnifiedMessageTag.SYSTEM],
-                metadata=metadata,
-            )
-        except Exception:
+            queue = MessageCoordinator._get_queue()
+            
+            # If queue available, enqueue for sequential processing
+            if queue:
+                # Pass stalled flag in metadata for Ctrl+Enter behavior
+                metadata = {
+                    "stalled": stalled,
+                    "use_pyautogui": use_pyautogui,
+                }
+                
+                queue_id = queue.enqueue(
+                    message={
+                        "type": "agent_message",
+                        "sender": "CAPTAIN",
+                        "recipient": agent,
+                        "content": message,
+                        "priority": priority.value if hasattr(priority, "value") else str(priority),
+                        "message_type": UnifiedMessageType.CAPTAIN_TO_AGENT.value,
+                        "tags": [UnifiedMessageTag.SYSTEM.value],
+                        "metadata": metadata,
+                    }
+                )
+                
+                logger.info(
+                    f"✅ Message queued for {agent} (ID: {queue_id}): {message[:50]}..."
+                )
+                return True
+            else:
+                # Fallback to direct send if queue unavailable (should not happen in production)
+                logger.warning("⚠️ Queue unavailable, falling back to direct send")
+                metadata = {"stalled": stalled} if stalled else {}
+                return send_message(
+                    content=message,
+                    sender="CAPTAIN",
+                    recipient=agent,
+                    message_type=UnifiedMessageType.CAPTAIN_TO_AGENT,
+                    priority=priority,
+                    tags=[UnifiedMessageTag.SYSTEM],
+                    metadata=metadata,
+                )
+        except Exception as e:
+            logger.error(f"Error sending message to {agent}: {e}")
             return False
 
     @staticmethod
     def broadcast_to_all(
         message: str, priority=UnifiedMessagePriority.REGULAR, stalled: bool = False
     ):
-        # Pass stalled flag in metadata for Ctrl+Enter behavior
-        metadata = {"stalled": stalled} if stalled else {}
-        return sum(
-            1
-            for agent in SWARM_AGENTS
-            if send_message(
-                content=message,
-                sender="CAPTAIN",
-                recipient=agent,
-                message_type=UnifiedMessageType.BROADCAST,
-                priority=priority,
-                tags=[UnifiedMessageTag.SYSTEM, UnifiedMessageTag.COORDINATION],
-                metadata=metadata,
-            )
-        )
+        """
+        Broadcast message to all agents via message queue.
+        
+        CRITICAL: All messages route through queue for proper PyAutoGUI orchestration.
+        Queue processor ensures sequential delivery with keyboard locks.
+        """
+        try:
+            queue = MessageCoordinator._get_queue()
+            
+            # If queue available, enqueue all messages for sequential processing
+            if queue:
+                metadata = {
+                    "stalled": stalled,
+                    "use_pyautogui": True,  # Always use PyAutoGUI for broadcasts
+                }
+                
+                priority_value = priority.value if hasattr(priority, "value") else str(priority)
+                
+                # Enqueue messages for all agents
+                queue_ids = []
+                for agent in SWARM_AGENTS:
+                    queue_id = queue.enqueue(
+                        message={
+                            "type": "agent_message",
+                            "sender": "CAPTAIN",
+                            "recipient": agent,
+                            "content": message,
+                            "priority": priority_value,
+                            "message_type": UnifiedMessageType.BROADCAST.value,
+                            "tags": [
+                                UnifiedMessageTag.SYSTEM.value,
+                                UnifiedMessageTag.COORDINATION.value,
+                            ],
+                            "metadata": metadata,
+                        }
+                    )
+                    queue_ids.append(queue_id)
+                
+                logger.info(
+                    f"✅ Broadcast queued for {len(queue_ids)} agents: {message[:50]}..."
+                )
+                return len(queue_ids)
+            else:
+                # Fallback to direct send with keyboard lock if queue unavailable
+                logger.warning("⚠️ Queue unavailable, falling back to direct broadcast")
+                from ..core.keyboard_control_lock import keyboard_control
+                
+                with keyboard_control("broadcast_all_agents"):
+                    metadata = {"stalled": stalled} if stalled else {}
+                    return sum(
+                        1
+                        for agent in SWARM_AGENTS
+                        if send_message(
+                            content=message,
+                            sender="CAPTAIN",
+                            recipient=agent,
+                            message_type=UnifiedMessageType.BROADCAST,
+                            priority=priority,
+                            tags=[UnifiedMessageTag.SYSTEM, UnifiedMessageTag.COORDINATION],
+                            metadata=metadata,
+                        )
+                    )
+        except Exception as e:
+            logger.error(f"Error broadcasting message: {e}")
+            return 0
 
     @staticmethod
     def coordinate_survey():
@@ -320,7 +423,7 @@ class MessageCoordinator:
         message = CONSOLIDATION_MESSAGE_TEMPLATE.format(
             batch=batch or "DEFAULT",
             status=status or "IN_PROGRESS",
-            timestamp=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            timestamp=get_swarm_time_display(),
         )
         success_count = MessageCoordinator.broadcast_to_all(message, UnifiedMessagePriority.REGULAR)
         if success_count > 0:
@@ -339,9 +442,12 @@ def handle_message(args, parser) -> int:
             parser.print_help()
             return 1
 
+        # Normalize "normal" to "regular" for consistency
+        normalized_priority = "regular" if args.priority == "normal" else args.priority
+        
         priority = (
             UnifiedMessagePriority.URGENT
-            if args.priority == "urgent"
+            if normalized_priority == "urgent"
             else UnifiedMessagePriority.REGULAR
         )
 
@@ -498,30 +604,121 @@ def handle_leaderboard() -> int:
 
 
 class ConsolidatedMessagingService:
-    """Consolidated messaging service adapter for Discord bot."""
+    """
+    Consolidated messaging service adapter for Discord bot.
+    
+    CRITICAL UPDATE (2025-01-27): Uses message queue for synchronization
+    Prevents race conditions when Discord + computer + agents send messages.
+    All messages go through queue for sequential delivery with global lock.
+    """
 
     def __init__(self):
         """Initialize messaging service."""
         self.project_root = Path(__file__).parent.parent.parent
         self.messaging_cli = self.project_root / "src" / "services" / "messaging_cli.py"
-        logger.info("ConsolidatedMessagingService initialized")
+        
+        # CRITICAL: Initialize message queue for synchronization
+        try:
+            from src.core.message_queue import MessageQueue
+            
+            self.queue = MessageQueue()
+            logger.info("✅ ConsolidatedMessagingService initialized with message queue")
+        except Exception as e:
+            logger.error(f"⚠️ Failed to initialize message queue: {e}")
+            self.queue = None
 
     def send_message(
-        self, agent: str, message: str, priority: str = "regular", use_pyautogui: bool = True
+        self, 
+        agent: str, 
+        message: str, 
+        priority: str = "regular", 
+        use_pyautogui: bool = True,
+        wait_for_delivery: bool = False,
+        timeout: float = 30.0,
+        discord_user_id: str | None = None,
+        stalled: bool = False
     ) -> dict[str, Any]:
         """
-        Send message to agent via messaging_cli.py subprocess.
+        Send message to agent via message queue (synchronized delivery).
+        
+        CRITICAL: All messages go through queue to prevent race conditions.
+        Discord + computer + agents synchronized through global keyboard lock.
 
         Args:
             agent: Target agent ID (e.g., "Agent-1")
             message: Message content
             priority: Message priority ("regular" or "urgent")
-            use_pyautogui: Whether to use PyAutoGUI delivery
+            use_pyautogui: Whether to use PyAutoGUI delivery (default: True)
+            wait_for_delivery: Wait for message to be delivered before returning (default: False)
+            timeout: Maximum time to wait for delivery in seconds (default: 30.0)
+            discord_user_id: Discord user ID for username resolution (optional)
 
         Returns:
-            Dictionary with success status and message
+            Dictionary with success status and queue ID
         """
         try:
+            # CRITICAL: Use message queue for PyAutoGUI delivery (synchronized delivery)
+            # This ensures sequential delivery with global keyboard lock
+            if self.queue and use_pyautogui:
+                # Enqueue message for sequential processing
+                queue_id = self.queue.enqueue(
+                    message={
+                        "type": "agent_message",
+                        "sender": self._resolve_discord_sender(discord_user_id) if discord_user_id else "DISCORD",
+                        "discord_username": self._get_discord_username(discord_user_id) if discord_user_id else None,
+                        "discord_user_id": discord_user_id if discord_user_id else None,
+                        "recipient": agent,
+                        "content": message,
+                        "priority": priority,
+                        "source": "discord",
+                        "tags": [],
+                        "metadata": {
+                            "source": "discord",
+                            "sender": self._resolve_discord_sender(discord_user_id) if discord_user_id else "DISCORD",
+                        "discord_username": self._get_discord_username(discord_user_id) if discord_user_id else None,
+                        "discord_user_id": discord_user_id if discord_user_id else None,
+                            "use_pyautogui": True,
+                            "stalled": stalled,
+                        },
+                    }
+                )
+                
+                logger.info(
+                    f"✅ Message queued for {agent} (ID: {queue_id}): {message[:50]}..."
+                )
+                
+                # CRITICAL: Wait for delivery if requested (blocking mode)
+                if wait_for_delivery:
+                    logger.debug(f"⏳ Waiting for message {queue_id} delivery...")
+                    delivered = self.queue.wait_for_delivery(queue_id, timeout=timeout)
+                    if delivered:
+                        logger.info(f"✅ Message {queue_id} delivered successfully")
+                        return {
+                            "success": True,
+                            "message": f"Message delivered to {agent}",
+                            "agent": agent,
+                            "queue_id": queue_id,
+                            "delivered": True,
+                        }
+                    else:
+                        logger.warning(f"⚠️ Message {queue_id} delivery failed or timeout")
+                        return {
+                            "success": False,
+                            "message": f"Message delivery failed or timeout for {agent}",
+                            "agent": agent,
+                            "queue_id": queue_id,
+                            "delivered": False,
+                        }
+                
+                # Non-blocking: return immediately after enqueue
+                return {
+                    "success": True,
+                    "message": f"Message queued for {agent}",
+                    "agent": agent,
+                    "queue_id": queue_id,
+                }
+            
+            # Fallback to subprocess if queue not available
             cmd = [
                 "python",
                 str(self.messaging_cli),
@@ -565,6 +762,9 @@ class ConsolidatedMessagingService:
     def broadcast_message(self, message: str, priority: str = "regular") -> dict[str, Any]:
         """
         Broadcast message to all agents.
+        
+        CRITICAL: Wraps entire operation in keyboard lock to prevent conflicts.
+        All 8 messages must complete before other operations can proceed.
 
         Args:
             message: Message content
@@ -573,6 +773,8 @@ class ConsolidatedMessagingService:
         Returns:
             Dictionary with success status
         """
+        from ..core.keyboard_control_lock import keyboard_control
+        
         agents = [
             "Agent-1",
             "Agent-2",
@@ -584,18 +786,74 @@ class ConsolidatedMessagingService:
             "Agent-8",
         ]
 
-        results = []
-        for agent in agents:
-            result = self.send_message(agent, message, priority, use_pyautogui=True)
-            results.append(result)
+        # CRITICAL: Wrap entire broadcast in keyboard lock
+        # Prevents Discord/other sends during 8-message operation
+        # Also wait for each message to be delivered before next one
+        with keyboard_control("broadcast_operation"):
+            results = []
+            for agent in agents:
+                # CRITICAL: Wait for each message to be delivered before sending next
+                # This ensures proper sequential delivery even within the broadcast operation
+                result = self.send_message(
+                    agent, 
+                    message, 
+                    priority, 
+                    use_pyautogui=True,
+                    wait_for_delivery=True,  # Block until delivered
+                    timeout=30.0  # 30 second timeout per message
+                )
+                results.append(result)
+                
+                # Small delay between agents for stability
+                import time
+                time.sleep(0.5)
 
-        success_count = sum(1 for r in results if r.get("success"))
+            success_count = sum(1 for r in results if r.get("success"))
+            delivered_count = sum(1 for r in results if r.get("delivered", False))
 
-        return {
-            "success": success_count > 0,
-            "message": f"Broadcast to {success_count}/{len(agents)} agents",
-            "results": results,
-        }
+            logger.info(
+                f"✅ Broadcast complete: {success_count}/{len(agents)} queued, "
+                f"{delivered_count}/{len(agents)} delivered "
+                f"(locked during entire operation to prevent conflicts)"
+            )
+            
+            return {
+                "success": success_count > 0,
+                "message": f"Broadcast to {success_count}/{len(agents)} agents ({delivered_count} delivered)",
+                "results": results,
+            }
+
+    def _resolve_discord_sender(self, discord_user_id: str | None) -> str:
+        """
+        Resolve Discord user ID to sender name.
+        
+        Args:
+            discord_user_id: Discord user ID
+            
+        Returns:
+            Sender name string
+        """
+        if not discord_user_id:
+            return "DISCORD"
+        # For now, return a simple identifier
+        # In production, this could resolve to actual Discord username
+        return f"DISCORD-{discord_user_id[:8]}"
+
+    def _get_discord_username(self, discord_user_id: str | None) -> str | None:
+        """
+        Get Discord username from user ID.
+        
+        Args:
+            discord_user_id: Discord user ID
+            
+        Returns:
+            Username string or None
+        """
+        if not discord_user_id:
+            return None
+        # For now, return None
+        # In production, this could resolve to actual Discord username via API
+        return None
 
 
 # Discord integration adapter

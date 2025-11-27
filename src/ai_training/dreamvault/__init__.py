@@ -1,18 +1,14 @@
-"""
-DreamVault - AI Training & Memory Intelligence System.
+# AUTO-GENERATED __init__.py
+# DO NOT EDIT MANUALLY - changes may be overwritten
 
-V2 Compliance: Ported from DreamVault repository
-Author: Agent-7 - Repository Cloning Specialist
-License: MIT
-"""
-
-# Schema module - import full module, not specific class
+from . import config
+from . import database
+from . import runner
 from . import schema
-from .config import Config
-from .database import DatabaseConnection as Database
 
 __all__ = [
-    "Config",
-    "Database",
-    "schema",
+    'config',
+    'database',
+    'runner',
+    'schema',
 ]

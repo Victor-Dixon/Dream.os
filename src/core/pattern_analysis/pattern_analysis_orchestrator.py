@@ -11,7 +11,7 @@ License: MIT
 
 from typing import Any
 
-from .pattern_analysis_engine import PatternAnalysisEngine
+from ..analytics.intelligence.pattern_analysis_engine import PatternAnalysisEngine
 from .pattern_analysis_models import (
     MissionContext,
     MissionPattern,

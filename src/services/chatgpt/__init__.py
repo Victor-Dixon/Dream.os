@@ -1,25 +1,24 @@
-"""
-ChatGPT Integration - V2 Compliant
-==================================
+# AUTO-GENERATED __init__.py
+# DO NOT EDIT MANUALLY - changes may be overwritten
 
-Browser automation for ChatGPT interaction and conversation extraction.
-Extends V2's existing browser infrastructure with ChatGPT-specific capabilities.
-
-V2 Compliance: All files ≤400 lines, SOLID principles, comprehensive error handling.
-
-Author: Agent-1 - Browser Automation Specialist
-License: MIT
-"""
-
-from .navigator import ChatGPTNavigator
-from .session import BrowserSessionManager
-from .extractor import ConversationExtractor
+from . import cli
+from . import extractor
+from . import extractor_deprecated
+from . import extractor_message_parser
+from . import extractor_storage
+from . import navigator
+from . import navigator_messaging
+from . import session
+from . import session_persistence
 
 __all__ = [
-    'ChatGPTNavigator',
-    'BrowserSessionManager',
-    'ConversationExtractor',
+    'cli',
+    'extractor',
+    'extractor_deprecated',
+    'extractor_message_parser',
+    'extractor_storage',
+    'navigator',
+    'navigator_messaging',
+    'session',
+    'session_persistence',
 ]
-
-__version__ = "2.0.0"
-__author__ = "Agent-1 - Browser Automation Specialist"

@@ -3,8 +3,10 @@
 
 from . import anomaly_detector
 from . import pattern_extractor
+from . import trend_analyzer
 
 __all__ = [
     'anomaly_detector',
     'pattern_extractor',
+    'trend_analyzer',
 ]

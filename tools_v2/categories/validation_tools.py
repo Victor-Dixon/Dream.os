@@ -287,3 +287,74 @@ class IntegrityValidatorTool(IToolAdapter):
                 exit_code=1,
                 error_message=str(e)
             )
+
+
+class SSOTValidatorTool(IToolAdapter):
+    """Validate SSOT (Single Source of Truth) - Check documentation-code alignment."""
+
+    def get_spec(self) -> ToolSpec:
+        return ToolSpec(
+            name="validation.ssot",
+            version="1.0.0",
+            category="validation",
+            summary="Validate SSOT - Check documentation-code alignment",
+            required_params=["code", "docs"],
+            optional_params={"verbose": False}
+        )
+
+    def validate(self, params: dict) -> tuple[bool, list[str]]:
+        spec = self.get_spec()
+        return spec.validate_params(params)
+
+    def execute(self, params: dict, context: dict | None = None) -> ToolResult:
+        """Execute SSOT validation."""
+        try:
+            import sys
+            from pathlib import Path
+
+            # Add tools to path
+            tools_path = Path(__file__).parent.parent.parent / "tools"
+            sys.path.insert(0, str(tools_path))
+
+            # Import SSOT validator
+            from ssot_validator import validate_ssot
+
+            # Get parameters
+            code_file = params["code"]
+            doc_files = params["docs"] if isinstance(params["docs"], list) else [params["docs"]]
+            verbose = params.get("verbose", False)
+
+            # Validate SSOT
+            results = validate_ssot(code_file, doc_files)
+
+            # Convert sets to lists for JSON serialization
+            output = {
+                "code_file": code_file,
+                "doc_files": doc_files,
+                "code_flags": list(results["code_flags"]),
+                "doc_flags": list(results["doc_flags"]),
+                "aligned": list(results["aligned"]),
+                "undocumented": list(results["undocumented"]),
+                "nonexistent": list(results["nonexistent"]),
+                "alignment_percentage": (
+                    len(results["aligned"]) / max(len(results["code_flags"]), len(results["doc_flags"])) * 100
+                    if max(len(results["code_flags"]), len(results["doc_flags"])) > 0
+                    else 100
+                ),
+                "ssot_violation": len(results["nonexistent"]) > 0,
+                "status": "violation" if results["nonexistent"] else ("incomplete" if results["undocumented"] else "aligned")
+            }
+
+            return ToolResult(
+                success=len(results["nonexistent"]) == 0,
+                output=output,
+                exit_code=1 if results["nonexistent"] else 0,
+            )
+
+        except Exception as e:
+            return ToolResult(
+                success=False,
+                output=None,
+                exit_code=1,
+                error_message=str(e)
+            )

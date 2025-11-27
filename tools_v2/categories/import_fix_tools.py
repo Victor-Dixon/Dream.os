@@ -259,6 +259,84 @@ class QuickLineCountTool(IToolAdapter):
             raise ToolExecutionError(str(e), tool_name="refactor.quick_line_count")
 
 
+class PublicAPIImportValidatorTool(IToolAdapter):
+    """Validate public API imports from modules (checks __all__ exports)."""
+
+    def get_spec(self) -> ToolSpec:
+        return ToolSpec(
+            name="integration.validate_public_api",
+            version="1.0.0",
+            category="integration",
+            summary="Validate public API imports from modules (checks __all__ exports)",
+            required_params=[],
+            optional_params={"module": None, "directory": None},
+        )
+
+    def validate(self, params: dict) -> tuple[bool, list[str]]:
+        # Either module or directory must be provided
+        if not params.get("module") and not params.get("directory"):
+            return False, ["Either 'module' or 'directory' must be provided"]
+        return True, []
+
+    def execute(self, params: dict, context: dict | None = None) -> ToolResult:
+        """Execute public API import validation."""
+        try:
+            import sys
+            from pathlib import Path
+
+            # Add tools to path
+            tools_path = Path(__file__).parent.parent.parent / "tools"
+            sys.path.insert(0, str(tools_path))
+
+            # Import validate_imports functions
+            from validate_imports import validate_module_imports, validate_directory
+
+            results = {
+                "modules_tested": [],
+                "modules_passed": [],
+                "modules_failed": [],
+                "total": 0,
+                "passed": 0,
+                "failed": 0,
+            }
+
+            all_success = True
+
+            # Validate individual modules
+            if params.get("module"):
+                modules = params["module"] if isinstance(params["module"], list) else [params["module"]]
+                for module_path in modules:
+                    success, errors = validate_module_imports(module_path)
+                    results["modules_tested"].append(module_path)
+                    results["total"] += 1
+                    if success:
+                        results["modules_passed"].append(module_path)
+                        results["passed"] += 1
+                    else:
+                        results["modules_failed"].append({"module": module_path, "errors": errors})
+                        results["failed"] += 1
+                        all_success = False
+
+            # Validate directory
+            if params.get("directory"):
+                success, total, failed = validate_directory(params["directory"])
+                results["total"] += total
+                results["passed"] += (total - failed)
+                results["failed"] += failed
+                if not success:
+                    all_success = False
+
+            return ToolResult(
+                success=all_success,
+                output=results,
+                exit_code=0 if all_success else 1,
+            )
+
+        except Exception as e:
+            logger.error(f"Error in public API validation: {e}")
+            raise ToolExecutionError(str(e), tool_name="integration.validate_public_api")
+
+
 class ImportChainValidatorTool(IToolAdapter):
     """Validate import chains and identify missing modules."""
 

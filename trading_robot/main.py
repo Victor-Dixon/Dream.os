@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-Alpaca Trading Robot - Main Entry Point
+Multi-Broker Trading Robot - Main Entry Point
+Supports Alpaca and Robinhood brokers
 """
 import asyncio
 import signal
@@ -27,9 +28,10 @@ class TradingRobot:
     async def initialize(self):
         """Initialize the trading robot components"""
         try:
-            logger.info("🚀 Initializing Alpaca Trading Robot...")
+            broker_name = config.broker.upper()
+            logger.info(f"🚀 Initializing {broker_name} Trading Robot...")
 
-            # Initialize trading engine
+            # Initialize trading engine (uses broker factory)
             self.trading_engine = TradingEngine()
             await self.trading_engine.initialize()
 
@@ -47,7 +49,8 @@ class TradingRobot:
     async def start(self):
         """Start the trading robot"""
         try:
-            logger.info("🎯 Starting Alpaca Trading Robot...")
+            broker_name = config.broker.upper()
+            logger.info(f"🎯 Starting {broker_name} Trading Robot...")
 
             # Start trading engine
             await self.trading_engine.start()
@@ -66,7 +69,8 @@ class TradingRobot:
     async def stop(self):
         """Stop the trading robot"""
         try:
-            logger.info("🛑 Stopping Alpaca Trading Robot...")
+            broker_name = config.broker.upper()
+            logger.info(f"🛑 Stopping {broker_name} Trading Robot...")
 
             self.running = False
 

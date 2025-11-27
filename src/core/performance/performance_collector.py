@@ -9,7 +9,40 @@ Author: Agent-8 (SSOT Maintenance & System Integration Specialist)
 License: MIT
 """
 
+from collections import deque
 from datetime import datetime
+from enum import Enum
+from typing import Any, Dict, List, Optional
+import threading
+
+
+class MetricType(Enum):
+    """Metric type enumeration."""
+    GAUGE = "gauge"
+    COUNTER = "counter"
+    TIMER = "timer"
+    HISTOGRAM = "histogram"
+
+
+class PerformanceMetric:
+    """Performance metric data structure."""
+    
+    def __init__(
+        self,
+        name: str,
+        metric_type: MetricType,
+        value: float,
+        timestamp: datetime,
+        tags: Dict[str, str] = None,
+        metadata: Dict[str, Any] = None,
+    ):
+        """Initialize performance metric."""
+        self.name = name
+        self.metric_type = metric_type
+        self.value = value
+        self.timestamp = timestamp
+        self.tags = tags or {}
+        self.metadata = metadata or {}
 
 
 class PerformanceCollector:

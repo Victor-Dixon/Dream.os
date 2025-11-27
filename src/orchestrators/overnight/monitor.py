@@ -180,9 +180,25 @@ class ProgressMonitor:
         stalled_agents = []
         current_time = time.time()
         
-        for agent_id, last_activity in self.agent_activity.items():
-            if current_time - last_activity > self.stall_timeout:
+        # Enhanced: Use comprehensive activity detection (ALWAYS - Agent-1 proposal)
+        try:
+            from .enhanced_agent_activity_detector import EnhancedAgentActivityDetector
+            
+            detector = EnhancedAgentActivityDetector()
+            stale_agents = detector.get_stale_agents(max_age_seconds=self.stall_timeout)
+            
+            # Extract agent IDs from stale agents
+            for agent_id, age in stale_agents:
                 stalled_agents.append(agent_id)
+                self.logger.warning(
+                    f"Agent {agent_id} stalled (no activity for {age:.0f}s > {self.stall_timeout}s)"
+                )
+        except Exception as e:
+            # Fallback only on actual errors (not ImportError - detector should always be available)
+            self.logger.error(f"Enhanced activity detector error: {e}, using fallback")
+            for agent_id, last_activity in self.agent_activity.items():
+                if current_time - last_activity > self.stall_timeout:
+                    stalled_agents.append(agent_id)
         
         if stalled_agents:
             self.logger.warning(f"Detected stalled agents: {stalled_agents}")
@@ -261,30 +277,71 @@ class ProgressMonitor:
         }
 
     def get_agent_status(self) -> Dict[str, Any]:
-        """Get status of all agents."""
+        """Get status of all agents with enhanced activity detection."""
         current_time = time.time()
         agent_status = {}
         
-        for agent_id in self.agent_activity:
-            last_activity = self.agent_activity[agent_id]
-            current_task = self.agent_tasks[agent_id]
+        # Enhanced: Use comprehensive activity detection (ALWAYS - Agent-1 proposal)
+        try:
+            from .enhanced_agent_activity_detector import EnhancedAgentActivityDetector
             
-            # Determine agent status
-            time_since_activity = current_time - last_activity
+            detector = EnhancedAgentActivityDetector()
+            all_activity = detector.get_all_agents_activity()
             
-            if time_since_activity > self.stall_timeout:
-                status = 'stalled'
-            elif current_task:
-                status = 'busy'
-            else:
-                status = 'idle'
-            
-            agent_status[agent_id] = {
-                'status': status,
-                'last_activity': last_activity,
-                'time_since_activity': time_since_activity,
-                'current_task': current_task,
-            }
+            for agent_id in self.agent_activity:
+                current_task = self.agent_tasks[agent_id]
+                
+                # Get enhanced activity data
+                activity_data = all_activity.get(agent_id, {})
+                latest_activity = activity_data.get("latest_activity")
+                activity_sources = activity_data.get("activity_sources", [])
+                
+                # Use enhanced activity if available, otherwise fallback
+                if latest_activity:
+                    last_activity = latest_activity
+                    time_since_activity = current_time - last_activity
+                else:
+                    last_activity = self.agent_activity[agent_id]
+                    time_since_activity = current_time - last_activity
+                
+                # Determine agent status
+                if time_since_activity > self.stall_timeout:
+                    status = 'stalled'
+                elif current_task:
+                    status = 'busy'
+                else:
+                    status = 'idle'
+                
+                agent_status[agent_id] = {
+                    'status': status,
+                    'last_activity': last_activity,
+                    'time_since_activity': time_since_activity,
+                    'current_task': current_task,
+                    'activity_sources': activity_sources,  # NEW: Show activity sources
+                    'activity_count': len(activity_sources),
+                }
+        except Exception as e:
+            # Fallback only on actual errors (not ImportError - detector should always be available)
+            self.logger.error(f"Enhanced activity detector error: {e}, using fallback")
+            for agent_id in self.agent_activity:
+                last_activity = self.agent_activity[agent_id]
+                current_task = self.agent_tasks[agent_id]
+                
+                time_since_activity = current_time - last_activity
+                
+                if time_since_activity > self.stall_timeout:
+                    status = 'stalled'
+                elif current_task:
+                    status = 'busy'
+                else:
+                    status = 'idle'
+                
+                agent_status[agent_id] = {
+                    'status': status,
+                    'last_activity': last_activity,
+                    'time_since_activity': time_since_activity,
+                    'current_task': current_task,
+                }
         
         return agent_status
 
@@ -320,3 +377,45 @@ class ProgressMonitor:
             "current_cycle": self.current_cycle,
             "tracked_agents": len(self.agent_activity),
         }
+
+    async def trigger_recovery(self) -> Dict[str, Any]:
+        """
+        Trigger recovery actions for stalled agents.
+        
+        This method allows the monitor to act independently,
+        not just detect stalled agents.
+        
+        Returns:
+            Dict with recovery results
+        """
+        results = {
+            "stalled_agents": [],
+            "recovery_triggered": False,
+            "errors": [],
+        }
+        
+        try:
+            # Get stalled agents
+            stalled_agents = await self.get_stalled_agents()
+            results["stalled_agents"] = stalled_agents
+            
+            if not stalled_agents:
+                self.logger.info("✅ No stalled agents - recovery not needed")
+                return results
+            
+            # Import recovery system
+            from .recovery import RecoverySystem
+            
+            # Initialize and trigger recovery
+            recovery = RecoverySystem(self.config)
+            await recovery.initialize()
+            await recovery.handle_stalled_agents(stalled_agents)
+            
+            results["recovery_triggered"] = True
+            self.logger.info(f"✅ Recovery triggered for {len(stalled_agents)} stalled agents")
+            
+        except Exception as e:
+            self.logger.error(f"❌ Recovery trigger failed: {e}", exc_info=True)
+            results["errors"].append(str(e))
+        
+        return results

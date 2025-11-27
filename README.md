@@ -1,6 +1,8 @@
 # 🚀 **AutoDream OS - Agent Cellphone V2**
 **WE. ARE. SWARM.**
 
+> **Self-optimizing operating system for creators and architects. Converges workflows, automates execution, scales systems in real time. Modular, adaptive, and autonomous—Dream.OS evolves with you.**
+
 ## 🐝 **What "WE ARE SWARM" Means**
 
 **"WE ARE SWARM"** refers to our **Cursor IDE Automation System** where 8 autonomous agents are positioned at specific coordinates across multiple monitors in the Cursor IDE. This is a **physical automation system** that enables real-time coordination between AI agents through automated mouse and keyboard interactions.

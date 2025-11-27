@@ -81,7 +81,7 @@ lifecycle.end_cycle(commit=True)  # Auto-saves + commits
 - `next_actions`: What's planned for next cycle
 - Git commit with status.json
 
-### 2. CREATE DEVLOG (if significant work)
+### 2. CREATE & POST DEVLOG (AUTOMATIC - for all significant work)
 **Only if:** Major feature, bug fix, or milestone
 ```bash
 echo "# Agent-X Cycle N - [Topic]" > devlogs/$(date +%Y%m%d)_agent-x_topic.md
@@ -125,7 +125,8 @@ CYCLE END:
 [ ] Update completed_tasks
 [ ] Update next_actions
 [ ] Commit status.json to git
-[ ] Create devlog (if needed)
+[ ] Create devlog automatically (for all significant work)
+[ ] Post to Discord: `python tools/devlog_manager.py post --agent agent-X --file devlog.md`
 ```
 
 ---

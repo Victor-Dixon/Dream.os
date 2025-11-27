@@ -169,6 +169,20 @@ class RecoverySystem:
         try:
             self.logger.warning(f"Handling {len(stalled_agents)} stalled agents")
 
+            # Send Discord stall alerts (enhancement - Agent-2 - 2025-01-27)
+            try:
+                from .monitor_discord_alerts import send_stall_alert
+                from .enhanced_agent_activity_detector import EnhancedAgentActivityDetector
+                
+                detector = EnhancedAgentActivityDetector()
+                for agent_id in stalled_agents:
+                    # Get activity details for Discord alert
+                    activity_data = detector.detect_agent_activity(agent_id)
+                    stall_duration = time.time() - activity_data.get("latest_activity", time.time())
+                    send_stall_alert(agent_id, stall_duration, activity_data)
+            except Exception as discord_error:
+                self.logger.warning(f"Discord stall alerts failed: {discord_error}")
+
             for agent_id in stalled_agents:
                 await self._rescue_agent(agent_id)
 
@@ -218,7 +232,17 @@ class RecoverySystem:
         """Rescue a stalled or failing agent."""
         try:
             self.recovery_attempts[agent_id] = 0
+            
+            # Send rescue message
             await self.messaging.send_agent_rescue_message(agent_id)
+            
+            # Send Discord recovery alert (enhancement - Agent-2 - 2025-01-27)
+            try:
+                from .monitor_discord_alerts import send_recovery_alert
+                send_recovery_alert(agent_id, "succeeded", "Agent rescue completed")
+            except Exception as discord_error:
+                self.logger.warning(f"Discord recovery alert failed for {agent_id}: {discord_error}")
+            
             self.failure_history.append(
                 {
                     "type": "agent_rescue",
@@ -229,6 +253,13 @@ class RecoverySystem:
             self.logger.info(f"Agent rescue completed for {agent_id}")
         except Exception as e:
             self.logger.error(f"Agent rescue failed for {agent_id}: {e}")
+            
+            # Send Discord failure alert (enhancement - Agent-2 - 2025-01-27)
+            try:
+                from .monitor_discord_alerts import send_recovery_alert
+                send_recovery_alert(agent_id, "failed", f"Rescue failed: {str(e)}")
+            except Exception:
+                pass  # Don't fail on Discord alert failure
 
     async def _handle_health_issue(self, issue: str) -> None:
         """Handle a specific health issue."""

@@ -23,6 +23,58 @@
 📊 **STATUS UPDATES:** Must update status.json with timestamp every Captain prompt cycle
 ⏰ **CHECK-IN FREQUENCY:** Every time you are prompted or complete a task
 
+## ⏰ **TIME CHECKING SYSTEM - MANDATORY FOR ACCURATE TIMESTAMPS**
+
+**🚨 CRITICAL**: Always use the swarm time checking system to get accurate timestamps. File metadata can show incorrect creation dates, breaking chronological history.
+
+**How to Use**:
+```python
+from src.utils.swarm_time import get_swarm_time, format_swarm_timestamp_readable
+
+# Get accurate timestamp
+timestamp = format_swarm_timestamp_readable()  # "YYYY-MM-DD HH:MM:SS"
+
+# Use in status.json
+status["last_updated"] = format_swarm_timestamp_readable()
+
+# Use in devlogs
+devlog_date = format_swarm_timestamp_readable()
+```
+
+**When to Use**:
+- ✅ Devlog timestamps
+- ✅ Documentation dates
+- ✅ Status.json `last_updated` field
+- ✅ File creation timestamps
+- ✅ Message timestamps
+- ✅ Progress reports
+
+**Why**: Ensures true chronological history, swarm synchronization, and accurate metadata.
+
+## 📋 **SESSION TRANSITION & PASSDOWN:**
+
+### **🔄 When Transitioning Sessions:**
+1. **Read Previous Passdown**: Check `agent_workspaces/{agent_id}/passdown.json` for context from previous agent session
+2. **Cleanup Sweep**: Before starting work, perform cleanup sweep:
+   - Remove any temporary files you created during previous session
+   - Archive old devlogs if needed
+   - Clean up test files or temporary scripts
+   - Remove any `.pyc` files or `__pycache__` directories if created
+   - Check for any leftover temporary files in your workspace
+3. **Create New Passdown**: At session end, create `agent_workspaces/{agent_id}/passdown.json` with:
+   - Completed missions and tasks
+   - Critical learnings
+   - Files created/modified
+   - Bugs fixed
+   - Next agent should know items
+   - Recommendations for next session
+
+### **📄 Passdown Location:**
+- **File**: `agent_workspaces/{agent_id}/passdown.json`
+- **Purpose**: Handoff document for next agent session
+- **When to Read**: At the start of every new session (after checking inbox)
+- **When to Write**: At the end of every session (before transition)
+
 ## 🔄 **AGENT CYCLE SYSTEM - 8X EFFICIENCY SCALE:**
 
 ### **What is an Agent Cycle?**

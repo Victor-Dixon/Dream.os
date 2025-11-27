@@ -1,30 +1,26 @@
-"""
-OSRS Swarm Agents Integration
-==============================
+# AUTO-GENERATED __init__.py
+# DO NOT EDIT MANUALLY - changes may be overwritten
 
-Integration of Old School RuneScape (OSRS) swarm agent coordination
-and gaming integration capabilities.
-
-Modules:
-    - gaming_integration_core: Core gaming integration functionality
-    - osrs_agent_core: OSRS agent core capabilities
-    - swarm_coordinator: Multi-agent swarm coordination
-    - performance_validation: Performance monitoring and validation
-
-Usage:
-    from src.integrations.osrs import gaming_integration_core
-    from src.integrations.osrs import swarm_coordinator
-
-Features:
-    - Multi-agent swarm coordination
-    - Gaming session management
-    - Performance monitoring
-    - SOLID-compliant architecture
-"""
+from . import gaming_integration_core
+from . import osrs_agent_activities
+from . import osrs_agent_core
+from . import osrs_agent_messaging
+from . import osrs_coordination_handlers
+from . import osrs_role_activities
+from . import performance_validation
+from . import swarm_activity_planner
+from . import swarm_coordinator
+from . import swarm_strategic_planner
 
 __all__ = [
-    "gaming_integration_core",
-    "osrs_agent_core",
-    "swarm_coordinator",
-    "performance_validation",
+    'gaming_integration_core',
+    'osrs_agent_activities',
+    'osrs_agent_core',
+    'osrs_agent_messaging',
+    'osrs_coordination_handlers',
+    'osrs_role_activities',
+    'performance_validation',
+    'swarm_activity_planner',
+    'swarm_coordinator',
+    'swarm_strategic_planner',
 ]

@@ -1,0 +1,25 @@
+"""
+DEPRECATED: This file has been replaced by wordpress_manager.py
+=============================================================================
+
+This file is DEPRECATED as part of WordPress tools unification.
+All functionality has been merged into wordpress_manager.py.
+
+Migration:
+- Old: from wordpress_deployment_manager import WordPressDeploymentManager
+- New: from wordpress_manager import WordPressManager
+
+The unified tool provides:
+- Page creation and setup
+- File deployment
+- Database operations
+- Menu management
+- Content updates
+- WP-CLI commands
+
+All in one cohesive tool.
+
+Author: Agent-7 (Web Development Specialist)
+Date: 2025-11-26
+"""
+

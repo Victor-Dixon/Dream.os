@@ -3,6 +3,10 @@
 GitHub Repository ROI Calculator
 =================================
 
+⚠️ DEPRECATED: This tool has been migrated to tools_v2.
+Use: python -m tools_v2.toolbelt bi.roi.repo <repo_path>
+See: tools_v2/categories/bi_tools.py for the adapter.
+
 Calculate ROI for keeping vs archiving GitHub repositories.
 Part of GitHub Consolidation Strategy mission.
 

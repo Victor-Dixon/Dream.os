@@ -4,7 +4,7 @@ Messaging Handlers for Unified Messaging System
 """
 
 from src.core.messaging_core import UnifiedMessageType, broadcast_message, send_message
-from src.services.messaging_cli import MessageCoordinator
+from src.services.messaging_infrastructure import MessageCoordinator
 
 
 def handle_message(content: str, recipient: str, use_pyautogui: bool = False) -> bool:

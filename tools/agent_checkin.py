@@ -7,13 +7,40 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
-# Import unified utilities
-from src.core.unified_utilities import (
-    get_logger,
-    get_unified_utility,
-    get_unified_validator,
-    write_json,
-)
+# Import unified utilities with fallback
+try:
+    from src.utils.unified_utilities import (
+        get_logger,
+        get_unified_utility,
+    )
+except ImportError:
+    # Fallback if unified utilities not available
+    import logging
+    from pathlib import Path
+    
+    def get_logger(name: str):
+        return logging.getLogger(name)
+    
+    class UnifiedUtilityFallback:
+        Path = Path
+        def remove(self, path):
+            Path(path).unlink(missing_ok=True)
+    
+    def get_unified_utility():
+        return UnifiedUtilityFallback()
+
+# Fallback functions
+def get_unified_validator():
+    """Fallback validator."""
+    class Validator:
+        def raise_validation_error(self, msg):
+            raise ValueError(msg)
+    return Validator()
+
+def write_json(data, file_handle, **kwargs):
+    """Fallback JSON writer."""
+    import json
+    json.dump(data, file_handle, **kwargs)
 
 ROOT = get_unified_utility().Path(__file__).resolve().parents[1]
 RUNTIME = ROOT / "runtime"
@@ -85,7 +112,7 @@ def update_index(obj: dict[str, Any]) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser(description="Multi-agent check-in (append + index).")
     parser.add_argument("json", help="Path to JSON payload or '-' for stdin")
-    args = parser.get_unified_utility().parse_args()
+    args = parser.parse_args()
 
     ensure_dirs()
     payload = load_json_arg(args.json)

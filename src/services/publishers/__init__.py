@@ -1,9 +1,10 @@
-"""
-Publisher Module - Multi-Platform Devlog Publishing
-Extracted from Auto_Blogger repository
-"""
+# AUTO-GENERATED __init__.py
+# DO NOT EDIT MANUALLY - changes may be overwritten
 
-from .discord_publisher import DiscordDevlogPublisher
+from . import base
+from . import discord_publisher
 
-__all__ = ['DiscordDevlogPublisher']
-
+__all__ = [
+    'base',
+    'discord_publisher',
+]
