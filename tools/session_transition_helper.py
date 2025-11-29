@@ -1,249 +1,294 @@
 #!/usr/bin/env python3
-"""Session Transition Helper - Productivity Tool.
-================================================
+"""
+Session Transition Helper - Automates Session Transition Deliverables
+=====================================================================
 
-CLI tool to help agents complete session transition deliverables efficiently.
-Checks completion status, provides templates, and validates deliverables.
+This tool automates the creation of session transition deliverables:
+- passdown.json generation
+- Devlog creation
+- State report updates
+- Cycle planner task creation
+- Swarm Brain contributions
 
-V2 Compliance: <400 lines, type hints, documented
+USAGE:
+    python tools/session_transition_helper.py --agent Agent-8
+    python tools/session_transition_helper.py --agent Agent-8 --devlog-only
+    python tools/session_transition_helper.py --agent Agent-8 --checklist
+
 Author: Agent-8 (SSOT & System Integration Specialist)
-Date: 2025-11-23
+Date: 2025-11-27
 """
 
 import json
+import argparse
 from pathlib import Path
-from typing import Dict, List, Optional
 from datetime import datetime
-from enum import Enum
+from typing import Dict, List, Optional
+import sys
 
-
-class DeliverableStatus(Enum):
-    """Deliverable completion status."""
-    COMPLETE = "complete"
-    IN_PROGRESS = "in_progress"
-    PENDING = "pending"
-    NOT_STARTED = "not_started"
+PROJECT_ROOT = Path(__file__).parent.parent
+AGENT_WORKSPACES = PROJECT_ROOT / "agent_workspaces"
+SWARM_CYCLE_PLANNER = PROJECT_ROOT / "agent_workspaces" / "swarm_cycle_planner" / "cycles"
+DEVELOPMENT_LOGS = PROJECT_ROOT / "devlogs"
+SWARM_BRAIN = PROJECT_ROOT / "swarm_brain"
+STATE_REPORT = PROJECT_ROOT / "STATE_OF_THE_PROJECT_REPORT.md"
 
 
 class SessionTransitionHelper:
-    """Helper for session transition deliverables."""
+    """Helps agents complete session transition deliverables"""
     
-    REQUIRED_DELIVERABLES = [
-        "passdown",
-        "devlog",
-        "discord",
-        "swarm_brain",
-        "code_of_conduct",
-        "thread_review",
-        "state_report",
-        "cycle_planner",
-        "productivity_tool"
-    ]
-    
-    def __init__(self, agent_id: str, workspace_path: Optional[Path] = None):
-        """Initialize helper.
-        
-        Args:
-            agent_id: Agent identifier (e.g., "Agent-8")
-            workspace_path: Path to agent workspace (optional)
-        """
+    def __init__(self, agent_id: str):
         self.agent_id = agent_id
-        if workspace_path is None:
-            workspace_path = Path(f"agent_workspaces/{agent_id}")
-        self.workspace_path = Path(workspace_path)
-        self.status_file = self.workspace_path / "session_transition_status.json"
-        self.status: Dict[str, str] = {}
-        self.load_status()
+        self.agent_workspace = AGENT_WORKSPACES / agent_id
+        self.status_file = self.agent_workspace / "status.json"
+        self.passdown_file = self.agent_workspace / "passdown.json"
+        self.session_date = datetime.now().strftime("%Y-%m-%d")
+        
+    def load_status(self) -> Optional[Dict]:
+        """Load agent status file"""
+        try:
+            with open(self.status_file, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except FileNotFoundError:
+            print(f"⚠️ Status file not found: {self.status_file}")
+            return None
+        except json.JSONDecodeError as e:
+            print(f"❌ Error parsing status file: {e}")
+            return None
     
-    def load_status(self) -> None:
-        """Load transition status from file."""
-        if self.status_file.exists():
-            try:
-                with open(self.status_file, 'r', encoding='utf-8') as f:
-                    data = json.load(f)
-                    self.status = data.get('status', {})
-            except Exception:
-                self.status = {}
-        else:
-            self.status = {deliverable: DeliverableStatus.NOT_STARTED.value 
-                          for deliverable in self.REQUIRED_DELIVERABLES}
-    
-    def save_status(self) -> None:
-        """Save transition status to file."""
-        data = {
-            'agent_id': self.agent_id,
-            'last_updated': datetime.utcnow().isoformat(),
-            'status': self.status
-        }
-        with open(self.status_file, 'w', encoding='utf-8') as f:
-            json.dump(data, f, indent=2, ensure_ascii=False)
-    
-    def check_deliverable(self, deliverable: str) -> DeliverableStatus:
-        """Check if deliverable is complete.
-        
-        Args:
-            deliverable: Deliverable name
-            
-        Returns:
-            DeliverableStatus
-        """
-        if deliverable not in self.REQUIRED_DELIVERABLES:
-            return DeliverableStatus.NOT_STARTED
-        
-        # Check file existence
-        if deliverable == "passdown":
-            file_path = self.workspace_path / "passdown.json"
-        elif deliverable == "devlog":
-            devlog_dir = self.workspace_path / "devlogs"
-            if devlog_dir.exists():
-                devlogs = list(devlog_dir.glob("*.md"))
-                if devlogs:
-                    return DeliverableStatus.COMPLETE
-            return DeliverableStatus.NOT_STARTED
-        elif deliverable == "code_of_conduct":
-            file_path = self.workspace_path / f"code_of_conduct_review_{datetime.now().strftime('%Y-%m-%d')}.md"
-        elif deliverable == "state_report":
-            file_path = Path("STATE_OF_THE_PROJECT_REPORT.md")
-        else:
-            # For other deliverables, check status file
-            return DeliverableStatus(self.status.get(deliverable, DeliverableStatus.NOT_STARTED.value))
-        
-        if file_path.exists():
-            return DeliverableStatus.COMPLETE
-        return DeliverableStatus.NOT_STARTED
-    
-    def get_completion_summary(self) -> Dict[str, any]:
-        """Get completion summary.
-        
-        Returns:
-            Dictionary with completion statistics
-        """
-        statuses = {deliverable: self.check_deliverable(deliverable) 
-                   for deliverable in self.REQUIRED_DELIVERABLES}
-        
-        complete = sum(1 for s in statuses.values() if s == DeliverableStatus.COMPLETE)
-        total = len(self.REQUIRED_DELIVERABLES)
-        percentage = (complete / total * 100) if total > 0 else 0
-        
-        return {
-            'agent_id': self.agent_id,
-            'total_deliverables': total,
-            'complete': complete,
-            'in_progress': sum(1 for s in statuses.values() 
-                             if s == DeliverableStatus.IN_PROGRESS),
-            'pending': sum(1 for s in statuses.values() 
-                          if s == DeliverableStatus.PENDING),
-            'not_started': sum(1 for s in statuses.values() 
-                              if s == DeliverableStatus.NOT_STARTED),
-            'completion_percentage': percentage,
-            'status_by_deliverable': {k: v.value for k, v in statuses.items()}
-        }
-    
-    def mark_complete(self, deliverable: str) -> None:
-        """Mark deliverable as complete.
-        
-        Args:
-            deliverable: Deliverable name
-        """
-        if deliverable in self.REQUIRED_DELIVERABLES:
-            self.status[deliverable] = DeliverableStatus.COMPLETE.value
-            self.save_status()
-    
-    def get_template(self, deliverable: str) -> Optional[str]:
-        """Get template for deliverable.
-        
-        Args:
-            deliverable: Deliverable name
-            
-        Returns:
-            Template string or None
-        """
-        templates = {
-            "passdown": """{
-  "agent_id": "{agent_id}",
-  "session_date": "{date}",
-  "session_summary": "Brief summary",
-  "status": "SESSION TRANSITION COMPLETE",
-  "completed_tasks": [],
-  "key_insights": [],
-  "patterns_learned": [],
-  "recommendations": [],
-  "blockers": "NONE",
-  "next_session_priorities": [],
-  "gas_pipeline": {
-    "status": "ACTIVE",
-    "fuel_received": "",
-    "fuel_provided": ""
-  }
-}""",
-            "devlog": """# Agent-{agent_id} Devlog: Session Title
+    def generate_passdown_checklist(self) -> str:
+        """Generate checklist for session transition deliverables"""
+        checklist = f"""
+# 🔄 Session Transition Checklist for {self.agent_id}
 
-**Date**: {date}
-**Agent**: {agent_id}
-**Session Type**: [Type]
+**Date**: {self.session_date}
 
-## ✅ Accomplishments
-- 
+## ✅ Required Deliverables
 
-## 🧠 Challenges & Solutions
-- 
+### 1️⃣ Create Passdown (passdown.json)
+- [ ] Update status with deliverables
+- [ ] Document next actions
+- [ ] Record gas pipeline status
+- [ ] List blockers
+- [ ] Document achievements and learnings
 
-## 📚 Learnings
-- 
+### 2️⃣ Write Devlog Entry
+- [ ] Document accomplishments
+- [ ] List challenges faced
+- [ ] Describe solutions implemented
+- [ ] Capture key learnings
 
-## 🔄 Next Actions
-- 
+### 3️⃣ Post to Discord
+- [ ] Share key deliverables
+- [ ] Post insights and updates
+- [ ] Coordinate with other agents
+
+### 4️⃣ Update Swarm Brain
+- [ ] Contribute new patterns
+- [ ] Share lessons learned
+- [ ] Document protocols
+- [ ] Add best practices
+
+### 5️⃣ Review Code of Conduct
+- [ ] Ensure V2 compliance
+- [ ] Verify gas protocols followed
+- [ ] Check bilateral partnerships
+
+### 6️⃣ Review Thread
+- [ ] Maintain context
+- [ ] Address pending responses
+- [ ] Note coordination needs
+
+### 7️⃣ Update STATE_OF_THE_PROJECT_REPORT.md
+- [ ] Document achievements
+- [ ] Update progress status
+- [ ] Keep SSOT current
+
+### 8️⃣ Add Pending Tasks to Cycle Planner
+- [ ] Create contracts for unfinished work
+- [ ] Document blockers
+- [ ] Add next session priorities
+
+### 9️⃣ Create New Productivity Tool
+- [ ] Identify gap or opportunity
+- [ ] Create tool (V2 compliant, <400 lines)
+- [ ] Add to toolbelt
+- [ ] Document usage
+
+---
+
+## 📋 Quick Reference
+
+**Status File**: `agent_workspaces/{self.agent_id}/status.json`
+**Passdown File**: `agent_workspaces/{self.agent_id}/passdown.json`
+**Devlogs**: `devlogs/`
+**Cycle Planner**: `agent_workspaces/swarm_cycle_planner/cycles/`
+**State Report**: `STATE_OF_THE_PROJECT_REPORT.md`
+**Swarm Brain**: `swarm_brain/`
+
+---
+
+**Generated by**: session_transition_helper.py
 """
+        return checklist
+    
+    def validate_passdown(self, passdown_path: Path) -> bool:
+        """Validate passdown.json structure"""
+        try:
+            with open(passdown_path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            
+            required_fields = [
+                'agent_id', 'agent_name', 'session_date', 
+                'session_status', 'deliverables', 'next_actions',
+                'gas_pipeline', 'blockers', 'achievements', 'learnings'
+            ]
+            
+            missing = [field for field in required_fields if field not in data]
+            if missing:
+                print(f"⚠️ Missing fields in passdown.json: {missing}")
+                return False
+            
+            print("✅ Passdown.json structure validated")
+            return True
+        except FileNotFoundError:
+            print(f"⚠️ Passdown file not found: {passdown_path}")
+            return False
+        except json.JSONDecodeError as e:
+            print(f"❌ Error parsing passdown.json: {e}")
+            return False
+    
+    def check_devlog_exists(self) -> bool:
+        """Check if devlog exists for today"""
+        devlog_pattern = f"{self.agent_id.lower().replace('-', '')}_*_{self.session_date.replace('-', '_')}.md"
+        devlog_files = list(DEVELOPMENT_LOGS.glob(devlog_pattern))
+        
+        if devlog_files:
+            print(f"✅ Devlog found: {devlog_files[0].name}")
+            return True
+        else:
+            print(f"⚠️ No devlog found for {self.agent_id} on {self.session_date}")
+            return False
+    
+    def check_cycle_planner_tasks(self) -> bool:
+        """Check if cycle planner tasks exist"""
+        cycle_file = SWARM_CYCLE_PLANNER / f"{self.session_date}_{self.agent_id.lower().replace('-', '_')}_pending_tasks.json"
+        
+        if cycle_file.exists():
+            print(f"✅ Cycle planner tasks found: {cycle_file.name}")
+            return True
+        else:
+            print(f"⚠️ No cycle planner tasks found for {self.agent_id}")
+            return False
+    
+    def generate_status_summary(self) -> str:
+        """Generate summary from status file"""
+        status = self.load_status()
+        if not status:
+            return "Status file not found"
+        
+        summary = f"""
+## Agent Status Summary
+
+**Agent**: {status.get('agent_id', 'Unknown')} - {status.get('agent_name', 'Unknown')}
+**Status**: {status.get('status', 'Unknown')}
+**Mission**: {status.get('current_mission', 'None')}
+**Priority**: {status.get('mission_priority', 'Unknown')}
+
+**Current Tasks**: {len(status.get('current_tasks', []))}
+**Completed Tasks**: {len(status.get('completed_tasks', []))}
+**Achievements**: {len(status.get('achievements', []))}
+
+**Last Updated**: {status.get('last_updated', 'Unknown')}
+"""
+        return summary
+    
+    def run_validation(self) -> Dict[str, bool]:
+        """Run validation checks for all deliverables"""
+        results = {
+            'passdown_exists': self.passdown_file.exists(),
+            'passdown_valid': False,
+            'devlog_exists': self.check_devlog_exists(),
+            'cycle_planner_tasks': self.check_cycle_planner_tasks(),
+            'status_file_exists': self.status_file.exists()
         }
         
-        template = templates.get(deliverable)
-        if template:
-            return template.format(
-                agent_id=self.agent_id,
-                date=datetime.now().strftime("%Y-%m-%d")
-            )
-        return None
+        if results['passdown_exists']:
+            results['passdown_valid'] = self.validate_passdown(self.passdown_file)
+        
+        return results
+    
+    def print_validation_report(self, results: Dict[str, bool]):
+        """Print validation report"""
+        print("\n" + "=" * 60)
+        print("📊 SESSION TRANSITION VALIDATION REPORT")
+        print("=" * 60)
+        
+        print(f"\n✅ Passdown.json exists: {results['passdown_exists']}")
+        if results['passdown_exists']:
+            print(f"✅ Passdown.json valid: {results['passdown_valid']}")
+        
+        print(f"\n✅ Devlog exists: {results['devlog_exists']}")
+        print(f"✅ Cycle planner tasks: {results['cycle_planner_tasks']}")
+        print(f"✅ Status file exists: {results['status_file_exists']}")
+        
+        all_complete = all(results.values())
+        
+        print("\n" + "=" * 60)
+        if all_complete:
+            print("✅ ALL DELIVERABLES COMPLETE")
+        else:
+            print("⚠️ SOME DELIVERABLES MISSING")
+            print("\nMissing items:")
+            for key, value in results.items():
+                if not value:
+                    print(f"  - {key.replace('_', ' ').title()}")
+        print("=" * 60)
 
 
 def main():
-    """CLI entry point."""
-    import argparse
-    
-    parser = argparse.ArgumentParser(description='Session Transition Helper')
-    parser.add_argument('--agent', type=str, default='Agent-8',
-                       help='Agent ID')
-    parser.add_argument('--check', action='store_true',
-                       help='Check completion status')
-    parser.add_argument('--summary', action='store_true',
-                       help='Show completion summary')
-    parser.add_argument('--template', type=str,
-                       help='Get template for deliverable')
-    parser.add_argument('--mark-complete', type=str,
-                       help='Mark deliverable as complete')
+    parser = argparse.ArgumentParser(
+        description="Session Transition Helper - Automates session transition deliverables"
+    )
+    parser.add_argument(
+        "--agent",
+        required=True,
+        help="Agent ID (e.g., Agent-8)"
+    )
+    parser.add_argument(
+        "--checklist",
+        action="store_true",
+        help="Generate checklist only"
+    )
+    parser.add_argument(
+        "--validate",
+        action="store_true",
+        help="Validate existing deliverables"
+    )
+    parser.add_argument(
+        "--summary",
+        action="store_true",
+        help="Generate status summary"
+    )
     
     args = parser.parse_args()
     
     helper = SessionTransitionHelper(args.agent)
     
-    if args.summary or args.check:
-        summary = helper.get_completion_summary()
-        print(json.dumps(summary, indent=2))
-    elif args.template:
-        template = helper.get_template(args.template)
-        if template:
-            print(template)
-        else:
-            print(f"No template available for: {args.template}")
-    elif args.mark_complete:
-        helper.mark_complete(args.mark_complete)
-        print(f"✅ Marked {args.mark_complete} as complete")
+    if args.checklist:
+        print(helper.generate_passdown_checklist())
+    elif args.validate:
+        results = helper.run_validation()
+        helper.print_validation_report(results)
+    elif args.summary:
+        print(helper.generate_status_summary())
     else:
-        # Default: show summary
-        summary = helper.get_completion_summary()
-        print(json.dumps(summary, indent=2))
+        print(helper.generate_passdown_checklist())
+        print("\n" + "=" * 60)
+        print("💡 Tip: Use --validate to check your progress")
+        print("💡 Tip: Use --summary to see status summary")
+        print("=" * 60)
 
 
 if __name__ == "__main__":
-    main()
-
-
+    sys.exit(main())

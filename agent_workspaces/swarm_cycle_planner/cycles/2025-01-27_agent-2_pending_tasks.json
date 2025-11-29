@@ -1,0 +1,64 @@
+{
+  "agent_id": "Agent-2",
+  "agent_name": "Architecture & Design Specialist",
+  "date": "2025-01-27",
+  "status": "PENDING_TASKS",
+  "contracts": [
+    {
+      "contract_id": "A2-ARCH-SUPPORT-001",
+      "title": "Continue Architecture Support for Execution Teams",
+      "description": "Provide architecture guidance for Agent-1 (Case Variations, Trading Repos), Agent-3 (Case Variations, Streamertools), Agent-7 (8 repos integration), Agent-8 (SSOT consolidation). Monitor progress and provide guidance as needed.",
+      "priority": "HIGH",
+      "points": 300,
+      "status": "AVAILABLE",
+      "dependencies": [],
+      "tools_available": [
+        "docs/integration/ (29 documents)",
+        "docs/architecture/EXECUTION_PATTERNS.md",
+        "docs/architecture/CONSOLIDATION_REVIEW.md"
+      ],
+      "deliverables": [
+        "Architecture guidance provided as needed",
+        "Progress monitoring and support",
+        "Pattern documentation updates"
+      ]
+    },
+    {
+      "contract_id": "A2-CODE-QUALITY-001",
+      "title": "Apply Test-Driven Dead Code Removal Pattern",
+      "description": "Apply the test-driven dead code removal pattern to other modules. Create comprehensive tests, identify unused functionality, verify usage, remove dead code. Pattern: Create Tests → Identify Gaps → Analyze Usage → Verify Protocol → Remove Dead Code.",
+      "priority": "MEDIUM",
+      "points": 200,
+      "status": "AVAILABLE",
+      "dependencies": [],
+      "tools_available": [
+        "tests/discord/test_discord_gui_views_comprehensive.py (pattern example)",
+        "tools/analyze_unneeded_functionality.py"
+      ],
+      "deliverables": [
+        "Test suites created for target modules",
+        "Dead code identified and removed",
+        "Pattern documentation updated"
+      ]
+    },
+    {
+      "contract_id": "A2-INTEGRATION-001",
+      "title": "Monitor Stage 1 Integration Progress",
+      "description": "Monitor Stage 1 integration progress across swarm. Review integration patterns, identify blockers, provide architecture support. Track progress toward 33-36 repo target.",
+      "priority": "MEDIUM",
+      "points": 150,
+      "status": "AVAILABLE",
+      "dependencies": [],
+      "tools_available": [
+        "docs/integration/INTEGRATION_PATTERNS_CATALOG.md",
+        "docs/integration/STAGE1_INTEGRATION_METHODOLOGY.md"
+      ],
+      "deliverables": [
+        "Progress tracking updates",
+        "Blocker identification and resolution",
+        "Integration pattern improvements"
+      ]
+    }
+  ]
+}
+

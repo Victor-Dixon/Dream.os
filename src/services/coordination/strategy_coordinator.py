@@ -13,7 +13,7 @@ License: MIT
 
 from typing import Any
 
-from ..models.messaging_models import (
+from ...core.messaging_models_core import (
     SenderType,
     UnifiedMessage,
     UnifiedMessagePriority,

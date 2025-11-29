@@ -68,3 +68,5 @@ foreach ($dir in $directories) {
 
 Write-Host "`nCleanup complete: $removedCount files removed"
 
+
+

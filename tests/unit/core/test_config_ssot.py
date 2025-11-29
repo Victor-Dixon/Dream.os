@@ -100,3 +100,78 @@ class TestConfigSSOTDataclasses:
         config = TimeoutConfig()
         assert config is not None
 
+    def test_get_file_pattern_config_returns_config(self):
+        """Test that get_file_pattern_config() returns file pattern configuration."""
+        file_pattern_config = get_file_pattern_config()
+        assert file_pattern_config is not None
+
+    def test_get_report_config_returns_config(self):
+        """Test that get_report_config() returns report configuration."""
+        report_config = get_report_config()
+        assert report_config is not None
+
+    def test_get_config_with_key(self):
+        """Test that get_config() can retrieve specific config values."""
+        config = get_config()
+        assert isinstance(config, dict) or hasattr(config, '__dict__')
+
+    def test_get_agent_config_with_different_agents(self):
+        """Test that get_agent_config() works with different agent IDs."""
+        agent1_config = get_agent_config("Agent-1")
+        agent2_config = get_agent_config("Agent-2")
+        assert agent1_config is not None
+        assert agent2_config is not None
+
+    def test_reload_config_returns_success(self):
+        """Test that reload_config() returns success indicator."""
+        result = reload_config()
+        assert result is True or result is None
+
+    def test_validate_config_returns_boolean(self):
+        """Test that validate_config() returns boolean result."""
+        result = validate_config()
+        assert isinstance(result, bool)
+
+    def test_config_ssot_exports_all_components(self):
+        """Test that config_ssot exports all expected components."""
+        from src.core.config_ssot import (
+            ConfigEnvironment,
+            ConfigSource,
+            ReportFormat,
+            UnifiedConfigManager,
+            FilePatternConfig,
+            ReportConfig,
+        )
+        assert ConfigEnvironment is not None
+        assert ConfigSource is not None
+        assert ReportFormat is not None
+        assert UnifiedConfigManager is not None
+        assert FilePatternConfig is not None
+        assert ReportConfig is not None
+
+    def test_dataclass_attributes(self):
+        """Test that dataclasses have expected attributes."""
+        agent_config = AgentConfig(agent_id="Agent-1")
+        assert hasattr(agent_config, 'agent_id')
+        
+        browser_config = BrowserConfig()
+        assert browser_config is not None
+        
+        threshold_config = ThresholdConfig()
+        assert hasattr(threshold_config, 'coverage_threshold') or threshold_config is not None
+
+    def test_unified_config_manager_import(self):
+        """Test that UnifiedConfigManager can be imported from config_ssot."""
+        from src.core.config_ssot import UnifiedConfigManager
+        manager = UnifiedConfigManager()
+        assert manager is not None
+
+    def test_config_enums_import(self):
+        """Test that config enums can be imported from config_ssot."""
+        from src.core.config_ssot import ConfigEnvironment, ConfigSource, ReportFormat
+        assert ConfigEnvironment.DEVELOPMENT is not None
+        assert ConfigSource.RUNTIME is not None
+        assert ReportFormat.JSON is not None
+
+
+

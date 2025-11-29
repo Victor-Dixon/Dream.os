@@ -74,12 +74,20 @@ Timestamp: {time.time()}
         except Exception as e:
             self.logger.error(f"Failed to send task recovery message: {e}")
 
-    async def send_agent_rescue_message(self, agent_id: str) -> None:
-        """Send rescue message to stalled agent."""
+    async def send_agent_rescue_message(self, agent_id: str, stall_duration_minutes: float = 0.0) -> None:
+        """Send optimized rescue message to stalled agent with FSM and Cycle Planner integration."""
         try:
-            self.logger.info(f"Sending rescue message to {agent_id}")
+            self.logger.info(f"Sending optimized rescue message to {agent_id}")
 
-            rescue_message = f"[RESCUE] {agent_id} - Reset and resume operations. Report status."
+            # Use optimized prompt generator
+            from src.core.optimized_stall_resume_prompt import generate_optimized_resume_prompt
+            
+            rescue_message = generate_optimized_resume_prompt(
+                agent_id=agent_id,
+                fsm_state=None,  # Will be loaded from status.json
+                last_mission=None,  # Will be loaded from status.json
+                stall_duration_minutes=stall_duration_minutes
+            )
 
             # Send via PyAutoGUI (primary method)
             await asyncio.get_event_loop().run_in_executor(

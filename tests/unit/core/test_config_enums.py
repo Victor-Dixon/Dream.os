@@ -25,3 +25,5 @@ class TestConfigEnums:
         assert ConfigSource.ENVIRONMENT.value == "environment"
         assert ConfigSource.DEFAULT.value == "default"
 
+
+

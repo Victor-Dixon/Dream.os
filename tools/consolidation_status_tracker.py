@@ -80,15 +80,47 @@ class ConsolidationStatusTracker:
             "prs": results
         }
     
+    def check_agent_7_status(self) -> Dict:
+        """Check Agent-7's consolidation status."""
+        from tools.consolidation_progress_tracker import ConsolidationProgressTracker
+        
+        tracker = ConsolidationProgressTracker("Agent-7")
+        report = tracker.get_status_report()
+        
+        # Check for GPT patterns extraction
+        gpt_patterns_file = Path("repo_consolidation_groups/gpt_automation/AUTO_BLOGGER_GPT_PATTERNS_EXTRACTION.md")
+        gpt_patterns_extracted = gpt_patterns_file.exists()
+        
+        completed_count = len(report['completed']) if report['completed'] else 0
+        return {
+            "agent": "Agent-7",
+            "phase_0": f"In Progress ({completed_count}/4 merges)",
+            "group_7": "Pending (1 merge + GPT patterns)",
+            "progress": report['progress'],
+            "completed_tasks": completed_count,
+            "pending_tasks": len(report['pending']) if report['pending'] else 5,
+            "gpt_patterns_extracted": gpt_patterns_extracted,
+            "blockers": report.get('blockers', [])
+        }
+    
     def identify_next_opportunities(self) -> List[Dict]:
         """Identify next consolidation opportunities."""
         return [
             {
-                "name": "Case Variations",
-                "repos": 12,
+                "name": "Case Variations (Agent-7)",
+                "repos": 4,
                 "risk": "Zero",
                 "priority": "HIGH",
-                "description": "Case variation merges (focusforge → FocusForge, etc.)"
+                "description": "Phase 0 case variation merges (focusforge → FocusForge, tbowtactics → TBOWTactics, superpowered_ttrpg → Superpowered-TTRPG, dadudekc → DaDudekC)",
+                "status": "In Progress"
+            },
+            {
+                "name": "GPT Automation (Agent-7)",
+                "repos": 1,
+                "risk": "Low",
+                "priority": "HIGH",
+                "description": "gpt_automation → selfevolving_ai (GPT patterns extracted from Auto_Blogger)",
+                "status": "Patterns Extracted, Merge Pending"
             },
             {
                 "name": "Trading Repos",
@@ -111,6 +143,7 @@ class ConsolidationStatusTracker:
         """Generate status report."""
         status = self.load_status()
         agent_2_status = self.check_agent_2_status()
+        agent_7_status = self.check_agent_7_status()
         opportunities = self.identify_next_opportunities()
         
         report = f"""# GitHub Consolidation Status Report
@@ -127,6 +160,15 @@ class ConsolidationStatusTracker:
 - **Phase 2**: {agent_2_status['phase_2']}
 - **PRs**: All verified merged
 
+### **Agent-7 Consolidation** ⏳ IN PROGRESS
+- **Phase 0**: {agent_7_status['phase_0']}
+- **Group 7**: {agent_7_status['group_7']}
+- **Progress**: {agent_7_status['progress']}
+- **GPT Patterns Extracted**: {'✅ Yes' if agent_7_status['gpt_patterns_extracted'] else '❌ No'}
+- **Completed**: {agent_7_status['completed_tasks']} tasks
+- **Pending**: {agent_7_status['pending_tasks']} tasks
+{f"- **Blockers**: {', '.join(agent_7_status['blockers'])}" if agent_7_status['blockers'] else ""}
+
 ---
 
 ## 🎯 **NEXT OPPORTUNITIES**
@@ -139,9 +181,11 @@ class ConsolidationStatusTracker:
             report += f"- **Priority**: {opp['priority']}\n"
             if 'roi' in opp:
                 report += f"- **ROI**: {opp['roi']}\n"
+            if 'status' in opp:
+                report += f"- **Status**: {opp['status']}\n"
             report += f"- **Description**: {opp['description']}\n\n"
         
-        report += "---\n\n**Status**: Ready for next phase execution\n"
+        report += "---\n\n**Status**: Consolidation in progress\n"
         
         return report
     
@@ -149,9 +193,11 @@ class ConsolidationStatusTracker:
         """Track and update consolidation status."""
         status = self.load_status()
         agent_2_status = self.check_agent_2_status()
+        agent_7_status = self.check_agent_7_status()
         opportunities = self.identify_next_opportunities()
         
         status["agents"]["Agent-2"] = agent_2_status
+        status["agents"]["Agent-7"] = agent_7_status
         status["next_opportunities"] = opportunities
         
         self.save_status(status)
@@ -190,4 +236,6 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
+
+
 

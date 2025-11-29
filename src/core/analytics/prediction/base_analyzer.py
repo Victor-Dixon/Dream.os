@@ -5,7 +5,7 @@ computations to maintain a single source of truth (SSOT) across prediction
 analyzers.
 
 Example:
-    >>> from core.analytics.prediction.base_analyzer import BasePredictionAnalyzer
+    >>> from src.core.analytics.prediction.base_analyzer import BasePredictionAnalyzer
     >>> BasePredictionAnalyzer.confidence_level(0.75)
     'high'
 """

@@ -202,3 +202,6 @@ class SwarmStatusGUIView(discord.ui.View):
         else:
             return "🟡"
 
+
+
+

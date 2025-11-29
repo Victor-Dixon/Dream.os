@@ -16,6 +16,7 @@ import os
 import subprocess
 import sys
 import time
+import atexit
 from pathlib import Path
 
 # Load .env file FIRST
@@ -27,6 +28,132 @@ except ImportError:
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+# Try to import psutil (optional but recommended)
+try:
+    import psutil
+    PSUTIL_AVAILABLE = True
+except ImportError:
+    PSUTIL_AVAILABLE = False
+    logger.warning("⚠️  psutil not installed - single-instance check will be limited")
+    logger.warning("   Install with: pip install psutil (recommended)")
+
+# Lock file for single instance
+LOCK_FILE = Path("logs/discord_system.lock")
+
+
+def cleanup_lock():
+    """Remove lock file on exit."""
+    try:
+        if LOCK_FILE.exists():
+            LOCK_FILE.unlink()
+    except Exception:
+        pass
+
+
+def check_existing_instance():
+    """Check if Discord system is already running."""
+    if not LOCK_FILE.exists():
+        return None
+    
+    try:
+        # Read PID from lock file
+        pid = int(LOCK_FILE.read_text().strip())
+        
+        # Check if process is still running
+        if PSUTIL_AVAILABLE:
+            if psutil.pid_exists(pid):
+                try:
+                    process = psutil.Process(pid)
+                    # Check if it's actually our script
+                    cmdline = ' '.join(process.cmdline())
+                    if 'start_discord_system.py' in cmdline or \
+                       'run_unified_discord_bot_with_restart.py' in cmdline:
+                        return pid
+                except (psutil.NoSuchProcess, psutil.AccessDenied):
+                    # Process doesn't exist or we can't access it
+                    pass
+        else:
+            # Fallback: Try to signal process (Windows)
+            if sys.platform == 'win32':
+                try:
+                    # On Windows, try to check if process exists
+                    # This is a simple check - if it fails, process doesn't exist
+                    os.kill(pid, 0)  # Signal 0 doesn't kill, just checks existence
+                    # If we get here, process exists - assume it's our script
+                    return pid
+                except (OSError, ProcessLookupError):
+                    # Process doesn't exist
+                    pass
+            else:
+                # On Unix, try similar approach
+                try:
+                    os.kill(pid, 0)
+                    return pid
+                except (OSError, ProcessLookupError):
+                    pass
+        
+        # Stale lock file - process is dead
+        logger.warning(f"⚠️  Found stale lock file (PID {pid} not running)")
+        LOCK_FILE.unlink()
+        return None
+        
+    except (ValueError, FileNotFoundError):
+        # Invalid lock file or doesn't exist
+        try:
+            LOCK_FILE.unlink()
+        except Exception:
+            pass
+        return None
+
+
+def create_lock():
+    """Create lock file with current PID."""
+    try:
+        # Ensure logs directory exists
+        LOCK_FILE.parent.mkdir(exist_ok=True)
+        
+        # Write current PID
+        LOCK_FILE.write_text(str(os.getpid()))
+        
+        # Register cleanup on exit
+        atexit.register(cleanup_lock)
+        
+        logger.info(f"✅ Lock file created (PID: {os.getpid()})")
+        return True
+    except Exception as e:
+        logger.error(f"❌ Failed to create lock file: {e}")
+        return False
+
+
+def check_running_discord_processes():
+    """Check for running Discord bot processes."""
+    if not PSUTIL_AVAILABLE:
+        # Without psutil, we can't easily check for other processes
+        logger.warning("⚠️  psutil not available - cannot check for running processes")
+        logger.warning("   Install with: pip install psutil (recommended)")
+        return []
+    
+    try:
+        current_pid = os.getpid()
+        discord_processes = []
+        
+        for proc in psutil.process_iter(['pid', 'name', 'cmdline']):
+            try:
+                if proc.info['pid'] == current_pid:
+                    continue
+                    
+                cmdline = ' '.join(proc.info['cmdline'] or [])
+                if 'run_unified_discord_bot_with_restart.py' in cmdline or \
+                   'unified_discord_bot.py' in cmdline:
+                    discord_processes.append(proc.info['pid'])
+            except (psutil.NoSuchProcess, psutil.AccessDenied):
+                continue
+        
+        return discord_processes
+    except Exception as e:
+        logger.warning(f"⚠️  Could not check for running processes: {e}")
+        return []
 
 
 def check_token():
@@ -145,8 +272,34 @@ def main():
     print("🚀 STARTING COMPLETE DISCORD SYSTEM")
     print("="*70 + "\n")
 
+    # Check for existing instance
+    existing_pid = check_existing_instance()
+    if existing_pid:
+        logger.error(f"❌ Discord system is already running (PID: {existing_pid})")
+        logger.error("   Only one instance can run at a time.")
+        logger.error("   To stop the existing instance:")
+        logger.error(f"   - Press Ctrl+C in the terminal running it, or")
+        logger.error(f"   - Kill the process: taskkill /F /PID {existing_pid}")
+        return 1
+    
+    # Check for running Discord bot processes
+    running_processes = check_running_discord_processes()
+    if running_processes:
+        logger.warning(f"⚠️  Found {len(running_processes)} running Discord bot process(es): {running_processes}")
+        logger.warning("   These may conflict with the new instance.")
+        response = input("   Continue anyway? (y/N): ").strip().lower()
+        if response != 'y':
+            logger.info("   Aborted by user")
+            return 1
+    
+    # Create lock file
+    if not create_lock():
+        logger.error("❌ Failed to create lock file - cannot ensure single instance")
+        return 1
+
     # Check token
     if not check_token():
+        cleanup_lock()
         print("\n💡 To fix:")
         print("   1. Create .env file in project root")
         print("   2. Add: DISCORD_BOT_TOKEN=your_token_here")
@@ -156,6 +309,7 @@ def main():
     # Start Discord bot
     bot_process = start_discord_bot()
     if not bot_process:
+        cleanup_lock()
         return 1
 
     # Wait a bit for bot to initialize
@@ -228,6 +382,7 @@ def main():
                         "   Failed to restart - will retry in next cycle")
     except KeyboardInterrupt:
         logger.info("\n👋 Shutting down...")
+        cleanup_lock()
         if bot_process and bot_process.poll() is None:
             logger.info("   Stopping Discord bot...")
             try:
@@ -255,6 +410,7 @@ def main():
                 logger.error(f"   Error stopping queue processor: {e}")
 
         logger.info("✅ Shutdown complete")
+        cleanup_lock()
 
     return 0
 

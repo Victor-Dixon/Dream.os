@@ -1,0 +1,122 @@
+#!/usr/bin/env python3
+"""
+Inbox Utility - Direct File Creation for Agents
+===============================================
+
+Separate utility for agents who want to create inbox files directly.
+This is NOT part of the messaging system - it's a simple file creation utility.
+
+Usage:
+    from src.utils.inbox_utility import create_inbox_message
+    
+    create_inbox_message(
+        recipient="Agent-4",
+        sender="Agent-7",
+        content="Your message here",
+        priority="urgent"
+    )
+
+Author: Agent-4 (Captain)
+Date: 2025-11-27
+"""
+
+from __future__ import annotations
+
+import logging
+from datetime import datetime
+from pathlib import Path
+from typing import Optional
+
+from ..utils.swarm_time import format_swarm_timestamp, format_swarm_timestamp_filename
+
+logger = logging.getLogger(__name__)
+
+
+def create_inbox_message(
+    recipient: str,
+    sender: str,
+    content: str,
+    priority: str = "normal",
+    message_type: str = "text",
+    tags: Optional[list[str]] = None,
+) -> bool:
+    """
+    Create an inbox message file directly in agent's inbox directory.
+    
+    This is a simple file creation utility - NOT part of the messaging system.
+    Agents should use this when they want to create inbox files directly.
+    
+    Args:
+        recipient: Agent ID (e.g., "Agent-4")
+        sender: Sender identifier
+        content: Message content
+        priority: Message priority (normal, urgent, etc.)
+        message_type: Message type (text, broadcast, etc.)
+        tags: Optional list of tags
+        
+    Returns:
+        True if file created successfully, False otherwise
+    """
+    try:
+        # Create inbox directory
+        inbox_dir = Path("agent_workspaces") / recipient / "inbox"
+        inbox_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Generate filename with timestamp
+        timestamp = format_swarm_timestamp_filename()
+        filename = f"INBOX_MESSAGE_{timestamp}.md"
+        filepath = inbox_dir / filename
+        
+        # Format message content
+        message_content = _format_inbox_message(
+            recipient=recipient,
+            sender=sender,
+            content=content,
+            priority=priority,
+            message_type=message_type,
+            tags=tags or [],
+        )
+        
+        # Write file
+        filepath.write_text(message_content, encoding="utf-8")
+        
+        logger.info(f"✅ Inbox message created: {filepath}")
+        return True
+        
+    except Exception as e:
+        logger.error(f"❌ Failed to create inbox message: {e}")
+        return False
+
+
+def _format_inbox_message(
+    recipient: str,
+    sender: str,
+    content: str,
+    priority: str,
+    message_type: str,
+    tags: list[str],
+) -> str:
+    """Format message content for inbox file."""
+    timestamp_str = format_swarm_timestamp()
+    
+    tags_str = ", ".join(tags) if tags else "none"
+    
+    return f"""# 🚨 INBOX MESSAGE - {message_type.upper()}
+
+**From**: {sender}
+**To**: {recipient}
+**Priority**: {priority}
+**Message Type**: {message_type}
+**Tags**: {tags_str}
+**Timestamp**: {timestamp_str}
+
+---
+
+{content}
+
+---
+
+*Message created via inbox utility (direct file creation)*
+*WE. ARE. SWARM. ⚡🔥*
+"""
+

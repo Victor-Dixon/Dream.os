@@ -42,7 +42,7 @@ def write_json(data, file_handle, **kwargs):
     import json
     json.dump(data, file_handle, **kwargs)
 
-ROOT = get_unified_utility().Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[1]
 RUNTIME = ROOT / "runtime"
 LOGS_DIR = RUNTIME / "agent_logs"
 INDEX_FILE = RUNTIME / "agents_index.json"
@@ -64,7 +64,7 @@ def load_json_arg(src: str) -> dict[str, Any]:
     """Load JSON from a file path or stdin ('-')."""
     if src == "-":
         return json.loads(sys.stdin.read())
-    path = get_unified_utility().Path(src)
+    path = Path(src)
     return json.loads(path.read_text(encoding="utf-8"))
 
 
@@ -94,7 +94,7 @@ def atomic_write(path: Path, data: dict[str, Any]) -> None:
         os.replace(tmp_path, path)
     except Exception:
         try:
-            get_unified_utility().remove(tmp_path)
+            os.remove(tmp_path)
         except OSError:
             pass
         raise

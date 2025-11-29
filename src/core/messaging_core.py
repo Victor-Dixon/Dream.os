@@ -119,7 +119,62 @@ class UnifiedMessagingCore:
         tags: list[UnifiedMessageTag] | None = None,
         metadata: dict[str, Any] | None = None,
     ) -> bool:
-        """Send a message using the unified messaging system."""
+        """
+        Send a message using the unified messaging system.
+        
+        VALIDATION: Checks if recipient has pending multi-agent request.
+        If pending, blocks message and shows pending request in error.
+        """
+        # Validate recipient can receive messages (check for pending multi-agent requests)
+        # Only validate if recipient is an agent (not system/captain)
+        if recipient.startswith("Agent-") and sender.startswith("Agent-"):
+            try:
+                from ..core.multi_agent_request_validator import get_multi_agent_validator
+                
+                validator = get_multi_agent_validator()
+                can_send, error_message, pending_info = validator.validate_agent_can_send_message(
+                    agent_id=recipient,
+                    target_recipient=sender,  # Allow if responding to request sender
+                    message_content=content
+                )
+                
+                if not can_send:
+                    # Recipient has pending request - block and show error
+                    self.logger.warning(
+                        f"❌ Message blocked - {recipient} has pending multi-agent request"
+                    )
+                    # Store error in metadata for caller to access
+                    if metadata is None:
+                        metadata = {}
+                    metadata["blocked"] = True
+                    metadata["blocked_reason"] = "pending_multi_agent_request"
+                    metadata["blocked_error_message"] = error_message
+                    return False
+                
+                # If responding to request sender, auto-route to collector
+                if pending_info and sender == pending_info["sender"]:
+                    try:
+                        from ..core.multi_agent_responder import get_multi_agent_responder
+                        responder = get_multi_agent_responder()
+                        
+                        # Auto-submit response to collector
+                        collector_id = pending_info["collector_id"]
+                        responder.submit_response(collector_id, recipient, content)
+                        
+                        self.logger.info(
+                            f"✅ Auto-routed response from {recipient} to collector {collector_id}"
+                        )
+                        # Still send the message normally (it's their response)
+                    except Exception as e:
+                        self.logger.debug(f"Error auto-routing response: {e}")
+                        # Continue with normal message send
+            except ImportError:
+                # Validator not available, proceed normally
+                pass
+            except Exception as e:
+                self.logger.debug(f"Error validating recipient: {e}")
+                # Continue with normal flow
+        
         message = UnifiedMessage(
             content=content,
             sender=sender,
@@ -261,58 +316,6 @@ class UnifiedMessagingCore:
                     pass  # Non-critical
             return False
 
-    def send_message_to_inbox(self, message: UnifiedMessage, max_retries: int = 3) -> bool:
-        """Send message to agent inbox with retry logic."""
-        try:
-            # Create inbox file path in agent workspace
-            inbox_dir = Path("agent_workspaces") / message.recipient / "inbox"
-            inbox_dir.mkdir(parents=True, exist_ok=True)
-
-            filepath = inbox_dir / f"{message.recipient}_inbox.txt"
-
-            # Check if rotation needed (prevent memory leak)
-            try:
-                from .messaging_inbox_rotation import get_rotation_manager
-
-                rotation_manager = get_rotation_manager()
-                rotation_manager.check_and_rotate(filepath)
-            except Exception as e:
-                self.logger.debug(f"Inbox rotation check skipped: {e}")
-
-            with open(filepath, "a", encoding="utf-8") as f:
-                # Handle both enum and string values
-                msg_type = (
-                    message.message_type.value
-                    if hasattr(message.message_type, "value")
-                    else str(message.message_type).upper()
-                )
-                priority = (
-                    message.priority.value
-                    if hasattr(message.priority, "value")
-                    else str(message.priority)
-                )
-
-                f.write(f"# 🚨 CAPTAIN MESSAGE - {msg_type}\n\n")
-                f.write(f"**From**: {message.sender}\n")
-                f.write(f"**To**: {message.recipient}\n")
-                f.write(f"**Priority**: {priority}\n")
-                # Format timestamp for display
-                timestamp_str = format_swarm_timestamp(message.timestamp) if isinstance(message.timestamp, datetime) else get_swarm_time_display()
-                f.write(f"**Timestamp**: {timestamp_str}\n")
-                if message.tags:
-                    f.write(
-                        f'**Tags**: {", ".join(tag.value if hasattr(tag, "value") else str(tag) for tag in message.tags)}\n'
-                    )
-                f.write("\n")
-                f.write(f"{message.content}\n")
-                f.write("\n" + "=" * 50 + "\n\n")
-
-            self.logger.info(f"Message sent to inbox: {message.recipient}")
-            return True
-
-        except Exception as e:
-            self.logger.error(f"Failed to send message to inbox: {e}")
-            return False
 
     def show_message_history(self):
         """Display message history."""

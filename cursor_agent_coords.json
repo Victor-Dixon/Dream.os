@@ -22,13 +22,13 @@
     },
     "Agent-3": {
       "chat_input_coordinates": [-1269, 1021],
-      "onboarding_input_coords": [-1276, 698],
+      "onboarding_input_coords": [-1276, 680],
       "description": "Infrastructure & DevOps Specialist",
       "active": true
     },
     "Agent-4": {
-      "chat_input_coordinates": [-308, 1020],
-      "onboarding_input_coords": [-304, 700],
+      "chat_input_coordinates": [-304, 680],
+      "onboarding_input_coords": [-304, 680],
       "description": "Quality Assurance Specialist (CAPTAIN)",
       "active": true
     },

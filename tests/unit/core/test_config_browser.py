@@ -58,3 +58,5 @@ class TestBrowserConfig:
         assert isinstance(config.max_scrape_retries, int)
         assert config.max_scrape_retries >= 0
 
+
+

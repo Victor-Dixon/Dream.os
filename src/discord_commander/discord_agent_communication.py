@@ -69,28 +69,37 @@ class AgentCommunicationEngine:
         return self._utility
 
     async def send_to_agent_inbox(self, agent: str, message: str, sender: str) -> CommandResult:
-        """Send message directly to agent's inbox."""
+        """Send message directly to agent's inbox using inbox utility."""
         try:
-            inbox_path = os.path.join(os.getcwd(), "agent_workspaces", agent, "inbox")
-            os.makedirs(inbox_path, exist_ok=True)
-
-            timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
-            message_filename = f"CAPTAIN_MESSAGE_{timestamp}_discord.md"
-            message_content = self._create_inbox_message_content(agent, message, sender)
-
-            message_file_path = os.path.join(inbox_path, message_filename)
-            with open(message_file_path, "w", encoding="utf-8") as f:
-                f.write(message_content)
-
-            self.logger.info(f"Message sent to {agent}'s inbox: {message_filename}")
-
-            return create_command_result(
-                success=True,
-                message=f"Message successfully delivered to {agent}'s inbox",
-                data={"filename": message_filename, "path": message_file_path},
-                agent=agent,
+            from src.utils.inbox_utility import create_inbox_message
+            
+            # Use inbox utility for file creation (separate from messaging system)
+            success = create_inbox_message(
+                recipient=agent,
+                sender=f"{sender} (via Discord Commander)",
+                content=message,
+                priority="urgent",
+                message_type="text",
+                tags=["discord", "captain"]
             )
-
+            
+            if success:
+                # Get the created file path for response
+                inbox_dir = Path("agent_workspaces") / agent / "inbox"
+                message_files = sorted(inbox_dir.glob("INBOX_MESSAGE_*.md"), key=lambda p: p.stat().st_mtime, reverse=True)
+                latest_file = message_files[0] if message_files else None
+                
+                self.logger.info(f"Message sent to {agent}'s inbox via utility")
+                
+                return create_command_result(
+                    success=True,
+                    message=f"Message successfully delivered to {agent}'s inbox",
+                    data={"filename": latest_file.name if latest_file else "unknown", "path": str(latest_file) if latest_file else "unknown"},
+                    agent=agent,
+                )
+            else:
+                raise Exception("Inbox utility returned False")
+                
         except Exception as e:
             self.logger.error(f"Failed to send message to {agent}'s inbox: {e}")
             return create_command_result(
@@ -98,25 +107,6 @@ class AgentCommunicationEngine:
                 message=f"Failed to deliver message to {agent}'s inbox: {str(e)}",
                 agent=agent,
             )
-
-    def _create_inbox_message_content(self, agent: str, message: str, sender: str) -> str:
-        """Create inbox message content."""
-        return f"""# 🚨 CAPTAIN MESSAGE FROM DISCORD
-
-**From**: {sender} (via Discord Commander)
-**To**: {agent}
-**Priority**: URGENT
-**Timestamp**: {datetime.utcnow().isoformat()}
-
----
-
-{message}
-
----
-
-**Message delivered via Discord Commander**
-**WE. ARE. SWARM. ⚡️🔥**
-"""
 
     async def broadcast_to_all_agents(self, message: str, sender: str) -> CommandResult:
         """Broadcast message to all agents."""

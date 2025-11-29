@@ -82,12 +82,47 @@ class MessageQueue(IMessageQueue):
             Path(self.config.queue_directory) / "queue.json"
         )
         self.statistics_calculator = statistics_calculator or QueueStatisticsCalculator()
-        self.health_monitor = health_monitor or QueueHealthMonitor(self.statistics_calculator)
+        self.health_monitor = health_monitor or QueueHealthMonitor(
+            self.statistics_calculator)
         self.logger = logger
 
         # Initialize queue file
         queue_file = Path(self.config.queue_directory) / "queue.json"
         queue_file.parent.mkdir(parents=True, exist_ok=True)
+
+    def _log_info(self, message: str) -> None:
+        """Log info message if logger available."""
+        if self.logger:
+            self.logger.info(message)
+
+    def _log_warning(self, message: str) -> None:
+        """Log warning message if logger available."""
+        if self.logger:
+            self.logger.warning(message)
+
+    def _find_entry_by_id(self, entries: List[IQueueEntry], queue_id: str) -> Optional[IQueueEntry]:
+        """Find queue entry by ID."""
+        for entry in entries:
+            if getattr(entry, 'queue_id', '') == queue_id:
+                return entry
+        return None
+
+    def _update_entry_status(
+        self, entry: IQueueEntry, status: str, error: Optional[str] = None
+    ) -> None:
+        """Update entry status and metadata."""
+        entry.status = status
+        entry.updated_at = datetime.now()
+
+        if error:
+            if not hasattr(entry, 'metadata'):
+                entry.metadata = {}
+            entry.metadata['last_error'] = error
+
+        if status == "FAILED":
+            if not hasattr(entry, 'delivery_attempts'):
+                entry.delivery_attempts = 0
+            entry.delivery_attempts += 1
 
     def enqueue(
         self,
@@ -104,13 +139,29 @@ class MessageQueue(IMessageQueue):
             Queue ID for tracking
         """
         queue_id = str(uuid.uuid4())
+        priority_score = self._calculate_priority_score(
+            message, datetime.now())
+        entry = self._create_queue_entry(
+            queue_id, message, priority_score, delivery_callback)
+
+        def _enqueue_operation():
+            entries = self.persistence.load_entries()
+            self._validate_queue_size(entries)
+            entries.append(entry)
+            self.persistence.save_entries(entries)
+            self._log_info(
+                f"Message queued: {queue_id} (priority: {priority_score})")
+            return queue_id
+
+        return self.persistence.atomic_operation(_enqueue_operation)
+
+    def _create_queue_entry(
+        self, queue_id: str, message: Any, priority_score: float,
+        delivery_callback: Optional[Callable[[Any], bool]]
+    ) -> QueueEntry:
+        """Create new queue entry."""
         now = datetime.now()
-
-        # Calculate priority score (simplified for now)
-        priority_score = self._calculate_priority_score(message, now)
-
-        # Create queue entry
-        entry = QueueEntry(
+        return QueueEntry(
             message=message,
             queue_id=queue_id,
             priority_score=priority_score,
@@ -120,22 +171,11 @@ class MessageQueue(IMessageQueue):
             metadata={"delivery_callback": delivery_callback is not None},
         )
 
-        # Atomic enqueue operation using persistence layer
-        def _enqueue_operation():
-            entries = self.persistence.load_entries()
-
-            # Check queue size limit
-            if len(entries) >= self.config.max_queue_size:
-                raise RuntimeError(f"Queue size limit exceeded: {self.config.max_queue_size}")
-
-            entries.append(entry)
-            self.persistence.save_entries(entries)
-
-            if self.logger:
-                self.logger.info(f"Message queued: {queue_id} (priority: {priority_score})")
-            return queue_id
-
-        return self.persistence.atomic_operation(_enqueue_operation)
+    def _validate_queue_size(self, entries: List[IQueueEntry]) -> None:
+        """Validate queue size limit."""
+        if len(entries) >= self.config.max_queue_size:
+            raise RuntimeError(
+                f"Queue size limit exceeded: {self.config.max_queue_size}")
 
     def _calculate_priority_score(self, message: Any, now: datetime) -> float:
         """Calculate priority score for message."""
@@ -162,56 +202,64 @@ class MessageQueue(IMessageQueue):
 
         def _dequeue_operation():
             entries = self.persistence.load_entries()
-
-            # More efficient priority queue using heap
-            import heapq
-
-            # Create max-heap by negating priority scores
-            pending_entries = [
-                (-getattr(e, 'priority_score', 0), i, e)
-                for i, e in enumerate(entries)
-                if getattr(e, 'status', '') == 'PENDING'
-            ]
+            pending_entries = self._get_pending_entries(entries)
 
             if not pending_entries:
                 return []
 
-            # Get top priority entries
-            heapq.heapify(pending_entries)
-            entries_to_process = []
-
-            for _ in range(min(batch_size, len(pending_entries))):
-                neg_priority, original_index, entry = heapq.heappop(pending_entries)
-                entry.status = "PROCESSING"
-                entry.updated_at = datetime.now()
-                entries_to_process.append(entry)
-
-            # Save updated entries
+            entries_to_process = self._select_top_priority_entries(
+                pending_entries, batch_size)
+            self._mark_entries_processing(entries_to_process)
             self.persistence.save_entries(entries)
-
-            if self.logger:
-                self.logger.info(f"Dequeued {len(entries_to_process)} messages for processing")
+            self._log_info(
+                f"Dequeued {len(entries_to_process)} messages for processing")
             return entries_to_process
 
         return self.persistence.atomic_operation(_dequeue_operation)
+
+    def _get_pending_entries(self, entries: List[IQueueEntry]) -> List[tuple]:
+        """Get pending entries with priority scores for heap."""
+        import heapq
+        return [
+            (-getattr(e, 'priority_score', 0), i, e)
+            for i, e in enumerate(entries)
+            if getattr(e, 'status', '') == 'PENDING'
+        ]
+
+    def _select_top_priority_entries(
+        self, pending_entries: List[tuple], batch_size: int
+    ) -> List[IQueueEntry]:
+        """Select top priority entries using heap."""
+        import heapq
+        heapq.heapify(pending_entries)
+        entries_to_process = []
+
+        for _ in range(min(batch_size, len(pending_entries))):
+            _, _, entry = heapq.heappop(pending_entries)
+            entries_to_process.append(entry)
+
+        return entries_to_process
+
+    def _mark_entries_processing(self, entries: List[IQueueEntry]) -> None:
+        """Mark entries as processing."""
+        for entry in entries:
+            entry.status = "PROCESSING"
+            entry.updated_at = datetime.now()
 
     def mark_delivered(self, queue_id: str) -> bool:
         """Mark message as successfully delivered."""
 
         def _mark_delivered_operation():
             entries = self.persistence.load_entries()
+            entry = self._find_entry_by_id(entries, queue_id)
 
-            for entry in entries:
-                if getattr(entry, 'queue_id', '') == queue_id:
-                    entry.status = "DELIVERED"
-                    entry.updated_at = datetime.now()
-                    self.persistence.save_entries(entries)
-                    if self.logger:
-                        self.logger.info(f"Message marked as delivered: {queue_id}")
-                    return True
+            if entry:
+                self._update_entry_status(entry, "DELIVERED")
+                self.persistence.save_entries(entries)
+                self._log_info(f"Message marked as delivered: {queue_id}")
+                return True
 
-            if self.logger:
-                self.logger.warning(f"Queue entry not found: {queue_id}")
+            self._log_warning(f"Queue entry not found: {queue_id}")
             return False
 
         return self.persistence.atomic_operation(_mark_delivered_operation)
@@ -221,29 +269,16 @@ class MessageQueue(IMessageQueue):
 
         def _mark_failed_operation():
             entries = self.persistence.load_entries()
+            entry = self._find_entry_by_id(entries, queue_id)
 
-            for entry in entries:
-                if getattr(entry, 'queue_id', '') == queue_id:
-                    entry.status = "FAILED"
-                    entry.updated_at = datetime.now()
+            if entry:
+                self._update_entry_status(entry, "FAILED", error)
+                self.persistence.save_entries(entries)
+                self._log_warning(
+                    f"Message marked as failed: {queue_id} - {error}")
+                return True
 
-                    # Update delivery attempts
-                    if not hasattr(entry, 'delivery_attempts'):
-                        entry.delivery_attempts = 0
-                    entry.delivery_attempts += 1
-
-                    # Add error to metadata
-                    if not hasattr(entry, 'metadata'):
-                        entry.metadata = {}
-                    entry.metadata['last_error'] = error
-
-                    self.persistence.save_entries(entries)
-                    if self.logger:
-                        self.logger.warning(f"Message marked as failed: {queue_id} - {error}")
-                    return True
-
-            if self.logger:
-                self.logger.warning(f"Queue entry not found: {queue_id}")
+            self._log_warning(f"Queue entry not found: {queue_id}")
             return False
 
         return self.persistence.atomic_operation(_mark_failed_operation)
@@ -263,29 +298,33 @@ class MessageQueue(IMessageQueue):
         def _cleanup_operation():
             entries = self.persistence.load_entries()
             original_count = len(entries)
-
-            # Filter out expired entries
-            max_age_seconds = self.config.max_age_days * 24 * 60 * 60
-            now = datetime.now()
-
-            active_entries = []
-            for entry in entries:
-                if hasattr(entry, 'created_at'):
-                    age = (now - entry.created_at).total_seconds()
-                    if age <= max_age_seconds:
-                        active_entries.append(entry)
-                else:
-                    active_entries.append(entry)  # Keep entries without timestamp
-
+            active_entries = self._filter_expired_entries(entries)
             expired_count = original_count - len(active_entries)
-            self.persistence.save_entries(active_entries)
 
-            if expired_count > 0 and self.logger:
-                self.logger.info(f"Cleaned up {expired_count} expired entries")
+            self.persistence.save_entries(active_entries)
+            if expired_count > 0:
+                self._log_info(f"Cleaned up {expired_count} expired entries")
 
             return expired_count
 
         return self.persistence.atomic_operation(_cleanup_operation)
+
+    def _filter_expired_entries(self, entries: List[IQueueEntry]) -> List[IQueueEntry]:
+        """Filter out expired entries."""
+        max_age_seconds = self.config.max_age_days * 24 * 60 * 60
+        now = datetime.now()
+        active_entries = []
+
+        for entry in entries:
+            if not hasattr(entry, 'created_at'):
+                active_entries.append(entry)
+                continue
+
+            age = (now - entry.created_at).total_seconds()
+            if age <= max_age_seconds:
+                active_entries.append(entry)
+
+        return active_entries
 
     def get_health_status(self) -> Dict[str, Any]:
         """Get comprehensive queue health status."""
@@ -295,8 +334,6 @@ class MessageQueue(IMessageQueue):
             return self.health_monitor.assess_health(entries)
 
         return self.persistence.atomic_operation(_get_health_operation)
-
-
 
 
 class AsyncQueueProcessor(IQueueProcessor):
@@ -346,25 +383,27 @@ class AsyncQueueProcessor(IQueueProcessor):
         entries = self.queue.dequeue()
 
         for entry in entries:
-            try:
-                message = getattr(entry, 'message', None)
-                queue_id = getattr(entry, 'queue_id', '')
+            self._process_entry(entry)
 
-                if message is None:
-                    if self.logger:
-                        self.logger.warning(f"Entry missing message: {queue_id}")
-                    continue
+    def _process_entry(self, entry: IQueueEntry) -> None:
+        """Process single queue entry."""
+        message = getattr(entry, 'message', None)
+        queue_id = getattr(entry, 'queue_id', '')
 
-                success = self.delivery_callback(message)
+        if message is None:
+            if self.logger:
+                self.logger.warning(f"Entry missing message: {queue_id}")
+            return
 
-                if success:
-                    self.queue.mark_delivered(queue_id)
-                else:
-                    self.queue.mark_failed(queue_id, "Delivery callback returned False")
-
-            except Exception as e:
-                queue_id = getattr(entry, 'queue_id', 'unknown')
-                self.queue.mark_failed(queue_id, str(e))
+        try:
+            success = self.delivery_callback(message)
+            if success:
+                self.queue.mark_delivered(queue_id)
+            else:
+                self.queue.mark_failed(
+                    queue_id, "Delivery callback returned False")
+        except Exception as e:
+            self.queue.mark_failed(queue_id, str(e))
 
     async def _cleanup_if_needed(self, interval: float) -> None:
         """Perform cleanup if interval has passed."""
@@ -375,7 +414,8 @@ class AsyncQueueProcessor(IQueueProcessor):
         if now - self.last_cleanup >= cleanup_interval:
             expired_count = self.queue.cleanup_expired()
             if expired_count > 0 and self.logger:
-                self.logger.info(f"Cleanup completed: {expired_count} expired entries removed")
+                self.logger.info(
+                    f"Cleanup completed: {expired_count} expired entries removed")
             self.last_cleanup = now
 
 

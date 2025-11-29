@@ -30,3 +30,5 @@ class TestUnifiedValidationSystem:
         """Test that validation system has rules loaded."""
         assert hasattr(validation_system, 'rules') or hasattr(validation_system, '_rules')
 
+
+

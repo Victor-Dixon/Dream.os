@@ -16,7 +16,7 @@ Status: V2 COMPLIANT - Decision Constants Optimized
 
 from typing import Final
 
-from ..unified_config import get_config, get_unified_config
+from ..config_ssot import get_config, get_unified_config
 
 # Configuration simplified - KISS compliance
 

@@ -38,3 +38,5 @@ class TestDiscordTemplateCollection:
         # Placeholder for validation tests
         assert True  # Placeholder
 
+
+

@@ -46,3 +46,5 @@ class TestSSOTUnifiedModels:
         assert component.component_id == "test"
         assert component.component_type == SSOTComponentType.EXECUTION
 
+
+

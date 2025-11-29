@@ -78,3 +78,5 @@ class TestThresholdConfig:
         assert targets["response_time"]["unit"] == "ms"
         assert targets["throughput"]["unit"] == "ops/sec"
 
+
+

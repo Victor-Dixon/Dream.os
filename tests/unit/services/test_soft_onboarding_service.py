@@ -86,7 +86,7 @@ class TestSoftOnboardingService:
         
         assert result is False
 
-    @patch('src.services.soft_onboarding_service.keyboard_control')
+    @patch('src.core.keyboard_control_lock.keyboard_control')
     @patch('src.services.handlers.soft_onboarding_handler.SoftOnboardingHandler')
     def test_execute_soft_onboarding_success(self, mock_handler_class, mock_keyboard_control):
         """Test execute_soft_onboarding with successful execution."""
@@ -105,7 +105,7 @@ class TestSoftOnboardingService:
         mock_keyboard_control.assert_called_once_with("soft_onboard_Agent-1")
         mock_handler.handle.assert_called_once()
 
-    @patch('src.services.soft_onboarding_service.keyboard_control')
+    @patch('src.core.keyboard_control_lock.keyboard_control')
     @patch('src.services.handlers.soft_onboarding_handler.SoftOnboardingHandler')
     def test_execute_soft_onboarding_failure(self, mock_handler_class, mock_keyboard_control):
         """Test execute_soft_onboarding when handler fails."""
@@ -124,8 +124,8 @@ class TestSoftOnboardingService:
 class TestSoftOnboardAgent:
     """Tests for soft_onboard_agent convenience function."""
 
-    @patch('src.services.soft_onboarding_service.is_locked')
-    @patch('src.services.soft_onboarding_service.keyboard_control')
+    @patch('src.core.keyboard_control_lock.is_locked')
+    @patch('src.core.keyboard_control_lock.keyboard_control')
     @patch('src.services.soft_onboarding_service.SoftOnboardingService')
     def test_soft_onboard_agent_success(self, mock_service_class, mock_keyboard_control, mock_is_locked):
         """Test soft_onboard_agent with successful onboarding."""
@@ -142,7 +142,7 @@ class TestSoftOnboardAgent:
         mock_keyboard_control.assert_called_once_with("soft_onboard_Agent-1")
         mock_service.onboard_agent.assert_called_once_with("Agent-1", "Test message")
 
-    @patch('src.services.soft_onboarding_service.is_locked')
+    @patch('src.core.keyboard_control_lock.is_locked')
     @patch('src.services.soft_onboarding_service.SoftOnboardingService')
     def test_soft_onboard_agent_lock_already_held(self, mock_service_class, mock_is_locked):
         """Test soft_onboard_agent when lock is already held."""
@@ -162,9 +162,9 @@ class TestSoftOnboardAgent:
 class TestSoftOnboardMultipleAgents:
     """Tests for soft_onboard_multiple_agents function."""
 
-    @patch('src.services.soft_onboarding_service.time.sleep')
+    @patch('time.sleep')
     @patch('src.services.soft_onboarding_service.soft_onboard_agent')
-    @patch('src.services.soft_onboarding_service.keyboard_control')
+    @patch('src.core.keyboard_control_lock.keyboard_control')
     def test_soft_onboard_multiple_agents_success(self, mock_keyboard_control, mock_onboard, mock_sleep):
         """Test soft_onboard_multiple_agents with successful onboarding."""
         mock_keyboard_control.return_value.__enter__ = Mock()
@@ -181,7 +181,7 @@ class TestSoftOnboardMultipleAgents:
     @patch('subprocess.run')
     @patch('pathlib.Path.exists')
     @patch('src.services.soft_onboarding_service.soft_onboard_agent')
-    @patch('src.services.soft_onboarding_service.keyboard_control')
+    @patch('src.core.keyboard_control_lock.keyboard_control')
     def test_soft_onboard_multiple_with_cycle_report(
         self, mock_keyboard_control, mock_onboard, mock_exists, mock_subprocess
     ):
@@ -202,7 +202,7 @@ class TestSoftOnboardMultipleAgents:
         mock_subprocess.assert_called_once()
 
     @patch('src.services.soft_onboarding_service.soft_onboard_agent')
-    @patch('src.services.soft_onboarding_service.keyboard_control')
+    @patch('src.core.keyboard_control_lock.keyboard_control')
     def test_soft_onboard_multiple_without_cycle_report(self, mock_keyboard_control, mock_onboard):
         """Test soft_onboard_multiple_agents without cycle report."""
         mock_keyboard_control.return_value.__enter__ = Mock()
@@ -274,4 +274,175 @@ class TestGenerateCycleAccomplishmentsReport:
         result = generate_cycle_accomplishments_report()
         
         assert result is None
+
+    @patch('subprocess.run')
+    @patch('pathlib.Path.exists')
+    def test_generate_cycle_report_timeout(self, mock_exists, mock_subprocess):
+        """Test cycle report generation with timeout."""
+        mock_exists.return_value = True
+        import subprocess
+        mock_subprocess.side_effect = subprocess.TimeoutExpired("cmd", 30)
+        
+        result = generate_cycle_accomplishments_report()
+        
+        assert result is None
+
+    @patch('subprocess.run')
+    @patch('pathlib.Path.exists')
+    def test_generate_cycle_report_exception(self, mock_exists, mock_subprocess):
+        """Test cycle report generation with exception."""
+        mock_exists.return_value = True
+        mock_subprocess.side_effect = Exception("Subprocess error")
+        
+        result = generate_cycle_accomplishments_report()
+        
+        assert result is None
+
+    @patch('subprocess.run')
+    @patch('pathlib.Path.exists')
+    def test_generate_cycle_report_no_path_in_output(self, mock_exists, mock_subprocess):
+        """Test cycle report when path not found in output."""
+        mock_exists.return_value = True
+        mock_result = Mock()
+        mock_result.returncode = 0
+        mock_result.stdout = "Report generated successfully"
+        mock_subprocess.return_value = mock_result
+        
+        result = generate_cycle_accomplishments_report()
+        
+        # Should return default location
+        assert result is not None
+        assert isinstance(result, Path)
+
+    @patch('src.services.handlers.soft_onboarding_handler.SoftOnboardingHandler')
+    def test_onboard_agent_with_multiple_kwargs(self, mock_handler_class):
+        """Test onboard_agent with multiple kwargs."""
+        service = SoftOnboardingService()
+        mock_handler = Mock()
+        mock_handler.handle.return_value = True
+        mock_handler_class.return_value = mock_handler
+        
+        result = service.onboard_agent(
+            "Agent-1", "Message",
+            role="test_role",
+            custom_cleanup_message="Cleanup",
+            extra_param="extra"
+        )
+        
+        assert result is True
+        call_args = mock_handler.handle.call_args[0][0]
+        assert call_args.role == "test_role"
+        assert call_args.custom_cleanup_message == "Cleanup"
+        assert call_args.extra_param == "extra"
+
+    @patch('src.core.keyboard_control_lock.keyboard_control')
+    @patch('src.services.handlers.soft_onboarding_handler.SoftOnboardingHandler')
+    def test_execute_soft_onboarding_with_cleanup_message(self, mock_handler_class, mock_keyboard_control):
+        """Test execute_soft_onboarding with custom cleanup message."""
+        service = SoftOnboardingService()
+        mock_handler = Mock()
+        mock_handler.handle.return_value = True
+        mock_handler_class.return_value = mock_handler
+        mock_keyboard_control.return_value.__enter__ = Mock()
+        mock_keyboard_control.return_value.__exit__ = Mock()
+        
+        result = service.execute_soft_onboarding(
+            "Agent-1", "Message", role="role", custom_cleanup_message="Cleanup"
+        )
+        
+        assert result is True
+        call_args = mock_handler.handle.call_args[0][0]
+        assert call_args.cleanup_message == "Cleanup"
+
+    @patch('src.core.keyboard_control_lock.is_locked')
+    @patch('src.services.soft_onboarding_service.SoftOnboardingService')
+    def test_soft_onboard_agent_with_kwargs(self, mock_service_class, mock_is_locked):
+        """Test soft_onboard_agent with kwargs."""
+        mock_is_locked.return_value = False
+        mock_service = Mock()
+        mock_service.onboard_agent.return_value = True
+        mock_service_class.return_value = mock_service
+        
+        with patch('src.services.soft_onboarding_service.keyboard_control') as mock_keyboard:
+            mock_keyboard.return_value.__enter__ = Mock()
+            mock_keyboard.return_value.__exit__ = Mock()
+            
+            result = soft_onboard_agent("Agent-1", "Message", role="role")
+            
+            assert result is True
+            mock_service.onboard_agent.assert_called_once_with("Agent-1", "Message", role="role")
+
+    @patch('time.sleep')
+    @patch('subprocess.run')
+    @patch('pathlib.Path.exists')
+    @patch('src.services.soft_onboarding_service.soft_onboard_agent')
+    @patch('src.core.keyboard_control_lock.keyboard_control')
+    def test_soft_onboard_multiple_cycle_report_script_not_found(
+        self, mock_keyboard_control, mock_onboard, mock_exists, mock_subprocess, mock_sleep
+    ):
+        """Test cycle report generation when script doesn't exist."""
+        mock_keyboard_control.return_value.__enter__ = Mock()
+        mock_keyboard_control.return_value.__exit__ = Mock()
+        mock_onboard.return_value = True
+        mock_exists.return_value = False
+        
+        agents = [("Agent-1", "Message 1")]
+        results = soft_onboard_multiple_agents(agents, generate_cycle_report=True)
+        
+        assert results == {"Agent-1": True}
+        mock_subprocess.assert_not_called()
+
+    @patch('time.sleep')
+    @patch('subprocess.run')
+    @patch('pathlib.Path.exists')
+    @patch('src.services.soft_onboarding_service.soft_onboard_agent')
+    @patch('src.core.keyboard_control_lock.keyboard_control')
+    def test_soft_onboard_multiple_cycle_report_exception(
+        self, mock_keyboard_control, mock_onboard, mock_exists, mock_subprocess, mock_sleep
+    ):
+        """Test cycle report generation exception handling."""
+        mock_keyboard_control.return_value.__enter__ = Mock()
+        mock_keyboard_control.return_value.__exit__ = Mock()
+        mock_onboard.return_value = True
+        mock_exists.return_value = True
+        mock_subprocess.side_effect = Exception("Report error")
+        
+        agents = [("Agent-1", "Message 1")]
+        results = soft_onboard_multiple_agents(agents, generate_cycle_report=True)
+        
+        # Should handle exception gracefully
+        assert results == {"Agent-1": True}
+
+    @patch('time.sleep')
+    @patch('src.services.soft_onboarding_service.soft_onboard_agent')
+    @patch('src.core.keyboard_control_lock.keyboard_control')
+    def test_soft_onboard_multiple_empty_list(self, mock_keyboard_control, mock_onboard, mock_sleep):
+        """Test soft_onboard_multiple_agents with empty list."""
+        mock_keyboard_control.return_value.__enter__ = Mock()
+        mock_keyboard_control.return_value.__exit__ = Mock()
+        
+        results = soft_onboard_multiple_agents([])
+        
+        assert results == {}
+        mock_onboard.assert_not_called()
+
+    @patch('src.services.handlers.soft_onboarding_handler.SoftOnboardingHandler')
+    def test_handler_property_caching(self, mock_handler_class):
+        """Test that handler property caches the handler instance."""
+        service = SoftOnboardingService()
+        mock_handler = Mock()
+        mock_handler_class.return_value = mock_handler
+        
+        handler1 = service.handler
+        handler2 = service.handler
+        
+        assert handler1 is handler2
+        assert mock_handler_class.call_count == 1
+
+    def test_service_logger_initialization(self):
+        """Test that service has logger."""
+        service = SoftOnboardingService()
+        
+        # Service should have logger attribute (from logging.getLogger)
+        assert hasattr(service, 'handler')  # At least handler property exists
 

@@ -29,7 +29,7 @@ class TestHardOnboardingService:
         with pytest.raises(ImportError, match="PyAutoGUI required"):
             HardOnboardingService()
 
-    @patch('src.services.hard_onboarding_service.get_coordinate_loader')
+    @patch('src.core.coordinate_loader.get_coordinate_loader')
     @patch('src.services.hard_onboarding_service.PYAUTOGUI_AVAILABLE', True)
     @patch('src.services.hard_onboarding_service.pyautogui')
     def test_load_agent_coordinates(self, mock_pyautogui, mock_get_loader):
@@ -47,7 +47,7 @@ class TestHardOnboardingService:
         mock_loader.get_chat_coordinates.assert_called_once_with("Agent-1")
         mock_loader.get_onboarding_coordinates.assert_called_once_with("Agent-1")
 
-    @patch('src.services.hard_onboarding_service.PyAutoGUIMessagingDelivery')
+    @patch('src.core.messaging_pyautogui.PyAutoGUIMessagingDelivery')
     @patch('src.services.hard_onboarding_service.PYAUTOGUI_AVAILABLE', True)
     @patch('src.services.hard_onboarding_service.pyautogui')
     def test_validate_coordinates(self, mock_pyautogui, mock_delivery_class):
@@ -63,8 +63,8 @@ class TestHardOnboardingService:
         mock_delivery.validate_coordinates.assert_called_once_with("Agent-1", (100, 200))
 
     @patch('src.services.hard_onboarding_service.time.sleep')
-    @patch('src.services.hard_onboarding_service.get_coordinate_loader')
-    @patch('src.services.hard_onboarding_service.PyAutoGUIMessagingDelivery')
+    @patch('src.core.coordinate_loader.get_coordinate_loader')
+    @patch('src.core.messaging_pyautogui.PyAutoGUIMessagingDelivery')
     @patch('src.services.hard_onboarding_service.PYAUTOGUI_AVAILABLE', True)
     @patch('src.services.hard_onboarding_service.pyautogui')
     def test_step_1_clear_chat_success(
@@ -87,7 +87,7 @@ class TestHardOnboardingService:
         mock_pyautogui.click.assert_called_once()
         mock_pyautogui.hotkey.assert_called_once_with("ctrl", "shift", "backspace")
 
-    @patch('src.services.hard_onboarding_service.get_coordinate_loader')
+    @patch('src.core.coordinate_loader.get_coordinate_loader')
     @patch('src.services.hard_onboarding_service.PYAUTOGUI_AVAILABLE', True)
     @patch('src.services.hard_onboarding_service.pyautogui')
     def test_step_1_clear_chat_no_coordinates(self, mock_pyautogui, mock_get_loader):
@@ -126,7 +126,7 @@ class TestHardOnboardingService:
         mock_pyautogui.hotkey.assert_called_once_with("ctrl", "n")
 
     @patch('src.services.hard_onboarding_service.time.sleep')
-    @patch('src.services.hard_onboarding_service.get_coordinate_loader')
+    @patch('src.core.coordinate_loader.get_coordinate_loader')
     @patch('src.services.hard_onboarding_service.PYAUTOGUI_AVAILABLE', True)
     @patch('src.services.hard_onboarding_service.pyautogui')
     def test_step_4_navigate_to_onboarding_success(
@@ -145,7 +145,7 @@ class TestHardOnboardingService:
         mock_pyautogui.moveTo.assert_called_once_with(300, 400)
         mock_pyautogui.click.assert_called_once()
 
-    @patch('src.services.hard_onboarding_service.get_coordinate_loader')
+    @patch('src.core.coordinate_loader.get_coordinate_loader')
     @patch('src.services.hard_onboarding_service.PYAUTOGUI_AVAILABLE', True)
     @patch('src.services.hard_onboarding_service.pyautogui')
     def test_step_4_navigate_invalid_coordinates(self, mock_pyautogui, mock_get_loader):
@@ -257,8 +257,9 @@ class TestHardOnboardAgent:
         result = hard_onboard_agent("Agent-1", "Onboarding message", role="test_role")
         
         assert result is True
+        # Role is passed as positional arg, not keyword
         mock_service.execute_hard_onboarding.assert_called_once_with(
-            "Agent-1", "Onboarding message", role="test_role"
+            "Agent-1", "Onboarding message", "test_role"
         )
 
     @patch('src.services.hard_onboarding_service.HardOnboardingService')
@@ -303,7 +304,312 @@ class TestHardOnboardMultipleAgents:
         results = hard_onboard_multiple_agents(agents, role="test_role")
         
         assert results == {"Agent-1": True}
+        # Role is passed as positional arg, not keyword
         mock_service.execute_hard_onboarding.assert_called_once_with(
-            "Agent-1", "Message 1", role="test_role"
+            "Agent-1", "Message 1", "test_role"
         )
+
+    @patch('src.services.hard_onboarding_service.time.sleep')
+    @patch('src.services.hard_onboarding_service.HardOnboardingService')
+    def test_hard_onboard_multiple_agents_empty_list(self, mock_service_class, mock_sleep):
+        """Test hard_onboard_multiple_agents with empty list."""
+        mock_service = Mock()
+        mock_service_class.return_value = mock_service
+        
+        results = hard_onboard_multiple_agents([])
+        
+        assert results == {}
+        mock_service.execute_hard_onboarding.assert_not_called()
+
+    @patch('src.services.hard_onboarding_service.time.sleep')
+    @patch('src.services.hard_onboarding_service.HardOnboardingService')
+    def test_hard_onboard_multiple_agents_partial_failure(self, mock_service_class, mock_sleep):
+        """Test hard_onboard_multiple_agents with partial failures."""
+        mock_service = Mock()
+        mock_service.execute_hard_onboarding.side_effect = [True, False, True]
+        mock_service_class.return_value = mock_service
+        
+        agents = [("Agent-1", "M1"), ("Agent-2", "M2"), ("Agent-3", "M3")]
+        results = hard_onboard_multiple_agents(agents)
+        
+        assert results == {"Agent-1": True, "Agent-2": False, "Agent-3": True}
+        assert mock_sleep.call_count == 3
+
+    @patch('src.services.hard_onboarding_service.time.sleep')
+    @patch('src.core.coordinate_loader.get_coordinate_loader')
+    @patch('src.core.messaging_pyautogui.PyAutoGUIMessagingDelivery')
+    @patch('src.services.hard_onboarding_service.PYAUTOGUI_AVAILABLE', True)
+    @patch('src.services.hard_onboarding_service.pyautogui')
+    def test_step_1_clear_chat_validation_failure(
+        self, mock_pyautogui, mock_delivery_class, mock_get_loader, mock_sleep
+    ):
+        """Test step_1_clear_chat when coordinate validation fails."""
+        service = HardOnboardingService()
+        mock_loader = Mock()
+        mock_loader.get_chat_coordinates.return_value = (100, 200)
+        mock_get_loader.return_value = mock_loader
+        mock_delivery = Mock()
+        mock_delivery.validate_coordinates.return_value = False
+        mock_delivery_class.return_value = mock_delivery
+        
+        result = service.step_1_clear_chat("Agent-1")
+        
+        assert result is False
+
+    @patch('src.services.hard_onboarding_service.time.sleep')
+    @patch('src.core.coordinate_loader.get_coordinate_loader')
+    @patch('src.core.messaging_pyautogui.PyAutoGUIMessagingDelivery')
+    @patch('src.services.hard_onboarding_service.PYAUTOGUI_AVAILABLE', True)
+    @patch('src.services.hard_onboarding_service.pyautogui')
+    def test_step_1_clear_chat_exception(
+        self, mock_pyautogui, mock_delivery_class, mock_get_loader, mock_sleep
+    ):
+        """Test step_1_clear_chat exception handling."""
+        service = HardOnboardingService()
+        mock_loader = Mock()
+        mock_loader.get_chat_coordinates.return_value = (100, 200)
+        mock_get_loader.return_value = mock_loader
+        mock_delivery = Mock()
+        mock_delivery.validate_coordinates.return_value = True
+        mock_delivery_class.return_value = mock_delivery
+        mock_pyautogui.moveTo.side_effect = Exception("Move error")
+        
+        result = service.step_1_clear_chat("Agent-1")
+        
+        assert result is False
+
+    @patch('src.services.hard_onboarding_service.time.sleep')
+    @patch('src.services.hard_onboarding_service.PYAUTOGUI_AVAILABLE', True)
+    @patch('src.services.hard_onboarding_service.pyautogui')
+    def test_step_2_send_execute_exception(self, mock_pyautogui, mock_sleep):
+        """Test step_2_send_execute exception handling."""
+        service = HardOnboardingService()
+        mock_pyautogui.hotkey.side_effect = Exception("Hotkey error")
+        
+        result = service.step_2_send_execute()
+        
+        assert result is False
+
+    @patch('src.services.hard_onboarding_service.time.sleep')
+    @patch('src.services.hard_onboarding_service.PYAUTOGUI_AVAILABLE', True)
+    @patch('src.services.hard_onboarding_service.pyautogui')
+    def test_step_3_new_window_exception(self, mock_pyautogui, mock_sleep):
+        """Test step_3_new_window exception handling."""
+        service = HardOnboardingService()
+        mock_pyautogui.hotkey.side_effect = Exception("Hotkey error")
+        
+        result = service.step_3_new_window()
+        
+        assert result is False
+
+    @patch('src.services.hard_onboarding_service.time.sleep')
+    @patch('src.core.coordinate_loader.get_coordinate_loader')
+    @patch('src.services.hard_onboarding_service.PYAUTOGUI_AVAILABLE', True)
+    @patch('src.services.hard_onboarding_service.pyautogui')
+    def test_step_4_navigate_no_coordinates(self, mock_pyautogui, mock_get_loader, mock_sleep):
+        """Test step_4_navigate_to_onboarding when coordinates are missing."""
+        service = HardOnboardingService()
+        mock_loader = Mock()
+        mock_loader.get_chat_coordinates.return_value = (100, 200)
+        mock_loader.get_onboarding_coordinates.return_value = None
+        mock_get_loader.return_value = mock_loader
+        
+        result = service.step_4_navigate_to_onboarding("Agent-1")
+        
+        assert result is False
+
+    @patch('src.services.hard_onboarding_service.time.sleep')
+    @patch('src.core.coordinate_loader.get_coordinate_loader')
+    @patch('src.services.hard_onboarding_service.PYAUTOGUI_AVAILABLE', True)
+    @patch('src.services.hard_onboarding_service.pyautogui')
+    def test_step_4_navigate_exception(self, mock_pyautogui, mock_get_loader, mock_sleep):
+        """Test step_4_navigate_to_onboarding exception handling."""
+        service = HardOnboardingService()
+        mock_loader = Mock()
+        mock_loader.get_chat_coordinates.return_value = (100, 200)
+        mock_loader.get_onboarding_coordinates.return_value = (300, 400)
+        mock_get_loader.return_value = mock_loader
+        mock_pyautogui.moveTo.side_effect = Exception("Move error")
+        
+        result = service.step_4_navigate_to_onboarding("Agent-1")
+        
+        assert result is False
+
+    @patch('src.services.hard_onboarding_service.TEMPLATE_LOADER_AVAILABLE', True)
+    @patch('src.services.hard_onboarding_service.load_onboarding_template')
+    @patch('src.services.hard_onboarding_service.pyperclip')
+    @patch('src.services.hard_onboarding_service.time.sleep')
+    @patch('src.services.hard_onboarding_service.PYAUTOGUI_AVAILABLE', True)
+    @patch('src.services.hard_onboarding_service.pyautogui')
+    def test_step_5_send_onboarding_message_no_role(
+        self, mock_pyautogui, mock_sleep, mock_pyperclip, mock_load_template
+    ):
+        """Test step_5_send_onboarding_message without role."""
+        service = HardOnboardingService()
+        
+        result = service.step_5_send_onboarding_message("Agent-1", "Custom message", role=None)
+        
+        assert result is True
+        # Should use custom message only when role is None
+        mock_pyperclip.copy.assert_called_once_with("Custom message")
+
+    @patch('src.services.hard_onboarding_service.TEMPLATE_LOADER_AVAILABLE', True)
+    @patch('src.services.hard_onboarding_service.load_onboarding_template')
+    @patch('src.services.hard_onboarding_service.pyperclip')
+    @patch('src.services.hard_onboarding_service.time.sleep')
+    @patch('src.services.hard_onboarding_service.PYAUTOGUI_AVAILABLE', True)
+    @patch('src.services.hard_onboarding_service.pyautogui')
+    def test_step_5_send_onboarding_message_exception(
+        self, mock_pyautogui, mock_sleep, mock_pyperclip, mock_load_template
+    ):
+        """Test step_5_send_onboarding_message exception handling."""
+        service = HardOnboardingService()
+        mock_pyperclip.copy.side_effect = Exception("Copy error")
+        
+        result = service.step_5_send_onboarding_message("Agent-1", "Message")
+        
+        assert result is False
+
+    @patch('src.services.hard_onboarding_service.HardOnboardingService.step_5_send_onboarding_message')
+    @patch('src.services.hard_onboarding_service.HardOnboardingService.step_4_navigate_to_onboarding')
+    @patch('src.services.hard_onboarding_service.HardOnboardingService.step_3_new_window')
+    @patch('src.services.hard_onboarding_service.HardOnboardingService.step_2_send_execute')
+    @patch('src.services.hard_onboarding_service.HardOnboardingService.step_1_clear_chat')
+    @patch('src.services.hard_onboarding_service.PYAUTOGUI_AVAILABLE', True)
+    @patch('src.services.hard_onboarding_service.pyautogui')
+    def test_execute_hard_onboarding_step2_failure(
+        self, mock_pyautogui, mock_step1, mock_step2, mock_step3, mock_step4, mock_step5
+    ):
+        """Test execute_hard_onboarding when step 2 fails."""
+        service = HardOnboardingService()
+        mock_step1.return_value = True
+        mock_step2.return_value = False
+        
+        result = service.execute_hard_onboarding("Agent-1", "Message")
+        
+        assert result is False
+        mock_step1.assert_called_once()
+        mock_step2.assert_called_once()
+        mock_step3.assert_not_called()
+
+    @patch('src.services.hard_onboarding_service.HardOnboardingService.step_5_send_onboarding_message')
+    @patch('src.services.hard_onboarding_service.HardOnboardingService.step_4_navigate_to_onboarding')
+    @patch('src.services.hard_onboarding_service.HardOnboardingService.step_3_new_window')
+    @patch('src.services.hard_onboarding_service.HardOnboardingService.step_2_send_execute')
+    @patch('src.services.hard_onboarding_service.HardOnboardingService.step_1_clear_chat')
+    @patch('src.services.hard_onboarding_service.PYAUTOGUI_AVAILABLE', True)
+    @patch('src.services.hard_onboarding_service.pyautogui')
+    def test_execute_hard_onboarding_step3_failure(
+        self, mock_pyautogui, mock_step1, mock_step2, mock_step3, mock_step4, mock_step5
+    ):
+        """Test execute_hard_onboarding when step 3 fails."""
+        service = HardOnboardingService()
+        mock_step1.return_value = True
+        mock_step2.return_value = True
+        mock_step3.return_value = False
+        
+        result = service.execute_hard_onboarding("Agent-1", "Message")
+        
+        assert result is False
+        mock_step4.assert_not_called()
+
+    @patch('src.services.hard_onboarding_service.HardOnboardingService.step_5_send_onboarding_message')
+    @patch('src.services.hard_onboarding_service.HardOnboardingService.step_4_navigate_to_onboarding')
+    @patch('src.services.hard_onboarding_service.HardOnboardingService.step_3_new_window')
+    @patch('src.services.hard_onboarding_service.HardOnboardingService.step_2_send_execute')
+    @patch('src.services.hard_onboarding_service.HardOnboardingService.step_1_clear_chat')
+    @patch('src.services.hard_onboarding_service.PYAUTOGUI_AVAILABLE', True)
+    @patch('src.services.hard_onboarding_service.pyautogui')
+    def test_execute_hard_onboarding_step4_failure(
+        self, mock_pyautogui, mock_step1, mock_step2, mock_step3, mock_step4, mock_step5
+    ):
+        """Test execute_hard_onboarding when step 4 fails."""
+        service = HardOnboardingService()
+        mock_step1.return_value = True
+        mock_step2.return_value = True
+        mock_step3.return_value = True
+        mock_step4.return_value = False
+        
+        result = service.execute_hard_onboarding("Agent-1", "Message")
+        
+        assert result is False
+        mock_step5.assert_not_called()
+
+    @patch('src.services.hard_onboarding_service.HardOnboardingService.step_5_send_onboarding_message')
+    @patch('src.services.hard_onboarding_service.HardOnboardingService.step_4_navigate_to_onboarding')
+    @patch('src.services.hard_onboarding_service.HardOnboardingService.step_3_new_window')
+    @patch('src.services.hard_onboarding_service.HardOnboardingService.step_2_send_execute')
+    @patch('src.services.hard_onboarding_service.HardOnboardingService.step_1_clear_chat')
+    @patch('src.services.hard_onboarding_service.PYAUTOGUI_AVAILABLE', True)
+    @patch('src.services.hard_onboarding_service.pyautogui')
+    def test_execute_hard_onboarding_step5_failure(
+        self, mock_pyautogui, mock_step1, mock_step2, mock_step3, mock_step4, mock_step5
+    ):
+        """Test execute_hard_onboarding when step 5 fails."""
+        service = HardOnboardingService()
+        mock_step1.return_value = True
+        mock_step2.return_value = True
+        mock_step3.return_value = True
+        mock_step4.return_value = True
+        mock_step5.return_value = False
+        
+        result = service.execute_hard_onboarding("Agent-1", "Message")
+        
+        assert result is False
+        mock_step5.assert_called_once()
+
+    @patch('src.services.hard_onboarding_service.HardOnboardingService')
+    def test_hard_onboard_agent_no_role(self, mock_service_class):
+        """Test hard_onboard_agent without role."""
+        mock_service = Mock()
+        mock_service.execute_hard_onboarding.return_value = True
+        mock_service_class.return_value = mock_service
+        
+        result = hard_onboard_agent("Agent-1", "Message", role=None)
+        
+        assert result is True
+        mock_service.execute_hard_onboarding.assert_called_once_with(
+            "Agent-1", "Message", None
+        )
+
+    @patch('src.services.hard_onboarding_service.time.sleep')
+    @patch('src.core.coordinate_loader.get_coordinate_loader')
+    @patch('src.services.hard_onboarding_service.PYAUTOGUI_AVAILABLE', True)
+    @patch('src.services.hard_onboarding_service.pyautogui')
+    def test_step_4_navigate_coordinate_bounds_check(self, mock_pyautogui, mock_get_loader, mock_sleep):
+        """Test step_4 coordinate bounds validation."""
+        service = HardOnboardingService()
+        mock_loader = Mock()
+        mock_loader.get_chat_coordinates.return_value = (100, 200)
+        # Test various out-of-bounds coordinates
+        test_cases = [
+            (-3000, 500),  # X too negative
+            (3000, 500),   # X too positive
+            (300, -100),   # Y too negative
+            (300, 2000),  # Y too positive
+        ]
+        
+        for coords in test_cases:
+            mock_loader.get_onboarding_coordinates.return_value = coords
+            mock_get_loader.return_value = mock_loader
+            
+            result = service.step_4_navigate_to_onboarding("Agent-1")
+            assert result is False
+
+    @patch('src.services.hard_onboarding_service.time.sleep')
+    @patch('src.core.coordinate_loader.get_coordinate_loader')
+    @patch('src.services.hard_onboarding_service.PYAUTOGUI_AVAILABLE', True)
+    @patch('src.services.hard_onboarding_service.pyautogui')
+    def test_step_4_navigate_valid_coordinates(self, mock_pyautogui, mock_get_loader, mock_sleep):
+        """Test step_4 with valid coordinates."""
+        service = HardOnboardingService()
+        mock_loader = Mock()
+        mock_loader.get_chat_coordinates.return_value = (100, 200)
+        mock_loader.get_onboarding_coordinates.return_value = (500, 600)  # Valid
+        mock_get_loader.return_value = mock_loader
+        
+        result = service.step_4_navigate_to_onboarding("Agent-1")
+        
+        assert result is True
+        mock_pyautogui.moveTo.assert_called_once_with(500, 600)
 

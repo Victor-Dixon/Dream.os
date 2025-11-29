@@ -53,3 +53,5 @@ class TestCoordinationValidator:
         assert issue.rule_id == "test_rule"
         assert issue.severity == ValidationSeverity.ERROR
 
+
+

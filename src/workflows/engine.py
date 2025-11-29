@@ -31,7 +31,7 @@ from .models import (
 try:
     from ..core.coordinate_loader import get_coordinate_loader
     from ..core.messaging_pyautogui import send_message_to_agent
-    from ..core.unified_config import get_unified_config
+    from ..core.config_ssot import get_unified_config
     from ..core.unified_logging_system import get_logger
 except ImportError as e:
     logging.warning(f"V2 integration imports failed: {e}")

@@ -34,3 +34,5 @@ class TestStandardValidator:
         result = validator.validate(valid_component)
         assert isinstance(result, (bool, dict, list))
 
+
+

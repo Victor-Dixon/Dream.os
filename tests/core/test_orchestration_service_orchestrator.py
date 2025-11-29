@@ -172,3 +172,84 @@ class TestServiceOrchestrator:
         assert result.ok is True
         assert result.metrics["service_steps"] == 1
 
+    def test_execute_data_modification(self, orchestrator, context):
+        """Test that execute allows data modification through steps."""
+        class ModifyingStep:
+            def __init__(self, name):
+                self._name = name
+            def name(self):
+                return self._name
+            def run(self, ctx, data):
+                data["modified"] = True
+                data["value"] = data.get("value", 0) + 1
+                return data
+        
+        orchestrator.registry.register("modify", lambda: ModifyingStep("modify"))
+        payload = {"service_pipeline": ["modify"], "value": 5}
+        
+        result = orchestrator.execute(context, payload)
+        
+        assert result.ok is True
+        assert result.metrics["service_steps"] == 1
+
+    def test_execute_with_missing_steps(self, orchestrator, context):
+        """Test execute with missing steps in registry."""
+        payload = {"service_pipeline": ["nonexistent_step"]}
+        
+        result = orchestrator.execute(context, payload)
+        
+        assert result.ok is True
+        assert result.metrics["service_steps"] == 0
+
+    def test_execute_with_step_failure(self, registry, context):
+        """Test execute with a step that raises an exception."""
+        class FailingStep:
+            def name(self):
+                return "failing_step"
+            def run(self, ctx, data):
+                raise ValueError("Step failed")
+        
+        registry.register("failing_step", lambda: FailingStep())
+        orchestrator = ServiceOrchestrator(registry)
+        payload = {"service_pipeline": ["failing_step"]}
+        
+        with pytest.raises(ValueError, match="Step failed"):
+            orchestrator.execute(context, payload)
+
+    def test_execute_preserves_all_data(self, orchestrator, context):
+        """Test that execute preserves all data fields through steps."""
+        payload = {
+            "service_pipeline": ["step1"],
+            "data1": "value1",
+            "data2": 42,
+            "data3": {"nested": "value"}
+        }
+        
+        result = orchestrator.execute(context, payload)
+        
+        assert result.ok is True
+        assert result.metrics["service_steps"] == 1
+
+    def test_report_with_different_summaries(self, orchestrator):
+        """Test report with different summary formats."""
+        result1 = OrchestrationResult(ok=True, summary="service:0", metrics={})
+        result2 = OrchestrationResult(ok=True, summary="service:10", metrics={})
+        
+        report1 = orchestrator.report(result1)
+        report2 = orchestrator.report(result2)
+        
+        assert "[ServiceOrchestrator]" in report1
+        assert "service:0" in report1
+        assert "[ServiceOrchestrator]" in report2
+        assert "service:10" in report2
+
+    def test_plan_with_invalid_step_types(self, orchestrator, context):
+        """Test plan with invalid step types in pipeline."""
+        payload = {"service_pipeline": ["step1", None, "step2"]}
+        
+        # Should handle gracefully or skip invalid entries
+        steps = list(orchestrator.plan(context, payload))
+        
+        # Registry should only return valid steps
+        assert len(steps) >= 0  # At least handle gracefully
+

@@ -16,7 +16,9 @@
       "num": 3,
       "name": "DreamBank",
       "analyzed": true,
-      "agent": "Agent-1"
+      "agent": "Agent-1",
+      "merged": true,
+      "merged_into": "DreamVault"
     },
     {
       "num": 4,
@@ -74,23 +76,14 @@
       "agent": "Agent-2"
     },
     {
-      "num": 13,
-      "name": "bible-application",
-      "analyzed": true,
-      "agent": "Agent-2"
-    },
-    {
-      "num": 14,
-      "name": "Unknown",
-      "analyzed": false,
-      "agent": "Agent-2"
-    },
-    {
       "num": 15,
       "name": "DreamVault",
       "analyzed": true,
       "agent": "Agent-2",
-      "goldmine": true
+      "goldmine": true,
+      "merged_repos": [
+        "DreamBank"
+      ]
     },
     {
       "num": 16,
@@ -189,38 +182,8 @@
       "goldmine": true
     },
     {
-      "num": 31,
-      "name": "streamertools",
-      "analyzed": true,
-      "agent": "Agent-5"
-    },
-    {
-      "num": 32,
-      "name": "focusforge",
-      "analyzed": true,
-      "agent": "Agent-5"
-    },
-    {
-      "num": 33,
-      "name": "tbowtactics",
-      "analyzed": true,
-      "agent": "Agent-5"
-    },
-    {
-      "num": 34,
-      "name": "fastapi",
-      "analyzed": true,
-      "agent": "Agent-5"
-    },
-    {
       "num": 35,
       "name": "dadudekcwebsite",
-      "analyzed": true,
-      "agent": "Agent-5"
-    },
-    {
-      "num": 36,
-      "name": "dadudekc",
       "analyzed": true,
       "agent": "Agent-5"
     },
@@ -256,12 +219,6 @@
       "agent": "Agent-6"
     },
     {
-      "num": 42,
-      "name": "MeTuber",
-      "analyzed": true,
-      "agent": "Agent-6"
-    },
-    {
       "num": 43,
       "name": "ideas",
       "analyzed": false,
@@ -269,23 +226,11 @@
       "goldmine": true
     },
     {
-      "num": 44,
-      "name": "langchain-google",
-      "analyzed": true,
-      "agent": "Agent-6"
-    },
-    {
       "num": 45,
       "name": "intelligent-multi-agent",
       "analyzed": false,
       "agent": "Agent-6",
       "goldmine": true
-    },
-    {
-      "num": 46,
-      "name": "machinelearningmodelmaker",
-      "analyzed": true,
-      "agent": "Agent-6"
     },
     {
       "num": 47,
@@ -299,19 +244,6 @@
       "analyzed": false,
       "agent": "Agent-6",
       "goldmine": true
-    },
-    {
-      "num": 49,
-      "name": "projectscanner",
-      "analyzed": false,
-      "agent": "Agent-6",
-      "goldmine": true
-    },
-    {
-      "num": 50,
-      "name": "Superpowered-TTRPG",
-      "analyzed": true,
-      "agent": "Agent-6"
     },
     {
       "num": 51,
@@ -338,12 +270,6 @@
       "agent": "Agent-7"
     },
     {
-      "num": 55,
-      "name": "LSTMmodel_trainer",
-      "analyzed": true,
-      "agent": "Agent-7"
-    },
-    {
       "num": 56,
       "name": "IT_help_desk",
       "analyzed": true,
@@ -364,12 +290,6 @@
     {
       "num": 59,
       "name": "DigitalDreamscape",
-      "analyzed": true,
-      "agent": "Agent-7"
-    },
-    {
-      "num": 60,
-      "name": "TROOP",
       "analyzed": true,
       "agent": "Agent-7"
     },
@@ -434,12 +354,6 @@
       "agent": "Agent-8"
     },
     {
-      "num": 71,
-      "name": "FreeWork",
-      "analyzed": true,
-      "agent": "Captain"
-    },
-    {
       "num": 72,
       "name": "bolt-project",
       "analyzed": true,
@@ -456,53 +370,47 @@
       "name": "SWARM",
       "analyzed": true,
       "agent": "Captain"
-    },
-    {
-      "num": 75,
-      "name": "stocktwits-analyzer",
-      "analyzed": true,
-      "agent": "Captain"
     }
   ],
   "stats": {
-    "total_repos": 75,
-    "analyzed": 63,
-    "pending": 12,
-    "goldmines": 15,
-    "completion_percent": 84.0
-  },
-  "agents": {
-    "Agent-1": {
-      "assigned": 10,
-      "completed": 9
-    },
-    "Agent-2": {
-      "assigned": 10,
-      "completed": 9
-    },
-    "Agent-3": {
-      "assigned": 10,
-      "completed": 10
-    },
-    "Agent-5": {
-      "assigned": 10,
-      "completed": 10
-    },
-    "Agent-6": {
-      "assigned": 10,
-      "completed": 0
-    },
-    "Agent-7": {
-      "assigned": 10,
-      "completed": 10
-    },
-    "Agent-8": {
-      "assigned": 10,
-      "completed": 0
-    },
-    "Captain": {
-      "assigned": 5,
-      "completed": 0
+    "total_repos": 59,
+    "analyzed": 56,
+    "pending": 4,
+    "goldmines": 12,
+    "completion_percent": 93.3,
+    "agents": {
+      "Agent-1": {
+        "assigned": 10,
+        "completed": 10
+      },
+      "Agent-2": {
+        "assigned": 9,
+        "completed": 8
+      },
+      "Agent-3": {
+        "assigned": 10,
+        "completed": 10
+      },
+      "Agent-5": {
+        "assigned": 5,
+        "completed": 5
+      },
+      "Agent-6": {
+        "assigned": 5,
+        "completed": 2
+      },
+      "Agent-7": {
+        "assigned": 8,
+        "completed": 8
+      },
+      "Agent-8": {
+        "assigned": 10,
+        "completed": 10
+      },
+      "Captain": {
+        "assigned": 3,
+        "completed": 3
+      }
     }
   }
 }

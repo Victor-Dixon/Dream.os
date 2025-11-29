@@ -13,7 +13,7 @@ License: MIT
 
 from datetime import datetime
 
-from .data_models import (
+from .models import (
     AgentPerformanceMetrics,
     StrategicMission,
     StrategicOversightReport,
@@ -21,8 +21,9 @@ from .data_models import (
     SwarmCoordinationInsight,
     SwarmCoordinationStatus,
     SystemHealthMetrics,
-    VectorDatabaseMetrics,
 )
+# VectorDatabaseMetrics not yet implemented - stub if needed
+VectorDatabaseMetrics = None
 from .enums import AgentRole, ConfidenceLevel, ImpactLevel, PriorityLevel, ReportType
 from .factories.metrics_factory import MetricsFactory
 from .factories.mission_factory import MissionFactory

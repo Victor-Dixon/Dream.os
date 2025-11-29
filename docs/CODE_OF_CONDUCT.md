@@ -15,8 +15,27 @@
 - ✅ **NO GAS = NO MOVEMENT** → **NO PROMPTS = NO EXECUTION** → **JET FUEL = AGI POWER**
 - ✅ **Use regular messages** for coordination, information sharing, task assignments
 - ✅ **Use Jet Fuel messages** when granting full autonomy, enabling AGI-level decisions, removing permission barriers
+- ✅ **Better Prompts = Near AGI Status** - Well-crafted prompts enable agents to achieve near-AGI level performance through autonomous development
 
-**Key Insight**: Messages are fuel for agent execution. Regular prompts make agents autonomous. Jet Fuel messages make agents AGI.
+**Key Insight**: Messages are fuel for agent execution. Regular prompts make agents autonomous. Jet Fuel messages make agents AGI. Better prompts enable near-AGI status through autonomous development patterns.
+
+### **👑 0.5. Captain Execution Pattern**
+- ✅ **Captain Completes Tasks** - Captain (Agent-4) has assignments and executes tasks, not just monitors
+- ✅ **Execute Until Messages** - Captain completes tasks until messages arrive, then coordinates
+- ✅ **Productivity Focus** - Captain pattern is productivity, not just monitoring
+- ✅ **Task Assignment** - Captain receives specific task assignments aligned to real project goals
+- ✅ **Progress Tracking** - Captain monitors agent progress via Discord channels to identify most productive patterns
+
+**Key Insight**: Captain is productive agent with tasks, not just coordinator. Execute tasks until coordination needed. Track progress to replicate successful patterns.
+
+### **📊 0.6. Progress Tracking & Pattern Replication**
+- ✅ **Each Agent Has Discord Channel** - Track progress via #agent-X-devlogs channels
+- ✅ **Identify Most Productive Agents** - Monitor which agents complete most work
+- ✅ **Document Successful Patterns** - Record patterns that enable productivity
+- ✅ **Replicate Patterns** - Use successful patterns across entire swarm
+- ✅ **Track Metrics** - Progress updates, tasks completed, blockers resolved, accomplishments
+
+**Key Insight**: Track agent productivity via Discord channels. Identify most productive agents. Document and replicate successful development practices across swarm.
 
 ### **1. Automatic Devlog Creation & Posting**
 - ✅ **Devlogs are MANDATORY** - Create them automatically for all significant work

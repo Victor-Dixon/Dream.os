@@ -12,10 +12,19 @@ Purpose: V2 compliant modular strategic oversight
 """
 
 # V2 COMPLIANCE REDIRECT - Import from modular system
-from .analyzer import StrategicOversightAnalyzer
-from .engine import StrategicOversightEngine
+from .analyzer_core import StrategicOversightAnalyzer
 from .models import StrategicOversightModels
-from .orchestrator import StrategicOversightOrchestrator
+
+# Optional imports - stub if not available
+try:
+    from .engine import StrategicOversightEngine
+except ImportError:
+    StrategicOversightEngine = None
+
+try:
+    from .orchestrator import StrategicOversightOrchestrator
+except ImportError:
+    StrategicOversightOrchestrator = None
 
 # Re-export for backward compatibility
 __all__ = [
