@@ -1,1 +1,29 @@
-{}
+{
+  "ariajet": {
+    "host": "",
+    "username": "",
+    "password": "",
+    "remote_path": "/public_html"
+  },
+  "ariajet.site": {
+    "host": "",
+    "username": "",
+    "password": "",
+    "remote_path": "/public_html"
+  },
+  "prismblossom": {
+    "host": "",
+    "username": "",
+    "password": "",
+    "port": 22,
+    "remote_path": "/public_html/wp-content/themes/prismblossom"
+  },
+  "prismblossom.online": {
+    "host": "",
+    "username": "",
+    "password": "",
+    "port": 22,
+    "remote_path": "/public_html/wp-content/themes/prismblossom"
+  }
+}
+

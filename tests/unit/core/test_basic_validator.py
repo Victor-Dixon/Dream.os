@@ -58,3 +58,5 @@ class TestBasicValidator:
         issues = validator.validate_basic_fields(component)
         assert any("at least 3 characters" in issue.lower() for issue in issues)
 
+
+

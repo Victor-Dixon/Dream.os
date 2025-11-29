@@ -29,12 +29,9 @@ except ImportError:
         def get_system_health_data(self):
             return {}
 
+from .enums import ConfidenceLevel, ImpactLevel, InsightType, PriorityLevel
 from .models import (
     AgentPerformanceMetrics,
-    ConfidenceLevel,
-    ImpactLevel,
-    InsightType,
-    PriorityLevel,
     StrategicRecommendation,
     SwarmCoordinationInsight,
     SystemHealthMetrics,

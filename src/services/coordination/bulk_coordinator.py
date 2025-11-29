@@ -14,7 +14,7 @@ License: MIT
 import time
 from typing import Any
 
-from ..models.messaging_models import UnifiedMessage, UnifiedMessagePriority
+from ...core.messaging_models_core import UnifiedMessage, UnifiedMessagePriority
 from .strategy_coordinator import StrategyCoordinator
 
 

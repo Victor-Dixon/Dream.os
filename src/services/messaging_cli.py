@@ -35,6 +35,15 @@ except ImportError:
     TaskHandler = None
     TASK_HANDLER_AVAILABLE = False
 
+# Import hard onboarding handler
+try:
+    from src.services.handlers.hard_onboarding_handler import HardOnboardingHandler
+
+    HARD_ONBOARDING_HANDLER_AVAILABLE = True
+except ImportError:
+    HardOnboardingHandler = None
+    HARD_ONBOARDING_HANDLER_AVAILABLE = False
+
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
@@ -61,6 +70,9 @@ class MessagingCLI:
     def __init__(self):
         self.parser = create_messaging_parser()
         self.task_handler = TaskHandler() if TASK_HANDLER_AVAILABLE else None
+        self.hard_onboarding_handler = (
+            HardOnboardingHandler() if HARD_ONBOARDING_HANDLER_AVAILABLE else None
+        )
 
     def execute(self, args=None):
         """Execute CLI command based on arguments."""
@@ -70,8 +82,16 @@ class MessagingCLI:
         parsed_args = self.parser.parse_args(args)
 
         try:
-            # Check if task handler can handle this request (SSOT Blocker Fix - Agent-8)
+            # Check if hard onboarding handler can handle this request
             if (
+                HARD_ONBOARDING_HANDLER_AVAILABLE
+                and self.hard_onboarding_handler
+                and self.hard_onboarding_handler.can_handle(parsed_args)
+            ):
+                self.hard_onboarding_handler.handle(parsed_args)
+                return self.hard_onboarding_handler.exit_code
+            # Check if task handler can handle this request (SSOT Blocker Fix - Agent-8)
+            elif (
                 TASK_HANDLER_AVAILABLE
                 and self.task_handler
                 and self.task_handler.can_handle(parsed_args)

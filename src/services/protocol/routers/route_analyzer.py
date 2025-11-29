@@ -15,7 +15,7 @@ import logging
 from datetime import datetime
 from typing import Any
 
-from ...models.messaging_models import UnifiedMessage, UnifiedMessagePriority
+from ...core.messaging_models_core import UnifiedMessage, UnifiedMessagePriority
 from ..messaging_protocol_models import (
     ROUTE_PRIORITY_ORDER,
     MessageRoute,

@@ -17,7 +17,7 @@ def main():
     onboarding_message = """🐝 CAPTAIN AGENT-4 - HARD ONBOARDING COMPLETE! 🐝
 
 **Role**: Swarm Captain & Coordinator (Agent-4)
-**Position**: (-308, 1000) - Monitor 1, Bottom-Right
+**Position**: (-304, 745) - Monitor 1
 **Status**: AUTONOMOUS OPERATIONAL MODE
 
 ---

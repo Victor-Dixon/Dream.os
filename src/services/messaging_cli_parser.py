@@ -132,4 +132,29 @@ def create_messaging_parser() -> argparse.ArgumentParser:
         help="Mark task as complete",
     )
 
+    # Hard onboarding flag
+    parser.add_argument(
+        "--hard-onboarding",
+        action="store_true",
+        help="Execute hard onboarding protocol (5-step reset) for agent",
+    )
+
+    parser.add_argument(
+        "--onboarding-file",
+        type=str,
+        help="Path to file containing onboarding message (for hard onboarding)",
+    )
+
+    parser.add_argument(
+        "--role",
+        type=str,
+        help="Agent role assignment (for hard onboarding with template)",
+    )
+
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Dry run mode - show what would be done without executing",
+    )
+
     return parser

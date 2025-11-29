@@ -10,8 +10,12 @@ import pytest
 from src.discord_commander.utils.message_chunking import (
     chunk_field_value,
     chunk_message,
-    split_long_message,
-    truncate_field_value
+    chunk_embed_description,
+    format_chunk_header,
+    MAX_MESSAGE_LENGTH,
+    MAX_FIELD_VALUE,
+    SAFE_MESSAGE_CHUNK,
+    SAFE_FIELD_CHUNK
 )
 
 
@@ -46,19 +50,18 @@ class TestMessageChunking:
         assert len(chunks) > 1
         assert all(len(chunk) <= 2000 for chunk in chunks)
 
-    def test_split_long_message(self):
-        """Test splitting long message."""
-        long_text = "C" * 3000
-        chunks = split_long_message(long_text, max_length=1000)
+    def test_chunk_embed_description(self):
+        """Test chunking embed description."""
+        long_description = "C" * 5000  # Exceeds embed description limit
+        chunks = chunk_embed_description(long_description)
         assert len(chunks) > 1
-        assert all(len(chunk) <= 1000 for chunk in chunks)
+        assert all(len(chunk) <= 4000 for chunk in chunks)
 
-    def test_truncate_field_value(self):
-        """Test truncating field value."""
-        long_text = "D" * 2000
-        truncated = truncate_field_value(long_text, max_length=1000)
-        assert len(truncated) <= 1000
-        assert truncated.endswith("...")
+    def test_format_chunk_header(self):
+        """Test chunk header formatting."""
+        header = format_chunk_header(1, 3)
+        assert "Part 1/3" in header
+        assert header.startswith("**")
 
     def test_chunk_preserves_content(self):
         """Test that chunking preserves all content."""

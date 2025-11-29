@@ -12,7 +12,7 @@ Mission: V2 Compliance Refactoring
 import uuid
 from datetime import datetime
 
-from .core_models import (
+from .models import (
     AgentPerformanceMetrics,
     StrategicMission,
     StrategicOversightReport,
@@ -109,7 +109,7 @@ class StrategicOversightFactoryExtended:
     def create_emergency_insight(
         description: str,
         affected_agents: list[str] = None,
-        emergency_level: EmergencyStatus = EmergencyStatus.WARNING,
+        emergency_level: EmergencyStatus = EmergencyStatus.MEDIUM,
         immediate_actions: list[str] = None,
     ) -> SwarmCoordinationInsight:
         """Create emergency coordination insight."""

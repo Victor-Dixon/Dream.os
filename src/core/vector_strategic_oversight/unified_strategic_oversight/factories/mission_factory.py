@@ -13,7 +13,7 @@ License: MIT
 import uuid
 from datetime import datetime
 
-from ..data_models import StrategicMission
+from ..models import StrategicMission
 from ..enums import PriorityLevel
 
 

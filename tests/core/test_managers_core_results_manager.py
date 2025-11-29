@@ -141,7 +141,114 @@ class TestCoreResultsManager:
         assert status["active_results"] == 0
         assert status["v2_compliant"] is True
 
+    def test_process_results_without_result_id(self, manager, mock_context):
+        """Test process_results without providing result_id."""
+        payload = {
+            "result_type": "test",
+            "data": {"key": "value"}
+        }
+        result = manager.process_results(mock_context, payload)
+        assert result.success is True
+        assert "result_id" in result.data
+        assert result.data["result_id"] in manager._results
+
+    def test_process_results_with_metadata(self, manager, mock_context):
+        """Test process_results with metadata."""
+        payload = {
+            "result_type": "analysis",
+            "data": {"score": 95},
+            "metadata": {"agent": "Agent-5", "timestamp": "2025-11-28"}
+        }
+        result = manager.process_results(mock_context, payload)
+        result_id = result.data["result_id"]
+        assert manager._results[result_id]["metadata"]["agent"] == "Agent-5"
+
+    def test_process_results_empty_data(self, manager, mock_context):
+        """Test process_results with empty data."""
+        payload = {
+            "result_type": "test"
+        }
+        result = manager.process_results(mock_context, payload)
+        result_id = result.data["result_id"]
+        assert manager._results[result_id]["data"] == {}
+        assert manager._results[result_id]["result_type"] == "test"
+
+    def test_get_results_empty(self, manager, mock_context):
+        """Test get_results with no results."""
+        result = manager.get_results(mock_context, {})
+        assert result.success is True
+        assert len(result.data["results"]) == 0
+
+    def test_get_results_with_filter(self, manager, mock_context):
+        """Test get_results with multiple result types."""
+        manager._results["r1"] = {"result_type": "analysis", "data": {}}
+        manager._results["r2"] = {"result_type": "validation", "data": {}}
+        manager._results["r3"] = {"result_type": "analysis", "data": {}}
+        
+        result = manager.get_results(mock_context, {})
+        assert result.success is True
+        assert len(result.data["results"]) == 3
+
+    def test_cleanup_preserves_v2_compliance(self, manager, mock_context):
+        """Test that cleanup doesn't affect v2_compliant flag."""
+        manager._results["result-1"] = {"result_type": "test", "data": {}}
+        manager.cleanup(mock_context)
+        
+        status = manager.get_status()
+        assert status["v2_compliant"] is True
+        assert status["active_results"] == 0
+
+    def test_multiple_process_results(self, manager, mock_context):
+        """Test processing multiple results."""
+        for i in range(5):
+            payload = {
+                "result_type": f"test_{i}",
+                "data": {"index": i}
+            }
+            manager.process_results(mock_context, payload)
+        
+        assert len(manager._results) == 5
+        status = manager.get_status()
+        assert status["active_results"] == 5
+
+    def test_process_results_overwrites_existing(self, manager, mock_context):
+        """Test that process_results overwrites existing result_id."""
+        result_id = str(uuid.uuid4())
+        payload1 = {
+            "result_id": result_id,
+            "result_type": "old",
+            "data": {"value": 1}
+        }
+        manager.process_results(mock_context, payload1)
+        
+        payload2 = {
+            "result_id": result_id,
+            "result_type": "new",
+            "data": {"value": 2}
+        }
+        manager.process_results(mock_context, payload2)
+        
+        assert len(manager._results) == 1
+        assert manager._results[result_id]["result_type"] == "new"
+        assert manager._results[result_id]["data"]["value"] == 2
+
+    def test_get_status_after_operations(self, manager, mock_context):
+        """Test get_status after various operations."""
+        # Process some results
+        for i in range(3):
+            manager.process_results(mock_context, {"result_type": f"test_{i}", "data": {}})
+        
+        status = manager.get_status()
+        assert status["active_results"] == 3
+        
+        # Cleanup
+        manager.cleanup(mock_context)
+        status = manager.get_status()
+        assert status["active_results"] == 0
+
 
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])
+
+
 

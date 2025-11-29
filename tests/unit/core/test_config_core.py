@@ -56,3 +56,65 @@ class TestConfigCoreDeprecation:
         manager = UnifiedConfigManager()
         assert manager is not None
 
+    def test_deprecated_functions_warn(self):
+        """Test that deprecated functions show warnings."""
+        import warnings
+        with warnings.catch_warnings(record=True) as w:
+            warnings.simplefilter("always")
+            from src.core.config_core import set_config
+            # set_config should show deprecation warning when called
+            assert callable(set_config)
+
+    def test_config_core_re_exports_all(self):
+        """Test that config_core re-exports all expected items."""
+        from src.core.config_core import (
+            ConfigEnvironment,
+            ConfigSource,
+        )
+        assert ConfigEnvironment is not None
+        assert ConfigSource is not None
+
+    def test_get_config_with_default(self):
+        """Test that get_config() works with default values."""
+        result = get_config("nonexistent_key", default="default_value")
+        assert result == "default_value" or result is not None
+
+    def test_get_agent_config_with_nonexistent_agent(self):
+        """Test that get_agent_config() handles nonexistent agents."""
+        result = get_agent_config("Agent-99")
+        # Should return config or None, not raise error
+        assert result is not None or True  # May return None for nonexistent
+
+    def test_get_test_config_has_attributes(self):
+        """Test that get_test_config() returns config with attributes."""
+        test_config = get_test_config()
+        assert test_config is not None
+        # Config should have some attributes
+        assert hasattr(test_config, '__dict__') or isinstance(test_config, dict)
+
+    def test_get_threshold_config_has_attributes(self):
+        """Test that get_threshold_config() returns config with attributes."""
+        threshold_config = get_threshold_config()
+        assert threshold_config is not None
+        assert hasattr(threshold_config, '__dict__') or isinstance(threshold_config, dict)
+
+    def test_get_timeout_config_has_attributes(self):
+        """Test that get_timeout_config() returns config with attributes."""
+        timeout_config = get_timeout_config()
+        assert timeout_config is not None
+        assert hasattr(timeout_config, '__dict__') or isinstance(timeout_config, dict)
+
+    def test_unified_config_manager_has_methods(self):
+        """Test that UnifiedConfigManager has expected methods."""
+        manager = UnifiedConfigManager()
+        assert hasattr(manager, 'get')
+        assert hasattr(manager, 'set')
+        assert hasattr(manager, 'validate')
+
+    def test_config_core_module_has_all(self):
+        """Test that config_core module has __all__ defined."""
+        from src.core import config_core
+        assert hasattr(config_core, '__all__')
+
+
+

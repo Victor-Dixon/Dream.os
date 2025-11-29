@@ -27,7 +27,7 @@ except ImportError:
 
 # V2 Integration
 try:
-    from ..core.unified_config import get_unified_config
+    from ..core.config_ssot import get_unified_config
 except ImportError:
 
     def get_unified_config():

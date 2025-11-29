@@ -1,5 +1,5 @@
 {
-  "last_updated": "2025-11-27T06:02:19.494543",
+  "last_updated": "2025-11-28T14:04:16.872551",
   "phases": {},
   "agents": {
     "Agent-2": {
@@ -26,15 +26,38 @@
           "url": "https://github.com/Dadudekc/trading-leads-bot/pull/5"
         }
       ]
+    },
+    "Agent-7": {
+      "agent": "Agent-7",
+      "phase_0": "In Progress (0/4 merges)",
+      "group_7": "Pending (1 merge + GPT patterns)",
+      "progress": "0/5",
+      "completed_tasks": 0,
+      "pending_tasks": 5,
+      "gpt_patterns_extracted": true,
+      "blockers": [
+        "superpowered_ttrpg \u2192 Superpowered-TTRPG: Source repository not found (404) - verify exists",
+        "dadudekc \u2192 DaDudekC: Target repo archived (read-only) - unarchive or skip",
+        "gpt_automation \u2192 selfevolving_ai: Target repository not found (404) - verify name or create repository"
+      ]
     }
   },
   "next_opportunities": [
     {
-      "name": "Case Variations",
-      "repos": 12,
+      "name": "Case Variations (Agent-7)",
+      "repos": 4,
       "risk": "Zero",
       "priority": "HIGH",
-      "description": "Case variation merges (focusforge \u2192 FocusForge, etc.)"
+      "description": "Phase 0 case variation merges (focusforge \u2192 FocusForge, tbowtactics \u2192 TBOWTactics, superpowered_ttrpg \u2192 Superpowered-TTRPG, dadudekc \u2192 DaDudekC)",
+      "status": "In Progress"
+    },
+    {
+      "name": "GPT Automation (Agent-7)",
+      "repos": 1,
+      "risk": "Low",
+      "priority": "HIGH",
+      "description": "gpt_automation \u2192 selfevolving_ai (GPT patterns extracted from Auto_Blogger)",
+      "status": "Patterns Extracted, Merge Pending"
     },
     {
       "name": "Trading Repos",

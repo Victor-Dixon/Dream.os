@@ -33,7 +33,7 @@ def get_logger_fallback(name):
 # Import V2 integration with fallback
 try:
     from ..core.coordinate_loader import get_coordinate_loader
-    from ..core.unified_config import get_unified_config
+    from ..core.config_ssot import get_unified_config
     from ..core.unified_logging_system import get_logger
 except ImportError as e:
     logging.warning(f"V2 integration imports failed: {e} - using fallbacks")

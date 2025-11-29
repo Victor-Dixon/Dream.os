@@ -46,8 +46,31 @@
       "dependencies": [],
       "estimated_time": "Ongoing",
       "agent_assigned": "Agent-7"
+    },
+    {
+      "contract_id": "A7-CONSOLIDATION-001",
+      "title": "GitHub Consolidation - Phase 0 (4 repos)",
+      "description": "Complete Phase 0 case variation merges: focusforge→FocusForge, tbowtactics→TBOWTactics, superpowered_ttrpg→Superpowered-TTRPG, dadudekc→DaDudekC. First merge prepared, blocked by GitHub API rate limit.",
+      "priority": "HIGH",
+      "points": 400,
+      "status": "IN_PROGRESS",
+      "dependencies": ["GitHub API rate limit reset"],
+      "estimated_time": "2-3 hours",
+      "agent_assigned": "Agent-7",
+      "progress": "1/4 prepared (25%)"
+    },
+    {
+      "contract_id": "A7-CONSOLIDATION-002",
+      "title": "GitHub Consolidation - Group 7 (GPT/AI Automation)",
+      "description": "Merge gpt_automation → selfevolving_ai and extract GPT patterns from Auto_Blogger. Execute after Phase 0 complete.",
+      "priority": "HIGH",
+      "points": 200,
+      "status": "PENDING",
+      "dependencies": ["A7-CONSOLIDATION-001"],
+      "estimated_time": "1-2 hours",
+      "agent_assigned": "Agent-7"
     }
   ],
-  "notes": "All contracts ready for next cycle. Integration testing contract pending PR merges. Discord and disk space monitoring are ongoing active contracts."
+  "notes": "GitHub consolidation is HIGH priority active assignment. Phase 0 merges ready to resume when API rate limit resets. Integration testing contract pending PR merges. Discord and disk space monitoring are ongoing active contracts."
 }
 

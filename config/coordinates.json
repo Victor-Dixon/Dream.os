@@ -19,8 +19,8 @@
       "active": true
     },
     "Agent-4": {
-      "chat_input_coordinates": [-308, 1000],
-      "onboarding_coordinates": [-308, 950],
+      "chat_input_coordinates": [-304, 745],
+      "onboarding_coordinates": [-304, 695],
       "description": "Project Management & Coordination Specialist",
       "active": true
     },

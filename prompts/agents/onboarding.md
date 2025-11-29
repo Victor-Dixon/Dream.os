@@ -27,7 +27,25 @@
 
 **🚨 CRITICAL**: Always use the swarm time checking system to get accurate timestamps. File metadata can show incorrect creation dates, breaking chronological history.
 
-**How to Use**:
+**CLI Tool (EASIEST METHOD)**:
+```bash
+# Get current readable timestamp
+python tools/get_swarm_time.py
+
+# Get ISO timestamp
+python tools/get_swarm_time.py --iso
+
+# Get filename-safe timestamp
+python tools/get_swarm_time.py --filename
+
+# Get date only (YYYY-MM-DD)
+python tools/get_swarm_time.py --date
+
+# Get all formats
+python tools/get_swarm_time.py --all
+```
+
+**Python Code**:
 ```python
 from src.utils.swarm_time import get_swarm_time, format_swarm_timestamp_readable
 
@@ -42,14 +60,17 @@ devlog_date = format_swarm_timestamp_readable()
 ```
 
 **When to Use**:
-- ✅ Devlog timestamps
+- ✅ Devlog timestamps (ALWAYS use correct date format: YYYY-MM-DD)
 - ✅ Documentation dates
-- ✅ Status.json `last_updated` field
+- ✅ Status.json `last_updated` field (ALWAYS update with current time)
 - ✅ File creation timestamps
 - ✅ Message timestamps
 - ✅ Progress reports
+- ✅ Filename dates (use YYYY-MM-DD format, not YYYY-01-27)
 
-**Why**: Ensures true chronological history, swarm synchronization, and accurate metadata.
+**Current Date**: Always check with `python tools/get_swarm_time.py --date` before creating files or updating status.
+
+**Why**: Ensures true chronological history, swarm synchronization, and accurate metadata. Prevents date errors like using 2025-01-27 when actual date is 2025-11-28.
 
 ## 📋 **SESSION TRANSITION & PASSDOWN:**
 

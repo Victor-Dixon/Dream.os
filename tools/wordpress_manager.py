@@ -111,12 +111,6 @@ class WordPressManager:
             "remote_base": "/public_html/wp-content/themes/southwestsecret",
             "function_prefix": "southwestsecret"
         },
-        "freerideinvestor": {
-            "local_path": "D:/websites/FreeRideInvestor",
-            "theme_name": "freerideinvestor",
-            "remote_base": "/public_html/wp-content/themes/freerideinvestor",
-            "function_prefix": "freerideinvestor"
-        },
         "prismblossom": {
             "local_path": "D:/websites/prismblossom.online",
             "theme_name": "prismblossom",
@@ -143,36 +137,7 @@ class WordPressManager:
         self._load_credentials()
     
     def _load_credentials(self):
-        """Load deployment credentials from file or environment variables."""
-        import os
-        try:
-            from dotenv import load_dotenv
-            # Load .env file if it exists (Hostinger direct access)
-            env_file = Path("D:/Agent_Cellphone_V2_Repository/.env")
-            if env_file.exists():
-                load_dotenv(env_file)
-        except ImportError:
-            pass  # dotenv not installed, skip
-        
-        # First try environment variables (Hostinger direct access)
-        host = os.getenv("HOSTINGER_HOST") or os.getenv("SSH_HOST")
-        username = os.getenv("HOSTINGER_USER") or os.getenv("SSH_USER")
-        password = os.getenv("HOSTINGER_PASS") or os.getenv("SSH_PASS")
-        port = int(os.getenv("HOSTINGER_PORT") or os.getenv("SSH_PORT") or "65002")
-        
-        if host and username and password:
-            # Use environment variables (Hostinger direct access)
-            self.credentials = {
-                "host": host,
-                "username": username,
-                "password": password,
-                "port": port,
-                "remote_path": self.config.get("remote_base", "/public_html")
-            }
-            logger.info(f"Loaded credentials from environment variables for {self.site_key}")
-            return
-        
-        # Fall back to credentials file
+        """Load deployment credentials."""
         creds_file = Path("D:/Agent_Cellphone_V2_Repository/.deploy_credentials/sites.json")
         if not creds_file.exists():
             return
@@ -185,10 +150,6 @@ class WordPressManager:
                 all_creds.get(f"{self.site_key}.online") or
                 all_creds.get(self.site_key.replace(".online", ""))
             )
-            if self.credentials:
-                # Ensure port is set to 65002 for Hostinger if not specified
-                if not self.credentials.get("port") or self.credentials.get("port") == 22:
-                    self.credentials["port"] = 65002
         except Exception as e:
             logger.error(f"Failed to load credentials: {e}")
     

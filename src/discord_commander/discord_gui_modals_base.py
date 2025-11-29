@@ -1,0 +1,119 @@
+#!/usr/bin/env python3
+"""
+Discord GUI Modals Base - Common Modal Functionality
+====================================================
+
+Base classes and utilities for Discord UI modals.
+
+Author: Agent-6 (Coordination & Communication Specialist) - V2 Compliance Refactor
+License: MIT
+"""
+
+import logging
+from typing import Optional
+
+try:
+    import discord
+    DISCORD_AVAILABLE = True
+except ImportError:
+    DISCORD_AVAILABLE = False
+    discord = None
+
+from src.services.messaging_infrastructure import ConsolidatedMessagingService
+
+logger = logging.getLogger(__name__)
+
+
+class BaseMessageModal(discord.ui.Modal):
+    """Base modal for message composition with common functionality."""
+
+    def __init__(
+        self,
+        title: str,
+        messaging_service: ConsolidatedMessagingService,
+        message_label: str = "Message (Shift+Enter for line breaks)",
+        message_placeholder: str = "Enter message...",
+        include_priority: bool = True,
+        include_agent_selection: bool = False,
+    ):
+        super().__init__(title=title)
+        self.messaging_service = messaging_service
+
+        # Agent selection (if needed)
+        if include_agent_selection:
+            self.agent_input = discord.ui.TextInput(
+                label="Agent ID",
+                placeholder="Agent-1, Agent-2, etc.",
+                required=True,
+                max_length=20,
+            )
+            self.add_item(self.agent_input)
+
+        # Message input
+        self.message_input = discord.ui.TextInput(
+            label=message_label,
+            placeholder=message_placeholder,
+            style=discord.TextStyle.paragraph,
+            required=True,
+            max_length=2000,
+        )
+        self.add_item(self.message_input)
+
+        # Priority input (if needed)
+        if include_priority:
+            self.priority_input = discord.ui.TextInput(
+                label="Priority (regular/urgent)",
+                placeholder="regular",
+                default="regular",
+                required=False,
+                max_length=10,
+            )
+            self.add_item(self.priority_input)
+
+    def _get_message_preview(self, message: str, max_length: int = 500) -> str:
+        """Get message preview with length limit."""
+        return message if len(message) <= max_length else message[:max_length - 3] + "..."
+
+    def _send_to_agent(
+        self, agent_id: str, message: str, priority: str = "regular", jet_fuel: bool = False
+    ) -> dict:
+        """Send message to single agent."""
+        if jet_fuel:
+            message = f"🚀 JET FUEL MESSAGE - AUTONOMOUS MODE ACTIVATED\n\n{message}"
+            priority = "urgent"
+
+        return self.messaging_service.send_message(
+            agent=agent_id, message=message, priority=priority, use_pyautogui=True
+        )
+
+    def _broadcast_to_agents(
+        self, agents: list[str], message: str, priority: str = "regular", jet_fuel: bool = False
+    ) -> tuple[int, list[str]]:
+        """Broadcast message to multiple agents. Returns (success_count, errors)."""
+        if jet_fuel:
+            message = f"🚀 JET FUEL MESSAGE - AUTONOMOUS MODE ACTIVATED\n\n{message}"
+            priority = "urgent"
+
+        success_count = 0
+        errors = []
+
+        for agent in agents:
+            result = self._send_to_agent(agent, message, priority, jet_fuel=False)  # Already handled
+            if result.get("success"):
+                success_count += 1
+            else:
+                errors.append(f"{agent}: {result.get('error')}")
+
+        return success_count, errors
+
+    def _get_all_agents(self) -> list[str]:
+        """Get list of all agent IDs."""
+        return [f"Agent-{i}" for i in range(1, 9)]
+
+    def _format_error_message(self, errors: list[str], max_errors: int = 3) -> str:
+        """Format error message list."""
+        return "\n".join(errors[:max_errors])
+
+
+__all__ = ["BaseMessageModal"]
+

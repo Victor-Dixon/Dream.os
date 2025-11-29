@@ -21,8 +21,8 @@ from typing import Any
 class DeliveryMethod(Enum):
     """Delivery methods for messages."""
 
-    INBOX = "inbox"
-    PYAUTOGUI = "pyautogui"
+    PYAUTOGUI = "pyautogui"  # Primary delivery method
+    INBOX = "inbox"  # Fallback when PyAutoGUI fails (e.g., Cursor queue full)
     BROADCAST = "broadcast"
 
 
@@ -36,6 +36,7 @@ class UnifiedMessageType(Enum):
     CAPTAIN_TO_AGENT = "captain_to_agent"
     SYSTEM_TO_AGENT = "system_to_agent"
     HUMAN_TO_AGENT = "human_to_agent"
+    MULTI_AGENT_REQUEST = "multi_agent_request"  # For response collection
 
 
 class UnifiedMessagePriority(Enum):

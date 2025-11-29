@@ -57,6 +57,17 @@ overnight:
     health_checks: true
     performance_tracking: true
     
+  # Self-healing system (Agent-3 - 2025-01-27)
+  # Proactive stall detection and recovery to prevent 2XX stalled agents
+  self_healing:
+    enabled: true                    # Enable continuous self-healing
+    check_interval: 30               # Check every 30 seconds (aggressive)
+    stall_threshold: 120             # 2 minutes = stalled (faster than monitor)
+    max_attempts: 3                  # Max recovery attempts before escalation
+    auto_reset: true                 # Allow status.json reset
+    force_update: true               # Force status.json timestamp updates
+    clear_stuck_tasks: true          # Clear stuck tasks automatically
+    
   # Integration with other systems
   integration:
     workflow_engine: true

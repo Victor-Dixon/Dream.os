@@ -98,6 +98,14 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
         "flags": ["--soft-onboard", "--soft"],
         "args_passthrough": True,
     },
+    "test-usage-analyzer": {
+        "name": "Test Usage Analyzer",
+        "module": "tools.test_usage_analyzer",
+        "main_function": "main",
+        "description": "Identify unused functionality via test coverage analysis - finds methods only tested but never used in production",
+        "flags": ["--test-usage-analyzer", "--test-usage", "--unused-via-tests"],
+        "args_passthrough": True,
+    },
     "swarm-brain": {
         "name": "Swarm Brain Update",
         "module": "tools.update_swarm_brain",

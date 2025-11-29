@@ -63,3 +63,5 @@ class TestDiscordEmbeds:
         except ImportError:
             pytest.skip("Discord embeds not available")
 
+
+

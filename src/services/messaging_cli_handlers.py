@@ -64,7 +64,7 @@ class MessageCoordinator:
         agent: str, message: str, priority=UnifiedMessagePriority.REGULAR, use_pyautogui=False
     ):
         try:
-            # Always use inbox delivery since PyAutoGUI module missing
+            # Use unified messaging system (PyAutoGUI delivery)
             return send_message(
                 content=message,
                 sender="CAPTAIN",

@@ -47,3 +47,5 @@ class TestSSOTModels:
         assert violation.entity_name == "test_entity"
         assert violation.message == "Test violation"
 
+
+

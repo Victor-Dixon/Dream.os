@@ -12,9 +12,9 @@ import time
 from dataclasses import dataclass, field
 
 try:
-    from ...core.enhanced_unified_config import get_enhanced_config
+    from ...core.config_ssot import get_unified_config
 
-    _unified_config = get_enhanced_config()
+    _unified_config = get_unified_config()
 except ImportError:
     _unified_config = None
 

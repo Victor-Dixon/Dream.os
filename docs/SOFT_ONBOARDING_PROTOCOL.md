@@ -2,6 +2,7 @@
 ## Session Cleanup & Agent Onboarding
 
 **Created:** 2025-10-11  
+**Last Updated:** 2025-11-28  
 **Status:** ACTIVE  
 **Priority:** CRITICAL
 
@@ -12,6 +13,28 @@
 Soft onboarding ensures agents complete their current session properly before starting a new one. This prevents context loss and maintains civilization-building documentation standards.
 
 **All operations go through the message queue to prevent race conditions with other agents!**
+
+---
+
+## ⏰ **TIME CHECKING - MANDATORY FIRST STEP**
+
+**🚨 CRITICAL**: Before any onboarding, agents MUST get the correct current date/time.
+
+**Use the Swarm Time Tool**:
+```bash
+# Get current date (for filenames and status updates)
+python tools/get_swarm_time.py --date
+
+# Get full timestamp (for status.json last_updated)
+python tools/get_swarm_time.py
+```
+
+**Why**: Prevents date errors (e.g., using 2025-01-27 when actual date is 2025-11-28). All timestamps must be accurate for proper chronological history.
+
+**Always use**:
+- ✅ `python tools/get_swarm_time.py --date` before creating devlog files
+- ✅ `python tools/get_swarm_time.py` before updating status.json
+- ✅ Correct date format: YYYY-MM-DD (e.g., 2025-11-28, not 2025-01-27)
 
 ### **6-Step Protocol**
 

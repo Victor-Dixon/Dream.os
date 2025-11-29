@@ -172,3 +172,31 @@ class TestIntegrationOrchestrator:
         assert result.ok is True
         assert result.metrics["integration_steps"] == 1
 
+    def test_execute_with_missing_steps(self, orchestrator, context):
+        """Test execute with steps not in registry."""
+        payload = {"integration_pipeline": ["nonexistent1", "nonexistent2"]}
+        
+        result = orchestrator.execute(context, payload)
+        
+        assert result.ok is True
+        assert result.metrics["integration_steps"] == 0
+
+    def test_execute_data_modification(self, orchestrator, context):
+        """Test that execute allows step data modification."""
+        class ModifyingStep:
+            def __init__(self, name):
+                self._name = name
+            def name(self):
+                return self._name
+            def run(self, ctx, data):
+                data["modified"] = True
+                return data
+        
+        orchestrator.registry.register("modify", lambda: ModifyingStep("modify"))
+        payload = {"integration_pipeline": ["modify"], "original": True}
+        
+        result = orchestrator.execute(context, payload)
+        
+        assert result.ok is True
+        assert result.metrics["integration_steps"] == 1
+

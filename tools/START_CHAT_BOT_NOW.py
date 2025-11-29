@@ -48,6 +48,18 @@ def check_config():
     channel = os.getenv("TWITCH_CHANNEL")
     swarm_voice = os.getenv("TWITCH_SWARM_VOICE")
     
+    # Parse channel from TWITCH_SWARM_VOICE if present
+    if swarm_voice:
+        parts = swarm_voice.split("|")
+        if len(parts) >= 3:
+            # Channel is in TWITCH_SWARM_VOICE, use it
+            channel = parts[2].strip()
+        elif len(parts) < 3 and not channel:
+            # TWITCH_SWARM_VOICE incomplete and no separate channel
+            issues.append("⚠️  TWITCH_SWARM_VOICE found but incomplete (need: username|token|channel)")
+            issues.append("   Format: TWITCH_SWARM_VOICE=username|oauth:token|channel")
+            issues.append("   Or set TWITCH_CHANNEL=your_channel_name in .env")
+    
     if not access_token and not swarm_voice:
         issues.append("❌ No Twitch access token found")
         issues.append("   Set TWITCH_ACCESS_TOKEN in .env or run:")
@@ -55,16 +67,6 @@ def check_config():
     elif access_token and not channel:
         issues.append("⚠️  Access token found but no channel specified")
         issues.append("   Set TWITCH_CHANNEL=your_channel_name in .env")
-    
-    if not channel and swarm_voice:
-        # Try to parse from TWITCH_SWARM_VOICE
-        parts = swarm_voice.split("|")
-        if len(parts) >= 3:
-            channel = parts[2].strip()
-        elif len(parts) == 1:
-            # Might just be a token, need channel
-            issues.append("⚠️  TWITCH_SWARM_VOICE found but channel missing")
-            issues.append("   Set TWITCH_CHANNEL=your_channel_name in .env")
     
     if issues:
         print("\n".join(issues))
@@ -105,6 +107,7 @@ async def main():
     elif swarm_voice:
         parts = swarm_voice.split("|")
         if len(parts) == 3:
+            # Full format: username|token|channel
             username, oauth_token, channel = [p.strip() for p in parts]
             twitch_config = {
                 "username": username,
@@ -112,9 +115,33 @@ async def main():
                 "channel": channel,
             }
             print(f"✅ Using TWITCH_SWARM_VOICE for channel: {channel}")
+        elif len(parts) == 1 and channel:
+            # Only token in TWITCH_SWARM_VOICE, but channel set separately
+            username = os.getenv("TWITCH_BOT_USERNAME") or channel
+            oauth_token = parts[0].strip()
+            # Ensure token has oauth: prefix
+            if not oauth_token.startswith("oauth:"):
+                oauth_token = f"oauth:{oauth_token}"
+            twitch_config = {
+                "username": username,
+                "oauth_token": oauth_token,
+                "channel": channel,
+            }
+            print(f"✅ Using TWITCH_SWARM_VOICE (token) + TWITCH_CHANNEL: {channel}")
+        elif len(parts) == 1:
+            # Only token, no channel
+            print("❌ TWITCH_SWARM_VOICE has token but no channel")
+            print("   Set TWITCH_CHANNEL=your_channel_name in .env")
+            return
     
     if not twitch_config:
         print("❌ Could not determine Twitch configuration")
+        print()
+        print("💡 Setup options:")
+        print("   1. Set TWITCH_ACCESS_TOKEN and TWITCH_CHANNEL")
+        print("   2. Set TWITCH_SWARM_VOICE=username|oauth:token|channel")
+        print("   3. Set TWITCH_SWARM_VOICE=token and TWITCH_CHANNEL=channel")
+        print("   4. Run: python tools/twitch_oauth_setup.py")
         return
     
     print()
@@ -163,4 +190,6 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
+
 

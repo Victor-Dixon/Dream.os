@@ -144,11 +144,29 @@ It consolidates prior onboarding guides and system updates.
 
 ### **🚨 MANDATORY: Use Swarm Time System for All Timestamps**
 
-**Problem**: File metadata shows incorrect creation dates (files appear created later than they actually were). This breaks chronological history in devlogs and documentation.
+**Problem**: File metadata shows incorrect creation dates (files appear created later than they actually were). This breaks chronological history in devlogs and documentation. Agents may use wrong dates (e.g., 2025-01-27 when actual date is 2025-11-28).
 
 **Solution**: **ALWAYS use the swarm time checking system** to get accurate timestamps.
 
 ### **How to Use Swarm Time System**:
+
+**CLI Tool (RECOMMENDED - EASIEST)**:
+```bash
+# Get current readable timestamp (for status.json, devlogs)
+python tools/get_swarm_time.py
+
+# Get date only (YYYY-MM-DD) - for filenames
+python tools/get_swarm_time.py --date
+
+# Get ISO timestamp
+python tools/get_swarm_time.py --iso
+
+# Get filename-safe timestamp
+python tools/get_swarm_time.py --filename
+
+# Get all formats
+python tools/get_swarm_time.py --all
+```
 
 **Python Code**:
 ```python
@@ -160,17 +178,17 @@ current_time = get_swarm_time()
 
 # Format for readable timestamp
 timestamp = format_swarm_timestamp_readable()
-# Returns: "YYYY-MM-DD HH:MM:SS" (e.g., "2025-01-27 14:30:45")
+# Returns: "YYYY-MM-DD HH:MM:SS" (e.g., "2025-11-28 14:30:45")
 
 # Format for filenames
 filename_timestamp = format_swarm_timestamp_filename()
-# Returns: "YYYYMMDD_HHMMSS_ffffff" (e.g., "20250127_143045_123456")
+# Returns: "YYYYMMDD_HHMMSS_ffffff" (e.g., "20251128_143045_123456")
 ```
 
-**Command Line**:
+**Command Line (Alternative)**:
 ```bash
 # Get current swarm time
-python -c "from src.utils.swarm_time import get_swarm_time, format_swarm_timestamp_readable; print(format_swarm_timestamp_readable())"
+python -c "from src.utils.swarm_time import format_swarm_timestamp_readable; print(format_swarm_timestamp_readable())"
 ```
 
 ### **When to Use Swarm Time**:
