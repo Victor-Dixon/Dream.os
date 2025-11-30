@@ -211,10 +211,199 @@ class PyAutoGUIMessagingDelivery:
         try:
             # Get coordinates for agent
             from .coordinate_loader import get_coordinate_loader
+            from .messaging_models_core import UnifiedMessageType
 
             coord_loader = get_coordinate_loader()
 
-            coords = coord_loader.get_chat_coordinates(message.recipient)
+            # CRITICAL FIX: Only use onboarding coordinates for ONBOARDING message type
+            # All other message types (TEXT, BROADCAST, SYSTEM_TO_AGENT, etc.) use chat coordinates
+            # EXTRA PROTECTION: Agent-4 ALWAYS uses chat coordinates unless explicitly ONBOARDING type
+            message_type_str = str(message.message_type)
+            logger.info(f"🔍 Message type for {message.recipient}: {message_type_str} (enum: {message.message_type})")
+            
+            # Get both coordinate sets for verification
+            chat_coords_expected = coord_loader.get_chat_coordinates(message.recipient)
+            onboarding_coords_check = coord_loader.get_onboarding_coordinates(message.recipient)
+            
+            # CRITICAL HARDCODED OVERRIDE FOR AGENT-4: Force correct coordinates regardless of loader
+            # This ensures Agent-4 ALWAYS uses the correct coordinates
+            if message.recipient == "Agent-4":
+                AGENT4_CHAT_COORDS = (-308, 1000)  # Hardcoded from cursor_agent_coords.json
+                AGENT4_ONBOARDING_COORDS = (-304, 680)  # Hardcoded from cursor_agent_coords.json
+                
+                # Verify loader returned correct coords
+                if chat_coords_expected != AGENT4_CHAT_COORDS:
+                    logger.warning(f"⚠️ Agent-4 chat coords mismatch! Loader: {chat_coords_expected}, Expected: {AGENT4_CHAT_COORDS}. Using hardcoded.")
+                    chat_coords_expected = AGENT4_CHAT_COORDS
+                
+                if onboarding_coords_check != AGENT4_ONBOARDING_COORDS:
+                    logger.warning(f"⚠️ Agent-4 onboarding coords mismatch! Loader: {onboarding_coords_check}, Expected: {AGENT4_ONBOARDING_COORDS}. Using hardcoded.")
+                    onboarding_coords_check = AGENT4_ONBOARDING_COORDS
+                
+                logger.info(f"✅ Agent-4 coordinates verified: Chat={chat_coords_expected}, Onboarding={onboarding_coords_check}")
+            
+            # CRITICAL ROUTING LOGIC: Agent-4 ALWAYS uses chat coordinates unless EXPLICITLY ONBOARDING
+            # This is a defensive fix to prevent messages from going to onboarding coordinates
+            # Only messages with message_type == UnifiedMessageType.ONBOARDING should use onboarding coords
+            
+            # Log message details for debugging
+            logger.info(f"🔍 Routing decision for {message.recipient}:")
+            logger.info(f"   - Message type: {message.message_type} ({message_type_str})")
+            logger.info(f"   - Message type class: {type(message.message_type)}")
+            if hasattr(message.message_type, 'value'):
+                logger.info(f"   - Message type value: '{message.message_type.value}'")
+            logger.info(f"   - Sender: {sender}")
+            logger.info(f"   - Recipient: {message.recipient}")
+            logger.info(f"   - Chat coords: {chat_coords_expected}")
+            logger.info(f"   - Onboarding coords: {onboarding_coords_check}")
+            # CRITICAL: Log metadata in case message_type is being overridden
+            if hasattr(message, 'metadata') and isinstance(message.metadata, dict):
+                logger.info(f"   - Metadata keys: {list(message.metadata.keys())}")
+                if 'message_type' in message.metadata:
+                    logger.warning(f"   ⚠️ WARNING: message_type found in metadata: {message.metadata.get('message_type')}")
+                if 'use_onboarding_coords' in message.metadata:
+                    logger.error(f"   ❌ ERROR: use_onboarding_coords flag found in metadata: {message.metadata.get('use_onboarding_coords')}")
+            
+            # CRITICAL: Agent-4 special handling - ONLY use onboarding coords for explicit ONBOARDING type
+            # Use multiple checks to ensure correct routing
+            is_onboarding_type = False
+            if hasattr(message.message_type, 'value'):
+                is_onboarding_type = message.message_type.value == "onboarding" or message.message_type == UnifiedMessageType.ONBOARDING
+            elif isinstance(message.message_type, str):
+                is_onboarding_type = message.message_type.lower() == "onboarding"
+            else:
+                # Enum comparison
+                is_onboarding_type = message.message_type == UnifiedMessageType.ONBOARDING
+            
+            # CRITICAL FIX: Discord messages to Agent-4 ALWAYS use chat coordinates
+            # Check metadata for Discord source (multiple ways to detect Discord messages)
+            is_discord_message = False
+            if hasattr(message, 'metadata') and isinstance(message.metadata, dict):
+                # Check for Discord source in metadata
+                source = message.metadata.get("source", "")
+                is_discord_message = (
+                    source == "discord" or 
+                    source == "DISCORD" or
+                    "discord" in str(source).lower() or
+                    message.metadata.get("discord_user_id") is not None or
+                    message.metadata.get("discord_username") is not None
+                )
+            
+            if message.recipient == "Agent-4":
+                # CRITICAL: Agent-4 MUST use chat coords unless EXPLICITLY ONBOARDING
+                # ABSOLUTE OVERRIDE: Hardcode coordinates for Agent-4 to prevent any routing errors
+                AGENT4_CHAT_ABS = (-308, 1000)
+                AGENT4_ONBOARDING_ABS = (-304, 680)
+                
+                # CRITICAL FIX: ALL messages to Agent-4 use chat coords UNLESS EXPLICITLY ONBOARDING
+                # This includes Discord messages, CAPTAIN_TO_AGENT, SYSTEM_TO_AGENT, etc.
+                # ONLY UnifiedMessageType.ONBOARDING should use onboarding coordinates
+                
+                # Check if Discord message (for logging)
+                if is_discord_message:
+                    logger.info(f"📍 Agent-4: Discord message detected - forcing chat coordinates")
+                    logger.info(f"📍 Agent-4: Metadata source: {message.metadata.get('source') if hasattr(message, 'metadata') and isinstance(message.metadata, dict) else 'N/A'}")
+                
+                # ONLY use onboarding coords if EXPLICITLY ONBOARDING type
+                if is_onboarding_type:
+                    # ONLY case where Agent-4 uses onboarding coordinates
+                    coords = AGENT4_ONBOARDING_ABS  # Use hardcoded onboarding coords
+                    logger.info(f"📍 Agent-4: Using ONBOARDING coordinates (EXPLICIT ONBOARDING type confirmed): {coords}")
+                else:
+                    # ALL other message types for Agent-4 use chat coordinates - NO EXCEPTIONS
+                    # This includes: CAPTAIN_TO_AGENT, SYSTEM_TO_AGENT, TEXT, BROADCAST, etc.
+                    # ABSOLUTE OVERRIDE: Hardcode chat coords for Agent-4
+                    coords = AGENT4_CHAT_ABS  # Use hardcoded chat coords - NEVER use onboarding
+                    logger.info(f"📍 Agent-4: FORCING hardcoded chat coordinates (type: {message_type_str}, sender: {sender}, is_discord: {is_discord_message}): {coords}")
+                    logger.info(f"📍 Agent-4: ABSOLUTE OVERRIDE - Chat coords hardcoded to prevent routing errors")
+                    
+                    # Triple-check: If somehow wrong coords were selected, force hardcoded chat coords
+                    if coords != AGENT4_CHAT_ABS:
+                        logger.error(f"❌ CRITICAL BUG: Agent-4 non-ONBOARDING message using wrong coords! Expected: {AGENT4_CHAT_ABS}, Got: {coords}")
+                        coords = AGENT4_CHAT_ABS  # Force hardcoded chat coords
+                        logger.warning(f"⚠️ ABSOLUTE OVERRIDE: Agent-4 now using hardcoded chat coordinates: {coords}")
+            
+            # Agent-2 special handling (similar to Agent-4)
+            elif message.recipient == "Agent-2":
+                if message.message_type == UnifiedMessageType.ONBOARDING:
+                    coords = onboarding_coords_check
+                    logger.info(f"📍 Agent-2: Using ONBOARDING coordinates (explicit ONBOARDING type): {coords}")
+                else:
+                    coords = chat_coords_expected
+                    logger.info(f"📍 Agent-2: Using chat coordinates (type: {message_type_str}): {coords}")
+                    # Defensive check
+                    if coords == onboarding_coords_check:
+                        logger.error(f"❌ CRITICAL BUG: Agent-2 non-ONBOARDING message selected onboarding coords! FORCING chat coords.")
+                        coords = chat_coords_expected
+            
+            # All other agents: Use onboarding coords ONLY for ONBOARDING type
+            elif message.message_type == UnifiedMessageType.ONBOARDING:
+                coords = onboarding_coords_check
+                logger.info(f"📍 {message.recipient}: Using ONBOARDING coordinates (explicit ONBOARDING type): {coords}")
+            else:
+                coords = chat_coords_expected
+                logger.info(f"📍 {message.recipient}: Using CHAT coordinates (type: {message_type_str}): {coords}")
+            
+            # Final defensive verification for Agent-4 - ABSOLUTE HARDCODED OVERRIDE
+            if message.recipient == "Agent-4":
+                # Hardcoded coordinates for absolute override
+                AGENT4_CHAT_FINAL = (-308, 1000)
+                AGENT4_ONBOARDING_FINAL = (-304, 680)
+                
+                # Re-check onboarding type status with multiple methods
+                final_is_onboarding = False
+                if hasattr(message.message_type, 'value'):
+                    final_is_onboarding = message.message_type.value == "onboarding"
+                elif isinstance(message.message_type, str):
+                    final_is_onboarding = message.message_type.lower() == "onboarding"
+                else:
+                    final_is_onboarding = message.message_type == UnifiedMessageType.ONBOARDING
+                
+                # Re-check Discord source (multiple detection methods)
+                final_is_discord = False
+                if hasattr(message, 'metadata') and isinstance(message.metadata, dict):
+                    source = message.metadata.get("source", "")
+                    final_is_discord = (
+                        source == "discord" or 
+                        source == "DISCORD" or
+                        "discord" in str(source).lower() or
+                        message.metadata.get("discord_user_id") is not None or
+                        message.metadata.get("discord_username") is not None
+                    )
+                
+                logger.info(f"🔍 Agent-4 FINAL VERIFICATION:")
+                logger.info(f"   - Final is_onboarding check: {final_is_onboarding}")
+                logger.info(f"   - Final is_discord check: {final_is_discord}")
+                logger.info(f"   - Selected coords: {coords}")
+                logger.info(f"   - Hardcoded chat: {AGENT4_CHAT_FINAL}")
+                logger.info(f"   - Hardcoded onboarding: {AGENT4_ONBOARDING_FINAL}")
+                
+                # CRITICAL: Discord messages ALWAYS use chat coordinates
+                if final_is_discord:
+                    if coords != AGENT4_CHAT_FINAL:
+                        logger.error(f"❌ CRITICAL ROUTING ERROR: Agent-4 Discord message using wrong coords!")
+                        logger.error(f"   Expected hardcoded chat: {AGENT4_CHAT_FINAL}, Got: {coords}")
+                        coords = AGENT4_CHAT_FINAL  # Force chat coords for Discord
+                        logger.warning(f"⚠️ ABSOLUTE OVERRIDE: Agent-4 Discord message forced to chat coordinates: {coords}")
+                    else:
+                        logger.info(f"✅ Agent-4 Discord message verified: Using chat coordinates")
+                elif not final_is_onboarding:
+                    # ABSOLUTE OVERRIDE: Force hardcoded chat coords for Agent-4 if not onboarding
+                    if coords != AGENT4_CHAT_FINAL:
+                        logger.error(f"❌ CRITICAL ROUTING ERROR: Agent-4 non-ONBOARDING message using wrong coords!")
+                        logger.error(f"   Expected hardcoded chat: {AGENT4_CHAT_FINAL}, Got: {coords}")
+                        logger.error(f"   Message type: {message.message_type}, Message type str: {message_type_str}")
+                        logger.error(f"   Is onboarding check: {final_is_onboarding}")
+                        coords = AGENT4_CHAT_FINAL  # Force hardcoded chat coords - ABSOLUTE OVERRIDE
+                        logger.warning(f"⚠️ ABSOLUTE HARDCODED OVERRIDE: Agent-4 routing fixed - using hardcoded chat coordinates: {coords}")
+                    else:
+                        logger.info(f"✅ Agent-4 routing verified: Using hardcoded chat coordinates for non-ONBOARDING message")
+                else:
+                    # Verify onboarding coords match hardcoded
+                    if coords != AGENT4_ONBOARDING_FINAL:
+                        logger.warning(f"⚠️ Agent-4 ONBOARDING coords mismatch, using hardcoded: {AGENT4_ONBOARDING_FINAL}")
+                        coords = AGENT4_ONBOARDING_FINAL
+            
             if not coords:
                 logger.error(f"No coordinates for {message.recipient}")
                 return False
