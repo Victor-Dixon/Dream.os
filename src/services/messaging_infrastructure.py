@@ -402,6 +402,7 @@ class MessageCoordinator:
         priority=UnifiedMessagePriority.REGULAR,
         use_pyautogui=False,
         stalled: bool = False,
+        sender: str = None,
     ):
         """
         Send message to agent via message queue (prevents race conditions).
@@ -410,8 +411,23 @@ class MessageCoordinator:
         Queue processor handles keyboard locks to prevent concurrent operations.
         
         VALIDATION: Checks if agent has pending multi-agent request and blocks if needed.
+        
+        Args:
+            agent: Recipient agent ID
+            message: Message content
+            priority: Message priority
+            use_pyautogui: Use PyAutoGUI delivery
+            stalled: Use stalled delivery mode
+            sender: Optional sender ID (auto-detected if not provided)
         """
         try:
+            # DETECT SENDER: Auto-detect if not provided
+            if sender is None:
+                sender = MessageCoordinator._detect_sender()
+            
+            # DETERMINE MESSAGE TYPE based on sender
+            message_type, sender_final = MessageCoordinator._determine_message_type(sender, agent)
+            
             # VALIDATION LAYER 1: Check if recipient has pending multi-agent request
             # This prevents messages from being queued when recipient can't respond
             from ..core.multi_agent_request_validator import get_multi_agent_validator
@@ -454,11 +470,11 @@ class MessageCoordinator:
                 queue_id = queue.enqueue(
                     message={
                         "type": "agent_message",
-                        "sender": "CAPTAIN",
+                        "sender": sender_final,
                         "recipient": agent,
                         "content": formatted_message,
                         "priority": priority.value if hasattr(priority, "value") else str(priority),
-                        "message_type": UnifiedMessageType.CAPTAIN_TO_AGENT.value,
+                        "message_type": message_type.value,
                         "tags": [UnifiedMessageTag.SYSTEM.value],
                         "metadata": metadata,
                     }
@@ -474,9 +490,9 @@ class MessageCoordinator:
                 metadata = {"stalled": stalled} if stalled else {}
                 return send_message(
                     content=message,
-                    sender="CAPTAIN",
+                    sender=sender_final,
                     recipient=agent,
-                    message_type=UnifiedMessageType.CAPTAIN_TO_AGENT,
+                    message_type=message_type,
                     priority=priority,
                     tags=[UnifiedMessageTag.SYSTEM],
                     metadata=metadata,
@@ -712,6 +728,85 @@ class MessageCoordinator:
         else:
             logger.error("❌ Consolidation update failed")
             return False
+    
+    @staticmethod
+    def _detect_sender() -> str:
+        """
+        Detect actual sender from environment and context.
+        
+        Checks:
+        1. AGENT_CONTEXT environment variable
+        2. Current working directory for agent workspace
+        3. Defaults to CAPTAIN if not detected
+        
+        Returns:
+            Detected sender ID (Agent-X, CAPTAIN, SYSTEM, etc.)
+        """
+        import os
+        from pathlib import Path
+        
+        # Check environment variable first
+        agent_context = os.getenv("AGENT_CONTEXT") or os.getenv("AGENT_ID")
+        if agent_context:
+            # Normalize to Agent-X format
+            if agent_context.startswith("Agent-"):
+                return agent_context
+            elif agent_context.isdigit():
+                return f"Agent-{agent_context}"
+            else:
+                return f"Agent-{agent_context}"
+        
+        # Check current working directory
+        try:
+            cwd = Path.cwd().as_posix()
+            for agent_id in SWARM_AGENTS:
+                if f"agent_workspaces/{agent_id}" in cwd or f"/{agent_id}/" in cwd:
+                    logger.debug(f"📍 Detected sender from directory: {agent_id}")
+                    return agent_id
+        except Exception as e:
+            logger.debug(f"Could not detect sender from directory: {e}")
+        
+        # Default to CAPTAIN
+        logger.debug("📍 No sender detected, defaulting to CAPTAIN")
+        return "CAPTAIN"
+    
+    @staticmethod
+    def _determine_message_type(sender: str, recipient: str) -> tuple[UnifiedMessageType, str]:
+        """
+        Determine message type and normalize sender based on sender/recipient.
+        
+        Args:
+            sender: Detected or provided sender
+            recipient: Message recipient
+            
+        Returns:
+            Tuple of (message_type, normalized_sender)
+        """
+        sender_upper = sender.upper() if sender else ""
+        recipient_upper = recipient.upper() if recipient else ""
+        
+        # Agent-to-Agent
+        if sender and sender.startswith("Agent-") and recipient and recipient.startswith("Agent-"):
+            return UnifiedMessageType.AGENT_TO_AGENT, sender
+        
+        # Agent-to-Captain
+        if sender and sender.startswith("Agent-") and recipient_upper in ["CAPTAIN", "AGENT-4"]:
+            return UnifiedMessageType.AGENT_TO_CAPTAIN, sender
+        
+        # Captain-to-Agent
+        if sender_upper in ["CAPTAIN", "AGENT-4"]:
+            return UnifiedMessageType.CAPTAIN_TO_AGENT, "CAPTAIN"
+        
+        # System-to-Agent
+        if sender_upper in ["SYSTEM", "DISCORD", "COMMANDER"]:
+            return UnifiedMessageType.SYSTEM_TO_AGENT, sender
+        
+        # Human-to-Agent
+        if sender_upper in ["HUMAN", "USER", "GENERAL"]:
+            return UnifiedMessageType.HUMAN_TO_AGENT, sender
+        
+        # Default: System-to-Agent
+        return UnifiedMessageType.SYSTEM_TO_AGENT, sender or "SYSTEM"
 
 
 def handle_message(args, parser) -> int:
@@ -985,6 +1080,28 @@ class ConsolidatedMessagingService:
             # CRITICAL: Use message queue for PyAutoGUI delivery (synchronized delivery)
             # This ensures sequential delivery with global keyboard lock
             if self.queue and use_pyautogui:
+                # Determine message type explicitly for Discord messages
+                # CRITICAL FIX: Always use HUMAN_TO_AGENT for Discord messages (never ONBOARDING)
+                # Only onboarding commands (!hard onboard, !soft onboard, !start) should use ONBOARDING type
+                # Regular Discord messages should ALWAYS use HUMAN_TO_AGENT to route to chat input coords
+                from ..core.messaging_models_core import UnifiedMessageType
+                
+                # Check if this is an onboarding command (hard onboard, soft onboard, start)
+                message_lower = message.lower()
+                is_onboarding_command = (
+                    "hard onboard" in message_lower or
+                    "soft onboard" in message_lower or
+                    message_lower.strip().startswith("!start") or
+                    message_lower.strip().startswith("start")
+                )
+                
+                # Set message_type explicitly: ONBOARDING only for onboarding commands, HUMAN_TO_AGENT for all others
+                if is_onboarding_command:
+                    explicit_message_type = UnifiedMessageType.ONBOARDING.value
+                else:
+                    # CRITICAL: Regular Discord messages ALWAYS use HUMAN_TO_AGENT (routes to chat input coords)
+                    explicit_message_type = UnifiedMessageType.HUMAN_TO_AGENT.value
+                
                 # Enqueue message for sequential processing
                 queue_id = self.queue.enqueue(
                     message={
@@ -996,6 +1113,7 @@ class ConsolidatedMessagingService:
                         "content": message,
                         "priority": priority,
                         "source": "discord",
+                        "message_type": explicit_message_type,  # CRITICAL FIX: Explicitly set message_type
                         "tags": [],
                         "metadata": {
                             "source": "discord",
@@ -1147,23 +1265,83 @@ class ConsolidatedMessagingService:
                 "message": f"Broadcast to {success_count}/{len(agents)} agents ({delivered_count} delivered)",
                 "results": results,
             }
-
-    def _resolve_discord_sender(self, discord_user_id: str | None) -> str:
         """
-        Resolve Discord user ID to sender name.
+        Detect actual sender from environment and context.
+        
+        Checks:
+        1. AGENT_CONTEXT environment variable
+        2. Current working directory for agent workspace
+        3. Defaults to CAPTAIN if not detected
+        
+        Returns:
+            Detected sender ID (Agent-X, CAPTAIN, SYSTEM, etc.)
+        """
+        import os
+        from pathlib import Path
+        
+        # Check environment variable first
+        agent_context = os.getenv("AGENT_CONTEXT") or os.getenv("AGENT_ID")
+        if agent_context:
+            # Normalize to Agent-X format
+            if agent_context.startswith("Agent-"):
+                return agent_context
+            elif agent_context.isdigit():
+                return f"Agent-{agent_context}"
+            else:
+                return f"Agent-{agent_context}"
+        
+        # Check current working directory
+        try:
+            cwd = Path.cwd().as_posix()
+            for agent_id in SWARM_AGENTS:
+                if f"agent_workspaces/{agent_id}" in cwd or f"/{agent_id}/" in cwd:
+                    logger.debug(f"📍 Detected sender from directory: {agent_id}")
+                    return agent_id
+        except Exception as e:
+            logger.debug(f"Could not detect sender from directory: {e}")
+        
+        # Default to CAPTAIN
+        logger.debug("📍 No sender detected, defaulting to CAPTAIN")
+        return "CAPTAIN"
+    
+    @staticmethod
+    def _determine_message_type(sender: str, recipient: str) -> tuple[UnifiedMessageType, str]:
+        """
+        Determine message type and normalize sender based on sender/recipient.
         
         Args:
-            discord_user_id: Discord user ID
+            sender: Detected or provided sender
+            recipient: Message recipient
             
         Returns:
-            Sender name string
+            Tuple of (message_type, normalized_sender)
         """
-        if not discord_user_id:
-            return "DISCORD"
-        # For now, return a simple identifier
-        # In production, this could resolve to actual Discord username
-        return f"DISCORD-{discord_user_id[:8]}"
-
+        sender_upper = sender.upper() if sender else ""
+        recipient_upper = recipient.upper() if recipient else ""
+        
+        # Agent-to-Agent
+        if sender.startswith("Agent-") and recipient.startswith("Agent-"):
+            return UnifiedMessageType.AGENT_TO_AGENT, sender
+        
+        # Agent-to-Captain
+        if sender.startswith("Agent-") and recipient_upper in ["CAPTAIN", "AGENT-4"]:
+            return UnifiedMessageType.AGENT_TO_CAPTAIN, sender
+        
+        # Captain-to-Agent
+        if sender_upper in ["CAPTAIN", "AGENT-4"]:
+            return UnifiedMessageType.CAPTAIN_TO_AGENT, "CAPTAIN"
+        
+        # System-to-Agent
+        if sender_upper in ["SYSTEM", "DISCORD", "COMMANDER"]:
+            return UnifiedMessageType.SYSTEM_TO_AGENT, sender
+        
+        # Human-to-Agent
+        if sender_upper in ["HUMAN", "USER", "GENERAL"]:
+            return UnifiedMessageType.HUMAN_TO_AGENT, sender
+        
+        # Default: System-to-Agent
+        return UnifiedMessageType.SYSTEM_TO_AGENT, sender or "SYSTEM"
+    
     def _get_discord_username(self, discord_user_id: str | None) -> str | None:
         """
         Get Discord username from user ID.

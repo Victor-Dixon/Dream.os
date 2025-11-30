@@ -713,24 +713,6 @@ class TestMessagingCoreFunctions:
         assert mock_repo.save_message.called
 
 
-if __name__ == "__main__":
-    pytest.main([__file__, "-v"])
-
-
-            content="test",
-            sender="Agent-1",
-            recipient="Agent-2",
-            message_type=UnifiedMessageType.TEXT,
-            metadata={"channel": "onboarding", "sender_role": "CAPTAIN", "receiver_role": "AGENT"}
-        )
-        
-        mock_delivery_service.send_message.return_value = True
-        
-        # Template resolution happens inside send_message_object via dynamic import
-        # Test that message is sent successfully regardless
-        result = messaging_core.send_message_object(message)
-        assert result is True
-
     def test_send_message_metadata_serialization_complex(self, messaging_core, mock_delivery_service):
         """Test send_message_object with complex metadata serialization."""
         from src.core.messaging_models_core import UnifiedMessage, UnifiedMessageType

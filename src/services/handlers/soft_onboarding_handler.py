@@ -81,6 +81,10 @@ class SoftOnboardingHandler:
                 self.exit_code = 1
                 return True
 
+            # Ensure onboarding_file attribute exists (fix for missing attribute error)
+            if not hasattr(args, 'onboarding_file'):
+                args.onboarding_file = None
+            
             if not args.message and not args.onboarding_file and not args.onboarding_step:
                 logger.error("❌ --message or --onboarding-file required for soft onboarding")
                 self.exit_code = 1

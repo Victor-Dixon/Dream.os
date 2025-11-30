@@ -292,6 +292,78 @@ class MessagingCommands(commands.Cog):
             )
             await ctx.send(embed=embed)
 
+    @commands.command(name="bump", description="Bump agents by clicking chat input and clearing (shift+backspace)")
+    async def bump_command(self, ctx: commands.Context, *agent_numbers: int):
+        """
+        Bump agents by clicking their chat input and pressing shift+backspace.
+        
+        Usage: !bump 1 2 3 4 5 6 7 8
+        Example: !bump 1 2 3 (bumps Agent-1, Agent-2, Agent-3)
+        """
+        try:
+            if not agent_numbers:
+                embed = discord.Embed(
+                    title="❌ No Agents Specified",
+                    description="Please specify agent numbers (1-8)\nExample: `!bump 1 2 3`",
+                    color=discord.Color.red(),
+                    timestamp=datetime.now(),
+                )
+                await ctx.send(embed=embed)
+                return
+            
+            # Import bump function
+            import sys
+            from pathlib import Path
+            sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+            from tools.agent_bump_script import bump_agents_by_number
+            
+            # Convert to list and bump agents
+            agent_nums = list(agent_numbers)
+            results = bump_agents_by_number(agent_nums)
+            
+            # Create result embed
+            success_count = sum(1 for r in results.values() if r)
+            total_count = len(results)
+            
+            if success_count == total_count:
+                color = discord.Color.green()
+                title = f"✅ Successfully Bumped {success_count} Agent(s)"
+            elif success_count > 0:
+                color = discord.Color.orange()
+                title = f"⚠️ Partially Successful: {success_count}/{total_count}"
+            else:
+                color = discord.Color.red()
+                title = f"❌ Failed to Bump Agents"
+            
+            embed = discord.Embed(
+                title=title,
+                description=f"Bumped {success_count}/{total_count} agent(s)",
+                color=color,
+                timestamp=datetime.now(),
+            )
+            
+            # Add results for each agent
+            for agent_id, success in results.items():
+                status = "✅" if success else "❌"
+                embed.add_field(
+                    name=f"{status} {agent_id}",
+                    value="Success" if success else "Failed",
+                    inline=True,
+                )
+            
+            embed.set_footer(text="Agent Bump Script | Click + Shift+Backspace")
+            await ctx.send(embed=embed)
+            
+        except Exception as e:
+            self.logger.error(f"Error in bump command: {e}", exc_info=True)
+            embed = discord.Embed(
+                title="❌ Error",
+                description=f"Error bumping agents: {str(e)}",
+                color=discord.Color.red(),
+                timestamp=datetime.now(),
+            )
+            await ctx.send(embed=embed)
+
     @commands.command(name="help_messaging", description="Get help with messaging commands")
     async def help_messaging(self, ctx: commands.Context):
         """Get help with messaging commands."""
@@ -305,6 +377,7 @@ class MessagingCommands(commands.Cog):
 
             commands_help = [
                 ("`!agent <name> <msg>`", "Send message to agent (C-057)"),
+                ("`!bump <1-8> [1-8]...`", "Bump agents (click chat input + shift+backspace)"),
                 ("`/message_agent`", "Send message to specific agent"),
                 ("`/agent_interact`", "Interactive messaging interface"),
                 ("`/swarm_status`", "View current swarm status"),
@@ -324,7 +397,7 @@ class MessagingCommands(commands.Cog):
 
             embed.add_field(
                 name="Tips",
-                value="• Use `!agent Agent-1 Hello!` for quick messages\n• Use `/agent_interact` for easy agent selection\n• Check `/swarm_status` before messaging\n• Use `/agent_list` to see all available agents",
+                value="• Use `!agent Agent-1 Hello!` for quick messages\n• Use `!bump 1 2 3` to bump multiple agents\n• Use `/agent_interact` for easy agent selection\n• Check `/swarm_status` before messaging\n• Use `/agent_list` to see all available agents",
                 inline=False,
             )
 

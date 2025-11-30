@@ -11,20 +11,40 @@ from typing import Any
 
 
 def _load_coordinates() -> dict[str, dict[str, Any]]:
-    """Load agent coordinates from the cursor_agent_coords.json SSOT."""
+    """Load agent coordinates from the cursor_agent_coords.json SSOT.
+    
+    CRITICAL: chat_input_coordinates goes to "coords", onboarding_input_coords goes to "onboarding_coords".
+    These must NEVER be swapped.
+    """
     coord_file = Path("cursor_agent_coords.json")
     data = json.loads(coord_file.read_text(encoding="utf-8"))
     agents: dict[str, dict[str, Any]] = {}
     for agent_id, info in data.get("agents", {}).items():
+        # CRITICAL: chat_input_coordinates is the PRIMARY chat input field
         chat = info.get("chat_input_coordinates", [0, 0])
+        # onboarding_input_coords is ONLY for onboarding messages
         onboarding = info.get("onboarding_input_coords", chat)  # Fallback to chat if not present
+        
+        # DEFENSIVE CHECK: Verify coordinates are different (except for fallback case)
+        if chat == onboarding and agent_id != "Agent-4":  # Agent-4 might have same coords
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.warning(f"⚠️ {agent_id}: chat and onboarding coords are the same: {chat}")
+        
         agents[agent_id] = {
-            "coords": tuple(chat),  # Store as tuple for coordinate loader
-            "onboarding_coords": tuple(onboarding),  # Onboarding coordinates
+            "coords": tuple(chat),  # CRITICAL: This is chat_input_coordinates - NEVER swap with onboarding
+            "onboarding_coords": tuple(onboarding),  # This is onboarding_input_coords - separate field
             "x": chat[0],
             "y": chat[1],
             "description": info.get("description", ""),
         }
+        
+        # CRITICAL VERIFICATION: Log for Agent-4 to catch any bugs
+        if agent_id == "Agent-4":
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.debug(f"✅ Agent-4 coordinates loaded: chat={agents[agent_id]['coords']}, onboarding={agents[agent_id]['onboarding_coords']}")
+    
     return agents
 
 
@@ -37,6 +57,21 @@ class CoordinateLoader:
     def __init__(self):
         """Initialize coordinate loader."""
         self.coordinates = COORDINATES.copy()
+        self._last_load_time = None
+    
+    def _reload_coordinates(self):
+        """Reload coordinates from SSOT file to ensure we have latest values."""
+        try:
+            global COORDINATES
+            COORDINATES = _load_coordinates()
+            self.coordinates = COORDINATES.copy()
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.debug(f"🔄 Reloaded coordinates from SSOT")
+        except Exception as e:
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.warning(f"⚠️ Failed to reload coordinates: {e}")
 
     def get_all_agents(self) -> list[str]:
         """Get all agent IDs."""
@@ -47,15 +82,42 @@ class CoordinateLoader:
         return agent_id in self.coordinates
 
     def get_chat_coordinates(self, agent_id: str) -> tuple[int, int]:
-        """Get chat coordinates for agent."""
+        """Get chat coordinates for agent.
+        
+        CRITICAL: Always returns chat_input_coordinates, NEVER onboarding coordinates.
+        """
+        # Reload coordinates to ensure we have latest values
+        self._reload_coordinates()
         if agent_id in self.coordinates:
-            return self.coordinates[agent_id]["coords"]
+            # CRITICAL FIX: Always use "coords" which is chat_input_coordinates
+            # Never use onboarding_coords here
+            coords = self.coordinates[agent_id]["coords"]
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.debug(f"📍 Chat coordinates for {agent_id}: {coords}")
+            
+            # DEFENSIVE CHECK: Verify we're not accidentally returning onboarding coords
+            onboarding_coords = self.coordinates[agent_id].get("onboarding_coords")
+            if coords == onboarding_coords:
+                logger.error(f"❌ CRITICAL BUG: get_chat_coordinates returned onboarding coords for {agent_id}!")
+                logger.error(f"   Chat coords should be: {coords}, Onboarding: {onboarding_coords}")
+                # Force reload and try again
+                self._reload_coordinates()
+                coords = self.coordinates[agent_id]["coords"]
+            
+            return coords
         raise ValueError(f"No coordinates found for agent {agent_id}")
 
     def get_onboarding_coordinates(self, agent_id: str) -> tuple[int, int]:
         """Get onboarding coordinates for agent."""
+        # Reload coordinates to ensure we have latest values
+        self._reload_coordinates()
         if agent_id in self.coordinates:
-            return self.coordinates[agent_id]["onboarding_coords"]
+            coords = self.coordinates[agent_id]["onboarding_coords"]
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.debug(f"📍 Onboarding coordinates for {agent_id}: {coords}")
+            return coords
         raise ValueError(f"No onboarding coordinates found for agent {agent_id}")
 
     def get_agent_description(self, agent_id: str) -> str:

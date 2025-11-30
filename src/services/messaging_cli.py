@@ -26,7 +26,7 @@ from src.services.messaging_infrastructure import (
 
 # Import task handler with guard to handle missing dependencies gracefully
 try:
-    from src.services.handlers.task_handler import TaskHandler
+    from .handlers.task_handler import TaskHandler
 
     TASK_HANDLER_AVAILABLE = True
 except ImportError:

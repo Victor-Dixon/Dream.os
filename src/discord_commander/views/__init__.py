@@ -13,7 +13,9 @@ License: MIT
 from .agent_messaging_view import AgentMessagingGUIView
 from .swarm_status_view import SwarmStatusGUIView
 from .help_view import HelpGUIView
-from .main_control_panel_view import MainControlPanelView, UnstallAgentView
+from .main_control_panel_view import MainControlPanelView
+from .unstall_agent_view import UnstallAgentView
+from .bump_agent_view import BumpAgentView
 
 __all__ = [
     "AgentMessagingGUIView",
@@ -21,6 +23,7 @@ __all__ = [
     "HelpGUIView",
     "MainControlPanelView",
     "UnstallAgentView",
+    "BumpAgentView",
 ]
 
 

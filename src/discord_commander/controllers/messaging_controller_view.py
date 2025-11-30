@@ -215,12 +215,18 @@ class MessagingControllerView(discord.ui.View):
                     description = f"{description} - {mission[:remaining]}"
             description = description[:100] if len(description) > 100 else description
             
+            # Discord SelectOption value must be <= 20 characters
+            option_value = agent["id"]
+            if len(option_value) > 20:
+                option_value = option_value[:20]
+                logger.warning(f"Truncated SelectOption value for {agent['id']} to {option_value}")
+            
             options.append(
                 discord.SelectOption(
                     label=label,
                     description=description,
                     emoji=emoji,
-                    value=agent["id"],
+                    value=option_value,
                 )
             )
         return options

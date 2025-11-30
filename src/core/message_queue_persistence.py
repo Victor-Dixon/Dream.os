@@ -24,30 +24,196 @@ class FileQueuePersistence(IQueuePersistence):
         self.lock_manager = lock_manager
 
     def load_entries(self) -> List[IQueueEntry]:
-        """Load queue entries from JSON file."""
+        """Load queue entries from JSON file with robust error handling.
+        
+        Handles:
+        - Corrupted JSON (multiple JSON objects, invalid structure)
+        - Empty files
+        - Partial JSON writes
+        - Encoding issues
+        """
         if not self.queue_file.exists():
             return []
 
         try:
-            with open(self.queue_file, encoding="utf-8") as f:
-                data = json.load(f)
-
-            return [QueueEntry.from_dict(entry_data) for entry_data in data]
-        except (json.JSONDecodeError, KeyError, ValueError, FileNotFoundError) as e:
-            # Log error and return empty list
-            print(f"Failed to load queue entries: {e}")
+            # Read raw file content
+            raw_content = self.queue_file.read_text(encoding="utf-8").strip()
+            
+            if not raw_content:
+                # Empty file - return empty list
+                return []
+            
+            # Try to parse as standard JSON array
+            try:
+                data = json.loads(raw_content)
+                
+                # Validate structure
+                if not isinstance(data, list):
+                    # If it's a dict, try to extract entries
+                    if isinstance(data, dict) and "entries" in data:
+                        data = data["entries"]
+                    elif isinstance(data, dict) and "pending_pushes" in data:
+                        # Handle deferred push queue format
+                        data = data["pending_pushes"]
+                    else:
+                        # Invalid structure - backup and reset
+                        self._backup_corrupted_file()
+                        return []
+                
+                # Parse entries with error isolation
+                entries = []
+                for idx, entry_data in enumerate(data):
+                    try:
+                        entry = QueueEntry.from_dict(entry_data)
+                        entries.append(entry)
+                    except (KeyError, ValueError, TypeError) as entry_error:
+                        # Skip invalid entries but continue processing
+                        print(f"⚠️ Skipping invalid entry at index {idx}: {entry_error}")
+                        continue
+                
+                return entries
+                
+            except json.JSONDecodeError as json_error:
+                # Handle corrupted JSON - try recovery strategies
+                return self._recover_corrupted_json(raw_content, json_error)
+                
+        except (FileNotFoundError, PermissionError, UnicodeDecodeError) as e:
+            print(f"⚠️ Failed to load queue entries: {e}")
             return []
+        except Exception as e:
+            # Last resort: backup and reset
+            print(f"❌ Critical error loading queue entries: {e}")
+            self._backup_corrupted_file()
+            return []
+    
+    def _recover_corrupted_json(self, raw_content: str, json_error: json.JSONDecodeError) -> List[IQueueEntry]:
+        """Attempt to recover from corrupted JSON.
+        
+        Strategies:
+        1. Try to find valid JSON objects in the file
+        2. Extract entries from partial JSON
+        3. Fall back to backup or empty list
+        """
+        try:
+            # Strategy 1: Try to find array start
+            if raw_content.startswith('['):
+                # Try to parse up to the error position
+                error_pos = json_error.pos if hasattr(json_error, 'pos') else len(raw_content)
+                partial_content = raw_content[:error_pos]
+                
+                # Try to find last valid array closing
+                last_bracket = partial_content.rfind(']')
+                if last_bracket > 0:
+                    try:
+                        data = json.loads(partial_content[:last_bracket + 1])
+                        if isinstance(data, list):
+                            entries = []
+                            for entry_data in data:
+                                try:
+                                    entries.append(QueueEntry.from_dict(entry_data))
+                                except Exception:
+                                    continue
+                            if entries:
+                                # Backup corrupted file and save recovered entries
+                                self._backup_corrupted_file()
+                                self.save_entries(entries)
+                                print(f"✅ Recovered {len(entries)} entries from corrupted JSON")
+                                return entries
+                    except Exception:
+                        pass
+            
+            # Strategy 2: Try to extract individual JSON objects
+            # Look for JSON object patterns { ... }
+            entries = []
+            bracket_count = 0
+            current_obj = ""
+            
+            for char in raw_content:
+                if char == '{':
+                    if bracket_count == 0:
+                        current_obj = ""
+                    bracket_count += 1
+                    current_obj += char
+                elif char == '}':
+                    current_obj += char
+                    bracket_count -= 1
+                    
+                    if bracket_count == 0:
+                        # Found complete object
+                        try:
+                            obj_data = json.loads(current_obj)
+                            entry = QueueEntry.from_dict(obj_data)
+                            entries.append(entry)
+                        except Exception:
+                            pass
+                        current_obj = ""
+            
+            if entries:
+                # Backup and save recovered entries
+                self._backup_corrupted_file()
+                self.save_entries(entries)
+                print(f"✅ Recovered {len(entries)} entries using object extraction")
+                return entries
+                
+        except Exception as recovery_error:
+            print(f"⚠️ Recovery attempt failed: {recovery_error}")
+        
+        # All recovery strategies failed - backup and return empty
+        self._backup_corrupted_file()
+        return []
+    
+    def _backup_corrupted_file(self) -> None:
+        """Backup corrupted queue file before reset with improved error handling."""
+        try:
+            if self.queue_file.exists():
+                from datetime import datetime
+                import shutil
+                
+                # Create backup directory if it doesn't exist
+                backup_dir = self.queue_file.parent / "backups"
+                backup_dir.mkdir(exist_ok=True)
+                
+                # Generate unique backup filename with timestamp
+                timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+                backup_name = f"{self.queue_file.stem}_{timestamp}_corrupted.json"
+                backup_path = backup_dir / backup_name
+                
+                # Use copy instead of rename to preserve original for analysis
+                shutil.copy2(self.queue_file, backup_path)
+                
+                # Only remove original after successful backup
+                self.queue_file.unlink()
+                
+                print(f"📦 Backed up corrupted queue file to: {backup_path}")
+        except PermissionError as e:
+            print(f"⚠️ Permission denied backing up corrupted file: {e}")
+        except Exception as e:
+            print(f"⚠️ Failed to backup corrupted file: {e}")
 
     def save_entries(self, entries: List[IQueueEntry]) -> None:
-        """Save queue entries to JSON file."""
+        """Save queue entries to JSON file with atomic write for reliability."""
         try:
             data = [entry.to_dict() for entry in entries]
 
-            # Direct write for better performance
-            with open(self.queue_file, "w", encoding="utf-8") as f:
+            # Atomic write: Write to temp file first, then rename
+            temp_file = self.queue_file.with_suffix('.json.tmp')
+            with open(temp_file, "w", encoding="utf-8") as f:
                 json.dump(data, f, separators=(',', ':'), ensure_ascii=False, default=str)
+            
+            # Atomic rename (Windows-compatible)
+            if self.queue_file.exists():
+                self.queue_file.unlink()
+            temp_file.rename(self.queue_file)
+            
         except Exception as e:
             print(f"Failed to save queue entries: {e}")
+            # Clean up temp file on error
+            temp_file = self.queue_file.with_suffix('.json.tmp')
+            if temp_file.exists():
+                try:
+                    temp_file.unlink()
+                except Exception:
+                    pass
             raise
 
     def atomic_operation(self, operation: Callable[[], Any]) -> Any:

@@ -14,8 +14,15 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from tools.repo_safe_merge import SafeRepoMerge
-from tools.merge_prs_via_api import get_github_token
-from tools.check_pr_status import check_pr_status
+
+# Import GitHub Bypass System (Local-First Architecture)
+try:
+    from src.core.synthetic_github import get_synthetic_github
+    from src.core.deferred_push_queue import get_deferred_push_queue
+    GITHUB_BYPASS_AVAILABLE = True
+except ImportError as e:
+    GITHUB_BYPASS_AVAILABLE = False
+    print(f"⚠️ GitHub Bypass System not available - using legacy method: {e}")
 
 
 # Case variations from Master Plan (12 repos)
@@ -85,25 +92,29 @@ CASE_VARIATIONS = [
 
 def check_existing_prs():
     """Check if any PRs already exist for these merges."""
-    token = get_github_token()
-    if not token:
-        print("⚠️ No GitHub token - will proceed with dry runs only")
+    if not GITHUB_BYPASS_AVAILABLE:
+        print("⚠️ GitHub Bypass System not available - skipping PR check")
         return {}
     
-    existing_prs = {}
-    
-    # Check known PRs from previous work
-    known_prs = [
-        ("Dadudekc/MachineLearningModelMaker", 2, "LSTMmodel_trainer merge")
-    ]
-    
-    for owner_repo, pr_num, desc in known_prs:
-        owner, repo = owner_repo.split("/")
-        status = check_pr_status(owner, repo, pr_num)
-        if status and status.get("merged"):
-            existing_prs[desc] = status
-    
-    return existing_prs
+    try:
+        github = get_synthetic_github()
+        existing_prs = {}
+        
+        # Check known PRs from previous work
+        known_prs = [
+            ("MachineLearningModelMaker", 2, "LSTMmodel_trainer merge")
+        ]
+        
+        for repo, pr_num, desc in known_prs:
+            # Use SyntheticGitHub to check PR status (non-blocking)
+            success, pr_data = github.get_pr("Dadudekc", repo, pr_num)
+            if success and pr_data and pr_data.get("merged"):
+                existing_prs[desc] = pr_data
+        
+        return existing_prs
+    except Exception as e:
+        print(f"⚠️ Error checking existing PRs: {e}")
+        return {}
 
 
 def execute_case_variation_merge(source, target, description):

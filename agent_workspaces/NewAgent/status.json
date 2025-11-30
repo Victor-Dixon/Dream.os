@@ -1,0 +1,19 @@
+{
+  "agent_id": "NewAgent",
+  "agent_name": "Agent",
+  "status": "IDLE",
+  "current_phase": "Initialized",
+  "last_updated": "2025-11-30T08:41:56.368363+00:00",
+  "current_mission": "No mission assigned",
+  "mission_priority": "NONE",
+  "cycle_count": 0,
+  "fsm_state": "start",
+  "current_tasks": [],
+  "completed_tasks": [],
+  "achievements": [],
+  "points_earned": 0,
+  "next_actions": [
+    "Await mission assignment"
+  ],
+  "blockers": []
+}

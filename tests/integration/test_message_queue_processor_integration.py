@@ -340,6 +340,155 @@ class TestMessageQueueProcessorIntegration:
             assert entry_2.status == "DELIVERED"
 
 
+    @patch("src.core.message_queue_processor.send_message")
+    def test_batch_processing_multiple_messages(self, mock_send_message, processor):
+        """Test batch processing with multiple messages."""
+        mock_send_message.return_value = True
+        
+        # Enqueue multiple messages
+        queue_ids = []
+        for i in range(5):
+            queue_id = processor.queue.enqueue({
+                "recipient": f"Agent-{i+1}",
+                "content": f"Batch message {i+1}",
+                "sender": "TEST"
+            })
+            queue_ids.append(queue_id)
+        
+        # Process in batches
+        processed = processor.process_queue(max_messages=5, batch_size=2)
+        
+        assert processed == 5
+        assert mock_send_message.call_count == 5
+        
+        # Verify all marked as delivered
+        for queue_id in queue_ids:
+            entry = processor.queue.get_entry(queue_id)
+            assert entry.status == "DELIVERED"
+
+    @patch("src.core.message_queue_processor.send_message")
+    def test_batch_processing_partial_batch(self, mock_send_message, processor):
+        """Test processing partial batch when fewer messages than batch_size."""
+        mock_send_message.return_value = True
+        
+        # Enqueue 3 messages
+        queue_ids = []
+        for i in range(3):
+            queue_id = processor.queue.enqueue({
+                "recipient": "Agent-1",
+                "content": f"Message {i+1}",
+                "sender": "TEST"
+            })
+            queue_ids.append(queue_id)
+        
+        # Process with batch_size=5 (larger than available)
+        processed = processor.process_queue(max_messages=3, batch_size=5)
+        
+        assert processed == 3
+        assert mock_send_message.call_count == 3
+
+    def test_batch_processing_with_persistence_roundtrip(self, processor):
+        """Test batch processing persists status correctly."""
+        # Enqueue multiple messages
+        queue_ids = []
+        for i in range(3):
+            queue_id = processor.queue.enqueue({
+                "recipient": "Agent-1",
+                "content": f"Persistence test {i+1}",
+                "sender": "TEST"
+            })
+            queue_ids.append(queue_id)
+        
+        # Process with mock delivery
+        with patch.object(processor, "_route_delivery", return_value=True):
+            processed = processor.process_queue(max_messages=3, batch_size=1)
+        
+        assert processed == 3
+        
+        # Verify persistence - reload from file
+        entries = processor.queue.persistence.load_entries()
+        assert len(entries) == 3
+        assert all(e.status == "DELIVERED" for e in entries)
+
+    @patch("src.core.message_queue_processor.send_message")
+    def test_batch_processing_mixed_success_failure(self, mock_send_message, processor):
+        """Test batch processing with mixed success and failure."""
+        mock_send_message.side_effect = [True, False, True]
+        
+        # Enqueue 3 messages
+        queue_ids = []
+        for i in range(3):
+            queue_id = processor.queue.enqueue({
+                "recipient": "Agent-1",
+                "content": f"Mixed test {i+1}",
+                "sender": "TEST"
+            })
+            queue_ids.append(queue_id)
+        
+        # Process all
+        processed = processor.process_queue(max_messages=3, batch_size=3)
+        
+        assert processed == 3
+        
+        # Verify statuses
+        entry1 = processor.queue.get_entry(queue_ids[0])
+        entry2 = processor.queue.get_entry(queue_ids[1])
+        entry3 = processor.queue.get_entry(queue_ids[2])
+        
+        assert entry1.status == "DELIVERED"
+        assert entry2.status == "FAILED"
+        assert entry3.status == "DELIVERED"
+
+    def test_batch_processing_empty_queue(self, processor):
+        """Test batch processing with empty queue."""
+        processed = processor.process_queue(max_messages=5, batch_size=2)
+        
+        assert processed == 0
+
+    @patch("src.core.message_queue_processor.send_message")
+    def test_batch_processing_max_messages_limit(self, mock_send_message, processor):
+        """Test batch processing respects max_messages limit."""
+        mock_send_message.return_value = True
+        
+        # Enqueue 10 messages
+        for i in range(10):
+            processor.queue.enqueue({
+                "recipient": "Agent-1",
+                "content": f"Message {i+1}",
+                "sender": "TEST"
+            })
+        
+        # Process only 5
+        processed = processor.process_queue(max_messages=5, batch_size=2)
+        
+        assert processed == 5
+        assert mock_send_message.call_count == 5
+
+    def test_processor_dependency_injection(self, message_queue):
+        """Test processor accepts injected messaging core."""
+        mock_core = MagicMock()
+        mock_core.send_message.return_value = True
+        
+        processor = MessageQueueProcessor(
+            queue=message_queue,
+            messaging_core=mock_core
+        )
+        
+        # Enqueue message
+        queue_id = message_queue.enqueue({
+            "recipient": "Agent-1",
+            "content": "Injection test",
+            "sender": "TEST"
+        })
+        
+        # Process
+        processed = processor.process_queue(max_messages=1)
+        
+        assert processed == 1
+        assert mock_core.send_message.called
+        assert processor.messaging_core == mock_core
+
+
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])
 

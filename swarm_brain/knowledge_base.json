@@ -1,6 +1,6 @@
 {
   "created_at": "2025-10-13T16:54:04.804842",
-  "last_updated": "2025-11-24T09:03:20.561294",
+  "last_updated": "2025-11-29T18:14:26.017074",
   "entries": {
     "kb-1": {
       "id": "kb-1",
@@ -2056,10 +2056,66 @@
       ],
       "timestamp": "2025-11-24T09:03:20.561294",
       "metadata": {}
+    },
+    "kb-134": {
+      "id": "kb-134",
+      "title": "Auto-Gas Sent: Agent-1 → Agent-2",
+      "content": "Progress: 76.0%, Reason: PRIMARY_HANDOFF_75_PERCENT, Timestamp: 2025-11-29T17:28:49.845824",
+      "author": "AutoGasPipeline",
+      "category": "learning",
+      "tags": [
+        "auto-gas",
+        "pipeline",
+        "perpetual-motion"
+      ],
+      "timestamp": "2025-11-29T17:28:49.845824",
+      "metadata": {}
+    },
+    "kb-135": {
+      "id": "kb-135",
+      "title": "Auto-Gas Sent: Agent-1 → Agent-2",
+      "content": "Progress: 76.0%, Reason: PRIMARY_HANDOFF_75_PERCENT, Timestamp: 2025-11-29T17:29:56.235640",
+      "author": "AutoGasPipeline",
+      "category": "learning",
+      "tags": [
+        "auto-gas",
+        "pipeline",
+        "perpetual-motion"
+      ],
+      "timestamp": "2025-11-29T17:29:56.235640",
+      "metadata": {}
+    },
+    "kb-136": {
+      "id": "kb-136",
+      "title": "Auto-Gas Sent: Agent-1 → Agent-2",
+      "content": "Progress: 76.0%, Reason: PRIMARY_HANDOFF_75_PERCENT, Timestamp: 2025-11-29T17:30:31.702395",
+      "author": "AutoGasPipeline",
+      "category": "learning",
+      "tags": [
+        "auto-gas",
+        "pipeline",
+        "perpetual-motion"
+      ],
+      "timestamp": "2025-11-29T17:30:31.702395",
+      "metadata": {}
+    },
+    "kb-137": {
+      "id": "kb-137",
+      "title": "Auto-Gas Sent: Agent-1 → Agent-2",
+      "content": "Progress: 76.0%, Reason: PRIMARY_HANDOFF_75_PERCENT, Timestamp: 2025-11-29T18:14:26.017074",
+      "author": "AutoGasPipeline",
+      "category": "learning",
+      "tags": [
+        "auto-gas",
+        "pipeline",
+        "perpetual-motion"
+      ],
+      "timestamp": "2025-11-29T18:14:26.017074",
+      "metadata": {}
     }
   },
   "stats": {
-    "total_entries": 133,
+    "total_entries": 137,
     "contributors": {
       "Agent-7": 16,
       "Agent-5": 16,
@@ -2068,7 +2124,8 @@
       "Agent-8": 11,
       "Agent-1": 4,
       "Agent-4": 1,
-      "Agent-3": 1
+      "Agent-3": 1,
+      "AutoGasPipeline": 4
     }
   }
 }

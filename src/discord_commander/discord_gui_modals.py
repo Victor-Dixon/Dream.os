@@ -274,6 +274,296 @@ class TemplateBroadcastModal(BaseMessageModal):
             await interaction.response.send_message(f"❌ Error: {e}", ephemeral=True)
 
 
+class SoftOnboardModal(discord.ui.Modal):
+    """Modal for soft onboarding agent(s)."""
+
+    def __init__(self, messaging_service: ConsolidatedMessagingService):
+        super().__init__(title="🚀 Soft Onboard Agent(s)")
+        self.messaging_service = messaging_service
+
+        # Agent selection
+        self.agent_input = discord.ui.TextInput(
+            label="Agent ID(s)",
+            placeholder="Agent-1, Agent-1,Agent-2,Agent-3, or 'all'",
+            required=True,
+            max_length=200,
+        )
+        self.add_item(self.agent_input)
+
+        # Optional custom message
+        self.message_input = discord.ui.TextInput(
+            label="Onboarding Message (Optional)",
+            placeholder="Leave empty for default message, or enter custom onboarding message...",
+            style=discord.TextStyle.paragraph,
+            required=False,
+            max_length=2000,
+        )
+        self.add_item(self.message_input)
+
+    async def on_submit(self, interaction: discord.Interaction):
+        """Handle modal submission."""
+        try:
+            import subprocess
+            from pathlib import Path
+
+            agent_ids = self.agent_input.value.strip()
+            custom_message = self.message_input.value.strip() if self.message_input.value else None
+
+            # Get project root
+            project_root = Path(__file__).parent.parent.parent
+            cli_path = project_root / 'tools' / 'soft_onboard_cli.py'
+
+            # Default message
+            default_message = "🚀 SOFT ONBOARD - Agent activation initiated. Check your inbox and begin autonomous operations."
+            message = custom_message if custom_message else default_message
+
+            # Parse agent list
+            if not agent_ids or agent_ids.lower() == "all":
+                agent_list = [f"Agent-{i}" for i in range(1, 9)]
+                agents_str = ','.join(agent_list)
+            else:
+                # Parse comma-separated list
+                raw_list = [aid.strip() for aid in agent_ids.split(",") if aid.strip()]
+                agent_list = []
+                for aid in raw_list:
+                    if aid.isdigit():
+                        agent_list.append(f"Agent-{aid}")
+                    elif aid.lower().startswith("agent-"):
+                        agent_list.append(aid)
+                    else:
+                        agent_list.append(aid)
+                agents_str = ','.join(agent_list)
+
+            # Send initial response
+            await interaction.response.defer(ephemeral=True)
+
+            # Execute soft onboarding
+            if len(agent_list) == 1:
+                cmd = ['python', str(cli_path), '--agent', agent_list[0], '--message', message]
+            else:
+                cmd = ['python', str(cli_path), '--agents', agents_str, '--message', message, '--generate-cycle-report']
+
+            result = subprocess.run(
+                cmd,
+                capture_output=True,
+                text=True,
+                timeout=300,
+                cwd=str(project_root)
+            )
+
+            # Send results
+            if result.returncode == 0:
+                embed = discord.Embed(
+                    title="✅ SOFT ONBOARD COMPLETE",
+                    description=f"Soft onboarding initiated for **{len(agent_list)} agent(s)**",
+                    color=discord.Color.green(),
+                )
+                embed.add_field(
+                    name="Agents",
+                    value=', '.join(agent_list),
+                    inline=False
+                )
+                if result.stdout:
+                    # Extract summary from output
+                    output_lines = result.stdout.split('\n')
+                    summary = '\n'.join([line for line in output_lines if '✅' in line or '❌' in line][:5])
+                    if summary:
+                        embed.add_field(name="Status", value=summary[:500], inline=False)
+            else:
+                error_msg = result.stderr[:500] if result.stderr else result.stdout[:500] if result.stdout else "Unknown error"
+                embed = discord.Embed(
+                    title="❌ SOFT ONBOARD FAILED",
+                    description=f"Failed to soft onboard agents",
+                    color=discord.Color.red(),
+                )
+                embed.add_field(name="Error", value=error_msg, inline=False)
+
+            await interaction.followup.send(embed=embed, ephemeral=True)
+
+        except subprocess.TimeoutExpired:
+            await interaction.followup.send(
+                "❌ Soft onboarding timed out after 5 minutes", ephemeral=True
+            )
+        except Exception as e:
+            logger.error(f"Error in soft onboard modal: {e}", exc_info=True)
+            await interaction.followup.send(f"❌ Error: {e}", ephemeral=True)
+
+
+class MermaidModal(discord.ui.Modal):
+    """Modal for creating Mermaid diagrams."""
+
+    def __init__(self):
+        super().__init__(title="🌊 Create Mermaid Diagram")
+        self.diagram_input = discord.ui.TextInput(
+            label="Mermaid Diagram Code",
+            placeholder="graph TD; A-->B; B-->C;",
+            style=discord.TextStyle.paragraph,
+            required=True,
+            max_length=2000,
+        )
+        self.add_item(self.diagram_input)
+
+    async def on_submit(self, interaction: discord.Interaction):
+        """Handle modal submission."""
+        try:
+            diagram_code = self.diagram_input.value.strip()
+            
+            # Remove code block markers if present
+            if diagram_code.startswith("```mermaid"):
+                diagram_code = diagram_code[10:]
+            elif diagram_code.startswith("```"):
+                diagram_code = diagram_code[3:]
+            if diagram_code.endswith("```"):
+                diagram_code = diagram_code[:-3]
+            diagram_code = diagram_code.strip()
+            
+            # Create embed with mermaid code
+            embed = discord.Embed(
+                title="🌊 Mermaid Diagram",
+                description="Mermaid diagram code:",
+                color=discord.Color.blue(),
+            )
+            
+            # Send mermaid code in code block
+            mermaid_block = f"```mermaid\n{diagram_code}\n```"
+            
+            # Discord has a 2000 character limit per message
+            if len(mermaid_block) > 1900:
+                await interaction.response.send_message(
+                    "❌ Mermaid diagram too long. Please shorten it.",
+                    ephemeral=True
+                )
+                return
+            
+            embed.add_field(
+                name="Diagram Code",
+                value=mermaid_block,
+                inline=False,
+            )
+            
+            embed.set_footer(text="Note: Discord may not render Mermaid natively. Use external tools for visualization.")
+            
+            await interaction.response.send_message(embed=embed)
+        except Exception as e:
+            logger.error(f"Error creating mermaid diagram: {e}", exc_info=True)
+            await interaction.response.send_message(
+                f"❌ Error creating diagram: {e}",
+                ephemeral=True
+            )
+
+
+class HardOnboardModal(discord.ui.Modal):
+    """Modal for hard onboarding agent(s)."""
+
+    def __init__(self, messaging_service: ConsolidatedMessagingService):
+        super().__init__(title="🚀 Hard Onboard Agent(s)")
+        self.messaging_service = messaging_service
+
+        # Agent selection
+        self.agent_input = discord.ui.TextInput(
+            label="Agent ID(s)",
+            placeholder="Agent-1, Agent-1,Agent-2,Agent-3, or 'all'",
+            required=True,
+            max_length=200,
+        )
+        self.add_item(self.agent_input)
+
+    async def on_submit(self, interaction: discord.Interaction):
+        """Handle modal submission."""
+        try:
+            import subprocess
+            from pathlib import Path
+
+            agent_ids = self.agent_input.value.strip()
+
+            # Get project root
+            project_root = Path(__file__).parent.parent.parent
+            cli_path = project_root / 'tools' / 'captain_hard_onboard_agent.py'
+
+            # Parse agent list
+            if not agent_ids or agent_ids.lower() == "all":
+                agent_list = [f"Agent-{i}" for i in range(1, 9)]
+            else:
+                # Parse comma-separated list
+                raw_list = [aid.strip() for aid in agent_ids.split(",") if aid.strip()]
+                agent_list = []
+                for aid in raw_list:
+                    if aid.isdigit():
+                        agent_list.append(f"Agent-{aid}")
+                    elif aid.lower().startswith("agent-"):
+                        agent_list.append(aid)
+                    else:
+                        agent_list.append(aid)
+
+            # Send initial response
+            await interaction.response.defer(ephemeral=True)
+
+            # Execute hard onboarding for each agent
+            successful = []
+            failed = []
+
+            for agent_id in agent_list:
+                try:
+                    result = subprocess.run(
+                        ['python', str(cli_path), agent_id],
+                        capture_output=True,
+                        text=True,
+                        timeout=60,
+                        cwd=str(project_root)
+                    )
+
+                    if result.returncode == 0:
+                        successful.append(agent_id)
+                    else:
+                        error_msg = result.stderr[:200] if result.stderr else "Unknown error"
+                        failed.append((agent_id, error_msg))
+                except subprocess.TimeoutExpired:
+                    failed.append((agent_id, "Timeout after 60 seconds"))
+                except Exception as e:
+                    failed.append((agent_id, str(e)[:200]))
+
+            # Send results
+            if len(successful) == len(agent_list):
+                embed = discord.Embed(
+                    title="✅ HARD ONBOARD COMPLETE",
+                    description=f"All **{len(agent_list)} agent(s)** hard onboarded successfully!",
+                    color=discord.Color.green(),
+                )
+                embed.add_field(
+                    name="Activated Agents",
+                    value="\n".join([f"✅ {agent}" for agent in successful]),
+                    inline=False
+                )
+            elif successful:
+                embed = discord.Embed(
+                    title="⚠️ PARTIAL HARD ONBOARD",
+                    description=f"**{len(successful)}/{len(agent_list)}** agents onboarded successfully",
+                    color=discord.Color.orange(),
+                )
+                embed.add_field(
+                    name="✅ Successful",
+                    value="\n".join([f"✅ {agent}" for agent in successful]),
+                    inline=False
+                )
+                if failed:
+                    error_list = "\n".join([f"❌ {agent}: {error}" for agent, error in failed[:5]])
+                    embed.add_field(name="❌ Failed", value=error_list, inline=False)
+            else:
+                embed = discord.Embed(
+                    title="❌ HARD ONBOARD FAILED",
+                    description="All agents failed to onboard",
+                    color=discord.Color.red(),
+                )
+                error_list = "\n".join([f"❌ {agent}: {error}" for agent, error in failed[:5]])
+                embed.add_field(name="Errors", value=error_list, inline=False)
+
+            await interaction.followup.send(embed=embed, ephemeral=True)
+
+        except Exception as e:
+            logger.error(f"Error in hard onboard modal: {e}", exc_info=True)
+            await interaction.followup.send(f"❌ Error: {e}", ephemeral=True)
+
+
 __all__ = [
     "AgentMessageModal",
     "BroadcastMessageModal",
@@ -281,4 +571,6 @@ __all__ = [
     "SelectiveBroadcastModal",
     "JetFuelBroadcastModal",
     "TemplateBroadcastModal",
+    "SoftOnboardModal",
+    "HardOnboardModal",
 ]

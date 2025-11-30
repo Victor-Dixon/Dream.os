@@ -8,84 +8,63 @@
 
 ## 📊 **SUMMARY**
 
-- **Files Analyzed**: 141
-- **Files Without Tests**: 44
-- **Functions Without Tests**: 735
-- **Classes Without Tests**: 192
+- **Files Analyzed**: 146
+- **Files Without Tests**: 5
+- **Functions Without Tests**: 299
+- **Classes Without Tests**: 102
 - **Potential Dead Code**: 0 items
 
 ---
 
 ## 📁 **FILES WITHOUT TESTS**
 
-- **src\services\agent_vector_utils.py**: 2 functions, 0 classes
-- **src\services\architectural_principles.py**: 2 functions, 1 classes
-- **src\services\architectural_principles_data.py**: 9 functions, 0 classes
-- **src\services\compliance_validator.py**: 7 functions, 1 classes
-- **src\services\constants.py**: 0 functions, 0 classes
-- **src\services\cursor_db.py**: 4 functions, 2 classes
-- **src\services\learning_recommender.py**: 9 functions, 2 classes
-- **src\services\message_identity_clarification.py**: 3 functions, 1 classes
-- **src\services\messaging_cli_formatters.py**: 0 functions, 0 classes
-- **src\services\messaging_cli_parser.py**: 1 functions, 0 classes
-- **src\services\onboarding_template_loader.py**: 5 functions, 1 classes
-- **src\services\performance_analyzer.py**: 13 functions, 2 classes
-- **src\services\recommendation_engine.py**: 11 functions, 2 classes
-- **src\services\role_command_handler.py**: 2 functions, 1 classes
-- **src\services\status_embedding_indexer.py**: 1 functions, 0 classes
-- **src\services\swarm_intelligence_manager.py**: 15 functions, 2 classes
-- **src\services\vector_database_service_unified.py**: 33 functions, 3 classes
-- **src\services\work_indexer.py**: 6 functions, 3 classes
-- **src\services\unified_onboarding_service.py**: 0 functions, 0 classes
-- **src\services\vector_integration_unified.py**: 0 functions, 0 classes
-
-... and 24 more files
+- **src\discord_commander\views\bump_agent_view.py**: 4 functions, 1 classes
+- **src\services\chatgpt\extractor_message_parser.py**: 1 functions, 1 classes
+- **src\services\chatgpt\extractor_storage.py**: 6 functions, 1 classes
+- **src\services\chatgpt\navigator_messaging.py**: 0 functions, 1 classes
+- **src\services\chatgpt\session_persistence.py**: 1 functions, 1 classes
 
 ---
 
 ## 🔧 **FUNCTIONS WITHOUT TESTS**
 
-- **src\discord_commander\contract_notifications.py**: `test_notifications` ✅ USED
-- **src\discord_commander\contract_notifications.py**: `notify_contract_assigned` ✅ USED
-- **src\discord_commander\contract_notifications.py**: `notify_contract_started` ✅ USED
-- **src\discord_commander\contract_notifications.py**: `notify_contract_completed` ✅ USED
-- **src\discord_commander\contract_notifications.py**: `notify_contract_blocked` ✅ USED
 - **src\discord_commander\core.py**: `__post_init__` ✅ USED
-- **src\discord_commander\core.py**: `is_valid` ✅ USED
-- **src\discord_commander\debate_discord_integration.py**: `post_debate_start_to_discord` ✅ USED
-- **src\discord_commander\debate_discord_integration.py**: `post_vote_to_discord` ✅ USED
-- **src\discord_commander\debate_discord_integration.py**: `post_debate_status_to_discord` ✅ USED
-- **src\discord_commander\debate_discord_integration.py**: `post_debate_start` ✅ USED
-- **src\discord_commander\debate_discord_integration.py**: `post_vote` ✅ USED
-- **src\discord_commander\debate_discord_integration.py**: `post_debate_status` ✅ USED
-- **src\discord_commander\discord_agent_communication.py**: `create_agent_communication_engine` ✅ USED
-- **src\discord_commander\discord_agent_communication.py**: `get_agent_status_file_path` ✅ USED
-- **src\discord_commander\discord_agent_communication.py**: `is_valid_agent` ✅ USED
-- **src\discord_commander\discord_agent_communication.py**: `get_all_agent_names` ✅ USED
-- **src\discord_commander\discord_agent_communication.py**: `validate_agent_name` ✅ USED
-- **src\discord_commander\discord_agent_communication.py**: `format_timestamp` ✅ USED
-- **src\discord_commander\discord_agent_communication.py**: `create_message_metadata` ✅ USED
-- **src\discord_commander\discord_agent_communication.py**: `get_unified_utility` ✅ USED
 - **src\discord_commander\discord_embeds.py**: `create_achievement_embed` ✅ USED
 - **src\discord_commander\discord_embeds.py**: `create_milestone_embed` ✅ USED
 - **src\discord_commander\discord_embeds.py**: `create_architectural_review_embed` ✅ USED
 - **src\discord_commander\discord_embeds.py**: `create_error_embed` ✅ USED
 - **src\discord_commander\discord_embeds.py**: `create_validation_embed` ✅ USED
 - **src\discord_commander\discord_embeds.py**: `create_cleanup_embed` ✅ USED
-- **src\discord_commander\discord_gui_controller.py**: `create_main_gui` ✅ USED
-- **src\discord_commander\discord_gui_controller.py**: `create_status_gui` ✅ USED
-- **src\discord_commander\discord_gui_controller.py**: `create_control_panel` ✅ USED
+- **src\discord_commander\discord_models.py**: `create_command_result` ✅ USED
+- **src\discord_commander\discord_models.py**: `__post_init__` ✅ USED
+- **src\discord_commander\discord_models.py**: `__post_init__` ✅ USED
+- **src\discord_commander\enhanced_bot.py**: `get_bot_status` ✅ USED
+- **src\discord_commander\enhanced_bot.py**: `mock_command` ✅ USED
+- **src\discord_commander\enhanced_bot.py**: `decorator` ✅ USED
+- **src\discord_commander\github_book_viewer.py**: `get_repo` ✅ USED
+- **src\discord_commander\github_book_viewer.py**: `get_analyzed_count` ✅ USED
+- **src\discord_commander\github_book_viewer.py**: `get_goldmines` ✅ USED
+- **src\discord_commander\github_book_viewer.py**: `mock_command` ✅ USED
+- **src\discord_commander\github_book_viewer.py**: `add_item` ✅ USED
+- **src\discord_commander\github_book_viewer.py**: `decorator` ✅ USED
+- **src\discord_commander\messaging_commands.py**: `setup` ✅ USED
+- **src\discord_commander\messaging_commands.py**: `mock_command` ✅ USED
+- **src\discord_commander\messaging_commands.py**: `decorator` ✅ USED
+- **src\discord_commander\messaging_controller_views.py**: `add_item` ✅ USED
+- **src\discord_commander\approval_commands.py**: `setup` ✅ USED
+- **src\discord_commander\discord_template_collection.py**: `get_template_by_name` ✅ USED
+- **src\discord_commander\discord_template_collection.py**: `get_all_templates` ✅ USED
+- **src\discord_commander\discord_template_collection.py**: `get_templates_by_mode` ✅ USED
+- **src\discord_commander\trading_data_service.py**: `get_market_data` ✅ USED
+- **src\discord_commander\trading_data_service.py**: `get_current_price` ✅ USED
+- **src\discord_commander\status_change_monitor.py**: `setup_status_monitor` ✅ USED
 
-... and 705 more functions
+... and 269 more functions
 
 ---
 
 ## 🏗️ **CLASSES WITHOUT TESTS**
 
-- **src\discord_commander\contract_notifications.py**: `ContractNotifier` ✅ USED
-- **src\discord_commander\core.py**: `DiscordConfig` ✅ USED
-- **src\discord_commander\debate_discord_integration.py**: `DebateDiscordPoster` ✅ USED
-- **src\discord_commander\discord_agent_communication.py**: `AgentCommunicationEngine` ✅ USED
 - **src\discord_commander\discord_agent_communication.py**: `_Utility` ✅ USED
 - **src\discord_commander\discord_gui_modals.py**: `AgentMessageModal` ✅ USED
 - **src\discord_commander\discord_gui_modals.py**: `BroadcastMessageModal` ✅ USED
@@ -95,15 +74,19 @@
 - **src\discord_commander\discord_gui_modals.py**: `TemplateBroadcastModal` ✅ USED
 - **src\discord_commander\discord_gui_modals.py**: `SoftOnboardModal` ✅ USED
 - **src\discord_commander\discord_gui_modals.py**: `HardOnboardModal` ✅ USED
-- **src\discord_commander\discord_gui_modals.py**: `MockTextInput` ✅ USED
-- **src\discord_commander\discord_gui_modals.py**: `MockModal` ✅ USED
-- **src\discord_commander\discord_gui_modals.py**: `MockUI` ✅ USED
-- **src\discord_commander\discord_gui_modals.py**: `MockTextStyle` ✅ USED
-- **src\discord_commander\discord_gui_modals.py**: `MockDiscord` ✅ USED
-- **src\discord_commander\discord_gui_modals.py**: `ui` ✅ USED
 - **src\discord_commander\discord_models.py**: `CommandResult` ✅ USED
+- **src\discord_commander\discord_models.py**: `DiscordMessage` ✅ USED
+- **src\discord_commander\discord_models.py**: `AgentCommand` ✅ USED
+- **src\discord_commander\discord_models.py**: `CommunicationStats` ✅ USED
+- **src\discord_commander\enhanced_bot.py**: `EnhancedDiscordCommanderBot` ✅ USED
+- **src\discord_commander\enhanced_bot.py**: `EnhancedBotManager` ✅ USED
+- **src\discord_commander\enhanced_bot.py**: `MockBot` ✅ USED
+- **src\discord_commander\enhanced_bot.py**: `MockCog` ✅ USED
+- **src\discord_commander\enhanced_bot.py**: `MockCommandError` ✅ USED
+- **src\discord_commander\enhanced_bot.py**: `MockCommands` ✅ USED
+- **src\discord_commander\enhanced_bot.py**: `MockExt` ✅ USED
 
-... and 172 more classes
+... and 82 more classes
 
 ---
 

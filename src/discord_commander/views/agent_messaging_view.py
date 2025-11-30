@@ -114,12 +114,17 @@ class AgentMessagingGUIView(discord.ui.View):
         options = []
         for agent in self.agents:
             emoji = self._get_status_emoji(agent.get("status", "unknown"))
+            # Discord SelectOption value must be <= 20 characters
+            option_value = agent["id"]
+            if len(option_value) > 20:
+                option_value = option_value[:20]
+            
             options.append(
                 discord.SelectOption(
                     label=agent["id"],
                     description=f"{agent.get('name', 'Unknown')} - {agent.get('points', 0)} pts",
                     emoji=emoji,
-                    value=agent["id"],
+                    value=option_value,
                 )
             )
         return options
@@ -260,8 +265,14 @@ class AgentMessagingGUIView(discord.ui.View):
                     inline=True,
                 )
 
-            # Add summary (check if status contains "active")
-            active_count = sum(1 for a in agents if "ACTIVE" in a.get("status", "").upper() or "JET_FUEL" in a.get("status", "").upper())
+            # CRITICAL FIX: Properly detect ACTIVE status
+            # Check for ACTIVE_AGENT_MODE, ACTIVE, JET_FUEL, etc.
+            active_count = sum(
+                1 for a in agents 
+                if "ACTIVE" in str(a.get("status", "")).upper() 
+                or "JET_FUEL" in str(a.get("status", "")).upper()
+                or "ACTIVE_AGENT_MODE" in str(a.get("status", "")).upper()
+            )
             embed.add_field(
                 name="📊 Summary",
                 value=f"Active: {active_count}/{len(agents)} agents",

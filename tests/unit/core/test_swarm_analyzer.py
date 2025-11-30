@@ -226,4 +226,48 @@ class TestSwarmCoordinationAnalyzer:
         assert len(insights) > 0
         assert insights[0].insight_type == InsightType.PERFORMANCE
 
+    @pytest.mark.asyncio
+    async def test_analyze_swarm_coordination_error_handling(self, analyzer, sample_agent_data, sample_mission_data):
+        """Test error handling in swarm coordination analysis."""
+        with patch.object(analyzer, '_analyze_collaboration_patterns', side_effect=Exception("Test error")):
+            insights = await analyzer.analyze_swarm_coordination(
+                sample_agent_data, sample_mission_data, time_window_hours=24
+            )
+            # Should return empty list on error
+            assert isinstance(insights, list)
+
+    @pytest.mark.asyncio
+    async def test_analyze_collaboration_patterns_empty_agent_data(self, analyzer):
+        """Test collaboration analysis with empty agent data."""
+        with patch('src.core.vector_strategic_oversight.unified_strategic_oversight.analyzers.swarm_analyzer.MessageRepository'):
+            insights = await analyzer._analyze_collaboration_patterns([])
+            assert isinstance(insights, list)
+
+    @pytest.mark.asyncio
+    async def test_analyze_collaboration_patterns_strong_collaboration(self, analyzer, sample_agent_data):
+        """Test collaboration analysis with strong collaboration signals."""
+        mock_messages = [
+            {"from": f"Agent-{i}", "to": f"Agent-{j}", "timestamp": datetime.now().isoformat()}
+            for i in range(1, 4) for j in range(1, 4) if i != j
+        ] * 5  # Many messages
+        with patch('src.core.vector_strategic_oversight.unified_strategic_oversight.analyzers.swarm_analyzer.MessageRepository') as mock_repo_class:
+            mock_repo = Mock()
+            mock_repo.get_message_history.return_value = mock_messages
+            mock_repo_class.return_value = mock_repo
+            insights = await analyzer._analyze_collaboration_patterns(sample_agent_data)
+            assert len(insights) > 0
+            assert insights[0].description.lower().count("strong") > 0 or insights[0].impact_level == ImpactLevel.MEDIUM
+
+    @pytest.mark.asyncio
+    async def test_analyze_mission_coordination_empty_mission_data(self, analyzer):
+        """Test mission coordination with empty mission data."""
+        insights = await analyzer._analyze_mission_coordination([])
+        assert isinstance(insights, list)
+
+    @pytest.mark.asyncio
+    async def test_analyze_performance_trends_insufficient_data(self, analyzer, sample_agent_data):
+        """Test performance trends with insufficient agent data."""
+        insights = await analyzer._analyze_performance_trends([], time_window_hours=24)
+        assert isinstance(insights, list)
+
 

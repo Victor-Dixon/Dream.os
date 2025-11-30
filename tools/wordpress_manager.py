@@ -17,10 +17,23 @@ V2 Compliant: <400 lines
 
 import json
 import logging
+import os
 import re
 import sys
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
+
+# Load .env file if available
+try:
+    from dotenv import load_dotenv, dotenv_values
+    env_vars = dotenv_values(".env")
+    # Merge into os.environ
+    for key, value in env_vars.items():
+        if value and key not in os.environ:
+            os.environ[key] = value
+    load_dotenv()
+except ImportError:
+    pass  # dotenv not installed, skip
 
 try:
     import paramiko
@@ -122,6 +135,18 @@ class WordPressManager:
             "theme_name": "prismblossom",
             "remote_base": "/public_html/wp-content/themes/prismblossom",
             "function_prefix": "prismblossom"
+        },
+        "freerideinvestor": {
+            "local_path": "D:/websites/FreeRideInvestor",
+            "theme_name": "freerideinvestor",
+            "remote_base": "/public_html/wp-content/themes/freerideinvestor",
+            "function_prefix": "freerideinvestor"
+        },
+        "FreeRideInvestor": {
+            "local_path": "D:/websites/FreeRideInvestor",
+            "theme_name": "freerideinvestor",
+            "remote_base": "/public_html/wp-content/themes/freerideinvestor",
+            "function_prefix": "freerideinvestor"
         }
     }
     
@@ -137,27 +162,49 @@ class WordPressManager:
         self._load_credentials()
     
     def _load_credentials(self):
-        """Load deployment credentials."""
+        """Load deployment credentials from sites.json or .env environment variables."""
+        # First try sites.json
         creds_file = Path("D:/Agent_Cellphone_V2_Repository/.deploy_credentials/sites.json")
-        if not creds_file.exists():
-            return
+        if creds_file.exists():
+            try:
+                with open(creds_file) as f:
+                    all_creds = json.load(f)
+                self.credentials = (
+                    all_creds.get(self.site_key) or 
+                    all_creds.get(f"{self.site_key}.online") or
+                    all_creds.get(self.site_key.replace(".online", ""))
+                )
+                if self.credentials:
+                    return
+            except Exception as e:
+                logger.error(f"Failed to load credentials from sites.json: {e}")
         
-        try:
-            with open(creds_file) as f:
-                all_creds = json.load(f)
-            self.credentials = (
-                all_creds.get(self.site_key) or 
-                all_creds.get(f"{self.site_key}.online") or
-                all_creds.get(self.site_key.replace(".online", ""))
-            )
-        except Exception as e:
-            logger.error(f"Failed to load credentials: {e}")
+        # Fallback to .env environment variables (shared Hostinger credentials)
+        host = os.getenv("HOSTINGER_HOST") or os.getenv("SSH_HOST")
+        username = os.getenv("HOSTINGER_USER") or os.getenv("SSH_USER")
+        password = os.getenv("HOSTINGER_PASS") or os.getenv("SSH_PASS")
+        port_str = os.getenv("HOSTINGER_PORT") or os.getenv("SSH_PORT", "65002")
+        
+        if host and username and password:
+            try:
+                port = int(port_str)
+            except ValueError:
+                port = 65002  # Default Hostinger SFTP port
+            
+            self.credentials = {
+                "host": host,
+                "username": username,
+                "password": password,
+                "port": port
+            }
+            logger.info(f"Loaded credentials from .env environment variables")
     
     def get_theme_path(self) -> Path:
         """Get local theme directory path."""
         theme_paths = [
             Path(self.config["local_path"]) / "wordpress-theme" / self.config["theme_name"],
             Path(self.config["local_path"]) / "wp-content" / "themes" / self.config["theme_name"],
+            Path(self.config["local_path"]),  # For FreeRideInvestor where theme is in root
         ]
         for path in theme_paths:
             if path.exists():

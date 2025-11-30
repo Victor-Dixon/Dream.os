@@ -102,3 +102,65 @@ class TestBroadcastTemplatesView:
         except Exception as e:
             pytest.skip(f"Error handling test requires setup: {e}")
 
+    def test_create_templates_embed(self, mock_discord, mock_messaging_service):
+        """Test creating templates embed."""
+        try:
+            from src.discord_commander.controllers.broadcast_templates_view import (
+                BroadcastTemplatesView
+            )
+            
+            view = BroadcastTemplatesView(mock_messaging_service)
+            embed = view.create_templates_embed()
+            
+            assert embed is not None
+            assert embed.title is not None
+            assert embed.description is not None
+        except ImportError:
+            pytest.skip("Broadcast templates view not available")
+
+    @pytest.mark.asyncio
+    async def test_on_mode_select(self, mock_discord, mock_messaging_service):
+        """Test mode selection handler."""
+        try:
+            from src.discord_commander.controllers.broadcast_templates_view import (
+                BroadcastTemplatesView
+            )
+            
+            view = BroadcastTemplatesView(mock_messaging_service)
+            mock_interaction = AsyncMock()
+            mock_interaction.response.is_done.return_value = False
+            mock_interaction.response.edit_message = AsyncMock()
+            
+            await view.on_mode_select(mock_interaction, "urgent")
+            
+            assert view.current_mode == "urgent"
+            mock_interaction.response.edit_message.assert_called_once()
+        except ImportError:
+            pytest.skip("Broadcast templates view not available")
+
+    @pytest.mark.asyncio
+    async def test_on_template_select(self, mock_discord, mock_messaging_service):
+        """Test template selection handler."""
+        try:
+            from src.discord_commander.controllers.broadcast_templates_view import (
+                BroadcastTemplatesView
+            )
+            
+            view = BroadcastTemplatesView(mock_messaging_service)
+            mock_interaction = AsyncMock()
+            mock_interaction.response.is_done.return_value = False
+            mock_interaction.response.send_modal = AsyncMock()
+            
+            template = {
+                "name": "Test Template",
+                "emoji": "✅",
+                "message": "Test message",
+                "priority": "regular"
+            }
+            
+            await view.on_template_select(mock_interaction, template)
+            
+            mock_interaction.response.send_modal.assert_called_once()
+        except ImportError:
+            pytest.skip("Broadcast templates view not available")
+

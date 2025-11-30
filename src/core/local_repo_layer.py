@@ -32,12 +32,11 @@ class LocalRepoManager:
         Initialize local repo manager with self-healing capabilities.
         
         Args:
-            base_path: Base directory for local repos (default: /dream/repos/master/)
+            base_path: Base directory for local repos (default: D:/Temp)
         """
         if base_path is None:
-            # Default to project-local directory (can be moved later)
-            project_root = Path(__file__).resolve().parent.parent.parent
-            base_path = project_root / "dream" / "repos" / "master"
+            # Default to D:/Temp directly (simplified per directive)
+            base_path = Path("D:/Temp")
         
         self.base_path = Path(base_path)
         
@@ -45,15 +44,14 @@ class LocalRepoManager:
         try:
             self.base_path.mkdir(parents=True, exist_ok=True)
         except PermissionError as e:
-            logger.warning(f"⚠️ Permission denied creating {self.base_path}, using fallback")
-            # Fallback to temp directory
-            import tempfile
-            self.base_path = Path(tempfile.gettempdir()) / "local_repos" / "master"
+            logger.warning(f"⚠️ Permission denied creating {self.base_path}, using D:/Temp fallback")
+            # Fallback to D:/Temp directly
+            self.base_path = Path("D:/Temp")
             self.base_path.mkdir(parents=True, exist_ok=True)
         except Exception as e:
-            logger.error(f"❌ Failed to create base path: {e}, using fallback")
-            import tempfile
-            self.base_path = Path(tempfile.gettempdir()) / "local_repos" / "master"
+            logger.error(f"❌ Failed to create base path: {e}, using D:/Temp fallback")
+            # Fallback to D:/Temp directly
+            self.base_path = Path("D:/Temp")
             self.base_path.mkdir(parents=True, exist_ok=True)
         
         # Metadata file for tracking repos

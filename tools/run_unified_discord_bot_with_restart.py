@@ -65,34 +65,31 @@ def run_bot():
     """Run the Discord bot and return exit code."""
     try:
         import sys
+        import subprocess
         from pathlib import Path
         
-        # CRITICAL: Import discord package BEFORE adding project root to path
-        # This prevents local tools/discord/ from shadowing the discord.py package
-        try:
-            import discord
-            import discord.ext
-            # Verify it's the installed package, not local
-            assert hasattr(discord, 'Client'), "discord module is not the installed package"
-        except (ImportError, AssertionError):
-            # If import fails, we'll try again after path setup
-            pass
-        
-        # Add project root to Python path
-        # Insert at position 1 (after current directory) to prioritize installed packages
+        # CRITICAL FIX: True Linux-like restart - spawn new Python process
+        # This ensures all modules are reloaded from disk, not from cache
         project_root = Path(__file__).parent.parent
-        project_root_str = str(project_root)
-        if project_root_str not in sys.path:
-            # Insert at position 1 to prioritize installed packages over local directories
-            sys.path.insert(1, project_root_str)
+        bot_script = project_root / "src" / "discord_commander" / "unified_discord_bot.py"
         
-        import asyncio
-        from src.discord_commander.unified_discord_bot import main as bot_main
+        if not bot_script.exists():
+            print(f"❌ Bot script not found: {bot_script}")
+            return 1
         
-        # Run bot (will block until shutdown or restart)
-        asyncio.run(bot_main())
+        # Spawn new Python process to run bot
+        # This ensures fresh module imports (no cache)
+        process = subprocess.Popen(
+            [sys.executable, str(bot_script)],
+            cwd=str(project_root),
+            stdout=sys.stdout,
+            stderr=sys.stderr,
+        )
         
-        return 0  # Clean exit
+        # Wait for process to complete
+        exit_code = process.wait()
+        
+        return exit_code
         
     except KeyboardInterrupt:
         print("\n⚠️  Bot interrupted by user (Ctrl+C)")
