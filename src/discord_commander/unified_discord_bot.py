@@ -220,6 +220,14 @@ class UnifiedDiscordBot(commands.Bot):
         if not hasattr(self, '_startup_sent'):
             self.logger.info(f"✅ Discord Commander Bot ready: {self.user}")
             self.logger.info(f"📊 Guilds: {len(self.guilds)}")
+            
+            # Start status change monitoring
+            try:
+                from .status_change_monitor import setup_status_monitor
+                self.status_monitor = setup_status_monitor(self, self.channel_id)
+                self.logger.info("✅ Status change monitor started")
+            except Exception as e:
+                self.logger.warning(f"⚠️ Could not start status monitor: {e}")
             self.logger.info(f"🤖 Latency: {round(self.latency * 1000, 2)}ms")
 
             # Set bot presence
@@ -406,6 +414,7 @@ class UnifiedDiscordBot(commands.Bot):
                 value=(
                     "• `!message <agent> <msg>` - Direct agent message\n"
                     "• `!broadcast <msg>` - Broadcast to all agents\n"
+                    "• `!bump <1-8> [1-8]...` - Bump agents (click + shift+backspace)\n"
                     "• `!agents` - List all agents"
                 ),
                 inline=False,
@@ -614,10 +623,17 @@ class MessagingCommands(commands.Cog):
             self.logger.error(f"Error opening GUI: {e}")
             await ctx.send(f"❌ Error: {e}")
 
-    @commands.command(name="status", description="View swarm status")
-    async def status(self, ctx: commands.Context):
-        """View swarm status."""
+    @commands.command(name="status", description="View swarm status. Use '!status refresh' to force update.")
+    async def status(self, ctx: commands.Context, *, args: str = ""):
+        """View swarm status. Use '!status refresh' to force immediate update."""
         try:
+            # Force refresh if requested
+            if args.lower() == "refresh":
+                from .status_reader import StatusReader
+                status_reader = StatusReader()
+                status_reader.clear_cache()
+                await ctx.send("🔄 Status cache cleared - refreshing...", delete_after=3)
+            
             view = self.gui_controller.create_status_gui()
 
             # Import status reader to create embed
@@ -633,6 +649,71 @@ class MessagingCommands(commands.Cog):
 
         except Exception as e:
             self.logger.error(f"Error showing status: {e}")
+            await ctx.send(f"❌ Error: {e}")
+
+    @commands.command(name="monitor", description="Control status change monitor. Usage: !monitor [start|stop|status]")
+    async def monitor(self, ctx: commands.Context, action: str = "status"):
+        """Control status change monitor."""
+        try:
+            action = action.lower()
+            
+            if not hasattr(self, 'status_monitor'):
+                await ctx.send("❌ Status monitor not initialized. Bot may not be fully ready.")
+                return
+            
+            if action == "start":
+                if hasattr(self.status_monitor, 'monitor_status_changes'):
+                    if self.status_monitor.monitor_status_changes.is_running():
+                        await ctx.send("✅ Status monitor is already running!")
+                    else:
+                        self.status_monitor.start_monitoring()
+                        await ctx.send("✅ Status monitor started! Checking every 15 seconds.")
+                else:
+                    self.status_monitor.start_monitoring()
+                    await ctx.send("✅ Status monitor started! Checking every 15 seconds.")
+            
+            elif action == "stop":
+                if hasattr(self.status_monitor, 'monitor_status_changes'):
+                    if self.status_monitor.monitor_status_changes.is_running():
+                        self.status_monitor.stop_monitoring()
+                        await ctx.send("🛑 Status monitor stopped.")
+                    else:
+                        await ctx.send("⚠️ Status monitor is not running.")
+                else:
+                    await ctx.send("⚠️ Status monitor is not running.")
+            
+            elif action == "status":
+                if hasattr(self.status_monitor, 'monitor_status_changes'):
+                    is_running = self.status_monitor.monitor_status_changes.is_running()
+                    status_text = "🟢 RUNNING" if is_running else "🔴 STOPPED"
+                    interval = self.status_monitor.check_interval
+                    
+                    embed = discord.Embed(
+                        title="📊 Status Change Monitor",
+                        description=f"**Status:** {status_text}\n**Check Interval:** {interval} seconds",
+                        color=0x27AE60 if is_running else 0xE74C3C,
+                        timestamp=discord.utils.utcnow()
+                    )
+                    
+                    # Show tracking info
+                    if hasattr(self.status_monitor, 'last_modified'):
+                        tracked_agents = len(self.status_monitor.last_modified)
+                        embed.add_field(
+                            name="Tracked Agents",
+                            value=f"{tracked_agents}/8 agents",
+                            inline=True
+                        )
+                    
+                    embed.set_footer(text="Use !monitor start to start, !monitor stop to stop")
+                    await ctx.send(embed=embed)
+                else:
+                    await ctx.send("⚠️ Status monitor not initialized.")
+            
+            else:
+                await ctx.send("❌ Invalid action. Use: `!monitor [start|stop|status]`")
+        
+        except Exception as e:
+            self.logger.error(f"Error in monitor command: {e}", exc_info=True)
             await ctx.send(f"❌ Error: {e}")
 
     @commands.command(name="message", description="Send message to agent")
@@ -914,29 +995,65 @@ class MessagingCommands(commands.Cog):
             )
             await ctx.send(embed=embed)
 
-            # Soft onboard each agent
+            # Soft onboard agents (use --agents for multiple, --agent for single)
             successful = []
             failed = []
 
             # Get project root (use module-level or calculate)
             project_root = Path(__file__).parent.parent.parent
+            cli_path = project_root / 'tools' / 'soft_onboard_cli.py'
 
-            for agent_id in agent_list:
-                try:
-                    # Use absolute path to ensure reliable execution
-                    cli_path = project_root / 'tools' / 'soft_onboard_cli.py'
-                    cmd = ['python', str(cli_path), '--agent', agent_id, '--message', message]
-                    result = subprocess.run(cmd, capture_output=True, text=True, timeout=120, cwd=str(project_root))
+            try:
+                # Use --agents for multiple agents (more efficient, uses soft_onboard_multiple_agents)
+                if len(agent_list) == 1:
+                    # Single agent - use --agent
+                    cmd = ['python', str(cli_path), '--agent', agent_list[0], '--message', message]
+                else:
+                    # Multiple agents - use --agents with comma-separated list
+                    agents_str = ','.join(agent_list)
+                    cmd = ['python', str(cli_path), '--agents', agents_str, '--message', message, '--generate-cycle-report']
+                
+                result = subprocess.run(cmd, capture_output=True, text=True, timeout=300, cwd=str(project_root))
 
-                    if result.returncode == 0:
-                        successful.append(agent_id)
+                if result.returncode == 0:
+                    # All agents successful
+                    successful = agent_list.copy()
+                    # Parse output to check individual results if needed
+                    if result.stdout:
+                        # Check for any failures in output
+                        if "Failed:" in result.stdout or "❌" in result.stdout:
+                            # Parse individual results from output
+                            lines = result.stdout.split('\n')
+                            for line in lines:
+                                if "✅" in line and any(agent in line for agent in agent_list):
+                                    # Agent succeeded
+                                    pass
+                                elif "❌" in line and any(agent in line for agent in agent_list):
+                                    # Agent failed - extract agent ID
+                                    for agent in agent_list:
+                                        if agent in line and agent not in [s for s in successful]:
+                                            failed.append((agent, "Failed during onboarding"))
+                                            if agent in successful:
+                                                successful.remove(agent)
+                else:
+                    # Command failed - try to parse which agents failed
+                    error_msg = result.stderr[:500] if result.stderr else result.stdout[:500] if result.stdout else "Unknown error"
+                    # If we can't determine individual failures, mark all as failed
+                    if len(agent_list) == 1:
+                        failed.append((agent_list[0], error_msg))
                     else:
-                        error_msg = result.stderr[:200] if result.stderr else "Unknown error"
-                        failed.append((agent_id, error_msg))
-                except subprocess.TimeoutExpired:
-                    failed.append((agent_id, "Timeout after 2 minutes"))
-                except Exception as e:
-                    failed.append((agent_id, str(e)[:200]))
+                        # For multiple agents, mark all as failed if we can't parse individual results
+                        for agent_id in agent_list:
+                            failed.append((agent_id, error_msg))
+            except subprocess.TimeoutExpired:
+                # Timeout - mark all as failed
+                for agent_id in agent_list:
+                    failed.append((agent_id, "Timeout after 5 minutes"))
+            except Exception as e:
+                # Exception - mark all as failed
+                error_msg = str(e)[:200]
+                for agent_id in agent_list:
+                    failed.append((agent_id, error_msg))
 
             # Send results
             if len(successful) == len(agent_list):
@@ -1489,6 +1606,207 @@ Agent, you appear stalled. CONTINUE AUTONOMOUSLY NOW.
             await ctx.send(f"❌ Self-healing system not available: {e}")
         except Exception as e:
             self.logger.error(f"Error in heal command: {e}", exc_info=True)
+            await ctx.send(f"❌ Error: {e}")
+
+    @commands.command(name="session", aliases=["sessions", "cycle"], description="Post session accomplishments report")
+    async def session(self, ctx: commands.Context, date: str = None):
+        """
+        Post beautiful session accomplishments report to Discord.
+        
+        Usage:
+        !session - Show most recent session report
+        !session 2025-11-28 - Show report for specific date
+        !session latest - Show most recent report
+        """
+        try:
+            from pathlib import Path
+            import re
+            from datetime import datetime
+
+            cycles_dir = Path("docs/cycles")
+            if not cycles_dir.exists():
+                await ctx.send("❌ Cycles directory not found: `docs/cycles/`")
+                return
+
+            # Find cycle report files
+            cycle_files = sorted(cycles_dir.glob("CYCLE_ACCOMPLISHMENTS_*.md"), reverse=True)
+            
+            if not cycle_files:
+                await ctx.send("❌ No cycle accomplishment reports found in `docs/cycles/`")
+                return
+
+            # Select file based on date parameter
+            selected_file = None
+            if date:
+                if date.lower() == "latest":
+                    selected_file = cycle_files[0]
+                else:
+                    # Try to match date in filename
+                    date_pattern = date.replace("-", "_")
+                    for f in cycle_files:
+                        if date_pattern in f.name:
+                            selected_file = f
+                            break
+                    if not selected_file:
+                        await ctx.send(f"❌ No report found for date: {date}\n**Available dates:** Use `!session latest` to see most recent")
+                        return
+            else:
+                # Default to most recent
+                selected_file = cycle_files[0]
+
+            # Read and parse report
+            report_content = selected_file.read_text(encoding="utf-8")
+            
+            # Extract date from filename
+            date_match = re.search(r'(\d{4}-\d{2}-\d{2})', selected_file.name)
+            report_date = date_match.group(1) if date_match else "Unknown"
+
+            # Parse report sections
+            lines = report_content.split('\n')
+            
+            # Extract summary
+            summary = {}
+            in_summary = False
+            for line in lines:
+                if "## 📊 SWARM SUMMARY" in line:
+                    in_summary = True
+                    continue
+                if in_summary and line.startswith("##"):
+                    break
+                if in_summary and "- **" in line:
+                    match = re.search(r'\*\*(.+?)\*\*: (.+)', line)
+                    if match:
+                        summary[match.group(1)] = match.group(2).strip()
+
+            # Extract agent accomplishments
+            agents_data = {}
+            current_agent = None
+            current_section = None
+            current_content = []
+            
+            for line in lines:
+                if line.startswith("### Agent-"):
+                    # Save previous agent
+                    if current_agent:
+                        agents_data[current_agent][current_section] = '\n'.join(current_content).strip()
+                    
+                    # Start new agent
+                    match = re.match(r'### (Agent-\d+) - (.+)', line)
+                    if match:
+                        current_agent = match.group(1)
+                        agents_data[current_agent] = {
+                            'name': match.group(2),
+                            'completed_tasks': [],
+                            'achievements': [],
+                            'current_tasks': []
+                        }
+                        current_content = []
+                        current_section = None
+                elif current_agent and line.startswith("####"):
+                    # Save previous section
+                    if current_section and current_content:
+                        if current_section == 'completed_tasks':
+                            agents_data[current_agent]['completed_tasks'] = [c.strip('- ').strip() for c in current_content if c.strip() and c.strip().startswith('-')]
+                        elif current_section == 'achievements':
+                            agents_data[current_agent]['achievements'] = [c.strip('- ').strip() for c in current_content if c.strip() and c.strip().startswith('-')]
+                        elif current_section == 'current_tasks':
+                            agents_data[current_agent]['current_tasks'] = [c.strip('- ').strip() for c in current_content if c.strip() and c.strip().startswith('-')]
+                    
+                    # Start new section
+                    if "Completed Tasks" in line:
+                        current_section = 'completed_tasks'
+                    elif "Achievements" in line:
+                        current_section = 'achievements'
+                    elif "Current Tasks" in line:
+                        current_section = 'current_tasks'
+                    else:
+                        current_section = None
+                    current_content = []
+                elif current_agent and current_section and line.strip():
+                    current_content.append(line)
+            
+            # Save last agent
+            if current_agent and current_section and current_content:
+                if current_section == 'completed_tasks':
+                    agents_data[current_agent]['completed_tasks'] = [c.strip('- ').strip() for c in current_content if c.strip() and c.strip().startswith('-')]
+                elif current_section == 'achievements':
+                    agents_data[current_agent]['achievements'] = [c.strip('- ').strip() for c in current_content if c.strip() and c.strip().startswith('-')]
+
+            # Create beautiful embed
+            embed = discord.Embed(
+                title="📊 SESSION ACCOMPLISHMENTS REPORT",
+                description=f"**Date**: {report_date}\n**Report**: `{selected_file.name}`",
+                color=discord.Color.blue(),
+                timestamp=datetime.now()
+            )
+
+            # Add summary fields
+            if summary:
+                summary_text = "\n".join([f"**{k}**: {v}" for k, v in summary.items()])
+                embed.add_field(
+                    name="📊 Swarm Summary",
+                    value=summary_text[:1024],
+                    inline=False
+                )
+
+            # Add agent accomplishments (limit to fit Discord limits)
+            agent_texts = []
+            for agent_id in sorted(agents_data.keys()):
+                data = agents_data[agent_id]
+                agent_text = f"**{agent_id}** - {data['name']}\n"
+                
+                if data['completed_tasks']:
+                    task_count = len(data['completed_tasks'])
+                    agent_text += f"✅ **{task_count}** completed tasks\n"
+                    # Show first 3 tasks
+                    for task in data['completed_tasks'][:3]:
+                        task_short = task[:80] + "..." if len(task) > 80 else task
+                        agent_text += f"  • {task_short}\n"
+                    if task_count > 3:
+                        agent_text += f"  • *... and {task_count - 3} more*\n"
+                
+                if data['achievements']:
+                    achievement_count = len(data['achievements'])
+                    agent_text += f"🏆 **{achievement_count}** achievements\n"
+                    # Show first 2 achievements
+                    for achievement in data['achievements'][:2]:
+                        achievement_short = achievement[:80] + "..." if len(achievement) > 80 else achievement
+                        agent_text += f"  • {achievement_short}\n"
+                    if achievement_count > 2:
+                        agent_text += f"  • *... and {achievement_count - 2} more*\n"
+                
+                agent_texts.append(agent_text)
+
+            # Split agents into chunks to fit Discord limits
+            chunk_size = 3  # 3 agents per embed field
+            for i in range(0, len(agent_texts), chunk_size):
+                chunk = agent_texts[i:i+chunk_size]
+                field_value = "\n".join(chunk)
+                if len(field_value) > 1024:
+                    field_value = field_value[:1021] + "..."
+                
+                field_name = f"🤖 Agents {i+1}-{min(i+chunk_size, len(agent_texts))}" if len(agent_texts) > chunk_size else "🤖 Agent Accomplishments"
+                embed.add_field(
+                    name=field_name,
+                    value=field_value,
+                    inline=False
+                )
+
+            # Add footer
+            embed.set_footer(text="🐝 WE. ARE. SWARM. ⚡🔥")
+
+            # Send embed
+            await ctx.send(embed=embed)
+
+            # If report is very long, also send a link to the full report
+            if len(report_content) > 4000:
+                await ctx.send(
+                    f"📄 **Full Report Available**: `{selected_file.name}`\n"
+                    f"💡 Use `!session {report_date}` to view this report again"
+                )
+
+        except Exception as e:
+            self.logger.error(f"Error in session command: {e}", exc_info=True)
             await ctx.send(f"❌ Error: {e}")
 
 
