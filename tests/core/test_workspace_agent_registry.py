@@ -5,6 +5,7 @@ Tests AgentRegistry class and workspace management operations.
 Target: ≥85% coverage, 5+ test methods.
 """
 
+from src.core.workspace_agent_registry import AgentRegistry
 import pytest
 from unittest.mock import Mock, MagicMock, patch
 from pathlib import Path
@@ -15,8 +16,6 @@ import sys
 # Add project root to path
 project_root = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(project_root))
-
-from src.core.workspace_agent_registry import AgentRegistry
 
 
 class TestAgentRegistry:
@@ -55,7 +54,7 @@ class TestAgentRegistry:
         for i in range(1, 4):
             agent_dir = workspace_path / f"Agent-{i}"
             agent_dir.mkdir(parents=True, exist_ok=True)
-        
+
         agents = registry.list_agents()
         assert len(agents) == 3
         assert "Agent-1" in agents
@@ -68,7 +67,7 @@ class TestAgentRegistry:
         for i in [3, 1, 2]:
             agent_dir = workspace_path / f"Agent-{i}"
             agent_dir.mkdir(parents=True, exist_ok=True)
-        
+
         agents = registry.list_agents()
         assert agents == ["Agent-1", "Agent-2", "Agent-3"]
 
@@ -76,12 +75,12 @@ class TestAgentRegistry:
         """Test that list_agents filters out non-Agent directories."""
         workspace_path = Path(registry.root)
         workspace_path.mkdir(parents=True, exist_ok=True)
-        
+
         # Create agent and non-agent directories
         (workspace_path / "Agent-1").mkdir()
         (workspace_path / "other_dir").mkdir()
         (workspace_path / "not_agent").mkdir()
-        
+
         agents = registry.list_agents()
         assert agents == ["Agent-1"]
 
@@ -89,7 +88,7 @@ class TestAgentRegistry:
         """Test reset_statuses creates status files."""
         agents = ["Agent-1", "Agent-2"]
         registry.reset_statuses(agents)
-        
+
         for agent_id in agents:
             status_path = registry._status_path(agent_id)
             assert os.path.exists(status_path)
@@ -102,7 +101,7 @@ class TestAgentRegistry:
         """Test reset_statuses creates agent directories."""
         agents = ["Agent-1"]
         registry.reset_statuses(agents)
-        
+
         agent_dir = os.path.join(registry.root, "Agent-1")
         assert os.path.isdir(agent_dir)
 
@@ -110,7 +109,7 @@ class TestAgentRegistry:
         """Test clear_onboarding_flags creates onboarding files."""
         agents = ["Agent-1"]
         registry.clear_onboarding_flags(agents)
-        
+
         onboard_path = registry._onboard_path("Agent-1")
         assert os.path.exists(onboard_path)
         with open(onboard_path, 'r', encoding='utf-8') as f:
@@ -121,9 +120,10 @@ class TestAgentRegistry:
     def test_force_onboard(self, registry):
         """Test force_onboard creates onboarding file."""
         # Ensure directory exists
-        os.makedirs(os.path.dirname(registry._onboard_path("Agent-1")), exist_ok=True)
+        os.makedirs(os.path.dirname(
+            registry._onboard_path("Agent-1")), exist_ok=True)
         registry.force_onboard("Agent-1", timeout=60)
-        
+
         onboard_path = registry._onboard_path("Agent-1")
         assert os.path.exists(onboard_path)
         with open(onboard_path, 'r', encoding='utf-8') as f:
@@ -135,9 +135,10 @@ class TestAgentRegistry:
     def test_force_onboard_default_timeout(self, registry):
         """Test force_onboard uses default timeout."""
         # Ensure directory exists
-        os.makedirs(os.path.dirname(registry._onboard_path("Agent-1")), exist_ok=True)
+        os.makedirs(os.path.dirname(
+            registry._onboard_path("Agent-1")), exist_ok=True)
         registry.force_onboard("Agent-1")
-        
+
         onboard_path = registry._onboard_path("Agent-1")
         with open(onboard_path, 'r', encoding='utf-8') as f:
             data = json.load(f)
@@ -146,7 +147,8 @@ class TestAgentRegistry:
     def test_verify_onboarded_true(self, registry):
         """Test verify_onboarded returns True when onboarded."""
         # Ensure directory exists
-        os.makedirs(os.path.dirname(registry._onboard_path("Agent-1")), exist_ok=True)
+        os.makedirs(os.path.dirname(
+            registry._onboard_path("Agent-1")), exist_ok=True)
         registry.force_onboard("Agent-1")
         result = registry.verify_onboarded("Agent-1")
         assert result is True
@@ -168,14 +170,14 @@ class TestAgentRegistry:
         os.makedirs(os.path.dirname(onboard_path), exist_ok=True)
         with open(onboard_path, 'w', encoding='utf-8') as f:
             f.write("invalid json")
-        
+
         result = registry.verify_onboarded("Agent-1")
         assert result is False
 
     def test_synchronize(self, registry):
         """Test synchronize creates sync marker file."""
         registry.synchronize()
-        
+
         sync_file = os.path.join(registry.root, "_sync.ok")
         assert os.path.exists(sync_file)
         with open(sync_file, 'r', encoding='utf-8') as f:
@@ -184,8 +186,9 @@ class TestAgentRegistry:
     def test_save_last_onboarding_message(self, registry):
         """Test save_last_onboarding_message creates message file."""
         registry.save_last_onboarding_message("Agent-1", "Test message")
-        
-        message_path = os.path.join(registry.root, "Agent-1", "last_onboarding_message.txt")
+
+        message_path = os.path.join(
+            registry.root, "Agent-1", "last_onboarding_message.txt")
         assert os.path.exists(message_path)
         with open(message_path, 'r', encoding='utf-8') as f:
             assert f.read() == "Test message"
@@ -193,7 +196,7 @@ class TestAgentRegistry:
     def test_save_last_onboarding_message_creates_directory(self, registry):
         """Test save_last_onboarding_message creates agent directory."""
         registry.save_last_onboarding_message("Agent-1", "Test")
-        
+
         agent_dir = os.path.join(registry.root, "Agent-1")
         assert os.path.isdir(agent_dir)
 
@@ -203,11 +206,12 @@ class TestAgentRegistry:
             mock_loader = MagicMock()
             mock_loader.get_onboarding_coordinates.return_value = (100, 200)
             mock_get_loader.return_value = mock_loader
-            
+
             coords = registry.get_onboarding_coords("Agent-1")
-            
+
             assert coords == (100, 200)
-            mock_loader.get_onboarding_coordinates.assert_called_once_with("Agent-1")
+            mock_loader.get_onboarding_coordinates.assert_called_once_with(
+                "Agent-1")
 
     def test_get_onboarding_coords_exception_returns_default(self, registry):
         """Test get_onboarding_coords returns (0, 0) on exception."""
@@ -240,4 +244,3 @@ class TestAgentRegistry:
 
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])
-

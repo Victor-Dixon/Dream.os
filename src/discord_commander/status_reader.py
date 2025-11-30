@@ -40,27 +40,39 @@ class StatusReader:
         self.cache_timestamps: dict[str, datetime] = {}
         self.max_cache_size = 20  # Max 20 agents (8 main + 12 buffer)
 
-    def read_agent_status(self, agent_id: str) -> dict[str, Any] | None:
+    def read_agent_status(self, agent_id: str, force_refresh: bool = False) -> dict[str, Any] | None:
         """Read status for a specific agent.
 
         Args:
             agent_id: Agent identifier (e.g., "Agent-1")
+            force_refresh: If True, bypass cache and read from file
 
         Returns:
             Agent status data or None if not found
         """
-        # Check cache
-        if agent_id in self.cache:
-            cached_time = self.cache_timestamps.get(agent_id)
-            if cached_time and (datetime.now() - cached_time).total_seconds() < self.cache_ttl:
-                return self.cache[agent_id]
-
-        # Read from file
         status_file = self.workspace_dir / agent_id / "status.json"
-
+        
         if not status_file.exists():
             logger.warning(f"Status file not found for {agent_id}: {status_file}")
             return None
+        
+        # Check file modification time if cached
+        if not force_refresh and agent_id in self.cache:
+            cached_time = self.cache_timestamps.get(agent_id)
+            if cached_time:
+                # Check if file was modified since cache
+                try:
+                    file_mtime = datetime.fromtimestamp(status_file.stat().st_mtime)
+                    if (datetime.now() - cached_time).total_seconds() < self.cache_ttl:
+                        # File not modified, return cache
+                        if file_mtime <= cached_time:
+                            return self.cache[agent_id]
+                        # File was modified, need to refresh
+                        logger.debug(f"Status file modified for {agent_id}, refreshing cache")
+                except Exception:
+                    pass  # If can't check mtime, continue to read file
+
+        # Read from file
 
         try:
             with open(status_file, encoding="utf-8") as f:

@@ -51,8 +51,8 @@ class MergePlan:
         self.source_branch = source_branch
         self.target_branch = target_branch
         self.description = description
-        self.plan_id = self._generate_id()
         self.created_at = datetime.now().isoformat()
+        self.plan_id = self._generate_id()
         self.status = ConsolidationStatus.PENDING
         self.diff_file: Optional[Path] = None
         self.conflicts: List[str] = []
@@ -409,8 +409,8 @@ class MergePlan:
         self.source_branch = source_branch
         self.target_branch = target_branch
         self.description = description
-        self.plan_id = self._generate_id()
         self.created_at = datetime.now().isoformat()
+        self.plan_id = self._generate_id()
         self.status = ConsolidationStatus.PENDING
         self.diff_file: Optional[Path] = None
         self.conflicts: List[str] = []

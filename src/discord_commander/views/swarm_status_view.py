@@ -146,19 +146,20 @@ class SwarmStatusGUIView(discord.ui.View):
             agent_name = status_data.get("agent_name", agent_id)
             current_phase = status_data.get("current_phase", "N/A")
             
-            # Determine status emoji
-            status_upper = agent_status.upper()
-            if "ACTIVE" in status_upper or "JET_FUEL" in status_upper:
+            # CRITICAL FIX: Properly detect ACTIVE status
+            # Check for ACTIVE_AGENT_MODE, ACTIVE, JET_FUEL, etc.
+            status_upper = str(agent_status).upper()
+            if "ACTIVE" in status_upper or "JET_FUEL" in status_upper or "ACTIVE_AGENT_MODE" in status_upper:
                 emoji = "🟢"
                 active_count += 1
             elif "COMPLETE" in status_upper or "COMPLETED" in status_upper:
                 emoji = "✅"
-            elif "REST" in status_upper or "STANDBY" in status_upper:
+            elif "REST" in status_upper or "STANDBY" in status_upper or "IDLE" in status_upper:
                 emoji = "💤"
             elif "ERROR" in status_upper or "FAILED" in status_upper:
                 emoji = "🔴"
             else:
-                emoji = "🟡"
+                emoji = "🟡"  # Unknown/Other status
             
             # Build compact status value (Discord field limit: 1024 chars)
             status_value = (

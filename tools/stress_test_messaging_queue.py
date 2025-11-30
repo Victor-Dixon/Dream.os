@@ -34,8 +34,15 @@ from src.core.mock_unified_messaging_core import (
     MockDeliveryConfig,
 )
 from src.core.stress_test_runner import StressTestRunner, MessageType
-from src.core.message_queue_processor import MessageQueueProcessor
 from src.core.message_queue import MessageQueue, QueueConfig
+
+# Optional import - MessageQueueProcessor may not exist
+try:
+    from src.core.message_queue_processor import MessageQueueProcessor
+    HAS_MESSAGE_QUEUE_PROCESSOR = True
+except ImportError:
+    HAS_MESSAGE_QUEUE_PROCESSOR = False
+    MessageQueueProcessor = None
 
 logging.basicConfig(
     level=logging.INFO,
@@ -55,8 +62,29 @@ def create_mock_delivery_callback(mock_core: MockUnifiedMessagingCore):
     return delivery_callback
 
 
-def create_real_delivery_callback(processor: MessageQueueProcessor):
+def create_real_delivery_callback(processor=None):
     """Create delivery callback using real message queue processor."""
+    if not HAS_MESSAGE_QUEUE_PROCESSOR or processor is None:
+        # Fallback: Use direct queue
+        queue = MessageQueue()
+        def delivery_callback(sender: str, recipient: str, content: str, **kwargs) -> bool:
+            try:
+                queue_id = queue.enqueue(
+                    message={
+                        "content": content,
+                        "sender": sender,
+                        "recipient": recipient,
+                        **kwargs
+                    },
+                    priority="normal",
+                    metadata=kwargs.get("metadata", {})
+                )
+                return queue_id is not None
+            except Exception as e:
+                logger.error(f"Error enqueueing message: {e}")
+                return False
+        return delivery_callback
+    
     def delivery_callback(sender: str, recipient: str, content: str, **kwargs) -> bool:
         # Enqueue message to real queue
         try:
@@ -86,6 +114,9 @@ def run_stress_test(
     min_latency_ms: int = 1,
     max_latency_ms: int = 10,
     output_file: Optional[str] = None,
+    batch_size: int = 100,
+    interval: float = 0.01,
+    use_in_memory_queue: bool = True,
 ) -> None:
     """Run stress test.
     
@@ -98,6 +129,9 @@ def run_stress_test(
         min_latency_ms: Minimum latency in milliseconds
         max_latency_ms: Maximum latency in milliseconds
         output_file: Optional output file for results JSON
+        batch_size: Batch size for queue processing (default: 100, optimized)
+        interval: Interval between batches in seconds (default: 0.01, optimized)
+        use_in_memory_queue: Use in-memory queue for performance (default: True)
     """
     logger.info("=" * 70)
     logger.info("🚀 STRESS TEST MESSAGING QUEUE")
@@ -106,6 +140,10 @@ def run_stress_test(
     logger.info(f"Message Rate: {messages_per_second} msg/s")
     logger.info(f"Mode: {'MOCK' if use_mock else 'REAL'}")
     logger.info(f"Chaos Mode: {'ENABLED' if chaos_mode else 'DISABLED'}")
+    if not use_mock:
+        logger.info(f"Batch Size: {batch_size}")
+        logger.info(f"Interval: {interval}s")
+        logger.info(f"In-Memory Queue: {'ENABLED' if use_in_memory_queue else 'DISABLED'}")
     logger.info("=" * 70)
     
     # Setup delivery callback
@@ -121,18 +159,31 @@ def run_stress_test(
         delivery_callback = create_mock_delivery_callback(mock_core)
         logger.info("✅ Mock messaging core initialized")
     else:
-        # Use real message queue processor
-        queue = MessageQueue()
-        processor = MessageQueueProcessor(queue=queue)
-        delivery_callback = create_real_delivery_callback(processor)
-        logger.info("✅ Real message queue processor initialized")
-        
-        # Start processing queue in background
-        import threading
-        def process_queue():
-            processor.process_queue(max_messages=None, batch_size=10)
-        queue_thread = threading.Thread(target=process_queue, daemon=True)
-        queue_thread.start()
+        # Use real message queue
+        if HAS_MESSAGE_QUEUE_PROCESSOR:
+            # Use in-memory queue for performance if requested
+            if use_in_memory_queue:
+                from src.core.in_memory_message_queue import InMemoryMessageQueue
+                queue = InMemoryMessageQueue(max_size=50000)
+                logger.info("✅ In-memory queue initialized (high performance)")
+            else:
+                queue = MessageQueue()
+                logger.info("✅ File-based queue initialized")
+            
+            processor = MessageQueueProcessor(queue=queue)
+            delivery_callback = create_real_delivery_callback(processor)
+            logger.info("✅ Real message queue processor initialized")
+            
+            # Start processing queue in background with optimized batch size
+            import threading
+            def process_queue():
+                processor.process_queue(max_messages=None, batch_size=batch_size, interval=interval)
+            queue_thread = threading.Thread(target=process_queue, daemon=True)
+            queue_thread.start()
+        else:
+            # Fallback: Direct queue without processor
+            delivery_callback = create_real_delivery_callback()
+            logger.info("✅ Real message queue initialized (direct mode)")
     
     # Create stress test runner
     runner = StressTestRunner(
@@ -364,6 +415,26 @@ Examples:
         help="Enable verbose logging"
     )
     
+    parser.add_argument(
+        "--batch-size", "-b",
+        type=int,
+        default=100,
+        help="Batch size for queue processing (default: 100, optimized for throughput)"
+    )
+    
+    parser.add_argument(
+        "--interval",
+        type=float,
+        default=0.01,
+        help="Interval between batches in seconds (default: 0.01, optimized for throughput)"
+    )
+    
+    parser.add_argument(
+        "--no-in-memory",
+        action="store_true",
+        help="Disable in-memory queue (use file-based queue)"
+    )
+    
     args = parser.parse_args()
     
     # Set logging level
@@ -401,6 +472,9 @@ Examples:
                 min_latency_ms=args.min_latency,
                 max_latency_ms=args.max_latency,
                 output_file=args.output,
+                batch_size=args.batch_size,
+                interval=args.interval,
+                use_in_memory_queue=not args.no_in_memory,
             )
     except KeyboardInterrupt:
         logger.info("\n⚠️ Test interrupted by user")

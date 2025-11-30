@@ -262,6 +262,19 @@ class SwarmTasksControllerView(discord.ui.View):
 
         return pages
 
+    def _calculate_embed_size(self, embed: discord.Embed) -> int:
+        """Calculate total character count of embed."""
+        size = 0
+        if embed.title:
+            size += len(embed.title)
+        if embed.description:
+            size += len(embed.description)
+        if embed.footer and embed.footer.text:
+            size += len(embed.footer.text)
+        for field in embed.fields:
+            size += len(field.name) + len(field.value)
+        return size
+
     def _create_page_embed(self, agents: list[dict], page_num: int, total_agents: int, all_agents_data: list[dict]) -> discord.Embed:
         """Create a single page embed with full task details."""
         embed = discord.Embed(
@@ -270,6 +283,10 @@ class SwarmTasksControllerView(discord.ui.View):
             color=0x2ECC71,
             timestamp=discord.utils.utcnow(),
         )
+
+        # Track embed size to prevent exceeding 6000 char limit
+        base_size = self._calculate_embed_size(embed)
+        safe_limit = MAX_EMBED_LENGTH - 500  # Leave 500 char buffer for footer and formatting
 
         # Add agent tasks with FULL details (no truncation)
         for agent in agents:
@@ -308,16 +325,51 @@ class SwarmTasksControllerView(discord.ui.View):
 
                 # Add first task part as main field
                 if task_parts:
+                    field_name = f"{priority_emoji} {agent_id} - {priority}"
+                    field_value = f"**Mission:** {mission}\n\n**Tasks:**\n{task_parts[0]}"
+                    
+                    # Check if adding this field would exceed limit
+                    current_size = self._calculate_embed_size(embed)
+                    if current_size + len(field_name) + len(field_value) > safe_limit:
+                        # Truncate tasks if needed
+                        task_lines = task_parts[0].split('\n')
+                        if len(task_lines) > 5:
+                            truncated = '\n'.join(task_lines[:5])
+                            field_value = f"**Mission:** {mission}\n\n**Tasks:**\n{truncated}\n... (showing 5 of {len(tasks)} tasks)"
+                        else:
+                            # Truncate field value itself if still too long
+                            max_value_size = safe_limit - current_size - len(field_name) - 100
+                            if len(field_value) > max_value_size:
+                                field_value = field_value[:max_value_size-20] + "\n... (truncated)"
+                            # If still can't fit, skip remaining agents
+                            if current_size + len(field_name) + len(field_value) > safe_limit:
+                                break
+                    
                     embed.add_field(
-                        name=f"{priority_emoji} {agent_id} - {priority}",
-                        value=f"**Mission:** {mission}\n\n**Tasks:**\n{task_parts[0]}",
+                        name=field_name,
+                        value=field_value,
                         inline=False
                     )
 
-                    # Add additional task parts as continuation fields
+                    # Add additional task parts as continuation fields (if space allows)
                     for i, part in enumerate(task_parts[1:], 1):
+                        current_size = self._calculate_embed_size(embed)
+                        continuation_name = f"  └─ {agent_id} (continued)"
+                        continuation_size = len(continuation_name) + len(part)
+                        
+                        if current_size + continuation_size > safe_limit:
+                            # Truncate continuation if possible
+                            max_part_size = safe_limit - current_size - len(continuation_name) - 50
+                            if max_part_size > 100:
+                                part = part[:max_part_size] + "\n... (truncated)"
+                                continuation_size = len(continuation_name) + len(part)
+                            
+                            # If still can't fit, skip this and remaining continuation fields
+                            if current_size + continuation_size > safe_limit:
+                                break
+                        
                         embed.add_field(
-                            name=f"  └─ {agent_id} (continued)",
+                            name=continuation_name,
                             value=part,
                             inline=False
                         )
@@ -328,9 +380,18 @@ class SwarmTasksControllerView(discord.ui.View):
                         inline=False
                     )
             else:
+                field_name = f"{priority_emoji} {agent_id} - {priority}"
+                field_value = f"**Mission:** {mission}\n\n**Tasks:** No specific tasks listed"
+                
+                # Check if adding this field would exceed limit
+                current_size = self._calculate_embed_size(embed)
+                if current_size + len(field_name) + len(field_value) > safe_limit:
+                    # Skip remaining agents if we're at limit
+                    break
+                
                 embed.add_field(
-                    name=f"{priority_emoji} {agent_id} - {priority}",
-                    value=f"**Mission:** {mission}\n\n**Tasks:** No specific tasks listed",
+                    name=field_name,
+                    value=field_value,
                     inline=False
                 )
 
@@ -352,6 +413,91 @@ class SwarmTasksControllerView(discord.ui.View):
         footer_text += " • WE ARE SWARM"
 
         embed.set_footer(text=footer_text)
+        
+        # Final validation - ensure embed doesn't exceed limit
+        final_size = self._calculate_embed_size(embed)
+        if final_size > MAX_EMBED_LENGTH:
+            logger.warning(f"Embed size {final_size} exceeds limit {MAX_EMBED_LENGTH}, truncating footer")
+            # Truncate footer if needed
+            max_footer = MAX_EMBED_LENGTH - (final_size - len(footer_text))
+            if max_footer > 50:
+                embed.set_footer(text=footer_text[:max_footer-3] + "...")
+            else:
+                embed.set_footer(text="🐝 SWARM")
+        
+        return embed
+
+    def _load_all_agent_statuses(self) -> list[dict[str, Any]]:
+        """Load status for all agents."""
+        agents = []
+
+        for i in range(1, 9):
+            agent_id = f"Agent-{i}"
+            status_file = self.workspace_path / agent_id / "status.json"
+
+            if not status_file.exists():
+                continue
+
+            try:
+                with open(status_file, "r", encoding="utf-8") as f:
+                    status = json.load(f)
+                    agents.append(status)
+            except Exception as e:
+                logger.warning(f"Could not load status for {agent_id}: {e}")
+
+        return agents
+
+    def create_initial_embed(self) -> discord.Embed:
+        """Create initial embed for first display."""
+        embeds = self._create_tasks_embeds()
+        return embeds[0] if embeds else discord.Embed(title="🐝 SWARM TASKS", description="Loading...")
+
+
+__all__ = ["SwarmTasksControllerView"]
+
+                
+                # Check if adding this field would exceed limit
+                current_size = self._calculate_embed_size(embed)
+                if current_size + len(field_name) + len(field_value) > safe_limit:
+                    # Skip remaining agents if we're at limit
+                    break
+                
+                embed.add_field(
+                    name=field_name,
+                    value=field_value,
+                    inline=False
+                )
+
+        # Add footer with pagination and statistics
+        all_agents = self._load_all_agent_statuses()
+        if self.filter_priority:
+            filtered_agents = [a for a in all_agents if a.get(
+                "mission_priority", "").upper() == self.filter_priority.upper()]
+        else:
+            filtered_agents = all_agents
+        total_tasks = sum(len(a.get("current_tasks", []))
+                          for a in filtered_agents)
+        active_agents = sum(1 for a in all_agents if a.get(
+            "status") == "ACTIVE_AGENT_MODE")
+
+        footer_text = f"🐝 {active_agents}/8 agents active • {total_tasks} total tasks"
+        if len(agents) < total_agents:
+            footer_text += f" • Page {page_num} of {(total_agents + 3) // 4}"
+        footer_text += " • WE ARE SWARM"
+
+        embed.set_footer(text=footer_text)
+        
+        # Final validation - ensure embed doesn't exceed limit
+        final_size = self._calculate_embed_size(embed)
+        if final_size > MAX_EMBED_LENGTH:
+            logger.warning(f"Embed size {final_size} exceeds limit {MAX_EMBED_LENGTH}, truncating footer")
+            # Truncate footer if needed
+            max_footer = MAX_EMBED_LENGTH - (final_size - len(footer_text))
+            if max_footer > 50:
+                embed.set_footer(text=footer_text[:max_footer-3] + "...")
+            else:
+                embed.set_footer(text="🐝 SWARM")
+        
         return embed
 
     def _load_all_agent_statuses(self) -> list[dict[str, Any]]:

@@ -82,7 +82,8 @@
       "agent": "Agent-2",
       "goldmine": true,
       "merged_repos": [
-        "DreamBank"
+        "DreamBank",
+        "DigitalDreamscape"
       ]
     },
     {
@@ -291,7 +292,9 @@
       "num": 59,
       "name": "DigitalDreamscape",
       "analyzed": true,
-      "agent": "Agent-7"
+      "agent": "Agent-7",
+      "merged": true,
+      "merged_into": "DreamVault"
     },
     {
       "num": 61,
@@ -373,7 +376,7 @@
     }
   ],
   "stats": {
-    "total_repos": 59,
+    "total_repos": 57,
     "analyzed": 56,
     "pending": 4,
     "goldmines": 12,

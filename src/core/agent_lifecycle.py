@@ -81,6 +81,19 @@ class AgentLifecycle:
         
         with open(self.status_file, 'w') as f:
             json.dump(self.status, f, indent=2)
+        
+        # Notify Discord monitor if available (non-blocking)
+        try:
+            from src.discord_commander.status_change_monitor import StatusChangeMonitor
+            # Try to get bot instance and notify (if bot is running)
+            # This is optional - file watcher will catch it anyway
+            import sys
+            if 'bot' in sys.modules or hasattr(sys.modules.get('src.discord_commander.unified_discord_bot', None), 'status_monitor'):
+                # Bot might be running, but we can't reliably access it here
+                # File watcher will detect the change within 15 seconds
+                pass
+        except Exception:
+            pass  # Discord not available or bot not running - file watcher will catch it
     
     def _commit_to_git(self, message: Optional[str] = None) -> bool:
         """
@@ -349,4 +362,3 @@ def quick_cycle_end(agent_id: str, commit: bool = True) -> None:
     """
     lifecycle = AgentLifecycle(agent_id)
     lifecycle.end_cycle(commit=commit)
-

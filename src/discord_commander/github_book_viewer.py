@@ -259,13 +259,23 @@ class GitHubBookData:
         for pattern in patterns:
             match = re.search(pattern, filename, re.IGNORECASE)
             if match:
-                name = match.group(-1)  # Get last group (repo name)
-                # Clean up the name
-                name = name.replace("-", " ").replace("_", " ").title()
-                # Remove common suffixes
-                name = re.sub(r'\s+(complete|analysis|final)$', '', name, flags=re.IGNORECASE)
-                if name and len(name) > 2:
-                    return name
+                try:
+                    # Get last group (repo name) - handle patterns with 1 or 2 groups
+                    groups = match.groups()
+                    if groups:
+                        name = groups[-1]  # Get last group (repo name)
+                    else:
+                        continue  # Skip if no groups
+                    # Clean up the name
+                    name = name.replace("-", " ").replace("_", " ").title()
+                    # Remove common suffixes
+                    name = re.sub(r'\s+(complete|analysis|final)$', '', name, flags=re.IGNORECASE)
+                    if name and len(name) > 2:
+                        return name
+                except (IndexError, AttributeError) as e:
+                    # Skip this pattern if group access fails
+                    logger.debug(f"Error extracting group from pattern {pattern}: {e}")
+                    continue
 
         # Try content extraction
         for line in content.split("\n")[:30]:
@@ -489,11 +499,19 @@ class GitHubBookNavigator(discord.ui.View):
         options = []
         for repo_num in analyzed[:25]:
             repo_data = self.book_data.get_repo(repo_num)
+            # CRITICAL FIX: Discord SelectOption value must be <= 20 characters
+            # Repo numbers are integers (1-75), so str(repo_num) is 1-2 chars - safe
+            # But ensure we validate anyway
+            option_value = str(repo_num)
+            if len(option_value) > 20:
+                option_value = option_value[:20]
+                logger.warning(f"⚠️ Truncated repo number SelectOption value: {repo_num} -> {option_value}")
+            
             options.append(
                 discord.SelectOption(
                     label=f"Repo #{repo_num}",
                     description=repo_data.get("name", "Unknown")[:100],
-                    value=str(repo_num),
+                    value=option_value,  # Guaranteed <= 20 characters
                 )
             )
 

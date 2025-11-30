@@ -117,11 +117,14 @@ class AgentMessagingView(discord.ui.View):
             for i in range(1, 9):
                 agent_id = f"Agent-{i}"
                 status_data = all_statuses.get(agent_id, {})
+                # CRITICAL FIX: Preserve actual status string, don't convert to boolean
+                # This ensures status display works correctly
+                actual_status = status_data.get("status", "UNKNOWN")
                 agents.append(
                     {
                         "id": agent_id,
                         "name": status_data.get("agent_name", f"Agent-{i}"),
-                        "status": "ACTIVE" in str(status_data.get("status", "")).upper(),
+                        "status": actual_status,  # Preserve status string for proper display
                         "coordinates": status_data.get("coordinate_position", f"({i}, {i})"),
                     }
                 )
@@ -141,7 +144,9 @@ class AgentMessagingView(discord.ui.View):
         """Create Discord select options for agents."""
         options = []
         for agent in self.agents:
-            status_emoji = "🟢" if agent["status"] else "🔴"
+            # CRITICAL FIX: Check status string properly (not boolean)
+            status_str = str(agent.get("status", "UNKNOWN")).upper()
+            status_emoji = "🟢" if "ACTIVE" in status_str or "JET_FUEL" in status_str else "🔴"
             # Discord label must be 1-45 characters
             agent_name = agent.get('name', agent['id'])
             # Truncate to fit: emoji (2) + space (1) + name (max 42) = 45
@@ -156,10 +161,21 @@ class AgentMessagingView(discord.ui.View):
             label = label[:45] if len(label) > 45 else label
             if len(label) < 1:
                 label = agent['id'][:45]  # Final fallback
+            # Discord SelectOption value must be <= 20 characters
+            option_value = agent["id"]
+            if len(option_value) > 20:
+                option_value = option_value[:20]
+            
+            # Description must be <= 100 characters
+            description = f"Agent {agent['id']}"
+            if len(description) > 100:
+                description = description[:100]
+            
             options.append(
                 discord.SelectOption(
-                    label=label, value=agent["id"], description=f"Agent {agent['id']}"[
-                        :100]
+                    label=label,
+                    value=option_value,  # Guaranteed <= 20 characters
+                    description=description  # Guaranteed <= 100 characters
                 )
             )
         return options
@@ -283,18 +299,20 @@ class SwarmStatusView(discord.ui.View):
                 current_tasks = status_data.get("current_tasks", [])
                 last_updated = status_data.get("last_updated", "Unknown")
                 
-                # Determine status emoji
-                if "ACTIVE" in agent_status.upper() or "JET_FUEL" in agent_status.upper():
+                # CRITICAL FIX: Properly detect ACTIVE status
+                # Check for ACTIVE_AGENT_MODE, ACTIVE, JET_FUEL, etc.
+                status_upper = str(agent_status).upper()
+                if "ACTIVE" in status_upper or "JET_FUEL" in status_upper or "ACTIVE_AGENT_MODE" in status_upper:
                     emoji = "🟢"
                     active_count += 1
-                elif "COMPLETE" in agent_status.upper() or "COMPLETED" in agent_status.upper():
+                elif "COMPLETE" in status_upper or "COMPLETED" in status_upper:
                     emoji = "✅"
-                elif "REST" in agent_status.upper() or "STANDBY" in agent_status.upper():
+                elif "REST" in status_upper or "STANDBY" in status_upper or "IDLE" in status_upper:
                     emoji = "💤"
-                elif "ERROR" in agent_status.upper() or "FAILED" in agent_status.upper():
+                elif "ERROR" in status_upper or "FAILED" in status_upper:
                     emoji = "🔴"
                 else:
-                    emoji = "🟡"
+                    emoji = "🟡"  # Unknown/Other status
                 
                 # Truncate mission and task for display (Discord field value limit: 1024 chars)
                 mission_display = current_mission[:80] + "..." if len(current_mission) > 80 else current_mission

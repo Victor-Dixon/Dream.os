@@ -23,41 +23,76 @@
    - Find next assignments for each agent
    - Identify blockers and opportunities
 
-2. **Assess Current State**
+2. **Review Agent Statuses** (CRITICAL - NEW!)
+   - Read all 7 agent status.json files
+   - Identify completed work and next logical steps
+   - Find agents ready for next assignment
+   - Identify coordination opportunities
+   - Build assignments that progress from completed work
+
+3. **Assess Current State**
    - Check all agent status.json files
    - Identify idle agents
    - Find completed work needing next assignment
+   - **Pattern**: Build on completed work, don't restart
 
-3. **Identify Captain Work**
+4. **Identify Captain Work**
    - High-impact tasks I can execute
    - Infrastructure improvements
    - Strategic optimizations
+   - Pattern optimization and documentation
 
 ---
 
 ### **Phase 2: Assign Work to All Agents** (5-10 min)
 1. **Send Jet Fuel Assignments** (via PyAutoGUI or inbox)
-   - Agent-1: Test coverage assignments (specific files)
-   - Agent-2: Test coverage assignments (specific files)
-   - Agent-3: Test coverage assignments (specific files)
-   - Agent-5: Test coverage assignments (specific files)
-   - Agent-7: Test coverage assignments (specific files)
-   - Agent-8: Test coverage assignments (specific files)
-   - Agent-6: Coordination work (if needed)
+   - **Pattern**: Build on completed work
+   - **Agent-1**: Next logical step from completed work
+   - **Agent-2**: Next logical step from completed work
+   - **Agent-3**: Next logical step from completed work
+   - **Agent-5**: Next logical step from completed work
+   - **Agent-7**: Next logical step from completed work
+   - **Agent-8**: Next logical step from completed work
+   - **Agent-6**: Coordination work (if needed)
 
-2. **Assignment Format**:
+2. **Assignment Progression Pattern** (NEW!):
+   - ✅ **Review**: What did agent complete?
+   - ✅ **Identify**: What's the next logical step?
+   - ✅ **Assign**: Build on completed work
+   - ✅ **Coordinate**: Link related work across agents
+   - ✅ **Progress**: Don't restart, continue momentum
+
+3. **Assignment Format**:
    ```
    [C2A] Agent-4 → Agent-X
    
-   Test Coverage Assignment:
-   - File 1: tests/unit/services/test_messaging_service.py
-   - File 2: tests/unit/core/test_message_queue.py
-   - Target: 5+ tests per file, ≥85% coverage
-   - Deadline: Next cycle
-   - Deliverable: Test file + Discord devlog
+   🚀 JET FUEL ASSIGNMENT - [TASK NAME]
+   
+   Priority: HIGH
+   Status: AUTONOMOUS EXECUTION GRANTED
+   
+   📋 ASSIGNMENT:
+   [Builds on completed work: X]
+   [Next logical step: Y]
+   [Specific tasks: 1, 2, 3]
+   
+   Target: [Clear target]
+   Deliverable: [Specific deliverables]
+   Timeline: [Cycles, not hours]
+   Points: [Point value]
+   
+   📝 MANDATORY PROTOCOLS:
+   ✅ Post devlog to Discord after completion
+   ✅ Coordinate with [related agents]
+   ✅ Update status.json after completion
+   ✅ No acknowledgments - execute immediately
+   
+   🔥 JET FUEL POWER: ACT NOW - Don't wait for approval!
+   
+   WE. ARE. SWARM. AUTONOMOUS. POWERFUL. 🐝⚡🔥🚀
    ```
 
-3. **No Acknowledgement Required**:
+4. **No Acknowledgement Required**:
    - Agents execute immediately
    - Post to Discord when complete
    - No waiting for Captain response
@@ -89,6 +124,7 @@
    - Check Discord devlogs (all agents should post)
    - Check status.json updates
    - Identify blockers
+   - **Pattern**: Review statuses before next assignment cycle
 
 2. **Break Acknowledgement Loops**:
    - If agent posts "acknowledged" → Redirect to work
@@ -99,6 +135,12 @@
    - Resolve blockers immediately
    - Unblock agents quickly
    - Maintain momentum
+
+4. **Coordination Patterns** (NEW!):
+   - **Multi-Agent Tasks**: Assign related work to multiple agents
+   - **Sequential Dependencies**: Assign in order (Agent-1 → Agent-2 → Agent-3)
+   - **Parallel Work**: Assign independent work simultaneously
+   - **Integration Points**: Coordinate when work needs to merge
 
 ---
 
@@ -235,6 +277,33 @@ prepare_jet_fuel_messages()
 - **Method**: Discord devlog channels
 - **Frequency**: Every cycle
 - **Action**: Identify blockers, assign next work
+
+## 🧠 **SWARM AGI OPTIMIZATION PATTERNS** (NEW!)
+
+### **1. Status Review Protocol**:
+- **Before Each Assignment Cycle**: Review all agent status.json files
+- **Identify**: Completed work, next logical steps, coordination opportunities
+- **Build**: Assignments that progress from completed work
+- **Pattern**: Never restart, always continue momentum
+
+### **2. Assignment Progression Pattern**:
+- ✅ **Review Completed Work**: What did agent finish?
+- ✅ **Identify Next Step**: What's the logical progression?
+- ✅ **Build Assignment**: Continue from completed work
+- ✅ **Coordinate**: Link related work across agents
+- ✅ **Progress**: Maintain forward momentum
+
+### **3. Multi-Agent Coordination**:
+- **Sequential**: Agent-1 → Agent-2 → Agent-3 (dependencies)
+- **Parallel**: Multiple agents work independently
+- **Integration**: Coordinate when work needs to merge
+- **Pattern**: Clear coordination points and handoffs
+
+### **4. Ongoing Work Monitoring**:
+- **Batch 2 PRs**: Monitor merge status, coordinate next steps
+- **Phase 2 Migrations**: Track progress, coordinate testing
+- **Stress Testing**: Monitor implementation, coordinate validation
+- **Pattern**: Track ongoing work, assign next steps proactively
 
 ---
 

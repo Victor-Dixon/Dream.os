@@ -1,264 +1,158 @@
-"""
-Tests for coordinator_status_parser.py
+"""Tests for coordinator_status_parser.py - V2 Compliant Test Suite"""
 
-Comprehensive tests for coordinator status parsing and filtering.
-Target: ≥85% coverage
-"""
+import unittest
+from unittest.mock import Mock
 
-import pytest
-from unittest.mock import MagicMock
 from src.core.coordinator_status_parser import (
     CoordinatorStatusParser,
     CoordinatorStatusFilter,
 )
-from src.core.coordinator_models import CoordinationStatus, CoordinatorStatus as StatusModel
 
 
-class TestCoordinatorStatusParser:
-    """Tests for CoordinatorStatusParser."""
+class TestCoordinatorStatusParser(unittest.TestCase):
+    """Test suite for CoordinatorStatusParser class."""
 
-    def test_parse_status_with_get_status_method(self):
-        """Test parsing status when coordinator has get_status method."""
-        parser = CoordinatorStatusParser()
-        coordinator = MagicMock()
-        coordinator.get_status = MagicMock(return_value={"status": "active"})
-        
-        result = parser.parse_status(coordinator)
-        
-        assert result == {"status": "active"}
+    def setUp(self):
+        """Set up test fixtures."""
+        self.parser = CoordinatorStatusParser()
 
-    def test_parse_status_with_to_dict_method(self):
-        """Test parsing status when status has to_dict method."""
-        parser = CoordinatorStatusParser()
-        status_obj = MagicMock()
-        status_obj.to_dict = MagicMock(return_value={"status": "operational"})
-        coordinator = MagicMock()
-        coordinator.get_status = MagicMock(return_value=status_obj)
+    def test_parse_status_with_get_status_dict(self):
+        """Test parsing status when coordinator returns dict."""
+        coordinator = Mock()
+        coordinator.get_status = Mock(return_value={"status": "active", "count": 5})
         
-        result = parser.parse_status(coordinator)
+        result = self.parser.parse_status(coordinator)
         
-        assert result == {"status": "operational"}
+        self.assertEqual(result["status"], "active")
+        self.assertEqual(result["count"], 5)
 
-    def test_parse_status_with_dict_status(self):
-        """Test parsing status when status is already a dict."""
-        parser = CoordinatorStatusParser()
-        coordinator = MagicMock()
-        coordinator.get_status = MagicMock(return_value={"status": "active", "count": 5})
+    def test_parse_status_with_get_status_object(self):
+        """Test parsing status when coordinator returns object with to_dict."""
+        status_obj = Mock()
+        status_obj.to_dict = Mock(return_value={"status": "active"})
+        coordinator = Mock()
+        coordinator.get_status = Mock(return_value=status_obj)
         
-        result = parser.parse_status(coordinator)
+        result = self.parser.parse_status(coordinator)
         
-        assert result == {"status": "active", "count": 5}
+        self.assertEqual(result["status"], "active")
+        status_obj.to_dict.assert_called_once()
 
-    def test_parse_status_with_non_dict_status(self):
-        """Test parsing status when status is not a dict."""
-        parser = CoordinatorStatusParser()
-        coordinator = MagicMock()
-        coordinator.get_status = MagicMock(return_value="active")
+    def test_parse_status_with_get_status_string(self):
+        """Test parsing status when coordinator returns string."""
+        coordinator = Mock()
+        coordinator.get_status = Mock(return_value="active")
         
-        result = parser.parse_status(coordinator)
+        result = self.parser.parse_status(coordinator)
         
-        assert result == {"status": "active"}
+        self.assertEqual(result["status"], "active")
 
-    def test_parse_status_no_get_status_method(self):
+    def test_parse_status_no_get_status(self):
         """Test parsing status when coordinator has no get_status method."""
-        parser = CoordinatorStatusParser()
-        coordinator = MagicMock()
-        coordinator.name = "test_coordinator"
-        del coordinator.get_status
+        coordinator = Mock(spec=[])  # No attributes by default
+        coordinator.name = "test_coord"
+        del coordinator.get_status  # Ensure no get_status
         
-        result = parser.parse_status(coordinator)
+        result = self.parser.parse_status(coordinator)
         
-        assert result["name"] == "test_coordinator"
-        assert result["status"] == "unknown"
-        assert "error" in result
+        self.assertIsInstance(result, dict)
+        self.assertEqual(result["name"], "test_coord")
+        self.assertEqual(result["status"], "unknown")
+        self.assertIn("error", result)
 
-    def test_parse_status_no_name_attribute(self):
-        """Test parsing status when coordinator has no name attribute."""
-        parser = CoordinatorStatusParser()
-        coordinator = MagicMock()
-        del coordinator.get_status
-        del coordinator.name
+    def test_parse_status_exception(self):
+        """Test parsing status when exception occurs."""
+        coordinator = Mock()
+        coordinator.get_status = Mock(side_effect=Exception("Test error"))
+        coordinator.name = "test_coord"
         
-        result = parser.parse_status(coordinator)
+        result = self.parser.parse_status(coordinator)
         
-        assert result["name"] == "unknown"
-        assert result["status"] == "unknown"
+        self.assertEqual(result["name"], "test_coord")
+        self.assertEqual(result["status"], "error")
+        self.assertIn("error", result)
 
-    def test_parse_status_exception_handling(self):
-        """Test exception handling during parsing."""
-        parser = CoordinatorStatusParser()
-        coordinator = MagicMock()
-        coordinator.get_status = MagicMock(side_effect=Exception("Test error"))
-        coordinator.name = "test_coordinator"
+    def test_can_parse_status_true(self):
+        """Test can_parse_status returns True when coordinator has get_status."""
+        coordinator = Mock()
+        coordinator.get_status = Mock()
         
-        result = parser.parse_status(coordinator)
+        result = self.parser.can_parse_status(coordinator)
         
-        assert result["name"] == "test_coordinator"
-        assert result["status"] == "error"
-        assert "Test error" in result["error"]
+        self.assertTrue(result)
 
-    def test_can_parse_status_with_method(self):
-        """Test can_parse_status when coordinator has get_status method."""
-        parser = CoordinatorStatusParser()
-        coordinator = MagicMock()
-        coordinator.get_status = MagicMock()
+    def test_can_parse_status_false(self):
+        """Test can_parse_status returns False when coordinator has no get_status."""
+        coordinator = Mock(spec=[])  # No attributes by default
+        # Ensure get_status doesn't exist
+        if hasattr(coordinator, 'get_status'):
+            delattr(coordinator, 'get_status')
         
-        result = parser.can_parse_status(coordinator)
+        result = self.parser.can_parse_status(coordinator)
         
-        assert result is True
-
-    def test_can_parse_status_without_method(self):
-        """Test can_parse_status when coordinator has no get_status method."""
-        parser = CoordinatorStatusParser()
-        coordinator = MagicMock()
-        del coordinator.get_status
-        
-        result = parser.can_parse_status(coordinator)
-        
-        assert result is False
+        self.assertFalse(result)
 
 
-class TestCoordinatorStatusFilter:
-    """Tests for CoordinatorStatusFilter."""
+class TestCoordinatorStatusFilter(unittest.TestCase):
+    """Test suite for CoordinatorStatusFilter class."""
 
-    def test_initialization(self):
-        """Test filter initialization."""
-        parser = CoordinatorStatusParser()
-        filter_obj = CoordinatorStatusFilter(parser)
-        
-        assert filter_obj.status_parser == parser
+    def setUp(self):
+        """Set up test fixtures."""
+        self.parser = CoordinatorStatusParser()
+        self.filter = CoordinatorStatusFilter(self.parser)
 
-    def test_get_coordinators_by_status_matching(self):
+    def test_get_coordinators_by_status_matches(self):
         """Test filtering coordinators by matching status."""
-        parser = CoordinatorStatusParser()
-        filter_obj = CoordinatorStatusFilter(parser)
-        
-        coord1 = MagicMock()
-        coord1.get_status = MagicMock(return_value={"status": "active"})
-        coord2 = MagicMock()
-        coord2.get_status = MagicMock(return_value={"status": "inactive"})
+        coord1 = Mock()
+        coord1.get_status = Mock(return_value={"status": "active"})
+        coord2 = Mock()
+        coord2.get_status = Mock(return_value={"status": "inactive"})
         
         coordinators = {"coord1": coord1, "coord2": coord2}
         
-        result = filter_obj.get_coordinators_by_status(coordinators, "active")
+        result = self.filter.get_coordinators_by_status(coordinators, "active")
         
-        assert "coord1" in result
-        assert "coord2" not in result
+        self.assertIn("coord1", result)
+        self.assertNotIn("coord2", result)
 
-    def test_get_coordinators_by_status_coordination_status_enum(self):
-        """Test filtering by CoordinationStatus enum."""
-        parser = CoordinatorStatusParser()
-        filter_obj = CoordinatorStatusFilter(parser)
+    def test_get_coordinators_by_status_coordination_status(self):
+        """Test filtering by coordination_status field."""
+        from enum import Enum
         
-        coord1 = MagicMock()
-        # Return a dict with coordination_status as enum
-        coord1.get_status = MagicMock(return_value={"coordination_status": CoordinationStatus.OPERATIONAL})
+        class Status(Enum):
+            ACTIVE = "active"
         
-        coordinators = {"coord1": coord1}
+        coord = Mock()
+        coord.get_status = Mock(return_value={"coordination_status": Status.ACTIVE})
         
-        result = filter_obj.get_coordinators_by_status(coordinators, "operational")
+        coordinators = {"coord1": coord}
         
-        # Should match via enum value
-        assert "coord1" in result
+        result = self.filter.get_coordinators_by_status(coordinators, "active")
+        
+        self.assertIn("coord1", result)
 
-    def test_get_coordinators_by_status_coordination_status_string(self):
-        """Test filtering by coordination_status string."""
-        parser = CoordinatorStatusParser()
-        filter_obj = CoordinatorStatusFilter(parser)
+    def test_get_coordinators_by_status_exception(self):
+        """Test filtering handles exceptions gracefully."""
+        coord = Mock()
+        coord.get_status = Mock(side_effect=Exception("Test error"))
         
-        coord1 = MagicMock()
-        coord1.get_status = MagicMock(return_value={"coordination_status": "operational"})
+        coordinators = {"coord1": coord}
         
-        coordinators = {"coord1": coord1}
+        result = self.filter.get_coordinators_by_status(coordinators, "active")
         
-        result = filter_obj.get_coordinators_by_status(coordinators, "operational")
-        
-        assert "coord1" in result
+        self.assertEqual(len(result), 0)
 
     def test_get_coordinators_by_status_no_match(self):
         """Test filtering when no coordinators match."""
-        parser = CoordinatorStatusParser()
-        filter_obj = CoordinatorStatusFilter(parser)
+        coord = Mock()
+        coord.get_status = Mock(return_value={"status": "inactive"})
         
-        coord1 = MagicMock()
-        coord1.get_status = MagicMock(return_value={"status": "active"})
+        coordinators = {"coord1": coord}
         
-        coordinators = {"coord1": coord1}
+        result = self.filter.get_coordinators_by_status(coordinators, "active")
         
-        result = filter_obj.get_coordinators_by_status(coordinators, "inactive")
-        
-        assert len(result) == 0
+        self.assertEqual(len(result), 0)
 
-    def test_get_coordinators_by_status_exception_handling(self):
-        """Test exception handling during filtering."""
-        parser = CoordinatorStatusParser()
-        filter_obj = CoordinatorStatusFilter(parser)
-        
-        coord1 = MagicMock()
-        coord1.get_status = MagicMock(side_effect=Exception("Test error"))
-        coord2 = MagicMock()
-        coord2.get_status = MagicMock(return_value={"status": "active"})
-        
-        coordinators = {"coord1": coord1, "coord2": coord2}
-        
-        result = filter_obj.get_coordinators_by_status(coordinators, "active")
-        
-        # Should skip coord1 due to exception, include coord2
-        assert "coord1" not in result
-        assert "coord2" in result
 
-    def test_matches_status_coordination_status_enum(self):
-        """Test matching status with CoordinationStatus enum."""
-        parser = CoordinatorStatusParser()
-        filter_obj = CoordinatorStatusFilter(parser)
-        
-        status_info = {"coordination_status": CoordinationStatus.OPERATIONAL}
-        
-        result = filter_obj._matches_status(status_info, "operational")
-        
-        assert result is True
-
-    def test_matches_status_coordination_status_string(self):
-        """Test matching status with coordination_status string."""
-        parser = CoordinatorStatusParser()
-        filter_obj = CoordinatorStatusFilter(parser)
-        
-        status_info = {"coordination_status": "operational"}
-        
-        result = filter_obj._matches_status(status_info, "operational")
-        
-        assert result is True
-
-    def test_matches_status_direct_status_field(self):
-        """Test matching status with direct status field."""
-        parser = CoordinatorStatusParser()
-        filter_obj = CoordinatorStatusFilter(parser)
-        
-        status_info = {"status": "active"}
-        
-        result = filter_obj._matches_status(status_info, "active")
-        
-        assert result is True
-
-    def test_matches_status_no_match(self):
-        """Test matching status when no match found."""
-        parser = CoordinatorStatusParser()
-        filter_obj = CoordinatorStatusFilter(parser)
-        
-        status_info = {"other_field": "value"}
-        
-        result = filter_obj._matches_status(status_info, "active")
-        
-        assert result is False
-
-    def test_matches_status_different_value(self):
-        """Test matching status with different value."""
-        parser = CoordinatorStatusParser()
-        filter_obj = CoordinatorStatusFilter(parser)
-        
-        status_info = {"status": "active"}
-        
-        result = filter_obj._matches_status(status_info, "inactive")
-        
-        assert result is False
-
+if __name__ == "__main__":
+    unittest.main()

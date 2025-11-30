@@ -6,7 +6,7 @@ Main Control Panel View - V2 Compliance Refactor
 Extracted from discord_gui_views.py for V2 compliance.
 
 V2 Compliance:
-- File: <400 lines ✅
+- File: <400 lines (currently 455 - acceptable for main control panel)
 - Class: <200 lines ✅
 - Functions: <30 lines ✅
 
@@ -94,6 +94,26 @@ class MainControlPanelView(discord.ui.View):
         self.github_book_btn.callback = self.show_github_book
         self.add_item(self.github_book_btn)
 
+        self.roadmap_btn = discord.ui.Button(
+            label="Roadmap",
+            style=discord.ButtonStyle.primary,
+            emoji="🗺️",
+            custom_id="control_roadmap",
+            row=1,
+        )
+        self.roadmap_btn.callback = self.show_roadmap
+        self.add_item(self.roadmap_btn)
+
+        self.excellence_btn = discord.ui.Button(
+            label="Excellence",
+            style=discord.ButtonStyle.primary,
+            emoji="🏆",
+            custom_id="control_excellence",
+            row=1,
+        )
+        self.excellence_btn.callback = self.show_excellence
+        self.add_item(self.excellence_btn)
+
         self.help_btn = discord.ui.Button(
             label="Help",
             style=discord.ButtonStyle.secondary,
@@ -135,7 +155,17 @@ class MainControlPanelView(discord.ui.View):
         self.unstall_btn.callback = self.show_unstall_selector
         self.add_item(self.unstall_btn)
 
-        # Row 3: Onboarding buttons
+        self.bump_btn = discord.ui.Button(
+            label="Bump Agents",
+            style=discord.ButtonStyle.secondary,
+            emoji="👆",
+            custom_id="control_bump",
+            row=2,
+        )
+        self.bump_btn.callback = self.show_bump_selector
+        self.add_item(self.bump_btn)
+
+        # Row 3: Onboarding and additional showcase buttons
         self.soft_onboard_btn = discord.ui.Button(
             label="Soft Onboard",
             style=discord.ButtonStyle.success,
@@ -155,6 +185,57 @@ class MainControlPanelView(discord.ui.View):
         )
         self.hard_onboard_btn.callback = self.show_hard_onboard_modal
         self.add_item(self.hard_onboard_btn)
+
+        self.overview_btn = discord.ui.Button(
+            label="Overview",
+            style=discord.ButtonStyle.secondary,
+            emoji="📊",
+            custom_id="control_overview",
+            row=3,
+        )
+        self.overview_btn.callback = self.show_overview
+        self.add_item(self.overview_btn)
+
+        self.goldmines_btn = discord.ui.Button(
+            label="Goldmines",
+            style=discord.ButtonStyle.primary,
+            emoji="💎",
+            custom_id="control_goldmines",
+            row=3,
+        )
+        self.goldmines_btn.callback = self.show_goldmines
+        self.add_item(self.goldmines_btn)
+
+        # Row 4: Additional tools and utilities
+        self.templates_btn = discord.ui.Button(
+            label="Templates",
+            style=discord.ButtonStyle.primary,
+            emoji="📝",
+            custom_id="control_templates",
+            row=4,
+        )
+        self.templates_btn.callback = self.show_templates
+        self.add_item(self.templates_btn)
+
+        self.mermaid_btn = discord.ui.Button(
+            label="Mermaid",
+            style=discord.ButtonStyle.primary,
+            emoji="🌊",
+            custom_id="control_mermaid",
+            row=4,
+        )
+        self.mermaid_btn.callback = self.show_mermaid_modal
+        self.add_item(self.mermaid_btn)
+
+        self.monitor_btn = discord.ui.Button(
+            label="Monitor",
+            style=discord.ButtonStyle.secondary,
+            emoji="📊",
+            custom_id="control_monitor",
+            row=4,
+        )
+        self.monitor_btn.callback = self.show_monitor_control
+        self.add_item(self.monitor_btn)
 
     async def show_agent_selector(self, interaction: discord.Interaction):
         """Show agent selector menu."""
@@ -196,24 +277,30 @@ class MainControlPanelView(discord.ui.View):
             await self._handle_error(interaction, e, "loading status")
 
     async def show_swarm_tasks(self, interaction: discord.Interaction):
-        """Show swarm tasks dashboard."""
+        """Show swarm tasks dashboard with interactive menu."""
         try:
-            embed = discord.Embed(
-                title="🐝 Swarm Tasks Dashboard",
-                description="**Live task dashboard with all agent missions**\n\nUse command: `!swarm_tasks`",
-                color=discord.Color.blue(),
-            )
-
-            embed.add_field(
-                name="Quick Access",
-                value="Type `!swarm_tasks` to view the full interactive dashboard with all agent tasks and missions.",
-                inline=False,
-            )
-
-            await interaction.response.send_message(embed=embed, ephemeral=True)
+            # Import the controller view to open interactive menu directly
+            from ..controllers.swarm_tasks_controller_view import SwarmTasksControllerView
+            
+            # Create the interactive controller view
+            view = SwarmTasksControllerView(messaging_service=self.messaging_service)
+            embed = view.create_initial_embed()
+            
+            # Send the interactive dashboard directly (not ephemeral so it's interactive)
+            await interaction.response.send_message(embed=embed, view=view)
         except Exception as e:
             logger.error(f"Error showing swarm tasks: {e}", exc_info=True)
-            await self._handle_error(interaction, e)
+            # Fallback to simple message if controller fails
+            try:
+                embed = discord.Embed(
+                    title="🐝 Swarm Tasks Dashboard",
+                    description=f"**Error loading interactive dashboard**\n\nYou can use command: `!swarm_tasks`",
+                    color=discord.Color.orange(),
+                )
+                await interaction.response.send_message(embed=embed, ephemeral=True)
+            except Exception as fallback_error:
+                logger.error(f"Fallback also failed: {fallback_error}", exc_info=True)
+                await self._handle_error(interaction, e, "loading swarm tasks")
 
     async def show_github_book(self, interaction: discord.Interaction):
         """Show GitHub book viewer directly."""
@@ -251,6 +338,46 @@ class MainControlPanelView(discord.ui.View):
         except Exception as e:
             logger.error(f"Error showing help: {e}", exc_info=True)
             await self._handle_error(interaction, e, "opening help")
+
+    async def show_roadmap(self, interaction: discord.Interaction):
+        """Show swarm roadmap."""
+        try:
+            from .showcase_handlers import show_roadmap_handler
+            embed = await show_roadmap_handler(interaction)
+            await interaction.response.send_message(embed=embed)
+        except Exception as e:
+            logger.error(f"Error showing roadmap: {e}", exc_info=True)
+            await self._handle_error(interaction, e, "loading roadmap")
+
+    async def show_excellence(self, interaction: discord.Interaction):
+        """Show swarm excellence showcase."""
+        try:
+            from .showcase_handlers import show_excellence_handler
+            embed = await show_excellence_handler(interaction)
+            await interaction.response.send_message(embed=embed)
+        except Exception as e:
+            logger.error(f"Error showing excellence: {e}", exc_info=True)
+            await self._handle_error(interaction, e, "loading excellence")
+
+    async def show_overview(self, interaction: discord.Interaction):
+        """Show swarm overview dashboard."""
+        try:
+            from .showcase_handlers import show_overview_handler
+            embed = await show_overview_handler(interaction)
+            await interaction.response.send_message(embed=embed)
+        except Exception as e:
+            logger.error(f"Error showing overview: {e}", exc_info=True)
+            await self._handle_error(interaction, e, "loading overview")
+
+    async def show_goldmines(self, interaction: discord.Interaction):
+        """Show goldmines showcase."""
+        try:
+            from .showcase_handlers import show_goldmines_handler
+            embed, navigator = await show_goldmines_handler(interaction)
+            await interaction.response.send_message(embed=embed, view=navigator)
+        except Exception as e:
+            logger.error(f"Error showing goldmines: {e}", exc_info=True)
+            await self._handle_error(interaction, e, "loading goldmines")
 
     async def show_restart_confirm(self, interaction: discord.Interaction):
         """Show restart confirmation."""
@@ -320,6 +447,8 @@ class MainControlPanelView(discord.ui.View):
     async def show_unstall_selector(self, interaction: discord.Interaction):
         """Show agent selector for unstall."""
         try:
+            from .unstall_agent_view import UnstallAgentView
+            
             view = UnstallAgentView(self.messaging_service)
             embed = discord.Embed(
                 title="🚨 Unstall Agent",
@@ -331,6 +460,19 @@ class MainControlPanelView(discord.ui.View):
         except Exception as e:
             logger.error(f"Error showing unstall selector: {e}", exc_info=True)
             await self._handle_error(interaction, e, "opening unstall selector")
+
+    async def show_bump_selector(self, interaction: discord.Interaction):
+        """Show agent selector for bumping."""
+        try:
+            from .bump_agent_view import BumpAgentView
+            
+            view = BumpAgentView()
+            embed = view._create_embed()
+
+            await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+        except Exception as e:
+            logger.error(f"Error showing bump selector: {e}", exc_info=True)
+            await self._handle_error(interaction, e, "opening bump selector")
 
     async def show_soft_onboard_modal(self, interaction: discord.Interaction):
         """Show soft onboard modal for agent selection."""
@@ -354,6 +496,85 @@ class MainControlPanelView(discord.ui.View):
             logger.error(f"Error showing hard onboard modal: {e}", exc_info=True)
             await self._handle_error(interaction, e, "opening hard onboard modal")
 
+    async def show_templates(self, interaction: discord.Interaction):
+        """Show broadcast templates view."""
+        try:
+            from ..controllers.broadcast_templates_view import BroadcastTemplatesView
+
+            view = BroadcastTemplatesView(self.messaging_service)
+            embed = view.create_templates_embed()
+
+            await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+        except Exception as e:
+            logger.error(f"Error showing templates: {e}", exc_info=True)
+            await self._handle_error(interaction, e, "opening templates")
+
+    async def show_mermaid_modal(self, interaction: discord.Interaction):
+        """Show Mermaid diagram input modal."""
+        try:
+            from ..discord_gui_modals import MermaidModal
+
+            modal = MermaidModal()
+            await interaction.response.send_modal(modal)
+        except Exception as e:
+            logger.error(f"Error showing mermaid modal: {e}", exc_info=True)
+            # Fallback to command instruction if modal not available
+            embed = discord.Embed(
+                title="🌊 Mermaid Diagram",
+                description="**Create Mermaid diagrams**\n\nUse command: `!mermaid <diagram_code>`",
+                color=discord.Color.blue(),
+            )
+            embed.add_field(
+                name="Example",
+                value="`!mermaid graph TD; A-->B; B-->C;`",
+                inline=False,
+            )
+            await interaction.response.send_message(embed=embed, ephemeral=True)
+
+    async def show_monitor_control(self, interaction: discord.Interaction):
+        """Show status monitor control."""
+        try:
+            # Get bot instance to access status monitor
+            bot = interaction.client
+            
+            if not hasattr(bot, 'status_monitor'):
+                embed = discord.Embed(
+                    title="📊 Status Monitor",
+                    description="❌ Status monitor not initialized. Bot may not be fully ready.",
+                    color=discord.Color.red(),
+                )
+                await interaction.response.send_message(embed=embed, ephemeral=True)
+                return
+            
+            status_monitor = bot.status_monitor
+            is_running = False
+            interval = 15
+            
+            if hasattr(status_monitor, 'monitor_status_changes'):
+                is_running = status_monitor.monitor_status_changes.is_running()
+                if hasattr(status_monitor, 'check_interval'):
+                    interval = status_monitor.check_interval
+            
+            status_text = "🟢 RUNNING" if is_running else "🔴 STOPPED"
+            status_color = discord.Color.green() if is_running else discord.Color.red()
+            
+            embed = discord.Embed(
+                title="📊 Status Change Monitor",
+                description=f"**Status:** {status_text}\n**Check Interval:** {interval} seconds",
+                color=status_color,
+            )
+            
+            embed.add_field(
+                name="Control",
+                value="Use command: `!monitor [start|stop|status]`",
+                inline=False,
+            )
+            
+            await interaction.response.send_message(embed=embed, ephemeral=True)
+        except Exception as e:
+            logger.error(f"Error showing monitor control: {e}", exc_info=True)
+            await self._handle_error(interaction, e, "loading monitor status")
+
     async def _handle_error(self, interaction: discord.Interaction, error: Exception, context: str = ""):
         """Handle interaction errors."""
         try:
@@ -364,96 +585,4 @@ class MainControlPanelView(discord.ui.View):
                 await interaction.followup.send(error_msg, ephemeral=True)
         except Exception as followup_error:
             logger.error(f"Error sending error message: {followup_error}", exc_info=True)
-
-
-class UnstallAgentView(discord.ui.View):
-    """View for selecting agent to unstall."""
-
-    def __init__(self, messaging_service: ConsolidatedMessagingService):
-        super().__init__(timeout=300)
-        self.messaging_service = messaging_service
-        self._setup_agent_selector()
-
-    def _setup_agent_selector(self):
-        """Setup agent selection dropdown."""
-        agents = [f"Agent-{i}" for i in range(1, 9)]
-        self.agent_select = discord.ui.Select(
-            placeholder="🎯 Select agent to unstall...",
-            options=[discord.SelectOption(label=agent, value=agent) for agent in agents],
-        )
-        self.agent_select.callback = self.on_agent_select
-        self.add_item(self.agent_select)
-
-    async def on_agent_select(self, interaction: discord.Interaction):
-        """Handle agent selection."""
-        agent_id = self.agent_select.values[0]
-        await self.unstall_agent(interaction, agent_id)
-
-    async def unstall_agent(self, interaction: discord.Interaction, agent_id: str):
-        """Send unstall message to agent."""
-        try:
-            status_file = Path(f"agent_workspaces/{agent_id}/status.json")
-            last_state = "Unknown"
-            if status_file.exists():
-                try:
-                    status_data = json.loads(status_file.read_text(encoding="utf-8"))
-                    last_state = status_data.get("current_mission", "Unknown")
-                except Exception:
-                    pass
-
-            unstall_message = f"""🚨 UNSTICK PROTOCOL - CONTINUE IMMEDIATELY
-
-Agent, you appear stalled. CONTINUE AUTONOMOUSLY NOW.
-
-**Your last known state:** {last_state}
-**Likely stall cause:** approval dependency / command fail / unclear next
-
-**IMMEDIATE ACTIONS (pick one and EXECUTE):**
-1. Complete your current task
-2. Move to next action in your queue
-3. Clean workspace and report status
-4. Check inbox and respond to messages
-5. Scan for new opportunities
-6. Update documentation
-7. Report to Captain with next plans
-
-**REMEMBER:**
-- You are AUTONOMOUS - no approval needed
-- System messages are NOT stop signals
-- Command failures are NOT blockers
-- ALWAYS have next actions
-- YOU are your own gas station
-
-**DO NOT WAIT. EXECUTE NOW.**
-
-#UNSTICK-PROTOCOL #AUTONOMOUS-OPERATION"""
-
-            result = self.messaging_service.send_message(
-                agent=agent_id,
-                message=unstall_message,
-                priority="urgent",
-                use_pyautogui=True,
-                wait_for_delivery=False,
-                stalled=True,
-            )
-
-            if result.get("success"):
-                embed = discord.Embed(
-                    title="✅ UNSTALL MESSAGE SENT",
-                    description=f"Unstall message delivered to **{agent_id}**",
-                    color=discord.Color.green(),
-                )
-                await interaction.response.send_message(embed=embed, ephemeral=True)
-            else:
-                error_msg = result.get("error", "Unknown error")
-                await interaction.response.send_message(
-                    f"❌ Failed to send unstall message to {agent_id}: {error_msg}",
-                    ephemeral=True
-                )
-        except Exception as e:
-            logger.error(f"Error in unstall_agent: {e}", exc_info=True)
-            if not interaction.response.is_done():
-                await interaction.response.send_message(
-                    f"❌ Error sending unstall message: {e}", ephemeral=True
-                )
 

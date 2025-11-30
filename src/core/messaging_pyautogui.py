@@ -509,3 +509,29 @@ def send_message_pyautogui(agent_id: str, message: str, timeout: int = 30) -> bo
 def send_message_to_onboarding_coords(agent_id: str, message: str, timeout: int = 30) -> bool:
     """Send message to onboarding coordinates."""
     return send_message_pyautogui(agent_id, message, timeout)
+
+
+def send_message_pyautogui(agent_id: str, message: str, timeout: int = 30) -> bool:
+    """Legacy function for sending messages via PyAutoGUI."""
+    try:
+        delivery = PyAutoGUIMessagingDelivery()
+        from .messaging_core import UnifiedMessage, UnifiedMessagePriority, UnifiedMessageType
+
+        msg = UnifiedMessage(
+            content=message,
+            sender="CAPTAIN",
+            recipient=agent_id,
+            message_type=UnifiedMessageType.CAPTAIN_TO_AGENT,
+            priority=UnifiedMessagePriority.URGENT,
+            tags=[],
+            metadata={},
+        )
+        return delivery.send_message(msg)
+    except Exception as e:
+        logger.error(f"Failed to send PyAutoGUI message: {e}")
+        return False
+
+
+def send_message_to_onboarding_coords(agent_id: str, message: str, timeout: int = 30) -> bool:
+    """Send message to onboarding coordinates."""
+    return send_message_pyautogui(agent_id, message, timeout)

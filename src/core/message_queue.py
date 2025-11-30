@@ -159,10 +159,19 @@ class MessageQueue(IMessageQueue):
         self, queue_id: str, message: Any, priority_score: float,
         delivery_callback: Optional[Callable[[Any], bool]]
     ) -> QueueEntry:
-        """Create new queue entry."""
+        """Create new queue entry.
+        
+        FIXED: Normalize message format to dict to ensure consistent routing.
+        Handles both UnifiedMessage objects and dict messages.
+        """
         now = datetime.now()
+        
+        # FIXED: Normalize message to dict format for consistent routing
+        # Prevents routing issues when messages come from different sources
+        normalized_message = self._normalize_message(message)
+        
         return QueueEntry(
-            message=message,
+            message=normalized_message,
             queue_id=queue_id,
             priority_score=priority_score,
             status="PENDING",
@@ -170,6 +179,41 @@ class MessageQueue(IMessageQueue):
             updated_at=now,
             metadata={"delivery_callback": delivery_callback is not None},
         )
+    
+    def _normalize_message(self, message: Any) -> dict:
+        """Normalize message to dict format for consistent routing.
+        
+        Handles both UnifiedMessage objects and dict messages.
+        Ensures recipient is always extractable regardless of source.
+        """
+        if isinstance(message, dict):
+            # Already a dict - ensure required fields exist
+            return message
+        
+        # UnifiedMessage object - convert to dict
+        from .messaging_models_core import UnifiedMessage
+        if isinstance(message, UnifiedMessage):
+            message_dict = {
+                "recipient": message.recipient,
+                "content": message.content,
+                "sender": message.sender,
+                "message_type": getattr(message.message_type, "value", None) or str(message.message_type),
+                "priority": getattr(message.priority, "value", None) or str(message.priority),
+                "tags": [getattr(tag, "value", None) or str(tag) for tag in message.tags],
+                "metadata": message.metadata or {},
+            }
+            return message_dict
+        
+        # Fallback: try to extract as object attributes
+        return {
+            "recipient": getattr(message, "recipient", None) or getattr(message, "to", None),
+            "content": getattr(message, "content", None) or getattr(message, "message", None),
+            "sender": getattr(message, "sender", None) or getattr(message, "from", "SYSTEM"),
+            "message_type": getattr(message, "message_type", "text"),
+            "priority": getattr(message, "priority", "normal"),
+            "tags": getattr(message, "tags", []),
+            "metadata": getattr(message, "metadata", {}),
+        }
 
     def _validate_queue_size(self, entries: List[IQueueEntry]) -> None:
         """Validate queue size limit."""
@@ -178,11 +222,28 @@ class MessageQueue(IMessageQueue):
                 f"Queue size limit exceeded: {self.config.max_queue_size}")
 
     def _calculate_priority_score(self, message: Any, now: datetime) -> float:
-        """Calculate priority score for message."""
-        # Simplified priority calculation
+        """Calculate priority score for message.
+        
+        FIXED: Handles both UnifiedMessage objects and normalized dict messages.
+        """
+        # Check if message is dict (normalized format)
+        if isinstance(message, dict):
+            priority = message.get("priority", "regular")
+            if isinstance(priority, str):
+                # Map priority strings to scores
+                priority_map = {"urgent": 1.0, "high": 0.8, "normal": 0.5, "regular": 0.5, "low": 0.3}
+                return priority_map.get(priority.lower(), 0.5)
+            elif isinstance(priority, (int, float)):
+                return float(priority)
+        
+        # UnifiedMessage object format
         if hasattr(message, 'priority'):
             if hasattr(message.priority, 'value'):
-                return float(message.priority.value)
+                priority_value = message.priority.value
+                if isinstance(priority_value, str):
+                    priority_map = {"urgent": 1.0, "high": 0.8, "normal": 0.5, "regular": 0.5, "low": 0.3}
+                    return priority_map.get(priority_value.lower(), 0.5)
+                return float(priority_value)
             elif isinstance(message.priority, (int, float)):
                 return float(message.priority)
 

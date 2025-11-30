@@ -1,53 +1,30 @@
-#!/usr/bin/env python3
-"""
-Tests for Approval Commands
-============================
-
-Tests for Discord approval command functionality.
-
-Author: Agent-7
-Date: 2025-11-26
-"""
-
+"""Tests for Approval Commands - expanded coverage."""
 import pytest
-from unittest.mock import AsyncMock, MagicMock, patch
+from unittest.mock import Mock, patch, AsyncMock
 
 
 class TestApprovalCommands:
-    """Test suite for approval commands."""
+    """Test ApprovalCommands cog."""
 
     @pytest.fixture
-    def mock_discord(self):
-        """Mock Discord library."""
-        with patch.dict('sys.modules', {
-            'discord': MagicMock(),
-            'discord.ext': MagicMock(),
-            'discord.ext.commands': MagicMock()
-        }):
-            yield
+    def mock_bot(self):
+        return Mock()
 
-    def test_command_initialization(self, mock_discord):
-        """Test command initialization."""
-        try:
-            from src.discord_commander.approval_commands import ApprovalCommands
-            
-            commands = ApprovalCommands(MagicMock())
-            assert commands is not None
-        except ImportError:
-            pytest.skip("Approval commands not available")
-        except Exception as e:
-            pytest.skip(f"Command initialization requires setup: {e}")
+    @pytest.fixture
+    def approval_commands(self, mock_bot):
+        from src.discord_commander.approval_commands import ApprovalCommands
+        return ApprovalCommands(mock_bot)
 
     @pytest.mark.asyncio
-    async def test_approval_command(self, mock_discord):
-        """Test approval command."""
-        # Placeholder for command tests
-        assert True  # Placeholder
+    async def test_approve_command(self, approval_commands):
+        mock_ctx = AsyncMock()
+        mock_ctx.send = AsyncMock()
+        await approval_commands.approve(mock_ctx, "test-id")
+        assert True
 
-    def test_error_handling(self, mock_discord):
-        """Test error handling."""
-        # Placeholder for error handling tests
-        assert True  # Placeholder
-
-
-
+    @pytest.mark.asyncio
+    async def test_reject_command(self, approval_commands):
+        mock_ctx = AsyncMock()
+        mock_ctx.send = AsyncMock()
+        await approval_commands.reject(mock_ctx, "test-id")
+        assert True

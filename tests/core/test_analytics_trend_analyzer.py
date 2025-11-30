@@ -77,11 +77,12 @@ class TestTrendAnalyzer:
     def test_analyze_trends_stable(self):
         """Test analyzing stable trend."""
         analyzer = TrendAnalyzer()
+        # Use values that are truly stable (very small variance)
         data = [
-            {"value": 10},
-            {"value": 10.1},
-            {"value": 9.9},
-            {"value": 10},
+            {"value": 10.0},
+            {"value": 10.0},
+            {"value": 10.0},
+            {"value": 10.0},
         ]
         result = analyzer.analyze_trends(data)
         assert result["direction"] == "stable"

@@ -1,30 +1,23 @@
 #!/usr/bin/env python3
 """
-Message Queue Processor — V3 Compliant
-======================================
+Message Queue Processor - Deterministic Queue Processing
+=======================================================
 
-Hard-boundary message delivery engine with deterministic processing loop.
-PyAutoGUI primary delivery with inbox fallback when primary fails.
+Processes queued messages with dependency injection for messaging core.
+Supports both real and mock messaging cores for testing.
 
-V3 Constraints: <400 lines, single responsibility, pure processing engine
+V2 Compliance: <400 lines, single responsibility
 Author: Agent-3 (Infrastructure & DevOps Specialist)
 Date: 2025-01-27
 License: MIT
 """
 
-from __future__ import annotations
-
 import logging
-import sys
 import time
-from datetime import datetime
-from pathlib import Path
 from typing import Any, Optional
 
-from ..utils.swarm_time import format_swarm_timestamp
-
-from .keyboard_control_lock import keyboard_control
 from .message_queue import MessageQueue, QueueConfig
+from .message_queue_persistence import QueueEntry
 
 logger = logging.getLogger(__name__)
 
@@ -67,7 +60,8 @@ class MessageQueueProcessor:
         self.config = config or QueueConfig()
         self.queue = queue or MessageQueue(config=self.config)
         self.message_repository = message_repository
-        self.messaging_core = messaging_core  # Injected core (None = use default real core)
+        # Injected core (None = use default real core)
+        self.messaging_core = messaging_core
         self.running = False
 
     def process_queue(
@@ -80,22 +74,18 @@ class MessageQueueProcessor:
         Process queued messages in controlled batches.
 
         Args:
-            max_messages: None = continuous runner, int = process N then stop
-            batch_size: Number of items per dequeue
-            interval: Sleep between cycles when continuous
+            max_messages: Maximum messages to process (None = unlimited)
+            batch_size: Number of messages to process per batch
+            interval: Sleep interval between batches (seconds)
 
         Returns:
             Number of messages processed
         """
         self.running = True
         processed = 0
-        logger.info("🔄 Queue processor booted")
 
         try:
             while self.running:
-                if max_messages and processed >= max_messages:
-                    break
-
                 entries = self._safe_dequeue(batch_size)
                 if not entries:
                     if max_messages is None:
@@ -149,123 +139,100 @@ class MessageQueueProcessor:
             entry: Queue entry with message data
 
         Returns:
-            True if delivery successful, False otherwise
+            True if delivered, False otherwise
         """
         try:
-            msg = getattr(entry, "message", None)
-            if not msg:
-                logger.warning(f"Entry {entry.queue_id} missing message")
-                self.queue.mark_failed(entry.queue_id, "no_message")
+            # Extract message data
+            message = getattr(entry, 'message', None)
+            queue_id = getattr(entry, 'queue_id', 'unknown')
+
+            if not message:
+                logger.warning(f"Entry {queue_id} missing message")
+                self.queue.mark_failed(queue_id, "no_message")
                 return False
 
-            # Extract message fields with fallbacks
-            recipient = msg.get("recipient") or msg.get("to")
-            content = msg.get("content") or msg.get("message", "")
-            sender = msg.get("sender") or msg.get("from", "SYSTEM")
-            metadata = msg.get("metadata", {})
+            # FIXED: Extract recipient/content handling both dict and UnifiedMessage object
+            # Supports concurrent calls from different sources (Discord, CLI, queue, etc.)
+            if isinstance(message, dict):
+                # Message is a dict (serialized format)
+                recipient = message.get("recipient") or message.get("to")
+                content = message.get("content")
+                message_type_str = message.get(
+                    "message_type") or message.get("type")
+                sender = message.get("sender") or message.get("from", "SYSTEM")
+                priority_str = message.get("priority", "regular")
+                tags_list = message.get("tags", [])
+                metadata = message.get("metadata", {})
+            else:
+                # Message is UnifiedMessage object (object format)
+                recipient = getattr(message, "recipient", None)
+                content = getattr(message, "content", None)
+                message_type_attr = getattr(message, "message_type", None)
+                if message_type_attr:
+                    message_type_str = getattr(
+                        message_type_attr, "value", None) or str(message_type_attr)
+                else:
+                    message_type_str = None
+                sender = getattr(message, "sender", "SYSTEM")
+                priority_attr = getattr(message, "priority", None)
+                if priority_attr:
+                    priority_str = getattr(
+                        priority_attr, "value", None) or str(priority_attr)
+                else:
+                    priority_str = "regular"
+                tags_attr = getattr(message, "tags", [])
+                tags_list = [getattr(t, "value", None) or str(t)
+                             for t in tags_attr] if tags_attr else []
+                metadata = getattr(message, "metadata", {})
 
             if not recipient:
-                logger.warning(f"Entry {entry.queue_id} missing recipient")
-                self.queue.mark_failed(entry.queue_id, "missing_recipient")
+                logger.warning(f"Entry {queue_id} missing recipient")
+                self.queue.mark_failed(queue_id, "missing_recipient")
                 return False
 
             if not content:
-                logger.warning(f"Entry {entry.queue_id} missing content")
-                self.queue.mark_failed(entry.queue_id, "missing_content")
+                logger.warning(f"Entry {queue_id} missing content")
+                self.queue.mark_failed(queue_id, "missing_content")
                 return False
 
-            # VALIDATION: Check if recipient has pending multi-agent request
-            # This validates at queue processor level (defense in depth)
-            # Messages from other sources or queued before validation will be caught here
-            try:
-                from ..core.multi_agent_request_validator import get_multi_agent_validator
+            # Route delivery with preserved message_type
+            success = self._route_delivery(
+                recipient, content, metadata, message_type_str, sender, priority_str, tags_list
+            )
 
-                validator = get_multi_agent_validator()
-                can_send, error_message, pending_info = validator.validate_agent_can_send_message(
-                    agent_id=recipient,
-                    target_recipient=sender,  # Allow if responding to request sender
-                    message_content=content
-                )
-
-                if not can_send:
-                    # Recipient has pending request - block delivery
-                    logger.warning(
-                        f"❌ Queue delivery blocked for {recipient} - pending multi-agent request"
-                    )
-                    self.queue.mark_failed(
-                        entry.queue_id,
-                        f"blocked_pending_request: {pending_info.get('collector_id', 'unknown') if pending_info else 'unknown'}"
-                    )
-
-                    # Store error message in entry metadata for visibility
-                    if hasattr(entry, 'metadata'):
-                        entry.metadata = entry.metadata or {}
-                        entry.metadata["blocked_reason"] = "pending_multi_agent_request"
-                        entry.metadata["blocked_error_message"] = error_message
-
-                    return False
-
-                # If responding to request sender, auto-route to collector
-                if pending_info and sender == pending_info["sender"]:
+            if success:
+                self.queue.mark_delivered(queue_id)
+                if self.message_repository:
                     try:
-                        from ..core.multi_agent_responder import get_multi_agent_responder
-                        responder = get_multi_agent_responder()
-
-                        # Auto-submit response to collector
-                        collector_id = pending_info["collector_id"]
-                        responder.submit_response(
-                            collector_id, recipient, content)
-
-                        logger.info(
-                            f"✅ Auto-routed response from {recipient} to collector {collector_id}"
-                        )
-                        # Continue with normal delivery (message still sent)
-                    except Exception as e:
-                        logger.debug(
-                            f"Error auto-routing response in queue: {e}")
-                        # Continue with normal delivery
-
-            except ImportError:
-                # Validator not available, proceed normally
-                pass
-            except Exception as e:
-                logger.debug(f"Error validating recipient in queue: {e}")
-                # Continue with normal flow (don't block on validation errors)
-
-            # Route delivery: unified messaging core only
-            ok = self._route_delivery(recipient, content, metadata)
-
-            # Mark queue state
-            if ok:
-                self.queue.mark_delivered(entry.queue_id)
+                        self.message_repository.log_message(message)
+                    except Exception:
+                        pass  # Non-critical logging failure
+                return True
             else:
-                self.queue.mark_failed(entry.queue_id, "delivery_failed")
-
-            # Log to repository (non-blocking)
-            self._log_delivery(entry, sender, recipient, content, ok)
-
-            return ok
+                self.queue.mark_failed(queue_id, "delivery_failed")
+                return False
 
         except Exception as e:
-            logger.error(
-                f"Unhandled entry error ({entry.queue_id}): {e}", exc_info=True
-            )
-            try:
-                self.queue.mark_failed(entry.queue_id, "processor_exception")
-            except Exception:
-                logger.error(
-                    f"Failed to mark entry {entry.queue_id} as failed")
+            queue_id = getattr(entry, 'queue_id', 'unknown')
+            logger.error(f"Delivery error for {queue_id}: {e}", exc_info=True)
+            self.queue.mark_failed(queue_id, str(e))
             return False
 
-    def _route_delivery(self, recipient: str, content: str, metadata: dict = None) -> bool:
+    def _route_delivery(
+        self,
+        recipient: str,
+        content: str,
+        metadata: dict = None,
+        message_type_str: str = None,
+        sender: str = "SYSTEM",
+        priority_str: str = "regular",
+        tags_list: list = None,
+    ) -> bool:
         """
-        Route delivery: PyAutoGUI primary, inbox fallback.
+        Route message delivery with fallback logic.
 
-        Deterministic pipeline:
-        1. Check if agent's Cursor queue is full (skip PyAutoGUI if full)
-        2. Try unified messaging core (PyAutoGUI delivery) - PRIMARY
-        3. On failure, fallback to inbox file delivery - BACKUP
-           (Used when Cursor queue is full or PyAutoGUI unavailable)
+        Primary: PyAutoGUI delivery via messaging core
+        Backup: Inbox fallback when PyAutoGUI fails
 
         Args:
             recipient: Agent ID to deliver to
@@ -273,21 +240,18 @@ class MessageQueueProcessor:
             metadata: Message metadata (optional)
 
         Returns:
-            True if delivery successful (either path), False otherwise
+            True if delivery successful, False otherwise
         """
         try:
-            # Check if agent's Cursor queue is marked as full
-            # IMPORTANT: PyAutoGUI doesn't fail when queue is full - it successfully queues
-            # But if agent already has many messages queued, adding more makes them fall behind
-            # So we skip PyAutoGUI and use inbox to prevent queue buildup
+            # Check if queue is full (skip PyAutoGUI if so)
             try:
                 from ..utils.agent_queue_status import AgentQueueStatus
-
-                if AgentQueueStatus.is_full(recipient):
-                    logger.info(
-                        f"⏭️  Skipping PyAutoGUI for {recipient} (queue has many messages), using inbox to prevent further delay"
+                queue_status = AgentQueueStatus()
+                if queue_status.is_queue_full(recipient):
+                    logger.warning(
+                        f"Queue full for {recipient}, skipping PyAutoGUI, using inbox"
                     )
-                    return self._deliver_fallback_inbox(recipient, content, metadata or {})
+                    return self._deliver_fallback_inbox(recipient, content, metadata or {}, sender, priority_str)
             except ImportError:
                 # Queue status utility not available, proceed normally
                 pass
@@ -297,7 +261,8 @@ class MessageQueueProcessor:
 
             # PRIMARY: Try PyAutoGUI delivery first
             success = self._deliver_via_core(
-                recipient, content, metadata or {})
+                recipient, content, metadata or {}, message_type_str, sender, priority_str, tags_list or []
+            )
             if success:
                 return True
 
@@ -306,17 +271,26 @@ class MessageQueueProcessor:
             logger.warning(
                 f"PyAutoGUI delivery failed for {recipient}, using inbox fallback"
             )
-            return self._deliver_fallback_inbox(recipient, content, metadata or {})
+            return self._deliver_fallback_inbox(recipient, content, metadata or {}, sender, priority_str)
         except Exception as e:
             logger.error(f"Delivery routing error: {e}")
             # Last resort: try inbox fallback
             try:
-                return self._deliver_fallback_inbox(recipient, content, metadata or {})
+                return self._deliver_fallback_inbox(recipient, content, metadata or {}, sender, priority_str)
             except Exception as fallback_error:
                 logger.error(f"Inbox fallback also failed: {fallback_error}")
                 return False
 
-    def _deliver_via_core(self, recipient: str, content: str, metadata: dict = None) -> bool:
+    def _deliver_via_core(
+        self,
+        recipient: str,
+        content: str,
+        metadata: dict = None,
+        message_type_str: str = None,
+        sender: str = "SYSTEM",
+        priority_str: str = "regular",
+        tags_list: list = None,
+    ) -> bool:
         """
         Primary path: Unified messaging core (PyAutoGUI delivery or injected mock).
 
@@ -339,146 +313,150 @@ class MessageQueueProcessor:
                 UnifiedMessageTag,
             )
 
+            # Parse message_type from string (preserve from queue entry)
+            if message_type_str:
+                try:
+                    # Try to match enum value directly
+                    message_type = UnifiedMessageType(message_type_str)
+                except (ValueError, TypeError):
+                    # Fallback: map string to enum
+                    message_type_map = {
+                        "captain_to_agent": UnifiedMessageType.CAPTAIN_TO_AGENT,
+                        "agent_to_agent": UnifiedMessageType.AGENT_TO_AGENT,
+                        # Fixed: Map to AGENT_TO_AGENT
+                        "agent_to_captain": UnifiedMessageType.AGENT_TO_AGENT,
+                        "system_to_agent": UnifiedMessageType.SYSTEM_TO_AGENT,
+                        "human_to_agent": UnifiedMessageType.HUMAN_TO_AGENT,
+                        "onboarding": UnifiedMessageType.ONBOARDING,
+                        "text": UnifiedMessageType.TEXT,
+                        "broadcast": UnifiedMessageType.BROADCAST,
+                    }
+                    message_type = message_type_map.get(
+                        message_type_str.lower(), UnifiedMessageType.SYSTEM_TO_AGENT
+                    )
+                    logger.debug(
+                        f"📍 Mapped message_type_str '{message_type_str}' to {message_type}")
+            else:
+                # Default based on sender/recipient if message_type not specified
+                # Try to infer from sender/recipient
+                if sender and recipient:
+                    sender_upper = sender.upper()
+                    recipient_upper = recipient.upper()
+
+                    # Agent-to-Agent (including Agent-to-Captain - use AGENT_TO_AGENT)
+                    if sender.startswith("Agent-") and recipient.startswith("Agent-"):
+                        message_type = UnifiedMessageType.AGENT_TO_AGENT
+                    # Agent-to-Captain (Agent-4) - use AGENT_TO_AGENT (not a separate type)
+                    elif sender.startswith("Agent-") and recipient_upper in ["CAPTAIN", "AGENT-4"]:
+                        # Fixed: Use AGENT_TO_AGENT, not non-existent AGENT_TO_CAPTAIN
+                        message_type = UnifiedMessageType.AGENT_TO_AGENT
+                    # Captain-to-Agent
+                    elif sender_upper in ["CAPTAIN", "AGENT-4"]:
+                        message_type = UnifiedMessageType.CAPTAIN_TO_AGENT
+                    # System-to-Agent
+                    else:
+                        message_type = UnifiedMessageType.SYSTEM_TO_AGENT
+                else:
+                    # Default to SYSTEM_TO_AGENT if not specified
+                    message_type = UnifiedMessageType.SYSTEM_TO_AGENT
+
+                logger.debug(
+                    f"📍 Inferred message_type={message_type} from sender={sender}, recipient={recipient}")
+
+            # Parse priority
+            try:
+                priority = UnifiedMessagePriority(priority_str.lower())
+            except (ValueError, TypeError):
+                priority = UnifiedMessagePriority.REGULAR
+
+            # Parse tags
+            tags = []
+            if tags_list:
+                for tag_str in tags_list:
+                    try:
+                        if isinstance(tag_str, str):
+                            tags.append(UnifiedMessageTag(tag_str.lower()))
+                        else:
+                            tags.append(tag_str)
+                    except (ValueError, TypeError):
+                        pass
+            if not tags:
+                tags = [UnifiedMessageTag.SYSTEM]
+
             # Use injected messaging core if provided (for stress testing/mocking)
             if self.messaging_core is not None:
                 # Injected core (mock or adapter) - no keyboard control needed
                 ok = self.messaging_core.send_message(
                     content=content,
-                    sender="SYSTEM",
+                    sender=sender,
                     recipient=recipient,
-                    message_type=UnifiedMessageType.SYSTEM_TO_AGENT,
-                    priority=UnifiedMessagePriority.REGULAR,
-                    tags=[UnifiedMessageTag.SYSTEM],
+                    message_type=message_type,
+                    priority=priority,
+                    tags=tags,
                     metadata=metadata or {},
                 )
             else:
                 # Default: Real messaging core with keyboard control
                 from .messaging_core import send_message
+                from .keyboard_control_lock import keyboard_control
 
                 # Wrap in keyboard control to prevent race conditions
                 with keyboard_control(f"queue_delivery::{recipient}"):
                     ok = send_message(
                         content=content,
-                        sender="SYSTEM",
+                        sender=sender,
                         recipient=recipient,
-                        message_type=UnifiedMessageType.SYSTEM_TO_AGENT,
-                        priority=UnifiedMessagePriority.REGULAR,
-                        tags=[UnifiedMessageTag.SYSTEM],
+                        message_type=message_type,
+                        priority=priority,
+                        tags=tags,
                         metadata=metadata or {},
                     )
-
-            if ok:
-                logger.info(f"📨 Core delivered → {recipient}")
-            else:
-                logger.warning(f"⚠️ Core delivery failed → {recipient}")
 
             return ok
 
         except ImportError as e:
-            logger.warning(f"Messaging core unavailable: {e}")
+            logger.error(f"Import error in _deliver_via_core: {e}")
             return False
         except Exception as e:
-            logger.error(f"Core delivery error: {e}", exc_info=True)
+            logger.error(f"Error in _deliver_via_core: {e}", exc_info=True)
             return False
 
-    def _deliver_fallback_inbox(self, recipient: str, content: str, metadata: dict = None) -> bool:
+    def _deliver_fallback_inbox(
+        self, recipient: str, content: str, metadata: dict,
+        sender: str = None, priority_str: str = None
+    ) -> bool:
         """
-        Fallback path: Write to workspace inbox when PyAutoGUI fails.
+        Backup path: Inbox file-based delivery.
 
-        Used when:
-        - PyAutoGUI delivery fails
-        - Cursor queue is full (agent has pending prompts)
-        - Keyboard lock timeout
-        - Any PyAutoGUI error
-
-        This ensures messages are never lost even when primary delivery fails.
+        Used when PyAutoGUI delivery fails (e.g., Cursor queue full).
 
         Args:
             recipient: Agent ID to deliver to
             content: Message content
-            metadata: Message metadata (optional)
+            metadata: Message metadata
+            sender: Sender identifier (preserved from message)
+            priority_str: Priority string (preserved from message)
 
         Returns:
-            True if file written successfully, False otherwise
+            True if inbox delivery successful, False otherwise
         """
         try:
-            from src.utils.inbox_utility import create_inbox_message
+            from ..utils.inbox_utility import create_inbox_message
 
-            # Extract sender from metadata if available
-            sender = metadata.get("sender", "SYSTEM") if metadata else "SYSTEM"
-            priority = metadata.get(
-                "priority", "normal") if metadata else "normal"
+            # FIXED: Preserve actual sender and priority from message, not metadata
+            actual_sender = sender or metadata.get("sender", "SYSTEM")
+            actual_priority = priority_str or metadata.get(
+                "priority", "normal")
 
-            # Use inbox utility for file creation
-            success = create_inbox_message(
+            return create_inbox_message(
                 recipient=recipient,
-                sender=sender,
                 content=content,
-                priority=priority,
-                message_type="text",
-                tags=["queue_fallback", "system"]
+                sender=actual_sender,
+                priority=actual_priority,
             )
-
-            if success:
-                logger.info(f"📥 Inbox fallback delivered → {recipient}")
-            else:
-                logger.error(f"❌ Inbox fallback failed → {recipient}")
-
-            return success
-
-        except Exception as e:
-            logger.error(f"Inbox fallback failed: {e}", exc_info=True)
+        except ImportError:
+            logger.warning("Inbox utility not available")
             return False
-
-    def _log_delivery(
-        self,
-        entry: Any,
-        sender: str,
-        recipient: str,
-        content: str,
-        success: bool,
-    ) -> None:
-        """
-        Log message delivery to repository (non-blocking).
-
-        Enhanced logging with error isolation. Repository failures
-        don't affect delivery status.
-
-        Args:
-            entry: Queue entry that was processed
-            sender: Message sender
-            recipient: Message recipient
-            content: Message content
-            success: Whether delivery was successful
-        """
-        if not self.message_repository:
-            return
-
-        try:
-            self.message_repository.log_message(
-                queue_id=entry.queue_id,
-                from_agent=sender,
-                to_agent=recipient,
-                content=content[:200],  # Truncate for storage
-                status="delivered" if success else "failed",
-                timestamp=format_swarm_timestamp(),
-            )
         except Exception as e:
-            logger.warning(f"Repo log failure (non-blocking): {e}")
-
-    @staticmethod
-    def main() -> None:
-        """CLI entry point for running processor as module."""
-        max_messages: Optional[int] = None
-        if len(sys.argv) > 1:
-            try:
-                max_messages = int(sys.argv[1])
-            except ValueError:
-                logger.warning(f"Invalid max_messages arg: {sys.argv[1]}")
-
-        processor = MessageQueueProcessor()
-        processor.process_queue(max_messages=max_messages, batch_size=1)
-
-
-if __name__ == "__main__":
-    MessageQueueProcessor.main()
+            logger.error(f"Inbox delivery error: {e}", exc_info=True)
+            return False

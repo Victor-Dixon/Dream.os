@@ -16,7 +16,7 @@ from . import hard_onboarding_service
 from . import learning_recommender
 from . import message_batching_service
 from . import message_identity_clarification
-from . import messaging_cli
+# from . import messaging_cli  # Commented out per user request
 from . import messaging_cli_formatters
 from . import messaging_cli_handlers
 from . import messaging_cli_parser

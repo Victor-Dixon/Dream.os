@@ -23,6 +23,7 @@ Date: 2025-11-27
 from __future__ import annotations
 
 import logging
+import threading
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
@@ -30,6 +31,9 @@ from typing import Optional
 from ..utils.swarm_time import format_swarm_timestamp, format_swarm_timestamp_filename
 
 logger = logging.getLogger(__name__)
+
+# Thread-safe lock for concurrent inbox writes
+_inbox_write_lock = threading.Lock()
 
 
 def create_inbox_message(
@@ -58,13 +62,17 @@ def create_inbox_message(
         True if file created successfully, False otherwise
     """
     try:
-        # Create inbox directory
-        inbox_dir = Path("agent_workspaces") / recipient / "inbox"
+        # FIXED: Use absolute path from project root to prevent routing issues
+        # when called from different working directories (Discord bot, queue processor, etc.)
+        project_root = Path(__file__).resolve().parent.parent.parent
+        inbox_dir = project_root / "agent_workspaces" / recipient / "inbox"
         inbox_dir.mkdir(parents=True, exist_ok=True)
         
-        # Generate filename with timestamp
+        # Generate filename with timestamp + UUID to prevent concurrent overwrites
+        import uuid
         timestamp = format_swarm_timestamp_filename()
-        filename = f"INBOX_MESSAGE_{timestamp}.md"
+        unique_id = str(uuid.uuid4())[:8]
+        filename = f"INBOX_MESSAGE_{timestamp}_{unique_id}.md"
         filepath = inbox_dir / filename
         
         # Format message content
@@ -77,10 +85,11 @@ def create_inbox_message(
             tags=tags or [],
         )
         
-        # Write file
-        filepath.write_text(message_content, encoding="utf-8")
+        # FIXED: Thread-safe file write for concurrent messaging calls
+        with _inbox_write_lock:
+            filepath.write_text(message_content, encoding="utf-8")
         
-        logger.info(f"✅ Inbox message created: {filepath}")
+        logger.info(f"✅ Inbox message created: {filepath} (recipient: {recipient})")
         return True
         
     except Exception as e:

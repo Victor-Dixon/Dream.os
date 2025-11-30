@@ -20,10 +20,13 @@ from .onboarding_handler import OnboardingHandler
 # Vector database imports with guard (optional dependency)
 try:
     from src.core.vector_database import VectorDatabaseService
+    from src.services.vector_database_service_unified import get_vector_database_service
 
     VECTOR_DB_AVAILABLE = True
 except ImportError:
     VECTOR_DB_AVAILABLE = False
+    def get_vector_database_service():
+        return None
 
 logger = logging.getLogger(__name__)
 
