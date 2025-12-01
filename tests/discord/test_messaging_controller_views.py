@@ -251,3 +251,4 @@ class TestMessagingControllerViews:
             embed = await view._create_status_embed()
             
             assert embed is not None
+

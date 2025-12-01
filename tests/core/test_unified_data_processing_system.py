@@ -162,3 +162,4 @@ class TestWriteFile:
             result = write_file("test.txt", "content")
             assert result is False
 
+

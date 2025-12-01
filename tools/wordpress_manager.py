@@ -59,9 +59,10 @@ class ConnectionManager:
     def connect(self) -> bool:
         """Establish SSH connection."""
         if not HAS_PARAMIKO:
-            logger.error("paramiko not installed")
+            logger.error("paramiko not installed - install with: pip install paramiko")
             return False
         try:
+            logger.debug(f"Connecting to {self.host}:{self.port} as {self.username}")
             self.transport = paramiko.Transport((self.host, self.port))
             self.transport.connect(username=self.username, password=self.password)
             self.client = paramiko.SSHClient()
@@ -69,9 +70,18 @@ class ConnectionManager:
             self.client.connect(hostname=self.host, port=self.port, 
                               username=self.username, password=self.password)
             self.sftp = paramiko.SFTPClient.from_transport(self.transport)
+            logger.debug("SFTP connection established successfully")
             return True
+        except paramiko.AuthenticationException:
+            logger.error(f"Authentication failed for {self.username}@{self.host}:{self.port}")
+            logger.error("Please verify username and password are correct")
+            return False
+        except paramiko.SSHException as e:
+            logger.error(f"SSH connection error: {e}")
+            logger.error("Please verify host address and port are correct")
+            return False
         except Exception as e:
-            logger.error(f"Connection failed: {e}")
+            logger.error(f"Connection failed: {type(e).__name__}: {e}")
             return False
     
     def disconnect(self):
@@ -174,30 +184,79 @@ class WordPressManager:
                     all_creds.get(f"{self.site_key}.online") or
                     all_creds.get(self.site_key.replace(".online", ""))
                 )
-                if self.credentials:
+                # Validate credentials are not empty
+                if self.credentials and self._validate_credentials(self.credentials):
+                    logger.info(f"Loaded credentials from sites.json for {self.site_key}")
                     return
+                elif self.credentials:
+                    logger.warning(f"Credentials found in sites.json for {self.site_key} but are empty/invalid")
+                    self.credentials = None
             except Exception as e:
                 logger.error(f"Failed to load credentials from sites.json: {e}")
         
-        # Fallback to .env environment variables (shared Hostinger credentials)
-        host = os.getenv("HOSTINGER_HOST") or os.getenv("SSH_HOST")
-        username = os.getenv("HOSTINGER_USER") or os.getenv("SSH_USER")
-        password = os.getenv("HOSTINGER_PASS") or os.getenv("SSH_PASS")
-        port_str = os.getenv("HOSTINGER_PORT") or os.getenv("SSH_PORT", "65002")
+        # Try .env file in multiple locations
+        env_locations = [
+            Path("D:/Agent_Cellphone_V2_Repository/.env"),
+            Path(".env"),
+            Path("D:/websites/.env"),
+            Path(__file__).parent.parent / ".env"
+        ]
         
-        if host and username and password:
+        env_loaded = False
+        for env_path in env_locations:
+            if env_path.exists():
+                try:
+                    from dotenv import load_dotenv
+                    load_dotenv(env_path)
+                    env_loaded = True
+                    logger.info(f"Loaded .env file from: {env_path}")
+                    break
+                except Exception as e:
+                    logger.debug(f"Could not load .env from {env_path}: {e}")
+        
+        # Fallback to .env environment variables (shared Hostinger credentials)
+        host = os.getenv("HOSTINGER_HOST") or os.getenv("SSH_HOST") or os.getenv("HOST")
+        username = os.getenv("HOSTINGER_USER") or os.getenv("SSH_USER") or os.getenv("USERNAME")
+        password = os.getenv("HOSTINGER_PASS") or os.getenv("SSH_PASS") or os.getenv("PASSWORD")
+        port_str = os.getenv("HOSTINGER_PORT") or os.getenv("SSH_PORT") or os.getenv("PORT", "65002")
+        
+        # Validate credentials are not empty
+        if host and username and password and host.strip() and username.strip() and password.strip():
             try:
                 port = int(port_str)
             except ValueError:
                 port = 65002  # Default Hostinger SFTP port
             
             self.credentials = {
-                "host": host,
-                "username": username,
-                "password": password,
+                "host": host.strip(),
+                "username": username.strip(),
+                "password": password.strip(),
                 "port": port
             }
-            logger.info(f"Loaded credentials from .env environment variables")
+            if self._validate_credentials(self.credentials):
+                logger.info(f"Loaded credentials from .env environment variables for {self.site_key}")
+            else:
+                logger.warning(f"Credentials from .env are invalid for {self.site_key}")
+                self.credentials = None
+        else:
+            missing = []
+            if not host or not host.strip():
+                missing.append("HOSTINGER_HOST/SSH_HOST")
+            if not username or not username.strip():
+                missing.append("HOSTINGER_USER/SSH_USER")
+            if not password or not password.strip():
+                missing.append("HOSTINGER_PASS/SSH_PASS")
+            logger.warning(f"Missing credentials for {self.site_key}: {', '.join(missing)}")
+            self.credentials = None
+    
+    def _validate_credentials(self, creds: dict) -> bool:
+        """Validate credentials are not empty."""
+        if not creds:
+            return False
+        host = creds.get("host", "").strip()
+        username = creds.get("username", "").strip()
+        password = creds.get("password", "").strip()
+        return bool(host and username and password)
     
     def get_theme_path(self) -> Path:
         """Get local theme directory path."""
@@ -279,16 +338,47 @@ add_action('after_switch_theme', '{function_name}');"""
     def connect(self) -> bool:
         """Connect to deployment server."""
         if not self.credentials:
-            logger.error("No credentials available")
+            logger.error(f"No credentials available for {self.site_key}")
+            logger.error("Please configure credentials in:")
+            logger.error("  1. .deploy_credentials/sites.json (site-specific)")
+            logger.error("  2. .env file (HOSTINGER_HOST, HOSTINGER_USER, HOSTINGER_PASS, HOSTINGER_PORT)")
             return False
-        host = self.credentials.get("host")
-        username = self.credentials.get("username")
-        password = self.credentials.get("password")
+        
+        host = self.credentials.get("host", "").strip()
+        username = self.credentials.get("username", "").strip()
+        password = self.credentials.get("password", "").strip()
         port = self.credentials.get("port", 22)
-        if not all([host, username, password]):
+        
+        # Validate credentials
+        missing = []
+        if not host:
+            missing.append("host")
+        if not username:
+            missing.append("username")
+        if not password:
+            missing.append("password")
+        
+        if missing:
+            logger.error(f"Missing credentials for {self.site_key}: {', '.join(missing)}")
+            logger.error("Please check .deploy_credentials/sites.json or .env file")
             return False
-        self.conn_manager = ConnectionManager(host, username, password, port)
-        return self.conn_manager.connect()
+        
+        try:
+            self.conn_manager = ConnectionManager(host, username, password, port)
+            if self.conn_manager.connect():
+                logger.info(f"Connected to {host}:{port} as {username}")
+                return True
+            else:
+                logger.error(f"Connection failed to {host}:{port}")
+                logger.error("Please verify:")
+                logger.error("  - Host address is correct")
+                logger.error("  - Username and password are correct")
+                logger.error("  - Port number is correct (default: 65002 for Hostinger SFTP)")
+                logger.error("  - Firewall allows SFTP/SSH connections")
+                return False
+        except Exception as e:
+            logger.error(f"Connection error: {e}")
+            return False
     
     def disconnect(self):
         """Disconnect from server."""
@@ -374,6 +464,79 @@ add_filter('wp_nav_menu_items', '{prefix}_add_{page_slug}_menu', 10, 2);"""
         full_cmd = f"cd {remote_path} && {wp_path} {command}"
         return self.conn_manager.execute_command(full_cmd)
     
+    # ========== THEME MANAGEMENT ==========
+    
+    def replace_theme(self, new_theme_path: Path, backup: bool = True) -> bool:
+        """
+        Replace entire theme on server.
+        
+        Args:
+            new_theme_path: Local path to new theme directory
+            backup: Whether to backup existing theme first
+        
+        Returns:
+            True if successful
+        """
+        if not self.connect():
+            return False
+        
+        try:
+            remote_theme_dir = self.config['remote_base']
+            
+            # Backup existing theme if requested
+            if backup:
+                backup_cmd = f"cp -r {remote_theme_dir} {remote_theme_dir}.backup"
+                stdout, stderr, code = self.conn_manager.execute_command(backup_cmd)
+                if code == 0:
+                    print(f"✅ Backup created: {remote_theme_dir}.backup")
+            
+            # Deploy all files from new theme
+            files_deployed = 0
+            for file_path in new_theme_path.rglob("*"):
+                if file_path.is_file():
+                    rel_path = file_path.relative_to(new_theme_path)
+                    remote_path = f"{remote_theme_dir}/{rel_path}"
+                    if self.conn_manager.upload_file(file_path, remote_path):
+                        files_deployed += 1
+            
+            print(f"✅ Theme replaced: {files_deployed} files deployed")
+            return True
+        except Exception as e:
+            logger.error(f"Theme replacement failed: {e}")
+            return False
+    
+    def activate_theme(self, theme_name: Optional[str] = None) -> bool:
+        """
+        Activate theme via WP-CLI.
+        
+        Args:
+            theme_name: Theme name (defaults to configured theme)
+        
+        Returns:
+            True if successful
+        """
+        if not theme_name:
+            theme_name = self.config['theme_name']
+        
+        stdout, stderr, code = self.wp_cli(f"theme activate {theme_name}")
+        if code == 0:
+            print(f"✅ Theme '{theme_name}' activated")
+            return True
+        else:
+            logger.error(f"Theme activation failed: {stderr}")
+            return False
+    
+    def list_themes(self) -> List[Dict[str, str]]:
+        """List all available themes."""
+        stdout, stderr, code = self.wp_cli("theme list --format=json")
+        if code == 0:
+            try:
+                themes = json.loads(stdout)
+                return themes
+            except:
+                return []
+        return []
+    
     # ========== UTILITIES ==========
     
     def list_pages(self) -> List[Dict[str, str]]:
@@ -420,6 +583,9 @@ def main():
     parser.add_argument('--list', action='store_true', help='List pages')
     parser.add_argument('--verify', action='store_true', help='Verify setup')
     parser.add_argument('--add-menu', type=str, help='Add page to menu (slug)')
+    parser.add_argument('--replace-theme', type=str, help='Replace theme (path to new theme)')
+    parser.add_argument('--activate-theme', type=str, help='Activate theme by name')
+    parser.add_argument('--list-themes', action='store_true', help='List all themes')
     
     args = parser.parse_args()
     
@@ -442,6 +608,18 @@ def main():
             print(f"Pages: {results['pages']}")
         elif args.add_menu:
             manager.add_to_menu(args.add_menu)
+        elif args.replace_theme:
+            theme_path = Path(args.replace_theme)
+            if manager.replace_theme(theme_path):
+                print("✅ Theme replaced successfully")
+        elif args.activate_theme:
+            if manager.activate_theme(args.activate_theme):
+                print("✅ Theme activated successfully")
+        elif args.list_themes:
+            themes = manager.list_themes()
+            for theme in themes:
+                status = "✅ ACTIVE" if theme.get('status') == 'active' else "  "
+                print(f"{status} {theme.get('name', 'Unknown')} - {theme.get('version', 'N/A')}")
         else:
             parser.print_help()
     

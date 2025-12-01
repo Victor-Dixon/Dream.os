@@ -203,3 +203,4 @@ class TestMessagingDiscord:
             assert call_args[1]['priority'] == UnifiedMessagePriority.URGENT
             assert UnifiedMessageTag.SYSTEM in call_args[1]['tags']
             assert UnifiedMessageTag.BROADCAST in call_args[1]['tags']
+

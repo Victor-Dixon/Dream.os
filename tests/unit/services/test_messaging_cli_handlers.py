@@ -328,3 +328,4 @@ class TestConvenienceFunctions:
         
         assert result is True
         mock_pyautogui.assert_called_once_with("Agent-6", "Test message", 30)
+

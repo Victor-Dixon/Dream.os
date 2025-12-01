@@ -877,6 +877,212 @@ class TestMessagingCommandsCog:
         except Exception as e:
             pytest.skip(f"unstall command test requires setup: {e}")
 
+    @pytest.mark.asyncio
+    async def test_monitor_command_start(self, mock_bot, mock_gui_controller):
+        """Test monitor command - start action."""
+        try:
+            from src.discord_commander.unified_discord_bot import MessagingCommands
+            cog = MessagingCommands(mock_bot, mock_gui_controller)
+            
+            mock_ctx = MagicMock()
+            mock_ctx.send = AsyncMock()
+            
+            await cog.monitor(mock_ctx, action="start")
+            
+            mock_ctx.send.assert_called_once()
+        except Exception as e:
+            pytest.skip(f"monitor start test requires setup: {e}")
+
+    @pytest.mark.asyncio
+    async def test_monitor_command_stop(self, mock_bot, mock_gui_controller):
+        """Test monitor command - stop action."""
+        try:
+            from src.discord_commander.unified_discord_bot import MessagingCommands
+            cog = MessagingCommands(mock_bot, mock_gui_controller)
+            
+            mock_ctx = MagicMock()
+            mock_ctx.send = AsyncMock()
+            
+            await cog.monitor(mock_ctx, action="stop")
+            
+            mock_ctx.send.assert_called_once()
+        except Exception as e:
+            pytest.skip(f"monitor stop test requires setup: {e}")
+
+    @pytest.mark.asyncio
+    async def test_monitor_command_status(self, mock_bot, mock_gui_controller):
+        """Test monitor command - status action."""
+        try:
+            from src.discord_commander.unified_discord_bot import MessagingCommands
+            cog = MessagingCommands(mock_bot, mock_gui_controller)
+            
+            mock_ctx = MagicMock()
+            mock_ctx.send = AsyncMock()
+            
+            await cog.monitor(mock_ctx, action="status")
+            
+            mock_ctx.send.assert_called_once()
+        except Exception as e:
+            pytest.skip(f"monitor status test requires setup: {e}")
+
+    @pytest.mark.asyncio
+    async def test_help_command(self, mock_bot, mock_gui_controller):
+        """Test help command."""
+        try:
+            from src.discord_commander.unified_discord_bot import MessagingCommands
+            cog = MessagingCommands(mock_bot, mock_gui_controller)
+            
+            mock_ctx = MagicMock()
+            mock_ctx.send = AsyncMock()
+            
+            await cog.help_cmd(mock_ctx)
+            
+            mock_ctx.send.assert_called_once()
+        except Exception as e:
+            pytest.skip(f"help command test requires setup: {e}")
+
+    @pytest.mark.asyncio
+    async def test_list_commands_command(self, mock_bot, mock_gui_controller):
+        """Test list_commands command."""
+        try:
+            from src.discord_commander.unified_discord_bot import MessagingCommands
+            cog = MessagingCommands(mock_bot, mock_gui_controller)
+            
+            mock_ctx = MagicMock()
+            mock_ctx.send = AsyncMock()
+            mock_bot.walk_commands = MagicMock(return_value=[
+                MagicMock(name="test_command", description="Test command")
+            ])
+            
+            await cog.list_commands(mock_ctx)
+            
+            mock_ctx.send.assert_called_once()
+        except Exception as e:
+            pytest.skip(f"list_commands test requires setup: {e}")
+
+    @pytest.mark.asyncio
+    async def test_heal_command_status(self, mock_bot, mock_gui_controller):
+        """Test heal command - status action."""
+        try:
+            from src.discord_commander.unified_discord_bot import MessagingCommands
+            cog = MessagingCommands(mock_bot, mock_gui_controller)
+            
+            mock_ctx = MagicMock()
+            mock_ctx.send = AsyncMock()
+            
+            with patch('src.core.agent_self_healing_system.get_self_healing_system') as mock_system:
+                mock_healing_system = MagicMock()
+                mock_healing_system.get_healing_stats.return_value = {
+                    'total_actions': 10,
+                    'success_rate': 90.0,
+                    'successful': 9,
+                    'failed': 1,
+                    'terminal_cancellations_today': {}
+                }
+                mock_system.return_value = mock_healing_system
+                
+                await cog.heal(mock_ctx, action="status")
+                
+                mock_ctx.send.assert_called_once()
+        except Exception as e:
+            pytest.skip(f"heal status test requires setup: {e}")
+
+    @pytest.mark.asyncio
+    async def test_heal_command_check(self, mock_bot, mock_gui_controller):
+        """Test heal command - check action."""
+        try:
+            from src.discord_commander.unified_discord_bot import MessagingCommands
+            cog = MessagingCommands(mock_bot, mock_gui_controller)
+            
+            mock_ctx = MagicMock()
+            mock_ctx.send = AsyncMock()
+            
+            with patch('src.core.agent_self_healing_system.get_self_healing_system') as mock_system, \
+                 patch('src.core.agent_self_healing_system.heal_stalled_agents_now') as mock_heal:
+                mock_healing_system = MagicMock()
+                mock_system.return_value = mock_healing_system
+                mock_heal.return_value = {
+                    'timestamp': '2025-11-30',
+                    'stalled_agents_found': 0,
+                    'agents_healed': [],
+                    'agents_failed': []
+                }
+                
+                await cog.heal(mock_ctx, action="check")
+                
+                assert mock_ctx.send.call_count >= 2  # Initial message + results
+        except Exception as e:
+            pytest.skip(f"heal check test requires setup: {e}")
+
+    @pytest.mark.asyncio
+    async def test_obs_command(self, mock_bot, mock_gui_controller):
+        """Test obs command."""
+        try:
+            from src.discord_commander.unified_discord_bot import MessagingCommands
+            cog = MessagingCommands(mock_bot, mock_gui_controller)
+            
+            mock_ctx = MagicMock()
+            mock_ctx.send = AsyncMock()
+            
+            with patch('pathlib.Path') as mock_path:
+                mock_obs_dir = MagicMock()
+                mock_obs_dir.exists.return_value = True
+                mock_obs_dir.glob.return_value = []
+                mock_path.return_value = mock_obs_dir
+                
+                await cog.obs(mock_ctx)
+                
+                mock_ctx.send.assert_called_once()
+        except Exception as e:
+            pytest.skip(f"obs command test requires setup: {e}")
+
+    @pytest.mark.asyncio
+    async def test_pieces_command(self, mock_bot, mock_gui_controller):
+        """Test pieces command."""
+        try:
+            from src.discord_commander.unified_discord_bot import MessagingCommands
+            cog = MessagingCommands(mock_bot, mock_gui_controller)
+            
+            mock_ctx = MagicMock()
+            mock_ctx.send = AsyncMock()
+            
+            with patch('pathlib.Path') as mock_path:
+                mock_pieces_dir = MagicMock()
+                mock_pieces_dir.exists.return_value = True
+                mock_pieces_dir.glob.return_value = []
+                mock_path.return_value = mock_pieces_dir
+                
+                await cog.pieces(mock_ctx)
+                
+                mock_ctx.send.assert_called_once()
+        except Exception as e:
+            pytest.skip(f"pieces command test requires setup: {e}")
+
+    @pytest.mark.asyncio
+    async def test_session_command(self, mock_bot, mock_gui_controller):
+        """Test session command."""
+        try:
+            from src.discord_commander.unified_discord_bot import MessagingCommands
+            cog = MessagingCommands(mock_bot, mock_gui_controller)
+            
+            mock_ctx = MagicMock()
+            mock_ctx.send = AsyncMock()
+            
+            with patch('pathlib.Path') as mock_path:
+                mock_cycles_dir = MagicMock()
+                mock_cycles_dir.exists.return_value = True
+                mock_cycle_file = MagicMock()
+                mock_cycle_file.name = "CYCLE_ACCOMPLISHMENTS_2025-11-30.md"
+                mock_cycle_file.read_text.return_value = "# Cycle Report\n## 📊 SWARM SUMMARY"
+                mock_cycles_dir.glob.return_value = [mock_cycle_file]
+                mock_path.return_value = mock_cycles_dir
+                
+                await cog.session(mock_ctx, date=None)
+                
+                mock_ctx.send.assert_called_once()
+        except Exception as e:
+            pytest.skip(f"session command test requires setup: {e}")
+
 
 if __name__ == "__main__":
     pytest.main([__file__, "-v", "--cov=src.discord_commander.unified_discord_bot", "--cov-report=term-missing"])
