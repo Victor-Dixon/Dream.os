@@ -258,11 +258,28 @@ ORCHESTRATION = {
 ### **Before Any Deletion**:
 
 1. ✅ **Git Commit Current State**
-2. ⏭️ **Update All Imports** (for `config_core.py`)
-3. ⏭️ **Run Tests** (verify nothing breaks)
-4. ⏭️ **Check Dynamic Imports** (for review files)
-5. ⏭️ **Verify Config References** (for review files)
-6. ⏭️ **Get Captain Approval** (for large deletions)
+2. 🚨 **Check Implementation Status** (NEW - verify not placeholders)
+3. 🚨 **Verify Integration Plans** (NEW - check if future features)
+4. ⏭️ **Update All Imports** (for `config_core.py`)
+5. ⏭️ **Run Tests** (verify nothing breaks)
+6. ⏭️ **Check Dynamic Imports** (for review files)
+7. ⏭️ **Verify Config References** (for review files)
+8. ⏭️ **Get Captain Approval** (for large deletions)
+
+### **🚨 CRITICAL: Implementation Status Check**
+
+**Many "unused" files are FULLY IMPLEMENTED features:**
+- DDD architecture (complete but not integrated)
+- Architecture patterns (reference implementations)
+- Core agent systems (complete implementations)
+- Automation systems (functional code)
+- AI training systems (complete systems)
+
+**DO NOT DELETE** without verifying:
+- ✅ Implementation status (placeholder vs. complete)
+- ✅ Integration plans (future features)
+- ✅ Dynamic usage (importlib, __import__)
+- ✅ Implementation value (even if not currently used)
 
 ---
 
