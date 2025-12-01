@@ -283,21 +283,31 @@ Many files flagged as "duplicates" share the same filename but serve **different
 
 ## ⚠️ CRITICAL RECOMMENDATIONS
 
-### **1. Content Comparison Required**
+### **1. Implementation Status Check** 🚨 **NEW PRIORITY**
+
+**Before any deletion**, verify implementation status:
+- ✅ Check if files are fully implemented (not placeholders)
+- ✅ Check if part of complete architectures (DDD, patterns, etc.)
+- ✅ Check if ready for future integration
+- ✅ Check if have implementation value
+
+**Many "unused" files are actually complete implementations waiting for integration!**
+
+### **2. Content Comparison Required**
 
 **Before any deletion**, run content comparison on all flagged duplicates:
 - Use file hashing to identify truly identical files
 - Compare content for diverged duplicates
 - Document differences
 
-### **2. SSOT Compliance**
+### **3. SSOT Compliance**
 
 **For true duplicates**, follow SSOT principles:
 - Keep file in most authoritative location (`src/core/` preferred)
 - Update all imports before deletion
 - Verify no dynamic imports reference deleted files
 
-### **3. Merge Before Delete**
+### **4. Merge Before Delete**
 
 **For diverged duplicates**:
 - Merge unique functionality into primary file
@@ -305,11 +315,12 @@ Many files flagged as "duplicates" share the same filename but serve **different
 - Test after merge
 - Delete only after merge complete
 
-### **4. False Positive Handling**
+### **5. False Positive Handling**
 
 **Remove false positives** from deletion consideration:
 - Files with same name but different purpose are NOT duplicates
 - Keep all false positives
+- Keep all fully implemented features
 
 ---
 
