@@ -237,6 +237,27 @@ class MainControlPanelView(discord.ui.View):
         self.monitor_btn.callback = self.show_monitor_control
         self.add_item(self.monitor_btn)
 
+        # Row 5: Additional utility buttons
+        self.obs_btn = discord.ui.Button(
+            label="Observations",
+            style=discord.ButtonStyle.secondary,
+            emoji="👁️",
+            custom_id="control_obs",
+            row=5,
+        )
+        self.obs_btn.callback = self.show_obs
+        self.add_item(self.obs_btn)
+
+        self.pieces_btn = discord.ui.Button(
+            label="Pieces",
+            style=discord.ButtonStyle.secondary,
+            emoji="🧩",
+            custom_id="control_pieces",
+            row=5,
+        )
+        self.pieces_btn.callback = self.show_pieces
+        self.add_item(self.pieces_btn)
+
     async def show_agent_selector(self, interaction: discord.Interaction):
         """Show agent selector menu."""
         try:
@@ -574,6 +595,42 @@ class MainControlPanelView(discord.ui.View):
         except Exception as e:
             logger.error(f"Error showing monitor control: {e}", exc_info=True)
             await self._handle_error(interaction, e, "loading monitor status")
+
+    async def show_obs(self, interaction: discord.Interaction):
+        """Show observations."""
+        try:
+            embed = discord.Embed(
+                title="👁️ Observations",
+                description="**Observations feature**\n\nThis feature is being implemented.",
+                color=discord.Color.blue(),
+            )
+            embed.add_field(
+                name="Status",
+                value="Feature in development",
+                inline=False,
+            )
+            await interaction.response.send_message(embed=embed, ephemeral=True)
+        except Exception as e:
+            logger.error(f"Error showing obs: {e}", exc_info=True)
+            await self._handle_error(interaction, e, "loading observations")
+
+    async def show_pieces(self, interaction: discord.Interaction):
+        """Show pieces."""
+        try:
+            embed = discord.Embed(
+                title="🧩 Pieces",
+                description="**Pieces feature**\n\nThis feature is being implemented.",
+                color=discord.Color.blue(),
+            )
+            embed.add_field(
+                name="Status",
+                value="Feature in development",
+                inline=False,
+            )
+            await interaction.response.send_message(embed=embed, ephemeral=True)
+        except Exception as e:
+            logger.error(f"Error showing pieces: {e}", exc_info=True)
+            await self._handle_error(interaction, e, "loading pieces")
 
     async def _handle_error(self, interaction: discord.Interaction, error: Exception, context: str = ""):
         """Handle interaction errors."""

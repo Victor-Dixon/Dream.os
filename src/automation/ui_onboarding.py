@@ -11,6 +11,13 @@ except ImportError:
     PYPERCLIP_AVAILABLE = False
     pyperclip = None
 
+try:
+    import pyautogui
+    PYAUTOGUI_AVAILABLE = True
+except ImportError:
+    PYAUTOGUI_AVAILABLE = False
+    pyautogui = None
+
 
 class UIUnavailableError(Exception):
     """Raised when UI automation is not available."""

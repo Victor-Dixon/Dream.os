@@ -1608,6 +1608,44 @@ Agent, you appear stalled. CONTINUE AUTONOMOUSLY NOW.
             self.logger.error(f"Error in heal command: {e}", exc_info=True)
             await ctx.send(f"❌ Error: {e}")
 
+    @commands.command(name="obs", description="View observations")
+    async def obs(self, ctx: commands.Context):
+        """View observations."""
+        try:
+            embed = discord.Embed(
+                title="👁️ Observations",
+                description="**Observations feature**\n\nThis command is being implemented.",
+                color=discord.Color.blue(),
+            )
+            embed.add_field(
+                name="Status",
+                value="Feature in development",
+                inline=False,
+            )
+            await ctx.send(embed=embed)
+        except Exception as e:
+            self.logger.error(f"Error in obs command: {e}", exc_info=True)
+            await ctx.send(f"❌ Error: {e}")
+
+    @commands.command(name="pieces", description="View pieces")
+    async def pieces(self, ctx: commands.Context):
+        """View pieces."""
+        try:
+            embed = discord.Embed(
+                title="🧩 Pieces",
+                description="**Pieces feature**\n\nThis command is being implemented.",
+                color=discord.Color.blue(),
+            )
+            embed.add_field(
+                name="Status",
+                value="Feature in development",
+                inline=False,
+            )
+            await ctx.send(embed=embed)
+        except Exception as e:
+            self.logger.error(f"Error in pieces command: {e}", exc_info=True)
+            await ctx.send(f"❌ Error: {e}")
+
     @commands.command(name="session", aliases=["sessions", "cycle"], description="Post session accomplishments report")
     async def session(self, ctx: commands.Context, date: str = None):
         """

@@ -59,3 +59,4 @@ class RealMessagingCoreAdapter:
             content, sender, recipient, message_type, priority, tags, metadata
         )
 
+

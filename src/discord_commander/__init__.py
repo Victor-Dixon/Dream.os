@@ -3,21 +3,17 @@
 
 from . import approval_commands
 from . import contract_notifications
-from . import core
 from . import debate_discord_integration
 from . import discord_agent_communication
 from . import discord_embeds
 from . import discord_gui_controller
 from . import discord_gui_modals
-from . import discord_gui_views
 from . import discord_models
 from . import discord_service
-from . import enhanced_bot
 from . import github_book_viewer
 from . import messaging_commands
 from . import messaging_controller
 from . import messaging_controller_modals
-from . import messaging_controller_refactored
 from . import messaging_controller_views
 from . import status_reader
 from . import swarm_showcase_commands
@@ -27,21 +23,17 @@ from . import webhook_commands
 __all__ = [
     'approval_commands',
     'contract_notifications',
-    'core',
     'debate_discord_integration',
     'discord_agent_communication',
     'discord_embeds',
     'discord_gui_controller',
     'discord_gui_modals',
-    'discord_gui_views',
     'discord_models',
     'discord_service',
-    'enhanced_bot',
     'github_book_viewer',
     'messaging_commands',
     'messaging_controller',
     'messaging_controller_modals',
-    'messaging_controller_refactored',
     'messaging_controller_views',
     'status_reader',
     'swarm_showcase_commands',
