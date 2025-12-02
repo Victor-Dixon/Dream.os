@@ -68,24 +68,33 @@ class RetrySafetyEngine:
 
             except config.exceptions as e:
                 last_exception = e
-
-                if attempt == config.max_retries:
-                    if effective_logger:
-                        self._get_logger().error(
-                            f"❌ All {config.max_retries} retry attempts failed: {e}"
-                        )
+                if self._handle_retry_failure(attempt, config, e, effective_logger):
                     break
 
-                if effective_logger:
-                    delay = config.calculate_delay(attempt)
-                    self._get_logger().warning(
-                        f"⚠️ Attempt {attempt + 1} failed: {e}, retrying in {delay:.1f}s"
-                    )
-                    time.sleep(delay)
-                else:
-                    time.sleep(config.calculate_delay(attempt))
-
         raise last_exception
+
+    def _handle_retry_failure(
+        self,
+        attempt: int,
+        config: RetryConfiguration,
+        exception: Exception,
+        logger: logging.Logger | None,
+    ) -> bool:
+        """Handle retry failure and determine if retries exhausted."""
+        if attempt == config.max_retries:
+            if logger:
+                self._get_logger().error(
+                    f"❌ All {config.max_retries} retry attempts failed: {exception}"
+                )
+            return True
+
+        delay = config.calculate_delay(attempt)
+        if logger:
+            self._get_logger().warning(
+                f"⚠️ Attempt {attempt + 1} failed: {exception}, retrying in {delay:.1f}s"
+            )
+        time.sleep(delay)
+        return False
 
     def safe_execute(
         self,
@@ -172,27 +181,34 @@ class RetrySafetyEngine:
         effective_logger = logger or self.logger
 
         try:
-            # Set timeout handler
             signal.signal(signal.SIGALRM, timeout_handler)
             signal.alarm(int(timeout))
-
             result = operation_func()
-
-            # Clear timeout
             signal.alarm(0)
             return result
 
         except TimeoutError as e:
-            if effective_logger:
-                self._get_logger().warning(f"⏰ Operation timed out: {e}")
-            return default_return
+            return self._handle_timeout(e, effective_logger, default_return)
         except Exception as e:
-            if effective_logger:
-                self._get_logger().error(f"❌ Operation failed: {e}")
-            return default_return
+            return self._handle_timeout_error(e, effective_logger, default_return)
         finally:
-            # Always clear timeout
             signal.alarm(0)
+
+    def _handle_timeout(
+        self, error: TimeoutError, logger: logging.Logger | None, default: Any
+    ) -> Any:
+        """Handle timeout error."""
+        if logger:
+            self._get_logger().warning(f"⏰ Operation timed out: {error}")
+        return default
+
+    def _handle_timeout_error(
+        self, error: Exception, logger: logging.Logger | None, default: Any
+    ) -> Any:
+        """Handle timeout execution error."""
+        if logger:
+            self._get_logger().error(f"❌ Operation failed: {error}")
+        return default
 
     def circuit_breaker_execute(
         self,
