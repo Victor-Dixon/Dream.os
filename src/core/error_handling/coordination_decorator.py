@@ -14,6 +14,41 @@ from collections.abc import Callable
 from typing import Any
 
 
+def _create_operation(func: Callable, args: tuple, kwargs: dict) -> Callable:
+    """Create operation callable from function and arguments."""
+    def operation() -> Any:
+        """Execute the wrapped operation."""
+        return func(*args, **kwargs)
+    return operation
+
+
+def _get_operation_name(func: Callable) -> str:
+    """Get operation name from function."""
+    return f"{func.__module__}.{func.__name__}"
+
+
+def _execute_with_coordination_handler(
+    operation: Callable,
+    operation_name: str,
+    component: str,
+    use_retry: bool,
+    use_circuit_breaker: bool,
+    use_recovery: bool,
+    use_intelligence: bool,
+) -> Any:
+    """Execute operation with coordination error handler."""
+    from .coordination_error_handler import coordination_handler_core
+    return coordination_handler_core.execute_with_error_handling(
+        operation,
+        operation_name,
+        component,
+        use_retry,
+        use_circuit_breaker,
+        use_recovery,
+        use_intelligence,
+    )
+
+
 def handle_coordination_errors(
     component: str = "coordination",
     use_retry: bool = True,
@@ -22,8 +57,6 @@ def handle_coordination_errors(
     use_intelligence: bool = True,
 ) -> Callable:
     """Decorator for coordination-specific error handling.
-
-    Provides comprehensive error management for coordination operations.
 
     Args:
         component: Component identifier
@@ -35,41 +68,13 @@ def handle_coordination_errors(
     Returns:
         Decorated function with error handling
     """
-
     def decorator(func: Callable) -> Callable:
-        """Decorator implementation.
-
-        Args:
-            func: Function to decorate
-
-        Returns:
-            Wrapped function with error handling
-        """
-
+        """Decorator implementation."""
         def wrapper(*args: Any, **kwargs: Any) -> Any:
-            """Wrapper function that applies error handling.
-
-            Args:
-                *args: Positional arguments
-                **kwargs: Keyword arguments
-
-            Returns:
-                Function result
-            """
-            # Late import to avoid circular dependency
-            from .coordination_error_handler import coordination_handler_core
-
-            operation_name = f"{func.__module__}.{func.__name__}"
-
-            def operation() -> Any:
-                """Execute the wrapped operation.
-
-                Returns:
-                    Operation result
-                """
-                return func(*args, **kwargs)
-
-            return coordination_handler_core.execute_with_error_handling(
+            """Wrapper function that applies error handling."""
+            operation = _create_operation(func, args, kwargs)
+            operation_name = _get_operation_name(func)
+            return _execute_with_coordination_handler(
                 operation,
                 operation_name,
                 component,
@@ -78,7 +83,5 @@ def handle_coordination_errors(
                 use_recovery,
                 use_intelligence,
             )
-
         return wrapper
-
     return decorator

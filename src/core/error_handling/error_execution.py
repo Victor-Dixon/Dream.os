@@ -56,6 +56,28 @@ class ErrorExecutionOrchestrator:
         self.classifier = classifier or error_classifier
         logger.info("ErrorExecutionOrchestrator initialized")
 
+    def _prepare_execution(
+        self, component: str, use_intelligence: bool, use_circuit_breaker: bool, use_retry: bool
+    ) -> tuple:
+        """Prepare execution components."""
+        if use_intelligence:
+            self._check_failure_risk(component)
+        circuit_breaker = self.circuit_breakers.get(component) if use_circuit_breaker else None
+        retry_mechanism = self.retry_mechanisms.get(component) if use_retry else None
+        return circuit_breaker, retry_mechanism
+
+    def _handle_success(self, component: str, use_intelligence: bool) -> None:
+        """Handle successful execution."""
+        if use_intelligence:
+            intelligence_engine.record_recovery(component, success=True, recovery_time=0.0)
+
+    def _handle_error(
+        self, e: Exception, component: str, operation_name: str, use_intelligence: bool
+    ) -> None:
+        """Handle error and record for intelligence."""
+        if use_intelligence:
+            self._record_error_intelligence(e, component, operation_name)
+
     def execute_with_error_handling(
         self,
         operation: Callable[[], T],
@@ -83,41 +105,23 @@ class ErrorExecutionOrchestrator:
         Raises:
             Exception: If operation fails after all recovery attempts
         """
-        # Check predictive failure risk if intelligence enabled
-        if use_intelligence:
-            self._check_failure_risk(component)
-
-        # Get components
-        circuit_breaker = self.circuit_breakers.get(component) if use_circuit_breaker else None
-        retry_mechanism = self.retry_mechanisms.get(component) if use_retry else None
+        _, retry_mechanism = self._prepare_execution(
+            component, use_intelligence, use_circuit_breaker, use_retry
+        )
 
         try:
-            # Execute with retry (circuit breaker integration pending)
             result = self._execute_with_retry(operation, retry_mechanism, operation_name)
-
-            # Record successful execution
-            if use_intelligence:
-                intelligence_engine.record_recovery(component, success=True, recovery_time=0.0)
-
+            self._handle_success(component, use_intelligence)
             return result
 
         except Exception as e:
-            # Record error for intelligence analysis
-            if use_intelligence:
-                self._record_error_intelligence(e, component, operation_name)
+            self._handle_error(e, component, operation_name, use_intelligence)
 
-            # Attempt recovery if enabled
             if use_recovery:
                 logger.warning(f"Operation {operation_name} failed, attempting recovery: {e}")
-                recovery_success = self._attempt_recovery(
-                    component, type(e).__name__, use_intelligence
-                )
-
-                if recovery_success:
-                    # Retry operation after successful recovery
+                if self._attempt_recovery(component, type(e).__name__, use_intelligence):
                     return self._execute_with_retry(operation, retry_mechanism, operation_name)
 
-            # If recovery failed or not enabled, raise the error
             logger.error(f"Operation {operation_name} failed after all attempts")
             raise e
 
@@ -144,6 +148,40 @@ class ErrorExecutionOrchestrator:
             logger.debug(f"Executing {operation_name} without retry")
             return operation()
 
+    def _get_suggested_strategy(self, error_type: str, component: str) -> str | None:
+        """Get intelligent recovery strategy suggestion."""
+        suggested = intelligence_engine.suggest_recovery_strategy(error_type, component)
+        if suggested:
+            logger.info(f"Intelligence suggests recovery strategy: {suggested} for {component}")
+        return suggested
+
+    def _try_strategy(self, strategy, component: str, error_type: str, use_intelligence: bool) -> bool:
+        """Try a recovery strategy."""
+        if self._execute_recovery_strategy(strategy, component, error_type):
+            if use_intelligence:
+                intelligence_engine.record_recovery(component, success=True, recovery_time=1.0)
+            return True
+        return False
+
+    def _try_suggested_strategy(
+        self, suggested_strategy: str, component: str, error_type: str, use_intelligence: bool
+    ) -> bool:
+        """Try suggested recovery strategy first."""
+        for strategy in self.recovery_strategies:
+            if suggested_strategy.lower() in strategy.name.lower():
+                if self._try_strategy(strategy, component, error_type, use_intelligence):
+                    return True
+        return False
+
+    def _try_all_strategies(
+        self, component: str, error_type: str, use_intelligence: bool
+    ) -> bool:
+        """Try all recovery strategies."""
+        for strategy in self.recovery_strategies:
+            if self._try_strategy(strategy, component, error_type, use_intelligence):
+                return True
+        return False
+
     def _attempt_recovery(self, component: str, error_type: str, use_intelligence: bool) -> bool:
         """Attempt error recovery using registered strategies.
 
@@ -155,38 +193,16 @@ class ErrorExecutionOrchestrator:
         Returns:
             True if recovery succeeded, False otherwise
         """
-        # Get intelligent recovery suggestion
-        suggested_strategy = None
         if use_intelligence:
-            suggested_strategy = intelligence_engine.suggest_recovery_strategy(
-                error_type, component
-            )
-            logger.info(
-                f"Intelligence suggests recovery strategy: {suggested_strategy} for {component}"
-            )
-
-        # Try suggested strategy first
-        if suggested_strategy:
-            for strategy in self.recovery_strategies:
-                if suggested_strategy.lower() in strategy.name.lower():
-                    if self._execute_recovery_strategy(strategy, component, error_type):
-                        if use_intelligence:
-                            intelligence_engine.record_recovery(
-                                component, success=True, recovery_time=1.0
-                            )
-                        return True
-
-        # Fallback: try all strategies
-        for strategy in self.recovery_strategies:
-            if self._execute_recovery_strategy(strategy, component, error_type):
-                if use_intelligence:
-                    intelligence_engine.record_recovery(component, success=True, recovery_time=1.0)
+            suggested = self._get_suggested_strategy(error_type, component)
+            if suggested and self._try_suggested_strategy(suggested, component, error_type, use_intelligence):
                 return True
 
-        # Recovery failed
+        if self._try_all_strategies(component, error_type, use_intelligence):
+            return True
+
         if use_intelligence:
             intelligence_engine.record_recovery(component, success=False, recovery_time=1.0)
-
         logger.warning(f"All recovery strategies failed for {component}")
         return False
 
