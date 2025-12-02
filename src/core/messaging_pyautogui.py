@@ -149,7 +149,18 @@ class PyAutoGUIMessagingDelivery:
         - Clipboard locking (prevents concurrent overwrites)
         - Increased delays (1.0s for slow systems)
         - 3-attempt retry mechanism
+        
+        CRITICAL FIX: Handles both dict and UnifiedMessage object formats.
         """
+        # Extract recipient for logging (handles both dict and object)
+        recipient = None
+        if isinstance(message, dict):
+            recipient = message.get('recipient') or message.get('to', 'UNKNOWN')
+        elif hasattr(message, 'recipient'):
+            recipient = message.recipient
+        else:
+            recipient = 'UNKNOWN'
+        
         # RACE CONDITION FIX #3: Retry mechanism (3 attempts)
         for attempt in range(3):
             try:
@@ -159,25 +170,81 @@ class PyAutoGUIMessagingDelivery:
                 
                 # Wait before retry
                 if attempt < 2:
-                    logger.warning(f"⚠️ Retry {attempt + 1}/3 for {message.recipient}")
+                    logger.warning(f"⚠️ Retry {attempt + 1}/3 for {recipient}")
                     time.sleep(1.0)
             
             except Exception as e:
                 logger.error(
-                    f"❌ Attempt {attempt + 1} failed for {message.recipient}: {e}",
+                    f"❌ Attempt {attempt + 1} failed for {recipient}: {e}",
                     exc_info=True
                 )
                 if attempt < 2:
                     time.sleep(1.0)
         
         logger.error(
-            f"❌ All 3 attempts failed for {message.recipient} - message not delivered",
+            f"❌ All 3 attempts failed for {recipient} - message not delivered",
             exc_info=False
         )
         return False
     
     def _send_message_attempt(self, message, attempt_num: int) -> bool:
         """Single message delivery attempt with all race condition fixes."""
+        # CRITICAL FIX: Handle both dict and UnifiedMessage object formats
+        # Queue messages are normalized to dicts, but delivery expects UnifiedMessage objects
+        if isinstance(message, dict):
+            # Convert dict to UnifiedMessage-like object for compatibility
+            from .messaging_models_core import UnifiedMessage, UnifiedMessageType, UnifiedMessagePriority, UnifiedMessageTag
+            
+            # Extract recipient from dict (CRITICAL for routing)
+            recipient = message.get('recipient') or message.get('to')
+            if not recipient:
+                logger.error(f"❌ Message dict missing recipient: {message.keys()}")
+                return False
+            
+            # Convert message_type string to enum if needed
+            message_type_str = message.get('message_type', 'text')
+            if isinstance(message_type_str, str):
+                try:
+                    message_type = UnifiedMessageType(message_type_str)
+                except (ValueError, AttributeError):
+                    # Fallback to TEXT if invalid
+                    message_type = UnifiedMessageType.TEXT
+            else:
+                message_type = message_type_str
+            
+            # Convert priority string to enum if needed
+            priority_str = message.get('priority', 'regular')
+            if isinstance(priority_str, str):
+                try:
+                    priority = UnifiedMessagePriority(priority_str)
+                except (ValueError, AttributeError):
+                    priority = UnifiedMessagePriority.REGULAR
+            else:
+                priority = priority_str
+            
+            # Convert tags list to enums if needed
+            tags_list = message.get('tags', [])
+            tags = []
+            for tag in tags_list:
+                if isinstance(tag, str):
+                    try:
+                        tags.append(UnifiedMessageTag(tag))
+                    except (ValueError, AttributeError):
+                        pass
+                else:
+                    tags.append(tag)
+            
+            # Create UnifiedMessage object from dict
+            message = UnifiedMessage(
+                content=message.get('content', ''),
+                sender=message.get('sender', 'CAPTAIN'),
+                recipient=recipient,
+                message_type=message_type,
+                priority=priority,
+                tags=tags if tags else [UnifiedMessageTag.SYSTEM],
+                metadata=message.get('metadata', {})
+            )
+        
         # Get sender for lock identifier
         sender = "CAPTAIN"  # default
         if hasattr(message, 'sender'):
@@ -483,32 +550,6 @@ class PyAutoGUIMessagingDelivery:
                 exc_info=True
             )
             return False
-
-
-def send_message_pyautogui(agent_id: str, message: str, timeout: int = 30) -> bool:
-    """Legacy function for sending messages via PyAutoGUI."""
-    try:
-        delivery = PyAutoGUIMessagingDelivery()
-        from .messaging_core import UnifiedMessage, UnifiedMessagePriority, UnifiedMessageType
-
-        msg = UnifiedMessage(
-            content=message,
-            sender="CAPTAIN",
-            recipient=agent_id,
-            message_type=UnifiedMessageType.CAPTAIN_TO_AGENT,
-            priority=UnifiedMessagePriority.URGENT,
-            tags=[],
-            metadata={},
-        )
-        return delivery.send_message(msg)
-    except Exception as e:
-        logger.error(f"Failed to send PyAutoGUI message: {e}")
-        return False
-
-
-def send_message_to_onboarding_coords(agent_id: str, message: str, timeout: int = 30) -> bool:
-    """Send message to onboarding coordinates."""
-    return send_message_pyautogui(agent_id, message, timeout)
 
 
 def send_message_pyautogui(agent_id: str, message: str, timeout: int = 30) -> bool:

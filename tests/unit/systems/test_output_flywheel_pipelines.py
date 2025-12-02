@@ -11,8 +11,9 @@ from pathlib import Path
 import sys
 
 # Add project root to path
-project_root = Path(__file__).resolve().parent.parent.parent
-sys.path.insert(0, str(project_root))
+project_root = Path(__file__).resolve().parent.parent.parent.parent
+if str(project_root) not in sys.path:
+    sys.path.insert(0, str(project_root))
 
 from systems.output_flywheel.processors.repo_scanner import scan_repo_to_dict
 from systems.output_flywheel.processors.story_extractor import extract_story_from_session

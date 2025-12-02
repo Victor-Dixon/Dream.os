@@ -200,8 +200,18 @@ class FileQueuePersistence(IQueuePersistence):
             max_retries: Maximum number of retry attempts (default: 8, increased for WinError 32)
             base_delay: Base delay in seconds for exponential backoff (default: 0.15, increased for file locks)
         """
+        # Try to import monitor (optional, fails gracefully if not available)
+        monitor = None
+        try:
+            from tools.file_locking_monitor import FileLockingMonitor
+            monitor = FileLockingMonitor()
+        except (ImportError, Exception):
+            pass  # Monitoring optional, continue without it
+        
         data = [entry.to_dict() for entry in entries]
         temp_file = self.queue_file.with_suffix('.json.tmp')
+        start_time = time.time()
+        total_delay = 0.0
         
         # Write to temp file first
         try:
@@ -231,6 +241,14 @@ class FileQueuePersistence(IQueuePersistence):
                 # Use shutil.move instead of rename for better Windows compatibility
                 shutil.move(str(temp_file), str(self.queue_file))
                 
+                # Success - record metrics if monitoring enabled
+                if monitor and attempt > 0:
+                    monitor.record_retry_success(
+                        attempts=attempt + 1,
+                        total_delay=total_delay,
+                        winerror_code=None,
+                    )
+                
                 # Success - return
                 return
                 
@@ -239,9 +257,29 @@ class FileQueuePersistence(IQueuePersistence):
                 last_error = e
                 if attempt < max_retries - 1:
                     delay = base_delay * (2 ** attempt)
+                    delay = min(delay, 2.0)  # Cap max delay
+                    total_delay += delay
+                    
+                    # Record error for monitoring
+                    if monitor:
+                        monitor.record_error(
+                            error_type="PermissionError",
+                            winerror_code=5,
+                            attempt=attempt + 1,
+                            delay=delay,
+                            file_path=str(self.queue_file),
+                        )
+                    
                     print(f"⚠️ File locked (attempt {attempt + 1}/{max_retries}), retrying in {delay:.2f}s...")
                     time.sleep(delay)
                 else:
+                    # Record retry failure
+                    if monitor:
+                        monitor.record_retry_failure(
+                            attempts=max_retries,
+                            winerror_code=5,
+                        )
+                    
                     print(f"❌ Failed to save queue entries after {max_retries} attempts: {e}")
                     # Clean up temp file
                     if temp_file.exists():
@@ -263,9 +301,28 @@ class FileQueuePersistence(IQueuePersistence):
                         delay = base_delay * (2 ** attempt)
                         # Cap max delay at 2.0 seconds to prevent excessive waits
                         delay = min(delay, 2.0)
+                        total_delay += delay
+                        
+                        # Record error for monitoring
+                        if monitor:
+                            monitor.record_error(
+                                error_type="OSError",
+                                winerror_code=winerror_code,
+                                attempt=attempt + 1,
+                                delay=delay,
+                                file_path=str(self.queue_file),
+                            )
+                        
                         print(f"⚠️ {error_name} (WinError {winerror_code}, attempt {attempt + 1}/{max_retries}), retrying in {delay:.2f}s...")
                         time.sleep(delay)
                     else:
+                        # Record retry failure
+                        if monitor:
+                            monitor.record_retry_failure(
+                                attempts=max_retries,
+                                winerror_code=winerror_code,
+                            )
+                        
                         print(f"❌ Failed to save queue entries after {max_retries} attempts: {e}")
                         # Clean up temp file
                         if temp_file.exists():
