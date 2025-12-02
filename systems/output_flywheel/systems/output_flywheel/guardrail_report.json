@@ -1,0 +1,33 @@
+{
+  "overall_status": "RED",
+  "timestamp": "2025-12-02T03:28:57.231667",
+  "metrics": {
+    "artifacts_per_week": {
+      "metric": "artifacts_per_week",
+      "current": 0,
+      "target": 2,
+      "warning_threshold": 1,
+      "critical_threshold": 0,
+      "status": "RED"
+    },
+    "trading_days_documented": {
+      "metric": "trading_days_documented",
+      "current": 0,
+      "expected": 23,
+      "month": "2025-12",
+      "status": "RED"
+    },
+    "publication_rate": {
+      "metric": "publication_rate",
+      "current": 0.0,
+      "target": 90,
+      "warning_threshold": 75,
+      "critical_threshold": 50,
+      "status": "RED"
+    }
+  },
+  "missing_artifacts": {
+    "count": 0,
+    "sessions": []
+  }
+}

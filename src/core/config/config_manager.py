@@ -47,10 +47,13 @@ from .config_dataclasses import (
 )
 from .config_enums import ConfigEnvironment, ConfigSource
 
+# Import Singleton base class for standardized pattern
+from src.architecture.design_patterns import Singleton
+
 logger = logging.getLogger(__name__)
 
 
-class UnifiedConfigManager:
+class UnifiedConfigManager(Singleton):
     """SINGLE SOURCE OF TRUTH for all configuration management.
 
     Enhanced features from DUP-001 consolidation:
@@ -62,7 +65,15 @@ class UnifiedConfigManager:
     """
 
     def __init__(self):
-        """Initialize the unified configuration manager."""
+        """Initialize the unified configuration manager.
+        
+        Uses Singleton pattern to ensure only one instance exists.
+        Thread-safe initialization via Singleton base class.
+        """
+        # Prevent re-initialization if already initialized (Singleton pattern)
+        if hasattr(self, '_initialized'):
+            return
+        
         self.logger = logging.getLogger(__name__)
 
         # Configuration metadata tracking (from config_core.py)
@@ -85,7 +96,10 @@ class UnifiedConfigManager:
         # Track initialization
         self._record_event("initialization", {"timestamp": datetime.now().isoformat()})
 
-        self.logger.info("✅ Unified Configuration SSOT initialized")
+        # Mark as initialized (Singleton pattern)
+        self._initialized = True
+
+        self.logger.info("✅ Unified Configuration SSOT initialized (Singleton pattern)")
 
     def _load_environment(self) -> None:
         """Load environment variables from .env file."""

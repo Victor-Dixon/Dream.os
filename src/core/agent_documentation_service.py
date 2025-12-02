@@ -53,7 +53,7 @@ class AgentDocumentationService:
     def search_documentation(
         self, agent_id: str = None, query: str = None, n_results: int = 5
     ) -> list[dict[str, Any]]:
-        """Search documentation.
+        """Search documentation using vector database service.
         
         Args:
             agent_id: Optional agent ID (uses self.agent_id if not provided)
@@ -61,24 +61,88 @@ class AgentDocumentationService:
             n_results: Number of results to return
             
         Returns:
-            List of documentation results
+            List of documentation results with title, content, relevance, source
         """
         target_agent_id = agent_id or self.agent_id
+        
+        if not query:
+            return []
+        
         try:
             logger.info(f"Searching documentation for agent {target_agent_id}: {query}")
-            # Simple search implementation (stub - to be implemented)
-            if query:
-                return [
-                    {
-                        "title": f"Documentation for {query}",
-                        "content": f"Sample content for {query}",
-                        "relevance": 0.8,
-                        "source": "docs/sample.md",
-                    }
-                ]
+            
+            # Use vector database service if available
+            try:
+                from src.services.vector_database_service_unified import get_vector_database_service
+                from src.web.vector_database.models import SearchRequest
+                
+                vector_db = get_vector_database_service()
+                if vector_db:
+                    # Build search request with agent filter if provided
+                    filters = {}
+                    if target_agent_id:
+                        filters["agent_id"] = target_agent_id
+                    
+                    search_request = SearchRequest(
+                        query=query,
+                        collection="agent_cellphone_v2",  # Default collection
+                        limit=n_results,
+                        filters=filters if filters else None,
+                    )
+                    
+                    # Perform search
+                    results = vector_db.search(search_request)
+                    
+                    # Convert to expected format
+                    return [
+                        {
+                            "title": result.title or f"Document {result.id}",
+                            "content": result.content,
+                            "relevance": result.relevance or result.score or 0.0,
+                            "source": result.metadata.get("source", result.collection or "unknown") if result.metadata else result.collection or "unknown",
+                            "id": result.id,
+                            "collection": result.collection,
+                            "tags": result.tags or [],
+                            "created_at": result.created_at.isoformat() if hasattr(result.created_at, 'isoformat') else str(result.created_at),
+                        }
+                        for result in results
+                    ]
+            except ImportError:
+                logger.warning("Vector database service not available, using fallback")
+            except Exception as e:
+                logger.warning(f"Vector database search failed: {e}, using fallback")
+            
+            # Fallback: Use vector_db if provided directly
+            if self.vector_db:
+                try:
+                    # Try to use vector_db.search if it has that method
+                    if hasattr(self.vector_db, 'search'):
+                        from src.web.vector_database.models import SearchRequest
+                        search_request = SearchRequest(
+                            query=query,
+                            collection="agent_cellphone_v2",
+                            limit=n_results,
+                        )
+                        results = self.vector_db.search(search_request)
+                        return [
+                            {
+                                "title": result.title or f"Document {result.id}",
+                                "content": result.content,
+                                "relevance": result.relevance or result.score or 0.0,
+                                "source": result.collection or "unknown",
+                                "id": result.id,
+                            }
+                            for result in results
+                        ]
+                except Exception as e:
+                    logger.warning(f"Direct vector_db search failed: {e}")
+            
+            # Final fallback: Return empty results with warning
+            logger.warning(f"No vector database available for documentation search")
             return []
+            
         except Exception as e:
-            logger.error(f"Error searching documentation: {e}")
+            logger.error(f"Error searching documentation: {e}", exc_info=True)
             return []
 
     def search_docs(self, query: str, n_results: int = 5) -> list[dict[str, Any]]:
@@ -94,25 +158,87 @@ class AgentDocumentationService:
         return self.search_documentation(agent_id=self.agent_id, query=query, n_results=n_results)
 
     def get_doc(self, doc_id: str) -> dict[str, Any] | None:
-        """Get specific document.
+        """Get specific document by ID using vector database service.
         
         Args:
             doc_id: Document ID
             
         Returns:
-            Document data or None if not found
+            Document data with id, title, content, metadata, or None if not found
         """
+        if not doc_id:
+            return None
+        
         try:
             logger.info(f"Getting document {doc_id} for agent {self.agent_id}")
-            # Simple document retrieval (stub - to be implemented)
-            return {
-                "id": doc_id,
-                "title": f"Document {doc_id}",
-                "content": f"Content for document {doc_id}",
-                "last_updated": datetime.now().isoformat(),
-            }
+            
+            # Use vector database service if available
+            try:
+                from src.services.vector_database_service_unified import get_vector_database_service
+                from src.web.vector_database.models import PaginationRequest
+                
+                vector_db = get_vector_database_service()
+                if vector_db:
+                    # Search for document by ID using pagination request
+                    # Note: Vector DB services typically don't have direct get-by-id,
+                    # so we search with a filter or use pagination
+                    pagination_request = PaginationRequest(
+                        collection="agent_cellphone_v2",
+                        page=1,
+                        page_size=100,  # Get enough to find the doc
+                    )
+                    
+                    documents = vector_db.get_documents(pagination_request)
+                    
+                    # Find document by ID in results
+                    if isinstance(documents, dict) and "documents" in documents:
+                        for doc in documents.get("documents", []):
+                            if doc.id == doc_id or str(doc.id) == str(doc_id):
+                                return {
+                                    "id": doc.id,
+                                    "title": doc.title or f"Document {doc.id}",
+                                    "content": doc.content,
+                                    "collection": doc.collection,
+                                    "tags": doc.tags or [],
+                                    "metadata": doc.metadata or {},
+                                    "created_at": doc.created_at.isoformat() if hasattr(doc.created_at, 'isoformat') else str(doc.created_at),
+                                    "updated_at": doc.updated_at.isoformat() if hasattr(doc.updated_at, 'isoformat') else str(doc.updated_at),
+                                    "last_updated": doc.updated_at.isoformat() if hasattr(doc.updated_at, 'isoformat') else str(doc.updated_at),
+                                }
+            except ImportError:
+                logger.warning("Vector database service not available, using fallback")
+            except Exception as e:
+                logger.warning(f"Vector database document retrieval failed: {e}, using fallback")
+            
+            # Fallback: Use vector_db if provided directly
+            if self.vector_db:
+                try:
+                    if hasattr(self.vector_db, 'get_documents'):
+                        from src.web.vector_database.models import PaginationRequest
+                        pagination_request = PaginationRequest(
+                            collection="agent_cellphone_v2",
+                            page=1,
+                            page_size=100,
+                        )
+                        documents = self.vector_db.get_documents(pagination_request)
+                        if isinstance(documents, dict) and "documents" in documents:
+                            for doc in documents.get("documents", []):
+                                if doc.id == doc_id or str(doc.id) == str(doc_id):
+                                    return {
+                                        "id": doc.id,
+                                        "title": doc.title or f"Document {doc.id}",
+                                        "content": doc.content,
+                                        "last_updated": datetime.now().isoformat(),
+                                    }
+                except Exception as e:
+                    logger.warning(f"Direct vector_db document retrieval failed: {e}")
+            
+            # Final fallback: Return None (document not found)
+            logger.warning(f"Document {doc_id} not found - vector database not available or document doesn't exist")
+            return None
+            
         except Exception as e:
-            logger.error(f"Error getting document: {e}")
+            logger.error(f"Error getting document: {e}", exc_info=True)
             return None
 
     def get_agent_relevant_docs(

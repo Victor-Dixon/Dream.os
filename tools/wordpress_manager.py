@@ -19,7 +19,9 @@ import json
 import logging
 import os
 import re
+import socket
 import sys
+import time
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
@@ -41,6 +43,10 @@ try:
 except ImportError:
     HAS_PARAMIKO = False
 
+# Ensure we have at least basic logging configured
+if not logging.getLogger().handlers:
+    logging.basicConfig(level=logging.INFO)
+
 logger = logging.getLogger(__name__)
 
 
@@ -56,33 +62,100 @@ class ConnectionManager:
         self.sftp = None
         self.transport = None
     
-    def connect(self) -> bool:
-        """Establish SSH connection."""
+    def connect(self, max_retries: int = 3, base_delay: float = 0.5) -> bool:
+        """
+        Establish SSH connection with structured diagnostics and safe retry.
+
+        Logs each failure stage (DNS/TCP, SSH handshake, auth, SFTP init)
+        without ever logging secrets.
+        """
         if not HAS_PARAMIKO:
             logger.error("paramiko not installed - install with: pip install paramiko")
             return False
-        try:
-            logger.debug(f"Connecting to {self.host}:{self.port} as {self.username}")
-            self.transport = paramiko.Transport((self.host, self.port))
-            self.transport.connect(username=self.username, password=self.password)
-            self.client = paramiko.SSHClient()
-            self.client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-            self.client.connect(hostname=self.host, port=self.port, 
-                              username=self.username, password=self.password)
-            self.sftp = paramiko.SFTPClient.from_transport(self.transport)
-            logger.debug("SFTP connection established successfully")
-            return True
-        except paramiko.AuthenticationException:
-            logger.error(f"Authentication failed for {self.username}@{self.host}:{self.port}")
-            logger.error("Please verify username and password are correct")
-            return False
-        except paramiko.SSHException as e:
-            logger.error(f"SSH connection error: {e}")
-            logger.error("Please verify host address and port are correct")
-            return False
-        except Exception as e:
-            logger.error(f"Connection failed: {type(e).__name__}: {e}")
-            return False
+
+        for attempt in range(1, max_retries + 1):
+            try:
+                logger.info(
+                    "Attempting SFTP connection",
+                    extra={
+                        "stage": "connect_start",
+                        "host": self.host,
+                        "port": self.port,
+                        "username": self.username,
+                        "attempt": attempt,
+                        "max_retries": max_retries,
+                    },
+                )
+
+                # DNS / TCP stage
+                try:
+                    self.transport = paramiko.Transport((self.host, self.port))
+                except (socket.gaierror, OSError) as e:
+                    logger.error(
+                        "DNS/TCP connection failed "
+                        f"for {self.host}:{self.port} (stage=dns_tcp, attempt={attempt}/{max_retries}): {e}"
+                    )
+                    if attempt == max_retries:
+                        return False
+                    time.sleep(base_delay * attempt)
+                    continue
+
+                # SSH authentication stage
+                try:
+                    self.transport.connect(username=self.username, password=self.password)
+                except paramiko.AuthenticationException:
+                    logger.error(
+                        "Authentication failed "
+                        f"for {self.username}@{self.host}:{self.port} (stage=auth)"
+                    )
+                    logger.error("Please verify username and password are correct")
+                    return False
+                except paramiko.SSHException as e:
+                    logger.error(
+                        f"SSH handshake/auth error for {self.host}:{self.port} "
+                        f"(stage=ssh_handshake, attempt={attempt}/{max_retries}): {e}"
+                    )
+                    if attempt == max_retries:
+                        return False
+                    time.sleep(base_delay * attempt)
+                    continue
+
+                # SSH client + SFTP stage
+                try:
+                    self.client = paramiko.SSHClient()
+                    self.client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+                    self.client.connect(
+                        hostname=self.host,
+                        port=self.port,
+                        username=self.username,
+                        password=self.password,
+                    )
+                    self.sftp = paramiko.SFTPClient.from_transport(self.transport)
+                except paramiko.SSHException as e:
+                    logger.error(
+                        f"SFTP channel initialization failed for {self.host}:{self.port} "
+                        f"(stage=sftp_init, attempt={attempt}/{max_retries}): {e}"
+                    )
+                    if attempt == max_retries:
+                        return False
+                    time.sleep(base_delay * attempt)
+                    continue
+
+                logger.info(
+                    f"SFTP connection established successfully to {self.host}:{self.port} "
+                    f"(username={self.username}, attempt={attempt}/{max_retries})"
+                )
+                return True
+
+            except Exception as e:
+                logger.error(
+                    f"Unexpected connection failure for {self.host}:{self.port} "
+                    f"(stage=unknown, attempt={attempt}/{max_retries}): {type(e).__name__}: {e}"
+                )
+                if attempt == max_retries:
+                    return False
+                time.sleep(base_delay * attempt)
+                continue
     
     def disconnect(self):
         """Close connections."""

@@ -1,0 +1,171 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Work Session Schema",
+  "description": "Schema for work session data that drives the Output Flywheel",
+  "type": "object",
+  "required": ["session_id", "session_type", "timestamp", "agent_id"],
+  "properties": {
+    "session_id": {
+      "type": "string",
+      "description": "Unique identifier for the work session (UUID)",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "session_type": {
+      "type": "string",
+      "enum": ["build", "trade", "life_aria"],
+      "description": "Type of work session"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp of session start"
+    },
+    "agent_id": {
+      "type": "string",
+      "description": "Agent identifier (e.g., 'Agent-2')",
+      "pattern": "^Agent-\\d+$"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Session metadata",
+      "properties": {
+        "duration_minutes": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Session duration in minutes"
+        },
+        "files_changed": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of files changed (for build sessions)"
+        },
+        "commits": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of commits (for build sessions)"
+        },
+        "trades_executed": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of trades executed (for trade sessions)"
+        },
+        "lines_added": {
+          "type": "integer",
+          "description": "Lines of code added"
+        },
+        "lines_removed": {
+          "type": "integer",
+          "description": "Lines of code removed"
+        }
+      }
+    },
+    "source_data": {
+      "type": "object",
+      "description": "Source data for artifact generation",
+      "properties": {
+        "repo_path": {
+          "type": "string",
+          "description": "Path to repository (for build sessions)"
+        },
+        "git_commits": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "hash": {"type": "string"},
+              "message": {"type": "string"},
+              "author": {"type": "string"},
+              "timestamp": {"type": "string", "format": "date-time"},
+              "files": {
+                "type": "array",
+                "items": {"type": "string"}
+              }
+            }
+          }
+        },
+        "trades": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "symbol": {"type": "string"},
+              "action": {"type": "string", "enum": ["buy", "sell"]},
+              "quantity": {"type": "number"},
+              "price": {"type": "number"},
+              "timestamp": {"type": "string", "format": "date-time"},
+              "profit_loss": {"type": "number"}
+            }
+          }
+        },
+        "conversations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "source": {"type": "string"},
+              "content": {"type": "string"},
+              "timestamp": {"type": "string", "format": "date-time"}
+            }
+          }
+        }
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "description": "Generated artifacts",
+      "properties": {
+        "readme": {
+          "type": "object",
+          "properties": {
+            "generated": {"type": "boolean"},
+            "path": {"type": "string"},
+            "status": {"type": "string", "enum": ["ready", "published", "failed"]}
+          }
+        },
+        "blog_post": {
+          "type": "object",
+          "properties": {
+            "generated": {"type": "boolean"},
+            "path": {"type": "string"},
+            "status": {"type": "string", "enum": ["ready", "published", "failed"]}
+          }
+        },
+        "social_post": {
+          "type": "object",
+          "properties": {
+            "generated": {"type": "boolean"},
+            "path": {"type": "string"},
+            "status": {"type": "string", "enum": ["ready", "published", "failed"]}
+          }
+        },
+        "trade_journal": {
+          "type": "object",
+          "properties": {
+            "generated": {"type": "boolean"},
+            "path": {"type": "string"},
+            "status": {"type": "string", "enum": ["ready", "published", "failed"]}
+          }
+        }
+      }
+    },
+    "pipeline_status": {
+      "type": "object",
+      "description": "Status of each pipeline",
+      "properties": {
+        "build_artifact": {
+          "type": "string",
+          "enum": ["complete", "pending", "failed", "not_applicable"]
+        },
+        "trade_artifact": {
+          "type": "string",
+          "enum": ["complete", "pending", "failed", "not_applicable"]
+        },
+        "life_aria_artifact": {
+          "type": "string",
+          "enum": ["complete", "pending", "failed", "not_applicable"]
+        }
+      }
+    }
+  }
+}
+

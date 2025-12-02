@@ -1,0 +1,30 @@
+======================================================================
+🔍 SFTP Credential Troubleshooting Report
+======================================================================
+
+Host: 157.173.214.121
+Port: 65002
+Username: dadudekc
+Password Length: 12 characters
+
+Test Results:
+----------------------------------------------------------------------
+❌ Basic Connection: Authentication failed - username or password incorrect
+❌ Username: Original username: Authentication failed - username or password incorrect
+❌ Username: Email format: Authentication failed - username or password incorrect
+❌ Username: Hostinger email format: Authentication failed - username or password incorrect
+❌ Username: Prefixed with 'u': Authentication failed - username or password incorrect
+❌ Password: Original password: Authentication failed - username or password incorrect
+❌ Password: Escaped # character: Authentication failed - username or password incorrect
+❌ Password: Escaped ! character: Authentication failed - username or password incorrect
+❌ Password: Escaped @ character: Authentication failed - username or password incorrect
+❌ Password: UTF-8 encoded: Authentication failed - username or password incorrect
+
+Recommendations:
+----------------------------------------------------------------------
+❌ All credential variations failed
+💡 Verify credentials in Hostinger control panel
+💡 Check if SFTP is enabled on your Hostinger account
+💡 Verify username format (may need cPanel username, not email)
+💡 Reset SFTP password in Hostinger if needed
+💡 Try manual connection with FileZilla to verify credentials work

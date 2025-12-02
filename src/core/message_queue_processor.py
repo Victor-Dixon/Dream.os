@@ -141,6 +141,17 @@ class MessageQueueProcessor:
         Returns:
             True if delivered, False otherwise
         """
+        # Track agent activity for message delivery
+        tracker = None
+        recipient = None
+        queue_id = None
+        
+        try:
+            from .agent_activity_tracker import get_activity_tracker
+            tracker = get_activity_tracker()
+        except Exception:
+            pass  # Non-critical if tracker unavailable
+        
         try:
             # Extract message data
             message = getattr(entry, 'message', None)
@@ -188,12 +199,23 @@ class MessageQueueProcessor:
             if not recipient:
                 logger.warning(f"Entry {queue_id} missing recipient")
                 self.queue.mark_failed(queue_id, "missing_recipient")
+                if tracker and recipient and recipient.startswith("Agent-"):
+                    tracker.mark_inactive(recipient)
                 return False
 
             if not content:
                 logger.warning(f"Entry {queue_id} missing content")
                 self.queue.mark_failed(queue_id, "missing_content")
+                if tracker and recipient and recipient.startswith("Agent-"):
+                    tracker.mark_inactive(recipient)
                 return False
+
+            # Mark agent as delivering message (if agent-to-agent or system delivery)
+            if tracker and recipient and recipient.startswith("Agent-"):
+                try:
+                    tracker.mark_delivering(recipient, queue_id)
+                except Exception:
+                    pass  # Non-critical tracking failure
 
             # Route delivery with preserved message_type
             success = self._route_delivery(
@@ -207,15 +229,33 @@ class MessageQueueProcessor:
                         self.message_repository.log_message(message)
                     except Exception:
                         pass  # Non-critical logging failure
+                # Mark agent as inactive after successful delivery
+                if tracker and recipient and recipient.startswith("Agent-"):
+                    try:
+                        tracker.mark_inactive(recipient)
+                    except Exception:
+                        pass  # Non-critical tracking failure
                 return True
             else:
                 self.queue.mark_failed(queue_id, "delivery_failed")
+                # Mark agent as inactive after failed delivery
+                if tracker and recipient and recipient.startswith("Agent-"):
+                    try:
+                        tracker.mark_inactive(recipient)
+                    except Exception:
+                        pass  # Non-critical tracking failure
                 return False
 
         except Exception as e:
             queue_id = getattr(entry, 'queue_id', 'unknown')
             logger.error(f"Delivery error for {queue_id}: {e}", exc_info=True)
             self.queue.mark_failed(queue_id, str(e))
+            # Mark agent as inactive on error
+            if tracker and recipient and recipient.startswith("Agent-"):
+                try:
+                    tracker.mark_inactive(recipient)
+                except Exception:
+                    pass  # Non-critical tracking failure
             return False
 
     def _route_delivery(

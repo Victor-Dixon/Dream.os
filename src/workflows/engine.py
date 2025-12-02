@@ -152,25 +152,31 @@ class WorkflowEngine:
         self.state = WorkflowState.RUNNING
 
         try:
-            # Send prompt to agent
-            await self._send_prompt_to_agent(step)
-
-            # Wait for AI response
-            self.state = WorkflowState.WAITING_FOR_AI
-            response = await self._wait_for_ai_response(step)
-
-            if response:
-                # Process response
-                self.state = WorkflowState.PROCESSING_RESPONSE
-                await self._process_ai_response(step, response)
-
-                # Mark step as completed
-                self.completed_steps.add(step.id)
-                self.logger.info(f"Step completed: {step.name}")
+            # Check if this is a GPT API step
+            if step.agent_target == "GPT_API" or step.metadata.get("gpt_enabled"):
+                # Execute GPT step directly
+                await self._execute_gpt_step(step)
             else:
-                # Step failed
-                self.failed_steps.add(step.id)
-                self.logger.error(f"Step failed: {step.name}")
+                # Standard agent messaging workflow
+                # Send prompt to agent
+                await self._send_prompt_to_agent(step)
+
+                # Wait for AI response
+                self.state = WorkflowState.WAITING_FOR_AI
+                response = await self._wait_for_ai_response(step)
+
+                if response:
+                    # Process response
+                    self.state = WorkflowState.PROCESSING_RESPONSE
+                    await self._process_ai_response(step, response)
+
+                    # Mark step as completed
+                    self.completed_steps.add(step.id)
+                    self.logger.info(f"Step completed: {step.name}")
+                else:
+                    # Step failed
+                    self.failed_steps.add(step.id)
+                    self.logger.error(f"Step failed: {step.name}")
 
         except Exception as e:
             self.logger.error(f"Error executing step {step.name}: {e}")
@@ -178,6 +184,29 @@ class WorkflowEngine:
         finally:
             self.current_step = None
             self.save_state()
+
+    async def _execute_gpt_step(self, step: WorkflowStep) -> None:
+        """Execute a GPT-powered workflow step."""
+        try:
+            from .gpt_integration import get_gpt_integration
+
+            gpt_integration = get_gpt_integration(self.config.gpt_config if hasattr(self.config, 'gpt_config') else {})
+            
+            if not gpt_integration.is_available():
+                raise RuntimeError("GPT integration not available")
+
+            # Execute GPT step (returns AIResponse directly)
+            ai_response = gpt_integration.execute_gpt_step(step, self.workflow_data)
+
+            # Process response
+            self.state = WorkflowState.PROCESSING_RESPONSE
+            await self._process_ai_response(step, ai_response)
+            self.completed_steps.add(step.id)
+            self.logger.info(f"GPT step completed: {step.name}")
+
+        except Exception as e:
+            self.failed_steps.add(step.id)
+            self.logger.error(f"GPT step execution error: {step.name} - {e}")
 
     async def _send_prompt_to_agent(self, step: WorkflowStep) -> None:
         """Send prompt to target agent using V2 messaging system."""

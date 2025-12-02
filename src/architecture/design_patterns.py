@@ -3,19 +3,24 @@ Unified Design Patterns - KISS Principle Implementation
 ======================================================
 
 Essential design patterns consolidated into a single, simple module.
-Follows KISS principle: Keep It Simple, Stupid.
+Provides usable base classes that consolidate existing patterns in codebase.
 
-V2 Compliance: < 150 lines, single responsibility.
+Follows KISS principle: Keep It Simple, Stupid.
+V2 Compliance: < 400 lines, single responsibility.
 
 Author: Agent-2 (Architecture & Design Specialist) - KISS Leadership
 License: MIT
 """
 import logging
+import threading
+from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
-from typing import Any
+from typing import Any, Callable, TypeVar, Generic
 logger = logging.getLogger(__name__)
+
+T = TypeVar('T')
 
 
 class PatternType(Enum):
@@ -36,6 +41,127 @@ class DesignPattern:
     implementation: str
     use_cases: list[str]
 
+
+# ============================================================================
+# USABLE BASE CLASSES - Consolidate existing patterns
+# ============================================================================
+
+class Singleton:
+    """
+    Thread-safe Singleton base class.
+    
+    Consolidates existing singleton patterns (_config_manager, _instance patterns).
+    Usage:
+        class MyConfig(Singleton):
+            def __init__(self):
+                if not hasattr(self, '_initialized'):
+                    self.value = "config"
+                    self._initialized = True
+    """
+    _instances: dict[type, Any] = {}
+    _lock = threading.Lock()
+
+    def __new__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            with cls._lock:
+                if cls not in cls._instances:
+                    cls._instances[cls] = super().__new__(cls)
+        return cls._instances[cls]
+
+
+class Factory(Generic[T]):
+    """
+    Generic Factory base class.
+    
+    Consolidates existing factory patterns (TradingDependencyContainer, ManagerRegistry).
+    Usage:
+        factory = Factory[str, MyClass]()
+        factory.register('type1', lambda: Type1Class())
+        obj = factory.create('type1')
+    """
+    def __init__(self):
+        """Initialize factory."""
+        self._creators: dict[str, Callable[[], T]] = {}
+        self.logger = logging.getLogger(__name__)
+
+    def register(self, name: str, creator: Callable[[], T]) -> None:
+        """Register a factory creator function."""
+        self._creators[name] = creator
+        self.logger.debug(f"Registered factory creator: {name}")
+
+    def create(self, name: str) -> T | None:
+        """Create object using registered creator."""
+        if name not in self._creators:
+            self.logger.error(f"Factory creator not found: {name}")
+            return None
+        try:
+            return self._creators[name]()
+        except Exception as e:
+            self.logger.error(f"Factory creation failed for {name}: {e}")
+            return None
+
+
+class Observer(ABC):
+    """
+    Abstract Observer base class.
+    
+    Consolidates OrchestratorEvents pattern.
+    Usage:
+        class MyObserver(Observer):
+            def update(self, data):
+                print(f"Received: {data}")
+    """
+    @abstractmethod
+    def update(self, data: Any = None) -> None:
+        """Called when subject notifies observers."""
+        pass
+
+
+class Subject:
+    """
+    Subject base class for Observer pattern.
+    
+    Consolidates OrchestratorEvents pattern.
+    Usage:
+        subject = Subject()
+        observer = MyObserver()
+        subject.attach(observer)
+        subject.notify("data")
+    """
+    def __init__(self):
+        """Initialize subject."""
+        self._observers: list[Observer] = []
+        self._lock = threading.Lock()
+        self.logger = logging.getLogger(__name__)
+
+    def attach(self, observer: Observer) -> None:
+        """Attach an observer."""
+        with self._lock:
+            if observer not in self._observers:
+                self._observers.append(observer)
+                self.logger.debug("Observer attached")
+
+    def detach(self, observer: Observer) -> None:
+        """Detach an observer."""
+        with self._lock:
+            if observer in self._observers:
+                self._observers.remove(observer)
+                self.logger.debug("Observer detached")
+
+    def notify(self, data: Any = None) -> None:
+        """Notify all observers."""
+        with self._lock:
+            observers = list(self._observers)
+        for observer in observers:
+            try:
+                observer.update(data)
+            except Exception as e:
+                self.logger.error(f"Observer update failed: {e}")
+
+
+# ============================================================================
+# PATTERN DOCUMENTATION - Reference implementations
+# ============================================================================
 
 class UnifiedDesignPatterns:
     """
@@ -152,3 +278,18 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+# ============================================================================
+# EXPORTS - Usable classes and documentation
+# ============================================================================
+
+__all__ = [
+    'PatternType',
+    'DesignPattern',
+    'UnifiedDesignPatterns',
+    'Singleton',  # Usable base class
+    'Factory',    # Usable base class
+    'Observer',   # Usable base class
+    'Subject',    # Usable base class
+]

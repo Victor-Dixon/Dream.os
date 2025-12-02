@@ -4,10 +4,15 @@ Centralized dependency management with service registration and resolution
 REFACTORED: Clean DI container with comprehensive service management
 V2 COMPLIANCE: Under 300-line limit, comprehensive error handling, modular design
 
+Phase 1 Integration: Uses Factory base class for standardized factory pattern.
+
 @author Agent-7 - Web Development Specialist (adapted for Trading Robot)
 @version 1.0.0 - V2 COMPLIANCE DEPENDENCY INJECTION
 @license MIT
 """
+
+# Import Factory base class for standardized factory pattern
+from src.architecture.design_patterns import Factory
 
 
 class DependencyInjectionError(Exception):
@@ -20,10 +25,15 @@ class TradingDependencyContainer:
     """Dependency injection container for trading robot components."""
 
     def __init__(self):
-        """Initialize DI container."""
+        """Initialize DI container.
+        
+        Uses Factory base class for standardized factory pattern (Phase 1 Integration).
+        """
         self.logger = UnifiedLoggingSystem("TradingDependencyContainer")
         self._services: Dict[str, Any] = {}
-        self._factories: Dict[str, Callable] = {}
+        # Use Factory base class for standardized factory pattern
+        self._factory = Factory()
+        self._factories: Dict[str, Callable] = {}  # Keep for backward compatibility
         self._singletons: Dict[str, Any] = {}
         self._scoped_instances: Dict[str, Dict[str, Any]] = {}
 
@@ -58,7 +68,10 @@ class TradingDependencyContainer:
             raise DependencyInjectionError(f"Failed to register defaults: {e}")
 
     def register_factory(self, name: str, factory: Callable, singleton: bool = False) -> None:
-        """Register a service factory."""
+        """Register a service factory using standardized Factory pattern.
+        
+        Uses Factory base class for standardized factory pattern (Phase 1 Integration).
+        """
         try:
             self.logger.get_unified_logger().log_operation_start(
                 "register_factory", {"service_name": name, "singleton": singleton}
@@ -67,6 +80,9 @@ class TradingDependencyContainer:
             if not callable(factory):
                 raise DependencyInjectionError(f"Factory for {name} must be callable")
 
+            # Use Factory base class for standardized pattern
+            self._factory.register(name, factory)
+            # Keep for backward compatibility
             self._factories[name] = factory
             if singleton:
                 self._services[name] = None  # Mark as singleton but not yet instantiated
