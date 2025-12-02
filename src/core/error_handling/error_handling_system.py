@@ -148,48 +148,78 @@ class UnifiedErrorHandlingOrchestrator:
         use_recovery: bool = True,
     ) -> Any:
         """Execute operation with comprehensive error handling."""
+        wrapped_operation = self._wrap_with_circuit_breaker(
+            operation, component, use_circuit_breaker
+        )
 
+        if use_retry:
+            return self._execute_with_retry_and_recovery(
+                wrapped_operation, operation_name, component, use_recovery
+            )
+        else:
+            return wrapped_operation()
+
+    def _wrap_with_circuit_breaker(
+        self, operation: Callable, component: str, use_circuit_breaker: bool
+    ) -> Callable:
+        """Wrap operation with circuit breaker if enabled."""
         def wrapped_operation():
             return operation()
 
-        # Apply circuit breaker if enabled
         if use_circuit_breaker and component in self.circuit_breakers:
             circuit_breaker = self.circuit_breakers[component]
 
             def circuit_protected_operation():
                 return circuit_breaker.call(wrapped_operation)
 
-            wrapped_operation = circuit_protected_operation
+            return circuit_protected_operation
 
-        # Apply retry if enabled
-        if use_retry:
-            retry_mechanism = self.retry_mechanisms.get(component, RetryMechanism(RetryConfig()))
+        return wrapped_operation
 
+    def _execute_with_retry_and_recovery(
+        self,
+        wrapped_operation: Callable,
+        operation_name: str,
+        component: str,
+        use_recovery: bool,
+    ) -> Any:
+        """Execute with retry and recovery if enabled."""
+        retry_mechanism = self.retry_mechanisms.get(component, RetryMechanism(RetryConfig()))
+
+        try:
+            return retry_mechanism.execute_with_retry(wrapped_operation)
+        except Exception as e:
+            if use_recovery:
+                return self._attempt_recovery_and_retry(
+                    e, wrapped_operation, operation_name, retry_mechanism
+                )
+            raise e
+
+    def _attempt_recovery_and_retry(
+        self,
+        error: Exception,
+        wrapped_operation: Callable,
+        operation_name: str,
+        retry_mechanism: RetryMechanism,
+    ) -> Any:
+        """Attempt recovery and retry operation."""
+        error_context = ErrorContext(
+            operation=operation_name,
+            timestamp=datetime.now().isoformat(),
+            error_type=type(error).__name__,
+            category=None,
+            severity=ErrorSeverity.HIGH,
+            additional_data={"exception": str(error)},
+        )
+
+        if self.recovery_manager.attempt_recovery(error_context):
             try:
                 return retry_mechanism.execute_with_retry(wrapped_operation)
-            except Exception as e:
-                # Attempt recovery if enabled
-                if use_recovery:
-                    error_context = ErrorContext(
-                        operation=operation_name,
-                        timestamp=datetime.now().isoformat(),
-                        error_type=type(e).__name__,
-                        category=None,  # Will be determined by recovery strategy
-                        severity=ErrorSeverity.HIGH,
-                        additional_data={"exception": str(e)},
-                    )
+            except Exception as retry_error:
+                logger.error(f"Operation failed even after recovery: {retry_error}")
+                raise retry_error
 
-                    if self.recovery_manager.attempt_recovery(error_context):
-                        # Retry once after recovery
-                        try:
-                            return retry_mechanism.execute_with_retry(wrapped_operation)
-                        except Exception as retry_error:
-                            logger.error(f"Operation failed even after recovery: {retry_error}")
-                            raise retry_error
-
-                raise e
-        else:
-            return wrapped_operation()
+        raise error
 
     def get_system_health_report(self) -> dict[str, Any]:
         """Get comprehensive system health report."""
