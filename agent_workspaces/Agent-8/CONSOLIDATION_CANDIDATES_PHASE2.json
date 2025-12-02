@@ -2702,8 +2702,8 @@
       "category": "validation",
       "score": 4,
       "lines": 128,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_validation.py"
     },
     {
@@ -2712,8 +2712,8 @@
       "category": "analysis",
       "score": 4,
       "lines": 149,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_analysis.py"
     },
     {
@@ -2722,8 +2722,8 @@
       "category": "monitoring",
       "score": 4,
       "lines": 126,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_monitoring.py"
     },
     {
@@ -2762,8 +2762,8 @@
       "category": "monitoring",
       "score": 3,
       "lines": 119,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_monitoring.py"
     },
     {
@@ -2772,8 +2772,8 @@
       "category": "monitoring",
       "score": 2,
       "lines": 148,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_monitoring.py"
     },
     {
@@ -2822,8 +2822,8 @@
       "category": "analysis",
       "score": 4,
       "lines": 133,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_analysis.py"
     },
     {
@@ -2842,8 +2842,8 @@
       "category": "analysis",
       "score": 2,
       "lines": 81,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_analysis.py"
     },
     {
@@ -2852,8 +2852,8 @@
       "category": "analysis",
       "score": 2,
       "lines": 125,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_analysis.py"
     },
     {
@@ -2862,8 +2862,8 @@
       "category": "analysis",
       "score": 3,
       "lines": 115,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_analysis.py"
     },
     {
@@ -2882,8 +2882,8 @@
       "category": "validation",
       "score": 2,
       "lines": 48,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_validation.py"
     },
     {
@@ -2892,8 +2892,8 @@
       "category": "analysis",
       "score": 2,
       "lines": 44,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_analysis.py"
     },
     {
@@ -2982,8 +2982,8 @@
       "category": "analysis",
       "score": 2,
       "lines": 57,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_analysis.py"
     },
     {
@@ -3022,8 +3022,8 @@
       "category": "analysis",
       "score": 2,
       "lines": 38,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_analysis.py"
     },
     {
@@ -3032,8 +3032,8 @@
       "category": "validation",
       "score": 4,
       "lines": 144,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_validation.py"
     },
     {
@@ -3052,8 +3052,8 @@
       "category": "monitoring",
       "score": 2,
       "lines": 49,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_monitoring.py"
     },
     {
@@ -3062,8 +3062,8 @@
       "category": "monitoring",
       "score": 3,
       "lines": 138,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_monitoring.py"
     },
     {
@@ -3132,8 +3132,8 @@
       "category": "analysis",
       "score": 3,
       "lines": 101,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_analysis.py"
     },
     {
@@ -3152,8 +3152,8 @@
       "category": "validation",
       "score": 3,
       "lines": 144,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_validation.py"
     },
     {
@@ -3162,8 +3162,8 @@
       "category": "analysis",
       "score": 4,
       "lines": 140,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_analysis.py"
     },
     {
@@ -3192,8 +3192,8 @@
       "category": "validation",
       "score": 4,
       "lines": 144,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_validation.py"
     },
     {
@@ -3222,8 +3222,8 @@
       "category": "monitoring",
       "score": 3,
       "lines": 100,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_monitoring.py"
     },
     {
@@ -3252,8 +3252,8 @@
       "category": "analysis",
       "score": 4,
       "lines": 120,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_analysis.py"
     },
     {
@@ -3322,8 +3322,8 @@
       "category": "monitoring",
       "score": 4,
       "lines": 130,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_monitoring.py"
     },
     {
@@ -3332,8 +3332,8 @@
       "category": "monitoring",
       "score": 3,
       "lines": 102,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_monitoring.py"
     },
     {
@@ -3372,8 +3372,8 @@
       "category": "monitoring",
       "score": 3,
       "lines": 149,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_monitoring.py"
     },
     {
@@ -3392,8 +3392,8 @@
       "category": "monitoring",
       "score": 3,
       "lines": 117,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_monitoring.py"
     },
     {
@@ -3422,8 +3422,8 @@
       "category": "validation",
       "score": 4,
       "lines": 114,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_validation.py"
     },
     {
@@ -3432,8 +3432,8 @@
       "category": "monitoring",
       "score": 2,
       "lines": 23,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_monitoring.py"
     },
     {
@@ -3462,8 +3462,8 @@
       "category": "monitoring",
       "score": 3,
       "lines": 103,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_monitoring.py"
     },
     {
@@ -3472,8 +3472,8 @@
       "category": "monitoring",
       "score": 2,
       "lines": 90,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_monitoring.py"
     },
     {
@@ -3502,8 +3502,8 @@
       "category": "validation",
       "score": 2,
       "lines": 45,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_validation.py"
     },
     {
@@ -3512,8 +3512,8 @@
       "category": "monitoring",
       "score": 2,
       "lines": 53,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_monitoring.py"
     },
     {
@@ -3532,8 +3532,8 @@
       "category": "monitoring",
       "score": 4,
       "lines": 132,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_monitoring.py"
     },
     {
@@ -3542,8 +3542,8 @@
       "category": "analysis",
       "score": 3,
       "lines": 121,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_analysis.py"
     },
     {
@@ -3612,8 +3612,8 @@
       "category": "monitoring",
       "score": 4,
       "lines": 101,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_monitoring.py"
     },
     {
@@ -3632,8 +3632,8 @@
       "category": "monitoring",
       "score": 3,
       "lines": 139,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_monitoring.py"
     },
     {
@@ -3652,8 +3652,8 @@
       "category": "validation",
       "score": 3,
       "lines": 138,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_validation.py"
     },
     {
@@ -3672,8 +3672,8 @@
       "category": "validation",
       "score": 3,
       "lines": 115,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_validation.py"
     },
     {
@@ -3712,8 +3712,8 @@
       "category": "analysis",
       "score": 4,
       "lines": 101,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_analysis.py"
     },
     {
@@ -3722,8 +3722,8 @@
       "category": "analysis",
       "score": 4,
       "lines": 115,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_analysis.py"
     },
     {
@@ -3732,8 +3732,8 @@
       "category": "analysis",
       "score": 4,
       "lines": 125,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_analysis.py"
     },
     {
@@ -3742,8 +3742,8 @@
       "category": "validation",
       "score": 2,
       "lines": 116,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_validation.py"
     },
     {
@@ -3762,8 +3762,8 @@
       "category": "analysis",
       "score": 4,
       "lines": 114,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_analysis.py"
     },
     {
@@ -3812,8 +3812,8 @@
       "category": "monitoring",
       "score": 2,
       "lines": 47,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_monitoring.py"
     },
     {
@@ -3842,8 +3842,8 @@
       "category": "validation",
       "score": 3,
       "lines": 116,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_validation.py"
     },
     {
@@ -3862,8 +3862,8 @@
       "category": "analysis",
       "score": 4,
       "lines": 132,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_analysis.py"
     },
     {
@@ -3882,8 +3882,8 @@
       "category": "monitoring",
       "score": 3,
       "lines": 147,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_monitoring.py"
     },
     {
@@ -3932,8 +3932,8 @@
       "category": "monitoring",
       "score": 4,
       "lines": 141,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_monitoring.py"
     },
     {
@@ -3942,8 +3942,8 @@
       "category": "monitoring",
       "score": 4,
       "lines": 149,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_monitoring.py"
     },
     {
@@ -3952,8 +3952,8 @@
       "category": "monitoring",
       "score": 3,
       "lines": 106,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_monitoring.py"
     },
     {
@@ -3992,8 +3992,8 @@
       "category": "monitoring",
       "score": 2,
       "lines": 88,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_monitoring.py"
     },
     {
@@ -4022,8 +4022,8 @@
       "category": "analysis",
       "score": 3,
       "lines": 105,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_analysis.py"
     },
     {
@@ -4032,8 +4032,8 @@
       "category": "analysis",
       "score": 4,
       "lines": 127,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_analysis.py"
     },
     {
@@ -4042,8 +4042,8 @@
       "category": "monitoring",
       "score": 2,
       "lines": 71,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_monitoring.py"
     },
     {
@@ -4072,8 +4072,8 @@
       "category": "monitoring",
       "score": 3,
       "lines": 111,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_monitoring.py"
     },
     {
@@ -4082,8 +4082,8 @@
       "category": "monitoring",
       "score": 3,
       "lines": 120,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_monitoring.py"
     },
     {
@@ -4152,8 +4152,8 @@
       "category": "analysis",
       "score": 4,
       "lines": 128,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_analysis.py"
     },
     {
@@ -4192,8 +4192,8 @@
       "category": "validation",
       "score": 3,
       "lines": 111,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_validation.py"
     },
     {
@@ -4262,8 +4262,8 @@
       "category": "monitoring",
       "score": 4,
       "lines": 108,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_monitoring.py"
     },
     {
@@ -4282,8 +4282,8 @@
       "category": "validation",
       "score": 2,
       "lines": 120,
-      "status": "review_needed",
-      "can_archive": false,
+      "status": "candidate",
+      "can_archive": true,
       "unified_replacement": "unified_validation.py"
     },
     {
