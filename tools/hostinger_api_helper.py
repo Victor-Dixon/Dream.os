@@ -36,7 +36,10 @@ logger = logging.getLogger(__name__)
 class HostingerAPIHelper:
     """Helper to discover SFTP credentials via Hostinger API."""
 
-    BASE_URL = "https://api.hostinger.com/v1"
+    # Updated to use developers.hostinger.com API
+    BASE_URL = "https://developers.hostinger.com/api"
+    VPS_BASE_URL = f"{BASE_URL}/vps/v1"
+    V1_BASE_URL = f"{BASE_URL}/v1"
     
     def __init__(self, api_key: Optional[str] = None):
         """Initialize Hostinger API helper."""
@@ -44,15 +47,14 @@ class HostingerAPIHelper:
         if not self.api_key:
             raise ValueError("HOSTINGER_API_KEY not set in .env file")
         
-        # Try different authentication formats
-        # Hostinger API might use different auth format
+        # Use Bearer token format (confirmed working from user's curl command)
         self.headers = {
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json",
             "Accept": "application/json"
         }
         
-        # Alternative: API key in header directly
+        # Alternative: API key in header directly (fallback)
         self.headers_alt = {
             "X-API-Key": self.api_key,
             "Content-Type": "application/json",
@@ -66,13 +68,23 @@ class HostingerAPIHelper:
             return None
         
         try:
-            response = requests.get(
-                f"{self.BASE_URL}/account",
-                headers=self.headers,
-                timeout=10
-            )
-            response.raise_for_status()
-            return response.json()
+            # Try V1 API first
+            endpoints = [
+                f"{self.V1_BASE_URL}/account",
+                f"{self.BASE_URL}/v1/account",
+                f"{self.VPS_BASE_URL}/account",
+            ]
+            
+            for endpoint in endpoints:
+                try:
+                    response = requests.get(endpoint, headers=self.headers, timeout=10)
+                    if response.status_code == 200:
+                        return response.json()
+                except:
+                    continue
+            
+            logger.warning("Account info endpoint not found")
+            return None
         except requests.exceptions.RequestException as e:
             logger.error(f"API request failed: {e}")
             return None
@@ -83,25 +95,29 @@ class HostingerAPIHelper:
             return None
         
         try:
-            # Try Bearer token first
-            response = requests.get(
-                f"{self.BASE_URL}/domains",
-                headers=self.headers,
-                timeout=10
-            )
+            # Try multiple endpoints
+            endpoints = [
+                f"{self.V1_BASE_URL}/domains",
+                f"{self.BASE_URL}/v1/domains",
+                f"{self.VPS_BASE_URL}/domains",
+            ]
             
-            # If 403, try alternative auth format
-            if response.status_code == 403:
-                logger.info("Bearer token failed, trying X-API-Key format...")
-                response = requests.get(
-                    f"{self.BASE_URL}/domains",
-                    headers=self.headers_alt,
-                    timeout=10
-                )
+            for endpoint in endpoints:
+                try:
+                    response = requests.get(endpoint, headers=self.headers, timeout=10)
+                    if response.status_code == 200:
+                        data = response.json()
+                        # Handle different response formats
+                        if isinstance(data, list):
+                            return data
+                        return data.get("domains", []) or data.get("data", []) or []
+                    elif response.status_code == 404:
+                        continue  # Try next endpoint
+                except:
+                    continue
             
-            response.raise_for_status()
-            data = response.json()
-            return data.get("domains", []) or data.get("data", [])
+            logger.warning("Domains endpoint not found")
+            return None
         except requests.exceptions.RequestException as e:
             logger.error(f"Failed to get domains: {e}")
             if hasattr(e, 'response') and e.response is not None:
