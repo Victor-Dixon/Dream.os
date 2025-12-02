@@ -1,8 +1,8 @@
 {
-  "timestamp": "2025-12-02T05:51:47.971882",
+  "timestamp": "2025-12-02T08:28:08.946885",
   "summary": {
-    "identical_groups": 576,
-    "same_name_groups": 140,
+    "identical_groups": 581,
+    "same_name_groups": 144,
     "needs_analysis_groups": 51
   },
   "categories": {
@@ -10,36 +10,6 @@
       {
         "ssot": "AGENTS.md",
         "duplicates": [
-          "DRY_ELIMINATOR_REVIEW.md",
-          "temp_help_view.txt",
-          "implementation_leadership_confirmation.py",
-          "src\\ai_training\\dreamvault\\scrapers\\chatgpt_scraper_core.py",
-          "src\\ai_training\\dreamvault\\scrapers\\chatgpt_scraper_operations.py",
-          "src\\ai_training\\dreamvault\\scrapers\\chatgpt_scraper_refactored.py",
-          "src\\services\\unified_onboarding_service.py",
-          "src\\services\\vector_integration_unified.py",
-          "src\\services\\vector_models_and_embedding_unified.py",
-          "docs\\architecture\\MESSAGE_QUEUE_PROCESSOR_ARCHITECTURAL_REVIEW.md",
-          "docs\\architecture\\AGENT7_CLEANUP_ARCHITECTURAL_REVIEW.md",
-          "docs\\discord\\STATUS_UPDATE_INTEGRATION.md",
-          "docs\\discord\\STATUS_UPDATE_SOLUTION_SUMMARY.md",
-          "docs\\discord\\STATUS_UPDATE_QUICK_GUIDE.md",
-          "docs\\discord\\START_STATUS_MONITOR_OVERNIGHT.md",
-          "docs\\discord\\WHY_MONITOR_DIDNT_START.md",
-          "docs\\discord\\MONITOR_NOT_STARTING_FIX.md",
-          "docs\\protocols\\EXECUTION_OVER_DOCUMENTATION.md",
-          "docs\\protocols\\AGENT_COMPLIANCE_ENFORCEMENT.md",
-          "docs\\organization\\SIMPLE_GIT_CLONE_SOLUTION.md",
-          "docs\\organization\\SESSION_CLOSE_2025-11-29_TASK_ASSIGNMENTS.md",
-          "docs\\organization\\NEXT_ASSIGNMENTS_2025-11-30.md",
-          "docs\\organization\\NEXT_ASSIGNMENTS_ROUND2_2025-11-30.md",
-          "docs\\captain\\11-28_VS_11-29_CAPTAIN_COMPARISON.md",
-          "docs\\chat_presence\\SWARM_PUBLIC_ANNOUNCEMENT.md",
-          "docs\\cleanup\\AGENT7_CLEANUP_EXECUTION_LOG.md",
-          "docs\\cleanup\\AGENT7_CLEANUP_COMPLETE_REPORT.md",
-          "temp_repos\\Thea\\codebase_analysis\\class_counts.txt",
-          "temp_repos\\Thea\\src\\dreamscape\\core\\training\\__init__.py",
-          "temp_repos\\Auto_Blogger\\__init__.py",
           "temp_repos\\Auto_Blogger\\autoblogger\\__init__.py",
           "temp_repos\\Auto_Blogger\\autoblogger\\models\\__init__.py",
           "temp_repos\\Auto_Blogger\\autoblogger\\resources\\translations\\styles.qss",
@@ -78,7 +48,7 @@
           "swarm_brain\\protocols\\AGENT_COMPLETION_PROTOCOL.md",
           "trading_robot\\README_LIVE_TRADING_SETUP.md"
         ],
-        "count": 68
+        "count": 38
       },
       {
         "ssot": "rc.services.messaging_cli --bulk --message \uf022[BROADCAST] All Agents - Break Acknowledgment Loop",
@@ -210,16 +180,30 @@
         "count": 2
       },
       {
-        "ssot": "docs\\organization\\OUTPUT_FLYWHEEL_COMPLETION_STATUS.md",
+        "ssot": "docs\\organization\\OUTPUT_FLYWHEEL_SWARM_INTEGRATION.md",
         "duplicates": [
-          "swarm_brain\\devlogs\\system_events\\2025-12-02_agent-4_OUTPUT_FLYWHEEL_COMPLETION_STATUS.md"
+          "swarm_brain\\devlogs\\system_events\\2025-12-02_agent-4_OUTPUT_FLYWHEEL_SWARM_INTEGRATION.md"
         ],
         "count": 2
       },
       {
-        "ssot": "docs\\organization\\OUTPUT_FLYWHEEL_SWARM_INTEGRATION.md",
+        "ssot": "docs\\organization\\SWARM_STATUS_2025-12-02_08-00.md",
         "duplicates": [
-          "swarm_brain\\devlogs\\system_events\\2025-12-02_agent-4_OUTPUT_FLYWHEEL_SWARM_INTEGRATION.md"
+          "swarm_brain\\devlogs\\system_events\\2025-12-02_agent-4_SWARM_STATUS_2025-12-02_08-00.md"
+        ],
+        "count": 2
+      },
+      {
+        "ssot": "docs\\organization\\STATUS_MONITOR_ACTIVATION_GUIDE.md",
+        "duplicates": [
+          "swarm_brain\\devlogs\\system_events\\2025-12-02_agent-4_STATUS_MONITOR_ACTIVATION_GUIDE.md"
+        ],
+        "count": 2
+      },
+      {
+        "ssot": "docs\\organization\\CAPTAIN_LOOP_CLOSURE_ASSIGNMENTS_2025-12-02.md",
+        "duplicates": [
+          "swarm_brain\\devlogs\\system_events\\2025-12-02_agent-4_CAPTAIN_LOOP_CLOSURE_ASSIGNMENTS_2025-12-02.md"
         ],
         "count": 2
       },
@@ -4067,6 +4051,27 @@
         "count": 2
       },
       {
+        "ssot": "devlogs\\agent-6_2025-12-02_technical_debt_assessment_complete.md",
+        "duplicates": [
+          "swarm_brain\\devlogs\\mission_reports\\2025-12-02_agent-6_agent-6_2025-12-02_technical_debt_assessment_complete.md"
+        ],
+        "count": 2
+      },
+      {
+        "ssot": "devlogs\\2025-12-02_agent4_technical_debt_swarm_assignment.md",
+        "duplicates": [
+          "swarm_brain\\devlogs\\system_events\\2025-12-02_agent-4_2025-12-02_agent4_technical_debt_swarm_assignment.md"
+        ],
+        "count": 2
+      },
+      {
+        "ssot": "devlogs\\2025-12-02_agent4_status_monitor_resume_fix.md",
+        "duplicates": [
+          "swarm_brain\\devlogs\\system_events\\2025-12-02_agent-4_2025-12-02_agent4_status_monitor_resume_fix.md"
+        ],
+        "count": 2
+      },
+      {
         "ssot": "schemas\\swarm_debate_consolidation_backup.xml",
         "duplicates": [
           "schemas\\swarm_debate_consolidation.xml"
@@ -4230,6 +4235,7 @@
           "dream\\repos\\master\\dadudekc\\README.md",
           "money_ops\\README.md",
           "systems\\output_flywheel\\README.md",
+          "systems\\output_flywheel\\integration\\README.md",
           "examples\\quickstart_demo\\README.md",
           "extensions\\repository-navigator\\README.md",
           "extensions\\repository-navigator\\test\\README.md",
@@ -4240,7 +4246,7 @@
           "trading_robot\\README.md",
           ".cursor\\rules\\README.md"
         ],
-        "count": 63
+        "count": 64
       },
       {
         "filename": "jest.config.js",
@@ -4418,6 +4424,14 @@
         "count": 10
       },
       {
+        "filename": "base_manager.py",
+        "paths": [
+          "src\\core\\managers\\base_manager.py",
+          "src\\core\\base\\base_manager.py"
+        ],
+        "count": 2
+      },
+      {
         "filename": "task_executor.py",
         "paths": [
           "src\\core\\managers\\execution\\task_executor.py",
@@ -4534,6 +4548,14 @@
           "temp_repos\\Auto_Blogger\\autoblogger\\services\\utils.py"
         ],
         "count": 4
+      },
+      {
+        "filename": "dependency_injection.py",
+        "paths": [
+          "src\\infrastructure\\dependency_injection.py",
+          "src\\trading_robot\\core\\dependency_injection.py"
+        ],
+        "count": 2
       },
       {
         "filename": "memory_system.py",
@@ -5206,6 +5228,22 @@
         "paths": [
           "tools\\consolidation_executor.py",
           "tools\\toolbelt\\executors\\consolidation_executor.py"
+        ],
+        "count": 2
+      },
+      {
+        "filename": "weekly_report_generator.py",
+        "paths": [
+          "systems\\output_flywheel\\weekly_report_generator.py",
+          "systems\\technical_debt\\weekly_report_generator.py"
+        ],
+        "count": 2
+      },
+      {
+        "filename": "weekly_report_2025-11-25.json",
+        "paths": [
+          "systems\\output_flywheel\\reports\\weekly_report_2025-11-25.json",
+          "systems\\technical_debt\\reports\\weekly_report_2025-11-25.json"
         ],
         "count": 2
       },
