@@ -1,0 +1,16 @@
+{
+  "errors": [],
+  "retry_success": [],
+  "concurrency_events": [],
+  "summary": {
+    "total_errors": 0,
+    "winerror_5_count": 0,
+    "winerror_32_count": 0,
+    "retry_success_count": 0,
+    "retry_failure_count": 0,
+    "max_retries_needed": 0,
+    "avg_retry_delay": 0.0,
+    "high_concurrency_count": 0
+  },
+  "last_updated": "2025-12-02T07:16:18.417323"
+}

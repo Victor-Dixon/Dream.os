@@ -733,7 +733,7 @@ class MessagingCommands(commands.Cog):
                     color=discord.Color.green(),
                 )
                 # Use chunking utility to avoid truncation
-                from .utils.message_chunking import chunk_field_value
+                from src.discord_commander.utils.message_chunking import chunk_field_value
                 message_chunks = chunk_field_value(message)
                 embed.add_field(
                     name="Message", value=message_chunks[0], inline=False)
@@ -817,7 +817,7 @@ class MessagingCommands(commands.Cog):
                     color=discord.Color.green(),
                 )
                 # Use chunking utility to avoid truncation
-                from .utils.message_chunking import chunk_field_value
+                from src.discord_commander.utils.message_chunking import chunk_field_value
                 message_chunks = chunk_field_value(message)
                 embed.add_field(
                     name="Message", value=message_chunks[0], inline=False)

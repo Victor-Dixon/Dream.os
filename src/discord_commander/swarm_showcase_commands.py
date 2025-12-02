@@ -124,7 +124,7 @@ class SwarmShowcaseCommands(commands.Cog if DISCORD_AVAILABLE else object):
             
             # Format tasks with FULL content (no truncation)
             # Use chunking utility to handle long task lists
-            from .utils.message_chunking import chunk_field_value
+            from src.discord_commander.utils.message_chunking import chunk_field_value
             
             if tasks:
                 # Create full task list
