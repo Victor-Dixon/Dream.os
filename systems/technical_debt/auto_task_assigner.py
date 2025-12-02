@@ -71,17 +71,32 @@ class TechnicalDebtAutoAssigner:
         self.agent_workspaces = project_root / "agent_workspaces"
 
     def _find_latest_report(self) -> Optional[Path]:
-        """Find the most recent weekly report."""
+        """Find the most recent report (daily or weekly)."""
         if not self.reports_dir.exists():
             return None
         
-        reports = sorted(
+        # Try daily reports first (2x daily - more frequent)
+        daily_reports = sorted(
+            self.reports_dir.glob("daily_report_*.json"),
+            key=lambda p: p.stat().st_mtime,
+            reverse=True
+        )
+        if daily_reports:
+            logger.info(f"Using latest daily report: {daily_reports[0].name}")
+            return daily_reports[0]
+        
+        # Fallback to weekly reports
+        weekly_reports = sorted(
             self.reports_dir.glob("weekly_report_*.json"),
             key=lambda p: p.stat().st_mtime,
             reverse=True
         )
+        if weekly_reports:
+            logger.info(f"Using latest weekly report: {weekly_reports[0].name}")
+            return weekly_reports[0]
         
-        return reports[0] if reports else None
+        logger.warning("No technical debt reports found (daily or weekly).")
+        return None
 
     def _load_report(self) -> Dict[str, Any]:
         """Load weekly technical debt report."""
@@ -200,12 +215,12 @@ class TechnicalDebtAutoAssigner:
         
         return "Agent-1"  # Default coordinator
 
-    def _check_agent_availability(self, agent_id: str) -> bool:
+    def _check_agent_availability(self, agent_id: str) -> tuple[bool, str]:
         """Check if agent is available (not blocked, has capacity)."""
         status_file = self.agent_workspaces / agent_id / "status.json"
         
         if not status_file.exists():
-            return True  # Assume available if no status file
+            return True, "no status file"  # Assume available if no status file
         
         try:
             with open(status_file, "r", encoding="utf-8") as f:
@@ -213,21 +228,18 @@ class TechnicalDebtAutoAssigner:
             
             # Check if agent is blocked
             if status.get("status") == "BLOCKED":
-                return False
+                return False, "blocked"
             
             # Check current tasks count (limit to 5 active tasks - more lenient)
             current_tasks = status.get("current_tasks", [])
-            if len(current_tasks) >= 5:
-                return False
+            task_count = len(current_tasks)
+            if task_count >= 5:
+                return False, f"{task_count} tasks (max 5)"
             
-            # Check if agent is active (not idle)
-            agent_status = status.get("status", "").upper()
-            if agent_status in ["IDLE", "WAITING", "COMPLETE"]:
-                return True  # Available for new work
-            
-            return True  # Assume available if active
-        except Exception:
-            return True  # Assume available on error
+            # Agent is available
+            return True, f"available ({task_count} tasks)"
+        except Exception as e:
+            return True, f"error checking: {e}"  # Assume available on error
 
     def _send_task_via_messaging(self, agent_id: str, task: Dict[str, Any]) -> bool:
         """Send task to agent via messaging CLI."""
@@ -331,8 +343,9 @@ class TechnicalDebtAutoAssigner:
             agent_id = self._find_best_agent(task)
             
             # Check availability
-            if not self._check_agent_availability(agent_id):
-                print(f"⏭️ Skipping {task['category']} - {agent_id} not available")
+            is_available, reason = self._check_agent_availability(agent_id)
+            if not is_available:
+                print(f"⏭️ Skipping {task['category']} - {agent_id} not available ({reason})")
                 skipped += 1
                 continue
             

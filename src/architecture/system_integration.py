@@ -225,6 +225,58 @@ class UnifiedSystemIntegration:
         
         return results
 
+    def register_metrics_exporter(self) -> bool:
+        """Register metrics exporter in integration framework (Phase 2 Integration)."""
+        try:
+            from src.services.metrics_exporter import MetricsExporter
+            # Register as API endpoint (metrics export service)
+            metrics_url = "file://metrics_export.json"  # Default export location
+            success = self.register_endpoint(
+                "metrics_exporter",
+                IntegrationType.API,
+                metrics_url
+            )
+            if success:
+                self.logger.info('✅ Metrics exporter registered in integration framework')
+            return success
+        except Exception as e:
+            self.logger.error(f"❌ Failed to register metrics exporter: {e}")
+            return False
+
+    def check_metrics_exporter_health(self) -> dict[str, Any]:
+        """Check metrics exporter health (Phase 2 Integration)."""
+        if "metrics_exporter" not in self.endpoints:
+            return {'error': "Metrics exporter not registered"}
+        
+        try:
+            from src.services.metrics_exporter import MetricsExporter
+            exporter = MetricsExporter()
+            
+            # Test export
+            try:
+                metrics = exporter.export_unified_metrics()
+                metrics_available = bool(metrics.get("summary"))
+            except:
+                metrics_available = False
+            
+            # Update endpoint status
+            endpoint = self.endpoints["metrics_exporter"]
+            endpoint.status = IntegrationStatus.CONNECTED if metrics_available else IntegrationStatus.ERROR
+            endpoint.last_checked = datetime.now().isoformat()
+            endpoint.response_time = 0.1
+            
+            return {
+                'endpoint': 'metrics_exporter',
+                'status': 'connected' if metrics_available else 'error',
+                'metrics_available': metrics_available,
+                'last_checked': endpoint.last_checked
+            }
+        except Exception as e:
+            self.logger.error(f"❌ Metrics exporter health check failed: {e}")
+            if "metrics_exporter" in self.endpoints:
+                self.endpoints["metrics_exporter"].status = IntegrationStatus.ERROR
+            return {'error': str(e), 'endpoint': 'metrics_exporter'}
+
     def integrate_systems(self) ->dict[str, Any]:
         """Integrate all registered systems (Phase 2: Auto-register existing systems)."""
         self.logger.info('🔗 Starting system integration...')
@@ -244,6 +296,10 @@ class UnifiedSystemIntegration:
         db_results = self.auto_register_databases()
         self.logger.info(f"Databases registered: {sum(1 for v in db_results.values() if v)}/{len(db_results)}")
         
+        # Register metrics exporter
+        metrics_result = self.register_metrics_exporter()
+        self.logger.info(f"Metrics exporter registration: {'✅' if metrics_result else '❌'}")
+        
         # Legacy endpoints (for backward compatibility)
         self.register_endpoint('monitoring', IntegrationType.API,
             'http://localhost:8000/monitoring')
@@ -257,6 +313,8 @@ class UnifiedSystemIntegration:
         for endpoint_name in self.endpoints:
             if endpoint_name == "message_queue":
                 health_results[endpoint_name] = self.check_message_queue_health()
+            elif endpoint_name == "metrics_exporter":
+                health_results[endpoint_name] = self.check_metrics_exporter_health()
             else:
                 health_results[endpoint_name] = self.check_endpoint_health(
                     endpoint_name)

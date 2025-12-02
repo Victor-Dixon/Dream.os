@@ -31,10 +31,12 @@ try:
     from .production_monitor import ProductionMonitor
     from .output_flywheel_usage_tracker import OutputFlywheelUsageTracker
     from .metrics_tracker import OutputFlywheelMetricsTracker
+    from .unified_metrics_reader import UnifiedMetricsReader
 except ImportError:
     from production_monitor import ProductionMonitor
     from output_flywheel_usage_tracker import OutputFlywheelUsageTracker
     from metrics_tracker import OutputFlywheelMetricsTracker
+    from unified_metrics_reader import UnifiedMetricsReader
 
 
 class WeeklyReportGenerator:
@@ -52,6 +54,7 @@ class WeeklyReportGenerator:
         self.monitor = ProductionMonitor(metrics_dir)
         self.usage_tracker = OutputFlywheelUsageTracker(metrics_dir)
         self.metrics_tracker = OutputFlywheelMetricsTracker(metrics_dir)
+        self.unified_metrics = UnifiedMetricsReader()
 
     def calculate_publication_rate(self) -> Dict[str, Any]:
         """Calculate publication success rates."""
@@ -181,6 +184,11 @@ class WeeklyReportGenerator:
         # Get usage statistics
         usage_stats = self.usage_tracker.usage_data.get("usage_stats", {})
         
+        # Get unified metrics from Agent-8's exporter
+        unified_metrics = self.unified_metrics.get_metrics()
+        manifest_stats = unified_metrics.get("manifest", {}).get("manifest_stats", {})
+        ssot_compliance = unified_metrics.get("ssot", {}).get("ssot_compliance", {})
+        
         report = {
             "report_period": {
                 "week_start": week_start.isoformat(),
@@ -217,6 +225,20 @@ class WeeklyReportGenerator:
                 "total_errors": production_report["errors"]["total_errors"],
             },
             "feedback_summary": feedback_summary,
+            "unified_metrics": {
+                "manifest": {
+                    "total_sessions": manifest_stats.get("total_sessions", 0),
+                    "total_artifacts": manifest_stats.get("total_artifacts", 0),
+                    "sessions_by_type": manifest_stats.get("sessions_by_type", {}),
+                    "artifacts_by_type": manifest_stats.get("artifacts_by_type", {}),
+                    "duplicate_hashes": manifest_stats.get("duplicate_hashes", 0),
+                },
+                "ssot": {
+                    "compliant": ssot_compliance.get("overall_compliant", False),
+                    "violations": ssot_compliance.get("total_violations", 0),
+                    "warnings": ssot_compliance.get("total_warnings", 0),
+                },
+            },
             "recommendations": self._generate_recommendations(production_report, feedback_summary),
         }
         
