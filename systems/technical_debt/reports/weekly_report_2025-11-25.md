@@ -1,7 +1,7 @@
 # Technical Debt Weekly Report
 
 **Report Period**: 2025-11-25 to 2025-12-02  
-**Generated**: 2025-12-02 06:17:47
+**Generated**: 2025-12-02 08:44:30
 
 ---
 
