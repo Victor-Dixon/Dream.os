@@ -1087,12 +1087,16 @@ class ConsolidatedMessagingService:
                 from ..core.messaging_models_core import UnifiedMessageType
                 
                 # Check if this is an onboarding command (hard onboard, soft onboard, start)
-                message_lower = message.lower()
+                import re
+                message_lower = message.lower().strip()
+                
+                # More specific matching: only match "start" when followed by agent identifier
                 is_onboarding_command = (
                     "hard onboard" in message_lower or
                     "soft onboard" in message_lower or
-                    message_lower.strip().startswith("!start") or
-                    message_lower.strip().startswith("start")
+                    message_lower.startswith("!start") or
+                    # Only match "start Agent-X" or "start X" where X is 1-8 (not generic "start")
+                    bool(re.match(r'^start\s+(agent-)?[1-8](\s|$)', message_lower, re.IGNORECASE))
                 )
                 
                 # Set message_type explicitly: ONBOARDING only for onboarding commands, HUMAN_TO_AGENT for all others

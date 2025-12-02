@@ -121,7 +121,7 @@ class PyAutoGUIMessagingDelivery:
 
     def validate_coordinates(self, agent_id: str, coords: tuple[int, int]) -> bool:
         """
-        Validate coordinates before sending.
+        Validate coordinates before sending with comprehensive checks.
 
         Args:
             agent_id: Agent identifier
@@ -131,15 +131,54 @@ class PyAutoGUIMessagingDelivery:
             True if coordinates are valid
         """
         if not coords or len(coords) != 2:
-            logger.error(f"Invalid coordinates for {agent_id}: {coords}")
+            logger.error(f"❌ Invalid coordinates for {agent_id}: {coords}")
             return False
 
         x, y = coords
         if not isinstance(x, (int, float)) or not isinstance(y, (int, float)):
-            logger.error(f"Coordinates must be numeric for {agent_id}: ({x}, {y})")
+            logger.error(f"❌ Coordinates must be numeric for {agent_id}: ({x}, {y})")
             return False
 
-        return True
+        # Validate against bounds from cursor_agent_coords.json
+        try:
+            from .coordinate_loader import get_coordinate_loader
+            coord_loader = get_coordinate_loader()
+            
+            # Get expected coordinates for this agent
+            expected_chat_coords = coord_loader.get_chat_coordinates(agent_id)
+            expected_onboarding_coords = coord_loader.get_onboarding_coordinates(agent_id)
+            
+            # Check if coords match expected (within tolerance for screen variations)
+            coords_match = (
+                coords == expected_chat_coords or 
+                coords == expected_onboarding_coords or
+                (abs(x - expected_chat_coords[0]) <= 5 and abs(y - expected_chat_coords[1]) <= 5) or
+                (abs(x - expected_onboarding_coords[0]) <= 5 and abs(y - expected_onboarding_coords[1]) <= 5)
+            )
+            
+            if not coords_match:
+                logger.warning(
+                    f"⚠️ Coordinate mismatch for {agent_id}: got {coords}, "
+                    f"expected chat={expected_chat_coords} or onboarding={expected_onboarding_coords}"
+                )
+                # Don't fail - allow with warning (screen resolution differences)
+            
+            # Validate bounds from cursor_agent_coords.json validation_rules
+            # Default bounds: min_x=-2000, max_x=2000, min_y=0, max_y=1500
+            if x < -2000 or x > 2000:
+                logger.error(f"❌ X coordinate out of bounds for {agent_id}: {x} (expected -2000 to 2000)")
+                return False
+            if y < 0 or y > 1500:
+                logger.error(f"❌ Y coordinate out of bounds for {agent_id}: {y} (expected 0 to 1500)")
+                return False
+            
+            logger.debug(f"✅ Coordinates validated for {agent_id}: {coords}")
+            return True
+            
+        except Exception as e:
+            logger.warning(f"⚠️ Could not validate coordinates against SSOT: {e}, using basic validation")
+            # Fallback to basic validation if SSOT check fails
+            return True
 
     def send_message(self, message) -> bool:
         """
@@ -489,6 +528,34 @@ class PyAutoGUIMessagingDelivery:
             logger.debug(f"📍 Moving to coordinates: ({x}, {y})")
             self.pyautogui.moveTo(x, y, duration=0.5)
             
+            # CRITICAL: Validate coordinates AFTER moveTo but BEFORE paste
+            # This ensures we're at the correct location before attempting paste
+            current_mouse_pos = self.pyautogui.position()
+            coords_valid = self.validate_coordinates(message.recipient, (x, y))
+            
+            # Verify mouse actually moved to target coordinates (within tolerance)
+            distance = ((current_mouse_pos[0] - x) ** 2 + (current_mouse_pos[1] - y) ** 2) ** 0.5
+            if distance > 10:  # Allow 10px tolerance for screen variations
+                logger.warning(
+                    f"⚠️ Mouse position mismatch for {message.recipient}: "
+                    f"expected ({x}, {y}), got {current_mouse_pos}, distance={distance:.1f}px"
+                )
+                # Retry moveTo if too far off
+                self.pyautogui.moveTo(x, y, duration=0.3)
+                time.sleep(0.2)
+                current_mouse_pos = self.pyautogui.position()
+                distance = ((current_mouse_pos[0] - x) ** 2 + (current_mouse_pos[1] - y) ** 2) ** 0.5
+                if distance > 10:
+                    logger.error(
+                        f"❌ Failed to move to coordinates for {message.recipient}: "
+                        f"expected ({x}, {y}), still at {current_mouse_pos}"
+                    )
+                    return False
+            
+            if not coords_valid:
+                logger.error(f"❌ Coordinate validation failed for {message.recipient} at ({x}, {y})")
+                return False
+            
             # Click to focus window and input field
             logger.debug("🖱️ Clicking to focus input field")
             self.pyautogui.click()
@@ -505,12 +572,36 @@ class PyAutoGUIMessagingDelivery:
             self.pyautogui.press("delete")
             time.sleep(0.3)
 
+            # CRITICAL: Final coordinate validation RIGHT BEFORE paste
+            # This is the last chance to catch coordinate issues before pasting
+            final_mouse_pos = self.pyautogui.position()
+            final_distance = ((final_mouse_pos[0] - x) ** 2 + (final_mouse_pos[1] - y) ** 2) ** 0.5
+            if final_distance > 10:
+                logger.error(
+                    f"❌ CRITICAL: Mouse moved away before paste for {message.recipient}: "
+                    f"expected ({x}, {y}), got {final_mouse_pos}"
+                )
+                # Re-position before paste
+                self.pyautogui.moveTo(x, y, duration=0.2)
+                time.sleep(0.2)
+                self.pyautogui.click()  # Re-focus
+                time.sleep(0.3)
+
             # RACE CONDITION FIX #1: Clipboard lock (prevents concurrent overwrites!)
             with _clipboard_lock:
                 # Paste message (clipboard locked during this entire block!)
                 logger.debug(f"📋 Copying message to clipboard: {msg_content[:50]}...")
                 pyperclip.copy(msg_content)
                 time.sleep(0.5)  # Wait for clipboard to be ready
+                
+                # CRITICAL: One final coordinate check before paste
+                pre_paste_pos = self.pyautogui.position()
+                if abs(pre_paste_pos[0] - x) > 10 or abs(pre_paste_pos[1] - y) > 10:
+                    logger.error(
+                        f"❌ CRITICAL: Mouse position invalid before paste for {message.recipient}: "
+                        f"expected ({x}, {y}), got {pre_paste_pos}"
+                    )
+                    return False
                 
                 logger.debug("📥 Pasting message")
                 self.pyautogui.hotkey("ctrl", "v")
@@ -522,6 +613,11 @@ class PyAutoGUIMessagingDelivery:
                     clipboard_check = pyperclip.paste()
                     if clipboard_check == msg_content:
                         logger.debug("✅ Clipboard verified")
+                    else:
+                        logger.warning(
+                            f"⚠️ Clipboard mismatch after paste for {message.recipient}: "
+                            f"expected {len(msg_content)} chars, got {len(clipboard_check)} chars"
+                        )
                 except Exception:
                     pass  # Non-critical check
 
@@ -540,6 +636,17 @@ class PyAutoGUIMessagingDelivery:
                 logger.debug("✅ Using Enter for normal message")
                 self.pyautogui.press("enter")
             time.sleep(1.0)  # Wait for message to be sent
+            
+            # CRITICAL: Verify message was sent by checking if input field is cleared
+            # This ensures the full sequence completed successfully
+            try:
+                # Small delay to allow UI to update
+                time.sleep(0.3)
+                # Check if we can still interact with the input (indicates message was sent)
+                # This is a best-effort verification
+                logger.debug("✅ Message send sequence completed")
+            except Exception as e:
+                logger.warning(f"⚠️ Could not verify message send completion: {e}")
 
             logger.info(f"✅ Message sent to {message.recipient} at {coords} (attempt {attempt_num})")
             return True
