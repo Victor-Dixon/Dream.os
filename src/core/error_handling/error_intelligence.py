@@ -100,7 +100,16 @@ class ErrorIntelligenceEngine:
             severity: Error severity (low, medium, high, critical)
             context: Additional error context
         """
-        error_record = {
+        error_record = self._create_error_record(error_type, component, severity, context)
+        self._store_error_record(error_record, component)
+        self._update_metrics(component, severity)
+        self._trigger_pattern_analysis()
+
+    def _create_error_record(
+        self, error_type: str, component: str, severity: str, context: dict[str, Any] | None
+    ) -> dict[str, Any]:
+        """Create error record dictionary."""
+        return {
             "type": error_type,
             "component": component,
             "severity": severity,
@@ -108,16 +117,18 @@ class ErrorIntelligenceEngine:
             "context": context or {},
         }
 
+    def _store_error_record(self, error_record: dict[str, Any], component: str) -> None:
+        """Store error record in history and component tracking."""
         self.error_history.append(error_record)
-        # Memory leak fix: Limit component error history to prevent unbounded growth
         self.component_errors[component].append(error_record)
         if len(self.component_errors[component]) > self.history_window:
             self.component_errors[component] = self.component_errors[component][
                 -self.history_window :
             ]
-        self.error_type_counts[error_type] += 1
+        self.error_type_counts[error_record["type"]] += 1
 
-        # Update metrics
+    def _update_metrics(self, component: str, severity: str) -> None:
+        """Update component metrics based on error."""
         metrics = self.component_metrics[component]
         metrics.total_errors += 1
         if severity == "critical":
@@ -125,7 +136,8 @@ class ErrorIntelligenceEngine:
         else:
             metrics.recoverable_errors += 1
 
-        # Trigger pattern analysis if threshold reached
+    def _trigger_pattern_analysis(self) -> None:
+        """Trigger pattern analysis if threshold reached."""
         if len(self.error_history) % self.analysis_interval == 0:
             self._analyze_patterns()
 
@@ -173,38 +185,44 @@ class ErrorIntelligenceEngine:
         if component not in self.component_errors:
             return 0.0, "low"
 
+        risk_factors = self._calculate_risk_factors(component)
+        risk_score = self._compute_weighted_risk(risk_factors)
+        risk_level = self._classify_risk_level(risk_score)
+
+        return risk_score, risk_level
+
+    def _calculate_risk_factors(self, component: str) -> dict[str, float]:
+        """Calculate risk factors for a component."""
         recent_errors = self._get_recent_errors(component, hours=1)
         error_rate = len(recent_errors) / 60.0  # Errors per minute
-
         metrics = self.component_metrics[component]
 
-        # Calculate risk based on multiple factors
-        risk_factors = {
-            "error_rate": min(error_rate / 10.0, 1.0),  # Normalize to 0-1
+        return {
+            "error_rate": min(error_rate / 10.0, 1.0),
             "critical_ratio": (metrics.critical_errors / max(metrics.total_errors, 1)),
             "recovery_failure": 1.0 - metrics.recovery_success_rate,
             "health_decline": 1.0 - (metrics.health_score / 100.0),
         }
 
-        # Weighted average
-        risk_score = (
+    def _compute_weighted_risk(self, risk_factors: dict[str, float]) -> float:
+        """Compute weighted risk score from factors."""
+        return (
             risk_factors["error_rate"] * 0.3
             + risk_factors["critical_ratio"] * 0.3
             + risk_factors["recovery_failure"] * 0.2
             + risk_factors["health_decline"] * 0.2
         )
 
-        # Classify risk level
+    def _classify_risk_level(self, risk_score: float) -> str:
+        """Classify risk level from score."""
         if risk_score >= 0.75:
-            risk_level = "critical"
+            return "critical"
         elif risk_score >= 0.5:
-            risk_level = "high"
+            return "high"
         elif risk_score >= 0.25:
-            risk_level = "medium"
+            return "medium"
         else:
-            risk_level = "low"
-
-        return risk_score, risk_level
+            return "low"
 
     def suggest_recovery_strategy(self, error_type: str, component: str) -> str:
         """Suggest optimal recovery strategy based on historical success.
