@@ -1,8 +1,8 @@
 {
-  "total_tools": 1511,
+  "total_tools": 1537,
   "categories": {
     "monitoring": {
-      "count": 357,
+      "count": 362,
       "tools": [
         "github_create_and_push_repo",
         "add_remaining_swarm_knowledge",
@@ -15,10 +15,10 @@
         "agent_status_quick_check",
         "agent_task_finder"
       ],
-      "total_lines": 78726
+      "total_lines": 79797
     },
     "validation": {
-      "count": 349,
+      "count": 354,
       "tools": [
         "github_create_and_push_repo",
         "add_remaining_swarm_knowledge",
@@ -31,10 +31,10 @@
         "agent_status_quick_check",
         "agent_task_finder"
       ],
-      "total_lines": 77293
+      "total_lines": 78364
     },
     "automation": {
-      "count": 146,
+      "count": 150,
       "tools": [
         "github_create_and_push_repo",
         "add_remaining_swarm_knowledge",
@@ -47,10 +47,10 @@
         "auto_inbox_processor",
         "auto_remediate_loc"
       ],
-      "total_lines": 35667
+      "total_lines": 36601
     },
     "analysis": {
-      "count": 215,
+      "count": 220,
       "tools": [
         "add_remaining_swarm_knowledge",
         "agent_fuel_monitor",
@@ -63,10 +63,10 @@
         "audit_cleanup",
         "audit_imports"
       ],
-      "total_lines": 53379
+      "total_lines": 54450
     },
     "consolidation": {
-      "count": 166,
+      "count": 168,
       "tools": [
         "add_remaining_swarm_knowledge",
         "agent_orient",
@@ -79,10 +79,10 @@
         "devlog_manager",
         "duplication_analysis"
       ],
-      "total_lines": 38277
+      "total_lines": 38839
     },
     "messaging": {
-      "count": 175,
+      "count": 176,
       "tools": [
         "add_remaining_swarm_knowledge",
         "agent_fuel_monitor",
@@ -95,10 +95,10 @@
         "audit_imports",
         "audit_project_components"
       ],
-      "total_lines": 41533
+      "total_lines": 41856
     },
     "captain": {
-      "count": 94,
+      "count": 98,
       "tools": [
         "agent_fuel_monitor",
         "agent_lifecycle_automator",
@@ -111,7 +111,7 @@
         "captain_check_agent_status",
         "captain_completion_processor"
       ],
-      "total_lines": 20454
+      "total_lines": 21388
     },
     "other": {
       "count": 9,
@@ -168,44 +168,44 @@
     {
       "category": "monitoring",
       "action": "consolidate",
-      "tools_count": 357,
-      "suggestion": "Consider consolidating 357 monitoring tools into unified implementation"
+      "tools_count": 362,
+      "suggestion": "Consider consolidating 362 monitoring tools into unified implementation"
     },
     {
       "category": "validation",
       "action": "consolidate",
-      "tools_count": 349,
-      "suggestion": "Consider consolidating 349 validation tools into unified implementation"
+      "tools_count": 354,
+      "suggestion": "Consider consolidating 354 validation tools into unified implementation"
     },
     {
       "category": "automation",
       "action": "consolidate",
-      "tools_count": 146,
-      "suggestion": "Consider consolidating 146 automation tools into unified implementation"
+      "tools_count": 150,
+      "suggestion": "Consider consolidating 150 automation tools into unified implementation"
     },
     {
       "category": "analysis",
       "action": "consolidate",
-      "tools_count": 215,
-      "suggestion": "Consider consolidating 215 analysis tools into unified implementation"
+      "tools_count": 220,
+      "suggestion": "Consider consolidating 220 analysis tools into unified implementation"
     },
     {
       "category": "consolidation",
       "action": "consolidate",
-      "tools_count": 166,
-      "suggestion": "Consider consolidating 166 consolidation tools into unified implementation"
+      "tools_count": 168,
+      "suggestion": "Consider consolidating 168 consolidation tools into unified implementation"
     },
     {
       "category": "messaging",
       "action": "consolidate",
-      "tools_count": 175,
-      "suggestion": "Consider consolidating 175 messaging tools into unified implementation"
+      "tools_count": 176,
+      "suggestion": "Consider consolidating 176 messaging tools into unified implementation"
     },
     {
       "category": "captain",
       "action": "consolidate",
-      "tools_count": 94,
-      "suggestion": "Consider consolidating 94 captain tools into unified implementation"
+      "tools_count": 98,
+      "suggestion": "Consider consolidating 98 captain tools into unified implementation"
     },
     {
       "category": "other",
