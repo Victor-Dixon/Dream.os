@@ -40,11 +40,13 @@ Verify SSOT compliance for **Batches 1-5** (250 files deleted) from bulk deletio
 - **Type**: broken_import
 
 **Investigation**:
-- ✅ **File Status**: `tools_v2/tool_registry.py` was NOT actually deleted (still exists)
-- ✅ **SSOT Compliance**: File is canonical SSOT, should NOT have been deleted
-- ⚠️ **Action Required**: Verify if this file was incorrectly marked for deletion
+- ⚠️ **File Status**: `tools_v2/tool_registry.py` does NOT exist (was never created or was deleted previously)
+- ⚠️ **Import Status**: Import in `tools/audit_toolbelt.py` is BROKEN (file doesn't exist)
+- ✅ **Pre-existing Issue**: This is NOT related to bulk deletion - file was missing before deletion
+- ✅ **Registry Functionality**: Registry functionality exists in `tools_v2/toolbelt_core.py` (different module)
+- ✅ **Bulk Deletion Impact**: No impact - file wasn't deleted by bulk deletion (it was already missing)
 
-**Conclusion**: This appears to be a **false positive** - the file was marked for deletion but should be kept as SSOT. The deletion tool likely skipped it correctly.
+**Conclusion**: This is a **pre-existing broken import** unrelated to bulk deletion. The file was listed in duplicate analysis data but doesn't actually exist. This needs to be fixed separately by updating `tools/audit_toolbelt.py` to use the correct import from `toolbelt_core.py`.
 
 ---
 
