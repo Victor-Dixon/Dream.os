@@ -11,9 +11,9 @@
 
 ### **Function Size Violations**:
 - **Initial**: 21 violations across 10 files
-- **Current**: 18 violations across 10 files
-- **Progress**: 3 violations fixed (14% reduction)
-- **Remaining**: 18 violations
+- **Current**: 15 violations across 10 files
+- **Progress**: 6 violations fixed (29% reduction)
+- **Remaining**: 15 violations
 
 ### **File Size Compliance**:
 - ✅ **All error handling files <300 lines** (100% compliant)
@@ -40,6 +40,31 @@
   - `_try_all_strategies()` - Tries all strategies
 - **Result**: `execute_with_error_handling()` reduced from 64 to 46 lines (still needs work)
 - **Result**: `_attempt_recovery()` reduced from 45 to ~25 lines ✅
+
+### **3. retry_safety_engine.py** ✅
+- **Fixed**: `retry_operation()` - Extracted `_handle_retry_failure()` helper
+- **Fixed**: `execute_with_timeout()` - Extracted `_handle_timeout()` and `_handle_timeout_error()` helpers
+- **Result**: `retry_operation()` reduced from 52 to 38 lines ✅
+- **Result**: `execute_with_timeout()` reduced from 47 to 38 lines ✅
+
+### **4. error_handling_system.py** ✅
+- **Fixed**: `execute_with_comprehensive_error_handling()` - Extracted multiple helpers:
+  - `_wrap_with_circuit_breaker()` - Wraps operation with circuit breaker
+  - `_execute_with_retry_and_recovery()` - Executes with retry and recovery
+  - `_attempt_recovery_and_retry()` - Attempts recovery and retries
+- **Result**: Function reduced from 52 lines to ~30 lines ✅
+
+### **5. error_intelligence.py** ✅
+- **Fixed**: `predict_failure_risk()` - Extracted helpers:
+  - `_calculate_risk_factors()` - Calculates risk factors
+  - `_compute_weighted_risk()` - Computes weighted risk score
+  - `_classify_risk_level()` - Classifies risk level
+- **Fixed**: `record_error()` - Extracted helpers:
+  - `_create_error_record()` - Creates error record
+  - `_store_error_record()` - Stores error record
+  - `_update_metrics()` - Updates component metrics
+  - `_trigger_pattern_analysis()` - Triggers pattern analysis
+- **Result**: Both functions now <30 lines ✅
 
 ---
 
