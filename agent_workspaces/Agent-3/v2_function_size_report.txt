@@ -3,7 +3,7 @@ V2 Function Size Verification Report
 
 Directory: src\core\error_handling
 Files checked: 33
-Total functions: 240
+Total functions: 250
 Files with violations: 10
 
 Violations:
@@ -12,9 +12,7 @@ error_handling\component_management.py:
   - get_error_report(): 31 lines
 
 error_handling\coordination_decorator.py:
-  - handle_coordination_errors(): 68 lines
-  - decorator(): 44 lines
-  - wrapper(): 32 lines
+  - handle_coordination_errors(): 36 lines
 
 error_handling\coordination_error_handler.py:
   - execute_with_error_handling(): 36 lines
@@ -28,8 +26,7 @@ error_handling\error_decision_models.py:
   - decide_action(): 37 lines
 
 error_handling\error_execution.py:
-  - execute_with_error_handling(): 64 lines
-  - _attempt_recovery(): 45 lines
+  - execute_with_error_handling(): 46 lines
 
 error_handling\error_handling_system.py:
   - with_error_recovery(): 34 lines
