@@ -237,13 +237,13 @@ class MainControlPanelView(discord.ui.View):
         self.monitor_btn.callback = self.show_monitor_control
         self.add_item(self.monitor_btn)
 
-        # Row 5: Additional utility buttons
+        # Move buttons to row 4 (Discord only allows rows 0-4, row 5 is invalid)
         self.obs_btn = discord.ui.Button(
             label="Observations",
             style=discord.ButtonStyle.secondary,
             emoji="👁️",
             custom_id="control_obs",
-            row=5,
+            row=4,
         )
         self.obs_btn.callback = self.show_obs
         self.add_item(self.obs_btn)
@@ -253,7 +253,7 @@ class MainControlPanelView(discord.ui.View):
             style=discord.ButtonStyle.secondary,
             emoji="🧩",
             custom_id="control_pieces",
-            row=5,
+            row=4,
         )
         self.pieces_btn.callback = self.show_pieces
         self.add_item(self.pieces_btn)

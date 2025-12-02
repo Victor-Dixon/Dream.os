@@ -235,12 +235,14 @@ Each agent should create a report with:
 
 ### Category 1: [Category Name]
 - File: `path/to/file.py`
-- Status: ✅ SAFE TO DELETE | ⚠️ NEEDS REVIEW | ❌ KEEP
+- Status: ✅ SAFE TO DELETE | ⚠️ NEEDS REVIEW | ❌ KEEP | 🔨 NEEDS IMPLEMENTATION
 - Reason: [Explanation]
 - False Positives Found: [Yes/No]
 - Dynamic Imports: [Yes/No]
-- Entry Points: [Yes/No]
 - Config References: [Yes/No]
+- **Implementation Status**: [Not Yet Implemented | Truly Unused | Partially Implemented]
+- **TODO/FIXME Found**: [Yes/No - List if found]
+- **Should Integrate**: [Yes/No - If yes, how?]
 
 ### Category 2: [Category Name]
 ...

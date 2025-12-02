@@ -9,6 +9,8 @@ License: MIT
 """
 
 import json
+import time
+import shutil
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Callable
 
@@ -190,31 +192,111 @@ class FileQueuePersistence(IQueuePersistence):
         except Exception as e:
             print(f"⚠️ Failed to backup corrupted file: {e}")
 
-    def save_entries(self, entries: List[IQueueEntry]) -> None:
-        """Save queue entries to JSON file with atomic write for reliability."""
+    def save_entries(self, entries: List[IQueueEntry], max_retries: int = 8, base_delay: float = 0.15) -> None:
+        """Save queue entries to JSON file with atomic write and retry logic.
+        
+        Args:
+            entries: List of queue entries to save
+            max_retries: Maximum number of retry attempts (default: 8, increased for WinError 32)
+            base_delay: Base delay in seconds for exponential backoff (default: 0.15, increased for file locks)
+        """
+        data = [entry.to_dict() for entry in entries]
+        temp_file = self.queue_file.with_suffix('.json.tmp')
+        
+        # Write to temp file first
         try:
-            data = [entry.to_dict() for entry in entries]
-
-            # Atomic write: Write to temp file first, then rename
-            temp_file = self.queue_file.with_suffix('.json.tmp')
             with open(temp_file, "w", encoding="utf-8") as f:
                 json.dump(data, f, separators=(',', ':'), ensure_ascii=False, default=str)
-            
-            # Atomic rename (Windows-compatible)
-            if self.queue_file.exists():
-                self.queue_file.unlink()
-            temp_file.rename(self.queue_file)
-            
         except Exception as e:
-            print(f"Failed to save queue entries: {e}")
-            # Clean up temp file on error
-            temp_file = self.queue_file.with_suffix('.json.tmp')
-            if temp_file.exists():
-                try:
-                    temp_file.unlink()
-                except Exception:
-                    pass
+            print(f"❌ Failed to write temp file: {e}")
             raise
+        
+        # Atomic rename with retry logic for Windows file locking
+        last_error = None
+        for attempt in range(max_retries):
+            try:
+                # Try to remove existing file if it exists
+                if self.queue_file.exists():
+                    try:
+                        self.queue_file.unlink()
+                    except PermissionError:
+                        # File may be locked, wait and retry
+                        if attempt < max_retries - 1:
+                            delay = base_delay * (2 ** attempt)
+                            time.sleep(delay)
+                            continue
+                        else:
+                            raise
+                
+                # Use shutil.move instead of rename for better Windows compatibility
+                shutil.move(str(temp_file), str(self.queue_file))
+                
+                # Success - return
+                return
+                
+            except PermissionError as e:
+                # Windows file locking issue (WinError 5)
+                last_error = e
+                if attempt < max_retries - 1:
+                    delay = base_delay * (2 ** attempt)
+                    print(f"⚠️ File locked (attempt {attempt + 1}/{max_retries}), retrying in {delay:.2f}s...")
+                    time.sleep(delay)
+                else:
+                    print(f"❌ Failed to save queue entries after {max_retries} attempts: {e}")
+                    # Clean up temp file
+                    if temp_file.exists():
+                        try:
+                            temp_file.unlink()
+                        except Exception:
+                            pass
+                    raise PermissionError(f"Failed to save queue entries: File locked after {max_retries} retries. {e}")
+                    
+            except OSError as e:
+                # Windows-specific errors: WinError 5 (Access Denied) and WinError 32 (File in use)
+                winerror_code = getattr(e, 'winerror', None)
+                if winerror_code in (5, 32):
+                    # WinError 5: Access Denied
+                    # WinError 32: The process cannot access the file because it is being used by another process
+                    last_error = e
+                    error_name = "Access denied" if winerror_code == 5 else "File in use"
+                    if attempt < max_retries - 1:
+                        delay = base_delay * (2 ** attempt)
+                        # Cap max delay at 2.0 seconds to prevent excessive waits
+                        delay = min(delay, 2.0)
+                        print(f"⚠️ {error_name} (WinError {winerror_code}, attempt {attempt + 1}/{max_retries}), retrying in {delay:.2f}s...")
+                        time.sleep(delay)
+                    else:
+                        print(f"❌ Failed to save queue entries after {max_retries} attempts: {e}")
+                        # Clean up temp file
+                        if temp_file.exists():
+                            try:
+                                temp_file.unlink()
+                            except Exception:
+                                pass
+                        raise PermissionError(f"Failed to save queue entries: {error_name} (WinError {winerror_code}) after {max_retries} retries. {e}")
+                else:
+                    # Other OSError - don't retry
+                    print(f"❌ Failed to save queue entries: {e}")
+                    if temp_file.exists():
+                        try:
+                            temp_file.unlink()
+                        except Exception:
+                            pass
+                    raise
+                    
+            except Exception as e:
+                # Other errors - don't retry
+                print(f"❌ Failed to save queue entries: {e}")
+                if temp_file.exists():
+                    try:
+                        temp_file.unlink()
+                    except Exception:
+                        pass
+                raise
+        
+        # Should not reach here, but handle just in case
+        if last_error:
+            raise last_error
 
     def atomic_operation(self, operation: Callable[[], Any]) -> Any:
         """Perform atomic file operation with locking."""

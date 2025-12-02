@@ -17,13 +17,15 @@ Author: Agent-3 (Infrastructure & DevOps) - Discord Consolidation
 License: MIT
 """
 
-from src.services.messaging_infrastructure import ConsolidatedMessagingService
-from src.discord_commander.discord_gui_controller import DiscordGUIController
 import asyncio
 import logging
 import os
 import sys
 from pathlib import Path
+
+# Add project root to path FIRST (before any src imports)
+project_root = Path(__file__).parent.parent.parent
+sys.path.insert(0, str(project_root))
 
 # Load environment variables from .env file
 try:
@@ -45,9 +47,9 @@ except ImportError:
     print("❌ discord.py not installed! Run: pip install discord.py")
     sys.exit(1)
 
-# Add project root to path
-project_root = Path(__file__).parent.parent.parent
-sys.path.insert(0, str(project_root))
+# Now import src modules (after path is set)
+from src.services.messaging_infrastructure import ConsolidatedMessagingService
+from src.discord_commander.discord_gui_controller import DiscordGUIController
 
 
 logger = logging.getLogger(__name__)
@@ -1644,6 +1646,69 @@ Agent, you appear stalled. CONTINUE AUTONOMOUSLY NOW.
             await ctx.send(embed=embed)
         except Exception as e:
             self.logger.error(f"Error in pieces command: {e}", exc_info=True)
+            await ctx.send(f"❌ Error: {e}")
+
+    @commands.command(name="sftp", aliases=["sftp_creds", "ftp"], description="Get SFTP credentials guide")
+    async def sftp(self, ctx: commands.Context):
+        """Get SFTP credentials - streamlined guide."""
+        try:
+            embed = discord.Embed(
+                title="🔑 How to Get SFTP Credentials (30 seconds)",
+                description="**Quick guide to get your SFTP credentials from Hostinger**",
+                color=discord.Color.green(),
+            )
+            
+            embed.add_field(
+                name="Step 1: Log into Hostinger",
+                value="👉 https://hpanel.hostinger.com/",
+                inline=False,
+            )
+            
+            embed.add_field(
+                name="Step 2: Get Credentials",
+                value=(
+                    "1. Click **Files** → **FTP Accounts**\n"
+                    "2. Find your domain\n"
+                    "3. Copy these 4 values:\n"
+                    "   • **FTP Username** (not your email!)\n"
+                    "   • **FTP Password** (click 'Show' or reset if needed)\n"
+                    "   • **FTP Host** (IP address like `157.173.214.121`)\n"
+                    "   • **FTP Port** (should be `65002`)"
+                ),
+                inline=False,
+            )
+            
+            embed.add_field(
+                name="Step 3: Add to .env File",
+                value=(
+                    "Open `.env` in repository root, add:\n"
+                    "```env\n"
+                    "HOSTINGER_HOST=157.173.214.121\n"
+                    "HOSTINGER_USER=your_username_here\n"
+                    "HOSTINGER_PASS=your_password_here\n"
+                    "HOSTINGER_PORT=65002\n"
+                    "```"
+                ),
+                inline=False,
+            )
+            
+            embed.add_field(
+                name="Step 4: Test",
+                value="```bash\npython tools/sftp_credential_troubleshooter.py\n```",
+                inline=False,
+            )
+            
+            embed.add_field(
+                name="💡 Tip",
+                value="Username might be different from your email (check Hostinger exactly as shown)",
+                inline=False,
+            )
+            
+            embed.set_footer(text="🐝 WE. ARE. SWARM. ⚡🔥")
+            
+            await ctx.send(embed=embed)
+        except Exception as e:
+            self.logger.error(f"Error in sftp command: {e}", exc_info=True)
             await ctx.send(f"❌ Error: {e}")
 
     @commands.command(name="session", aliases=["sessions", "cycle"], description="Post session accomplishments report")

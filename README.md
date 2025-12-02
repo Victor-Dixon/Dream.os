@@ -112,6 +112,7 @@ AutoDream OS is a **production-grade, V2 compliant** platform for building sophi
 - **Contract System**: Automated agent agreements and task management
 - **FSM-Driven Development**: Finite state machine for complex workflows
 - **Advanced Workflows**: Production-grade multi-agent workflow orchestration
+- **Output Flywheel**: Automatically transforms work sessions into public artifacts (READMEs, blog posts, social content, trading journals) - **PRODUCTION-READY v1.0**
 - **Vision System**: Screen capture, OCR, and visual analysis capabilities
 - **ChatGPT Integration**: Browser automation for ChatGPT interaction
 - **Overnight Runner**: 24/7 autonomous operations with cycle-based scheduling
