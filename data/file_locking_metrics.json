@@ -31,6 +31,14 @@
       "attempt": 1,
       "delay": 0.15,
       "file_path": "message_queue\\queue.json"
+    },
+    {
+      "timestamp": "2025-12-02T09:10:40.495403",
+      "error_type": "PermissionError",
+      "winerror_code": 5,
+      "attempt": 1,
+      "delay": 0.15,
+      "file_path": "message_queue\\queue.json"
     }
   ],
   "retry_success": [
@@ -57,18 +65,24 @@
       "attempts": 2,
       "total_delay": 0.15,
       "winerror_code": null
+    },
+    {
+      "timestamp": "2025-12-02T09:10:40.691095",
+      "attempts": 2,
+      "total_delay": 0.15,
+      "winerror_code": null
     }
   ],
   "concurrency_events": [],
   "summary": {
-    "total_errors": 4,
-    "winerror_5_count": 4,
+    "total_errors": 5,
+    "winerror_5_count": 5,
     "winerror_32_count": 0,
-    "retry_success_count": 4,
+    "retry_success_count": 5,
     "retry_failure_count": 0,
     "max_retries_needed": 3,
-    "avg_retry_delay": 0.11249999999999999,
+    "avg_retry_delay": 0.12,
     "high_concurrency_count": 0
   },
-  "last_updated": "2025-12-02T08:46:00.535470"
+  "last_updated": "2025-12-02T09:10:40.692096"
 }
