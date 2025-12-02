@@ -1,0 +1,85 @@
+{
+  "export_timestamp": "2025-12-02T09:04:00.090048",
+  "export_version": "1.0.0",
+  "manifest": {
+    "manifest_stats": {
+      "total_sessions": 3,
+      "total_artifacts": 8,
+      "sessions_by_type": {
+        "trade": 1,
+        "build": 2
+      },
+      "artifacts_by_type": {
+        "trade_journal": 1,
+        "social_post": 3,
+        "readme": 2,
+        "build_log": 2
+      },
+      "artifacts_by_status": {
+        "ready": 8
+      },
+      "duplicate_hashes": 0
+    },
+    "manifest_ssot_compliance": {
+      "compliant": true,
+      "violations": [],
+      "warnings": [],
+      "timestamp": "2025-12-02T09:03:59.287320"
+    }
+  },
+  "ssot": {
+    "ssot_compliance": {
+      "overall_compliant": true,
+      "total_violations": 0,
+      "total_warnings": 4,
+      "timestamp": "2025-12-02T09:04:00.088048"
+    },
+    "work_session_ssot": {
+      "compliant": true,
+      "violations": [],
+      "warnings": [],
+      "total_sessions": 0
+    },
+    "artifact_ssot": {
+      "compliant": true,
+      "violations": [],
+      "warnings": [
+        "Duplicate artifact name: README.generated.md (2 files)",
+        "Duplicate artifact name: build_log_test-build-001.md (2 files)",
+        "Duplicate artifact name: social_post_test-build-001.md (2 files)",
+        "Found 10 artifacts outside artifacts/ directory"
+      ],
+      "total_artifacts": 18,
+      "duplicate_names": 3
+    },
+    "pipeline_ssot": {
+      "compliant": true,
+      "violations": [],
+      "warnings": [],
+      "pipelines_checked": 3
+    },
+    "manifest_ssot": {
+      "compliant": true,
+      "violations": [],
+      "warnings": [],
+      "manifest_exists": true
+    }
+  },
+  "flywheel": {
+    "flywheel_metrics": {
+      "artifacts_per_week": 4,
+      "repos_with_clean_readmes": 0,
+      "trading_days_documented": 0,
+      "publication_rate": 0.0,
+      "timestamp": "2025-12-02T09:04:00.090048"
+    }
+  },
+  "summary": {
+    "total_sessions": 3,
+    "total_artifacts": 8,
+    "ssot_compliant": true,
+    "ssot_violations": 0,
+    "artifacts_per_week": 4,
+    "publication_rate": 0.0
+  }
+}
