@@ -254,9 +254,12 @@ python -m tools.wordpress_manager --site freerideinvestor --activate-theme freer
 ## ✅ **NEXT STEPS**
 
 1. ✅ **COMPLETE**: Fix prismblossom theme (add `style.css`)
-2. **HIGH**: Deploy all themes using `theme_deployment_manager.py`
-3. **MEDIUM**: Verify themes are activated in WordPress
-4. **LOW**: Optimize FreeRideInvestor theme size
+2. ✅ **COMPLETE**: Web audit of live sites (see `WEB_AUDIT_REPORT_LIVE_SITES.md`)
+3. **HIGH**: Deploy freerideinvestor.com `functions.php` fix (20+ duplicate menu items)
+4. **HIGH**: Verify prismblossom.online theme deployment (especially new `style.css`)
+5. **MEDIUM**: Clarify southwestsecret.com strategy (WordPress vs static HTML)
+6. **MEDIUM**: Add ariajet.site to deployment system (if needed)
+7. **LOW**: Optimize FreeRideInvestor theme size
 
 ---
 

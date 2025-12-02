@@ -230,6 +230,18 @@ class WordPressManager:
             "theme_name": "freerideinvestor",
             "remote_base": "/public_html/wp-content/themes/freerideinvestor",
             "function_prefix": "freerideinvestor"
+        },
+        "ariajet": {
+            "local_path": "D:/websites/ariajet.site",
+            "theme_name": "ariajet",
+            "remote_base": "/public_html/wp-content/themes/ariajet",
+            "function_prefix": "ariajet"
+        },
+        "ariajet.site": {
+            "local_path": "D:/websites/ariajet.site",
+            "theme_name": "ariajet",
+            "remote_base": "/public_html/wp-content/themes/ariajet",
+            "function_prefix": "ariajet"
         }
     }
     
