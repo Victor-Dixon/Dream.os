@@ -97,8 +97,17 @@ class MessageQueueProcessor:
                     if max_messages and processed >= max_messages:
                         break
 
+                    # CRITICAL: Wait for full delivery sequence to complete before moving to next
+                    # This ensures proper sequencing and prevents race conditions
                     ok = self._deliver_entry(entry)
                     processed += 1
+                    
+                    # CRITICAL: Small delay between messages to ensure UI settles
+                    # This prevents rapid-fire messages from interfering with each other
+                    if ok:
+                        time.sleep(0.5)  # Brief pause after successful delivery
+                    else:
+                        time.sleep(1.0)  # Longer pause after failed delivery for recovery
 
                 if max_messages and processed >= max_messages:
                     break
