@@ -46,6 +46,7 @@ class SwarmShowcaseCommands(commands.Cog if DISCORD_AVAILABLE else object):
     - !swarm_roadmap - Show integration roadmap
     - !swarm_excellence - Showcase agent achievements
     - !swarm_overview - Complete swarm status and missions
+    - !swarm_profile - Display swarm collective profile (identity, stats, achievements)
     """
 
     def __init__(self, bot):
@@ -448,6 +449,151 @@ class SwarmShowcaseCommands(commands.Cog if DISCORD_AVAILABLE else object):
 
         embed.set_footer(text="🐝 Dual-track execution - No idleness! | WE ARE SWARM")
 
+        return embed
+
+    # ========================================================================
+    # SWARM PROFILE DISPLAY
+    # ========================================================================
+
+    @commands.command(name="swarm_profile", aliases=["profile", "swarm_identity"])
+    async def show_swarm_profile(self, ctx: commands.Context):
+        """
+        Display swarm collective profile - identity, stats, achievements.
+        
+        Shows:
+        - Swarm identity and personality
+        - Mission and vision
+        - Agent composition
+        - Capabilities and achievements
+        - Current stats and blockers
+        """
+        try:
+            embed = await self._create_profile_embed()
+            await ctx.send(embed=embed)
+        except Exception as e:
+            self.logger.error(f"Error displaying swarm profile: {e}", exc_info=True)
+            await ctx.send(f"❌ Error loading swarm profile: {e}")
+
+    async def _create_profile_embed(self) -> discord.Embed:
+        """Create beautiful embed for swarm profile."""
+        # Load swarm profile
+        profile_path = Path("swarm_profile.json")
+        if not profile_path.exists():
+            embed = discord.Embed(
+                title="🐝 SWARM PROFILE",
+                description="**Swarm profile not found**",
+                color=discord.Color.red(),
+            )
+            return embed
+        
+        try:
+            with open(profile_path, "r", encoding="utf-8") as f:
+                profile = json.load(f)
+        except Exception as e:
+            self.logger.error(f"Error loading swarm profile: {e}")
+            embed = discord.Embed(
+                title="🐝 SWARM PROFILE",
+                description=f"**Error loading profile: {e}**",
+                color=discord.Color.red(),
+            )
+            return embed
+        
+        # Extract data
+        identity = profile.get("identity", {})
+        personality = identity.get("personality", {})
+        composition = profile.get("composition", {})
+        capabilities = profile.get("capabilities", {})
+        achievements = profile.get("achievements", {})
+        stats = profile.get("stats", {})
+        values = profile.get("values_and_principles", {})
+        
+        # Create embed
+        embed = discord.Embed(
+            title=f"🐝 {profile.get('swarm_name', 'Swarm')} Profile",
+            description=f"**{profile.get('swarm_tagline', 'WE. ARE. SWARM. ⚡🔥')}**\n\n{identity.get('mission', 'No mission defined')}",
+            color=0xF39C12,  # Orange for identity
+            timestamp=discord.utils.utcnow(),
+        )
+        
+        # Identity Section
+        embed.add_field(
+            name="🎭 Identity",
+            value=(
+                f"**Tone:** {personality.get('tone', 'Unknown')}\n"
+                f"**Style:** {personality.get('communication_style', 'Unknown')}\n"
+                f"**Values:** {', '.join(personality.get('values', [])[:5])}\n"
+                f"**Philosophy:** Build Fast, Break Better"
+            ),
+            inline=False
+        )
+        
+        # Composition
+        total_agents = composition.get("total_agents", 0)
+        active_agents = composition.get("active_agents", 0)
+        embed.add_field(
+            name="👥 Composition",
+            value=(
+                f"**Total Agents:** {total_agents}\n"
+                f"**Active Agents:** {active_agents}\n"
+                f"**Specializations:** {len(composition.get('agent_roles', {}))} roles"
+            ),
+            inline=True
+        )
+        
+        # Capabilities
+        core_systems = len(capabilities.get("core_systems", []))
+        tools = len(capabilities.get("tools", []))
+        embed.add_field(
+            name="⚙️ Capabilities",
+            value=(
+                f"**Core Systems:** {core_systems}\n"
+                f"**Specializations:** {len(capabilities.get('specializations', []))}\n"
+                f"**Tools:** {tools}"
+            ),
+            inline=True
+        )
+        
+        # Achievements
+        milestones = len(achievements.get("major_milestones", []))
+        repo_consolidation = achievements.get("repository_consolidation", {})
+        repos_reduced = repo_consolidation.get("repos_reduced", 0)
+        embed.add_field(
+            name="🏆 Achievements",
+            value=(
+                f"**Major Milestones:** {milestones}\n"
+                f"**Repos Reduced:** {repos_reduced} (21% reduction)\n"
+                f"**Target:** {repo_consolidation.get('target', 'Unknown')}"
+            ),
+            inline=True
+        )
+        
+        # Stats
+        active_projects = len(stats.get("active_projects", []))
+        blockers = len(stats.get("current_blockers", []))
+        compliance = stats.get("compliance_rate", "Unknown")
+        embed.add_field(
+            name="📊 Current Stats",
+            value=(
+                f"**Active Projects:** {active_projects}\n"
+                f"**Current Blockers:** {blockers}\n"
+                f"**Compliance Rate:** {compliance}\n"
+                f"**Efficiency:** {stats.get('swarm_efficiency', 'Unknown')}"
+            ),
+            inline=False
+        )
+        
+        # Principles
+        core_values = values.get("core_values", [])
+        if core_values:
+            embed.add_field(
+                name="💎 Core Values",
+                value=" • ".join(core_values[:5]),
+                inline=False
+            )
+        
+        # Footer
+        embed.set_footer(text=f"🐝 Version {profile.get('version', 'Unknown')} • Last Updated: {profile.get('last_updated', 'Unknown')[:10]} • WE. ARE. SWARM. ⚡🔥")
+        
         return embed
 
     # ========================================================================

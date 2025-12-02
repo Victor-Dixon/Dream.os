@@ -3,22 +3,22 @@
 ======================================================================
 
 Host: 157.173.214.121
-Port: 65002
-Username: dadudekc
+Port: 21
+Username: u996867598.freerideinvestor.com
 Password Length: 12 characters
 
 Test Results:
 ----------------------------------------------------------------------
-❌ Basic Connection: Authentication failed - username or password incorrect
-❌ Username: Original username: Authentication failed - username or password incorrect
-❌ Username: Email format: Authentication failed - username or password incorrect
-❌ Username: Hostinger email format: Authentication failed - username or password incorrect
-❌ Username: Prefixed with 'u': Authentication failed - username or password incorrect
-❌ Password: Original password: Authentication failed - username or password incorrect
-❌ Password: Escaped # character: Authentication failed - username or password incorrect
-❌ Password: Escaped ! character: Authentication failed - username or password incorrect
-❌ Password: Escaped @ character: Authentication failed - username or password incorrect
-❌ Password: UTF-8 encoded: Authentication failed - username or password incorrect
+❌ Basic Connection: SSH error: Error reading SSH protocol banner
+❌ Username: Original username: SSH error: Error reading SSH protocol banner
+❌ Username: Email format: SSH error: Error reading SSH protocol banner
+❌ Username: Hostinger email format: SSH error: Error reading SSH protocol banner
+❌ Username: Prefixed with 'u': SSH error: Error reading SSH protocol banner
+❌ Password: Original password: SSH error: Error reading SSH protocol banner
+❌ Password: Escaped # character: SSH error: Error reading SSH protocol banner
+❌ Password: Escaped ! character: SSH error: Error reading SSH protocol banner
+❌ Password: Escaped @ character: SSH error: Error reading SSH protocol banner
+❌ Password: UTF-8 encoded: SSH error: Error reading SSH protocol banner
 
 Recommendations:
 ----------------------------------------------------------------------

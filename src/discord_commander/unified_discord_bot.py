@@ -17,6 +17,8 @@ Author: Agent-3 (Infrastructure & DevOps) - Discord Consolidation
 License: MIT
 """
 
+from src.discord_commander.discord_gui_controller import DiscordGUIController
+from src.services.messaging_infrastructure import ConsolidatedMessagingService
 import asyncio
 import logging
 import os
@@ -48,8 +50,6 @@ except ImportError:
     sys.exit(1)
 
 # Now import src modules (after path is set)
-from src.services.messaging_infrastructure import ConsolidatedMessagingService
-from src.discord_commander.discord_gui_controller import DiscordGUIController
 
 
 logger = logging.getLogger(__name__)
@@ -222,12 +222,17 @@ class UnifiedDiscordBot(commands.Bot):
         if not hasattr(self, '_startup_sent'):
             self.logger.info(f"✅ Discord Commander Bot ready: {self.user}")
             self.logger.info(f"📊 Guilds: {len(self.guilds)}")
-            
-            # Start status change monitoring
+
+            # Start status change monitoring (AUTO-START when bot is running)
             try:
                 from .status_change_monitor import setup_status_monitor
-                self.status_monitor = setup_status_monitor(self, self.channel_id)
-                self.logger.info("✅ Status change monitor started")
+                self.status_monitor = setup_status_monitor(
+                    self, self.channel_id)
+                # Auto-start monitoring when bot starts (no command needed)
+                if hasattr(self.status_monitor, 'start_monitoring'):
+                    self.status_monitor.start_monitoring()
+                self.logger.info(
+                    "✅ Status change monitor started and running automatically")
             except Exception as e:
                 self.logger.warning(f"⚠️ Could not start status monitor: {e}")
             self.logger.info(f"🤖 Latency: {round(self.latency * 1000, 2)}ms")
@@ -428,7 +433,8 @@ class UnifiedDiscordBot(commands.Bot):
                     "• `!swarm_tasks` - Live task dashboard\n"
                     "• `!swarm_roadmap` - Strategic roadmap\n"
                     "• `!swarm_excellence` - Lean Excellence campaign\n"
-                    "• `!swarm_overview` - Complete swarm status"
+                    "• `!swarm_overview` - Complete swarm status\n"
+                    "• `!swarm_profile` - Swarm collective profile (identity, stats, achievements)"
                 ),
                 inline=False,
             )
@@ -635,7 +641,7 @@ class MessagingCommands(commands.Cog):
                 status_reader = StatusReader()
                 status_reader.clear_cache()
                 await ctx.send("🔄 Status cache cleared - refreshing...", delete_after=3)
-            
+
             view = self.gui_controller.create_status_gui()
 
             # Import status reader to create embed
@@ -653,16 +659,16 @@ class MessagingCommands(commands.Cog):
             self.logger.error(f"Error showing status: {e}")
             await ctx.send(f"❌ Error: {e}")
 
-    @commands.command(name="monitor", description="Control status change monitor. Usage: !monitor [start|stop|status]")
+    @commands.command(name="monitor", description="Control status change monitor. Usage: !monitor [stop|status] (auto-starts with bot)")
     async def monitor(self, ctx: commands.Context, action: str = "status"):
         """Control status change monitor."""
         try:
             action = action.lower()
-            
+
             if not hasattr(self, 'status_monitor'):
                 await ctx.send("❌ Status monitor not initialized. Bot may not be fully ready.")
                 return
-            
+
             if action == "start":
                 if hasattr(self.status_monitor, 'monitor_status_changes'):
                     if self.status_monitor.monitor_status_changes.is_running():
@@ -673,7 +679,7 @@ class MessagingCommands(commands.Cog):
                 else:
                     self.status_monitor.start_monitoring()
                     await ctx.send("✅ Status monitor started! Checking every 15 seconds.")
-            
+
             elif action == "stop":
                 if hasattr(self.status_monitor, 'monitor_status_changes'):
                     if self.status_monitor.monitor_status_changes.is_running():
@@ -683,20 +689,26 @@ class MessagingCommands(commands.Cog):
                         await ctx.send("⚠️ Status monitor is not running.")
                 else:
                     await ctx.send("⚠️ Status monitor is not running.")
-            
+
             elif action == "status":
                 if hasattr(self.status_monitor, 'monitor_status_changes'):
                     is_running = self.status_monitor.monitor_status_changes.is_running()
                     status_text = "🟢 RUNNING" if is_running else "🔴 STOPPED"
                     interval = self.status_monitor.check_interval
-                    
+
+                    # Add auto-start note to description
+                    description = f"**Status:** {status_text}"
+                    if is_running:
+                        description += "\n**Auto-starts with bot** (no command needed)"
+                    description += f"\n**Check Interval:** {interval} seconds"
+
                     embed = discord.Embed(
                         title="📊 Status Change Monitor",
-                        description=f"**Status:** {status_text}\n**Check Interval:** {interval} seconds",
+                        description=description,
                         color=0x27AE60 if is_running else 0xE74C3C,
                         timestamp=discord.utils.utcnow()
                     )
-                    
+
                     # Show tracking info
                     if hasattr(self.status_monitor, 'last_modified'):
                         tracked_agents = len(self.status_monitor.last_modified)
@@ -705,15 +717,16 @@ class MessagingCommands(commands.Cog):
                             value=f"{tracked_agents}/8 agents",
                             inline=True
                         )
-                    
-                    embed.set_footer(text="Use !monitor start to start, !monitor stop to stop")
+
+                    embed.set_footer(
+                        text="Auto-starts with bot. Use !monitor stop to stop, !monitor start to restart if stopped")
                     await ctx.send(embed=embed)
                 else:
                     await ctx.send("⚠️ Status monitor not initialized.")
-            
+
             else:
-                await ctx.send("❌ Invalid action. Use: `!monitor [start|stop|status]`")
-        
+                await ctx.send("❌ Invalid action. Use: `!monitor [stop|status]` (monitor auto-starts with bot)")
+
         except Exception as e:
             self.logger.error(f"Error in monitor command: {e}", exc_info=True)
             await ctx.send(f"❌ Error: {e}")
@@ -756,7 +769,7 @@ class MessagingCommands(commands.Cog):
     @commands.command(name="mermaid", description="Render Mermaid diagram")
     async def mermaid(self, ctx: commands.Context, *, diagram_code: str):
         """Render Mermaid diagram code.
-        
+
         Usage: !mermaid graph TD; A-->B; B-->C;
         """
         try:
@@ -769,35 +782,35 @@ class MessagingCommands(commands.Cog):
             if diagram_code.endswith("```"):
                 diagram_code = diagram_code[:-3]
             diagram_code = diagram_code.strip()
-            
+
             # Create embed with mermaid code
             embed = discord.Embed(
                 title="📊 Mermaid Diagram",
                 description="Mermaid diagram code:",
                 color=discord.Color.blue(),
             )
-            
+
             # Send mermaid code in code block
             # Discord doesn't natively render mermaid, but we can format it nicely
             mermaid_block = f"```mermaid\n{diagram_code}\n```"
-            
+
             # Discord has a 2000 character limit per message
             if len(mermaid_block) > 1900:
                 await ctx.send("❌ Mermaid diagram too long. Please shorten it.")
                 return
-            
+
             embed.add_field(
                 name="Diagram Code",
                 value=mermaid_block,
                 inline=False
             )
-            
+
             embed.set_footer(
                 text="💡 Tip: Copy this code to a Mermaid editor or use Discord's code block rendering"
             )
-            
+
             await ctx.send(embed=embed)
-            
+
         except Exception as e:
             self.logger.error(f"Error rendering mermaid: {e}")
             await ctx.send(f"❌ Error rendering mermaid diagram: {e}")
@@ -957,7 +970,7 @@ class MessagingCommands(commands.Cog):
     async def soft_onboard(self, ctx: commands.Context, *, agent_ids: str = None):
         """
         Soft onboard agent(s). Can specify single agent, multiple agents, or all.
-        
+
         Usage:
         !soft Agent-1
         !soft Agent-1,Agent-2,Agent-3
@@ -972,7 +985,8 @@ class MessagingCommands(commands.Cog):
                 agent_list = [f"Agent-{i}" for i in range(1, 9)]
             else:
                 # Parse comma-separated agent IDs
-                raw_agent_list = [aid.strip() for aid in agent_ids.split(",") if aid.strip()]
+                raw_agent_list = [aid.strip()
+                                  for aid in agent_ids.split(",") if aid.strip()]
                 # Convert numeric IDs to Agent-X format
                 agent_list = []
                 for aid in raw_agent_list:
@@ -1009,13 +1023,16 @@ class MessagingCommands(commands.Cog):
                 # Use --agents for multiple agents (more efficient, uses soft_onboard_multiple_agents)
                 if len(agent_list) == 1:
                     # Single agent - use --agent
-                    cmd = ['python', str(cli_path), '--agent', agent_list[0], '--message', message]
+                    cmd = ['python', str(cli_path), '--agent',
+                           agent_list[0], '--message', message]
                 else:
                     # Multiple agents - use --agents with comma-separated list
                     agents_str = ','.join(agent_list)
-                    cmd = ['python', str(cli_path), '--agents', agents_str, '--message', message, '--generate-cycle-report']
-                
-                result = subprocess.run(cmd, capture_output=True, text=True, timeout=300, cwd=str(project_root))
+                    cmd = ['python', str(
+                        cli_path), '--agents', agents_str, '--message', message, '--generate-cycle-report']
+
+                result = subprocess.run(
+                    cmd, capture_output=True, text=True, timeout=300, cwd=str(project_root))
 
                 if result.returncode == 0:
                     # All agents successful
@@ -1034,12 +1051,14 @@ class MessagingCommands(commands.Cog):
                                     # Agent failed - extract agent ID
                                     for agent in agent_list:
                                         if agent in line and agent not in [s for s in successful]:
-                                            failed.append((agent, "Failed during onboarding"))
+                                            failed.append(
+                                                (agent, "Failed during onboarding"))
                                             if agent in successful:
                                                 successful.remove(agent)
                 else:
                     # Command failed - try to parse which agents failed
-                    error_msg = result.stderr[:500] if result.stderr else result.stdout[:500] if result.stdout else "Unknown error"
+                    error_msg = result.stderr[:500] if result.stderr else result.stdout[:
+                                                                                        500] if result.stdout else "Unknown error"
                     # If we can't determine individual failures, mark all as failed
                     if len(agent_list) == 1:
                         failed.append((agent_list[0], error_msg))
@@ -1078,8 +1097,10 @@ class MessagingCommands(commands.Cog):
                     name="✅ Successful", value="\n".join([f"✅ {agent}" for agent in successful]), inline=False
                 )
                 if failed:
-                    error_list = "\n".join([f"❌ {agent}: {error}" for agent, error in failed[:5]])
-                    partial_embed.add_field(name="❌ Failed", value=error_list, inline=False)
+                    error_list = "\n".join(
+                        [f"❌ {agent}: {error}" for agent, error in failed[:5]])
+                    partial_embed.add_field(
+                        name="❌ Failed", value=error_list, inline=False)
                 await ctx.send(embed=partial_embed)
             else:
                 error_embed = discord.Embed(
@@ -1087,8 +1108,10 @@ class MessagingCommands(commands.Cog):
                     description="All agents failed to onboard",
                     color=discord.Color.red(),
                 )
-                error_list = "\n".join([f"❌ {agent}: {error}" for agent, error in failed[:5]])
-                error_embed.add_field(name="Errors", value=error_list, inline=False)
+                error_list = "\n".join(
+                    [f"❌ {agent}: {error}" for agent, error in failed[:5]])
+                error_embed.add_field(
+                    name="Errors", value=error_list, inline=False)
                 await ctx.send(embed=error_embed)
 
         except Exception as e:
@@ -1099,7 +1122,7 @@ class MessagingCommands(commands.Cog):
     async def hard_onboard(self, ctx: commands.Context, *, agent_ids: str = None):
         """
         Hard onboard agent(s). Can specify single agent, multiple agents, or all.
-        
+
         Usage:
         !hard_onboard Agent-1
         !hard_onboard Agent-1,Agent-2,Agent-3
@@ -1114,7 +1137,8 @@ class MessagingCommands(commands.Cog):
                 agent_list = [f"Agent-{i}" for i in range(1, 9)]
             else:
                 # Parse comma-separated agent IDs
-                raw_agent_list = [aid.strip() for aid in agent_ids.split(",") if aid.strip()]
+                raw_agent_list = [aid.strip()
+                                  for aid in agent_ids.split(",") if aid.strip()]
                 # Convert numeric IDs to Agent-X format
                 agent_list = []
                 for aid in raw_agent_list:
@@ -1158,7 +1182,8 @@ class MessagingCommands(commands.Cog):
                     if result.returncode == 0:
                         successful.append(agent_id)
                     else:
-                        failed.append((agent_id, result.stderr[:200] if result.stderr else "Unknown error"))
+                        failed.append(
+                            (agent_id, result.stderr[:200] if result.stderr else "Unknown error"))
                 except subprocess.TimeoutExpired:
                     failed.append((agent_id, "Timeout after 60 seconds"))
                 except Exception as e:
@@ -1171,8 +1196,10 @@ class MessagingCommands(commands.Cog):
                     description=f"All **{len(agent_list)} agent(s)** hard onboarded successfully!",
                     color=discord.Color.green(),
                 )
-                activated_list = "\n".join([f"✅ {agent}" for agent in successful])
-                success_embed.add_field(name="Activated Agents", value=activated_list, inline=False)
+                activated_list = "\n".join(
+                    [f"✅ {agent}" for agent in successful])
+                success_embed.add_field(
+                    name="Activated Agents", value=activated_list, inline=False)
                 success_embed.add_field(
                     name="Next Steps",
                     value="1. Check agent workspaces for onboarding messages\n2. Use !status to verify agents active\n3. Begin mission assignments",
@@ -1189,8 +1216,10 @@ class MessagingCommands(commands.Cog):
                     name="✅ Successful", value="\n".join([f"✅ {agent}" for agent in successful]), inline=False
                 )
                 if failed:
-                    error_list = "\n".join([f"❌ {agent}: {error}" for agent, error in failed[:5]])
-                    partial_embed.add_field(name="❌ Failed", value=error_list, inline=False)
+                    error_list = "\n".join(
+                        [f"❌ {agent}: {error}" for agent, error in failed[:5]])
+                    partial_embed.add_field(
+                        name="❌ Failed", value=error_list, inline=False)
                 await ctx.send(embed=partial_embed)
             else:
                 error_embed = discord.Embed(
@@ -1198,8 +1227,10 @@ class MessagingCommands(commands.Cog):
                     description="All agents failed to onboard",
                     color=discord.Color.red(),
                 )
-                error_list = "\n".join([f"❌ {agent}: {error}" for agent, error in failed[:5]])
-                error_embed.add_field(name="Errors", value=error_list, inline=False)
+                error_list = "\n".join(
+                    [f"❌ {agent}: {error}" for agent, error in failed[:5]])
+                error_embed.add_field(
+                    name="Errors", value=error_list, inline=False)
                 await ctx.send(embed=error_embed)
 
         except Exception as e:
@@ -1210,7 +1241,7 @@ class MessagingCommands(commands.Cog):
     async def git_push(self, ctx: commands.Context, *, commit_message: str = None):
         """
         Push project to GitHub. Automatically stages, commits, and pushes changes.
-        
+
         Usage:
         !git_push "Your commit message"
         !push "Fixed bug in messaging system"
@@ -1229,7 +1260,7 @@ class MessagingCommands(commands.Cog):
                 capture_output=True,
                 text=True
             )
-            
+
             if git_check.returncode != 0:
                 await ctx.send("❌ Not a git repository or git not available")
                 return
@@ -1325,7 +1356,8 @@ class MessagingCommands(commands.Cog):
                 capture_output=True,
                 text=True
             )
-            current_branch = branch_result.stdout.strip() if branch_result.returncode == 0 else "main"
+            current_branch = branch_result.stdout.strip(
+            ) if branch_result.returncode == 0 else "main"
 
             push_result = subprocess.run(
                 ["git", "push", "origin", current_branch],
@@ -1355,7 +1387,8 @@ class MessagingCommands(commands.Cog):
             )
             await status_msg.edit(embed=embed)
 
-            self.logger.info(f"✅ Git push successful: {commit_message} by {ctx.author.name}")
+            self.logger.info(
+                f"✅ Git push successful: {commit_message} by {ctx.author.name}")
 
         except Exception as e:
             self.logger.error(f"Error in git_push command: {e}", exc_info=True)
@@ -1438,7 +1471,7 @@ Agent, you appear stalled. CONTINUE AUTONOMOUSLY NOW.
     async def heal(self, ctx: commands.Context, action: str = "status", agent_id: str = None):
         """
         Self-healing system commands.
-        
+
         Usage:
         !heal status - Show healing statistics
         !heal check - Immediately check and heal all stalled agents
@@ -1451,19 +1484,19 @@ Agent, you appear stalled. CONTINUE AUTONOMOUSLY NOW.
                 heal_stalled_agents_now
             )
             import asyncio
-            
+
             system = get_self_healing_system()
-            
+
             if action.lower() == "status" or action.lower() == "stats":
                 # Show healing statistics
                 stats = system.get_healing_stats()
-                
+
                 embed = discord.Embed(
                     title="🏥 Self-Healing System Status",
                     description="Agent stall detection and recovery statistics",
                     color=discord.Color.blue(),
                 )
-                
+
                 # Overall stats
                 embed.add_field(
                     name="📊 Overall Statistics",
@@ -1475,19 +1508,19 @@ Agent, you appear stalled. CONTINUE AUTONOMOUSLY NOW.
                     ),
                     inline=False
                 )
-                
+
                 # Terminal cancellation counts
                 cancel_counts = stats.get('terminal_cancellations_today', {})
                 cancel_summary = "\n".join([
                     f"{agent}: {count}" for agent, count in cancel_counts.items() if count > 0
                 ]) or "None today"
-                
+
                 embed.add_field(
                     name="🛑 Terminal Cancellations (Today)",
                     value=cancel_summary,
                     inline=False
                 )
-                
+
                 # Recent actions
                 if stats.get('recent_actions'):
                     recent = stats['recent_actions'][-5:]  # Last 5
@@ -1500,21 +1533,22 @@ Agent, you appear stalled. CONTINUE AUTONOMOUSLY NOW.
                         value=recent_text[:1024],  # Discord limit
                         inline=False
                     )
-                
+
                 await ctx.send(embed=embed)
-                
+
             elif action.lower() == "check" or action.lower() == "heal":
                 # Immediately check and heal stalled agents
                 await ctx.send("🔍 Checking for stalled agents and healing...")
-                
+
                 results = await heal_stalled_agents_now()
-                
+
                 embed = discord.Embed(
                     title="🏥 Healing Check Results",
                     description=f"Checked at {results['timestamp']}",
-                    color=discord.Color.green() if results['stalled_agents_found'] == 0 else discord.Color.orange(),
+                    color=discord.Color.green(
+                    ) if results['stalled_agents_found'] == 0 else discord.Color.orange(),
                 )
-                
+
                 embed.add_field(
                     name="📊 Results",
                     value=(
@@ -1524,23 +1558,23 @@ Agent, you appear stalled. CONTINUE AUTONOMOUSLY NOW.
                     ),
                     inline=False
                 )
-                
+
                 if results['agents_healed']:
                     embed.add_field(
                         name="✅ Successfully Healed",
                         value=", ".join(results['agents_healed']),
                         inline=False
                     )
-                
+
                 if results['agents_failed']:
                     embed.add_field(
                         name="❌ Failed to Heal",
                         value=", ".join(results['agents_failed']),
                         inline=False
                     )
-                
+
                 await ctx.send(embed=embed)
-                
+
             elif action.lower() == "cancel_count" or action.lower() == "cancellations":
                 # Show terminal cancellation count
                 if agent_id:
@@ -1551,7 +1585,8 @@ Agent, you appear stalled. CONTINUE AUTONOMOUSLY NOW.
                         color=discord.Color.orange() if count > 0 else discord.Color.green(),
                     )
                 else:
-                    cancel_counts = system.get_healing_stats().get('terminal_cancellations_today', {})
+                    cancel_counts = system.get_healing_stats().get(
+                        'terminal_cancellations_today', {})
                     total = sum(cancel_counts.values())
                     embed = discord.Embed(
                         title="🛑 Terminal Cancellations (Today)",
@@ -1560,21 +1595,22 @@ Agent, you appear stalled. CONTINUE AUTONOMOUSLY NOW.
                     )
                     for agent, count in cancel_counts.items():
                         if count > 0:
-                            embed.add_field(name=agent, value=str(count), inline=True)
-                
+                            embed.add_field(
+                                name=agent, value=str(count), inline=True)
+
                 await ctx.send(embed=embed)
-                
+
             elif action.lower() == "agent" and agent_id:
                 # Show detailed stats for specific agent
                 stats = system.get_healing_stats()
                 agent_stats = stats['by_agent'].get(agent_id, {})
                 cancel_count = system.get_cancellation_count_today(agent_id)
-                
+
                 embed = discord.Embed(
                     title=f"🏥 Agent Healing Stats - {agent_id}",
                     color=discord.Color.blue(),
                 )
-                
+
                 embed.add_field(
                     name="📊 Healing Actions",
                     value=(
@@ -1584,15 +1620,15 @@ Agent, you appear stalled. CONTINUE AUTONOMOUSLY NOW.
                     ),
                     inline=False
                 )
-                
+
                 embed.add_field(
                     name="🛑 Terminal Cancellations",
                     value=f"**Today:** {cancel_count}",
                     inline=False
                 )
-                
+
                 await ctx.send(embed=embed)
-                
+
             else:
                 await ctx.send(
                     f"❌ Unknown action: `{action}`\n"
@@ -1603,7 +1639,7 @@ Agent, you appear stalled. CONTINUE AUTONOMOUSLY NOW.
                     f"- `!heal cancel_count Agent-3` - Show cancellation count\n"
                     f"- `!heal agent Agent-3` - Show agent-specific stats"
                 )
-                
+
         except ImportError as e:
             await ctx.send(f"❌ Self-healing system not available: {e}")
         except Exception as e:
@@ -1657,13 +1693,13 @@ Agent, you appear stalled. CONTINUE AUTONOMOUSLY NOW.
                 description="**Quick guide to get your SFTP credentials from Hostinger**",
                 color=discord.Color.green(),
             )
-            
+
             embed.add_field(
                 name="Step 1: Log into Hostinger",
                 value="👉 https://hpanel.hostinger.com/",
                 inline=False,
             )
-            
+
             embed.add_field(
                 name="Step 2: Get Credentials",
                 value=(
@@ -1677,7 +1713,7 @@ Agent, you appear stalled. CONTINUE AUTONOMOUSLY NOW.
                 ),
                 inline=False,
             )
-            
+
             embed.add_field(
                 name="Step 3: Add to .env File",
                 value=(
@@ -1691,21 +1727,21 @@ Agent, you appear stalled. CONTINUE AUTONOMOUSLY NOW.
                 ),
                 inline=False,
             )
-            
+
             embed.add_field(
                 name="Step 4: Test",
                 value="```bash\npython tools/sftp_credential_troubleshooter.py\n```",
                 inline=False,
             )
-            
+
             embed.add_field(
                 name="💡 Tip",
                 value="Username might be different from your email (check Hostinger exactly as shown)",
                 inline=False,
             )
-            
+
             embed.set_footer(text="🐝 WE. ARE. SWARM. ⚡🔥")
-            
+
             await ctx.send(embed=embed)
         except Exception as e:
             self.logger.error(f"Error in sftp command: {e}", exc_info=True)
@@ -1715,7 +1751,7 @@ Agent, you appear stalled. CONTINUE AUTONOMOUSLY NOW.
     async def session(self, ctx: commands.Context, date: str = None):
         """
         Post beautiful session accomplishments report to Discord.
-        
+
         Usage:
         !session - Show most recent session report
         !session 2025-11-28 - Show report for specific date
@@ -1732,8 +1768,9 @@ Agent, you appear stalled. CONTINUE AUTONOMOUSLY NOW.
                 return
 
             # Find cycle report files
-            cycle_files = sorted(cycles_dir.glob("CYCLE_ACCOMPLISHMENTS_*.md"), reverse=True)
-            
+            cycle_files = sorted(cycles_dir.glob(
+                "CYCLE_ACCOMPLISHMENTS_*.md"), reverse=True)
+
             if not cycle_files:
                 await ctx.send("❌ No cycle accomplishment reports found in `docs/cycles/`")
                 return
@@ -1759,14 +1796,14 @@ Agent, you appear stalled. CONTINUE AUTONOMOUSLY NOW.
 
             # Read and parse report
             report_content = selected_file.read_text(encoding="utf-8")
-            
+
             # Extract date from filename
             date_match = re.search(r'(\d{4}-\d{2}-\d{2})', selected_file.name)
             report_date = date_match.group(1) if date_match else "Unknown"
 
             # Parse report sections
             lines = report_content.split('\n')
-            
+
             # Extract summary
             summary = {}
             in_summary = False
@@ -1786,13 +1823,14 @@ Agent, you appear stalled. CONTINUE AUTONOMOUSLY NOW.
             current_agent = None
             current_section = None
             current_content = []
-            
+
             for line in lines:
                 if line.startswith("### Agent-"):
                     # Save previous agent
                     if current_agent:
-                        agents_data[current_agent][current_section] = '\n'.join(current_content).strip()
-                    
+                        agents_data[current_agent][current_section] = '\n'.join(
+                            current_content).strip()
+
                     # Start new agent
                     match = re.match(r'### (Agent-\d+) - (.+)', line)
                     if match:
@@ -1809,12 +1847,15 @@ Agent, you appear stalled. CONTINUE AUTONOMOUSLY NOW.
                     # Save previous section
                     if current_section and current_content:
                         if current_section == 'completed_tasks':
-                            agents_data[current_agent]['completed_tasks'] = [c.strip('- ').strip() for c in current_content if c.strip() and c.strip().startswith('-')]
+                            agents_data[current_agent]['completed_tasks'] = [c.strip(
+                                '- ').strip() for c in current_content if c.strip() and c.strip().startswith('-')]
                         elif current_section == 'achievements':
-                            agents_data[current_agent]['achievements'] = [c.strip('- ').strip() for c in current_content if c.strip() and c.strip().startswith('-')]
+                            agents_data[current_agent]['achievements'] = [c.strip(
+                                '- ').strip() for c in current_content if c.strip() and c.strip().startswith('-')]
                         elif current_section == 'current_tasks':
-                            agents_data[current_agent]['current_tasks'] = [c.strip('- ').strip() for c in current_content if c.strip() and c.strip().startswith('-')]
-                    
+                            agents_data[current_agent]['current_tasks'] = [c.strip(
+                                '- ').strip() for c in current_content if c.strip() and c.strip().startswith('-')]
+
                     # Start new section
                     if "Completed Tasks" in line:
                         current_section = 'completed_tasks'
@@ -1827,13 +1868,15 @@ Agent, you appear stalled. CONTINUE AUTONOMOUSLY NOW.
                     current_content = []
                 elif current_agent and current_section and line.strip():
                     current_content.append(line)
-            
+
             # Save last agent
             if current_agent and current_section and current_content:
                 if current_section == 'completed_tasks':
-                    agents_data[current_agent]['completed_tasks'] = [c.strip('- ').strip() for c in current_content if c.strip() and c.strip().startswith('-')]
+                    agents_data[current_agent]['completed_tasks'] = [c.strip(
+                        '- ').strip() for c in current_content if c.strip() and c.strip().startswith('-')]
                 elif current_section == 'achievements':
-                    agents_data[current_agent]['achievements'] = [c.strip('- ').strip() for c in current_content if c.strip() and c.strip().startswith('-')]
+                    agents_data[current_agent]['achievements'] = [c.strip(
+                        '- ').strip() for c in current_content if c.strip() and c.strip().startswith('-')]
 
             # Create beautiful embed
             embed = discord.Embed(
@@ -1845,7 +1888,8 @@ Agent, you appear stalled. CONTINUE AUTONOMOUSLY NOW.
 
             # Add summary fields
             if summary:
-                summary_text = "\n".join([f"**{k}**: {v}" for k, v in summary.items()])
+                summary_text = "\n".join(
+                    [f"**{k}**: {v}" for k, v in summary.items()])
                 embed.add_field(
                     name="📊 Swarm Summary",
                     value=summary_text[:1024],
@@ -1857,27 +1901,29 @@ Agent, you appear stalled. CONTINUE AUTONOMOUSLY NOW.
             for agent_id in sorted(agents_data.keys()):
                 data = agents_data[agent_id]
                 agent_text = f"**{agent_id}** - {data['name']}\n"
-                
+
                 if data['completed_tasks']:
                     task_count = len(data['completed_tasks'])
                     agent_text += f"✅ **{task_count}** completed tasks\n"
                     # Show first 3 tasks
                     for task in data['completed_tasks'][:3]:
-                        task_short = task[:80] + "..." if len(task) > 80 else task
+                        task_short = task[:80] + \
+                            "..." if len(task) > 80 else task
                         agent_text += f"  • {task_short}\n"
                     if task_count > 3:
                         agent_text += f"  • *... and {task_count - 3} more*\n"
-                
+
                 if data['achievements']:
                     achievement_count = len(data['achievements'])
                     agent_text += f"🏆 **{achievement_count}** achievements\n"
                     # Show first 2 achievements
                     for achievement in data['achievements'][:2]:
-                        achievement_short = achievement[:80] + "..." if len(achievement) > 80 else achievement
+                        achievement_short = achievement[:80] + \
+                            "..." if len(achievement) > 80 else achievement
                         agent_text += f"  • {achievement_short}\n"
                     if achievement_count > 2:
                         agent_text += f"  • *... and {achievement_count - 2} more*\n"
-                
+
                 agent_texts.append(agent_text)
 
             # Split agents into chunks to fit Discord limits
@@ -1887,8 +1933,9 @@ Agent, you appear stalled. CONTINUE AUTONOMOUSLY NOW.
                 field_value = "\n".join(chunk)
                 if len(field_value) > 1024:
                     field_value = field_value[:1021] + "..."
-                
-                field_name = f"🤖 Agents {i+1}-{min(i+chunk_size, len(agent_texts))}" if len(agent_texts) > chunk_size else "🤖 Agent Accomplishments"
+
+                field_name = f"🤖 Agents {i+1}-{min(i+chunk_size, len(agent_texts))}" if len(
+                    agent_texts) > chunk_size else "🤖 Agent Accomplishments"
                 embed.add_field(
                     name=field_name,
                     value=field_value,

@@ -314,15 +314,15 @@ def load_site_configs() -> Dict[str, Dict]:
         },
         "ariajet": {
             "local_path": "D:/websites/ariajet.site",
-            "theme_name": None,
-            "remote_base": "/public_html",
-            "functions_path": "/public_html/index.html",
+            "theme_name": "ariajet",
+            "remote_base": "/public_html/wp-content/themes/ariajet",
+            "functions_path": "/public_html/wp-content/themes/ariajet/functions.php",
         },
         "ariajet.site": {
             "local_path": "D:/websites/ariajet.site",
-            "theme_name": None,
-            "remote_base": "/public_html",
-            "functions_path": "/public_html/index.html",
+            "theme_name": "ariajet",
+            "remote_base": "/public_html/wp-content/themes/ariajet",
+            "functions_path": "/public_html/wp-content/themes/ariajet/functions.php",
         },
     }
     
