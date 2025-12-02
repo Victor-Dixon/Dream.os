@@ -1,50 +1,20 @@
 # Duplicate File Analysis Report
-**Generated**: 2025-12-02 05:51:47
+**Generated**: 2025-12-02 08:28:08
 **Analyzer**: Agent-2 (Architecture & Design Specialist)
 
 ## 📊 Summary
 
-- **Identical Files (Safe Delete)**: 576 groups
-- **Same Name, Different Content**: 140 groups
+- **Identical Files (Safe Delete)**: 581 groups
+- **Same Name, Different Content**: 144 groups
 - **Needs Analysis**: 51 groups
 
 ## ✅ Category A: Identical Files (Safe to Delete)
 
-**Total files safe to delete**: 652
+**Total files safe to delete**: 627
 
-### Group 1: 68 identical files
+### Group 1: 38 identical files
 - **Keep**: `AGENTS.md`
 - **Delete**:
-  - `DRY_ELIMINATOR_REVIEW.md`
-  - `temp_help_view.txt`
-  - `implementation_leadership_confirmation.py`
-  - `src\ai_training\dreamvault\scrapers\chatgpt_scraper_core.py`
-  - `src\ai_training\dreamvault\scrapers\chatgpt_scraper_operations.py`
-  - `src\ai_training\dreamvault\scrapers\chatgpt_scraper_refactored.py`
-  - `src\services\unified_onboarding_service.py`
-  - `src\services\vector_integration_unified.py`
-  - `src\services\vector_models_and_embedding_unified.py`
-  - `docs\architecture\MESSAGE_QUEUE_PROCESSOR_ARCHITECTURAL_REVIEW.md`
-  - `docs\architecture\AGENT7_CLEANUP_ARCHITECTURAL_REVIEW.md`
-  - `docs\discord\STATUS_UPDATE_INTEGRATION.md`
-  - `docs\discord\STATUS_UPDATE_SOLUTION_SUMMARY.md`
-  - `docs\discord\STATUS_UPDATE_QUICK_GUIDE.md`
-  - `docs\discord\START_STATUS_MONITOR_OVERNIGHT.md`
-  - `docs\discord\WHY_MONITOR_DIDNT_START.md`
-  - `docs\discord\MONITOR_NOT_STARTING_FIX.md`
-  - `docs\protocols\EXECUTION_OVER_DOCUMENTATION.md`
-  - `docs\protocols\AGENT_COMPLIANCE_ENFORCEMENT.md`
-  - `docs\organization\SIMPLE_GIT_CLONE_SOLUTION.md`
-  - `docs\organization\SESSION_CLOSE_2025-11-29_TASK_ASSIGNMENTS.md`
-  - `docs\organization\NEXT_ASSIGNMENTS_2025-11-30.md`
-  - `docs\organization\NEXT_ASSIGNMENTS_ROUND2_2025-11-30.md`
-  - `docs\captain\11-28_VS_11-29_CAPTAIN_COMPARISON.md`
-  - `docs\chat_presence\SWARM_PUBLIC_ANNOUNCEMENT.md`
-  - `docs\cleanup\AGENT7_CLEANUP_EXECUTION_LOG.md`
-  - `docs\cleanup\AGENT7_CLEANUP_COMPLETE_REPORT.md`
-  - `temp_repos\Thea\codebase_analysis\class_counts.txt`
-  - `temp_repos\Thea\src\dreamscape\core\training\__init__.py`
-  - `temp_repos\Auto_Blogger\__init__.py`
   - `temp_repos\Auto_Blogger\autoblogger\__init__.py`
   - `temp_repos\Auto_Blogger\autoblogger\models\__init__.py`
   - `temp_repos\Auto_Blogger\autoblogger\resources\translations\styles.qss`
@@ -177,9 +147,9 @@
   - `swarm_brain\devlogs\system_events\2025-12-01_agent-4_CAPTAIN_PRIORITY_STATUS_2025-12-01_20-30.md`
 
 ### Group 20: 2 identical files
-- **Keep**: `docs\organization\OUTPUT_FLYWHEEL_COMPLETION_STATUS.md`
+- **Keep**: `docs\organization\OUTPUT_FLYWHEEL_SWARM_INTEGRATION.md`
 - **Delete**:
-  - `swarm_brain\devlogs\system_events\2025-12-02_agent-4_OUTPUT_FLYWHEEL_COMPLETION_STATUS.md`
+  - `swarm_brain\devlogs\system_events\2025-12-02_agent-4_OUTPUT_FLYWHEEL_SWARM_INTEGRATION.md`
 
 ## ⚠️ Category C: Same Name, Different Content
 
@@ -217,7 +187,7 @@ These files have the same name but different content. Consider renaming for clar
 - `temp_repos\Thea\src\dreamscape\core\discord\config.py`
 - `temp_repos\Thea\src\dreamscape\core\memory\weaponization\config.py`
 
-### README.md (63 files)
+### README.md (64 files)
 - `README.md`
 - `src\core\validation\README.md`
 - `docs\README.md`
@@ -272,6 +242,7 @@ These files have the same name but different content. Consider renaming for clar
 - `dream\repos\master\dadudekc\README.md`
 - `money_ops\README.md`
 - `systems\output_flywheel\README.md`
+- `systems\output_flywheel\integration\README.md`
 - `examples\quickstart_demo\README.md`
 - `extensions\repository-navigator\README.md`
 - `extensions\repository-navigator\test\README.md`
