@@ -58,8 +58,8 @@ class CaptainSwarmCoordinator:
             "coordinates": (653, 940),
         },
         "Agent-8": {
-            "name": "SSOT & System Integration",
-            "focus": ["ssot", "system integration", "consolidation", "file deletion"],
+            "name": "Testing & Quality Assurance",
+            "focus": ["testing", "quality_assurance", "test_coverage", "test_infrastructure", "integration_testing"],
             "coordinates": (1611, 941),
         },
     }
@@ -320,4 +320,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
