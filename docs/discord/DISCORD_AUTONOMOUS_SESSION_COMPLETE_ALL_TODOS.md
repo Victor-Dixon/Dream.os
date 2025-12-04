@@ -95,9 +95,9 @@
 ## 📋 ALL DELIVERABLES LOCATION
 
 **Strategic Planning:**
-- Business Value: `docs/strategic/BUSINESS_VALUE_MAPPING_GITHUB_REPOS.md`
-- Alternatives: `docs/strategic/ALTERNATIVE_STRATEGIES_GITHUB_CONSOLIDATION.md`
-- Recovery: `docs/strategic/RECOVERY_PLANNING_GITHUB_CONSOLIDATION.md`
+- Business Value: `docs/strategy/BUSINESS_VALUE_MAPPING_GITHUB_REPOS.md`
+- Alternatives: `docs/strategy/ALTERNATIVE_STRATEGIES_GITHUB_CONSOLIDATION.md`
+- Recovery: `docs/strategy/RECOVERY_PLANNING_GITHUB_CONSOLIDATION.md`
 
 **Passdowns (6):**
 - Captain: `agent_workspaces/Agent-4/inbox/CAPTAIN_FINAL_PASSDOWN_NEXT_SESSION.md`

@@ -21,7 +21,7 @@
 
 ### **Documentation Locations Audited:**
 1. `docs/captain/` - 4 files
-2. `docs/strategic/` - 3 files
+2. `docs/strategy/` - 3 files
 3. `docs/task_assignments/` - 5 files
 
 **Total Files Audited:** 12 files
@@ -96,7 +96,7 @@ All task assignment files are properly organized in `docs/task_assignments/`:
 ### **4. Incomplete Documentation (Priority: LOW)**
 
 #### **Strategic Documentation:**
-- `docs/strategic/BUSINESS_VALUE_MAPPING_GITHUB_REPOS.md` - Contains placeholder text:
+- `docs/strategy/BUSINESS_VALUE_MAPPING_GITHUB_REPOS.md` - Contains placeholder text:
   - Line 13: "**None identified yet** - Most repos are tools/frameworks, not revenue-generating"
   - Line 162: "**Income:** Limited (tools/frameworks, not products)"
 
@@ -149,7 +149,7 @@ All task assignment files are properly organized in `docs/task_assignments/`:
 ### **Priority 3: Review Placeholder Content (MEDIUM)**
 
 **Action Required:**
-- Review `docs/strategic/BUSINESS_VALUE_MAPPING_GITHUB_REPOS.md`
+- Review `docs/strategy/BUSINESS_VALUE_MAPPING_GITHUB_REPOS.md`
 - Determine if placeholders are intentional or need completion
 - Add markers if placeholders are temporary
 

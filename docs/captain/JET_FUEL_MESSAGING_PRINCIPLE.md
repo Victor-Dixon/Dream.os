@@ -118,7 +118,7 @@ WE. ARE. SWARM. AUTONOMOUS. POWERFUL. 🐝⚡🔥🚀
 ## 📚 REFERENCE DOCUMENTATION
 
 - **Primary**: `swarm_brain/procedures/PROCEDURE_MESSAGE_AGENT.md`
-- **Secondary**: `docs/specifications/MESSAGING_SYSTEM_V2_ENHANCED_TYPES.md`
+- **Secondary**: `docs/specs/MESSAGING_SYSTEM_V2_ENHANCED_TYPES.md`
 - **This Document**: Captain reference for Jet Fuel usage
 
 ---

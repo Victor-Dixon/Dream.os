@@ -167,7 +167,7 @@
 - **Report**: `docs/reports/AGENT-7_PROACTIVE_CLEANUP_REPORT.md`
 
 ### Documentation
-- **Integration Guides**: `docs/integrations/DREAM_OS_INTEGRATION.md`, `DREAMVAULT_INTEGRATION.md`, `GPT_AUTOMATION_INTEGRATION.md`
+- **Integration Guides**: `docs/integration/DREAM_OS_INTEGRATION.md`, `DREAMVAULT_INTEGRATION.md`, `GPT_AUTOMATION_INTEGRATION.md`
 - **Status**: Agent-8 approved
 - **Quality**: Comprehensive, follows standards
 

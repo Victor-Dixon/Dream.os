@@ -23,7 +23,7 @@
 ### 1. ✅ Duplicate File Cleanup
 **Issue**: Redundant comprehensive guide after creating split files  
 **Action**: Deleted `docs/DREAM_OS_DREAMVAULT_INTEGRATION_GUIDE.md`  
-**Reason**: Agent-8 approved split files in docs/integrations/ make this redundant  
+**Reason**: Agent-8 approved split files in docs/integration/ make this redundant  
 **Impact**: Cleaner docs structure, no duplication
 
 ### 2. ✅ Integration Validation & Fix
@@ -62,7 +62,7 @@ except ImportError:
 **Impact**: Cleaner docs/ directory while preserving history in archive
 
 ### 4. ✅ Documentation Update
-**Action**: Updated docs/integrations/DREAMVAULT_INTEGRATION.md  
+**Action**: Updated docs/integration/DREAMVAULT_INTEGRATION.md  
 **Changes**:
 - Updated import validation examples
 - Added new troubleshooting entry for ChatGPTScraper

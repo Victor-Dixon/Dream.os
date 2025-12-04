@@ -13,7 +13,7 @@
 - Automated project snapshots via pre-commit (generation) and pre-push (enforcement).
 - Artifacts: project_analysis.json, test_analysis.json, chatgpt_project_context.json, dependency_cache.json.
 - Documented overnight consistency enhancements in
-  `docs/specifications/OVERNIGHT_CONSISTENCY_ENHANCEMENTS_PRD.md`.
+  `docs/specs/OVERNIGHT_CONSISTENCY_ENHANCEMENTS_PRD.md`.
 ### Changed
 - Consolidated captain documentation into `docs/guides/captain_handbook.md`.
 - Updated `AGENTS.md` to emphasize Python-first guidelines and exempt the monitoring component from language restrictions.

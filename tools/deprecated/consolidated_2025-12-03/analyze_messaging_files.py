@@ -182,11 +182,11 @@ def main():
         "src/core/messaging_core.py",
         "src/services/messaging_pyautogui.py",
         "scripts/messaging_cli_completion.sh",
-        "docs/specifications/MESSAGING_SYSTEM_V2_ENHANCED_TYPES.md",
-        "docs/specifications/MESSAGING_SYSTEM_PRD.md",
-        "docs/specifications/MESSAGING_DEPLOYMENT_STRATEGY.md",
-        "docs/specifications/MESSAGING_ARCHITECTURE_DIAGRAM.md",
-        "docs/specifications/MESSAGING_API_SPECIFICATIONS.md",
+        "docs/specs/MESSAGING_SYSTEM_V2_ENHANCED_TYPES.md",
+        "docs/specs/MESSAGING_SYSTEM_PRD.md",
+        "docs/specs/MESSAGING_DEPLOYMENT_STRATEGY.md",
+        "docs/specs/MESSAGING_ARCHITECTURE_DIAGRAM.md",
+        "docs/specs/MESSAGING_API_SPECIFICATIONS.md",
         "config/messaging.yml"
     ]
     

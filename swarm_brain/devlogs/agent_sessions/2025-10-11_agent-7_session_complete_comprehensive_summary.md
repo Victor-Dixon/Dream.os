@@ -390,7 +390,7 @@ This comprehensive devlog documents Agent-7's complete achievement set across:
 ### Integration Documentation
 1. `docs/TEAM_BETA_INTEGRATION_PLAYBOOK.md` (methodology)
 2. `docs/CHAT_MATE_INTEGRATION.md` (C-064)
-3. `docs/integrations/DREAMVAULT_INTEGRATION.md` (C-073)
+3. `docs/integration/DREAMVAULT_INTEGRATION.md` (C-073)
 4. `docs/C-064_CHAT_MATE_CLONING_ANALYSIS.md` (analysis)
 
 ### Devlogs Created

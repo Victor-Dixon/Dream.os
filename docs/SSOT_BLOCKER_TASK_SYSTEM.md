@@ -42,12 +42,12 @@ python -m src.services.messaging_cli --get-next-task
 - **Content:** Instructions to use `--get-next-task`
 - **Context:** Agent onboarding checklist
 
-### **5. docs/specifications/MESSAGING_API_SPECIFICATIONS.md**
+### **5. docs/specs/MESSAGING_API_SPECIFICATIONS.md**
 - **Line:** 50
 - **Content:** "`--get-next-task` (requires `--agent`)"
 - **Context:** API specification document
 
-### **6. docs/specifications/MESSAGING_SYSTEM_PRD.md**
+### **6. docs/specs/MESSAGING_SYSTEM_PRD.md**
 - **Line:** 76
 - **Content:** "REQ-FLG-006: `--get-next-task` requires `--agent`"
 - **Context:** Product requirements document

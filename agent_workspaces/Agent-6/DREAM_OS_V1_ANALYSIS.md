@@ -30,7 +30,7 @@
 
 **Documentation:**
 - ✅ `docs/DREAM_OS_DREAMVAULT_INTEGRATION.md`
-- ✅ `docs/integrations/DREAM_OS_INTEGRATION.md`
+- ✅ `docs/integration/DREAM_OS_INTEGRATION.md`
 
 **Setup:**
 - ✅ `scripts/setup_dream_os_dreamvault.py`

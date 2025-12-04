@@ -56,7 +56,7 @@
 
 **Duplicate Set 3: Jet Fuel Protocol Documentation**
 - **Action**: Archived `JET_FUEL_PROTOCOL_ACKNOWLEDGMENT.md` (acknowledgment only)
-- **Result**: SSOT docs remain (`docs/specifications/MESSAGING_SYSTEM_V2_ENHANCED_TYPES.md`, `swarm_brain/procedures/PROCEDURE_MESSAGE_AGENT.md`)
+- **Result**: SSOT docs remain (`docs/specs/MESSAGING_SYSTEM_V2_ENHANCED_TYPES.md`, `swarm_brain/procedures/PROCEDURE_MESSAGE_AGENT.md`)
 - **Status**: ✅ Archived, SSOT docs remain
 
 **Total**: ✅ **3 duplicate sets consolidated/archived**

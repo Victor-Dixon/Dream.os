@@ -37,7 +37,7 @@ Merge the best features, patterns, and concepts from all three projects into V2 
 - ✅ **FSM Orchestrator**: `src/gaming/dreamos/fsm_orchestrator.py`
 - ✅ **Atomic File Manager**: `src/gaming/dreamos/resumer_v2/atomic_file_manager.py`
 - ✅ **UI Integration**: Gamification UI components
-- ✅ **Documentation**: `docs/integrations/DREAM_OS_INTEGRATION.md`
+- ✅ **Documentation**: `docs/integration/DREAM_OS_INTEGRATION.md`
 
 **Status**: Core FSM and file management integrated, but full Dream.os repo (36,561 lines) not yet analyzed.
 

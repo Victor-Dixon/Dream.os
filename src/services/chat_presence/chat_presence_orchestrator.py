@@ -11,6 +11,12 @@ Author: Agent-7 (Web Development Specialist)
 License: MIT
 """
 
+from ...core.messaging_models_core import (
+    UnifiedMessagePriority,
+    UnifiedMessageTag,
+    UnifiedMessageType,
+)
+from ...core.messaging_core import send_message
 import asyncio
 import logging
 from pathlib import Path
@@ -32,12 +38,6 @@ log_file = log_dir / "chat_presence_orchestrator.log"
 configure_logging(level="DEBUG", log_file=log_file)
 
 logger = get_logger(__name__)
-from ...core.messaging_core import send_message
-from ...core.messaging_models_core import (
-    UnifiedMessagePriority,
-    UnifiedMessageTag,
-    UnifiedMessageType,
-)
 # OBS imports (optional - bot can run without OBS)
 try:
     from ...obs.caption_interpreter import CaptionInterpreter, InterpretedCaption
@@ -109,16 +109,18 @@ class ChatPresenceOrchestrator:
 
         self.running = False
         self._status_update_task: Optional[asyncio.Task] = None
-        
+
         # Admin users (channel owner + configured admins)
         self.admin_users = set()
-        channel_owner = self.twitch_config.get("channel", "").lstrip("#").lower()
+        channel_owner = self.twitch_config.get(
+            "channel", "").lstrip("#").lower()
         if channel_owner:
             self.admin_users.add(channel_owner)
         # Add configured admins from env/config if needed
         admin_list = self.twitch_config.get("admin_users", [])
         if isinstance(admin_list, str):
-            admin_list = [a.strip().lower() for a in admin_list.split(",") if a.strip()]
+            admin_list = [a.strip().lower()
+                          for a in admin_list.split(",") if a.strip()]
         self.admin_users.update(admin_list)
 
     async def start(self) -> bool:
@@ -143,14 +145,14 @@ class ChatPresenceOrchestrator:
                 logger.warning("⚠️ OBS listener failed to start")
 
         self.running = True
-        
+
         # Start periodic status updates (every 5 minutes)
         if self.twitch_bridge:
             self._status_update_task = asyncio.create_task(
                 self._periodic_status_updates()
             )
             logger.info("📊 Periodic status updates started (every 5 minutes)")
-        
+
         logger.info("✅ Chat Presence Orchestrator started")
         return True
 
@@ -172,7 +174,7 @@ class ChatPresenceOrchestrator:
                 event_loop = asyncio.get_running_loop()
             except RuntimeError:
                 event_loop = None
-            
+
             self.twitch_bridge = TwitchChatBridge(
                 username=self.twitch_config.get("username", ""),
                 oauth_token=self.twitch_config.get("oauth_token", ""),
@@ -239,7 +241,7 @@ class ChatPresenceOrchestrator:
         # Handle status commands first (special case - available to all users)
         is_status = self.message_interpreter.is_status_command(message)
         logger.debug(f"is_status_command returned: {is_status}")
-        
+
         if is_status:
             logger.info(f"Status command detected: {message}")
             try:
@@ -261,7 +263,7 @@ class ChatPresenceOrchestrator:
 
         # Check if user is admin for agent messaging commands
         is_admin = self._is_admin_user(username, message_data.get("tags", {}))
-        
+
         # Determine which agent should respond
         agent_id = self.message_interpreter.determine_responder(
             message, username, "twitch"
@@ -290,7 +292,8 @@ class ChatPresenceOrchestrator:
             await self.twitch_bridge.send_message(
                 f"❌ Only admins can send messages to agents. Use !status to check agent status."
             )
-            logger.warning(f"⚠️ Non-admin user {username} attempted to message agents")
+            logger.warning(
+                f"⚠️ Non-admin user {username} attempted to message agents")
             return
 
         # Extract message content (remove command prefix)
@@ -428,7 +431,8 @@ class ChatPresenceOrchestrator:
         logger.info(f"Status command received: {message}")
 
         # Parse command
-        command_type, agent_id = self.message_interpreter.parse_status_command(message)
+        command_type, agent_id = self.message_interpreter.parse_status_command(
+            message)
         logger.debug(
             "Parsed status command",
             extra={"command_type": command_type, "agent_id": agent_id}
@@ -439,11 +443,12 @@ class ChatPresenceOrchestrator:
                 logger.error("status_reader is None!")
                 await self.twitch_bridge.send_message("❌ Status reader not available")
                 return
-            
+
             logger.debug("status_reader available, proceeding...")
             if command_type == "agent" and agent_id:
                 # Single agent status
-                status_text = self.status_reader.format_agent_status_compact(agent_id)
+                status_text = self.status_reader.format_agent_status_compact(
+                    agent_id)
                 await self.twitch_bridge.send_message(status_text)
             else:
                 # All agents summary
@@ -454,9 +459,10 @@ class ChatPresenceOrchestrator:
                     all_status = self.status_reader.get_all_agents_status()
                     lines = ["📊 Swarm Status:"]
                     for agent_id in sorted(all_status.keys()):
-                        compact = self.status_reader.format_agent_status_compact(agent_id)
+                        compact = self.status_reader.format_agent_status_compact(
+                            agent_id)
                         lines.append(compact)
-                    
+
                     # Send in chunks to avoid message limits
                     chunk = []
                     current_length = 0
@@ -468,14 +474,15 @@ class ChatPresenceOrchestrator:
                         else:
                             chunk.append(line)
                             current_length += len(line) + 3  # " | " separator
-                    
+
                     if chunk:
                         await self.twitch_bridge.send_message(" | ".join(chunk))
                 else:
                     await self.twitch_bridge.send_message(summary)
 
         except Exception as e:
-            logger.error(f"❌ Error handling status command: {e}", exc_info=True)
+            logger.error(
+                f"❌ Error handling status command: {e}", exc_info=True)
             await self.twitch_bridge.send_message("❌ Error retrieving status")
 
     async def _handle_obs_caption(self, caption_data: dict) -> None:
@@ -631,27 +638,27 @@ class ChatPresenceOrchestrator:
     def _is_admin_user(self, username: str, tags: dict) -> bool:
         """
         Check if user is an admin.
-        
+
         Args:
             username: Twitch username (lowercase)
             tags: Twitch IRC tags (may contain badges)
-            
+
         Returns:
             True if user is admin
         """
         username_lower = username.lower()
-        
+
         # Check configured admin list
         if username_lower in self.admin_users:
             return True
-        
+
         # Check Twitch badges (broadcaster, moderator)
         # Twitch IRC tags format: badges=broadcaster/1,moderator/1
         badges = tags.get("badges", "")
         if isinstance(badges, str):
             if "broadcaster" in badges or "moderator" in badges:
                 return True
-        
+
         return False
 
     async def _periodic_status_updates(self) -> None:
@@ -667,30 +674,32 @@ class ChatPresenceOrchestrator:
                 break
             await asyncio.sleep(1)
             wait_count += 1
-        
+
         if not self.twitch_bridge or not self.twitch_bridge.connected:
-            logger.warning("⚠️ Twitch bridge not connected, skipping periodic updates")
+            logger.warning(
+                "⚠️ Twitch bridge not connected, skipping periodic updates")
             return
-        
+
         while self.running:
             try:
                 await asyncio.sleep(300)  # 5 minutes
-                
+
                 if not self.running or not self.twitch_bridge or not self.twitch_bridge.connected:
                     break
-                
+
                 # Get and post status summary
                 summary = self.status_reader.format_all_agents_summary()
-                
+
                 # Split if too long
                 if len(summary) > 500:
                     # Send compact version
                     all_status = self.status_reader.get_all_agents_status()
                     lines = ["📊 **Swarm Status Update:**"]
                     for agent_id in sorted(all_status.keys()):
-                        compact = self.status_reader.format_agent_status_compact(agent_id)
+                        compact = self.status_reader.format_agent_status_compact(
+                            agent_id)
                         lines.append(compact)
-                    
+
                     # Send in chunks
                     chunk = []
                     current_length = 0
@@ -702,18 +711,19 @@ class ChatPresenceOrchestrator:
                         else:
                             chunk.append(line)
                             current_length += len(line) + 3
-                    
+
                     if chunk:
                         await self.twitch_bridge.send_message(" | ".join(chunk))
                 else:
                     await self.twitch_bridge.send_message(summary)
-                
+
                 logger.info("📊 Periodic status update posted to Twitch")
-                
+
             except asyncio.CancelledError:
                 break
             except Exception as e:
-                logger.error(f"❌ Error in periodic status update: {e}", exc_info=True)
+                logger.error(
+                    f"❌ Error in periodic status update: {e}", exc_info=True)
                 # Continue running even if one update fails
                 await asyncio.sleep(60)  # Wait 1 minute before retry
 
