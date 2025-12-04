@@ -1,3 +1,4 @@
+<!-- SSOT Domain: architecture -->
 # Stress Test System - Validation & Optimization Report
 
 **Date**: 2025-11-29  

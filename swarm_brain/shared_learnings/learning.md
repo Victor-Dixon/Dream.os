@@ -3970,7 +3970,7 @@ Full documentation: docs/messaging/FLAG_PRIORITY_MAPPING.md
 **Key Files:**
 - `src/services/publishers/discord_publisher.py`
 - `src/services/publishers/base.py`
-- `docs/consolidation/MIGRATION_PATTERNS_FROM_FREERIDE.md`
+- `docs/archive/consolidation/MIGRATION_PATTERNS_FROM_FREERIDE.md`
 
 ---
 

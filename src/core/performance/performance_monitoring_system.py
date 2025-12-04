@@ -16,6 +16,8 @@ from datetime import datetime
 from typing import Any
 
 import psutil
+from dataclasses import dataclass, field
+
 
 
 @dataclass

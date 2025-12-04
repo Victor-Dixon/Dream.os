@@ -88,7 +88,7 @@ This index organizes ALL swarm documentation for quick agent access.
 ### **SSOT (Single Source of Truth)**:
 - `docs/ssot/SSOT_ENFORCEMENT_GUIDE.md` - SSOT enforcement
 - `docs/CONFIG_SSOT_MIGRATION_GUIDE.md` - Config SSOT migration
-- `docs/consolidation/CONFIG_CONSOLIDATION_GUIDE.md` - Config consolidation
+- `docs/archive/consolidation/CONFIG_CONSOLIDATION_GUIDE.md` - Config consolidation
 
 ---
 

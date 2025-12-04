@@ -1,4 +1,7 @@
-"""Shared metrics utilities.
+"""
+Shared metrics utilities.
+
+<!-- SSOT Domain: integration -->
 
 This module provides a single source of truth for simple metrics
 collection patterns used across the codebase."""
@@ -8,6 +11,8 @@ from __future__ import annotations
 from collections import defaultdict
 from dataclasses import dataclass
 from datetime import datetime
+from dataclasses import dataclass, field
+
 
 
 @dataclass

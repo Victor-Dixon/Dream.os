@@ -1,10 +1,16 @@
 # AUTO-GENERATED __init__.py
 # DO NOT EDIT MANUALLY - changes may be overwritten
 
-from . import circuit_breaker
+# Use provider pattern to avoid circular imports
+from .circuit_breaker.provider import CircuitBreakerProvider
+from .circuit_breaker.protocol import ICircuitBreaker
+
+# Export CircuitBreaker from directory (file/directory conflict resolved)
+# Import from directory, not file
+from .circuit_breaker.implementation import CircuitBreaker
 from . import component_management
 from . import coordination_decorator
-from . import coordination_error_handler
+# coordination_error_handler merged into component_management
 from . import coordination_strategies
 from . import error_analysis_engine
 from . import error_classification
@@ -31,10 +37,12 @@ from . import retry_safety_engine
 from . import specialized_handlers
 
 __all__ = [
-    'circuit_breaker',
+    'CircuitBreakerProvider',
+    'ICircuitBreaker',
+    'CircuitBreaker',  # Backward compatibility via lazy import
     'component_management',
     'coordination_decorator',
-    'coordination_error_handler',
+    # 'coordination_error_handler',  # Merged into component_management
     'coordination_strategies',
     'error_analysis_engine',
     'error_classification',

@@ -1,0 +1,24 @@
+{
+  "session_id": "c2ec7e9f-a9fa-4f8b-a21b-15d1498033fa",
+  "session_type": "build",
+  "timestamp": "2025-12-03T01:09:18.829775Z",
+  "agent_id": "Agent-1",
+  "metadata": {
+    "agent_name": "Test Agent",
+    "current_mission": "Test Mission",
+    "completed_tasks": [],
+    "achievements": [],
+    "duration_minutes": 429
+  },
+  "source_data": {
+    "repo_path": "C:\\Users\\USER\\AppData\\Local\\Temp\\tmp1je52cdi",
+    "git_commits": [],
+    "files_changed": []
+  },
+  "artifacts": {},
+  "pipeline_status": {
+    "build_artifact": "pending",
+    "trade_artifact": "not_applicable",
+    "life_aria_artifact": "not_applicable"
+  }
+}

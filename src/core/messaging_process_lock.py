@@ -3,6 +3,8 @@
 Cross-Process Messaging Lock System
 ====================================
 
+<!-- SSOT Domain: integration -->
+
 Prevents race conditions when multiple agents/processes send messages simultaneously.
 Uses file-based locking for cross-process coordination.
 

@@ -47,6 +47,86 @@
       "attempt": 1,
       "delay": 0.15,
       "file_path": "message_queue\\queue.json"
+    },
+    {
+      "timestamp": "2025-12-02T16:16:30.430573",
+      "error_type": "PermissionError",
+      "winerror_code": 5,
+      "attempt": 1,
+      "delay": 0.15,
+      "file_path": "message_queue\\queue.json"
+    },
+    {
+      "timestamp": "2025-12-02T16:45:15.204906",
+      "error_type": "PermissionError",
+      "winerror_code": 5,
+      "attempt": 1,
+      "delay": 0.15,
+      "file_path": "message_queue\\queue.json"
+    },
+    {
+      "timestamp": "2025-12-02T22:03:11.738842",
+      "error_type": "PermissionError",
+      "winerror_code": 5,
+      "attempt": 1,
+      "delay": 0.15,
+      "file_path": "message_queue\\queue.json"
+    },
+    {
+      "timestamp": "2025-12-02T22:12:48.437834",
+      "error_type": "PermissionError",
+      "winerror_code": 5,
+      "attempt": 1,
+      "delay": 0.15,
+      "file_path": "message_queue\\queue.json"
+    },
+    {
+      "timestamp": "2025-12-02T22:19:53.706687",
+      "error_type": "PermissionError",
+      "winerror_code": 5,
+      "attempt": 1,
+      "delay": 0.15,
+      "file_path": "message_queue\\queue.json"
+    },
+    {
+      "timestamp": "2025-12-02T22:21:22.862707",
+      "error_type": "PermissionError",
+      "winerror_code": 5,
+      "attempt": 1,
+      "delay": 0.15,
+      "file_path": "message_queue\\queue.json"
+    },
+    {
+      "timestamp": "2025-12-02T22:26:31.189298",
+      "error_type": "PermissionError",
+      "winerror_code": 5,
+      "attempt": 1,
+      "delay": 0.15,
+      "file_path": "message_queue\\queue.json"
+    },
+    {
+      "timestamp": "2025-12-02T22:27:46.936529",
+      "error_type": "PermissionError",
+      "winerror_code": 5,
+      "attempt": 1,
+      "delay": 0.15,
+      "file_path": "message_queue\\queue.json"
+    },
+    {
+      "timestamp": "2025-12-02T22:34:24.753117",
+      "error_type": "PermissionError",
+      "winerror_code": 5,
+      "attempt": 1,
+      "delay": 0.15,
+      "file_path": "message_queue\\queue.json"
+    },
+    {
+      "timestamp": "2025-12-03T05:58:24.181185",
+      "error_type": "PermissionError",
+      "winerror_code": 5,
+      "attempt": 1,
+      "delay": 0.15,
+      "file_path": "message_queue\\queue.json"
     }
   ],
   "retry_success": [
@@ -91,18 +171,66 @@
       "attempts": 2,
       "total_delay": 0.15,
       "winerror_code": null
+    },
+    {
+      "timestamp": "2025-12-02T16:34:44.851362",
+      "attempts": 2,
+      "total_delay": 0.0,
+      "winerror_code": null
+    },
+    {
+      "timestamp": "2025-12-02T16:45:16.513846",
+      "attempts": 4,
+      "total_delay": 0.15,
+      "winerror_code": null
+    },
+    {
+      "timestamp": "2025-12-02T22:03:12.002124",
+      "attempts": 2,
+      "total_delay": 0.15,
+      "winerror_code": null
+    },
+    {
+      "timestamp": "2025-12-02T22:12:48.623004",
+      "attempts": 2,
+      "total_delay": 0.15,
+      "winerror_code": null
+    },
+    {
+      "timestamp": "2025-12-02T22:19:54.058520",
+      "attempts": 2,
+      "total_delay": 0.15,
+      "winerror_code": null
+    },
+    {
+      "timestamp": "2025-12-02T22:26:31.376990",
+      "attempts": 2,
+      "total_delay": 0.15,
+      "winerror_code": null
+    },
+    {
+      "timestamp": "2025-12-02T22:27:47.123697",
+      "attempts": 2,
+      "total_delay": 0.15,
+      "winerror_code": null
+    },
+    {
+      "timestamp": "2025-12-02T22:34:24.952342",
+      "attempts": 2,
+      "total_delay": 0.15,
+      "winerror_code": null
     }
   ],
   "concurrency_events": [],
   "summary": {
-    "total_errors": 6,
-    "winerror_5_count": 6,
+    "total_errors": 16,
+    "winerror_5_count": 16,
     "winerror_32_count": 0,
-    "retry_success_count": 7,
+    "retry_success_count": 15,
     "retry_failure_count": 0,
-    "max_retries_needed": 3,
-    "avg_retry_delay": 0.10714285714285714,
+    "max_retries_needed": 4,
+    "avg_retry_delay": 0.11999999999999997,
     "high_concurrency_count": 0
   },
-  "last_updated": "2025-12-02T09:58:19.611456"
+  "last_updated": "2025-12-03T05:58:24.181185"
 }

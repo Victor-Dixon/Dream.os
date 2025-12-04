@@ -22,7 +22,7 @@ export class DashboardViewRenderer {
     /**
      * Render view content based on view type
      */
-    renderView(view) {
+    async renderView(view) {
         const contentDiv = document.getElementById('dashboardContent');
         if (!contentDiv) {
             this.logger.error('Dashboard content div not found');
@@ -58,8 +58,16 @@ export class DashboardViewRenderer {
             case 'queue_status':
                 content = this.renderQueueStatusView();
                 break;
+            case 'engine-discovery':
+                content = await this.renderEngineDiscoveryView();
+                break;
             default:
                 content = this.renderDefaultView(view);
+        }
+
+        // Handle async content (for engine-discovery view)
+        if (content instanceof Promise) {
+            content = await content;
         }
 
         contentDiv.innerHTML = content;
@@ -248,6 +256,28 @@ export class DashboardViewRenderer {
      */
     getDashboardData() {
         return window.dashboardData || {};
+    }
+
+    /**
+     * Render engine discovery view
+     */
+    async renderEngineDiscoveryView() {
+        try {
+            // Import and use EngineDiscoveryView
+            const { EngineDiscoveryView } = await import('./dashboard-view-engine-discovery.js');
+            const view = new EngineDiscoveryView();
+            return await view.render();
+        } catch (error) {
+            this.logger.error('Failed to render engine discovery view:', error);
+            return `
+                <div class="dashboard-view engine-discovery-view">
+                    <div class="error-state">
+                        <h3>❌ Error Loading Engine Discovery</h3>
+                        <p>${error.message}</p>
+                    </div>
+                </div>
+            `;
+        }
     }
 
     /**

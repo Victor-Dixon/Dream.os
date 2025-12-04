@@ -2,6 +2,8 @@
 Strategy Coordinator - V2 Compliant Module
 =========================================
 
+<!-- SSOT Domain: communication -->
+
 Handles coordination strategy determination and application.
 Extracted from messaging_coordination_handler.py for V2 compliance.
 

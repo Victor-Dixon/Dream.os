@@ -11,7 +11,7 @@ Author: Agent-1 (Integration & Core Systems Specialist)
 License: MIT
 """
 
-from typing import Any
+from typing import Any, Dict
 
 # Import BaseEngine with fallback
 try:

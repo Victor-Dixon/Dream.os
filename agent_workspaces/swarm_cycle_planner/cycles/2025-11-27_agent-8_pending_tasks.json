@@ -9,7 +9,7 @@
       "description": "Review and consolidate 15 duplicate repo name pairs in data/github_75_repos_master_list.json. This is blocking accurate SSOT tracking for Batch 2 merges. Must be resolved before Merge #1 verification.",
       "priority": "HIGH",
       "points": 400,
-      "status": "PENDING",
+      "status": "COMPLETE",
       "dependencies": [],
       "estimated_time": "1-2 hours",
       "agent_assigned": "Agent-8",
@@ -19,14 +19,18 @@
     {
       "contract_id": "A8-SSOT-MERGE1-VERIFY-001",
       "title": "Execute Merge #1 SSOT Verification",
-      "description": "After Agent-1 completes Merge #1 verification, execute full SSOT verification: update master list, run full verification, verify system integration. Merge: DreamBank → DreamVault.",
+      "description": "After Agent-1 completes Merge #1 verification, execute full SSOT verification: update master list, run full verification, verify system integration. Merge: DreamBank \u2192 DreamVault.",
       "priority": "HIGH",
       "points": 300,
-      "status": "PENDING",
-      "dependencies": ["Agent-1 completes Merge #1 verification"],
+      "status": "COMPLETE",
+      "dependencies": [
+        "Agent-1 completes Merge #1 verification"
+      ],
       "estimated_time": "30 minutes",
       "agent_assigned": "Agent-8",
-      "blockers": ["Master list duplicates must be resolved first"],
+      "blockers": [
+        "Master list duplicates must be resolved first"
+      ],
       "commands": [
         "python tools/batch2_ssot_verifier.py --merge \"DreamBank -> DreamVault\"",
         "python tools/batch2_ssot_verifier.py --full"
@@ -38,7 +42,7 @@
       "description": "Run detailed import chain validator to identify broken import paths. Address any import issues discovered during SSOT verification.",
       "priority": "MEDIUM",
       "points": 250,
-      "status": "PENDING",
+      "status": "IN_PROGRESS",
       "dependencies": [],
       "estimated_time": "1 hour",
       "agent_assigned": "Agent-8",
@@ -69,7 +73,9 @@
       "priority": "LOW",
       "points": 150,
       "status": "PENDING",
-      "dependencies": ["Agent-1 requests support"],
+      "dependencies": [
+        "Agent-1 requests support"
+      ],
       "estimated_time": "Variable",
       "agent_assigned": "Agent-8",
       "blockers": []
@@ -81,13 +87,16 @@
       "priority": "HIGH",
       "points": 200,
       "status": "PENDING",
-      "dependencies": ["Batch 2 merges completing"],
+      "dependencies": [
+        "Batch 2 merges completing"
+      ],
       "estimated_time": "15-30 minutes per merge",
       "agent_assigned": "Agent-8",
-      "blockers": ["Master list duplicates must be resolved"],
-      "workflow": "After each merge: update master list → full verification → document → report"
+      "blockers": [
+        "Master list duplicates must be resolved"
+      ],
+      "workflow": "After each merge: update master list \u2192 full verification \u2192 document \u2192 report"
     }
   ],
   "notes": "Master list duplicate resolution is critical blocker. SSOT verification workflow established and ready. Session transition tool created for future efficiency. Batch 2 SSOT verification: 7/12 merges complete, Merge #1 verification in progress by Agent-1."
 }
-

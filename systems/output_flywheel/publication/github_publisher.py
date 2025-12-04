@@ -34,7 +34,16 @@ class GitHubPublisher:
         self.auto_push = auto_push
     
     def _run_git_command(self, command: list, cwd: Optional[Path] = None) -> tuple[bool, str]:
-        """Run git command."""
+        """
+        Run git command with enhanced error messages.
+        
+        Args:
+            command: Git command as list (e.g., ['add', 'file.txt'])
+            cwd: Working directory (default: self.repo_path)
+            
+        Returns:
+            Tuple of (success: bool, output: str)
+        """
         if cwd is None:
             cwd = self.repo_path
         
@@ -44,11 +53,30 @@ class GitHubPublisher:
                 cwd=cwd,
                 capture_output=True,
                 text=True,
-                check=False
+                check=False,
+                timeout=30
             )
-            return result.returncode == 0, result.stdout + result.stderr
+            
+            if result.returncode != 0:
+                # Enhanced error message
+                error_msg = result.stderr.strip() or result.stdout.strip()
+                if not error_msg:
+                    error_msg = f"Git command failed with exit code {result.returncode}"
+                
+                # Add context
+                full_error = f"Git command failed: {' '.join(['git'] + command)}\n"
+                full_error += f"Working directory: {cwd}\n"
+                full_error += f"Error: {error_msg}"
+                
+                return False, full_error
+            
+            return True, result.stdout.strip()
+        except subprocess.TimeoutExpired:
+            return False, f"Git command timed out after 30 seconds: {' '.join(['git'] + command)}"
+        except FileNotFoundError:
+            return False, "Git not found - please install Git to use GitHub publisher"
         except Exception as e:
-            return False, str(e)
+            return False, f"Unexpected error running git command: {str(e)}"
     
     def _is_git_repo(self) -> bool:
         """Check if path is a git repository."""
@@ -56,18 +84,30 @@ class GitHubPublisher:
         return git_dir.exists()
     
     def update_readme(self, readme_path: str, commit_message: Optional[str] = None) -> Dict[str, Any]:
-        """Update README.md in repository."""
+        """
+        Update README.md in repository with enhanced error messages.
+        
+        Args:
+            readme_path: Path to README file (relative to repo root)
+            commit_message: Custom commit message (optional)
+            
+        Returns:
+            Dict with success status and detailed error messages
+        """
         if not self._is_git_repo():
             return {
                 "success": False,
-                "error": "Not a git repository"
+                "error": f"Not a git repository: {self.repo_path}",
+                "suggestion": "Initialize git repository with 'git init' or navigate to a git repository"
             }
         
         readme_file = self.repo_path / readme_path
         if not readme_file.exists():
             return {
                 "success": False,
-                "error": f"README file not found: {readme_path}"
+                "error": f"README file not found: {readme_path}",
+                "suggestion": f"Check that the file exists at: {readme_file}",
+                "repo_path": str(self.repo_path)
             }
         
         if not self.auto_commit:

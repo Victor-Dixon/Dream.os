@@ -3,6 +3,8 @@
 Output Flywheel Usage Tracker
 ==============================
 
+<!-- SSOT Domain: analytics -->
+
 Tracks agent usage of Output Flywheel system and gathers feedback for v1.1.
 
 Author: Agent-5 (Business Intelligence Specialist)
@@ -17,9 +19,9 @@ from typing import Any, Dict, List, Optional
 
 # Handle both relative and absolute imports
 try:
-    from .metrics_tracker import OutputFlywheelMetricsTracker
+    from .metrics_client import MetricsClient
 except ImportError:
-    from metrics_tracker import OutputFlywheelMetricsTracker
+    from metrics_client import MetricsClient
 
 
 class OutputFlywheelUsageTracker:
@@ -38,7 +40,7 @@ class OutputFlywheelUsageTracker:
         self.usage_data_path = self.feedback_dir / "usage_data.json"
         self.feedback_path = self.feedback_dir / "v1.1_feedback.json"
         
-        self.tracker = OutputFlywheelMetricsTracker(metrics_dir)
+        self.tracker = MetricsClient(metrics_dir)
         self._load_usage_data()
 
     def _load_usage_data(self):

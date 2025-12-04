@@ -252,7 +252,7 @@
 ## 📚 **Files Referenced/Analyzed**
 
 ### **Consolidation Files:**
-1. `docs/consolidation/WEEK_1-2_CONSOLIDATION_TRACKING.md`
+1. `docs/archive/consolidation/WEEK_1-2_CONSOLIDATION_TRACKING.md`
 2. `docs/consolidation_status_report.md` (Agent-7)
 3. `docs/architecture/CONSOLIDATION_ARCHITECTURE_PATTERNS.md` (Agent-2)
 4. `docs/WEB_CONSOLIDATION_FINAL_REPORT.md`

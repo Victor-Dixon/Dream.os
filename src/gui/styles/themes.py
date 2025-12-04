@@ -256,5 +256,3 @@ class ThemeManager:
         """Get list of available theme names."""
         return list(self.themes.keys())
 
-    class ThemeManager:
-        pass

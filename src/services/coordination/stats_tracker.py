@@ -2,6 +2,8 @@
 Stats Tracker - V2 Compliant Module
 ==================================
 
+<!-- SSOT Domain: communication -->
+
 Handles coordination statistics tracking and reporting.
 Extracted from messaging_coordination_handler.py for V2 compliance.
 

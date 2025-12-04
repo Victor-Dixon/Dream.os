@@ -2,6 +2,8 @@
 Orchestrator Lifecycle Management
 ==================================
 
+<!-- SSOT Domain: integration -->
+
 Lifecycle operations (init, cleanup) extracted for V2 compliance.
 
 Author: Agent-2 - Architecture & Design Specialist (V2 Refactor)

@@ -331,55 +331,154 @@ def main():
     print("   Press Ctrl+C or kill the processes")
     print("="*70 + "\n")
 
+    # Crash tracking to prevent infinite restart loops
+    bot_crash_count = 0
+    queue_crash_count = 0
+    max_crashes = 5  # Maximum consecutive crashes before stopping
+    crash_cooldown = 10  # Seconds to wait before restarting after crash
+    last_bot_crash_time = 0
+    last_queue_crash_time = 0
+    bot_stable_time = 30  # Seconds bot must run successfully to reset crash count
+    queue_stable_time = 30
+    bot_start_time = time.time()
+    queue_start_time = time.time()
+
     # Keep script running
     try:
         while True:
             time.sleep(1)
+            
             # Check if bot process is still alive or needs restart
             if bot_process is None:
                 # Process is None (failed restart or never started) - try to start
-                logger.warning(
-                    "⚠️  Discord bot process is None - attempting to start...")
-                bot_process = start_discord_bot()
-                if not bot_process:
-                    logger.error(
-                        "   Failed to start - will retry in next cycle")
+                current_time = time.time()
+                if current_time - last_bot_crash_time >= crash_cooldown:
+                    logger.warning(
+                        "⚠️  Discord bot process is None - attempting to start...")
+                    bot_process = start_discord_bot()
+                    if bot_process:
+                        bot_start_time = time.time()
+                        bot_crash_count = 0  # Reset on successful start
+                    else:
+                        logger.error(
+                            "   Failed to start - will retry after cooldown")
+                        last_bot_crash_time = current_time
+                        bot_crash_count += 1
             elif bot_process.poll() is not None:
-                # Process died - log and attempt restart
+                # Process died - check crash count and cooldown
                 exit_code = bot_process.returncode
+                current_time = time.time()
+                
+                # Check if bot ran long enough to be considered stable
+                if current_time - bot_start_time >= bot_stable_time:
+                    bot_crash_count = 0  # Reset crash count on stable run
+                
+                bot_crash_count += 1
                 logger.error(
                     f"❌ Discord bot process died (exit code: {exit_code})")
                 logger.error(
+                    f"   Crash count: {bot_crash_count}/{max_crashes}")
+                logger.error(
                     "   Check logs/discord_bot_errors.log for details")
-                # Try to restart
-                logger.info("   Attempting to restart Discord bot...")
-                bot_process = start_discord_bot()
-                if not bot_process:
+                
+                if bot_crash_count >= max_crashes:
                     logger.error(
-                        "   Failed to restart - will retry in next cycle")
+                        f"❌ Bot crashed {max_crashes} times in a row!")
+                    logger.error(
+                        "   Stopping auto-restart to prevent infinite loop.")
+                    logger.error(
+                        "   Please investigate the issue before restarting manually.")
+                    bot_process = None  # Stop trying to restart
+                elif current_time - last_bot_crash_time >= crash_cooldown:
+                    # Cooldown passed - attempt restart
+                    logger.info(
+                        f"   Attempting to restart Discord bot (cooldown passed)...")
+                    bot_process = start_discord_bot()
+                    if bot_process:
+                        bot_start_time = time.time()
+                        last_bot_crash_time = 0  # Reset crash time on success
+                    else:
+                        last_bot_crash_time = current_time
+                else:
+                    # Still in cooldown - wait
+                    remaining = crash_cooldown - (current_time - last_bot_crash_time)
+                    logger.info(
+                        f"   Waiting {int(remaining)}s before restart (cooldown)...")
+                    last_bot_crash_time = current_time
+            else:
+                # Bot is running - check if it's been stable long enough
+                if bot_crash_count > 0:
+                    current_time = time.time()
+                    if current_time - bot_start_time >= bot_stable_time:
+                        logger.info(
+                            f"✅ Bot has been stable for {bot_stable_time}s - resetting crash count")
+                        bot_crash_count = 0
 
             # Check if queue process is still alive or needs restart
             if queue_process is None:
                 # Process is None (failed restart or never started) - try to start
-                logger.warning(
-                    "⚠️  Queue processor process is None - attempting to start...")
-                queue_process = start_queue_processor()
-                if not queue_process:
-                    logger.error(
-                        "   Failed to start - will retry in next cycle")
+                current_time = time.time()
+                if current_time - last_queue_crash_time >= crash_cooldown:
+                    logger.warning(
+                        "⚠️  Queue processor process is None - attempting to start...")
+                    queue_process = start_queue_processor()
+                    if queue_process:
+                        queue_start_time = time.time()
+                        queue_crash_count = 0  # Reset on successful start
+                    else:
+                        logger.error(
+                            "   Failed to start - will retry after cooldown")
+                        last_queue_crash_time = current_time
+                        queue_crash_count += 1
             elif queue_process.poll() is not None:
-                # Process died - log and attempt restart
+                # Process died - check crash count and cooldown
                 exit_code = queue_process.returncode
+                current_time = time.time()
+                
+                # Check if queue ran long enough to be considered stable
+                if current_time - queue_start_time >= queue_stable_time:
+                    queue_crash_count = 0  # Reset crash count on stable run
+                
+                queue_crash_count += 1
                 logger.error(
                     f"❌ Queue processor process died (exit code: {exit_code})")
                 logger.error(
+                    f"   Crash count: {queue_crash_count}/{max_crashes}")
+                logger.error(
                     "   Check logs/queue_processor_errors.log for details")
-                # Try to restart
-                logger.info("   Attempting to restart queue processor...")
-                queue_process = start_queue_processor()
-                if not queue_process:
+                
+                if queue_crash_count >= max_crashes:
                     logger.error(
-                        "   Failed to restart - will retry in next cycle")
+                        f"❌ Queue processor crashed {max_crashes} times in a row!")
+                    logger.error(
+                        "   Stopping auto-restart to prevent infinite loop.")
+                    logger.error(
+                        "   Please investigate the issue before restarting manually.")
+                    queue_process = None  # Stop trying to restart
+                elif current_time - last_queue_crash_time >= crash_cooldown:
+                    # Cooldown passed - attempt restart
+                    logger.info(
+                        f"   Attempting to restart queue processor (cooldown passed)...")
+                    queue_process = start_queue_processor()
+                    if queue_process:
+                        queue_start_time = time.time()
+                        last_queue_crash_time = 0  # Reset crash time on success
+                    else:
+                        last_queue_crash_time = current_time
+                else:
+                    # Still in cooldown - wait
+                    remaining = crash_cooldown - (current_time - last_queue_crash_time)
+                    logger.info(
+                        f"   Waiting {int(remaining)}s before restart (cooldown)...")
+                    last_queue_crash_time = current_time
+            else:
+                # Queue is running - check if it's been stable long enough
+                if queue_crash_count > 0:
+                    current_time = time.time()
+                    if current_time - queue_start_time >= queue_stable_time:
+                        logger.info(
+                            f"✅ Queue processor has been stable for {queue_stable_time}s - resetting crash count")
+                        queue_crash_count = 0
     except KeyboardInterrupt:
         logger.info("\n👋 Shutting down...")
         cleanup_lock()

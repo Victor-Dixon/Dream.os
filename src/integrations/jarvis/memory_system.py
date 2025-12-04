@@ -4,6 +4,9 @@ Memory System for Personal Jarvis
 Enables Jarvis to remember conversations, user preferences, and context
 """
 
+import logging
+from typing import List
+
 class MemorySystem:
     """Memory system for Personal Jarvis to remember conversations and context"""
     

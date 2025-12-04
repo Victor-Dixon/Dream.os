@@ -9,7 +9,7 @@ from . import config_file_scanner
 from . import config_models
 from . import config_remediator
 from . import config_scanners
-from . import confirm
+# from . import confirm  # DELETED - File does not exist
 from . import file_scanner
 from . import file_utils
 from . import logger
@@ -28,7 +28,7 @@ __all__ = [
     'config_models',
     'config_remediator',
     'config_scanners',
-    'confirm',
+    # 'confirm',  # DELETED - File does not exist
     'file_scanner',
     'file_utils',
     'logger',

@@ -67,31 +67,36 @@ python tools/detect_venv_files.py [repo_path]
 
 ---
 
-### **3. Integration Issues Checker**
-**File**: `tools/check_integration_issues.py`  
-**Created By**: Agent-3
+### **3. Integration Validator** (Consolidated Tool)
+**File**: `tools/communication/integration_validator.py`  
+**Created By**: Agent-6 (consolidates `check_integration_issues.py` + `integration_health_checker.py`)
 
-**Purpose**: Check for integration issues in merged repos.
+**Purpose**: Unified integration validator - checks integration issues, health, and readiness for merged repos.
 
 **Usage**:
 ```bash
-python tools/check_integration_issues.py [repo_path]
+python tools/communication/integration_validator.py --repo-path [repo_path]
+# Or via toolbelt:
+agent_toolbelt --check-integration [repo_path]
 ```
 
 **Features**:
-- Detects integration issues
-- Identifies conflicts
-- Checks for broken dependencies
+- Detects integration issues (venv, duplicates, code duplication)
+- Validates repository state (git cleanliness)
+- Checks integration readiness (tools, docs)
+- Validates integration environment
 
 **Output**:
 - List of integration issues
-- Conflict details
-- Dependency issues
+- Repository state validation
+- Integration readiness assessment
+- Environment validation
 
 **When to Use**:
 - After merging repos
 - Before integration
 - When troubleshooting
+- Validating integration environment
 
 ---
 
@@ -155,7 +160,7 @@ python tools/analyze_merged_repo_patterns.py
 1. `detect_venv_files.py` - Detect venv files
 2. `enhanced_duplicate_detector.py` - Detect duplicates
 3. Cleanup scripts - Remove venv and duplicates
-4. `check_integration_issues.py` - Check for issues
+4. `tools/communication/integration_validator.py` - Unified integration validation (consolidates check_integration_issues.py + integration_health_checker.py)
 
 ---
 
@@ -192,7 +197,7 @@ python tools/analyze_merged_repo_patterns.py
 ### **For Integration**:
 - **Pattern extraction**: `analyze_merged_repo_patterns.py`
 - **Service integration**: `SERVICE_INTEGRATION_TEMPLATE.md`
-- **Issue checking**: `check_integration_issues.py`
+- **Issue checking**: `tools/communication/integration_validator.py` (unified validator)
 
 ---
 
@@ -201,7 +206,7 @@ python tools/analyze_merged_repo_patterns.py
 ### **Complete Integration Workflow**:
 1. `detect_venv_files.py` → Cleanup venv
 2. `enhanced_duplicate_detector.py` → Resolve duplicates
-3. `check_integration_issues.py` → Check issues
+3. `tools/communication/integration_validator.py` → Unified integration validation
 4. `analyze_merged_repo_patterns.py` → Extract patterns
 5. `SERVICE_INTEGRATION_TEMPLATE.md` → Integrate services
 

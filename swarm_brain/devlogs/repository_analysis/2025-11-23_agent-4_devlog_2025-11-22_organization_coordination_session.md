@@ -34,7 +34,7 @@ Major organization and coordination phase focusing on:
   - `tools/fixes/` - Fix scripts
   - `tools/discord/` - Discord bot scripts
   - `docs/emergency/` - Emergency documentation
-  - `docs/consolidation/` - Consolidation reports
+  - `docs/archive/consolidation/` - Consolidation reports
   - `docs/discord/` - Discord announcements
   - `docs/quarantine/` - Quarantine documentation
 

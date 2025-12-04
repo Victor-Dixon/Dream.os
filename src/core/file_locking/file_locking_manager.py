@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
+# SSOT Domain: infrastructure
 """
 File Locking Manager - V2 Compliance Module
 ==========================================
 
 High-level file locking management for V2 compliance.
+SSOT: Single Source of Truth for high-level file locking operations.
 
 Author: Captain Agent-4 - Strategic Oversight & Emergency Intervention Manager
 License: MIT
@@ -13,7 +15,11 @@ import time
 from pathlib import Path
 from typing import Any
 
-from .file_locking_engine import FileLockEngine
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .file_locking_engine import FileLockEngine
+
 from .file_locking_models import LockConfig, LockInfo, LockMetrics, LockResult, LockStatus
 
 
@@ -23,7 +29,15 @@ class FileLockManager:
     def __init__(self, config: LockConfig = None):
         """Initialize file lock manager."""
         self.config = config or LockConfig()
-        self.engine = FileLockEngine(self.config)
+        self._engine = None  # Lazy-loaded to avoid circular import
+
+    @property
+    def engine(self) -> "FileLockEngine":
+        """Lazy-load engine to avoid circular import."""
+        if self._engine is None:
+            from .file_locking_engine import FileLockEngine
+            self._engine = FileLockEngine(self.config)
+        return self._engine
 
     def create_file_lock(self, filepath: str, metadata: dict[str, Any] = None) -> LockResult:
         """Create a file lock."""
@@ -138,3 +152,130 @@ class FileLockManager:
             "average_release_time_ms": metrics.average_release_time_ms,
             "stale_cleanups": metrics.total_stale_cleanups,
         }
+
+    # Batch operations
+    def batch_acquire_locks(
+        self, filepaths: list[str], metadata: dict[str, Any] = None
+    ) -> dict[str, LockResult]:
+        """Acquire multiple locks."""
+        results = {}
+        for filepath in filepaths:
+            results[filepath] = self.acquire_lock(filepath, metadata)
+        return results
+
+    def batch_release_locks(self, filepaths: list[str]) -> dict[str, LockResult]:
+        """Release multiple locks."""
+        results = {}
+        for filepath in filepaths:
+            results[filepath] = self.release_lock(filepath)
+        return results
+
+    # Extended operations
+    def extend_lock(self, filepath: str, duration: int) -> LockResult:
+        """Extend lock duration (placeholder - locks are file-based, duration managed by stale_age)."""
+        # File locks don't have explicit duration - they're managed by stale_age
+        # This method exists for API compatibility
+        lock_info = self.get_lock_info(filepath)
+        if not lock_info:
+            return LockResult(
+                success=False, status=LockStatus.ERROR, error_message="Lock not found"
+            )
+        # Update timestamp to extend lock
+        lock_info.timestamp = time.time()
+        return LockResult(success=True, status=LockStatus.LOCKED, lock_info=lock_info)
+
+    def cleanup_expired_locks(self) -> int:
+        """Clean up expired locks (alias for cleanup_stale_locks)."""
+        return self.cleanup_stale_locks()
+
+    # Query operations (using LockQueries utility)
+    def get_locks_by_process(self, pid: int) -> list[LockInfo]:
+        """Get locks owned by specific process."""
+        from .operations.lock_queries import LockQueries
+        queries = LockQueries(self)
+        return queries.get_locks_by_process(pid)
+
+    def get_locks_by_thread(self, thread_id: str) -> list[LockInfo]:
+        """Get locks owned by specific thread."""
+        from .operations.lock_queries import LockQueries
+        queries = LockQueries(self)
+        return queries.get_locks_by_thread(thread_id)
+
+    def get_locks_by_owner(self, owner: str) -> list[LockInfo]:
+        """Get locks owned by specific owner."""
+        from .operations.lock_queries import LockQueries
+        queries = LockQueries(self)
+        return queries.get_locks_by_owner(owner)
+
+    def get_locks_by_type(self, lock_type: str) -> list[LockInfo]:
+        """Get locks by type."""
+        from .operations.lock_queries import LockQueries
+        queries = LockQueries(self)
+        return queries.get_locks_by_type(lock_type)
+
+    def get_locks_by_duration(self, min_duration: int, max_duration: int = None) -> list[LockInfo]:
+        """Get locks by duration range."""
+        from .operations.lock_queries import LockQueries
+        queries = LockQueries(self)
+        return queries.get_locks_by_duration(min_duration, max_duration)
+
+    def get_locks_by_metadata(self, metadata_key: str, metadata_value: Any) -> list[LockInfo]:
+        """Get locks by metadata key-value pair."""
+        from .operations.lock_queries import LockQueries
+        queries = LockQueries(self)
+        return queries.get_locks_by_metadata(metadata_key, metadata_value)
+
+    def get_lock_statistics(self) -> dict[str, Any]:
+        """Get lock statistics."""
+        from .operations.lock_queries import LockQueries
+        queries = LockQueries(self)
+        return queries.get_lock_statistics()
+
+    def find_conflicting_locks(self, filepath: str) -> list[LockInfo]:
+        """Find locks that conflict with the given filepath."""
+        from .operations.lock_queries import LockQueries
+        queries = LockQueries(self)
+        return queries.find_conflicting_locks(filepath)
+
+    def get_lock_health_status(self) -> dict[str, Any]:
+        """Get lock health status."""
+        from .operations.lock_queries import LockQueries
+        queries = LockQueries(self)
+        return queries.get_lock_health_status()
+
+
+class FileLockContext:
+    """Context manager for file locking."""
+
+    def __init__(self, manager: "FileLockManager", filepath: str, metadata: dict[str, Any] = None):
+        """Initialize context manager."""
+        self.manager = manager
+        self.filepath = filepath
+        self.metadata = metadata
+        self.lock_result = None
+
+    def __enter__(self):
+        """Enter context and acquire lock."""
+        self.lock_result = self.manager.acquire_lock(self.filepath, self.metadata)
+        if not self.lock_result.success:
+            raise RuntimeError(f"Failed to acquire lock: {self.lock_result.error_message}")
+        return self.lock_result
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        """Exit context and release lock."""
+        if self.lock_result and self.lock_result.success:
+            self.manager.release_lock(self.filepath)
+
+
+# Global instance for backward compatibility
+_global_file_lock_manager = None
+
+
+def get_file_lock_manager() -> FileLockManager:
+    """Get global file lock manager instance."""
+    global _global_file_lock_manager
+
+    if _global_file_lock_manager is None:
+        _global_file_lock_manager = FileLockManager()
+
+    return _global_file_lock_manager

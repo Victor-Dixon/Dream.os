@@ -1,3 +1,4 @@
+<!-- SSOT Domain: architecture -->
 # 🏗️ Consolidation Architecture Patterns
 **Author**: Agent-2 - Architecture & Design Specialist  
 **Date**: 2025-10-12  

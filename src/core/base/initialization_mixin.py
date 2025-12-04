@@ -95,3 +95,5 @@ class InitializationMixin:
             return False
         return getattr(self, attribute, False)
 
+
+

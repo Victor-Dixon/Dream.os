@@ -31,8 +31,9 @@ except ImportError:
 
 from src.services.messaging_infrastructure import ConsolidatedMessagingService
 
-# Modular components
-from .messaging_controller_views import AgentMessagingView, SwarmStatusView
+# Modular components - Using canonical WOW FACTOR controllers
+from .controllers.messaging_controller_view import MessagingControllerView
+from .controllers.status_controller_view import StatusControllerView
 
 logger = logging.getLogger(__name__)
 
@@ -59,23 +60,23 @@ class DiscordMessagingController:
         self.messaging_service = messaging_service
         self.logger = logging.getLogger(__name__)
 
-    def create_agent_messaging_view(self) -> AgentMessagingView:
+    def create_agent_messaging_view(self) -> MessagingControllerView:
         """
-        Create agent messaging view.
+        Create agent messaging view using canonical WOW FACTOR controller.
 
         Returns:
-            AgentMessagingView instance for agent selection and messaging
+            MessagingControllerView instance for agent selection and messaging
         """
-        return AgentMessagingView(self.messaging_service)
+        return MessagingControllerView(self.messaging_service)
 
-    def create_swarm_status_view(self) -> SwarmStatusView:
+    def create_swarm_status_view(self) -> StatusControllerView:
         """
-        Create swarm status view.
+        Create swarm status view using canonical WOW FACTOR controller.
 
         Returns:
-            SwarmStatusView instance for status monitoring
+            StatusControllerView instance for status monitoring
         """
-        return SwarmStatusView(self.messaging_service)
+        return StatusControllerView(self.messaging_service)
 
     async def send_agent_message(
         self, agent_id: str, message: str, priority: str = "NORMAL"

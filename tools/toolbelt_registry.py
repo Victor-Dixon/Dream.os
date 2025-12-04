@@ -262,11 +262,11 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
         "args_passthrough": True,
     },
     "repo-batch": {
-        "name": "Repo Batch Analyzer",
-        "module": "tools.repo_batch_analyzer",
+        "name": "Repository Analyzer",
+        "module": "tools.repository_analyzer",
         "main_function": "main",
-        "description": "Automated multi-repo analysis (10hrs → 2hrs!)",
-        "flags": ["--repo-batch", "--batch-analyze"],
+        "description": "Unified repository and project analysis (consolidates repo_batch_analyzer and 7 other tools)",
+        "flags": ["--repo-batch", "--batch-analyze", "--repository-analyzer"],
         "args_passthrough": True,
     },
     "extraction-roadmap": {
@@ -318,11 +318,12 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
         "args_passthrough": True,
     },
     # Agent Coordination & Communication Tools (Agent-6)
+    # NOTE: agent_status_quick_check.py consolidated into unified_agent_status_monitor.py
     "agent-status": {
-        "name": "Agent Status Quick Check",
-        "module": "tools.agent_status_quick_check",
+        "name": "Unified Agent Status Monitor",
+        "module": "tools.unified_agent_status_monitor",
         "main_function": "main",
-        "description": "Fast agent progress verification (prevents 'already done' confusion)",
+        "description": "Unified agent status monitoring (consolidates 15+ tools including quick check, snapshot, staleness)",
         "flags": ["--agent-status", "--status-check"],
         "args_passthrough": True,
     },
@@ -401,10 +402,10 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
         "args_passthrough": True,
     },
     "check-integration": {
-        "name": "Check Integration Issues",
-        "module": "tools.check_integration_issues",
+        "name": "Integration Validator",
+        "module": "tools.communication.integration_validator",
         "main_function": "main",
-        "description": "Check merged repositories for integration issues (Agent-3's tool)",
+        "description": "Unified integration validator - checks integration issues, health, and readiness (consolidates check_integration_issues.py + integration_health_checker.py)",
         "flags": ["--check-integration", "--int-check"],
         "args_passthrough": True,
     },
@@ -566,10 +567,10 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
         "args_passthrough": True,
     },
     "queue-status": {
-        "name": "Queue Status",
-        "module": "tools.check_queue_status",
+        "name": "Messaging Infrastructure Validator",
+        "module": "tools.communication.messaging_infrastructure_validator",
         "main_function": "main",
-        "description": "Check message queue status",
+        "description": "Unified messaging infrastructure validator - checks queue status, persistence, and configuration (consolidates check_queue_status.py)",
         "flags": ["--queue-status", "--q-status"],
         "args_passthrough": True,
     },
@@ -583,10 +584,10 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     },
     # Workspace Tools (Agent-6 Organization)
     "workspace-health": {
-        "name": "Workspace Health Checker",
-        "module": "tools.workspace_health_checker",
+        "name": "Workspace Health Monitor",
+        "module": "tools.workspace_health_monitor",
         "main_function": "main",
-        "description": "Check workspace health",
+        "description": "Check workspace health (consolidates workspace_health_checker.py)",
         "flags": ["--workspace-health", "--health"],
         "args_passthrough": True,
     },

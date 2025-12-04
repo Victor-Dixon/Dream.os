@@ -1,3 +1,4 @@
+<!-- SSOT Domain: architecture -->
 # 🏗️ Agent-7 Test Architecture Guide
 **Date**: 2025-01-27  
 **Guide**: Agent-2 (Architecture & Design Specialist)  

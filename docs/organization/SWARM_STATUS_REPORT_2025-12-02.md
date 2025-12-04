@@ -1,3 +1,4 @@
+<!-- SSOT Domain: communication -->
 # 📊 Daily Swarm Status Report
 
 **Date**: 2025-12-02 06:09:02  

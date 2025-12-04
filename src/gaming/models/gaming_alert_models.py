@@ -7,7 +7,12 @@ Author: Agent-3 - Infrastructure & DevOps Specialist
 Mission: V2 Compliance Implementation - Gaming Infrastructure Refactoring
 """
 
+from dataclasses import dataclass
 from datetime import datetime
+from enum import Enum
+from typing import Any, Dict, Optional
+from dataclasses import dataclass, field
+
 
 
 class AlertSeverity(Enum):

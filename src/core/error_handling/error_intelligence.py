@@ -16,6 +16,8 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta
 from enum import Enum
 from typing import Any
+from dataclasses import dataclass, field
+
 
 logger = logging.getLogger(__name__)
 

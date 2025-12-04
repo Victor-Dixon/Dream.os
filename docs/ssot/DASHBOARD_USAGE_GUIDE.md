@@ -14,7 +14,7 @@
 **Updated**: Real-time (after significant changes)
 
 ### 2. Consolidation Tracker
-**Location**: `docs/consolidation/WEEK_1-2_CONSOLIDATION_TRACKING.md`
+**Location**: `docs/archive/consolidation/WEEK_1-2_CONSOLIDATION_TRACKING.md`
 **Purpose**: Track consolidation progress across all systems
 **Updated**: Daily (when significant progress occurs)
 
@@ -94,7 +94,7 @@ Reduction: -51%
 
 **Step 1**: Open Consolidation Tracker
 ```
-docs/consolidation/WEEK_1-2_CONSOLIDATION_TRACKING.md
+docs/archive/consolidation/WEEK_1-2_CONSOLIDATION_TRACKING.md
 ```
 
 **Step 2**: Search for your agent ID (e.g., "Agent-2")
@@ -193,11 +193,11 @@ docs/v2_compliance/V2_COMPLIANCE_DASHBOARD.md
 
 **Your First 5 Minutes**:
 
-1. **Read Your Sprint Plan**: `docs/sprints/AGENT-X_SPRINT.md`
+1. **Read Your Sprint Plan**: `docs/archive/sprints/AGENT-X_SPRINT.md`
 
 2. **Check Consolidation Tracker**: Find your assigned systems
    ```
-   docs/consolidation/WEEK_1-2_CONSOLIDATION_TRACKING.md
+   docs/archive/consolidation/WEEK_1-2_CONSOLIDATION_TRACKING.md
    → Search for "Agent-X"
    ```
 
@@ -319,7 +319,7 @@ docs/v2_compliance/V2_COMPLIANCE_DASHBOARD.md
 
 ### Dashboard Locations:
 - V2 Compliance: `docs/v2_compliance/V2_COMPLIANCE_DASHBOARD.md`
-- Consolidation: `docs/consolidation/WEEK_1-2_CONSOLIDATION_TRACKING.md`
+- Consolidation: `docs/archive/consolidation/WEEK_1-2_CONSOLIDATION_TRACKING.md`
 - Competition: `docs/COMPETITION_LEADERBOARD.md`
 - This Guide: `docs/ssot/DASHBOARD_USAGE_GUIDE.md`
 

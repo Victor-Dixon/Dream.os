@@ -3,6 +3,8 @@
 Discord Service - V2 Compliance Module
 =======================================
 
+<!-- SSOT Domain: web -->
+
 Unified Discord integration for V2_SWARM DevLog monitoring and agent communication.
 Consolidates: discord_commander.py + discord_webhook_integration.py
 

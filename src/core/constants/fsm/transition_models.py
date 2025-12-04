@@ -14,6 +14,8 @@ from dataclasses import dataclass
 from typing import Any
 
 from ..fsm_enums import TransitionType
+from dataclasses import dataclass, field
+
 
 
 @dataclass

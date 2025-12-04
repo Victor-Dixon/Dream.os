@@ -34,7 +34,7 @@ Automatically generate comprehensive cycle accomplishment reports by reading all
 ### Report Location
 
 ```
-docs/cycles/CYCLE_ACCOMPLISHMENTS_{cycle_id}_{timestamp}.md
+docs/archive/cycles/CYCLE_ACCOMPLISHMENTS_{cycle_id}_{timestamp}.md
 ```
 
 ---
@@ -74,7 +74,7 @@ report_path = generate_cycle_accomplishments_report(cycle_id="C-050")
 1. **Easy Discovery**: All cycle accomplishments in one place
 2. **Automatic**: No manual compilation needed
 3. **Comprehensive**: Captures all agent work from status.json
-4. **Accessible**: Reports saved in `docs/cycles/` for easy finding
+4. **Accessible**: Reports saved in `docs/archive/cycles/` for easy finding
 5. **Integrated**: Works seamlessly with soft onboarding workflow
 
 ---

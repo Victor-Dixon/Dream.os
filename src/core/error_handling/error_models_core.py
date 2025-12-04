@@ -45,50 +45,6 @@ class ErrorContext:
             raise ValueError("message is required")
 
 
-@dataclass
-class CircuitBreakerConfig:
-    """Circuit breaker configuration with V2 compliance."""
-
-    name: str
-    failure_threshold: int = 5
-    recovery_timeout: int = 60
-    expected_exception: type[Exception] = Exception
-    success_threshold: int = 3
-    enabled: bool = True
-    metadata: dict[str, Any] = field(default_factory=dict)
-
-    def __post_init__(self):
-        """Post-initialization validation."""
-        if not self.name:
-            raise ValueError("name is required")
-        if self.failure_threshold <= 0:
-            raise ValueError("failure_threshold must be positive")
-        if self.recovery_timeout <= 0:
-            raise ValueError("recovery_timeout must be positive")
-        if self.success_threshold <= 0:
-            raise ValueError("success_threshold must be positive")
-
-
-@dataclass
-class RetryConfig:
-    """Retry configuration with V2 compliance."""
-
-    max_attempts: int = 3
-    base_delay: float = 1.0
-    max_delay: float = 60.0
-    strategy: RetryStrategy = RetryStrategy.EXPONENTIAL
-    backoff_multiplier: float = 2.0
-    jitter: bool = True
-    enabled: bool = True
-    metadata: dict[str, Any] = field(default_factory=dict)
-
-    def __post_init__(self):
-        """Post-initialization validation."""
-        if self.max_attempts <= 0:
-            raise ValueError("max_attempts must be positive")
-        if self.base_delay <= 0:
-            raise ValueError("base_delay must be positive")
-        if self.max_delay <= 0:
-            raise ValueError("max_delay must be positive")
-        if self.backoff_multiplier <= 0:
-            raise ValueError("backoff_multiplier must be positive")
+# Infrastructure SSOT: RetryConfig and CircuitBreakerConfig moved to config_dataclasses.py
+# Import from Infrastructure SSOT
+from src.core.config.config_dataclasses import CircuitBreakerConfig, RetryConfig

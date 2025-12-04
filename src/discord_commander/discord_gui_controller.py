@@ -3,6 +3,8 @@
 Discord GUI Controller - Facade Pattern
 ========================================
 
+<!-- SSOT Domain: web -->
+
 Lightweight facade for Discord GUI components.
 Consolidates Discord GUI functionality into a clean, simple interface.
 
@@ -14,7 +16,7 @@ License: MIT
 import logging
 from typing import Any
 
-from src.services.messaging_infrastructure import ConsolidatedMessagingService
+from src.services.unified_messaging_service import UnifiedMessagingService
 
 from .discord_gui_modals import AgentMessageModal, BroadcastMessageModal
 from .views import (
@@ -42,7 +44,7 @@ class DiscordGUIController:
     - discord_gui_modals.py: UI modals (AgentMessageModal, BroadcastMessageModal)
     """
 
-    def __init__(self, messaging_service: ConsolidatedMessagingService):
+    def __init__(self, messaging_service: UnifiedMessagingService):
         """Initialize Discord GUI controller."""
         self.messaging_service = messaging_service
         self.logger = logging.getLogger(__name__)

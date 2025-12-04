@@ -1,5 +1,6 @@
 import numpy as np
-
+import logging
+from typing import Dict, Tuple
 
 class VisionSystem:
     """

@@ -3,6 +3,8 @@
 Message Queue Helpers - V2 Compliance Refactor
 ===============================================
 
+<!-- SSOT Domain: integration -->
+
 Helper functions extracted from MessageQueue for V2 compliance.
 
 V2 Compliance:

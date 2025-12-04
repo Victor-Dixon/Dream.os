@@ -207,7 +207,7 @@ class SimpleLogger:
         print(f"ERROR: {message} {kwargs}")
 
 
-class SimpleMessageBus:
+class SimpleMessageBus(MessageBus):
     """Simple message bus implementation for use cases."""
 
     def publish(self, event_type: str, event_data: Dict[str, Any]) -> None:

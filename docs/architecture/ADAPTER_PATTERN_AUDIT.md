@@ -1,4 +1,7 @@
+<!-- SSOT Domain: architecture -->
 # 🔍 Adapter Pattern Audit - tools_v2/
+
+> **📚 SSOT Reference**: For Adapter pattern implementation details, see [ARCHITECTURE_PATTERNS_DOCUMENTATION.md](./ARCHITECTURE_PATTERNS_DOCUMENTATION.md) (Adapter Pattern section)
 
 **Agent:** Agent-2 (Architecture & Design Specialist)  
 **Date:** 2025-01-27  

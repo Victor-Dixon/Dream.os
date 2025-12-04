@@ -1,4 +1,8 @@
+<!-- SSOT Domain: architecture -->
 # Orchestrator Implementation Review
+
+> **📚 SSOT Reference**: For comprehensive Orchestrator pattern documentation, see [orchestrator-pattern.md](./orchestrator-pattern.md)
+
 **Mission:** C-059-8 (Autonomous Claim)  
 **Agent:** Agent-2 (Architecture & Design Specialist)  
 **Date:** 2025-10-11  

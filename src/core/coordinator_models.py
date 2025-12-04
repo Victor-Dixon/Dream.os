@@ -3,6 +3,8 @@
 Coordinator Models - V2 Compliant
 ================================
 
+<!-- SSOT Domain: integration -->
+
 Base models and data structures for the unified coordinator system.
 
 Author: Agent-2 - Architecture & Design Specialist

@@ -1,3 +1,4 @@
+<!-- SSOT Domain: architecture -->
 # Orchestrator Pattern - V2 Architecture
 
 ## Overview

@@ -34,13 +34,13 @@ from src.services.messaging_infrastructure import ConsolidatedMessagingService
 
 # Import enhanced templates (optional - falls back to original if unavailable)
 try:
-    from ...discord_commander.templates.broadcast_templates import (
+    from ..templates.broadcast_templates import (
         ENHANCED_BROADCAST_TEMPLATES,
     )
     USE_ENHANCED_TEMPLATES = True
 except ImportError:
     try:
-        from ...discord_commander.discord_template_collection import (
+        from ..discord_template_collection import (
             ENHANCED_BROADCAST_TEMPLATES,
         )
         USE_ENHANCED_TEMPLATES = True
@@ -252,7 +252,7 @@ class BroadcastTemplatesView(discord.ui.View):
     async def on_template_select(self, interaction: discord.Interaction, template: dict):
         """Handle template selection - opens broadcast modal with template."""
         try:
-            from ...discord_commander.discord_gui_modals import TemplateBroadcastModal
+            from ..discord_gui_modals import TemplateBroadcastModal
 
             # Create modal with template pre-filled
             modal = TemplateBroadcastModal(

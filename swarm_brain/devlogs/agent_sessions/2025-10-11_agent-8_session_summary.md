@@ -71,12 +71,12 @@
 **Achievements Documented:**
 
 **Agent-7 100% V2 Compliance:**
-- `docs/milestones/AGENT-7_100_PERCENT_V2_COMPLIANCE.md`
+- `docs/archive/milestones/AGENT-7_100_PERCENT_V2_COMPLIANCE.md`
 - 12/12 files V2 compliant
 - Phase 4 complete
 
 **Agent-7 PRIMARY ROLE COMPLETE:**
-- `docs/milestones/AGENT-7_TEAM_BETA_PRIMARY_ROLE_COMPLETE.md`
+- `docs/archive/milestones/AGENT-7_TEAM_BETA_PRIMARY_ROLE_COMPLETE.md`
 - 8/8 repositories, 37 files, 100% V2
 - LEGENDARY: First primary role completion in swarm!
 
@@ -284,8 +284,8 @@
 4. docs/V2_COMPLIANCE_TRACKER_2025-10-11.md
 5. docs/SSOT_STATUS_2025-10-11.md
 6. docs/enhancement_requests/MESSAGE_BATCHING_FEATURE.md
-7. docs/milestones/AGENT-7_100_PERCENT_V2_COMPLIANCE.md
-8. docs/milestones/AGENT-7_TEAM_BETA_PRIMARY_ROLE_COMPLETE.md
+7. docs/archive/milestones/AGENT-7_100_PERCENT_V2_COMPLIANCE.md
+8. docs/archive/milestones/AGENT-7_TEAM_BETA_PRIMARY_ROLE_COMPLETE.md
 9. docs/AGENT_TOOLBELT_EXPANSION_PROPOSAL.md
 
 ### Discord System (Restored)

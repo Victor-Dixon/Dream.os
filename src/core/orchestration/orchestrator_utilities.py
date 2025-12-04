@@ -2,6 +2,8 @@
 Orchestrator Utility Functions
 ===============================
 
+<!-- SSOT Domain: integration -->
+
 Utility functions for orchestrator operations extracted for V2 compliance.
 
 Author: Agent-2 - Architecture & Design Specialist (V2 Refactor)

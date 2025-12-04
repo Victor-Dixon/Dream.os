@@ -3,6 +3,8 @@
 Output Flywheel Metrics Monitor - Guardrail & Live Monitoring
 ==============================================================
 
+<!-- SSOT Domain: analytics -->
+
 Monitors metrics and provides guardrail status (RED/YELLOW/GREEN) with alerting.
 
 V2 Compliance:
@@ -25,9 +27,9 @@ import yaml
 
 # Handle both relative and absolute imports
 try:
-    from .metrics_tracker import OutputFlywheelMetricsTracker
+    from .metrics_client import MetricsClient
 except ImportError:
-    from metrics_tracker import OutputFlywheelMetricsTracker
+    from metrics_client import MetricsClient
 
 
 class MetricsMonitor:
@@ -40,7 +42,7 @@ class MetricsMonitor:
         
         self.metrics_dir = metrics_dir
         self.outputs_dir = metrics_dir / "outputs"
-        self.tracker = OutputFlywheelMetricsTracker(metrics_dir)
+        self.tracker = MetricsClient(metrics_dir)
         self.config = self._load_config()
 
     def _load_config(self) -> Dict[str, Any]:

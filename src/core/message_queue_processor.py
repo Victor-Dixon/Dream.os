@@ -3,6 +3,8 @@
 Message Queue Processor - Deterministic Queue Processing
 =======================================================
 
+<!-- SSOT Domain: communication -->
+
 Processes queued messages with dependency injection for messaging core.
 Supports both real and mock messaging cores for testing.
 

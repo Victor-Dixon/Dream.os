@@ -1,4 +1,5 @@
 import logging
+from typing import Dict
 logger = logging.getLogger(__name__)
 """
 Performance CLI - V2 Compliance Module

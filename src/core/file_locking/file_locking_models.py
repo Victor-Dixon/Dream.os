@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
+# SSOT Domain: infrastructure
 """
 File Locking Models - V2 Compliance Module
 =========================================
 
 Data models and enums for file locking operations.
+SSOT: Single Source of Truth for all file locking data models.
 
 Author: Captain Agent-4 - Strategic Oversight & Emergency Intervention Manager
 License: MIT

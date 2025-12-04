@@ -21,11 +21,27 @@ License: MIT
 
 from typing import Any
 
-from .browser.browser_adapter import ChromeBrowserAdapter
 from .browser.browser_models import BrowserConfig, TheaConfig
-from .browser.browser_operations import BrowserOperations
-from .browser.session_manager import SessionManager
 from .browser.unified_cookie_manager import UnifiedCookieManager as CookieManager
+
+# Stubs for missing modules
+class ChromeBrowserAdapter:
+    """Stub for missing browser adapter."""
+    def start(self, config): return False
+    def stop(self): pass
+    def is_running(self): return False
+    def get_current_url(self): return ""
+    def get_title(self): return ""
+    def get_cookies(self): return []
+    def add_cookies(self, cookies): pass
+
+class BrowserOperations:
+    """Stub for missing browser operations."""
+    def __init__(self, adapter, config): pass
+
+class SessionManager:
+    """Stub for missing session manager."""
+    def __init__(self, config): pass
 
 
 class UnifiedBrowserService:

@@ -1,3 +1,4 @@
+<!-- SSOT Domain: architecture -->
 # V2 Architecture Patterns Guide
 **Author:** Agent-2 (Architecture & Design Specialist)  
 **Date:** 2025-10-11  

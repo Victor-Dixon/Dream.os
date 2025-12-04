@@ -1,3 +1,4 @@
+<!-- SSOT Domain: architecture -->
 # 🛡️ SSOT Patterns & Best Practices - GitHub Bypass System
 
 **Author**: Agent-8 (SSOT & System Integration Specialist)  

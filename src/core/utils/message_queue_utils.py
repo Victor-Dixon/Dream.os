@@ -10,6 +10,30 @@ License: MIT
 """
 
 
+from datetime import datetime, timedelta
+import heapq
+from typing import TYPE_CHECKING, List, Dict, Any
+
+# Type aliases (must be defined before use)
+QueueConfig = Dict[str, Any]
+
+if TYPE_CHECKING:
+    from src.core.message_queue_persistence import QueueEntry
+else:
+    # Runtime import to avoid circular dependencies
+    try:
+        from src.core.message_queue_persistence import QueueEntry
+    except ImportError:
+        QueueEntry = Any  # Fallback for type hints
+
+# QueueStatus enum stub
+class QueueStatus:
+    PENDING = "PENDING"
+    PROCESSING = "PROCESSING"
+    DELIVERED = "DELIVERED"
+    FAILED = "FAILED"
+    EXPIRED = "EXPIRED"
+
 class MessageQueueUtils:
     """Utility functions for message queue operations."""
 
@@ -189,26 +213,26 @@ class MessageQueueUtils:
         return active_entries
 
     @staticmethod
-    def validate_queue_config(config: QueueConfig) -> List[str]:
+    def validate_queue_config(config: Dict[str, Any]) -> List[str]:
         """Validate queue configuration and return any issues."""
         issues = []
 
-        if config.max_queue_size <= 0:
+        if config.get("max_queue_size", 0) <= 0:
             issues.append("max_queue_size must be positive")
 
-        if config.max_age_days <= 0:
+        if config.get("max_age_days", 0) <= 0:
             issues.append("max_age_days must be positive")
 
-        if config.retry_base_delay <= 0:
+        if config.get("retry_base_delay", 0) <= 0:
             issues.append("retry_base_delay must be positive")
 
-        if config.retry_max_delay <= config.retry_base_delay:
+        if config.get("retry_max_delay", 0) <= config.get("retry_base_delay", 0):
             issues.append("retry_max_delay must be greater than retry_base_delay")
 
-        if config.processing_batch_size <= 0:
+        if config.get("processing_batch_size", 0) <= 0:
             issues.append("processing_batch_size must be positive")
 
-        if config.cleanup_interval <= 0:
+        if config.get("cleanup_interval", 0) <= 0:
             issues.append("cleanup_interval must be positive")
 
         return issues

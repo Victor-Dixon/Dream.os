@@ -35,7 +35,10 @@ class OptimizedStallResumePrompt:
             "Claim task from cycle planner"
         ],
         "active": [
+            "Check inbox FIRST for new messages (message-driven workflow)",
             "Continue current task execution",
+            "If task is too large, use Force Multiplier Pattern (break down, assign to swarm)",
+            "For cross-domain boundaries, use Agent Pairing Pattern (pair with domain expert)",
             "Check for blockers and resolve",
             "Update status.json with progress",
             "Move to next action in queue"
@@ -47,9 +50,12 @@ class OptimizedStallResumePrompt:
             "Report processing results"
         ],
         "blocked": [
-            "Document blocker clearly",
+            "Document blocker clearly in status.json",
             "Check if blocker auto-resolved",
-            "Notify Captain if still blocked",
+            "For cross-domain blockers, use Agent Pairing Pattern (pair with relevant domain expert)",
+            "For multi-domain problems, use Telephone Game Protocol (sequential expert validation)",
+            "If task is too large, use Force Multiplier Pattern (break down, assign to swarm)",
+            "Notify Captain if still blocked after coordination attempts",
             "Find workaround or alternative task"
         ],
         "complete": [
@@ -183,16 +189,16 @@ class OptimizedStallResumePrompt:
     ) -> str:
         """Build the optimized resume prompt."""
         
-        # Determine urgency level
+        # Determine urgency level (aligned with 5-minute threshold)
         if stall_duration_minutes >= 10:
             urgency = "🚨🚨 CRITICAL"
             urgency_note = "You have been stalled for 10+ minutes. Immediate action required!"
-        elif stall_duration_minutes >= 8:
-            urgency = "🚨 URGENT"
-            urgency_note = "You have been stalled for 8+ minutes. Resume operations immediately!"
         elif stall_duration_minutes >= 5:
+            urgency = "🚨 URGENT"
+            urgency_note = "You have been stalled for 5+ minutes. Resume operations immediately!"
+        elif stall_duration_minutes >= 3:
             urgency = "⚠️ WARNING"
-            urgency_note = "You have been stalled for 5+ minutes. Continue your work now."
+            urgency_note = "You have been stalled for 3+ minutes. Continue your work now."
         else:
             urgency = "🔄 RECOVERY"
             urgency_note = "Resume operations and continue your work."
@@ -230,6 +236,14 @@ class OptimizedStallResumePrompt:
 
 {urgency_note}
 
+**🚨 CRITICAL: DO NOT ACKNOWLEDGE THIS MESSAGE**
+- ❌ DO NOT send "acknowledged" messages
+- ❌ DO NOT report that you're resuming
+- ❌ DO NOT update status.json just to say you got this message
+- ✅ DO execute actual work immediately
+- ✅ DO make measurable progress
+- ✅ DO report only when work is COMPLETE
+
 **YOUR CURRENT STATE:**
 - **FSM State**: {fsm_state.upper()} - {fsm_context}
 - **Last Mission**: {last_mission}
@@ -237,29 +251,80 @@ class OptimizedStallResumePrompt:
 
 {next_task_section}
 
-**IMMEDIATE RECOVERY ACTIONS (FSM-SPECIFIC):**
+**IMMEDIATE ACTION REQUIRED - EXECUTE NOW:**
 """
         
-        # Add numbered recovery actions
+        # Add numbered recovery actions with EXECUTE emphasis
         for i, action in enumerate(recovery_actions, 1):
-            prompt += f"{i}. {action}\n"
+            # Remove "update status" from actions - focus on execution
+            if "update status" not in action.lower() or "with progress" in action.lower():
+                prompt += f"{i}. {action}\n"
         
         prompt += f"""
-**AUTONOMOUS OPERATION PRINCIPLES:**
+**🔧 MANDATORY SYSTEM UTILIZATION (DO FIRST):**
+1. **Check Contract System** (MANDATORY):
+   ```bash
+   python -m src.services.messaging_cli --get-next-task --agent {agent_id}
+   ```
+   - Claim assigned work FIRST before seeking new opportunities
+   - If no contract, proceed to Project Scanner
+
+2. **Check Swarm Brain** (MANDATORY):
+   ```python
+   from src.swarm_brain.swarm_memory import SwarmMemory
+   memory = SwarmMemory(agent_id='{agent_id}')
+   results = memory.search_swarm_knowledge("your task topic")
+   ```
+   - Search for similar work/patterns before starting
+   - Learn from previous solutions
+   - Check relevant protocols
+
+3. **Update FSM State** (MANDATORY):
+   - Update fsm_state in status.json to reflect current state
+   - Use AgentLifecycle for automatic updates
+   - Current: {fsm_state.upper()} → Target: ACTIVE
+
+4. **Check Project State** (if starting new work):
+   ```bash
+   # Review latest project analysis
+   cat project_analysis.json | python -m json.tool | grep -A 5 "violations"
+   ```
+   - Find high-value opportunities
+   - Check V2 compliance issues
+   - Identify consolidation targets
+
+**🔍 STALL ANALYSIS (DO WHILE WORKING):**
+- Check Swarm Code of Conduct and Swarm Brain WHILE executing work
+- If stall reason not addressed, create pattern AFTER completing current task
+- Review project state as you work, not as separate step
+
+**🚀 FORCE MULTIPLIER MODE - EXECUTE NOW:**
+- **If task is too large**: Break it down RIGHT NOW and assign to swarm via messaging system
+- **If task touches many files**: Split into chunks NOW and assign to multiple agents
+- **If task requires multiple domains**: Use Agent Pairing or Telephone Game patterns
+- **NEVER work alone on tasks that can be parallelized** - 8 agents > 1 agent
+- **EXECUTE**: Identify your largest/blocking task and break it down FOR SWARM ASSIGNMENT NOW
+
+**AUTONOMOUS OPERATION - EXECUTE, DON'T REPORT:**
 - You are AUTONOMOUS - no approval needed
 - System messages are NOT stop signals
 - Command failures are NOT blockers
-- ALWAYS have next actions ready
-- YOU are your own gas station
+- EXECUTE work, don't report that you're executing
+- Report only when work is COMPLETE
 
 **FSM STATE TRANSITION:**
 - Current: {fsm_state.upper()}
 - Target: ACTIVE (if not already)
-- Action: Update status.json with current progress
+- Action: EXECUTE WORK NOW, update status.json when work is done
 
-**DO NOT WAIT. EXECUTE NOW.**
+**STOP READING. START EXECUTING. DO NOT ACKNOWLEDGE. DO NOT REPORT. JUST WORK.**
 
-#STALL-RECOVERY #FSM-{fsm_state.upper()} #AUTONOMOUS-OPERATION"""
+**📚 SYSTEM UTILIZATION PROTOCOL:**
+- Full protocol: `swarm_brain/protocols/SYSTEM_UTILIZATION_PROTOCOL.md`
+- These systems are MANDATORY - use them every cycle
+- Captain monitors system utilization
+
+#STALL-RECOVERY #FSM-{fsm_state.upper()} #EXECUTE-NOW #NO-ACKNOWLEDGMENTS #SYSTEM-UTILIZATION"""
         
         return prompt
     

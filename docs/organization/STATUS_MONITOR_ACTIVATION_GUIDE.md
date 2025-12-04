@@ -76,10 +76,10 @@ When bot starts, you should see:
 ### **Timing**:
 1. **Every 15 seconds**: Status monitor checks all agent `status.json` files
 2. **Every 5 minutes** (20 iterations): Inactivity check runs
-3. **If inactive 30+ minutes**: Resume message sent to agent
+3. **If inactive 5+ minutes**: Resume message sent to agent
 
 ### **Resume Message Flow**:
-1. **Detect Inactivity**: Agent inactive 30+ minutes
+1. **Detect Inactivity**: Agent inactive 5+ minutes
 2. **Generate Resume Prompt**: Using `generate_optimized_resume_prompt()`
 3. **Send to Agent**: Via messaging system (direct inbox/chat delivery)
 4. **Post to Discord**: For visibility (status update channel)
@@ -127,7 +127,7 @@ When bot starts, you should see:
 - Inactivity duration
 
 ### **What Triggers Resume**:
-- Agent inactive for **30+ minutes**
+- Agent inactive for **5+ minutes**
 - No recent activity detected
 - Status file not updated recently
 
@@ -149,7 +149,7 @@ When bot starts, you should see:
 ### **To Verify It's Working**:
 1. Wait 5 minutes (inactivity check interval)
 2. Check bot logs for inactivity checks
-3. If agent inactive 30+ minutes, resume message will be sent
+3. If agent inactive 5+ minutes, resume message will be sent
 
 ---
 
@@ -159,7 +159,7 @@ When bot starts, you should see:
 - ✅ **Automatically activated** when Discord bot starts
 - ✅ **Runs in background** every 15 seconds
 - ✅ **Checks inactivity** every 5 minutes
-- ✅ **Sends resume messages** when agents inactive 30+ minutes
+- ✅ **Sends resume messages** when agents inactive 5+ minutes
 - ✅ **Posts to Discord** for visibility
 
 **No manual activation needed** - just start the Discord bot!

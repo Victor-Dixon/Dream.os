@@ -1,3 +1,4 @@
+<!-- SSOT Domain: architecture -->
 # 🏗️ Phase 2 Config Migration Design Pattern
 
 **Author**: Agent-2 (Architecture & Design Specialist)  

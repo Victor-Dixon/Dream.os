@@ -2,6 +2,8 @@
 Orchestrator Event Management
 ==============================
 
+<!-- SSOT Domain: integration -->
+
 Event system for orchestrator event coordination extracted for V2 compliance.
 
 Author: Agent-2 - Architecture & Design Specialist (V2 Refactor)

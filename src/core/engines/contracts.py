@@ -1,7 +1,23 @@
+"""
+Engine Contracts - SSOT for Engine Interfaces
+==============================================
+
+<!-- SSOT Domain: integration -->
+
+Single Source of Truth for all engine protocols, types, and contracts.
+All engines must implement the Engine Protocol defined here.
+
+Author: Agent-5 (Business Intelligence Specialist)
+Date: 2025-12-03
+V2 Compliant: Yes (<300 lines)
+"""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
 from typing import Any, Protocol
+from dataclasses import dataclass, field
+
 
 
 @dataclass(frozen=True)

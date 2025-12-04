@@ -3,6 +3,8 @@
 Unified Validator - Consolidated Validation Tool
 ================================================
 
+<!-- SSOT Domain: qa -->
+
 Consolidates all validation capabilities into a single unified tool.
 Replaces 19+ individual validation tools with modular validation system.
 
@@ -14,7 +16,7 @@ Validation Categories:
 - Session Transition Validation
 - Consolidation Validation
 
-Author: Agent-8 (SSOT & System Integration Specialist)
+Author: Agent-8 (Testing & Quality Assurance Specialist)
 Date: 2025-11-29
 V2 Compliant: Yes (<400 lines)
 """

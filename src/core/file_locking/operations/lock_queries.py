@@ -34,22 +34,33 @@ class LockQueries:
         return [lock for lock in active_locks if lock.thread_id == thread_id]
 
     def get_locks_by_owner(self, owner: str) -> list[LockInfo]:
-        """Get locks owned by specific owner."""
+        """Get locks owned by specific owner (uses process_name or metadata['owner'])."""
         active_locks = self.manager.get_active_locks()
-        return [lock for lock in active_locks if lock.owner == owner]
+        return [
+            lock
+            for lock in active_locks
+            if lock.process_name == owner
+            or (lock.metadata and lock.metadata.get("owner") == owner)
+        ]
 
     def get_locks_by_type(self, lock_type: str) -> list[LockInfo]:
-        """Get locks by type."""
+        """Get locks by type (uses metadata['lock_type'])."""
         active_locks = self.manager.get_active_locks()
-        return [lock for lock in active_locks if lock.lock_type == lock_type]
+        return [
+            lock
+            for lock in active_locks
+            if lock.metadata and lock.metadata.get("lock_type") == lock_type
+        ]
 
     def get_locks_by_duration(self, min_duration: int, max_duration: int = None) -> list[LockInfo]:
-        """Get locks by duration range."""
+        """Get locks by duration range (calculates from timestamp)."""
+        import time
+
         active_locks = self.manager.get_active_locks()
         filtered_locks = []
 
         for lock in active_locks:
-            duration = lock.duration
+            duration = time.time() - lock.timestamp
             if min_duration <= duration:
                 if max_duration is None or duration <= max_duration:
                     filtered_locks.append(lock)
@@ -67,6 +78,8 @@ class LockQueries:
 
     def get_lock_statistics(self) -> dict[str, Any]:
         """Get lock statistics."""
+        import time
+
         active_locks = self.manager.get_active_locks()
 
         if not active_locks:
@@ -82,16 +95,19 @@ class LockQueries:
         total_duration = 0
 
         for lock in active_locks:
-            # Count by type
-            lock_type = lock.lock_type
+            # Count by type (from metadata)
+            lock_type = lock.metadata.get("lock_type", "default") if lock.metadata else "default"
             locks_by_type[lock_type] = locks_by_type.get(lock_type, 0) + 1
 
-            # Count by owner
-            owner = lock.owner
+            # Count by owner (process_name or metadata)
+            owner = lock.process_name or (
+                lock.metadata.get("owner", "unknown") if lock.metadata else "unknown"
+            )
             locks_by_owner[owner] = locks_by_owner.get(owner, 0) + 1
 
-            # Sum duration
-            total_duration += lock.duration
+            # Sum duration (calculate from timestamp)
+            duration = time.time() - lock.timestamp
+            total_duration += duration
 
         return {
             "total_locks": len(active_locks),
@@ -101,25 +117,34 @@ class LockQueries:
         }
 
     def find_conflicting_locks(self, filepath: str) -> list[LockInfo]:
-        """Find locks that conflict with the given filepath."""
+        """Find locks that conflict with the given filepath (extracts from lock_file)."""
         active_locks = self.manager.get_active_locks()
         conflicting_locks = []
 
         for lock in active_locks:
-            if lock.filepath == filepath:
+            # Extract filepath from lock_file (removes .lock extension)
+            lock_filepath = lock.lock_file.replace(".lock", "")
+            if lock_filepath == filepath:
                 conflicting_locks.append(lock)
 
         return conflicting_locks
 
     def get_lock_health_status(self) -> dict[str, Any]:
         """Get lock health status."""
-        metrics = self.manager.get_lock_metrics()
+        metrics = self.manager.get_metrics()
+        active_locks = self.manager.get_active_locks()
+
+        # Calculate success rate from metrics
+        total_ops = metrics.total_locks_acquired + metrics.total_errors
+        success_rate = (
+            (metrics.total_locks_acquired / total_ops) if total_ops > 0 else 1.0
+        )
 
         return {
-            "total_locks": metrics.total_locks,
-            "active_locks": metrics.active_locks,
-            "expired_locks": metrics.expired_locks,
-            "failed_operations": metrics.failed_operations,
-            "success_rate": metrics.success_rate,
-            "health_status": "healthy" if metrics.success_rate > 0.9 else "degraded",
+            "total_locks": len(active_locks),
+            "active_locks": len(active_locks),
+            "total_errors": metrics.total_errors,
+            "total_timeouts": metrics.total_timeouts,
+            "success_rate": success_rate,
+            "health_status": "healthy" if success_rate > 0.9 else "degraded",
         }

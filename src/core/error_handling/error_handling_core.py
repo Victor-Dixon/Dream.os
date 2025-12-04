@@ -15,7 +15,9 @@ V2 Compliant: <400 lines, ≤5 classes (facade only)
 """
 
 # Import all from refactored modules
-from .error_config_models import CircuitBreakerConfig, ErrorSummary, RetryConfig
+# Infrastructure SSOT: RetryConfig and CircuitBreakerConfig moved to config_dataclasses.py
+from src.core.config.config_dataclasses import CircuitBreakerConfig, RetryConfig
+from .error_config import ErrorSummary
 from .error_enums import CircuitState, ErrorCategory, ErrorSeverity
 from .error_exceptions_core import CircuitBreakerError, RetryException
 from .error_response_models_core import (

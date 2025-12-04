@@ -1,3 +1,4 @@
+<!-- SSOT Domain: architecture -->
 # Stress Test System - Optimization Guide
 
 **Date**: 2025-11-29  

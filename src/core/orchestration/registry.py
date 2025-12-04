@@ -1,8 +1,16 @@
+"""
+Step Registry - Orchestration Registry
+
+<!-- SSOT Domain: integration -->
+"""
+
 from __future__ import annotations
 
 from collections.abc import Callable
 
 from .contracts import Step
+from typing import Dict, List, Callable, Any, Optional, Union, Tuple, Set
+
 
 
 class StepRegistry:

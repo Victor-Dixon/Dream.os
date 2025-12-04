@@ -3,10 +3,13 @@
 Agent Notes System
 ==================
 
+<!-- SSOT Domain: qa -->
+
 Personal note-taking system for individual agents.
 
 Author: Agent-7 - Repository Cloning Specialist
 Created: 2025-10-13
+Enhanced: Agent-8 - Testing & Quality Assurance (2025-12-03)
 """
 
 import json

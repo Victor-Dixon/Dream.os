@@ -1,3 +1,4 @@
+from typing import Dict
 """Compatibility layer for metric definitions.
 
 The actual data structures live in :mod:`src.services.metrics_definitions` to

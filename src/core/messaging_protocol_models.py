@@ -3,6 +3,8 @@
 Messaging Protocol Models - V2 Compliance Module
 ================================================
 
+<!-- SSOT Domain: integration -->
+
 Protocol interfaces for messaging system dependency injection.
 Extracted from messaging_core.py for better separation of concerns.
 

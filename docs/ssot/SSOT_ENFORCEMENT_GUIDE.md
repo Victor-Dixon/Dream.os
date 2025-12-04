@@ -103,7 +103,7 @@ The SSOT enforcement framework includes **three key dashboards** for tracking co
    - Monitors violations and fixes
    - Visualizes project-wide compliance
    
-2. **Consolidation Tracker** (`docs/consolidation/WEEK_1-2_CONSOLIDATION_TRACKING.md`)
+2. **Consolidation Tracker** (`docs/archive/consolidation/WEEK_1-2_CONSOLIDATION_TRACKING.md`)
    - Tracks all consolidation work across agents
    - Monitors SSOT compliance during consolidations
    - Real-time progress updates

@@ -1,4 +1,9 @@
 # src/services/messaging_discord.py
+"""
+<!-- SSOT Domain: communication -->
+Discord messaging integration for unified messaging system.
+"""
+
 from src.core.messaging_core import (
     UnifiedMessagePriority,
     UnifiedMessageTag,

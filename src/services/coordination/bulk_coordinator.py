@@ -2,6 +2,8 @@
 Bulk Coordinator - V2 Compliant Module
 =====================================
 
+<!-- SSOT Domain: communication -->
+
 Handles bulk message coordination and grouping.
 Extracted from messaging_coordination_handler.py for V2 compliance.
 

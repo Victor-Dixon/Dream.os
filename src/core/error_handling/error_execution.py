@@ -18,13 +18,17 @@ License: MIT
 
 import logging
 from collections.abc import Callable
-from typing import TypeVar
+from typing import TypeVar, TYPE_CHECKING
 
-from .circuit_breaker import CircuitBreaker
+# Use dependency injection pattern to avoid circular imports
+from .circuit_breaker.protocol import ICircuitBreaker
 from .error_classification import ErrorClassifier, error_classifier
 from .error_intelligence import intelligence_engine
 from .recovery_strategies import RecoveryStrategy
 from .retry_mechanisms import RetryMechanism
+
+if TYPE_CHECKING:
+    from .circuit_breaker.implementation import CircuitBreaker
 
 # Type variable for generic return types
 T = TypeVar("T")
@@ -37,7 +41,7 @@ class ErrorExecutionOrchestrator:
 
     def __init__(
         self,
-        circuit_breakers: dict[str, CircuitBreaker] | None = None,
+        circuit_breakers: dict[str, ICircuitBreaker] | None = None,
         retry_mechanisms: dict[str, RetryMechanism] | None = None,
         recovery_strategies: list[RecoveryStrategy] | None = None,
         classifier: ErrorClassifier | None = None,
@@ -45,7 +49,7 @@ class ErrorExecutionOrchestrator:
         """Initialize execution orchestrator.
 
         Args:
-            circuit_breakers: Dict of circuit breakers by component
+            circuit_breakers: Dict of circuit breakers by component (using protocol)
             retry_mechanisms: Dict of retry mechanisms by component
             recovery_strategies: List of recovery strategies
             classifier: Error classifier instance

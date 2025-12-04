@@ -1,5 +1,7 @@
 # Compliance Enforcement - Architecture Guide
 
+<!-- SSOT Domain: architecture -->
+
 **Date**: 2025-11-30  
 **Created By**: Agent-2 (Architecture & Design Specialist)  
 **Status**: ✅ **ARCHITECTURE GUIDANCE DOCUMENT**  

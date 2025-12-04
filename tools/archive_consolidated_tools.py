@@ -45,6 +45,14 @@ CONSOLIDATION_MAP = {
     "integrity_validator.py": "unified_validator.py",
     "passdown_validator.py": "unified_validator.py",
     "refactor_validator.py": "unified_validator.py",
+    
+    # Test coverage tools → unified_test_coverage.py
+    "test_coverage_tracker.py": "unified_test_coverage.py",
+    "test_coverage_prioritizer.py": "unified_test_coverage.py",
+    "analyze_test_coverage_gaps_clean.py": "unified_test_coverage.py",
+    
+    # Test analysis tools → unified_test_analysis.py
+    "test_all_discord_commands.py": "unified_test_analysis.py",
 }
 
 def archive_tools(dry_run=True):
@@ -99,5 +107,6 @@ if __name__ == "__main__":
     
     if dry_run:
         print(f"\n💡 Run with --execute to archive {len(archived)} tools")
+
 
 

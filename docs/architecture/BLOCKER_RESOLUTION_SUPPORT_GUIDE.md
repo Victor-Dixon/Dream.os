@@ -1,3 +1,4 @@
+<!-- SSOT Domain: architecture -->
 # 🚨 Blocker Resolution Support Guide
 
 **Date**: 2025-11-29  

@@ -1,3 +1,4 @@
+<!-- SSOT Domain: architecture -->
 # CLI Toolbelt Architecture Design
 **Mission:** C-058-2  
 **Agent:** Agent-2 (Architecture & Design Specialist)  

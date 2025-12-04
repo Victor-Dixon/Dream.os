@@ -13,6 +13,8 @@ from dataclasses import dataclass
 from typing import Any
 
 from .error_response_models_core import StandardErrorResponse
+from dataclasses import dataclass, field
+
 
 
 @dataclass

@@ -224,7 +224,7 @@ class BrowserSessionManager(BaseSessionManager):
         Returns:
             True if session is valid, False otherwise
         """
-        if not self.session_validation:
+        if not self.session_validation_enabled:
             return True
 
         try:
@@ -329,7 +329,7 @@ class BrowserSessionManager(BaseSessionManager):
             "cache_enabled": self.cache_enabled,
             "cache_size": self.cache_size,
             "auto_login": self.auto_login,
-            "session_validation": self.session_validation,
+            "session_validation": self.session_validation_enabled,
             "reauth_on_failure": self.reauth_on_failure,
             "session_valid": self.session_valid,
             "last_validation": self.last_validation,

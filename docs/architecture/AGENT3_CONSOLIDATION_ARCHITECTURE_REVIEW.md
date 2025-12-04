@@ -1,3 +1,4 @@
+<!-- SSOT Domain: architecture -->
 # 🏗️ Agent-3 Consolidation Architecture Review
 **Date**: 2025-01-27  
 **Reviewer**: Agent-2 (Architecture & Design Specialist)  

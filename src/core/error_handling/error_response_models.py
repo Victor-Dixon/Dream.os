@@ -14,6 +14,8 @@ from dataclasses import dataclass
 from typing import Any
 
 from .error_models_enums import ErrorCategory, ErrorRecoverability, ErrorSeverity
+from dataclasses import dataclass, field
+
 
 
 @dataclass

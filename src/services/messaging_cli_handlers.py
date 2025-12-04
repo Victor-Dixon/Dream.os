@@ -1,6 +1,8 @@
 """
 Messaging CLI Handlers Module
 Handles command execution logic
+
+<!-- SSOT Domain: communication -->
 """
 
 import logging

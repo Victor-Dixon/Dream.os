@@ -1,0 +1,309 @@
+"""
+Tests for messaging_infrastructure.py - ConsolidatedMessagingService and MessageCoordinator.
+
+Target: ≥85% coverage, 15+ tests.
+"""
+
+import pytest
+from unittest.mock import Mock, patch, MagicMock
+from src.services.messaging_infrastructure import (
+    ConsolidatedMessagingService,
+    MessageCoordinator,
+    _format_multi_agent_request_message,
+    _format_normal_message_with_instructions,
+    create_messaging_parser,
+    send_message_pyautogui,
+    send_message_to_onboarding_coords,
+)
+
+
+class TestConsolidatedMessagingService:
+    """Test ConsolidatedMessagingService class."""
+
+    @patch("src.core.message_queue.MessageQueue")
+    def test_init(self, mock_queue_class):
+        """Test ConsolidatedMessagingService initialization."""
+        mock_queue = Mock()
+        mock_queue_class.return_value = mock_queue
+        service = ConsolidatedMessagingService()
+        assert service is not None
+        assert service.queue == mock_queue
+
+    @patch("src.core.message_queue.MessageQueue")
+    @patch("src.core.multi_agent_request_validator.get_multi_agent_validator")
+    def test_send_message_success(self, mock_validator, mock_queue_class):
+        """Test successful message sending."""
+        mock_queue = Mock()
+        mock_queue.enqueue = Mock(return_value="queue_id_123")
+        mock_queue_class.return_value = mock_queue
+        mock_validator_instance = Mock()
+        mock_validator_instance.validate_agent_can_send_message = Mock(return_value=(True, None, None))
+        mock_validator.return_value = mock_validator_instance
+
+        service = ConsolidatedMessagingService()
+        result = service.send_message("Agent-1", "Test message")
+
+        assert result["success"] is True
+        assert "queue_id" in result
+
+    @patch("src.core.message_queue.MessageQueue")
+    @patch("src.core.multi_agent_request_validator.get_multi_agent_validator")
+    def test_send_message_with_priority(self, mock_validator, mock_queue_class):
+        """Test message sending with priority."""
+        mock_queue = Mock()
+        mock_queue.enqueue = Mock(return_value="queue_id_123")
+        mock_queue_class.return_value = mock_queue
+        mock_validator_instance = Mock()
+        mock_validator_instance.validate_agent_can_send_message = Mock(return_value=(True, None, None))
+        mock_validator.return_value = mock_validator_instance
+
+        service = ConsolidatedMessagingService()
+        result = service.send_message("Agent-1", "Test", priority="urgent")
+
+        assert result["success"] is True
+
+    @patch("src.core.message_queue.MessageQueue")
+    @patch("src.core.multi_agent_request_validator.get_multi_agent_validator")
+    def test_send_message_blocked(self, mock_validator, mock_queue_class):
+        """Test message sending when blocked by pending request."""
+        mock_queue = Mock()
+        mock_queue_class.return_value = mock_queue
+        mock_validator_instance = Mock()
+        mock_validator_instance.validate_agent_can_send_message = Mock(
+            return_value=(False, "Blocked", {"request_id": "req_1"})
+        )
+        mock_validator.return_value = mock_validator_instance
+
+        service = ConsolidatedMessagingService()
+        result = service.send_message("Agent-1", "Test message")
+
+        assert result["success"] is False
+        assert result["blocked"] is True
+
+    @patch("src.core.message_queue.MessageQueue")
+    @patch("src.core.multi_agent_request_validator.get_multi_agent_validator")
+    def test_send_message_exception(self, mock_validator, mock_queue_class):
+        """Test message sending with exception."""
+        mock_queue = Mock()
+        mock_queue_class.return_value = mock_queue
+        mock_validator_instance = Mock()
+        mock_validator_instance.validate_agent_can_send_message = Mock(side_effect=Exception("Error"))
+        mock_validator.return_value = mock_validator_instance
+
+        service = ConsolidatedMessagingService()
+        result = service.send_message("Agent-1", "Test message")
+
+        assert result["success"] is False
+
+    @patch("src.core.message_queue.MessageQueue")
+    @patch("src.core.multi_agent_request_validator.get_multi_agent_validator")
+    @patch("src.core.keyboard_control_lock.keyboard_control")
+    def test_broadcast_message_success(self, mock_lock, mock_validator, mock_queue_class):
+        """Test successful broadcast message."""
+        mock_queue = Mock()
+        mock_queue.enqueue = Mock(return_value="queue_id_1")
+        mock_queue_class.return_value = mock_queue
+        mock_validator_instance = Mock()
+        mock_validator_instance.validate_agent_can_send_message = Mock(return_value=(True, None, None))
+        mock_validator.return_value = mock_validator_instance
+        mock_lock.return_value.__enter__ = Mock()
+        mock_lock.return_value.__exit__ = Mock(return_value=None)
+
+        service = ConsolidatedMessagingService()
+        result = service.broadcast_message("Test broadcast", priority="regular")
+
+        assert isinstance(result, dict)
+        assert "success" in result or "results" in result
+
+    @patch("src.core.message_queue.MessageQueue")
+    @patch("src.core.keyboard_control_lock.keyboard_control")
+    def test_broadcast_message_no_queue(self, mock_lock, mock_queue_class):
+        """Test broadcast message when queue unavailable."""
+        mock_queue_class.return_value = None
+        mock_lock.return_value.__enter__ = Mock()
+        mock_lock.return_value.__exit__ = Mock(return_value=None)
+
+        service = ConsolidatedMessagingService()
+        service.queue = None
+        # Mock send_message to return success dict
+        with patch.object(service, "send_message", return_value={"success": True, "agent": "Agent-1"}):
+            result = service.broadcast_message("Test broadcast")
+
+            assert isinstance(result, dict)
+
+
+class TestMessageCoordinator:
+    """Test MessageCoordinator class."""
+
+    @patch("src.core.message_queue.MessageQueue")
+    def test_get_queue_success(self, mock_queue_class):
+        """Test successful queue initialization."""
+        mock_queue = Mock()
+        mock_queue_class.return_value = mock_queue
+
+        MessageCoordinator._queue = None
+        result = MessageCoordinator._get_queue()
+
+        assert result == mock_queue
+
+    @patch("src.core.message_queue.MessageQueue")
+    def test_get_queue_exception(self, mock_queue_class):
+        """Test queue initialization with exception."""
+        mock_queue_class.side_effect = Exception("Error")
+
+        MessageCoordinator._queue = None
+        result = MessageCoordinator._get_queue()
+
+        assert result is None
+
+    @patch("src.core.message_queue.MessageQueue")
+    @patch("src.core.multi_agent_request_validator.get_multi_agent_validator")
+    def test_send_to_agent_success(self, mock_validator, mock_queue_class):
+        """Test successful send_to_agent."""
+        mock_queue = Mock()
+        mock_queue.enqueue = Mock(return_value="queue_id")
+        mock_queue_class.return_value = mock_queue
+        MessageCoordinator._queue = mock_queue
+
+        mock_validator_instance = Mock()
+        mock_validator_instance.validate_agent_can_send_message = Mock(return_value=(True, None, None))
+        mock_validator.return_value = mock_validator_instance
+
+        with patch("src.services.messaging_infrastructure.MessageCoordinator._detect_sender", return_value="CAPTAIN"):
+            with patch("src.services.messaging_infrastructure.MessageCoordinator._determine_message_type", return_value=(Mock(), "CAPTAIN")):
+                result = MessageCoordinator.send_to_agent("Agent-1", "Test message")
+
+                assert result["success"] is True
+                assert "queue_id" in result
+
+    @patch("src.core.message_queue.MessageQueue")
+    @patch("src.core.multi_agent_request_validator.get_multi_agent_validator")
+    def test_send_to_agent_blocked(self, mock_validator, mock_queue_class):
+        """Test send_to_agent when agent is blocked."""
+        mock_queue = Mock()
+        mock_queue_class.return_value = mock_queue
+        MessageCoordinator._queue = mock_queue
+
+        mock_validator_instance = Mock()
+        mock_validator_instance.validate_agent_can_send_message = Mock(
+            return_value=(False, "Blocked", {"request_id": "req_1"})
+        )
+        mock_validator.return_value = mock_validator_instance
+
+        with patch("src.services.messaging_infrastructure.MessageCoordinator._detect_sender", return_value="CAPTAIN"):
+            with patch("src.services.messaging_infrastructure.MessageCoordinator._determine_message_type", return_value=(Mock(), "CAPTAIN")):
+                result = MessageCoordinator.send_to_agent("Agent-1", "Test message")
+
+                assert result["success"] is False
+                assert result["blocked"] is True
+
+    @patch("src.core.message_queue.MessageQueue")
+    @patch("src.core.multi_agent_request_validator.get_multi_agent_validator")
+    def test_broadcast_to_all_success(self, mock_validator, mock_queue_class):
+        """Test successful broadcast_to_all."""
+        mock_queue = Mock()
+        mock_queue.enqueue = Mock(return_value="queue_id")
+        mock_queue_class.return_value = mock_queue
+        MessageCoordinator._queue = mock_queue
+
+        mock_validator_instance = Mock()
+        mock_validator_instance.validate_agent_can_send_message = Mock(return_value=(True, None, None))
+        mock_validator.return_value = mock_validator_instance
+
+        from src.core.messaging_core import UnifiedMessagePriority
+
+        result = MessageCoordinator.broadcast_to_all("Test", UnifiedMessagePriority.REGULAR)
+
+        assert result > 0
+
+    def test_coordinate_survey(self):
+        """Test coordinate_survey method."""
+        with patch("src.services.messaging_infrastructure.MessageCoordinator.broadcast_to_all") as mock_broadcast:
+            mock_broadcast.return_value = 5
+
+            result = MessageCoordinator.coordinate_survey()
+
+            assert result is True
+            mock_broadcast.assert_called_once()
+
+    def test_coordinate_consolidation(self):
+        """Test coordinate_consolidation method."""
+        with patch("src.services.messaging_infrastructure.MessageCoordinator.broadcast_to_all") as mock_broadcast:
+            mock_broadcast.return_value = 5
+
+            result = MessageCoordinator.coordinate_consolidation("batch1", "COMPLETE")
+
+            assert result is True
+            mock_broadcast.assert_called_once()
+
+    def test_detect_sender_from_env(self):
+        """Test _detect_sender from environment variable."""
+        with patch("os.getenv", return_value="Agent-1"):
+            result = MessageCoordinator._detect_sender()
+
+            assert result == "Agent-1"
+
+    def test_detect_sender_default(self):
+        """Test _detect_sender defaults to CAPTAIN."""
+        with patch("os.getenv", return_value=None):
+            with patch("pathlib.Path.cwd", return_value=Mock(as_posix=Mock(return_value="/other/path"))):
+                result = MessageCoordinator._detect_sender()
+
+                assert result == "CAPTAIN"
+
+
+class TestUtilityFunctions:
+    """Test utility functions."""
+
+    def test_format_multi_agent_request_message(self):
+        """Test _format_multi_agent_request_message."""
+        result = _format_multi_agent_request_message(
+            "Test message", "collector_1", "req_1", 3, 120
+        )
+
+        assert "Test message" in result
+        assert "collector_1" in result
+        assert "req_1" in result
+        assert "3 agent(s)" in result
+
+    def test_format_normal_message_broadcast(self):
+        """Test _format_normal_message_with_instructions for BROADCAST."""
+        result = _format_normal_message_with_instructions("Test", "BROADCAST")
+
+        assert "Test" in result
+        assert "BROADCAST MESSAGE" in result
+
+    def test_format_normal_message_normal(self):
+        """Test _format_normal_message_with_instructions for NORMAL."""
+        result = _format_normal_message_with_instructions("Test", "NORMAL")
+
+        assert "Test" in result
+        assert "STANDARD MESSAGE" in result
+
+    def test_create_messaging_parser(self):
+        """Test create_messaging_parser."""
+        parser = create_messaging_parser()
+
+        assert parser is not None
+        assert hasattr(parser, "add_argument")
+
+    @patch("src.services.messaging_infrastructure.send_message")
+    def test_send_message_pyautogui(self, mock_send):
+        """Test send_message_pyautogui."""
+        mock_send.return_value = True
+
+        result = send_message_pyautogui("Agent-1", "Test message")
+
+        assert result is True
+        mock_send.assert_called_once()
+
+    def test_send_message_to_onboarding_coords(self):
+        """Test send_message_to_onboarding_coords alias."""
+        with patch("src.services.messaging_infrastructure.send_message_pyautogui") as mock_send:
+            mock_send.return_value = True
+
+            result = send_message_to_onboarding_coords("Agent-1", "Test")
+
+            assert result is True
+            mock_send.assert_called_once_with("Agent-1", "Test", 30)
+

@@ -135,3 +135,5 @@ class BaseHandler(ABC):
         log_method = getattr(self.logger, level, self.logger.info)
         log_method(f"{self.handler_name} request: {request}")
 
+
+

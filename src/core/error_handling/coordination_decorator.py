@@ -37,7 +37,7 @@ def _execute_with_coordination_handler(
     use_intelligence: bool,
 ) -> Any:
     """Execute operation with coordination error handler."""
-    from .coordination_error_handler import coordination_handler_core
+    from .component_management import coordination_handler_core
     return coordination_handler_core.execute_with_error_handling(
         operation,
         operation_name,

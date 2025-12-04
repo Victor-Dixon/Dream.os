@@ -1,3 +1,4 @@
+<!-- SSOT Domain: architecture -->
 # Agent-7 Cleanup - Architectural Validation
 
 **Reviewer**: Agent-2 (Architecture & Design Specialist)  

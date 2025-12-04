@@ -1,6 +1,9 @@
 # AUTO-GENERATED __init__.py
 # DO NOT EDIT MANUALLY - changes may be overwritten
 
+# Registry removed from __init__.py to avoid circular dependencies
+# Import directly: from src.core.engines.registry import EngineRegistry
+
 from . import analysis_core_engine
 from . import communication_core_engine
 from . import contracts
@@ -15,7 +18,6 @@ from . import monitoring_core_engine
 from . import orchestration_core_engine
 from . import performance_core_engine
 from . import processing_core_engine
-from . import registry
 from . import security_core_engine
 from . import storage_core_engine
 from . import utility_core_engine
@@ -36,7 +38,7 @@ __all__ = [
     'orchestration_core_engine',
     'performance_core_engine',
     'processing_core_engine',
-    'registry',
+    # 'registry' - Import directly: from src.core.engines.registry import EngineRegistry
     'security_core_engine',
     'storage_core_engine',
     'utility_core_engine',

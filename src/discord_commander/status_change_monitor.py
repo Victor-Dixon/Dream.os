@@ -19,7 +19,7 @@ import asyncio
 import json
 import logging
 from pathlib import Path
-from typing import Dict, Optional
+from typing import Dict, Optional, Any
 from datetime import datetime
 
 try:
@@ -311,85 +311,179 @@ class StatusChangeMonitor:
     async def _check_inactivity(self, agent_id: str, activity_detector):
         """Check if agent is inactive and send resumer prompt if needed."""
         try:
-            inactivity_threshold_minutes = 30.0  # 30 minutes of inactivity
+            inactivity_threshold_minutes = 5.0  # 5 minutes of inactivity
 
             summary = activity_detector.detect_agent_activity(
                 agent_id, lookback_minutes=60)
 
             # If agent is inactive for threshold duration
             if not summary.is_active or summary.inactivity_duration_minutes >= inactivity_threshold_minutes:
-                # Generate resumer prompt
-                try:
-                    from src.core.optimized_stall_resume_prompt import generate_optimized_resume_prompt
+                # Special handling for Agent-4 (Captain): Use Captain Restart Pattern from inbox
+                if agent_id == "Agent-4":
+                    resumer_prompt = self._get_captain_restart_pattern(
+                        inactivity_minutes=summary.inactivity_duration_minutes)
+                    if not resumer_prompt:
+                        # Fallback to generic prompt if pattern not found
+                        resumer_prompt = await self._generate_generic_resume_prompt(
+                            agent_id, summary)
+                else:
+                    # Regular agents: Use generic optimized prompt
+                    resumer_prompt = await self._generate_generic_resume_prompt(
+                        agent_id, summary)
 
-                    # Load status for context
-                    status_file = self.workspace_path / agent_id / "status.json"
-                    if status_file.exists():
-                        with open(status_file, 'r', encoding='utf-8') as f:
-                            status = json.load(f)
-
-                        fsm_state = status.get("status", "active")
-                        last_mission = status.get("current_mission", "Unknown")
-
-                        resumer_prompt = generate_optimized_resume_prompt(
-                            agent_id=agent_id,
-                            fsm_state=fsm_state,
-                            last_mission=last_mission,
-                            stall_duration_minutes=summary.inactivity_duration_minutes
-                        )
-
-                        # SEND resume message directly to agent via messaging system
+                if resumer_prompt:
+                    # SEND resume message directly to agent via messaging system
+                    # For Agent-4, pattern already includes resume context, so send as-is
+                    # For other agents, wrap with standard resume message format
+                    if agent_id == "Agent-4":
+                        await self._send_resume_message_to_agent(agent_id, resumer_prompt, summary, skip_wrapper=True)
+                    else:
                         await self._send_resume_message_to_agent(agent_id, resumer_prompt, summary)
 
-                        # Also post resumer prompt to Discord for visibility
-                        await self._post_resumer_prompt(agent_id, resumer_prompt, summary)
-                except ImportError:
-                    logger.warning("OptimizedStallResumePrompt not available")
-                except Exception as e:
-                    logger.error(
-                        f"Error generating resumer prompt for {agent_id}: {e}")
+                    # Also post resumer prompt to Discord for visibility
+                    await self._post_resumer_prompt(agent_id, resumer_prompt, summary)
         except Exception as e:
             logger.error(f"Error checking inactivity for {agent_id}: {e}")
 
-    async def _send_resume_message_to_agent(self, agent_id: str, prompt: str, summary):
+    async def _send_resume_message_to_agent(self, agent_id: str, prompt: str, summary, skip_wrapper: bool = False):
         """Send resume message directly to agent via messaging system."""
         try:
-            from src.services.messaging_infrastructure import MessageCoordinator
-            from src.services.messaging_infrastructure import UnifiedMessagePriority
+            import subprocess
+            import sys
+            from pathlib import Path
 
-            # Format resume message with context
-            resume_message = f"🚨 RESUMER PROMPT - Inactivity Detected\n\n"
-            resume_message += f"{prompt}\n\n"
-            resume_message += f"**Inactivity Duration**: {summary.inactivity_duration_minutes:.1f} minutes\n"
-            if summary.last_activity:
-                resume_message += f"**Last Activity**: {summary.last_activity.strftime('%Y-%m-%d %H:%M:%S')}\n"
-            if summary.activity_sources:
-                resume_message += f"**Activity Sources**: {', '.join(summary.activity_sources)}\n"
-            resume_message += f"\n**Action Required**: Review your status, update status.json, and resume operations.\n"
-            resume_message += f"\n🐝 WE. ARE. SWARM. ⚡🔥"
+            # Format resume message with context (unless skip_wrapper=True for Agent-4)
+            if skip_wrapper:
+                # For Agent-4, prompt already includes resume context
+                resume_message = prompt
+            else:
+                # For other agents, wrap with standard resume message format
+                resume_message = f"🚨 RESUMER PROMPT - Inactivity Detected\n\n"
+                resume_message += f"{prompt}\n\n"
+                resume_message += f"**Inactivity Duration**: {summary.inactivity_duration_minutes:.1f} minutes\n"
+                if summary.last_activity:
+                    resume_message += f"**Last Activity**: {summary.last_activity.strftime('%Y-%m-%d %H:%M:%S')}\n"
+                if summary.activity_sources:
+                    resume_message += f"**Activity Sources**: {', '.join(summary.activity_sources)}\n"
+                resume_message += f"\n**Action Required**: Review your status, update status.json, and resume operations.\n"
+                resume_message += f"\n🐝 WE. ARE. SWARM. ⚡🔥"
 
-            # Send message via messaging system (stalled=True for Ctrl+Enter behavior)
-            result = MessageCoordinator.send_to_agent(
-                agent=agent_id,
-                message=resume_message,
-                priority=UnifiedMessagePriority.URGENT,
-                use_pyautogui=True,
-                stalled=True,  # Use stalled mode for resume prompts
-                sender="Captain Agent-4"
+            # Send message via messaging CLI (proven reliable method)
+            project_root = Path(__file__).parent.parent.parent
+            cmd = [
+                sys.executable,
+                "-m",
+                "src.services.messaging_cli",
+                "--agent",
+                agent_id,
+                "--message",
+                resume_message,
+                "--priority",
+                "urgent",
+            ]
+
+            # Set PYTHONPATH and run command
+            env = {"PYTHONPATH": str(project_root)}
+            result = subprocess.run(
+                cmd,
+                capture_output=True,
+                text=True,
+                timeout=30,
+                env=env,
+                cwd=str(project_root)
             )
 
-            if result.get("success"):
+            if result.returncode == 0:
                 logger.info(
-                    f"✅ Resume message sent to {agent_id} via messaging system")
+                    f"✅ Resume message sent to {agent_id} via messaging CLI")
             else:
+                error_msg = result.stderr or result.stdout or "Unknown error"
                 logger.warning(
-                    f"⚠️ Failed to send resume message to {agent_id}: {result.get('error', 'Unknown error')}")
+                    f"⚠️ Failed to send resume message to {agent_id}: {error_msg}")
 
-        except ImportError as e:
-            logger.error(f"❌ Failed to import messaging system: {e}")
+        except subprocess.TimeoutExpired:
+            logger.error(f"❌ Timeout sending resume message to {agent_id}")
         except Exception as e:
             logger.error(
                 f"❌ Error sending resume message to {agent_id}: {e}", exc_info=True)
+
+    def _get_captain_restart_pattern(self, inactivity_minutes: float = 0.0) -> Optional[str]:
+        """Get Captain Restart Pattern from Agent-4 inbox, modified for resume context."""
+        try:
+            inbox_dir = self.workspace_path / "Agent-4" / "inbox"
+            if not inbox_dir.exists():
+                return None
+
+            # Look for Captain Restart Pattern files
+            pattern_files = list(inbox_dir.glob("CAPTAIN_RESTART_PATTERN*.md"))
+            if not pattern_files:
+                return None
+
+            # Get most recent pattern file
+            pattern_file = max(pattern_files, key=lambda p: p.stat().st_mtime)
+
+            # Read pattern content
+            with open(pattern_file, 'r', encoding='utf-8') as f:
+                pattern_content = f.read()
+
+            # Extract the pattern message (skip headers if present)
+            # Look for the actual pattern content after headers
+            lines = pattern_content.split('\n')
+            start_idx = 0
+            for i, line in enumerate(lines):
+                if line.startswith('Subject:') or (line.startswith('#') and 'RESTART' in line.upper()):
+                    start_idx = i
+                    break
+
+            pattern_message = '\n'.join(lines[start_idx:])
+            
+            # Modify pattern for resume context: Add inactivity header
+            resume_header = f"""🚨 RESUMER PROMPT - Captain Inactivity Detected
+
+**Inactivity Duration**: {inactivity_minutes:.1f} minutes
+**Trigger**: Status Monitor detected inactivity (5+ minute threshold)
+
+---
+"""
+            modified_pattern = resume_header + pattern_message
+            
+            return modified_pattern
+
+        except Exception as e:
+            logger.warning(f"Could not load Captain Restart Pattern: {e}")
+            return None
+
+    async def _generate_generic_resume_prompt(self, agent_id: str, summary) -> Optional[str]:
+        """Generate generic resume prompt for regular agents."""
+        try:
+            from src.core.optimized_stall_resume_prompt import generate_optimized_resume_prompt
+
+            # Load status for context
+            status_file = self.workspace_path / agent_id / "status.json"
+            if not status_file.exists():
+                return None
+
+            with open(status_file, 'r', encoding='utf-8') as f:
+                status = json.load(f)
+
+            fsm_state = status.get("status", "active")
+            last_mission = status.get("current_mission", "Unknown")
+
+            resumer_prompt = generate_optimized_resume_prompt(
+                agent_id=agent_id,
+                fsm_state=fsm_state,
+                last_mission=last_mission,
+                stall_duration_minutes=summary.inactivity_duration_minutes
+            )
+
+            return resumer_prompt
+
+        except ImportError:
+            logger.warning("OptimizedStallResumePrompt not available")
+            return None
+        except Exception as e:
+            logger.error(f"Error generating resume prompt for {agent_id}: {e}")
+            return None
 
     async def _post_resumer_prompt(self, agent_id: str, prompt: str, summary):
         """Post resumer prompt to Discord."""

@@ -185,6 +185,12 @@ config/*_token.txt
 config/*_key.txt
 config/*_secret.txt
 
+# Deployment credentials (FTP/SFTP passwords and usernames)
+.deploy_credentials/
+.deploy_credentials/**
+*.deploy_credentials.json
+sites.json
+
 # Discord tokens and webhooks
 discord_token.json
 discord_token.txt

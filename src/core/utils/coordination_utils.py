@@ -1,3 +1,4 @@
+from dataclasses import dataclass, field
 """
 Coordination Utilities - Shared V2 Compliant Utilities
 Main coordination utilities module that aggregates focused utility modules
@@ -9,7 +10,46 @@ V2 Compliance: Under 300-line limit with modular architecture
 """
 
 # Import all functionality from focused utility modules
+from typing import Dict, Any, List
 
+from .agent_matching import AgentMatchingUtils
+
+# Stubs for missing utility classes
+class PerformanceMetricsUtils:
+    @staticmethod
+    def update_coordination_metrics(*args, **kwargs): pass
+    @staticmethod
+    def update_performance_metrics(*args, **kwargs): pass
+    @staticmethod
+    def store_coordination_history(*args, **kwargs): pass
+    @staticmethod
+    def get_performance_summary(metrics): return {"timestamp": "unknown"}
+
+class VectorInsightsUtils:
+    @staticmethod
+    def enhance_data_with_vector_insights(*args, **kwargs): return {}
+    @staticmethod
+    def extract_recommendations_from_insights(*args, **kwargs): return []
+    @staticmethod
+    def generate_coordination_recommendations(*args, **kwargs): return []
+    @staticmethod
+    def create_enhanced_handler(*args, **kwargs): return None
+    @staticmethod
+    def save_coordination_insights(*args, **kwargs): pass
+    @staticmethod
+    def analyze_pattern_effectiveness(*args, **kwargs): return {}
+
+class VectorDatabaseOperations:
+    @staticmethod
+    def load_coordination_patterns(*args, **kwargs): return []
+    @staticmethod
+    def load_agent_capabilities(*args, **kwargs): return {}
+    @staticmethod
+    def search_coordination_patterns(*args, **kwargs): return []
+    @staticmethod
+    def add_coordination_pattern(*args, **kwargs): pass
+    @staticmethod
+    def get_vector_database_status(*args, **kwargs): return {}
 
 class CoordinationUtils:
     """Main coordination utilities class that aggregates focused utility modules.

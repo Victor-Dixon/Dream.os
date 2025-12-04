@@ -1,3 +1,4 @@
+<!-- SSOT Domain: architecture -->
 # GitHub Bypass System - Deployment Guide
 
 **Date**: 2025-11-28  

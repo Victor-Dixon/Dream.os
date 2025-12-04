@@ -1,49 +1,58 @@
+"""
+Coordination Core Engine - SSOT for Coordination Operations
+============================================================
+
+<!-- SSOT Domain: integration -->
+
+Core coordination engine - consolidates all coordination operations.
+Uses engine_base_helpers for common patterns (SSOT).
+
+Author: Agent-5 (Business Intelligence Specialist)
+Date: 2025-12-03
+V2 Compliant: Yes (<300 lines)
+"""
+
 from __future__ import annotations
 
 from typing import Any
 
 from .contracts import CoordinationEngine, EngineContext, EngineResult
+from .engine_base_helpers import EngineBaseMixin
 
 
 class CoordinationCoreEngine(CoordinationEngine):
     """Core coordination engine - consolidates all coordination operations."""
 
     def __init__(self):
+        # Use composition instead of inheritance for mixin (Protocol compatibility)
+        self._base = EngineBaseMixin()
+        self._base.__init__()  # Initialize base mixin
         self.tasks: dict[str, Any] = {}
         self.schedules: dict[str, Any] = {}
         self.monitors: dict[str, Any] = {}
-        self.is_initialized = False
+    
+    @property
+    def is_initialized(self) -> bool:
+        """Delegate to base mixin."""
+        return self._base.is_initialized
 
     def initialize(self, context: EngineContext) -> bool:
         """Initialize coordination core engine."""
-        try:
-            self.is_initialized = True
-            context.logger.info("Coordination Core Engine initialized")
-            return True
-        except Exception as e:
-            context.logger.error(f"Failed to initialize Coordination Core Engine: {e}")
-            return False
+        return self._base._standard_initialize(context, "Coordination Core Engine")
 
     def execute(self, context: EngineContext, payload: dict[str, Any]) -> EngineResult:
         """Execute coordination operation based on payload type."""
-        try:
-            operation = payload.get("operation", "unknown")
-
-            if operation == "coordinate":
-                return self.coordinate(context, payload.get("tasks", []))
-            elif operation == "schedule":
-                return self.schedule(context, payload)
-            elif operation == "monitor":
-                return self.monitor(context, payload.get("targets", []))
-            else:
-                return EngineResult(
-                    success=False,
-                    data={},
-                    metrics={},
-                    error=f"Unknown coordination operation: {operation}",
-                )
-        except Exception as e:
-            return EngineResult(success=False, data={}, metrics={}, error=str(e))
+        operation_map = {
+            "coordinate": lambda ctx, p: self.coordinate(ctx, p.get("tasks", [])),
+            "schedule": lambda ctx, p: self.schedule(ctx, p),
+            "monitor": lambda ctx, p: self.monitor(ctx, p.get("targets", [])),
+        }
+        return self._base._route_operation(
+            context, 
+            payload, 
+            operation_map,
+            "Unknown coordination operation"
+        )
 
     def coordinate(self, context: EngineContext, tasks: list[dict[str, Any]]) -> EngineResult:
         """Coordinate multiple tasks."""
@@ -71,7 +80,7 @@ class CoordinationCoreEngine(CoordinationEngine):
                 metrics={"tasks_coordinated": len(tasks)},
             )
         except Exception as e:
-            return EngineResult(success=False, data={}, metrics={}, error=str(e))
+            return self._base._handle_operation_error(e, "coordinate")
 
     def schedule(self, context: EngineContext, schedule: dict[str, Any]) -> EngineResult:
         """Schedule tasks for execution."""
@@ -94,7 +103,7 @@ class CoordinationCoreEngine(CoordinationEngine):
                 metrics={"tasks_scheduled": len(tasks)},
             )
         except Exception as e:
-            return EngineResult(success=False, data={}, metrics={}, error=str(e))
+            return self._base._handle_operation_error(e, "coordinate")
 
     def monitor(self, context: EngineContext, targets: list[str]) -> EngineResult:
         """Monitor specified targets."""
@@ -118,7 +127,7 @@ class CoordinationCoreEngine(CoordinationEngine):
                 metrics={"targets_monitored": len(targets)},
             )
         except Exception as e:
-            return EngineResult(success=False, data={}, metrics={}, error=str(e))
+            return self._base._handle_operation_error(e, "coordinate")
 
     def cleanup(self, context: EngineContext) -> bool:
         """Cleanup coordination core engine."""
@@ -126,9 +135,7 @@ class CoordinationCoreEngine(CoordinationEngine):
             self.tasks.clear()
             self.schedules.clear()
             self.monitors.clear()
-            self.is_initialized = False
-            context.logger.info("Coordination Core Engine cleaned up")
-            return True
+            return self._base._standard_cleanup(context, "Coordination Core Engine")
         except Exception as e:
             context.logger.error(f"Failed to cleanup Coordination Core Engine: {e}")
             return False

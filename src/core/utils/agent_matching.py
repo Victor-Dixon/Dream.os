@@ -8,6 +8,11 @@ V2 Compliance: Under 300-line limit with focused functionality
 @License: MIT
 """
 
+from dataclasses import dataclass
+from typing import List, Dict, Any
+from dataclasses import dataclass, field
+
+
 @dataclass
 class AgentCapability:
     """Standard agent capability structure."""

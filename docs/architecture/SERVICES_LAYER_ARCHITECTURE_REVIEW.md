@@ -1,4 +1,8 @@
+<!-- SSOT Domain: architecture -->
 # Services Layer Architecture Review
+
+> **📚 SSOT Reference**: For Service Architecture patterns, see [SERVICE_ARCHITECTURE_PATTERNS.md](./SERVICE_ARCHITECTURE_PATTERNS.md)
+
 **Author:** Agent-2 (Architecture & Design Specialist)  
 **Date:** 2025-10-11  
 **Type:** Autonomous Architectural Review  

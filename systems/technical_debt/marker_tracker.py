@@ -3,6 +3,8 @@
 Technical Debt Marker Tracker
 ==============================
 
+<!-- SSOT Domain: analytics -->
+
 Tracks and manages technical debt markers (TODO/FIXME/etc) across the codebase.
 
 Author: Agent-5 (Business Intelligence Specialist)
@@ -193,4 +195,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 

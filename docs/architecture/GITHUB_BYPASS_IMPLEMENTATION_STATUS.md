@@ -1,3 +1,4 @@
+<!-- SSOT Domain: architecture -->
 # GitHub Bypass System - Implementation Status
 
 **Date**: 2025-11-28  

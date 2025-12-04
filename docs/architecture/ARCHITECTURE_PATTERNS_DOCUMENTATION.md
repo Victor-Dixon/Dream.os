@@ -1,5 +1,7 @@
 # Architecture Patterns Documentation
 
+<!-- SSOT Domain: architecture -->
+
 **Date**: 2025-12-02  
 **Agent**: Agent-2 (Architecture & Design Specialist)  
 **Status**: ✅ **DOCUMENTATION COMPLETE**  
@@ -564,10 +566,36 @@ class ServiceFactory(Factory[Service]):
 
 ---
 
+## 📚 **RELATED DOCUMENTATION**
+
+This document serves as the **SSOT (Single Source of Truth)** for design pattern implementations. The following related documents provide complementary information:
+
+### **Pattern Catalogs & Examples**:
+- [DESIGN_PATTERN_CATALOG.md](./DESIGN_PATTERN_CATALOG.md) - Catalog of proven patterns in V2 swarm
+- [PATTERN_IMPLEMENTATION_EXAMPLES.md](./PATTERN_IMPLEMENTATION_EXAMPLES.md) - Implementation examples and code samples
+
+### **Pattern-Specific Documentation**:
+- [ADAPTER_PATTERN_AUDIT.md](./ADAPTER_PATTERN_AUDIT.md) - Adapter pattern audit for tools_v2/
+- [ADAPTER_MIGRATION_GUIDE.md](./ADAPTER_MIGRATION_GUIDE.md) - Adapter migration guide
+- [orchestrator-pattern.md](./orchestrator-pattern.md) - Comprehensive Orchestrator pattern documentation
+- [ORCHESTRATOR_IMPLEMENTATION_REVIEW.md](./ORCHESTRATOR_IMPLEMENTATION_REVIEW.md) - Orchestrator implementation review
+
+### **Architecture Guides**:
+- [EXECUTION_PATTERNS_ARCHITECTURE_GUIDE.md](./EXECUTION_PATTERNS_ARCHITECTURE_GUIDE.md) - Execution patterns (proven patterns from actual work)
+- [SERVICE_ARCHITECTURE_PATTERNS.md](./SERVICE_ARCHITECTURE_PATTERNS.md) - Service architecture patterns
+- [SERVICES_LAYER_ARCHITECTURE_REVIEW.md](./SERVICES_LAYER_ARCHITECTURE_REVIEW.md) - Services layer architecture review
+- [SERVICE_LAYER_OPTIMIZATION_GUIDE.md](./SERVICE_LAYER_OPTIMIZATION_GUIDE.md) - Service layer optimization guide
+- [V2_ARCHITECTURE_PATTERNS_GUIDE.md](./V2_ARCHITECTURE_PATTERNS_GUIDE.md) - V2 architecture patterns guide
+- [V2_ARCHITECTURE_BEST_PRACTICES.md](./V2_ARCHITECTURE_BEST_PRACTICES.md) - V2 architecture best practices
+
+---
+
 **Status**: ✅ **DOCUMENTATION COMPLETE** - File review complete
 
 **Created By**: Agent-2 (Architecture & Design Specialist)  
-**Date**: 2025-12-02
+**Date**: 2025-12-02  
+**Last Updated**: 2025-12-03 (Added Related Documentation section)
 
 🐝 **WE. ARE. SWARM. ⚡🔥**
+
 

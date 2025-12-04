@@ -5,9 +5,9 @@ from . import base_manager
 from . import base_manager_helpers
 from . import config_defaults
 from . import contracts
-from . import core_configuration_manager
+# from . import core_configuration_manager  # File does not exist - commented out
 from . import core_execution_manager
-from . import core_monitoring_manager
+# from . import core_monitoring_manager  # File does not exist - commented out
 from . import core_onboarding_manager
 from . import core_recovery_manager
 from . import core_resource_manager
@@ -29,9 +29,9 @@ __all__ = [
     'base_manager_helpers',
     'config_defaults',
     'contracts',
-    'core_configuration_manager',
+    # 'core_configuration_manager',  # Consolidated into config_manager.py and config_defaults.py
     'core_execution_manager',
-    'core_monitoring_manager',
+    # 'core_monitoring_manager',  # Consolidated into monitoring/ subdirectory
     'core_onboarding_manager',
     'core_recovery_manager',
     'core_resource_manager',

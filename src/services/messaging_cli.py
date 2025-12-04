@@ -3,6 +3,8 @@
 🐝 UNIFIED MESSAGING CLI - SWARM COMMAND CENTER
 ==============================================
 
+<!-- SSOT Domain: communication -->
+
 V2 Compliance: Refactored to <300 lines
 SOLID Principles: Single Responsibility, Open-Closed
 

@@ -3,6 +3,8 @@
 Import Chain Validator - Find Missing Imports
 =============================================
 
+<!-- SSOT Domain: qa -->
+
 Validates import chains and identifies missing modules.
 Based on the messaging_core import issue I fixed.
 

@@ -13,6 +13,11 @@ Phase 1 Integration: Uses Factory base class for standardized factory pattern.
 
 # Import Factory base class for standardized factory pattern
 from src.architecture.design_patterns import Factory
+from typing import Callable, Dict, Any, Optional, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from src.trading_robot.repositories.interfaces.trading_repository_interface import TradingRepositoryInterface
+    from src.trading_robot.services.trading_service import TradingService
 
 
 class DependencyInjectionError(Exception):
@@ -251,12 +256,12 @@ def reset_trading_container() -> None:
 
 
 # Convenience functions for service resolution
-def get_trading_repository() -> TradingRepositoryInterface:
+def get_trading_repository():
     """Get trading repository from DI container."""
     return get_trading_container().resolve("trading_repository")
 
 
-def get_trading_service() -> TradingService:
+def get_trading_service():
     """Get trading service from DI container."""
     return get_trading_container().resolve("trading_service")
 

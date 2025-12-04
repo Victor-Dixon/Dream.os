@@ -1,3 +1,4 @@
+<!-- SSOT Domain: architecture -->
 # 💾 D: Drive Disk Space Resolution
 
 **Date**: 2025-11-29  

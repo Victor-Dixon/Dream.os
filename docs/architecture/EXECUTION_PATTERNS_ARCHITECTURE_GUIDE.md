@@ -1,4 +1,7 @@
 # 🏗️ Execution Patterns Architecture Guide
+
+<!-- SSOT Domain: architecture -->
+
 **Date**: 2025-01-27  
 **Created By**: Agent-2 (Architecture & Design Specialist)  
 **Status**: ✅ **ARCHITECTURE SUPPORT DOCUMENT**  

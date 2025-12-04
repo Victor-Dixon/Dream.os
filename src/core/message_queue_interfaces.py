@@ -2,6 +2,8 @@
 Message Queue Interfaces - V2 Compliance Module
 ==============================================
 
+<!-- SSOT Domain: integration -->
+
 Abstract interfaces for message queue system following SOLID principles.
 
 Author: Agent-1 (System Recovery Specialist)

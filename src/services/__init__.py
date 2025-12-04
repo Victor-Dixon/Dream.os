@@ -6,7 +6,7 @@ from . import agent_vector_utils
 from . import architectural_models
 from . import architectural_principles
 from . import architectural_principles_data
-from . import compliance_validator
+# from . import compliance_validator  # DELETED - File does not exist
 from . import config
 from . import constants
 from . import contract_service
@@ -44,7 +44,7 @@ __all__ = [
     'architectural_models',
     'architectural_principles',
     'architectural_principles_data',
-    'compliance_validator',
+    # 'compliance_validator',  # DELETED - File does not exist
     'config',
     'constants',
     'contract_service',

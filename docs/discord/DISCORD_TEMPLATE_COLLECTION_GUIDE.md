@@ -1,3 +1,4 @@
+<!-- SSOT Domain: architecture -->
 # Discord Template Collection Guide
 
 **Author**: Agent-2 (Architecture & Design Specialist)  

@@ -2,6 +2,8 @@
 Coordinator Interfaces - V2 Compliance Module
 =============================================
 
+<!-- SSOT Domain: integration -->
+
 Abstract interfaces for coordinator system following SOLID principles.
 
 Author: Agent-1 (System Recovery Specialist)
