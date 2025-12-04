@@ -39,7 +39,7 @@
 - `docs/README.md` (main)
 - `docs/integration/README.md` (subdirectory)
 - `docs/protocols/README.md` (subdirectory)
-- `docs/specifications/README.md` (subdirectory)
+- `docs/specs/README.md` (subdirectory)
 - `docs/vector_database/README.md` (subdirectory)
 - **Action**: Keep all (different purposes - subdirectory READMEs are valid)
 - **Risk**: NONE (false positive - different contexts)

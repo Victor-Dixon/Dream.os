@@ -524,7 +524,7 @@ dependencies = [
 
 ### Create Integration Docs (Agent-8 Standards)
 
-**Location**: `docs/integrations/<REPO>_INTEGRATION.md`
+**Location**: `docs/integration/<REPO>_INTEGRATION.md`
 
 **Template Structure**:
 ```markdown
@@ -559,8 +559,8 @@ dependencies = [
 ```
 
 **Real Examples**:
-- `docs/integrations/DREAM_OS_INTEGRATION.md` ✅
-- `docs/integrations/DREAMVAULT_INTEGRATION.md` ✅
+- `docs/integration/DREAM_OS_INTEGRATION.md` ✅
+- `docs/integration/DREAMVAULT_INTEGRATION.md` ✅
 
 **Key Insight**: Follow Agent-8's documentation standards for SSOT integration!
 

@@ -165,7 +165,7 @@
 1. agent_workspaces/Agent-7/team_beta_repos_6-8_analysis.md
 2. agent_workspaces/Agent-7/team_beta_phase_4_progress.md
 3. agent_workspaces/Agent-7/team_beta_files_status.md
-4. docs/integrations/TEAM_BETA_REPOS_6-8_INTEGRATION.md
+4. docs/integration/TEAM_BETA_REPOS_6-8_INTEGRATION.md
 5. devlogs/2025-10-11_agent-7_team_beta_repos_6-8_complete.md (THIS DEVLOG)
 
 ---

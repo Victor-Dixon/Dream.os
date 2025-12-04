@@ -19,7 +19,7 @@ After deeper investigation, discovered that files flagged for deletion are actua
 ### **1. `automation_engine.py` - KEEP (Planned Integration)**
 
 **Discovery**: 
-- ✅ **Full integration guide exists**: `docs/integrations/GPT_AUTOMATION_INTEGRATION.md`
+- ✅ **Full integration guide exists**: `docs/integration/GPT_AUTOMATION_INTEGRATION.md`
 - ✅ **Setup script exists**: `scripts/setup_gpt_automation.py`
 - ✅ **Status**: "Ready for Production Use" (dated 2025-10-10)
 - ✅ **Context**: Part of "Team Beta Repo 4/8" integration (gpt-automation repository)
@@ -33,7 +33,7 @@ After deeper investigation, discovered that files flagged for deletion are actua
 ### **2. `filesystem.py` - KEEP (Integration Component)**
 
 **Discovery**:
-- ✅ **Referenced in integration guide**: `docs/integrations/GPT_AUTOMATION_INTEGRATION.md`
+- ✅ **Referenced in integration guide**: `docs/integration/GPT_AUTOMATION_INTEGRATION.md`
 - ✅ **Documented in utility catalog**: `docs/utils_function_catalog_enhanced.md`
 - ✅ **Part of 3-file package**: automation_engine.py, filesystem.py, __init__.py
 
@@ -71,7 +71,7 @@ After deeper investigation, discovered that files flagged for deletion are actua
 1. ✅ **Keep All Files** - No deletions recommended
 2. ✅ **Bug Fixed** - `ui_onboarding.py` now has `PYAUTOGUI_AVAILABLE` definition
 3. **Next Steps**:
-   - Review `docs/integrations/GPT_AUTOMATION_INTEGRATION.md`
+   - Review `docs/integration/GPT_AUTOMATION_INTEGRATION.md`
    - Consider implementing GPT automation features
    - Run `scripts/setup_gpt_automation.py` when ready
 
@@ -79,7 +79,7 @@ After deeper investigation, discovered that files flagged for deletion are actua
 
 ## 📚 **DOCUMENTATION EVIDENCE**
 
-- **Integration Guide**: `docs/integrations/GPT_AUTOMATION_INTEGRATION.md`
+- **Integration Guide**: `docs/integration/GPT_AUTOMATION_INTEGRATION.md`
 - **Setup Script**: `scripts/setup_gpt_automation.py`
 - **Utility Catalog**: `docs/utils_function_catalog_enhanced.md`
 - **Status**: "Ready for Production Use" (2025-10-10)
@@ -90,7 +90,7 @@ After deeper investigation, discovered that files flagged for deletion are actua
 
 1. **Check Documentation First**: Integration plans may exist even if code isn't actively used
 2. **Look for Setup Scripts**: Existence of setup scripts indicates planned usage
-3. **Review Integration Guides**: `docs/integrations/` directory contains integration plans
+3. **Review Integration Guides**: `docs/integration/` directory contains integration plans
 4. **Automated Tools Have Limitations**: Static analysis misses planned integrations
 
 ---

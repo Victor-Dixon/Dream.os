@@ -34,7 +34,7 @@
 
 **Issue**:
 - Created comprehensive integration guide initially
-- Agent-8 requested split into standard format (docs/integrations/)
+- Agent-8 requested split into standard format (docs/integration/)
 - Created DREAM_OS_INTEGRATION.md and DREAMVAULT_INTEGRATION.md
 - Original comprehensive guide became redundant
 
@@ -170,7 +170,7 @@ print('✅ All integrations verified working')
 
 ### Updated Files
 
-**File**: `docs/integrations/DREAMVAULT_INTEGRATION.md`
+**File**: `docs/integration/DREAMVAULT_INTEGRATION.md`
 
 **Changes**:
 1. Updated import validation examples (removed ChatGPTScraper from core imports)

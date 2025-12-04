@@ -61,7 +61,7 @@
 **Task**: Create comprehensive integration guides
 
 **Documents Created**:
-- ✅ `docs/integrations/TEAM_BETA_REPOS_6-8_INTEGRATION_GUIDE.md` (400+ lines)
+- ✅ `docs/integration/TEAM_BETA_REPOS_6-8_INTEGRATION_GUIDE.md` (400+ lines)
 - ✅ `agent_workspaces/Agent-7/PHASES_5-6-7_COMPLETION_REPORT.md` (600+ lines)
 - ✅ `devlogs/2025-10-11_agent-7_phases_5-6-7_autonomous_execution.md`
 
@@ -134,7 +134,7 @@
 
 ### Files Created (7)
 1. `src/core/message_formatters.py` - Message template formatters
-2. `docs/integrations/TEAM_BETA_REPOS_6-8_INTEGRATION_GUIDE.md` - Integration guide
+2. `docs/integration/TEAM_BETA_REPOS_6-8_INTEGRATION_GUIDE.md` - Integration guide
 3. `docs/MESSAGE_TEMPLATE_FORMATTING.md` - Template documentation
 4. `agent_workspaces/Agent-7/PHASES_5-6-7_COMPLETION_REPORT.md` - Phase report
 5. `devlogs/2025-10-11_agent-7_phases_5-6-7_autonomous_execution.md` - Phase devlog

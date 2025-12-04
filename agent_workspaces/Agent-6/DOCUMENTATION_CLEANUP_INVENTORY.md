@@ -107,7 +107,7 @@
 - **Date**: 2025-01-27
 - **Status**: ✅ Current
 
-**Location 2**: `docs/specifications/MESSAGING_SYSTEM_V2_ENHANCED_TYPES.md`
+**Location 2**: `docs/specs/MESSAGING_SYSTEM_V2_ENHANCED_TYPES.md`
 - **Content**: Enhanced messaging system V2 (includes Jet Fuel)
 - **Date**: 2025-01-27
 - **Status**: ✅ Current, authoritative
@@ -118,7 +118,7 @@
 - **Status**: ✅ Current, authoritative
 
 **Action**:
-- ✅ **KEEP**: `docs/specifications/MESSAGING_SYSTEM_V2_ENHANCED_TYPES.md` (SSOT)
+- ✅ **KEEP**: `docs/specs/MESSAGING_SYSTEM_V2_ENHANCED_TYPES.md` (SSOT)
 - ✅ **KEEP**: `swarm_brain/procedures/PROCEDURE_MESSAGE_AGENT.md` (SSOT)
 - ⚠️ **ARCHIVE**: Move `JET_FUEL_PROTOCOL_ACKNOWLEDGMENT.md` to `archive/` (acknowledgment only)
 - 📝 **LINK**: Add reference in acknowledgment to SSOT docs
@@ -178,11 +178,11 @@
 - `docs/MESSAGING_CLI_MODULARIZATION_ANALYSIS.md`
 - `docs/MESSAGING_CLASSIFICATION_FIX_2025-10-13.md`
 - `docs/CONCURRENT_MESSAGING_FIX.md`
-- `docs/specifications/MESSAGING_SYSTEM_V2_ENHANCED_TYPES.md`
-- `docs/specifications/MESSAGING_SYSTEM_PRD.md`
-- `docs/specifications/MESSAGING_DEPLOYMENT_STRATEGY.md`
-- `docs/specifications/MESSAGING_ARCHITECTURE_DIAGRAM.md`
-- `docs/specifications/MESSAGING_API_SPECIFICATIONS.md`
+- `docs/specs/MESSAGING_SYSTEM_V2_ENHANCED_TYPES.md`
+- `docs/specs/MESSAGING_SYSTEM_PRD.md`
+- `docs/specs/MESSAGING_DEPLOYMENT_STRATEGY.md`
+- `docs/specs/MESSAGING_ARCHITECTURE_DIAGRAM.md`
+- `docs/specs/MESSAGING_API_SPECIFICATIONS.md`
 - `docs/specs/MESSAGING_FLAGS_FIX_SPECIFICATION.md`
 - `docs/specs/MESSAGING_RACE_CONDITION_PREVENTION_SPEC.md`
 - `docs/messaging/FLAG_PRIORITY_MAPPING.md`

@@ -14,7 +14,7 @@
 **Subject**: Jet Fuel Protocol Enhancement  
 **Files Reviewed**:
 - ✅ `swarm_brain/procedures/PROCEDURE_MESSAGE_AGENT.md`
-- ✅ `docs/specifications/MESSAGING_SYSTEM_V2_ENHANCED_TYPES.md`
+- ✅ `docs/specs/MESSAGING_SYSTEM_V2_ENHANCED_TYPES.md`
 
 ---
 

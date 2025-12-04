@@ -101,7 +101,7 @@ Completed all remaining integration phases for Team Beta Repos 6-8:
 
 **Objective**: Create comprehensive integration guide
 
-**Deliverable**: `docs/integrations/TEAM_BETA_REPOS_6-8_INTEGRATION_GUIDE.md`
+**Deliverable**: `docs/integration/TEAM_BETA_REPOS_6-8_INTEGRATION_GUIDE.md`
 
 **Contents**:
 - Executive summary with statistics

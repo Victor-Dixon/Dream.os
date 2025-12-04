@@ -186,7 +186,7 @@ START
 - **Autonomous Protocol V2:** `docs/AUTONOMOUS_PROTOCOL_V2.md`
 - **Swarm Brain Guide:** (TO BE CREATED by Agent-8)
 - **Project Scanner Guide:** `AGENT_TOOLS_DOCUMENTATION.md`
-- **Messaging System:** `docs/specifications/MESSAGING_SYSTEM_PRD.md`
+- **Messaging System:** `docs/specs/MESSAGING_SYSTEM_PRD.md`
 
 ---
 

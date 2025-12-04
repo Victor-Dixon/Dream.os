@@ -107,7 +107,7 @@ This index organizes ALL swarm documentation for quick agent access.
 - `docs/DEVLOG_SYSTEM_GUIDE.md` - Devlog system
 
 ### **Integration**:
-- `docs/integrations/TEAM_BETA_REPOS_6-8_INTEGRATION_GUIDE.md` - Team Beta integration
+- `docs/integration/TEAM_BETA_REPOS_6-8_INTEGRATION_GUIDE.md` - Team Beta integration
 - `docs/architecture/SERVICE_LAYER_OPTIMIZATION_GUIDE.md` - Service layer
 
 ---
@@ -163,7 +163,7 @@ ls docs/
 | **Technical Guides** | `docs/` | Technical how-to guides |
 | **Tool Documentation** | `tools_v2/`, `tools/` | Tool-specific guides |
 | **Architecture** | `docs/architecture/` | Architecture patterns & best practices |
-| **Integration** | `docs/integrations/` | Integration guides |
+| **Integration** | `docs/integration/` | Integration guides |
 | **Captain Resources** | `agent_workspaces/Agent-4/` | Captain-specific materials |
 
 ---

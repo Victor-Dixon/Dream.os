@@ -47,7 +47,7 @@ Instead of just investigating whether files should be deleted, implement the int
 
 ### **4. Created Integration Documentation** ✅
 
-**File**: `docs/integrations/GPT_AUTOMATION_WORKFLOW_INTEGRATION.md`
+**File**: `docs/integration/GPT_AUTOMATION_WORKFLOW_INTEGRATION.md`
 
 **Contents**:
 - Usage examples
@@ -114,7 +114,7 @@ await engine.execute()
 1. ✅ `src/workflows/gpt_integration.py` - NEW (GPT integration module)
 2. ✅ `src/workflows/engine.py` - MODIFIED (GPT step execution)
 3. ✅ `src/workflows/__init__.py` - MODIFIED (GPT exports)
-4. ✅ `docs/integrations/GPT_AUTOMATION_WORKFLOW_INTEGRATION.md` - NEW (Documentation)
+4. ✅ `docs/integration/GPT_AUTOMATION_WORKFLOW_INTEGRATION.md` - NEW (Documentation)
 
 ---
 

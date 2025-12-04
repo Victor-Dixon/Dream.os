@@ -115,8 +115,8 @@
 2. `docs/CAPTAIN_LOG.md` (Line 840)
 3. `docs/ONBOARDING_GUIDE.md` (Lines 22, 74, 99)
 4. `docs/AGENT_ONBOARDING_GUIDE.md` (Lines 18, 74)
-5. `docs/specifications/MESSAGING_API_SPECIFICATIONS.md` (Line 50)
-6. `docs/specifications/MESSAGING_SYSTEM_PRD.md` (Line 76)
+5. `docs/specs/MESSAGING_API_SPECIFICATIONS.md` (Line 50)
+6. `docs/specs/MESSAGING_SYSTEM_PRD.md` (Line 76)
 
 **Impact:**
 - System-Driven Workflow Step 1 blocked

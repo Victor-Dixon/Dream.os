@@ -10,7 +10,7 @@
 ## ✅ COMPLETED STRATEGIC DOCUMENTS
 
 ### 1. Business Value Mapping ✅
-**File:** `docs/strategic/BUSINESS_VALUE_MAPPING_GITHUB_REPOS.md`
+**File:** `docs/strategy/BUSINESS_VALUE_MAPPING_GITHUB_REPOS.md`
 
 **Key Findings:**
 - **Income:** Limited (tools/frameworks, not products)
@@ -26,7 +26,7 @@
 5. MeTuber (professional portfolio!)
 
 ### 2. Alternative Strategies ✅
-**File:** `docs/strategic/ALTERNATIVE_STRATEGIES_GITHUB_CONSOLIDATION.md`
+**File:** `docs/strategy/ALTERNATIVE_STRATEGIES_GITHUB_CONSOLIDATION.md`
 
 **6 Strategies Analyzed:**
 1. Selective Integration (extract → archive)
@@ -44,7 +44,7 @@
 - **Timeline:** 5-6 months, low risk, high value!
 
 ### 3. Recovery Planning ✅
-**File:** `docs/strategic/RECOVERY_PLANNING_GITHUB_CONSOLIDATION.md`
+**File:** `docs/strategy/RECOVERY_PLANNING_GITHUB_CONSOLIDATION.md`
 
 **Complete Backup Strategy:**
 - Pre-consolidation: Clone all 75 repos

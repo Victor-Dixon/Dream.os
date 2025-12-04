@@ -154,6 +154,9 @@ class TwitchChatBridge:
     def _handle_message(self, message_data: dict) -> None:
         """
         Handle incoming chat message.
+        
+        NOTE: This method is deprecated - on_pubmsg() handles messages directly.
+        Kept for backward compatibility but should not be called.
 
         Args:
             message_data: Message data dictionary
@@ -161,11 +164,67 @@ class TwitchChatBridge:
         if self.on_message:
             try:
                 if asyncio.iscoroutinefunction(self.on_message):
-                    asyncio.create_task(self.on_message(message_data))
+                    # Get event loop - try bridge's event_loop, then get from bridge
+                    loop = None
+                    if self.event_loop:
+                        loop = self.event_loop
+                        logger.debug("Found event loop from bridge")
+                    
+                    if not loop:
+                        # Try to get current/running loop
+                        try:
+                            loop = asyncio.get_running_loop()
+                            logger.debug("Found running event loop")
+                        except RuntimeError:
+                            try:
+                                loop = asyncio.get_event_loop()
+                                logger.debug("Found event loop (not running)")
+                            except RuntimeError:
+                                logger.warning("No event loop found")
+                    
+                    if loop and loop.is_running():
+                        # Schedule coroutine in the running event loop
+                        future = asyncio.run_coroutine_threadsafe(self.on_message(message_data), loop)
+                        logger.info("Scheduled message callback in event loop")
+                    else:
+                        # Fallback: run in new thread with new event loop
+                        logger.warning("No running event loop found, creating new one")
+                        import threading
+                        def run_async():
+                            new_loop = asyncio.new_event_loop()
+                            asyncio.set_event_loop(new_loop)
+                            try:
+                                new_loop.run_until_complete(self.on_message(message_data))
+                                logger.info("Callback executed in new event loop")
+                            except Exception as e:
+                                logger.error(
+                                    "Error in callback execution",
+                                    extra={
+                                        "error_type": type(e).__name__,
+                                        "error_message": str(e),
+                                        "component": "TwitchChatBridge",
+                                        "operation": "_handle_message",
+                                    },
+                                    exc_info=True
+                                )
+                            finally:
+                                new_loop.close()
+                        thread = threading.Thread(target=run_async, daemon=True, name="TwitchCallbackThread")
+                        thread.start()
                 else:
+                    # Synchronous callback
                     self.on_message(message_data)
             except Exception as e:
-                logger.error(f"Error in message callback: {e}", exc_info=True)
+                logger.error(
+                    "Error in message callback",
+                    extra={
+                        "error_type": type(e).__name__,
+                        "error_message": str(e),
+                        "component": "TwitchChatBridge",
+                        "operation": "_handle_message",
+                    },
+                    exc_info=True
+                )
 
     async def send_message(self, message: str) -> bool:
         """

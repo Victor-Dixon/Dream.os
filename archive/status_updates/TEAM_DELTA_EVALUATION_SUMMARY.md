@@ -93,7 +93,7 @@
 ## 📋 DELIVERABLES CREATED
 
 1. ✅ **Comprehensive Evaluation Report**
-   - `docs/integrations/TEAM_DELTA_EVALUATION_REPORT.md`
+   - `docs/integration/TEAM_DELTA_EVALUATION_REPORT.md`
    - Full analysis, V2 assessments, integration plans
 
 2. ✅ **Discord Devlog**
@@ -123,5 +123,5 @@
 
 **Agent-7 reporting: Team Delta Evaluation COMPLETE - Awaiting Captain Approval!**
 
-📝 **Full Report**: `docs/integrations/TEAM_DELTA_EVALUATION_REPORT.md`
+📝 **Full Report**: `docs/integration/TEAM_DELTA_EVALUATION_REPORT.md`
 

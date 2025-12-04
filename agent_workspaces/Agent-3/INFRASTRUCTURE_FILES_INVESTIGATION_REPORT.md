@@ -28,7 +28,7 @@ Investigated 3 infrastructure/automation files flagged for potential deletion. F
 - **Test Files**: ❌ No test files found
 - **Config References**: ❌ Not referenced in config files
 - **Module Exports**: ✅ Exported via `src/ai_automation/__init__.py`
-- **Documentation**: ✅ **FULL INTEGRATION GUIDE EXISTS** (`docs/integrations/GPT_AUTOMATION_INTEGRATION.md`)
+- **Documentation**: ✅ **FULL INTEGRATION GUIDE EXISTS** (`docs/integration/GPT_AUTOMATION_INTEGRATION.md`)
 - **Setup Script**: ✅ **SETUP SCRIPT EXISTS** (`scripts/setup_gpt_automation.py`)
 - **Integration Status**: ✅ **"Ready for Production Use"** (per documentation)
 
@@ -46,7 +46,7 @@ Investigated 3 infrastructure/automation files flagged for potential deletion. F
 - **Status**: Integration complete, waiting for implementation/usage
 
 **Documentation Evidence**:
-- ✅ Full integration guide: `docs/integrations/GPT_AUTOMATION_INTEGRATION.md`
+- ✅ Full integration guide: `docs/integration/GPT_AUTOMATION_INTEGRATION.md`
 - ✅ Setup script: `scripts/setup_gpt_automation.py`
 - ✅ Status: "Ready for Production Use" (dated 2025-10-10)
 - ✅ Part of repository consolidation plan (gpt_automation → selfevolving_ai)
@@ -71,7 +71,7 @@ Investigated 3 infrastructure/automation files flagged for potential deletion. F
 - **Test Files**: ❌ No test files found
 - **Config References**: ❌ Not referenced in config files
 - **Module Exports**: ✅ Exported via `src/ai_automation/utils/__init__.py`
-- **Documentation**: ✅ **REFERENCED IN INTEGRATION GUIDE** (`docs/integrations/GPT_AUTOMATION_INTEGRATION.md`)
+- **Documentation**: ✅ **REFERENCED IN INTEGRATION GUIDE** (`docs/integration/GPT_AUTOMATION_INTEGRATION.md`)
 - **Utility Catalog**: ✅ **DOCUMENTED** in `docs/utils_function_catalog_enhanced.md`
 
 **File Analysis**:
@@ -171,7 +171,7 @@ Investigated 3 infrastructure/automation files flagged for potential deletion. F
    - Impact: Required for complete integration
 
 4. **Implement GPT Automation Features** (NEW RECOMMENDATION)
-   - Review `docs/integrations/GPT_AUTOMATION_INTEGRATION.md` for implementation guide
+   - Review `docs/integration/GPT_AUTOMATION_INTEGRATION.md` for implementation guide
    - Run `scripts/setup_gpt_automation.py` to set up dependencies
    - Begin using `AutomationEngine` for GPT-powered automation workflows
    - Impact: Activates planned integration
@@ -195,7 +195,7 @@ Investigated 3 infrastructure/automation files flagged for potential deletion. F
 
 - **Automated Tool Limitations**: 
   - Static import analysis missed the import in `onboarding_handler.py`
-  - Static import analysis cannot detect planned integrations documented in `docs/integrations/`
+  - Static import analysis cannot detect planned integrations documented in `docs/integration/`
   - Tool doesn't check for setup scripts or integration documentation
 
 ---
@@ -241,7 +241,7 @@ Investigated 3 infrastructure/automation files flagged for potential deletion. F
 1. ✅ **Fix Bug**: Added `PYAUTOGUI_AVAILABLE` to `ui_onboarding.py` (COMPLETE)
 2. ✅ **Investigation**: Found integration documentation - files are part of planned integration
 3. **Coordinate**: Check with Agent-7 about GPT automation implementation timeline
-4. **Implement**: Review `docs/integrations/GPT_AUTOMATION_INTEGRATION.md` for implementation guide
+4. **Implement**: Review `docs/integration/GPT_AUTOMATION_INTEGRATION.md` for implementation guide
 5. **Setup**: Run `scripts/setup_gpt_automation.py` to prepare dependencies
 6. **Verify**: All files are kept - no deletions needed
 

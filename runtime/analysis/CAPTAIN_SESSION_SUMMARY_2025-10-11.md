@@ -133,7 +133,7 @@ python -m src.services.messaging_cli --soft-onboarding --agent Agent-1 --onboard
 
 **Files Created:**
 - `devlogs/2025-10-11_agent-7_team_beta_repos_6-8_complete.md` (comprehensive devlog)
-- `docs/integrations/TEAM_BETA_REPOS_6-8_INTEGRATION.md` (integration documentation)
+- `docs/integration/TEAM_BETA_REPOS_6-8_INTEGRATION.md` (integration documentation)
 
 **Quality Metrics:**
 - **V2 Compliance Rate:** 100% (12/12 files)

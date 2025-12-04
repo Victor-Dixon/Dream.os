@@ -71,7 +71,7 @@ As Agent-2, I commit to:
 
 **Key Files:**
 - `swarm_brain/procedures/PROCEDURE_MESSAGE_AGENT.md` - Main protocol
-- `docs/specifications/MESSAGING_SYSTEM_V2_ENHANCED_TYPES.md` - Message types
+- `docs/specs/MESSAGING_SYSTEM_V2_ENHANCED_TYPES.md` - Message types
 - `docs/captain/JET_FUEL_MESSAGING_PRINCIPLE.md` - Jet Fuel guide
 
 ---

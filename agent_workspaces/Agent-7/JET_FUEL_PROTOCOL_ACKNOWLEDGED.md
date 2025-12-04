@@ -34,7 +34,7 @@
 - Emphasize independent work
 
 ### 2. MESSAGING_SYSTEM_V2_ENHANCED_TYPES.md
-**Location**: `docs/specifications/MESSAGING_SYSTEM_V2_ENHANCED_TYPES.md`  
+**Location**: `docs/specs/MESSAGING_SYSTEM_V2_ENHANCED_TYPES.md`  
 **Status**: ✅ Reviewed and understood
 
 **Key Learnings**:

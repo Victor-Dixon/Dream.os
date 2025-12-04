@@ -69,7 +69,7 @@
 **Duration**: ~1 cycle
 
 **Deliverables**:
-1. `docs/integrations/TEAM_BETA_REPOS_6-8_INTEGRATION_GUIDE.md` (400+ lines)
+1. `docs/integration/TEAM_BETA_REPOS_6-8_INTEGRATION_GUIDE.md` (400+ lines)
    - Executive summary with statistics
    - API documentation for all 3 integrations
    - 10+ usage examples
@@ -123,7 +123,7 @@
 - `src/integrations/osrs/performance_validation.py` (imports + cleanup)
 
 ### Documentation Created (Phase 7)
-- `docs/integrations/TEAM_BETA_REPOS_6-8_INTEGRATION_GUIDE.md` (400+ lines)
+- `docs/integration/TEAM_BETA_REPOS_6-8_INTEGRATION_GUIDE.md` (400+ lines)
 - `agent_workspaces/Agent-7/PHASES_5-6-7_COMPLETION_REPORT.md` (600+ lines)
 - `devlogs/2025-10-11_agent-7_phases_5-6-7_autonomous_execution.md` (this file)
 

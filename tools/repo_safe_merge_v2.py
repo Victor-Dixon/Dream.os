@@ -32,6 +32,13 @@ from src.core.merge_conflict_resolver import get_conflict_resolver
 from src.core.local_repo_layer import get_local_repo_manager
 from src.core.deferred_push_queue import get_deferred_push_queue
 
+# Import repository status tracker for error classification and duplicate prevention
+try:
+    from tools.repo_status_tracker import get_repo_status_tracker, RepoStatus
+    STATUS_TRACKER_AVAILABLE = True
+except ImportError:
+    STATUS_TRACKER_AVAILABLE = False
+    RepoStatus = None  # Type stub for type hints
 
 def get_github_token() -> Optional[str]:
     """Get GitHub token from environment or .env file."""
@@ -79,6 +86,17 @@ class SafeRepoMergeV2:
         self.conflict_resolver = get_conflict_resolver()
         self.repo_manager = get_local_repo_manager()
         self.queue = get_deferred_push_queue()
+        
+        # Initialize status tracker for error classification and duplicate prevention
+        if STATUS_TRACKER_AVAILABLE:
+            self.status_tracker = get_repo_status_tracker()
+            # Normalize repository names for consistent tracking
+            self.target_repo_normalized = self.status_tracker.normalize_repo_name(self.target_repo)
+            self.source_repo_normalized = self.status_tracker.normalize_repo_name(self.source_repo)
+        else:
+            self.status_tracker = None
+            self.target_repo_normalized = self.target_repo.lower()
+            self.source_repo_normalized = self.source_repo.lower()
         
         self.github_username = self._get_github_username()
 
@@ -145,6 +163,100 @@ class SafeRepoMergeV2:
             print(f"⚠️ Verification error: {e}")
             return True
 
+
+    def _preflight_checks(self) -> tuple[bool, Optional[str]]:
+        """
+        Perform pre-flight checks before attempting merge.
+        
+        Returns:
+            (success, error_message) tuple
+        """
+        if not self.status_tracker:
+            # Status tracker not available - skip pre-flight checks
+            return True, None
+        
+        # Check 1: Duplicate prevention - has this merge been attempted?
+        if self.status_tracker.has_attempted(self.source_repo, self.target_repo):
+            last_attempt = self.status_tracker.get_last_attempt(self.source_repo, self.target_repo)
+            if last_attempt and last_attempt.get("success"):
+                return False, f"Merge already completed successfully (last attempt: {last_attempt.get('timestamp')})"
+            elif last_attempt:
+                error = last_attempt.get("error", "Unknown error")
+                # If permanent error, don't retry
+                if self.status_tracker.is_permanent_error(error):
+                    return False, f"Previous attempt failed with permanent error: {error} (no retries)"
+        
+        # Check 2: Repository status - check if repos are already merged/deleted
+        source_status = self.status_tracker.get_repo_status(self.source_repo)
+        if source_status == RepoStatus.MERGED:
+            target = self.status_tracker.get_consolidation_target(self.source_repo)
+            return False, f"Source repo already merged into {target}"
+        if source_status == RepoStatus.DELETED:
+            return False, "Source repo has been deleted"
+        if source_status == RepoStatus.NOT_AVAILABLE:
+            return False, "Source repo not available (permanent error - no retries)"
+        
+        target_status = self.status_tracker.get_repo_status(self.target_repo)
+        if target_status == RepoStatus.DELETED:
+            return False, "Target repo has been deleted"
+        if target_status == RepoStatus.NOT_AVAILABLE:
+            return False, "Target repo not available (permanent error - no retries)"
+        
+        # Check 3: Strategy review - verify consolidation direction
+        existing_target = self.status_tracker.get_consolidation_target(self.source_repo)
+        if existing_target and existing_target != self.target_repo_normalized:
+            return False, f"Consolidation direction mismatch: source repo is already planned to merge into {existing_target}, not {self.target_repo}"
+        
+        # Check 4: Name resolution - verify exact repo names
+        print(f"📝 Name resolution:")
+        print(f"   Source: '{self.source_repo}' → '{self.source_repo_normalized}'")
+        print(f"   Target: '{self.target_repo}' → '{self.target_repo_normalized}'")
+        
+        # Check 5: Pre-flight repository existence check
+        print(f"🔍 Pre-flight: Verifying repositories exist...")
+        source_exists = self._verify_repo_exists(self.source_repo)
+        target_exists = self._verify_repo_exists(self.target_repo)
+        
+        if not source_exists:
+            # Mark as permanent error - no retries
+            self.status_tracker.set_repo_status(self.source_repo, RepoStatus.NOT_AVAILABLE, "Pre-flight check: repo does not exist")
+            return False, "Source repo not available (permanent error - no retries)"
+        
+        if not target_exists:
+            # Mark as permanent error - no retries
+            self.status_tracker.set_repo_status(self.target_repo, RepoStatus.NOT_AVAILABLE, "Pre-flight check: repo does not exist")
+            return False, "Target repo not available (permanent error - no retries)"
+        
+        # Mark repos as existing
+        self.status_tracker.set_repo_status(self.source_repo, RepoStatus.EXISTS)
+        self.status_tracker.set_repo_status(self.target_repo, RepoStatus.EXISTS)
+        
+        # Record consolidation direction
+        self.status_tracker.set_consolidation_direction(self.source_repo, self.target_repo)
+        
+        print(f"✅ Pre-flight checks passed")
+        return True, None
+    
+    def _verify_repo_exists(self, repo_name: str) -> bool:
+        """
+        Verify repository exists before attempting merge.
+        
+        Args:
+            repo_name: Repository name to verify
+            
+        Returns:
+            True if repo exists, False otherwise
+        """
+        try:
+            # Try to get repo - this will check both local and GitHub
+            success, path, was_local = self.github.get_repo(
+                repo_name, github_user=self.github_username
+            )
+            return success
+        except Exception as e:
+            print(f"⚠️ Error verifying {repo_name}: {e}")
+            return False
+
     def execute_merge(self, dry_run: bool = True) -> bool:
         """
         Execute the merge operation using local-first approach.
@@ -163,7 +275,23 @@ class SafeRepoMergeV2:
         print(f"Mode: {'DRY RUN' if dry_run else 'EXECUTE'}")
         print(f"{'='*60}\n")
         
-        # Step 1: Create backup
+        # Step 0: Pre-flight checks (NEW - before any operations)
+        print(f"🔍 Pre-flight checks...")
+        preflight_success, preflight_error = self._preflight_checks()
+        if not preflight_success:
+            print(f"❌ Pre-flight check failed: {preflight_error}")
+            self.generate_merge_report("FAILED", {}, preflight_error)
+            # Record attempt with permanent error classification
+            if self.status_tracker:
+                self.status_tracker.record_attempt(
+                    self.source_repo, 
+                    self.target_repo, 
+                    False, 
+                    preflight_error
+                )
+            return False
+        
+                # Step 1: Create backup
         if not self.create_backup():
             self.generate_merge_report("FAILED", {}, "Backup creation failed")
             return False
@@ -188,7 +316,13 @@ class SafeRepoMergeV2:
             self.source_repo, github_user=self.github_username
         )
         if not success:
-            self.buffer.mark_failed(merge_plan.plan_id, "Source repo not available")
+            error_msg = "Source repo not available"
+            # Classify error as permanent (no retries)
+            if self.status_tracker:
+                if self.status_tracker.is_permanent_error(error_msg):
+                    self.status_tracker.set_repo_status(self.source_repo, RepoStatus.NOT_AVAILABLE, error_msg)
+                self.status_tracker.record_attempt(self.source_repo, self.target_repo, False, error_msg)
+            self.buffer.mark_failed(merge_plan.plan_id, error_msg)
             self.generate_merge_report("FAILED", {}, "Source repo not available")
             return False
         
@@ -196,7 +330,13 @@ class SafeRepoMergeV2:
             self.target_repo, github_user=self.github_username
         )
         if not success:
-            self.buffer.mark_failed(merge_plan.plan_id, "Target repo not available")
+            error_msg = "Target repo not available"
+            # Classify error as permanent (no retries)
+            if self.status_tracker:
+                if self.status_tracker.is_permanent_error(error_msg):
+                    self.status_tracker.set_repo_status(self.target_repo, RepoStatus.NOT_AVAILABLE, error_msg)
+                self.status_tracker.record_attempt(self.source_repo, self.target_repo, False, error_msg)
+            self.buffer.mark_failed(merge_plan.plan_id, error_msg)
             self.generate_merge_report("FAILED", {}, "Target repo not available")
             return False
         
@@ -300,7 +440,12 @@ This merge is part of repository consolidation.
         else:
             print(f"   - PR: Queued for later (check deferred_push_queue.json)")
         
-        self.generate_merge_report("SUCCESS", {"plan_id": merge_plan.plan_id, "branch": merge_branch})
+        # Update status tracking
+        if self.status_tracker:
+            self.status_tracker.set_repo_status(self.source_repo, RepoStatus.MERGED, f"Merged into {self.target_repo}")
+            self.status_tracker.record_attempt(self.source_repo, self.target_repo, True, None)
+        
+                self.generate_merge_report("SUCCESS", {"plan_id": merge_plan.plan_id, "branch": merge_branch})
         return True
 
     def generate_merge_report(self, status: str, conflicts: Dict[str, Any], error: Optional[str] = None) -> Dict[str, Any]:
