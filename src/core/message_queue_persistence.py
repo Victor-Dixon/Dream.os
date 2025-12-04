@@ -2,6 +2,8 @@
 Message Queue Persistence - V2 Compliance Module
 ===============================================
 
+<!-- SSOT Domain: communication -->
+
 Handles queue persistence operations following SRP.
 
 Author: Agent-1 (System Recovery Specialist)
@@ -212,6 +214,10 @@ class FileQueuePersistence(IQueuePersistence):
         temp_file = self.queue_file.with_suffix('.json.tmp')
         start_time = time.time()
         total_delay = 0.0
+        
+        # Ensure directory exists before writing
+        temp_file.parent.mkdir(parents=True, exist_ok=True)
+        self.queue_file.parent.mkdir(parents=True, exist_ok=True)
         
         # Write to temp file first
         try:

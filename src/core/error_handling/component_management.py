@@ -18,13 +18,20 @@ License: MIT
 """
 
 import logging
-from typing import Any
+from typing import Any, TYPE_CHECKING
 
-from .circuit_breaker import CircuitBreaker
-from .error_handling_core import CircuitBreakerConfig, RetryConfig
+# Use dependency injection pattern to avoid circular imports
+from .circuit_breaker.provider import CircuitBreakerProvider
+from .circuit_breaker.protocol import ICircuitBreaker
+
+# Infrastructure SSOT: Import directly from config_dataclasses.py
+from src.core.config.config_dataclasses import CircuitBreakerConfig, RetryConfig
 from .error_intelligence import intelligence_engine
 from .recovery_strategies import RecoveryStrategy
 from .retry_mechanisms import RetryMechanism
+
+if TYPE_CHECKING:
+    from .circuit_breaker import CircuitBreaker
 
 logger = logging.getLogger(__name__)
 
@@ -34,7 +41,7 @@ class ComponentManager:
 
     def __init__(self):
         """Initialize component manager."""
-        self.circuit_breakers: dict[str, CircuitBreaker] = {}
+        self.circuit_breakers: dict[str, ICircuitBreaker] = {}
         self.retry_mechanisms: dict[str, RetryMechanism] = {}
         self.recovery_strategies: list[RecoveryStrategy] = []
         logger.info("ComponentManager initialized")
@@ -44,7 +51,7 @@ class ComponentManager:
         component: str,
         failure_threshold: int = 5,
         recovery_timeout: float = 60.0,
-    ) -> CircuitBreaker:
+    ) -> ICircuitBreaker:
         """Register a circuit breaker for a component.
 
         Args:
@@ -55,12 +62,12 @@ class ComponentManager:
         Returns:
             Registered circuit breaker
         """
-        config = CircuitBreakerConfig(
+        # Use provider pattern to avoid circular imports
+        circuit_breaker = CircuitBreakerProvider.create_with_config(
             name=component,
             failure_threshold=failure_threshold,
-            recovery_timeout=recovery_timeout,
+            recovery_timeout=recovery_timeout
         )
-        circuit_breaker = CircuitBreaker(config)
         self.circuit_breakers[component] = circuit_breaker
         logger.info(f"Circuit breaker registered for {component}")
         return circuit_breaker
@@ -225,7 +232,7 @@ component_manager = ComponentManager()
 
 
 # Helper functions for quick access
-def register_circuit_breaker(component: str, **kwargs) -> CircuitBreaker:
+def register_circuit_breaker(component: str, **kwargs) -> ICircuitBreaker:
     """Register circuit breaker using global manager."""
     return component_manager.register_circuit_breaker(component, **kwargs)
 
@@ -248,3 +255,178 @@ def get_component_status(component: str) -> dict[str, Any]:
 def reset_component(component: str) -> bool:
     """Reset component using global manager."""
     return component_manager.reset_component(component)
+
+
+# ============================================================================
+# CoordinationErrorHandlerCore - Merged from coordination_error_handler.py
+# ============================================================================
+
+from typing import Any, TypeVar
+from .coordination_strategies import register_default_coordination_strategies
+from .error_classification import error_classifier
+from .error_execution import ErrorExecutionOrchestrator
+
+# Type variable for generic return types
+T = TypeVar("T")
+
+
+class CoordinationErrorHandlerCore:
+    """Intelligent error handler for coordination and communication systems.
+
+    Provides comprehensive error management with:
+    - Retry mechanisms with exponential backoff
+    - Circuit breakers for fault tolerance
+    - Intelligent recovery strategies
+    - Error pattern analysis and prediction
+    - Learning from error history
+
+    Refactored for autonomous systems with modular V2-compliant architecture.
+    """
+
+    def __init__(self):
+        """Initialize the coordination error handler."""
+        # Use global component manager
+        self.component_manager = component_manager
+
+        # Create execution orchestrator with manager's components
+        self.orchestrator = ErrorExecutionOrchestrator(
+            circuit_breakers=self.component_manager.circuit_breakers,
+            retry_mechanisms=self.component_manager.retry_mechanisms,
+            recovery_strategies=self.component_manager.recovery_strategies,
+            classifier=error_classifier,
+        )
+
+        # Register default coordination strategies
+        register_default_coordination_strategies(self.component_manager)
+
+        logger.info("CoordinationErrorHandlerCore initialized with V2 modular architecture")
+
+    def execute_with_error_handling(
+        self,
+        operation,
+        operation_name: str = "operation",
+        component: str = "coordination",
+        use_retry: bool = True,
+        use_circuit_breaker: bool = True,
+        use_recovery: bool = True,
+        use_intelligence: bool = True,
+    ) -> Any:
+        """Execute operation with comprehensive error handling.
+
+        Args:
+            operation: Operation to execute
+            operation_name: Name for logging
+            component: Component identifier
+            use_retry: Enable retry mechanism
+            use_circuit_breaker: Enable circuit breaker
+            use_recovery: Enable recovery strategies
+            use_intelligence: Enable intelligent error analysis
+
+        Returns:
+            Operation result
+
+        Raises:
+            Exception: If operation fails after all recovery attempts
+        """
+        return self.orchestrator.execute_with_error_handling(
+            operation=operation,
+            operation_name=operation_name,
+            component=component,
+            use_retry=use_retry,
+            use_circuit_breaker=use_circuit_breaker,
+            use_recovery=use_recovery,
+            use_intelligence=use_intelligence,
+        )
+
+    def register_circuit_breaker(
+        self, component: str, failure_threshold: int = 5, recovery_timeout: float = 60.0
+    ) -> None:
+        """Register a circuit breaker for a component.
+
+        Args:
+            component: Component identifier
+            failure_threshold: Number of failures before opening circuit
+            recovery_timeout: Timeout before attempting recovery (seconds)
+        """
+        self.component_manager.register_circuit_breaker(
+            component, failure_threshold, recovery_timeout
+        )
+
+    def register_retry_mechanism(
+        self,
+        component: str,
+        max_attempts: int = 3,
+        base_delay: float = 1.0,
+        max_delay: float = 60.0,
+    ) -> None:
+        """Register a retry mechanism for a component.
+
+        Args:
+            component: Component identifier
+            max_attempts: Maximum retry attempts
+            base_delay: Initial delay between retries
+            max_delay: Maximum delay between retries
+        """
+        self.component_manager.register_retry_mechanism(
+            component, max_attempts, base_delay, max_delay
+        )
+
+    def add_recovery_strategy(self, strategy: RecoveryStrategy) -> None:
+        """Add a custom recovery strategy.
+
+        Args:
+            strategy: Recovery strategy to add
+        """
+        self.component_manager.add_recovery_strategy(strategy)
+
+    def get_error_report(self) -> dict[str, Any]:
+        """Generate comprehensive error report with intelligence insights.
+
+        Returns:
+            Comprehensive error and intelligence report
+        """
+        return self.component_manager.get_error_report()
+
+    def get_component_status(self, component: str) -> dict[str, Any]:
+        """Get detailed status for a specific component.
+
+        Args:
+            component: Component to analyze
+
+        Returns:
+            Component status including health and intelligence insights
+        """
+        return self.component_manager.get_component_status(component)
+
+    def reset_component(self, component: str) -> bool:
+        """Reset error handling state for a specific component.
+
+        Args:
+            component: Component to reset
+
+        Returns:
+            True if reset successful
+        """
+        return self.component_manager.reset_component(component)
+
+
+# Global coordination error handler instance (backward compatibility)
+coordination_handler_core = CoordinationErrorHandlerCore()
+coordination_handler = coordination_handler_core  # Alias for backward compatibility
+
+# Import decorator from separate module for backward compatibility
+from .coordination_decorator import handle_coordination_errors  # noqa: E402, F401
+
+__all__ = [
+    "ComponentManager",
+    "component_manager",
+    "register_circuit_breaker",
+    "register_retry_mechanism",
+    "add_recovery_strategy",
+    "get_component_status",
+    "reset_component",
+    "CoordinationErrorHandlerCore",
+    "coordination_handler_core",
+    "coordination_handler",
+    "handle_coordination_errors",
+]

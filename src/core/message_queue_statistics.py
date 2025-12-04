@@ -2,6 +2,8 @@
 Message Queue Statistics - V2 Compliance Module
 ==============================================
 
+<!-- SSOT Domain: integration -->
+
 Handles queue statistics calculations following SRP.
 
 Author: Agent-1 (System Recovery Specialist)

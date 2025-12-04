@@ -3,6 +3,8 @@
 In-Memory Message Queue - High-Performance Stress Testing
 =========================================================
 
+<!-- SSOT Domain: integration -->
+
 In-memory queue implementation for stress testing without file I/O overhead.
 Provides 10-50x performance improvement for stress tests.
 
@@ -23,6 +25,8 @@ from dataclasses import dataclass
 
 from .message_queue_interfaces import IMessageQueue, IQueueEntry
 from .message_queue_persistence import QueueEntry
+from dataclasses import dataclass, field
+
 
 logger = logging.getLogger(__name__)
 

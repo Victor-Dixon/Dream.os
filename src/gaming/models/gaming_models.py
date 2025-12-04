@@ -5,7 +5,12 @@ Data models and enums for gaming integration system.
 Author: Agent-3 - Infrastructure & DevOps Specialist
 """
 
+from dataclasses import dataclass
 from datetime import datetime
+from enum import Enum
+from typing import Any, Dict, List
+from dataclasses import dataclass, field
+
 
 
 class IntegrationStatus(Enum):

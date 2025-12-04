@@ -15,6 +15,8 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from datetime import datetime
 from typing import Any, Protocol
+from dataclasses import dataclass, field
+
 
 
 @dataclass(frozen=True)

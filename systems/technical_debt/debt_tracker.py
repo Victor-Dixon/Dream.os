@@ -3,6 +3,8 @@
 Technical Debt Tracker
 ======================
 
+<!-- SSOT Domain: analytics -->
+
 Tracks technical debt across the codebase, monitors progress,
 and generates reports for debt reduction.
 
@@ -265,4 +267,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 

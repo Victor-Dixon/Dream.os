@@ -1,3 +1,4 @@
+from dataclasses import dataclass, field
 #!/usr/bin/env python3
 """
 Simple Utils - KISS Compliant

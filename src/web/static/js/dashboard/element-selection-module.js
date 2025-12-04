@@ -34,9 +34,9 @@ export class ElementSelectionModule {
     /**
      * Safely query selector
      */
-    querySelector(selector) {
+    querySelector(selector, context = document) {
         try {
-            return document.querySelector(selector);
+            return context.querySelector(selector);
         } catch (error) {
             this.logger.warn(`Failed to query selector: ${selector}`, error);
             return null;
@@ -46,9 +46,9 @@ export class ElementSelectionModule {
     /**
      * Safely query selector all
      */
-    querySelectorAll(selector) {
+    querySelectorAll(selector, context = document) {
         try {
-            return Array.from(document.querySelectorAll(selector));
+            return Array.from(context.querySelectorAll(selector));
         } catch (error) {
             this.logger.warn(`Failed to query selector all: ${selector}`, error);
             return [];

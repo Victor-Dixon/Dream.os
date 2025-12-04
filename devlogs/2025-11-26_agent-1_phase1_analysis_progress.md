@@ -18,7 +18,7 @@ Following Agent-6's example: Breaking loops, taking direct action, making contin
 ### **Discovery Made**:
 - ✅ **V2 Overnight Runner EXISTS**: `src/orchestrators/overnight/` already implemented
 - ✅ **Integration Strategy Updated**: Enhance existing, don't create from scratch
-- ✅ **Analysis Document Created**: `docs/consolidation/OVERNIGHT_RUNNER_STATUS_UPDATE.md`
+- ✅ **Analysis Document Created**: `docs/archive/consolidation/OVERNIGHT_RUNNER_STATUS_UPDATE.md`
 
 ### **Key Finding**:
 **Original Plan**: Create overnight runner from V1 (8-12 hours)  

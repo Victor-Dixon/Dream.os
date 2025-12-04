@@ -15,6 +15,10 @@ License: MIT
 from .import_system.import_core import ImportSystemCore
 from .import_system.import_registry import ImportRegistry
 from .import_system.import_utilities import ImportUtilities
+from typing import Dict, List, Callable, Any, Optional, Union, Tuple, Set
+from dataclasses import dataclass, field
+from pathlib import Path
+
 
 
 class UnifiedImportSystem:

@@ -3,6 +3,8 @@
 Technical Debt Daily Report Generator (2x Daily)
 ==================================================
 
+<!-- SSOT Domain: analytics -->
+
 Generates daily progress reports for technical debt reduction.
 Runs 2x daily: Morning (9:00 AM) and Afternoon (3:00 PM).
 

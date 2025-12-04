@@ -3,6 +3,8 @@
 SSOT Config Validator - Validates config_ssot usage and facade mapping
 ============================================================
 
+<!-- SSOT Domain: qa -->
+
 Validates that config_ssot is used correctly and facade/shims remain mapped
 during config updates. Prevents SSOT violations in config consolidation.
 
@@ -19,7 +21,7 @@ USAGE:
     # Generate report
     python tools/ssot_config_validator.py --file src/path/to/file.py --report
 
-Author: Agent-8 (SSOT & System Integration Specialist)
+Author: Agent-8 (Testing & Quality Assurance Specialist)
 Date: 2025-01-27
 V2 Compliant: Yes (<400 lines)
 """

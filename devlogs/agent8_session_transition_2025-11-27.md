@@ -30,7 +30,7 @@ Completed messaging system enhancements, removed dead code, established Batch 2 
 - Verified file imports correctly after cleanup
 
 ### **3. Batch 2 SSOT Verification Setup**
-- Created comprehensive SSOT verification checklist: `docs/consolidation/BATCH2_SSOT_VERIFICATION_CHECKLIST.md`
+- Created comprehensive SSOT verification checklist: `docs/archive/consolidation/BATCH2_SSOT_VERIFICATION_CHECKLIST.md`
 - Established post-merge verification workflow
 - Ran initial SSOT verification using `batch2_ssot_verifier.py`
 - Results:

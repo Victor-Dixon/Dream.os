@@ -1,3 +1,4 @@
+<!-- SSOT Domain: architecture -->
 # Service Architecture Patterns - Swarm Reference
 
 **Date**: 2025-11-26  

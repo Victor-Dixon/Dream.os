@@ -188,6 +188,7 @@ python -m src.services.messaging_cli --broadcast --message "Coordination message
 
 ## 🔗 **RELATED PATTERNS**
 
+- **Agent Pairing Pattern**: Pair with domain experts for cross-domain coordination
 - **Swarm Intelligence**: Multiple agents > single agent
 - **Parallel Execution**: Simultaneous work > sequential
 - **Domain Expertise**: Right agent for right task

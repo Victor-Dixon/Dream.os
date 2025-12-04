@@ -124,7 +124,7 @@
 
 ## 📊 DELIVERABLE 2: CONSOLIDATION TRACKING UPDATE
 
-### File Updated: `docs/consolidation/WEEK_1-2_CONSOLIDATION_TRACKING.md`
+### File Updated: `docs/archive/consolidation/WEEK_1-2_CONSOLIDATION_TRACKING.md`
 
 **Update Type**: C-059 Soft Onboarding Update
 
@@ -456,7 +456,7 @@
    - Installation, usage, API reference
    - Integration patterns, troubleshooting, migration
 
-2. **Updated**: `docs/consolidation/WEEK_1-2_CONSOLIDATION_TRACKING.md`
+2. **Updated**: `docs/archive/consolidation/WEEK_1-2_CONSOLIDATION_TRACKING.md`
    - Soft onboarding milestone tracked
    - All 7 agent missions documented
    - Multi-mission coordination updated

@@ -2,6 +2,8 @@
 Orchestrator Component Management
 ==================================
 
+<!-- SSOT Domain: integration -->
+
 Component registration and management extracted for V2 compliance.
 
 Author: Agent-2 - Architecture & Design Specialist (V2 Refactor)

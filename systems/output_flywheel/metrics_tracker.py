@@ -3,6 +3,8 @@
 Output Flywheel Metrics Tracker
 =================================
 
+<!-- SSOT Domain: analytics -->
+
 Tracks metrics for the Output Flywheel system:
 - artifacts_per_week
 - repos_with_clean_readmes
@@ -384,4 +386,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 

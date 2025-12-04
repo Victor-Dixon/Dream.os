@@ -11,7 +11,7 @@ License: MIT
 import time
 from pathlib import Path
 
-from .file_locking_models import LockInfo, LockResult
+from .file_locking_models import LockInfo, LockResult, LockStatus
 
 
 class FileLockEngineOperations:
@@ -30,26 +30,26 @@ class FileLockEngineOperations:
             lock_file = Path(lock_info.lock_file)
 
             # Check if lock file exists and is stale
-            if lock_file.exists() and self._is_lock_stale(lock_file):
-                self._remove_stale_lock(lock_file)
+            if lock_file.exists() and self.base_engine.platform_ops._is_lock_stale(lock_file):
+                self.base_engine.platform_ops._remove_stale_lock(lock_file)
 
-            # Try to acquire lock
+            # Try to acquire lock using platform operations
             success = False
             if self.base_engine._is_windows:
-                success = self._acquire_windows_lock(lock_file)
+                success = self.base_engine.platform_ops._acquire_windows_lock(lock_file)
             else:
-                success = self._acquire_unix_lock(lock_file)
+                success = self.base_engine.platform_ops._acquire_unix_lock(lock_file)
 
             if success:
                 with self.base_engine._lock:
-                    self.base_engine._active_locks[lock_info.filepath] = lock_info
+                    self.base_engine._active_locks[lock_info.lock_file] = lock_info
 
                 execution_time = time.time() - start_time
                 self.base_engine._update_metrics("acquire_lock", True, execution_time)
 
                 return LockResult(
                     success=True,
-                    message="Lock acquired successfully",
+                    status=LockStatus.LOCKED,
                     lock_info=lock_info,
                 )
             else:
@@ -58,7 +58,8 @@ class FileLockEngineOperations:
 
                 return LockResult(
                     success=False,
-                    message="Failed to acquire lock - file may be locked by another process",
+                    status=LockStatus.LOCKED,
+                    error_message="Failed to acquire lock - file may be locked by another process",
                     lock_info=None,
                 )
 
@@ -67,7 +68,7 @@ class FileLockEngineOperations:
             self.base_engine._update_metrics("acquire_lock", False, execution_time)
 
             return LockResult(
-                success=False, message=f"Error acquiring lock: {str(e)}", lock_info=None
+                success=False, status=LockStatus.ERROR, error_message=f"Error acquiring lock: {str(e)}", lock_info=None
             )
 
     def release_lock(self, lock_info: LockInfo) -> LockResult:
@@ -79,8 +80,8 @@ class FileLockEngineOperations:
 
             # Remove from active locks
             with self.base_engine._lock:
-                if lock_info.filepath in self.base_engine._active_locks:
-                    del self.base_engine._active_locks[lock_info.filepath]
+                if lock_info.lock_file in self.base_engine._active_locks:
+                    del self.base_engine._active_locks[lock_info.lock_file]
 
             # Remove lock file
             if lock_file.exists():
@@ -90,7 +91,7 @@ class FileLockEngineOperations:
             self.base_engine._update_metrics("release_lock", True, execution_time)
 
             return LockResult(
-                success=True, message="Lock released successfully", lock_info=lock_info
+                success=True, status=LockStatus.UNLOCKED, lock_info=lock_info
             )
 
         except Exception as e:
@@ -98,7 +99,7 @@ class FileLockEngineOperations:
             self.base_engine._update_metrics("release_lock", False, execution_time)
 
             return LockResult(
-                success=False, message=f"Error releasing lock: {str(e)}", lock_info=None
+                success=False, status=LockStatus.ERROR, error_message=f"Error releasing lock: {str(e)}", lock_info=None
             )
 
     def cleanup_stale_locks(self) -> int:
@@ -110,12 +111,12 @@ class FileLockEngineOperations:
             lock_files = []
             for lock_info in self.base_engine._active_locks.values():
                 lock_file = Path(lock_info.lock_file)
-                if lock_file.exists() and self._is_lock_stale(lock_file):
+                if lock_file.exists() and self.base_engine.platform_ops._is_lock_stale(lock_file):
                     lock_files.append(lock_file)
 
             # Remove stale locks
             for lock_file in lock_files:
-                self._remove_stale_lock(lock_file)
+                self.base_engine.platform_ops._remove_stale_lock(lock_file)
                 cleaned_count += 1
 
             if cleaned_count > 0:

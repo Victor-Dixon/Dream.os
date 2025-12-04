@@ -28,7 +28,7 @@ Create a feature that automatically generates cycle accomplishment reports from 
 **Test Results**:
 - Successfully processed 7/8 agents (Agent-6 had JSON parsing error, handled gracefully)
 - Extracted: 424 completed tasks, 135 achievements across all agents
-- Generated test report: `docs/cycles/CYCLE_ACCOMPLISHMENTS_2025-11-25_05-41-16.md`
+- Generated test report: `docs/archive/cycles/CYCLE_ACCOMPLISHMENTS_2025-11-25_05-41-16.md`
 
 ### 2. Soft Onboarding Integration
 
@@ -101,7 +101,7 @@ Each generated report includes:
 
 ### Report Location
 ```
-docs/cycles/CYCLE_ACCOMPLISHMENTS_{cycle_id}_{timestamp}.md
+docs/archive/cycles/CYCLE_ACCOMPLISHMENTS_{cycle_id}_{timestamp}.md
 ```
 
 ### Usage Examples
@@ -130,7 +130,7 @@ report_path = generate_cycle_accomplishments_report(cycle_id="C-050")
 - **Easy Discovery**: All cycle accomplishments in one place
 - **Automatic**: Reports generated during soft onboarding
 - **Comprehensive**: Captures all agent work from status.json files
-- **Accessible**: Reports saved in `docs/cycles/` for easy finding
+- **Accessible**: Reports saved in `docs/archive/cycles/` for easy finding
 
 ### Future Enhancements
 - Add to Captain's toolbelt for cycle reviews
@@ -170,7 +170,7 @@ report_path = generate_cycle_accomplishments_report(cycle_id="C-050")
 Successfully created a comprehensive cycle accomplishments report feature that:
 - Automatically compiles all agent work from status.json files
 - Integrates seamlessly with soft onboarding
-- Provides easy-to-find reports in `docs/cycles/`
+- Provides easy-to-find reports in `docs/archive/cycles/`
 - Includes comprehensive documentation
 
 The feature is production-ready and enhances the swarm's ability to track and showcase cycle accomplishments.

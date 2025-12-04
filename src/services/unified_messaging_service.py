@@ -2,6 +2,8 @@
 Unified Messaging Service - Wrapper for Messaging Service
 ==========================================================
 
+<!-- SSOT Domain: communication -->
+
 Provides unified interface to messaging system.
 Wraps ConsolidatedMessagingService for backward compatibility.
 
@@ -9,6 +11,7 @@ V2 Compliance: Wrapper pattern, <400 lines
 """
 
 import logging
+from typing import Any
 
 from .messaging_infrastructure import ConsolidatedMessagingService
 
@@ -24,8 +27,16 @@ class UnifiedMessagingService:
         logger.info("UnifiedMessagingService initialized")
 
     def send_message(
-        self, agent: str, message: str, priority: str = "regular", use_pyautogui: bool = True
-    ) -> bool:
+        self,
+        agent: str,
+        message: str,
+        priority: str = "regular",
+        use_pyautogui: bool = True,
+        wait_for_delivery: bool = False,
+        timeout: float = 30.0,
+        discord_user_id: str | None = None,
+        stalled: bool = False,
+    ) -> dict[str, Any]:
         """
         Send message to agent.
 
@@ -34,11 +45,24 @@ class UnifiedMessagingService:
             message: Message content
             priority: Message priority (regular/urgent)
             use_pyautogui: Use PyAutoGUI delivery
+            wait_for_delivery: Wait for delivery confirmation
+            timeout: Timeout in seconds
+            discord_user_id: Discord user ID (optional)
+            stalled: Whether message is for stalled agent
 
         Returns:
-            True if successful
+            Dictionary with success status and queue_id
         """
-        return self.messaging.send_message(agent, message, priority, use_pyautogui)
+        return self.messaging.send_message(
+            agent=agent,
+            message=message,
+            priority=priority,
+            use_pyautogui=use_pyautogui,
+            wait_for_delivery=wait_for_delivery,
+            timeout=timeout,
+            discord_user_id=discord_user_id,
+            stalled=stalled,
+        )
 
     def broadcast_message(self, message: str, priority: str = "regular") -> dict:
         """

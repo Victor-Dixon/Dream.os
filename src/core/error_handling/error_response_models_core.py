@@ -14,6 +14,8 @@ from datetime import datetime
 from typing import Any
 
 from .error_enums import ErrorCategory, ErrorSeverity
+from dataclasses import dataclass, field
+
 
 
 @dataclass

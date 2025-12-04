@@ -11,7 +11,8 @@
  * License: MIT
  */
 
-export { DOMUtils } from './dom-utils.js';
+// DOM Utils SSOT: Use orchestrator instead of legacy utilities/dom-utils.js
+export { DOMUtilsOrchestrator as DOMUtils } from '../dashboard/dom-utils-orchestrator.js';
 export { CacheUtils } from './cache-utils.js';
 export { ValidationUtils } from './validation-utils.js';
 export { EventUtils } from './event-utils.js';

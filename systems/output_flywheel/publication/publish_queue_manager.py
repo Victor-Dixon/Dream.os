@@ -105,9 +105,21 @@ class PublishQueueManager:
         try:
             with open(temp_file, "w", encoding="utf-8") as f:
                 json.dump(entries, f, indent=2, ensure_ascii=False, default=str)
+        except PermissionError as e:
+            error_msg = f"Permission denied writing temp file: {temp_file}\n"
+            error_msg += f"Error: {e}\n"
+            error_msg += "Suggestion: Check file permissions and ensure directory is writable"
+            raise PermissionError(error_msg) from e
+        except OSError as e:
+            error_msg = f"OS error writing temp file: {temp_file}\n"
+            error_msg += f"Error: {e}\n"
+            error_msg += "Suggestion: Check disk space and directory permissions"
+            raise OSError(error_msg) from e
         except Exception as e:
-            print(f"❌ Failed to write temp file: {e}")
-            raise
+            error_msg = f"Unexpected error writing temp file: {temp_file}\n"
+            error_msg += f"Error: {e}\n"
+            error_msg += f"Error type: {type(e).__name__}"
+            raise Exception(error_msg) from e
         
         # Atomic move with retry logic
         for attempt in range(max_retries):
@@ -126,12 +138,38 @@ class PublishQueueManager:
                 return
                 
             except (PermissionError, OSError) as e:
-                if hasattr(e, 'winerror') and e.winerror == 5:
+                winerror_code = getattr(e, 'winerror', None)
+                if winerror_code == 5:  # Access Denied
                     if attempt < max_retries - 1:
                         delay = base_delay * (2 ** attempt)
                         time.sleep(delay)
                         continue
-                raise
+                    else:
+                        error_msg = f"Failed to save queue after {max_retries} retries\n"
+                        error_msg += f"File: {self.queue_file}\n"
+                        error_msg += f"Error: Access Denied (WinError 5)\n"
+                        error_msg += "Suggestion: Close any programs accessing the queue file and try again"
+                        raise PermissionError(error_msg) from e
+                elif winerror_code == 32:  # File in use
+                    if attempt < max_retries - 1:
+                        delay = base_delay * (2 ** attempt)
+                        delay = min(delay, 2.0)  # Cap delay
+                        time.sleep(delay)
+                        continue
+                    else:
+                        error_msg = f"Failed to save queue after {max_retries} retries\n"
+                        error_msg += f"File: {self.queue_file}\n"
+                        error_msg += f"Error: File in use (WinError 32)\n"
+                        error_msg += "Suggestion: Another process is using the queue file. Wait and try again."
+                        raise OSError(error_msg) from e
+                else:
+                    error_msg = f"Failed to save queue file\n"
+                    error_msg += f"File: {self.queue_file}\n"
+                    error_msg += f"Error: {e}\n"
+                    if winerror_code:
+                        error_msg += f"WinError code: {winerror_code}\n"
+                    error_msg += "Suggestion: Check file permissions and disk space"
+                    raise
     
     def add_entry(
         self,

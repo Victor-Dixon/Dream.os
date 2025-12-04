@@ -1,3 +1,4 @@
+<!-- SSOT Domain: architecture -->
 # Discord Templates Implementation Summary
 
 **Author**: Agent-2 (Architecture & Design Specialist)  

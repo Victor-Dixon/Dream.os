@@ -2,6 +2,8 @@
 Mock Coordinate Loader for Testing
 ==================================
 
+<!-- SSOT Domain: integration -->
+
 Provides mock coordinate loading functionality for smoke testing.
 """
 

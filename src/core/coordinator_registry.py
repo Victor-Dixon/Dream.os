@@ -3,6 +3,8 @@
 Coordinator Registry Implementation - V2 Compliant Module
 ========================================================
 
+<!-- SSOT Domain: integration -->
+
 Concrete implementation of ICoordinatorRegistry for managing coordinators.
 V2 Compliance: < 200 lines, single responsibility.
 

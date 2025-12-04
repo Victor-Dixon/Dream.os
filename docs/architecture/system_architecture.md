@@ -1,3 +1,4 @@
+<!-- SSOT Domain: architecture -->
 # System Architecture Documentation
 
 ## Overview

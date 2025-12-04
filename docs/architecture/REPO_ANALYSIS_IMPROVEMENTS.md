@@ -1,3 +1,4 @@
+<!-- SSOT Domain: architecture -->
 # 🏗️ Repository Analysis Improvements - Architecture Focus
 
 **Author**: Agent-2 (Architecture & Design Specialist)  

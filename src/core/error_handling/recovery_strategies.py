@@ -13,6 +13,8 @@ from collections.abc import Callable
 from datetime import datetime, timedelta
 
 from .error_handling_core import ErrorContext, ErrorSeverity
+from typing import Dict, List, Callable, Any, Optional, Union, Tuple, Set
+
 
 logger = logging.getLogger(__name__)
 

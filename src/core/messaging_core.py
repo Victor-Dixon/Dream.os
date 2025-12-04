@@ -3,6 +3,8 @@
 UNIFIED MESSAGING CORE SYSTEM - SINGLE SOURCE OF TRUTH
 =====================================================
 
+<!-- SSOT Domain: integration -->
+
 V2 COMPLIANCE REFACTOR: Models extracted to messaging_models_core.py
 Original: 472 lines → Now: 336 lines (28% reduction)
 

@@ -8,6 +8,9 @@ from . import models
 from . import steps
 from . import strategies
 
+# Export WorkflowEngine for backward compatibility
+from .engine import WorkflowEngine
+
 __all__ = [
     'autonomous_strategy',
     'cli',
@@ -15,4 +18,5 @@ __all__ = [
     'models',
     'steps',
     'strategies',
+    'WorkflowEngine',  # Export for imports like "from src.workflows import WorkflowEngine"
 ]

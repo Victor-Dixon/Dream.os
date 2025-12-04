@@ -3,6 +3,8 @@
 Message Queue System - Agent Cellphone V2
 =========================================
 
+<!-- SSOT Domain: integration -->
+
 Persistent message queuing system following SOLID principles.
 
 SOLID Principles:

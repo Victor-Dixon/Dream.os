@@ -16,7 +16,8 @@
 import { DashboardFormatters, createDashboardFormatters } from './dashboard/formatters.js';
 import { DashboardDateUtils, createDashboardDateUtils } from './dashboard/date-utils.js';
 import { DashboardStyleUtils, createDashboardStyleUtils } from './dashboard/style-utils.js';
-import { DashboardDOMUtils, createDashboardDOMUtils } from './dashboard/dom-utils.js';
+// DOM Utils SSOT: Import directly from orchestrator
+import { DashboardDOMUtils, createDashboardDOMUtils } from './dashboard/dom-utils-orchestrator.js';
 
 // ================================
 // DASHBOARD UTILS V2 ORCHESTRATOR

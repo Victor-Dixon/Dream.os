@@ -1,6 +1,8 @@
 """
 Messaging CLI Parser Module
 Handles argument parsing for messaging CLI
+
+<!-- SSOT Domain: communication -->
 """
 
 import argparse

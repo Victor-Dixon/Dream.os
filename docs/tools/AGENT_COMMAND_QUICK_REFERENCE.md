@@ -210,3 +210,5 @@ agent_workspaces/{Agent-X}/inbox/
 
 *Use this tool to command agents and coordinate the swarm!*
 
+
+

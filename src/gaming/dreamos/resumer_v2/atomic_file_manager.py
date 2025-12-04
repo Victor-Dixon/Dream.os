@@ -4,6 +4,9 @@ Atomic File Manager
 Provides atomic file operations for safe file updates.
 """
 
+from pathlib import Path
+from typing import Union
+
 
 class AtomicFileManager:
     """Manages atomic file operations for safe file updates."""

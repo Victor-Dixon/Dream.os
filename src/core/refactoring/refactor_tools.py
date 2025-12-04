@@ -12,6 +12,8 @@ Status: V2_COMPLIANT_IMPLEMENTATION
 """
 
 from typing import TYPE_CHECKING, Any
+from pathlib import Path
+
 
 if TYPE_CHECKING:
     from typing import TYPE_CHECKING

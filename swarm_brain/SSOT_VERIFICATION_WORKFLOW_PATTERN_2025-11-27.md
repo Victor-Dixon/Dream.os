@@ -109,7 +109,7 @@ python tools/import_chain_validator.py --check-all
 
 - `tools/batch2_ssot_verifier.py` - Automated SSOT verification
 - `tools/import_chain_validator.py` - Import path validation
-- `docs/consolidation/BATCH2_SSOT_VERIFICATION_CHECKLIST.md` - Verification checklist
+- `docs/archive/consolidation/BATCH2_SSOT_VERIFICATION_CHECKLIST.md` - Verification checklist
 
 ---
 
@@ -141,7 +141,7 @@ python tools/import_chain_validator.py --check-all
 
 ## 📚 **Related Documentation**
 
-- `docs/consolidation/BATCH2_SSOT_VERIFICATION_CHECKLIST.md`
+- `docs/archive/consolidation/BATCH2_SSOT_VERIFICATION_CHECKLIST.md`
 - `tools/batch2_ssot_verifier.py`
 - `docs/CONFIG_SSOT_MIGRATION_GUIDE.md`
 

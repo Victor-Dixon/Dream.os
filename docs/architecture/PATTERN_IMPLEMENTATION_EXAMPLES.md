@@ -1,4 +1,8 @@
+<!-- SSOT Domain: architecture -->
 # Architecture Pattern Implementation Examples
+
+> **📚 SSOT Reference**: For comprehensive design pattern documentation, see [ARCHITECTURE_PATTERNS_DOCUMENTATION.md](./ARCHITECTURE_PATTERNS_DOCUMENTATION.md)
+
 **Mission:** C-059-11 (Autonomous Claim)  
 **Agent:** Agent-2 (Architecture & Design Specialist)  
 **Date:** 2025-10-11  

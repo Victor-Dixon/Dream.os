@@ -3,6 +3,8 @@
 Technical Debt Weekly Report Generator
 ======================================
 
+<!-- SSOT Domain: analytics -->
+
 Generates weekly progress reports for technical debt reduction.
 
 Author: Agent-5 (Business Intelligence Specialist)
@@ -165,4 +167,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 

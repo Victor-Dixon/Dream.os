@@ -83,7 +83,7 @@
   - `!session latest` - Show most recent report
 
 ### **Implementation**
-- Reads cycle accomplishment reports from `docs/cycles/`
+- Reads cycle accomplishment reports from `docs/archive/cycles/`
 - Parses markdown reports and extracts:
   - Swarm summary (agents active, tasks, achievements, points)
   - Per-agent accomplishments (completed tasks, achievements, current tasks)
@@ -204,7 +204,7 @@
 
 ## ⚠️ **NOTES**
 
-- `!session` command reads from `docs/cycles/` directory
+- `!session` command reads from `docs/archive/cycles/` directory
 - Reports are automatically generated during soft onboarding
 - Can also be generated manually: `python tools/generate_cycle_accomplishments_report.py`
 - Command handles missing reports gracefully

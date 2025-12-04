@@ -3,6 +3,8 @@
 Output Flywheel Production Monitor - Execution Time, Success Rate & Error Tracking
 ==================================================================================
 
+<!-- SSOT Domain: analytics -->
+
 Monitors Output Flywheel v1.0 production usage:
 - Pipeline execution times
 - Artifact generation rates
@@ -30,9 +32,9 @@ import yaml
 
 # Handle imports
 try:
-    from .metrics_tracker import OutputFlywheelMetricsTracker
+    from .metrics_client import MetricsClient
 except ImportError:
-    from metrics_tracker import OutputFlywheelMetricsTracker
+    from metrics_client import MetricsClient
 
 
 class ProductionMonitor:
@@ -49,7 +51,7 @@ class ProductionMonitor:
         self.monitoring_data_path = metrics_dir / "data" / "production_monitoring.json"
         
         self.monitoring_data_path.parent.mkdir(parents=True, exist_ok=True)
-        self.tracker = OutputFlywheelMetricsTracker(metrics_dir)
+        self.tracker = MetricsClient(metrics_dir)
         self._load_monitoring_data()
 
     def _load_monitoring_data(self):
@@ -325,4 +327,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 

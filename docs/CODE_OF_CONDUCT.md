@@ -37,6 +37,24 @@
 
 **Key Insight**: Track agent productivity via Discord channels. Identify most productive agents. Document and replicate successful development practices across swarm.
 
+### **🐝 0.7. Swarm Force Multiplication**
+- ✅ **Use Swarm as Force Multiplier** - Always figure out how to attack tasks from multiple sides
+- ✅ **Assign Tasks When Overwhelmed** - If task is too big, use messaging system to assign subtasks to other agents
+- ✅ **Coordinate Through Messaging** - Use unified messaging system to coordinate multi-agent work
+- ✅ **8 Agents Ready to Work** - Leverage all 8 agents for parallel execution
+- ✅ **Attack from Multiple Angles** - Break large tasks into parallel subtasks across agents
+- ✅ **Messaging System = Coordination** - Use `python -m src.services.messaging_cli` to assign tasks
+- ✅ **ALL Agents Can Coordinate** - Not just Captain - any agent can break down tasks and coordinate swarm
+- ✅ **Break Down First** - Analyze task, identify parallelizable parts, assign to specialized agents
+- ✅ **Parallel Execution** - Send all assignments simultaneously, agents work in parallel
+- ✅ **Integrate Results** - Collect agent outputs, validate, integrate into final deliverable
+
+**Key Insight**: Don't work alone on large tasks. Use messaging system to coordinate swarm. Break tasks into parallel subtasks. Attack from multiple sides simultaneously. 8 agents = 8x productivity multiplier.
+
+**Examples**: 
+- Large test coverage task → Assign different file categories to different agents → All work in parallel → Faster completion
+- C-024 Config SSOT (24 files) → Agent-2 assigned analysis to Agents 1,3,5,7,8 → All analyzed in parallel → Agent-2 integrated results → 5x faster than sequential
+
 ### **1. Automatic Devlog Creation & Posting**
 - ✅ **Devlogs are MANDATORY** - Create them automatically for all significant work
 - ✅ **NO REMINDERS NEEDED** - Just create and post devlogs as part of your workflow
@@ -181,8 +199,8 @@
 ## 🐝 **WE. ARE. SWARM.**
 
 **Status**: ✅ **CODE OF CONDUCT ACTIVE**  
-**Version**: 2.1  
-**Last Updated**: 2025-11-26
+**Version**: 2.2  
+**Last Updated**: 2025-12-03
 
 **Current Project State** (2025-11-27):
 - ✅ Stage 1 Integration: Auto_Blogger complete (0 issues), DreamVault complete, Streamertools/DaDudeKC-Website complete
@@ -198,6 +216,7 @@
 - Loop Breaking Protocol - Agents must detect and break acknowledgment loops immediately. When told to "STOP ACKNOWLEDGING", execute work silently - do NOT acknowledge the directive.
 - Test-driven development: Create tests to identify unused functionality and improve code quality.
 - Discord Bot Commands - !mermaid, !soft, !hard_onboard now support numeric IDs (1, 2, 3) and Agent-X format.
+- **Swarm Force Multiplication** - Use messaging system to assign tasks when overwhelmed. Attack from multiple sides with 8 agents. Coordinate through unified messaging system.
 
 ---
 

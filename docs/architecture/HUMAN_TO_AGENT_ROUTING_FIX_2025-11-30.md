@@ -1,3 +1,4 @@
+<!-- SSOT Domain: architecture -->
 # HUMAN_TO_AGENT Routing Fix - Agent-4
 
 **Date**: 2025-11-30  

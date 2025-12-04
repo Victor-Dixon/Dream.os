@@ -51,7 +51,7 @@ def main():
         
         # Start processing (runs continuously)
         try:
-            processor.process_queue(max_messages=None, batch_size=1)
+            processor.process_queue(max_messages=None, batch_size=1, interval=5.0)
         except KeyboardInterrupt:
             logger.info("\n👋 Queue processor stopped by user")
             processor.running = False
@@ -64,6 +64,8 @@ def main():
     except ImportError as e:
         logger.error(f"❌ Failed to import queue processor: {e}")
         logger.error("   Ensure all dependencies are installed")
+        import traceback
+        traceback.print_exc()
         return 1
     except Exception as e:
         logger.error(f"❌ Fatal error: {e}", exc_info=True)
@@ -72,5 +74,4 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
-
 

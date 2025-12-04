@@ -14,7 +14,8 @@ from collections.abc import Callable
 from functools import wraps
 from typing import Any
 
-from .error_handling_core import RetryConfig
+# Infrastructure SSOT: RetryConfig moved to config_dataclasses.py
+from src.core.config.config_dataclasses import RetryConfig
 
 logger = logging.getLogger(__name__)
 

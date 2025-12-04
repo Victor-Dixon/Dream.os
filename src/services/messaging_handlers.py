@@ -1,6 +1,8 @@
 # src/services/messaging_handlers.py
 """
 Messaging Handlers for Unified Messaging System
+
+<!-- SSOT Domain: communication -->
 """
 
 from src.core.messaging_core import UnifiedMessageType, broadcast_message, send_message

@@ -13,6 +13,8 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from .extraction_helpers import extract_core, extract_models, extract_utils
+from dataclasses import dataclass, field
+
 
 
 @dataclass

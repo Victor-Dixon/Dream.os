@@ -12,6 +12,7 @@ import { createElementCreationModule } from './element-creation-module.js';
 import { createEventManagementModule } from './event-management-module.js';
 import { createCSSClassManagementModule } from './css-class-management-module.js';
 import { createElementVisibilityModule } from './element-visibility-module.js';
+import { createCacheManagementModule } from './cache-management-module.js';
 
 // ================================
 // DOM UTILS ORCHESTRATOR
@@ -31,13 +32,15 @@ export class DOMUtilsOrchestrator {
         this.eventManagement = createEventManagementModule();
         this.cssClassManagement = createCSSClassManagementModule();
         this.elementVisibility = createElementVisibilityModule();
+        this.cacheManagement = createCacheManagementModule();
 
         this.modules = {
             elementSelection: this.elementSelection,
             elementCreation: this.elementCreation,
             eventManagement: this.eventManagement,
             cssClassManagement: this.cssClassManagement,
-            elementVisibility: this.elementVisibility
+            elementVisibility: this.elementVisibility,
+            cacheManagement: this.cacheManagement
         };
     }
 
@@ -49,12 +52,46 @@ export class DOMUtilsOrchestrator {
         return this.elementSelection.getElementById(id);
     }
 
-    querySelector(selector) {
-        return this.elementSelection.querySelector(selector);
+    querySelector(selector, context = document) {
+        // Check cache first (only for document context to avoid stale cache)
+        if (context === document) {
+            const cacheKey = `query-${selector}`;
+            const cached = this.cacheManagement.get(cacheKey);
+            if (cached) {
+                return cached;
+            }
+
+            // Query and cache result
+            const element = this.elementSelection.querySelector(selector, context);
+            if (element) {
+                this.cacheManagement.set(cacheKey, element);
+            }
+            return element;
+        }
+
+        // Non-document context: don't cache (may be dynamic)
+        return this.elementSelection.querySelector(selector, context);
     }
 
-    querySelectorAll(selector) {
-        return this.elementSelection.querySelectorAll(selector);
+    querySelectorAll(selector, context = document) {
+        // Check cache first (only for document context to avoid stale cache)
+        if (context === document) {
+            const cacheKey = `queryAll-${selector}`;
+            const cached = this.cacheManagement.get(cacheKey);
+            if (cached) {
+                return cached;
+            }
+
+            // Query and cache result
+            const elements = this.elementSelection.querySelectorAll(selector, context);
+            if (elements && elements.length > 0) {
+                this.cacheManagement.set(cacheKey, elements);
+            }
+            return elements;
+        }
+
+        // Non-document context: don't cache (may be dynamic)
+        return this.elementSelection.querySelectorAll(selector, context);
     }
 
     getElementsByClassName(className) {
@@ -247,6 +284,80 @@ export class DOMUtilsOrchestrator {
             this.logger.error('Failed to cleanup DOM utils', error);
             return false;
         }
+    }
+
+    // ================================
+    // CACHE MANAGEMENT METHODS
+    // ================================
+
+    /**
+     * Clear all cached elements
+     */
+    clearCache() {
+        return this.cacheManagement.clear();
+    }
+
+    /**
+     * Get cache statistics
+     */
+    getCacheStats() {
+        return this.cacheManagement.getStats();
+    }
+
+    // ================================
+    // COMPATIBILITY ADAPTER METHODS
+    // ================================
+
+    /**
+     * Select element (compatibility adapter)
+     * @deprecated Use querySelector() instead
+     */
+    selectElement(selector, context = document) {
+        console.warn('[DEPRECATED] selectElement() is deprecated. Use querySelector() instead.');
+        return this.querySelector(selector, context);
+    }
+
+    /**
+     * Select multiple elements (compatibility adapter)
+     * @deprecated Use querySelectorAll() instead
+     */
+    selectElements(selector, context = document) {
+        console.warn('[DEPRECATED] selectElements() is deprecated. Use querySelectorAll() instead.');
+        return this.querySelectorAll(selector, context);
+    }
+
+    /**
+     * Set text (compatibility adapter)
+     * @deprecated Use setTextContent() instead
+     */
+    setText(element, text) {
+        console.warn('[DEPRECATED] setText() is deprecated. Use setTextContent() instead.');
+        return this.setTextContent(element, text);
+    }
+
+    /**
+     * Get text (compatibility adapter)
+     */
+    getText(element) {
+        return element ? element.textContent : '';
+    }
+
+    /**
+     * Get HTML (compatibility adapter)
+     */
+    getHTML(element) {
+        return element ? element.innerHTML : '';
+    }
+
+    /**
+     * Set HTML (compatibility adapter)
+     */
+    setHTML(element, html) {
+        if (element) {
+            element.innerHTML = html || '';
+            return true;
+        }
+        return false;
     }
 }
 

@@ -59,7 +59,8 @@ function setupBreadcrumbs() {
         'workload_distribution': ['Dashboard', 'Workload Distribution'],
         'message_history': ['Dashboard', 'Message History'],
         'agent_activity': ['Dashboard', 'Agent Activity'],
-        'queue_status': ['Dashboard', 'Queue Status']
+        'queue_status': ['Dashboard', 'Queue Status'],
+        'engine-discovery': ['Dashboard', 'Engine Discovery']
     };
 
     function updateBreadcrumbs(view) {

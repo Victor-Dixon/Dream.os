@@ -56,12 +56,12 @@ Integrated a comprehensive cycle accomplishments report feature into the soft on
 
 Reports are saved to:
 ```
-docs/cycles/CYCLE_ACCOMPLISHMENTS_{cycle_id}_{timestamp}.md
+docs/archive/cycles/CYCLE_ACCOMPLISHMENTS_{cycle_id}_{timestamp}.md
 ```
 
 **Example:**
-- `docs/cycles/CYCLE_ACCOMPLISHMENTS_C-050_2025-01-27_05-41-16.md`
-- `docs/cycles/CYCLE_ACCOMPLISHMENTS_2025-11-25_05-41-16.md`
+- `docs/archive/cycles/CYCLE_ACCOMPLISHMENTS_C-050_2025-01-27_05-41-16.md`
+- `docs/archive/cycles/CYCLE_ACCOMPLISHMENTS_2025-11-25_05-41-16.md`
 
 ---
 
@@ -91,7 +91,7 @@ print(f"Report generated: {report_path}")
 ## ✅ **TEST RESULTS**
 
 **Test Report Generated:**
-- `docs/cycles/CYCLE_ACCOMPLISHMENTS_2025-11-25_05-41-16.md`
+- `docs/archive/cycles/CYCLE_ACCOMPLISHMENTS_2025-11-25_05-41-16.md`
 
 **Processing Results:**
 - ✅ Successfully processed 7/8 agents
@@ -153,7 +153,7 @@ Each report includes:
 ## 📈 **BENEFITS**
 
 1. **Automated Reporting**: Reports generated automatically during onboarding
-2. **Historical Tracking**: All reports saved in `docs/cycles/` for easy discovery
+2. **Historical Tracking**: All reports saved in `docs/archive/cycles/` for easy discovery
 3. **Swarm Visibility**: Complete view of all agent accomplishments
 4. **Progress Tracking**: Easy to see cycle progress across the swarm
 5. **Programmatic Access**: Can be called from any Python code
@@ -184,7 +184,7 @@ Each report includes:
 **Next Steps:**
 - Reports automatically generated during soft onboarding
 - Manual generation available via CLI
-- All reports saved in `docs/cycles/` directory
+- All reports saved in `docs/archive/cycles/` directory
 
 ---
 

@@ -16,7 +16,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from .log_config import LoggingConfig
+    from .unified_logger import LoggingConfig
 
 from .log_formatters import ColorFormatter, PlainFormatter
 

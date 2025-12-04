@@ -13,6 +13,8 @@ import logging
 import statistics
 from datetime import datetime
 from typing import Any
+from dataclasses import dataclass, field
+
 
 logger = logging.getLogger(__name__)
 

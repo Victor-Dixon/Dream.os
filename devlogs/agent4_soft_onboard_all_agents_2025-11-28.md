@@ -37,7 +37,7 @@ Executed soft onboarding protocol for all 8 agents to transition from 11-28-2025
 
 ## 📊 **CYCLE REPORT GENERATED**
 
-**Report**: `docs/cycles/CYCLE_ACCOMPLISHMENTS_2025-11-28_2025-11-29_05-33-18.md`
+**Report**: `docs/archive/cycles/CYCLE_ACCOMPLISHMENTS_2025-11-28_2025-11-29_05-33-18.md`
 
 **Summary**:
 - **Agents Active**: 8/8

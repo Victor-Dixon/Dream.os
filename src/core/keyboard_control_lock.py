@@ -115,3 +115,46 @@ def release_lock(source: str):
     _keyboard_control_lock.release()
     logger.debug(f"🔓 Keyboard lock manually released by: {source}")
 
+
+def force_release_lock():
+    """
+    Force release keyboard lock (emergency recovery).
+    
+    WARNING: Only use when lock is stuck/deadlocked.
+    This bypasses normal source checking and should only be used
+    for recovery from stuck locks.
+    """
+    global _current_holder
+    
+    if not _keyboard_control_lock.locked():
+        logger.info("🔓 Lock not held - nothing to release")
+        return False
+    
+    logger.warning(
+        f"⚠️ FORCE RELEASING keyboard lock (was held by: {_current_holder})"
+    )
+    _current_holder = None
+    
+    try:
+        # Force release - may raise RuntimeError if lock not held by this thread
+        # But we check locked() first, so this should be safe
+        _keyboard_control_lock.release()
+        logger.info("✅ Keyboard lock force released")
+        return True
+    except RuntimeError as e:
+        logger.error(f"❌ Failed to force release lock: {e}")
+        return False
+
+
+def get_lock_status() -> dict:
+    """
+    Get detailed lock status for debugging.
+    
+    Returns:
+        Dictionary with lock status information
+    """
+    return {
+        "locked": _keyboard_control_lock.locked(),
+        "current_holder": _current_holder,
+        "timeout_seconds": _LOCK_TIMEOUT,
+    }

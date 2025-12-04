@@ -79,6 +79,11 @@ class MessageInterpreter:
         """
         message_lower = message.lower()
 
+        # Check for status commands first (special handling)
+        if message_lower.startswith("!status"):
+            # Status commands are handled separately
+            return None
+
         # Check for !agent1, !agent-1, etc.
         agent_commands = {
             "!agent1": "Agent-1",
@@ -113,6 +118,77 @@ class MessageInterpreter:
                 return agent_id
 
         return None
+
+    def is_status_command(self, message: str) -> bool:
+        """
+        Check if message is a status command.
+
+        Args:
+            message: Message content
+
+        Returns:
+            True if status command
+        """
+        message_lower = message.lower().strip()
+        status_commands = ["!status", "!swarm", "!agents"]
+        return any(message_lower.startswith(cmd) for cmd in status_commands)
+
+    def parse_status_command(self, message: str) -> tuple[str, Optional[str]]:
+        """
+        Parse status command to determine what status to show.
+
+        Args:
+            message: Status command message
+
+        Returns:
+            Tuple of (command_type, agent_id)
+            command_type: "all" or "agent"
+            agent_id: Specific agent ID if requesting single agent, None for all
+        """
+        message_lower = message.lower().strip()
+        parts = message_lower.split()
+
+        if len(parts) == 1:
+            # !status - show all
+            return ("all", None)
+
+        # Check for agent specification
+        agent_part = parts[1] if len(parts) > 1 else None
+
+        # Try to extract agent ID
+        agent_commands = {
+            "agent1": "Agent-1",
+            "agent-1": "Agent-1",
+            "agent_one": "Agent-1",
+            "agent2": "Agent-2",
+            "agent-2": "Agent-2",
+            "agent_two": "Agent-2",
+            "agent3": "Agent-3",
+            "agent-3": "Agent-3",
+            "agent_three": "Agent-3",
+            "agent4": "Agent-4",
+            "agent-4": "Agent-4",
+            "captain": "Agent-4",
+            "agent_four": "Agent-4",
+            "agent5": "Agent-5",
+            "agent-5": "Agent-5",
+            "agent_five": "Agent-5",
+            "agent6": "Agent-6",
+            "agent-6": "Agent-6",
+            "agent_six": "Agent-6",
+            "agent7": "Agent-7",
+            "agent-7": "Agent-7",
+            "agent_seven": "Agent-7",
+            "agent8": "Agent-8",
+            "agent-8": "Agent-8",
+            "agent_eight": "Agent-8",
+        }
+
+        if agent_part and agent_part in agent_commands:
+            return ("agent", agent_commands[agent_part])
+
+        # Default to all if can't parse
+        return ("all", None)
 
     def _is_broadcast_command(self, message: str) -> bool:
         """

@@ -2,6 +2,8 @@
 Metrics Repository - SSOT for Metrics Data
 ==========================================
 
+<!-- SSOT Domain: integration -->
+
 Persistent storage for metrics data from MetricsEngine.
 Provides SSOT for all metrics history and analytics.
 

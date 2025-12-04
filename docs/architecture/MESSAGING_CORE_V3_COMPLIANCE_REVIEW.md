@@ -1,3 +1,4 @@
+<!-- SSOT Domain: architecture -->
 # Messaging Core V3 Compliance Review
 
 **Reviewer**: Agent-2 (Architecture & Design Specialist)  

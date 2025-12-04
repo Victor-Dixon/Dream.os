@@ -1,4 +1,8 @@
+<!-- SSOT Domain: architecture -->
 # V2 Architecture Best Practices
+
+> **📚 SSOT Reference**: For V2 Architecture patterns, see [V2_ARCHITECTURE_PATTERNS_GUIDE.md](./V2_ARCHITECTURE_PATTERNS_GUIDE.md)
+
 **Mission:** C-059-7 (Autonomous Claim)  
 **Agent:** Agent-2 (Architecture & Design Specialist)  
 **Date:** 2025-10-11  

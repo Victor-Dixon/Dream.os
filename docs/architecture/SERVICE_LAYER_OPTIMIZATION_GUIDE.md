@@ -1,4 +1,8 @@
+<!-- SSOT Domain: architecture -->
 # Service Layer Optimization Guide
+
+> **📚 SSOT Reference**: For Service Architecture patterns, see [SERVICE_ARCHITECTURE_PATTERNS.md](./SERVICE_ARCHITECTURE_PATTERNS.md)
+
 **Mission:** C-059-9 (Autonomous Claim)  
 **Agent:** Agent-2 (Architecture & Design Specialist)  
 **Date:** 2025-10-11  

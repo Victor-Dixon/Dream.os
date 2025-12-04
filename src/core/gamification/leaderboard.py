@@ -10,6 +10,8 @@ License: MIT
 """
 
 from .achievements import AgentScore
+from typing import Dict, List, Callable, Any, Optional, Union, Tuple, Set
+
 
 
 class LeaderboardManager:

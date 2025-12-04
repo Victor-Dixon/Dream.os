@@ -3,6 +3,8 @@
 Messaging Models - V2 Compliance Module
 =======================================
 
+<!-- SSOT Domain: integration -->
+
 Core messaging models and enums.
 Extracted from messaging_core.py (472→<300 lines)
 

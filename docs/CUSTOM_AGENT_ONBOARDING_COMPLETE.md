@@ -193,7 +193,7 @@ DELIVERABLE: [output] | NEXT: [who/what]
 ## ✅ AGENT READINESS CHECKLIST
 
 Each agent should now:
-- [ ] Read their sprint plan (`docs/sprints/AGENT-[X]_SPRINT.md`)
+- [ ] Read their sprint plan (`docs/archive/sprints/AGENT-[X]_SPRINT.md`)
 - [ ] Review cycle timeline (`docs/CYCLE_TIMELINE.md`)
 - [ ] Locate their first cycle assignment
 - [ ] Understand cycle response format

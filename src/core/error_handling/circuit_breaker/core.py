@@ -25,13 +25,10 @@ class CircuitState(Enum):
     HALF_OPEN = "half_open"
 
 
-class CircuitBreakerConfig:
-    """Configuration for circuit breaker."""
+# Infrastructure SSOT: CircuitBreakerConfig moved to config_dataclasses.py
+from src.core.config.config_dataclasses import CircuitBreakerConfig
 
-    def __init__(self, name: str, failure_threshold: int = 5, timeout_seconds: int = 60):
-        self.name = name
-        self.failure_threshold = failure_threshold
-        self.timeout_seconds = timeout_seconds
+# Note: SSOT CircuitBreakerConfig has timeout_seconds property for backward compatibility
 
 
 class CircuitBreakerCore:
@@ -69,7 +66,9 @@ class CircuitBreakerCore:
 
         if self.failure_count >= self.config.failure_threshold:
             self.state = CircuitState.OPEN
-            self.next_attempt_time = datetime.now() + timedelta(seconds=self.config.timeout_seconds)
+            # Use timeout_seconds property (backward compatibility)
+            timeout = self.config.timeout_seconds if hasattr(self.config, 'timeout_seconds') else self.config.recovery_timeout
+            self.next_attempt_time = datetime.now() + timedelta(seconds=timeout)
             logger.warning(
                 f"Circuit breaker '{self.config.name}' opened after {self.failure_count} failures"
             )
@@ -81,7 +80,7 @@ class CircuitBreakerCore:
             "state": self.state.value,
             "failure_count": self.failure_count,
             "failure_threshold": self.config.failure_threshold,
-            "timeout_seconds": self.config.timeout_seconds,
+            "timeout_seconds": self.config.timeout_seconds if hasattr(self.config, 'timeout_seconds') else int(self.config.recovery_timeout),
             "last_failure_time": (
                 self.last_failure_time.isoformat() if self.last_failure_time else None
             ),

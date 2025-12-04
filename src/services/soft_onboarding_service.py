@@ -273,50 +273,70 @@ Press Enter when complete to proceed to next session onboarding!
         """
         Execute full soft onboarding protocol (6 steps with animations).
 
-        CRITICAL: Wrapped in keyboard_control to block other sends during operation.
+        CRITICAL: Checks if keyboard lock is already held before acquiring.
+        Prevents nested lock deadlocks when called from soft_onboard_agent().
         """
-        from ..core.keyboard_control_lock import keyboard_control
+        from ..core.keyboard_control_lock import keyboard_control, is_locked
 
-        with keyboard_control(f"soft_onboard_{agent_id}"):
-            try:
-                logger.info(
-                    f"🚀 Starting 6-step soft onboarding for {agent_id}")
+        # Check if lock is already held (e.g., by soft_onboard_multiple_agents or queue processor)
+        lock_already_held = is_locked()
 
-                # Step 1: Click chat input
-                if not self.step_1_click_chat_input(agent_id):
-                    logger.error("❌ Step 1 failed: Click chat input")
-                    return False
+        if lock_already_held:
+            logger.debug(f"🔒 Keyboard lock already held, executing steps without acquiring lock")
+            # Execute steps without acquiring lock (caller already has it)
+            return self._execute_soft_onboarding_steps(agent_id, onboarding_message, role, custom_cleanup_message)
+        else:
+            # Acquire lock and execute steps
+            with keyboard_control(f"soft_onboard_{agent_id}"):
+                return self._execute_soft_onboarding_steps(agent_id, onboarding_message, role, custom_cleanup_message)
 
-                # Step 2: Save session
-                if not self.step_2_save_session():
-                    logger.error("❌ Step 2 failed: Save session")
-                    return False
+    def _execute_soft_onboarding_steps(
+        self, agent_id: str, onboarding_message: str, role: str = None, custom_cleanup_message: str = None
+    ) -> bool:
+        """
+        Execute the actual soft onboarding steps (no lock management).
+        
+        This method performs the 6-step protocol without acquiring/releasing locks.
+        Lock management is handled by the caller (execute_soft_onboarding).
+        """
+        try:
+            logger.info(f"🚀 Starting 6-step soft onboarding for {agent_id}")
 
-                # Step 3: Send cleanup prompt
-                if not self.step_3_send_cleanup_prompt(agent_id, custom_cleanup_message):
-                    logger.error("❌ Step 3 failed: Send cleanup prompt")
-                    return False
-
-                # Step 4: Open new tab
-                if not self.step_4_open_new_tab():
-                    logger.error("❌ Step 4 failed: Open new tab")
-                    return False
-
-                # Step 5: Navigate to onboarding
-                if not self.step_5_navigate_to_onboarding(agent_id):
-                    logger.error("❌ Step 5 failed: Navigate to onboarding")
-                    return False
-
-                # Step 6: Paste onboarding message
-                if not self.step_6_paste_onboarding_message(agent_id, onboarding_message):
-                    logger.error("❌ Step 6 failed: Paste onboarding message")
-                    return False
-
-                logger.info(f"🎉 Soft onboarding complete for {agent_id}!")
-                return True
-            except Exception as e:
-                logger.error(f"Soft onboarding execution failed: {e}")
+            # Step 1: Click chat input
+            if not self.step_1_click_chat_input(agent_id):
+                logger.error("❌ Step 1 failed: Click chat input")
                 return False
+
+            # Step 2: Save session
+            if not self.step_2_save_session():
+                logger.error("❌ Step 2 failed: Save session")
+                return False
+
+            # Step 3: Send cleanup prompt
+            if not self.step_3_send_cleanup_prompt(agent_id, custom_cleanup_message):
+                logger.error("❌ Step 3 failed: Send cleanup prompt")
+                return False
+
+            # Step 4: Open new tab
+            if not self.step_4_open_new_tab():
+                logger.error("❌ Step 4 failed: Open new tab")
+                return False
+
+            # Step 5: Navigate to onboarding
+            if not self.step_5_navigate_to_onboarding(agent_id):
+                logger.error("❌ Step 5 failed: Navigate to onboarding")
+                return False
+
+            # Step 6: Paste onboarding message
+            if not self.step_6_paste_onboarding_message(agent_id, onboarding_message):
+                logger.error("❌ Step 6 failed: Paste onboarding message")
+                return False
+
+            logger.info(f"🎉 Soft onboarding complete for {agent_id}!")
+            return True
+        except Exception as e:
+            logger.error(f"Soft onboarding execution failed: {e}")
+            return False
 
 
 def soft_onboard_agent(agent_id: str, message: str, **kwargs) -> bool:
@@ -473,7 +493,7 @@ def generate_cycle_accomplishments_report(cycle_id: str | None = None) -> Path |
                         'Report generated:')[1].strip()
                     return Path(report_path_str)
             # If path not found in output, return default location
-            return Path("docs/cycles")
+            return Path("docs/archive/cycles")
         else:
             logger.warning(
                 f"⚠️  Cycle report generation failed: {result.stderr[:200]}")

@@ -3,6 +3,8 @@
 Unified Metrics Reader - Integration with Agent-8's Metrics Exporter
 =====================================================================
 
+<!-- SSOT Domain: analytics -->
+
 Reads unified metrics from Agent-8's metrics exporter for monitoring and reporting.
 
 V2 Compliance:
@@ -116,4 +118,5 @@ class UnifiedMetricsReader:
             output_path = self.metrics_export_path
         
         return self.exporter.export_to_json(output_path)
+
 

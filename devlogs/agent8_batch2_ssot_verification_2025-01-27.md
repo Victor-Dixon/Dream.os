@@ -15,7 +15,7 @@ Prepared SSOT verification checklist and workflow for Batch 2 merges (7/12 compl
 ## ✅ **Actions Taken**
 
 1. **Created SSOT Verification Checklist**
-   - Location: `docs/consolidation/BATCH2_SSOT_VERIFICATION_CHECKLIST.md`
+   - Location: `docs/archive/consolidation/BATCH2_SSOT_VERIFICATION_CHECKLIST.md`
    - Post-merge verification procedures documented
    - Verification categories defined
    - Usage instructions provided

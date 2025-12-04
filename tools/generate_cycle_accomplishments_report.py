@@ -11,7 +11,7 @@ Part of soft onboarding protocol - automatically generates report during onboard
 Usage:
     python tools/generate_cycle_accomplishments_report.py
     python tools/generate_cycle_accomplishments_report.py --cycle C-XXX
-    python tools/generate_cycle_accomplishments_report.py --output docs/cycles/
+    python tools/generate_cycle_accomplishments_report.py --output docs/archive/cycles/
 
 Author: Agent-7 (Web Development Specialist)
 Date: 2025-01-27
@@ -76,14 +76,14 @@ def generate_cycle_report(
     
     Args:
         cycle_id: Optional cycle identifier (e.g., "C-XXX")
-        output_dir: Optional output directory (default: docs/cycles/)
+        output_dir: Optional output directory (default: docs/archive/cycles/)
     
     Returns:
         Path to generated report file
     """
     # Determine output directory
     if output_dir is None:
-        output_dir = Path("docs/cycles")
+        output_dir = Path("docs/archive/cycles")
     else:
         output_dir = Path(output_dir)
     
@@ -237,7 +237,7 @@ def main():
     parser.add_argument(
         "--output",
         type=str,
-        help="Output directory (default: docs/cycles/)"
+        help="Output directory (default: docs/archive/cycles/)"
     )
     
     args = parser.parse_args()

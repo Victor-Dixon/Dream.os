@@ -111,26 +111,27 @@ class AgentStatusQuickCheckTool(IToolAdapter):
             import sys
             from pathlib import Path
             sys.path.insert(0, str(Path(__file__).parent.parent.parent / "tools"))
-            from agent_status_quick_check import AgentStatusChecker
+            # NOTE: agent_status_quick_check consolidated into unified_agent_status_monitor
+            from unified_agent_status_monitor import UnifiedAgentStatusMonitor
             params = params or {}
-            checker = AgentStatusChecker(Path("agent_workspaces"))
+            monitor = UnifiedAgentStatusMonitor(Path("agent_workspaces").parent)
             if params.get("check_all"):
                 output = {"mode": "all", "agents": {}}
                 for agent_dir in (Path("agent_workspaces")).iterdir():
                     if agent_dir.is_dir() and agent_dir.name.startswith("Agent-"):
-                        status = checker.get_agent_status(agent_dir.name)
+                        status = monitor.get_quick_status(agent_dir.name)
                         if status:
                             output["agents"][agent_dir.name] = {
-                                "mission": status.get("current_mission", "None"),
+                                "mission": status.get("mission", "None"),
                                 "status": status.get("status", "Unknown"),
-                                "points": status.get("total_points_earned", 0)
+                                "points": status.get("points", 0)
                             }
             elif params.get("agent_id"):
-                status = checker.get_agent_status(params["agent_id"])
+                status = monitor.get_quick_status(params["agent_id"])
                 if not status:
                     return ToolResult(success=False, output=None, error_message=f"Status not found for {params['agent_id']}", exit_code=1)
-                output = {"agent_id": params["agent_id"], "mission": status.get("current_mission"), "status": status.get("status"),
-                    "points": status.get("total_points_earned", 0), "phase": status.get("current_phase")}
+                output = {"agent_id": params["agent_id"], "mission": status.get("mission"), "status": status.get("status"),
+                    "points": status.get("points", 0), "phase": status.get("phase")}
             else:
                 return ToolResult(success=False, output=None, error_message="Must specify agent_id or check_all=True", exit_code=1)
             return ToolResult(success=True, output=output)

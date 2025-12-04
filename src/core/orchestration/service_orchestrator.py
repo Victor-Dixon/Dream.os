@@ -1,3 +1,9 @@
+"""
+Service Orchestrator - Service Pipeline
+
+<!-- SSOT Domain: integration -->
+"""
+
 from __future__ import annotations
 
 from collections.abc import Iterable

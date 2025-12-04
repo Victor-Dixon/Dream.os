@@ -40,11 +40,11 @@ Optimized the stall/resume prompt system and integrated it with FSM (Finite Stat
 - Displays task details (ID, title, priority, points)
 - Suggests claiming and executing task
 
-### **Urgency Levels**
+### **Urgency Levels** (Updated 2025-12-03)
 - 🚨🚨 **CRITICAL** (10+ min): Immediate action required
-- 🚨 **URGENT** (8+ min): Resume immediately
-- ⚠️ **WARNING** (5+ min): Continue work now
-- 🔄 **RECOVERY** (<5 min): Resume operations
+- 🚨 **URGENT** (5+ min): Resume immediately (aligned with 5-minute threshold)
+- ⚠️ **WARNING** (3+ min): Continue work now
+- 🔄 **RECOVERY** (<3 min): Resume operations
 
 ## 📊 Impact
 

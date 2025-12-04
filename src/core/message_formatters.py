@@ -3,6 +3,8 @@
 Message Template Formatters
 ============================
 
+<!-- SSOT Domain: integration -->
+
 Implements compact, minimal, and full message formatting templates
 for the unified messaging system.
 

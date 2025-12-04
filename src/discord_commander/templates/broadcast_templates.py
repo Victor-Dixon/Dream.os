@@ -101,6 +101,72 @@ Daily standup time. Please share:
             "priority": "regular",
         },
         {
+            "name": "System Utilization Protocol",
+            "emoji": "🔧",
+            "message": """🔧 SYSTEM UTILIZATION PROTOCOL - MANDATORY FOR ALL AGENTS
+
+**NEW PROTOCOL CREATED**: System Utilization Protocol is now MANDATORY
+
+**WHAT THIS MEANS:**
+
+Agents are underutilizing critical systems. This protocol makes system utilization MANDATORY at key workflow points.
+
+**MANDATORY CHECKPOINTS:**
+
+**Every Cycle Start:**
+
+1. ✅ Check Contract System: python -m src.services.messaging_cli --get-next-task --agent Agent-X
+
+2. ✅ Check Swarm Brain: Search for similar work/patterns before starting
+
+3. ✅ Update FSM State: Update fsm_state in status.json to reflect current state
+
+4. ✅ Update last_updated timestamp
+
+**Before New Task:**
+
+1. ✅ Run Project Scanner (if analysis stale >24 hours): python tools/run_project_scan.py
+
+2. ✅ Check Swarm Brain for patterns
+
+3. ✅ Check Contract System
+
+4. ✅ Review project_analysis.json for opportunities
+
+**During Work:**
+
+1. ✅ Update FSM State on transitions
+
+2. ✅ Update status.json with progress
+
+**After Task:**
+
+1. ✅ Share learning to Swarm Brain
+
+2. ✅ Update FSM State to 'complete'
+
+3. ✅ Update status.json with results
+
+**FULL PROTOCOL**: swarm_brain/protocols/SYSTEM_UTILIZATION_PROTOCOL.md
+
+**ENFORCEMENT**: Captain monitors system utilization. Violations result in intervention.
+
+**SYSTEMS DOCUMENTATION:**
+
+- Project Scanner: swarm_brain/procedures/PROCEDURE_PROJECT_SCANNING.md
+
+- Swarm Brain: swarm_brain/protocols/SWARM_BRAIN_ACCESS_GUIDE.md
+
+- FSM System: swarm_brain/protocols/AGENT_LIFECYCLE_FSM.md
+
+- Contract System: docs/SYSTEM_DRIVEN_WORKFLOW.md
+
+**🐝 WE. ARE. SWARM. ⚡🔥**
+
+**USE THE SYSTEMS - THEY MAKE YOU SMARTER AND MORE EFFICIENT!**""",
+            "priority": "regular",
+        },
+        {
             "name": "Progress Update",
             "emoji": "📈",
             "message": """[C2A] All Agents | Progress Update Request
@@ -543,6 +609,32 @@ Resource sharing coordination needed.
 
 🐝 WE. ARE. SWARM. ⚡🔥""",
             "priority": "regular",
+        },
+        {
+            "name": "Captain Restart Pattern",
+            "emoji": "🛰️",
+            "message": """[C2A] Agent-4 | Captain Restart Pattern v1
+
+**Priority**: NORMAL
+**Status**: RESTART_PATTERN
+
+Captain Restart Pattern v1 - On wake: (1) Check inbox for this message, (2) Run 5-minute checklist: status.json stamp, inbox sweep, status sweep (all 8 agents), immediate follow-ups using Force Multiplier/Agent Pairing/Telephone Game, devlog anchor. (3) Touch at least one SSOT remediation action and one Phase 2 consolidation action. (4) Log cycle in devlog.
+
+**Active Missions**:
+- SSOT remediation (Priority 1)
+- Phase 2 tools consolidation
+
+**Follow-Up Targets**:
+- Agent-5 (Phase 2 execution)
+- Agent-3 (infra monitoring %)
+- Agent-2 (43 architecture files)
+- Agent-1 (coordinate loaders)
+- Agent-7 (DOM utils + status update)
+
+**Full Pattern**: agent_workspaces/Agent-4/inbox/CAPTAIN_RESTART_PATTERN_V1_2025-12-03.md
+
+🐝 WE. ARE. SWARM. ⚡🔥""",
+            "priority": "normal",
         },
     ],
     "architectural": [

@@ -3,6 +3,8 @@
 Base Orchestrator - V2 Compliant Foundation
 ============================================
 
+<!-- SSOT Domain: integration -->
+
 Base class for all orchestrators providing common lifecycle management,
 component coordination, and standardized interfaces.
 

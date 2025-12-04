@@ -1,16 +1,37 @@
 # AUTO-GENERATED __init__.py
 # DO NOT EDIT MANUALLY - changes may be overwritten
 
-from . import file_locking_engine_operations
-from . import file_locking_engine_platform
-from . import file_locking_manager
+# Lazy imports to avoid circular dependencies
+# Import only models at module level (no circular dependencies)
 from . import file_locking_models
-from . import file_locking_orchestrator
+
+# Export models (SSOT - no circular dependencies)
+from .file_locking_models import (
+    LockConfig,
+    LockInfo,
+    LockMetrics,
+    LockResult,
+    LockStatus,
+)
+
+# Export manager (SSOT for high-level operations)
+from .file_locking_manager import FileLockManager, FileLockContext, get_file_lock_manager
+
+# Export engine base (redirect shim for backward compatibility)
+from .file_locking_engine_base import file_locking_engine_base, FileLockEngineBase, FileLockEngine
 
 __all__ = [
-    'file_locking_engine_operations',
-    'file_locking_engine_platform',
-    'file_locking_manager',
     'file_locking_models',
-    'file_locking_orchestrator',
+    'LockConfig',
+    'LockInfo',
+    'LockMetrics',
+    'LockResult',
+    'LockStatus',
+    'FileLockManager',
+    'FileLockContext',
+    'get_file_lock_manager',
+    'file_locking_engine_base',  # Redirect shim for backward compatibility
+    'FileLockEngineBase',  # Alias for FileLockEngine
+    'FileLockEngine',  # SSOT implementation
+    # Other classes exported via lazy imports when modules are accessed
 ]

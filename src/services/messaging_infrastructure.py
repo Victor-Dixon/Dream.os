@@ -2,6 +2,9 @@
 """
 UNIFIED MESSAGING INFRASTRUCTURE - Services Layer Consolidation
 ===============================================================
+
+<!-- SSOT Domain: integration -->
+
 Consolidates messaging CLI support (7 files → 1): parser, formatters, handlers, service adapters
 V2 Compliance | Author: Agent-2 | Date: 2025-10-15
 """

@@ -11,17 +11,7 @@ License: MIT
 import logging
 import time
 from typing import Any
-try:
-    from ...core.unified_data_processing_system import read_json, write_json
-    from ..models.messaging_models import RecipientType, SenderType
-except ImportError:
-    COORDINATE_CONFIG_FILE = 'cursor_agent_coords.json'
-
-    def read_json(path):
-        return {}
-
-    def write_json(path, data):
-        pass
+from ...core.coordinate_loader import get_coordinate_loader
 
 
 class CoordinateHandler:
@@ -45,6 +35,9 @@ class CoordinateHandler:
     async def load_coordinates_async(self, service=None) ->dict[str, Any]:
         """Load agent coordinates asynchronously with caching.
 
+        Uses SSOT coordinate loader (get_coordinate_loader()) to ensure
+        single source of truth for coordinate data.
+
         Args:
             service: Messaging service instance (optional)
 
@@ -59,12 +52,22 @@ class CoordinateHandler:
                 return {'success': True, 'coordinates': self.
                     coordinates_cache, 'agent_count': len(self.
                     coordinates_cache), 'cached': True}
-            coords_data = read_json(COORDINATE_CONFIG_FILE)
+            
+            # Use SSOT coordinate loader
+            coord_loader = get_coordinate_loader()
+            all_agents = coord_loader.get_all_agents()
+            
+            # Convert SSOT format to expected format: {agent_id: [x, y]}
             coordinates = {}
-            if 'agents' in coords_data:
-                for agent_id, agent_data in coords_data['agents'].items():
-                    coordinates[agent_id] = agent_data.get(
-                        'chat_input_coordinates', [0, 0])
+            for agent_id in all_agents:
+                try:
+                    chat_coords = coord_loader.get_chat_coordinates(agent_id)
+                    # Convert tuple to list for compatibility
+                    coordinates[agent_id] = [chat_coords[0], chat_coords[1]]
+                except (ValueError, KeyError) as e:
+                    self.logger.warning(f'Failed to get coordinates for {agent_id}: {e}')
+                    coordinates[agent_id] = [0, 0]
+            
             self.coordinates_cache = coordinates
             self.last_coordinate_load = current_time
             return {'success': True, 'coordinates': coordinates,

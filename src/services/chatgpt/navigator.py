@@ -11,6 +11,7 @@ Author: Agent-1 - Browser Automation Specialist
 License: MIT
 """
 
+import asyncio
 import time
 from pathlib import Path
 from typing import Optional, Dict, Any

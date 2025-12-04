@@ -1,6 +1,8 @@
 """
 Messaging CLI Formatters Module
 Handles message templates and formatting
+
+<!-- SSOT Domain: communication -->
 """
 
 SURVEY_MESSAGE_TEMPLATE = """

@@ -53,7 +53,7 @@
 
 3. **Inactivity Threshold Not Met**
    - Monitor checks every 5 minutes
-   - Only sends resume if inactive 30+ minutes
+   - Only sends resume if inactive 5+ minutes
    - May not have triggered yet
 
 4. **Activity Detector May Not Be Working**

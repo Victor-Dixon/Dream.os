@@ -61,7 +61,7 @@ if activity_detector:
 ### **Inactivity Detection Flow**:
 1. **Every 15 seconds**: Status monitor checks all agents
 2. **Every 5 minutes** (20 iterations): Inactivity check runs
-3. **If inactive 30+ minutes**: 
+3. **If inactive 5+ minutes**: 
    - Generate resume prompt
    - **SEND resume message to agent** (via messaging system) ✅ **NEW**
    - Post resume prompt to Discord (for visibility)
@@ -95,7 +95,7 @@ if activity_detector:
 - ✅ No linting errors
 
 **Testing**:
-- Status monitor will now send resume messages when agents are inactive 30+ minutes
+- Status monitor will now send resume messages when agents are inactive 5+ minutes
 - Messages sent via messaging system (proper delivery)
 - Discord notifications still posted (for visibility)
 

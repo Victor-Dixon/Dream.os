@@ -90,17 +90,37 @@ async def main():
     
     # Load configuration
     access_token = os.getenv("TWITCH_ACCESS_TOKEN")
-    channel = os.getenv("TWITCH_CHANNEL")
+    channel = os.getenv("TWITCH_CHANNEL", "").strip()
     swarm_voice = os.getenv("TWITCH_SWARM_VOICE")
+    
+    # Fix channel name if it's a URL
+    if channel:
+        # Extract channel name from URL if needed
+        if "twitch.tv/" in channel.lower():
+            # Extract channel name from URL
+            parts = [p for p in channel.split("/") if p.strip()]  # Filter empty parts
+            channel = parts[-1].strip() if parts else channel
+            # Remove trailing slash or empty string
+            channel = channel.rstrip("/").strip()
+            if channel.startswith("#"):
+                channel = channel[1:]
+            print(f"🔧 Extracted channel name from URL: {channel}")
+        # Remove any # prefix
+        if channel.startswith("#"):
+            channel = channel[1:]
     
     # Build config
     twitch_config = None
     
     if access_token and channel:
         username = os.getenv("TWITCH_BOT_USERNAME") or channel
+        # Ensure token has oauth: prefix (required by Twitch IRC)
+        oauth_token = access_token
+        if not oauth_token.startswith("oauth:"):
+            oauth_token = f"oauth:{oauth_token}"
         twitch_config = {
             "username": username,
-            "oauth_token": access_token,
+            "oauth_token": oauth_token,
             "channel": channel,
         }
         print(f"✅ Using OAuth token for channel: {channel}")

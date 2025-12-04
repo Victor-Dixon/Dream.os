@@ -3,6 +3,8 @@
 PyAutoGUI Messaging Delivery
 Sends messages to agent chat input coordinates using PyAutoGUI
 
+<!-- SSOT Domain: communication -->
+
 RACE CONDITION FIXES (2025-10-15):
 - Clipboard locking to prevent concurrent overwrites
 - Increased delays (0.5s→1.0s) for slow systems
@@ -20,6 +22,8 @@ import threading
 
 # Import global keyboard control lock
 from .keyboard_control_lock import keyboard_control
+from typing import Dict, List, Callable, Any, Optional, Union, Tuple, Set
+
 
 logger = logging.getLogger(__name__)
 
@@ -682,4 +686,9 @@ def send_message_pyautogui(agent_id: str, message: str, timeout: int = 30) -> bo
 
 def send_message_to_onboarding_coords(agent_id: str, message: str, timeout: int = 30) -> bool:
     """Send message to onboarding coordinates."""
+    return send_message_pyautogui(agent_id, message, timeout)
+
+
+def send_message_to_agent(agent_id: str, message: str, timeout: int = 30) -> bool:
+    """Alias for send_message_pyautogui for backward compatibility."""
     return send_message_pyautogui(agent_id, message, timeout)

@@ -3,6 +3,8 @@
 Unified Discord Bot - Single Bot for Agent Messaging
 ====================================================
 
+<!-- SSOT Domain: web -->
+
 Single, unified Discord bot providing complete GUI access to agent messaging system.
 Consolidates all Discord functionality into one bot instance.
 
@@ -17,8 +19,6 @@ Author: Agent-3 (Infrastructure & DevOps) - Discord Consolidation
 License: MIT
 """
 
-from src.discord_commander.discord_gui_controller import DiscordGUIController
-from src.services.messaging_infrastructure import ConsolidatedMessagingService
 import asyncio
 import logging
 import os
@@ -28,6 +28,10 @@ from pathlib import Path
 # Add project root to path FIRST (before any src imports)
 project_root = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(project_root))
+
+# Now import src modules (after path is set)
+from src.discord_commander.discord_gui_controller import DiscordGUIController
+from src.services.unified_messaging_service import UnifiedMessagingService
 
 # Load environment variables from .env file
 try:
@@ -142,7 +146,7 @@ class UnifiedDiscordBot(commands.Bot):
 
         self.token = token
         self.channel_id = channel_id
-        self.messaging_service = ConsolidatedMessagingService()
+        self.messaging_service = UnifiedMessagingService()
         self.gui_controller = DiscordGUIController(self.messaging_service)
         self.logger = logging.getLogger(__name__)
 
@@ -864,6 +868,32 @@ class MessagingCommands(commands.Cog):
             self.logger.error(f"Error showing help: {e}")
             await ctx.send(f"❌ Error: {e}")
 
+    @commands.command(name="aria", description="✨ View Aria's interactive profile!")
+    async def aria_profile(self, ctx: commands.Context):
+        """Display Aria's interactive profile with buttons!"""
+        try:
+            from src.discord_commander.views.aria_profile_view import AriaProfileView
+
+            view = AriaProfileView()
+            embed = view._create_main_embed()
+            await ctx.send(embed=embed, view=view)
+        except Exception as e:
+            self.logger.error(f"Error in !aria command: {e}", exc_info=True)
+            await ctx.send(f"❌ Oops! Something went wrong: {e}")
+
+    @commands.command(name="carmyn", aliases=["carymn"], description="🌟 Display Carmyn's awesome profile!")
+    async def carmyn_profile(self, ctx: commands.Context):
+        """Display Carmyn's interactive profile with buttons!"""
+        try:
+            from .views.carmyn_profile_view import CarmynProfileView
+
+            view = CarmynProfileView()
+            embed = view._create_main_embed()
+            await ctx.send(embed=embed, view=view)
+        except Exception as e:
+            self.logger.error(f"Error in !carmyn command: {e}", exc_info=True)
+            await ctx.send(f"❌ Oops! Something went wrong: {e}")
+
     @commands.command(name="commands", description="List all registered commands")
     async def list_commands(self, ctx: commands.Context):
         """List all registered bot commands for debugging."""
@@ -1160,32 +1190,51 @@ class MessagingCommands(commands.Cog):
             )
             await ctx.send(embed=embed)
 
-            # Hard onboard each agent using captain_hard_onboard_agent.py
+            # Hard onboard each agent using hard onboarding service
             successful = []
             failed = []
 
             # Get project root (use module-level or calculate)
             project_root = Path(__file__).parent.parent.parent
 
+            # Import hard onboarding service
+            from ..services.hard_onboarding_service import hard_onboard_agent
+
             for agent_id in agent_list:
                 try:
-                    # Use absolute path to ensure reliable execution
-                    cli_path = project_root / 'tools' / 'captain_hard_onboard_agent.py'
-                    result = subprocess.run(
-                        ['python', str(cli_path), agent_id],
-                        capture_output=True,
-                        text=True,
-                        timeout=60,
-                        cwd=str(project_root)
+                    # Load onboarding message from agent's workspace
+                    onboarding_file = project_root / "agent_workspaces" / agent_id / "HARD_ONBOARDING_MESSAGE.md"
+                    
+                    if onboarding_file.exists():
+                        onboarding_message = onboarding_file.read_text(encoding="utf-8")
+                    else:
+                        # Use default onboarding message if file doesn't exist
+                        onboarding_message = f"""🚨 HARD ONBOARD - {agent_id}
+
+**Status**: RESET & ACTIVATE
+**Protocol**: Complete session reset
+
+**YOUR MISSION**: Resume autonomous operations immediately.
+
+**NEXT ACTIONS**:
+1. Check your inbox for assignments
+2. Update your status.json
+3. Resume autonomous execution
+4. Post devlog when work complete
+
+**WE. ARE. SWARM. AUTONOMOUS. POWERFUL. 🐝⚡🔥🚀**"""
+
+                    # Execute hard onboarding
+                    success = hard_onboard_agent(
+                        agent_id=agent_id,
+                        onboarding_message=onboarding_message,
+                        role=None
                     )
 
-                    if result.returncode == 0:
+                    if success:
                         successful.append(agent_id)
                     else:
-                        failed.append(
-                            (agent_id, result.stderr[:200] if result.stderr else "Unknown error"))
-                except subprocess.TimeoutExpired:
-                    failed.append((agent_id, "Timeout after 60 seconds"))
+                        failed.append((agent_id, "Hard onboarding service returned False"))
                 except Exception as e:
                     failed.append((agent_id, str(e)[:200]))
 
@@ -1762,9 +1811,9 @@ Agent, you appear stalled. CONTINUE AUTONOMOUSLY NOW.
             import re
             from datetime import datetime
 
-            cycles_dir = Path("docs/cycles")
+            cycles_dir = Path("docs/archive/cycles")
             if not cycles_dir.exists():
-                await ctx.send("❌ Cycles directory not found: `docs/cycles/`")
+                await ctx.send("❌ Cycles directory not found: `docs/archive/cycles/`")
                 return
 
             # Find cycle report files
@@ -1772,7 +1821,7 @@ Agent, you appear stalled. CONTINUE AUTONOMOUSLY NOW.
                 "CYCLE_ACCOMPLISHMENTS_*.md"), reverse=True)
 
             if not cycle_files:
-                await ctx.send("❌ No cycle accomplishment reports found in `docs/cycles/`")
+                await ctx.send("❌ No cycle accomplishment reports found in `docs/archive/cycles/`")
                 return
 
             # Select file based on date parameter

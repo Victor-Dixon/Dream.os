@@ -14,6 +14,8 @@ from dataclasses import dataclass
 from enum import Enum
 
 from src.swarm_brain.swarm_memory import SwarmMemory
+from dataclasses import dataclass, field
+
 
 # Optional messaging import (for Discord bot compatibility)
 try:

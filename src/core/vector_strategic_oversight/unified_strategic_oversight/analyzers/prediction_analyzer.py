@@ -14,6 +14,8 @@ from typing import Any
 from src.core.analytics.prediction.base_analyzer import BasePredictionAnalyzer
 
 from ..enums import ConfidenceLevel
+from dataclasses import dataclass, field
+
 
 
 @dataclass

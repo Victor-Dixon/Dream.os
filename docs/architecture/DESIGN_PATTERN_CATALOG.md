@@ -1,4 +1,8 @@
+<!-- SSOT Domain: architecture -->
 # Design Pattern Catalog
+
+> **📚 SSOT Reference**: For comprehensive design pattern documentation, see [ARCHITECTURE_PATTERNS_DOCUMENTATION.md](./ARCHITECTURE_PATTERNS_DOCUMENTATION.md)
+
 **Mission:** C-059-10 (Autonomous Claim)  
 **Agent:** Agent-2 (Architecture & Design Specialist)  
 **Date:** 2025-10-11  

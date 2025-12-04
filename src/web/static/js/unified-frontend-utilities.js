@@ -11,14 +11,14 @@
  * License: MIT
  */
 
-import { DOMUtils } from './dom-utils.js';
+import { DOMUtilsOrchestrator } from './dashboard/dom-utils-orchestrator.js';
 import { CacheUtils } from './cache-utils.js';
 import { ValidationUtils } from './validation-utils.js';
 import { EventUtils } from './event-utils.js';
 
 export class UnifiedFrontendUtilities {
     constructor() {
-        this.dom = new DOMUtils();
+        this.dom = new DOMUtilsOrchestrator();
         this.cache = new CacheUtils();
         this.validation = new ValidationUtils();
         this.events = new EventUtils();

@@ -3,6 +3,8 @@
 Output Flywheel Analytics Dashboard Generator
 =============================================
 
+<!-- SSOT Domain: analytics -->
+
 Generates HTML analytics dashboard for Output Flywheel metrics visualization.
 
 Author: Agent-5 (Business Intelligence Specialist)
@@ -15,11 +17,8 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any, Dict, List
 
-# Import metrics tracker
-import sys
-sys.path.insert(0, str(Path(__file__).parent))
-
-from metrics_tracker import OutputFlywheelMetricsTracker
+# Import metrics client (canonical)
+from .metrics_client import MetricsClient
 
 
 class AnalyticsDashboardGenerator:
@@ -35,15 +34,15 @@ class AnalyticsDashboardGenerator:
         
         self.metrics_dir = metrics_dir
         self.output_path = output_path
-        self.tracker = OutputFlywheelMetricsTracker(metrics_dir)
+        self.client = MetricsClient(metrics_dir)
 
     def generate_dashboard(self):
         """Generate complete dashboard HTML."""
-        metrics = self.tracker.get_current_metrics()
-        weekly_summary = self.tracker.generate_weekly_summary()
+        metrics = self.client.get_current_metrics()
+        weekly_summary = self.client.generate_weekly_summary()
         
         # Get historical data
-        weekly_summaries = self.tracker.metrics_data.get("weekly_summaries", [])
+        weekly_summaries = self.client.metrics_data.get("weekly_summaries", [])
         
         # Generate HTML
         html = self._generate_html(metrics, weekly_summary, weekly_summaries)

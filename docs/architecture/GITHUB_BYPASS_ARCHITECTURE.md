@@ -1,3 +1,4 @@
+<!-- SSOT Domain: architecture -->
 # GitHub Bypass Architecture - Bottleneck Breaking System
 
 **Date**: 2025-11-28  
