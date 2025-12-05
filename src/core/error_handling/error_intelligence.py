@@ -277,37 +277,57 @@ class ErrorIntelligenceEngine:
         Returns:
             System-wide intelligence report
         """
+        summary = self._calculate_system_summary()
+        high_risk_components = self._identify_high_risk_components()
+        patterns_data = self._format_detected_patterns()
+        component_health = self._get_all_component_health()
+
+        return {
+            "summary": summary,
+            "high_risk_components": high_risk_components,
+            "detected_patterns": patterns_data,
+            "component_health": component_health,
+        }
+
+    def _calculate_system_summary(self) -> dict[str, Any]:
+        """Calculate system-wide summary statistics."""
         total_errors = sum(m.total_errors for m in self.component_metrics.values())
         total_critical = sum(m.critical_errors for m in self.component_metrics.values())
+        high_risk_count = len(self._identify_high_risk_components())
 
-        high_risk_components = [
+        return {
+            "total_errors": total_errors,
+            "critical_errors": total_critical,
+            "components_tracked": len(self.component_metrics),
+            "high_risk_components": high_risk_count,
+            "patterns_detected": len(self.detected_patterns),
+        }
+
+    def _identify_high_risk_components(self) -> list[str]:
+        """Identify components with high or critical risk."""
+        return [
             comp
             for comp in self.component_metrics.keys()
             if self.predict_failure_risk(comp)[1] in ("high", "critical")
         ]
 
+    def _format_detected_patterns(self) -> list[dict[str, Any]]:
+        """Format detected patterns for report."""
+        return [
+            {
+                "error_type": p.error_type,
+                "component": p.component,
+                "frequency": p.frequency,
+                "trend": p.trend.value,
+                "suggested_action": p.suggested_action,
+            }
+            for p in self.detected_patterns
+        ]
+
+    def _get_all_component_health(self) -> dict[str, Any]:
+        """Get health status for all components."""
         return {
-            "summary": {
-                "total_errors": total_errors,
-                "critical_errors": total_critical,
-                "components_tracked": len(self.component_metrics),
-                "high_risk_components": len(high_risk_components),
-                "patterns_detected": len(self.detected_patterns),
-            },
-            "high_risk_components": high_risk_components,
-            "detected_patterns": [
-                {
-                    "error_type": p.error_type,
-                    "component": p.component,
-                    "frequency": p.frequency,
-                    "trend": p.trend.value,
-                    "suggested_action": p.suggested_action,
-                }
-                for p in self.detected_patterns
-            ],
-            "component_health": {
-                comp: self.get_component_health(comp) for comp in self.component_metrics.keys()
-            },
+            comp: self.get_component_health(comp) for comp in self.component_metrics.keys()
         }
 
     def _analyze_patterns(self) -> None:
