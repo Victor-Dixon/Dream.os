@@ -53,25 +53,37 @@ class RetrySafetyEngine:
         Raises:
             Exception: Last exception if all retries fail
         """
-        if config is None:
-            config = RetryConfiguration()
-
+        config = config or RetryConfiguration()
         effective_logger = logger or self.logger
+
+        return self._execute_retry_loop(operation_func, config, effective_logger)
+
+    def _execute_retry_loop(
+        self,
+        operation_func: Callable,
+        config: RetryConfiguration,
+        logger: logging.Logger | None,
+    ) -> Any:
+        """Execute retry loop with error handling."""
         last_exception = None
 
         for attempt in range(config.max_retries + 1):
             try:
-                if effective_logger and attempt > 0:
-                    self._get_logger().info(f"🔄 Retry attempt {attempt}/{config.max_retries}")
-
+                self._log_retry_attempt(attempt, config.max_retries, logger)
                 return operation_func()
-
             except config.exceptions as e:
                 last_exception = e
-                if self._handle_retry_failure(attempt, config, e, effective_logger):
+                if self._handle_retry_failure(attempt, config, e, logger):
                     break
 
         raise last_exception
+
+    def _log_retry_attempt(
+        self, attempt: int, max_retries: int, logger: logging.Logger | None
+    ) -> None:
+        """Log retry attempt if applicable."""
+        if logger and attempt > 0:
+            self._get_logger().info(f"🔄 Retry attempt {attempt}/{max_retries}")
 
     def _handle_retry_failure(
         self,
@@ -175,22 +187,35 @@ class RetrySafetyEngine:
         """
         import signal
 
-        def timeout_handler(signum, frame):
-            raise TimeoutError(f"Operation timed out after {timeout} seconds")
-
         effective_logger = logger or self.logger
+        timeout_handler = self._create_timeout_handler(timeout)
 
         try:
-            signal.signal(signal.SIGALRM, timeout_handler)
-            signal.alarm(int(timeout))
-            result = operation_func()
-            signal.alarm(0)
-            return result
-
+            return self._execute_with_signal_timeout(operation_func, timeout, timeout_handler)
         except TimeoutError as e:
             return self._handle_timeout(e, effective_logger, default_return)
         except Exception as e:
             return self._handle_timeout_error(e, effective_logger, default_return)
+        finally:
+            signal.alarm(0)
+
+    def _create_timeout_handler(self, timeout: float) -> Callable:
+        """Create timeout signal handler."""
+        def timeout_handler(signum, frame):
+            raise TimeoutError(f"Operation timed out after {timeout} seconds")
+        return timeout_handler
+
+    def _execute_with_signal_timeout(
+        self, operation_func: Callable, timeout: float, handler: Callable
+    ) -> Any:
+        """Execute operation with signal-based timeout."""
+        import signal
+        signal.signal(signal.SIGALRM, handler)
+        signal.alarm(int(timeout))
+        try:
+            result = operation_func()
+            signal.alarm(0)
+            return result
         finally:
             signal.alarm(0)
 
