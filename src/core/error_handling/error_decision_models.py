@@ -173,8 +173,18 @@ class ErrorDecisionEngine:
             Decision dictionary with action and parameters
         """
         severity, category, recoverability = self.classifier.classify(error)
+        decision = self._create_base_decision(severity, category, recoverability)
+        
+        self._evaluate_retry_decision(decision, error, attempt, recoverability)
+        self._evaluate_recovery_decision(decision, recoverability)
+        
+        return decision
 
-        decision = {
+    def _create_base_decision(
+        self, severity: Any, category: Any, recoverability: Any
+    ) -> dict[str, Any]:
+        """Create base decision structure."""
+        return {
             "severity": severity.value,
             "category": category.value,
             "recoverability": recoverability.value,
@@ -183,7 +193,10 @@ class ErrorDecisionEngine:
             "suggested_action": "log_and_raise",
         }
 
-        # Determine if should retry
+    def _evaluate_retry_decision(
+        self, decision: dict[str, Any], error: Exception, attempt: int, recoverability: Any
+    ) -> None:
+        """Evaluate and set retry decision."""
         if recoverability in (
             ErrorRecoverability.RECOVERABLE,
             ErrorRecoverability.PARTIALLY_RECOVERABLE,
@@ -193,9 +206,10 @@ class ErrorDecisionEngine:
                 decision["retry_delay"] = self.retry_config.get_delay(attempt)
                 decision["suggested_action"] = "retry_with_backoff"
 
-        # Determine if should attempt recovery
+    def _evaluate_recovery_decision(
+        self, decision: dict[str, Any], recoverability: Any
+    ) -> None:
+        """Evaluate and set recovery decision."""
         if recoverability != ErrorRecoverability.NOT_RECOVERABLE and not decision["should_retry"]:
             decision["should_recover"] = True
             decision["suggested_action"] = "attempt_recovery"
-
-        return decision
