@@ -73,8 +73,8 @@
     "Performance Optimization: Message Queue Throughput - Increased from ~0.2 msg/s to 100-500 msg/s (500x improvement)"
   ],
   "next_actions": [
-    "\u2705 ACTIVE: V2 Compliance Refactoring - Continue refactoring 15 function violations (Priority 1: 4 large violations >35 lines)",
-    "\u2705 ACTIVE: Tools Consolidation Phase 2 - Continue discovery analysis, identify consolidation targets in top 3 categories",
+    "\u23f3 ACTIVE: Phase 2 Infrastructure Monitoring Consolidation - Analyze workspace_health_monitor.py and mission_control.py, migrate unique features to unified_monitor.py",
+    "\u23f3 ACTIVE: Tools Consolidation Phase 2 Execution - Start monitoring tools consolidation (42 candidates identified)",
     "Continue infrastructure improvements - Test coverage maintenance (100%), CI/CD improvements, system reliability enhancements",
     "Maintain infrastructure tools and automation - Keep all tools operational and ready for use"
   ],
