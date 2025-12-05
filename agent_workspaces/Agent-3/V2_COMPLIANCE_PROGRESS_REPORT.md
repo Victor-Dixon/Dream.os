@@ -71,7 +71,7 @@
 
 ---
 
-## ⏳ **REMAINING VIOLATIONS** (11 total)
+## ⏳ **REMAINING VIOLATIONS** (9 total)
 
 ### **Priority 1: Large Violations (>35 lines)**
 1. `error_analysis_engine.py`:
@@ -89,16 +89,16 @@
 
 ### **Priority 2: Medium Violations (35-37 lines)**
 5. `error_analysis_engine.py`:
-   - `assess_system_health()`: 37 lines
+   - `assess_system_health()`: ⚠️ **FILE NOT FOUND** - May have been consolidated
 
 6. `error_decision_models.py`:
-   - `decide_action()`: 37 lines
+   - `decide_action()`: ✅ **FIXED** - Refactored to 25 lines using proper layering pattern
 
 7. `coordination_decorator.py`:
-   - `handle_coordination_errors()`: 36 lines
+   - `handle_coordination_errors()`: ✅ **FIXED** - Refactored to 25 lines using proper layering pattern
 
 8. `coordination_error_handler.py`:
-   - `execute_with_error_handling()`: 36 lines
+   - `execute_with_error_handling()`: ⚠️ **FILE NOT FOUND** - Extracted to coordination_decorator.py and error_execution.py
 
 ### **Priority 3: Small Violations (30-35 lines)**
 9. `error_handling_system.py`:
@@ -154,7 +154,7 @@
 
 ### **V2 Compliance**:
 - ✅ File sizes: 100% compliant (<300 lines)
-- ⏳ Function sizes: 96% compliant (11/263 functions need work)
+- ⏳ Function sizes: 97% compliant (9/263 functions need work)
 - **Target**: 100% compliance by end of week
 
 ### **Tools Consolidation**:
