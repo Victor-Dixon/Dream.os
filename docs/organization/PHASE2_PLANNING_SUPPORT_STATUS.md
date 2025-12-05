@@ -158,8 +158,8 @@
 
 **Tracker Files Updated**:
 - ✅ `docs/organization/PHASE2_PLANNING_SUPPORT_STATUS.md` (this document)
-- ⏳ `docs/organization/GITHUB_CONSOLIDATION_FINAL_TRACKER_2025-11-29.md` (Phase 2 status)
-- ⏳ `docs/organization/MASTER_CONSOLIDATION_TRACKER_UPDATE_2025-11-29.md` (Phase 2 readiness)
+- ⏳ `docs/archive/organization/GITHUB_CONSOLIDATION_FINAL_TRACKER_2025-11-29.md` (Phase 2 status - ARCHIVED)
+- ⏳ `docs/archive/organization/MASTER_CONSOLIDATION_TRACKER_UPDATE_2025-11-29.md` (Phase 2 readiness - ARCHIVED)
 
 ---
 
