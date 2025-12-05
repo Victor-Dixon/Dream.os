@@ -143,29 +143,43 @@ class ComponentManager:
         """
         try:
             intelligence_report = intelligence_engine.get_system_intelligence_report()
-
-            return {
-                "system_health": {
-                    "total_errors": intelligence_report["summary"]["total_errors"],
-                    "critical_errors": intelligence_report["summary"]["critical_errors"],
-                    "components_tracked": intelligence_report["summary"]["components_tracked"],
-                    "high_risk_components": len(intelligence_report["high_risk_components"]),
-                },
-                "intelligence": intelligence_report,
-                "circuit_breakers": {
-                    name: breaker.state.value for name, breaker in self.circuit_breakers.items()
-                },
-                "retry_mechanisms": list(self.retry_mechanisms.keys()),
-                "recovery_strategies": [s.name for s in self.recovery_strategies],
-            }
+            return self._build_success_report(intelligence_report)
         except Exception as e:
             logger.error(f"Error generating error report: {e}")
-            return {
-                "error": str(e),
-                "circuit_breakers": list(self.circuit_breakers.keys()),
-                "retry_mechanisms": list(self.retry_mechanisms.keys()),
-                "recovery_strategies": [s.name for s in self.recovery_strategies],
-            }
+            return self._build_error_report(e)
+
+    def _build_success_report(self, intelligence_report: dict[str, Any]) -> dict[str, Any]:
+        """Build success report from intelligence data."""
+        return {
+            "system_health": self._extract_system_health(intelligence_report),
+            "intelligence": intelligence_report,
+            "circuit_breakers": self._get_circuit_breaker_states(),
+            "retry_mechanisms": list(self.retry_mechanisms.keys()),
+            "recovery_strategies": [s.name for s in self.recovery_strategies],
+        }
+
+    def _extract_system_health(self, intelligence_report: dict[str, Any]) -> dict[str, Any]:
+        """Extract system health metrics from intelligence report."""
+        summary = intelligence_report["summary"]
+        return {
+            "total_errors": summary["total_errors"],
+            "critical_errors": summary["critical_errors"],
+            "components_tracked": summary["components_tracked"],
+            "high_risk_components": len(intelligence_report["high_risk_components"]),
+        }
+
+    def _get_circuit_breaker_states(self) -> dict[str, str]:
+        """Get circuit breaker states."""
+        return {name: breaker.state.value for name, breaker in self.circuit_breakers.items()}
+
+    def _build_error_report(self, error: Exception) -> dict[str, Any]:
+        """Build error report when intelligence fails."""
+        return {
+            "error": str(error),
+            "circuit_breakers": list(self.circuit_breakers.keys()),
+            "retry_mechanisms": list(self.retry_mechanisms.keys()),
+            "recovery_strategies": [s.name for s in self.recovery_strategies],
+        }
 
     def reset_component(self, component: str) -> bool:
         """Reset error handling state for a specific component.

@@ -156,16 +156,22 @@ class RetrySafetyEngine:
             ValueError: If validation fails
         """
         try:
-            if not validation_func():
-                raise ValueError(error_message)
-
+            self._validate_input(validation_func, error_message)
             return operation_func()
-
         except Exception as e:
-            effective_logger = logger or self.logger
-            if effective_logger:
-                self._get_logger().error(f"❌ Validation and execution failed: {e}")
+            self._log_validation_error(e, logger)
             raise
+
+    def _validate_input(self, validation_func: Callable, error_message: str) -> None:
+        """Validate input using validation function."""
+        if not validation_func():
+            raise ValueError(error_message)
+
+    def _log_validation_error(self, error: Exception, logger: logging.Logger | None) -> None:
+        """Log validation error if logger available."""
+        effective_logger = logger or self.logger
+        if effective_logger:
+            self._get_logger().error(f"❌ Validation and execution failed: {error}")
 
     def execute_with_timeout(
         self,
@@ -258,15 +264,17 @@ class RetrySafetyEngine:
         """
         # Simple circuit breaker implementation
         # In production, this would use a more sophisticated state machine
-
-        effective_logger = logger or self.logger
-
         try:
             return operation_func()
         except Exception as e:
-            if effective_logger:
-                self._get_logger().error(f"❌ Circuit breaker: Operation failed: {e}")
+            self._log_circuit_breaker_error(e, logger)
             raise
+
+    def _log_circuit_breaker_error(self, error: Exception, logger: logging.Logger | None) -> None:
+        """Log circuit breaker error if logger available."""
+        effective_logger = logger or self.logger
+        if effective_logger:
+            self._get_logger().error(f"❌ Circuit breaker: Operation failed: {error}")
 
 
 # Convenience functions for backward compatibility
