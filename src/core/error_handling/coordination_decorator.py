@@ -72,16 +72,27 @@ def handle_coordination_errors(
         """Decorator implementation."""
         def wrapper(*args: Any, **kwargs: Any) -> Any:
             """Wrapper function that applies error handling."""
-            operation = _create_operation(func, args, kwargs)
-            operation_name = _get_operation_name(func)
-            return _execute_with_coordination_handler(
-                operation,
-                operation_name,
-                component,
-                use_retry,
-                use_circuit_breaker,
-                use_recovery,
-                use_intelligence,
+            return _create_and_execute_coordination_wrapper(
+                func, args, kwargs, component,
+                use_retry, use_circuit_breaker, use_recovery, use_intelligence
             )
         return wrapper
     return decorator
+
+def _create_and_execute_coordination_wrapper(
+    func: Callable,
+    args: tuple,
+    kwargs: dict,
+    component: str,
+    use_retry: bool,
+    use_circuit_breaker: bool,
+    use_recovery: bool,
+    use_intelligence: bool,
+) -> Any:
+    """Create operation and execute with coordination handler."""
+    operation = _create_operation(func, args, kwargs)
+    operation_name = _get_operation_name(func)
+    return _execute_with_coordination_handler(
+        operation, operation_name, component,
+        use_retry, use_circuit_breaker, use_recovery, use_intelligence
+    )
