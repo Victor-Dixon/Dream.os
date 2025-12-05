@@ -1,128 +1,138 @@
-# 🚀 **Agent Cellphone V2 - Unified Documentation Hub**
+# 📚 Documentation Structure
 
-## **🎯 Current Status: Documentation Consolidation Complete**
-
-**Progress:** 100% Consolidated ✅
-**Status:** **PROFESSIONAL DOCUMENTATION STRUCTURE** ✅
-**Next:** **V2 COMPLIANCE FOCUS** 🚀
-
-### 🚨 **FUNDAMENTAL OPERATIONAL PRINCIPLE**
-**TIME-BASED DEADLINES ARE PROHIBITED. ALL OPERATIONS ARE CYCLE-BASED.**
-- **Cycle Definition**: One Captain prompt + One Agent response = One complete cycle
-- **Response Protocol**: Agent acknowledgment/response = Cycle completion
-- **Escalation Criteria**: Only escalate if agent fails to respond within one cycle
+**Last Updated**: 2025-12-04  
+**Status**: ✅ **ORGANIZED & ARCHIVED**
 
 ---
 
-## **📚 Unified Documentation Structure**
+## 🗂️ **ACTIVE DOCUMENTATION**
 
-### **🏗️ Architecture & Standards**
-- `V2_COMPLIANCE_README.md` - **V2 compliance standards and guidelines**
-- `AGENTS.md` - **Agent roles and responsibilities**
-- `CHANGELOG.md` - **Project changelog and updates**
+### **Core Documentation**
+- **`guides/`** - Active guides and how-to documentation
+- **`architecture/`** - Architecture documentation and design patterns
+- **`infrastructure/`** - Infrastructure and DevOps documentation
+- **`integration/`** - Integration documentation and guides
+- **`protocols/`** - Active protocols and standards
+- **`standards/`** - Coding standards and best practices
+- **`testing/`** - Testing documentation and guides
+- **`specs/`** - Technical specifications and PRDs
+- **`strategy/`** - Strategic planning and roadmaps
 
-### **📖 Guides & Implementation**
-- `CAPTAIN_AGENT_4_OPERATIONAL_HANDBOOK.md` - **Captain's strategic operations guide**
-- `QUICK_START.md` - **Quick start guide**
-- `README.md` - **Main project README**
+### **Specialized Documentation**
+- **`captain/`** - Captain (Agent-4) specific documentation
+- **`ssot/`** - Single Source of Truth documentation
+- **`messaging/`** - Messaging system documentation
+- **`discord/`** - Discord bot documentation
+- **`chat_presence/`** - Chat presence system documentation
+- **`v2_compliance/`** - V2 compliance standards and guides
 
-### **🔧 Technical Specifications**
-- `MESSAGING_API_SPECIFICATIONS.md` - **Messaging system API specs**
-- `MESSAGING_ARCHITECTURE_DIAGRAM.md` - **System architecture diagrams**
-- `MESSAGING_DEPLOYMENT_STRATEGY.md` - **Deployment strategies**
-- `MESSAGING_SYSTEM_PRD.md` - **Product requirements**
-- `MESSAGING_TEST_PLAN.md` - **Testing plans**
-- `MESSAGING_SYSTEM_V2_ENHANCED_TYPES.md` - **Enhanced type definitions**
-- `COMPLETION_SIGNAL` in `config/messaging.yml` - **SSOT for task completion**
-
-### **🛠️ User Guides**
-- `ADMIN_COMMANDER_SETUP.md` - **Admin setup guide**
-- `BOT_INVITE_SETUP.md` - **Bot invitation setup**
-- `DISCORD_BOT_SETUP.md` - **Discord bot configuration**
-- `DISCORD_COMMANDER_README.md` - **Discord commander usage**
-- `HOW_TO_RUN_DISCORD_GUI.md` - **GUI operation guide**
-- `PYAUTOGUI_TEST_GUIDE.md` - **PyAutoGUI testing guide**
-
-### **📋 Onboarding & Training**
-- `ONBOARDING_GUIDE.md` - **Agent onboarding guide (SSOT)**
-- `CAPTAIN_COORDINATION_TRAINING.md` - **Captain coordination training**
+### **Supporting Documentation**
+- **`organization/`** - Current organizational status and coordination
+- **`qa/`** - Quality assurance documentation
+- **`tools/`** - Tool documentation
+- **`examples/`** - Code examples and templates
+- **`quick_start/`** - Quick start guides
 
 ---
 
-## **📁 Organized Directory Structure**
+## 📦 **ARCHIVED DOCUMENTATION**
 
-```
-docs/
-├── README.md                           # This comprehensive index
-├── ONBOARDING_GUIDE.md                 # Agent onboarding guide (SSOT)
-├── architecture/
-│   └── system_architecture.md         # System architecture docs
-├── guides/
-│   ├── CAPTAIN_AGENT_4_OPERATIONAL_HANDBOOK.md
-│   ├── ADMIN_COMMANDER_SETUP.md
-│   ├── BOT_INVITE_SETUP.md
-│   ├── DISCORD_BOT_SETUP.md
-│   ├── DISCORD_COMMANDER_README.md
-│   ├── HOW_TO_RUN_DISCORD_GUI.md
-│   ├── PYAUTOGUI_TEST_GUIDE.md
-│   └── messaging_system_briefing.md
-├── integration/
-│   └── coordination_integration_patterns.md
-├── reports/
-│   ├── AGENT_1_*_REPORT.md           # Agent-1 integration reports
-│   ├── AGENT_2_*_REPORT.md           # Agent-2 architecture reports
-│   ├── AGENT_3_*_REPORT.md           # Agent-3 infrastructure reports
-│   ├── AGENT_4_*_REPORT.md           # Agent-4 strategic reports
-│   ├── AGENT_5_*_REPORT.md           # Agent-5 business intelligence
-│   ├── AGENT_6_*_REPORT.md           # Agent-6 coordination reports
-│   ├── AGENT_7_*_REPORT.md           # Agent-7 web development reports
-│   ├── AGENT_8_*_REPORT.md           # Agent-8 SSOT reports
-│   └── *_REPORT.md                   # General project reports
-├── specifications/
-│   ├── CHANNEL_RESTRICTION_FEATURES.md
-│   ├── MESSAGING_API_SPECIFICATIONS.md
-│   ├── MESSAGING_ARCHITECTURE_DIAGRAM.md
-│   ├── MESSAGING_DEPLOYMENT_STRATEGY.md
-│   ├── MESSAGING_SYSTEM_PRD.md
-│   ├── MESSAGING_SYSTEM_V2_ENHANCED_TYPES.md
-│   └── MESSAGING_TEST_PLAN.md
-├── technical/
-│   └── coordination_systems.md
-└── user_guides/
-    └── coordination_systems_guide.md
-```
+All historical documentation has been moved to **`archive/`**:
+
+- **`archive/cycles/`** - Historical cycle accomplishment reports
+- **`archive/sprints/`** - Historical sprint documentation
+- **`archive/consolidation/`** - Historical consolidation logs
+- **`archive/milestones/`** - Historical milestone documentation
+- **`archive/audits/`** - Historical audit reports
+- **`archive/organization/`** - Historical organizational status files
+- **`archive/task_assignments/`** - Historical task assignments
+- **`archive/reports/`** - Historical completion reports
+- **`archive/agent_cellphone_v1/`** - V1 documentation
+- **`archive/captain_status/`** - Historical captain status reports
+- **`archive/progress_trackers/`** - Historical progress tracking
+- **`archive/session_summaries/`** - Historical session summaries
+- **`archive/status_reports/`** - Historical status reports
+- **`archive/vision_attempts/`** - Historical vision documentation
 
 ---
 
-## **🧹 Consolidation Achievements**
+## 🧭 **NAVIGATION GUIDE**
 
-### **✅ Successfully Consolidated:**
-- **50+ documentation files** from scattered agent workspaces
-- **Unified naming conventions** (lowercase with underscores)
-- **Professional file organization** by category and purpose
-- **Eliminated redundant content** and outdated information
-- **Created comprehensive index** for easy navigation
-- **Maintained single source of truth** for all documentation
+### **For Developers**
+- Start with: `quick_start/` or `guides/`
+- Architecture: `architecture/`
+- Standards: `standards/` and `v2_compliance/`
+- Testing: `testing/`
 
-### **🎯 Key Improvements:**
-- **Standardized file naming** across all documentation
-- **Logical categorization** by purpose and audience
-- **Easy navigation** with comprehensive index
-- **Professional appearance** with consistent formatting
-- **Reduced clutter** in root and agent workspace directories
+### **For Agents**
+- Protocols: `protocols/`
+- Messaging: `messaging/`
+- SSOT: `ssot/`
+- Organization: `organization/`
 
----
+### **For Infrastructure**
+- Infrastructure: `infrastructure/`
+- Integration: `integration/`
+- Tools: `tools/`
 
-## **📊 Documentation Metrics**
-
-- **Total Files Consolidated:** 50+ documentation files
-- **Categories Organized:** 8 distinct documentation categories
-- **Naming Standardized:** All files follow consistent conventions
-- **Redundancy Eliminated:** Duplicate and outdated content removed
-- **Professional Structure:** Clean, organized, and maintainable
+### **For Historical Reference**
+- All archived content: `archive/`
+- See `archive/README.md` for archive structure
 
 ---
 
-**Last Updated:** $(Get-Date -Format "yyyy-MM-dd HH:mm:ss")
-**Status:** **DOCUMENTATION CONSOLIDATION COMPLETE** ✅
-**Next:** **V2 COMPLIANCE ENHANCEMENT** 🚀
+## 📋 **DOCUMENTATION CLEANUP STATUS**
+
+**Phases Completed**:
+- ✅ **Phase 1**: Historical directories archived (cycles, sprints, consolidation, milestones, audits)
+- ✅ **Phase 2**: All references updated to point to archive locations
+- ✅ **Phase 3**: Duplicate directories consolidated (specs/specifications, strategy/strategic, integration/integrations)
+- ✅ **Phase 4**: Large directories reviewed and archived (organization: 36 files, task_assignments: 5 files, reports: 3 files)
+- ✅ **Phase 5**: Structure optimized with clear navigation
+
+**Total Files Archived**: 44 files
+- Organization: 36 files
+- Task Assignments: 5 files
+- Reports: 3 files
+
+---
+
+## 🔍 **FINDING DOCUMENTATION**
+
+### **By Topic**
+- **Architecture**: `docs/architecture/`
+- **Standards**: `docs/standards/` and `docs/v2_compliance/`
+- **Protocols**: `docs/protocols/`
+- **Integration**: `docs/integration/`
+- **Testing**: `docs/testing/`
+
+### **By Type**
+- **Guides**: `docs/guides/`
+- **Specifications**: `docs/specs/`
+- **Reports**: `docs/archive/reports/` (historical)
+- **Status**: `docs/organization/` (current)
+
+### **By Agent**
+- **Captain**: `docs/captain/`
+- **All Agents**: `docs/protocols/` and `docs/organization/`
+
+---
+
+## 📝 **CONTRIBUTING**
+
+When adding new documentation:
+1. Place in appropriate active directory (see structure above)
+2. Follow naming conventions (PascalCase for files)
+3. Include SSOT domain tags where applicable
+4. Update this README if adding new top-level directories
+
+When archiving documentation:
+1. Move to `docs/archive/[category]/`
+2. Update references in code and documentation
+3. Update this README if needed
+
+---
+
+**For detailed cleanup analysis, see**: `agent_workspaces/Agent-1/DOCS_CLEANUP_ANALYSIS.md`
+
+🐝 **WE. ARE. SWARM. ⚡🔥**
