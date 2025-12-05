@@ -114,20 +114,48 @@ class ErrorExecutionOrchestrator:
         )
 
         try:
-            result = self._execute_with_retry(operation, retry_mechanism, operation_name)
-            self._handle_success(component, use_intelligence)
-            return result
-
+            return self._execute_operation_with_handling(
+                operation, retry_mechanism, operation_name, component, use_intelligence
+            )
         except Exception as e:
-            self._handle_error(e, component, operation_name, use_intelligence)
+            return self._handle_operation_error(
+                e, operation, retry_mechanism, operation_name, component,
+                use_recovery, use_intelligence
+            )
 
-            if use_recovery:
-                logger.warning(f"Operation {operation_name} failed, attempting recovery: {e}")
-                if self._attempt_recovery(component, type(e).__name__, use_intelligence):
-                    return self._execute_with_retry(operation, retry_mechanism, operation_name)
+    def _execute_operation_with_handling(
+        self,
+        operation: Callable[[], T],
+        retry_mechanism: RetryMechanism | None,
+        operation_name: str,
+        component: str,
+        use_intelligence: bool,
+    ) -> T:
+        """Execute operation and handle success."""
+        result = self._execute_with_retry(operation, retry_mechanism, operation_name)
+        self._handle_success(component, use_intelligence)
+        return result
 
-            logger.error(f"Operation {operation_name} failed after all attempts")
-            raise e
+    def _handle_operation_error(
+        self,
+        e: Exception,
+        operation: Callable[[], T],
+        retry_mechanism: RetryMechanism | None,
+        operation_name: str,
+        component: str,
+        use_recovery: bool,
+        use_intelligence: bool,
+    ) -> T:
+        """Handle operation error with recovery if enabled."""
+        self._handle_error(e, component, operation_name, use_intelligence)
+
+        if use_recovery:
+            logger.warning(f"Operation {operation_name} failed, attempting recovery: {e}")
+            if self._attempt_recovery(component, type(e).__name__, use_intelligence):
+                return self._execute_with_retry(operation, retry_mechanism, operation_name)
+
+        logger.error(f"Operation {operation_name} failed after all attempts")
+        raise e
 
     def _execute_with_retry(
         self,
