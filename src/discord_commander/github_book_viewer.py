@@ -33,69 +33,12 @@ try:
     DISCORD_AVAILABLE = True
 except ImportError:
     DISCORD_AVAILABLE = False
-    # Create mock discord module for when discord.py is not available
-
-    class MockView:
-        def __init__(self, *args, **kwargs):
-            pass
-
-        def add_item(self, item):
-            pass
-
-    class MockSelect:
-        def __init__(self, *args, **kwargs):
-            pass
-
-    class MockButton:
-        def __init__(self, *args, **kwargs):
-            pass
-
-    class MockSelectOption:
-        def __init__(self, *args, **kwargs):
-            pass
-
-    class MockUI:
-        View = MockView
-        Select = MockSelect
-        Button = MockButton
-        SelectOption = MockSelectOption
-
-    class MockButtonStyle:
-        primary = "primary"
-        secondary = "secondary"
-
-    class MockCog:
-        def __init__(self, *args, **kwargs):
-            pass
-
-    def mock_command(*args, **kwargs):
-        def decorator(func):
-            return func
-        return decorator
-
-    class MockCommands:
-        Cog = MockCog
-        command = mock_command
-        Context = type('Context', (), {})()
-
-    class MockExt:
-        commands = MockCommands()
-
-    class MockDiscord:
-        class ui:
-            View = MockView
-            Select = MockSelect
-            Button = MockButton
-            SelectOption = MockSelectOption
-        SelectOption = MockSelectOption
-        ButtonStyle = MockButtonStyle
-        Interaction = type('Interaction', (), {})()
-        Embed = type('Embed', (), {})()
-        Color = type('Color', (), {'blue': lambda: None})()
-        ext = MockExt()
-
-    discord = MockDiscord()
-    commands = MockCommands()
+    # Use unified test utilities when discord.py is not available
+    from .test_utils import get_mock_discord
+    
+    mock_discord, mock_commands = get_mock_discord()
+    discord = mock_discord
+    commands = mock_commands
 
 logger = logging.getLogger(__name__)
 

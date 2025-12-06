@@ -8,13 +8,19 @@
 
 ---
 
-# Subject: Captain Restart Pattern v1 — SSOT Remediation + Phase 2 Consolidation
+# Subject: Captain Restart Pattern v1 — SSOT Remediation + Phase 2 Consolidation + Violation Consolidation
+
+**Version**: v1.2 (Updated 2025-12-04)  
+**Last Updated**: 2025-12-04  
+**Improvements**: ACTION FIRST pattern, Violation Consolidation Phase 2, Pattern Update Protocol, Swarm Organizer integration
 
 Captain,
 
 This is a self-addressed pattern to remove cold-start friction next cycle.
 
-On wake, do NOT start with planning. Start with the loop.
+**CRITICAL**: On wake, do NOT start with planning. Start with ACTION FIRST pattern: Execute work → Command swarm → Execute work. Alternate continuously.
+
+**Pattern Update Protocol**: When you find improvements to this pattern, update this message immediately. This message is the SSOT for Captain restart behavior.
 
 --------------------------------
 FIRST 5 MINUTES CHECKLIST
@@ -60,21 +66,65 @@ FIRST 5 MINUTES CHECKLIST
        - Telephone Game
      - Keep messages short, directive, and concrete.
 
-5) Devlog anchor
+5) Fill Swarm Organizer
+   - **CRITICAL**: Fill out Swarm Organizer for all 8 agents
+   - Location: `agent_workspaces/swarm_cycle_planner/SWARM_ORGANIZER_YYYY-MM-DD.json`
+   - Copy template: `SWARM_ORGANIZER_TEMPLATE.json`
+   - For each agent (all 8):
+     - Read their status.json
+     - Populate: mission, priority, phase, tasks, next actions, blockers
+     - Assign points, estimate completion
+   - Document: swarm initiatives, coordination patterns, dependencies, metrics
+   - This is the SSOT for swarm organization
+
+6) Devlog anchor
    - Add a Captain devlog entry:
      - "Restarted Captain loop using Restart Pattern v1."
      - Summarize:
        - Which agents were contacted
        - Which domains (SSOT / Phase 2 / other) you touched
        - Any new global decisions
+       - Swarm organizer filled for all 8 agents
 
-After this 5-minute pass, THEN you can choose any deeper strategy or planning.
+After this 5-minute pass, THEN follow ACTION FIRST pattern:
+
+**ACTION FIRST PATTERN** (CRITICAL):
+- DO NOT just plan or tell the user what you'll do
+- EXECUTE work first (fix issues, create tools, analyze data)
+- THEN command the swarm (assign tasks, coordinate)
+- THEN execute more work (proactive improvements)
+- Bounce between executing and commanding continuously
+- Example: Fix a bug → Command Agent-1 to test → Create a scanner → Command Agent-5 to analyze results → Fix another issue
+
+**Proactive Work While Swarm is Busy**:
+- While agents are working, execute your own tasks:
+  - Create/improve tools (scanners, analyzers, validators)
+  - Fix critical issues (circular imports, missing files)
+  - Analyze data (project scans, violation analysis)
+  - Close open loops (deduplication, consolidation)
+- Do NOT wait for the swarm - act in parallel
 
 --------------------------------
 ACTIVE MISSIONS TO CARRY FORWARD
 --------------------------------
 
-1) SSOT remediation (Priority 1 focus)
+1) Violation Consolidation (Phase 2 - CRITICAL)
+   - Objective: Eliminate 1,415 code violations (duplicate classes, functions, SSOT violations)
+   - Status: Phase 1 assignments dispatched to swarm
+   - Phase 1 Targets (URGENT):
+     - Agent-1: Task class (10 locations) + AgentStatus (5 locations)
+     - Agent-2: IntegrationStatus (5 locations) + Gaming classes (12 locations)
+     - Agent-8: Config SSOT (5 locations) + SearchResult/SearchQuery (14 locations)
+     - Agent-7: Discord test mocks (9 locations) - Phase 3
+     - Agent-5: Code block analysis (88 blocks) - Phase 3
+   - Your job:
+     - Monitor Phase 1 consolidation progress
+     - Coordinate blockers and dependencies
+     - Execute your own violation fixes when swarm is busy
+     - Update consolidation plan based on results
+   - Full Plan: `agent_workspaces/Agent-4/VIOLATION_CONSOLIDATION_PLAN_2025-12-04.md`
+
+2) SSOT remediation (Priority 1 focus)
    - Objective: Reduce SSOT drift and duplication, starting with highest-impact zones.
    - Domain ownership:
      - Agent-1: Integration SSOT (coordinate loaders, messaging bridges)
@@ -90,7 +140,7 @@ ACTIVE MISSIONS TO CARRY FORWARD
      - Use Agent Pairing to resolve cross-domain questions.
      - When multiple agents are needed, use Telephone Game.
 
-2) Phase 2 tools consolidation
+3) Phase 2 tools consolidation
    - Objective: Move from "many tools; low clarity" → "fewer tools; clear owners; clear metrics."
    - Current positions (treat as default unless contradicted by live status):
      - Agent-3: Phase 2 coordinator for infrastructure + monitoring tools. Target: consolidate overlapping runners, queue monitors, and ops scripts.
@@ -99,10 +149,12 @@ ACTIVE MISSIONS TO CARRY FORWARD
      - Confirm whether consolidation execution has actually started, not just planned.
      - Push at least one concrete consolidation task into motion per relevant agent when you see stalls.
 
-3) Patterns in play
-   - Force Multiplier: When a task is too big or touches many files, you split it into parallelizable sub-tasks and assign across agents.
-   - Agent Pairing: Whenever SSOT ownership or boundaries are unclear, explicitly pair two agents and ask for a small joint decision/output.
-   - Telephone Game: For multi-domain problems, have experts add value sequentially instead of all-in-one messages. You define the hop order and done-condition up front.
+4) Patterns in play
+   - **ACTION FIRST**: Execute work → Command swarm → Execute work (alternate continuously). Don't just plan - DO.
+   - **Force Multiplier**: When a task is too big or touches many files, you split it into parallelizable sub-tasks and assign across agents.
+   - **Agent Pairing**: Whenever SSOT ownership or boundaries are unclear, explicitly pair two agents and ask for a small joint decision/output.
+   - **Telephone Game**: For multi-domain problems, have experts add value sequentially instead of all-in-one messages. You define the hop order and done-condition up front.
+   - **Proactive Parallelism**: While swarm is busy, execute your own tasks. Don't wait - act in parallel.
 
 --------------------------------
 CONCRETE FOLLOW-UP TARGETS NEXT CYCLE
@@ -143,14 +195,21 @@ CLOSING
 Future-Captain: when you read this, start with:
 
 1) Run the 5-minute checklist.
-2) Touch at least one SSOT remediation action and one Phase 2 consolidation action, using Force Multiplier / Pairing / Telephone Game as needed.
-3) Log the cycle in your devlog.
+2) Follow ACTION FIRST pattern: Execute work → Command swarm → Execute work (alternate continuously).
+3) Touch at least one violation consolidation action, one SSOT remediation action, and one Phase 2 consolidation action, using Force Multiplier / Pairing / Telephone Game as needed.
+4) While swarm is busy, execute proactive work (create tools, fix issues, analyze data).
+5) Log the cycle in your devlog.
 
-After that, you're free to adapt — but never skip the loop.
+**IMPORTANT**: When you find improvements to this pattern:
+- Update this message immediately with the improvement
+- Document what changed and why
+- Increment version number
+- This message is the SSOT for Captain restart behavior
+
+After that, you're free to adapt — but never skip the loop or the ACTION FIRST pattern.
 
 — Past-Captain
 
 ---
 *Message delivered via Unified Messaging Service*
-
 

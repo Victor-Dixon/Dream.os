@@ -9,6 +9,7 @@ import requests
 import sys
 from pathlib import Path
 from datetime import datetime
+from src.core.config.timeout_constants import TimeoutConstants
 
 # Add project root to path
 project_root = Path(__file__).resolve().parent.parent
@@ -29,7 +30,7 @@ def get_branch_sha(owner: str, repo: str, branch: str, token: str) -> str | None
         "Accept": "application/vnd.github.v3+json"
     }
     try:
-        response = requests.get(url, headers=headers, timeout=30)
+        response = requests.get(url, headers=headers, timeout=TimeoutConstants.HTTP_DEFAULT)
         if response.status_code == 200:
             return response.json()['commit']['sha']
         elif response.status_code == 404:
@@ -53,7 +54,7 @@ def get_merge_commits(owner: str, repo: str, branch: str, token: str, limit: int
         "per_page": limit
     }
     try:
-        response = requests.get(url, headers=headers, params=params, timeout=30)
+        response = requests.get(url, headers=headers, params=params, timeout=TimeoutConstants.HTTP_DEFAULT)
         if response.status_code == 200:
             commits = response.json()
             merge_commits = [c for c in commits if len(c.get('parents', [])) > 1]

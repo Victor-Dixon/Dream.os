@@ -21,6 +21,13 @@ from pathlib import Path
 from datetime import datetime
 from typing import Dict, List, Optional, Any
 
+# Add project root to path
+project_root = Path(__file__).resolve().parent.parent
+import sys
+sys.path.insert(0, str(project_root))
+
+from src.core.config.timeout_constants import TimeoutConstants
+
 # Merges to verify
 MERGES_TO_VERIFY = [
     {
@@ -115,7 +122,7 @@ def clone_repo(repo_name: str, target_dir: Path, use_token: bool = True) -> bool
             ["git", "clone", url, str(target_dir)],
             capture_output=True,
             text=True,
-            timeout=120
+            timeout=TimeoutConstants.HTTP_LONG
         )
         
         if result.returncode == 0:
@@ -137,7 +144,7 @@ def check_branch_exists(repo_dir: Path, branch_name: str) -> bool:
             cwd=repo_dir,
             capture_output=True,
             text=True,
-            timeout=30
+            timeout=TimeoutConstants.HTTP_DEFAULT
         )
         
         if branch_name in result.stdout or f"remotes/origin/{branch_name}" in result.stdout:
@@ -156,7 +163,7 @@ def find_merge_branches(repo_dir: Path) -> List[str]:
             cwd=repo_dir,
             capture_output=True,
             text=True,
-            timeout=30
+            timeout=TimeoutConstants.HTTP_DEFAULT
         )
         
         branches = []
@@ -187,7 +194,7 @@ def analyze_merge_branch(repo_dir: Path, branch_name: str) -> Dict[str, Any]:
             ["git", "checkout", branch_name],
             cwd=repo_dir,
             capture_output=True,
-            timeout=30
+            timeout=TimeoutConstants.HTTP_DEFAULT
         )
         
         # Get commit count
@@ -196,7 +203,7 @@ def analyze_merge_branch(repo_dir: Path, branch_name: str) -> Dict[str, Any]:
             cwd=repo_dir,
             capture_output=True,
             text=True,
-            timeout=30
+            timeout=TimeoutConstants.HTTP_DEFAULT
         )
         if result.returncode == 0:
             analysis["commit_count"] = int(result.stdout.strip())
@@ -207,7 +214,7 @@ def analyze_merge_branch(repo_dir: Path, branch_name: str) -> Dict[str, Any]:
             cwd=repo_dir,
             capture_output=True,
             text=True,
-            timeout=30
+            timeout=TimeoutConstants.HTTP_DEFAULT
         )
         analysis["merge_commit"] = result.returncode == 0 and result.stdout.strip() != ""
         
@@ -217,7 +224,7 @@ def analyze_merge_branch(repo_dir: Path, branch_name: str) -> Dict[str, Any]:
             cwd=repo_dir,
             capture_output=True,
             text=True,
-            timeout=30
+            timeout=TimeoutConstants.HTTP_DEFAULT
         )
         if result.returncode == 0:
             analysis["files_changed"] = len(result.stdout.strip().split('\n'))

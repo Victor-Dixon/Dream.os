@@ -16,6 +16,8 @@ from enum import Enum
 from typing import Any
 from dataclasses import dataclass, field
 
+from src.core.utils.validation_utils import validate_positive, validate_range
+
 
 
 class AnalyticsMetric(Enum):
@@ -106,12 +108,25 @@ class AnalyticsConfig:
     cache_ttl_seconds: int = 300
 
     def validate(self) -> None:
-        """Validate configuration."""
-        if self.analysis_interval_seconds < 1:
-            raise ValueError("Analysis interval must be at least 1 second")
-        if self.history_retention_hours < 1:
-            raise ValueError("History retention must be at least 1 hour")
-        if not 0 <= self.target_efficiency <= 1:
-            raise ValueError("Target efficiency must be between 0 and 1")
-        if self.cache_ttl_seconds < 1:
-            raise ValueError("Cache TTL must be at least 1 second")
+        """Validate configuration using SSOT validation utilities."""
+        validate_positive(
+            self.analysis_interval_seconds,
+            "Analysis interval",
+            min_val=1,
+        )
+        validate_positive(
+            self.history_retention_hours,
+            "History retention",
+            min_val=1,
+        )
+        validate_range(
+            self.target_efficiency,
+            min_val=0.0,
+            max_val=1.0,
+            field_name="Target efficiency",
+        )
+        validate_positive(
+            self.cache_ttl_seconds,
+            "Cache TTL",
+            min_val=1,
+        )

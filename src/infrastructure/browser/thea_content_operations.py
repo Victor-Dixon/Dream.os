@@ -6,6 +6,8 @@ Thea Content Operations - V2 Compliance
 Unified content scraping and response collection for Thea automation.
 Consolidates: thea_modules/browser_ops, content_scraper, response_collector, profile
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-3 (Infrastructure & DevOps) - Browser Consolidation
 License: MIT
 """

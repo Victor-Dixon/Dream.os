@@ -13,8 +13,12 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import Any
 
-from .error_enums import ErrorCategory, ErrorSeverity
-from dataclasses import dataclass, field
+# SSOT: Use error_models_enums for ErrorSeverity (more features: __str__, __lt__, etc.)
+# ErrorCategory is only in error_enums, so import from there
+from .error_models_enums import ErrorSeverity
+from .error_enums import ErrorCategory
+
+from src.core.utils.serialization_utils import to_dict
 
 
 
@@ -48,15 +52,8 @@ class StandardErrorResponse:
             self.timestamp = datetime.now().isoformat()
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary."""
-        return {
-            "success": self.success,
-            "error": self.error,
-            "error_type": self.error_type,
-            "operation": self.operation,
-            "timestamp": self.timestamp,
-            "context": self.context,
-        }
+        """Convert to dictionary using SSOT utility."""
+        return to_dict(self)
 
 
 @dataclass

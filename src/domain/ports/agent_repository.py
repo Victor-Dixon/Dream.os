@@ -4,6 +4,8 @@ Agent Repository Port - Domain Interface
 
 Defines the contract for agent persistence operations.
 This is a port in the hexagonal architecture.
+
+<!-- SSOT Domain: domain -->
 """
 
 from collections.abc import Iterable

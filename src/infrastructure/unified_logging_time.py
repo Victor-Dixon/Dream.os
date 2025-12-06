@@ -8,6 +8,8 @@ Refactored to V2 compliance by splitting into modules:
 - logging/unified_logger.py (logging)
 - time/system_clock.py (time operations)
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-3 (DevOps Specialist), Refactored by Agent-5
 License: MIT
 """

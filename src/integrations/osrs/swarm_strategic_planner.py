@@ -13,7 +13,7 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from .swarm_coordinator import OSRS_Swarm_Coordinator, SwarmActivity
 
-from ..agents.osrs_agent_core import AgentRole, AgentStatus
+from .osrs_agent_core import AgentRole, OSRSAgentStatus
 
 
 class OSRSStrategicPlanner:
@@ -84,7 +84,7 @@ class OSRSStrategicPlanner:
         combat_agents = [
             agent
             for agent in coordinator.agents.values()
-            if agent.role == AgentRole.COMBAT_SPECIALIST and agent.status == AgentStatus.ACTIVE
+            if agent.role == AgentRole.COMBAT_SPECIALIST and agent.status == OSRSAgentStatus.ACTIVE
         ]
 
         return len(combat_agents) >= 1

@@ -14,6 +14,8 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Any
 
+from src.core.utils.serialization_utils import to_dict
+
 
 @dataclass
 class ErrorContext:
@@ -39,16 +41,8 @@ class ErrorContext:
         self.metadata[key] = value
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary for serialization."""
-        return {
-            "component": self.component,
-            "operation": self.operation,
-            "timestamp": self.timestamp,
-            "metadata": self.metadata,
-            "environment": self.environment,
-            "stack_depth": self.stack_depth,
-            "execution_id": self.execution_id,
-        }
+        """Convert to dictionary for serialization using SSOT utility."""
+        return to_dict(self)
 
 
 @dataclass
@@ -91,12 +85,5 @@ class ErrorSummary:
             self.by_category[category_lower] += 1
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary for reporting."""
-        return {
-            "total_errors": self.total_errors,
-            "by_severity": self.by_severity,
-            "by_category": self.by_category,
-            "recoverable_count": self.recoverable_count,
-            "critical_count": self.critical_count,
-            "timestamp": self.timestamp,
-        }
+        """Convert to dictionary for reporting using SSOT utility."""
+        return to_dict(self)

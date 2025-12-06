@@ -21,7 +21,9 @@ from ..engines.risk_assessment_engine import RiskAssessmentEngine
 from ..intelligent_context_emergency import IntelligentContextEmergency
 from ..intelligent_context_engine import IntelligentContextEngine
 from ..metrics_models import ContextMetrics
-from ..search_models import ContextRetrievalResult, SearchResult
+from ..search_models import ContextRetrievalResult
+# Use SSOT SearchResult - supports all intelligent context fields
+from src.services.models.vector_models import SearchResult
 
 
 class ContextCore:

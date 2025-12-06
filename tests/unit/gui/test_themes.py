@@ -180,3 +180,4 @@ class TestThemeManager:
         assert manager.current_theme.colors["primary"] == "#FF0000"
 
 
+

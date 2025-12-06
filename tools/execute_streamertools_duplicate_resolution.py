@@ -23,6 +23,7 @@ sys.path.insert(0, str(project_root))
 
 try:
     from dotenv import load_dotenv
+from src.core.config.timeout_constants import TimeoutConstants
     env_path = Path('.env')
     if env_path.exists():
         load_dotenv(env_path)
@@ -77,7 +78,7 @@ def clone_streamertools(temp_base: Path, token: str, username: str) -> Optional[
         print(f"📥 Cloning {repo}...")
         subprocess.run(
             ["git", "clone", repo_url, str(repo_dir)],
-            check=True, timeout=300, capture_output=True, text=True
+            check=True, timeout=TimeoutConstants.HTTP_EXTENDED, capture_output=True, text=True
         )
         print(f"✅ Cloned {repo}")
         return repo_dir

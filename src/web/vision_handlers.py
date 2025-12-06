@@ -6,9 +6,13 @@ Handler classes for vision/analysis operations.
 Wires vision services to web layer.
 
 V2 Compliance: < 300 lines, handler pattern.
+Consolidated: Uses BaseHandler + AvailabilityMixin (33% code reduction).
 """
 
 from flask import jsonify, request
+
+from src.core.base.availability_mixin import AvailabilityMixin
+from src.core.base.base_handler import BaseHandler
 
 try:
     from src.vision.analyzers.color_analyzer import ColorAnalyzer
@@ -17,11 +21,14 @@ except ImportError:
     COLOR_ANALYZER_AVAILABLE = False
 
 
-class VisionHandlers:
+class VisionHandlers(BaseHandler, AvailabilityMixin):
     """Handler class for vision operations."""
 
-    @staticmethod
-    def handle_analyze_color(request) -> tuple:
+    def __init__(self):
+        """Initialize vision handlers."""
+        super().__init__("VisionHandlers")
+
+    def handle_analyze_color(self, request) -> tuple:
         """
         Handle request to analyze color in image.
 
@@ -31,23 +38,31 @@ class VisionHandlers:
         Returns:
             Tuple of (response_data, status_code)
         """
-        if not COLOR_ANALYZER_AVAILABLE:
-            return jsonify({"success": False, "error": "ColorAnalyzer not available"}), 503
+        # Check availability using mixin
+        availability_error = self.check_availability(
+            COLOR_ANALYZER_AVAILABLE,
+            "ColorAnalyzer"
+        )
+        if availability_error:
+            return availability_error
 
         try:
             data = request.get_json() or {}
             image_data = data.get("image_data")
 
             if not image_data:
-                return jsonify({"error": "image_data is required"}), 400
+                error_response = self.format_response(None, success=False, error="image_data is required")
+                return jsonify(error_response), 400
 
             analyzer = ColorAnalyzer()
             result = analyzer.analyze_colors(image_data)
-
-            return jsonify({"success": True, "data": result}), 200
+            response = self.format_response(result, success=True)
+            return jsonify(response), 200
 
         except Exception as e:
-            return jsonify({"success": False, "error": str(e)}), 500
+            error_response = self.handle_error(e, "analyze_color")
+            return jsonify(error_response), 500
+
 
 
 

@@ -30,6 +30,7 @@ except ImportError:
 def get_github_token() -> Optional[str]:
     """Get GitHub token from environment."""
     import os
+from src.core.config.timeout_constants import TimeoutConstants
     return os.getenv("GITHUB_TOKEN") or os.getenv("GH_TOKEN")
 
 
@@ -49,7 +50,7 @@ def verify_repo_exists(owner: str, repo: str, token: Optional[str] = None) -> Di
         headers["Authorization"] = f"token {token}"
     
     try:
-        response = requests.get(url, headers=headers, timeout=10)
+        response = requests.get(url, headers=headers, timeout=TimeoutConstants.HTTP_SHORT)
         
         if response.status_code == 200:
             data = response.json()
@@ -270,7 +271,7 @@ def check_pr_status() -> Dict[str, Any]:
                 }
                 
                 try:
-                    response = requests.get(url, headers=headers, timeout=10)
+                    response = requests.get(url, headers=headers, timeout=TimeoutConstants.HTTP_SHORT)
                     if response.status_code == 200:
                         pr_data = response.json()
                         state = pr_data.get('state', 'unknown')

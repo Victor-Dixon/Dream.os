@@ -6,6 +6,8 @@ Handles all message-related data operations following the repository pattern.
 This repository provides data access abstraction for message storage, history,
 and retrieval operations.
 
+<!-- SSOT Domain: data -->
+
 Author: Agent-7 (Quarantine Mission Phase 3)
 Date: 2025-10-16
 Points: 300

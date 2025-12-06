@@ -17,11 +17,13 @@ import logging
 from abc import ABC
 from typing import Any, Optional
 
-from src.core.config.config_manager import UnifiedConfigManager
-from src.core.logging.unified_logging_system import UnifiedLoggingSystem
+from ..config.config_manager import UnifiedConfigManager
+from ..unified_logging_system import UnifiedLoggingSystem
+from .initialization_mixin import InitializationMixin
+from .error_handling_mixin import ErrorHandlingMixin
 
 
-class BaseManager(ABC):
+class BaseManager(ABC, InitializationMixin, ErrorHandlingMixin):
     """
     Base class for Manager classes.
     
@@ -42,6 +44,8 @@ class BaseManager(ABC):
         """
         Initialize base manager.
         
+        Uses InitializationMixin for consolidated initialization pattern.
+        
         Args:
             manager_name: Name of the manager (for logging)
             config_section: Optional config section name
@@ -49,12 +53,15 @@ class BaseManager(ABC):
         self.manager_name = manager_name
         self.config_section = config_section or manager_name.lower()
         
-        # Initialize logging
-        self.logger = UnifiedLoggingSystem(manager_name).get_logger()
+        # Use consolidated initialization pattern from InitializationMixin
+        self.logger, config_dict = self.initialize_with_config(
+            manager_name, 
+            self.config_section
+        )
         
-        # Load configuration
+        # Store config for backward compatibility
         self.config = UnifiedConfigManager()
-        self.manager_config = self.config.get_section(self.config_section, {})
+        self.manager_config = config_dict or {}
         
         # Lifecycle state
         self._initialized = False
@@ -73,14 +80,19 @@ class BaseManager(ABC):
             self.logger.warning(f"{self.manager_name} already initialized")
             return True
         
-        try:
-            self._do_initialize()
-            self._initialized = True
-            self.logger.info(f"✅ {self.manager_name} initialization complete")
-            return True
-        except Exception as e:
-            self.logger.error(f"❌ {self.manager_name} initialization failed: {e}")
-            return False
+        return self.safe_execute(
+            operation=lambda: self._do_initialize() or True,
+            operation_name="initialize",
+            default_return=False,
+            logger=self.logger,
+            component_name=self.manager_name
+        ) and self._set_initialized()
+    
+    def _set_initialized(self) -> bool:
+        """Set initialized state and log success."""
+        self._initialized = True
+        self.logger.info(f"✅ {self.manager_name} initialization complete")
+        return True
     
     def _do_initialize(self) -> None:
         """
@@ -112,7 +124,7 @@ class BaseManager(ABC):
             self.logger.info(f"✅ {self.manager_name} activated")
             return True
         except Exception as e:
-            self.logger.error(f"❌ {self.manager_name} activation failed: {e}")
+            self.handle_error(e, "activate", self.logger, self.manager_name)
             return False
     
     def _do_activate(self) -> None:
@@ -140,7 +152,7 @@ class BaseManager(ABC):
             self.logger.info(f"✅ {self.manager_name} deactivated")
             return True
         except Exception as e:
-            self.logger.error(f"❌ {self.manager_name} deactivation failed: {e}")
+            self.handle_error(e, "deactivate", self.logger, self.manager_name)
             return False
     
     def _do_deactivate(self) -> None:
@@ -172,6 +184,7 @@ class BaseManager(ABC):
     def is_initialized(self) -> bool:
         """Check if manager is initialized."""
         return self._initialized
+
 
 
 

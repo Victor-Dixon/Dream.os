@@ -6,6 +6,8 @@ Handles all contract-related data operations following the repository pattern.
 This repository provides data access abstraction for contract storage, retrieval,
 and status management.
 
+<!-- SSOT Domain: data -->
+
 Author: Agent-7 (Quarantine Mission Phase 3)
 Date: 2025-10-16
 Points: 300

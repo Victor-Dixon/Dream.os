@@ -53,7 +53,7 @@ def get_github_owner() -> str:
             ["git", "config", "--get", "remote.origin.url"],
             capture_output=True,
             text=True,
-            timeout=5,
+            timeout=TimeoutConstants.HTTP_QUICK,
         )
         if result.returncode == 0:
             url = result.stdout.strip()
@@ -79,7 +79,7 @@ def fetch_repo_info(owner: str, repo_name: str, token: Optional[str] = None) -> 
         headers["Authorization"] = f"token {token}"
     
     try:
-        response = requests.get(url, headers=headers, timeout=10)
+        response = requests.get(url, headers=headers, timeout=TimeoutConstants.HTTP_SHORT)
         
         if response.status_code == 200:
             return response.json()
@@ -114,7 +114,7 @@ def list_all_repos(owner: str, token: Optional[str] = None) -> list[dict[str, An
     try:
         while True:
             params = {"page": page, "per_page": per_page, "sort": "created", "direction": "asc"}
-            response = requests.get(url, headers=headers, params=params, timeout=10)
+            response = requests.get(url, headers=headers, params=params, timeout=TimeoutConstants.HTTP_SHORT)
             
             if response.status_code == 200:
                 repos = response.json()
@@ -388,6 +388,7 @@ def main():
     except Exception as e:
         print(f"❌ Error: {e}")
         import traceback
+from src.core.config.timeout_constants import TimeoutConstants
         traceback.print_exc()
         return 1
 

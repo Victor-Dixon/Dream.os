@@ -9,6 +9,10 @@ This file will be moved to src/core/config/config_dataclasses.py by Agent-3.
 Author: Agent-7 (Web Development Specialist) - C-024 Priority 2 Phase 1
 Date: 2025-12-03
 License: MIT
+
+NOTE: This file should NOT be imported directly due to hyphen in filename.
+      It should be executed with: python -m exec(open('path').read())
+      Or the classes should be copied to the target location.
 """
 
 from dataclasses import dataclass, field

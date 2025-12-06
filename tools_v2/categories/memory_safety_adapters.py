@@ -193,6 +193,6 @@ __all__ = [
     "MemoryLeakDetectorTool",
     "FileVerificationTool",
     "UnboundedScanTool",
-    "ImportValidatorTool",
+    "MemorySafetyImportValidatorTool",  # Fixed: Use actual class name, not "ImportValidatorTool"
     "FileHandleCheckTool",
 ]

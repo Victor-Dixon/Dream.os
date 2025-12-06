@@ -42,22 +42,9 @@ except ImportError:
 
 def get_github_token() -> Optional[str]:
     """Get GitHub token from environment or .env file."""
-    token = os.getenv("GITHUB_TOKEN") or os.getenv("GH_TOKEN")
-    if token:
-        return token
-    
-    env_file = project_root / ".env"
-    if env_file.exists():
-        try:
-            with open(env_file, "r") as f:
-                for line in f:
-                    line = line.strip()
-                    if line.startswith("GITHUB_TOKEN=") or line.startswith("GH_TOKEN="):
-                        return line.split("=", 1)[1].strip().strip('"').strip("'")
-        except Exception:
-            pass
-    
-    return None
+    # Use SSOT utility for GitHub token
+    from src.core.utils.github_utils import get_github_token as get_token_ssot
+    return get_token_ssot(project_root)
 
 
 class SafeRepoMergeV2:
@@ -499,65 +486,6 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-"""
-Safe Repository Merge Script V2 - Local-First Architecture
-===========================================================
-
-Safely merges one GitHub repository into another using local-first approach.
-Uses GitHub Bypass System to eliminate blocking on GitHub API rate limits.
-
-Author: Agent-1 (Integration & Core Systems Specialist)
-Date: 2025-11-28
-Priority: HIGH
-Version: 2.0 - Local-First Architecture
-"""
-
-import json
-import sys
-import os
-from pathlib import Path
-from datetime import datetime
-from typing import Dict, Any, Optional
-import subprocess
-import shutil
-
-# Add project root to path
-project_root = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(project_root))
-
-# Import new local-first components
-from src.core.synthetic_github import get_synthetic_github
-from src.core.consolidation_buffer import get_consolidation_buffer, ConsolidationStatus
-from src.core.merge_conflict_resolver import get_conflict_resolver
-from src.core.local_repo_layer import get_local_repo_manager
-from src.core.deferred_push_queue import get_deferred_push_queue
-
-
-def get_github_token() -> Optional[str]:
-    """Get GitHub token from environment or .env file."""
-    token = os.getenv("GITHUB_TOKEN") or os.getenv("GH_TOKEN")
-    if token:
-        return token
-    
-    env_file = project_root / ".env"
-    if env_file.exists():
-        try:
-            with open(env_file, "r") as f:
-                for line in f:
-                    line = line.strip()
-                    if line.startswith("GITHUB_TOKEN=") or line.startswith("GH_TOKEN="):
-                        return line.split("=", 1)[1].strip().strip('"').strip("'")
-        except Exception:
-            pass
-    
-    return None
-
-
-class SafeRepoMergeV2:
-    """Safely merge one repository into another using local-first approach."""
-
-    def __init__(self, target_repo: str, source_repo: str, repo_numbers: Dict[str, int]):
         """
         Initialize safe merge operation.
 

@@ -31,14 +31,8 @@ class PerformanceMetric:
     unit: str = "ms"
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary."""
-        return {
-            "name": self.name,
-            "value": self.value,
-            "timestamp": self.timestamp.isoformat(),
-            "category": self.category,
-            "unit": self.unit,
-        }
+        """Convert to dictionary using SSOT utility."""
+        return to_dict(self)
 
 
 @dataclass
@@ -51,13 +45,12 @@ class PerformanceReport:
     summary: str = ""
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary."""
-        return {
-            "report_id": self.report_id,
-            "timestamp": self.timestamp.isoformat(),
-            "metrics": [metric.to_dict() for metric in self.metrics],
-            "summary": self.summary,
-        }
+        """Convert to dictionary using SSOT utility."""
+        result = to_dict(self)
+        # Ensure metrics are serialized
+        if "metrics" in result:
+            result["metrics"] = [metric.to_dict() if hasattr(metric, 'to_dict') else to_dict(metric) for metric in self.metrics]
+        return result
 
 
 class PerformanceMonitoringSystem:

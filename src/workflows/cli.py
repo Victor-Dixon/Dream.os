@@ -161,7 +161,14 @@ async def execute_workflow(args: argparse.Namespace) -> None:
 
     # Create engine and restore state
     engine = WorkflowEngine(args.name)
-    # Note: Full state restoration would be implemented here
+    
+    # Restore workflow state from saved file
+    try:
+        engine.restore_state(state_data)
+        print(f"✅ Workflow state restored from {latest_file.name}")
+    except Exception as e:
+        print(f"⚠️  Warning: Could not fully restore state: {e}")
+        print("   Continuing with basic state...")
 
     print(f"▶️ Executing workflow '{args.name}'...")
     await engine.start()

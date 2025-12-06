@@ -24,18 +24,35 @@ except ImportError:
         return None
     def search_vector_database(query):
         return []
-# Optional SearchQuery import
+# Optional SearchQuery import - use SSOT
 try:
-    from .vector_database.vector_database_models import SearchQuery
+    from src.services.models.vector_models import SearchQuery
 except ImportError:
+    import warnings
     from dataclasses import dataclass
     from typing import Any
+    
     @dataclass
     class SearchQuery:
+        """
+        Fallback SearchQuery - use SSOT when available.
+        
+        DEPRECATED: This is a fallback stub. Use src.services.models.vector_models.SearchQuery instead.
+        This class is maintained for backward compatibility only.
+        """
         query: str
         limit: int = 10
         agent_id: str | None = None
         metadata: dict[str, Any] | None = None
+        
+        def __post_init__(self):
+            """Warn about deprecation."""
+            warnings.warn(
+                "SearchQuery fallback stub is deprecated. "
+                "Use src.services.models.vector_models.SearchQuery instead.",
+                DeprecationWarning,
+                stacklevel=2
+            )
 
 
 class LearningRecommender:

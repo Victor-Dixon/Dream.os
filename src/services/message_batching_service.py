@@ -2,6 +2,8 @@
 Message Batching Service - V2 Compliant
 ======================================
 
+<!-- SSOT Domain: communication -->
+
 Allows agents to batch multiple updates into a single message.
 Works WITH message queue system for safe, efficient delivery.
 

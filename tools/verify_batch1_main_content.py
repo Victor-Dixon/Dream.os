@@ -8,6 +8,7 @@ import os
 import requests
 import sys
 from pathlib import Path
+from src.core.config.timeout_constants import TimeoutConstants
 
 # Add project root to path
 project_root = Path(__file__).resolve().parent.parent
@@ -32,7 +33,7 @@ def get_recent_commits(owner: str, repo: str, branch: str, token: str, limit: in
         "per_page": limit
     }
     try:
-        response = requests.get(url, headers=headers, params=params, timeout=30)
+        response = requests.get(url, headers=headers, params=params, timeout=TimeoutConstants.HTTP_DEFAULT)
         if response.status_code == 200:
             return response.json()
         else:
@@ -51,7 +52,7 @@ def get_repo_contents(owner: str, repo: str, path: str, token: str, branch: str 
     }
     params = {"ref": branch}
     try:
-        response = requests.get(url, headers=headers, params=params, timeout=30)
+        response = requests.get(url, headers=headers, params=params, timeout=TimeoutConstants.HTTP_DEFAULT)
         if response.status_code == 200:
             return response.json()
         elif response.status_code == 404:

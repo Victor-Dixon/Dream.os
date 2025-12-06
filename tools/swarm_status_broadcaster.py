@@ -3,6 +3,8 @@ Swarm Status Broadcaster - Automated messaging to multiple agents
 
 PURPOSE: Simplify C-055 coordination by automating status broadcasts
 CRITICAL FOR: Multi-agent coordination, reducing manual messaging overhead
+
+<!-- SSOT Domain: infrastructure -->
 """
 
 import subprocess
@@ -163,7 +165,7 @@ Congratulations! Keep up the excellence!
                 cmd,
                 capture_output=True,
                 text=True,
-                timeout=10
+                timeout=TimeoutConstants.HTTP_SHORT
             )
             
             return result.returncode == 0
@@ -225,6 +227,7 @@ Keep the momentum!
 def main():
     """CLI for swarm broadcasting"""
     import argparse
+from src.core.config.timeout_constants import TimeoutConstants
     
     parser = argparse.ArgumentParser(
         description="Broadcast messages to swarm agents"

@@ -235,6 +235,34 @@ for tool in registry.list_tools():
 
 ---
 
+## 📦 Archived & Deprecated Tools
+
+### **Archived Tools**
+
+Tools that have been archived are located in `tools/deprecated/` and should not be used:
+
+- **`aria_active_response.py`** - Archived (functionality consolidated)
+- **`captain_check_agent_status.py`** - Archived (consolidated into `unified_monitor.py`)
+
+**Replacement**: Use `--unified-validator` or `--unified-monitor` flags
+
+### **Deprecated Tools** (Archive Pending)
+
+These tools are deprecated and will be archived after migration period:
+
+- **`file_refactor_detector.py`** → Use `--unified-validator --category refactor`
+- **`session_transition_helper.py`** → Use `--unified-validator --category session`
+- **`tracker_status_validator.py`** → Use `--unified-validator --category tracker`
+- **`workspace_health_monitor.py`** → Use `--unified-monitor --category workspace`
+
+**Migration Guides**:
+- Validation Tools: `tools/MIGRATION_GUIDE_DEPRECATED_VALIDATION_TOOLS.md`
+- Monitoring Tools: `tools/MIGRATION_GUIDE_DEPRECATED_MONITORING_TOOLS.md`
+- Archived Tools: `tools/ARCHIVED_TOOLS_MIGRATION_GUIDE.md`
+- Deprecation Notices: `tools/DEPRECATION_NOTICES.md`
+
+---
+
 ## 🎯 Future Enhancements
 
 ### Phase 2 (Future)

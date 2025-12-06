@@ -22,8 +22,22 @@ from src.web.monitoring_routes import monitoring_bp
 from src.web.scheduler_routes import scheduler_bp
 from src.web.vision_routes import vision_bp
 from src.web.engines_routes import engines_bp
+from src.web.repository_merge_routes import repository_merge_bp
+from src.web.agent_management_routes import agent_management_bp
+from src.web.execution_coordinator_routes import execution_coordinator_bp
+from src.web.manager_registry_routes import manager_registry_bp
+from src.web.results_processor_routes import results_processor_bp
+from src.web.swarm_intelligence_routes import swarm_intelligence_bp
+from src.web.service_integration_routes import service_integration_bp
+from src.web.manager_operations_routes import manager_operations_bp
+from src.web.assignment_routes import assignment_bp
+from src.web.chat_presence_routes import chat_presence_bp
+from src.web.pipeline_routes import pipeline_bp
+from src.web.messaging_routes import messaging_bp
 from src.web.vector_database.routes import vector_db_bp
 from src.web.vector_database.message_routes import message_bp
+from src.web.pipeline_routes import pipeline_bp
+from src.web.messaging_routes import messaging_bp
 
 
 def create_app() -> Flask:
@@ -47,6 +61,18 @@ def create_app() -> Flask:
     app.register_blueprint(scheduler_bp)
     app.register_blueprint(vision_bp)
     app.register_blueprint(engines_bp)
+    app.register_blueprint(repository_merge_bp)
+    app.register_blueprint(agent_management_bp)
+    app.register_blueprint(execution_coordinator_bp)
+    app.register_blueprint(manager_registry_bp)
+    app.register_blueprint(results_processor_bp)
+    app.register_blueprint(swarm_intelligence_bp)
+    app.register_blueprint(service_integration_bp)
+    app.register_blueprint(manager_operations_bp)
+    app.register_blueprint(assignment_bp)
+    app.register_blueprint(chat_presence_bp)
+    app.register_blueprint(pipeline_bp)
+    app.register_blueprint(messaging_bp)
     app.register_blueprint(vector_db_bp)
     app.register_blueprint(message_bp)
 
@@ -71,5 +97,17 @@ def register_all_blueprints(app: Flask) -> None:
     app.register_blueprint(scheduler_bp)
     app.register_blueprint(vision_bp)
     app.register_blueprint(engines_bp)
+    app.register_blueprint(repository_merge_bp)
+    app.register_blueprint(agent_management_bp)
+    app.register_blueprint(execution_coordinator_bp)
+    app.register_blueprint(manager_registry_bp)
+    app.register_blueprint(results_processor_bp)
+    app.register_blueprint(swarm_intelligence_bp)
+    app.register_blueprint(service_integration_bp)
+    app.register_blueprint(manager_operations_bp)
+    app.register_blueprint(assignment_bp)
+    app.register_blueprint(chat_presence_bp)
+    app.register_blueprint(pipeline_bp)
+    app.register_blueprint(messaging_bp)
     app.register_blueprint(vector_db_bp)
     app.register_blueprint(message_bp)

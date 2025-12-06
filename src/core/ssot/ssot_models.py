@@ -15,6 +15,8 @@ from datetime import datetime
 from enum import Enum
 from typing import Any
 
+from src.core.utils.serialization_utils import to_dict
+
 
 class SSOTComponentType(Enum):
     """SSOT component types - consolidated from multiple files."""
@@ -63,16 +65,8 @@ class SSOTComponent:
     created_at: datetime = field(default_factory=datetime.utcnow)
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary."""
-        return {
-            "component_id": self.component_id,
-            "component_type": self.component_type.value,
-            "name": self.name,
-            "description": self.description,
-            "dependencies": self.dependencies,
-            "metadata": self.metadata,
-            "created_at": self.created_at.isoformat(),
-        }
+        """Convert to dictionary using SSOT utility."""
+        return to_dict(self)
 
 
 @dataclass
@@ -91,16 +85,8 @@ class SSOTIntegrationResult:
     metadata: dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary."""
-        return {
-            "component_id": self.component_id,
-            "success": self.success,
-            "execution_time": self.execution_time,
-            "error_message": self.error_message,
-            "validation_results": self.validation_results,
-            "performance_metrics": self.performance_metrics,
-            "metadata": self.metadata,
-        }
+        """Convert to dictionary using SSOT utility."""
+        return to_dict(self)
 
 
 @dataclass
@@ -124,16 +110,8 @@ class SSOTExecutionTask:
     completed_at: datetime | None = None
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary."""
-        return {
-            "task_id": self.task_id,
-            "component_id": self.component_id,
-            "phase": self.phase.value,
-            "dependencies": self.dependencies,
-            "priority": self.priority,
-            "timeout_seconds": self.timeout_seconds,
-            "retry_count": self.retry_count,
-            "max_retries": self.max_retries,
+        """Convert to dictionary using SSOT utility."""
+        return to_dict(self)
             "status": self.status,
             "created_at": self.created_at.isoformat(),
             "started_at": self.started_at.isoformat() if self.started_at else None,
@@ -157,16 +135,12 @@ class SSOTValidationReport:
     generated_at: datetime = field(default_factory=datetime.utcnow)
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary."""
-        return {
-            "report_id": self.report_id,
-            "component_id": self.component_id,
-            "validation_level": self.validation_level.value,
-            "results": [result.to_dict() for result in self.results],
-            "summary": self.summary,
-            "recommendations": self.recommendations,
-            "generated_at": self.generated_at.isoformat(),
-        }
+        """Convert to dictionary using SSOT utility."""
+        result = to_dict(self)
+        # Ensure results are serialized
+        if "results" in result:
+            result["results"] = [result.to_dict() if hasattr(result, 'to_dict') else to_dict(result) for result in self.results]
+        return result
 
 
 class SSOTMetrics:
@@ -208,13 +182,9 @@ class SSOTMetrics:
         self.validation_reports_generated += 1
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary."""
-        return {
-            "total_components": self.total_components,
-            "total_tasks": self.total_tasks,
-            "completed_tasks": self.completed_tasks,
-            "failed_tasks": self.failed_tasks,
-            "average_execution_time": self.average_execution_time,
-            "validation_reports_generated": self.validation_reports_generated,
-            "success_rate": (self.completed_tasks / max(1, self.total_tasks)) * 100,
-        }
+        """Convert to dictionary using SSOT utility."""
+        result = to_dict(self)
+        # Preserve computed success_rate
+        if "success_rate" not in result:
+            result["success_rate"] = (self.completed_tasks / max(1, self.total_tasks)) * 100
+        return result

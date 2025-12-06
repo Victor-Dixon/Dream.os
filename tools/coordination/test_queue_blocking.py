@@ -20,6 +20,7 @@ sys.path.insert(0, str(project_root))
 
 from src.services.messaging_infrastructure import ConsolidatedMessagingService
 from src.core.keyboard_control_lock import is_locked, get_current_holder
+from src.core.config.timeout_constants import TimeoutConstants
 
 
 def test_broadcast_blocking():
@@ -117,7 +118,7 @@ def test_single_message_blocking():
         test_message, 
         priority="regular",
         wait_for_delivery=True,
-        timeout=30.0
+        timeout=TimeoutConstants.HTTP_DEFAULT
     )
     elapsed = time.time() - start_time
     

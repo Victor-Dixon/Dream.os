@@ -14,6 +14,10 @@ from typing import Any
 
 from pydantic import BaseModel, Field
 
+# Use SSOT Pydantic config
+from src.core.pydantic_config import PydanticConfigV1
+from src.core.utils.serialization_utils import to_dict
+
 
 class InboundMessage(BaseModel):
     """Inbound message from any channel (Discord, CLI, Agent Bus)."""
@@ -25,10 +29,9 @@ class InboundMessage(BaseModel):
     timestamp: float = Field(default_factory=lambda: datetime.now().timestamp())
     metadata: dict[str, Any] = Field(default_factory=dict)
 
-    class Config:
-        """Pydantic config."""
-
-        arbitrary_types_allowed = True
+    class Config(PydanticConfigV1):
+        """Pydantic config - using SSOT."""
+        pass
 
 
 class ParsedTask(BaseModel):
@@ -44,22 +47,18 @@ class ParsedTask(BaseModel):
     source_msg_id: str | None = None
     metadata: dict[str, Any] = Field(default_factory=dict)
 
-    class Config:
-        """Pydantic config."""
-
-        arbitrary_types_allowed = True
+    class Config(PydanticConfigV1):
+        """Pydantic config - using SSOT."""
+        pass
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary for fingerprinting."""
-        return {
-            "title": self.title,
-            "description": self.description,
-            "priority": self.priority,
-            "assignee": self.assignee,
-            "parent_id": self.parent_id,
-            "due_timestamp": self.due_timestamp,
-            "tags": sorted(self.tags) if self.tags else [],
-        }
+        """Convert to dictionary for fingerprinting using SSOT utility."""
+        # Use SSOT utility, then apply custom sorting for tags
+        result = to_dict(self)
+        # Ensure tags are sorted for fingerprinting consistency
+        if "tags" in result and result["tags"]:
+            result["tags"] = sorted(result["tags"])
+        return result
 
 
 class TaskStateTransition(BaseModel):
@@ -72,10 +71,9 @@ class TaskStateTransition(BaseModel):
     timestamp: float = Field(default_factory=lambda: datetime.now().timestamp())
     metadata: dict[str, Any] = Field(default_factory=dict)
 
-    class Config:
-        """Pydantic config."""
-
-        arbitrary_types_allowed = True
+    class Config(PydanticConfigV1):
+        """Pydantic config - using SSOT."""
+        pass
 
 
 class TaskCompletionReport(BaseModel):
@@ -89,10 +87,9 @@ class TaskCompletionReport(BaseModel):
     timestamp: float = Field(default_factory=lambda: datetime.now().timestamp())
     metadata: dict[str, Any] = Field(default_factory=dict)
 
-    class Config:
-        """Pydantic config."""
-
-        arbitrary_types_allowed = True
+    class Config(PydanticConfigV1):
+        """Pydantic config - using SSOT."""
+        pass
 
     def format_message(self) -> str:
         """Format as message content."""

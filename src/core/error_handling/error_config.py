@@ -14,14 +14,30 @@ Consolidation: Agent-7 - Web Development Specialist (C-024)
 License: MIT
 """
 
+from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Any
 
+# Define CircuitBreakerConfig and RetryConfig locally (Infrastructure SSOT may not have them yet)
+@dataclass
+class CircuitBreakerConfig:
+    """Circuit breaker configuration."""
+    name: str
+    failure_threshold: int = 5
+    recovery_timeout: float = 60.0
+    
+    @property
+    def timeout(self) -> float:
+        """Backward compatibility: alias for recovery_timeout."""
+        return self.recovery_timeout
 
-# Infrastructure SSOT: RetryConfig and CircuitBreakerConfig moved to config_dataclasses.py
-# Import from Infrastructure SSOT for backward compatibility
-from dataclasses import dataclass, field
-
+@dataclass
+class RetryConfig:
+    """Retry configuration."""
+    max_attempts: int = 3
+    initial_delay: float = 1.0
+    max_delay: float = 60.0
+    exponential_base: float = 2.0
 
 class RecoverableErrors:
     """Recoverable error types."""
@@ -66,8 +82,8 @@ class ErrorSummary:
 
 
 __all__ = [
-    "RetryConfig",  # Re-exported from Infrastructure SSOT
-    "CircuitBreakerConfig",  # Re-exported from Infrastructure SSOT
+    "RetryConfig",
+    "CircuitBreakerConfig",
     "RecoverableErrors",
     "ErrorSeverityMapping",
     "ErrorSummary",

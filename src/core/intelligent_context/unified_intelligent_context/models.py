@@ -44,28 +44,56 @@ class Status(Enum):
     CANCELLED = "cancelled"
 
 
+# DEPRECATED: Use SSOT from src.services.models.vector_models instead
+import warnings
+from src.services.models.vector_models import SearchResult as SSOTSearchResult
+
 @dataclass
-class SearchResult:
-    """Search result structure for intelligent context search."""
-
-    result_id: str
-    title: str = ""
-    description: str = ""
-    relevance_score: float = 0.0
-    context_type: ContextType | None = None
-    metadata: dict[str, Any] = field(default_factory=dict)
-    timestamp: datetime = field(default_factory=datetime.now)
-
+class SearchResult(SSOTSearchResult):
+    """
+    DEPRECATED: This class is maintained for backward compatibility only.
+    
+    Use src.services.models.vector_models.SearchResult instead.
+    
+    This class will be removed in a future version.
+    
+    <!-- SSOT Domain: data -->
+    """
+    
+    def __init__(self, result_id: str, title: str = "", description: str = "",
+                 relevance_score: float = 0.0, context_type: ContextType | None = None,
+                 metadata: dict[str, Any] = None, timestamp: datetime = None):
+        """Initialize with legacy parameters."""
+        warnings.warn(
+            "SearchResult from src.core.intelligent_context.unified_intelligent_context.models is deprecated. "
+            "Use src.services.models.vector_models.SearchResult instead.",
+            DeprecationWarning,
+            stacklevel=2
+        )
+        super().__init__(
+            document_id=result_id,
+            content=description or title or "",
+            similarity_score=relevance_score,
+            metadata=metadata or {},
+            result_id=result_id,
+            title=title,
+            description=description,
+            relevance_score=relevance_score,
+            context_type=context_type,
+            timestamp=timestamp or datetime.now()
+        )
+    
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary."""
-        return {
-            "result_id": self.result_id,
-            "title": self.title,
-            "description": self.description,
-            "relevance_score": self.relevance_score,
-            "context_type": self.context_type.value if self.context_type else None,
-            "metadata": self.metadata,
-            "timestamp": self.timestamp.isoformat(),
+        """Convert to dictionary using SSOT utility."""
+        from src.core.utils.serialization_utils import to_dict
+        result = to_dict(self)
+        # Preserve custom aliases
+        if "result_id" not in result and self.result_id_alias:
+            result["result_id"] = self.result_id_alias
+        if "relevance_score" not in result and self.relevance_score_alias:
+            result["relevance_score"] = self.relevance_score_alias
+        return result
+            "timestamp": (self.timestamp.isoformat() if self.timestamp else datetime.now().isoformat()),
         }
 
 

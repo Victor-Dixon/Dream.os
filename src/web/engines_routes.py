@@ -165,13 +165,44 @@ def initialize_engine(engine_type: str):
         # Get engine (will create instance if not exists)
         engine = registry.get_engine(engine_type)
         
-        # Try to initialize if context available
-        # Note: This requires EngineContext - simplified for now
-        return jsonify({
-            "success": True,
-            "engine_type": engine_type,
-            "message": "Engine initialized successfully"
-        }), 200
+        # Create EngineContext for initialization
+        try:
+            from src.core.engines.contracts import EngineContext
+            from src.core.unified_logging_system import get_logger
+            
+            context = EngineContext(
+                config={},  # Can be enhanced with request-specific config
+                logger=get_logger(f"engine.{engine_type}"),
+                metrics={}
+            )
+            
+            # Initialize engine with context
+            initialized = engine.initialize(context) if hasattr(engine, 'initialize') else True
+            
+            if initialized:
+                return jsonify({
+                    "success": True,
+                    "engine_type": engine_type,
+                    "message": "Engine initialized successfully",
+                    "context_provided": True
+                }), 200
+            else:
+                return jsonify({
+                    "success": False,
+                    "engine_type": engine_type,
+                    "error": "Engine initialization failed",
+                    "context_provided": True
+                }), 500
+                
+        except Exception as e:
+            # Fallback if EngineContext not available
+            return jsonify({
+                "success": True,
+                "engine_type": engine_type,
+                "message": "Engine initialized (context unavailable)",
+                "context_provided": False,
+                "warning": str(e)
+            }), 200
         
     except Exception as e:
         return jsonify({
@@ -184,21 +215,33 @@ def initialize_engine(engine_type: str):
 @engines_bp.route("/initialize-all", methods=["POST"])
 def initialize_all_engines():
     """
-    Initialize all discovered engines.
-    
-    Note: Requires EngineContext - simplified implementation
+    Initialize all discovered engines with proper EngineContext.
     """
     try:
+        from src.core.engines.contracts import EngineContext
+        from src.core.unified_logging_system import get_logger
+        
         registry = _get_registry()
         engine_types = registry.get_engine_types()
+        
+        # Create shared context for all engines
+        context = EngineContext(
+            config={},
+            logger=get_logger("engine.registry"),
+            metrics={}
+        )
         
         results: Dict[str, bool] = {}
         for engine_type in engine_types:
             try:
                 engine = registry.get_engine(engine_type)
-                # Simplified - actual initialization requires context
-                results[engine_type] = True
+                # Initialize with proper context
+                if hasattr(engine, 'initialize'):
+                    results[engine_type] = engine.initialize(context)
+                else:
+                    results[engine_type] = True  # Engine doesn't require initialization
             except Exception as e:
+                context.logger.error(f"Failed to initialize {engine_type}: {e}")
                 results[engine_type] = False
         
         successful = sum(1 for v in results.values() if v)

@@ -98,7 +98,7 @@ def clone_dreamvault(temp_base: Path, token: str, username: str) -> Optional[Pat
         print(f"📥 Cloning {repo}...")
         subprocess.run(
             ["git", "clone", repo_url, str(repo_dir)],
-            check=True, timeout=300, capture_output=True, text=True
+            check=True, timeout=TimeoutConstants.HTTP_EXTENDED, capture_output=True, text=True
         )
         print(f"✅ Cloned {repo} successfully")
         return repo_dir
@@ -259,23 +259,23 @@ def commit_changes(repo_dir: Path, token: str, username: str) -> bool:
         # Configure git
         subprocess.run(
             ["git", "config", "user.name", username],
-            cwd=repo_dir, check=True, timeout=30
+            cwd=repo_dir, check=True, timeout=TimeoutConstants.HTTP_DEFAULT
         )
         subprocess.run(
             ["git", "config", "user.email", f"{username}@users.noreply.github.com"],
-            cwd=repo_dir, check=True, timeout=30
+            cwd=repo_dir, check=True, timeout=TimeoutConstants.HTTP_DEFAULT
         )
         
         # Add all changes
         subprocess.run(
             ["git", "add", "-A"],
-            cwd=repo_dir, check=True, timeout=60
+            cwd=repo_dir, check=True, timeout=TimeoutConstants.HTTP_MEDIUM
         )
         
         # Check if there are changes
         status = subprocess.run(
             ["git", "status", "--porcelain"],
-            cwd=repo_dir, capture_output=True, text=True, timeout=30
+            cwd=repo_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_DEFAULT
         )
         
         if not status.stdout.strip():
@@ -286,7 +286,7 @@ def commit_changes(repo_dir: Path, token: str, username: str) -> bool:
         commit_message = "Cleanup: Remove virtual environment files and resolve code duplicates"
         subprocess.run(
             ["git", "commit", "-m", commit_message],
-            cwd=repo_dir, check=True, timeout=60
+            cwd=repo_dir, check=True, timeout=TimeoutConstants.HTTP_MEDIUM
         )
         print("✅ Changes committed")
         
@@ -294,7 +294,7 @@ def commit_changes(repo_dir: Path, token: str, username: str) -> bool:
         repo_url = f"https://{username}:{token}@github.com/Dadudekc/DreamVault.git"
         subprocess.run(
             ["git", "push", "origin", "master"],
-            cwd=repo_dir, check=True, timeout=120
+            cwd=repo_dir, check=True, timeout=TimeoutConstants.HTTP_LONG
         )
         print("✅ Changes pushed to repository")
         
@@ -352,6 +352,7 @@ def main():
     except Exception as e:
         print(f"❌ Error during cleanup: {e}")
         import traceback
+from src.core.config.timeout_constants import TimeoutConstants
         traceback.print_exc()
         return 1
     finally:

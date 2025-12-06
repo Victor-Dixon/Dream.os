@@ -12,6 +12,7 @@ from datetime import datetime
 from typing import Any, Optional
 
 from .value_objects.ids import AgentId, TaskId
+from src.core.utils.serialization_utils import to_dict
 
 
 @dataclass(frozen=True)
@@ -33,13 +34,8 @@ class DomainEvent:
         return self.__class__.__name__
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert event to dictionary representation."""
-        return {
-            "event_id": self.event_id,
-            "event_type": self.event_type,
-            "occurred_at": self.occurred_at.isoformat(),
-            "event_version": self.event_version,
-        }
+        """Convert event to dictionary representation using SSOT utility."""
+        return to_dict(self)
 
 
 @dataclass(frozen=True)
@@ -60,9 +56,12 @@ class TaskCreated(DomainEvent):
             raise ValueError("priority is required")
 
     def to_dict(self) -> dict[str, Any]:
-        data = super().to_dict()
-        data.update({"task_id": str(self.task_id), "title": self.title, "priority": self.priority})
-        return data
+        """Convert to dictionary using SSOT utility."""
+        result = to_dict(self)
+        # Preserve custom fields
+        if self.task_id:
+            result["task_id"] = str(self.task_id)
+        return result
 
 
 @dataclass(frozen=True)
@@ -81,15 +80,14 @@ class TaskAssigned(DomainEvent):
             raise ValueError("agent_id is required")
 
     def to_dict(self) -> dict[str, Any]:
-        data = super().to_dict()
-        data.update(
-            {
-                "task_id": str(self.task_id),
-                "agent_id": str(self.agent_id),
-                "assigned_at": self.assigned_at.isoformat(),
-            }
-        )
-        return data
+        """Convert to dictionary using SSOT utility."""
+        result = to_dict(self)
+        # Preserve custom fields
+        if self.task_id:
+            result["task_id"] = str(self.task_id)
+        if self.agent_id:
+            result["agent_id"] = str(self.agent_id)
+        return result
 
 
 @dataclass(frozen=True)
@@ -108,15 +106,14 @@ class TaskCompleted(DomainEvent):
             raise ValueError("agent_id is required")
 
     def to_dict(self) -> dict[str, Any]:
-        data = super().to_dict()
-        data.update(
-            {
-                "task_id": str(self.task_id),
-                "agent_id": str(self.agent_id),
-                "completed_at": self.completed_at.isoformat(),
-            }
-        )
-        return data
+        """Convert to dictionary using SSOT utility."""
+        result = to_dict(self)
+        # Preserve custom fields
+        if self.task_id:
+            result["task_id"] = str(self.task_id)
+        if self.agent_id:
+            result["agent_id"] = str(self.agent_id)
+        return result
 
 
 @dataclass(frozen=True)
@@ -132,9 +129,12 @@ class AgentActivated(DomainEvent):
             raise ValueError("agent_id is required")
 
     def to_dict(self) -> dict[str, Any]:
-        data = super().to_dict()
-        data.update({"agent_id": str(self.agent_id), "activated_at": self.activated_at.isoformat()})
-        return data
+        """Convert to dictionary using SSOT utility."""
+        result = to_dict(self)
+        # Preserve custom fields
+        if self.agent_id:
+            result["agent_id"] = str(self.agent_id)
+        return result
 
 
 @dataclass(frozen=True)
@@ -150,6 +150,9 @@ class AgentDeactivated(DomainEvent):
             raise ValueError("agent_id is required")
 
     def to_dict(self) -> dict[str, Any]:
-        data = super().to_dict()
-        data.update({"agent_id": str(self.agent_id), "deactivated_at": self.deactivated_at.isoformat()})
-        return data
+        """Convert to dictionary using SSOT utility."""
+        result = to_dict(self)
+        # Preserve custom fields
+        if self.agent_id:
+            result["agent_id"] = str(self.agent_id)
+        return result

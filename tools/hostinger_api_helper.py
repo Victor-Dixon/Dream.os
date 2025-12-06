@@ -77,7 +77,7 @@ class HostingerAPIHelper:
             
             for endpoint in endpoints:
                 try:
-                    response = requests.get(endpoint, headers=self.headers, timeout=10)
+                    response = requests.get(endpoint, headers=self.headers, timeout=TimeoutConstants.HTTP_SHORT)
                     if response.status_code == 200:
                         return response.json()
                 except:
@@ -104,7 +104,7 @@ class HostingerAPIHelper:
             
             for endpoint in endpoints:
                 try:
-                    response = requests.get(endpoint, headers=self.headers, timeout=10)
+                    response = requests.get(endpoint, headers=self.headers, timeout=TimeoutConstants.HTTP_SHORT)
                     if response.status_code == 200:
                         data = response.json()
                         # Handle different response formats
@@ -134,7 +134,7 @@ class HostingerAPIHelper:
             response = requests.get(
                 f"{self.BASE_URL}/hosting/{domain}",
                 headers=self.headers,
-                timeout=10
+                timeout=TimeoutConstants.HTTP_SHORT
             )
             
             # If 403, try alternative auth format
@@ -143,7 +143,7 @@ class HostingerAPIHelper:
                 response = requests.get(
                     f"{self.BASE_URL}/hosting/{domain}",
                     headers=self.headers_alt,
-                    timeout=10
+                    timeout=TimeoutConstants.HTTP_SHORT
                 )
             
             # Debug: log response details
@@ -178,7 +178,7 @@ class HostingerAPIHelper:
                     response = requests.get(
                         endpoint,
                         headers=self.headers,
-                        timeout=10
+                        timeout=TimeoutConstants.HTTP_SHORT
                     )
                     if response.status_code == 200:
                         return response.json()
@@ -369,6 +369,7 @@ class HostingerAPIHelper:
 def main():
     """CLI interface."""
     import argparse
+from src.core.config.timeout_constants import TimeoutConstants
     
     parser = argparse.ArgumentParser(
         description="Discover SFTP credentials via Hostinger API"

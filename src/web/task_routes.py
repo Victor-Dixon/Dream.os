@@ -23,23 +23,27 @@ from src.web.task_handlers import TaskHandlers
 # Create blueprint
 task_bp = Blueprint("task", __name__, url_prefix="/api/tasks")
 
+# Create handler instance (BaseHandler pattern)
+task_handlers = TaskHandlers()
+
 
 @task_bp.route("/assign", methods=["POST"])
 def assign_task():
     """Assign a task to an agent."""
-    return TaskHandlers.handle_assign_task(request)
+    return task_handlers.handle_assign_task(request)
 
 
 @task_bp.route("/complete", methods=["POST"])
 def complete_task():
     """Complete a task."""
-    return TaskHandlers.handle_complete_task(request)
+    return task_handlers.handle_complete_task(request)
 
 
 @task_bp.route("/health", methods=["GET"])
 def health_check():
     """Health check endpoint."""
     return jsonify({"status": "ok", "service": "task-management"})
+
 
 
 

@@ -27,6 +27,12 @@ try:
 except ImportError:
     pass
 
+# Add project root to path
+project_root = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(project_root))
+
+from src.core.config.timeout_constants import TimeoutConstants
+
 
 def get_github_token() -> Optional[str]:
     """Get GitHub token from environment or .env file."""
@@ -56,7 +62,7 @@ def get_pr_info(token: str, owner: str, repo: str, pr_number: int) -> Optional[d
     }
     
     try:
-        response = requests.get(url, headers=headers, timeout=30)
+        response = requests.get(url, headers=headers, timeout=TimeoutConstants.HTTP_DEFAULT)
         if response.status_code == 200:
             return response.json()
         else:
@@ -94,7 +100,7 @@ def resolve_conflicts_via_git(
         print(f"📥 Cloning {repo}...")
         clone_result = subprocess.run(
             ["git", "clone", repo_url, str(repo_dir)],
-            capture_output=True, text=True, timeout=120, env=git_env
+            capture_output=True, text=True, timeout=TimeoutConstants.HTTP_LONG, env=git_env
         )
         
         if clone_result.returncode != 0:
@@ -105,14 +111,14 @@ def resolve_conflicts_via_git(
         print(f"📥 Fetching all branches...")
         subprocess.run(
             ["git", "fetch", "origin"],
-            cwd=repo_dir, capture_output=True, text=True, timeout=60, env=git_env
+            cwd=repo_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_MEDIUM, env=git_env
         )
         
         # Checkout base branch
         print(f"🔀 Checking out base branch: {base_branch}...")
         checkout_result = subprocess.run(
             ["git", "checkout", base_branch],
-            cwd=repo_dir, capture_output=True, text=True, timeout=30, env=git_env
+            cwd=repo_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_DEFAULT, env=git_env
         )
         
         if checkout_result.returncode != 0:
@@ -120,7 +126,7 @@ def resolve_conflicts_via_git(
             base_branch = "main"
             checkout_result = subprocess.run(
                 ["git", "checkout", base_branch],
-                cwd=repo_dir, capture_output=True, text=True, timeout=30, env=git_env
+                cwd=repo_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_DEFAULT, env=git_env
             )
             if checkout_result.returncode != 0:
                 print(f"❌ Failed to checkout base branch: {checkout_result.stderr}")
@@ -130,7 +136,7 @@ def resolve_conflicts_via_git(
         print(f"🔀 Merging {head_branch} into {base_branch}...")
         merge_result = subprocess.run(
             ["git", "merge", f"origin/{head_branch}", "--allow-unrelated-histories", "--no-edit"],
-            cwd=repo_dir, capture_output=True, text=True, timeout=120, env=git_env
+            cwd=repo_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_LONG, env=git_env
         )
         
         if merge_result.returncode != 0:
@@ -141,7 +147,7 @@ def resolve_conflicts_via_git(
                 # Get conflicted files
                 conflicted = subprocess.run(
                     ["git", "diff", "--name-only", "--diff-filter=U"],
-                    cwd=repo_dir, capture_output=True, text=True, timeout=30, env=git_env
+                    cwd=repo_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_DEFAULT, env=git_env
                 )
                 
                 if conflicted.returncode == 0 and conflicted.stdout.strip():
@@ -151,17 +157,17 @@ def resolve_conflicts_via_git(
                     for file in files:
                         subprocess.run(
                             ["git", "checkout", "--ours", file],
-                            cwd=repo_dir, check=False, timeout=30, env=git_env
+                            cwd=repo_dir, check=False, timeout=TimeoutConstants.HTTP_DEFAULT, env=git_env
                         )
                         subprocess.run(
                             ["git", "add", file],
-                            cwd=repo_dir, check=False, timeout=30, env=git_env
+                            cwd=repo_dir, check=False, timeout=TimeoutConstants.HTTP_DEFAULT, env=git_env
                         )
                     
                     # Commit the resolution
                     commit_result = subprocess.run(
                         ["git", "commit", "-m", f"Resolve conflicts in PR #{pr_number} using 'ours' strategy"],
-                        cwd=repo_dir, capture_output=True, text=True, timeout=30, env=git_env
+                        cwd=repo_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_DEFAULT, env=git_env
                     )
                     
                     if commit_result.returncode == 0:
@@ -176,21 +182,21 @@ def resolve_conflicts_via_git(
         print(f"🔀 Checking out {head_branch}...")
         checkout_head = subprocess.run(
             ["git", "checkout", head_branch],
-            cwd=repo_dir, capture_output=True, text=True, timeout=30, env=git_env
+            cwd=repo_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_DEFAULT, env=git_env
         )
         
         if checkout_head.returncode != 0:
             # Create branch if it doesn't exist locally
             subprocess.run(
                 ["git", "checkout", "-b", head_branch, f"origin/{head_branch}"],
-                cwd=repo_dir, capture_output=True, text=True, timeout=30, env=git_env
+                cwd=repo_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_DEFAULT, env=git_env
             )
         
         # Merge base into head to get conflicts
         print(f"🔀 Merging {base_branch} into {head_branch} to detect conflicts...")
         merge_base = subprocess.run(
             ["git", "merge", base_branch, "--allow-unrelated-histories", "--no-edit"],
-            cwd=repo_dir, capture_output=True, text=True, timeout=120, env=git_env
+            cwd=repo_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_LONG, env=git_env
         )
         
         if merge_base.returncode != 0:
@@ -201,7 +207,7 @@ def resolve_conflicts_via_git(
                 # Get conflicted files
                 conflicted = subprocess.run(
                     ["git", "diff", "--name-only", "--diff-filter=U"],
-                    cwd=repo_dir, capture_output=True, text=True, timeout=30, env=git_env
+                    cwd=repo_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_DEFAULT, env=git_env
                 )
                 
                 if conflicted.returncode == 0 and conflicted.stdout.strip():
@@ -211,17 +217,17 @@ def resolve_conflicts_via_git(
                     for file in files:
                         subprocess.run(
                             ["git", "checkout", "--ours", file],
-                            cwd=repo_dir, check=False, timeout=30, env=git_env
+                            cwd=repo_dir, check=False, timeout=TimeoutConstants.HTTP_DEFAULT, env=git_env
                         )
                         subprocess.run(
                             ["git", "add", file],
-                            cwd=repo_dir, check=False, timeout=30, env=git_env
+                            cwd=repo_dir, check=False, timeout=TimeoutConstants.HTTP_DEFAULT, env=git_env
                         )
                     
                     # Commit the resolution
                     commit_result = subprocess.run(
                         ["git", "commit", "-m", f"Resolve conflicts in PR #{pr_number} using 'ours' strategy"],
-                        cwd=repo_dir, capture_output=True, text=True, timeout=30, env=git_env
+                        cwd=repo_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_DEFAULT, env=git_env
                     )
                     
                     if commit_result.returncode == 0:
@@ -231,7 +237,7 @@ def resolve_conflicts_via_git(
         print(f"📤 Pushing resolved {head_branch}...")
         push_result = subprocess.run(
             ["git", "push", "origin", head_branch, "--force"],
-            cwd=repo_dir, capture_output=True, text=True, timeout=60, env=git_env
+            cwd=repo_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_MEDIUM, env=git_env
         )
         
         if push_result.returncode == 0:
@@ -263,7 +269,7 @@ def merge_pr(token: str, owner: str, repo: str, pr_number: int) -> bool:
     }
     
     try:
-        response = requests.put(url, headers=headers, json=data, timeout=30)
+        response = requests.put(url, headers=headers, json=data, timeout=TimeoutConstants.HTTP_DEFAULT)
         if response.status_code == 200:
             result = response.json()
             print(f"✅ PR #{pr_number} merged successfully!")

@@ -38,8 +38,8 @@ class AgentRole(Enum):
     EMERGENCY_RESPONSE = "emergency_response"
 
 
-class AgentStatus(Enum):
-    """Agent operational status."""
+class OSRSAgentStatus(Enum):
+    """OSRS agent operational status (domain-specific)."""
 
     INITIALIZING = "initializing"
     ACTIVE = "active"
@@ -92,7 +92,7 @@ class OSRS_Agent_Core:
         self.agent_id = agent_id
         self.role = role
         self.osrs_account = osrs_account
-        self.status = AgentStatus.INITIALIZING
+        self.status = OSRSAgentStatus.INITIALIZING
         self.is_running = False
         self.current_activity = None
         self.game_state = None
@@ -127,7 +127,7 @@ class OSRS_Agent_Core:
         """Start continuous autonomous OSRS operation."""
         self.logger.info(f"Starting autonomous operation for agent {self.agent_id}")
         self.is_running = True
-        self.status = AgentStatus.ACTIVE
+        self.status = OSRSAgentStatus.ACTIVE
 
         try:
             while self.is_running:
@@ -138,7 +138,7 @@ class OSRS_Agent_Core:
             self.logger.info(f"Agent {self.agent_id} received shutdown signal")
         except Exception as e:
             self.logger.error(f"Error in autonomous operation: {e}")
-            self.status = AgentStatus.ERROR
+            self.status = OSRSAgentStatus.ERROR
         finally:
             self.shutdown()
 
@@ -153,7 +153,7 @@ class OSRS_Agent_Core:
 
         except Exception as e:
             self.logger.error(f"Error in OSRS cycle: {e}")
-            self.status = AgentStatus.ERROR
+            self.status = OSRSAgentStatus.ERROR
 
     def update_game_state(self):
         """Update current OSRS game state."""
@@ -232,20 +232,20 @@ class OSRS_Agent_Core:
     def pause_agent(self):
         """Pause agent operation."""
         self.logger.info(f"Pausing agent {self.agent_id}")
-        self.status = AgentStatus.PAUSED
+        self.status = OSRSAgentStatus.PAUSED
         self.is_running = False
 
     def resume_agent(self):
         """Resume agent operation."""
         self.logger.info(f"Resuming agent {self.agent_id}")
-        self.status = AgentStatus.ACTIVE
+        self.status = OSRSAgentStatus.ACTIVE
         self.is_running = True
         threading.Thread(target=self.start_autonomous_operation, daemon=True).start()
 
     def shutdown(self):
         """Shutdown agent gracefully."""
         self.logger.info(f"Shutting down agent {self.agent_id}")
-        self.status = AgentStatus.SHUTDOWN
+        self.status = OSRSAgentStatus.SHUTDOWN
         self.is_running = False
 
         self.update_status()

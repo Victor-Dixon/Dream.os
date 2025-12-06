@@ -32,7 +32,7 @@ except ImportError:
 
 from src.services.messaging_infrastructure import ConsolidatedMessagingService
 
-from ...discord_commander.status_reader import StatusReader
+from ..status_reader import StatusReader
 
 logger = logging.getLogger(__name__)
 

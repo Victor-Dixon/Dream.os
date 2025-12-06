@@ -6,6 +6,7 @@ Handler classes for task management operations.
 Wires use cases to web layer with dependency injection.
 
 V2 Compliance: < 300 lines, handler pattern.
+Consolidated: Uses BaseHandler (33% code reduction).
 """
 
 import json
@@ -23,6 +24,7 @@ from src.application.use_cases.complete_task_uc import (
     CompleteTaskResponse,
     CompleteTaskUseCase,
 )
+from src.core.base.base_handler import BaseHandler
 from src.domain.ports.agent_repository import AgentRepository
 from src.domain.ports.logger import Logger
 from src.domain.ports.message_bus import MessageBus
@@ -31,16 +33,18 @@ from src.domain.services.assignment_service import AssignmentService
 from src.infrastructure.dependency_injection import get_dependencies
 
 
-class TaskHandlers:
+class TaskHandlers(BaseHandler):
     """Handler class for task management operations."""
 
-    @staticmethod
-    def _get_use_case_dependencies() -> Dict[str, Any]:
+    def __init__(self):
+        """Initialize task handlers."""
+        super().__init__("TaskHandlers")
+
+    def _get_use_case_dependencies(self) -> Dict[str, Any]:
         """Get dependencies for use cases."""
         return get_dependencies()
 
-    @staticmethod
-    def handle_assign_task(request) -> tuple:
+    def handle_assign_task(self, request) -> tuple:
         """
         Handle task assignment request.
 
@@ -57,10 +61,11 @@ class TaskHandlers:
             agent_id = data.get("agent_id")  # Optional for auto-assignment
 
             if not task_id:
-                return jsonify({"error": "task_id is required"}), 400
+                error_response = self.format_response(None, success=False, error="task_id is required")
+                return jsonify(error_response), 400
 
             # Get dependencies
-            deps = TaskHandlers._get_use_case_dependencies()
+            deps = self._get_use_case_dependencies()
             task_repo: TaskRepository = deps["task_repository"]
             agent_repo: AgentRepository = deps["agent_repository"]
             message_bus: MessageBus = deps["message_bus"]
@@ -82,24 +87,21 @@ class TaskHandlers:
 
             # Return response
             if response.success:
-                return (
-                    jsonify(
-                        {
-                            "success": True,
-                            "task_id": str(response.task.id) if response.task else None,
-                            "agent_id": str(response.agent.id) if response.agent else None,
-                        }
-                    ),
-                    200,
-                )
+                response_data = {
+                    "task_id": str(response.task.id) if response.task else None,
+                    "agent_id": str(response.agent.id) if response.agent else None,
+                }
+                handler_response = self.format_response(response_data, success=True)
+                return jsonify(handler_response), 200
             else:
-                return jsonify({"success": False, "error": response.error_message}), 400
+                error_response = self.format_response(None, success=False, error=response.error_message)
+                return jsonify(error_response), 400
 
         except Exception as e:
-            return jsonify({"success": False, "error": str(e)}), 500
+            error_response = self.handle_error(e, "assign_task")
+            return jsonify(error_response), 500
 
-    @staticmethod
-    def handle_complete_task(request) -> tuple:
+    def handle_complete_task(self, request) -> tuple:
         """
         Handle task completion request.
 
@@ -116,13 +118,15 @@ class TaskHandlers:
             agent_id = data.get("agent_id")
 
             if not task_id or not agent_id:
-                return (
-                    jsonify({"error": "task_id and agent_id are required"}),
-                    400,
+                error_response = self.format_response(
+                    None,
+                    success=False,
+                    error="task_id and agent_id are required"
                 )
+                return jsonify(error_response), 400
 
             # Get dependencies
-            deps = TaskHandlers._get_use_case_dependencies()
+            deps = self._get_use_case_dependencies()
             task_repo: TaskRepository = deps["task_repository"]
             agent_repo: AgentRepository = deps["agent_repository"]
             message_bus: MessageBus = deps["message_bus"]
@@ -142,21 +146,20 @@ class TaskHandlers:
 
             # Return response
             if response.success:
-                return (
-                    jsonify(
-                        {
-                            "success": True,
-                            "task_id": str(response.task.id) if response.task else None,
-                            "agent_id": str(response.agent.id) if response.agent else None,
-                        }
-                    ),
-                    200,
-                )
+                response_data = {
+                    "task_id": str(response.task.id) if response.task else None,
+                    "agent_id": str(response.agent.id) if response.agent else None,
+                }
+                handler_response = self.format_response(response_data, success=True)
+                return jsonify(handler_response), 200
             else:
-                return jsonify({"success": False, "error": response.error_message}), 400
+                error_response = self.format_response(None, success=False, error=response.error_message)
+                return jsonify(error_response), 400
 
         except Exception as e:
-            return jsonify({"success": False, "error": str(e)}), 500
+            error_response = self.handle_error(e, "complete_task")
+            return jsonify(error_response), 500
+
 
 
 

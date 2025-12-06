@@ -9,12 +9,20 @@ Mission: Week 1 Quick Win - Discord Contract Notifications
 """
 
 import os
+import sys
 import requests
 from datetime import datetime
 from typing import Optional, Dict, Any
+from pathlib import Path
 from dotenv import load_dotenv
 
 load_dotenv()
+
+# Add project root to path
+project_root = Path(__file__).resolve().parent.parent.parent
+sys.path.insert(0, str(project_root))
+
+from src.core.config.timeout_constants import TimeoutConstants
 
 
 class ContractNotifier:
@@ -58,7 +66,7 @@ class ContractNotifier:
         }
         
         try:
-            response = requests.post(self.webhook_url, json=payload, timeout=10)
+            response = requests.post(self.webhook_url, json=payload, timeout=TimeoutConstants.HTTP_SHORT)
             return response.status_code == 204
         except Exception as e:
             print(f"❌ Error posting assignment notification: {e}")
@@ -92,7 +100,7 @@ class ContractNotifier:
         }
         
         try:
-            response = requests.post(self.webhook_url, json=payload, timeout=10)
+            response = requests.post(self.webhook_url, json=payload, timeout=TimeoutConstants.HTTP_SHORT)
             return response.status_code == 204
         except Exception as e:
             print(f"❌ Error posting start notification: {e}")
@@ -130,7 +138,7 @@ class ContractNotifier:
         }
         
         try:
-            response = requests.post(self.webhook_url, json=payload, timeout=10)
+            response = requests.post(self.webhook_url, json=payload, timeout=TimeoutConstants.HTTP_SHORT)
             return response.status_code == 204
         except Exception as e:
             print(f"❌ Error posting completion notification: {e}")
@@ -166,7 +174,7 @@ class ContractNotifier:
         }
         
         try:
-            response = requests.post(self.webhook_url, json=payload, timeout=10)
+            response = requests.post(self.webhook_url, json=payload, timeout=TimeoutConstants.HTTP_SHORT)
             return response.status_code == 204
         except Exception as e:
             print(f"❌ Error posting blocked notification: {e}")

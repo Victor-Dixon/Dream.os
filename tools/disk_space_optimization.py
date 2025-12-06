@@ -113,7 +113,7 @@ def optimize_git_repo(dry_run: bool = True) -> dict:
                 cwd=PROJECT_ROOT,
                 capture_output=True,
                 text=True,
-                timeout=300
+                timeout=TimeoutConstants.HTTP_EXTENDED
             )
             if result.returncode == 0:
                 print("✅ Git repository optimized")
@@ -158,6 +158,7 @@ def recommend_c_drive_cleanup() -> list:
 def main():
     """Main optimization function."""
     import argparse
+from src.core.config.timeout_constants import TimeoutConstants
     
     parser = argparse.ArgumentParser(description="Disk space optimization")
     parser.add_argument("--execute", action="store_true", help="Execute cleanup (not dry run)")

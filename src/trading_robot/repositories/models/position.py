@@ -15,6 +15,8 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Any
 
+from src.core.utils.serialization_utils import to_dict
+
 
 @dataclass
 class Position:
@@ -108,15 +110,8 @@ class Position:
             self.quantity = total_quantity
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert position to dictionary."""
-        return {
-            "symbol": self.symbol,
-            "quantity": self.quantity,
-            "average_price": self.average_price,
-            "current_price": self.current_price,
-            "timestamp": self.timestamp.isoformat(),
-            "metadata": self.metadata,
-        }
+        """Convert position to dictionary using SSOT utility."""
+        return to_dict(self)
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> "Position":

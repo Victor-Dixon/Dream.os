@@ -3,6 +3,9 @@
 File Refactor Detector - Quick Refactor History Checker
 ========================================================
 
+⚠️ DEPRECATED: This tool has been consolidated into unified_validator.py
+Use: python tools/unified_validator.py --category refactor --file <path>
+
 Quickly checks if a file has already been refactored by examining headers and git history.
 Based on Agent-1 session learning: Check before you start!
 

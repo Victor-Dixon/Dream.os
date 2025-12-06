@@ -4,6 +4,8 @@ SQLite Task Repository - Infrastructure Adapter
 
 Concrete implementation of TaskRepository using SQLite.
 This is an adapter that implements the domain port.
+
+<!-- SSOT Domain: infrastructure -->
 """
 
 import sqlite3

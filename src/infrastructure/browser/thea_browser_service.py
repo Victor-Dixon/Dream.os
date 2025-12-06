@@ -6,6 +6,8 @@ Thea Browser Service - V2 Compliance
 Unified browser service for Thea Manager automation.
 Consolidates: browser_adapter, chrome_undetected, thea_login_handler, thea_manager_profile
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-3 (Infrastructure & DevOps) - Browser Consolidation
 License: MIT
 """

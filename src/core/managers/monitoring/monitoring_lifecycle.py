@@ -15,6 +15,7 @@ if TYPE_CHECKING:
     from .monitoring_state import MonitoringState
 
 from ..contracts import ManagerContext
+from src.core.config.timeout_constants import TimeoutConstants
 
 
 class MonitoringLifecycle:
@@ -94,7 +95,7 @@ class MonitoringLifecycle:
         """Stop background monitoring tasks."""
         self._stop_event.set()
         if self._background_thread:
-            self._background_thread.join(timeout=5.0)
+            self._background_thread.join(timeout=TimeoutConstants.HTTP_QUICK)
 
     def _background_monitor(self) -> None:
         """Background monitoring loop."""

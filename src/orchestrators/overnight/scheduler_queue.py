@@ -13,7 +13,7 @@ License: MIT
 import heapq
 import logging
 
-from .scheduler_models import Task
+from .scheduler_models import ScheduledTask as Task
 
 
 class SchedulerQueue:

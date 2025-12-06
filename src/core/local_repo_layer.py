@@ -21,6 +21,8 @@ from pathlib import Path
 from typing import Dict, Any, Optional, List, Tuple
 import hashlib
 
+from .config.timeout_constants import TimeoutConstants
+
 logger = logging.getLogger(__name__)
 
 
@@ -205,7 +207,7 @@ class LocalRepoManager:
                 ["git", "clone", "--depth", "1", "-b", branch, github_url, str(repo_path)],
                 capture_output=True,
                 text=True,
-                timeout=120
+                timeout=TimeoutConstants.HTTP_LONG
             )
             
             if result.returncode != 0:
@@ -263,7 +265,7 @@ class LocalRepoManager:
                 ["git", "clone", str(source_path), str(repo_path)],
                 capture_output=True,
                 text=True,
-                timeout=120
+                timeout=TimeoutConstants.HTTP_LONG
             )
             
             if result.returncode != 0:
@@ -316,7 +318,7 @@ class LocalRepoManager:
                 cwd=repo_path,
                 capture_output=True,
                 text=True,
-                timeout=30
+                timeout=TimeoutConstants.HTTP_DEFAULT
             )
             
             if result.returncode != 0:
@@ -358,7 +360,7 @@ class LocalRepoManager:
                 cwd=repo_path,
                 capture_output=True,
                 text=True,
-                timeout=30
+                timeout=TimeoutConstants.HTTP_DEFAULT
             )
             
             # Merge source branch
@@ -367,7 +369,7 @@ class LocalRepoManager:
                 cwd=repo_path,
                 capture_output=True,
                 text=True,
-                timeout=60
+                timeout=TimeoutConstants.HTTP_MEDIUM
             )
             
             if result.returncode != 0:
@@ -429,7 +431,7 @@ class LocalRepoManager:
                 cwd=repo_path,
                 capture_output=True,
                 text=True,
-                timeout=30
+                timeout=TimeoutConstants.HTTP_DEFAULT
             )
             
             if result.returncode != 0:

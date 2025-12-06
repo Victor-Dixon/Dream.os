@@ -16,6 +16,7 @@ from typing import Optional
 
 try:
     import requests
+from src.core.config.timeout_constants import TimeoutConstants
     REQUESTS_AVAILABLE = True
 except ImportError:
     REQUESTS_AVAILABLE = False
@@ -53,7 +54,7 @@ def verify_pr(token: str, owner: str, repo: str, pr_number: int) -> bool:
     }
     
     try:
-        response = requests.get(url, headers=headers, timeout=30)
+        response = requests.get(url, headers=headers, timeout=TimeoutConstants.HTTP_DEFAULT)
         return response.status_code == 200
     except Exception:
         return False

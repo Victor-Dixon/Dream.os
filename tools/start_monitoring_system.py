@@ -14,6 +14,8 @@ Usage:
 
 Author: Agent-3 (Infrastructure & DevOps Specialist)
 Date: 2025-01-27
+V2 Compliant: Yes
+<!-- SSOT Domain: infrastructure -->
 """
 
 import asyncio

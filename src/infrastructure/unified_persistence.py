@@ -15,6 +15,8 @@ SOLID Implementation:
 - DIP: Dependencies injected via constructor
 - ISP: Separate interfaces for different persistence operations
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-3 (DevOps Specialist)
 Refactored by: Agent-6 (VSCode Forking & Quality Gates Specialist)
 License: MIT
@@ -25,7 +27,7 @@ from typing import Any
 
 from .persistence.agent_repository import AgentRepository
 from .persistence.database_connection import DatabaseConnection
-from .persistence.persistence_models import Agent, PersistenceConfig, Task
+from .persistence.persistence_models import Agent, PersistenceConfig, TaskPersistenceModel
 from .persistence.persistence_statistics import PersistenceStatistics
 from .persistence.task_repository import TaskRepository
 
@@ -75,11 +77,11 @@ class UnifiedPersistenceService:
         return list(self.agent_repo.get_by_capability(capability))
 
     # Task operations
-    def save_task(self, task: Task) -> None:
+    def save_task(self, task: TaskPersistenceModel) -> None:
         """Save a task."""
         self.task_repo.save(task)
 
-    def get_task(self, task_id: str) -> Task | None:
+    def get_task(self, task_id: str) -> TaskPersistenceModel | None:
         """Get a task by ID."""
         return self.task_repo.get(task_id)
 
@@ -87,15 +89,15 @@ class UnifiedPersistenceService:
         """Delete a task."""
         return self.task_repo.delete(task_id)
 
-    def list_tasks(self, limit: int = 1000) -> list[Task]:
+    def list_tasks(self, limit: int = 1000) -> list[TaskPersistenceModel]:
         """List all tasks."""
         return list(self.task_repo.list_all(limit))
 
-    def get_tasks_by_agent(self, agent_id: str, limit: int = 100) -> list[Task]:
+    def get_tasks_by_agent(self, agent_id: str, limit: int = 100) -> list[TaskPersistenceModel]:
         """Get tasks by agent ID."""
         return list(self.task_repo.get_by_agent(agent_id, limit))
 
-    def get_pending_tasks(self, limit: int = 100) -> list[Task]:
+    def get_pending_tasks(self, limit: int = 100) -> list[TaskPersistenceModel]:
         """Get pending tasks."""
         return list(self.task_repo.get_pending(limit))
 

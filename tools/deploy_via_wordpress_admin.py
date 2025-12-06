@@ -6,6 +6,8 @@ Deploy via WordPress Admin - Browser Automation
 Uses browser automation to deploy files via WordPress admin Theme Editor.
 No SFTP credentials required - uses WordPress admin login.
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-7 (Web Development Specialist)
 Hardened by: Agent-3 (Infrastructure & DevOps Specialist)
 """
@@ -148,7 +150,7 @@ def deploy_via_wordpress_admin(
             print("   Please log in to WordPress admin if prompted")
             print("   Waiting 60 seconds for manual login...")
 
-            if not _wait_for_logged_in(driver, timeout=60):
+            if not _wait_for_logged_in(driver, timeout=TimeoutConstants.HTTP_MEDIUM):
                 return False
 
         # Navigate to Theme Editor
@@ -232,6 +234,7 @@ def deploy_via_wordpress_admin(
 def main():
     """Main deployment function."""
     import argparse
+from src.core.config.timeout_constants import TimeoutConstants
 
     parser = argparse.ArgumentParser(description="Deploy file via WordPress admin")
     parser.add_argument("--site", default="freerideinvestor.com", help="Site domain")
@@ -322,6 +325,7 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
+
 
 
 

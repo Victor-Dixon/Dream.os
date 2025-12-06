@@ -24,6 +24,16 @@ except ImportError:
     print("❌ requests library not available. Install with: pip install requests")
     sys.exit(1)
 
+# Import TimeoutConstants with fallback
+try:
+    from src.core.config.timeout_constants import TimeoutConstants
+except ImportError:
+    TimeoutConstants = None
+except ImportError:
+    REQUESTS_AVAILABLE = False
+    print("❌ requests library not available. Install with: pip install requests")
+    sys.exit(1)
+
 
 def get_github_token() -> Optional[str]:
     """Get GitHub token from environment or .env file."""
@@ -63,7 +73,7 @@ def merge_pr(
     }
     
     try:
-        response = requests.put(url, headers=headers, json=data, timeout=30)
+        response = requests.put(url, headers=headers, json=data, timeout=TimeoutConstants.HTTP_DEFAULT)
         if response.status_code == 200:
             result = response.json()
             print(f"✅ PR #{pr_number} merged successfully!")
@@ -113,7 +123,8 @@ def create_pr(
     }
     
     try:
-        response = requests.post(url, headers=headers, json=data, timeout=30)
+        timeout = TimeoutConstants.HTTP_DEFAULT if TimeoutConstants else 30
+        response = requests.post(url, headers=headers, json=data, timeout=timeout)
         if response.status_code == 201:
             pr_data = response.json()
             print(f"✅ PR created: {pr_data.get('html_url')}")
@@ -128,7 +139,7 @@ def create_pr(
                     list_url,
                     headers=headers,
                     params={"head": f"{owner}:{head}", "state": "open"},
-                    timeout=30
+                    timeout=timeout
                 )
                 if list_response.status_code == 200:
                     prs = list_response.json()

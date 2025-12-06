@@ -19,6 +19,12 @@ except ImportError:
     print("❌ requests library not installed. Install with: pip install requests")
     sys.exit(1)
 
+# Add project root to path
+project_root = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(project_root))
+
+from src.core.config.timeout_constants import TimeoutConstants
+
 
 def get_github_token() -> Optional[str]:
     """Get GitHub token from environment."""
@@ -57,7 +63,7 @@ def verify_repo_exists(owner: str, repo: str, token: Optional[str] = None) -> Di
         headers["Authorization"] = f"token {token}"
     
     try:
-        response = requests.get(url, headers=headers, timeout=10)
+        response = requests.get(url, headers=headers, timeout=TimeoutConstants.HTTP_SHORT)
         
         if response.status_code == 200:
             data = response.json()

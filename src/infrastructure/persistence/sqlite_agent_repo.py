@@ -3,6 +3,8 @@ SQLite Agent Repository - Infrastructure Adapter
 ===============================================
 
 Concrete implementation of AgentRepository using SQLite.
+
+<!-- SSOT Domain: infrastructure -->
 """
 
 import json

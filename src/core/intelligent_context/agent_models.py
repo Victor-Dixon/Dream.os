@@ -17,6 +17,8 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Any
 
+from src.core.utils.serialization_utils import to_dict
+
 
 @dataclass
 class AgentCapability:
@@ -34,19 +36,12 @@ class AgentCapability:
     metadata: dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary."""
-        return {
-            "agent_id": self.agent_id,
-            "primary_role": self.primary_role,
-            "skills": list(self.skills),
-            "experience_level": self.experience_level,
-            "current_workload": self.current_workload,
-            "success_rate": self.success_rate,
-            "specialization": self.specialization,
-            "availability_status": self.availability_status,
-            "last_active": self.last_active.isoformat(),
-            "metadata": self.metadata,
-        }
+        """Convert to dictionary using SSOT utility."""
+        result = to_dict(self)
+        # Ensure skills set is converted to list
+        if "skills" in result and isinstance(result["skills"], set):
+            result["skills"] = list(result["skills"])
+        return result
 
 
 @dataclass

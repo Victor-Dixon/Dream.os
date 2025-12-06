@@ -16,7 +16,7 @@ import json
 from datetime import datetime
 from pathlib import Path
 from typing import Any
-from .models import Contract, Task, TaskStatus
+from .models import Contract, ContractTask as Task, TaskStatus
 
 
 class ContractStorage:

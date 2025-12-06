@@ -6,6 +6,8 @@ FTP Deployer - WordPress File Deployment Tool
 Deploys files to WordPress sites via FTP (port 21).
 Uses Python's ftplib for reliable FTP connections.
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-3 (Infrastructure & DevOps Specialist)
 V2 Compliant: <400 lines
 """
@@ -123,7 +125,7 @@ class FTPDeployer:
                 
                 # Create FTP connection
                 self.ftp = FTP()
-                self.ftp.connect(self.host, self.port, timeout=10)
+                self.ftp.connect(self.host, self.port, timeout=TimeoutConstants.HTTP_SHORT)
                 
                 # Login
                 self.ftp.login(self.username, self.password)
@@ -423,6 +425,7 @@ def deploy_wordpress_file(site: str, local_file: Path, remote_path: Optional[str
 def main():
     """CLI interface."""
     import argparse
+from src.core.config.timeout_constants import TimeoutConstants
     
     parser = argparse.ArgumentParser(
         description="FTP Deployer for WordPress Files"

@@ -20,35 +20,12 @@ try:
     DISCORD_AVAILABLE = True
 except ImportError:
     DISCORD_AVAILABLE = False
-    # Create mock discord module for when discord.py is not available
-    class MockCog:
-        def __init__(self, *args, **kwargs):
-            pass
+    # Use unified test utilities when discord.py is not available
+    from .test_utils import get_mock_discord
     
-    def mock_command(*args, **kwargs):
-        """Mock decorator for commands.command."""
-        def decorator(func):
-            return func
-        return decorator
-    
-    class MockCommandError(Exception):
-        """Mock CommandError exception."""
-        pass
-    
-    class MockCommands:
-        Cog = MockCog
-        command = mock_command
-        Context = type('Context', (), {})()
-        CommandError = MockCommandError
-    
-    class MockExt:
-        commands = MockCommands()
-    
-    class MockDiscord:
-        ext = MockExt()
-    
-    discord = MockDiscord()
-    commands = MockCommands()
+    mock_discord, mock_commands = get_mock_discord()
+    discord = mock_discord
+    commands = mock_commands
 
 from .messaging_controller import DiscordMessagingController
 
@@ -253,6 +230,21 @@ class MessagingCommands(commands.Cog):
             # Map agent names (handle with/without Agent- prefix)
             if not agent_name.startswith("Agent-"):
                 agent_name = f"Agent-{agent_name}"
+
+            # Validate agent name is in allowed list (Agent-1 through Agent-8)
+            from src.discord_commander.discord_agent_communication import AgentCommunicationEngine
+            engine = AgentCommunicationEngine()
+            if not engine.is_valid_agent(agent_name):
+                embed = discord.Embed(
+                    title="❌ Invalid Agent Name",
+                    description=f"`{agent_name}` is not a valid agent name.\n\n"
+                               f"**Valid agents:** Agent-1, Agent-2, Agent-3, Agent-4, "
+                               f"Agent-5, Agent-6, Agent-7, Agent-8",
+                    color=discord.Color.red(),
+                    timestamp=datetime.now(),
+                )
+                await ctx.send(embed=embed)
+                return
 
             # Send message via messaging controller
             success = await self.messaging_controller.send_agent_message(

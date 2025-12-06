@@ -34,7 +34,7 @@ class BaseExecutionManager(BaseManager):
         self.task_queue: list[str] = []
         self.execution_threads: dict[str, threading.Thread] = {}
         self.max_concurrent_tasks = 5
-        self.task_timeout = 300
+        self.task_timeout=TimeoutConstants.HTTP_EXTENDED
 
         # Initialize subcomponents
         self.task_executor = TaskExecutor()
@@ -201,6 +201,7 @@ class BaseExecutionManager(BaseManager):
                     except Exception as e:
                         self.logger.error(f"Error in task processor loop: {e}")
                         import time
+from src.core.config.timeout_constants import TimeoutConstants
                         time.sleep(1.0)
             
             # Start background thread

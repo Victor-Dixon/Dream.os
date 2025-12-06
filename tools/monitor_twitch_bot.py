@@ -8,6 +8,8 @@ This provides a better way to monitor the bot than pasting terminal output.
 
 Author: Agent-7 (Web Development Specialist)
 Date: 2025-12-04
+V2 Compliant: Yes
+<!-- SSOT Domain: infrastructure -->
 """
 
 import os
@@ -15,6 +17,7 @@ import sys
 import time
 import subprocess
 from pathlib import Path
+from src.core.config.timeout_constants import TimeoutConstants
 
 def monitor_bot_process():
     """Monitor the Twitch bot process and show its output."""
@@ -33,7 +36,7 @@ def monitor_bot_process():
             ["tasklist", "/FI", "IMAGENAME eq python.exe", "/FO", "CSV"],
             capture_output=True,
             text=True,
-            timeout=5
+            timeout=TimeoutConstants.HTTP_QUICK
         )
         
         if result.returncode == 0:

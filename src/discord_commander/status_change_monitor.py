@@ -15,11 +15,12 @@ Author: Agent-4 (Captain)
 Created: 2025-11-29
 """
 
+from src.core.config.timeout_constants import TimeoutConstants
 import asyncio
 import json
 import logging
 from pathlib import Path
-from typing import Dict, Optional, Any
+from typing import Dict, Optional, Any, List
 from datetime import datetime
 
 try:
@@ -28,6 +29,15 @@ try:
     DISCORD_AVAILABLE = True
 except ImportError:
     DISCORD_AVAILABLE = False
+
+# Add project root to path
+import sys
+from pathlib import Path
+project_root = Path(__file__).resolve().parent.parent.parent
+sys.path.insert(0, str(project_root))
+
+
+if not DISCORD_AVAILABLE:
     discord = None
     tasks = None
 
@@ -37,20 +47,24 @@ logger = logging.getLogger(__name__)
 class StatusChangeMonitor:
     """Monitor status.json files and post Discord updates on changes."""
 
-    def __init__(self, bot, channel_id: Optional[int] = None):
+    def __init__(self, bot, channel_id: Optional[int] = None, scheduler=None):
         """
         Initialize status change monitor.
 
         Args:
             bot: Discord bot instance
             channel_id: Optional Discord channel ID for status updates
+            scheduler: Optional TaskScheduler instance for integration
         """
         self.bot = bot
         self.channel_id = channel_id
+        self.scheduler = scheduler
         self.workspace_path = Path("agent_workspaces")
         self.last_modified: Dict[str, float] = {}  # agent_id -> mtime
         self.last_status: Dict[str, dict] = {}  # agent_id -> status data
         self.check_interval = 15  # Check every 15 seconds
+        # agent_id -> pending tasks
+        self.pending_tasks: Dict[str, List[dict]] = {}
 
     def start_monitoring(self):
         """Start the background monitoring task."""
@@ -87,6 +101,7 @@ class StatusChangeMonitor:
                 logger.warning(
                     "AgentActivityDetector not available - using status.json only")
 
+            changes_detected = 0
             for i in range(1, 9):
                 agent_id = f"Agent-{i}"
                 status_file = self.workspace_path / agent_id / "status.json"
@@ -95,48 +110,70 @@ class StatusChangeMonitor:
                     continue
 
                 # Check file modification time
-                current_mtime = status_file.stat().st_mtime
-                last_mtime = self.last_modified.get(agent_id, 0)
+                try:
+                    current_mtime = status_file.stat().st_mtime
+                    last_mtime = self.last_modified.get(agent_id, 0)
 
-                # If file was modified since last check
-                if current_mtime > last_mtime:
-                    # Read new status
-                    try:
-                        with open(status_file, 'r', encoding='utf-8') as f:
-                            new_status = json.load(f)
+                    # If file was modified since last check
+                    if current_mtime > last_mtime:
+                        # Read new status
+                        try:
+                            with open(status_file, 'r', encoding='utf-8') as f:
+                                new_status = json.load(f)
 
-                        # Compare with last known status
-                        old_status = self.last_status.get(agent_id, {})
+                            # Compare with last known status
+                            old_status = self.last_status.get(agent_id, {})
 
-                        # Detect significant changes
-                        changes = self._detect_changes(old_status, new_status)
+                            # Detect significant changes
+                            changes = self._detect_changes(
+                                old_status, new_status)
 
-                        if changes:
-                            await self._post_status_update(agent_id, new_status, changes)
+                            if changes:
+                                logger.info(
+                                    f"📊 Status change detected for {agent_id}: {list(changes.keys())}")
+                                await self._post_status_update(agent_id, new_status, changes)
+                                changes_detected += 1
+                            else:
+                                logger.debug(
+                                    f"No significant changes for {agent_id} (file modified but no status changes)")
 
-                        # Update tracking
-                        self.last_modified[agent_id] = current_mtime
-                        self.last_status[agent_id] = new_status.copy()
+                            # Update tracking
+                            self.last_modified[agent_id] = current_mtime
+                            self.last_status[agent_id] = new_status.copy()
 
-                    except Exception as e:
-                        logger.error(
-                            f"Error reading status for {agent_id}: {e}")
+                        except json.JSONDecodeError as e:
+                            logger.error(
+                                f"❌ Invalid JSON in {agent_id} status.json: {e}")
+                        except Exception as e:
+                            logger.error(
+                                f"❌ Error reading status for {agent_id}: {e}", exc_info=True)
 
-                # Check for inactivity (every 5 minutes = 20 iterations)
-                if activity_detector:
-                    if not hasattr(self, '_inactivity_check_counter'):
-                        self._inactivity_check_counter = {}
-                    if agent_id not in self._inactivity_check_counter:
-                        self._inactivity_check_counter[agent_id] = 0
+                    # Check for inactivity (every 5 minutes = 20 iterations)
+                    if activity_detector:
+                        if not hasattr(self, '_inactivity_check_counter'):
+                            self._inactivity_check_counter = {}
+                        if agent_id not in self._inactivity_check_counter:
+                            self._inactivity_check_counter[agent_id] = 0
 
-                    self._inactivity_check_counter[agent_id] += 1
-                    # 5 minutes (20 * 15s)
-                    if self._inactivity_check_counter[agent_id] >= 20:
-                        self._inactivity_check_counter[agent_id] = 0
-                        await self._check_inactivity(agent_id, activity_detector)
+                        self._inactivity_check_counter[agent_id] += 1
+                        # 5 minutes (20 * 15s)
+                        if self._inactivity_check_counter[agent_id] >= 20:
+                            self._inactivity_check_counter[agent_id] = 0
+                            await self._check_inactivity(agent_id, activity_detector)
+                except FileNotFoundError:
+                    logger.debug(
+                        f"Status file not found for {agent_id} (may have been deleted)")
+                except Exception as e:
+                    logger.error(
+                        f"❌ Error checking status for {agent_id}: {e}", exc_info=True)
+
+            if changes_detected > 0:
+                logger.info(
+                    f"✅ Status monitoring cycle complete: {changes_detected} updates posted")
 
         except Exception as e:
-            logger.error(f"Error in status monitoring: {e}")
+            logger.error(
+                f"❌ Error in status monitoring loop: {e}", exc_info=True)
 
     @monitor_status_changes.before_loop
     async def before_monitor(self):
@@ -205,19 +242,44 @@ class StatusChangeMonitor:
             channel = None
             if self.channel_id:
                 channel = self.bot.get_channel(self.channel_id)
-            else:
+                if channel:
+                    logger.debug(
+                        f"Using configured channel: {channel.name} ({channel.id})")
+
+            if not channel:
                 # Try to find #agent-status or #captain-updates channel
+                preferred_channels = [
+                    "agent-status", "captain-updates", "swarm-status", "agent-4-devlogs"]
                 for guild in self.bot.guilds:
                     for ch in guild.channels:
                         if isinstance(ch, discord.TextChannel):
-                            if ch.name in ["agent-status", "captain-updates", "swarm-status"]:
+                            if ch.name in preferred_channels:
                                 channel = ch
+                                logger.debug(
+                                    f"Found preferred channel: {ch.name} ({ch.id})")
+                                break
+                    if channel:
+                        break
+
+            # Fallback: Use first available text channel if preferred not found
+            if not channel:
+                for guild in self.bot.guilds:
+                    for ch in guild.channels:
+                        if isinstance(ch, discord.TextChannel):
+                            # Skip bot channels and system channels
+                            if not ch.name.startswith("system-") and "bot" not in ch.name.lower():
+                                channel = ch
+                                logger.warning(
+                                    f"Using fallback channel: {ch.name} ({ch.id})")
                                 break
                     if channel:
                         break
 
             if not channel:
-                logger.warning("No status update channel found")
+                logger.error(
+                    "❌ No status update channel found - cannot post status update")
+                logger.error(
+                    f"Available channels: {[ch.name for guild in self.bot.guilds for ch in guild.channels if isinstance(ch, discord.TextChannel)]}")
                 return
 
             # Create embed
@@ -225,10 +287,15 @@ class StatusChangeMonitor:
 
             # Post update
             await channel.send(embed=embed)
-            logger.info(f"✅ Status update posted for {agent_id}")
+            logger.info(
+                f"✅ Status update posted for {agent_id} to #{channel.name}")
 
+        except discord.errors.Forbidden as e:
+            logger.error(f"❌ Permission denied posting to channel: {e}")
+        except discord.errors.HTTPException as e:
+            logger.error(f"❌ HTTP error posting status update: {e}")
         except Exception as e:
-            logger.error(f"Error posting status update: {e}")
+            logger.error(f"❌ Error posting status update: {e}", exc_info=True)
 
     def _create_status_update_embed(self, agent_id: str, status: dict, changes: dict) -> discord.Embed:
         """Create Discord embed for status update."""
@@ -318,6 +385,23 @@ class StatusChangeMonitor:
 
             # If agent is inactive for threshold duration
             if not summary.is_active or summary.inactivity_duration_minutes >= inactivity_threshold_minutes:
+                # NEW: Check scheduler for pending tasks
+                pending_tasks = []
+                if self.scheduler:
+                    try:
+                        from ...orchestrators.overnight.scheduler_integration import SchedulerStatusMonitorIntegration
+                        integration = SchedulerStatusMonitorIntegration(
+                            scheduler=self.scheduler, status_monitor=self)
+                        pending_tasks = integration.get_pending_tasks_for_agent(
+                            agent_id)
+
+                        # Mark agent as inactive in scheduler
+                        integration.mark_agent_inactive(
+                            agent_id, summary.inactivity_duration_minutes)
+                    except Exception as e:
+                        logger.warning(
+                            f"Failed to query scheduler for {agent_id}: {e}")
+
                 # Special handling for Agent-4 (Captain): Use Captain Restart Pattern from inbox
                 if agent_id == "Agent-4":
                     resumer_prompt = self._get_captain_restart_pattern(
@@ -325,11 +409,11 @@ class StatusChangeMonitor:
                     if not resumer_prompt:
                         # Fallback to generic prompt if pattern not found
                         resumer_prompt = await self._generate_generic_resume_prompt(
-                            agent_id, summary)
+                            agent_id, summary, pending_tasks=pending_tasks)
                 else:
                     # Regular agents: Use generic optimized prompt
                     resumer_prompt = await self._generate_generic_resume_prompt(
-                        agent_id, summary)
+                        agent_id, summary, pending_tasks=pending_tasks)
 
                 if resumer_prompt:
                     # SEND resume message directly to agent via messaging system
@@ -346,12 +430,8 @@ class StatusChangeMonitor:
             logger.error(f"Error checking inactivity for {agent_id}: {e}")
 
     async def _send_resume_message_to_agent(self, agent_id: str, prompt: str, summary, skip_wrapper: bool = False):
-        """Send resume message directly to agent via messaging system."""
+        """Send resume message directly to agent via messaging system using PyAutoGUI to chat input coordinates."""
         try:
-            import subprocess
-            import sys
-            from pathlib import Path
-
             # Format resume message with context (unless skip_wrapper=True for Agent-4)
             if skip_wrapper:
                 # For Agent-4, prompt already includes resume context
@@ -368,41 +448,74 @@ class StatusChangeMonitor:
                 resume_message += f"\n**Action Required**: Review your status, update status.json, and resume operations.\n"
                 resume_message += f"\n🐝 WE. ARE. SWARM. ⚡🔥"
 
-            # Send message via messaging CLI (proven reliable method)
-            project_root = Path(__file__).parent.parent.parent
-            cmd = [
-                sys.executable,
-                "-m",
-                "src.services.messaging_cli",
-                "--agent",
-                agent_id,
-                "--message",
-                resume_message,
-                "--priority",
-                "urgent",
-            ]
+            # CRITICAL: Send message directly via unified messaging core with PyAutoGUI enabled
+            # This ensures delivery to chat input coordinates, not just inbox
+            try:
+                from src.core.messaging_core import (
+                    UnifiedMessagePriority,
+                    UnifiedMessageTag,
+                    UnifiedMessageType,
+                    send_message,
+                )
+                
+                # Send message via PyAutoGUI to chat input coordinates
+                # Use CAPTAIN_TO_AGENT type to route to chat input coordinates (not onboarding coords)
+                success = send_message(
+                    content=resume_message,
+                    sender="Status Monitor",
+                    recipient=agent_id,
+                    message_type=UnifiedMessageType.CAPTAIN_TO_AGENT,  # Routes to chat coords
+                    priority=UnifiedMessagePriority.URGENT,
+                    tags=[UnifiedMessageTag.CAPTAIN],
+                )
+                
+                if success:
+                    logger.info(
+                        f"✅ Resume message sent to {agent_id} via PyAutoGUI (chat input coordinates)")
+                else:
+                    logger.warning(
+                        f"⚠️ Failed to send resume message to {agent_id} via PyAutoGUI - message may be queued")
+                    
+            except ImportError:
+                # Fallback to CLI method if core messaging not available
+                logger.warning("Core messaging not available, falling back to CLI method")
+                import subprocess
+                import sys
+                from pathlib import Path
+                
+                project_root = Path(__file__).parent.parent.parent
+                cmd = [
+                    sys.executable,
+                    "-m",
+                    "src.services.messaging_cli",
+                    "--agent",
+                    agent_id,
+                    "--message",
+                    resume_message,
+                    "--priority",
+                    "urgent",
+                    "--mode",
+                    "pyautogui",  # Explicitly specify PyAutoGUI mode
+                ]
 
-            # Set PYTHONPATH and run command
-            env = {"PYTHONPATH": str(project_root)}
-            result = subprocess.run(
-                cmd,
-                capture_output=True,
-                text=True,
-                timeout=30,
-                env=env,
-                cwd=str(project_root)
-            )
+                env = {"PYTHONPATH": str(project_root)}
+                result = subprocess.run(
+                    cmd,
+                    capture_output=True,
+                    text=True,
+                    timeout=TimeoutConstants.HTTP_DEFAULT,
+                    env=env,
+                    cwd=str(project_root)
+                )
 
-            if result.returncode == 0:
-                logger.info(
-                    f"✅ Resume message sent to {agent_id} via messaging CLI")
-            else:
-                error_msg = result.stderr or result.stdout or "Unknown error"
-                logger.warning(
-                    f"⚠️ Failed to send resume message to {agent_id}: {error_msg}")
+                if result.returncode == 0:
+                    logger.info(
+                        f"✅ Resume message sent to {agent_id} via messaging CLI (PyAutoGUI mode)")
+                else:
+                    error_msg = result.stderr or result.stdout or "Unknown error"
+                    logger.warning(
+                        f"⚠️ Failed to send resume message to {agent_id}: {error_msg}")
 
-        except subprocess.TimeoutExpired:
-            logger.error(f"❌ Timeout sending resume message to {agent_id}")
         except Exception as e:
             logger.error(
                 f"❌ Error sending resume message to {agent_id}: {e}", exc_info=True)
@@ -436,7 +549,7 @@ class StatusChangeMonitor:
                     break
 
             pattern_message = '\n'.join(lines[start_idx:])
-            
+
             # Modify pattern for resume context: Add inactivity header
             resume_header = f"""🚨 RESUMER PROMPT - Captain Inactivity Detected
 
@@ -446,14 +559,14 @@ class StatusChangeMonitor:
 ---
 """
             modified_pattern = resume_header + pattern_message
-            
+
             return modified_pattern
 
         except Exception as e:
             logger.warning(f"Could not load Captain Restart Pattern: {e}")
             return None
 
-    async def _generate_generic_resume_prompt(self, agent_id: str, summary) -> Optional[str]:
+    async def _generate_generic_resume_prompt(self, agent_id: str, summary, pending_tasks: list = None) -> Optional[str]:
         """Generate generic resume prompt for regular agents."""
         try:
             from src.core.optimized_stall_resume_prompt import generate_optimized_resume_prompt
@@ -469,12 +582,28 @@ class StatusChangeMonitor:
             fsm_state = status.get("status", "active")
             last_mission = status.get("current_mission", "Unknown")
 
+            # Generate base prompt
             resumer_prompt = generate_optimized_resume_prompt(
                 agent_id=agent_id,
                 fsm_state=fsm_state,
                 last_mission=last_mission,
-                stall_duration_minutes=summary.inactivity_duration_minutes
+                stall_duration_minutes=summary.inactivity_duration_minutes,
+                scheduler=self.scheduler
             )
+
+            # NEW: Add scheduled tasks to prompt if available
+            if pending_tasks and len(pending_tasks) > 0:
+                try:
+                    from ...orchestrators.overnight.scheduler_integration import SchedulerStatusMonitorIntegration
+                    integration = SchedulerStatusMonitorIntegration(
+                        scheduler=self.scheduler, status_monitor=self)
+                    scheduled_tasks_section = integration.format_scheduled_tasks_for_prompt(
+                        agent_id)
+                    if scheduled_tasks_section:
+                        resumer_prompt += "\n" + scheduled_tasks_section
+                except Exception as e:
+                    logger.warning(
+                        f"Failed to format scheduled tasks for {agent_id}: {e}")
 
             return resumer_prompt
 
@@ -559,17 +688,18 @@ class StatusChangeMonitor:
             agent_id, status, {"manual": True}))
 
 
-def setup_status_monitor(bot, channel_id: Optional[int] = None) -> StatusChangeMonitor:
+def setup_status_monitor(bot, channel_id: Optional[int] = None, scheduler=None) -> StatusChangeMonitor:
     """
     Setup and start status change monitoring.
 
     Args:
         bot: Discord bot instance
         channel_id: Optional channel ID for status updates
+        scheduler: Optional TaskScheduler instance for integration
 
     Returns:
         StatusChangeMonitor instance
     """
-    monitor = StatusChangeMonitor(bot, channel_id)
+    monitor = StatusChangeMonitor(bot, channel_id, scheduler=scheduler)
     monitor.start_monitoring()
     return monitor

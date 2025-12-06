@@ -21,7 +21,7 @@ Date: 2025-10-12
 
 import json
 
-from markov_task_optimizer import MarkovTaskOptimizer, ProjectState, Task
+from markov_task_optimizer import MarkovTaskOptimizer, ProjectState, OptimizationTask as Task
 
 
 def calculate_roi(points: int, complexity: int, v2_impact: int, autonomy_impact: int) -> float:

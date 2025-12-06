@@ -11,7 +11,7 @@ Date: 2025-10-12
 
 import json
 
-from markov_task_optimizer import MarkovTaskOptimizer, ProjectState, Task
+from markov_task_optimizer import MarkovTaskOptimizer, ProjectState, OptimizationTask as Task
 
 
 def load_real_violations_from_scanner():

@@ -36,7 +36,7 @@ except ImportError as e:
 
 
 # Modular components
-from .scheduler_models import DEFAULT_TASK_PRIORITIES, Task
+from .scheduler_models import DEFAULT_TASK_PRIORITIES, ScheduledTask as Task
 from .scheduler_queue import SchedulerQueue
 from .scheduler_tracking import SchedulerTracking
 
@@ -162,6 +162,22 @@ class TaskScheduler:
 
             # Add to priority queue
             self.queue.add_task(task)
+
+            # NEW: Notify status monitor if available
+            if hasattr(self, 'status_monitor') and self.status_monitor:
+                try:
+                    from .scheduler_integration import SchedulerStatusMonitorIntegration
+                    integration = SchedulerStatusMonitorIntegration(
+                        scheduler=self, status_monitor=self.status_monitor)
+                    integration.notify_pending_task(
+                        agent_id=agent_id,
+                        task_id=task_id,
+                        task_type=task_type,
+                        priority=priority,
+                        scheduled_cycle=scheduled_cycle or self.current_cycle
+                    )
+                except Exception as e:
+                    self.logger.warning(f"Failed to notify status monitor: {e}")
 
             self.logger.info(f"Task added: {task_id} (type: {task_type}, priority: {priority})")
             return True

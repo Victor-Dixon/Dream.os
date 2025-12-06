@@ -394,16 +394,9 @@ class QueueEntry:
         self.metadata = metadata or {}
 
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary."""
-        return {
-            'message': self.message,
-            'queue_id': self.queue_id,
-            'priority_score': self.priority_score,
-            'status': self.status,
-            'created_at': self.created_at.isoformat() if hasattr(self.created_at, 'isoformat') else str(self.created_at),
-            'updated_at': self.updated_at.isoformat() if hasattr(self.updated_at, 'isoformat') else str(self.updated_at),
-            'metadata': self.metadata
-        }
+        """Convert to dictionary using SSOT utility."""
+        from src.core.utils.serialization_utils import to_dict
+        return to_dict(self)
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'QueueEntry':

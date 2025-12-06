@@ -16,6 +16,8 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import Any
 
+from src.core.utils.serialization_utils import to_dict
+
 
 class WorkflowState(Enum):
     """Workflow execution states following V2 cycle-based tracking."""
@@ -86,21 +88,8 @@ class WorkflowStep:
         self.retry_count += 1
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert step to dictionary for serialization."""
-        return {
-            "id": self.id,
-            "name": self.name,
-            "description": self.description,
-            "agent_target": self.agent_target,
-            "prompt_template": self.prompt_template,
-            "expected_response_type": self.expected_response_type.value,
-            "timeout_seconds": self.timeout_seconds,
-            "retry_count": self.retry_count,
-            "max_retries": self.max_retries,
-            "dependencies": self.dependencies,
-            "completion_criteria": self.completion_criteria,
-            "metadata": self.metadata,
-        }
+        """Convert step to dictionary for serialization using SSOT utility."""
+        return to_dict(self)
 
 
 @dataclass
@@ -138,17 +127,8 @@ class AIResponse:
         )
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert response to dictionary for serialization."""
-        return {
-            "agent": self.agent,
-            "text": self.text,
-            "timestamp": self.timestamp,
-            "message_id": self.message_id,
-            "role": self.role,
-            "metadata": self.metadata,
-            "confidence": self.confidence,
-            "response_type": self.response_type.value if self.response_type else None,
-        }
+        """Convert response to dictionary for serialization using SSOT utility."""
+        return to_dict(self)
 
 
 @dataclass
@@ -211,23 +191,8 @@ class WorkflowProgress:
         self.last_update_time = time.time()
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert progress to dictionary for serialization."""
-        return {
-            "workflow_name": self.workflow_name,
-            "state": self.state.value,
-            "total_steps": self.total_steps,
-            "completed_steps": self.completed_steps,
-            "failed_steps": self.failed_steps,
-            "pending_steps": self.pending_steps,
-            "current_step": self.current_step,
-            "start_time": self.start_time,
-            "last_update_time": self.last_update_time,
-            "cycles_completed": self.cycles_completed,
-            "completion_percentage": self.completion_percentage,
-            "execution_time": self.execution_time,
-            "cycles_per_minute": self.cycles_per_minute,
-            "workflow_data": self.workflow_data,
-        }
+        """Convert progress to dictionary for serialization using SSOT utility."""
+        return to_dict(self)
 
 
 @dataclass

@@ -14,6 +14,8 @@ SOLID Implementation:
 - OCP: Extensible browser adapter system
 - DIP: Dependencies injected via constructor
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-3 (DevOps Specialist)
 Refactored by: Agent-6 (VSCode Forking & Quality Gates Specialist)
 License: MIT

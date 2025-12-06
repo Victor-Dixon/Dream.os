@@ -2,12 +2,17 @@
 """
 Tracker Status Validator - Agent-6 Productivity Tool
 
+⚠️ DEPRECATED: This tool has been consolidated into unified_validator.py
+Use: python tools/unified_validator.py --category tracker
+
 Validates SSOT consistency across tracking documents to prevent status drift.
 Checks PHASE1_EXECUTION_TRACKING.md and MASTER_CONSOLIDATION_TRACKER.md for:
 - Consistent progress counts
 - Matching completion statuses
 - No 'pending' or 'in progress' references for completed items
 - PR links present for completed merges
+
+<!-- SSOT Domain: infrastructure -->
 
 V2 Compliant: <400 lines
 """

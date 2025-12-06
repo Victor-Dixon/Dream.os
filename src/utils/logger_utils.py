@@ -11,14 +11,15 @@ V2 Compliance: Wrapper pattern, <400 lines
 import logging
 
 # Import from unified logging system
-# Note: Adjust these imports based on what's actually exported
+# Verified: get_logger and configure_logging are exported
 try:
     from ..core.unified_logging_system import get_logger as unified_get_logger
-    from ..core.unified_logging_system import setup_logger as unified_setup_logger
+    from ..core.unified_logging_system import configure_logging
 
     UNIFIED_AVAILABLE = True
 except ImportError:
     UNIFIED_AVAILABLE = False
+    configure_logging = None
 
 
 def setup_logger(name: str, level: str = "INFO", log_file: str = None):
@@ -33,8 +34,12 @@ def setup_logger(name: str, level: str = "INFO", log_file: str = None):
     Returns:
         Configured logger instance
     """
-    if UNIFIED_AVAILABLE:
-        return unified_setup_logger(name, level, log_file)
+    if UNIFIED_AVAILABLE and configure_logging:
+        # Configure unified logging system if not already configured
+        from pathlib import Path
+        log_path = Path(log_file) if log_file else None
+        configure_logging(level=level, log_file=log_path)
+        return unified_get_logger(name)
 
     # Fallback implementation
     logger = logging.getLogger(name)

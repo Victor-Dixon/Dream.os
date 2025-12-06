@@ -23,6 +23,11 @@ import sys
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
+# Add project root to path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+
+from src.core.utils.validation_utils import print_validation_report
+
 # Discord limits
 MAX_MESSAGE_LENGTH = 2000
 MAX_EMBED_DESCRIPTION = 4096
@@ -173,17 +178,11 @@ class MessageValidator:
         }
 
     def print_report(self) -> None:
-        """Print validation report."""
-        if self.errors:
-            print("❌ VALIDATION ERRORS:")
-            for error in self.errors:
-                print(f"  • {error}")
-        if self.warnings:
-            print("⚠️  WARNINGS:")
-            for warning in self.warnings:
-                print(f"  • {warning}")
-        if not self.errors and not self.warnings:
-            print("✅ All validations passed!")
+        """Print validation report using SSOT utility."""
+        print_validation_report(
+            errors=self.errors,
+            warnings=self.warnings,
+        )
 
 
 def main() -> int:

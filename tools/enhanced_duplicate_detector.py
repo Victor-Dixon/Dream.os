@@ -31,20 +31,8 @@ except ImportError:
     pass
 
 
-def get_github_token() -> Optional[str]:
-    token = os.getenv("GITHUB_TOKEN") or os.getenv("GH_TOKEN")
-    if token:
-        return token
-    env_path = Path(".env")
-    if env_path.exists():
-        try:
-            with open(env_path, "r") as f:
-                for line in f:
-                    if line.startswith("GITHUB_TOKEN="):
-                        return line.split("=", 1)[1].strip().strip('"').strip("'")
-        except Exception:
-            pass
-    return None
+# SSOT: Use github_utils.get_github_token() instead
+from src.core.utils.github_utils import get_github_token
 
 
 def get_github_username() -> Optional[str]:
@@ -269,7 +257,7 @@ def main():
         print(f"📥 Cloning {repo_name}...")
         subprocess.run(
             ["git", "clone", repo_url, str(repo_dir)],
-            check=True, timeout=300, capture_output=True, text=True
+            check=True, timeout=TimeoutConstants.HTTP_EXTENDED, capture_output=True, text=True
         )
         print(f"✅ Cloned {repo_name} successfully")
         
@@ -305,6 +293,7 @@ def main():
     except Exception as e:
         print(f"❌ Error: {e}")
         import traceback
+from src.core.config.timeout_constants import TimeoutConstants
         traceback.print_exc()
         return 1
     finally:

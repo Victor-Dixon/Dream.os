@@ -16,8 +16,8 @@ from typing import Any
 
 
 @dataclass
-class Task:
-    """Task representation for scheduling."""
+class ScheduledTask:
+    """Scheduled task representation for overnight scheduler (scheduling domain-specific, not to be confused with domain entity Task)."""
 
     id: str
     type: str

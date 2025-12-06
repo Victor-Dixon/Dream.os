@@ -36,9 +36,51 @@ def get_message_queue_status():
     return CoreHandlers.handle_get_message_queue_status(request)
 
 
+@core_bp.route("/message-queue/process", methods=["POST"])
+def process_message_queue():
+    """Process message queue entries."""
+    return CoreHandlers.handle_process_message_queue(request)
+
+
+@core_bp.route("/message-queue/queue-size", methods=["GET"])
+def get_queue_size():
+    """Get message queue size."""
+    return CoreHandlers.handle_get_queue_size(request)
+
+
 @core_bp.route("/health", methods=["GET"])
 def health_check():
     """Health check endpoint for core services."""
     return jsonify({"status": "ok", "service": "core_system"}), 200
+
+
+@core_bp.route("/execution/status", methods=["GET"])
+def get_execution_status():
+    """Get execution manager status."""
+    return CoreHandlers.handle_get_execution_status(request)
+
+
+@core_bp.route("/service/status", methods=["GET"])
+def get_service_status():
+    """Get service manager status."""
+    return CoreHandlers.handle_get_service_status(request)
+
+
+@core_bp.route("/resource/status", methods=["GET"])
+def get_resource_status():
+    """Get resource manager status."""
+    return CoreHandlers.handle_get_resource_status(request)
+
+
+@core_bp.route("/recovery/status", methods=["GET"])
+def get_recovery_status():
+    """Get recovery manager status."""
+    return CoreHandlers.handle_get_recovery_status(request)
+
+
+@core_bp.route("/results/status", methods=["GET"])
+def get_results_status():
+    """Get results manager status."""
+    return CoreHandlers.handle_get_results_status(request)
 
 

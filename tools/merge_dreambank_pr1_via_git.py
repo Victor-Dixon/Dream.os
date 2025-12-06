@@ -15,6 +15,12 @@ import sys
 from pathlib import Path
 from typing import Optional, Tuple
 
+# Add project root to path
+project_root = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(project_root))
+
+from src.core.config.timeout_constants import TimeoutConstants
+
 GITHUB_USER = "Dadudekc"
 REPO = "DreamVault"
 TEMP_DIR = Path("D:/Temp")
@@ -54,13 +60,13 @@ def get_pr_branch_name() -> Optional[str]:
         success, stdout, _ = run_git_command(
             ["fetch", "origin"],
             cwd=REPO_DIR,
-            timeout=30
+            timeout=TimeoutConstants.HTTP_DEFAULT
         )
         if success:
             success, stdout, _ = run_git_command(
                 ["branch", "-r", "--list", "origin/merge-DreamBank-*", "origin/merge-dreambank-*"],
                 cwd=REPO_DIR,
-                timeout=30
+                timeout=TimeoutConstants.HTTP_DEFAULT
             )
             if success and stdout.strip():
                 # Extract branch name
@@ -85,7 +91,7 @@ def clone_repo() -> bool:
     success, stdout, stderr = run_git_command(
         ["clone", f"https://github.com/{GITHUB_USER}/{REPO}.git", str(REPO_DIR)],
         cwd=TEMP_DIR,
-        timeout=120
+        timeout=TimeoutConstants.HTTP_LONG
     )
     
     if success:
@@ -105,7 +111,7 @@ def merge_pr_branch(pr_branch: str) -> bool:
     success, _, stderr = run_git_command(
         ["fetch", "origin"],
         cwd=REPO_DIR,
-        timeout=60
+        timeout=TimeoutConstants.HTTP_MEDIUM
     )
     if not success:
         print(f"⚠️ Fetch warning: {stderr}")
@@ -114,7 +120,7 @@ def merge_pr_branch(pr_branch: str) -> bool:
     success, stdout, _ = run_git_command(
         ["branch", "-r", "--list", "origin/main", "origin/master"],
         cwd=REPO_DIR,
-        timeout=30
+        timeout=TimeoutConstants.HTTP_DEFAULT
     )
     
     main_branch = "main"
@@ -130,7 +136,7 @@ def merge_pr_branch(pr_branch: str) -> bool:
     success, _, stderr = run_git_command(
         ["checkout", main_branch],
         cwd=REPO_DIR,
-        timeout=30
+        timeout=TimeoutConstants.HTTP_DEFAULT
     )
     if not success:
         print(f"❌ Checkout failed: {stderr}")
@@ -138,14 +144,14 @@ def merge_pr_branch(pr_branch: str) -> bool:
     
     # Pull latest
     print(f"📥 Pulling latest {main_branch}...")
-    run_git_command(["pull", "origin", main_branch], cwd=REPO_DIR, timeout=60)
+    run_git_command(["pull", "origin", main_branch], cwd=REPO_DIR, timeout=TimeoutConstants.HTTP_MEDIUM)
     
     # Check if PR branch exists
     print(f"🔍 Checking if branch {pr_branch} exists...")
     success, stdout, _ = run_git_command(
         ["branch", "-r", "--list", f"origin/{pr_branch}"],
         cwd=REPO_DIR,
-        timeout=30
+        timeout=TimeoutConstants.HTTP_DEFAULT
     )
     
     if not stdout.strip():
@@ -154,7 +160,7 @@ def merge_pr_branch(pr_branch: str) -> bool:
         success, stdout, _ = run_git_command(
             ["branch", "-r", "--list", "origin/merge-*"],
             cwd=REPO_DIR,
-            timeout=30
+            timeout=TimeoutConstants.HTTP_DEFAULT
         )
         if stdout.strip():
             branches = [b.strip().replace('origin/', '') for b in stdout.strip().split('\n')]
@@ -175,7 +181,7 @@ def merge_pr_branch(pr_branch: str) -> bool:
         ["merge", f"origin/{pr_branch}", "--no-edit", 
          "-m", f"Merge {pr_branch} into {main_branch} - DreamBank consolidation"],
         cwd=REPO_DIR,
-        timeout=120
+        timeout=TimeoutConstants.HTTP_LONG
     )
     
     if not success:
@@ -183,13 +189,13 @@ def merge_pr_branch(pr_branch: str) -> bool:
         if "CONFLICT" in stderr or "CONFLICT" in stdout:
             print(f"⚠️ Merge conflicts detected, resolving with 'ours' strategy...")
             # Abort and retry with ours strategy
-            run_git_command(["merge", "--abort"], cwd=REPO_DIR, timeout=30)
+            run_git_command(["merge", "--abort"], cwd=REPO_DIR, timeout=TimeoutConstants.HTTP_DEFAULT)
             
             success, stdout, stderr = run_git_command(
                 ["merge", f"origin/{pr_branch}", "-X", "ours", "--no-edit",
                  "-m", f"Merge {pr_branch} into {main_branch} - DreamBank consolidation (conflicts resolved)"],
                 cwd=REPO_DIR,
-                timeout=120
+                timeout=TimeoutConstants.HTTP_LONG
             )
         
         if not success:
@@ -203,7 +209,7 @@ def merge_pr_branch(pr_branch: str) -> bool:
     success, stdout, stderr = run_git_command(
         ["push", "origin", main_branch],
         cwd=REPO_DIR,
-        timeout=120
+        timeout=TimeoutConstants.HTTP_LONG
     )
     
     if success:

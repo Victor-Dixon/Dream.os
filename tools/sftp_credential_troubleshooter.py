@@ -68,7 +68,7 @@ class SFTPCredentialTroubleshooter:
             transport = paramiko.Transport((host, int(port)))
             
             # Try connection with timeout
-            transport.start_client(timeout=10)
+            transport.start_client(timeout=TimeoutConstants.HTTP_SHORT)
             transport.auth_password(username=username, password=password)
             
             # Create SFTP client
@@ -249,6 +249,7 @@ class SFTPCredentialTroubleshooter:
 def main():
     """CLI entry point."""
     import argparse
+from src.core.config.timeout_constants import TimeoutConstants
     
     parser = argparse.ArgumentParser(
         description="SFTP Credential Troubleshooter"

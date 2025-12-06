@@ -13,6 +13,8 @@ License: MIT
 
 from typing import Any
 
+from src.core.utils.serialization_utils import to_dict
+
 
 class Theme:
     """Base theme class."""
@@ -31,8 +33,8 @@ class Theme:
         return self.styles.get(component, "")
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert theme to dictionary."""
-        return {"name": self.name, "colors": self.colors, "styles": self.styles}
+        """Convert theme to dictionary using SSOT utility."""
+        return to_dict(self)
 
 
 class DarkTheme(Theme):

@@ -4,6 +4,8 @@ Agent Repository - Unified Persistence Service
 
 Repository for Agent entities.
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-6 (VSCode Forking & Quality Gates Specialist) - Refactored from Agent-3
 License: MIT
 """

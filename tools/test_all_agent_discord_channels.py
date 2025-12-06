@@ -15,6 +15,7 @@ import sys
 from pathlib import Path
 from dotenv import load_dotenv
 import requests
+from src.core.config.timeout_constants import TimeoutConstants
 
 # Load environment
 load_dotenv()
@@ -48,7 +49,7 @@ def test_webhook(webhook_url: str, agent_id: str) -> tuple[bool, str]:
     }
     
     try:
-        response = requests.post(webhook_url, json=payload, timeout=10)
+        response = requests.post(webhook_url, json=payload, timeout=TimeoutConstants.HTTP_SHORT)
         if response.status_code == 204:
             return True, "✅ Webhook valid - test message sent"
         else:

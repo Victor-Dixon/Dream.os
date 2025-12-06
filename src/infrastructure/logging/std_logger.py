@@ -3,6 +3,8 @@ Standard Logger - Infrastructure Adapter
 ========================================
 
 Concrete implementation of Logger using Python's logging module.
+
+<!-- SSOT Domain: infrastructure -->
 """
 
 import logging

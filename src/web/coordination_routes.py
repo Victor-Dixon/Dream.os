@@ -5,6 +5,8 @@ Coordination Routes
 Flask routes for coordination engine operations.
 Wires coordination engines to web layer.
 
+<!-- SSOT Domain: web -->
+
 V2 Compliance: < 300 lines, single responsibility, route definitions.
 """
 
@@ -26,6 +28,18 @@ def get_task_coordination_status():
 def execute_task_coordination():
     """Execute task coordination."""
     return CoordinationHandlers.handle_execute_task_coordination(request)
+
+
+@coordination_bp.route("/task-coordination/coordinate", methods=["POST"])
+def coordinate_task():
+    """Coordinate a specific task."""
+    return CoordinationHandlers.handle_coordinate_task(request)
+
+
+@coordination_bp.route("/task-coordination/resolve", methods=["POST"])
+def resolve_coordination():
+    """Resolve coordination conflicts."""
+    return CoordinationHandlers.handle_resolve_coordination(request)
 
 
 @coordination_bp.route("/health", methods=["GET"])

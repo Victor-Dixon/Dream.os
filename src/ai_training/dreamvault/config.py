@@ -1,5 +1,14 @@
 """
 Configuration management for ShadowArchive.
+
+<!-- SSOT Domain: ai_training -->
+
+NOTE: This is a domain-specific config for ShadowArchive training.
+This class is maintained as a domain-specific SSOT for ai_training domain.
+For general application configuration, use src.core.config_ssot.py.
+
+SSOT Status: Domain-specific SSOT (ai_training domain)
+Consolidation: This class is NOT a violation - it's a domain-specific SSOT.
 """
 
 from pathlib import Path
@@ -9,7 +18,18 @@ import yaml
 
 
 class Config:
-    """Configuration manager for ShadowArchive."""
+    """
+    Configuration manager for ShadowArchive.
+    
+    SSOT Status: Domain-specific SSOT for ai_training domain.
+    
+    This class serves as the single source of truth for ShadowArchive training
+    configuration. It is NOT a violation - it's intentionally domain-specific.
+    
+    For general application configuration, use src.core.config_ssot.py.
+    
+    <!-- SSOT Domain: ai_training -->
+    """
 
     def __init__(self, config_path: str | None = None):
         self.config_path = config_path or "configs/ingest.yaml"

@@ -31,7 +31,7 @@ class FSMMonitoringHelper:
         orchestrator._monitoring = False
         orchestrator._stop_event.set()
         if orchestrator._monitor_thread:
-            orchestrator._monitor_thread.join(timeout=5)
+            orchestrator._monitor_thread.join(timeout=TimeoutConstants.HTTP_QUICK)
         logger.info("Background monitoring stopped")
 
     @staticmethod
@@ -39,7 +39,7 @@ class FSMMonitoringHelper:
         """Background monitoring loop."""
         while not orchestrator._stop_event.is_set():
             FSMMonitoringHelper._check_inboxes(orchestrator)
-            orchestrator._stop_event.wait(timeout=10)
+            orchestrator._stop_event.wait(timeout=TimeoutConstants.HTTP_SHORT)
 
     @staticmethod
     def _check_inboxes(orchestrator):
@@ -54,6 +54,7 @@ class FSMMonitoringHelper:
                             import json
 
                             from .fsm_orchestrator import AgentReport
+from src.core.config.timeout_constants import TimeoutConstants
 
                             report_data = json.load(f)
                             report = AgentReport(**report_data)

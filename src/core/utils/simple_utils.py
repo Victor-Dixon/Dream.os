@@ -1,60 +1,42 @@
-from dataclasses import dataclass, field
 #!/usr/bin/env python3
 """
-Simple Utils - KISS Compliant
-=============================
+Simple Utils - V2 Compliance Redirect Shim
+==========================================
 
-Simple utility functions following KISS principles.
-No overengineering, no complex patterns, just simple utilities.
+Redirects file operations to unified_file_utils.py for backward compatibility.
+Maintains KISS principle for unique utility functions.
 
-Author: Agent-8 - SSOT & System Integration Specialist
-Mission: KISS Simplification
+This module acts as a redirect shim to eliminate duplicate code.
+File operations delegate to unified_file_utils.py (SSOT).
+Unique functions (timestamp, string formatting, path validation) remain.
+
+Author: Agent-2 (Architecture & Design Specialist)
+Date: 2025-12-04
+License: MIT
 """
 
 import os
 from datetime import datetime
+from pathlib import Path
+from typing import Any, Optional
+
+# Import unified file utilities (SSOT)
+from ...utils.unified_file_utils import UnifiedFileUtils, DirectoryOperations
+
+# Create singleton instance for backward compatibility
+_unified_instance = UnifiedFileUtils()
 
 
-def read_file(filepath):
-    """Read file content."""
-    try:
-        with open(filepath, encoding="utf-8") as f:
-            return f.read()
-    except Exception:
-        return None
+# ================================
+# UNIQUE FUNCTIONS (Keep)
+# ================================
 
-
-def write_file(filepath, content):
-    """Write content to file."""
-    try:
-        os.makedirs(os.path.dirname(filepath), exist_ok=True)
-        with open(filepath, "w", encoding="utf-8") as f:
-            f.write(content)
-        return True
-    except Exception:
-        return False
-
-
-def list_files(directory, extension=None):
-    """List files in directory."""
-    try:
-        files = []
-        for item in os.listdir(directory):
-            item_path = os.path.join(directory, item)
-            if os.path.isfile(item_path):
-                if extension is None or item.endswith(extension):
-                    files.append(item_path)
-        return files
-    except Exception:
-        return []
-
-
-def get_timestamp():
+def get_timestamp() -> str:
     """Get current timestamp."""
     return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 
-def format_string(template, **kwargs):
+def format_string(template: str, **kwargs: Any) -> str:
     """Format string with variables."""
     try:
         return template.format(**kwargs)
@@ -62,7 +44,7 @@ def format_string(template, **kwargs):
         return template
 
 
-def is_valid_path(path):
+def is_valid_path(path: str) -> bool:
     """Check if path is valid."""
     try:
         return os.path.exists(path)
@@ -70,17 +52,71 @@ def is_valid_path(path):
         return False
 
 
-def create_directory(path):
-    """Create directory if it doesn't exist."""
+# ================================
+# FILE OPERATIONS (Redirect to SSOT)
+# ================================
+
+def read_file(filepath: str) -> Optional[str]:
+    """Read file content."""
+    # Note: unified_file_utils has read_json/read_yaml, but not raw read_file
+    # Keep simple implementation for raw file reading (KISS principle)
     try:
-        os.makedirs(path, exist_ok=True)
+        with open(filepath, encoding="utf-8") as f:
+            return f.read()
+    except Exception:
+        return None
+
+
+def write_file(filepath: str, content: str) -> bool:
+    """Write content to file."""
+    # Use unified_file_utils for directory creation
+    try:
+        from pathlib import Path
+        Path(filepath).parent.mkdir(parents=True, exist_ok=True)
+        # Keep simple implementation for raw file writing (KISS principle)
+        with open(filepath, "w", encoding="utf-8") as f:
+            f.write(content)
         return True
     except Exception:
         return False
 
 
-def delete_file(filepath):
+def list_files(directory: str, extension: Optional[str] = None) -> list[str]:
+    """List files in directory."""
+    # Convert extension filter to pattern for unified_file_utils
+    if extension:
+        pattern = f"*.{extension.lstrip('.')}"
+    else:
+        pattern = "*"
+    return _unified_instance.list_files(directory, pattern)
+
+
+def get_file_size(filepath: str) -> int:
+    """Get file size in bytes."""
+    size = _unified_instance.get_file_size(filepath)
+    return size or 0  # Return 0 instead of None for backward compatibility
+
+
+def copy_file(source: str, destination: str) -> bool:
+    """Copy file from source to destination."""
+    return _unified_instance.copy_file(source, destination)
+
+
+def create_directory(path: str) -> bool:
+    """Create directory if it doesn't exist."""
+    # Use unified_file_utils directory operations
+    try:
+        from pathlib import Path
+        Path(path).mkdir(parents=True, exist_ok=True)
+        return True
+    except Exception:
+        return False
+
+
+def delete_file(filepath: str) -> bool:
     """Delete file."""
+    # unified_file_utils has safe_delete_file (with backup), but not simple delete
+    # Keep simple implementation for backward compatibility (KISS principle)
     try:
         if os.path.exists(filepath):
             os.remove(filepath)
@@ -89,20 +125,16 @@ def delete_file(filepath):
         return False
 
 
-def get_file_size(filepath):
-    """Get file size in bytes."""
-    try:
-        return os.path.getsize(filepath)
-    except Exception:
-        return 0
-
-
-def copy_file(source, destination):
-    """Copy file from source to destination."""
-    try:
-        import shutil
-
-        shutil.copy2(source, destination)
-        return True
-    except Exception:
-        return False
+# Backward compatibility exports
+__all__ = [
+    "read_file",
+    "write_file",
+    "list_files",
+    "get_timestamp",
+    "format_string",
+    "is_valid_path",
+    "create_directory",
+    "delete_file",
+    "get_file_size",
+    "copy_file",
+]

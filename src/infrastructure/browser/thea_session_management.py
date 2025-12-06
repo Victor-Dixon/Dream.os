@@ -6,6 +6,8 @@ Thea Session Management - V2 Compliance
 Unified session, cookie, and rate limit management for Thea automation.
 Consolidates: cookie_manager, session_manager, thea_cookie_manager, thea_session_manager
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-3 (Infrastructure & DevOps) - Browser Consolidation
 License: MIT
 """

@@ -11,7 +11,7 @@ REFACTORED FOR V2 COMPLIANCE (ROI 90.00 - #1 HIGHEST IN CODEBASE):
 - Pattern: Facade pattern (re-exports for backward compatibility)
 
 Modules:
-- context_enums.py: Enums (3 classes)
+- enums.py: Enums (3 classes) - SSOT for AgentStatus, MissionPhase, RiskLevel
 - mission_models.py: Mission context (1 class)
 - agent_models.py: Agent capabilities (2 classes)
 - context_results.py: Search and retrieval results (2 classes)
@@ -25,10 +25,12 @@ License: MIT
 """
 
 # Import all classes for backward compatibility (Facade pattern)
-from .context_enums import AgentStatus, MissionPhase, RiskLevel
+from .enums import AgentStatus, MissionPhase, RiskLevel
 from .mission_models import MissionContext
 from .agent_models import AgentCapability, AgentRecommendation
-from .context_results import ContextRetrievalResult, SearchResult
+from .context_results import ContextRetrievalResult
+# Use SSOT SearchResult - supports all intelligent context fields
+from src.services.models.vector_models import SearchResult
 from .emergency_models import EmergencyContext, InterventionProtocol
 from .analysis_models import RiskAssessment, SuccessPrediction
 from .metrics_models import ContextMetrics

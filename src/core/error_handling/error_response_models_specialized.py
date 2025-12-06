@@ -12,8 +12,11 @@ V2 Compliant: <400 lines, ≤5 classes
 from dataclasses import dataclass
 from typing import Any
 
+# SSOT: Import from consolidated core models
 from .error_response_models_core import StandardErrorResponse
 from dataclasses import dataclass, field
+
+from src.core.utils.serialization_utils import to_dict
 
 
 
@@ -24,9 +27,8 @@ class ValidationErrorResponse(StandardErrorResponse):
     validation_type: str = ""
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary."""
-        result = super().to_dict()
-        result["validation_type"] = self.validation_type
+        """Convert to dictionary using SSOT utility."""
+        result = to_dict(self)
         return result
 
 
@@ -37,9 +39,8 @@ class ConfigurationErrorResponse(StandardErrorResponse):
     config_key: str = ""
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary."""
-        result = super().to_dict()
-        result["config_key"] = self.config_key
+        """Convert to dictionary using SSOT utility."""
+        result = to_dict(self)
         return result
 
 
@@ -50,9 +51,8 @@ class AgentErrorResponse(StandardErrorResponse):
     agent_id: str = ""
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary."""
-        result = super().to_dict()
-        result["agent_id"] = self.agent_id
+        """Convert to dictionary using SSOT utility."""
+        result = to_dict(self)
         return result
 
 
@@ -69,10 +69,8 @@ class CoordinationErrorResponse(StandardErrorResponse):
             self.participants = []
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary."""
-        result = super().to_dict()
-        result["coordination_type"] = self.coordination_type
-        result["participants"] = self.participants
+        """Convert to dictionary using SSOT utility."""
+        result = to_dict(self)
         return result
 
 

@@ -14,7 +14,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from ..agents.osrs_agent_core import AgentRole, AgentStatus, OSRS_Agent_Core
+from .osrs_agent_core import AgentRole, OSRSAgentStatus, OSRS_Agent_Core
 from .swarm_strategic_planner import OSRSStrategicPlanner
 
 
@@ -145,7 +145,7 @@ class OSRS_Swarm_Coordinator:
             for agent_id in activity.participating_agents:
                 if agent_id in self.agents:
                     agent = self.agents[agent_id]
-                    if agent.status == AgentStatus.ACTIVE:
+                    if agent.status == OSRSAgentStatus.ACTIVE:
                         ready_agents.append(agent_id)
             if len(ready_agents) == len(activity.participating_agents):
                 activity.status = "active"
@@ -188,7 +188,7 @@ class OSRS_Swarm_Coordinator:
             # Find agents that might have the requested resource
             potential_suppliers = []
             for agent_id, agent in self.agents.items():
-                if agent_id != requesting_agent and agent.status == AgentStatus.ACTIVE:
+                if agent_id != requesting_agent and agent.status == OSRSAgentStatus.ACTIVE:
                     # Check if agent has the requested resource
                     if agent.game_state and requested_item in agent.game_state.inventory_items:
                         potential_suppliers.append(agent_id)
@@ -231,11 +231,11 @@ class OSRS_Swarm_Coordinator:
         try:
             for agent_id, agent in self.agents.items():
                 # Check if agent is responding
-                if agent.status == AgentStatus.ERROR:
+                if agent.status == OSRSAgentStatus.ERROR:
                     self.logger.warning(f"Agent {agent_id} is in error state")
                     # Attempt to restart the agent
                     self.restart_agent(agent_id)
-                elif agent.status == AgentStatus.SHUTDOWN:
+                elif agent.status == OSRSAgentStatus.SHUTDOWN:
                     self.logger.warning(f"Agent {agent_id} has shutdown")
                     # Remove from active agents
                     if agent_id in self.agents:

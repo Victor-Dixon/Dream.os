@@ -17,11 +17,13 @@ import logging
 from abc import ABC
 from typing import Any, Optional
 
-from src.core.config.config_manager import UnifiedConfigManager
-from src.core.logging.unified_logging_system import UnifiedLoggingSystem
+from ..config.config_manager import UnifiedConfigManager
+from ..unified_logging_system import UnifiedLoggingSystem
+from .initialization_mixin import InitializationMixin
+from .error_handling_mixin import ErrorHandlingMixin
 
 
-class BaseService(ABC):
+class BaseService(ABC, InitializationMixin, ErrorHandlingMixin):
     """
     Base class for Service classes.
     
@@ -42,6 +44,8 @@ class BaseService(ABC):
         """
         Initialize base service.
         
+        Uses InitializationMixin for consolidated initialization pattern.
+        
         Args:
             service_name: Name of the service (for logging)
             config_section: Optional config section name
@@ -49,12 +53,15 @@ class BaseService(ABC):
         self.service_name = service_name
         self.config_section = config_section or service_name.lower()
         
-        # Initialize logging
-        self.logger = UnifiedLoggingSystem(service_name).get_logger()
+        # Use consolidated initialization pattern from InitializationMixin
+        self.logger, config_dict = self.initialize_with_config(
+            service_name,
+            self.config_section
+        )
         
-        # Load configuration
+        # Store config for backward compatibility
         self.config = UnifiedConfigManager()
-        self.service_config = self.config.get_section(self.config_section, {})
+        self.service_config = config_dict or {}
         
         # Lifecycle state
         self._initialized = False
@@ -73,14 +80,19 @@ class BaseService(ABC):
             self.logger.warning(f"{self.service_name} already initialized")
             return True
         
-        try:
-            self._do_initialize()
-            self._initialized = True
-            self.logger.info(f"✅ {self.service_name} initialization complete")
-            return True
-        except Exception as e:
-            self.logger.error(f"❌ {self.service_name} initialization failed: {e}")
-            return False
+        return self.safe_execute(
+            operation=lambda: self._do_initialize() or True,
+            operation_name="initialize",
+            default_return=False,
+            logger=self.logger,
+            component_name=self.service_name
+        ) and self._set_initialized()
+    
+    def _set_initialized(self) -> bool:
+        """Set initialized state and log success."""
+        self._initialized = True
+        self.logger.info(f"✅ {self.service_name} initialization complete")
+        return True
     
     def _do_initialize(self) -> None:
         """
@@ -112,7 +124,7 @@ class BaseService(ABC):
             self.logger.info(f"✅ {self.service_name} started")
             return True
         except Exception as e:
-            self.logger.error(f"❌ {self.service_name} start failed: {e}")
+            self.handle_error(e, "start", self.logger, self.service_name)
             return False
     
     def _do_start(self) -> None:
@@ -140,7 +152,7 @@ class BaseService(ABC):
             self.logger.info(f"✅ {self.service_name} stopped")
             return True
         except Exception as e:
-            self.logger.error(f"❌ {self.service_name} stop failed: {e}")
+            self.handle_error(e, "stop", self.logger, self.service_name)
             return False
     
     def _do_stop(self) -> None:
@@ -172,6 +184,7 @@ class BaseService(ABC):
     def is_initialized(self) -> bool:
         """Check if service is initialized."""
         return self._initialized
+
 
 
 

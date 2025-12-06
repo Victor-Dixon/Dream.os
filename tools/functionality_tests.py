@@ -13,6 +13,7 @@ License: MIT
 import subprocess
 from datetime import datetime
 from typing import Any
+from src.core.config.timeout_constants import TimeoutConstants
 
 
 class FunctionalityTests:
@@ -35,7 +36,7 @@ class FunctionalityTests:
         for test_name, test_command in agent_tests.items():
             try:
                 result = subprocess.run(
-                    test_command, shell=True, capture_output=True, text=True, timeout=300
+                    test_command, shell=True, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_EXTENDED
                 )
 
                 results["tests_run"].append(test_name)

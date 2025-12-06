@@ -29,8 +29,8 @@ logger = logging.getLogger(__name__)
 # ============================================================================
 
 @dataclass
-class Task:
-    """Represents a task to be assigned"""
+class WorkflowAssignmentTask:
+    """Workflow assignment task (workflow domain-specific, not to be confused with domain entity Task)."""
     title: str
     description: str
     required_skills: list[str]
@@ -61,7 +61,7 @@ class Agent:
 @dataclass
 class Assignment:
     """Represents a task assignment"""
-    task: Task
+    task: WorkflowAssignmentTask
     agent_id: str
     fit_score: float
     reasoning: str
@@ -98,12 +98,12 @@ class AutoAssignmentEngine:
             "Agent-8": ["ssot", "system_integration", "configuration", "data_flow"],
         }
     
-    def assign_task(self, task: Task, dry_run: bool = False) -> Assignment:
+    def assign_task(self, task: WorkflowAssignmentTask, dry_run: bool = False) -> Assignment:
         """
         Assign task to best-fit agent
         
         Args:
-            task: Task to assign
+            task: WorkflowAssignmentTask to assign
             dry_run: If True, don't send message, just calculate
         
         Returns:
@@ -148,7 +148,7 @@ class AutoAssignmentEngine:
         
         return assignment
     
-    def _calculate_fit_score(self, agent: Agent, task: Task) -> tuple[float, str]:
+    def _calculate_fit_score(self, agent: Agent, task: WorkflowAssignmentTask) -> tuple[float, str]:
         """
         Calculate how well agent fits task
         
@@ -183,7 +183,7 @@ class AutoAssignmentEngine:
         
         return score, reasoning
     
-    def _calculate_skill_match(self, agent: Agent, task: Task) -> float:
+    def _calculate_skill_match(self, agent: Agent, task: WorkflowAssignmentTask) -> float:
         """Calculate skill match percentage"""
         if not task.required_skills:
             return 0.5  # Neutral if no skills specified
@@ -288,8 +288,8 @@ Begin execution when ready! 🚀
 # ============================================================================
 
 @dataclass
-class AgentStatus:
-    """Agent status for dashboard"""
+class AgentStatusData:
+    """Agent status data model for dashboard (not to be confused with AgentStatus enum)"""
     agent_id: str
     name: str
     status: str
@@ -338,7 +338,7 @@ class TeamCoordinationDashboard:
             'timestamp': datetime.now().isoformat()
         }
     
-    def _load_all_agent_statuses(self) -> list[AgentStatus]:
+    def _load_all_agent_statuses(self) -> list[AgentStatusData]:
         """Load status for all agents"""
         agents = []
         
@@ -360,8 +360,8 @@ class TeamCoordinationDashboard:
         
         return agents
     
-    def _parse_agent_status(self, status_data: dict, agent_id: str) -> AgentStatus:
-        """Parse status.json into AgentStatus"""
+    def _parse_agent_status(self, status_data: dict, agent_id: str) -> AgentStatusData:
+        """Parse status.json into AgentStatusData"""
         current_tasks = status_data.get('current_tasks', [])
         current_task = current_tasks[0] if current_tasks else "No active task"
         
@@ -379,7 +379,7 @@ class TeamCoordinationDashboard:
         # Suggest next action
         next_action = self._suggest_next_action(status_data, gas_level, blockers)
         
-        return AgentStatus(
+        return AgentStatusData(
             agent_id=agent_id,
             name=status_data.get('agent_name', agent_id),
             status=status_data.get('status', 'UNKNOWN'),
@@ -448,7 +448,7 @@ class TeamCoordinationDashboard:
         # Normal operation
         return "✅ CONTINUE: Agent executing normally"
     
-    def _generate_summary(self, agents: list[AgentStatus]) -> str:
+    def _generate_summary(self, agents: list[AgentStatusData]) -> str:
         """Generate text summary of team status"""
         total = len(agents)
         executing = sum(1 for a in agents if a.status == 'ACTIVE_AGENT_MODE')
@@ -465,7 +465,7 @@ Low Gas: {low_gas}
 """
         return summary.strip()
     
-    def _generate_coordination_suggestions(self, agents: list[AgentStatus]) -> list[str]:
+    def _generate_coordination_suggestions(self, agents: list[AgentStatusData]) -> list[str]:
         """Generate coordination suggestions"""
         suggestions = []
         
@@ -489,7 +489,7 @@ Low Gas: {low_gas}
         
         return suggestions
     
-    def _identify_bottlenecks(self, agents: list[AgentStatus]) -> list[str]:
+    def _identify_bottlenecks(self, agents: list[AgentStatusData]) -> list[str]:
         """Identify system bottlenecks"""
         bottlenecks = []
         
@@ -505,7 +505,7 @@ Low Gas: {low_gas}
         
         return bottlenecks
     
-    def _analyze_resource_allocation(self, agents: list[AgentStatus]) -> dict:
+    def _analyze_resource_allocation(self, agents: list[AgentStatusData]) -> dict:
         """Analyze resource allocation"""
         return {
             'total_agents': len(agents),

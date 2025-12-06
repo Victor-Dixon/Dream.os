@@ -7,6 +7,7 @@ from pathlib import Path
 
 try:
     from dotenv import load_dotenv
+from src.core.config.timeout_constants import TimeoutConstants
     env_path = Path('.env')
     if env_path.exists():
         load_dotenv(env_path)
@@ -46,7 +47,7 @@ def main():
     # Check if merge branch exists
     print(f"📋 Checking merge branch: merge-contract-leads-20251126...")
     branch_url = f"https://api.github.com/repos/{owner}/{repo}/branches/merge-contract-leads-20251126"
-    branch_response = requests.get(branch_url, headers=headers, timeout=30)
+    branch_response = requests.get(branch_url, headers=headers, timeout=TimeoutConstants.HTTP_DEFAULT)
     
     if branch_response.status_code == 200:
         branch_data = branch_response.json()
@@ -58,7 +59,7 @@ def main():
     # Check for open PRs related to contract-leads
     print(f"\n📋 Checking for open PRs...")
     prs_url = f"https://api.github.com/repos/{owner}/{repo}/pulls"
-    prs_response = requests.get(prs_url, headers=headers, params={"state": "open", "head": f"{owner}:merge-contract-leads-20251126"}, timeout=30)
+    prs_response = requests.get(prs_url, headers=headers, params={"state": "open", "head": f"{owner}:merge-contract-leads-20251126"}, timeout=TimeoutConstants.HTTP_DEFAULT)
     
     if prs_response.status_code == 200:
         prs = prs_response.json()
@@ -81,7 +82,7 @@ def main():
                     # Close PR
                     close_url = f"https://api.github.com/repos/{owner}/{repo}/pulls/{pr_number}"
                     close_data = {"state": "closed"}
-                    close_response = requests.patch(close_url, headers=headers, json=close_data, timeout=30)
+                    close_response = requests.patch(close_url, headers=headers, json=close_data, timeout=TimeoutConstants.HTTP_DEFAULT)
                     
                     if close_response.status_code == 200:
                         print(f"✅ PR #{pr_number} closed successfully")
@@ -96,12 +97,12 @@ def main():
     # Check if contract-leads content is in main/master
     print(f"\n📋 Checking if contract-leads content is in main branch...")
     main_url = f"https://api.github.com/repos/{owner}/{repo}/git/trees/main?recursive=1"
-    main_response = requests.get(main_url, headers=headers, timeout=30)
+    main_response = requests.get(main_url, headers=headers, timeout=TimeoutConstants.HTTP_DEFAULT)
     
     if main_response.status_code != 200:
         # Try master
         main_url = f"https://api.github.com/repos/{owner}/{repo}/git/trees/master?recursive=1"
-        main_response = requests.get(main_url, headers=headers, timeout=30)
+        main_response = requests.get(main_url, headers=headers, timeout=TimeoutConstants.HTTP_DEFAULT)
     
     if main_response.status_code == 200:
         tree_data = main_response.json()

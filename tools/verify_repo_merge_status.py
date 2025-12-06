@@ -5,6 +5,7 @@ import os
 import requests
 import sys
 from pathlib import Path
+from src.core.config.timeout_constants import TimeoutConstants
 
 # Add project root to path
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -30,7 +31,7 @@ def verify_branch_status():
         
         # Compare branch to main
         url = f'https://api.github.com/repos/Dadudekc/{repo_name}/compare/main...{branch_name}'
-        r = requests.get(url, headers=headers, timeout=10)
+        r = requests.get(url, headers=headers, timeout=TimeoutConstants.HTTP_SHORT)
         
         if r.status_code == 200:
             data = r.json()
@@ -56,5 +57,6 @@ def verify_branch_status():
 
 if __name__ == '__main__':
     verify_branch_status()
+
 
 

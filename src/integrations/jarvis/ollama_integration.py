@@ -1,4 +1,5 @@
 from ..core.unified_entry_point_system import main
+from src.core.config.timeout_constants import TimeoutConstants
 
 """
 Ollama Integration for Local Agents
@@ -58,7 +59,7 @@ class OllamaClient:
         try:
             payload = {"model": model, "prompt": prompt, "stream": False, **kwargs}
 
-            response = self.session.post(f"{self.base_url}/api/generate", json=payload, timeout=60)
+            response = self.session.post(f"{self.base_url}/api/generate", json=payload, timeout=TimeoutConstants.HTTP_MEDIUM)
 
             if response.status_code == 200:
                 data = response.json()

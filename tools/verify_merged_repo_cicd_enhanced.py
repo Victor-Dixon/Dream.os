@@ -101,7 +101,7 @@ class EnhancedCICDVerifier:
 
             # Check for .github/workflows directory
             workflows_url = f"https://api.github.com/repos/{self.owner}/{repo_name}/contents/.github/workflows"
-            response = requests.get(workflows_url, headers=headers, timeout=10)
+            response = requests.get(workflows_url, headers=headers, timeout=TimeoutConstants.HTTP_SHORT)
 
             if response.status_code == 200:
                 workflow_files = response.json()
@@ -131,7 +131,7 @@ class EnhancedCICDVerifier:
                     headers["Authorization"] = f"token {self.token}"
 
                 file_url = f"https://api.github.com/repos/{self.owner}/{repo_name}/contents/{dep_file}"
-                response = requests.get(file_url, headers=headers, timeout=10)
+                response = requests.get(file_url, headers=headers, timeout=TimeoutConstants.HTTP_SHORT)
 
                 if response.status_code == 200:
                     results["dependencies"][dep_file] = "exists"
@@ -264,6 +264,7 @@ class EnhancedCICDVerifier:
 def main():
     """Main entry point."""
     import argparse
+from src.core.config.timeout_constants import TimeoutConstants
 
     parser = argparse.ArgumentParser(
         description="Enhanced CI/CD verification for merged repos"

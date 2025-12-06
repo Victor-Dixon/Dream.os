@@ -24,6 +24,7 @@ except ImportError:
 
 try:
     from dotenv import load_dotenv
+from src.core.config.timeout_constants import TimeoutConstants
     load_dotenv()
 except ImportError:
     pass
@@ -76,7 +77,7 @@ def create_game_post(creds: Dict, game_data: Dict) -> bool:
     }
     
     try:
-        response = requests.post(url, json=post_data, auth=auth, timeout=30)
+        response = requests.post(url, json=post_data, auth=auth, timeout=TimeoutConstants.HTTP_DEFAULT)
         
         if response.status_code == 201:
             post = response.json()

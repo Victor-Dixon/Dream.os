@@ -24,25 +24,14 @@ from typing import Optional
 project_root = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(project_root))
 
+from src.core.config.timeout_constants import TimeoutConstants
+
 
 def get_github_token() -> Optional[str]:
     """Get GitHub token from environment or .env file."""
-    token = os.getenv("GITHUB_TOKEN") or os.getenv("GH_TOKEN")
-    if token:
-        return token
-    
-    env_file = project_root / ".env"
-    if env_file.exists():
-        try:
-            with open(env_file, "r") as f:
-                for line in f:
-                    line = line.strip()
-                    if line.startswith("GITHUB_TOKEN=") or line.startswith("GH_TOKEN="):
-                        return line.split("=", 1)[1].strip().strip('"').strip("'")
-        except Exception:
-            pass
-    
-    return None
+    # Use SSOT utility for GitHub token
+    from src.core.utils.github_utils import get_github_token as get_token_ssot
+    return get_token_ssot(project_root)
 
 
 def git_based_merge(
@@ -137,7 +126,7 @@ Executed via git operations (no API rate limits).
             ["git", "clone", target_url, str(target_dir)],
             capture_output=True,
             text=True,
-            timeout=120,
+            timeout=TimeoutConstants.HTTP_LONG,
             check=False,
             env=git_env
         )
@@ -155,7 +144,7 @@ Executed via git operations (no API rate limits).
             ["git", "clone", source_url, str(source_dir)],
             capture_output=True,
             text=True,
-            timeout=120,
+            timeout=TimeoutConstants.HTTP_LONG,
             check=False,
             env=git_env
         )
@@ -173,7 +162,7 @@ Executed via git operations (no API rate limits).
             ["git", "remote", "add", "source-merge", str(source_dir)],
             cwd=target_dir,
             check=True,
-            timeout=30
+            timeout=TimeoutConstants.HTTP_DEFAULT
         )
         
         # Fetch from source
@@ -182,7 +171,7 @@ Executed via git operations (no API rate limits).
             ["git", "fetch", "source-merge"],
             cwd=target_dir,
             check=True,
-            timeout=60
+            timeout=TimeoutConstants.HTTP_MEDIUM
         )
         
         # Create merge branch
@@ -192,7 +181,7 @@ Executed via git operations (no API rate limits).
             ["git", "checkout", "-b", merge_branch],
             cwd=target_dir,
             check=True,
-            timeout=30
+            timeout=TimeoutConstants.HTTP_DEFAULT
         )
         
         # Merge source into target
@@ -205,7 +194,7 @@ Executed via git operations (no API rate limits).
             cwd=target_dir,
             capture_output=True,
             text=True,
-            timeout=120,
+            timeout=TimeoutConstants.HTTP_LONG,
             check=False
         )
         
@@ -218,7 +207,7 @@ Executed via git operations (no API rate limits).
                 cwd=target_dir,
                 capture_output=True,
                 text=True,
-                timeout=120,
+                timeout=TimeoutConstants.HTTP_LONG,
                 check=False
             )
         
@@ -234,7 +223,7 @@ Executed via git operations (no API rate limits).
                     cwd=target_dir,
                     capture_output=True,
                     text=True,
-                    timeout=30
+                    timeout=TimeoutConstants.HTTP_DEFAULT
                 )
                 
                 if unmerged.returncode == 0 and unmerged.stdout.strip():
@@ -247,7 +236,7 @@ Executed via git operations (no API rate limits).
                         ["git", "commit", "-m", f"Merge {source_repo} into {target_repo} - Conflicts resolved"],
                         cwd=target_dir,
                         check=False,
-                        timeout=30
+                        timeout=TimeoutConstants.HTTP_DEFAULT
                     )
                     
                     if commit_result.returncode == 0:
@@ -271,7 +260,7 @@ Executed via git operations (no API rate limits).
             cwd=target_dir,
             capture_output=True,
             text=True,
-            timeout=60,
+            timeout=TimeoutConstants.HTTP_MEDIUM,
             check=False
         )
         

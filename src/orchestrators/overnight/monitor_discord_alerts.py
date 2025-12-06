@@ -16,6 +16,7 @@ import requests
 from typing import List, Optional, Dict, Any
 from datetime import datetime
 import logging
+from src.core.config.timeout_constants import TimeoutConstants
 
 logger = logging.getLogger(__name__)
 
@@ -105,7 +106,7 @@ Agent has been stalled for {duration_str}. Recovery system will attempt to rescu
     }
     
     try:
-        response = requests.post(webhook_url, json=payload, timeout=10)
+        response = requests.post(webhook_url, json=payload, timeout=TimeoutConstants.HTTP_SHORT)
         response.raise_for_status()
         logger.info(f"✅ Discord alert sent for {agent_id}")
         return True
@@ -151,7 +152,7 @@ def send_recovery_alert(agent_id: str, recovery_status: str, details: Optional[s
     }
     
     try:
-        response = requests.post(webhook_url, json=payload, timeout=10)
+        response = requests.post(webhook_url, json=payload, timeout=TimeoutConstants.HTTP_SHORT)
         response.raise_for_status()
         logger.info(f"✅ Recovery alert sent for {agent_id}: {recovery_status}")
         return True
@@ -204,7 +205,7 @@ def send_health_alert(issues: List[str], health_status: Dict[str, Any]) -> bool:
     }
     
     try:
-        response = requests.post(webhook_url, json=payload, timeout=10)
+        response = requests.post(webhook_url, json=payload, timeout=TimeoutConstants.HTTP_SHORT)
         response.raise_for_status()
         logger.info(f"✅ Health alert sent: {len(issues)} issues")
         return True

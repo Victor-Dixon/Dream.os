@@ -9,9 +9,16 @@ Date: 2025-01-28
 import subprocess
 import shutil
 import os
+import sys
 import time
 from pathlib import Path
 from typing import Optional
+
+# Add project root to path
+project_root = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(project_root))
+
+from src.core.config.timeout_constants import TimeoutConstants
 
 GITHUB_USER = "Dadudekc"
 BASE_DIR = Path("D:/Temp") / f"consolidation_force_push_{int(time.time())}"
@@ -71,7 +78,7 @@ def force_push_to_main(repo: str, branch: str, description: str) -> bool:
             ["git", "clone", repo_url, str(repo_dir)],
             capture_output=True,
             text=True,
-            timeout=120,
+            timeout=TimeoutConstants.HTTP_LONG,
             check=False,
             env=git_env
         )
@@ -88,7 +95,7 @@ def force_push_to_main(repo: str, branch: str, description: str) -> bool:
             cwd=repo_dir,
             capture_output=True,
             text=True,
-            timeout=60,
+            timeout=TimeoutConstants.HTTP_MEDIUM,
             check=False
         )
         
@@ -103,7 +110,7 @@ def force_push_to_main(repo: str, branch: str, description: str) -> bool:
             cwd=repo_dir,
             capture_output=True,
             text=True,
-            timeout=30,
+            timeout=TimeoutConstants.HTTP_DEFAULT,
             check=False
         )
         
@@ -114,7 +121,7 @@ def force_push_to_main(repo: str, branch: str, description: str) -> bool:
                 cwd=repo_dir,
                 capture_output=True,
                 text=True,
-                timeout=30,
+                timeout=TimeoutConstants.HTTP_DEFAULT,
                 check=False
             )
             
@@ -128,7 +135,7 @@ def force_push_to_main(repo: str, branch: str, description: str) -> bool:
             cwd=repo_dir,
             capture_output=True,
             text=True,
-            timeout=30,
+            timeout=TimeoutConstants.HTTP_DEFAULT,
             check=True
         )
         main_branch = branch_result.stdout.strip()
@@ -141,7 +148,7 @@ def force_push_to_main(repo: str, branch: str, description: str) -> bool:
             cwd=repo_dir,
             capture_output=True,
             text=True,
-            timeout=120,
+            timeout=TimeoutConstants.HTTP_LONG,
             check=False
         )
         
@@ -149,7 +156,7 @@ def force_push_to_main(repo: str, branch: str, description: str) -> bool:
             print(f"⚠️ Merge had conflicts, using ours strategy...")
             # Abort and retry with ours strategy
             subprocess.run(["git", "merge", "--abort"], cwd=repo_dir, 
-                         capture_output=True, timeout=30, check=False)
+                         capture_output=True, timeout=TimeoutConstants.HTTP_DEFAULT, check=False)
             
             merge_result = subprocess.run(
                 ["git", "merge", f"origin/{branch}", "-X", "ours", "--no-edit",
@@ -157,7 +164,7 @@ def force_push_to_main(repo: str, branch: str, description: str) -> bool:
                 cwd=repo_dir,
                 capture_output=True,
                 text=True,
-                timeout=120,
+                timeout=TimeoutConstants.HTTP_LONG,
                 check=False
             )
             
@@ -172,7 +179,7 @@ def force_push_to_main(repo: str, branch: str, description: str) -> bool:
             cwd=repo_dir,
             capture_output=True,
             text=True,
-            timeout=60,
+            timeout=TimeoutConstants.HTTP_MEDIUM,
             check=False,
             env=git_env
         )
@@ -189,7 +196,7 @@ def force_push_to_main(repo: str, branch: str, description: str) -> bool:
             cwd=repo_dir,
             capture_output=True,
             text=True,
-            timeout=30,
+            timeout=TimeoutConstants.HTTP_DEFAULT,
             check=False
         )
         

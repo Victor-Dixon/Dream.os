@@ -18,6 +18,8 @@ from typing import Any
 from .error_models_enums import ErrorCategory, ErrorSeverity
 from dataclasses import dataclass, field
 
+from src.core.utils.serialization_utils import to_dict
+
 
 
 @dataclass
@@ -50,15 +52,8 @@ class StandardErrorResponse:
             self.timestamp = datetime.now().isoformat()
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary."""
-        return {
-            "success": self.success,
-            "error": self.error,
-            "error_type": self.error_type,
-            "operation": self.operation,
-            "timestamp": self.timestamp,
-            "context": self.context,
-        }
+        """Convert to dictionary using SSOT utility."""
+        return to_dict(self)
 
 
 @dataclass

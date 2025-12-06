@@ -17,6 +17,8 @@ from datetime import datetime
 from enum import Enum
 from typing import Any
 
+from src.core.utils.serialization_utils import to_dict
+
 
 class CoordinationStatus(Enum):
     """Coordination status enumeration."""
@@ -82,16 +84,8 @@ class CoordinationTarget:
         return self.status == CoordinationStatus.OPERATIONAL
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert target to dictionary."""
-        return {
-            "target_id": self.target_id,
-            "target_type": self.target_type.value,
-            "priority": self.priority.value,
-            "status": self.status.value,
-            "created_at": self.created_at.isoformat(),
-            "updated_at": self.updated_at.isoformat(),
-            "metadata": self.metadata,
-        }
+        """Convert target to dictionary using SSOT utility."""
+        return to_dict(self)
 
 
 @dataclass
@@ -107,16 +101,8 @@ class CoordinationResult:
     metadata: dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert result to dictionary."""
-        return {
-            "success": self.success,
-            "operation": self.operation,
-            "result": self.result,
-            "error": self.error,
-            "timestamp": self.timestamp.isoformat(),
-            "coordinator": self.coordinator,
-            "metadata": self.metadata,
-        }
+        """Convert result to dictionary using SSOT utility."""
+        return to_dict(self)
 
 
 @dataclass
@@ -137,21 +123,8 @@ class CoordinatorStatus:
     status: str
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert status to dictionary."""
-        return {
-            "name": self.name,
-            "initialized": self.initialized,
-            "coordination_status": self.coordination_status.value,
-            "config": self.config,
-            "start_time": self.start_time.isoformat(),
-            "uptime_seconds": self.uptime_seconds,
-            "operations_count": self.operations_count,
-            "error_count": self.error_count,
-            "success_rate": self.success_rate,
-            "targets_count": self.targets_count,
-            "targets_by_type": self.targets_by_type,
-            "status": self.status,
-        }
+        """Convert status to dictionary using SSOT utility."""
+        return to_dict(self)
 
 
 @dataclass

@@ -32,8 +32,8 @@ class TaskState(Enum):
 
 
 @dataclass
-class Task:
-    """Task data structure for FSM orchestrator."""
+class FSMTask:
+    """FSM workflow task data structure (domain-specific, not to be confused with domain entity Task)."""
 
     id: str
     title: str

@@ -13,6 +13,8 @@ from datetime import datetime
 from enum import Enum
 from typing import Any
 
+from src.core.utils.serialization_utils import to_dict
+
 
 class ContractStatus(Enum):
     """Contract status enumeration."""
@@ -41,8 +43,8 @@ class TaskStatus(Enum):
     CANCELLED = "cancelled"
 
 
-class Task:
-    """Task data model."""
+class ContractTask:
+    """Contract task data model (contract system domain-specific, not to be confused with domain entity Task)."""
 
     def __init__(self, **kwargs):
         """Initialize task with provided data."""
@@ -58,22 +60,11 @@ class Task:
         self.last_updated = kwargs.get("last_updated", datetime.now().isoformat())
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert task to dictionary."""
-        return {
-            "task_id": self.task_id,
-            "title": self.title,
-            "description": self.description,
-            "status": self.status,
-            "priority": self.priority,
-            "assigned_to": self.assigned_to,
-            "created_at": self.created_at,
-            "due_date": self.due_date,
-            "completed_at": self.completed_at,
-            "last_updated": self.last_updated,
-        }
+        """Convert task to dictionary using SSOT utility."""
+        return to_dict(self)
 
     @classmethod
-    def from_dict(cls, data: dict[str, Any]) -> "Task":
+    def from_dict(cls, data: dict[str, Any]) -> "ContractTask":
         """Create task from dictionary."""
         return cls(**data)
 
@@ -110,20 +101,8 @@ class Contract:
         self.last_updated = kwargs.get("last_updated", datetime.now().isoformat())
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert contract to dictionary."""
-        return {
-            "contract_id": self.contract_id,
-            "title": self.title,
-            "description": self.description,
-            "status": self.status,
-            "priority": self.priority,
-            "assigned_to": self.assigned_to,
-            "created_at": self.created_at,
-            "assigned_at": self.assigned_at,
-            "completed_at": self.completed_at,
-            "tasks": self.tasks,
-            "last_updated": self.last_updated,
-        }
+        """Convert contract to dictionary using SSOT utility."""
+        return to_dict(self)
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> "Contract":

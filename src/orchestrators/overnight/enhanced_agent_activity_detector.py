@@ -321,7 +321,7 @@ class EnhancedAgentActivityDetector:
                 ["git", "log", "--all", "--format=%H|%ct|%s", "--grep", agent_id],
                 capture_output=True,
                 text=True,
-                timeout=5,
+                timeout=TimeoutConstants.HTTP_QUICK,
                 cwd=self.workspace_root,
             )
             
@@ -531,6 +531,7 @@ class EnhancedAgentActivityDetector:
                     if last_cycle_str:
                         try:
                             from datetime import datetime
+from src.core.config.timeout_constants import TimeoutConstants
                             # Parse ISO format timestamp
                             last_cycle_time = datetime.fromisoformat(
                                 last_cycle_str.replace("Z", "+00:00")

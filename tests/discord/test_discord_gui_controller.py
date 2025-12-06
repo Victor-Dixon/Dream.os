@@ -212,3 +212,4 @@ class TestDiscordGUIController:
         assert controller.logger.name == "src.discord_commander.discord_gui_controller"
 
 
+

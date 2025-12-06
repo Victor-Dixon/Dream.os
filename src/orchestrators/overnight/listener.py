@@ -92,7 +92,7 @@ def _post_discord(webhook: Optional[str], username: str, use_embed: bool, title:
         
         data = json.dumps(payload).encode("utf-8")
         req = request.Request(webhook, data=data, headers={"Content-Type": "application/json"})
-        with request.urlopen(req, timeout=5):
+        with request.urlopen(req, timeout=TimeoutConstants.HTTP_QUICK):
             pass
     except Exception as e:
         logger.debug(f"Discord post failed: {e}")
@@ -458,5 +458,6 @@ def main() -> int:
 
 if __name__ == "__main__":
     import sys
+from src.core.config.timeout_constants import TimeoutConstants
     sys.exit(main())
 

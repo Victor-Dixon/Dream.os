@@ -92,16 +92,17 @@ class HardOnboardingService:
 
             x, y = chat_coords
 
-            logger.info(f"🗑️ Step 1: Clearing chat for {agent_id} at {chat_coords}")
+            logger.info(
+                f"🗑️ Step 1: Clearing chat for {agent_id} at {chat_coords}")
 
-            # Click chat input
-            self.pyautogui.moveTo(x, y)
+            # Click chat input - wait for app to respond to interaction
+            self.pyautogui.moveTo(x, y, duration=0.5)
             self.pyautogui.click()
-            time.sleep(0.3)
+            time.sleep(1.0)  # Wait for app to respond to click interaction
 
             # Press Ctrl+Shift+Backspace
             self.pyautogui.hotkey("ctrl", "shift", "backspace")
-            time.sleep(0.5)
+            time.sleep(0.8)  # Wait for clear operation
 
             logger.info(f"✅ Chat cleared for {agent_id}")
             return True
@@ -120,7 +121,7 @@ class HardOnboardingService:
         try:
             logger.info("⚡ Step 2: Executing Ctrl+Enter")
             self.pyautogui.hotkey("ctrl", "enter")
-            time.sleep(0.5)
+            time.sleep(0.8)  # Increased from 0.5s for reliability
             logger.info("✅ Ctrl+Enter executed")
             return True
 
@@ -138,7 +139,8 @@ class HardOnboardingService:
         try:
             logger.info("🆕 Step 3: Creating new window (Ctrl+N)")
             self.pyautogui.hotkey("ctrl", "n")
-            time.sleep(1.5)  # Wait for new window to initialize
+            # Increased from 1.5s for reliability - critical window initialization
+            time.sleep(2.0)
             logger.info("✅ New window created")
             return True
 
@@ -177,10 +179,10 @@ class HardOnboardingService:
                 f"🎯 Step 4: Navigating to onboarding input for {agent_id} at {onboarding_coords}"
             )
 
-            # Move to and click onboarding input
-            self.pyautogui.moveTo(x, y)
+            # Move to and click onboarding input - wait for app to respond
+            self.pyautogui.moveTo(x, y, duration=0.5)
             self.pyautogui.click()
-            time.sleep(0.3)
+            time.sleep(1.0)  # Wait for app to respond to click interaction
 
             logger.info(f"✅ Navigated to onboarding input for {agent_id}")
             return True
@@ -192,10 +194,10 @@ class HardOnboardingService:
     def _get_agent_specific_instructions(self, agent_id: str) -> str:
         """
         Get agent-specific optimized instructions based on role.
-        
+
         Args:
             agent_id: Agent identifier
-        
+
         Returns:
             Agent-specific instructions string
         """
@@ -579,9 +581,9 @@ class HardOnboardingService:
 
 🧪 **TEST. ENFORCE. MAINTAIN.** 🧪"""
         }
-        
+
         return instructions_map.get(agent_id, "")
-    
+
     def step_5_send_onboarding_message(
         self, agent_id: str, onboarding_message: str, role: str = None
     ) -> bool:
@@ -604,10 +606,12 @@ class HardOnboardingService:
                 full_message = load_onboarding_template(
                     agent_id=agent_id, role=role, custom_message=onboarding_message
                 )
-                logger.info("✅ Using FULL template with operating cycle duties")
+                logger.info(
+                    "✅ Using FULL template with operating cycle duties")
             else:
                 full_message = onboarding_message
-                logger.warning("⚠️ Using custom message only (template not available)")
+                logger.warning(
+                    "⚠️ Using custom message only (template not available)")
 
             # Automatically prepend Jet Fuel header to all hard onboarding messages
             jet_fuel_header = """🚀 JET FUEL MESSAGE - HARD ONBOARDING
@@ -625,10 +629,11 @@ This message is your fuel - ACT NOW!
 - ACT, CREATE, MIGRATE, IMPROVE
 
 WE. ARE. SWARM. AUTONOMOUS. POWERFUL. 🐝⚡🔥🚀"""
-            
+
             # Agent-specific optimized instructions
-            agent_instructions = self._get_agent_specific_instructions(agent_id)
-            
+            agent_instructions = self._get_agent_specific_instructions(
+                agent_id)
+
             if agent_id == "Agent-4":
                 captain_instructions = """
 
@@ -732,25 +737,28 @@ WE. ARE. SWARM. AUTONOMOUS. POWERFUL. 🐝⚡🔥🚀"""
 **REMEMBER**: Prompts are gas. High-quality prompts = AGI power. Perpetual motion = Autonomous development success.
 
 👑 **YOU ARE THE CAPTAIN - LEAD THE SWARM TO AGI!** 👑"""
-                full_message = jet_fuel_header + full_message + captain_instructions + jet_fuel_footer
+                full_message = jet_fuel_header + full_message + \
+                    captain_instructions + jet_fuel_footer
             elif agent_instructions:
-                full_message = jet_fuel_header + full_message + agent_instructions + jet_fuel_footer
+                full_message = jet_fuel_header + full_message + \
+                    agent_instructions + jet_fuel_footer
             else:
                 full_message = jet_fuel_header + full_message + jet_fuel_footer
 
             # Small delay before pasting to ensure input is ready
-            time.sleep(0.5)
+            time.sleep(0.8)  # Increased from 0.5s for reliability
 
             # Paste onboarding message
             pyperclip.copy(full_message)
             self.pyautogui.hotkey("ctrl", "v")
-            time.sleep(0.3)
+            time.sleep(0.5)  # Increased from 0.3s for reliability
 
             # Press Enter to send
             self.pyautogui.press("enter")
-            time.sleep(0.5)
+            time.sleep(0.8)  # Increased from 0.5s for reliability
 
-            logger.info(f"✅ Onboarding message sent to {agent_id} (with Jet Fuel)")
+            logger.info(
+                f"✅ Onboarding message sent to {agent_id} (with Jet Fuel)")
             return True
 
         except Exception as e:
@@ -843,7 +851,8 @@ def hard_onboard_multiple_agents(
 
     for agent_id, onboarding_message in agents:
         logger.info(f"🚨 Processing {agent_id}...")
-        success = service.execute_hard_onboarding(agent_id, onboarding_message, role)
+        success = service.execute_hard_onboarding(
+            agent_id, onboarding_message, role)
         results[agent_id] = success
 
         if success:

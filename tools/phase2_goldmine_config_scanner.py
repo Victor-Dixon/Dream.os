@@ -71,6 +71,7 @@ def clone_repo(repo_name: str, temp_dir: Path) -> Optional[Path]:
     # Remove if exists
     if repo_dir.exists():
         import shutil
+from src.core.config.timeout_constants import TimeoutConstants
         shutil.rmtree(repo_dir)
     
     try:
@@ -79,7 +80,7 @@ def clone_repo(repo_name: str, temp_dir: Path) -> Optional[Path]:
             ["git", "clone", "--depth", "1", repo_url, str(repo_dir)],
             check=True,
             capture_output=True,
-            timeout=120
+            timeout=TimeoutConstants.HTTP_LONG
         )
         logger.info(f"✅ Cloned {repo_name}")
         return repo_dir

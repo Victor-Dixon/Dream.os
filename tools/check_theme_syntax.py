@@ -82,7 +82,7 @@ def check_php_syntax(php_file_path: Path) -> tuple[bool, list[str]]:
             ['php', '-l', str(php_file_path)],
             capture_output=True,
             text=True,
-            timeout=10
+            timeout=TimeoutConstants.HTTP_SHORT
         )
         
         if result.returncode != 0:
@@ -206,6 +206,7 @@ def check_theme(theme_path: Path) -> dict:
 def main():
     """CLI entry point."""
     import argparse
+from src.core.config.timeout_constants import TimeoutConstants
     
     parser = argparse.ArgumentParser(
         description="Check theme files for syntax errors"
@@ -230,6 +231,7 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
+
 
 
 

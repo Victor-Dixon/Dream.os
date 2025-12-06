@@ -9266,5 +9266,3659 @@
         "classes": {},
         "routes": [],
         "complexity": 0
+    },
+    "src\\core\\stress_test_metrics.py": {
+        "language": ".py",
+        "functions": [
+            "create_stress_test_metrics_collector",
+            "__init__",
+            "start_test",
+            "stop_test",
+            "record_latency",
+            "record_message_sent",
+            "record_message_delivered",
+            "record_message_failed",
+            "record_queue_depth",
+            "record_chaos_event",
+            "_calculate_percentiles",
+            "_calculate_throughput",
+            "_calculate_failure_rate",
+            "_calculate_avg_queue_depth",
+            "_calculate_final_metrics",
+            "get_per_agent_metrics",
+            "get_per_message_type_metrics",
+            "generate_dashboard_json",
+            "identify_bottlenecks",
+            "analyze_failure_patterns"
+        ],
+        "classes": {
+            "StressTestMetricsCollector": {
+                "methods": [
+                    "__init__",
+                    "start_test",
+                    "stop_test",
+                    "record_latency",
+                    "record_message_sent",
+                    "record_message_delivered",
+                    "record_message_failed",
+                    "record_queue_depth",
+                    "record_chaos_event",
+                    "_calculate_percentiles",
+                    "_calculate_throughput",
+                    "_calculate_failure_rate",
+                    "_calculate_avg_queue_depth",
+                    "_calculate_final_metrics",
+                    "get_per_agent_metrics",
+                    "get_per_message_type_metrics",
+                    "generate_dashboard_json"
+                ],
+                "docstring": "Comprehensive metrics collector for stress testing.",
+                "base_classes": []
+            },
+            "StressTestAnalyzer": {
+                "methods": [
+                    "identify_bottlenecks",
+                    "analyze_failure_patterns"
+                ],
+                "docstring": "Analyze stress test results to identify bottlenecks and failure patterns.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 39
+    },
+    "src\\core\\stress_test_metrics_integration.py": {
+        "language": ".py",
+        "functions": [
+            "create_stress_test_integration",
+            "__init__",
+            "integrate_with_message_queue",
+            "record_queue_event",
+            "integrate_with_stress_test_runner",
+            "finalize_stress_test"
+        ],
+        "classes": {
+            "StressTestMetricsIntegration": {
+                "methods": [
+                    "__init__",
+                    "integrate_with_message_queue",
+                    "record_queue_event",
+                    "integrate_with_stress_test_runner",
+                    "finalize_stress_test"
+                ],
+                "docstring": "Integration layer for stress test metrics in messaging system.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 11
+    },
+    "src\\core\\stress_test_runner.py": {
+        "language": ".py",
+        "functions": [
+            "record_send",
+            "get_stats",
+            "__init__",
+            "start",
+            "stop",
+            "_agent_worker",
+            "_generate_message_content",
+            "_send_message",
+            "get_stats"
+        ],
+        "classes": {
+            "MessageType": {
+                "methods": [],
+                "docstring": "Types of messages for stress testing.",
+                "base_classes": [
+                    "Enum"
+                ]
+            },
+            "AgentSimulator": {
+                "methods": [
+                    "record_send",
+                    "get_stats"
+                ],
+                "docstring": "Simulates a single agent sending messages.",
+                "base_classes": []
+            },
+            "StressTestRunner": {
+                "methods": [
+                    "__init__",
+                    "start",
+                    "stop",
+                    "_agent_worker",
+                    "_generate_message_content",
+                    "_send_message",
+                    "get_stats"
+                ],
+                "docstring": "Stress test runner that simulates 9 concurrent agents.\n\nFeatures:\n- 9 fake agents (Agent-1 through Agent-8, plus Agent-9)\n- 4 message types (text, broadcast, system, urgent)\n- Concurrent message sending\n- Configurable message rate\n- Statistics tracking",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 18
+    },
+    "src\\core\\stress_test_metrics_analyzer.py": {
+        "language": ".py",
+        "functions": [
+            "__init__",
+            "load_dashboard_from_file",
+            "analyze_latency_patterns",
+            "identify_bottlenecks",
+            "generate_optimization_opportunities",
+            "generate_performance_recommendations",
+            "generate_dashboard_visualization_data",
+            "_assess_tail_latency",
+            "_analyze_latency_distribution",
+            "_detect_latency_anomalies",
+            "_analyze_latency_trends",
+            "_generate_latency_recommendations",
+            "_generate_latency_chart_data",
+            "_generate_throughput_chart_data",
+            "_generate_failure_rate_chart_data",
+            "_generate_queue_depth_chart_data",
+            "_generate_agent_comparison_data",
+            "_generate_message_type_analysis",
+            "_generate_key_insights"
+        ],
+        "classes": {
+            "StressTestMetricsAnalyzer": {
+                "methods": [
+                    "__init__",
+                    "load_dashboard_from_file",
+                    "analyze_latency_patterns",
+                    "identify_bottlenecks",
+                    "generate_optimization_opportunities",
+                    "generate_performance_recommendations",
+                    "generate_dashboard_visualization_data",
+                    "_assess_tail_latency",
+                    "_analyze_latency_distribution",
+                    "_detect_latency_anomalies",
+                    "_analyze_latency_trends",
+                    "_generate_latency_recommendations",
+                    "_generate_latency_chart_data",
+                    "_generate_throughput_chart_data",
+                    "_generate_failure_rate_chart_data",
+                    "_generate_queue_depth_chart_data",
+                    "_generate_agent_comparison_data",
+                    "_generate_message_type_analysis",
+                    "_generate_key_insights"
+                ],
+                "docstring": "Advanced analyzer for stress test metrics and insights generation.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 38
+    },
+    "src\\core\\stress_test_analysis_report.py": {
+        "language": ".py",
+        "functions": [
+            "__init__",
+            "generate_full_report",
+            "_generate_executive_summary",
+            "_calculate_severity_breakdown",
+            "_generate_key_findings",
+            "_generate_action_items",
+            "_generate_markdown_summary"
+        ],
+        "classes": {
+            "StressTestAnalysisReport": {
+                "methods": [
+                    "__init__",
+                    "generate_full_report",
+                    "_generate_executive_summary",
+                    "_calculate_severity_breakdown",
+                    "_generate_key_findings",
+                    "_generate_action_items",
+                    "_generate_markdown_summary"
+                ],
+                "docstring": "Generate comprehensive stress test analysis reports.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 14
+    },
+    "src\\core\\stress_testing\\messaging_core_protocol.py": {
+        "language": ".py",
+        "functions": [
+            "send_message"
+        ],
+        "classes": {
+            "MessagingCoreProtocol": {
+                "methods": [
+                    "send_message"
+                ],
+                "docstring": "Protocol for messaging core (real or mock).",
+                "base_classes": [
+                    "Protocol"
+                ]
+            }
+        },
+        "routes": [],
+        "complexity": 2
+    },
+    "src\\core\\stress_testing\\real_messaging_core_adapter.py": {
+        "language": ".py",
+        "functions": [
+            "__init__",
+            "send_message"
+        ],
+        "classes": {
+            "RealMessagingCoreAdapter": {
+                "methods": [
+                    "__init__",
+                    "send_message"
+                ],
+                "docstring": "Adapter wrapping real messaging_core.send_message for protocol compliance.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 4
+    },
+    "src\\core\\stress_testing\\mock_messaging_core.py": {
+        "language": ".py",
+        "functions": [
+            "__init__",
+            "send_message",
+            "get_sent_messages",
+            "reset"
+        ],
+        "classes": {
+            "MockMessagingCore": {
+                "methods": [
+                    "__init__",
+                    "send_message",
+                    "get_sent_messages",
+                    "reset"
+                ],
+                "docstring": "Mock messaging core for stress testing - zero real agent interaction.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 8
+    },
+    "src\\core\\stress_testing\\__init__.py": {
+        "language": ".py",
+        "functions": [],
+        "classes": {},
+        "routes": [],
+        "complexity": 0
+    },
+    "src\\core\\stress_testing\\message_generator.py": {
+        "language": ".py",
+        "functions": [
+            "__init__",
+            "generate_batch",
+            "_map_message_type"
+        ],
+        "classes": {
+            "MessageGenerator": {
+                "methods": [
+                    "__init__",
+                    "generate_batch",
+                    "_map_message_type"
+                ],
+                "docstring": "Generates test messages for stress testing.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 6
+    },
+    "src\\core\\stress_testing\\stress_runner.py": {
+        "language": ".py",
+        "functions": [
+            "__init__",
+            "run_stress_test"
+        ],
+        "classes": {
+            "StressTestRunner": {
+                "methods": [
+                    "__init__",
+                    "run_stress_test"
+                ],
+                "docstring": "Orchestrates stress tests for MessageQueueProcessor.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 4
+    },
+    "src\\core\\stress_testing\\metrics_collector.py": {
+        "language": ".py",
+        "functions": [
+            "__init__",
+            "record_message",
+            "get_metrics",
+            "reset"
+        ],
+        "classes": {
+            "MetricsCollector": {
+                "methods": [
+                    "__init__",
+                    "record_message",
+                    "get_metrics",
+                    "reset"
+                ],
+                "docstring": "Collects and analyzes stress test metrics.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 8
+    },
+    "agent_workspaces\\Agent-2\\extracted_logic\\portfolio\\test_stock_portfolio_manager.py": {
+        "language": ".py",
+        "functions": [
+            "setUp",
+            "test_fetch_stock_data_multiple_symbols",
+            "test_fetch_stock_data_api_failure"
+        ],
+        "classes": {
+            "TestStockPortfolioManager": {
+                "methods": [
+                    "setUp",
+                    "test_fetch_stock_data_multiple_symbols",
+                    "test_fetch_stock_data_api_failure"
+                ],
+                "docstring": null,
+                "base_classes": [
+                    "unittest.TestCase"
+                ]
+            }
+        },
+        "routes": [],
+        "complexity": 6
+    },
+    "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\core\\run_agent_training_tests.py": {
+        "language": ".py",
+        "functions": [
+            "main"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 1
+    },
+    "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\tests\\test_agent_training.py": {
+        "language": ".py",
+        "functions": [
+            "create_sample_training_data",
+            "test_agent_trainers",
+            "main"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 3
+    },
+    "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\tests\\unit\\test_mmorpg_models.py": {
+        "language": ".py",
+        "functions": [
+            "test_quest_init",
+            "test_skill_init",
+            "test_character_init",
+            "test_achievement_init",
+            "test_progress_event_init",
+            "test_knowledge_node_init"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 6
+    },
+    "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\tests\\test_ai_integration.py": {
+        "language": ".py",
+        "functions": [
+            "setUp",
+            "tearDown",
+            "setup_logging_capture",
+            "create_sample_training_data",
+            "test_conversation_agent_training_pipeline",
+            "test_summarization_agent_training_pipeline",
+            "test_qa_agent_training_pipeline",
+            "test_instruction_agent_training_pipeline",
+            "test_embedding_agent_training_pipeline",
+            "test_training_pipeline_error_handling",
+            "test_training_data_validation",
+            "test_model_creation_and_persistence",
+            "setUp",
+            "tearDown",
+            "create_conversation_data",
+            "test_conversation_feature_extraction",
+            "test_conversation_data_filtering",
+            "__init__",
+            "emit"
+        ],
+        "classes": {
+            "TestAITrainingPipelineIntegration": {
+                "methods": [
+                    "setUp",
+                    "tearDown",
+                    "setup_logging_capture",
+                    "create_sample_training_data",
+                    "test_conversation_agent_training_pipeline",
+                    "test_summarization_agent_training_pipeline",
+                    "test_qa_agent_training_pipeline",
+                    "test_instruction_agent_training_pipeline",
+                    "test_embedding_agent_training_pipeline",
+                    "test_training_pipeline_error_handling",
+                    "test_training_data_validation",
+                    "test_model_creation_and_persistence"
+                ],
+                "docstring": "Integration tests for the complete AI agent training pipeline.",
+                "base_classes": [
+                    "unittest.TestCase"
+                ]
+            },
+            "TestConversationProcessingIntegration": {
+                "methods": [
+                    "setUp",
+                    "tearDown",
+                    "create_conversation_data",
+                    "test_conversation_feature_extraction",
+                    "test_conversation_data_filtering"
+                ],
+                "docstring": "Integration tests for conversation processing and feature extraction.",
+                "base_classes": [
+                    "unittest.TestCase"
+                ]
+            },
+            "LogCaptureHandler": {
+                "methods": [
+                    "__init__",
+                    "emit"
+                ],
+                "docstring": null,
+                "base_classes": [
+                    "logging.Handler"
+                ]
+            }
+        },
+        "routes": [],
+        "complexity": 38
+    },
+    "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\tests\\test_training_data_integration.py": {
+        "language": ".py",
+        "functions": [
+            "test_orchestrator",
+            "test_gui_integration",
+            "main"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 3
+    },
+    "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\tests\\integration\\test_agent_training_system.py": {
+        "language": ".py",
+        "functions": [
+            "setup",
+            "test_system_availability",
+            "test_training_components",
+            "test_agent_training",
+            "test_gui_integration",
+            "test_agent_querying",
+            "test_training_config_validation",
+            "test_personality_extraction",
+            "test_skill_tree_generation",
+            "test_knowledge_base_construction",
+            "test_training_data_extraction",
+            "test_agent_persistence",
+            "test_conversation_filtering",
+            "test_training_metrics",
+            "test_end_to_end_workflow",
+            "test_error_handling",
+            "test_performance_benchmarks",
+            "test_memory_cleanup",
+            "test_concurrent_training",
+            "test_configuration_persistence",
+            "test_agent_metadata",
+            "test_training_validation",
+            "test_resource_management",
+            "test_api_consistency",
+            "test_data_integrity",
+            "test_error_recovery",
+            "test_scalability",
+            "test_compatibility",
+            "test_documentation_accuracy",
+            "test_logging_consistency",
+            "test_cleanup_teardown",
+            "test_final_integration",
+            "_generate_test_summary"
+        ],
+        "classes": {
+            "TestAgentTrainingSystem": {
+                "methods": [
+                    "setup",
+                    "test_system_availability",
+                    "test_training_components",
+                    "test_agent_training",
+                    "test_gui_integration",
+                    "test_agent_querying",
+                    "test_training_config_validation",
+                    "test_personality_extraction",
+                    "test_skill_tree_generation",
+                    "test_knowledge_base_construction",
+                    "test_training_data_extraction",
+                    "test_agent_persistence",
+                    "test_conversation_filtering",
+                    "test_training_metrics",
+                    "test_end_to_end_workflow",
+                    "test_error_handling",
+                    "test_performance_benchmarks",
+                    "test_memory_cleanup",
+                    "test_concurrent_training",
+                    "test_configuration_persistence",
+                    "test_agent_metadata",
+                    "test_training_validation",
+                    "test_resource_management",
+                    "test_api_consistency",
+                    "test_data_integrity",
+                    "test_error_recovery",
+                    "test_scalability",
+                    "test_compatibility",
+                    "test_documentation_accuracy",
+                    "test_logging_consistency",
+                    "test_cleanup_teardown",
+                    "test_final_integration",
+                    "_generate_test_summary"
+                ],
+                "docstring": "Integration test suite for the agent training system.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 66
+    },
+    "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\tests\\integration\\test_training_data_extraction.py": {
+        "language": ".py",
+        "functions": [
+            "temp_output_dir",
+            "mock_memory_manager",
+            "orchestrator",
+            "test_orchestrator_initialization",
+            "test_get_conversations_by_ids",
+            "test_extract_conversation_data_success",
+            "test_extract_conversation_data_no_content",
+            "test_generate_summary_report",
+            "test_analyze_extracted_fields",
+            "generator",
+            "test_generator_initialization",
+            "test_generate_structured_summary",
+            "test_create_enhanced_fallback_structure",
+            "test_language_detection",
+            "test_difficulty_level_detection",
+            "test_conversation_type_detection",
+            "temp_output_dir",
+            "mock_memory_manager",
+            "test_run_structured_training_data_extraction",
+            "test_extraction_with_no_conversations",
+            "test_extraction_with_specific_conversation_ids",
+            "temp_output_dir",
+            "test_extraction_with_invalid_output_directory",
+            "test_extraction_with_corrupted_conversation_data",
+            "progress_callback"
+        ],
+        "classes": {
+            "TestTrainingDataOrchestrator": {
+                "methods": [
+                    "temp_output_dir",
+                    "mock_memory_manager",
+                    "orchestrator",
+                    "test_orchestrator_initialization",
+                    "test_get_conversations_by_ids",
+                    "test_extract_conversation_data_success",
+                    "test_extract_conversation_data_no_content",
+                    "test_generate_summary_report",
+                    "test_analyze_extracted_fields"
+                ],
+                "docstring": "Test the training data orchestrator functionality.",
+                "base_classes": []
+            },
+            "TestTrainingDataGenerator": {
+                "methods": [
+                    "generator",
+                    "test_generator_initialization",
+                    "test_generate_structured_summary",
+                    "test_create_enhanced_fallback_structure",
+                    "test_language_detection",
+                    "test_difficulty_level_detection",
+                    "test_conversation_type_detection"
+                ],
+                "docstring": "Test the training data generator functionality.",
+                "base_classes": []
+            },
+            "TestTrainingDataExtractionWorkflow": {
+                "methods": [
+                    "temp_output_dir",
+                    "mock_memory_manager",
+                    "test_run_structured_training_data_extraction",
+                    "test_extraction_with_no_conversations",
+                    "test_extraction_with_specific_conversation_ids"
+                ],
+                "docstring": "Test the complete training data extraction workflow.",
+                "base_classes": []
+            },
+            "TestTrainingDataExtractionErrorHandling": {
+                "methods": [
+                    "temp_output_dir",
+                    "test_extraction_with_invalid_output_directory",
+                    "test_extraction_with_corrupted_conversation_data"
+                ],
+                "docstring": "Test error handling in training data extraction.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 49
+    },
+    "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\tests\\testing\\test_conversational_ai_gui.py": {
+        "language": ".py",
+        "functions": [
+            "test_conversational_ai_integration"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 1
+    },
+    "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\scripts\\test_main_application.py": {
+        "language": ".py",
+        "functions": [
+            "test_environment",
+            "test_imports",
+            "test_main_function",
+            "test_component_functions",
+            "test_agent4_systems",
+            "test_gui_components",
+            "test_database_operations",
+            "run_quick_tests",
+            "main"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 9
+    },
+    "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\tests\\test_conversations_panel.py": {
+        "language": ".py",
+        "functions": [
+            "test_conversations_panel_integration",
+            "test_gui_components",
+            "main"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 3
+    },
+    "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\tests\\test_conversation_ingestion.py": {
+        "language": ".py",
+        "functions": [
+            "setUp",
+            "tearDown",
+            "setup_logging_capture",
+            "create_sample_conversation_data",
+            "test_conversation_ingestion_workflow",
+            "test_conversation_data_structure_validation",
+            "test_conversation_message_processing",
+            "test_training_data_generation_structure",
+            "test_conversation_metadata_handling",
+            "test_edge_case_handling",
+            "test_conversation_search_preparation",
+            "test_statistics_methods_availability",
+            "setUp",
+            "tearDown",
+            "test_conversation_quality_metrics",
+            "test_conversation_data_integrity",
+            "__init__",
+            "emit"
+        ],
+        "classes": {
+            "TestConversationIngestion": {
+                "methods": [
+                    "setUp",
+                    "tearDown",
+                    "setup_logging_capture",
+                    "create_sample_conversation_data",
+                    "test_conversation_ingestion_workflow",
+                    "test_conversation_data_structure_validation",
+                    "test_conversation_message_processing",
+                    "test_training_data_generation_structure",
+                    "test_conversation_metadata_handling",
+                    "test_edge_case_handling",
+                    "test_conversation_search_preparation",
+                    "test_statistics_methods_availability"
+                ],
+                "docstring": "Tests for conversation ingestion and processing functionality.",
+                "base_classes": [
+                    "unittest.TestCase"
+                ]
+            },
+            "TestConversationDataValidation": {
+                "methods": [
+                    "setUp",
+                    "tearDown",
+                    "test_conversation_quality_metrics",
+                    "test_conversation_data_integrity"
+                ],
+                "docstring": "Tests for conversation data validation and quality checks.",
+                "base_classes": [
+                    "unittest.TestCase"
+                ]
+            },
+            "LogCaptureHandler": {
+                "methods": [
+                    "__init__",
+                    "emit"
+                ],
+                "docstring": null,
+                "base_classes": [
+                    "logging.Handler"
+                ]
+            }
+        },
+        "routes": [],
+        "complexity": 36
+    },
+    "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\tests\\test_chatgpt_scraper.py": {
+        "language": ".py",
+        "functions": [
+            "test_undetected_chromedriver_compatibility",
+            "test_scraper_initialization",
+            "test_demo_conversations",
+            "test_conversation_saving",
+            "test_full_scraping_workflow",
+            "test_template_prompt_integration",
+            "test_error_handling",
+            "test_demo_mode_workflow"
+        ],
+        "classes": {
+            "TestChatGPTScraper": {
+                "methods": [
+                    "test_scraper_initialization",
+                    "test_demo_conversations",
+                    "test_conversation_saving",
+                    "test_full_scraping_workflow",
+                    "test_template_prompt_integration",
+                    "test_error_handling",
+                    "test_demo_mode_workflow"
+                ],
+                "docstring": "Test suite for ChatGPT Scraper functionality.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 15
+    },
+    "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\tests\\integration\\test_conversation_context_integration.py": {
+        "language": ".py",
+        "functions": [
+            "main",
+            "__init__",
+            "load_conversation_history",
+            "_extract_work_themes",
+            "create_contextual_prompt",
+            "send_contextual_template"
+        ],
+        "classes": {
+            "ConversationContextIntegrator": {
+                "methods": [
+                    "__init__",
+                    "load_conversation_history",
+                    "_extract_work_themes",
+                    "create_contextual_prompt",
+                    "send_contextual_template"
+                ],
+                "docstring": "Integrates conversation history with template system for personalized content.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 11
+    },
+    "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\tests\\testing\\test_all_templates_on_conversation.py": {
+        "language": ".py",
+        "functions": [
+            "main",
+            "__init__",
+            "initialize_scraper",
+            "get_conversation_for_testing",
+            "prepare_template_context",
+            "_analyze_work_patterns",
+            "_get_mmorpg_state",
+            "_get_current_skills",
+            "_get_relevant_history",
+            "test_template",
+            "run_all_templates_test"
+        ],
+        "classes": {
+            "TemplateTester": {
+                "methods": [
+                    "__init__",
+                    "initialize_scraper",
+                    "get_conversation_for_testing",
+                    "prepare_template_context",
+                    "_analyze_work_patterns",
+                    "_get_mmorpg_state",
+                    "_get_current_skills",
+                    "_get_relevant_history",
+                    "test_template",
+                    "run_all_templates_test"
+                ],
+                "docstring": "Test multiple templates by sending them to ChatGPT and showing responses.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 21
+    },
+    "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\tests\\testing\\test_gui_conversation_display.py": {
+        "language": ".py",
+        "functions": [
+            "test_conversation_display"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 1
+    },
+    "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\tests\\testing\\test_conversational_ai_gui.py": {
+        "language": ".py",
+        "functions": [
+            "test_conversational_ai_integration"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 1
+    },
+    "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\tests\\testing\\verify_conversation_content.py": {
+        "language": ".py",
+        "functions": [
+            "main"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 1
+    },
+    "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\tests\\testing\\test_list_conversations.py": {
+        "language": ".py",
+        "functions": [
+            "main"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 1
+    },
+    "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\tests\\unit\\test_conversation_stats.py": {
+        "language": ".py",
+        "functions": [
+            "test_stats_updater",
+            "main"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 2
+    },
+    "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\tests\\unit\\test_chat_navigation.py": {
+        "language": ".py",
+        "functions": [
+            "test_chat_navigation"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 1
+    },
+    "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\tests\\unit\\test_direct_chat.py": {
+        "language": ".py",
+        "functions": [
+            "direct_chat_test"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 1
+    },
+    "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\tests\\unit\\test_final_chat.py": {
+        "language": ".py",
+        "functions": [
+            "final_chat_test"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 1
+    },
+    "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\tests\\unit\\test_working_chat.py": {
+        "language": ".py",
+        "functions": [
+            "working_chat_test"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 1
+    },
+    "agent_workspaces\\Agent-1\\extracted_patterns\\testing_patterns\\auth.e2e.test.js": {
+        "language": ".js",
+        "functions": [],
+        "classes": {},
+        "routes": [],
+        "complexity": 0
+    },
+    "agent_workspaces\\Agent-1\\extracted_patterns\\testing_patterns\\jest.setup.js": {
+        "language": ".js",
+        "functions": [],
+        "classes": {},
+        "routes": [],
+        "complexity": 0
+    },
+    "agent_workspaces\\Agent-1\\extracted_patterns\\testing_patterns\\email.e2e.test.js": {
+        "language": ".js",
+        "functions": [],
+        "classes": {},
+        "routes": [],
+        "complexity": 0
+    },
+    "agent_workspaces\\Agent-1\\extracted_patterns\\testing_patterns\\jest.teardown.js": {
+        "language": ".js",
+        "functions": [],
+        "classes": {},
+        "routes": [],
+        "complexity": 0
+    },
+    "temp_repos\\Auto_Blogger\\Test1.py": {
+        "language": ".py",
+        "functions": [
+            "load_user",
+            "register",
+            "login",
+            "dashboard",
+            "logout"
+        ],
+        "classes": {
+            "User": {
+                "methods": [],
+                "docstring": null,
+                "base_classes": [
+                    "UserMixin",
+                    "db.Model"
+                ]
+            }
+        },
+        "routes": [
+            {
+                "function": "register",
+                "method": "GET",
+                "path": "/register"
+            },
+            {
+                "function": "register",
+                "method": "POST",
+                "path": "/register"
+            },
+            {
+                "function": "login",
+                "method": "GET",
+                "path": "/login"
+            },
+            {
+                "function": "login",
+                "method": "POST",
+                "path": "/login"
+            },
+            {
+                "function": "dashboard",
+                "method": "ROUTE",
+                "path": "/dashboard"
+            },
+            {
+                "function": "logout",
+                "method": "ROUTE",
+                "path": "/logout"
+            }
+        ],
+        "complexity": 5
+    },
+    "temp_repos\\Auto_Blogger\\autoblogger\\scrapers\\athlea\\test_athlea.py": {
+        "language": ".py",
+        "functions": [
+            "setup_logging",
+            "test_single_chat",
+            "test_chat_history"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 3
+    },
+    "temp_repos\\Auto_Blogger\\autoblogger\\scripts\\load_and_test_cookies.py": {
+        "language": ".py",
+        "functions": [
+            "main"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 1
+    },
+    "temp_repos\\Auto_Blogger\\autoblogger\\scripts\\test_scrape.py": {
+        "language": ".py",
+        "functions": [
+            "run_quick_test"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 1
+    },
+    "temp_repos\\Auto_Blogger\\tests\\auth.e2e.test.js": {
+        "language": ".js",
+        "functions": [],
+        "classes": {},
+        "routes": [],
+        "complexity": 0
+    },
+    "temp_repos\\Auto_Blogger\\tests\\email.e2e.test.js": {
+        "language": ".js",
+        "functions": [],
+        "classes": {},
+        "routes": [],
+        "complexity": 0
+    },
+    "temp_repos\\Auto_Blogger\\tests\\jest.setup.js": {
+        "language": ".js",
+        "functions": [],
+        "classes": {},
+        "routes": [],
+        "complexity": 0
+    },
+    "temp_repos\\Auto_Blogger\\tests\\jest.teardown.js": {
+        "language": ".js",
+        "functions": [],
+        "classes": {},
+        "routes": [],
+        "complexity": 0
+    },
+    "temp_repos\\Auto_Blogger\\tests\\setup.js": {
+        "language": ".js",
+        "functions": [],
+        "classes": {},
+        "routes": [],
+        "complexity": 0
+    },
+    "temp_repos\\Auto_Blogger\\tests\\test_auto_reply.py": {
+        "language": ".py",
+        "functions": [
+            "mock_credentials",
+            "auto_reply",
+            "test_auto_reply_initialization",
+            "test_generate_reply",
+            "test_generate_reply_error",
+            "test_post_reply",
+            "test_post_reply_linkedin",
+            "test_post_reply_unsupported_platform",
+            "test_post_reply_error",
+            "test_save_reply_history",
+            "test_load_reply_history",
+            "test_load_reply_history_invalid_file",
+            "test_post_twitter_reply",
+            "test_post_linkedin_reply"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 14
+    },
+    "temp_repos\\Auto_Blogger\\tests\\test_wordpress_client_integration.py": {
+        "language": ".py",
+        "functions": [
+            "mock_config",
+            "test_wordpress_client_initialization",
+            "test_post_to_wordpress_success",
+            "test_post_to_wordpress_error_handling",
+            "test_update_settings"
+        ],
+        "classes": {
+            "TestWordPressClientIntegration": {
+                "methods": [
+                    "mock_config",
+                    "test_wordpress_client_initialization",
+                    "test_post_to_wordpress_success",
+                    "test_post_to_wordpress_error_handling",
+                    "test_update_settings"
+                ],
+                "docstring": "Test WordPressClient with integrated error handler.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 10
+    },
+    "temp_repos\\Auto_Blogger\\tests\\test_autoblogger.py": {
+        "language": ".py",
+        "functions": [
+            "app",
+            "main_window",
+            "test_vector_db_functions",
+            "test_search_dialog",
+            "test_generate_blog_function",
+            "test_post_to_blog",
+            "test_settings_dialog",
+            "test_preview_blog_post"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 8
+    },
+    "temp_repos\\Auto_Blogger\\tests\\test_verify_beta.py": {
+        "language": ".py",
+        "functions": [
+            "project_root",
+            "verifier",
+            "test_verifier_initialization",
+            "test_check_required_files",
+            "test_find_python_files",
+            "test_analyze_file_with_docstring",
+            "test_analyze_file_without_docstring",
+            "test_check_docstring",
+            "test_check_type_hints",
+            "test_check_error_handling",
+            "test_calculate_complexity",
+            "test_calculate_scores",
+            "test_analyze_project",
+            "test_analyze_project_empty",
+            "test_analyze_project_with_errors"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 15
+    },
+    "temp_repos\\Auto_Blogger\\tests\\test_blog_post.py": {
+        "language": ".py",
+        "functions": [
+            "test_blog_post_creation",
+            "test_blog_post_with_optional_fields",
+            "test_blog_post_validation",
+            "test_blog_post_methods",
+            "test_wordpress_format",
+            "test_blog_post_equality",
+            "test_blog_post_str_representation"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 7
+    },
+    "temp_repos\\Auto_Blogger\\tests\\test_error_handler.py": {
+        "language": ".py",
+        "functions": [
+            "test_error_handler_initialization",
+            "test_error_handler_environment_detection",
+            "test_handle_error_with_context",
+            "test_handle_error_with_stack_trace",
+            "test_format_error_response",
+            "test_get_error_handler_singleton"
+        ],
+        "classes": {
+            "TestErrorHandler": {
+                "methods": [
+                    "test_error_handler_initialization",
+                    "test_error_handler_environment_detection",
+                    "test_handle_error_with_context",
+                    "test_handle_error_with_stack_trace",
+                    "test_format_error_response",
+                    "test_get_error_handler_singleton"
+                ],
+                "docstring": "Test error handler functionality.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 12
+    },
+    "temp_repos\\Auto_Blogger\\tests\\test_blog_generator_integration.py": {
+        "language": ".py",
+        "functions": [
+            "test_error_handler_accessible"
+        ],
+        "classes": {
+            "TestBlogGeneratorIntegration": {
+                "methods": [
+                    "test_error_handler_accessible"
+                ],
+                "docstring": "Test BlogGenerator with integrated error handler.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 2
+    },
+    "tools\\validate_stress_test_integration.py": {
+        "language": ".py",
+        "functions": [
+            "main",
+            "__init__",
+            "validate_all",
+            "_check_no_real_imports",
+            "_check_no_pyautogui",
+            "_check_no_inbox_writes",
+            "_check_protocol_compliance",
+            "_check_injection_point",
+            "_check_mock_isolation",
+            "_add_violation",
+            "_get_results"
+        ],
+        "classes": {
+            "StressTestValidator": {
+                "methods": [
+                    "__init__",
+                    "validate_all",
+                    "_check_no_real_imports",
+                    "_check_no_pyautogui",
+                    "_check_no_inbox_writes",
+                    "_check_protocol_compliance",
+                    "_check_injection_point",
+                    "_check_mock_isolation",
+                    "_add_violation",
+                    "_get_results"
+                ],
+                "docstring": "Validates stress test integration safety.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 21
+    },
+    "tools\\stress_test_messaging_queue.py": {
+        "language": ".py",
+        "functions": [
+            "create_mock_delivery_callback",
+            "create_real_delivery_callback",
+            "run_stress_test",
+            "run_comparison_mode",
+            "main",
+            "delivery_callback",
+            "delivery_callback",
+            "delivery_callback",
+            "process_queue"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 9
+    },
+    "tools\\run_stress_test_with_metrics.py": {
+        "language": ".py",
+        "functions": [
+            "create_metrics_enabled_callback",
+            "run_stress_test_with_metrics",
+            "main",
+            "delivery_callback"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 4
+    },
+    "tools\\run_test_suite_validation.py": {
+        "language": ".py",
+        "functions": [
+            "run_test_suite",
+            "main"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 2
+    },
+    "tools\\test_ftp_auto_detect.py": {
+        "language": ".py",
+        "functions": [],
+        "classes": {},
+        "routes": [],
+        "complexity": 0
+    },
+    "tools\\unified_test_coverage.py": {
+        "language": ".py",
+        "functions": [
+            "main",
+            "__init__",
+            "_load_unnecessary_files",
+            "load_status",
+            "save_status",
+            "add_file",
+            "update_status",
+            "get_progress",
+            "_categorize_file",
+            "_count_complexity",
+            "_check_has_tests",
+            "prioritize_files",
+            "analyze_gaps",
+            "generate_report"
+        ],
+        "classes": {
+            "TestCoverageStatus": {
+                "methods": [],
+                "docstring": "Test coverage status for a file.",
+                "base_classes": []
+            },
+            "UnifiedTestCoverage": {
+                "methods": [
+                    "__init__",
+                    "_load_unnecessary_files",
+                    "load_status",
+                    "save_status",
+                    "add_file",
+                    "update_status",
+                    "get_progress",
+                    "_categorize_file",
+                    "_count_complexity",
+                    "_check_has_tests",
+                    "prioritize_files",
+                    "analyze_gaps",
+                    "generate_report"
+                ],
+                "docstring": "Unified test coverage tool combining tracking, prioritization, and gap analysis.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 27
+    },
+    "tools\\unified_test_analysis.py": {
+        "language": ".py",
+        "functions": [
+            "main",
+            "__init__",
+            "analyze_command_registration",
+            "analyze_error_handling",
+            "analyze_test_coverage",
+            "generate_report",
+            "run_analysis"
+        ],
+        "classes": {
+            "UnifiedTestAnalyzer": {
+                "methods": [
+                    "__init__",
+                    "analyze_command_registration",
+                    "analyze_error_handling",
+                    "analyze_test_coverage",
+                    "generate_report",
+                    "run_analysis"
+                ],
+                "docstring": "Unified test analysis tool for comprehensive testing.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 13
+    },
+    "tools\\test_twitch_connection_tdd.py": {
+        "language": ".py",
+        "functions": [
+            "test_channel_name_extraction",
+            "test_oauth_token_format",
+            "test_bot_username",
+            "test_configuration_complete",
+            "test_import_availability",
+            "test_bridge_initialization",
+            "main"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 7
+    },
+    "tools\\test_chat_presence_import.py": {
+        "language": ".py",
+        "functions": [],
+        "classes": {},
+        "routes": [],
+        "complexity": 0
+    },
+    "tools\\test_repo_status_tracker.py": {
+        "language": ".py",
+        "functions": [
+            "main",
+            "__init__",
+            "run_all_tests",
+            "test_name_resolution",
+            "test_status_tracking",
+            "test_error_classification",
+            "test_duplicate_prevention",
+            "test_consolidation_direction",
+            "test_persistence",
+            "generate_report",
+            "cleanup"
+        ],
+        "classes": {
+            "TestRepoStatusTracker": {
+                "methods": [
+                    "__init__",
+                    "run_all_tests",
+                    "test_name_resolution",
+                    "test_status_tracking",
+                    "test_error_classification",
+                    "test_duplicate_prevention",
+                    "test_consolidation_direction",
+                    "test_persistence",
+                    "generate_report",
+                    "cleanup"
+                ],
+                "docstring": "Test suite for RepoStatusTracker.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 21
+    },
+    "tools\\deprecated\\consolidated_2025-11-29\\automated_test_coverage_tracker.py": {
+        "language": ".py",
+        "functions": [
+            "main",
+            "__init__",
+            "get_test_files",
+            "count_tests_in_file",
+            "analyze_test_coverage",
+            "check_specific_files",
+            "generate_coverage_report",
+            "print_summary"
+        ],
+        "classes": {
+            "TestCoverageTracker": {
+                "methods": [
+                    "__init__",
+                    "get_test_files",
+                    "count_tests_in_file",
+                    "analyze_test_coverage",
+                    "check_specific_files",
+                    "generate_coverage_report",
+                    "print_summary"
+                ],
+                "docstring": "Automated test coverage tracking and reporting.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 15
+    },
+    "tools\\deprecated\\consolidated_2025-11-30\\analyze_stress_test_metrics.py": {
+        "language": ".py",
+        "functions": [
+            "find_latest_dashboard",
+            "main"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 2
+    },
+    "tools\\deprecated\\consolidated_2025-11-30\\analyze_test_coverage_gaps.py": {
+        "language": ".py",
+        "functions": [
+            "main",
+            "__init__",
+            "find_all_source_files",
+            "find_all_test_files",
+            "get_test_for_source",
+            "analyze_file",
+            "calculate_priority",
+            "analyze_coverage",
+            "generate_priority_matrix",
+            "generate_dashboard",
+            "_categorize_coverage"
+        ],
+        "classes": {
+            "TestCoverageAnalyzer": {
+                "methods": [
+                    "__init__",
+                    "find_all_source_files",
+                    "find_all_test_files",
+                    "get_test_for_source",
+                    "analyze_file",
+                    "calculate_priority",
+                    "analyze_coverage",
+                    "generate_priority_matrix",
+                    "generate_dashboard",
+                    "_categorize_coverage"
+                ],
+                "docstring": "Analyzes test coverage gaps.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 21
+    },
+    "tools\\deprecated\\consolidated_2025-12-02\\test_thea_code_review.py": {
+        "language": ".py",
+        "functions": [
+            "test_prompt_generation",
+            "test_response_parsing",
+            "test_imports",
+            "main"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 4
+    },
+    "tools\\deprecated\\consolidated_2025-12-02\\test_bump_button.py": {
+        "language": ".py",
+        "functions": [
+            "test_bump_button",
+            "test_bump_view",
+            "test_button_count"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 3
+    },
+    "tools\\deprecated\\consolidated_2025-12-02\\check_debug_test.py": {
+        "language": ".py",
+        "functions": [],
+        "classes": {},
+        "routes": [],
+        "complexity": 0
+    },
+    "tools\\deprecated\\consolidated_2025-12-02\\check_verbose_test.py": {
+        "language": ".py",
+        "functions": [],
+        "classes": {},
+        "routes": [],
+        "complexity": 0
+    },
+    "tools\\deprecated\\consolidated_2025-12-02\\test_discord_agent4_routing.py": {
+        "language": ".py",
+        "functions": [
+            "test_discord_routing"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 1
+    },
+    "tools\\deprecated\\consolidated_2025-12-02\\test_agent3_start_flag.py": {
+        "language": ".py",
+        "functions": [
+            "test_agent3_with_start_flag"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 1
+    },
+    "tools\\deprecated\\consolidated_2025-12-02\\test_architecture_core_integration.py": {
+        "language": ".py",
+        "functions": [
+            "test_phase3_integration"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 1
+    },
+    "tools\\deprecated\\consolidated_2025-12-02\\test_all_discord_buttons.py": {
+        "language": ".py",
+        "functions": [
+            "check_file_for_buttons",
+            "main"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 2
+    },
+    "tools\\deprecated\\consolidated_2025-12-02\\test_git_clone_auth.py": {
+        "language": ".py",
+        "functions": [],
+        "classes": {},
+        "routes": [],
+        "complexity": 0
+    },
+    "tools\\deprecated\\consolidated_2025-12-02\\test_enhanced_activity_detector.py": {
+        "language": ".py",
+        "functions": [],
+        "classes": {},
+        "routes": [],
+        "complexity": 0
+    },
+    "tools\\deprecated\\consolidated_2025-12-02\\test_discord_prefix_mapping.py": {
+        "language": ".py",
+        "functions": [
+            "test_prefix_mapping"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 1
+    },
+    "tools\\deprecated\\consolidated_2025-12-02\\test_mermaid_renderer.py": {
+        "language": ".py",
+        "functions": [
+            "test_mermaid_extraction",
+            "test_mermaid_rendering",
+            "test_mermaid_file_save",
+            "main"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 4
+    },
+    "tools\\deprecated\\consolidated_2025-12-02\\run_stress_test_benchmark.py": {
+        "language": ".py",
+        "functions": [
+            "run_benchmark_suite"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 1
+    },
+    "tools\\deprecated\\consolidated_2025-12-02\\test_agent3_onboarding_coords.py": {
+        "language": ".py",
+        "functions": [
+            "test_agent3_onboarding"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 1
+    },
+    "tools\\deprecated\\consolidated_2025-12-02\\identify_missing_service_tests.py": {
+        "language": ".py",
+        "functions": [
+            "get_service_files",
+            "get_test_files",
+            "map_service_to_test",
+            "main"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 4
+    },
+    "tools\\deprecated\\consolidated_2025-12-02\\test_queue_file_locking.py": {
+        "language": ".py",
+        "functions": [
+            "test_save_entries_with_retry"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 1
+    },
+    "tools\\deprecated\\consolidated_2025-12-03\\analyze_test_coverage_gaps_clean.py": {
+        "language": ".py",
+        "functions": [
+            "main",
+            "__init__",
+            "find_all_source_files",
+            "find_all_test_files",
+            "get_test_for_source",
+            "analyze_file",
+            "calculate_priority",
+            "analyze_coverage",
+            "generate_priority_matrix",
+            "generate_dashboard"
+        ],
+        "classes": {
+            "CleanTestCoverageAnalyzer": {
+                "methods": [
+                    "__init__",
+                    "find_all_source_files",
+                    "find_all_test_files",
+                    "get_test_for_source",
+                    "analyze_file",
+                    "calculate_priority",
+                    "analyze_coverage",
+                    "generate_priority_matrix",
+                    "generate_dashboard"
+                ],
+                "docstring": "Analyzes test coverage gaps excluding unnecessary files.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 19
+    },
+    "tools\\deprecated\\consolidated_2025-12-03\\test_usage_analyzer.py": {
+        "language": ".py",
+        "functions": [
+            "find_python_files",
+            "parse_python_file",
+            "find_test_files_for_module",
+            "extract_tested_methods",
+            "search_codebase_usage",
+            "analyze_module",
+            "main"
+        ],
+        "classes": {},
+        "routes": [],
+        "complexity": 7
+    },
+    "tools\\deprecated\\consolidated_2025-12-03\\test_coverage_tracker.py": {
+        "language": ".py",
+        "functions": [
+            "main",
+            "__init__",
+            "load_status",
+            "save_status",
+            "add_file",
+            "update_status",
+            "get_progress",
+            "generate_report"
+        ],
+        "classes": {
+            "TestCoverageStatus": {
+                "methods": [],
+                "docstring": "Test coverage status for a file.",
+                "base_classes": []
+            },
+            "TestCoverageTracker": {
+                "methods": [
+                    "__init__",
+                    "load_status",
+                    "save_status",
+                    "add_file",
+                    "update_status",
+                    "get_progress",
+                    "generate_report"
+                ],
+                "docstring": "Tracks test coverage progress for assigned files.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 15
+    },
+    "tools\\deprecated\\consolidated_2025-12-03\\test_coverage_prioritizer.py": {
+        "language": ".py",
+        "functions": [
+            "main",
+            "__init__",
+            "_categorize_file",
+            "_count_complexity",
+            "_check_has_tests",
+            "_check_usage",
+            "prioritize_files",
+            "generate_report"
+        ],
+        "classes": {
+            "TestCoveragePrioritizer": {
+                "methods": [
+                    "__init__",
+                    "_categorize_file",
+                    "_count_complexity",
+                    "_check_has_tests",
+                    "_check_usage",
+                    "prioritize_files",
+                    "generate_report"
+                ],
+                "docstring": "Prioritizes files for test coverage based on multiple factors.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 15
+    },
+    "tools\\deprecated\\consolidated_2025-12-03\\test_all_discord_commands.py": {
+        "language": ".py",
+        "functions": [
+            "main",
+            "__init__",
+            "get_last_message",
+            "__init__",
+            "test_command_registration",
+            "test_messaging_commands",
+            "test_swarm_showcase_commands",
+            "test_github_book_commands",
+            "test_command_error_handling",
+            "_check_error_handling",
+            "run_all_tests",
+            "_generate_summary",
+            "print_report"
+        ],
+        "classes": {
+            "MockContext": {
+                "methods": [
+                    "__init__",
+                    "get_last_message"
+                ],
+                "docstring": "Mock Discord context for command testing.",
+                "base_classes": []
+            },
+            "DiscordCommandsTester": {
+                "methods": [
+                    "__init__",
+                    "test_command_registration",
+                    "test_messaging_commands",
+                    "test_swarm_showcase_commands",
+                    "test_github_book_commands",
+                    "test_command_error_handling",
+                    "_check_error_handling",
+                    "run_all_tests",
+                    "_generate_summary",
+                    "print_report"
+                ],
+                "docstring": "Comprehensive tester for all Discord commands.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 25
+    },
+    "dream\\repos\\master\\dadudekc\\test_q_learning.py": {
+        "language": ".py",
+        "functions": [
+            "__init__",
+            "reset",
+            "step",
+            "test_q_network_initialization",
+            "test_q_network_forward_pass",
+            "test_q_network_different_batch_sizes",
+            "test_train_batch_with_sufficient_memory",
+            "test_train_batch_with_insufficient_memory",
+            "test_choose_action_exploration",
+            "test_choose_action_exploitation",
+            "test_save_model"
+        ],
+        "classes": {
+            "MockEnv": {
+                "methods": [
+                    "__init__",
+                    "reset",
+                    "step"
+                ],
+                "docstring": null,
+                "base_classes": []
+            },
+            "TestQNetwork": {
+                "methods": [
+                    "test_q_network_initialization",
+                    "test_q_network_forward_pass",
+                    "test_q_network_different_batch_sizes"
+                ],
+                "docstring": "Test QNetwork class functionality",
+                "base_classes": []
+            },
+            "TestTrainingFunctions": {
+                "methods": [
+                    "test_train_batch_with_sufficient_memory",
+                    "test_train_batch_with_insufficient_memory"
+                ],
+                "docstring": "Test training-related functions",
+                "base_classes": []
+            },
+            "TestActionSelection": {
+                "methods": [
+                    "test_choose_action_exploration",
+                    "test_choose_action_exploitation"
+                ],
+                "docstring": "Test action selection logic",
+                "base_classes": []
+            },
+            "TestModelPersistence": {
+                "methods": [
+                    "test_save_model"
+                ],
+                "docstring": "Test model saving and loading",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 22
+    },
+    "tests\\unit\\systems\\test_output_flywheel_pipelines.py": {
+        "language": ".py",
+        "functions": [
+            "temp_session_dir",
+            "temp_artifacts_dir",
+            "sample_build_session",
+            "sample_trade_session",
+            "test_pipeline_module_imports",
+            "test_pipeline_runs_without_error",
+            "test_pipeline_module_imports",
+            "test_pipeline_runs_without_error",
+            "test_repo_scanner_imports",
+            "test_story_extractor_imports",
+            "test_readme_generator_imports",
+            "test_build_log_generator_imports",
+            "test_social_generator_imports",
+            "test_trade_processor_imports",
+            "test_repo_scanner_basic",
+            "test_story_extractor_basic"
+        ],
+        "classes": {
+            "TestBuildArtifactPipeline": {
+                "methods": [
+                    "test_pipeline_module_imports",
+                    "test_pipeline_runs_without_error"
+                ],
+                "docstring": "Smoke tests for build artifact pipeline.",
+                "base_classes": []
+            },
+            "TestTradeArtifactPipeline": {
+                "methods": [
+                    "test_pipeline_module_imports",
+                    "test_pipeline_runs_without_error"
+                ],
+                "docstring": "Smoke tests for trade artifact pipeline.",
+                "base_classes": []
+            },
+            "TestProcessors": {
+                "methods": [
+                    "test_repo_scanner_imports",
+                    "test_story_extractor_imports",
+                    "test_readme_generator_imports",
+                    "test_build_log_generator_imports",
+                    "test_social_generator_imports",
+                    "test_trade_processor_imports",
+                    "test_repo_scanner_basic",
+                    "test_story_extractor_basic"
+                ],
+                "docstring": "Smoke tests for processors.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 28
+    },
+    "tests\\test_engine_registry_plugin_discovery.py": {
+        "language": ".py",
+        "functions": [
+            "test_registry_initializes",
+            "test_engines_discovered",
+            "test_all_required_engines_present",
+            "test_engine_retrieval",
+            "test_unknown_engine_type_raises_error",
+            "test_engine_lazy_instantiation",
+            "test_engine_singleton_behavior",
+            "test_get_engine_types_returns_list",
+            "test_all_engines_implement_required_methods",
+            "test_engine_initialize_signature",
+            "test_engine_execute_signature",
+            "test_engine_cleanup_signature",
+            "test_engine_get_status_signature",
+            "test_initialize_all",
+            "test_cleanup_all",
+            "test_get_all_status",
+            "test_import_error_handled_gracefully",
+            "test_pkgutil_error_handled",
+            "test_missing_engine_methods_handled",
+            "test_existing_api_unchanged",
+            "test_engine_types_consistent",
+            "test_engine_behavior_unchanged",
+            "test_discovery_uses_pkgutil",
+            "test_discovery_filters_by_naming_convention",
+            "test_discovery_finds_engine_classes",
+            "test_discovery_logs_activity"
+        ],
+        "classes": {
+            "TestEngineRegistryDiscovery": {
+                "methods": [
+                    "test_registry_initializes",
+                    "test_engines_discovered",
+                    "test_all_required_engines_present",
+                    "test_engine_retrieval",
+                    "test_unknown_engine_type_raises_error",
+                    "test_engine_lazy_instantiation",
+                    "test_engine_singleton_behavior",
+                    "test_get_engine_types_returns_list"
+                ],
+                "docstring": "Test engine discovery mechanism.",
+                "base_classes": []
+            },
+            "TestEngineProtocolCompliance": {
+                "methods": [
+                    "test_all_engines_implement_required_methods",
+                    "test_engine_initialize_signature",
+                    "test_engine_execute_signature",
+                    "test_engine_cleanup_signature",
+                    "test_engine_get_status_signature"
+                ],
+                "docstring": "Test that discovered engines comply with Engine protocol.",
+                "base_classes": []
+            },
+            "TestEngineRegistryOperations": {
+                "methods": [
+                    "test_initialize_all",
+                    "test_cleanup_all",
+                    "test_get_all_status"
+                ],
+                "docstring": "Test registry operations (initialize_all, cleanup_all, get_all_status).",
+                "base_classes": []
+            },
+            "TestDiscoveryErrorHandling": {
+                "methods": [
+                    "test_import_error_handled_gracefully",
+                    "test_pkgutil_error_handled",
+                    "test_missing_engine_methods_handled"
+                ],
+                "docstring": "Test error handling in discovery mechanism.",
+                "base_classes": []
+            },
+            "TestBackwardCompatibility": {
+                "methods": [
+                    "test_existing_api_unchanged",
+                    "test_engine_types_consistent",
+                    "test_engine_behavior_unchanged"
+                ],
+                "docstring": "Test backward compatibility with existing code.",
+                "base_classes": []
+            },
+            "TestDiscoveryMechanism": {
+                "methods": [
+                    "test_discovery_uses_pkgutil",
+                    "test_discovery_filters_by_naming_convention",
+                    "test_discovery_finds_engine_classes",
+                    "test_discovery_logs_activity"
+                ],
+                "docstring": "Test the discovery mechanism itself.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 52
+    },
+    "tests\\unit\\systems\\test_output_flywheel_integration.py": {
+        "language": ".py",
+        "functions": [
+            "temp_workspace",
+            "session_hook",
+            "test_assemble_work_session_basic",
+            "test_assemble_work_session_with_metadata",
+            "test_save_session",
+            "test_trigger_pipeline_success",
+            "test_trigger_pipeline_failure",
+            "test_end_of_session_auto_trigger",
+            "test_end_of_session_no_trigger",
+            "test_end_of_session_hook",
+            "test_infer_session_type_build",
+            "test_infer_session_type_trade",
+            "test_infer_session_type_life_aria",
+            "test_should_trigger_with_completed_tasks",
+            "test_should_trigger_with_achievements",
+            "test_update_status_with_artifacts",
+            "test_auto_trigger_on_status_update",
+            "mock_run_side_effect"
+        ],
+        "classes": {
+            "TestAgentSessionHook": {
+                "methods": [
+                    "test_assemble_work_session_basic",
+                    "test_assemble_work_session_with_metadata",
+                    "test_save_session",
+                    "test_trigger_pipeline_success",
+                    "test_trigger_pipeline_failure",
+                    "test_end_of_session_auto_trigger",
+                    "test_end_of_session_no_trigger"
+                ],
+                "docstring": "Test AgentSessionHook class.",
+                "base_classes": []
+            },
+            "TestEndOfSessionHook": {
+                "methods": [
+                    "test_end_of_session_hook"
+                ],
+                "docstring": "Test end_of_session_hook convenience function.",
+                "base_classes": []
+            },
+            "TestStatusJsonIntegration": {
+                "methods": [
+                    "test_infer_session_type_build",
+                    "test_infer_session_type_trade",
+                    "test_infer_session_type_life_aria",
+                    "test_should_trigger_with_completed_tasks",
+                    "test_should_trigger_with_achievements",
+                    "test_update_status_with_artifacts"
+                ],
+                "docstring": "Test StatusJsonIntegration class.",
+                "base_classes": []
+            },
+            "TestAutoTriggerOnStatusUpdate": {
+                "methods": [
+                    "test_auto_trigger_on_status_update"
+                ],
+                "docstring": "Test auto_trigger_on_status_update convenience function.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 33
+    },
+    "tests\\unit\\services\\__init__.py": {
+        "language": ".py",
+        "functions": [],
+        "classes": {},
+        "routes": [],
+        "complexity": 0
+    },
+    "tests\\unit\\services\\test_extractor_message_parser.py": {
+        "language": ".py",
+        "functions": [
+            "test_init_defaults",
+            "test_init_custom"
+        ],
+        "classes": {
+            "TestMessageParser": {
+                "methods": [
+                    "test_init_defaults",
+                    "test_init_custom"
+                ],
+                "docstring": "Test MessageParser class.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 4
+    },
+    "tests\\unit\\services\\test_navigator_messaging.py": {
+        "language": ".py",
+        "functions": [],
+        "classes": {
+            "TestNavigatorMessaging": {
+                "methods": [],
+                "docstring": "Test NavigatorMessaging class.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 0
+    },
+    "tests\\unit\\services\\test_extractor_storage.py": {
+        "language": ".py",
+        "functions": [
+            "test_init_defaults",
+            "test_init_custom",
+            "test_save_conversation_success",
+            "test_save_conversation_with_filename",
+            "test_save_conversation_generate_filename",
+            "test_save_conversation_exception",
+            "test_load_conversation_success",
+            "test_load_conversation_not_found",
+            "test_load_conversation_invalid_json",
+            "test_list_conversations_success",
+            "test_list_conversations_empty",
+            "test_list_conversations_sorted",
+            "test_cleanup_old_conversations",
+            "test_cleanup_old_conversations_none",
+            "test_get_storage_info"
+        ],
+        "classes": {
+            "TestConversationStorage": {
+                "methods": [
+                    "test_init_defaults",
+                    "test_init_custom",
+                    "test_save_conversation_success",
+                    "test_save_conversation_with_filename",
+                    "test_save_conversation_generate_filename",
+                    "test_save_conversation_exception",
+                    "test_load_conversation_success",
+                    "test_load_conversation_not_found",
+                    "test_load_conversation_invalid_json",
+                    "test_list_conversations_success",
+                    "test_list_conversations_empty",
+                    "test_list_conversations_sorted",
+                    "test_cleanup_old_conversations",
+                    "test_cleanup_old_conversations_none",
+                    "test_get_storage_info"
+                ],
+                "docstring": "Test ConversationStorage class.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 30
+    },
+    "tests\\unit\\services\\test_contract_manager.py": {
+        "language": ".py",
+        "functions": [
+            "test_init",
+            "test_get_system_status_success",
+            "test_get_system_status_exception",
+            "test_get_agent_status_success",
+            "test_get_agent_status_empty",
+            "test_get_agent_status_exception",
+            "test_get_next_task_success",
+            "test_get_next_task_no_tasks",
+            "test_get_next_task_only_active",
+            "test_get_next_task_exception",
+            "test_add_task_to_contract_success",
+            "test_add_task_to_contract_not_found",
+            "test_add_task_to_contract_no_tasks_key",
+            "test_add_task_to_contract_exception"
+        ],
+        "classes": {
+            "TestContractManager": {
+                "methods": [
+                    "test_init",
+                    "test_get_system_status_success",
+                    "test_get_system_status_exception",
+                    "test_get_agent_status_success",
+                    "test_get_agent_status_empty",
+                    "test_get_agent_status_exception",
+                    "test_get_next_task_success",
+                    "test_get_next_task_no_tasks",
+                    "test_get_next_task_only_active",
+                    "test_get_next_task_exception",
+                    "test_add_task_to_contract_success",
+                    "test_add_task_to_contract_not_found",
+                    "test_add_task_to_contract_no_tasks_key",
+                    "test_add_task_to_contract_exception"
+                ],
+                "docstring": "Test ContractManager class.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 28
+    },
+    "tests\\unit\\services\\test_session_persistence.py": {
+        "language": ".py",
+        "functions": [
+            "test_clear_session_files_success",
+            "test_clear_session_files_not_persistent",
+            "test_clear_session_files_not_exists",
+            "test_clear_session_files_exception"
+        ],
+        "classes": {
+            "TestSessionPersistence": {
+                "methods": [
+                    "test_clear_session_files_success",
+                    "test_clear_session_files_not_persistent",
+                    "test_clear_session_files_not_exists",
+                    "test_clear_session_files_exception"
+                ],
+                "docstring": "Test SessionPersistence class.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 8
+    },
+    "tests\\unit\\services\\test_navigator.py": {
+        "language": ".py",
+        "functions": [
+            "test_init_defaults",
+            "test_init_custom_config",
+            "test_init_no_playwright",
+            "test_get_active_page_success",
+            "test_get_active_page_none"
+        ],
+        "classes": {
+            "TestChatGPTNavigator": {
+                "methods": [
+                    "test_init_defaults",
+                    "test_init_custom_config",
+                    "test_init_no_playwright",
+                    "test_get_active_page_success",
+                    "test_get_active_page_none"
+                ],
+                "docstring": "Test ChatGPTNavigator class.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 10
+    },
+    "tests\\unit\\services\\test_session.py": {
+        "language": ".py",
+        "functions": [
+            "test_init_defaults",
+            "test_init_custom_config",
+            "test_init_no_playwright",
+            "test_validate_session_disabled",
+            "test_validate_session_sync_method"
+        ],
+        "classes": {
+            "TestBrowserSessionManager": {
+                "methods": [
+                    "test_init_defaults",
+                    "test_init_custom_config",
+                    "test_init_no_playwright",
+                    "test_validate_session_disabled",
+                    "test_validate_session_sync_method"
+                ],
+                "docstring": "Test BrowserSessionManager class.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 10
+    },
+    "tests\\unit\\services\\test_thea_service.py": {
+        "language": ".py",
+        "functions": [
+            "test_init_defaults",
+            "test_init_custom",
+            "test_init_no_selenium",
+            "test_start_browser_undetected_success",
+            "test_start_browser_standard_fallback",
+            "test_start_browser_undetected_failure",
+            "test_start_browser_exception",
+            "test_are_cookies_fresh_with_manager",
+            "test_are_cookies_fresh_no_manager",
+            "test_are_cookies_fresh_file_exists",
+            "test_validate_cookies_success",
+            "test_validate_cookies_not_logged_in",
+            "test_validate_cookies_no_driver",
+            "test_validate_cookies_exception",
+            "test_refresh_cookies_already_logged_in",
+            "test_refresh_cookies_exception"
+        ],
+        "classes": {
+            "TestTheaService": {
+                "methods": [
+                    "test_init_defaults",
+                    "test_init_custom",
+                    "test_init_no_selenium",
+                    "test_start_browser_undetected_success",
+                    "test_start_browser_standard_fallback",
+                    "test_start_browser_undetected_failure",
+                    "test_start_browser_exception",
+                    "test_are_cookies_fresh_with_manager",
+                    "test_are_cookies_fresh_no_manager",
+                    "test_are_cookies_fresh_file_exists",
+                    "test_validate_cookies_success",
+                    "test_validate_cookies_not_logged_in",
+                    "test_validate_cookies_no_driver",
+                    "test_validate_cookies_exception",
+                    "test_refresh_cookies_already_logged_in",
+                    "test_refresh_cookies_exception"
+                ],
+                "docstring": "Test TheaService class.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 32
+    },
+    "tests\\unit\\services\\test_unified_messaging_service.py": {
+        "language": ".py",
+        "functions": [
+            "test_init",
+            "test_send_message_success",
+            "test_send_message_with_priority",
+            "test_send_message_no_pyautogui",
+            "test_send_message_failure",
+            "test_send_message_exception",
+            "test_broadcast_message_success",
+            "test_broadcast_message_with_priority",
+            "test_broadcast_message_partial_failure",
+            "test_broadcast_message_exception",
+            "test_messaging_service_alias",
+            "test_send_message_empty_message",
+            "test_send_message_none_agent",
+            "test_broadcast_message_empty",
+            "test_broadcast_message_all_failures"
+        ],
+        "classes": {
+            "TestUnifiedMessagingService": {
+                "methods": [
+                    "test_init",
+                    "test_send_message_success",
+                    "test_send_message_with_priority",
+                    "test_send_message_no_pyautogui",
+                    "test_send_message_failure",
+                    "test_send_message_exception",
+                    "test_broadcast_message_success",
+                    "test_broadcast_message_with_priority",
+                    "test_broadcast_message_partial_failure",
+                    "test_broadcast_message_exception",
+                    "test_messaging_service_alias",
+                    "test_send_message_empty_message",
+                    "test_send_message_none_agent",
+                    "test_broadcast_message_empty",
+                    "test_broadcast_message_all_failures"
+                ],
+                "docstring": "Test UnifiedMessagingService class.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 30
+    },
+    "tests\\unit\\services\\test_messaging_infrastructure.py": {
+        "language": ".py",
+        "functions": [
+            "test_init",
+            "test_send_message_success",
+            "test_send_message_with_priority",
+            "test_send_message_blocked",
+            "test_send_message_exception",
+            "test_broadcast_message_success",
+            "test_broadcast_message_no_queue",
+            "test_get_queue_success",
+            "test_get_queue_exception",
+            "test_send_to_agent_success",
+            "test_send_to_agent_blocked",
+            "test_broadcast_to_all_success",
+            "test_coordinate_survey",
+            "test_coordinate_consolidation",
+            "test_detect_sender_from_env",
+            "test_detect_sender_default",
+            "test_format_multi_agent_request_message",
+            "test_format_normal_message_broadcast",
+            "test_format_normal_message_normal",
+            "test_create_messaging_parser",
+            "test_send_message_pyautogui",
+            "test_send_message_to_onboarding_coords"
+        ],
+        "classes": {
+            "TestConsolidatedMessagingService": {
+                "methods": [
+                    "test_init",
+                    "test_send_message_success",
+                    "test_send_message_with_priority",
+                    "test_send_message_blocked",
+                    "test_send_message_exception",
+                    "test_broadcast_message_success",
+                    "test_broadcast_message_no_queue"
+                ],
+                "docstring": "Test ConsolidatedMessagingService class.",
+                "base_classes": []
+            },
+            "TestMessageCoordinator": {
+                "methods": [
+                    "test_get_queue_success",
+                    "test_get_queue_exception",
+                    "test_send_to_agent_success",
+                    "test_send_to_agent_blocked",
+                    "test_broadcast_to_all_success",
+                    "test_coordinate_survey",
+                    "test_coordinate_consolidation",
+                    "test_detect_sender_from_env",
+                    "test_detect_sender_default"
+                ],
+                "docstring": "Test MessageCoordinator class.",
+                "base_classes": []
+            },
+            "TestUtilityFunctions": {
+                "methods": [
+                    "test_format_multi_agent_request_message",
+                    "test_format_normal_message_broadcast",
+                    "test_format_normal_message_normal",
+                    "test_create_messaging_parser",
+                    "test_send_message_pyautogui",
+                    "test_send_message_to_onboarding_coords"
+                ],
+                "docstring": "Test utility functions.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 44
+    },
+    "tests\\unit\\core\\engines\\test_registry_discovery.py": {
+        "language": ".py",
+        "functions": [
+            "test_registry_initialization",
+            "test_discovery_finds_engines",
+            "test_get_engine_types",
+            "test_get_engine_creates_instance",
+            "test_get_engine_lazy_instantiation",
+            "test_get_engine_invalid_type",
+            "test_all_engines_protocol_compliant",
+            "mock_context",
+            "test_initialize_all",
+            "test_cleanup_all",
+            "test_get_all_status",
+            "test_discovery_handles_import_errors",
+            "test_discovery_skips_non_engine_modules",
+            "test_discovery_handles_missing_package",
+            "test_engine_exists_and_works",
+            "test_engine_initialization",
+            "test_registry_singleton_behavior",
+            "test_no_circular_dependencies",
+            "test_backward_compatibility"
+        ],
+        "classes": {
+            "TestEngineRegistryDiscovery": {
+                "methods": [
+                    "test_registry_initialization",
+                    "test_discovery_finds_engines",
+                    "test_get_engine_types",
+                    "test_get_engine_creates_instance",
+                    "test_get_engine_lazy_instantiation",
+                    "test_get_engine_invalid_type",
+                    "test_all_engines_protocol_compliant"
+                ],
+                "docstring": "Test engine discovery functionality.",
+                "base_classes": []
+            },
+            "TestEngineRegistryOperations": {
+                "methods": [
+                    "mock_context",
+                    "test_initialize_all",
+                    "test_cleanup_all",
+                    "test_get_all_status"
+                ],
+                "docstring": "Test registry operations (initialize, cleanup, status).",
+                "base_classes": []
+            },
+            "TestEngineDiscoveryEdgeCases": {
+                "methods": [
+                    "test_discovery_handles_import_errors",
+                    "test_discovery_skips_non_engine_modules",
+                    "test_discovery_handles_missing_package"
+                ],
+                "docstring": "Test edge cases and error handling in discovery.",
+                "base_classes": []
+            },
+            "TestAll14Engines": {
+                "methods": [
+                    "test_engine_exists_and_works",
+                    "test_engine_initialization"
+                ],
+                "docstring": "Test all 14 specific engines individually.",
+                "base_classes": []
+            },
+            "TestNoRegressions": {
+                "methods": [
+                    "test_registry_singleton_behavior",
+                    "test_no_circular_dependencies",
+                    "test_backward_compatibility"
+                ],
+                "docstring": "Test that discovery pattern doesn't break existing functionality.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 38
+    },
+    "tests\\unit\\core\\test_config_ssot.py": {
+        "language": ".py",
+        "functions": [
+            "test_get_config_with_default",
+            "test_get_config_from_env",
+            "test_get_config_type_conversion",
+            "test_unified_config_manager_singleton",
+            "test_unified_config_manager_get",
+            "test_unified_config_manager_reload",
+            "test_validate_config_valid",
+            "test_reload_config_function",
+            "test_timeout_config_creation",
+            "test_agent_config_creation",
+            "test_browser_config_creation",
+            "test_threshold_config_creation",
+            "test_file_pattern_config_creation",
+            "test_test_config_creation",
+            "test_report_config_creation",
+            "test_get_unified_config",
+            "test_get_timeout_config",
+            "test_get_agent_config",
+            "test_get_browser_config",
+            "test_get_threshold_config",
+            "test_get_file_pattern_config",
+            "test_get_test_config",
+            "test_get_report_config",
+            "test_config_browser_shim_imports",
+            "test_config_browser_shim_functionality",
+            "test_config_thresholds_shim_imports",
+            "test_config_thresholds_shim_functionality",
+            "test_unified_config_shim_deprecation_warning",
+            "test_unified_config_shim_re_exports",
+            "test_unified_config_shim_backward_compatibility",
+            "test_migration_from_config_core",
+            "test_migration_from_unified_config",
+            "test_migration_from_config_browser",
+            "test_migration_from_config_thresholds",
+            "test_end_to_end_config_flow",
+            "test_config_reload_integration",
+            "test_shim_consistency_with_ssot",
+            "test_config_enums",
+            "test_get_config_missing_env_var",
+            "test_get_config_empty_string_default",
+            "test_get_config_none_default",
+            "test_config_manager_with_invalid_env"
+        ],
+        "classes": {
+            "TestConfigSSOTCore": {
+                "methods": [
+                    "test_get_config_with_default",
+                    "test_get_config_from_env",
+                    "test_get_config_type_conversion",
+                    "test_unified_config_manager_singleton",
+                    "test_unified_config_manager_get",
+                    "test_unified_config_manager_reload",
+                    "test_validate_config_valid",
+                    "test_reload_config_function"
+                ],
+                "docstring": "Test core config_ssot.py functionality.",
+                "base_classes": []
+            },
+            "TestConfigDataclasses": {
+                "methods": [
+                    "test_timeout_config_creation",
+                    "test_agent_config_creation",
+                    "test_browser_config_creation",
+                    "test_threshold_config_creation",
+                    "test_file_pattern_config_creation",
+                    "test_test_config_creation",
+                    "test_report_config_creation"
+                ],
+                "docstring": "Test config dataclasses.",
+                "base_classes": []
+            },
+            "TestConfigAccessors": {
+                "methods": [
+                    "test_get_unified_config",
+                    "test_get_timeout_config",
+                    "test_get_agent_config",
+                    "test_get_browser_config",
+                    "test_get_threshold_config",
+                    "test_get_file_pattern_config",
+                    "test_get_test_config",
+                    "test_get_report_config"
+                ],
+                "docstring": "Test config accessor functions.",
+                "base_classes": []
+            },
+            "TestBackwardCompatibilityShims": {
+                "methods": [
+                    "test_config_browser_shim_imports",
+                    "test_config_browser_shim_functionality",
+                    "test_config_thresholds_shim_imports",
+                    "test_config_thresholds_shim_functionality",
+                    "test_unified_config_shim_deprecation_warning",
+                    "test_unified_config_shim_re_exports",
+                    "test_unified_config_shim_backward_compatibility"
+                ],
+                "docstring": "Test backward compatibility of shim modules.",
+                "base_classes": []
+            },
+            "TestConfigMigration": {
+                "methods": [
+                    "test_migration_from_config_core",
+                    "test_migration_from_unified_config",
+                    "test_migration_from_config_browser",
+                    "test_migration_from_config_thresholds"
+                ],
+                "docstring": "Test migration from old config files to SSOT.",
+                "base_classes": []
+            },
+            "TestConfigIntegration": {
+                "methods": [
+                    "test_end_to_end_config_flow",
+                    "test_config_reload_integration",
+                    "test_shim_consistency_with_ssot",
+                    "test_config_enums"
+                ],
+                "docstring": "Integration tests for consolidated config.",
+                "base_classes": []
+            },
+            "TestConfigEdgeCases": {
+                "methods": [
+                    "test_get_config_missing_env_var",
+                    "test_get_config_empty_string_default",
+                    "test_get_config_none_default",
+                    "test_config_manager_with_invalid_env"
+                ],
+                "docstring": "Test edge cases and error handling.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 84
+    },
+    "tests\\unit\\domain\\test_browser_port.py": {
+        "language": ".py",
+        "functions": [
+            "__init__",
+            "open",
+            "goto",
+            "send_and_wait",
+            "close",
+            "is_ready",
+            "get_current_url",
+            "wait_for_element",
+            "test_open_browser_success",
+            "test_open_browser_with_profile",
+            "test_goto_valid_url",
+            "test_goto_empty_url_raises_error",
+            "test_goto_invalid_url_raises_error",
+            "test_send_and_wait_success",
+            "test_send_and_wait_empty_prompt_raises_error",
+            "test_send_and_wait_invalid_timeout_raises_error",
+            "test_close_browser_success",
+            "test_close_browser_not_open_raises_error",
+            "test_is_ready_returns_correct_state",
+            "test_wait_for_element_success",
+            "test_wait_for_element_empty_selector_raises_error",
+            "test_page_reply_dataclass",
+            "test_page_reply_with_error"
+        ],
+        "classes": {
+            "MockBrowser": {
+                "methods": [
+                    "__init__",
+                    "open",
+                    "goto",
+                    "send_and_wait",
+                    "close",
+                    "is_ready",
+                    "get_current_url",
+                    "wait_for_element"
+                ],
+                "docstring": "Mock implementation of Browser interface for testing.",
+                "base_classes": [
+                    "Browser"
+                ]
+            },
+            "TestBrowserPort": {
+                "methods": [
+                    "test_open_browser_success",
+                    "test_open_browser_with_profile",
+                    "test_goto_valid_url",
+                    "test_goto_empty_url_raises_error",
+                    "test_goto_invalid_url_raises_error",
+                    "test_send_and_wait_success",
+                    "test_send_and_wait_empty_prompt_raises_error",
+                    "test_send_and_wait_invalid_timeout_raises_error",
+                    "test_close_browser_success",
+                    "test_close_browser_not_open_raises_error",
+                    "test_is_ready_returns_correct_state",
+                    "test_wait_for_element_success",
+                    "test_wait_for_element_empty_selector_raises_error",
+                    "test_page_reply_dataclass",
+                    "test_page_reply_with_error"
+                ],
+                "docstring": "Test suite for Browser port interface.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 46
+    },
+    "tests\\unit\\core\\managers\\test_core_service_manager.py": {
+        "language": ".py",
+        "functions": [
+            "test_init",
+            "test_get_onboarding_manager",
+            "test_get_recovery_manager",
+            "test_get_results_manager",
+            "test_is_initialized_false",
+            "test_is_initialized_true",
+            "test_get_status",
+            "test_get_status_after_init",
+            "test_inherits_from_coordinator",
+            "test_execute_delegates_to_coordinator"
+        ],
+        "classes": {
+            "TestCoreServiceManager": {
+                "methods": [
+                    "test_init",
+                    "test_get_onboarding_manager",
+                    "test_get_recovery_manager",
+                    "test_get_results_manager",
+                    "test_is_initialized_false",
+                    "test_is_initialized_true",
+                    "test_get_status",
+                    "test_get_status_after_init",
+                    "test_inherits_from_coordinator",
+                    "test_execute_delegates_to_coordinator"
+                ],
+                "docstring": "Test CoreServiceManager class.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 20
+    },
+    "tests\\unit\\core\\file_locking\\test_chain3_redirect_shim.py": {
+        "language": ".py",
+        "functions": [
+            "test_import_file_locking_engine_base",
+            "test_redirect_shim_points_to_file_lock_engine",
+            "test_import_from_init",
+            "test_file_lock_engine_instantiation",
+            "test_file_lock_engine_with_config",
+            "test_file_lock_engine_base_alias_instantiation",
+            "test_old_import_pattern_1",
+            "test_old_import_pattern_2",
+            "test_old_import_pattern_3",
+            "test_file_locking_manager_imports",
+            "test_file_locking_engine_imports",
+            "test_file_locking_engine_operations_imports",
+            "test_file_locking_engine_platform_imports",
+            "test_file_locking_orchestrator_imports",
+            "test_file_locking_models_imports",
+            "test_basic_lock_operations",
+            "test_file_lock_manager_operations"
+        ],
+        "classes": {
+            "TestFileLockingEngineBaseRedirect": {
+                "methods": [
+                    "test_import_file_locking_engine_base",
+                    "test_redirect_shim_points_to_file_lock_engine",
+                    "test_import_from_init"
+                ],
+                "docstring": "Test file_locking_engine_base redirect shim.",
+                "base_classes": []
+            },
+            "TestFileLockEngineInstantiation": {
+                "methods": [
+                    "test_file_lock_engine_instantiation",
+                    "test_file_lock_engine_with_config",
+                    "test_file_lock_engine_base_alias_instantiation"
+                ],
+                "docstring": "Test FileLockEngine can be instantiated.",
+                "base_classes": []
+            },
+            "TestBackwardCompatibility": {
+                "methods": [
+                    "test_old_import_pattern_1",
+                    "test_old_import_pattern_2",
+                    "test_old_import_pattern_3"
+                ],
+                "docstring": "Test backward compatibility with old import patterns.",
+                "base_classes": []
+            },
+            "TestAffectedFiles": {
+                "methods": [
+                    "test_file_locking_manager_imports",
+                    "test_file_locking_engine_imports",
+                    "test_file_locking_engine_operations_imports",
+                    "test_file_locking_engine_platform_imports",
+                    "test_file_locking_orchestrator_imports",
+                    "test_file_locking_models_imports"
+                ],
+                "docstring": "Test that all affected files can import correctly.",
+                "base_classes": []
+            },
+            "TestNoRegressions": {
+                "methods": [
+                    "test_basic_lock_operations",
+                    "test_file_lock_manager_operations"
+                ],
+                "docstring": "Test that existing functionality still works.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 34
+    },
+    "tests\\unit\\domain\\test_message_bus_port.py": {
+        "language": ".py",
+        "functions": [
+            "__init__",
+            "publish",
+            "subscribe",
+            "unsubscribe",
+            "get_subscribers",
+            "is_available",
+            "get_stats",
+            "test_publish_event_success",
+            "test_publish_event_empty_type_raises_error",
+            "test_publish_event_invalid_data_raises_error",
+            "test_publish_event_with_metadata",
+            "test_subscribe_success",
+            "test_subscribe_with_custom_id",
+            "test_subscribe_empty_event_type_raises_error",
+            "test_subscribe_non_callable_handler_raises_error",
+            "test_subscribe_wildcard_events",
+            "test_unsubscribe_success",
+            "test_unsubscribe_not_found_returns_false",
+            "test_unsubscribe_empty_id_raises_error",
+            "test_get_subscribers_specific_event",
+            "test_get_subscribers_all_events",
+            "test_is_available_returns_true",
+            "test_is_available_returns_false",
+            "test_publish_when_not_available_raises_error",
+            "test_get_stats_returns_correct_data",
+            "test_publish_notifies_subscribers"
+        ],
+        "classes": {
+            "MockMessageBus": {
+                "methods": [
+                    "__init__",
+                    "publish",
+                    "subscribe",
+                    "unsubscribe",
+                    "get_subscribers",
+                    "is_available",
+                    "get_stats"
+                ],
+                "docstring": "Mock implementation of MessageBus interface for testing.",
+                "base_classes": [
+                    "MessageBus"
+                ]
+            },
+            "TestMessageBusPort": {
+                "methods": [
+                    "test_publish_event_success",
+                    "test_publish_event_empty_type_raises_error",
+                    "test_publish_event_invalid_data_raises_error",
+                    "test_publish_event_with_metadata",
+                    "test_subscribe_success",
+                    "test_subscribe_with_custom_id",
+                    "test_subscribe_empty_event_type_raises_error",
+                    "test_subscribe_non_callable_handler_raises_error",
+                    "test_subscribe_wildcard_events",
+                    "test_unsubscribe_success",
+                    "test_unsubscribe_not_found_returns_false",
+                    "test_unsubscribe_empty_id_raises_error",
+                    "test_get_subscribers_specific_event",
+                    "test_get_subscribers_all_events",
+                    "test_is_available_returns_true",
+                    "test_is_available_returns_false",
+                    "test_publish_when_not_available_raises_error",
+                    "test_get_stats_returns_correct_data",
+                    "test_publish_notifies_subscribers"
+                ],
+                "docstring": "Test suite for MessageBus port interface.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 52
+    },
+    "tests\\unit\\trading_robot\\test_portfolio_repository_interface.py": {
+        "language": ".py",
+        "functions": [
+            "sample_portfolio",
+            "sample_portfolio_with_position",
+            "__init__"
+        ],
+        "classes": {
+            "MockPortfolioRepository": {
+                "methods": [
+                    "__init__"
+                ],
+                "docstring": "Mock implementation of PortfolioRepositoryInterface for testing.",
+                "base_classes": [
+                    "PortfolioRepositoryInterface"
+                ]
+            },
+            "TestPortfolioRepositoryInterface": {
+                "methods": [],
+                "docstring": "Test suite for PortfolioRepositoryInterface.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 4
+    },
+    "tests\\unit\\trading_robot\\test_position_repository_interface.py": {
+        "language": ".py",
+        "functions": [
+            "mock_repo",
+            "sample_position",
+            "sample_short_position",
+            "__init__"
+        ],
+        "classes": {
+            "MockPositionRepository": {
+                "methods": [
+                    "__init__"
+                ],
+                "docstring": "Mock implementation for testing interface contract.",
+                "base_classes": [
+                    "PositionRepositoryInterface"
+                ]
+            },
+            "TestPositionRepositoryInterface": {
+                "methods": [],
+                "docstring": "Test suite for PositionRepositoryInterface.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 5
+    },
+    "tests\\unit\\gui\\test_agent_card.py": {
+        "language": ".py",
+        "functions": [
+            "test_init",
+            "test_init_with_parent",
+            "test_set_selected",
+            "test_set_selected_false",
+            "test_update_status_online",
+            "test_update_status_busy",
+            "test_update_status_offline",
+            "test_update_status_unknown",
+            "test_update_activity",
+            "test_get_agent_info",
+            "test_on_selection_changed",
+            "test_on_selection_changed_unchecked",
+            "test_fallback_when_pyqt5_unavailable",
+            "test_setup_card_styling",
+            "test_create_layout"
+        ],
+        "classes": {
+            "TestAgentCard": {
+                "methods": [
+                    "test_init",
+                    "test_init_with_parent",
+                    "test_set_selected",
+                    "test_set_selected_false",
+                    "test_update_status_online",
+                    "test_update_status_busy",
+                    "test_update_status_offline",
+                    "test_update_status_unknown",
+                    "test_update_activity",
+                    "test_get_agent_info",
+                    "test_on_selection_changed",
+                    "test_on_selection_changed_unchecked",
+                    "test_fallback_when_pyqt5_unavailable",
+                    "test_setup_card_styling",
+                    "test_create_layout"
+                ],
+                "docstring": "Test AgentCard component.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 30
+    },
+    "tests\\unit\\trading_robot\\test_trading_repository_interface.py": {
+        "language": ".py",
+        "functions": [
+            "mock_repo",
+            "sample_trade",
+            "sample_executed_trade",
+            "__init__"
+        ],
+        "classes": {
+            "MockTradingRepository": {
+                "methods": [
+                    "__init__"
+                ],
+                "docstring": "Mock implementation for testing interface contract.",
+                "base_classes": [
+                    "TradingRepositoryInterface"
+                ]
+            },
+            "TestTradingRepositoryInterface": {
+                "methods": [],
+                "docstring": "Test suite for TradingRepositoryInterface.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 5
+    },
+    "tests\\unit\\gui\\test_themes.py": {
+        "language": ".py",
+        "functions": [
+            "test_init",
+            "test_get_color_default",
+            "test_get_color_existing",
+            "test_get_style_empty",
+            "test_get_style_existing",
+            "test_to_dict",
+            "test_init",
+            "test_dark_theme_colors",
+            "test_dark_theme_styles",
+            "test_dark_theme_button_style",
+            "test_init",
+            "test_light_theme_colors",
+            "test_light_theme_styles",
+            "test_init",
+            "test_set_theme_dark",
+            "test_set_theme_light",
+            "test_set_theme_invalid",
+            "test_get_theme",
+            "test_add_theme",
+            "test_get_available_themes",
+            "test_add_and_set_custom_theme"
+        ],
+        "classes": {
+            "TestTheme": {
+                "methods": [
+                    "test_init",
+                    "test_get_color_default",
+                    "test_get_color_existing",
+                    "test_get_style_empty",
+                    "test_get_style_existing",
+                    "test_to_dict"
+                ],
+                "docstring": "Test base Theme class.",
+                "base_classes": []
+            },
+            "TestDarkTheme": {
+                "methods": [
+                    "test_init",
+                    "test_dark_theme_colors",
+                    "test_dark_theme_styles",
+                    "test_dark_theme_button_style"
+                ],
+                "docstring": "Test DarkTheme class.",
+                "base_classes": []
+            },
+            "TestLightTheme": {
+                "methods": [
+                    "test_init",
+                    "test_light_theme_colors",
+                    "test_light_theme_styles"
+                ],
+                "docstring": "Test LightTheme class.",
+                "base_classes": []
+            },
+            "TestThemeManager": {
+                "methods": [
+                    "test_init",
+                    "test_set_theme_dark",
+                    "test_set_theme_light",
+                    "test_set_theme_invalid",
+                    "test_get_theme",
+                    "test_add_theme",
+                    "test_get_available_themes",
+                    "test_add_and_set_custom_theme"
+                ],
+                "docstring": "Test ThemeManager class.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 42
+    },
+    "tests\\unit\\gui\\__init__.py": {
+        "language": ".py",
+        "functions": [],
+        "classes": {},
+        "routes": [],
+        "complexity": 0
+    },
+    "tests\\discord\\test_messaging_commands.py": {
+        "language": ".py",
+        "functions": [
+            "mock_bot",
+            "mock_messaging_controller",
+            "mock_ctx",
+            "messaging_commands",
+            "test_init",
+            "test_logger_initialized"
+        ],
+        "classes": {
+            "TestMessagingCommands": {
+                "methods": [
+                    "mock_bot",
+                    "mock_messaging_controller",
+                    "mock_ctx",
+                    "messaging_commands",
+                    "test_init",
+                    "test_logger_initialized"
+                ],
+                "docstring": "Test MessagingCommands class.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 12
+    },
+    "tests\\unit\\swarm_brain\\test_agent_notes.py": {
+        "language": ".py",
+        "functions": [
+            "test_note_type_values",
+            "test_note_type_string_enum",
+            "test_init_creates_directories",
+            "test_init_sets_agent_id",
+            "test_init_creates_default_notes",
+            "test_init_loads_existing_notes",
+            "test_add_note_creates_note",
+            "test_add_note_sets_type",
+            "test_add_note_sets_tags",
+            "test_add_note_defaults_to_important",
+            "test_add_note_saves_to_file",
+            "test_add_note_increments_id",
+            "test_add_note_creates_learning_file",
+            "test_add_note_creates_important_file",
+            "test_add_note_creates_work_log_file",
+            "test_add_note_creates_todos_file",
+            "test_add_note_appends_to_existing_file",
+            "test_get_notes_returns_all",
+            "test_get_notes_filters_by_type",
+            "test_get_notes_filters_by_tags",
+            "test_get_notes_filters_by_type_and_tags",
+            "test_search_notes_by_content",
+            "test_search_notes_case_insensitive",
+            "test_search_notes_by_type",
+            "test_log_work",
+            "test_record_learning",
+            "test_mark_important",
+            "test_load_notes_handles_missing_file",
+            "test_save_notes_handles_io_error",
+            "test_append_to_markdown_handles_missing_type"
+        ],
+        "classes": {
+            "TestNoteType": {
+                "methods": [
+                    "test_note_type_values",
+                    "test_note_type_string_enum"
+                ],
+                "docstring": "Test NoteType enum.",
+                "base_classes": []
+            },
+            "TestAgentNotesInitialization": {
+                "methods": [
+                    "test_init_creates_directories",
+                    "test_init_sets_agent_id",
+                    "test_init_creates_default_notes",
+                    "test_init_loads_existing_notes"
+                ],
+                "docstring": "Test AgentNotes initialization.",
+                "base_classes": []
+            },
+            "TestAddNote": {
+                "methods": [
+                    "test_add_note_creates_note",
+                    "test_add_note_sets_type",
+                    "test_add_note_sets_tags",
+                    "test_add_note_defaults_to_important",
+                    "test_add_note_saves_to_file",
+                    "test_add_note_increments_id"
+                ],
+                "docstring": "Test adding notes.",
+                "base_classes": []
+            },
+            "TestAppendToMarkdown": {
+                "methods": [
+                    "test_add_note_creates_learning_file",
+                    "test_add_note_creates_important_file",
+                    "test_add_note_creates_work_log_file",
+                    "test_add_note_creates_todos_file",
+                    "test_add_note_appends_to_existing_file"
+                ],
+                "docstring": "Test markdown file generation.",
+                "base_classes": []
+            },
+            "TestGetNotes": {
+                "methods": [
+                    "test_get_notes_returns_all",
+                    "test_get_notes_filters_by_type",
+                    "test_get_notes_filters_by_tags",
+                    "test_get_notes_filters_by_type_and_tags"
+                ],
+                "docstring": "Test retrieving notes.",
+                "base_classes": []
+            },
+            "TestSearchNotes": {
+                "methods": [
+                    "test_search_notes_by_content",
+                    "test_search_notes_case_insensitive",
+                    "test_search_notes_by_type"
+                ],
+                "docstring": "Test searching notes.",
+                "base_classes": []
+            },
+            "TestConvenienceMethods": {
+                "methods": [
+                    "test_log_work",
+                    "test_record_learning",
+                    "test_mark_important"
+                ],
+                "docstring": "Test convenience methods.",
+                "base_classes": []
+            },
+            "TestErrorHandling": {
+                "methods": [
+                    "test_load_notes_handles_missing_file",
+                    "test_save_notes_handles_io_error",
+                    "test_append_to_markdown_handles_missing_type"
+                ],
+                "docstring": "Test error handling.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 60
+    },
+    "tests\\discord\\test_discord_service.py": {
+        "language": ".py",
+        "functions": [
+            "test_init_with_webhook_url",
+            "test_init_without_webhook_url",
+            "test_load_webhook_url_from_env",
+            "test_load_webhook_url_from_config",
+            "test_load_webhook_url_not_found",
+            "test_find_new_devlogs_no_directory",
+            "test_find_new_devlogs_with_files",
+            "test_parse_devlog_filename_full_format",
+            "test_parse_devlog_filename_short_format",
+            "test_extract_devlog_summary_with_content",
+            "test_extract_devlog_summary_empty_content",
+            "test_send_devlog_notification_success",
+            "test_send_devlog_notification_no_webhook",
+            "test_send_devlog_notification_failure",
+            "test_send_agent_status_notification_success",
+            "test_send_agent_status_notification_no_webhook",
+            "test_send_swarm_coordination_notification_success",
+            "test_test_webhook_connection_success",
+            "test_test_webhook_connection_no_webhook",
+            "test_test_webhook_connection_failure",
+            "test_test_webhook_connection_exception",
+            "test_stop_monitoring",
+            "test_get_discord_service_singleton",
+            "test_get_discord_service_with_webhook"
+        ],
+        "classes": {
+            "TestDiscordService": {
+                "methods": [
+                    "test_init_with_webhook_url",
+                    "test_init_without_webhook_url",
+                    "test_load_webhook_url_from_env",
+                    "test_load_webhook_url_from_config",
+                    "test_load_webhook_url_not_found",
+                    "test_find_new_devlogs_no_directory",
+                    "test_find_new_devlogs_with_files",
+                    "test_parse_devlog_filename_full_format",
+                    "test_parse_devlog_filename_short_format",
+                    "test_extract_devlog_summary_with_content",
+                    "test_extract_devlog_summary_empty_content",
+                    "test_send_devlog_notification_success",
+                    "test_send_devlog_notification_no_webhook",
+                    "test_send_devlog_notification_failure",
+                    "test_send_agent_status_notification_success",
+                    "test_send_agent_status_notification_no_webhook",
+                    "test_send_swarm_coordination_notification_success",
+                    "test_test_webhook_connection_success",
+                    "test_test_webhook_connection_no_webhook",
+                    "test_test_webhook_connection_failure",
+                    "test_test_webhook_connection_exception",
+                    "test_stop_monitoring"
+                ],
+                "docstring": "Test DiscordService class.",
+                "base_classes": []
+            },
+            "TestDiscordServiceSingleton": {
+                "methods": [
+                    "test_get_discord_service_singleton",
+                    "test_get_discord_service_with_webhook"
+                ],
+                "docstring": "Test DiscordService singleton pattern.",
+                "base_classes": []
+            },
+            "AsyncMock": {
+                "methods": [],
+                "docstring": "Async mock helper.",
+                "base_classes": [
+                    "Mock"
+                ]
+            }
+        },
+        "routes": [],
+        "complexity": 48
+    },
+    "tests\\discord\\test_messaging_controller.py": {
+        "language": ".py",
+        "functions": [
+            "mock_messaging_service",
+            "controller",
+            "test_init",
+            "test_create_agent_messaging_view",
+            "test_create_swarm_status_view",
+            "test_get_agent_status_success",
+            "test_get_agent_status_no_agent_data",
+            "test_get_agent_status_exception",
+            "test_logger_initialized"
+        ],
+        "classes": {
+            "TestDiscordMessagingController": {
+                "methods": [
+                    "mock_messaging_service",
+                    "controller",
+                    "test_init",
+                    "test_create_agent_messaging_view",
+                    "test_create_swarm_status_view",
+                    "test_get_agent_status_success",
+                    "test_get_agent_status_no_agent_data",
+                    "test_get_agent_status_exception",
+                    "test_logger_initialized"
+                ],
+                "docstring": "Test DiscordMessagingController class.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 18
+    },
+    "tests\\discord\\test_discord_gui_controller.py": {
+        "language": ".py",
+        "functions": [
+            "mock_messaging_service",
+            "controller",
+            "test_init",
+            "test_create_main_gui",
+            "test_create_status_gui",
+            "test_create_control_panel",
+            "test_create_agent_message_modal",
+            "test_create_broadcast_modal",
+            "test_get_agent_status_success",
+            "test_get_agent_status_exception",
+            "test_logger_initialized"
+        ],
+        "classes": {
+            "TestDiscordGUIController": {
+                "methods": [
+                    "mock_messaging_service",
+                    "controller",
+                    "test_init",
+                    "test_create_main_gui",
+                    "test_create_status_gui",
+                    "test_create_control_panel",
+                    "test_create_agent_message_modal",
+                    "test_create_broadcast_modal",
+                    "test_get_agent_status_success",
+                    "test_get_agent_status_exception",
+                    "test_logger_initialized"
+                ],
+                "docstring": "Test DiscordGUIController class.",
+                "base_classes": []
+            }
+        },
+        "routes": [],
+        "complexity": 22
+    },
+    "tests\\services\\chat_presence\\test_twitch_bridge.py": {
+        "language": ".py",
+        "functions": [
+            "test_channel_name_with_hash_prefix",
+            "test_channel_name_without_hash_prefix",
+            "test_channel_name_from_url_extraction",
+            "setUp",
+            "test_message_callback_called",
+            "test_message_data_structure",
+            "test_async_callback_handling",
+            "test_connect_starts_thread",
+            "test_oauth_token_format",
+            "test_oauth_token_without_prefix",
+            "setUp",
+            "test_online_message_flag_initialized",
+            "test_online_message_flag_reset_on_stop",
+            "test_extract_channel_from_url",
+            "test_extract_channel_from_url_with_hash",
+            "test_channel_name_already_correct"
+        ],
+        "classes": {
+            "TestTwitchBridgeChannelName": {
+                "methods": [
+                    "test_channel_name_with_hash_prefix",
+                    "test_channel_name_without_hash_prefix",
+                    "test_channel_name_from_url_extraction"
+                ],
+                "docstring": "Test channel name handling and extraction.",
+                "base_classes": [
+                    "unittest.TestCase"
+                ]
+            },
+            "TestTwitchBridgeMessageHandling": {
+                "methods": [
+                    "setUp",
+                    "test_message_callback_called",
+                    "test_message_data_structure",
+                    "test_async_callback_handling"
+                ],
+                "docstring": "Test message reception and processing.",
+                "base_classes": [
+                    "unittest.TestCase"
+                ]
+            },
+            "TestTwitchBridgeConnection": {
+                "methods": [
+                    "test_connect_starts_thread",
+                    "test_oauth_token_format",
+                    "test_oauth_token_without_prefix"
+                ],
+                "docstring": "Test connection logic.",
+                "base_classes": [
+                    "unittest.TestCase"
+                ]
+            },
+            "TestTwitchBridgeOnlineMessage": {
+                "methods": [
+                    "setUp",
+                    "test_online_message_flag_initialized",
+                    "test_online_message_flag_reset_on_stop"
+                ],
+                "docstring": "Test online message functionality.",
+                "base_classes": [
+                    "unittest.TestCase"
+                ]
+            },
+            "TestChannelNameExtraction": {
+                "methods": [
+                    "test_extract_channel_from_url",
+                    "test_extract_channel_from_url_with_hash",
+                    "test_channel_name_already_correct"
+                ],
+                "docstring": "Test channel name extraction from URLs (START_CHAT_BOT_NOW.py logic).",
+                "base_classes": [
+                    "unittest.TestCase"
+                ]
+            }
+        },
+        "routes": [],
+        "complexity": 32
+    },
+    "tests\\services\\chat_presence\\test_chat_presence_orchestrator.py": {
+        "language": ".py",
+        "functions": [
+            "setUp",
+            "test_status_command_detection",
+            "test_status_command_parsing_all",
+            "test_status_command_parsing_specific_agent",
+            "test_agent_command_detection",
+            "test_broadcast_command_detection",
+            "setUp",
+            "test_channel_owner_is_admin",
+            "test_configured_admin_is_admin",
+            "test_broadcaster_badge_is_admin",
+            "test_moderator_badge_is_admin",
+            "test_regular_user_is_not_admin",
+            "setUp"
+        ],
+        "classes": {
+            "TestMessageInterpreter": {
+                "methods": [
+                    "setUp",
+                    "test_status_command_detection",
+                    "test_status_command_parsing_all",
+                    "test_status_command_parsing_specific_agent",
+                    "test_agent_command_detection",
+                    "test_broadcast_command_detection"
+                ],
+                "docstring": "Test message interpretation and command detection.",
+                "base_classes": [
+                    "unittest.TestCase"
+                ]
+            },
+            "TestAdminChecking": {
+                "methods": [
+                    "setUp",
+                    "test_channel_owner_is_admin",
+                    "test_configured_admin_is_admin",
+                    "test_broadcaster_badge_is_admin",
+                    "test_moderator_badge_is_admin",
+                    "test_regular_user_is_not_admin"
+                ],
+                "docstring": "Test admin user checking logic.",
+                "base_classes": [
+                    "unittest.TestCase"
+                ]
+            },
+            "TestStatusCommandHandling": {
+                "methods": [
+                    "setUp"
+                ],
+                "docstring": "Test status command handling.",
+                "base_classes": [
+                    "unittest.TestCase"
+                ]
+            }
+        },
+        "routes": [],
+        "complexity": 26
+    },
+    "tests\\services\\chat_presence\\test_twitch_integration.py": {
+        "language": ".py",
+        "functions": [
+            "test_connection_initialization",
+            "test_channel_name_normalization",
+            "setUp",
+            "test_message_received_calls_handler",
+            "test_multiple_messages_received",
+            "test_on_pubmsg_creates_message_data",
+            "test_on_pubmsg_skips_bot_own_messages",
+            "test_extract_from_url",
+            "test_extract_from_url_with_trailing_slash",
+            "test_already_correct_channel_name",
+            "message_handler",
+            "message_handler",
+            "message_handler"
+        ],
+        "classes": {
+            "TestTwitchConnectionFlow": {
+                "methods": [
+                    "test_connection_initialization",
+                    "test_channel_name_normalization"
+                ],
+                "docstring": "Test the complete connection flow.",
+                "base_classes": [
+                    "unittest.TestCase"
+                ]
+            },
+            "TestMessageReception": {
+                "methods": [
+                    "setUp",
+                    "test_message_received_calls_handler",
+                    "test_multiple_messages_received"
+                ],
+                "docstring": "Test message reception and callback invocation.",
+                "base_classes": [
+                    "unittest.TestCase"
+                ]
+            },
+            "TestIRCBotEventHandling": {
+                "methods": [
+                    "test_on_pubmsg_creates_message_data",
+                    "test_on_pubmsg_skips_bot_own_messages"
+                ],
+                "docstring": "Test IRC bot event handling.",
+                "base_classes": [
+                    "unittest.TestCase"
+                ]
+            },
+            "TestChannelNameExtractionFromEnv": {
+                "methods": [
+                    "test_extract_from_url",
+                    "test_extract_from_url_with_trailing_slash",
+                    "test_already_correct_channel_name"
+                ],
+                "docstring": "Test channel name extraction from environment variables.",
+                "base_classes": [
+                    "unittest.TestCase"
+                ]
+            }
+        },
+        "routes": [],
+        "complexity": 23
+    },
+    "tests\\services\\chat_presence\\test_twitch_connection_debug.py": {
+        "language": ".py",
+        "functions": [
+            "setUp",
+            "test_channel_name_format_issues",
+            "test_oauth_token_format_issues"
+        ],
+        "classes": {
+            "TestMessageFlow": {
+                "methods": [
+                    "setUp"
+                ],
+                "docstring": "Test complete message flow from IRC to handler.",
+                "base_classes": [
+                    "unittest.TestCase"
+                ]
+            },
+            "TestConnectionIssues": {
+                "methods": [
+                    "test_channel_name_format_issues",
+                    "test_oauth_token_format_issues"
+                ],
+                "docstring": "Test to identify connection issues.",
+                "base_classes": [
+                    "unittest.TestCase"
+                ]
+            }
+        },
+        "routes": [],
+        "complexity": 6
     }
 }

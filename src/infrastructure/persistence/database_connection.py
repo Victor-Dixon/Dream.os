@@ -4,6 +4,8 @@ Database Connection - Unified Persistence Service
 
 Manages database connections with proper cleanup and configuration.
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-6 (VSCode Forking & Quality Gates Specialist) - Refactored from Agent-3
 License: MIT
 """

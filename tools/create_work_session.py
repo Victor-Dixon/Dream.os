@@ -161,7 +161,7 @@ def extract_git_commits(repo_path: Path, limit: int = 50) -> list:
             ["git", "-C", str(repo_path), "log", f"--max-count={limit}", "--pretty=format:%H|%an|%ae|%ad|%s", "--date=iso"],
             capture_output=True,
             text=True,
-            timeout=30
+            timeout=TimeoutConstants.HTTP_DEFAULT
         )
         
         if result.returncode != 0:
@@ -183,7 +183,7 @@ def extract_git_commits(repo_path: Path, limit: int = 50) -> list:
                 ["git", "-C", str(repo_path), "show", "--name-only", "--pretty=format:", commit_hash],
                 capture_output=True,
                 text=True,
-                timeout=10
+                timeout=TimeoutConstants.HTTP_SHORT
             )
             
             files = []
@@ -276,12 +276,14 @@ def main():
     except Exception as e:
         print(f"❌ Unexpected error: {e}", file=sys.stderr)
         import traceback
+from src.core.config.timeout_constants import TimeoutConstants
         traceback.print_exc()
         return 1
 
 
 if __name__ == "__main__":
     sys.exit(main())
+
 
 
 

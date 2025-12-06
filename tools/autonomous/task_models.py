@@ -15,8 +15,8 @@ from datetime import datetime
 
 
 @dataclass
-class Task:
-    """A discovered task opportunity"""
+class TaskOpportunity:
+    """A discovered task opportunity (autonomous task discovery domain-specific, not to be confused with domain entity Task)."""
     task_id: str
     title: str
     description: str
@@ -57,7 +57,7 @@ class AgentProfile:
 class TaskRecommendation:
     """Personalized task recommendation for an agent"""
     agent_id: str
-    task: Task
+    task: TaskOpportunity
     match_score: float  # 0-1 (skill match)
     priority_score: float  # 0-1 (urgency + impact)
     total_score: float  # Combined score

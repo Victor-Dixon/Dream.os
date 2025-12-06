@@ -10,6 +10,7 @@ import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+from src.core.config.timeout_constants import TimeoutConstants
 
 logger = logging.getLogger(__name__)
 
@@ -34,7 +35,7 @@ class LoginHandler:
         self.username = username
         self.password = password
         self.totp_secret = totp_secret
-        self.timeout = 30
+        self.timeout=TimeoutConstants.HTTP_DEFAULT
 
     def ensure_login(self, driver, allow_manual: bool = True, manual_timeout: int = 60) -> bool:
         """

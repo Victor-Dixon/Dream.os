@@ -20,6 +20,7 @@ from pathlib import Path
 
 try:
     from dotenv import load_dotenv
+from src.core.config.timeout_constants import TimeoutConstants
     env_path = Path('.env')
     if env_path.exists():
         load_dotenv(env_path)
@@ -64,25 +65,25 @@ def main():
         print(f"📥 Cloning {repo}...")
         subprocess.run(
             ["git", "clone", repo_url, str(repo_dir)],
-            capture_output=True, text=True, timeout=120, env=git_env, check=True
+            capture_output=True, text=True, timeout=TimeoutConstants.HTTP_LONG, env=git_env, check=True
         )
         
         print(f"📥 Fetching all branches...")
         subprocess.run(
             ["git", "fetch", "origin"],
-            cwd=repo_dir, capture_output=True, text=True, timeout=60, env=git_env, check=True
+            cwd=repo_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_MEDIUM, env=git_env, check=True
         )
         
         print(f"🔀 Checking out {head_branch}...")
         subprocess.run(
             ["git", "checkout", head_branch],
-            cwd=repo_dir, capture_output=True, text=True, timeout=30, env=git_env, check=True
+            cwd=repo_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_DEFAULT, env=git_env, check=True
         )
         
         print(f"🔀 Merging {base_branch} into {head_branch}...")
         merge_result = subprocess.run(
             ["git", "merge", f"origin/{base_branch}", "--allow-unrelated-histories", "--no-edit"],
-            cwd=repo_dir, capture_output=True, text=True, timeout=120, env=git_env
+            cwd=repo_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_LONG, env=git_env
         )
         
         if merge_result.returncode != 0:
@@ -91,7 +92,7 @@ def main():
             # Get conflicted files
             conflicted = subprocess.run(
                 ["git", "diff", "--name-only", "--diff-filter=U"],
-                cwd=repo_dir, capture_output=True, text=True, timeout=30, env=git_env
+                cwd=repo_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_DEFAULT, env=git_env
             )
             
             if conflicted.returncode == 0 and conflicted.stdout.strip():
@@ -102,18 +103,18 @@ def main():
                     print(f"  🔧 Resolving {file} using 'ours' strategy...")
                     subprocess.run(
                         ["git", "checkout", "--ours", file],
-                        cwd=repo_dir, check=False, timeout=30, env=git_env
+                        cwd=repo_dir, check=False, timeout=TimeoutConstants.HTTP_DEFAULT, env=git_env
                     )
                     subprocess.run(
                         ["git", "add", file],
-                        cwd=repo_dir, check=False, timeout=30, env=git_env
+                        cwd=repo_dir, check=False, timeout=TimeoutConstants.HTTP_DEFAULT, env=git_env
                     )
                 
                 # Commit the resolution
                 print(f"💾 Committing merge with resolved conflicts...")
                 commit_result = subprocess.run(
                     ["git", "commit", "-m", "Resolve conflicts in PR #3 using 'ours' strategy (keep DreamVault versions)"],
-                    cwd=repo_dir, capture_output=True, text=True, timeout=30, env=git_env
+                    cwd=repo_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_DEFAULT, env=git_env
                 )
                 
                 if commit_result.returncode == 0:
@@ -128,7 +129,7 @@ def main():
         print(f"📤 Pushing resolved {head_branch}...")
         push_result = subprocess.run(
             ["git", "push", "origin", head_branch, "--force"],
-            cwd=repo_dir, capture_output=True, text=True, timeout=60, env=git_env
+            cwd=repo_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_MEDIUM, env=git_env
         )
         
         if push_result.returncode == 0:
@@ -146,7 +147,7 @@ def main():
             }
             data = {"merge_method": "merge"}
             
-            response = requests.put(url, headers=headers, json=data, timeout=30)
+            response = requests.put(url, headers=headers, json=data, timeout=TimeoutConstants.HTTP_DEFAULT)
             if response.status_code == 200:
                 result = response.json()
                 print(f"✅ PR #{pr_number} merged successfully!")

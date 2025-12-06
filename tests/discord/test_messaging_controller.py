@@ -150,3 +150,4 @@ class TestDiscordMessagingController:
         assert controller.logger.name == "src.discord_commander.messaging_controller"
 
 
+

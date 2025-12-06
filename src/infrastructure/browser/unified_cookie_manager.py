@@ -14,6 +14,8 @@ Features:
 - Auto-save functionality
 - Comprehensive error handling
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-6 (Quality Gates & VSCode Specialist) - DUP-003 Consolidation
 Date: 2025-10-16
 """

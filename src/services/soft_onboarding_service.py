@@ -13,9 +13,16 @@ Implements full soft onboarding protocol with PyAutoGUI animations:
 V2 Compliance: <400 lines, single responsibility
 """
 
+from src.core.config.timeout_constants import TimeoutConstants
 import logging
+import sys
 import time
 from pathlib import Path
+
+# Add project root to path
+project_root = Path(__file__).resolve().parent.parent.parent
+sys.path.insert(0, str(project_root))
+
 
 logger = logging.getLogger(__name__)
 
@@ -67,9 +74,10 @@ class SoftOnboardingService:
             logger.info(
                 f"👆 Step 1: Clicking chat input for {agent_id} at {chat_coords}")
 
+            # Click chat input - wait for app to respond to interaction
             self.pyautogui.moveTo(x, y, duration=0.5)
             self.pyautogui.click()
-            time.sleep(0.5)
+            time.sleep(1.0)  # Wait for app to respond to click interaction
 
             logger.info(f"✅ Chat input clicked for {agent_id}")
             return True
@@ -86,7 +94,7 @@ class SoftOnboardingService:
         try:
             logger.info("💾 Step 2: Saving session (Ctrl+Enter)")
             self.pyautogui.hotkey("ctrl", "enter")
-            time.sleep(0.5)
+            time.sleep(0.8)  # Wait for session save operation
             logger.info("✅ Session saved")
             return True
         except Exception as e:
@@ -132,7 +140,7 @@ class SoftOnboardingService:
         try:
             logger.info("🆕 Step 4: Opening new tab (Ctrl+T)")
             self.pyautogui.hotkey("ctrl", "t")
-            time.sleep(1.0)  # Wait for tab to initialize
+            time.sleep(2.0)  # Wait for tab to initialize and stabilize
             logger.info("✅ New tab opened")
             return True
         except Exception as e:
@@ -155,9 +163,10 @@ class SoftOnboardingService:
             logger.info(
                 f"🎯 Step 5: Navigating to onboarding coords for {agent_id} at {onboarding_coords}")
 
+            # Click onboarding input - wait for app to respond to interaction
             self.pyautogui.moveTo(x, y, duration=0.5)
             self.pyautogui.click()
-            time.sleep(0.5)
+            time.sleep(1.0)  # Wait for app to respond to click interaction
 
             logger.info(f"✅ Navigated to onboarding input for {agent_id}")
             return True
@@ -184,9 +193,9 @@ class SoftOnboardingService:
             # Paste and send
             pyperclip.copy(message)
             self.pyautogui.hotkey("ctrl", "v")
-            time.sleep(0.5)
+            time.sleep(0.5)  # Wait for paste to complete
             self.pyautogui.press("enter")
-            time.sleep(1.0)
+            time.sleep(0.8)  # Wait for message send
 
             logger.info(f"✅ Onboarding message sent to {agent_id}")
             return True
@@ -273,50 +282,48 @@ Press Enter when complete to proceed to next session onboarding!
         """
         Execute full soft onboarding protocol (6 steps with animations).
 
-        CRITICAL: Wrapped in keyboard_control to block other sends during operation.
+        NOTE: Lock handling is done by caller (soft_onboard_agent or soft_onboard_multiple_agents).
+        This method should NOT acquire the lock itself to avoid double-locking.
         """
-        from ..core.keyboard_control_lock import keyboard_control
+        try:
+            logger.info(
+                f"🚀 Starting 6-step soft onboarding for {agent_id}")
 
-        with keyboard_control(f"soft_onboard_{agent_id}"):
-            try:
-                logger.info(
-                    f"🚀 Starting 6-step soft onboarding for {agent_id}")
-
-                # Step 1: Click chat input
-                if not self.step_1_click_chat_input(agent_id):
-                    logger.error("❌ Step 1 failed: Click chat input")
-                    return False
-
-                # Step 2: Save session
-                if not self.step_2_save_session():
-                    logger.error("❌ Step 2 failed: Save session")
-                    return False
-
-                # Step 3: Send cleanup prompt
-                if not self.step_3_send_cleanup_prompt(agent_id, custom_cleanup_message):
-                    logger.error("❌ Step 3 failed: Send cleanup prompt")
-                    return False
-
-                # Step 4: Open new tab
-                if not self.step_4_open_new_tab():
-                    logger.error("❌ Step 4 failed: Open new tab")
-                    return False
-
-                # Step 5: Navigate to onboarding
-                if not self.step_5_navigate_to_onboarding(agent_id):
-                    logger.error("❌ Step 5 failed: Navigate to onboarding")
-                    return False
-
-                # Step 6: Paste onboarding message
-                if not self.step_6_paste_onboarding_message(agent_id, onboarding_message):
-                    logger.error("❌ Step 6 failed: Paste onboarding message")
-                    return False
-
-                logger.info(f"🎉 Soft onboarding complete for {agent_id}!")
-                return True
-            except Exception as e:
-                logger.error(f"Soft onboarding execution failed: {e}")
+            # Step 1: Click chat input
+            if not self.step_1_click_chat_input(agent_id):
+                logger.error("❌ Step 1 failed: Click chat input")
                 return False
+
+            # Step 2: Save session
+            if not self.step_2_save_session():
+                logger.error("❌ Step 2 failed: Save session")
+                return False
+
+            # Step 3: Send cleanup prompt
+            if not self.step_3_send_cleanup_prompt(agent_id, custom_cleanup_message):
+                logger.error("❌ Step 3 failed: Send cleanup prompt")
+                return False
+
+            # Step 4: Open new tab
+            if not self.step_4_open_new_tab():
+                logger.error("❌ Step 4 failed: Open new tab")
+                return False
+
+            # Step 5: Navigate to onboarding
+            if not self.step_5_navigate_to_onboarding(agent_id):
+                logger.error("❌ Step 5 failed: Navigate to onboarding")
+                return False
+
+            # Step 6: Paste onboarding message
+            if not self.step_6_paste_onboarding_message(agent_id, onboarding_message):
+                logger.error("❌ Step 6 failed: Paste onboarding message")
+                return False
+
+            logger.info(f"🎉 Soft onboarding complete for {agent_id}!")
+            return True
+        except Exception as e:
+            logger.error(f"Soft onboarding execution failed: {e}")
+            return False
 
 
 def soft_onboard_agent(agent_id: str, message: str, **kwargs) -> bool:
@@ -394,7 +401,7 @@ def soft_onboard_multiple_agents(
 
             # Small delay between agents for stability
             import time
-            time.sleep(1.0)
+            time.sleep(2.0)  # Wait between agents
 
         # Generate cycle accomplishments report after onboarding all agents
         if generate_cycle_report:
@@ -411,7 +418,7 @@ def soft_onboard_multiple_agents(
                         [sys.executable, str(report_script)],
                         capture_output=True,
                         text=True,
-                        timeout=30
+                        timeout=TimeoutConstants.HTTP_DEFAULT
                     )
                     if result.returncode == 0:
                         logger.info("✅ Cycle accomplishments report generated")
@@ -461,7 +468,7 @@ def generate_cycle_accomplishments_report(cycle_id: str | None = None) -> Path |
             (["--cycle", cycle_id] if cycle_id else []),
             capture_output=True,
             text=True,
-            timeout=30
+            timeout=TimeoutConstants.HTTP_DEFAULT
         )
 
         if result.returncode == 0:

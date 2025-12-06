@@ -5,6 +5,8 @@ Activity Repository - SSOT for Agent Activity Data
 Persistent storage for agent activity data from AgentActivityTracker.
 Provides SSOT for all activity history and monitoring.
 
+<!-- SSOT Domain: data -->
+
 Author: Agent-5 (Business Intelligence Specialist)
 Date: 2025-01-27
 JET FUEL: Autonomous creation

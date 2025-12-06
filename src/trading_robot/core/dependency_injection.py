@@ -34,7 +34,7 @@ class TradingDependencyContainer:
         
         Uses Factory base class for standardized factory pattern (Phase 1 Integration).
         """
-        self.logger = UnifiedLoggingSystem("TradingDependencyContainer")
+        self.logger = UnifiedLoggingSystem().get_logger("TradingDependencyContainer")
         self._services: Dict[str, Any] = {}
         # Use Factory base class for standardized factory pattern
         self._factory = Factory()

@@ -286,13 +286,13 @@ class OSRSCoordinationHandlers:
                     self.agent.send_message(agent_id, emergency_message)
 
             # Update agent status for emergency response
-            from .osrs_agent_core import AgentStatus
+            from .osrs_agent_core import OSRSAgentStatus
 
-            if self.agent.status != AgentStatus.ERROR:
+            if self.agent.status != OSRSAgentStatus.ERROR:
                 previous_status = self.agent.status
-                self.agent.status = AgentStatus.ERROR
+                self.agent.status = OSRSAgentStatus.ERROR
                 self.logger.info(
-                    f"Agent status changed: {previous_status} -> {AgentStatus.ERROR}"
+                    f"Agent status changed: {previous_status} -> {OSRSAgentStatus.ERROR}"
                 )
 
         except Exception as e:

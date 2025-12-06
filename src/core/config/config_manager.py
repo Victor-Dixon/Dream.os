@@ -6,6 +6,8 @@ Configuration Manager - V2 Compliance Module
 Unified configuration manager class - SINGLE SOURCE OF TRUTH (SSOT).
 Consolidated from multiple ConfigManager implementations into one.
 
+<!-- SSOT Domain: core -->
+
 CONSOLIDATION HISTORY:
 - Agent-7 (2025-10-12): Created initial config_ssot.py
 - Agent-2 (2025-10-13): Modularized into config/ submodule (ROI 32.26)
