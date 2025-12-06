@@ -18,6 +18,10 @@ from datetime import datetime
 project_root = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(project_root))
 
+from src.core.config.timeout_constants import TimeoutConstants
+
+from src.core.utils.file_utils import ensure_directory_removed
+
 def resolve_conflicts_with_ours(target_repo: str, source_repo: str, merge_branch: str) -> bool:
     """Resolve conflicts in merge branch using 'ours' strategy (keep target repo versions)."""
     try:
@@ -40,24 +44,9 @@ def resolve_conflicts_with_ours(target_repo: str, source_repo: str, merge_branch
         target_dir = temp_base / "target" / target_repo
         source_dir = temp_base / "source" / source_repo
         
-        def ensure_dir_removed(dir_path, name):
-            """Ensure directory is completely removed."""
-            if dir_path.exists():
-                print(f"🧹 Removing existing {name} directory: {dir_path}")
-                try:
-                    shutil.rmtree(dir_path, ignore_errors=True)
-                    time.sleep(0.5)
-                    if dir_path.exists():
-                        def remove_readonly(func, path, exc):
-                            os.chmod(path, stat.S_IWRITE)
-                            func(path)
-                        shutil.rmtree(dir_path, onerror=remove_readonly)
-                        time.sleep(0.5)
-                except Exception as e:
-                    print(f"⚠️ Cleanup warning for {name}: {e}")
-        
-        ensure_dir_removed(target_dir, "target")
-        ensure_dir_removed(source_dir, "source")
+        # Use SSOT utility for directory removal
+        ensure_directory_removed(target_dir, "target")
+        ensure_directory_removed(source_dir, "source")
         
         # Prepare git environment
         git_env = os.environ.copy()
@@ -73,7 +62,7 @@ def resolve_conflicts_with_ours(target_repo: str, source_repo: str, merge_branch
         print(f"📥 Cloning target repository: {target_repo} (shallow clone)...")
         clone_result = subprocess.run(
             ["git", "clone", "--depth", "1", target_url, str(target_dir)],
-            capture_output=True, text=True, check=False, timeout=120, env=git_env
+            capture_output=True, text=True, check=False, timeout=TimeoutConstants.HTTP_LONG, env=git_env
         )
         
         if clone_result.returncode != 0:
@@ -82,7 +71,7 @@ def resolve_conflicts_with_ours(target_repo: str, source_repo: str, merge_branch
                 ensure_dir_removed(target_dir, "target")
                 clone_result = subprocess.run(
                     ["git", "clone", target_url, str(target_dir)],
-                    capture_output=True, text=True, check=False, timeout=120, env=git_env
+                    capture_output=True, text=True, check=False, timeout=TimeoutConstants.HTTP_LONG, env=git_env
                 )
             if clone_result.returncode != 0:
                 print(f"❌ Failed to clone target repo: {error_msg}")
@@ -92,26 +81,26 @@ def resolve_conflicts_with_ours(target_repo: str, source_repo: str, merge_branch
         print(f"🔍 Checking for merge branch: {merge_branch}...")
         branch_check = subprocess.run(
             ["git", "branch", "-r"],
-            cwd=target_dir, capture_output=True, text=True, timeout=30
+            cwd=target_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_DEFAULT
         )
         
         if merge_branch in branch_check.stdout:
             print(f"✅ Merge branch exists, checking out...")
-            subprocess.run(["git", "fetch", "origin", merge_branch], cwd=target_dir, check=True, timeout=30)
+            subprocess.run(["git", "fetch", "origin", merge_branch], cwd=target_dir, check=True, timeout=TimeoutConstants.HTTP_DEFAULT)
             subprocess.run(["git", "checkout", "-b", merge_branch, f"origin/{merge_branch}"], 
-                         cwd=target_dir, check=True, timeout=30)
+                         cwd=target_dir, check=True, timeout=TimeoutConstants.HTTP_DEFAULT)
         else:
             print(f"📝 Creating new merge branch: {merge_branch}...")
-            subprocess.run(["git", "checkout", "-b", merge_branch], cwd=target_dir, check=True, timeout=30)
+            subprocess.run(["git", "checkout", "-b", merge_branch], cwd=target_dir, check=True, timeout=TimeoutConstants.HTTP_DEFAULT)
         
         # Add source as remote if not already added
-        remotes = subprocess.run(["git", "remote"], cwd=target_dir, capture_output=True, text=True, timeout=30)
+        remotes = subprocess.run(["git", "remote"], cwd=target_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_DEFAULT)
         if "source-merge" not in remotes.stdout:
             # Clone source repo
             print(f"📥 Cloning source repository: {source_repo}...")
             clone_result = subprocess.run(
                 ["git", "clone", source_url, str(source_dir)],
-                capture_output=True, text=True, check=False, timeout=120, env=git_env
+                capture_output=True, text=True, check=False, timeout=TimeoutConstants.HTTP_LONG, env=git_env
             )
             
             if clone_result.returncode != 0:
@@ -120,7 +109,7 @@ def resolve_conflicts_with_ours(target_repo: str, source_repo: str, merge_branch
                     ensure_dir_removed(source_dir, "source")
                     clone_result = subprocess.run(
                         ["git", "clone", source_url, str(source_dir)],
-                        capture_output=True, text=True, check=False, timeout=120, env=git_env
+                        capture_output=True, text=True, check=False, timeout=TimeoutConstants.HTTP_LONG, env=git_env
                     )
                 if clone_result.returncode != 0:
                     print(f"❌ Failed to clone source repo: {error_msg}")
@@ -129,15 +118,15 @@ def resolve_conflicts_with_ours(target_repo: str, source_repo: str, merge_branch
             # Add source as remote
             print(f"🔗 Adding source repo as remote...")
             subprocess.run(["git", "remote", "add", "source-merge", str(source_dir)], 
-                         cwd=target_dir, check=True, timeout=30)
+                         cwd=target_dir, check=True, timeout=TimeoutConstants.HTTP_DEFAULT)
         
         # Fetch from source
-        subprocess.run(["git", "fetch", "source-merge"], cwd=target_dir, check=True, timeout=60)
+        subprocess.run(["git", "fetch", "source-merge"], cwd=target_dir, check=True, timeout=TimeoutConstants.HTTP_MEDIUM)
         
         # Check merge status
         merge_status = subprocess.run(
             ["git", "status"],
-            cwd=target_dir, capture_output=True, text=True, timeout=30
+            cwd=target_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_DEFAULT
         )
         
         if "Unmerged paths" in merge_status.stdout or "both modified" in merge_status.stdout:
@@ -146,7 +135,7 @@ def resolve_conflicts_with_ours(target_repo: str, source_repo: str, merge_branch
             # Get list of conflicted files
             conflicted_files = subprocess.run(
                 ["git", "diff", "--name-only", "--diff-filter=U"],
-                cwd=target_dir, capture_output=True, text=True, timeout=30
+                cwd=target_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_DEFAULT
             )
             
             if conflicted_files.returncode == 0 and conflicted_files.stdout.strip():
@@ -159,12 +148,12 @@ def resolve_conflicts_with_ours(target_repo: str, source_repo: str, merge_branch
                     # Use checkout --ours to keep target repo version
                     subprocess.run(
                         ["git", "checkout", "--ours", file],
-                        cwd=target_dir, check=True, timeout=30
+                        cwd=target_dir, check=True, timeout=TimeoutConstants.HTTP_DEFAULT
                     )
                     # Stage the resolved file
                     subprocess.run(
                         ["git", "add", file],
-                        cwd=target_dir, check=True, timeout=30
+                        cwd=target_dir, check=True, timeout=TimeoutConstants.HTTP_DEFAULT
                     )
                     print(f"  ✅ Resolved {file}")
                 
@@ -172,7 +161,7 @@ def resolve_conflicts_with_ours(target_repo: str, source_repo: str, merge_branch
                 print(f"💾 Committing merge with resolved conflicts...")
                 commit_result = subprocess.run(
                     ["git", "commit", "-m", f"Merge {source_repo} into {target_repo} - Conflicts resolved using 'ours' strategy"],
-                    cwd=target_dir, capture_output=True, text=True, timeout=30
+                    cwd=target_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_DEFAULT
                 )
                 
                 if commit_result.returncode == 0:
@@ -182,7 +171,7 @@ def resolve_conflicts_with_ours(target_repo: str, source_repo: str, merge_branch
                     print(f"📤 Pushing merge branch...")
                     push_result = subprocess.run(
                         ["git", "push", "-u", "origin", merge_branch],
-                        cwd=target_dir, capture_output=True, text=True, timeout=60, env=git_env
+                        cwd=target_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_MEDIUM, env=git_env
                     )
                     
                     if push_result.returncode == 0:
@@ -202,14 +191,14 @@ def resolve_conflicts_with_ours(target_repo: str, source_repo: str, merge_branch
             print(f"🔀 Attempting merge...")
             merge_result = subprocess.run(
                 ["git", "merge", "source-merge/main", "--allow-unrelated-histories", "--no-edit", "-m", f"Merge {source_repo} into {target_repo}"],
-                cwd=target_dir, capture_output=True, text=True, timeout=120
+                cwd=target_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_LONG
             )
             
             if merge_result.returncode != 0:
                 # Try master branch
                 merge_result = subprocess.run(
                     ["git", "merge", "source-merge/master", "--allow-unrelated-histories", "--no-edit", "-m", f"Merge {source_repo} into {target_repo}"],
-                    cwd=target_dir, capture_output=True, text=True, timeout=120
+                    cwd=target_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_LONG
                 )
             
             if merge_result.returncode != 0:
@@ -221,7 +210,7 @@ def resolve_conflicts_with_ours(target_repo: str, source_repo: str, merge_branch
                     # Get list of conflicted files
                     conflicted_files = subprocess.run(
                         ["git", "diff", "--name-only", "--diff-filter=U"],
-                        cwd=target_dir, capture_output=True, text=True, timeout=30
+                        cwd=target_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_DEFAULT
                     )
                     
                     if conflicted_files.returncode == 0 and conflicted_files.stdout.strip():
@@ -233,11 +222,11 @@ def resolve_conflicts_with_ours(target_repo: str, source_repo: str, merge_branch
                             print(f"  🔧 Resolving {file} using 'ours' strategy...")
                             subprocess.run(
                                 ["git", "checkout", "--ours", file],
-                                cwd=target_dir, check=True, timeout=30
+                                cwd=target_dir, check=True, timeout=TimeoutConstants.HTTP_DEFAULT
                             )
                             subprocess.run(
                                 ["git", "add", file],
-                                cwd=target_dir, check=True, timeout=30
+                                cwd=target_dir, check=True, timeout=TimeoutConstants.HTTP_DEFAULT
                             )
                             print(f"  ✅ Resolved {file}")
                         
@@ -245,7 +234,7 @@ def resolve_conflicts_with_ours(target_repo: str, source_repo: str, merge_branch
                         print(f"💾 Committing merge with resolved conflicts...")
                         commit_result = subprocess.run(
                             ["git", "commit", "-m", f"Merge {source_repo} into {target_repo} - Conflicts resolved using 'ours' strategy"],
-                            cwd=target_dir, capture_output=True, text=True, timeout=30
+                            cwd=target_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_DEFAULT
                         )
                         
                         if commit_result.returncode == 0:
@@ -255,7 +244,7 @@ def resolve_conflicts_with_ours(target_repo: str, source_repo: str, merge_branch
                             print(f"📤 Pushing merge branch...")
                             push_result = subprocess.run(
                                 ["git", "push", "-u", "origin", merge_branch],
-                                cwd=target_dir, capture_output=True, text=True, timeout=60, env=git_env
+                                cwd=target_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_MEDIUM, env=git_env
                             )
                             
                             if push_result.returncode == 0:
@@ -267,7 +256,7 @@ def resolve_conflicts_with_ours(target_repo: str, source_repo: str, merge_branch
                                     print(f"⚠️ Remote branch has different commits, force pushing resolved conflicts...")
                                     push_result = subprocess.run(
                                         ["git", "push", "-u", "--force", "origin", merge_branch],
-                                        cwd=target_dir, capture_output=True, text=True, timeout=60, env=git_env
+                                        cwd=target_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_MEDIUM, env=git_env
                                     )
                                     if push_result.returncode == 0:
                                         print(f"✅ Merge branch force-pushed successfully!")
@@ -288,7 +277,7 @@ def resolve_conflicts_with_ours(target_repo: str, source_repo: str, merge_branch
                 # Push merge branch
                 push_result = subprocess.run(
                     ["git", "push", "-u", "origin", merge_branch],
-                    cwd=target_dir, capture_output=True, text=True, timeout=60, env=git_env
+                    cwd=target_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_MEDIUM, env=git_env
                 )
                 
                 if push_result.returncode == 0:

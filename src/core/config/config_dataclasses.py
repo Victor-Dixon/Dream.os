@@ -6,6 +6,8 @@ Configuration Dataclasses - V2 Compliance Module
 Dataclass configuration models for unified configuration system.
 Extracted from config_ssot.py for better modularity.
 
+<!-- SSOT Domain: core -->
+
 V2 Compliance: Single Responsibility Principle, <400 lines
 SOLID Principles: Open-Closed Principle, Interface Segregation
 

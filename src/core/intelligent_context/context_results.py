@@ -18,31 +18,57 @@ from datetime import datetime
 from typing import Any
 
 from .mission_models import MissionContext
+from src.core.utils.serialization_utils import to_dict
 
+
+# DEPRECATED: Use SSOT from src.services.models.vector_models instead
+import warnings
+from src.services.models.vector_models import SearchResult as SSOTSearchResult
 
 @dataclass
-class SearchResult:
-    """Search result structure."""
-
-    result_id: str
-    content: str
-    relevance_score: float
-    source_type: str
-    source_id: str
-    metadata: dict[str, Any] = field(default_factory=dict)
-    timestamp: datetime = field(default_factory=datetime.now)
-
+class SearchResult(SSOTSearchResult):
+    """
+    DEPRECATED: This class is maintained for backward compatibility only.
+    
+    Use src.services.models.vector_models.SearchResult instead.
+    
+    This class will be removed in a future version.
+    
+    <!-- SSOT Domain: data -->
+    """
+    
+    def __init__(self, result_id: str, content: str, relevance_score: float,
+                 source_type: str, source_id: str, metadata: dict[str, Any] = None,
+                 timestamp: datetime = None):
+        """Initialize with legacy parameters."""
+        warnings.warn(
+            "SearchResult from src.core.intelligent_context.context_results is deprecated. "
+            "Use src.services.models.vector_models.SearchResult instead.",
+            DeprecationWarning,
+            stacklevel=2
+        )
+        super().__init__(
+            document_id=result_id,
+            content=content,
+            similarity_score=relevance_score,
+            metadata=metadata or {},
+            result_id=result_id,
+            source_type=source_type,
+            source_id=source_id,
+            relevance_score=relevance_score,
+            timestamp=timestamp or datetime.now()
+        )
+    
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary."""
-        return {
-            "result_id": self.result_id,
-            "content": self.content,
-            "relevance_score": self.relevance_score,
-            "source_type": self.source_type,
-            "source_id": self.source_id,
-            "metadata": self.metadata,
-            "timestamp": self.timestamp.isoformat(),
-        }
+        """Convert to dictionary using SSOT utility."""
+        # Use SSOT utility for base conversion, then add aliases
+        result = to_dict(self)
+        # Map aliases for backward compatibility
+        if "result_id_alias" in result:
+            result["result_id"] = result.pop("result_id_alias")
+        if "relevance_score_alias" in result:
+            result["relevance_score"] = result.pop("relevance_score_alias")
+        return result
 
 
 @dataclass
@@ -59,13 +85,8 @@ class ContextRetrievalResult:
     error_message: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary."""
-        return {
-            "success": self.success,
-            "mission_context": (self.mission_context.to_dict() if self.mission_context else None),
-            "search_results": [r.to_dict() for r in self.search_results],
-            "agent_recommendations": self.agent_recommendations,
-            "risk_assessment": self.risk_assessment,
+        """Convert to dictionary using SSOT utility."""
+        return to_dict(self)
             "success_prediction": self.success_prediction,
             "execution_time_ms": self.execution_time_ms,
             "error_message": self.error_message,

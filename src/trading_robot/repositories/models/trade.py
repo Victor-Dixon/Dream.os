@@ -15,6 +15,8 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Any
 
+from src.core.utils.serialization_utils import to_dict
+
 
 @dataclass
 class Trade:
@@ -75,18 +77,8 @@ class Trade:
         return self.status == "cancelled"
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert trade to dictionary."""
-        return {
-            "id": self.id,
-            "symbol": self.symbol,
-            "side": self.side,
-            "quantity": self.quantity,
-            "price": self.price,
-            "timestamp": self.timestamp.isoformat(),
-            "status": self.status,
-            "order_type": self.order_type,
-            "metadata": self.metadata,
-        }
+        """Convert trade to dictionary using SSOT utility."""
+        return to_dict(self)
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> "Trade":

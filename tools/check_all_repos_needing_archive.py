@@ -9,6 +9,7 @@ from pathlib import Path
 
 try:
     from dotenv import load_dotenv
+from src.core.config.timeout_constants import TimeoutConstants
     env_path = Path('.env')
     if env_path.exists():
         load_dotenv(env_path)
@@ -61,7 +62,7 @@ def main():
         repo_url = f"https://api.github.com/repos/{owner}/{repo_name}"
         
         try:
-            response = requests.get(repo_url, headers=headers, timeout=30)
+            response = requests.get(repo_url, headers=headers, timeout=TimeoutConstants.HTTP_DEFAULT)
             if response.status_code == 200:
                 repo_data = response.json()
                 archived = repo_data.get("archived", False)

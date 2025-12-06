@@ -15,7 +15,7 @@ from typing import Any
 
 from ..shared_utilities import (
     CleanupManager,
-    ConfigurationManager,
+    ConfigurationManagerUtil as ConfigurationManager,  # Alias for backward compatibility
     ErrorHandler,
     InitializationManager,
     LoggingManager,

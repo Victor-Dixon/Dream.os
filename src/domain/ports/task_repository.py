@@ -4,6 +4,8 @@ Task Repository Port - Domain Interface
 
 Defines the contract for task persistence operations.
 This is a port in the hexagonal architecture - the domain defines what it needs.
+
+<!-- SSOT Domain: domain -->
 """
 
 from collections.abc import Iterable

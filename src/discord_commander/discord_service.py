@@ -36,6 +36,8 @@ except ImportError:
         create_devlog_embed,
     )
 
+from src.core.config.timeout_constants import TimeoutConstants
+
 
 class DiscordService:
     """Unified Discord service for DevLog monitoring, webhooks, and agent communication."""
@@ -48,7 +50,7 @@ class DiscordService:
         self.last_check_time = datetime.utcnow()
         self.is_running = False
         self.session = requests.Session()
-        self.session.timeout = 10
+        self.session.timeout=TimeoutConstants.HTTP_SHORT
 
     def _load_webhook_url(self) -> str | None:
         """Load webhook URL from environment or config."""

@@ -16,6 +16,8 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import Any
 
+from src.core.utils.serialization_utils import to_dict
+
 
 class LockStatus(Enum):
     """Status of file lock operations."""
@@ -56,15 +58,8 @@ class LockInfo:
         return time.time() - self.timestamp > stale_age
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary."""
-        return {
-            "lock_file": self.lock_file,
-            "pid": self.pid,
-            "thread_id": self.thread_id,
-            "timestamp": self.timestamp,
-            "process_name": self.process_name,
-            "metadata": self.metadata,
-        }
+        """Convert to dictionary using SSOT utility."""
+        return to_dict(self)
 
 
 @dataclass
@@ -79,15 +74,12 @@ class LockResult:
     retry_count: int = 0
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary."""
-        return {
-            "success": self.success,
-            "status": self.status.value,
-            "lock_info": self.lock_info.to_dict() if self.lock_info else None,
-            "error_message": self.error_message,
-            "execution_time_ms": self.execution_time_ms,
-            "retry_count": self.retry_count,
-        }
+        """Convert to dictionary using SSOT utility."""
+        result = to_dict(self)
+        # Ensure lock_info is serialized if present
+        if self.lock_info:
+            result["lock_info"] = self.lock_info.to_dict() if hasattr(self.lock_info, 'to_dict') else to_dict(self.lock_info)
+        return result
 
 
 @dataclass
@@ -107,17 +99,8 @@ class LockMetrics:
     last_updated: float = field(default_factory=time.time)
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary."""
-        return {
-            "total_locks_created": self.total_locks_created,
-            "total_locks_acquired": self.total_locks_acquired,
-            "total_locks_released": self.total_locks_released,
-            "total_timeouts": self.total_timeouts,
-            "total_errors": self.total_errors,
-            "total_stale_cleanups": self.total_stale_cleanups,
-            "average_acquire_time_ms": self.average_acquire_time_ms,
-            "average_release_time_ms": self.average_release_time_ms,
-            "total_execution_time_ms": self.total_execution_time_ms,
+        """Convert to dictionary using SSOT utility."""
+        return to_dict(self)
             "active_locks": self.active_locks,
             "last_updated": self.last_updated,
         }

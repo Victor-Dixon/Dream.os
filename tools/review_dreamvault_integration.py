@@ -65,21 +65,14 @@ def get_github_username() -> Optional[str]:
     return None
 
 
+# Use SSOT utility for directory removal
+from src.core.utils.file_utils import ensure_directory_removed
+from src.core.config.timeout_constants import TimeoutConstants
+
+# Alias for backward compatibility
 def ensure_dir_removed(dir_path: Path, name: str):
-    """Ensure directory is completely removed."""
-    if dir_path.exists():
-        print(f"🧹 Removing existing {name} directory: {dir_path}")
-        try:
-            shutil.rmtree(dir_path, ignore_errors=True)
-            time.sleep(0.5)
-            if dir_path.exists():
-                def remove_readonly(func, path, exc):
-                    os.chmod(path, stat.S_IWRITE)
-                    func(path)
-                shutil.rmtree(dir_path, onerror=remove_readonly)
-                time.sleep(0.5)
-        except Exception as e:
-            print(f"⚠️ Cleanup warning for {name}: {e}")
+    """Ensure directory is completely removed (uses SSOT utility)."""
+    ensure_directory_removed(dir_path, name)
 
 
 def clone_dreamvault(temp_base: Path, token: str, username: str) -> Optional[Path]:
@@ -93,7 +86,7 @@ def clone_dreamvault(temp_base: Path, token: str, username: str) -> Optional[Pat
         print(f"📥 Cloning {repo}...")
         subprocess.run(
             ["git", "clone", repo_url, str(repo_dir)],
-            check=True, timeout=300, capture_output=True, text=True
+            check=True, timeout=TimeoutConstants.HTTP_EXTENDED, capture_output=True, text=True
         )
         print(f"✅ Cloned {repo} successfully")
         return repo_dir
@@ -117,7 +110,7 @@ def check_git_history(repo_dir: Path) -> Dict:
         # Check for merge commits
         result = subprocess.run(
             ["git", "log", "--all", "--merges", "--oneline", "--grep", "DreamBank"],
-            cwd=repo_dir, capture_output=True, text=True, timeout=30
+            cwd=repo_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_DEFAULT
         )
         if result.returncode == 0 and result.stdout.strip():
             merges["DreamBank"]["found"] = True
@@ -125,7 +118,7 @@ def check_git_history(repo_dir: Path) -> Dict:
         
         result = subprocess.run(
             ["git", "log", "--all", "--merges", "--oneline", "--grep", "DigitalDreamscape"],
-            cwd=repo_dir, capture_output=True, text=True, timeout=30
+            cwd=repo_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_DEFAULT
         )
         if result.returncode == 0 and result.stdout.strip():
             merges["DigitalDreamscape"]["found"] = True
@@ -133,7 +126,7 @@ def check_git_history(repo_dir: Path) -> Dict:
         
         result = subprocess.run(
             ["git", "log", "--all", "--merges", "--oneline", "--grep", "Thea"],
-            cwd=repo_dir, capture_output=True, text=True, timeout=30
+            cwd=repo_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_DEFAULT
         )
         if result.returncode == 0 and result.stdout.strip():
             merges["Thea"]["found"] = True

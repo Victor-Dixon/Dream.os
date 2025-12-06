@@ -48,7 +48,7 @@ def run_test_suite(timeout=600):
             "--maxfail=10",
             "--json-report",
             "--json-report-file=test_results.json",
-            "--timeout=300",
+            "--timeout=TimeoutConstants.HTTP_EXTENDED",
         ]
         
         start_time = datetime.now()
@@ -93,6 +93,7 @@ def run_test_suite(timeout=600):
             if "passed" in line.lower() and "failed" in line.lower():
                 # Try to extract numbers
                 import re
+from src.core.config.timeout_constants import TimeoutConstants
                 numbers = re.findall(r'\d+', line)
                 if len(numbers) >= 2:
                     result["tests_passed"] = int(numbers[0]) if numbers else 0
@@ -168,6 +169,7 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
+
 
 
 

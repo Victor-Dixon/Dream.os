@@ -11,22 +11,27 @@ License: MIT
 from __future__ import annotations
 
 from collections.abc import Iterable
-from dataclasses import dataclass
-from typing import Any, Protocol
 from dataclasses import dataclass, field
-
+from typing import Any, Protocol
 
 
 @dataclass
 class OrchestrationContext:
     """Context object for orchestration operations."""
 
-    config: dict[str, Any]
+    orchestrator_id: str = ""
+    config: dict[str, Any] = field(default_factory=dict)
     metrics: dict[str, Any] | None = None
+    metadata: dict[str, Any] = field(default_factory=dict)
+    _events: list[tuple[str, dict[str, Any]]] = field(default_factory=list, repr=False)
 
-    def emit(self, event: str, data: dict[str, Any]) -> None:
+    def emit(self, event: str, data: dict[str, Any] | None = None) -> None:
         """Emit an orchestration event."""
-        pass
+        self._events.append((event, data or {}))
+
+    def get_events(self) -> list[tuple[str, dict[str, Any]]]:
+        """Get all emitted events."""
+        return list(self._events)
 
 
 @dataclass
@@ -35,12 +40,16 @@ class OrchestrationResult:
 
     ok: bool
     summary: str
-    metrics: dict[str, Any] | None = None
+    metrics: dict[str, Any] = field(default_factory=dict)
     error: str | None = None
 
 
 class Step(Protocol):
     """Protocol for orchestration steps."""
+
+    def name(self) -> str:
+        """Return step name."""
+        ...
 
     def run(self, ctx: OrchestrationContext, data: dict[str, Any]) -> dict[str, Any]:
         """Execute the step and return updated data."""
@@ -61,4 +70,3 @@ class Orchestrator(Protocol):
     def report(self, result: OrchestrationResult) -> str:
         """Generate a report from the result."""
         ...
-

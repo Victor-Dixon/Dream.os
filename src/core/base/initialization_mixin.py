@@ -47,7 +47,8 @@ class InitializationMixin:
         Returns:
             Logger instance
         """
-        logger = UnifiedLoggingSystem(name).get_logger()
+        # UnifiedLoggingSystem doesn't take name parameter - use get_logger(name) instead
+        logger = UnifiedLoggingSystem().get_logger(name)
         if level:
             logger.setLevel(getattr(logging, level.upper(), logging.INFO))
         return logger
@@ -94,6 +95,21 @@ class InitializationMixin:
         if not hasattr(self, attribute):
             return False
         return getattr(self, attribute, False)
+    
+    def initialize_with_config(self, name: str, section: Optional[str] = None) -> tuple[logging.Logger, dict[str, Any]]:
+        """
+        Initialize logging and config together (convenience method).
+        
+        Args:
+            name: Logger name
+            section: Config section name (default: class name)
+        
+        Returns:
+            Tuple of (logger, config_dict)
+        """
+        logger = self.setup_logging(name)
+        config_dict = self.load_config(section)
+        return logger, config_dict
 
 
 

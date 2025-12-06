@@ -49,7 +49,7 @@ def check_rate_limit() -> bool:
             ["gh", "api", "rate_limit"],
             capture_output=True,
             text=True,
-            timeout=10
+            timeout=TimeoutConstants.HTTP_SHORT
         )
         if result.returncode == 0:
             import json
@@ -72,7 +72,7 @@ def archive_repo(repo: str, dry_run: bool = False) -> Tuple[bool, str]:
             ["gh", "repo", "archive", repo, "--yes"],
             capture_output=True,
             text=True,
-            timeout=30
+            timeout=TimeoutConstants.HTTP_DEFAULT
         )
         
         if result.returncode == 0:
@@ -115,6 +115,7 @@ def wait_for_rate_limit(max_wait: int = 3600) -> bool:
 def main():
     """Main execution function."""
     import argparse
+from src.core.config.timeout_constants import TimeoutConstants
     
     parser = argparse.ArgumentParser(
         description="Archive source repos after PRs merged"

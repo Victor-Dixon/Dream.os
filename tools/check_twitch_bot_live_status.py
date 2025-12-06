@@ -5,6 +5,8 @@ Check Twitch Bot Live Status
 
 Checks if the bot is actually connected and receiving messages.
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-7 (Web Development Specialist)
 Date: 2025-12-03
 """

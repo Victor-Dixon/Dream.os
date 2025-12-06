@@ -33,7 +33,7 @@ from . import status_embedding_indexer
 from . import swarm_intelligence_manager
 from . import unified_messaging_service
 # from . import unified_onboarding_service  # DELETED 2025-12-02 (duplicate)
-from . import vector_database_service_unified
+# from . import vector_database_service_unified  # TEMPORARILY DISABLED - Circular import blocking messaging CLI
 # from . import vector_integration_unified  # DELETED 2025-12-02 (duplicate)
 # from . import vector_models_and_embedding_unified  # DELETED 2025-12-02 (duplicate)
 from . import work_indexer
@@ -71,7 +71,7 @@ __all__ = [
     'swarm_intelligence_manager',
     'unified_messaging_service',
     # 'unified_onboarding_service',  # DELETED 2025-12-02 (duplicate)
-    'vector_database_service_unified',
+    # 'vector_database_service_unified',  # TEMPORARILY DISABLED - Circular import blocking messaging CLI
     # 'vector_integration_unified',  # DELETED 2025-12-02 (duplicate)
     # 'vector_models_and_embedding_unified',  # DELETED 2025-12-02 (duplicate)
     'work_indexer',

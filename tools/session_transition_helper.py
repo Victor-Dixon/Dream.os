@@ -3,6 +3,9 @@
 Session Transition Helper - Automates Session Transition Deliverables
 =====================================================================
 
+⚠️ DEPRECATED: This tool has been consolidated into unified_validator.py
+Use: python tools/unified_validator.py --category session --agent <agent_id>
+
 This tool automates the creation of session transition deliverables:
 - passdown.json generation
 - Devlog creation

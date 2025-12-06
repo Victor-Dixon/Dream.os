@@ -71,21 +71,40 @@ class SearchRequest:
     filters: dict[str, Any] = field(default_factory=dict)
 
 
-@dataclass
-class SearchResult:
-    """Search result model."""
+# Backward compatibility shim - use SSOT from src.services.models.vector_models
+from src.services.models.vector_models import SearchResult as SSOTSearchResult
 
-    id: str
-    title: str
-    content: str
-    collection: str
-    relevance: float
-    tags: list[str] = field(default_factory=list)
-    created_at: str = ""
-    updated_at: str = ""
-    size: str = ""
-    metadata: dict[str, Any] = field(default_factory=dict)
-    score: float | None = None
+@dataclass
+class SearchResult(SSOTSearchResult):
+    """
+    Backward compatibility shim for SearchResult.
+    
+    DEPRECATED: Use src.services.models.vector_models.SearchResult instead.
+    This class is maintained for backward compatibility only.
+    
+    <!-- SSOT Domain: data -->
+    """
+    
+    def __init__(self, id: str, title: str, content: str, collection: str, 
+                 relevance: float, tags: list[str] = None, created_at: str = "",
+                 updated_at: str = "", size: str = "", metadata: dict[str, Any] = None,
+                 score: float | None = None):
+        """Initialize with web model parameters."""
+        super().__init__(
+            document_id=id,
+            content=content,
+            similarity_score=relevance,
+            metadata=metadata or {},
+            id=id,
+            title=title,
+            collection=collection,
+            relevance=relevance,
+            tags=tags or [],
+            created_at=created_at,
+            updated_at=updated_at,
+            size=size,
+            score=score
+        )
 
 
 @dataclass

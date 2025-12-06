@@ -22,6 +22,7 @@ from datetime import datetime
 from typing import Any, Dict, List, Optional
 from dataclasses import dataclass, field
 from enum import Enum
+from src.core.config.timeout_constants import TimeoutConstants
 
 logger = logging.getLogger(__name__)
 
@@ -192,7 +193,7 @@ class StressTestRunner:
         
         # Wait for all threads to finish
         for thread in self._threads:
-            thread.join(timeout=5.0)
+            thread.join(timeout=TimeoutConstants.HTTP_QUICK)
         
         logger.info("✅ Stress test stopped")
     

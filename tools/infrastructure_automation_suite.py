@@ -6,6 +6,8 @@ Infrastructure Automation Suite
 Comprehensive automation suite for infrastructure operations.
 Combines all infrastructure tools into unified automation.
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-3 (Infrastructure & DevOps) - JET FUEL AUTONOMOUS MODE
 Created: 2025-01-27
 Priority: CRITICAL
@@ -35,7 +37,7 @@ class InfrastructureAutomationSuite:
                 ["python", "tools/message_compression_automation.py"],
                 capture_output=True,
                 text=True,
-                timeout=300,
+                timeout=TimeoutConstants.HTTP_EXTENDED,
             )
             if result.returncode == 0:
                 return {"success": True, "output": result.stdout}
@@ -51,7 +53,7 @@ class InfrastructureAutomationSuite:
                 ["python", "tools/infrastructure_health_dashboard.py", "--json"],
                 capture_output=True,
                 text=True,
-                timeout=60,
+                timeout=TimeoutConstants.HTTP_MEDIUM,
             )
             if result.returncode == 0:
                 return {"success": True, "health": json.loads(result.stdout)}
@@ -67,7 +69,7 @@ class InfrastructureAutomationSuite:
                 ["python", "tools/repo_consolidation_analyzer.py", "--json"],
                 capture_output=True,
                 text=True,
-                timeout=60,
+                timeout=TimeoutConstants.HTTP_MEDIUM,
             )
             if result.returncode == 0:
                 return {"success": True, "analysis": json.loads(result.stdout)}
@@ -148,6 +150,7 @@ class InfrastructureAutomationSuite:
 def main():
     """CLI entry point."""
     import argparse
+from src.core.config.timeout_constants import TimeoutConstants
     
     parser = argparse.ArgumentParser(description="Infrastructure Automation Suite")
     parser.add_argument("--json", action="store_true", help="Output as JSON")

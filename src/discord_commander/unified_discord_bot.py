@@ -23,6 +23,7 @@ import asyncio
 import logging
 import os
 import sys
+import time
 from pathlib import Path
 
 # Add project root to path FIRST (before any src imports)
@@ -54,7 +55,7 @@ except ImportError:
     sys.exit(1)
 
 # Now import src modules (after path is set)
-
+from src.core.config.timeout_constants import TimeoutConstants
 
 logger = logging.getLogger(__name__)
 
@@ -150,6 +151,10 @@ class UnifiedDiscordBot(commands.Bot):
         self.gui_controller = DiscordGUIController(self.messaging_service)
         self.logger = logging.getLogger(__name__)
 
+        # Connection health tracking
+        self.last_heartbeat = time.time()
+        self.connection_healthy = False
+
         # Discord user ID to developer name mapping
         self.discord_user_map = self._load_discord_user_map()
 
@@ -222,6 +227,10 @@ class UnifiedDiscordBot(commands.Bot):
 
     async def on_ready(self):
         """Bot ready event."""
+        # Update connection health
+        self.connection_healthy = True
+        self.last_heartbeat = time.time()
+        
         # Prevent duplicate startup messages on reconnection
         if not hasattr(self, '_startup_sent'):
             self.logger.info(f"✅ Discord Commander Bot ready: {self.user}")
@@ -229,9 +238,26 @@ class UnifiedDiscordBot(commands.Bot):
 
             # Start status change monitoring (AUTO-START when bot is running)
             try:
-                from .status_change_monitor import setup_status_monitor
+                from src.discord_commander.status_change_monitor import setup_status_monitor
+                
+                # NEW: Initialize scheduler for integration
+                scheduler = None
+                try:
+                    from src.orchestrators.overnight.scheduler import TaskScheduler
+                    scheduler = TaskScheduler()
+                    self.logger.info("✅ Task scheduler initialized")
+                except Exception as e:
+                    self.logger.warning(f"⚠️ Could not initialize scheduler: {e}")
+                
+                # Create status monitor with scheduler integration
                 self.status_monitor = setup_status_monitor(
-                    self, self.channel_id)
+                    self, self.channel_id, scheduler=scheduler)
+                
+                # Wire scheduler to status monitor (bidirectional)
+                if scheduler and self.status_monitor:
+                    scheduler.status_monitor = self.status_monitor
+                    self.logger.info("✅ Scheduler-StatusMonitor integration wired")
+                
                 # Auto-start monitoring when bot starts (no command needed)
                 if hasattr(self.status_monitor, 'start_monitoring'):
                     self.status_monitor.start_monitoring()
@@ -322,9 +348,22 @@ class UnifiedDiscordBot(commands.Bot):
                 recipient = header
                 message_prefix = developer_prefix  # Auto-add developer prefix
 
-            # Validate recipient format
+            # Validate recipient format and ensure it's a valid agent (Agent-1 through Agent-8)
             if not recipient.startswith('Agent-'):
                 self.logger.warning(f"Invalid recipient format: {recipient}")
+                await message.add_reaction("❌")
+                return
+
+            # Validate agent name is in allowed list (Agent-1 through Agent-8)
+            from src.discord_commander.discord_agent_communication import AgentCommunicationEngine
+            engine = AgentCommunicationEngine()
+            if not engine.is_valid_agent(recipient):
+                self.logger.warning(f"Invalid agent name: {recipient} (must be Agent-1 through Agent-8)")
+                await message.add_reaction("❌")
+                await message.channel.send(
+                    f"❌ Invalid agent name: `{recipient}`. "
+                    f"Only Agent-1 through Agent-8 are allowed."
+                )
                 return
 
             # Priority is always regular for Discord messages
@@ -351,12 +390,21 @@ class UnifiedDiscordBot(commands.Bot):
                 self.logger.info(
                     f"✅ Message queued: {queue_id} → {recipient} ({message_prefix})")
 
-                # Send confirmation (optional - can be removed if too noisy)
-                # await message.add_reaction("✅")
+                # Send confirmation to Discord
+                await message.add_reaction("✅")
+                # Send confirmation message (brief, non-intrusive)
+                await message.channel.send(
+                    f"✅ Message queued for **{recipient}** (Queue ID: `{queue_id[:8]}...`)",
+                    reference=message  # Reply to original message
+                )
             else:
                 error = result.get("error", "Unknown error")
                 self.logger.error(f"❌ Failed to queue message: {error}")
                 await message.add_reaction("❌")
+                await message.channel.send(
+                    f"❌ Failed to queue message: {error}",
+                    reference=message  # Reply to original message
+                )
 
         except Exception as e:
             self.logger.error(
@@ -545,11 +593,25 @@ class UnifiedDiscordBot(commands.Bot):
 
     async def on_disconnect(self):
         """Handle bot disconnection."""
+        self.connection_healthy = False
         self.logger.warning(
             "⚠️ Discord Bot disconnected - will attempt to reconnect")
         # Reset startup flag on disconnect so we can send startup message on reconnect
         if hasattr(self, '_startup_sent'):
             delattr(self, '_startup_sent')
+    
+    async def on_resume(self):
+        """Handle bot reconnection after disconnect."""
+        self.connection_healthy = True
+        self.last_heartbeat = time.time()
+        self.logger.info("✅ Discord Bot reconnected successfully after disconnect")
+    
+    async def on_socket_raw_receive(self, msg):
+        """Track connection health via socket activity."""
+        self.last_heartbeat = time.time()
+        if not self.connection_healthy:
+            self.connection_healthy = True
+            self.logger.debug("🔄 Connection health restored")
 
     async def on_error(self, event, *args, **kwargs):
         """Handle errors in event handlers."""
@@ -1062,7 +1124,7 @@ class MessagingCommands(commands.Cog):
                         cli_path), '--agents', agents_str, '--message', message, '--generate-cycle-report']
 
                 result = subprocess.run(
-                    cmd, capture_output=True, text=True, timeout=300, cwd=str(project_root))
+                    cmd, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_EXTENDED, cwd=str(project_root))
 
                 if result.returncode == 0:
                     # All agents successful
@@ -2010,7 +2072,7 @@ Agent, you appear stalled. CONTINUE AUTONOMOUSLY NOW.
 
 
 async def main() -> int:
-    """Main function to run the unified Discord bot. Returns exit code."""
+    """Main function to run the unified Discord bot with automatic reconnection. Returns exit code."""
     # Setup logging
     logging.basicConfig(
         level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
@@ -2033,34 +2095,142 @@ async def main() -> int:
             print(f"⚠️  Invalid DISCORD_CHANNEL_ID: {channel_id}")
             channel_id = None
 
-    # Create and run bot
+    # Create bot instance
     bot = UnifiedDiscordBot(token=token, channel_id=channel_id)
 
-    try:
-        print("🚀 Starting Discord Commander...")
-        print("🐝 WE. ARE. SWARM.")
-        await bot.start(token)
-        return 0  # Clean exit
-    except KeyboardInterrupt:
-        print("\n🛑 Bot stopped by user")
-        return 0  # Clean exit
-    except discord.LoginFailure as e:
-        print(f"❌ Invalid Discord token: {e}")
-        logger.error(f"Login failure: {e}")
-        return 1  # Exit with error code
-    except discord.PrivilegedIntentsRequired as e:
-        print(f"❌ Missing required intents: {e}")
-        logger.error(f"Intents error: {e}")
-        return 1  # Exit with error code
-    except Exception as e:
-        print(f"❌ Bot error: {e}")
-        logger.error(f"Bot crashed: {e}", exc_info=True)
-        return 1  # Exit with error code
-    finally:
+    # Reconnection settings
+    max_reconnect_attempts = 999999  # Essentially infinite
+    base_delay = 5  # Start with 5 seconds
+    max_delay = 300  # Max 5 minutes between attempts
+    reconnect_delay = base_delay
+    reconnect_count = 0
+    consecutive_failures = 0
+    max_consecutive_failures = 10  # After 10 failures, increase delay significantly
+
+    print("🚀 Starting Discord Commander...")
+    print("🐝 WE. ARE. SWARM.")
+    print("🔄 Auto-reconnect enabled - bot will automatically reconnect on internet outage\n")
+
+    while reconnect_count < max_reconnect_attempts:
         try:
-            await bot.close()
+            # Attempt to start/restart bot
+            if reconnect_count > 0:
+                logger.info(f"🔄 Reconnection attempt {reconnect_count} (delay: {reconnect_delay}s)")
+                await asyncio.sleep(reconnect_delay)
+            
+            logger.info("🔌 Connecting to Discord...")
+            await bot.start(token)
+            
+            # If we get here, bot started successfully
+            reconnect_count = 0  # Reset on successful connection
+            consecutive_failures = 0
+            reconnect_delay = base_delay  # Reset delay
+            
+            # Bot will run until disconnected
+            # When disconnected, loop will restart
+            return 0  # Clean exit (shouldn't normally reach here)
+            
+        except KeyboardInterrupt:
+            print("\n🛑 Bot stopped by user")
+            try:
+                await bot.close()
+            except:
+                pass
+            return 0  # Clean exit
+            
+        except discord.LoginFailure as e:
+            print(f"❌ Invalid Discord token: {e}")
+            logger.error(f"Login failure: {e}")
+            # Don't retry on login failure - token is wrong
+            try:
+                await bot.close()
+            except:
+                pass
+            return 1  # Exit with error code
+            
+        except discord.PrivilegedIntentsRequired as e:
+            print(f"❌ Missing required intents: {e}")
+            logger.error(f"Intents error: {e}")
+            # Don't retry on intents error - configuration issue
+            try:
+                await bot.close()
+            except:
+                pass
+            return 1  # Exit with error code
+            
+        except (ConnectionError, OSError, asyncio.TimeoutError) as e:
+            # Network-related errors - retry with backoff
+            consecutive_failures += 1
+            reconnect_count += 1
+            
+            error_type = type(e).__name__
+            logger.warning(
+                f"⚠️ Network error ({error_type}): {e}\n"
+                f"   Attempt {reconnect_count}, consecutive failures: {consecutive_failures}\n"
+                f"   Retrying in {reconnect_delay} seconds..."
+            )
+            
+            # Exponential backoff with jitter
+            if consecutive_failures >= max_consecutive_failures:
+                # After many failures, use longer delays
+                reconnect_delay = min(max_delay, reconnect_delay * 2)
+            else:
+                # Normal exponential backoff
+                reconnect_delay = min(max_delay, reconnect_delay * 1.5)
+            
+            # Add small random jitter to prevent thundering herd
+            import random
+            jitter = random.uniform(0.8, 1.2)
+            reconnect_delay = int(reconnect_delay * jitter)
+            
+            # Close bot before retry
+            try:
+                await bot.close()
+            except:
+                pass
+            
+            # Wait before retry
+            continue
+            
         except Exception as e:
-            logger.error(f"Error during bot close: {e}")
+            # Other errors - log and retry with backoff
+            consecutive_failures += 1
+            reconnect_count += 1
+            
+            logger.error(
+                f"❌ Bot error: {e}\n"
+                f"   Attempt {reconnect_count}, consecutive failures: {consecutive_failures}\n"
+                f"   Retrying in {reconnect_delay} seconds...",
+                exc_info=True
+            )
+            
+            # Exponential backoff
+            if consecutive_failures >= max_consecutive_failures:
+                reconnect_delay = min(max_delay, reconnect_delay * 2)
+            else:
+                reconnect_delay = min(max_delay, reconnect_delay * 1.5)
+            
+            # Add jitter
+            import random
+            jitter = random.uniform(0.8, 1.2)
+            reconnect_delay = int(reconnect_delay * jitter)
+            
+            # Close bot before retry
+            try:
+                await bot.close()
+            except:
+                pass
+            
+            # Wait before retry
+            continue
+    
+    # Should never reach here, but just in case
+    logger.error("❌ Max reconnection attempts reached")
+    try:
+        await bot.close()
+    except:
+        pass
+    return 1
 
 
 if __name__ == "__main__":

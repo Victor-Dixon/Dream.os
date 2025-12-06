@@ -156,7 +156,8 @@ class TradingEngine:
                 self.positions = {pos['symbol']: pos for pos in positions}
 
                 if positions:
-                    logger.debug(f"📊 Current positions: {[f\"{p['symbol']}:{p['qty']}\" for p in positions]}")
+                    position_strs = [f"{p['symbol']}:{p['qty']}" for p in positions]
+                    logger.debug(f"📊 Current positions: {position_strs}")
 
                 await asyncio.sleep(30)  # Update every 30 seconds
 

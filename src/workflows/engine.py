@@ -327,6 +327,68 @@ class WorkflowEngine:
 
         self.logger.info(f"Workflow state saved: {state_file}")
 
+    def restore_state(self, state_data: dict[str, Any]) -> None:
+        """
+        Restore workflow state from saved data.
+        
+        Args:
+            state_data: Dictionary containing saved workflow state
+        """
+        try:
+            # Restore workflow state
+            state_value = state_data.get("state", "initialized")
+            self.state = WorkflowState(state_value)
+            
+            # Restore completed and failed steps
+            self.completed_steps = set(state_data.get("completed_steps", []))
+            self.failed_steps = set(state_data.get("failed_steps", []))
+            
+            # Restore workflow data
+            self.workflow_data = state_data.get("workflow_data", {})
+            
+            # Restore steps from serialized data
+            from .models import WorkflowStep, ResponseType
+            
+            restored_steps = []
+            for step_dict in state_data.get("steps", []):
+                try:
+                    step = WorkflowStep(
+                        id=step_dict["id"],
+                        name=step_dict["name"],
+                        description=step_dict["description"],
+                        agent_target=step_dict["agent_target"],
+                        prompt_template=step_dict["prompt_template"],
+                        expected_response_type=ResponseType(step_dict["expected_response_type"]),
+                        timeout_seconds=step_dict.get("timeout_seconds", 300),
+                        retry_count=step_dict.get("retry_count", 0),
+                        max_retries=step_dict.get("max_retries", 3),
+                        dependencies=step_dict.get("dependencies", []),
+                        completion_criteria=step_dict.get("completion_criteria", {}),
+                        metadata=step_dict.get("metadata", {}),
+                    )
+                    restored_steps.append(step)
+                except Exception as e:
+                    self.logger.warning(f"Failed to restore step {step_dict.get('id', 'unknown')}: {e}")
+            
+            self.steps = restored_steps
+            
+            # Restore current step if available
+            current_step_id = state_data.get("current_step")
+            if current_step_id:
+                self.current_step = next(
+                    (step for step in self.steps if step.id == current_step_id),
+                    None
+                )
+            
+            self.logger.info(
+                f"Workflow state restored: {len(self.steps)} steps, "
+                f"{len(self.completed_steps)} completed, state={self.state.value}"
+            )
+            
+        except Exception as e:
+            self.logger.error(f"Failed to restore workflow state: {e}")
+            raise
+
     def pause(self) -> None:
         """Pause workflow execution."""
         if self.state == WorkflowState.RUNNING:

@@ -18,20 +18,14 @@ License: MIT
 """
 
 import logging
-from typing import Any, TYPE_CHECKING
+from typing import Any
 
-# Use dependency injection pattern to avoid circular imports
-from .circuit_breaker.provider import CircuitBreakerProvider
-from .circuit_breaker.protocol import ICircuitBreaker
-
+from .circuit_breaker.implementation import CircuitBreaker
 # Infrastructure SSOT: Import directly from config_dataclasses.py
 from src.core.config.config_dataclasses import CircuitBreakerConfig, RetryConfig
 from .error_intelligence import intelligence_engine
 from .recovery_strategies import RecoveryStrategy
 from .retry_mechanisms import RetryMechanism
-
-if TYPE_CHECKING:
-    from .circuit_breaker import CircuitBreaker
 
 logger = logging.getLogger(__name__)
 
@@ -41,7 +35,7 @@ class ComponentManager:
 
     def __init__(self):
         """Initialize component manager."""
-        self.circuit_breakers: dict[str, ICircuitBreaker] = {}
+        self.circuit_breakers: dict[str, CircuitBreaker] = {}
         self.retry_mechanisms: dict[str, RetryMechanism] = {}
         self.recovery_strategies: list[RecoveryStrategy] = []
         logger.info("ComponentManager initialized")
@@ -51,7 +45,7 @@ class ComponentManager:
         component: str,
         failure_threshold: int = 5,
         recovery_timeout: float = 60.0,
-    ) -> ICircuitBreaker:
+    ) -> CircuitBreaker:
         """Register a circuit breaker for a component.
 
         Args:
@@ -62,12 +56,12 @@ class ComponentManager:
         Returns:
             Registered circuit breaker
         """
-        # Use provider pattern to avoid circular imports
-        circuit_breaker = CircuitBreakerProvider.create_with_config(
+        config = CircuitBreakerConfig(
             name=component,
             failure_threshold=failure_threshold,
-            recovery_timeout=recovery_timeout
+            recovery_timeout=recovery_timeout,
         )
+        circuit_breaker = CircuitBreaker(config)
         self.circuit_breakers[component] = circuit_breaker
         logger.info(f"Circuit breaker registered for {component}")
         return circuit_breaker
@@ -143,43 +137,29 @@ class ComponentManager:
         """
         try:
             intelligence_report = intelligence_engine.get_system_intelligence_report()
-            return self._build_success_report(intelligence_report)
+
+            return {
+                "system_health": {
+                    "total_errors": intelligence_report["summary"]["total_errors"],
+                    "critical_errors": intelligence_report["summary"]["critical_errors"],
+                    "components_tracked": intelligence_report["summary"]["components_tracked"],
+                    "high_risk_components": len(intelligence_report["high_risk_components"]),
+                },
+                "intelligence": intelligence_report,
+                "circuit_breakers": {
+                    name: breaker.state.value for name, breaker in self.circuit_breakers.items()
+                },
+                "retry_mechanisms": list(self.retry_mechanisms.keys()),
+                "recovery_strategies": [s.name for s in self.recovery_strategies],
+            }
         except Exception as e:
             logger.error(f"Error generating error report: {e}")
-            return self._build_error_report(e)
-
-    def _build_success_report(self, intelligence_report: dict[str, Any]) -> dict[str, Any]:
-        """Build success report from intelligence data."""
-        return {
-            "system_health": self._extract_system_health(intelligence_report),
-            "intelligence": intelligence_report,
-            "circuit_breakers": self._get_circuit_breaker_states(),
-            "retry_mechanisms": list(self.retry_mechanisms.keys()),
-            "recovery_strategies": [s.name for s in self.recovery_strategies],
-        }
-
-    def _extract_system_health(self, intelligence_report: dict[str, Any]) -> dict[str, Any]:
-        """Extract system health metrics from intelligence report."""
-        summary = intelligence_report["summary"]
-        return {
-            "total_errors": summary["total_errors"],
-            "critical_errors": summary["critical_errors"],
-            "components_tracked": summary["components_tracked"],
-            "high_risk_components": len(intelligence_report["high_risk_components"]),
-        }
-
-    def _get_circuit_breaker_states(self) -> dict[str, str]:
-        """Get circuit breaker states."""
-        return {name: breaker.state.value for name, breaker in self.circuit_breakers.items()}
-
-    def _build_error_report(self, error: Exception) -> dict[str, Any]:
-        """Build error report when intelligence fails."""
-        return {
-            "error": str(error),
-            "circuit_breakers": list(self.circuit_breakers.keys()),
-            "retry_mechanisms": list(self.retry_mechanisms.keys()),
-            "recovery_strategies": [s.name for s in self.recovery_strategies],
-        }
+            return {
+                "error": str(e),
+                "circuit_breakers": list(self.circuit_breakers.keys()),
+                "retry_mechanisms": list(self.retry_mechanisms.keys()),
+                "recovery_strategies": [s.name for s in self.recovery_strategies],
+            }
 
     def reset_component(self, component: str) -> bool:
         """Reset error handling state for a specific component.
@@ -246,7 +226,7 @@ component_manager = ComponentManager()
 
 
 # Helper functions for quick access
-def register_circuit_breaker(component: str, **kwargs) -> ICircuitBreaker:
+def register_circuit_breaker(component: str, **kwargs) -> CircuitBreaker:
     """Register circuit breaker using global manager."""
     return component_manager.register_circuit_breaker(component, **kwargs)
 

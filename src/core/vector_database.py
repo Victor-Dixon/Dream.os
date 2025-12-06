@@ -36,14 +36,64 @@ class SearchType(Enum):
     FILTERED = "filtered"
 
 
-class SearchResult:
-    """Result of vector database search."""
+# Backward compatibility shim - use SSOT from src.services.models.vector_models
+import warnings
+from src.services.models.vector_models import SearchResult as SSOTSearchResult
 
-    def __init__(self, document_id: str, content: str, similarity_score: float, metadata: Dict[str, Any]):
-        self.document_id = document_id
-        self.content = content
-        self.similarity_score = similarity_score
-        self.metadata = metadata
+class SearchResult(SSOTSearchResult):
+    """
+    Backward compatibility shim for SearchResult - SSOT consolidated.
+    
+    DEPRECATED: Use src.services.models.vector_models.SearchResult instead.
+    This class is maintained for backward compatibility only.
+    
+    Supports both legacy initialization patterns:
+    1. document_id, content, similarity_score, metadata (original pattern)
+    2. document (VectorDocument), score, metadata (VectorDocument variant)
+    
+    <!-- SSOT Domain: data -->
+    """
+    
+    def __init__(self, document_id: str = None, content: str = None, 
+                 similarity_score: float = None, metadata: Dict[str, Any] = None,
+                 document: 'VectorDocument' = None, score: float = None):
+        """Initialize with legacy parameters - supports both patterns."""
+        # Handle VectorDocument variant
+        if document is not None:
+            warnings.warn(
+                "SearchResult (VectorDocument variant) is deprecated. "
+                "Use src.services.models.vector_models.SearchResult instead. "
+                "Use create_search_result_from_document() to convert.",
+                DeprecationWarning,
+                stacklevel=2
+            )
+            document_id = document.id
+            content = document.content
+            similarity_score = score or 0.0
+            metadata = metadata or {}
+            # Store document reference for backward compatibility
+            super().__init__(
+                document_id=document_id,
+                content=content,
+                similarity_score=similarity_score,
+                metadata=metadata,
+                document=document,
+                score=score
+            )
+        else:
+            # Handle standard pattern
+            if document_id is None or content is None or similarity_score is None:
+                raise ValueError("Either (document_id, content, similarity_score, metadata) or (document, score, metadata) must be provided")
+            super().__init__(
+                document_id=document_id,
+                content=content,
+                similarity_score=similarity_score,
+                metadata=metadata or {}
+            )
+    
+    def to_ssot(self) -> 'SSOTSearchResult':
+        """Convert to SSOT SearchResult (for VectorDocument variant compatibility)."""
+        return self
 
 
 class VectorDocument:
@@ -192,15 +242,39 @@ class EmbeddingModel(Enum):
     OPENAI_3_LARGE = "openai_3_large"
 
 
-@dataclass
-class SearchQuery:
-    """Query for vector search operations."""
+# Backward compatibility shim - use SSOT from src.services.models.vector_models
+import warnings
+from src.services.models.vector_models import SearchQuery as SSOTSearchQuery
 
-    query_text: str
-    limit: int = 10
-    threshold: float = 0.0
-    search_type: Optional['SearchType'] = None
-    metadata_filter: Optional[Dict[str, Any]] = None
+@dataclass
+class SearchQuery(SSOTSearchQuery):
+    """
+    Backward compatibility shim for SearchQuery.
+    
+    DEPRECATED: Use src.services.models.vector_models.SearchQuery instead.
+    This class is maintained for backward compatibility only.
+    This class will be removed in a future version.
+    
+    <!-- SSOT Domain: data -->
+    """
+    
+    def __init__(self, query_text: str, limit: int = 10, threshold: float = 0.0, 
+                 search_type: Optional['SearchType'] = None, 
+                 metadata_filter: Optional[Dict[str, Any]] = None):
+        """Initialize with legacy parameters."""
+        warnings.warn(
+            "SearchQuery from src.core.vector_database is deprecated. "
+            "Use src.services.models.vector_models.SearchQuery instead.",
+            DeprecationWarning,
+            stacklevel=2
+        )
+        super().__init__(
+            query_text=query_text,
+            limit=limit,
+            threshold=threshold,  # Maps to similarity_threshold
+            search_type=search_type,
+            metadata_filter=metadata_filter  # Maps to filters
+        )
 
 
 class SearchType(Enum):
@@ -211,13 +285,21 @@ class SearchType(Enum):
     HYBRID = "hybrid"
 
 
-@dataclass
-class SearchResult:
-    """Result from vector search operations."""
-
-    document: VectorDocument
-    score: float
-    metadata: Dict[str, Any]
+# Backward compatibility: Create adapter function for VectorDocument variant
+def create_search_result_from_document(document: VectorDocument, score: float, metadata: Dict[str, Any]) -> 'SSOTSearchResult':
+    """
+    Create SSOT SearchResult from VectorDocument variant.
+    
+    DEPRECATED: Use SearchResult(document=document, score=score, metadata=metadata) instead.
+    This function is maintained for backward compatibility only.
+    """
+    warnings.warn(
+        "create_search_result_from_document() is deprecated. "
+        "Use SearchResult(document=document, score=score, metadata=metadata) instead.",
+        DeprecationWarning,
+        stacklevel=2
+    )
+    return SearchResult(document=document, score=score, metadata=metadata)
 
 
 @dataclass

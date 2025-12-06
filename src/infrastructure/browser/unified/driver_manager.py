@@ -1,6 +1,8 @@
 """
 UnifiedDriverManager - Chrome WebDriver management with advanced features.
 
+<!-- SSOT Domain: infrastructure -->
+
 V2 Compliance: Adapted from Chat_Mate with V2 logging patterns
 Author: Agent-7 - Repository Cloning Specialist
 License: MIT

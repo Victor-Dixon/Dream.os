@@ -348,17 +348,9 @@ class UnifiedMessagingCore:
         CRITICAL FIX: Expands "ALL_AGENTS" into individual messages for each agent.
         This ensures broadcast messages are properly queued and delivered to all agents.
         """
-        # Get list of all agents
-        agents = [
-            "Agent-1",
-            "Agent-2",
-            "Agent-3",
-            "Agent-4",
-            "Agent-5",
-            "Agent-6",
-            "Agent-7",
-            "Agent-8",
-        ]
+        # Get list of all agents (SSOT)
+        from src.core.constants.agent_constants import AGENT_LIST
+        agents = AGENT_LIST
         
         # Send individual message to each agent (ensures proper queue processing)
         success_count = 0

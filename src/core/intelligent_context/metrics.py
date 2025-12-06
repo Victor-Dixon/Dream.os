@@ -14,6 +14,8 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Any
 
+from src.core.utils.serialization_utils import to_dict
+
 
 @dataclass
 class ContextMetrics:
@@ -31,16 +33,8 @@ class ContextMetrics:
     last_updated: datetime = field(default_factory=datetime.now)
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary."""
-        return {
-            "total_retrievals": self.total_retrievals,
-            "successful_retrievals": self.successful_retrievals,
-            "failed_retrievals": self.failed_retrievals,
-            "average_execution_time_ms": self.average_execution_time_ms,
-            "total_execution_time_ms": self.total_execution_time_ms,
-            "emergency_interventions": self.emergency_interventions,
-            "agent_optimizations": self.agent_optimizations,
-            "risk_assessments": self.risk_assessments,
+        """Convert to dictionary using SSOT utility."""
+        return to_dict(self)
             "success_predictions": self.success_predictions,
             "last_updated": self.last_updated.isoformat(),
         }

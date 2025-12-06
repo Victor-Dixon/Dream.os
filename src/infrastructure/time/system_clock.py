@@ -5,6 +5,8 @@ System Clock and Time Operations - V2 Compliance Module
 
 Time management functionality extracted from unified_logging_time.py.
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-5 (Business Intelligence & Team Beta Leader) - V2 Refactoring
 License: MIT
 """

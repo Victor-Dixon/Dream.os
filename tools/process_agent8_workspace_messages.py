@@ -9,6 +9,7 @@ from pathlib import Path
 from datetime import datetime
 from typing import Dict, List
 import subprocess
+from src.core.config.timeout_constants import TimeoutConstants
 
 class Agent8WorkspaceProcessor:
     def __init__(self, workspace_path: Path):
@@ -87,7 +88,7 @@ class Agent8WorkspaceProcessor:
                     ["python", "-m", "src.services.messaging_cli", "--agent", agent, "--message", response],
                     capture_output=True,
                     text=True,
-                    timeout=30
+                    timeout=TimeoutConstants.HTTP_DEFAULT
                 )
                 return result.returncode == 0
             except:
@@ -214,6 +215,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 

@@ -115,6 +115,7 @@ class CoordinationPerformanceMonitor:
         # Record memory usage (simplified)
         try:
             import psutil
+from src.core.config.timeout_constants import TimeoutConstants
 
             memory = psutil.virtual_memory()
             self.collector.record_metric("system_memory_usage", memory.percent)
@@ -169,7 +170,7 @@ class CoordinationPerformanceMonitor:
         """Stop background monitoring."""
         self.monitoring_active = False
         if self.monitoring_thread:
-            self.monitoring_thread.join(timeout=5)
+            self.monitoring_thread.join(timeout=TimeoutConstants.HTTP_QUICK)
 
 
 # Global performance monitor instance

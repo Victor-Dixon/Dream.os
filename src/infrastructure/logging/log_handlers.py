@@ -5,6 +5,8 @@ Log Handlers Module
 
 Logging handlers and setup logic extracted from unified_logger.py.
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-3 (Infrastructure & DevOps) - ROI Refactoring
 License: MIT
 """

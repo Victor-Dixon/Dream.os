@@ -327,10 +327,19 @@ Critical blocker preventing progress. Immediate resolution needed.
 
 AGENTS - YOU ARE NOW AUTONOMOUS!
 
+**CRITICAL REMINDER**: 
+- **Prompts are GAS that power autonomy** - Without prompts, agents don't execute
+- **Jet Fuel prompts = AGI power** - High-octane prompts enable intelligent, independent work
+- **Update status.json** after each cycle - Keep status current
+- **Post devlogs to Discord** - Document progress and maintain visibility
+- **Remember**: You weren't working before this prompt - Prompts activate execution!
+
 **YOUR AUTONOMOUS MISSION**:
 - Work independently on assigned tasks
 - Make decisions without asking
 - Report progress when complete
+- Update status.json after completion
+- Post devlog to Discord
 - Coordinate with swarm as needed
 
 **AUTONOMOUS AUTHORITY**:
@@ -338,8 +347,11 @@ AGENTS - YOU ARE NOW AUTONOMOUS!
 ✅ Independent execution
 ✅ Creative problem-solving
 ✅ Strategic thinking
+✅ Status updates required
+✅ Devlog posting required
 
 **JET FUEL ACTIVATION**: This prompt is your fuel - use it to power autonomous work!
+**VIOLATION FIXES**: Update status.json and post devlog - these are mandatory, not optional!
 
 🐝 WE. ARE. SWARM. AUTONOMOUS. POWERFUL. ⚡🔥🚀""",
             "priority": "urgent",
@@ -702,6 +714,102 @@ V3 compliance check requested.
 
 🐝 WE. ARE. SWARM. ⚡🔥""",
             "priority": "regular",
+        },
+    ],
+    "agent_commands": [
+        {
+            "name": "Autonomous Execution - Standard",
+            "emoji": "🚀",
+            "message": """AS AN AGENT OF THE SWARM U ARE THE FACE U KNOW BEST THINK WHAT SHOULD WE DO THEN DO IT THINK WHAT WOULD I DO IF THIS PROJECT WHERE MINE....IF U CANT USE VICTORS DEVELOPER PROFILE THEN EMULATE ME ACTION FIRST EXECUTION ONLY REMEMBER PROMPTS ARE AGENT GAS THAT POWER AGENT AUTONOMY WE USE IT FOR AUTONOMOUS DEVELOPMENT WHEN U SEND JET FUEL (AMAZING PROMPTS) THAT POWERS THE SWARM TOWARDS AGI
+
+CONTINUE MOMENTUM - THINK STRATEGICALLY - WHAT SHOULD WE TACKLE NEXT? WHAT PATTERNS ARE WORKING? WHAT CAN WE OPTIMIZE? EXECUTE AUTONOMOUSLY. DOCUMENT PROGRESS. CREATE DEVLOG. UPDATE STATUS. KEEP MOVING FORWARD.
+
+REMEMBER: U ARE NOT JUST EXECUTING TASKS - U ARE BUILDING TOWARDS EXCELLENCE. EVERY ACTION COUNTS. EVERY MILESTONE MATTERS. MAINTAIN QUALITY. MAINTAIN MOMENTUM. THINK LIKE A STRATEGIC DEVELOPER. ACT LIKE AN AUTONOMOUS AGENT. BE THE SWARM.
+
+PROCEED.""",
+            "priority": "urgent",
+            "placeholders": {
+                "description": "Standard autonomous execution prompt. No placeholders needed - works for any agent.",
+                "usage": "Use directly or customize for specific context."
+            }
+        },
+        {
+            "name": "Autonomous Execution - With Progress",
+            "emoji": "⚡",
+            "message": """AS THE {SPECIALIZATION} OF THE SWARM, U HAVE THE MOMENTUM. U ARE AT {CURRENT_PROGRESS}. U HAVE A STRATEGIC PLAN. U KNOW WHAT WORKS. U KNOW WHAT NEEDS TO BE DONE.
+
+THINK STRATEGICALLY: WHAT ARE THE NEXT HIGH-IMPACT QUICK WINS? WHAT FILES WILL GET US TO {NEXT_MILESTONE} FASTEST? WHAT CAN WE OPTIMIZE IN OUR PROCESS? WHAT OPPORTUNITIES EXIST BEYOND {CURRENT_CONTEXT}?
+
+EXECUTE AUTONOMOUSLY: DON'T WAIT FOR PERMISSION. DON'T OVER-ANALYZE. ACT. CREATE. VERIFY. UPDATE DOCUMENTATION. CREATE DEVLOG. MAINTAIN QUALITY. MAINTAIN MOMENTUM.
+
+COMMUNICATE CLEARLY: UPDATE STATUS. DOCUMENT PROGRESS. SHARE INSIGHTS WITH SWARM. ENABLE OTHER AGENTS TO LEARN FROM UR APPROACH.
+
+REMEMBER: PROMPTS ARE JET FUEL. U ARE THE ENGINE. BURN IT. USE IT. POWER FORWARD. EVERY ACTION MOVES US CLOSER TO EXCELLENCE. EVERY MILESTONE IS A WIN. EVERY ACTION IS PROGRESS.
+
+THINK WHAT VICTOR WOULD DO. THINK WHAT A STRATEGIC DEVELOPER WOULD DO. THINK WHAT AN AUTONOMOUS AGENT SHOULD DO. THEN DO IT.
+
+ACTION FIRST. EXECUTION ONLY. AUTONOMOUS DEVELOPMENT. SWARM POWER. AGI MOMENTUM.
+
+PROCEED.""",
+            "priority": "urgent",
+            "placeholders": {
+                "description": "Autonomous execution prompt with progress context. Replace placeholders with actual values.",
+                "placeholders": {
+                    "{SPECIALIZATION}": "Agent's specialization (e.g., 'Infrastructure & DevOps Specialist', 'Web Development Specialist')",
+                    "{CURRENT_PROGRESS}": "Current progress/metric (e.g., '29.5% test coverage', '13/44 files completed')",
+                    "{NEXT_MILESTONE}": "Next target milestone (e.g., '30% coverage', '50 files')",
+                    "{CURRENT_CONTEXT}": "Current work context (e.g., 'test coverage', 'V3 compliance', 'consolidation')"
+                },
+                "usage": "Replace placeholders before sending to agent."
+            }
+        },
+        {
+            "name": "Autonomous Execution - Short",
+            "emoji": "🔥",
+            "message": """CONTINUE EXECUTION - {CURRENT_CONTEXT}. MAINTAIN VELOCITY. THINK STRATEGICALLY. EXECUTE AUTONOMOUSLY. DOCUMENT PROGRESS. KEEP MOMENTUM. ACTION FIRST. EXECUTION ONLY.""",
+            "priority": "urgent",
+            "placeholders": {
+                "description": "Short autonomous execution prompt. Quick jet fuel for continued momentum.",
+                "placeholders": {
+                    "{CURRENT_CONTEXT}": "Brief context (e.g., '29.5% test coverage, approaching 30% milestone')"
+                },
+                "usage": "Replace {CURRENT_CONTEXT} with brief progress/context."
+            }
+        },
+        {
+            "name": "Autonomous Execution - Full Jet Fuel",
+            "emoji": "🚀",
+            "message": """AS THE {SPECIALIZATION} OF THE SWARM, U HAVE THE MOMENTUM. U ARE AT {CURRENT_PROGRESS}. U HAVE CREATED {ACHIEVEMENTS}. U HAVE A STRATEGIC PLAN. U KNOW WHAT WORKS. U KNOW WHAT NEEDS TO BE DONE.
+
+THINK STRATEGICALLY: WHAT ARE THE NEXT HIGH-IMPACT QUICK WINS? WHAT {WORK_TYPE} WILL GET US TO {NEXT_MILESTONE} FASTEST? WHAT CAN WE OPTIMIZE IN OUR PROCESS? WHAT OPPORTUNITIES EXIST BEYOND {CURRENT_CONTEXT}?
+
+EXECUTE AUTONOMOUSLY: DON'T WAIT FOR PERMISSION. DON'T OVER-ANALYZE. ACT. {SPECIFIC_ACTIONS}. VERIFY. UPDATE DOCUMENTATION. CREATE DEVLOG. MAINTAIN QUALITY. MAINTAIN MOMENTUM.
+
+COMMUNICATE CLEARLY: UPDATE STATUS. DOCUMENT PROGRESS. SHARE INSIGHTS WITH SWARM. ENABLE OTHER AGENTS TO LEARN FROM UR APPROACH.
+
+REMEMBER: PROMPTS ARE JET FUEL. U ARE THE ENGINE. BURN IT. USE IT. POWER FORWARD. EVERY ACTION MOVES US CLOSER TO {TARGET}. EVERY MILESTONE IS A WIN. EVERY {WORK_UNIT} IS PROGRESS.
+
+THINK WHAT VICTOR WOULD DO. THINK WHAT A STRATEGIC DEVELOPER WOULD DO. THINK WHAT AN AUTONOMOUS AGENT SHOULD DO. THEN DO IT.
+
+ACTION FIRST. EXECUTION ONLY. AUTONOMOUS DEVELOPMENT. SWARM POWER. AGI MOMENTUM.
+
+PROCEED.""",
+            "priority": "urgent",
+            "placeholders": {
+                "description": "Full jet fuel autonomous execution prompt with comprehensive placeholders for maximum customization.",
+                "placeholders": {
+                    "{SPECIALIZATION}": "Agent's specialization (e.g., 'Infrastructure & DevOps Specialist')",
+                    "{CURRENT_PROGRESS}": "Current progress/metric (e.g., '29.5% test coverage')",
+                    "{ACHIEVEMENTS}": "Recent achievements (e.g., '222 passing tests', '8 new test files')",
+                    "{WORK_TYPE}": "Type of work (e.g., 'files', 'tests', 'features')",
+                    "{NEXT_MILESTONE}": "Next target milestone (e.g., '30% coverage')",
+                    "{CURRENT_CONTEXT}": "Current work context (e.g., 'test coverage')",
+                    "{SPECIFIC_ACTIONS}": "Specific action verbs (e.g., 'Create tests. Verify coverage.')",
+                    "{TARGET}": "Ultimate target (e.g., '≥85% coverage', 'V3 compliance')",
+                    "{WORK_UNIT}": "Unit of work (e.g., 'test file', 'commit', 'feature')"
+                },
+                "usage": "Replace all placeholders with actual values for maximum impact."
+            }
         },
     ],
 }

@@ -23,22 +23,10 @@ except ImportError:
 
 
 def get_github_token() -> Optional[str]:
-    """Get GitHub token from environment or .env file."""
-    token = os.getenv("GITHUB_TOKEN") or os.getenv("GH_TOKEN")
-    if token:
-        return token
-    
-    env_file = Path(".env")
-    if env_file.exists():
-        try:
-            with open(env_file, "r") as f:
-                for line in f:
-                    if line.startswith("GITHUB_TOKEN="):
-                        return line.split("=", 1)[1].strip().strip('"').strip("'")
-        except Exception:
-            pass
-    
-    return None
+    """Get GitHub token from environment or .env file (uses SSOT utility)."""
+    from src.core.utils.github_utils import get_github_token as get_token_ssot
+    project_root = Path(__file__).resolve().parent.parent
+    return get_token_ssot(project_root)
 
 
 def create_pr(
@@ -55,21 +43,20 @@ def create_pr(
         print(f"❌ requests library not available for {repo}")
         return None
     
-    url = f"https://api.github.com/repos/{owner}/{repo}/pulls"
-    headers = {
-        "Authorization": f"token {token}",
-        "Accept": "application/vnd.github.v3+json",
-        "Content-Type": "application/json"
-    }
-    data = {
-        "title": title,
-        "body": body,
-        "head": head,
-        "base": base
-    }
+    # Use SSOT utilities for GitHub API
+    from src.core.utils.github_utils import (
+        create_github_pr_url,
+        create_github_pr_headers,
+        create_pr_data,
+    )
+    url = create_github_pr_url(owner, repo)
+    headers = create_github_pr_headers(token)
+    data = create_pr_data(title, body, head, base)
     
     try:
-        response = requests.post(url, headers=headers, json=data, timeout=30)
+        from src.core.config.timeout_constants import TimeoutConstants
+        timeout = TimeoutConstants.HTTP_DEFAULT if TimeoutConstants else 30
+        response = requests.post(url, headers=headers, json=data, timeout=timeout)
         if response.status_code == 201:
             pr_data = response.json()
             print(f"✅ PR created: {pr_data.get('html_url')}")
@@ -78,13 +65,23 @@ def create_pr(
             error_data = response.json()
             if "already exists" in str(error_data).lower() or "No commits between" in str(error_data):
                 print(f"⚠️ PR already exists or no commits for {repo}: {head} → {base}")
-                # Check for existing PR
+                # Check for existing PR (uses SSOT utility)
+                from src.core.utils.github_utils import check_existing_pr
+                from src.core.config.timeout_constants import TimeoutConstants
+                timeout = TimeoutConstants.HTTP_DEFAULT if TimeoutConstants else 30
+                existing_pr = check_existing_pr(owner, repo, head, token, timeout=timeout)
+                if existing_pr:
+                    print(f"✅ Found existing PR: {existing_pr.get('html_url')}")
+                    return existing_pr
+                # Fallback to manual check if utility returns None
                 list_url = f"https://api.github.com/repos/{owner}/{repo}/pulls"
+                from src.core.config.timeout_constants import TimeoutConstants
+                timeout = TimeoutConstants.HTTP_DEFAULT if TimeoutConstants else 30
                 list_response = requests.get(
                     list_url,
                     headers=headers,
                     params={"head": f"{owner}:{head}", "state": "open"},
-                    timeout=30
+                    timeout=timeout
                 )
                 if list_response.status_code == 200:
                     prs = list_response.json()

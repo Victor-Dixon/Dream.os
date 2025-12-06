@@ -4,6 +4,8 @@ Base Repository - Unified Persistence Service
 
 Abstract base class for repositories.
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-6 (VSCode Forking & Quality Gates Specialist) - Refactored from Agent-3
 License: MIT
 """

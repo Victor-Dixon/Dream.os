@@ -18,6 +18,7 @@ from src.core.messaging_core import (
     UnifiedMessageType,
     send_message,
 )
+from src.core.config.timeout_constants import TimeoutConstants
 
 from .messaging_cli_formatters import (
     AGENT_ASSIGNMENTS,
@@ -102,28 +103,16 @@ class MessageCoordinator:
         if success_count > 0:
             for agent, assignment in AGENT_ASSIGNMENTS.items():
                 msg = ASSIGNMENT_MESSAGE_TEMPLATE.format(agent=agent, assignment=assignment)
-                send_message_pyautogui(agent, msg, timeout=60)
+                send_message_pyautogui(agent, msg, timeout=TimeoutConstants.HTTP_MEDIUM)
         return success_count
 
+    # Consolidation coordination moved to messaging_infrastructure.py (SSOT)
+    # Import from MessageCoordinator.coordinate_consolidation instead
     @staticmethod
     def coordinate_consolidation(batch: str, status: str):
-        from datetime import datetime
-
-        msg = CONSOLIDATION_MESSAGE_TEMPLATE.format(
-            batch=batch, status=status, timestamp=datetime.now().isoformat()
-        )
-        return sum(
-            1
-            for agent in SWARM_AGENTS
-            if send_message(
-                content=msg,
-                sender="CAPTAIN",
-                recipient=agent,
-                message_type=UnifiedMessageType.SYSTEM_TO_AGENT,
-                priority=UnifiedMessagePriority.URGENT,
-                tags=[UnifiedMessageTag.SYSTEM, UnifiedMessageTag.COORDINATION],
-            )
-        )
+        """Delegate to MessageCoordinator.coordinate_consolidation (SSOT)."""
+        from .messaging_infrastructure import MessageCoordinator
+        return MessageCoordinator.coordinate_consolidation(batch, status)
 
 
 def handle_message(args, parser):
@@ -215,7 +204,7 @@ def handle_start_agents(args):
     logger.info(f"🚀 Starting {len(valid_agents)} agent(s) via onboarding coordinates...")
     for agent_id in valid_agents:
         try:
-            if send_message_to_onboarding_coords(agent_id, start_msg, timeout=30):
+            if send_message_to_onboarding_coords(agent_id, start_msg, timeout=TimeoutConstants.HTTP_DEFAULT):
                 success_count += 1
                 logger.info(f"  ✅ {agent_id} (onboarding coordinates)")
             else:

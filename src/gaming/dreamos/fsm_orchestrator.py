@@ -13,36 +13,8 @@ from enum import Enum
 from pathlib import Path
 from typing import Any
 
-
-class TaskState(Enum):
-    """Task state enumeration"""
-
-    NEW = "new"
-    IN_PROGRESS = "in_progress"
-    COMPLETED = "completed"
-    FAILED = "failed"
-    CANCELLED = "cancelled"
-
-
-@dataclass
-class Task:
-    """Task data structure"""
-
-    id: str
-    title: str
-    description: str
-    state: TaskState
-    created_at: str
-    updated_at: str
-    assigned_agent: str | None = None
-    evidence: list[dict[str, Any]] = None
-    metadata: dict[str, Any] = None
-
-    def __post_init__(self):
-        if self.evidence is None:
-            self.evidence = []
-        if self.metadata is None:
-            self.metadata = {}
+from .fsm_models import FSMTask, TaskState
+from src.core.config.timeout_constants import TimeoutConstants
 
 
 @dataclass
@@ -94,17 +66,17 @@ class FSMOrchestrator:
         self._stop_event = threading.Event()
 
         # Task cache for performance
-        self._task_cache: dict[str, Task] = {}
+        self._task_cache: dict[str, FSMTask] = {}
         self._cache_lock = threading.Lock()
 
         self.get_logger(__name__).info(f"FSM Orchestrator initialized with root: {self.fsm_root}")
 
     def create_task(
         self, task_id: str, title: str, description: str, assigned_agent: str | None = None
-    ) -> Task:
+    ) -> FSMTask:
         """Create a new task"""
         now = datetime.utcnow().isoformat()
-        task = Task(
+        task = FSMTask(
             id=task_id,
             title=title,
             description=description,
@@ -118,7 +90,7 @@ class FSMOrchestrator:
         self.get_logger(__name__).info(f"Created task: {task_id} - {title}")
         return task
 
-    def get_task(self, task_id: str) -> Task | None:
+    def get_task(self, task_id: str) -> FSMTask | None:
         """Get a task by ID"""
         # Check cache first
         with self._cache_lock:
@@ -133,7 +105,7 @@ class FSMOrchestrator:
         try:
             with open(task_file, encoding="utf-8") as f:
                 data = json.load(f)
-                task = Task(**data)
+                task = FSMTask(**data)
                 # Update cache
                 with self._cache_lock:
                     self._task_cache[task_id] = task
@@ -246,7 +218,7 @@ class FSMOrchestrator:
         except Exception as e:
             self.get_logger(__name__).error(f"Error emitting verification message: {e}")
 
-    def _save_task(self, task: Task):
+    def _save_task(self, task: FSMTask):
         """Save task to disk"""
         try:
             task_file = self.tasks_dir / f"{task.id}.json"
@@ -279,7 +251,7 @@ class FSMOrchestrator:
         self._monitoring = False
         self._stop_event.set()
         if self._monitor_thread:
-            self._monitor_thread.join(timeout=5.0)
+            self._monitor_thread.join(timeout=TimeoutConstants.HTTP_QUICK)
         self.get_logger(__name__).info("Stopped FSM monitoring")
 
     def _monitor_loop(self):

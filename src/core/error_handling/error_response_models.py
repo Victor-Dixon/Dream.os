@@ -16,6 +16,8 @@ from typing import Any
 from .error_models_enums import ErrorCategory, ErrorRecoverability, ErrorSeverity
 from dataclasses import dataclass, field
 
+from src.core.utils.serialization_utils import to_dict
+
 
 
 @dataclass
@@ -33,18 +35,8 @@ class BaseErrorResponse:
     stacktrace: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary for serialization."""
-        return {
-            "error_type": self.error_type,
-            "message": self.message,
-            "severity": self.severity.value,
-            "category": self.category.value,
-            "recoverability": self.recoverability.value,
-            "timestamp": self.timestamp,
-            "context": self.context,
-            "suggested_recovery": self.suggested_recovery,
-            "stacktrace": self.stacktrace,
-        }
+        """Convert to dictionary for serialization using SSOT utility."""
+        return to_dict(self)
 
 
 @dataclass

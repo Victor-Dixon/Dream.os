@@ -36,7 +36,7 @@ except ImportError as e:
 
 
 # Modular components
-from .scheduler_models import DEFAULT_TASK_PRIORITIES, Task
+from .scheduler_models import DEFAULT_TASK_PRIORITIES, ScheduledTask as Task
 from .scheduler_queue import SchedulerQueue
 from .scheduler_tracking import SchedulerTracking
 

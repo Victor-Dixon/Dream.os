@@ -122,7 +122,7 @@ def clone_repo(repo_name: str, temp_dir: Path) -> Optional[Path]:
             ["git", "clone", f"https://github.com/Dadudekc/{repo_name}.git", str(repo_path)],
             capture_output=True,
             text=True,
-            timeout=60,
+            timeout=TimeoutConstants.HTTP_MEDIUM,
             check=True
         )
         print(f"✅ Cloned {repo_name}")
@@ -155,7 +155,7 @@ def check_merge_commit(target_repo: str, source_repo: str) -> Tuple[bool, Option
             ["gh", "api", f"repos/Dadudekc/{target_repo}/commits"],
             capture_output=True,
             text=True,
-            timeout=10
+            timeout=TimeoutConstants.HTTP_SHORT
         )
         if result.returncode == 0:
             commits = json.loads(result.stdout)
@@ -321,6 +321,7 @@ def main():
 
 if __name__ == "__main__":
     import time
+from src.core.config.timeout_constants import TimeoutConstants
     sys.exit(main())
 
 

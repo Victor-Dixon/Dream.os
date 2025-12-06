@@ -22,6 +22,8 @@ Output: Complete mission brief ready to execute.
 Author: Agent-2 - Architecture & Design Specialist
 Date: 2025-10-12
 License: MIT
+V2 Compliant: Yes
+<!-- SSOT Domain: infrastructure -->
 """
 
 import json
@@ -56,7 +58,7 @@ class MissionControl:
                 ],
                 capture_output=True,
                 text=True,
-                timeout=10,
+                timeout=TimeoutConstants.HTTP_SHORT,
             )
 
             # Parse output for task assignment
@@ -90,7 +92,7 @@ class MissionControl:
         print("   🔄 Running fresh scan...")
         try:
             subprocess.run(
-                [sys.executable, "tools/run_project_scan.py"], timeout=120, capture_output=True
+                [sys.executable, "tools/run_project_scan.py"], timeout=TimeoutConstants.HTTP_LONG, capture_output=True
             )
 
             if analysis_file.exists():
@@ -176,7 +178,7 @@ class MissionControl:
                 ],
                 capture_output=True,
                 text=True,
-                timeout=30,
+                timeout=TimeoutConstants.HTTP_DEFAULT,
             )
 
             # Parse violations from output
@@ -279,7 +281,7 @@ class MissionControl:
                 [sys.executable, "-m", "tools.toolbelt", "--pattern-suggest", file_path, "--json"],
                 capture_output=True,
                 text=True,
-                timeout=10,
+                timeout=TimeoutConstants.HTTP_SHORT,
             )
 
             suggestions = json.loads(result.stdout)
@@ -339,6 +341,7 @@ class MissionControl:
 def main():
     """CLI entry point."""
     import argparse
+from src.core.config.timeout_constants import TimeoutConstants
 
     parser = argparse.ArgumentParser(
         description="Mission Control - Autonomous Mission Generator",

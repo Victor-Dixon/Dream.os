@@ -17,6 +17,8 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Any
 
+from src.core.utils.serialization_utils import to_dict
+
 
 @dataclass
 class MissionContext:
@@ -34,19 +36,8 @@ class MissionContext:
     metadata: dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary."""
-        return {
-            "mission_id": self.mission_id,
-            "mission_type": self.mission_type,
-            "current_phase": self.current_phase,
-            "agent_assignments": self.agent_assignments,
-            "critical_path": self.critical_path,
-            "risk_factors": self.risk_factors,
-            "success_criteria": self.success_criteria,
-            "created_at": self.created_at.isoformat(),
-            "last_updated": self.last_updated.isoformat(),
-            "metadata": self.metadata,
-        }
+        """Convert to dictionary using SSOT utility."""
+        return to_dict(self)
 
 
 __all__ = ["MissionContext"]

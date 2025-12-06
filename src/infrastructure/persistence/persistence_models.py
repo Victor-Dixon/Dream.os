@@ -4,6 +4,8 @@ Persistence Models - Unified Persistence Service
 
 Data models for persistence layer.
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-6 (VSCode Forking & Quality Gates Specialist) - Refactored from Agent-3
 License: MIT
 """
@@ -43,8 +45,8 @@ class Agent:
 
 
 @dataclass
-class Task:
-    """Task entity."""
+class TaskPersistenceModel:
+    """Task persistence model (infrastructure layer, not to be confused with domain entity Task)."""
 
     id: str
     title: str

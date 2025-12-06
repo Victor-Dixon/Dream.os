@@ -33,6 +33,7 @@ import sys
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Tuple, Optional
+from src.core.config.timeout_constants import TimeoutConstants
 
 
 class ToolAuditor:
@@ -141,7 +142,7 @@ class ToolAuditor:
                 [sys.executable, '-m', 'py_compile', str(file_path)],
                 capture_output=True,
                 text=True,
-                timeout=5
+                timeout=TimeoutConstants.HTTP_QUICK
             )
             
             if result.returncode == 0:
@@ -180,7 +181,7 @@ class ToolAuditor:
                 [sys.executable, str(file_path), '--help'],
                 capture_output=True,
                 text=True,
-                timeout=10
+                timeout=TimeoutConstants.HTTP_SHORT
             )
             
             # Exit code 0 or help output = working

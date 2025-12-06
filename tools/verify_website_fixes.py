@@ -26,7 +26,7 @@ def check_text_rendering(url: str, expected_text: str) -> dict:
         return {"status": "error", "message": "requests not available"}
     
     try:
-        response = requests.get(url, timeout=10)
+        response = requests.get(url, timeout=TimeoutConstants.HTTP_SHORT)
         response.raise_for_status()
         
         soup = BeautifulSoup(response.text, 'html.parser')
@@ -70,7 +70,7 @@ def check_contact_form(url: str) -> dict:
         return {"status": "error", "message": "requests not available"}
     
     try:
-        response = requests.get(url, timeout=10)
+        response = requests.get(url, timeout=TimeoutConstants.HTTP_SHORT)
         response.raise_for_status()
         
         soup = BeautifulSoup(response.text, 'html.parser')
@@ -170,7 +170,7 @@ def verify_freerideinvestor():
     try:
         import requests
         from bs4 import BeautifulSoup
-        response = requests.get("https://freerideinvestor.com", timeout=10)
+        response = requests.get("https://freerideinvestor.com", timeout=TimeoutConstants.HTTP_SHORT)
         soup = BeautifulSoup(response.text, 'html.parser')
         
         # Find navigation links
@@ -245,6 +245,7 @@ def main():
     # Save report
     import json
     from datetime import datetime
+from src.core.config.timeout_constants import TimeoutConstants
     report_file = Path("agent_workspaces/Agent-7/WEBSITE_VERIFICATION_REPORT.json")
     report_file.parent.mkdir(parents=True, exist_ok=True)
     
@@ -262,6 +263,7 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
+
 
 
 

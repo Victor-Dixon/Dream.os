@@ -97,4 +97,112 @@ class CoreHandlers:
         except Exception as e:
             return jsonify({"success": False, "error": str(e)}), 500
 
+    @staticmethod
+    def handle_get_execution_status(request) -> tuple:
+        """Handle request to get execution manager status."""
+        try:
+            from src.core.managers.core_execution_manager import CoreExecutionManager
+            manager = CoreExecutionManager()
+            status = manager.get_status()
+            return jsonify({"success": True, "data": status}), 200
+        except Exception as e:
+            return jsonify({"success": False, "error": str(e)}), 500
+
+    @staticmethod
+    def handle_get_service_status(request) -> tuple:
+        """Handle request to get service manager status."""
+        try:
+            from src.core.managers.core_service_manager import CoreServiceManager
+            manager = CoreServiceManager()
+            status = manager.get_status()
+            return jsonify({"success": True, "data": status}), 200
+        except Exception as e:
+            return jsonify({"success": False, "error": str(e)}), 500
+
+    @staticmethod
+    def handle_get_resource_status(request) -> tuple:
+        """Handle request to get resource manager status."""
+        try:
+            from src.core.managers.core_resource_manager import CoreResourceManager
+            manager = CoreResourceManager()
+            status = manager.get_status()
+            return jsonify({"success": True, "data": status}), 200
+        except Exception as e:
+            return jsonify({"success": False, "error": str(e)}), 500
+
+    @staticmethod
+    def handle_get_recovery_status(request) -> tuple:
+        """Handle request to get recovery manager status."""
+        try:
+            from src.core.managers.core_recovery_manager import CoreRecoveryManager
+            manager = CoreRecoveryManager()
+            status = manager.get_status()
+            return jsonify({"success": True, "data": status}), 200
+        except Exception as e:
+            return jsonify({"success": False, "error": str(e)}), 500
+
+    @staticmethod
+    def handle_get_results_status(request) -> tuple:
+        """Handle request to get results manager status."""
+        try:
+            from src.core.managers.core_results_manager import CoreResultsManager
+            manager = CoreResultsManager()
+            status = manager.get_status()
+            return jsonify({"success": True, "data": status}), 200
+        except Exception as e:
+            return jsonify({"success": False, "error": str(e)}), 500
+
+    @staticmethod
+    def handle_process_message_queue(request) -> tuple:
+        """Handle request to process message queue entries."""
+        if not MESSAGE_QUEUE_AVAILABLE:
+            return jsonify({"success": False, "error": "Message queue utils not available"}), 503
+
+        try:
+            from src.core.utils.message_queue_utils import MessageQueueUtils
+            data = request.get_json() or {}
+            max_entries = data.get("max_entries", 10)
+            
+            entries = MessageQueueUtils.get_entries_ready_for_processing(max_entries)
+            processed = len(entries)
+            
+            result = {
+                "processed": processed,
+                "entries": [
+                    {
+                        "id": entry.message_id,
+                        "status": entry.status.value if hasattr(entry.status, 'value') else str(entry.status),
+                        "recipient": entry.recipient,
+                        "attempts": entry.delivery_attempts
+                    }
+                    for entry in entries
+                ]
+            }
+            return jsonify({"success": True, "data": result}), 200
+
+        except Exception as e:
+            return jsonify({"success": False, "error": str(e)}), 500
+
+    @staticmethod
+    def handle_get_queue_size(request) -> tuple:
+        """Handle request to get message queue size."""
+        if not MESSAGE_QUEUE_AVAILABLE:
+            return jsonify({"success": False, "error": "Message queue utils not available"}), 503
+
+        try:
+            from src.core.utils.message_queue_utils import get_queue_status
+            status = get_queue_status()
+            
+            # Extract size information from status
+            queue_size = status.get("total_entries", 0) if isinstance(status, dict) else 0
+            
+            result = {
+                "queue_size": queue_size,
+                "status": status
+            }
+            return jsonify({"success": True, "data": result}), 200
+
+        except Exception as e:
+            return jsonify({"success": False, "error": str(e)}), 500
+
 

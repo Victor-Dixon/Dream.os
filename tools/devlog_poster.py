@@ -33,8 +33,14 @@ import time
 from pathlib import Path
 from datetime import datetime
 from typing import Optional, Dict, List
+
+# Add project root to path BEFORE imports
+project_root = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(project_root))
+
 import requests
 from dotenv import load_dotenv, dotenv_values
+from src.core.config.timeout_constants import TimeoutConstants
 
 # Load environment variables
 try:
@@ -252,7 +258,7 @@ class DevlogPoster:
         
         # Post embed
         try:
-            response = requests.post(webhook_url, json=payload, timeout=10)
+            response = requests.post(webhook_url, json=payload, timeout=TimeoutConstants.HTTP_SHORT)
             if response.status_code == 204:
                 print(f"✅ Posted to Discord: {channel_name}")
                 self._log_post(agent, file_path, is_major, channel_name, True)
@@ -265,21 +271,35 @@ class DevlogPoster:
             self._log_post(agent, file_path, is_major, channel_name, False)
             return False
         
-        # Post remaining chunks
+        # Post remaining chunks as beautiful embeds
         if remaining:
-            print(f"📦 Posting {len(remaining)} additional chunks...")
+            total_parts = len(remaining) + 1
+            print(f"📦 Posting {len(remaining)} additional chunks as embeds...")
             for i, chunk in enumerate(remaining, 2):
+                # Create beautiful embed for each chunk (consistent with first message)
+                chunk_embed = {
+                    "title": f"{'🚨 MAJOR UPDATE' if is_major else '📋 Devlog'} (Part {i}/{total_parts})",
+                    "description": chunk,
+                    "color": 0xFF0000 if is_major else 0x3498DB,
+                    "fields": [
+                        {"name": "Agent", "value": agent.upper(), "inline": True},
+                        {"name": "Part", "value": f"{i}/{total_parts}", "inline": True},
+                        {"name": "Category", "value": self.categorize_devlog(file_path.name, content), "inline": True},
+                    ],
+                    "footer": {"text": "Swarm Brain Devlog System"}
+                }
+                
                 chunk_payload = {
-                    "content": f"**Part {i}/{len(remaining) + 1}**\n\n{chunk}",
+                    "embeds": [chunk_embed],
                     "username": f"{agent.upper()} Devlog Bot"
                 }
                 
                 try:
-                    response = requests.post(webhook_url, json=chunk_payload, timeout=10)
+                    response = requests.post(webhook_url, json=chunk_payload, timeout=TimeoutConstants.HTTP_SHORT)
                     if response.status_code != 204:
                         print(f"❌ Discord error for chunk {i}: {response.status_code}")
                         return False
-                    print(f"✅ Posted chunk {i}/{len(remaining) + 1}")
+                    print(f"✅ Posted chunk {i}/{total_parts} as embed")
                     time.sleep(1)  # Rate limit
                 except Exception as e:
                     print(f"❌ Failed to post chunk {i}: {e}")

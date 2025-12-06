@@ -3,6 +3,8 @@
 Technical Debt Dashboard
 ========================
 
+<!-- SSOT Domain: analytics -->
+
 Interactive HTML dashboard for visualizing technical debt
 and tracking progress.
 

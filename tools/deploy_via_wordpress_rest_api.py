@@ -110,7 +110,7 @@ class WordPressRESTAPI:
             print(f"   File: {file_path}")
             print(f"   Content size: {len(file_content):,} bytes")
             
-            response = self.session.post(endpoint, json=payload, timeout=30)
+            response = self.session.post(endpoint, json=payload, timeout=TimeoutConstants.HTTP_DEFAULT)
             
             if response.status_code == 200:
                 data = response.json()
@@ -192,7 +192,7 @@ class WordPressRESTAPI:
         }
         
         try:
-            response = self.session.get(endpoint, params=params, timeout=30)
+            response = self.session.get(endpoint, params=params, timeout=TimeoutConstants.HTTP_DEFAULT)
             
             if response.status_code == 200:
                 data = response.json()
@@ -219,7 +219,7 @@ class WordPressRESTAPI:
         
         try:
             # Try a test request (will fail auth but should return 401, not 404)
-            response = self.session.post(endpoint, json={}, timeout=5)
+            response = self.session.post(endpoint, json={}, timeout=TimeoutConstants.HTTP_QUICK)
             
             # 404 means endpoint doesn't exist (plugin not installed)
             if response.status_code == 404:
@@ -311,6 +311,7 @@ def deploy_via_rest_api(
 def main():
     """Main CLI entry point."""
     import argparse
+from src.core.config.timeout_constants import TimeoutConstants
     
     parser = argparse.ArgumentParser(description="Deploy file via WordPress REST API")
     parser.add_argument("--site", required=True, help="WordPress site URL")

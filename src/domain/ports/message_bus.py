@@ -124,5 +124,3 @@ class MessageBus(ABC):
             Dictionary with stats (total_events, subscribers_count, etc.)
         """
         pass
-
-

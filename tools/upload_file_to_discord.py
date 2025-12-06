@@ -62,7 +62,7 @@ def upload_file_to_discord(
                 webhook_url,
                 files=files,
                 data=data,
-                timeout=60
+                timeout=TimeoutConstants.HTTP_MEDIUM
             )
             
             if response.status_code == 200 or response.status_code == 204:
@@ -81,6 +81,7 @@ def upload_file_to_discord(
 def main():
     """CLI interface."""
     import argparse
+from src.core.config.timeout_constants import TimeoutConstants
     
     parser = argparse.ArgumentParser(description="Upload file to Discord via webhook")
     parser.add_argument("file", type=Path, help="File to upload")
@@ -109,6 +110,8 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
 
 
 

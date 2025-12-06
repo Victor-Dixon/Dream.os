@@ -22,6 +22,7 @@ import os
 
 from .local_repo_layer import get_local_repo_manager
 from .deferred_push_queue import get_deferred_push_queue, PushStatus
+from .config.timeout_constants import TimeoutConstants
 
 logger = logging.getLogger(__name__)
 
@@ -87,14 +88,14 @@ class GitHubSandboxMode:
                  "https://api.github.com/zen"],
                 capture_output=True,
                 text=True,
-                timeout=5
+                timeout=TimeoutConstants.HTTP_QUICK
             )
             
             # Fallback: try python requests if curl not available
             if result.returncode != 0:
                 try:
                     import requests
-                    response = requests.get("https://api.github.com/zen", timeout=5)
+                    response = requests.get("https://api.github.com/zen", timeout=TimeoutConstants.HTTP_QUICK)
                     return response.status_code == 200
                 except:
                     pass
@@ -278,7 +279,7 @@ class SyntheticGitHub:
                 cwd=repo_path,
                 capture_output=True,
                 text=True,
-                timeout=60
+                timeout=TimeoutConstants.HTTP_MEDIUM
             )
             
             if result.returncode == 0:
@@ -390,7 +391,7 @@ class SyntheticGitHub:
                 cmd,
                 capture_output=True,
                 text=True,
-                timeout=30
+                timeout=TimeoutConstants.HTTP_DEFAULT
             )
             
             if result.returncode == 0:
@@ -542,6 +543,7 @@ import os
 
 from .local_repo_layer import get_local_repo_manager
 from .deferred_push_queue import get_deferred_push_queue, PushStatus
+from .config.timeout_constants import TimeoutConstants
 
 logger = logging.getLogger(__name__)
 
@@ -607,14 +609,14 @@ class GitHubSandboxMode:
                  "https://api.github.com/zen"],
                 capture_output=True,
                 text=True,
-                timeout=5
+                timeout=TimeoutConstants.HTTP_QUICK
             )
             
             # Fallback: try python requests if curl not available
             if result.returncode != 0:
                 try:
                     import requests
-                    response = requests.get("https://api.github.com/zen", timeout=5)
+                    response = requests.get("https://api.github.com/zen", timeout=TimeoutConstants.HTTP_QUICK)
                     return response.status_code == 200
                 except:
                     pass
@@ -798,7 +800,7 @@ class SyntheticGitHub:
                 cwd=repo_path,
                 capture_output=True,
                 text=True,
-                timeout=60
+                timeout=TimeoutConstants.HTTP_MEDIUM
             )
             
             if result.returncode == 0:
@@ -910,7 +912,7 @@ class SyntheticGitHub:
                 cmd,
                 capture_output=True,
                 text=True,
-                timeout=30
+                timeout=TimeoutConstants.HTTP_DEFAULT
             )
             
             if result.returncode == 0:

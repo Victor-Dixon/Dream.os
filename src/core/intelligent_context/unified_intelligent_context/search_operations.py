@@ -12,7 +12,9 @@ Mission: V2 Compliance Refactoring
 import re
 from datetime import datetime
 
-from .models import ContextType, Priority, SearchResult, Status
+from .models import ContextType, Priority, Status
+# Use SSOT SearchResult - supports all intelligent context fields
+from src.services.models.vector_models import SearchResult
 
 
 class IntelligentContextSearchOperations:

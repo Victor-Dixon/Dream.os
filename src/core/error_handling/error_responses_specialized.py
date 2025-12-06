@@ -14,8 +14,11 @@ License: MIT
 from dataclasses import dataclass
 from typing import Any
 
-from .error_responses import StandardErrorResponse
+# SSOT: Import from consolidated core models (deduplication)
+from .error_response_models_core import StandardErrorResponse
 from dataclasses import dataclass, field
+
+from src.core.utils.serialization_utils import to_dict
 
 
 
@@ -26,10 +29,8 @@ class ValidationErrorResponse(StandardErrorResponse):
     validation_type: str = ""
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary."""
-        result = super().to_dict()
-        result["validation_type"] = self.validation_type
-        return result
+        """Convert to dictionary using SSOT utility."""
+        return to_dict(self)
 
 
 @dataclass
@@ -39,10 +40,8 @@ class ConfigurationErrorResponse(StandardErrorResponse):
     config_key: str = ""
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary."""
-        result = super().to_dict()
-        result["config_key"] = self.config_key
-        return result
+        """Convert to dictionary using SSOT utility."""
+        return to_dict(self)
 
 
 @dataclass
@@ -52,10 +51,8 @@ class AgentErrorResponse(StandardErrorResponse):
     agent_id: str = ""
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary."""
-        result = super().to_dict()
-        result["agent_id"] = self.agent_id
-        return result
+        """Convert to dictionary using SSOT utility."""
+        return to_dict(self)
 
 
 @dataclass
@@ -71,11 +68,8 @@ class CoordinationErrorResponse(StandardErrorResponse):
             self.participants = []
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary."""
-        result = super().to_dict()
-        result["coordination_type"] = self.coordination_type
-        result["participants"] = self.participants
-        return result
+        """Convert to dictionary using SSOT utility."""
+        return to_dict(self)
 
 
 @dataclass
@@ -98,13 +92,8 @@ class ErrorSummary:
             self.timestamp = datetime.now().isoformat()
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary."""
-        return {
-            "total_errors": self.total_errors,
-            "error_types": self.error_types,
-            "operations": self.operations,
-            "timestamp": self.timestamp,
-        }
+        """Convert to dictionary using SSOT utility."""
+        return to_dict(self)
 
 
 __all__ = [

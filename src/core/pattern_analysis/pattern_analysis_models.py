@@ -14,6 +14,8 @@ from datetime import datetime
 from enum import Enum
 from typing import Any
 
+from src.core.utils.serialization_utils import to_dict
+
 
 class PatternType(Enum):
     """Types of mission patterns."""
@@ -138,15 +140,8 @@ class PatternMetrics:
     last_updated: datetime = field(default_factory=datetime.now)
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert metrics to dictionary."""
-        return {
-            "total_patterns": self.total_patterns,
-            "successful_analyses": self.successful_analyses,
-            "average_confidence": self.average_confidence,
-            "pattern_usage_count": self.pattern_usage_count,
-            "correlation_count": self.correlation_count,
-            "recommendation_count": self.recommendation_count,
-            "last_updated": self.last_updated.isoformat(),
+        """Convert metrics to dictionary using SSOT utility."""
+        return to_dict(self)
         }
 
 

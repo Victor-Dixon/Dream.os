@@ -16,6 +16,7 @@ from typing import Optional, Dict, Any
 
 try:
     import requests
+from src.core.config.timeout_constants import TimeoutConstants
     REQUESTS_AVAILABLE = True
 except ImportError:
     REQUESTS_AVAILABLE = False
@@ -69,7 +70,7 @@ def create_pr(
     }
     
     try:
-        response = requests.post(url, headers=headers, json=data, timeout=30)
+        response = requests.post(url, headers=headers, json=data, timeout=TimeoutConstants.HTTP_DEFAULT)
         if response.status_code == 201:
             pr_data = response.json()
             print(f"✅ PR created: {pr_data.get('html_url')}")
@@ -85,7 +86,7 @@ def create_pr(
                     list_url,
                     headers=headers,
                     params={"head": f"{owner}:{head}", "state": "open"},
-                    timeout=30
+                    timeout=TimeoutConstants.HTTP_DEFAULT
                 )
                 if list_response.status_code == 200:
                     prs = list_response.json()

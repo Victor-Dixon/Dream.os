@@ -211,7 +211,7 @@ class DiscordWebTester:
             if result["sent"]:
                 # Wait for response
                 time.sleep(wait_time)
-                result["response_received"] = self.wait_for_response(timeout=5)
+                result["response_received"] = self.wait_for_response(timeout=TimeoutConstants.HTTP_QUICK)
                 result["success"] = result["response_received"]
             else:
                 result["error"] = "Failed to send command"
@@ -319,7 +319,7 @@ def main():
             return 1
         
         # Wait for login
-        if not tester.wait_for_login(timeout=120):
+        if not tester.wait_for_login(timeout=TimeoutConstants.HTTP_LONG):
             print("❌ Login timeout")
             return 1
         
@@ -358,6 +358,7 @@ def main():
 
 if __name__ == "__main__":
     import sys
+from src.core.config.timeout_constants import TimeoutConstants
     sys.exit(main())
 
 

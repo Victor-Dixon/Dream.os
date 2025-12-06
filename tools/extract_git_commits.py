@@ -73,7 +73,7 @@ class GitCommitExtractor:
                 cmd,
                 capture_output=True,
                 text=True,
-                timeout=30,
+                timeout=TimeoutConstants.HTTP_DEFAULT,
                 check=False
             )
             
@@ -124,7 +124,7 @@ class GitCommitExtractor:
                 ["git", "-C", str(self.repo_path), "show", "--name-only", "--pretty=format:", commit_hash],
                 capture_output=True,
                 text=True,
-                timeout=10,
+                timeout=TimeoutConstants.HTTP_SHORT,
                 check=False
             )
             
@@ -142,7 +142,7 @@ class GitCommitExtractor:
                 ["git", "-C", str(self.repo_path), "show", "--stat", "--pretty=format:", commit_hash],
                 capture_output=True,
                 text=True,
-                timeout=10,
+                timeout=TimeoutConstants.HTTP_SHORT,
                 check=False
             )
             
@@ -288,12 +288,14 @@ def main():
     except Exception as e:
         print(f"❌ Unexpected error: {e}", file=sys.stderr)
         import traceback
+from src.core.config.timeout_constants import TimeoutConstants
         traceback.print_exc()
         return 1
 
 
 if __name__ == "__main__":
     sys.exit(main())
+
 
 
 

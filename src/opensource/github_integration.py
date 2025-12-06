@@ -13,6 +13,8 @@ import logging
 import subprocess
 from pathlib import Path
 
+from ..core.config.timeout_constants import TimeoutConstants
+
 logger = logging.getLogger(__name__)
 
 
@@ -53,7 +55,7 @@ class GitHubIntegration:
             label_filter = f"--label {','.join(labels)}" if labels else ""
             cmd = f"gh issue list --repo {owner}/{repo} {label_filter} --limit {limit} --json number,title,labels,url"
 
-            result = subprocess.run(cmd, shell=True, capture_output=True, text=True, timeout=30)
+            result = subprocess.run(cmd, shell=True, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_DEFAULT)
 
             if result.returncode == 0:
                 import json

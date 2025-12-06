@@ -9,6 +9,7 @@ from pathlib import Path
 from datetime import datetime
 from typing import Dict, List
 import subprocess
+from src.core.config.timeout_constants import TimeoutConstants
 
 class CaptainInboxProcessor:
     def __init__(self, inbox_path: Path, archive_path: Path):
@@ -53,7 +54,7 @@ class CaptainInboxProcessor:
                 ["python", "-m", "src.services.messaging_cli", "--agent", agent, "--message", message],
                 capture_output=True,
                 text=True,
-                timeout=30
+                timeout=TimeoutConstants.HTTP_DEFAULT
             )
             return result.returncode == 0
         except Exception as e:
@@ -136,6 +137,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 

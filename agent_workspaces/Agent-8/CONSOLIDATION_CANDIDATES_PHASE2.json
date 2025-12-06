@@ -11,16 +11,6 @@
       "unified_replacement": "unified_monitoring.py"
     },
     {
-      "name": "agent_status_quick_check",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\agent_status_quick_check.py",
-      "category": "monitoring",
-      "score": 5,
-      "lines": 297,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_monitoring.py"
-    },
-    {
       "name": "functionality_tests",
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\functionality_tests.py",
       "category": "monitoring",
@@ -84,8 +74,8 @@
       "name": "workspace_health_monitor",
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\workspace_health_monitor.py",
       "category": "monitoring",
-      "score": 5,
-      "lines": 306,
+      "score": 6,
+      "lines": 398,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_monitoring.py"
@@ -98,56 +88,6 @@
       "lines": 144,
       "status": "candidate",
       "can_archive": false,
-      "unified_replacement": "unified_monitoring.py"
-    },
-    {
-      "name": "message_compression_health_check",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\message_compression_health_check.py",
-      "category": "monitoring",
-      "score": 6,
-      "lines": 244,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_monitoring.py"
-    },
-    {
-      "name": "infrastructure_monitoring_enhancement",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\infrastructure_monitoring_enhancement.py",
-      "category": "monitoring",
-      "score": 6,
-      "lines": 183,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_monitoring.py"
-    },
-    {
-      "name": "discord_system_diagnostics",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\discord_system_diagnostics.py",
-      "category": "monitoring",
-      "score": 5,
-      "lines": 297,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_monitoring.py"
-    },
-    {
-      "name": "diagnose_stuck_messages",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\diagnose_stuck_messages.py",
-      "category": "monitoring",
-      "score": 5,
-      "lines": 129,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_monitoring.py"
-    },
-    {
-      "name": "check_queue_status",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\check_queue_status.py",
-      "category": "monitoring",
-      "score": 3,
-      "lines": 29,
-      "status": "candidate",
-      "can_archive": true,
       "unified_replacement": "unified_monitoring.py"
     },
     {
@@ -176,16 +116,6 @@
       "category": "monitoring",
       "score": 5,
       "lines": 220,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_monitoring.py"
-    },
-    {
-      "name": "tools_consolidation_analyzer",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\tools_consolidation_analyzer.py",
-      "category": "monitoring",
-      "score": 7,
-      "lines": 232,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_monitoring.py"
@@ -255,47 +185,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\START_CHAT_BOT_NOW.py",
       "category": "monitoring",
       "score": 5,
-      "lines": 195,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_monitoring.py"
-    },
-    {
-      "name": "integration_health_checker",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\integration_health_checker.py",
-      "category": "monitoring",
-      "score": 5,
-      "lines": 219,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_monitoring.py"
-    },
-    {
-      "name": "test_coverage_tracker",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\test_coverage_tracker.py",
-      "category": "monitoring",
-      "score": 5,
-      "lines": 202,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_monitoring.py"
-    },
-    {
-      "name": "test_usage_analyzer",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\test_usage_analyzer.py",
-      "category": "monitoring",
-      "score": 5,
-      "lines": 252,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_monitoring.py"
-    },
-    {
-      "name": "check_thea_service_health",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\check_thea_service_health.py",
-      "category": "monitoring",
-      "score": 6,
-      "lines": 168,
+      "lines": 215,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_monitoring.py"
@@ -395,7 +285,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\coordinate_implementation_tasks.py",
       "category": "monitoring",
       "score": 6,
-      "lines": 381,
+      "lines": 382,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_monitoring.py"
@@ -405,7 +295,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\cast_agent8_tools_ranking_votes.py",
       "category": "monitoring",
       "score": 5,
-      "lines": 146,
+      "lines": 147,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_monitoring.py"
@@ -425,7 +315,147 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\discover_ftp_credentials.py",
       "category": "monitoring",
       "score": 5,
-      "lines": 206,
+      "lines": 207,
+      "status": "candidate",
+      "can_archive": false,
+      "unified_replacement": "unified_monitoring.py"
+    },
+    {
+      "name": "start_message_queue_processor",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\start_message_queue_processor.py",
+      "category": "monitoring",
+      "score": 3,
+      "lines": 77,
+      "status": "candidate",
+      "can_archive": true,
+      "unified_replacement": "unified_monitoring.py"
+    },
+    {
+      "name": "unified_test_coverage",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\unified_test_coverage.py",
+      "category": "monitoring",
+      "score": 7,
+      "lines": 298,
+      "status": "candidate",
+      "can_archive": false,
+      "unified_replacement": "unified_monitoring.py"
+    },
+    {
+      "name": "consolidation_analyzer",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\consolidation_analyzer.py",
+      "category": "monitoring",
+      "score": 8,
+      "lines": 204,
+      "status": "candidate",
+      "can_archive": false,
+      "unified_replacement": "unified_monitoring.py"
+    },
+    {
+      "name": "archive_communication_validation_tools",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\archive_communication_validation_tools.py",
+      "category": "monitoring",
+      "score": 6,
+      "lines": 57,
+      "status": "candidate",
+      "can_archive": true,
+      "unified_replacement": "unified_monitoring.py"
+    },
+    {
+      "name": "fix_real_import_errors",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\fix_real_import_errors.py",
+      "category": "monitoring",
+      "score": 6,
+      "lines": 344,
+      "status": "candidate",
+      "can_archive": false,
+      "unified_replacement": "unified_monitoring.py"
+    },
+    {
+      "name": "test_twitch_connection_tdd",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\test_twitch_connection_tdd.py",
+      "category": "monitoring",
+      "score": 5,
+      "lines": 200,
+      "status": "candidate",
+      "can_archive": false,
+      "unified_replacement": "unified_monitoring.py"
+    },
+    {
+      "name": "monitor_twitch_bot",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\monitor_twitch_bot.py",
+      "category": "monitoring",
+      "score": 4,
+      "lines": 73,
+      "status": "candidate",
+      "can_archive": true,
+      "unified_replacement": "unified_monitoring.py"
+    },
+    {
+      "name": "check_twitch_bot_live_status",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\check_twitch_bot_live_status.py",
+      "category": "monitoring",
+      "score": 4,
+      "lines": 82,
+      "status": "candidate",
+      "can_archive": true,
+      "unified_replacement": "unified_monitoring.py"
+    },
+    {
+      "name": "analyze_web_integration_gaps",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\analyze_web_integration_gaps.py",
+      "category": "monitoring",
+      "score": 5,
+      "lines": 278,
+      "status": "candidate",
+      "can_archive": false,
+      "unified_replacement": "unified_monitoring.py"
+    },
+    {
+      "name": "prioritize_test_coverage",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\prioritize_test_coverage.py",
+      "category": "monitoring",
+      "score": 5,
+      "lines": 220,
+      "status": "candidate",
+      "can_archive": false,
+      "unified_replacement": "unified_monitoring.py"
+    },
+    {
+      "name": "create_unified_cli_framework",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\create_unified_cli_framework.py",
+      "category": "monitoring",
+      "score": 8,
+      "lines": 474,
+      "status": "candidate",
+      "can_archive": false,
+      "unified_replacement": "unified_monitoring.py"
+    },
+    {
+      "name": "test_scheduler_integration",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\test_scheduler_integration.py",
+      "category": "monitoring",
+      "score": 4,
+      "lines": 83,
+      "status": "candidate",
+      "can_archive": true,
+      "unified_replacement": "unified_monitoring.py"
+    },
+    {
+      "name": "session_cleanup_complete",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\session_cleanup_complete.py",
+      "category": "monitoring",
+      "score": 5,
+      "lines": 207,
+      "status": "candidate",
+      "can_archive": false,
+      "unified_replacement": "unified_monitoring.py"
+    },
+    {
+      "name": "template_customizer",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\template_customizer.py",
+      "category": "monitoring",
+      "score": 5,
+      "lines": 297,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_monitoring.py"
@@ -467,7 +497,17 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\repo_safe_merge.py",
       "category": "validation",
       "score": 7,
-      "lines": 1223,
+      "lines": 1229,
+      "status": "candidate",
+      "can_archive": false,
+      "unified_replacement": "unified_validation.py"
+    },
+    {
+      "name": "create_batch2_prs",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\create_batch2_prs.py",
+      "category": "validation",
+      "score": 5,
+      "lines": 208,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_validation.py"
@@ -487,7 +527,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\ssot_config_validator.py",
       "category": "validation",
       "score": 7,
-      "lines": 314,
+      "lines": 316,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_validation.py"
@@ -543,6 +583,16 @@
       "unified_replacement": "unified_validation.py"
     },
     {
+      "name": "git_based_merge_primary",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\git_based_merge_primary.py",
+      "category": "validation",
+      "score": 5,
+      "lines": 328,
+      "status": "candidate",
+      "can_archive": false,
+      "unified_replacement": "unified_validation.py"
+    },
+    {
       "name": "validate_stress_test_integration",
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\validate_stress_test_integration.py",
       "category": "validation",
@@ -556,8 +606,8 @@
       "name": "repo_safe_merge_v2",
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\repo_safe_merge_v2.py",
       "category": "validation",
-      "score": 7,
-      "lines": 713,
+      "score": 8,
+      "lines": 786,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_validation.py"
@@ -587,7 +637,17 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\verify_file_usage_enhanced_v2.py",
       "category": "validation",
       "score": 5,
-      "lines": 395,
+      "lines": 396,
+      "status": "candidate",
+      "can_archive": false,
+      "unified_replacement": "unified_validation.py"
+    },
+    {
+      "name": "merge_dreambank_pr1_via_git",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\merge_dreambank_pr1_via_git.py",
+      "category": "validation",
+      "score": 5,
+      "lines": 257,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_validation.py"
@@ -597,7 +657,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\verify_bulk_deletion_ssot.py",
       "category": "validation",
       "score": 5,
-      "lines": 235,
+      "lines": 236,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_validation.py"
@@ -607,7 +667,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\deploy_via_wordpress_rest_api.py",
       "category": "validation",
       "score": 5,
-      "lines": 344,
+      "lines": 345,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_validation.py"
@@ -617,9 +677,99 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\aria_active_response.py",
       "category": "validation",
       "score": 4,
-      "lines": 97,
+      "lines": 98,
       "status": "candidate",
       "can_archive": true,
+      "unified_replacement": "unified_validation.py"
+    },
+    {
+      "name": "validate_trackers",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\validate_trackers.py",
+      "category": "validation",
+      "score": 5,
+      "lines": 400,
+      "status": "candidate",
+      "can_archive": false,
+      "unified_replacement": "unified_validation.py"
+    },
+    {
+      "name": "validate_import_fixes",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\validate_import_fixes.py",
+      "category": "validation",
+      "score": 5,
+      "lines": 278,
+      "status": "candidate",
+      "can_archive": false,
+      "unified_replacement": "unified_validation.py"
+    },
+    {
+      "name": "test_chat_presence_import",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\test_chat_presence_import.py",
+      "category": "validation",
+      "score": 3,
+      "lines": 40,
+      "status": "candidate",
+      "can_archive": true,
+      "unified_replacement": "unified_validation.py"
+    },
+    {
+      "name": "verify_failed_merge_repos",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\verify_failed_merge_repos.py",
+      "category": "validation",
+      "score": 5,
+      "lines": 294,
+      "status": "candidate",
+      "can_archive": false,
+      "unified_replacement": "unified_validation.py"
+    },
+    {
+      "name": "consolidation_strategy_reviewer",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\consolidation_strategy_reviewer.py",
+      "category": "validation",
+      "score": 5,
+      "lines": 307,
+      "status": "candidate",
+      "can_archive": false,
+      "unified_replacement": "unified_validation.py"
+    },
+    {
+      "name": "enhance_repo_merge_v2",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\enhance_repo_merge_v2.py",
+      "category": "validation",
+      "score": 5,
+      "lines": 233,
+      "status": "candidate",
+      "can_archive": false,
+      "unified_replacement": "unified_validation.py"
+    },
+    {
+      "name": "execute_phase1_file_deletion",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\execute_phase1_file_deletion.py",
+      "category": "validation",
+      "score": 5,
+      "lines": 243,
+      "status": "candidate",
+      "can_archive": false,
+      "unified_replacement": "unified_validation.py"
+    },
+    {
+      "name": "consolidation_verifier",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\consolidation_verifier.py",
+      "category": "validation",
+      "score": 5,
+      "lines": 214,
+      "status": "candidate",
+      "can_archive": false,
+      "unified_replacement": "unified_validation.py"
+    },
+    {
+      "name": "timeout_constant_replacer",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\timeout_constant_replacer.py",
+      "category": "validation",
+      "score": 5,
+      "lines": 285,
+      "status": "candidate",
+      "can_archive": false,
       "unified_replacement": "unified_validation.py"
     }
   ],
@@ -670,16 +820,6 @@
       "category": "analysis",
       "score": 9,
       "lines": 593,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
-      "name": "analysis_cli",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\analysis_cli.py",
-      "category": "analysis",
-      "score": 6,
-      "lines": 282,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_analysis.py"
@@ -759,7 +899,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\autonomous_task_engine.py",
       "category": "analysis",
       "score": 10,
-      "lines": 798,
+      "lines": 771,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_analysis.py"
@@ -780,26 +920,6 @@
       "category": "analysis",
       "score": 5,
       "lines": 116,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
-      "name": "complexity_analyzer_core",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\complexity_analyzer_core.py",
-      "category": "analysis",
-      "score": 7,
-      "lines": 385,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
-      "name": "complexity_analyzer_formatters",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\complexity_analyzer_formatters.py",
-      "category": "analysis",
-      "score": 5,
-      "lines": 108,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_analysis.py"
@@ -835,16 +955,6 @@
       "unified_replacement": "unified_analysis.py"
     },
     {
-      "name": "comprehensive_tool_runtime_audit",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\comprehensive_tool_runtime_audit.py",
-      "category": "analysis",
-      "score": 7,
-      "lines": 213,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
       "name": "dashboard_data_aggregator",
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\dashboard_data_aggregator.py",
       "category": "analysis",
@@ -875,41 +985,11 @@
       "unified_replacement": "unified_analysis.py"
     },
     {
-      "name": "discord_status_dashboard",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\discord_status_dashboard.py",
-      "category": "analysis",
-      "score": 6,
-      "lines": 187,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
       "name": "documentation_assistant",
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\documentation_assistant.py",
       "category": "analysis",
       "score": 5,
       "lines": 208,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
-      "name": "duplication_analysis",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\duplication_analysis.py",
-      "category": "analysis",
-      "score": 5,
-      "lines": 139,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
-      "name": "duplication_analyzer",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\duplication_analyzer.py",
-      "category": "analysis",
-      "score": 9,
-      "lines": 105,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_analysis.py"
@@ -985,26 +1065,6 @@
       "unified_replacement": "unified_analysis.py"
     },
     {
-      "name": "pattern_extractor",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\pattern_extractor.py",
-      "category": "analysis",
-      "score": 5,
-      "lines": 208,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
-      "name": "pattern_suggester",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\pattern_suggester.py",
-      "category": "analysis",
-      "score": 6,
-      "lines": 155,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
       "name": "projectscanner",
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\projectscanner.py",
       "category": "analysis",
@@ -1020,16 +1080,6 @@
       "category": "analysis",
       "score": 7,
       "lines": 233,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
-      "name": "projectscanner_language_analyzer",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\projectscanner_language_analyzer.py",
-      "category": "analysis",
-      "score": 7,
-      "lines": 298,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_analysis.py"
@@ -1065,26 +1115,6 @@
       "unified_replacement": "unified_analysis.py"
     },
     {
-      "name": "refactor_analyzer",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\refactor_analyzer.py",
-      "category": "analysis",
-      "score": 7,
-      "lines": 157,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
-      "name": "refactoring_ast_analyzer",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\refactoring_ast_analyzer.py",
-      "category": "analysis",
-      "score": 6,
-      "lines": 217,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
       "name": "refactoring_suggestion_engine",
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\refactoring_suggestion_engine.py",
       "category": "analysis",
@@ -1105,21 +1135,11 @@
       "unified_replacement": "unified_analysis.py"
     },
     {
-      "name": "repo_batch_analyzer",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\repo_batch_analyzer.py",
-      "category": "analysis",
-      "score": 6,
-      "lines": 287,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
       "name": "toolbelt_registry",
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\toolbelt_registry.py",
       "category": "analysis",
       "score": 11,
-      "lines": 659,
+      "lines": 660,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_analysis.py"
@@ -1195,51 +1215,11 @@
       "unified_replacement": "unified_analysis.py"
     },
     {
-      "name": "workspace_health_checker",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\workspace_health_checker.py",
-      "category": "analysis",
-      "score": 6,
-      "lines": 403,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
-      "name": "repo_consolidation_analyzer",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\repo_consolidation_analyzer.py",
-      "category": "analysis",
-      "score": 7,
-      "lines": 269,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
       "name": "infrastructure_automation_suite",
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\infrastructure_automation_suite.py",
       "category": "analysis",
       "score": 7,
       "lines": 171,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
-      "name": "repo_overlap_analyzer",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\repo_overlap_analyzer.py",
-      "category": "analysis",
-      "score": 5,
-      "lines": 280,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
-      "name": "test_all_discord_commands",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\test_all_discord_commands.py",
-      "category": "analysis",
-      "score": 8,
-      "lines": 423,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_analysis.py"
@@ -1260,36 +1240,6 @@
       "category": "analysis",
       "score": 7,
       "lines": 344,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
-      "name": "integration_pattern_analyzer",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\integration_pattern_analyzer.py",
-      "category": "analysis",
-      "score": 10,
-      "lines": 352,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
-      "name": "enhanced_repo_consolidation_analyzer",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\enhanced_repo_consolidation_analyzer.py",
-      "category": "analysis",
-      "score": 6,
-      "lines": 234,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
-      "name": "architectural_pattern_analyzer",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\architectural_pattern_analyzer.py",
-      "category": "analysis",
-      "score": 8,
-      "lines": 530,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_analysis.py"
@@ -1489,7 +1439,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\verify_merges.py",
       "category": "analysis",
       "score": 7,
-      "lines": 324,
+      "lines": 331,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_analysis.py"
@@ -1500,16 +1450,6 @@
       "category": "analysis",
       "score": 5,
       "lines": 213,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
-      "name": "check_batch1_branches",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\check_batch1_branches.py",
-      "category": "analysis",
-      "score": 5,
-      "lines": 154,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_analysis.py"
@@ -1559,17 +1499,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\resolve_merge_conflicts.py",
       "category": "analysis",
       "score": 5,
-      "lines": 338,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
-      "name": "check_merge_branch_status",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\check_merge_branch_status.py",
-      "category": "analysis",
-      "score": 5,
-      "lines": 272,
+      "lines": 327,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_analysis.py"
@@ -1579,17 +1509,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\complete_merge_into_main.py",
       "category": "analysis",
       "score": 5,
-      "lines": 223,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
-      "name": "create_batch2_prs",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\create_batch2_prs.py",
-      "category": "analysis",
-      "score": 5,
-      "lines": 204,
+      "lines": 211,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_analysis.py"
@@ -1625,43 +1545,13 @@
       "unified_replacement": "unified_analysis.py"
     },
     {
-      "name": "discord_message_validator",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\discord_message_validator.py",
-      "category": "analysis",
-      "score": 5,
-      "lines": 245,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
-      "name": "agent_status_snapshot",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\agent_status_snapshot.py",
-      "category": "analysis",
-      "score": 5,
-      "lines": 145,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
       "name": "merge_prs_via_api",
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\merge_prs_via_api.py",
       "category": "analysis",
       "score": 6,
-      "lines": 282,
+      "lines": 283,
       "status": "candidate",
       "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
-      "name": "check_pr_status",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\check_pr_status.py",
-      "category": "analysis",
-      "score": 4,
-      "lines": 57,
-      "status": "candidate",
-      "can_archive": true,
       "unified_replacement": "unified_analysis.py"
     },
     {
@@ -1669,7 +1559,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\resolve_pr_conflicts.py",
       "category": "analysis",
       "score": 6,
-      "lines": 352,
+      "lines": 358,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_analysis.py"
@@ -1719,7 +1609,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\review_dreamvault_integration.py",
       "category": "analysis",
       "score": 7,
-      "lines": 361,
+      "lines": 354,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_analysis.py"
@@ -1729,17 +1619,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\resolve_dreamvault_duplicates.py",
       "category": "analysis",
       "score": 6,
-      "lines": 307,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
-      "name": "check_integration_issues",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\check_integration_issues.py",
-      "category": "analysis",
-      "score": 5,
-      "lines": 216,
+      "lines": 293,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_analysis.py"
@@ -1805,26 +1685,6 @@
       "unified_replacement": "unified_analysis.py"
     },
     {
-      "name": "check_github_rate_limits",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\check_github_rate_limits.py",
-      "category": "analysis",
-      "score": 6,
-      "lines": 382,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
-      "name": "check_consolidation_prs",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\check_consolidation_prs.py",
-      "category": "analysis",
-      "score": 5,
-      "lines": 228,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
       "name": "execute_case_variations_consolidation",
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\execute_case_variations_consolidation.py",
       "category": "analysis",
@@ -1835,51 +1695,11 @@
       "unified_replacement": "unified_analysis.py"
     },
     {
-      "name": "consolidation_status_tracker",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\consolidation_status_tracker.py",
-      "category": "analysis",
-      "score": 6,
-      "lines": 241,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
-      "name": "test_coverage_prioritizer",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\test_coverage_prioritizer.py",
-      "category": "analysis",
-      "score": 8,
-      "lines": 264,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
       "name": "consolidation_progress_tracker",
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\consolidation_progress_tracker.py",
       "category": "analysis",
       "score": 6,
       "lines": 216,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
-      "name": "validate_session_transition",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\validate_session_transition.py",
-      "category": "analysis",
-      "score": 5,
-      "lines": 213,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
-      "name": "session_transition_validator",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\session_transition_validator.py",
-      "category": "analysis",
-      "score": 5,
-      "lines": 276,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_analysis.py"
@@ -1905,16 +1725,6 @@
       "unified_replacement": "unified_analysis.py"
     },
     {
-      "name": "git_based_merge_primary",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\git_based_merge_primary.py",
-      "category": "analysis",
-      "score": 5,
-      "lines": 339,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
       "name": "agent_cellphone_config_dependency_scanner",
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\agent_cellphone_config_dependency_scanner.py",
       "category": "analysis",
@@ -1929,7 +1739,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\force_push_consolidations.py",
       "category": "analysis",
       "score": 5,
-      "lines": 250,
+      "lines": 257,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_analysis.py"
@@ -1950,16 +1760,6 @@
       "category": "analysis",
       "score": 7,
       "lines": 215,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
-      "name": "architecture_repo_analyzer",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\architecture_repo_analyzer.py",
-      "category": "analysis",
-      "score": 9,
-      "lines": 452,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_analysis.py"
@@ -1999,7 +1799,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\complete_batch2_remaining_merges.py",
       "category": "analysis",
       "score": 5,
-      "lines": 240,
+      "lines": 244,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_analysis.py"
@@ -2009,7 +1809,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\check_functionality_existence.py",
       "category": "analysis",
       "score": 5,
-      "lines": 299,
+      "lines": 300,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_analysis.py"
@@ -2019,7 +1819,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\run_test_suite_validation.py",
       "category": "analysis",
       "score": 6,
-      "lines": 172,
+      "lines": 174,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_analysis.py"
@@ -2035,51 +1835,11 @@
       "unified_replacement": "unified_analysis.py"
     },
     {
-      "name": "discord_bot_infrastructure_check",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\discord_bot_infrastructure_check.py",
-      "category": "analysis",
-      "score": 6,
-      "lines": 407,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
-      "name": "comprehensive_duplicate_analyzer",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\comprehensive_duplicate_analyzer.py",
-      "category": "analysis",
-      "score": 8,
-      "lines": 252,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
       "name": "execute_duplicate_resolution",
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\execute_duplicate_resolution.py",
       "category": "analysis",
       "score": 7,
       "lines": 236,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
-      "name": "analyze_technical_debt_markers",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\analyze_technical_debt_markers.py",
-      "category": "analysis",
-      "score": 7,
-      "lines": 375,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
-      "name": "file_locking_monitor",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\file_locking_monitor.py",
-      "category": "analysis",
-      "score": 7,
-      "lines": 363,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_analysis.py"
@@ -2099,7 +1859,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\captain_swarm_coordinator.py",
       "category": "analysis",
       "score": 9,
-      "lines": 324,
+      "lines": 325,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_analysis.py"
@@ -2109,7 +1869,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\captain_task_assigner.py",
       "category": "analysis",
       "score": 9,
-      "lines": 240,
+      "lines": 241,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_analysis.py"
@@ -2119,7 +1879,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\captain_loop_closer.py",
       "category": "analysis",
       "score": 7,
-      "lines": 212,
+      "lines": 213,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_analysis.py"
@@ -2165,31 +1925,11 @@
       "unified_replacement": "unified_analysis.py"
     },
     {
-      "name": "merge_dreambank_pr1_via_git",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\merge_dreambank_pr1_via_git.py",
-      "category": "analysis",
-      "score": 5,
-      "lines": 251,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
       "name": "schedule_daily_reports",
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\schedule_daily_reports.py",
       "category": "analysis",
       "score": 6,
       "lines": 200,
-      "status": "candidate",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
-      "name": "analyze_duplicate_code_consolidation",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\analyze_duplicate_code_consolidation.py",
-      "category": "analysis",
-      "score": 7,
-      "lines": 369,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_analysis.py"
@@ -2219,7 +1959,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\captain_inbox_assistant.py",
       "category": "analysis",
       "score": 5,
-      "lines": 386,
+      "lines": 389,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_analysis.py"
@@ -2239,7 +1979,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\process_captain_inbox_complete.py",
       "category": "analysis",
       "score": 5,
-      "lines": 140,
+      "lines": 141,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_analysis.py"
@@ -2249,7 +1989,197 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\process_agent8_workspace_messages.py",
       "category": "analysis",
       "score": 5,
-      "lines": 218,
+      "lines": 219,
+      "status": "candidate",
+      "can_archive": false,
+      "unified_replacement": "unified_analysis.py"
+    },
+    {
+      "name": "coverage_analyzer",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\coverage_analyzer.py",
+      "category": "analysis",
+      "score": 6,
+      "lines": 279,
+      "status": "candidate",
+      "can_archive": false,
+      "unified_replacement": "unified_analysis.py"
+    },
+    {
+      "name": "repository_analyzer",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\repository_analyzer.py",
+      "category": "analysis",
+      "score": 8,
+      "lines": 289,
+      "status": "candidate",
+      "can_archive": false,
+      "unified_replacement": "unified_analysis.py"
+    },
+    {
+      "name": "code_analysis_tool",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\code_analysis_tool.py",
+      "category": "analysis",
+      "score": 9,
+      "lines": 286,
+      "status": "candidate",
+      "can_archive": false,
+      "unified_replacement": "unified_analysis.py"
+    },
+    {
+      "name": "source_analyzer",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\source_analyzer.py",
+      "category": "analysis",
+      "score": 7,
+      "lines": 224,
+      "status": "candidate",
+      "can_archive": false,
+      "unified_replacement": "unified_analysis.py"
+    },
+    {
+      "name": "verify_repo_merge_status",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\verify_repo_merge_status.py",
+      "category": "analysis",
+      "score": 4,
+      "lines": 60,
+      "status": "candidate",
+      "can_archive": true,
+      "unified_replacement": "unified_analysis.py"
+    },
+    {
+      "name": "master_import_fixer",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\master_import_fixer.py",
+      "category": "analysis",
+      "score": 6,
+      "lines": 310,
+      "status": "candidate",
+      "can_archive": false,
+      "unified_replacement": "unified_analysis.py"
+    },
+    {
+      "name": "auto_fix_missing_imports",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\auto_fix_missing_imports.py",
+      "category": "analysis",
+      "score": 5,
+      "lines": 261,
+      "status": "candidate",
+      "can_archive": false,
+      "unified_replacement": "unified_analysis.py"
+    },
+    {
+      "name": "post_completion_report_to_discord",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\post_completion_report_to_discord.py",
+      "category": "analysis",
+      "score": 6,
+      "lines": 139,
+      "status": "candidate",
+      "can_archive": false,
+      "unified_replacement": "unified_analysis.py"
+    },
+    {
+      "name": "analyze_merge_plans",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\analyze_merge_plans.py",
+      "category": "analysis",
+      "score": 5,
+      "lines": 104,
+      "status": "candidate",
+      "can_archive": false,
+      "unified_replacement": "unified_analysis.py"
+    },
+    {
+      "name": "analyze_merge_failures",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\analyze_merge_failures.py",
+      "category": "analysis",
+      "score": 5,
+      "lines": 215,
+      "status": "candidate",
+      "can_archive": false,
+      "unified_replacement": "unified_analysis.py"
+    },
+    {
+      "name": "projectscanner_language_analyzer",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\projectscanner_language_analyzer.py",
+      "category": "analysis",
+      "score": 7,
+      "lines": 298,
+      "status": "candidate",
+      "can_archive": false,
+      "unified_replacement": "unified_analysis.py"
+    },
+    {
+      "name": "analyze_project_scan",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\analyze_project_scan.py",
+      "category": "analysis",
+      "score": 8,
+      "lines": 232,
+      "status": "candidate",
+      "can_archive": false,
+      "unified_replacement": "unified_analysis.py"
+    },
+    {
+      "name": "consolidate_cli_entry_points",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\consolidate_cli_entry_points.py",
+      "category": "analysis",
+      "score": 6,
+      "lines": 184,
+      "status": "candidate",
+      "can_archive": false,
+      "unified_replacement": "unified_analysis.py"
+    },
+    {
+      "name": "analyze_test_patterns",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\analyze_test_patterns.py",
+      "category": "analysis",
+      "score": 5,
+      "lines": 230,
+      "status": "candidate",
+      "can_archive": false,
+      "unified_replacement": "unified_analysis.py"
+    },
+    {
+      "name": "analyze_browser_automation_duplication",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\analyze_browser_automation_duplication.py",
+      "category": "analysis",
+      "score": 7,
+      "lines": 258,
+      "status": "candidate",
+      "can_archive": false,
+      "unified_replacement": "unified_analysis.py"
+    },
+    {
+      "name": "review_temp_repos",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\review_temp_repos.py",
+      "category": "analysis",
+      "score": 6,
+      "lines": 239,
+      "status": "candidate",
+      "can_archive": false,
+      "unified_replacement": "unified_analysis.py"
+    },
+    {
+      "name": "violation_domain_analyzer",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\violation_domain_analyzer.py",
+      "category": "analysis",
+      "score": 7,
+      "lines": 317,
+      "status": "candidate",
+      "can_archive": false,
+      "unified_replacement": "unified_analysis.py"
+    },
+    {
+      "name": "violation_consolidation_analyzer",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\violation_consolidation_analyzer.py",
+      "category": "analysis",
+      "score": 8,
+      "lines": 313,
+      "status": "candidate",
+      "can_archive": false,
+      "unified_replacement": "unified_analysis.py"
+    },
+    {
+      "name": "type_annotation_fixer",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\type_annotation_fixer.py",
+      "category": "analysis",
+      "score": 7,
+      "lines": 265,
       "status": "candidate",
       "can_archive": false,
       "unified_replacement": "unified_analysis.py"
@@ -2307,16 +2237,6 @@
       "unified_replacement": "unified_analysis.py"
     },
     {
-      "name": "cache_invalidator",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\cache_invalidator.py",
-      "category": "monitoring",
-      "score": 4,
-      "lines": 228,
-      "status": "review_needed",
-      "can_archive": false,
-      "unified_replacement": "unified_monitoring.py"
-    },
-    {
       "name": "captain_architectural_checker",
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\captain_architectural_checker.py",
       "category": "analysis",
@@ -2331,17 +2251,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\captain_check_agent_status.py",
       "category": "monitoring",
       "score": 3,
-      "lines": 119,
-      "status": "review_needed",
-      "can_archive": false,
-      "unified_replacement": "unified_monitoring.py"
-    },
-    {
-      "name": "captain_coordinate_validator",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\captain_coordinate_validator.py",
-      "category": "monitoring",
-      "score": 3,
-      "lines": 158,
+      "lines": 114,
       "status": "review_needed",
       "can_archive": false,
       "unified_replacement": "unified_monitoring.py"
@@ -2559,12 +2469,12 @@
     {
       "name": "import_chain_validator",
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\import_chain_validator.py",
-      "category": "monitoring",
-      "score": 3,
-      "lines": 138,
+      "category": "validation",
+      "score": 4,
+      "lines": 140,
       "status": "review_needed",
       "can_archive": false,
-      "unified_replacement": "unified_monitoring.py"
+      "unified_replacement": "unified_validation.py"
     },
     {
       "name": "markov_task_optimizer",
@@ -2817,16 +2727,6 @@
       "unified_replacement": "unified_monitoring.py"
     },
     {
-      "name": "discord_status_updater",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\discord_status_updater.py",
-      "category": "monitoring",
-      "score": 3,
-      "lines": 141,
-      "status": "review_needed",
-      "can_archive": false,
-      "unified_replacement": "unified_monitoring.py"
-    },
-    {
       "name": "start_discord_system",
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\start_discord_system.py",
       "category": "monitoring",
@@ -2877,16 +2777,6 @@
       "unified_replacement": "unified_monitoring.py"
     },
     {
-      "name": "check_and_post_unposted_devlogs",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\check_and_post_unposted_devlogs.py",
-      "category": "validation",
-      "score": 4,
-      "lines": 233,
-      "status": "review_needed",
-      "can_archive": false,
-      "unified_replacement": "unified_validation.py"
-    },
-    {
       "name": "test_all_agent_discord_channels",
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\test_all_agent_discord_channels.py",
       "category": "monitoring",
@@ -2905,16 +2795,6 @@
       "status": "review_needed",
       "can_archive": false,
       "unified_replacement": "unified_validation.py"
-    },
-    {
-      "name": "check_github_rate_limit",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\check_github_rate_limit.py",
-      "category": "monitoring",
-      "score": 2,
-      "lines": 53,
-      "status": "review_needed",
-      "can_archive": false,
-      "unified_replacement": "unified_monitoring.py"
     },
     {
       "name": "chunk_reports",
@@ -3031,20 +2911,10 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\run_birthday_workflow.py",
       "category": "validation",
       "score": 3,
-      "lines": 185,
+      "lines": 186,
       "status": "review_needed",
       "can_archive": false,
       "unified_replacement": "unified_validation.py"
-    },
-    {
-      "name": "github_rate_limit_handler",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\github_rate_limit_handler.py",
-      "category": "monitoring",
-      "score": 4,
-      "lines": 369,
-      "status": "review_needed",
-      "can_archive": false,
-      "unified_replacement": "unified_monitoring.py"
     },
     {
       "name": "archive_source_repos",
@@ -3101,7 +2971,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\enhanced_duplicate_detector.py",
       "category": "analysis",
       "score": 4,
-      "lines": 316,
+      "lines": 304,
       "status": "review_needed",
       "can_archive": false,
       "unified_replacement": "unified_analysis.py"
@@ -3111,7 +2981,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\run_integration_checks_agent7.py",
       "category": "analysis",
       "score": 4,
-      "lines": 163,
+      "lines": 164,
       "status": "review_needed",
       "can_archive": false,
       "unified_replacement": "unified_analysis.py"
@@ -3141,7 +3011,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\cleanup_superpowered_venv.py",
       "category": "analysis",
       "score": 4,
-      "lines": 314,
+      "lines": 316,
       "status": "review_needed",
       "can_archive": false,
       "unified_replacement": "unified_analysis.py"
@@ -3151,20 +3021,10 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\stage1_readiness_checker.py",
       "category": "monitoring",
       "score": 3,
-      "lines": 158,
+      "lines": 159,
       "status": "review_needed",
       "can_archive": false,
       "unified_replacement": "unified_monitoring.py"
-    },
-    {
-      "name": "check_batch2_pr_status",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\check_batch2_pr_status.py",
-      "category": "analysis",
-      "score": 4,
-      "lines": 217,
-      "status": "review_needed",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
     },
     {
       "name": "thea_code_review",
@@ -3227,24 +3087,14 @@
       "unified_replacement": "unified_monitoring.py"
     },
     {
-      "name": "check_all_batch2_prs",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\check_all_batch2_prs.py",
-      "category": "monitoring",
-      "score": 4,
-      "lines": 212,
-      "status": "review_needed",
-      "can_archive": false,
-      "unified_replacement": "unified_monitoring.py"
-    },
-    {
       "name": "resolve_pr_blockers",
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\resolve_pr_blockers.py",
-      "category": "analysis",
+      "category": "validation",
       "score": 4,
-      "lines": 234,
+      "lines": 235,
       "status": "review_needed",
       "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
+      "unified_replacement": "unified_validation.py"
     },
     {
       "name": "agent_bump_script",
@@ -3261,17 +3111,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\identify_unnecessary_files.py",
       "category": "monitoring",
       "score": 3,
-      "lines": 290,
-      "status": "review_needed",
-      "can_archive": false,
-      "unified_replacement": "unified_monitoring.py"
-    },
-    {
-      "name": "analyze_test_coverage_gaps_clean",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\analyze_test_coverage_gaps_clean.py",
-      "category": "monitoring",
-      "score": 4,
-      "lines": 255,
+      "lines": 291,
       "status": "review_needed",
       "can_archive": false,
       "unified_replacement": "unified_monitoring.py"
@@ -3291,7 +3131,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\analyze_file_implementation_status.py",
       "category": "analysis",
       "score": 4,
-      "lines": 335,
+      "lines": 336,
       "status": "review_needed",
       "can_archive": false,
       "unified_replacement": "unified_analysis.py"
@@ -3311,7 +3151,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\verify_file_usage_batch.py",
       "category": "validation",
       "score": 4,
-      "lines": 309,
+      "lines": 310,
       "status": "review_needed",
       "can_archive": false,
       "unified_replacement": "unified_validation.py"
@@ -3321,7 +3161,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\verify_file_comprehensive.py",
       "category": "monitoring",
       "score": 4,
-      "lines": 256,
+      "lines": 257,
       "status": "review_needed",
       "can_archive": false,
       "unified_replacement": "unified_monitoring.py"
@@ -3331,7 +3171,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\deploy_freeride_menu_fix.py",
       "category": "validation",
       "score": 4,
-      "lines": 153,
+      "lines": 154,
       "status": "review_needed",
       "can_archive": false,
       "unified_replacement": "unified_validation.py"
@@ -3341,7 +3181,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\deploy_via_wordpress_admin.py",
       "category": "monitoring",
       "score": 3,
-      "lines": 326,
+      "lines": 327,
       "status": "review_needed",
       "can_archive": false,
       "unified_replacement": "unified_monitoring.py"
@@ -3351,7 +3191,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\verify_hostinger_credentials.py",
       "category": "monitoring",
       "score": 3,
-      "lines": 184,
+      "lines": 185,
       "status": "review_needed",
       "can_archive": false,
       "unified_replacement": "unified_monitoring.py"
@@ -3361,7 +3201,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\verify_website_fixes.py",
       "category": "monitoring",
       "score": 3,
-      "lines": 266,
+      "lines": 267,
       "status": "review_needed",
       "can_archive": false,
       "unified_replacement": "unified_monitoring.py"
@@ -3371,37 +3211,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\wordpress_admin_deployer.py",
       "category": "monitoring",
       "score": 4,
-      "lines": 384,
-      "status": "review_needed",
-      "can_archive": false,
-      "unified_replacement": "unified_monitoring.py"
-    },
-    {
-      "name": "post_deployment_verification",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\post_deployment_verification.py",
-      "category": "monitoring",
-      "score": 3,
-      "lines": 234,
-      "status": "review_needed",
-      "can_archive": false,
-      "unified_replacement": "unified_monitoring.py"
-    },
-    {
-      "name": "debug_discord_bot",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\debug_discord_bot.py",
-      "category": "monitoring",
-      "score": 4,
-      "lines": 198,
-      "status": "review_needed",
-      "can_archive": false,
-      "unified_replacement": "unified_monitoring.py"
-    },
-    {
-      "name": "verify_discord_bot_status",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\verify_discord_bot_status.py",
-      "category": "monitoring",
-      "score": 4,
-      "lines": 163,
+      "lines": 385,
       "status": "review_needed",
       "can_archive": false,
       "unified_replacement": "unified_monitoring.py"
@@ -3411,27 +3221,17 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\run_publication.py",
       "category": "validation",
       "score": 4,
-      "lines": 254,
+      "lines": 255,
       "status": "review_needed",
       "can_archive": false,
       "unified_replacement": "unified_validation.py"
-    },
-    {
-      "name": "discord_bot_process_cleanup",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\discord_bot_process_cleanup.py",
-      "category": "monitoring",
-      "score": 3,
-      "lines": 187,
-      "status": "review_needed",
-      "can_archive": false,
-      "unified_replacement": "unified_monitoring.py"
     },
     {
       "name": "compare_duplicate_files_finalization",
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\compare_duplicate_files_finalization.py",
       "category": "monitoring",
       "score": 3,
-      "lines": 180,
+      "lines": 181,
       "status": "review_needed",
       "can_archive": false,
       "unified_replacement": "unified_monitoring.py"
@@ -3441,7 +3241,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\add_typing_imports.py",
       "category": "monitoring",
       "score": 3,
-      "lines": 185,
+      "lines": 186,
       "status": "review_needed",
       "can_archive": false,
       "unified_replacement": "unified_monitoring.py"
@@ -3451,7 +3251,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\captain_pattern_optimizer.py",
       "category": "monitoring",
       "score": 3,
-      "lines": 162,
+      "lines": 163,
       "status": "review_needed",
       "can_archive": false,
       "unified_replacement": "unified_monitoring.py"
@@ -3461,7 +3261,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\generate_22_file_list.py",
       "category": "monitoring",
       "score": 3,
-      "lines": 174,
+      "lines": 175,
       "status": "review_needed",
       "can_archive": false,
       "unified_replacement": "unified_monitoring.py"
@@ -3471,7 +3271,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\archive_consolidation_candidates.py",
       "category": "validation",
       "score": 4,
-      "lines": 174,
+      "lines": 175,
       "status": "review_needed",
       "can_archive": false,
       "unified_replacement": "unified_validation.py"
@@ -3481,7 +3281,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\archive_remaining_candidates.py",
       "category": "validation",
       "score": 4,
-      "lines": 175,
+      "lines": 176,
       "status": "review_needed",
       "can_archive": false,
       "unified_replacement": "unified_validation.py"
@@ -3501,7 +3301,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\cleanup_old_merge_directories.py",
       "category": "analysis",
       "score": 4,
-      "lines": 127,
+      "lines": 128,
       "status": "review_needed",
       "can_archive": false,
       "unified_replacement": "unified_analysis.py"
@@ -3547,16 +3347,6 @@
       "unified_replacement": "unified_monitoring.py"
     },
     {
-      "name": "check_status_monitor_and_agent_statuses",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\check_status_monitor_and_agent_statuses.py",
-      "category": "monitoring",
-      "score": 4,
-      "lines": 132,
-      "status": "review_needed",
-      "can_archive": false,
-      "unified_replacement": "unified_monitoring.py"
-    },
-    {
       "name": "swarm_profile_manager",
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\swarm_profile_manager.py",
       "category": "analysis",
@@ -3581,7 +3371,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\deploy_via_sftp.py",
       "category": "validation",
       "score": 3,
-      "lines": 111,
+      "lines": 112,
       "status": "review_needed",
       "can_archive": false,
       "unified_replacement": "unified_validation.py"
@@ -3591,7 +3381,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\upload_file_to_discord.py",
       "category": "analysis",
       "score": 4,
-      "lines": 113,
+      "lines": 114,
       "status": "review_needed",
       "can_archive": false,
       "unified_replacement": "unified_analysis.py"
@@ -3601,7 +3391,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\clear_wordpress_transients.py",
       "category": "analysis",
       "score": 3,
-      "lines": 178,
+      "lines": 179,
       "status": "review_needed",
       "can_archive": false,
       "unified_replacement": "unified_analysis.py"
@@ -3611,7 +3401,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\enable_wordpress_debug.py",
       "category": "validation",
       "score": 3,
-      "lines": 172,
+      "lines": 173,
       "status": "review_needed",
       "can_archive": false,
       "unified_replacement": "unified_validation.py"
@@ -3621,7 +3411,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\check_theme_syntax.py",
       "category": "validation",
       "score": 3,
-      "lines": 234,
+      "lines": 235,
       "status": "review_needed",
       "can_archive": false,
       "unified_replacement": "unified_validation.py"
@@ -3631,7 +3421,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\manual_theme_activation.py",
       "category": "monitoring",
       "score": 2,
-      "lines": 136,
+      "lines": 137,
       "status": "review_needed",
       "can_archive": false,
       "unified_replacement": "unified_monitoring.py"
@@ -3647,21 +3437,11 @@
       "unified_replacement": "unified_monitoring.py"
     },
     {
-      "name": "check_agent_status_staleness",
-      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\check_agent_status_staleness.py",
-      "category": "analysis",
-      "score": 4,
-      "lines": 130,
-      "status": "review_needed",
-      "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
-    },
-    {
       "name": "review_64_files_duplicates",
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\review_64_files_duplicates.py",
       "category": "analysis",
       "score": 4,
-      "lines": 309,
+      "lines": 310,
       "status": "review_needed",
       "can_archive": false,
       "unified_replacement": "unified_analysis.py"
@@ -3669,19 +3449,19 @@
     {
       "name": "create_work_session",
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\create_work_session.py",
-      "category": "analysis",
+      "category": "validation",
       "score": 4,
-      "lines": 286,
+      "lines": 288,
       "status": "review_needed",
       "can_archive": false,
-      "unified_replacement": "unified_analysis.py"
+      "unified_replacement": "unified_validation.py"
     },
     {
       "name": "extract_git_commits",
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\extract_git_commits.py",
       "category": "validation",
-      "score": 3,
-      "lines": 298,
+      "score": 4,
+      "lines": 300,
       "status": "review_needed",
       "can_archive": false,
       "unified_replacement": "unified_validation.py"
@@ -3691,7 +3471,7 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\captain_workspace_cleanup.py",
       "category": "monitoring",
       "score": 3,
-      "lines": 185,
+      "lines": 188,
       "status": "review_needed",
       "can_archive": false,
       "unified_replacement": "unified_monitoring.py"
@@ -3711,7 +3491,197 @@
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\create_ariajet_game_posts.py",
       "category": "monitoring",
       "score": 2,
-      "lines": 151,
+      "lines": 152,
+      "status": "review_needed",
+      "can_archive": false,
+      "unified_replacement": "unified_monitoring.py"
+    },
+    {
+      "name": "diagnose_ariajet_wordpress_path",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\diagnose_ariajet_wordpress_path.py",
+      "category": "validation",
+      "score": 3,
+      "lines": 130,
+      "status": "review_needed",
+      "can_archive": false,
+      "unified_replacement": "unified_validation.py"
+    },
+    {
+      "name": "unified_test_analysis",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\unified_test_analysis.py",
+      "category": "monitoring",
+      "score": 4,
+      "lines": 217,
+      "status": "review_needed",
+      "can_archive": false,
+      "unified_replacement": "unified_monitoring.py"
+    },
+    {
+      "name": "update_aria_preferences",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\update_aria_preferences.py",
+      "category": "analysis",
+      "score": 4,
+      "lines": 204,
+      "status": "review_needed",
+      "can_archive": false,
+      "unified_replacement": "unified_analysis.py"
+    },
+    {
+      "name": "run_bot_with_monitoring",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\run_bot_with_monitoring.py",
+      "category": "monitoring",
+      "score": 4,
+      "lines": 126,
+      "status": "review_needed",
+      "can_archive": false,
+      "unified_replacement": "unified_monitoring.py"
+    },
+    {
+      "name": "diagnose_twitch_bot",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\diagnose_twitch_bot.py",
+      "category": "monitoring",
+      "score": 4,
+      "lines": 227,
+      "status": "review_needed",
+      "can_archive": false,
+      "unified_replacement": "unified_monitoring.py"
+    },
+    {
+      "name": "diagnose_keyboard_lock",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\diagnose_keyboard_lock.py",
+      "category": "monitoring",
+      "score": 3,
+      "lines": 101,
+      "status": "review_needed",
+      "can_archive": false,
+      "unified_replacement": "unified_monitoring.py"
+    },
+    {
+      "name": "archive_merge_plans",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\archive_merge_plans.py",
+      "category": "validation",
+      "score": 2,
+      "lines": 68,
+      "status": "review_needed",
+      "can_archive": false,
+      "unified_replacement": "unified_validation.py"
+    },
+    {
+      "name": "auto_learn_preferences",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\auto_learn_preferences.py",
+      "category": "analysis",
+      "score": 4,
+      "lines": 382,
+      "status": "review_needed",
+      "can_archive": false,
+      "unified_replacement": "unified_analysis.py"
+    },
+    {
+      "name": "integrate_auto_learning",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\integrate_auto_learning.py",
+      "category": "monitoring",
+      "score": 2,
+      "lines": 143,
+      "status": "review_needed",
+      "can_archive": false,
+      "unified_replacement": "unified_monitoring.py"
+    },
+    {
+      "name": "test_repo_status_tracker",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\test_repo_status_tracker.py",
+      "category": "monitoring",
+      "score": 4,
+      "lines": 401,
+      "status": "review_needed",
+      "can_archive": false,
+      "unified_replacement": "unified_monitoring.py"
+    },
+    {
+      "name": "fix_duplicate_class",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\fix_duplicate_class.py",
+      "category": "analysis",
+      "score": 2,
+      "lines": 22,
+      "status": "review_needed",
+      "can_archive": false,
+      "unified_replacement": "unified_analysis.py"
+    },
+    {
+      "name": "remove_duplicate_content",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\remove_duplicate_content.py",
+      "category": "analysis",
+      "score": 2,
+      "lines": 24,
+      "status": "review_needed",
+      "can_archive": false,
+      "unified_replacement": "unified_analysis.py"
+    },
+    {
+      "name": "document_ssot_registry",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\document_ssot_registry.py",
+      "category": "validation",
+      "score": 4,
+      "lines": 162,
+      "status": "review_needed",
+      "can_archive": false,
+      "unified_replacement": "unified_validation.py"
+    },
+    {
+      "name": "archive_deprecated_tools",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\archive_deprecated_tools.py",
+      "category": "validation",
+      "score": 3,
+      "lines": 159,
+      "status": "review_needed",
+      "can_archive": false,
+      "unified_replacement": "unified_validation.py"
+    },
+    {
+      "name": "verify_toolbelt_after_archive",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\verify_toolbelt_after_archive.py",
+      "category": "monitoring",
+      "score": 4,
+      "lines": 146,
+      "status": "review_needed",
+      "can_archive": false,
+      "unified_replacement": "unified_monitoring.py"
+    },
+    {
+      "name": "delete_deprecated_tools",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\delete_deprecated_tools.py",
+      "category": "validation",
+      "score": 2,
+      "lines": 103,
+      "status": "review_needed",
+      "can_archive": false,
+      "unified_replacement": "unified_validation.py"
+    },
+    {
+      "name": "add_type_annotations",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\add_type_annotations.py",
+      "category": "analysis",
+      "score": 4,
+      "lines": 182,
+      "status": "review_needed",
+      "can_archive": false,
+      "unified_replacement": "unified_analysis.py"
+    },
+    {
+      "name": "check_keyboard_lock_status",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\check_keyboard_lock_status.py",
+      "category": "monitoring",
+      "score": 2,
+      "lines": 51,
+      "status": "review_needed",
+      "can_archive": false,
+      "unified_replacement": "unified_monitoring.py"
+    },
+    {
+      "name": "generate_weekly_progression_report",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\generate_weekly_progression_report.py",
+      "category": "monitoring",
+      "score": 4,
+      "lines": 447,
       "status": "review_needed",
       "can_archive": false,
       "unified_replacement": "unified_monitoring.py"
@@ -3739,6 +3709,24 @@
     {
       "name": "review_consolidation_candidates",
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\review_consolidation_candidates.py",
+      "status": "already_using_unified",
+      "can_archive": false
+    },
+    {
+      "name": "technical_debt_analyzer",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\technical_debt_analyzer.py",
+      "status": "already_using_unified",
+      "can_archive": false
+    },
+    {
+      "name": "analysis_toolkit",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\analysis_toolkit.py",
+      "status": "already_using_unified",
+      "can_archive": false
+    },
+    {
+      "name": "fix_consolidated_imports",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\fix_consolidated_imports.py",
       "status": "already_using_unified",
       "can_archive": false
     }
@@ -3789,6 +3777,30 @@
     {
       "name": "archive_captain_inbox",
       "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\archive_captain_inbox.py",
+      "status": "not_candidate",
+      "can_archive": false
+    },
+    {
+      "name": "capture_twitch_bot_output",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\capture_twitch_bot_output.py",
+      "status": "not_candidate",
+      "can_archive": false
+    },
+    {
+      "name": "repo_status_tracker",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\repo_status_tracker.py",
+      "status": "not_candidate",
+      "can_archive": false
+    },
+    {
+      "name": "scan_violations",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\scan_violations.py",
+      "status": "not_candidate",
+      "can_archive": false
+    },
+    {
+      "name": "update_swarm_organizer",
+      "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\update_swarm_organizer.py",
       "status": "not_candidate",
       "can_archive": false
     }

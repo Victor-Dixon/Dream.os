@@ -21,6 +21,7 @@ import subprocess
 import sys
 from pathlib import Path
 from typing import Any
+from src.core.config.timeout_constants import TimeoutConstants
 
 
 class WorkCompletionVerifier:
@@ -65,7 +66,7 @@ class WorkCompletionVerifier:
         print("🔍 Checking TypeScript compilation...")
         try:
             result = subprocess.run(
-                ["npm", "run", "compile"], cwd=ext_path, capture_output=True, text=True, timeout=60
+                ["npm", "run", "compile"], cwd=ext_path, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_MEDIUM
             )
 
             ts_pass = result.returncode == 0
@@ -80,7 +81,7 @@ class WorkCompletionVerifier:
         print("🧪 Running tests...")
         try:
             result = subprocess.run(
-                ["npm", "test"], cwd=ext_path, capture_output=True, text=True, timeout=120
+                ["npm", "test"], cwd=ext_path, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_LONG
             )
 
             tests_pass = result.returncode == 0
@@ -121,7 +122,7 @@ class WorkCompletionVerifier:
                 cwd=ext_path,
                 capture_output=True,
                 text=True,
-                timeout=120,
+                timeout=TimeoutConstants.HTTP_LONG,
             )
 
             output = result.stdout + result.stderr

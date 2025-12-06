@@ -12,6 +12,8 @@ Command-line tool to stress test the message queue system with:
 Usage:
     python -m tools.stress_test_messaging_queue [options]
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-3 (Infrastructure & DevOps Specialist)
 Date: 2025-01-27
 License: MIT

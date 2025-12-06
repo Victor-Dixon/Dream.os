@@ -4,6 +4,8 @@ Task Repository - Unified Persistence Service
 
 Repository for Task entities.
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-6 (VSCode Forking & Quality Gates Specialist) - Refactored from Agent-3
 License: MIT
 """
@@ -13,7 +15,7 @@ from datetime import datetime
 
 from .base_repository import BaseRepository
 from .database_connection import DatabaseConnection
-from .persistence_models import Task
+from .persistence_models import TaskPersistenceModel as Task
 
 
 class TaskRepository(BaseRepository[Task]):

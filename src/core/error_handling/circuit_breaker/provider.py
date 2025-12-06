@@ -57,7 +57,7 @@ class CircuitBreakerProvider:
         config = CircuitBreakerConfig(
             name="default",
             failure_threshold=5,
-            recovery_timeout=60.0
+            recovery_timeout=TimeoutConstants.HTTP_MEDIUM
         )
         return CircuitBreakerProvider.create(config)
 
@@ -79,6 +79,7 @@ class CircuitBreakerProvider:
             Circuit Breaker instance
         """
         from src.core.config.config_dataclasses import CircuitBreakerConfig
+        from src.core.config.timeout_constants import TimeoutConstants
         
         config = CircuitBreakerConfig(
             name=name,

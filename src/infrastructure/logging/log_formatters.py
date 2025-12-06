@@ -5,6 +5,8 @@ Log Formatters Module
 
 Logging formatters extracted from unified_logger.py for better modularity.
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-3 (Infrastructure & DevOps) - ROI Refactoring
 License: MIT
 """

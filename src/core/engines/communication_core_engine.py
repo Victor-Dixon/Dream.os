@@ -1,5 +1,14 @@
 from __future__ import annotations
 
+"""
+Communication Core Engine - Agent Cellphone V2
+==============================================
+
+<!-- SSOT Domain: communication -->
+
+Core communication engine - consolidates all communication operations.
+"""
+
 from typing import Any
 
 from .contracts import Engine, EngineContext, EngineResult

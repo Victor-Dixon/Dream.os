@@ -4,12 +4,15 @@ Integration Workflow Automation - Agent-2
 ==========================================
 
 Automated integration workflow for Stage 1 integration work.
+
+<!-- SSOT Domain: infrastructure -->
 """
 
 import subprocess
 import sys
 from pathlib import Path
 from typing import Optional
+from src.core.config.timeout_constants import TimeoutConstants
 
 # Add project root to path
 project_root = Path(__file__).resolve().parent.parent
@@ -34,7 +37,7 @@ class IntegrationWorkflow:
         if venv_tool.exists():
             result = subprocess.run(
                 ["python", str(venv_tool), str(self.repo_path)],
-                capture_output=True, text=True, timeout=300
+                capture_output=True, text=True, timeout=TimeoutConstants.HTTP_EXTENDED
             )
             if result.returncode != 0:
                 print(f"  ⚠️ Venv detection warning: {result.stderr}")
@@ -64,7 +67,7 @@ class IntegrationWorkflow:
         if issues_tool.exists():
             result = subprocess.run(
                 ["python", str(issues_tool), str(self.repo_path)],
-                capture_output=True, text=True, timeout=300
+                capture_output=True, text=True, timeout=TimeoutConstants.HTTP_EXTENDED
             )
             if result.returncode != 0:
                 print(f"  ⚠️ Integration issues check warning: {result.stderr}")

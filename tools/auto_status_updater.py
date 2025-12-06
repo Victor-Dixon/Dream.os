@@ -9,6 +9,8 @@ commits changes to git, and maintains timestamp accuracy.
 Created: 2025-10-15
 Author: Agent-3 (Infrastructure & Monitoring Engineer)
 Purpose: Autonomous efficient development - eliminate manual status updates
+V2 Compliant: Yes
+<!-- SSOT Domain: infrastructure -->
 
 Usage:
     python tools/auto_status_updater.py --agent Agent-3 --activity "Completed repo #61 analysis"

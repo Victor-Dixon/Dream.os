@@ -54,6 +54,14 @@ Comprehensive collection of enhanced Discord message templates for various scena
 - **Design Pattern** - Design pattern reviews
 - **V3 Compliance** - Compliance verification requests
 
+#### **7. Agent Commands** (4 templates) ⭐ NEW
+- **Autonomous Execution - Standard** - Generic autonomous execution prompt
+- **Autonomous Execution - With Progress** - Progress-aware autonomous prompt
+- **Autonomous Execution - Short** - Quick jet fuel prompt
+- **Autonomous Execution - Full Jet Fuel** - Comprehensive customizable prompt
+
+**Usage**: These templates use placeholders (e.g., `{AGENT_ID}`, `{SPECIALIZATION}`, `{CURRENT_PROGRESS}`) that should be replaced with actual values before sending to agents. Perfect for empowering autonomous development and maintaining momentum.
+
 ---
 
 ## 🎨 **NEW EMBED TEMPLATES**
@@ -261,9 +269,9 @@ await channel.send(embed=discord.Embed.from_dict(embed))
 ## 📊 **TEMPLATE STATISTICS**
 
 ### **Broadcast Templates**:
-- **Total Templates**: 25 templates
-- **Modes**: 6 modes (regular, urgent, jet_fuel, task, coordination, architectural)
-- **New Templates**: 7 new templates added
+- **Total Templates**: 29 templates
+- **Modes**: 7 modes (regular, urgent, jet_fuel, task, coordination, architectural, agent_commands)
+- **New Templates**: 11 new templates added (including 4 agent-specific autonomous execution prompts)
 - **Enhanced Templates**: All existing templates improved
 
 ### **Embed Templates**:
@@ -345,6 +353,67 @@ if template:
     priority = template["priority"]
 ```
 
+### **Example 4: Using Agent Command Templates** ⭐ NEW
+
+**Standard Version (No placeholders)**:
+```python
+from src.discord_commander.discord_template_collection import get_template_by_name
+
+# Get standard autonomous execution template
+template = get_template_by_name("Autonomous Execution - Standard", mode="agent_commands")
+if template:
+    message = template["message"]
+    # Use directly - no placeholders needed
+    await send_to_agent("Agent-3", message)
+```
+
+**With Progress Context (Replace placeholders)**:
+```python
+template = get_template_by_name("Autonomous Execution - With Progress", mode="agent_commands")
+if template:
+    message = template["message"]
+    # Replace placeholders
+    customized = message.format(
+        SPECIALIZATION="Infrastructure & DevOps Specialist",
+        CURRENT_PROGRESS="29.5% test coverage (13/44 files)",
+        NEXT_MILESTONE="30% coverage",
+        CURRENT_CONTEXT="test coverage"
+    )
+    await send_to_agent("Agent-3", customized)
+```
+
+**Full Jet Fuel Version (Maximum customization)**:
+```python
+template = get_template_by_name("Autonomous Execution - Full Jet Fuel", mode="agent_commands")
+if template:
+    message = template["message"]
+    # Replace all placeholders
+    customized = message.format(
+        SPECIALIZATION="Infrastructure & DevOps Specialist",
+        CURRENT_PROGRESS="29.5% test coverage",
+        ACHIEVEMENTS="222 passing tests",
+        WORK_TYPE="files",
+        NEXT_MILESTONE="30% coverage",
+        CURRENT_CONTEXT="test coverage",
+        SPECIFIC_ACTIONS="Create tests. Verify coverage.",
+        TARGET="≥85% coverage",
+        WORK_UNIT="test file"
+    )
+    await send_to_agent("Agent-3", customized)
+```
+
+**Quick Copy-Paste Usage**:
+1. Get template from Discord bot via `!broadcast` → Templates → Agent Commands
+2. Select template (Standard, With Progress, Short, or Full Jet Fuel)
+3. If template has placeholders, customize in Discord message
+4. Send to target agent
+
+**Common Placeholder Values**:
+- `{SPECIALIZATION}`: "Infrastructure & DevOps Specialist", "Web Development Specialist", "Architecture & Design Specialist", etc.
+- `{CURRENT_PROGRESS}`: "29.5% test coverage", "13/44 files completed", "V3 compliant"
+- `{NEXT_MILESTONE}`: "30% coverage", "50 files", "100% compliance"
+- `{CURRENT_CONTEXT}`: "test coverage", "V3 compliance", "consolidation"
+
 ---
 
 ## 📝 **BEST PRACTICES**
@@ -357,6 +426,7 @@ if template:
 4. **Task Broadcasts**: Task-related communications
 5. **Coordination Broadcasts**: Swarm coordination, meetings, sync
 6. **Architectural Broadcasts**: Architecture reviews, design patterns, compliance
+7. **Agent Commands**: Agent-specific autonomous execution prompts (use placeholders for customization)
 
 ### **Embed Selection**:
 
@@ -381,7 +451,7 @@ if template:
 ## ✅ **STATUS**
 
 **Implementation**: ✅ **COMPLETE**  
-**Templates Added**: 7 new broadcast templates + 6 new embed types  
+**Templates Added**: 11 new broadcast templates (including 4 agent-specific autonomous execution prompts) + 6 new embed types  
 **Enhancements**: All existing templates improved  
 **Documentation**: ✅ Complete  
 **Integration**: ✅ Automatic fallback to original templates

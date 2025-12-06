@@ -6,6 +6,8 @@ Configuration Accessors - V2 Compliance Module
 Accessor functions for unified configuration system.
 Extracted from config_ssot.py for better modularity.
 
+<!-- SSOT Domain: core -->
+
 V2 Compliance: Single Responsibility Principle
 SOLID Principles: Dependency Inversion Principle
 

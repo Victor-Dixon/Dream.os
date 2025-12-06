@@ -5,6 +5,8 @@ Dependency Injection Container
 Provides dependency injection for use cases.
 Wires domain ports to infrastructure implementations.
 
+<!-- SSOT Domain: infrastructure -->
+
 V2 Compliance: < 300 lines, DI container pattern.
 """
 
@@ -97,9 +99,9 @@ class DomainTaskRepositoryAdapter:
 
     def _to_infra(self, domain_task: DomainTask):
         """Convert domain task to infrastructure task."""
-        from src.infrastructure.persistence.persistence_models import Task
+        from src.infrastructure.persistence.persistence_models import TaskPersistenceModel
 
-        task = Task(
+        task = TaskPersistenceModel(
             id=str(domain_task.id),
             title=domain_task.title,
             description=domain_task.description or "",

@@ -17,11 +17,13 @@ import logging
 from abc import ABC, abstractmethod
 from typing import Any, Optional
 
-from src.core.config.config_manager import UnifiedConfigManager
-from src.core.logging.unified_logging_system import UnifiedLoggingSystem
+from ..config.config_manager import UnifiedConfigManager
+from ..unified_logging_system import UnifiedLoggingSystem
+from .initialization_mixin import InitializationMixin
+from .error_handling_mixin import ErrorHandlingMixin
 
 
-class BaseHandler(ABC):
+class BaseHandler(ABC, InitializationMixin, ErrorHandlingMixin):
     """
     Base class for Handler classes.
     
@@ -46,6 +48,8 @@ class BaseHandler(ABC):
         """
         Initialize base handler.
         
+        Uses InitializationMixin for consolidated initialization pattern.
+        
         Args:
             handler_name: Name of the handler (for logging)
             config_section: Optional config section name
@@ -53,12 +57,15 @@ class BaseHandler(ABC):
         self.handler_name = handler_name
         self.config_section = config_section or handler_name.lower()
         
-        # Initialize logging
-        self.logger = UnifiedLoggingSystem(handler_name).get_logger()
+        # Use consolidated initialization pattern from InitializationMixin
+        self.logger, config_dict = self.initialize_with_config(
+            handler_name,
+            self.config_section
+        )
         
-        # Load configuration
+        # Store config for backward compatibility
         self.config = UnifiedConfigManager()
-        self.handler_config = self.config.get_section(self.config_section, {})
+        self.handler_config = config_dict or {}
         
         self.logger.info(f"✅ {handler_name} initialized")
     
@@ -105,6 +112,8 @@ class BaseHandler(ABC):
         """
         Handle error and format error response.
         
+        Uses ErrorHandlingMixin for consolidated error handling pattern.
+        
         Args:
             error: Exception that occurred
             context: Optional context information
@@ -112,16 +121,19 @@ class BaseHandler(ABC):
         Returns:
             Formatted error response
         """
-        error_msg = str(error)
-        if context:
-            error_msg = f"{context}: {error_msg}"
+        # Use consolidated error handling from ErrorHandlingMixin
+        error_response = super().handle_error(
+            error,
+            context=context,
+            logger=self.logger,
+            component_name=self.handler_name
+        )
         
-        self.logger.error(f"{self.handler_name} error: {error_msg}")
-        
+        # Format as handler response
         return self.format_response(
             result=None,
             success=False,
-            error=error_msg
+            error=error_response.get("error", str(error))
         )
     
     def log_request(self, request: Any, level: str = "info") -> None:
@@ -134,6 +146,7 @@ class BaseHandler(ABC):
         """
         log_method = getattr(self.logger, level, self.logger.info)
         log_method(f"{self.handler_name} request: {request}")
+
 
 
 

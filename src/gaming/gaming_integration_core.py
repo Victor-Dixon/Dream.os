@@ -43,69 +43,21 @@ class IIntegrationHandler(Protocol):
     def handle_event(self, event: Dict[str, Any]) -> Dict[str, Any]: ...
 
 
-class IntegrationStatus(Enum):
-    """Integration status states."""
+# IntegrationStatus - Redirect to SSOT
+# SSOT: src/architecture/system_integration.py
+from src.architecture.system_integration import IntegrationStatus
 
-    CONNECTED = "connected"
-    DISCONNECTED = "disconnected"
-    ERROR = "error"
-    MAINTENANCE = "maintenance"
+# Gaming Classes - Redirect to SSOT
+# SSOT: src/gaming/models/gaming_models.py
+from src.gaming.models.gaming_models import (
+    GameType,
+    GameSession,
+    EntertainmentSystem,
+)
 
-
-class GameType(Enum):
-    """Game types."""
-
-    STRATEGY = "strategy"
-    ACTION = "action"
-    PUZZLE = "puzzle"
-    SIMULATION = "simulation"
-    ROLE_PLAYING = "role_playing"
-
-
-# SRP: GameSession as simple data class
-class GameSession:
-    """Simplified game session - Single Responsibility: Data container."""
-
-    def __init__(self, session_id: str, game_type: GameType, player_id: str):
-        self.session_id = session_id
-        self.game_type = game_type
-        self.player_id = player_id
-        self.start_time = datetime.now()
-        self.status = "active"
-        self.score = 0
-        self.level = 1
-
-    def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary representation."""
-        return {
-            "session_id": self.session_id,
-            "game_type": self.game_type.value,
-            "player_id": self.player_id,
-            "start_time": self.start_time.isoformat(),
-            "status": self.status,
-            "score": self.score,
-            "level": self.level
-        }
-
-
-# SRP: EntertainmentSystem as simple data class
-class EntertainmentSystem:
-    """Simplified entertainment system - Single Responsibility: Data container."""
-
-    def __init__(self, system_id: str, system_type: str):
-        self.system_id = system_id
-        self.system_type = system_type
-        self.status = "active"
-        self.last_activity = datetime.now()
-
-    def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary representation."""
-        return {
-            "system_id": self.system_id,
-            "system_type": self.system_type,
-            "status": self.status,
-            "last_activity": self.last_activity.isoformat()
-        }
+# Backward compatibility: Add to_dict() methods if needed
+# Note: SSOT uses dataclasses, but some code may expect to_dict()
+# This is handled by dataclass.asdict() or manual conversion where needed
 
 
 # SRP: GameSessionManager handles only session-related operations
@@ -118,21 +70,33 @@ class GameSessionManager:
     def create_session(self, game_type: str, player_id: str) -> Optional[Dict[str, Any]]:
         """Create a new game session."""
         try:
+            from dataclasses import asdict
             session_id = f"session_{int(datetime.now().timestamp())}"
             game_type_enum = GameType(game_type)
-            session = GameSession(session_id, game_type_enum, player_id)
+            # SSOT uses dataclass - create with all required fields
+            session = GameSession(
+                session_id=session_id,
+                game_type=game_type_enum,
+                player_id=player_id,
+                start_time=datetime.now(),
+                status="active",
+                metadata={},
+                performance_metrics={}
+            )
             self.sessions[session_id] = session
 
             logger.info(f"Created game session: {session_id}")
-            return session.to_dict()
+            # Convert dataclass to dict
+            return asdict(session)
         except Exception as e:
             logger.error(f"Error creating game session: {e}")
             return None
 
     def get_session(self, session_id: str) -> Optional[Dict[str, Any]]:
         """Get game session."""
+        from dataclasses import asdict
         session = self.sessions.get(session_id)
-        return session.to_dict() if session else None
+        return asdict(session) if session else None
 
     def end_session(self, session_id: str) -> bool:
         """End game session."""
@@ -149,8 +113,9 @@ class GameSessionManager:
 
     def get_active_sessions(self) -> List[Dict[str, Any]]:
         """Get active game sessions."""
+        from dataclasses import asdict
         return [
-            session.to_dict()
+            asdict(session)
             for session in self.sessions.values()
             if session.status == "active"
         ]
@@ -166,7 +131,16 @@ class EntertainmentSystemManager:
     def register_system(self, system_id: str, system_type: str) -> bool:
         """Register entertainment system."""
         try:
-            system = EntertainmentSystem(system_id, system_type)
+            from src.architecture.system_integration import IntegrationStatus
+            # SSOT uses dataclass - create with all required fields
+            system = EntertainmentSystem(
+                system_id=system_id,
+                system_type=system_type,
+                status=IntegrationStatus.CONNECTED,
+                capabilities=[],
+                configuration={},
+                last_updated=datetime.now()
+            )
             self.systems[system_id] = system
             logger.info(f"Registered entertainment system: {system_id}")
             return True
@@ -176,12 +150,14 @@ class EntertainmentSystemManager:
 
     def get_system(self, system_id: str) -> Optional[Dict[str, Any]]:
         """Get entertainment system."""
+        from dataclasses import asdict
         system = self.systems.get(system_id)
-        return system.to_dict() if system else None
+        return asdict(system) if system else None
 
     def get_all_systems(self) -> List[Dict[str, Any]]:
         """Get all entertainment systems."""
-        return [system.to_dict() for system in self.systems.values()]
+        from dataclasses import asdict
+        return [asdict(system) for system in self.systems.values()]
 
 
 # SRP: IntegrationEventHandler handles only event processing

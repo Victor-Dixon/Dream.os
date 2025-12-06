@@ -11,7 +11,8 @@ License: MIT
 
 import time
 
-from .search_models import SearchResult
+# Use SSOT SearchResult - supports all intelligent context fields
+from src.services.models.vector_models import SearchResult
 
 
 class IntelligentContextSearch:

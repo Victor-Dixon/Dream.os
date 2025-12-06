@@ -21,6 +21,12 @@ try:
 except ImportError:
     pass
 
+# Add project root to path
+project_root = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(project_root))
+
+from src.core.config.timeout_constants import TimeoutConstants
+
 def post_to_discord(content: str, title: str = "Completion Report") -> bool:
     """Post content to Discord via webhook."""
     # Try multiple webhook environment variables
@@ -85,7 +91,7 @@ def post_to_discord(content: str, title: str = "Completion Report") -> bool:
             }
         
         try:
-            response = requests.post(webhook_url, json=payload, timeout=10)
+            response = requests.post(webhook_url, json=payload, timeout=TimeoutConstants.HTTP_SHORT)
             
             if response.status_code in [200, 204]:
                 print(f"✅ Posted chunk {i+1}/{len(chunks)} to Discord")

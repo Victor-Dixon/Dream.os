@@ -11,12 +11,12 @@ Author: Agent-7 (Web Development Specialist)
 License: MIT
 """
 
-from ...core.messaging_models_core import (
+from src.core.messaging_models_core import (
     UnifiedMessagePriority,
     UnifiedMessageTag,
     UnifiedMessageType,
 )
-from ...core.messaging_core import send_message
+from src.core.messaging_core import send_message
 import asyncio
 import logging
 from pathlib import Path
@@ -40,9 +40,9 @@ configure_logging(level="DEBUG", log_file=log_file)
 logger = get_logger(__name__)
 # OBS imports (optional - bot can run without OBS)
 try:
-    from ...obs.caption_interpreter import CaptionInterpreter, InterpretedCaption
-    from ...obs.caption_listener import OBSCaptionListener
-    from ...obs.speech_log_manager import SpeechLogManager
+    from src.obs.caption_interpreter import CaptionInterpreter, InterpretedCaption
+    from src.obs.caption_listener import OBSCaptionListener
+    from src.obs.speech_log_manager import SpeechLogManager
     OBS_AVAILABLE = True
 except ImportError:
     OBS_AVAILABLE = False
@@ -316,6 +316,7 @@ class ChatPresenceOrchestrator:
             import subprocess
             import sys
             from pathlib import Path
+from src.core.config.timeout_constants import TimeoutConstants
 
             message_text = f"Twitch Chat Message from {username}: {message_content}"
             cmd = [
@@ -331,7 +332,7 @@ class ChatPresenceOrchestrator:
                 cmd,
                 capture_output=True,
                 text=True,
-                timeout=10,
+                timeout=TimeoutConstants.HTTP_SHORT,
                 cwd=str(Path(__file__).parent.parent.parent.parent)
             )
 

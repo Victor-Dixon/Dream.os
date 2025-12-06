@@ -32,6 +32,7 @@ logger = logging.getLogger(__name__)
 # Try to import psutil (optional but recommended)
 try:
     import psutil
+    from src.core.config.timeout_constants import TimeoutConstants
     PSUTIL_AVAILABLE = True
 except ImportError:
     PSUTIL_AVAILABLE = False
@@ -486,7 +487,7 @@ def main():
             logger.info("   Stopping Discord bot...")
             try:
                 bot_process.terminate()
-                bot_process.wait(timeout=5)
+                bot_process.wait(timeout=TimeoutConstants.HTTP_QUICK)
             except subprocess.TimeoutExpired:
                 logger.warning(
                     "   Discord bot didn't terminate in time - forcing kill...")
@@ -499,7 +500,7 @@ def main():
             logger.info("   Stopping queue processor...")
             try:
                 queue_process.terminate()
-                queue_process.wait(timeout=5)
+                queue_process.wait(timeout=TimeoutConstants.HTTP_QUICK)
             except subprocess.TimeoutExpired:
                 logger.warning(
                     "   Queue processor didn't terminate in time - forcing kill...")

@@ -6,6 +6,8 @@ Run Twitch Bot with Automated Monitoring
 Runs the bot and automatically monitors for connection status.
 Provides clear success/failure indicators.
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-7 (Web Development Specialist)
 Date: 2025-12-04
 """

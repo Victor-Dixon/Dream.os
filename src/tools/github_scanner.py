@@ -22,6 +22,7 @@ from typing import Any
 
 import requests
 from dotenv import load_dotenv
+from src.core.config.timeout_constants import TimeoutConstants
 
 # Add src to path if running as script
 if __name__ == "__main__":
@@ -116,7 +117,7 @@ class GitHubScanner:
             params["type"] = "all"
 
         try:
-            response = self.session.get(url, params=params, timeout=30)
+            response = self.session.get(url, params=params, timeout=TimeoutConstants.HTTP_DEFAULT)
             response.raise_for_status()
 
             repos = []
@@ -145,7 +146,7 @@ class GitHubScanner:
         url = f"{self.base_url}/repos/{owner}/{repo_name}"
 
         try:
-            response = self.session.get(url, timeout=30)
+            response = self.session.get(url, timeout=TimeoutConstants.HTTP_DEFAULT)
             response.raise_for_status()
             return self._parse_repository(response.json())
 
@@ -167,7 +168,7 @@ class GitHubScanner:
         url = f"{self.base_url}/repos/{owner}/{repo_name}/languages"
 
         try:
-            response = self.session.get(url, timeout=30)
+            response = self.session.get(url, timeout=TimeoutConstants.HTTP_DEFAULT)
             response.raise_for_status()
             return response.json()
 

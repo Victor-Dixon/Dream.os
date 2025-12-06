@@ -3,7 +3,6 @@
 
 from . import agent_models
 from . import analysis_models
-from . import context_enums
 from . import context_results
 from . import core_models
 from . import emergency_models
@@ -22,7 +21,6 @@ from . import search_models
 __all__ = [
     'agent_models',
     'analysis_models',
-    'context_enums',
     'context_results',
     'core_models',
     'emergency_models',

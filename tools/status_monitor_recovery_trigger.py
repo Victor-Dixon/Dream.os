@@ -9,6 +9,7 @@ V2 Compliance: ≤300 lines, single responsibility, comprehensive error handling
 
 Author: Agent-2 (Architecture & Design Specialist)
 Date: 2025-01-27
+<!-- SSOT Domain: infrastructure -->
 """
 
 import asyncio

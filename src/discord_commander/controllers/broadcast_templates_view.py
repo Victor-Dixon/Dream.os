@@ -189,15 +189,30 @@ class BroadcastTemplatesView(discord.ui.View):
             ("Coordination", "coordination", discord.ButtonStyle.secondary),
         ]
         
-        # Add architectural mode if enhanced templates available
-        if USE_ENHANCED_TEMPLATES and "architectural" in ENHANCED_BROADCAST_TEMPLATES:
-            modes.append(("Architecture", "architectural", discord.ButtonStyle.secondary))
+        # Add enhanced template modes if available
+        if USE_ENHANCED_TEMPLATES:
+            if "architectural" in ENHANCED_BROADCAST_TEMPLATES:
+                modes.append(("Architecture", "architectural", discord.ButtonStyle.secondary))
+            if "agent_commands" in ENHANCED_BROADCAST_TEMPLATES:
+                modes.append(("Agent Cmds", "agent_commands", discord.ButtonStyle.success if hasattr(discord.ButtonStyle, 'success') else discord.ButtonStyle.primary))
 
         for label, mode, style in modes:
+            # Emoji mapping for modes
+            mode_emojis = {
+                "regular": "📋",
+                "urgent": "🚨",
+                "jet_fuel": "🚀",
+                "task": "📋",
+                "coordination": "🐝",
+                "architectural": "🏗️",
+                "agent_commands": "🤖",
+            }
+            emoji = mode_emojis.get(mode, "📋")
+            
             btn = discord.ui.Button(
                 label=label,
                 style=style if mode == self.current_mode else discord.ButtonStyle.secondary,
-                emoji="📋" if mode == "regular" else "🚨" if mode == "urgent" else "🚀" if mode == "jet_fuel" else "📋" if mode == "task" else "🐝",
+                emoji=emoji,
                 custom_id=f"template_mode_{mode}",
                 row=0,
             )
@@ -278,6 +293,7 @@ class BroadcastTemplatesView(discord.ui.View):
             "task": "Task-Related Broadcasts",
             "coordination": "Coordination Broadcasts",
             "architectural": "Architectural Review Broadcasts",
+            "agent_commands": "Agent Command Templates",
         }
 
         mode_descriptions = {
@@ -287,6 +303,7 @@ class BroadcastTemplatesView(discord.ui.View):
             "task": "Task assignment and update messages",
             "coordination": "Swarm coordination and synchronization messages",
             "architectural": "Architecture review and design pattern messages",
+            "agent_commands": "Agent-specific autonomous execution prompts (customize placeholders before sending)",
         }
 
         embed = discord.Embed(
@@ -297,6 +314,7 @@ class BroadcastTemplatesView(discord.ui.View):
                 else discord.Color.red() if self.current_mode == "urgent"
                 else discord.Color.green() if self.current_mode == "jet_fuel"
                 else discord.Color.purple() if self.current_mode == "architectural"
+                else discord.Color.orange() if self.current_mode == "agent_commands"
                 else discord.Color.gold()
             ),
             timestamp=discord.utils.utcnow(),
@@ -311,9 +329,17 @@ class BroadcastTemplatesView(discord.ui.View):
         if templates:
             for template in templates:
                 preview = template["message"][:150] + "..." if len(template["message"]) > 150 else template["message"]
+                field_value = f"```\n{preview}\n```\n**Priority:** {template['priority']}"
+                
+                # Add placeholder info for agent_commands templates
+                if self.current_mode == "agent_commands" and "placeholders" in template:
+                    placeholder_info = template["placeholders"].get("description", "")
+                    if placeholder_info:
+                        field_value += f"\n\n💡 **Note:** {placeholder_info}"
+                
                 embed.add_field(
                     name=f"{template['emoji']} {template['name']}",
-                    value=f"```\n{preview}\n```\n**Priority:** {template['priority']}",
+                    value=field_value,
                     inline=False,
                 )
         else:

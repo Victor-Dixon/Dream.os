@@ -2,6 +2,8 @@
 Discord Messaging Controller - V2 Compliant Facade
 ===================================================
 
+<!-- SSOT Domain: communication -->
+
 Discord messaging controller that bridges Discord interactions with swarm messaging.
 Refactored for preventive optimization: 378L → <100L (73%+ reduction).
 
@@ -85,7 +87,7 @@ class DiscordMessagingController:
         Send message to specific agent.
 
         Args:
-            agent_id: Target agent ID
+            agent_id: Target agent ID (must be Agent-1 through Agent-8)
             message: Message content
             priority: Message priority (NORMAL, HIGH, CRITICAL)
 
@@ -93,6 +95,13 @@ class DiscordMessagingController:
             True if message sent successfully
         """
         try:
+            # Validate agent name is in allowed list (Agent-1 through Agent-8)
+            from src.discord_commander.discord_agent_communication import AgentCommunicationEngine
+            engine = AgentCommunicationEngine()
+            if not engine.is_valid_agent(agent_id):
+                self.logger.warning(f"Invalid agent name: {agent_id} (must be Agent-1 through Agent-8)")
+                return False
+
             return self.messaging_service.send_message(
                 agent=agent_id,  # Fixed: 'agent' not 'agent_id'
                 message=message,

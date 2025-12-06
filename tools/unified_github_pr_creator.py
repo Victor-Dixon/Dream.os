@@ -24,12 +24,73 @@ from datetime import datetime
 project_root = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(project_root))
 
-from tools.github_rate_limit_handler import get_github_token
-from tools.check_github_rate_limits import (
-    check_gh_cli_rate_limit,
-    check_rest_api_rate_limit,
-    check_graphql_api_rate_limit
-)
+# SSOT imports
+from src.core.utils.github_utils import get_github_token
+from src.core.config.timeout_constants import TimeoutConstants
+
+# Rate limit checking (simplified - tools may be archived)
+def check_gh_cli_rate_limit() -> Dict[str, Any]:
+    """Check GitHub CLI rate limit."""
+    try:
+        result = subprocess.run(
+            ["gh", "api", "rate_limit"],
+            capture_output=True,
+            text=True,
+            timeout=TimeoutConstants.HTTP_QUICK
+        )
+        if result.returncode == 0:
+            data = json.loads(result.stdout)
+            core = data.get("resources", {}).get("core", {})
+            return {
+                "status": "✅ Available",
+                "remaining": core.get("remaining", 0),
+                "limit": core.get("limit", 0),
+            }
+    except Exception:
+        pass
+    return {"status": "❌ Not available", "remaining": 0, "limit": 0}
+
+def check_rest_api_rate_limit(token: Optional[str]) -> Dict[str, Any]:
+    """Check REST API rate limit."""
+    if not token or not REQUESTS_AVAILABLE:
+        return {"status": "❌ Not available", "remaining": 0, "limit": 0}
+    
+    try:
+        headers = {"Authorization": f"token {token}", "Accept": "application/vnd.github.v3+json"}
+        response = requests.get("https://api.github.com/rate_limit", headers=headers, timeout=TimeoutConstants.HTTP_QUICK)
+        if response.status_code == 200:
+            data = response.json()
+            core = data.get("resources", {}).get("core", {})
+            return {
+                "status": "✅ Available",
+                "core": {
+                    "remaining": core.get("remaining", 0),
+                    "limit": core.get("limit", 0),
+                }
+            }
+    except Exception:
+        pass
+    return {"status": "❌ Not available", "core": {"remaining": 0, "limit": 0}}
+
+def check_graphql_api_rate_limit(token: Optional[str]) -> Dict[str, Any]:
+    """Check GraphQL API rate limit."""
+    if not token or not REQUESTS_AVAILABLE:
+        return {"status": "❌ Not available", "remaining": 0, "limit": 0}
+    
+    try:
+        headers = {"Authorization": f"token {token}", "Accept": "application/vnd.github.v3+json"}
+        response = requests.get("https://api.github.com/rate_limit", headers=headers, timeout=TimeoutConstants.HTTP_QUICK)
+        if response.status_code == 200:
+            data = response.json()
+            graphql = data.get("resources", {}).get("graphql", {})
+            return {
+                "status": "✅ Available",
+                "remaining": graphql.get("remaining", 0),
+                "limit": graphql.get("limit", 0),
+            }
+    except Exception:
+        pass
+    return {"status": "❌ Not available", "remaining": 0, "limit": 0}
 
 
 class UnifiedGitHubPRCreator:
@@ -38,7 +99,7 @@ class UnifiedGitHubPRCreator:
     def __init__(self, owner: str = "Dadudekc"):
         """Initialize PR creator."""
         self.owner = owner
-        self.token = get_github_token()
+        self.token = get_github_token(project_root)
     
     def check_available_methods(self) -> Dict[str, Dict]:
         """Check which methods are available and their rate limits."""
@@ -101,7 +162,7 @@ class UnifiedGitHubPRCreator:
                         cmd,
                         capture_output=True,
                         text=True,
-                        timeout=60,
+                        timeout=TimeoutConstants.HTTP_MEDIUM,
                         check=False
                     )
                     
@@ -173,7 +234,7 @@ class UnifiedGitHubPRCreator:
         }
         
         try:
-            response = requests.post(url, headers=headers, json=payload, timeout=30)
+            response = requests.post(url, headers=headers, json=payload, timeout=TimeoutConstants.HTTP_DEFAULT)
             
             if response.status_code == 201:
                 pr_data = response.json()

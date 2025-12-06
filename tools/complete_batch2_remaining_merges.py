@@ -23,6 +23,7 @@ project_root = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(project_root))
 
 from tools.merge_prs_via_api import get_github_token
+from src.core.config.timeout_constants import TimeoutConstants
 
 
 def get_github_username() -> str:
@@ -75,7 +76,7 @@ def complete_digitaldreamscape_merge():
             ["git", "clone", target_url, str(target_dir)],
             capture_output=True,
             text=True,
-            timeout=300,
+            timeout=TimeoutConstants.HTTP_EXTENDED,
             env=git_env
         )
         
@@ -92,7 +93,7 @@ def complete_digitaldreamscape_merge():
             ["git", "clone", source_url, str(source_dir)],
             capture_output=True,
             text=True,
-            timeout=300,
+            timeout=TimeoutConstants.HTTP_EXTENDED,
             env=git_env
         )
         
@@ -109,7 +110,7 @@ def complete_digitaldreamscape_merge():
             ["git", "checkout", "-b", merge_branch],
             cwd=target_dir,
             check=True,
-            timeout=30
+            timeout=TimeoutConstants.HTTP_DEFAULT
         )
         print(f"✅ Merge branch created: {merge_branch}")
         
@@ -119,7 +120,7 @@ def complete_digitaldreamscape_merge():
             ["git", "remote", "add", "source-merge", str(source_dir)],
             cwd=target_dir,
             check=True,
-            timeout=30
+            timeout=TimeoutConstants.HTTP_DEFAULT
         )
         
         # Fetch from source
@@ -128,7 +129,7 @@ def complete_digitaldreamscape_merge():
             ["git", "fetch", "source-merge"],
             cwd=target_dir,
             check=True,
-            timeout=120
+            timeout=TimeoutConstants.HTTP_LONG
         )
         
         # Merge source into target
@@ -138,7 +139,7 @@ def complete_digitaldreamscape_merge():
             cwd=target_dir,
             capture_output=True,
             text=True,
-            timeout=300
+            timeout=TimeoutConstants.HTTP_EXTENDED
         )
         
         if merge_result.returncode != 0:
@@ -148,7 +149,7 @@ def complete_digitaldreamscape_merge():
                 cwd=target_dir,
                 capture_output=True,
                 text=True,
-                timeout=300
+                timeout=TimeoutConstants.HTTP_EXTENDED
             )
         
         if merge_result.returncode != 0:
@@ -160,21 +161,21 @@ def complete_digitaldreamscape_merge():
                 cwd=target_dir,
                 capture_output=True,
                 text=True,
-                timeout=30
+                timeout=TimeoutConstants.HTTP_DEFAULT
             )
             if unmerged.returncode == 0 and unmerged.stdout.strip():
                 files = [f.strip() for f in unmerged.stdout.strip().split('\n') if f.strip()]
                 print(f"📋 Found {len(files)} conflicted file(s), resolving...")
                 for file in files:
-                    subprocess.run(["git", "checkout", "--ours", file], cwd=target_dir, check=False, timeout=30)
-                    subprocess.run(["git", "add", file], cwd=target_dir, check=False, timeout=30)
+                    subprocess.run(["git", "checkout", "--ours", file], cwd=target_dir, check=False, timeout=TimeoutConstants.HTTP_DEFAULT)
+                    subprocess.run(["git", "add", file], cwd=target_dir, check=False, timeout=TimeoutConstants.HTTP_DEFAULT)
                 # Commit the resolution
                 commit_result = subprocess.run(
                     ["git", "commit", "-m", "Merge DigitalDreamscape into DreamVault - Conflicts resolved using 'ours' strategy"],
                     cwd=target_dir,
                     capture_output=True,
                     text=True,
-                    timeout=30
+                    timeout=TimeoutConstants.HTTP_DEFAULT
                 )
                 if commit_result.returncode == 0:
                     print("✅ Conflicts resolved and merge committed")
@@ -194,7 +195,7 @@ def complete_digitaldreamscape_merge():
             cwd=target_dir,
             capture_output=True,
             text=True,
-            timeout=120,
+            timeout=TimeoutConstants.HTTP_LONG,
             env=git_env
         )
         

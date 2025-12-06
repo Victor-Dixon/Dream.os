@@ -4,6 +4,8 @@ Browser Models - Unified Browser Service
 
 Configuration and data models for browser operations.
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-6 (VSCode Forking & Quality Gates Specialist) - Refactored from Agent-3
 License: MIT
 """

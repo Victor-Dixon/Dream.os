@@ -1,234 +1,181 @@
-#!/usr/bin/env python3
 """
-Resolve PR Blockers - Agent-1
-=============================
-
-Resolves PR blockers:
-1. MeTuber PR #13: Verify and merge (Streamertools repo)
-2. DreamBank PR #1: Remove draft status and merge (DreamVault repo)
-
-Author: Agent-1 (Integration & Core Systems Specialist)
-Date: 2025-11-30
+Fix script for MeTuber webcam errors:
+- Handles 2D (grayscale) vs 3D (BGR) image arrays
+- Fixes IndexError in webcam_threading.py line 628
+- Fixes ValueError in webcam_filter_pyqt5.py line 690
 """
 
-import sys
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).parent.parent))
-
-from tools.merge_prs_via_api import get_github_token, merge_pr
-import requests
 
 
-def remove_draft_status(token: str, owner: str, repo: str, pr_number: int) -> bool:
-    """Remove draft status from a PR."""
-    # Use the correct endpoint for readying a draft PR
-    url = f"https://api.github.com/repos/{owner}/{repo}/pulls/{pr_number}/ready"
-    headers = {
-        "Authorization": f"token {token}",
-        "Accept": "application/vnd.github.v3+json",
-        "Content-Type": "application/json"
-    }
-    
+def fix_webcam_threading(file_path: str) -> bool:
+    """
+    Fix the _push_output method in webcam_threading.py
+    Handles both grayscale (2D) and color (3D) images.
+    """
     try:
-        # Try the ready endpoint first (if available)
-        response = requests.put(url, headers=headers, timeout=30)
-        if response.status_code == 204 or response.status_code == 200:
-            print(f"✅ PR #{pr_number} marked as ready (draft removed)!")
+        with open(file_path, 'r', encoding='utf-8') as f:
+            lines = f.readlines()
+
+        modified = False
+        has_cv2_import = False
+
+        # Check if cv2 is already imported
+        for line in lines:
+            if 'import cv2' in line or 'from cv2' in line:
+                has_cv2_import = True
+                break
+
+        # Find and fix the problematic line
+        for i, line in enumerate(lines):
+            # Look for: rgb = bgr[:, :, ::-1].copy()
+            if 'rgb' in line and 'bgr[:, :, ::-1]' in line and '.copy()' in line:
+                # Get indentation
+                indent = len(line) - len(line.lstrip())
+                indent_str = ' ' * indent
+
+                # Insert shape checking before the rgb assignment
+                fix_lines = [
+                    f"{indent_str}# Handle both grayscale (2D) and color (3D) images\n",
+                    f"{indent_str}if len(bgr.shape) == 2:\n",
+                    f"{indent_str}    # Convert grayscale to BGR\n",
+                    f"{indent_str}    bgr = cv2.cvtColor(bgr, cv2.COLOR_GRAY2BGR)\n",
+                    f"{indent_str}elif len(bgr.shape) == 3 and bgr.shape[2] == 1:\n",
+                    f"{indent_str}    # Convert single channel to BGR\n",
+                    f"{indent_str}    bgr = cv2.cvtColor(bgr, cv2.COLOR_GRAY2BGR)\n",
+                ]
+
+                lines[i:i+1] = fix_lines + [line]
+                modified = True
+                break
+
+        # Add cv2 import if needed
+        if modified and not has_cv2_import:
+            # Find the first import statement
+            for i, line in enumerate(lines):
+                if line.strip().startswith('import ') or line.strip().startswith('from '):
+                    # Insert cv2 import after this line
+                    lines.insert(i + 1, 'import cv2\n')
+                    break
+
+        if modified:
+            with open(file_path, 'w', encoding='utf-8') as f:
+                f.writelines(lines)
             return True
-        elif response.status_code == 404:
-            # Fallback to PATCH method
-            patch_url = f"https://api.github.com/repos/{owner}/{repo}/pulls/{pr_number}"
-            patch_data = {"draft": False}
-            patch_response = requests.patch(patch_url, headers=headers, json=patch_data, timeout=30)
-            if patch_response.status_code == 200:
-                print(f"✅ PR #{pr_number} draft status removed successfully!")
-                return True
-            else:
-                print(f"❌ Failed to remove draft status: {patch_response.status_code}")
-                print(f"   Response: {patch_response.text}")
-                return False
-        else:
-            print(f"❌ Failed to ready PR: {response.status_code}")
-            print(f"   Response: {response.text}")
-            return False
     except Exception as e:
-        print(f"❌ Error removing draft status: {e}")
+        print(f"Error fixing {file_path}: {e}")
+        import traceback
+        traceback.print_exc()
         return False
+
+    return False
+
+
+def fix_webcam_filter_pyqt5(file_path: str) -> bool:
+    """
+    Fix the _show_bgr_on_preview method in webcam_filter_pyqt5.py
+    Handles both grayscale (2D) and color (3D) images.
+    """
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            lines = f.readlines()
+
+        modified = False
+        has_cv2_import = False
+
+        # Check if cv2 is already imported
+        for line in lines:
+            if 'import cv2' in line or 'from cv2' in line:
+                has_cv2_import = True
+                break
+
+        # Find and fix the problematic line
+        for i, line in enumerate(lines):
+            # Look for: h, w, c = bgr.shape
+            if 'h, w, c = bgr.shape' in line or ('h' in line and 'w' in line and 'c' in line and 'bgr.shape' in line):
+                # Get indentation
+                indent = len(line) - len(line.lstrip())
+                indent_str = ' ' * indent
+
+                # Insert shape checking before the unpacking
+                fix_lines = [
+                    f"{indent_str}# Handle both grayscale (2D) and color (3D) images\n",
+                    f"{indent_str}if len(bgr.shape) == 2:\n",
+                    f"{indent_str}    # Convert grayscale to BGR\n",
+                    f"{indent_str}    bgr = cv2.cvtColor(bgr, cv2.COLOR_GRAY2BGR)\n",
+                    f"{indent_str}elif len(bgr.shape) == 3 and bgr.shape[2] == 1:\n",
+                    f"{indent_str}    # Convert single channel to BGR\n",
+                    f"{indent_str}    bgr = cv2.cvtColor(bgr, cv2.COLOR_GRAY2BGR)\n",
+                ]
+
+                lines[i:i+1] = fix_lines + [line]
+                modified = True
+                break
+
+        # Add cv2 import if needed
+        if modified and not has_cv2_import:
+            # Find the first import statement
+            for i, line in enumerate(lines):
+                if line.strip().startswith('import ') or line.strip().startswith('from '):
+                    # Insert cv2 import after this line
+                    lines.insert(i + 1, 'import cv2\n')
+                    break
+
+        if modified:
+            with open(file_path, 'w', encoding='utf-8') as f:
+                f.writelines(lines)
+            return True
+    except Exception as e:
+        print(f"Error fixing {file_path}: {e}")
+        import traceback
+        traceback.print_exc()
+        return False
+
+    return False
 
 
 def main():
-    """Resolve PR blockers."""
-    token = get_github_token()
-    if not token:
-        print("❌ GITHUB_TOKEN not found")
-        return 1
-    
-    owner = "Dadudekc"
-    
-    print("=" * 70)
-    print("🔧 RESOLVING PR BLOCKERS")
-    print("=" * 70)
-    
-    # 1. MeTuber PR #13 (Streamertools)
-    print("\n📋 PR #1: MeTuber → Streamertools (PR #13)")
-    print("   Target: Streamertools")
-    print("   Action: Verify status, then merge PR")
-    
-    # First verify PR status
-    verify_url = f"https://api.github.com/repos/{owner}/Streamertools/pulls/13"
-    verify_headers = {
-        "Authorization": f"token {token}",
-        "Accept": "application/vnd.github.v3+json"
-    }
-    verify_response = requests.get(verify_url, headers=verify_headers, timeout=10)
-    
-    if verify_response.status_code == 200:
-        pr_data = verify_response.json()
-        print(f"   PR State: {pr_data.get('state')}")
-        print(f"   PR Merged: {pr_data.get('merged')}")
-        print(f"   PR Draft: {pr_data.get('draft')}")
-        print(f"   PR Mergeable: {pr_data.get('mergeable')}")
-        
-        if pr_data.get('merged'):
-            print("   ✅ MeTuber PR #13 already merged!")
-            success1 = True
-        elif pr_data.get('state') == 'closed' and not pr_data.get('merged'):
-            print("   ⚠️ MeTuber PR #13 is closed but not merged")
-            success1 = False
+    """Main function to fix both files."""
+    metuber_path = Path("d:/MeTuber")
+
+    if not metuber_path.exists():
+        print("❌ MeTuber directory not found at d:/MeTuber")
+        print("Please update the path in this script or run manually.")
+        return
+
+    webcam_threading = metuber_path / "webcam_threading.py"
+    webcam_filter = metuber_path / "webcam_filter_pyqt5.py"
+
+    fixes_applied = []
+
+    if webcam_threading.exists():
+        print(f"🔧 Fixing {webcam_threading}...")
+        if fix_webcam_threading(str(webcam_threading)):
+            fixes_applied.append("webcam_threading.py")
+            print("✅ Fixed webcam_threading.py")
         else:
-            # Try merging via GitHub CLI first (more reliable)
-            import subprocess
-            print("   Attempting merge via GitHub CLI...")
-            result = subprocess.run(
-                ["gh", "pr", "merge", "13", "--repo", f"{owner}/Streamertools", "--merge", "--delete-branch"],
-                capture_output=True,
-                text=True,
-                timeout=60
-            )
-            if result.returncode == 0:
-                print("   ✅ MeTuber PR #13 merged successfully via GitHub CLI!")
-                success1 = True
-            else:
-                # Fallback to API
-                print(f"   GitHub CLI failed, trying API... ({result.stderr[:100]})")
-                success1 = merge_pr(token, owner, "Streamertools", 13, "merge")
-                if success1:
-                    print("   ✅ MeTuber PR #13 merged successfully via API!")
-                else:
-                    print("   ⚠️ MeTuber PR #13 merge failed - check logs above")
+            print("⚠️  No changes needed or pattern not found in webcam_threading.py")
     else:
-        print(f"   ❌ Failed to verify PR status: {verify_response.status_code}")
-        success1 = False
-    
-    # 2. DreamBank PR #1 (DreamVault)
-    print("\n📋 PR #2: DreamBank → DreamVault (PR #1)")
-    print("   Target: DreamVault")
-    print("   Action: Remove draft status, then merge")
-    
-    # Remove draft status
-    print("\n   Step 1: Removing draft status...")
-    draft_removed = remove_draft_status(token, owner, "DreamVault", 1)
-    
-    # Wait a moment for GitHub to process
-    import time
-    if draft_removed:
-        print("   Waiting 2 seconds for GitHub to process draft removal...")
-        time.sleep(2)
-        
-        # Verify draft status was removed
-        verify_url = f"https://api.github.com/repos/{owner}/DreamVault/pulls/1"
-        verify_headers = {
-            "Authorization": f"token {token}",
-            "Accept": "application/vnd.github.v3+json"
-        }
-        verify_response = requests.get(verify_url, headers=verify_headers, timeout=10)
-        if verify_response.status_code == 200:
-            pr_data = verify_response.json()
-            if pr_data.get('draft'):
-                print("   ⚠️ PR still shows as draft - trying alternative method...")
-                # Try PATCH directly
-                patch_url = f"https://api.github.com/repos/{owner}/DreamVault/pulls/1"
-                patch_data = {"draft": False}
-                patch_response = requests.patch(patch_url, headers=verify_headers, json=patch_data, timeout=30)
-                if patch_response.status_code == 200:
-                    print("   ✅ Draft status removed via PATCH")
-                    time.sleep(2)  # Wait again
-                else:
-                    print(f"   ⚠️ PATCH also failed: {patch_response.status_code}")
-            else:
-                print("   ✅ Draft status confirmed removed")
-    
-    if draft_removed:
-        print("\n   Step 2: Waiting longer for GitHub to process draft removal...")
-        import time
-        time.sleep(5)  # Wait longer
-        
-        # Verify draft status again
-        verify_response = requests.get(verify_url, headers=verify_headers, timeout=10)
-        if verify_response.status_code == 200:
-            pr_data = verify_response.json()
-            if pr_data.get('draft'):
-                print("   ⚠️ PR still shows as draft - trying force ready...")
-                # Try the ready endpoint again
-                ready_url = f"https://api.github.com/repos/{owner}/DreamVault/pulls/1/ready"
-                ready_response = requests.put(ready_url, headers=verify_headers, timeout=30)
-                if ready_response.status_code in [204, 200]:
-                    print("   ✅ PR marked as ready!")
-                    time.sleep(3)
-                else:
-                    print(f"   ⚠️ Ready endpoint failed: {ready_response.status_code}")
-            else:
-                print("   ✅ Draft status confirmed removed")
-        
-        print("\n   Step 3: Merging PR...")
-        # Try GitHub CLI first
-        import subprocess
-        result = subprocess.run(
-            ["gh", "pr", "merge", "1", "--repo", f"{owner}/DreamVault", "--merge", "--delete-branch"],
-            capture_output=True,
-            text=True,
-            timeout=60
-        )
-        if result.returncode == 0:
-            print("   ✅ DreamBank PR #1 merged successfully via GitHub CLI!")
-            success2 = True
+        print(f"⚠️  File not found: {webcam_threading}")
+
+    if webcam_filter.exists():
+        print(f"🔧 Fixing {webcam_filter}...")
+        if fix_webcam_filter_pyqt5(str(webcam_filter)):
+            fixes_applied.append("webcam_filter_pyqt5.py")
+            print("✅ Fixed webcam_filter_pyqt5.py")
         else:
-            # Fallback to API
-            print(f"   GitHub CLI failed, trying API... ({result.stderr[:100]})")
-            success2 = merge_pr(token, owner, "DreamVault", 1, "merge")
-            if success2:
-                print("   ✅ DreamBank PR #1 merged successfully via API!")
-            else:
-                print("   ⚠️ DreamBank PR #1 merge failed - check logs above")
+            print("⚠️  No changes needed or pattern not found in webcam_filter_pyqt5.py")
     else:
-        print("   ⚠️ Failed to remove draft status - cannot merge")
-        success2 = False
-    
-    # Summary
-    print("\n" + "=" * 70)
-    print("📊 PR BLOCKER RESOLUTION SUMMARY")
-    print("=" * 70)
-    
-    if success1:
-        print("✅ MeTuber PR #13: MERGED")
+        print(f"⚠️  File not found: {webcam_filter}")
+
+    if fixes_applied:
+        print(f"\n✅ Successfully fixed {len(fixes_applied)} file(s):")
+        for f in fixes_applied:
+            print(f"   - {f}")
+        print("\n⚠️  Please review the changes and test the application.")
     else:
-        print("❌ MeTuber PR #13: FAILED")
-    
-    if draft_removed and success2:
-        print("✅ DreamBank PR #1: DRAFT REMOVED & MERGED")
-    elif draft_removed:
-        print("⚠️ DreamBank PR #1: DRAFT REMOVED, MERGE FAILED")
-    else:
-        print("❌ DreamBank PR #1: FAILED")
-    
-    print("=" * 70)
-    
-    if success1 and draft_removed and success2:
-        return 0
-    else:
-        return 1
+        print("\n⚠️  No fixes were applied. The error patterns may have changed.")
 
 
 if __name__ == "__main__":
-    sys.exit(main())
-
+    main()

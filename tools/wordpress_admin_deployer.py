@@ -55,7 +55,7 @@ class WordPressAdminDeployer:
             return False
         
         try:
-            response = requests.get(f"{self.site_url}/wp-json/wp/v2", timeout=5)
+            response = requests.get(f"{self.site_url}/wp-json/wp/v2", timeout=TimeoutConstants.HTTP_QUICK)
             return response.status_code == 200
         except:
             return False
@@ -285,6 +285,7 @@ class WordPressAdminDeployer:
 def main():
     """CLI entry point."""
     import argparse
+from src.core.config.timeout_constants import TimeoutConstants
     
     parser = argparse.ArgumentParser(
         description="Deploy files via WordPress admin"
@@ -380,6 +381,7 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
+
 
 
 

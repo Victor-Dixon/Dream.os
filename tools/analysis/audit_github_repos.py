@@ -23,6 +23,7 @@ import sys
 sys.path.insert(0, str(Path(__file__).parent))
 
 from src.tools.github_scanner import GitHubScanner
+from src.core.config.timeout_constants import TimeoutConstants
 
 
 def audit_repository(repo_name: str, clone_url: str, audit_dir: Path) -> dict:
@@ -62,7 +63,7 @@ def audit_repository(repo_name: str, clone_url: str, audit_dir: Path) -> dict:
                 ["git", "clone", clone_url, str(repo_path)],
                 capture_output=True,
                 text=True,
-                timeout=300
+                timeout=TimeoutConstants.HTTP_EXTENDED
             )
             if result.returncode == 0:
                 results["clone_success"] = True

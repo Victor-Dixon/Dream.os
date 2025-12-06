@@ -27,6 +27,7 @@ sys.path.insert(0, str(project_root))
 
 try:
     from dotenv import load_dotenv
+from src.core.config.timeout_constants import TimeoutConstants
     env_path = Path('.env')
     if env_path.exists():
         load_dotenv(env_path)
@@ -176,7 +177,7 @@ def clone_repo(temp_base: Path, token: str, username: str, repo_name: str) -> Op
             ["git", "clone", repo_url, str(repo_dir)],
             check=True,
             capture_output=True,
-            timeout=300
+            timeout=TimeoutConstants.HTTP_EXTENDED
         )
         print(f"✅ Cloned {repo_name} successfully")
         return repo_dir
@@ -307,6 +308,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 

@@ -67,18 +67,19 @@ class DiscordMermaidRenderer:
             image_url = f"{self.mermaid_api}/{encoded}"
             
             # Verify URL works
-            response = requests.head(image_url, timeout=5)
+            response = requests.head(image_url, timeout=TimeoutConstants.HTTP_QUICK)
             if response.status_code == 200:
                 return image_url
             
             # Fallback to kroki.io (correct API format)
             import urllib.parse
+from src.core.config.timeout_constants import TimeoutConstants
             kroki_diagram = base64.urlsafe_b64encode(
                 diagram_code.encode('utf-8')
             ).decode('utf-8').rstrip('=')
             kroki_url = f"{self.kroki_api}/{kroki_diagram}"
             
-            kroki_response = requests.get(kroki_url, timeout=10)
+            kroki_response = requests.get(kroki_url, timeout=TimeoutConstants.HTTP_SHORT)
             if kroki_response.status_code == 200:
                 # kroki returns PNG image directly
                 return f"data:image/png;base64,{base64.b64encode(kroki_response.content).decode()}"
@@ -111,7 +112,7 @@ class DiscordMermaidRenderer:
                 image_data = base64.b64decode(encoded)
             else:
                 # URL
-                response = requests.get(image_url, timeout=10)
+                response = requests.get(image_url, timeout=TimeoutConstants.HTTP_SHORT)
                 if response.status_code != 200:
                     return False
                 image_data = response.content
@@ -190,7 +191,7 @@ class DiscordMermaidRenderer:
         if not diagrams:
             # No Mermaid diagrams, post as normal
             payload = {"content": content, "username": username}
-            response = requests.post(webhook_url, json=payload, timeout=10)
+            response = requests.post(webhook_url, json=payload, timeout=TimeoutConstants.HTTP_SHORT)
             return response.status_code == 204
         
         # Has Mermaid diagrams - convert to images
@@ -201,7 +202,7 @@ class DiscordMermaidRenderer:
         
         # Post content first
         payload = {"content": modified_content, "username": username}
-        response = requests.post(webhook_url, json=payload, timeout=10)
+        response = requests.post(webhook_url, json=payload, timeout=TimeoutConstants.HTTP_SHORT)
         if response.status_code != 204:
             print(f"❌ Failed to post content: {response.status_code}")
             return False
@@ -216,7 +217,7 @@ class DiscordMermaidRenderer:
                         webhook_url,
                         files=files,
                         data=data,
-                        timeout=30
+                        timeout=TimeoutConstants.HTTP_DEFAULT
                     )
                     if response.status_code == 204:
                         print(f"✅ Posted image: {image_path.name}")

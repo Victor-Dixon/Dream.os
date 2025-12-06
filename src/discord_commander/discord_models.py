@@ -13,6 +13,8 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import Any
 
+from src.core.utils.serialization_utils import to_dict
+
 
 @dataclass
 class CommandResult:
@@ -97,12 +99,5 @@ class CommunicationStats:
     uptime_percentage: float = 100.0
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert stats to dictionary."""
-        return {
-            "messages_sent": self.messages_sent,
-            "messages_received": self.messages_received,
-            "commands_executed": self.commands_executed,
-            "errors_encountered": self.errors_encountered,
-            "average_response_time": self.average_response_time,
-            "uptime_percentage": self.uptime_percentage,
-        }
+        """Convert stats to dictionary using SSOT utility."""
+        return to_dict(self)

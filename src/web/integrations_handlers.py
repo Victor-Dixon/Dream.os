@@ -6,9 +6,13 @@ Handler classes for integration services operations.
 Wires integration services to web layer.
 
 V2 Compliance: < 300 lines, handler pattern.
+Consolidated: Uses BaseHandler + AvailabilityMixin (33% code reduction).
 """
 
 from flask import jsonify, request
+
+from src.core.base.availability_mixin import AvailabilityMixin
+from src.core.base.base_handler import BaseHandler
 
 try:
     from src.integrations.jarvis.conversation_engine import ConversationEngine
@@ -23,11 +27,14 @@ except ImportError:
     VISION_SYSTEM_AVAILABLE = False
 
 
-class IntegrationsHandlers:
+class IntegrationsHandlers(BaseHandler, AvailabilityMixin):
     """Handler class for integration services operations."""
 
-    @staticmethod
-    def handle_jarvis_conversation(request) -> tuple:
+    def __init__(self):
+        """Initialize integrations handlers."""
+        super().__init__("IntegrationsHandlers")
+
+    def handle_jarvis_conversation(self, request) -> tuple:
         """
         Handle Jarvis conversation request.
 
@@ -37,26 +44,32 @@ class IntegrationsHandlers:
         Returns:
             Tuple of (response_data, status_code)
         """
-        if not CONVERSATION_ENGINE_AVAILABLE:
-            return jsonify({"success": False, "error": "ConversationEngine not available"}), 503
+        # Check availability using mixin
+        availability_error = self.check_availability(
+            CONVERSATION_ENGINE_AVAILABLE,
+            "ConversationEngine"
+        )
+        if availability_error:
+            return availability_error
 
         try:
             data = request.get_json() or {}
             message = data.get("message")
 
             if not message:
-                return jsonify({"error": "message is required"}), 400
+                error_response = self.format_response(None, success=False, error="message is required")
+                return jsonify(error_response), 400
 
             engine = ConversationEngine()
-            response = engine.process_message(message)
-
-            return jsonify({"success": True, "data": response}), 200
+            response_data = engine.process_message(message)
+            response = self.format_response(response_data, success=True)
+            return jsonify(response), 200
 
         except Exception as e:
-            return jsonify({"success": False, "error": str(e)}), 500
+            error_response = self.handle_error(e, "jarvis_conversation")
+            return jsonify(error_response), 500
 
-    @staticmethod
-    def handle_jarvis_vision(request) -> tuple:
+    def handle_jarvis_vision(self, request) -> tuple:
         """
         Handle Jarvis vision request.
 
@@ -66,8 +79,13 @@ class IntegrationsHandlers:
         Returns:
             Tuple of (response_data, status_code)
         """
-        if not VISION_SYSTEM_AVAILABLE:
-            return jsonify({"success": False, "error": "VisionSystem not available"}), 503
+        # Check availability using mixin
+        availability_error = self.check_availability(
+            VISION_SYSTEM_AVAILABLE,
+            "VisionSystem"
+        )
+        if availability_error:
+            return availability_error
 
         try:
             data = request.get_json() or {}
@@ -75,15 +93,18 @@ class IntegrationsHandlers:
             prompt = data.get("prompt")
 
             if not image_data:
-                return jsonify({"error": "image_data is required"}), 400
+                error_response = self.format_response(None, success=False, error="image_data is required")
+                return jsonify(error_response), 400
 
             vision = VisionSystem()
             result = vision.analyze_image(image_data, prompt)
-
-            return jsonify({"success": True, "data": result}), 200
+            response = self.format_response(result, success=True)
+            return jsonify(response), 200
 
         except Exception as e:
-            return jsonify({"success": False, "error": str(e)}), 500
+            error_response = self.handle_error(e, "jarvis_vision")
+            return jsonify(error_response), 500
+
 
 
 

@@ -23,6 +23,8 @@ from pathlib import Path
 project_root = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(project_root))
 
+from src.core.config.timeout_constants import TimeoutConstants
+
 def complete_merge_into_main(repo: str, merge_branch: str, base_branch: str = "master") -> bool:
     """Merge merge branch into main/master branch."""
     try:
@@ -34,23 +36,9 @@ def complete_merge_into_main(repo: str, merge_branch: str, base_branch: str = "m
         temp_base = Path(tempfile.mkdtemp(prefix=f"complete_merge_{timestamp}_"))
         repo_dir = temp_base / repo
         
-        def ensure_dir_removed(dir_path, name):
-            """Ensure directory is completely removed."""
-            if dir_path.exists():
-                print(f"🧹 Removing existing {name} directory: {dir_path}")
-                try:
-                    shutil.rmtree(dir_path, ignore_errors=True)
-                    time.sleep(0.5)
-                    if dir_path.exists():
-                        def remove_readonly(func, path, exc):
-                            os.chmod(path, stat.S_IWRITE)
-                            func(path)
-                        shutil.rmtree(dir_path, onerror=remove_readonly)
-                        time.sleep(0.5)
-                except Exception as e:
-                    print(f"⚠️ Cleanup warning for {name}: {e}")
-        
-        ensure_dir_removed(repo_dir, "repo")
+        # Use SSOT utility for directory removal
+        from src.core.utils.file_utils import ensure_directory_removed
+        ensure_directory_removed(repo_dir, "repo")
         
         # Prepare git environment
         git_env = os.environ.copy()
@@ -64,7 +52,7 @@ def complete_merge_into_main(repo: str, merge_branch: str, base_branch: str = "m
         print(f"📥 Cloning repository: {repo} (shallow clone)...")
         clone_result = subprocess.run(
             ["git", "clone", "--depth", "1", repo_url, str(repo_dir)],
-            capture_output=True, text=True, check=False, timeout=120, env=git_env
+            capture_output=True, text=True, check=False, timeout=TimeoutConstants.HTTP_LONG, env=git_env
         )
         
         if clone_result.returncode != 0:
@@ -73,7 +61,7 @@ def complete_merge_into_main(repo: str, merge_branch: str, base_branch: str = "m
                 ensure_dir_removed(repo_dir, "repo")
                 clone_result = subprocess.run(
                     ["git", "clone", "--depth", "1", repo_url, str(repo_dir)],
-                    capture_output=True, text=True, check=False, timeout=120, env=git_env
+                    capture_output=True, text=True, check=False, timeout=TimeoutConstants.HTTP_LONG, env=git_env
                 )
             if clone_result.returncode != 0:
                 print(f"❌ Failed to clone repo: {error_msg}")
@@ -83,7 +71,7 @@ def complete_merge_into_main(repo: str, merge_branch: str, base_branch: str = "m
         print(f"📥 Fetching merge branch: {merge_branch}...")
         fetch_result = subprocess.run(
             ["git", "fetch", "origin", f"{merge_branch}:{merge_branch}"],
-            cwd=repo_dir, capture_output=True, text=True, check=False, timeout=60, env=git_env
+            cwd=repo_dir, capture_output=True, text=True, check=False, timeout=TimeoutConstants.HTTP_MEDIUM, env=git_env
         )
         
         if fetch_result.returncode != 0:
@@ -92,7 +80,7 @@ def complete_merge_into_main(repo: str, merge_branch: str, base_branch: str = "m
             ensure_dir_removed(repo_dir, "repo")
             clone_result = subprocess.run(
                 ["git", "clone", repo_url, str(repo_dir)],
-                capture_output=True, text=True, check=False, timeout=120, env=git_env
+                capture_output=True, text=True, check=False, timeout=TimeoutConstants.HTTP_LONG, env=git_env
             )
             if clone_result.returncode != 0:
                 print(f"❌ Failed to clone repo: {clone_result.stderr}")
@@ -102,7 +90,7 @@ def complete_merge_into_main(repo: str, merge_branch: str, base_branch: str = "m
         print(f"🔀 Checking out base branch: {base_branch}...")
         checkout_result = subprocess.run(
             ["git", "checkout", base_branch],
-            cwd=repo_dir, capture_output=True, text=True, check=False, timeout=30
+            cwd=repo_dir, capture_output=True, text=True, check=False, timeout=TimeoutConstants.HTTP_DEFAULT
         )
         
         if checkout_result.returncode != 0:
@@ -110,7 +98,7 @@ def complete_merge_into_main(repo: str, merge_branch: str, base_branch: str = "m
             base_branch = "main"
             checkout_result = subprocess.run(
                 ["git", "checkout", base_branch],
-                cwd=repo_dir, capture_output=True, text=True, check=False, timeout=30
+                cwd=repo_dir, capture_output=True, text=True, check=False, timeout=TimeoutConstants.HTTP_DEFAULT
             )
             if checkout_result.returncode != 0:
                 print(f"❌ Failed to checkout base branch: {checkout_result.stderr}")
@@ -120,7 +108,7 @@ def complete_merge_into_main(repo: str, merge_branch: str, base_branch: str = "m
         print(f"🔀 Merging {merge_branch} into {base_branch}...")
         merge_result = subprocess.run(
             ["git", "merge", merge_branch, "--allow-unrelated-histories", "--no-edit", "-m", f"Merge {merge_branch} into {base_branch}"],
-            cwd=repo_dir, capture_output=True, text=True, timeout=120
+            cwd=repo_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_LONG
         )
         
         if merge_result.returncode != 0:
@@ -131,7 +119,7 @@ def complete_merge_into_main(repo: str, merge_branch: str, base_branch: str = "m
                 # Get list of conflicted files
                 conflicted_files = subprocess.run(
                     ["git", "diff", "--name-only", "--diff-filter=U"],
-                    cwd=repo_dir, capture_output=True, text=True, timeout=30
+                    cwd=repo_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_DEFAULT
                 )
                 
                 if conflicted_files.returncode == 0 and conflicted_files.stdout.strip():
@@ -143,11 +131,11 @@ def complete_merge_into_main(repo: str, merge_branch: str, base_branch: str = "m
                         print(f"  🔧 Resolving {file} using 'ours' strategy...")
                         subprocess.run(
                             ["git", "checkout", "--ours", file],
-                            cwd=repo_dir, check=True, timeout=30
+                            cwd=repo_dir, check=True, timeout=TimeoutConstants.HTTP_DEFAULT
                         )
                         subprocess.run(
                             ["git", "add", file],
-                            cwd=repo_dir, check=True, timeout=30
+                            cwd=repo_dir, check=True, timeout=TimeoutConstants.HTTP_DEFAULT
                         )
                         print(f"  ✅ Resolved {file}")
                     
@@ -155,7 +143,7 @@ def complete_merge_into_main(repo: str, merge_branch: str, base_branch: str = "m
                     print(f"💾 Committing merge with resolved conflicts...")
                     commit_result = subprocess.run(
                         ["git", "commit", "-m", f"Merge {merge_branch} into {base_branch} - Conflicts resolved using 'ours' strategy"],
-                        cwd=repo_dir, capture_output=True, text=True, timeout=30
+                        cwd=repo_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_DEFAULT
                     )
                     
                     if commit_result.returncode == 0:
@@ -175,7 +163,7 @@ def complete_merge_into_main(repo: str, merge_branch: str, base_branch: str = "m
         print(f"📤 Pushing merged {base_branch} branch...")
         push_result = subprocess.run(
             ["git", "push", "origin", base_branch],
-            cwd=repo_dir, capture_output=True, text=True, timeout=60, env=git_env
+            cwd=repo_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_MEDIUM, env=git_env
         )
         
         if push_result.returncode == 0:

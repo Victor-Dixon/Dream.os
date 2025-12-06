@@ -12,11 +12,19 @@ V2 Compliance: <400 lines
 """
 
 import os
+import sys
 import requests
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass
 from datetime import datetime
+from pathlib import Path
 import logging
+
+# Add project root to path
+project_root = Path(__file__).resolve().parent.parent.parent
+sys.path.insert(0, str(project_root))
+
+from src.core.config.timeout_constants import TimeoutConstants
 
 logger = logging.getLogger(__name__)
 
@@ -279,7 +287,7 @@ class PortfolioService:
                 f"interval=1min&"
                 f"apikey={self.api_key}"
             )
-            response = requests.get(url, timeout=10)
+            response = requests.get(url, timeout=TimeoutConstants.HTTP_SHORT)
             response.raise_for_status()
             json_data = response.json()
             

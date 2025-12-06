@@ -11,7 +11,9 @@ Author: Agent-3 - Infrastructure & DevOps Specialist
 from src.core.unified_logging_system import get_logger
 from src.services.vector_database_service_unified import get_vector_database_service
 
-from .models import SearchRequest, SearchResult
+from .models import SearchRequest
+# Use SSOT SearchResult - supports all web model fields (id, title, collection, tags, etc.)
+from src.services.models.vector_models import SearchResult
 
 
 class SearchUtils:

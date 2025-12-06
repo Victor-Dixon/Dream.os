@@ -72,5 +72,65 @@ class CoordinationHandlers:
         except Exception as e:
             return jsonify({"success": False, "error": str(e)}), 500
 
+    @staticmethod
+    def handle_coordinate_task(request) -> tuple:
+        """
+        Handle request to coordinate a specific task.
+        
+        Args:
+            request: Flask request object
+            
+        Returns:
+            Tuple of (response_data, status_code)
+        """
+        if not TASK_COORDINATION_AVAILABLE:
+            return jsonify({"success": False, "error": "TaskCoordinationEngine not available"}), 503
+
+        try:
+            data = request.get_json() or {}
+            task_id = data.get("task_id")
+            coordination_data = data.get("coordination_data", {})
+            
+            if not task_id:
+                return jsonify({"error": "task_id is required"}), 400
+            
+            engine = TaskCoordinationEngine()
+            result = engine.coordinate_task(task_id, coordination_data)
+            
+            return jsonify({"success": True, "data": result}), 200
+            
+        except Exception as e:
+            return jsonify({"success": False, "error": str(e)}), 500
+
+    @staticmethod
+    def handle_resolve_coordination(request) -> tuple:
+        """
+        Handle request to resolve coordination conflicts.
+        
+        Args:
+            request: Flask request object
+            
+        Returns:
+            Tuple of (response_data, status_code)
+        """
+        if not TASK_COORDINATION_AVAILABLE:
+            return jsonify({"success": False, "error": "TaskCoordinationEngine not available"}), 503
+
+        try:
+            data = request.get_json() or {}
+            conflict_id = data.get("conflict_id")
+            resolution = data.get("resolution", {})
+            
+            if not conflict_id:
+                return jsonify({"error": "conflict_id is required"}), 400
+            
+            engine = TaskCoordinationEngine()
+            result = engine.resolve_conflict(conflict_id, resolution)
+            
+            return jsonify({"success": True, "data": result}), 200
+            
+        except Exception as e:
+            return jsonify({"success": False, "error": str(e)}), 500
+
 
 

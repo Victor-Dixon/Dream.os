@@ -52,7 +52,7 @@ class MergeConflictResolver:
                 cwd=repo_path,
                 capture_output=True,
                 text=True,
-                timeout=30
+                timeout=TimeoutConstants.HTTP_DEFAULT
             )
             
             # Try merge (dry run)
@@ -61,7 +61,7 @@ class MergeConflictResolver:
                 cwd=repo_path,
                 capture_output=True,
                 text=True,
-                timeout=60
+                timeout=TimeoutConstants.HTTP_MEDIUM
             )
             
             # Check for conflict markers
@@ -78,7 +78,7 @@ class MergeConflictResolver:
                 cwd=repo_path,
                 capture_output=True,
                 text=True,
-                timeout=30
+                timeout=TimeoutConstants.HTTP_DEFAULT
             )
             
             has_conflicts = len(conflict_files) > 0
@@ -114,7 +114,7 @@ class MergeConflictResolver:
                         cwd=repo_path,
                         capture_output=True,
                         text=True,
-                        timeout=30
+                        timeout=TimeoutConstants.HTTP_DEFAULT
                     )
                     if result.returncode != 0:
                         logger.error(f"❌ Failed to resolve {file_path}")
@@ -140,7 +140,7 @@ class MergeConflictResolver:
                         cwd=repo_path,
                         capture_output=True,
                         text=True,
-                        timeout=30
+                        timeout=TimeoutConstants.HTTP_DEFAULT
                     )
                     if result.returncode != 0:
                         logger.error(f"❌ Failed to resolve {file_path}")
@@ -233,7 +233,7 @@ class MergeConflictResolver:
                 cwd=repo_path,
                 capture_output=True,
                 text=True,
-                timeout=30
+                timeout=TimeoutConstants.HTTP_DEFAULT
             )
             
             # Detect conflicts first
@@ -247,7 +247,7 @@ class MergeConflictResolver:
                 cwd=repo_path,
                 capture_output=True,
                 text=True,
-                timeout=60
+                timeout=TimeoutConstants.HTTP_MEDIUM
             )
             
             # Resolve conflicts if any
@@ -310,6 +310,7 @@ import subprocess
 from pathlib import Path
 from typing import Dict, Any, List, Optional, Tuple
 import re
+from src.core.config.timeout_constants import TimeoutConstants
 
 logger = logging.getLogger(__name__)
 
@@ -345,7 +346,7 @@ class MergeConflictResolver:
                 cwd=repo_path,
                 capture_output=True,
                 text=True,
-                timeout=30
+                timeout=TimeoutConstants.HTTP_DEFAULT
             )
             
             # Try merge (dry run)
@@ -354,7 +355,7 @@ class MergeConflictResolver:
                 cwd=repo_path,
                 capture_output=True,
                 text=True,
-                timeout=60
+                timeout=TimeoutConstants.HTTP_MEDIUM
             )
             
             # Check for conflict markers
@@ -371,7 +372,7 @@ class MergeConflictResolver:
                 cwd=repo_path,
                 capture_output=True,
                 text=True,
-                timeout=30
+                timeout=TimeoutConstants.HTTP_DEFAULT
             )
             
             has_conflicts = len(conflict_files) > 0
@@ -407,7 +408,7 @@ class MergeConflictResolver:
                         cwd=repo_path,
                         capture_output=True,
                         text=True,
-                        timeout=30
+                        timeout=TimeoutConstants.HTTP_DEFAULT
                     )
                     if result.returncode != 0:
                         logger.error(f"❌ Failed to resolve {file_path}")
@@ -433,7 +434,7 @@ class MergeConflictResolver:
                         cwd=repo_path,
                         capture_output=True,
                         text=True,
-                        timeout=30
+                        timeout=TimeoutConstants.HTTP_DEFAULT
                     )
                     if result.returncode != 0:
                         logger.error(f"❌ Failed to resolve {file_path}")
@@ -526,7 +527,7 @@ class MergeConflictResolver:
                 cwd=repo_path,
                 capture_output=True,
                 text=True,
-                timeout=30
+                timeout=TimeoutConstants.HTTP_DEFAULT
             )
             
             # Detect conflicts first
@@ -540,7 +541,7 @@ class MergeConflictResolver:
                 cwd=repo_path,
                 capture_output=True,
                 text=True,
-                timeout=60
+                timeout=TimeoutConstants.HTTP_MEDIUM
             )
             
             # Resolve conflicts if any

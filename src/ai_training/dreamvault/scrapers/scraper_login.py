@@ -11,7 +11,7 @@ class ScraperLoginHelper:
 
     @staticmethod
     def ensure_login_with_cookies(
-        driver, cookie_manager, login_handler, allow_manual=True, manual_timeout=60
+        driver, cookie_manager, login_handler, allow_manual=True, manual_timeout=TimeoutConstants.HTTP_MEDIUM
     ) -> bool:
         """Ensure user is logged into ChatGPT with cookie handling."""
         try:
@@ -62,6 +62,7 @@ class ScraperLoginHelper:
             from selenium.webdriver.common.by import By
             from selenium.webdriver.support import expected_conditions as EC
             from selenium.webdriver.support.ui import WebDriverWait
+from src.core.config.timeout_constants import TimeoutConstants
 
             wait = WebDriverWait(driver, 5)
             modal = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "[role='dialog']")))

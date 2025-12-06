@@ -18,6 +18,8 @@ Activity Sources:
 Author: Agent-6 (Coordination & Communication Specialist)
 Created: 2025-11-30
 Priority: HIGH - Improves agent activity detection
+V2 Compliant: Yes
+<!-- SSOT Domain: infrastructure -->
 """
 
 import json
@@ -343,7 +345,7 @@ class AgentActivityDetector:
                 cwd=agent_dir,
                 capture_output=True,
                 text=True,
-                timeout=5
+                timeout=TimeoutConstants.HTTP_QUICK
             )
             
             if result.returncode == 0:
@@ -471,6 +473,7 @@ Recent Actions:
 def main():
     """CLI entry point."""
     import argparse
+    from src.core.config.timeout_constants import TimeoutConstants
     
     parser = argparse.ArgumentParser(description="Agent Activity Detector")
     parser.add_argument("--agent", help="Check specific agent")

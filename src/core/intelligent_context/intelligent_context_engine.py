@@ -19,7 +19,8 @@ from .intelligent_context_emergency import IntelligentContextEmergency
 from .intelligent_context_optimization import IntelligentContextOptimization
 from .intelligent_context_search import IntelligentContextSearch
 from .metrics import ContextMetrics
-from .search_models import SearchResult
+# Use SSOT SearchResult - supports all intelligent context fields
+from src.services.models.vector_models import SearchResult
 
 
 class IntelligentContextEngine:

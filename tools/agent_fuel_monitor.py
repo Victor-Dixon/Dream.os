@@ -8,6 +8,8 @@ Ensures agents don't run out of gas during long missions.
 PROMPTS ARE GAS - this tool delivers periodic fuel!
 
 Captain Agent-4 - 2025-10-14
+V2 Compliant: Yes
+<!-- SSOT Domain: infrastructure -->
 """
 
 import json
@@ -220,7 +222,7 @@ LEGENDARY FINISH! Complete mission this cycle! 🏆"""
                 cwd=self.project_root,
                 capture_output=True,
                 text=True,
-                timeout=30
+                timeout=TimeoutConstants.HTTP_DEFAULT
             )
             
             return result.returncode == 0
@@ -336,6 +338,7 @@ LEGENDARY FINISH! Complete mission this cycle! 🏆"""
 def main():
     """CLI entry point."""
     import argparse
+from src.core.config.timeout_constants import TimeoutConstants
     
     parser = argparse.ArgumentParser(description="Monitor agents and deliver periodic GAS")
     parser.add_argument("--dry-run", action="store_true", help="Report only, don't deliver fuel")

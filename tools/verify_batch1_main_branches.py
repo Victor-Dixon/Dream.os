@@ -16,6 +16,7 @@ from typing import Optional, Dict, Any
 
 try:
     import requests
+from src.core.config.timeout_constants import TimeoutConstants
     REQUESTS_AVAILABLE = True
 except ImportError:
     REQUESTS_AVAILABLE = False
@@ -53,14 +54,14 @@ def get_main_branch_sha(token: str, owner: str, repo: str) -> Optional[str]:
     }
     
     try:
-        response = requests.get(url, headers=headers, timeout=30)
+        response = requests.get(url, headers=headers, timeout=TimeoutConstants.HTTP_DEFAULT)
         if response.status_code == 200:
             branch_data = response.json()
             return branch_data.get("commit", {}).get("sha")
         elif response.status_code == 404:
             # Try master branch
             url = f"https://api.github.com/repos/{owner}/{repo}/branches/master"
-            response = requests.get(url, headers=headers, timeout=30)
+            response = requests.get(url, headers=headers, timeout=TimeoutConstants.HTTP_DEFAULT)
             if response.status_code == 200:
                 branch_data = response.json()
                 return branch_data.get("commit", {}).get("sha")
@@ -82,7 +83,7 @@ def get_merge_branch_sha(token: str, owner: str, repo: str, branch: str) -> Opti
     }
     
     try:
-        response = requests.get(url, headers=headers, timeout=30)
+        response = requests.get(url, headers=headers, timeout=TimeoutConstants.HTTP_DEFAULT)
         if response.status_code == 200:
             branch_data = response.json()
             return branch_data.get("commit", {}).get("sha")

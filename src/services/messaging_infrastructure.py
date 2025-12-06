@@ -20,6 +20,7 @@ from pathlib import Path
 from typing import Any
 
 from ..utils.swarm_time import format_swarm_timestamp, get_swarm_time_display
+from ..core.config.timeout_constants import TimeoutConstants
 
 import pyautogui
 
@@ -110,7 +111,35 @@ Just type your response normally. It will be sent directly to the sender.
 **Note:** This is a standard message - respond normally, no special handling needed!
 🐝 WE. ARE. SWARM. ⚡🔥"""
     else:
-        return f"""{message}
+        # Check if message is from Discord ([D2A])
+        # Discord messages start with [D2A] prefix or contain [D2A] in the header
+        is_discord_message = (
+            message.strip().startswith("[D2A]") or 
+            "\n[D2A]" in message or 
+            (message.startswith("[D2A]") and len(message) > 5)
+        )
+        
+        if is_discord_message:
+            return f"""{message}
+
+---
+📨 **DISCORD MESSAGE [D2A]** - Respond in Discord
+---
+
+**How to Respond:**
+1. This is a DISCORD message ([D2A])
+2. **CRITICAL**: Your response must be sent BACK to Discord
+3. **Use Discord Router**: `python tools/post_to_discord_router.py --agent <your-agent-id> --message "<your response>"`
+4. **Example**: `python tools/post_to_discord_router.py --agent Agent-4 --message "Response to Discord user"`
+5. Do NOT just respond in this chat - Discord user is waiting for response in Discord
+
+**Response Format:**
+Post your response to Discord router channel using post_to_discord_router.py script.
+
+**Note:** Discord messages [D2A] require responses to be posted back to Discord channel!
+🐝 WE. ARE. SWARM. ⚡🔥"""
+        else:
+            return f"""{message}
 
 ---
 📨 **STANDARD MESSAGE** - Normal Response
@@ -1187,7 +1216,7 @@ class ConsolidatedMessagingService:
             env = {"PYTHONPATH": str(self.project_root)}
 
             result = subprocess.run(
-                cmd, capture_output=True, text=True, timeout=30, env=env, cwd=str(self.project_root)
+                cmd, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_DEFAULT, env=env, cwd=str(self.project_root)
             )
 
             if result.returncode == 0:
@@ -1225,16 +1254,9 @@ class ConsolidatedMessagingService:
         """
         from ..core.keyboard_control_lock import keyboard_control
         
-        agents = [
-            "Agent-1",
-            "Agent-2",
-            "Agent-3",
-            "Agent-4",
-            "Agent-5",
-            "Agent-6",
-            "Agent-7",
-            "Agent-8",
-        ]
+        # Get list of all agents (SSOT)
+        from src.core.constants.agent_constants import AGENT_LIST
+        agents = AGENT_LIST
 
         # CRITICAL: Wrap entire broadcast in keyboard lock
         # Prevents Discord/other sends during 8-message operation
@@ -1250,7 +1272,7 @@ class ConsolidatedMessagingService:
                     priority, 
                     use_pyautogui=True,
                     wait_for_delivery=True,  # Block until delivered
-                    timeout=30.0  # 30 second timeout per message
+                    timeout=TimeoutConstants.HTTP_DEFAULT  # 30 second timeout per message
                 )
                 results.append(result)
                 

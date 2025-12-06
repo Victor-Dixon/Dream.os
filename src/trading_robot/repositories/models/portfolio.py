@@ -16,6 +16,7 @@ from datetime import datetime
 from typing import Any
 
 from .position import Position
+from src.core.utils.serialization_utils import to_dict
 
 
 @dataclass
@@ -144,16 +145,12 @@ class Portfolio:
         }
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert portfolio to dictionary."""
-        return {
-            "id": self.id,
-            "name": self.name,
-            "positions": {symbol: pos.to_dict() for symbol, pos in self.positions.items()},
-            "cash_balance": self.cash_balance,
-            "total_value": self.total_value,
-            "timestamp": self.timestamp.isoformat(),
-            "metadata": self.metadata,
-        }
+        """Convert portfolio to dictionary using SSOT utility."""
+        result = to_dict(self)
+        # Ensure positions are serialized
+        if "positions" in result:
+            result["positions"] = {symbol: pos.to_dict() if hasattr(pos, 'to_dict') else to_dict(pos) for symbol, pos in self.positions.items()}
+        return result
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> "Portfolio":

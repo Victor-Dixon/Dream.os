@@ -6,6 +6,8 @@ Deploy via SFTP/SSH - The Original Method
 Uses the existing wordpress_manager.py to deploy files via SFTP/SSH.
 This is the method we've used successfully before - no plugins needed!
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-7 (Web Development Specialist)
 """
 
@@ -107,6 +109,7 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
+
 
 
 

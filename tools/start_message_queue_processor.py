@@ -9,6 +9,8 @@ This must be running for messages to be delivered via PyAutoGUI.
 Author: Agent-3 (Infrastructure & DevOps)
 Date: 2025-01-27
 Priority: CRITICAL
+V2 Compliant: Yes
+<!-- SSOT Domain: infrastructure -->
 """
 
 import logging

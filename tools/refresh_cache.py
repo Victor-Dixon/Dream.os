@@ -113,11 +113,12 @@ def refresh_cache(hard_reset: bool = False, analysis_chunks: bool = False) -> di
     print("\n🔄 Running project scanner with fresh data...")
     try:
         import subprocess
+from src.core.config.timeout_constants import TimeoutConstants
         result_proc = subprocess.run(
             [sys.executable, "tools/run_project_scan.py"],
             capture_output=True,
             text=True,
-            timeout=300  # 5 minute timeout
+            timeout=TimeoutConstants.HTTP_EXTENDED  # 5 minute timeout
         )
         
         if result_proc.returncode == 0:

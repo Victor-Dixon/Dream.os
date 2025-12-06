@@ -1,6 +1,8 @@
 """
 Messaging Core Protocol - Type-safe interface for messaging core (real or mock)
 
+<!-- SSOT Domain: infrastructure -->
+
 Defines the protocol that both real and mock messaging cores must implement.
 
 Author: Agent-2 (Architecture & Design Specialist)

@@ -196,14 +196,14 @@ def test_queue_processor_running():
                 ["powershell", "-Command", "Get-Process python -ErrorAction SilentlyContinue | Where-Object {$_.CommandLine -like '*queue*' -or $_.CommandLine -like '*message_queue*'} | Measure-Object | Select-Object -ExpandProperty Count"],
                 capture_output=True,
                 text=True,
-                timeout=5
+                timeout=TimeoutConstants.HTTP_QUICK
             )
         else:
             result = subprocess.run(
                 ["pgrep", "-f", "queue_processor"],
                 capture_output=True,
                 text=True,
-                timeout=5
+                timeout=TimeoutConstants.HTTP_QUICK
             )
         
         # Check log file for recent activity (optional - log may not exist)
@@ -307,6 +307,7 @@ def test_message_delivery_flow():
     except Exception as e:
         print_result(False, f"Error testing delivery flow: {e}")
         import traceback
+from src.core.config.timeout_constants import TimeoutConstants
         traceback.print_exc()
         return False
 

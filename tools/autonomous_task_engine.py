@@ -18,30 +18,7 @@ from collections import defaultdict
 import ast
 import re
 
-
-@dataclass
-class Task:
-    """A discovered task opportunity"""
-    task_id: str
-    title: str
-    description: str
-    file_path: str
-    task_type: str  # V2_VIOLATION, TECH_DEBT, FEATURE, BUG, OPTIMIZATION
-    severity: str  # CRITICAL, MAJOR, MINOR
-    estimated_effort: int  # 1-5 cycles
-    estimated_points: int
-    roi_score: float  # points / effort
-    impact_score: float  # 1-10
-    current_lines: Optional[int]
-    target_lines: Optional[int]
-    reduction_percent: Optional[float]
-    blockers: List[str]
-    dependencies: List[str]
-    coordination_needed: List[str]  # Other agents needed
-    skill_match: Dict[str, float]  # agent -> match score (0-1)
-    claimed_by: Optional[str]
-    claimed_at: Optional[datetime]
-    status: str  # AVAILABLE, CLAIMED, IN_PROGRESS, COMPLETED
+from .autonomous.task_models import TaskOpportunity, TaskRecommendation, AgentProfile
 
 
 @dataclass
@@ -58,11 +35,7 @@ class AgentProfile:
     current_workload: int  # 0-5 scale
 
 
-@dataclass
-class TaskRecommendation:
-    """Personalized task recommendation for an agent"""
-    agent_id: str
-    task: Task
+# TaskRecommendation imported from task_models
     match_score: float  # 0-1 (skill match)
     priority_score: float  # 0-1 (urgency + impact)
     total_score: float  # Combined score
@@ -88,12 +61,12 @@ class AutonomousTaskEngine:
     def __init__(self, repo_path: str = "."):
         self.repo_path = Path(repo_path)
         self.tasks_db_path = Path("runtime/autonomous_tasks.json")
-        self.tasks: List[Task] = []
+        self.tasks: List[TaskOpportunity] = []
         self.agent_profiles: Dict[str, AgentProfile] = {}
         self._load_tasks()
         self._load_agent_profiles()
     
-    def discover_tasks(self) -> List[Task]:
+    def discover_tasks(self) -> List[TaskOpportunity]:
         """
         Scan codebase and discover ALL available task opportunities
         
@@ -304,7 +277,7 @@ class AutonomousTaskEngine:
     
     # === PRIVATE METHODS ===
     
-    def _discover_v2_violations(self) -> List[Task]:
+    def _discover_v2_violations(self) -> List[TaskOpportunity]:
         """Discover V2 compliance violations"""
         tasks = []
         
@@ -314,7 +287,7 @@ class AutonomousTaskEngine:
                 ["python", "tools/v2_compliance_checker.py", ".", "--json"],
                 capture_output=True,
                 text=True,
-                timeout=60
+                timeout=TimeoutConstants.HTTP_MEDIUM
             )
             
             if result.returncode == 0:
@@ -336,7 +309,7 @@ class AutonomousTaskEngine:
                     if current_lines and target_lines:
                         reduction = ((current_lines - target_lines) / current_lines) * 100
                     
-                    task = Task(
+                    task = TaskOpportunity(
                         task_id=f"V2-{hash(file_path) % 10000:04d}",
                         title=f"Fix V2 violation in {Path(file_path).name}",
                         description=v.get("message", "V2 compliance violation"),
@@ -365,7 +338,7 @@ class AutonomousTaskEngine:
         
         return tasks
     
-    def _discover_tech_debt(self) -> List[Task]:
+    def _discover_tech_debt(self) -> List[TaskOpportunity]:
         """Discover technical debt opportunities"""
         tasks = []
         
@@ -383,7 +356,7 @@ class AutonomousTaskEngine:
                     effort = 3 if lines > 500 else 2
                     points = 400 if lines > 500 else 250
                     
-                    task = Task(
+                    task = TaskOpportunity(
                         task_id=f"DEBT-{hash(str(py_file)) % 10000:04d}",
                         title=f"Refactor large file {py_file.name}",
                         description=f"File has {lines} lines, consider modularization",
@@ -412,7 +385,7 @@ class AutonomousTaskEngine:
         
         return tasks[:20]  # Limit to top 20
     
-    def _discover_code_todos(self) -> List[Task]:
+    def _discover_code_todos(self) -> List[TaskOpportunity]:
         """Discover TODO and FIXME comments"""
         tasks = []
         
@@ -436,7 +409,7 @@ class AutonomousTaskEngine:
                     effort = 1
                     points = 150 if severity == "MAJOR" else 50
                     
-                    task = Task(
+                    task = TaskOpportunity(
                         task_id=f"TODO-{hash(line) % 10000:04d}",
                         title=f"Address TODO in {Path(file_path).name}:{line_num}",
                         description=comment.strip(),
@@ -465,12 +438,12 @@ class AutonomousTaskEngine:
         
         return tasks
     
-    def _discover_optimizations(self) -> List[Task]:
+    def _discover_optimizations(self) -> List[TaskOpportunity]:
         """Discover optimization opportunities"""
         # Could integrate with complexity analyzer
         return []
     
-    def _discover_test_gaps(self) -> List[Task]:
+    def _discover_test_gaps(self) -> List[TaskOpportunity]:
         """Discover files without tests"""
         tasks = []
         
@@ -483,7 +456,7 @@ class AutonomousTaskEngine:
             expected_test = self.repo_path / "tests" / f"test_{relative.name}"
             
             if expected_test not in test_files:
-                task = Task(
+                task = TaskOpportunity(
                     task_id=f"TEST-{hash(str(src_file)) % 10000:04d}",
                     title=f"Add tests for {src_file.name}",
                     description=f"Missing test coverage for {relative}",
@@ -509,7 +482,7 @@ class AutonomousTaskEngine:
         
         return tasks
     
-    def _calculate_skill_matches(self, task: Task) -> Dict[str, float]:
+    def _calculate_skill_matches(self, task: TaskOpportunity) -> Dict[str, float]:
         """Calculate how well each agent matches this task"""
         matches = {}
         
@@ -541,7 +514,7 @@ class AutonomousTaskEngine:
     
     def _score_task_for_agent(
         self,
-        task: Task,
+        task: TaskOpportunityOpportunity,
         profile: AgentProfile
     ) -> TaskRecommendation:
         """Score a task for a specific agent"""
@@ -626,12 +599,12 @@ class AutonomousTaskEngine:
         self.agent_profiles[agent_id] = profile
         return profile
     
-    def _has_unmet_blockers(self, task: Task) -> bool:
+    def _has_unmet_blockers(self, task: TaskOpportunity) -> bool:
         """Check if task has unmet blockers"""
         # Could check if blocker tasks are completed
         return len(task.blockers) > 0
     
-    def _find_task(self, task_id: str) -> Optional[Task]:
+    def _find_task(self, task_id: str) -> Optional[TaskOpportunity]:
         """Find task by ID"""
         for task in self.tasks:
             if task.task_id == task_id:
@@ -662,7 +635,7 @@ class AutonomousTaskEngine:
             try:
                 with open(self.tasks_db_path) as f:
                     data = json.load(f)
-                    self.tasks = [Task(**t) for t in data]
+                    self.tasks = [TaskOpportunity(**t) for t in data]
             except Exception:
                 self.tasks = []
     
@@ -699,6 +672,7 @@ class AutonomousTaskEngine:
 def main():
     """CLI for Autonomous Task Engine"""
     import argparse
+from src.core.config.timeout_constants import TimeoutConstants
     
     parser = argparse.ArgumentParser(
         description="Autonomous Task Discovery & Selection Engine"

@@ -13,14 +13,12 @@ from dataclasses import dataclass, field
 
 
 
-class IntegrationStatus(Enum):
-    """Status of gaming system integration."""
+# IntegrationStatus - Redirect to SSOT
+# SSOT: src/architecture/system_integration.py
+from src.architecture.system_integration import IntegrationStatus
 
-    DISCONNECTED = "disconnected"
-    CONNECTING = "connecting"
-    CONNECTED = "connected"
-    ERROR = "error"
-    MAINTENANCE = "maintenance"
+# Re-export for backward compatibility
+__all__ = ["IntegrationStatus", "GameType", "GameSession", "EntertainmentSystem"]
 
 
 class GameType(Enum):

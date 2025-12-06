@@ -347,7 +347,7 @@ class SoftOnboardModal(discord.ui.Modal):
                 cmd,
                 capture_output=True,
                 text=True,
-                timeout=300,
+                timeout=TimeoutConstants.HTTP_EXTENDED,
                 cwd=str(project_root)
             )
 
@@ -473,6 +473,7 @@ class HardOnboardModal(discord.ui.Modal):
         try:
             import subprocess
             from pathlib import Path
+            from src.core.config.timeout_constants import TimeoutConstants
 
             agent_ids = self.agent_input.value.strip()
 
@@ -508,7 +509,7 @@ class HardOnboardModal(discord.ui.Modal):
                         ['python', str(cli_path), agent_id],
                         capture_output=True,
                         text=True,
-                        timeout=60,
+                        timeout=TimeoutConstants.HTTP_MEDIUM,
                         cwd=str(project_root)
                     )
 

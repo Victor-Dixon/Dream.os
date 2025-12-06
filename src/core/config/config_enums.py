@@ -6,6 +6,8 @@ Configuration Enums - V2 Compliance Module
 Enum types for unified configuration system.
 Extracted from config_ssot.py for better modularity.
 
+<!-- SSOT Domain: core -->
+
 V2 Compliance: Single Responsibility Principle
 SOLID Principles: Open-Closed Principle
 

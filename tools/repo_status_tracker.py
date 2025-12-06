@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# SSOT Domain: infrastructure
 """
 Repository Status Tracker - SSOT for Repository Status
 ======================================================

@@ -9,6 +9,8 @@ Replaces 33+ individual monitoring tools with modular monitoring system.
 Consolidated Tools:
 - discord_bot_infrastructure_check.py (queue file check)
 - manually_trigger_status_monitor_resume.py (resume trigger)
+- workspace_health_monitor.py (workspace health monitoring) - Phase 2 ✅ CONSOLIDATED
+- captain_check_agent_status.py (agent status checking) - Phase 2 ✅ CONSOLIDATED
 
 Monitoring Categories:
 - Service Health (GitHub Pusher, Discord, CI/CD)
@@ -19,6 +21,7 @@ Monitoring Categories:
 
 Author: Agent-8 (SSOT & System Integration Specialist)
 Enhanced: Agent-1 (Integration & Core Systems Specialist) - 2025-12-03
+Phase 2: Agent-3 (Infrastructure & DevOps Specialist) - 2025-12-05 - Added workspace health monitoring
 V2 Compliant: Yes (<400 lines)
 <!-- SSOT Domain: infrastructure -->
 """
@@ -256,6 +259,233 @@ class UnifiedMonitor:
             "timestamp": datetime.now().isoformat()
         }
     
+    def monitor_workspace_health(self, agent_id: Optional[str] = None) -> Dict[str, Any]:
+        """Monitor agent workspace health (from workspace_health_monitor.py)."""
+        from datetime import timedelta
+        from dataclasses import dataclass
+        
+        @dataclass
+        class WorkspaceHealth:
+            """Workspace health metrics."""
+            agent_id: str
+            inbox_count: int = 0
+            unprocessed_count: int = 0
+            old_messages: int = 0
+            archive_count: int = 0
+            devlogs_count: int = 0
+            reports_count: int = 0
+            status_file_exists: bool = False
+            status_file_current: bool = False
+            status_consistency: str = "UNKNOWN"
+            issues_found: int = 0
+            health_score: float = 0.0
+            recommendations: List[str] = None
+        
+        workspace_root = self.project_root / "agent_workspaces"
+        cutoff_days = 7
+        cutoff_date = datetime.now() - timedelta(days=cutoff_days)
+        
+        def check_agent_workspace(agent_id: str) -> WorkspaceHealth:
+            """Check health of a single agent workspace."""
+            agent_dir = workspace_root / agent_id
+            if not agent_dir.exists():
+                return WorkspaceHealth(
+                    agent_id=agent_id,
+                    recommendations=["Workspace directory does not exist"]
+                )
+            
+            # Count inbox messages
+            inbox_dir = agent_dir / "inbox"
+            inbox_count = 0
+            unprocessed_count = 0
+            old_messages = 0
+            
+            if inbox_dir.exists():
+                messages_json = inbox_dir / "messages.json"
+                processed_messages = set()
+                if messages_json.exists():
+                    try:
+                        with open(messages_json, 'r') as f:
+                            msg_data = json.load(f)
+                            processed_messages = set(msg_data.get("messages", {}).keys())
+                    except Exception:
+                        pass
+                
+                for msg_file in inbox_dir.glob("*.md"):
+                    if msg_file.name not in ["Agent-6_inbox.txt", "messages.json"]:
+                        inbox_count += 1
+                        file_time = datetime.fromtimestamp(msg_file.stat().st_mtime)
+                        if file_time < cutoff_date:
+                            old_messages += 1
+                        if msg_file.stem not in processed_messages:
+                            unprocessed_count += 1
+            
+            # Count archive, devlogs, reports
+            archive_dir = inbox_dir / "archive"
+            archive_count = len(list(archive_dir.glob("*.md"))) if archive_dir.exists() else 0
+            devlogs_dir = agent_dir / "devlogs"
+            devlogs_count = len(list(devlogs_dir.glob("*.md"))) if devlogs_dir.exists() else 0
+            reports_dir = agent_dir / "reports"
+            reports_count = len(list(reports_dir.glob("*.md"))) if reports_dir.exists() else 0
+            
+            # Check status file
+            status_file = agent_dir / "status.json"
+            status_file_exists = status_file.exists()
+            status_file_current = False
+            status_consistency = "UNKNOWN"
+            agent_last_updated = None
+            
+            if status_file_exists:
+                try:
+                    status_data = json.loads(status_file.read_text())
+                    last_updated = status_data.get("last_updated", "")
+                    if last_updated:
+                        try:
+                            if "T" in last_updated:
+                                agent_last_updated = datetime.fromisoformat(last_updated.replace("Z", "+00:00"))
+                            else:
+                                agent_last_updated = datetime.strptime(last_updated, "%Y-%m-%d %H:%M:%S")
+                            if datetime.now() - agent_last_updated < timedelta(days=1):
+                                status_file_current = True
+                        except (ValueError, TypeError):
+                            pass
+                except (json.JSONDecodeError, KeyError):
+                    pass
+            
+            # Check consistency with runtime status
+            runtime_status_file = self.project_root / "runtime" / "AGENT_STATUS.json"
+            if runtime_status_file.exists() and agent_last_updated:
+                try:
+                    with open(runtime_status_file, 'r') as f:
+                        runtime_data = json.load(f)
+                        runtime_status = runtime_data.get(agent_id, {})
+                        runtime_last_updated = runtime_status.get("last_updated", "")
+                        if runtime_last_updated:
+                            try:
+                                if "T" in runtime_last_updated:
+                                    runtime_time = datetime.fromisoformat(runtime_last_updated.replace("Z", "+00:00"))
+                                else:
+                                    runtime_time = datetime.strptime(runtime_last_updated, "%Y-%m-%d %H:%M:%S")
+                                if abs((agent_last_updated - runtime_time).total_seconds()) < 60:
+                                    status_consistency = "CONSISTENT"
+                                else:
+                                    status_consistency = "INCONSISTENT"
+                            except (ValueError, TypeError):
+                                status_consistency = "UNKNOWN"
+                except Exception:
+                    status_consistency = "UNKNOWN"
+            else:
+                status_consistency = "NO_RUNTIME_FILE"
+            
+            # Identify issues
+            issues_found = 0
+            for file_path in agent_dir.rglob("*.md"):
+                try:
+                    content = file_path.read_text(encoding='utf-8', errors='ignore')
+                    if any(marker in content for marker in ["ERROR", "FIXME", "TODO"]):
+                        issues_found += 1
+                except Exception:
+                    pass
+            
+            # Calculate health score
+            health_score = 100.0
+            if old_messages > 0:
+                health_score -= min(30, old_messages * 5)
+            if unprocessed_count > 0:
+                health_score -= min(25, unprocessed_count * 3)
+            if inbox_count > 10:
+                health_score -= min(20, (inbox_count - 10) * 2)
+            if not status_file_exists:
+                health_score -= 20
+            if status_file_exists and not status_file_current:
+                health_score -= 10
+            if status_consistency == "INCONSISTENT":
+                health_score -= 15
+            health_score = max(0.0, health_score)
+            
+            # Generate recommendations
+            recommendations = []
+            if unprocessed_count > 0:
+                recommendations.append(f"Process {unprocessed_count} unprocessed inbox message(s)")
+            if old_messages > 0:
+                recommendations.append(f"Archive {old_messages} old inbox message(s) (>7 days)")
+            if inbox_count > 10:
+                recommendations.append(f"Review {inbox_count} inbox messages")
+            if not status_file_exists:
+                recommendations.append("Create status.json file")
+            if status_file_exists and not status_file_current:
+                recommendations.append("Update status.json file")
+            if status_consistency == "INCONSISTENT":
+                recommendations.append("Fix status file inconsistency")
+            if issues_found > 0:
+                recommendations.append(f"Review {issues_found} file(s) with ERROR/FIXME/TODO")
+            if not recommendations:
+                recommendations.append("Workspace health: Excellent ✅")
+            
+            return WorkspaceHealth(
+                agent_id=agent_id,
+                inbox_count=inbox_count,
+                unprocessed_count=unprocessed_count,
+                old_messages=old_messages,
+                archive_count=archive_count,
+                devlogs_count=devlogs_count,
+                reports_count=reports_count,
+                status_file_exists=status_file_exists,
+                status_file_current=status_file_current,
+                status_consistency=status_consistency,
+                issues_found=issues_found,
+                health_score=health_score,
+                recommendations=recommendations
+            )
+        
+        try:
+            if agent_id:
+                health = check_agent_workspace(agent_id)
+                return {
+                    "category": "workspace_health",
+                    "agent_id": agent_id,
+                    "health_score": health.health_score,
+                    "inbox_count": health.inbox_count,
+                    "unprocessed_count": health.unprocessed_count,
+                    "old_messages": health.old_messages,
+                    "status_file_exists": health.status_file_exists,
+                    "status_file_current": health.status_file_current,
+                    "status_consistency": health.status_consistency,
+                    "issues_found": health.issues_found,
+                    "recommendations": health.recommendations,
+                    "timestamp": datetime.now().isoformat()
+                }
+            else:
+                # Check all workspaces
+                all_health = {}
+                for agent_dir in workspace_root.iterdir():
+                    if agent_dir.is_dir() and agent_dir.name.startswith("Agent-"):
+                        all_health[agent_dir.name] = check_agent_workspace(agent_dir.name)
+                
+                avg_score = sum(h.health_score for h in all_health.values()) / len(all_health) if all_health else 0
+                return {
+                    "category": "workspace_health",
+                    "workspaces_checked": len(all_health),
+                    "average_health_score": round(avg_score, 1),
+                    "workspaces": {
+                        k: {
+                            "health_score": v.health_score,
+                            "old_messages": v.old_messages,
+                            "unprocessed_count": v.unprocessed_count,
+                            "status_consistency": v.status_consistency
+                        } for k, v in all_health.items()
+                    },
+                    "timestamp": datetime.now().isoformat()
+                }
+        except Exception as e:
+            logger.error(f"Workspace health check failed: {e}")
+            return {
+                "category": "workspace_health",
+                "status": "ERROR",
+                "error": str(e),
+                "timestamp": datetime.now().isoformat()
+            }
+    
     def monitor_test_coverage(self) -> Dict[str, Any]:
         """Monitor test coverage status."""
         try:
@@ -398,6 +628,9 @@ class UnifiedMonitor:
         # Agent status
         results["checks"]["agents"] = self.monitor_agent_status()
         
+        # Workspace health
+        results["checks"]["workspace"] = self.monitor_workspace_health()
+        
         # Test coverage
         results["checks"]["coverage"] = self.monitor_test_coverage()
         
@@ -449,6 +682,23 @@ class UnifiedMonitor:
             agents = checks["agents"]
             print(f"\n👥 Agents: {agents.get('active_agents', 0)}/{agents.get('total_agents', 0)} active")
         
+        # Workspace health
+        if "workspace" in checks:
+            workspace = checks["workspace"]
+            if "agent_id" in workspace:
+                # Single agent report
+                score = workspace.get("health_score", 0)
+                status_icon = "✅" if score >= 80 else "⚠️" if score >= 60 else "❌"
+                print(f"\n{status_icon} Workspace Health ({workspace.get('agent_id')}): {score:.1f}/100")
+                if workspace.get("old_messages", 0) > 0:
+                    print(f"   ⚠️ {workspace.get('old_messages')} old messages")
+                if workspace.get("unprocessed_count", 0) > 0:
+                    print(f"   ⚠️ {workspace.get('unprocessed_count')} unprocessed messages")
+            else:
+                # All workspaces summary
+                avg_score = workspace.get("average_health_score", 0)
+                print(f"\n📊 Workspace Health: {avg_score:.1f}/100 avg ({workspace.get('workspaces_checked', 0)} workspaces)")
+        
         # Test coverage
         if "coverage" in checks:
             coverage = checks["coverage"]
@@ -467,7 +717,7 @@ def main():
     
     parser.add_argument(
         "--category", "-c",
-        choices=["queue", "message_queue_file", "service", "disk", "agents", "coverage", "resume", "all"],
+        choices=["queue", "message_queue_file", "service", "disk", "agents", "coverage", "workspace", "resume", "all"],
         default="all",
         help="Monitoring category to check (default: all)"
     )
@@ -560,6 +810,9 @@ def main():
                         results = {"checks": {"agents": monitor.monitor_agent_status()}}
                     elif args.category == "coverage":
                         results = {"checks": {"coverage": monitor.monitor_test_coverage()}}
+                    elif args.category == "workspace":
+                        agent_id = args.agent if args.agent else None
+                        results = {"checks": {"workspace": monitor.monitor_workspace_health(agent_id)}}
                 
                 if args.json:
                     print(json.dumps(results, indent=2))
@@ -587,6 +840,9 @@ def main():
                 results = {"checks": {"agents": monitor.monitor_agent_status()}}
             elif args.category == "coverage":
                 results = {"checks": {"coverage": monitor.monitor_test_coverage()}}
+            elif args.category == "workspace":
+                agent_id = args.agent if args.agent else None
+                results = {"checks": {"workspace": monitor.monitor_workspace_health(agent_id)}}
         
         if args.json:
             print(json.dumps(results, indent=2))
