@@ -285,6 +285,30 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
         "flags": ["--unified-analyzer", "--analyze", "--analyzer"],
         "args_passthrough": True,
     },
+    "unified-captain": {
+        "name": "Unified Captain Tools",
+        "module": "tools.unified_captain",
+        "main_function": "main",
+        "description": "Consolidated captain operations - inbox, coordination, monitoring, tasks, cleanup (consolidates 23+ captain tools)",
+        "flags": ["--unified-captain", "--captain"],
+        "args_passthrough": True,
+    },
+    "unified-verifier": {
+        "name": "Unified Verifier",
+        "module": "tools.unified_verifier",
+        "main_function": "main",
+        "description": "Consolidated verification tool - repo, merge, file, cicd, credentials (consolidates 25+ verification tools)",
+        "flags": ["--unified-verifier", "--verify"],
+        "args_passthrough": True,
+    },
+    "unified-cleanup": {
+        "name": "Unified Cleanup Tools",
+        "module": "tools.unified_cleanup",
+        "main_function": "main",
+        "description": "Consolidated cleanup operations - archive, delete, cleanup, disk (consolidates 15+ cleanup/archive tools)",
+        "flags": ["--unified-cleanup", "--cleanup"],
+        "args_passthrough": True,
+    },
     "extraction-roadmap": {
         "name": "Extraction Roadmap Generator",
         "module": "tools.extraction_roadmap_generator",
@@ -481,6 +505,15 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
         "main_function": "main",
         "description": "THE masterpiece - Runs all 5 workflow steps, generates conflict-free mission brief",
         "flags": ["--mission-control", "--mission", "--mc"],
+        "args_passthrough": True,
+    },
+    # Unified Captain Tools (Agent-8 Consolidation)
+    "unified-captain": {
+        "name": "Unified Captain Tools",
+        "module": "tools.unified_captain",
+        "main_function": "main",
+        "description": "Consolidated captain operations - inbox, coordination, monitoring, tasks, cleanup (consolidates 23+ captain tools)",
+        "flags": ["--unified-captain", "--captain"],
         "args_passthrough": True,
     },
     # Agent & Captain Tools (Agent-6 Organization)
