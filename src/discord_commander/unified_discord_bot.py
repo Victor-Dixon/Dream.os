@@ -19,9 +19,13 @@ Author: Agent-3 (Infrastructure & DevOps) - Discord Consolidation
 License: MIT
 """
 
+from src.core.config.timeout_constants import TimeoutConstants
+from src.services.unified_messaging_service import UnifiedMessagingService
+from src.discord_commander.discord_gui_controller import DiscordGUIController
 import asyncio
 import logging
 import os
+import subprocess
 import sys
 import time
 from pathlib import Path
@@ -31,8 +35,6 @@ project_root = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(project_root))
 
 # Now import src modules (after path is set)
-from src.discord_commander.discord_gui_controller import DiscordGUIController
-from src.services.unified_messaging_service import UnifiedMessagingService
 
 # Load environment variables from .env file
 try:
@@ -55,7 +57,6 @@ except ImportError:
     sys.exit(1)
 
 # Now import src modules (after path is set)
-from src.core.config.timeout_constants import TimeoutConstants
 
 logger = logging.getLogger(__name__)
 
@@ -65,7 +66,7 @@ class ConfirmShutdownView(discord.ui.View):
     """Confirmation view for shutdown command."""
 
     def __init__(self):
-        super().__init__(timeout=30)
+        super().__init__(timeout=TimeoutConstants.HTTP_DEFAULT)
         self.confirmed = False
 
     @discord.ui.button(label="Confirm Shutdown", emoji="✅", style=discord.ButtonStyle.danger)
@@ -101,7 +102,7 @@ class ConfirmRestartView(discord.ui.View):
     """Confirmation view for restart command."""
 
     def __init__(self):
-        super().__init__(timeout=30)
+        super().__init__(timeout=TimeoutConstants.HTTP_DEFAULT)
         self.confirmed = False
 
     @discord.ui.button(label="Confirm Restart", emoji="🔄", style=discord.ButtonStyle.primary)
@@ -142,6 +143,7 @@ class UnifiedDiscordBot(commands.Bot):
         intents.message_content = True
         intents.guilds = True
         intents.members = True
+        intents.voice_states = True  # Required for voice channel access
 
         super().__init__(command_prefix="!", intents=intents, help_command=None)
 
@@ -230,16 +232,16 @@ class UnifiedDiscordBot(commands.Bot):
         # Update connection health
         self.connection_healthy = True
         self.last_heartbeat = time.time()
-        
+
         # Prevent duplicate startup messages on reconnection
         if not hasattr(self, '_startup_sent'):
             self.logger.info(f"✅ Discord Commander Bot ready: {self.user}")
             self.logger.info(f"📊 Guilds: {len(self.guilds)}")
 
-            # Start status change monitoring (AUTO-START when bot is running)
+            # Initialize status change monitor (manual start via UI/command)
             try:
                 from src.discord_commander.status_change_monitor import setup_status_monitor
-                
+
                 # NEW: Initialize scheduler for integration
                 scheduler = None
                 try:
@@ -247,22 +249,22 @@ class UnifiedDiscordBot(commands.Bot):
                     scheduler = TaskScheduler()
                     self.logger.info("✅ Task scheduler initialized")
                 except Exception as e:
-                    self.logger.warning(f"⚠️ Could not initialize scheduler: {e}")
-                
+                    self.logger.warning(
+                        f"⚠️ Could not initialize scheduler: {e}")
+
                 # Create status monitor with scheduler integration
                 self.status_monitor = setup_status_monitor(
                     self, self.channel_id, scheduler=scheduler)
-                
+
                 # Wire scheduler to status monitor (bidirectional)
                 if scheduler and self.status_monitor:
                     scheduler.status_monitor = self.status_monitor
-                    self.logger.info("✅ Scheduler-StatusMonitor integration wired")
-                
-                # Auto-start monitoring when bot starts (no command needed)
-                if hasattr(self.status_monitor, 'start_monitoring'):
-                    self.status_monitor.start_monitoring()
+                    self.logger.info(
+                        "✅ Scheduler-StatusMonitor integration wired")
+
+                # Do NOT auto-start; start via Discord view button/!monitor start
                 self.logger.info(
-                    "✅ Status change monitor started and running automatically")
+                    "✅ Status change monitor initialized (manual start via UI)")
             except Exception as e:
                 self.logger.warning(f"⚠️ Could not start status monitor: {e}")
             self.logger.info(f"🤖 Latency: {round(self.latency * 1000, 2)}ms")
@@ -285,6 +287,18 @@ class UnifiedDiscordBot(commands.Bot):
         # Don't process bot's own messages
         if message.author == self.user:
             return
+
+        # Handle !music(song title) format before command processing
+        content = message.content.strip()
+        if content.lower().startswith('!music('):
+            # Extract song title and create command-like message
+            import re
+            pattern = r'!music\(([^)]+)\)'
+            match = re.search(pattern, content, re.IGNORECASE)
+            if match:
+                song_title = match.group(1).strip()
+                # Modify message content to standard command format
+                message.content = f"!music {song_title}"
 
         # Process commands first
         await self.process_commands(message)
@@ -358,7 +372,8 @@ class UnifiedDiscordBot(commands.Bot):
             from src.discord_commander.discord_agent_communication import AgentCommunicationEngine
             engine = AgentCommunicationEngine()
             if not engine.is_valid_agent(recipient):
-                self.logger.warning(f"Invalid agent name: {recipient} (must be Agent-1 through Agent-8)")
+                self.logger.warning(
+                    f"Invalid agent name: {recipient} (must be Agent-1 through Agent-8)")
                 await message.add_reaction("❌")
                 await message.channel.send(
                     f"❌ Invalid agent name: `{recipient}`. "
@@ -580,6 +595,21 @@ class UnifiedDiscordBot(commands.Bot):
             # Add webhook commands cog (Agent-7 - Webhook Management)
             from src.discord_commander.webhook_commands import WebhookCommands
             await self.add_cog(WebhookCommands(self))
+
+            # Load tools commands
+            try:
+                from src.discord_commander.tools_commands import ToolsCommands
+                await self.add_cog(ToolsCommands(self))
+                self.logger.info("✅ Tools commands loaded")
+            except Exception as e:
+                self.logger.warning(f"⚠️ Could not load tools commands: {e}")
+
+            # Load music commands
+            try:
+                from src.discord_commander.music_commands import setup
+                await setup(self)
+            except Exception as e:
+                self.logger.warning(f"⚠️ Could not load music commands: {e}")
             self.logger.info("✅ Webhook commands loaded")
 
             # Final command count
@@ -599,13 +629,14 @@ class UnifiedDiscordBot(commands.Bot):
         # Reset startup flag on disconnect so we can send startup message on reconnect
         if hasattr(self, '_startup_sent'):
             delattr(self, '_startup_sent')
-    
+
     async def on_resume(self):
         """Handle bot reconnection after disconnect."""
         self.connection_healthy = True
         self.last_heartbeat = time.time()
-        self.logger.info("✅ Discord Bot reconnected successfully after disconnect")
-    
+        self.logger.info(
+            "✅ Discord Bot reconnected successfully after disconnect")
+
     async def on_socket_raw_receive(self, msg):
         """Track connection health via socket activity."""
         self.last_heartbeat = time.time()
@@ -725,7 +756,7 @@ class MessagingCommands(commands.Cog):
             self.logger.error(f"Error showing status: {e}")
             await ctx.send(f"❌ Error: {e}")
 
-    @commands.command(name="monitor", description="Control status change monitor. Usage: !monitor [stop|status] (auto-starts with bot)")
+    @commands.command(name="monitor", description="Control status change monitor. Usage: !monitor [start|stop|status] (manual start via control panel)")
     async def monitor(self, ctx: commands.Context, action: str = "status"):
         """Control status change monitor."""
         try:
@@ -762,10 +793,9 @@ class MessagingCommands(commands.Cog):
                     status_text = "🟢 RUNNING" if is_running else "🔴 STOPPED"
                     interval = self.status_monitor.check_interval
 
-                    # Add auto-start note to description
+                    # Add manual-start note to description
                     description = f"**Status:** {status_text}"
-                    if is_running:
-                        description += "\n**Auto-starts with bot** (no command needed)"
+                    description += "\n**Start/stop via Control Panel button or !monitor start/stop**"
                     description += f"\n**Check Interval:** {interval} seconds"
 
                     embed = discord.Embed(
@@ -785,7 +815,7 @@ class MessagingCommands(commands.Cog):
                         )
 
                     embed.set_footer(
-                        text="Auto-starts with bot. Use !monitor stop to stop, !monitor start to restart if stopped")
+                        text="Use Control Panel button or !monitor stop/start to control the monitor")
                     await ctx.send(embed=embed)
                 else:
                     await ctx.send("⚠️ Status monitor not initialized.")
@@ -1015,14 +1045,20 @@ class MessagingCommands(commands.Cog):
             self.logger.error(f"Error in shutdown command: {e}")
             await ctx.send(f"❌ Error: {e}")
 
-    @commands.command(name="restart", description="Restart the Discord bot")
+    @commands.command(name="restart", description="Restart the Discord bot (true restart - fresh process)")
     async def restart_cmd(self, ctx: commands.Context):
-        """Restart the Discord bot."""
+        """Restart the Discord bot with a true process restart (kills current process, starts fresh)."""
         try:
             # Confirmation embed
             embed = discord.Embed(
-                title="🔄 Restart Requested",
-                description="Bot will shutdown and restart. Continue?",
+                title="🔄 True Restart Requested",
+                description=(
+                    "Bot will perform a TRUE restart:\n"
+                    "• Current process will be terminated\n"
+                    "• Fresh process will start with updated code\n"
+                    "• All modules reloaded from disk\n\n"
+                    "Continue?"
+                ),
                 color=discord.Color.blue(),
             )
 
@@ -1036,27 +1072,77 @@ class MessagingCommands(commands.Cog):
             if view.confirmed:
                 # Announce restart
                 restart_embed = discord.Embed(
-                    title="🔄 Bot Restarting",
-                    description="Shutting down... Will be back in 5-10 seconds!",
+                    title="🔄 Bot Restarting (True Restart)",
+                    description=(
+                        "Performing true restart...\n"
+                        "• Terminating current process\n"
+                        "• Starting fresh process\n"
+                        "• Will be back in 5-10 seconds!"
+                    ),
                     color=discord.Color.blue(),
                 )
                 await ctx.send(embed=restart_embed)
 
                 # Log restart
-                self.logger.info("🔄 Restart command received - restarting bot")
+                self.logger.info("🔄 True restart command received - killing process and starting fresh")
 
-                # Create restart flag file
-                restart_flag_path = Path(
-                    __file__).parent.parent.parent / ".discord_bot_restart"
-                restart_flag_path.write_text("RESTART_REQUESTED")
+                # Perform true restart: spawn new process, then exit current
+                self._perform_true_restart()
 
-                # Close bot (restart logic handled by run script)
+                # Close bot (will exit after new process starts)
                 await self.bot.close()
             else:
                 await message.edit(content="❌ Restart cancelled", embed=None, view=None)
         except Exception as e:
-            self.logger.error(f"Error in restart command: {e}")
+            self.logger.error(f"Error in restart command: {e}", exc_info=True)
             await ctx.send(f"❌ Error: {e}")
+    
+    def _perform_true_restart(self):
+        """Perform true restart: spawn fresh process, then exit current."""
+        import subprocess
+        import sys
+        import os
+        from pathlib import Path
+        
+        try:
+            project_root = Path(__file__).parent.parent.parent
+            restart_script = project_root / "tools" / "run_unified_discord_bot_with_restart.py"
+            
+            if not restart_script.exists():
+                self.logger.error(f"Restart script not found: {restart_script}")
+                return False
+            
+            # Spawn new process to start bot fresh
+            # This ensures all code is reloaded from disk (no module cache)
+            if sys.platform == 'win32':
+                # Windows: Use CREATE_NEW_CONSOLE to run in separate window
+                subprocess.Popen(
+                    [sys.executable, str(restart_script)],
+                    cwd=str(project_root),
+                    creationflags=subprocess.CREATE_NEW_CONSOLE,
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL
+                )
+            else:
+                # Unix-like: Use nohup or screen
+                subprocess.Popen(
+                    [sys.executable, str(restart_script)],
+                    cwd=str(project_root),
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,
+                    start_new_session=True
+                )
+            
+            # Give new process a moment to start
+            import time
+            time.sleep(2)
+            
+            self.logger.info("✅ New bot process spawned - current process will exit")
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"Error performing true restart: {e}", exc_info=True)
+            return False
 
     @commands.command(name="soft_onboard", aliases=["soft"], description="Soft onboard agent(s)")
     async def soft_onboard(self, ctx: commands.Context, *, agent_ids: str = None):
@@ -1265,10 +1351,12 @@ class MessagingCommands(commands.Cog):
             for agent_id in agent_list:
                 try:
                     # Load onboarding message from agent's workspace
-                    onboarding_file = project_root / "agent_workspaces" / agent_id / "HARD_ONBOARDING_MESSAGE.md"
-                    
+                    onboarding_file = project_root / "agent_workspaces" / \
+                        agent_id / "HARD_ONBOARDING_MESSAGE.md"
+
                     if onboarding_file.exists():
-                        onboarding_message = onboarding_file.read_text(encoding="utf-8")
+                        onboarding_message = onboarding_file.read_text(
+                            encoding="utf-8")
                     else:
                         # Use default onboarding message if file doesn't exist
                         onboarding_message = f"""🚨 HARD ONBOARD - {agent_id}
@@ -1296,7 +1384,8 @@ class MessagingCommands(commands.Cog):
                     if success:
                         successful.append(agent_id)
                     else:
-                        failed.append((agent_id, "Hard onboarding service returned False"))
+                        failed.append(
+                            (agent_id, "Hard onboarding service returned False"))
                 except Exception as e:
                     failed.append((agent_id, str(e)[:200]))
 
@@ -2115,21 +2204,22 @@ async def main() -> int:
         try:
             # Attempt to start/restart bot
             if reconnect_count > 0:
-                logger.info(f"🔄 Reconnection attempt {reconnect_count} (delay: {reconnect_delay}s)")
+                logger.info(
+                    f"🔄 Reconnection attempt {reconnect_count} (delay: {reconnect_delay}s)")
                 await asyncio.sleep(reconnect_delay)
-            
+
             logger.info("🔌 Connecting to Discord...")
             await bot.start(token)
-            
+
             # If we get here, bot started successfully
             reconnect_count = 0  # Reset on successful connection
             consecutive_failures = 0
             reconnect_delay = base_delay  # Reset delay
-            
+
             # Bot will run until disconnected
             # When disconnected, loop will restart
             return 0  # Clean exit (shouldn't normally reach here)
-            
+
         except KeyboardInterrupt:
             print("\n🛑 Bot stopped by user")
             try:
@@ -2137,7 +2227,7 @@ async def main() -> int:
             except:
                 pass
             return 0  # Clean exit
-            
+
         except discord.LoginFailure as e:
             print(f"❌ Invalid Discord token: {e}")
             logger.error(f"Login failure: {e}")
@@ -2147,7 +2237,7 @@ async def main() -> int:
             except:
                 pass
             return 1  # Exit with error code
-            
+
         except discord.PrivilegedIntentsRequired as e:
             print(f"❌ Missing required intents: {e}")
             logger.error(f"Intents error: {e}")
@@ -2157,19 +2247,19 @@ async def main() -> int:
             except:
                 pass
             return 1  # Exit with error code
-            
+
         except (ConnectionError, OSError, asyncio.TimeoutError) as e:
             # Network-related errors - retry with backoff
             consecutive_failures += 1
             reconnect_count += 1
-            
+
             error_type = type(e).__name__
             logger.warning(
                 f"⚠️ Network error ({error_type}): {e}\n"
                 f"   Attempt {reconnect_count}, consecutive failures: {consecutive_failures}\n"
                 f"   Retrying in {reconnect_delay} seconds..."
             )
-            
+
             # Exponential backoff with jitter
             if consecutive_failures >= max_consecutive_failures:
                 # After many failures, use longer delays
@@ -2177,53 +2267,53 @@ async def main() -> int:
             else:
                 # Normal exponential backoff
                 reconnect_delay = min(max_delay, reconnect_delay * 1.5)
-            
+
             # Add small random jitter to prevent thundering herd
             import random
             jitter = random.uniform(0.8, 1.2)
             reconnect_delay = int(reconnect_delay * jitter)
-            
+
             # Close bot before retry
             try:
                 await bot.close()
             except:
                 pass
-            
+
             # Wait before retry
             continue
-            
+
         except Exception as e:
             # Other errors - log and retry with backoff
             consecutive_failures += 1
             reconnect_count += 1
-            
+
             logger.error(
                 f"❌ Bot error: {e}\n"
                 f"   Attempt {reconnect_count}, consecutive failures: {consecutive_failures}\n"
                 f"   Retrying in {reconnect_delay} seconds...",
                 exc_info=True
             )
-            
+
             # Exponential backoff
             if consecutive_failures >= max_consecutive_failures:
                 reconnect_delay = min(max_delay, reconnect_delay * 2)
             else:
                 reconnect_delay = min(max_delay, reconnect_delay * 1.5)
-            
+
             # Add jitter
             import random
             jitter = random.uniform(0.8, 1.2)
             reconnect_delay = int(reconnect_delay * jitter)
-            
+
             # Close bot before retry
             try:
                 await bot.close()
             except:
                 pass
-            
+
             # Wait before retry
             continue
-    
+
     # Should never reach here, but just in case
     logger.error("❌ Max reconnection attempts reached")
     try:
