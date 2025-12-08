@@ -1055,8 +1055,9 @@ class MessagingCommands(commands.Cog):
                 description=(
                     "Bot will perform a TRUE restart:\n"
                     "• Current process will be terminated\n"
-                    "• Fresh process will start with updated code\n"
-                    "• All modules reloaded from disk\n\n"
+                    "• Fresh bot + queue processor will start\n"
+                    "• All modules reloaded from disk\n"
+                    "• Message delivery enabled (queue processor)\n\n"
                     "Continue?"
                 ),
                 color=discord.Color.blue(),
@@ -1076,7 +1077,8 @@ class MessagingCommands(commands.Cog):
                     description=(
                         "Performing true restart...\n"
                         "• Terminating current process\n"
-                        "• Starting fresh process\n"
+                        "• Starting fresh bot + queue processor\n"
+                        "• All modules reloaded from disk\n"
                         "• Will be back in 5-10 seconds!"
                     ),
                     color=discord.Color.blue(),
@@ -1098,7 +1100,7 @@ class MessagingCommands(commands.Cog):
             await ctx.send(f"❌ Error: {e}")
     
     def _perform_true_restart(self):
-        """Perform true restart: spawn fresh process, then exit current."""
+        """Perform true restart: spawn fresh process for bot + queue processor, then exit current."""
         import subprocess
         import sys
         import os
@@ -1106,27 +1108,30 @@ class MessagingCommands(commands.Cog):
         
         try:
             project_root = Path(__file__).parent.parent.parent
-            restart_script = project_root / "tools" / "run_unified_discord_bot_with_restart.py"
+            # Use start_discord_system.py to start BOTH bot + queue processor
+            # This ensures messages can be sent (queue processor is required)
+            start_script = project_root / "tools" / "start_discord_system.py"
             
-            if not restart_script.exists():
-                self.logger.error(f"Restart script not found: {restart_script}")
+            if not start_script.exists():
+                self.logger.error(f"Start script not found: {start_script}")
                 return False
             
-            # Spawn new process to start bot fresh
+            # Spawn new process to start bot + queue processor fresh
             # This ensures all code is reloaded from disk (no module cache)
+            # AND ensures message queue processor is running (required for message delivery)
             if sys.platform == 'win32':
                 # Windows: Use CREATE_NEW_CONSOLE to run in separate window
                 subprocess.Popen(
-                    [sys.executable, str(restart_script)],
+                    [sys.executable, str(start_script)],
                     cwd=str(project_root),
                     creationflags=subprocess.CREATE_NEW_CONSOLE,
                     stdout=subprocess.DEVNULL,
                     stderr=subprocess.DEVNULL
                 )
             else:
-                # Unix-like: Use nohup or screen
+                # Unix-like: use nohup or screen
                 subprocess.Popen(
-                    [sys.executable, str(restart_script)],
+                    [sys.executable, str(start_script)],
                     cwd=str(project_root),
                     stdout=subprocess.DEVNULL,
                     stderr=subprocess.DEVNULL,
@@ -1137,7 +1142,7 @@ class MessagingCommands(commands.Cog):
             import time
             time.sleep(2)
             
-            self.logger.info("✅ New bot process spawned - current process will exit")
+            self.logger.info("✅ New bot + queue processor processes spawned - current process will exit")
             return True
             
         except Exception as e:
