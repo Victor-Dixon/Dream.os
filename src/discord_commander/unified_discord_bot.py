@@ -499,11 +499,12 @@ class UnifiedDiscordBot(commands.Bot):
             )
 
             embed.add_field(
-                name="🎛️ Interactive Control Panel (PREFERRED!)",
+                name="🎛️ Interactive Control Panel (PREFERRED - NO COMMANDS NEEDED!)",
                 value=(
                     "• `!control` (or `!panel`, `!menu`) - Open main control panel\n"
-                    "• **All features accessible via interactive buttons**\n"
-                    "• No commands needed - just click buttons!"
+                    "• **ALL features accessible via buttons**\n"
+                    "• **No commands needed - just click buttons!**\n"
+                    "• Tasks, Status, GitHub Book, Roadmap, Excellence, Overview, Goldmines, Templates, Mermaid, Monitor, Help - ALL via buttons!"
                 ),
                 inline=False,
             )
