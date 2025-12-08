@@ -384,16 +384,51 @@ class UnifiedDiscordBot(commands.Bot):
             # Priority is always regular for Discord messages
             priority = "regular"
 
-            # Build final message with prefix
-            final_message = f"{message_prefix} {recipient}\n\n{message_content}"
+            # Apply D2A template to Discord messages
+            from src.core.messaging_models_core import (
+                UnifiedMessage,
+                MessageCategory,
+                UnifiedMessageType,
+                UnifiedMessagePriority,
+            )
+            from src.core.messaging_templates import render_message
+            import uuid
+            from datetime import datetime
+
+            # Create UnifiedMessage with D2A category
+            msg = UnifiedMessage(
+                content=message_content,
+                sender=f"Discord User ({message.author.name})",
+                recipient=recipient,
+                message_type=UnifiedMessageType.HUMAN_TO_AGENT,
+                priority=UnifiedMessagePriority.REGULAR,
+                category=MessageCategory.D2A,
+                message_id=str(uuid.uuid4()),
+                timestamp=datetime.now().isoformat(),
+            )
+
+            # Render message with D2A template
+            # Extract interpretation and actions from message content
+            # For now, use message content as both interpretation and actions
+            # Get cycle checklist and discord reporting from template helpers
+            from src.core.messaging_models_core import CYCLE_CHECKLIST_TEXT, DISCORD_REPORTING_TEXT
+            
+            rendered_message = render_message(
+                msg,
+                interpretation=message_content,
+                actions=message_content,
+                fallback="If clarification needed, ask 1 clarifying question.",
+                cycle_checklist=CYCLE_CHECKLIST_TEXT,
+                discord_reporting=DISCORD_REPORTING_TEXT,
+            )
 
             self.logger.info(
                 f"📨 Processing {message_prefix} message: {recipient} - {message_content[:50]}...")
 
-            # Queue message for PyAutoGUI delivery
+            # Queue message for PyAutoGUI delivery (with template applied)
             result = self.messaging_service.send_message(
                 agent=recipient,
-                message=final_message,
+                message=rendered_message,
                 priority=priority,
                 use_pyautogui=True,
                 wait_for_delivery=False,
