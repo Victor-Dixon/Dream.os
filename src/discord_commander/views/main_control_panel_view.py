@@ -124,6 +124,16 @@ class MainControlPanelView(discord.ui.View):
         self.help_btn.callback = self.show_help
         self.add_item(self.help_btn)
 
+        self.commands_btn = discord.ui.Button(
+            label="All Commands",
+            style=discord.ButtonStyle.secondary,
+            emoji="📋",
+            custom_id="control_commands",
+            row=1,
+        )
+        self.commands_btn.callback = self.show_all_commands
+        self.add_item(self.commands_btn)
+
         # Row 2: System management buttons
         self.restart_btn = discord.ui.Button(
             label="Restart Bot",
@@ -631,6 +641,104 @@ class MainControlPanelView(discord.ui.View):
         except Exception as e:
             logger.error(f"Error showing pieces: {e}", exc_info=True)
             await self._handle_error(interaction, e, "loading pieces")
+
+    async def show_all_commands(self, interaction: discord.Interaction):
+        """Show all available commands organized by category with button access."""
+        try:
+            bot = interaction.client
+            
+            # Organize commands by category
+            commands_by_category = {
+                "🎛️ Control Panel": [
+                    "!control / !panel / !menu - Open main control panel (ALL FEATURES ACCESSIBLE VIA BUTTONS)"
+                ],
+                "📨 Messaging": [
+                    "!gui - Open messaging interface",
+                    "!message <agent> <msg> - Direct agent message",
+                    "!broadcast <msg> - Broadcast to all agents",
+                ],
+                "🐝 Swarm Showcase": [
+                    "!swarm_tasks - Live task dashboard (OR use 'Tasks' button)",
+                    "!swarm_roadmap - Strategic roadmap (OR use 'Roadmap' button)",
+                    "!swarm_excellence - Excellence campaign (OR use 'Excellence' button)",
+                    "!swarm_overview - Complete swarm status (OR use 'Overview' button)",
+                    "!swarm_profile - Swarm collective profile",
+                ],
+                "📚 GitHub Book": [
+                    "!github_book [chapter] - Interactive book navigation (OR use 'GitHub Book' button)",
+                    "!goldmines - High-value patterns (OR use 'Goldmines' button)",
+                    "!book_stats - Comprehensive statistics",
+                ],
+                "📊 Status & Monitoring": [
+                    "!status - View swarm status (OR use 'Swarm Status' button)",
+                    "!monitor [start|stop|status] - Control status monitor (OR use 'Monitor' button)",
+                ],
+                "🔄 System Management": [
+                    "!restart - Restart bot (OR use 'Restart Bot' button)",
+                    "!shutdown - Shutdown bot (OR use 'Shutdown Bot' button)",
+                    "!unstall <agent> - Unstall agent (OR use 'Unstall Agent' button)",
+                    "!bump <agents> - Bump agents (OR use 'Bump Agents' button)",
+                ],
+                "🚀 Onboarding": [
+                    "!soft_onboard <agents> - Soft onboard (OR use 'Soft Onboard' button)",
+                    "!hard_onboard <agents> - Hard onboard (OR use 'Hard Onboard' button)",
+                ],
+                "🌊 Utilities": [
+                    "!mermaid <code> - Render Mermaid diagram (OR use 'Mermaid' button)",
+                    "!templates - Broadcast templates (OR use 'Templates' button)",
+                    "!help - Interactive help menu (OR use 'Help' button)",
+                ],
+            }
+            
+            embed = discord.Embed(
+                title="📋 All Available Commands",
+                description=(
+                    "**🎯 IMPORTANT: All commands are accessible via buttons in the Control Panel!**\n\n"
+                    "**Use `!control` (or `!panel`, `!menu`) to open the Control Panel with all buttons.**\n\n"
+                    "Commands listed below are for reference - buttons are preferred."
+                ),
+                color=discord.Color.blue(),
+            )
+            
+            for category, commands in commands_by_category.items():
+                embed.add_field(
+                    name=category,
+                    value="\n".join(commands),
+                    inline=False,
+                )
+            
+            embed.add_field(
+                name="✅ Button Access",
+                value=(
+                    "**All features accessible via Control Panel buttons:**\n"
+                    "• Message Agent\n"
+                    "• Broadcast\n"
+                    "• Swarm Status\n"
+                    "• Tasks (swarm_tasks)\n"
+                    "• GitHub Book\n"
+                    "• Roadmap\n"
+                    "• Excellence\n"
+                    "• Overview\n"
+                    "• Goldmines\n"
+                    "• Templates\n"
+                    "• Mermaid\n"
+                    "• Monitor\n"
+                    "• Help\n"
+                    "• Restart/Shutdown\n"
+                    "• Onboarding\n"
+                    "• And more..."
+                ),
+                inline=False,
+            )
+            
+            embed.set_footer(
+                text="🐝 WE. ARE. SWARM. ⚡ Use buttons instead of commands when possible!"
+            )
+            
+            await interaction.response.send_message(embed=embed, ephemeral=True)
+        except Exception as e:
+            logger.error(f"Error showing all commands: {e}", exc_info=True)
+            await self._handle_error(interaction, e, "loading commands")
 
     async def _handle_error(self, interaction: discord.Interaction, error: Exception, context: str = ""):
         """Handle interaction errors."""

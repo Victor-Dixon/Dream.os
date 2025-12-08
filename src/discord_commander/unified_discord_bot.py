@@ -530,22 +530,22 @@ class UnifiedDiscordBot(commands.Bot):
             )
 
             embed.add_field(
-                name="🐝 Swarm Showcase Commands (NEW!)",
+                name="🐝 Swarm Showcase (ALL ACCESSIBLE VIA BUTTONS!)",
                 value=(
-                    "• `!swarm_tasks` - Live task dashboard\n"
-                    "• `!swarm_roadmap` - Strategic roadmap\n"
-                    "• `!swarm_excellence` - Lean Excellence campaign\n"
-                    "• `!swarm_overview` - Complete swarm status\n"
+                    "• **Tasks** button = `!swarm_tasks` - Live task dashboard\n"
+                    "• **Roadmap** button = `!swarm_roadmap` - Strategic roadmap\n"
+                    "• **Excellence** button = `!swarm_excellence` - Lean Excellence campaign\n"
+                    "• **Overview** button = `!swarm_overview` - Complete swarm status\n"
                     "• `!swarm_profile` - Swarm collective profile (identity, stats, achievements)"
                 ),
                 inline=False,
             )
 
             embed.add_field(
-                name="📚 GitHub Book Viewer (WOW FACTOR!)",
+                name="📚 GitHub Book Viewer (ACCESSIBLE VIA BUTTONS!)",
                 value=(
-                    "• `!github_book [chapter]` - Interactive book navigation\n"
-                    "• `!goldmines` - High-value pattern showcase\n"
+                    "• **GitHub Book** button = `!github_book [chapter]` - Interactive book navigation\n"
+                    "• **Goldmines** button = `!goldmines` - High-value pattern showcase\n"
                     "• `!book_stats` - Comprehensive statistics"
                 ),
                 inline=False,
@@ -1021,23 +1021,45 @@ class MessagingCommands(commands.Cog):
             self.logger.error(f"Error in !carmyn command: {e}", exc_info=True)
             await ctx.send(f"❌ Oops! Something went wrong: {e}")
 
-    @commands.command(name="commands", description="List all registered commands")
+    @commands.command(name="commands", description="List all registered commands (use Control Panel buttons instead!)")
     async def list_commands(self, ctx: commands.Context):
-        """List all registered bot commands for debugging."""
+        """List all registered bot commands - redirects to Control Panel button view."""
         try:
-            all_commands = []
-            for command in self.bot.walk_commands():
-                all_commands.append(
-                    f"`!{command.name}` - {command.description or 'No description'}")
-
+            # Instead of listing commands, open Control Panel which has all buttons
+            control_view = self.gui_controller.create_control_panel()
             embed = discord.Embed(
-                title="📋 All Registered Commands",
-                # Limit to 50 to avoid embed limits
-                description="\n".join(all_commands[:50]),
+                title="📋 All Commands - Use Control Panel Buttons!",
+                description=(
+                    "**🎯 All commands are accessible via buttons in the Control Panel!**\n\n"
+                    "**Click the buttons below to access all features:**\n"
+                    "• **Tasks** button = `!swarm_tasks`\n"
+                    "• **Swarm Status** button = `!status`\n"
+                    "• **GitHub Book** button = `!github_book`\n"
+                    "• **Roadmap** button = `!swarm_roadmap`\n"
+                    "• **Excellence** button = `!swarm_excellence`\n"
+                    "• **Overview** button = `!swarm_overview`\n"
+                    "• **Goldmines** button = `!goldmines`\n"
+                    "• **Templates** button = `!templates`\n"
+                    "• **Mermaid** button = `!mermaid`\n"
+                    "• **Monitor** button = `!monitor`\n"
+                    "• **Help** button = `!help`\n"
+                    "• **All Commands** button = This view\n\n"
+                    "**No need to type commands - just click buttons!**"
+                ),
                 color=discord.Color.blue(),
             )
-            embed.set_footer(text=f"Total: {len(all_commands)} commands")
-            await ctx.send(embed=embed)
+            
+            embed.add_field(
+                name="💡 Quick Access",
+                value="Type `!control` (or `!panel`, `!menu`) to open Control Panel anytime!",
+                inline=False,
+            )
+            
+            embed.set_footer(
+                text="🐝 WE. ARE. SWARM. ⚡ Buttons > Commands!"
+            )
+            
+            await ctx.send(embed=embed, view=control_view)
         except Exception as e:
             self.logger.error(f"Error listing commands: {e}")
             await ctx.send(f"❌ Error: {e}")
