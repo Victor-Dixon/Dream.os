@@ -21,15 +21,11 @@ from __future__ import annotations
 
 from typing import Any, Optional
 
-from .messaging_models_core import (
-    MessageCategory,
-    UnifiedMessage,
-    UnifiedMessageTag,
-    UnifiedMessageType,
-    MESSAGE_TEMPLATES,
+from .messaging_models import MessageCategory, UnifiedMessage, UnifiedMessageTag, UnifiedMessageType
+from .messaging_template_texts import (
     AGENT_OPERATING_CYCLE_TEXT,
-    CYCLE_CHECKLIST_TEXT,
-    DISCORD_REPORTING_TEXT,
+    MESSAGE_TEMPLATES,
+    format_d2a_payload,
 )
 
 
@@ -179,13 +175,7 @@ def render_message(
     if isinstance(tpl, str):
         # Ensure required fields for D2A template are present
         if category == MessageCategory.D2A:
-            from src.core.messaging_models_core import D2A_RESPONSE_POLICY_TEXT, D2A_REPORT_FORMAT_TEXT
-            base.setdefault("content", msg.content)
-            base.setdefault("interpretation", "Pending agent interpretation.")
-            base.setdefault("actions", "Evaluate request and execute if safe/within scope.")
-            base.setdefault("fallback", "Ask for clarification in Discord with one focused question.")
-            base.setdefault("discord_response_policy", D2A_RESPONSE_POLICY_TEXT)
-            base.setdefault("d2a_report_format", D2A_REPORT_FORMAT_TEXT)
+            base = format_d2a_payload(base)
         rendered = tpl.format(**base)
         if include_devlog:
             rendered += DEVLOG_FOOTER
