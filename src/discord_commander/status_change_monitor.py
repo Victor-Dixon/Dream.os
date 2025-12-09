@@ -442,17 +442,19 @@ class StatusChangeMonitor:
             attempt = self.resume_attempts.get(agent_id, 0) + 1
             send_mode = "enter" if attempt == 1 else "ctrl_enter"
 
+            # Calculate safe_minutes for use in template rendering (needed for both paths)
+            safe_minutes = (
+                f"{summary.inactivity_duration_minutes:.1f}"
+                if summary.inactivity_duration_minutes and summary.inactivity_duration_minutes != float('inf')
+                else "unknown"
+            )
+
             # Format resume message with context (unless skip_wrapper=True for Agent-4)
             if skip_wrapper:
                 # For Agent-4, prompt already includes resume context
                 resume_message = prompt
             else:
                 # For other agents, wrap with standard resume message format (no-ack, artifact-only)
-                safe_minutes = (
-                    f"{summary.inactivity_duration_minutes:.1f}"
-                    if summary.inactivity_duration_minutes and summary.inactivity_duration_minutes != float('inf')
-                    else "unknown"
-                )
                 resume_message = "🚨 RESUMER PROMPT - Inactivity Detected\n\n"
                 resume_message += "[NO-ACKNOWLEDGMENTS] This is a silent work order. Do not reply with acks; produce an artifact.\n\n"
                 resume_message += f"{prompt}\n\n"
