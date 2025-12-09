@@ -10,12 +10,6 @@ from . import navigator_messaging
 from . import session
 from . import session_persistence
 
-# Optional import for deprecated extractor
-try:
-    from . import extractor_deprecated
-except ImportError:
-    extractor_deprecated = None
-
 __all__ = [
     'cli',
     'extractor',

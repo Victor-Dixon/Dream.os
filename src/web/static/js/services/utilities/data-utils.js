@@ -1,77 +1,58 @@
 /**
  * Data Utilities - V2 Compliant Module
- * Data validation, formatting, and manipulation utilities
- * MODULAR: ~100 lines (V2 compliant)
+ * Data formatting utilities (SSOT for data-specific operations)
+ * NOTE: deepClone and formatDate moved to SSOT utilities (ArrayUtils, TimeUtils)
+ * NOTE: Validation methods (isValidEmail, isValidUrl) delegate to ValidationUtils SSOT
+ * MODULAR: ~40 lines (V2 compliant, duplicates removed)
+ * 
+ * @SSOT Domain: data-formatting
+ * @SSOT Location: services/utilities/data-utils.js
+ * @SSOT Scope: formatCurrency, data operations (delegates validation to ValidationUtils)
  *
  * @author Agent-7 - Web Development Specialist
- * @version 2.0.0 - V2 COMPLIANCE MODULAR EXTRACTION
+ * @version 2.2.0 - CONSOLIDATED (validation delegates to ValidationUtils SSOT)
  * @license MIT
  */
 
+import { LoggingUtils } from '../../../utilities/logging-utils.js';
+import { ValidationUtils } from '../../../utilities/validation-utils.js';
+
 export class DataUtils {
     constructor() {
-        this.logger = new UnifiedLoggingSystem("DataUtils");
+        this.logger = new LoggingUtils({ name: "DataUtils" });
+        this.validationUtils = new ValidationUtils(this.logger);
     }
 
     /**
-     * Validate email format
+     * Validate email format (delegates to ValidationUtils SSOT)
      */
     isValidEmail(email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
+        return this.validationUtils.isValidEmail(email);
     }
 
     /**
-     * Validate URL format
+     * Validate URL format (delegates to ValidationUtils SSOT)
      */
     isValidUrl(url) {
-        try {
-            new URL(url);
-            return true;
-        } catch {
-            return false;
-        }
+        return this.validationUtils.isValidUrl(url);
     }
 
     /**
-     * Deep clone an object
-     */
-    deepClone(obj) {
-        if (obj === null || typeof obj !== 'object') return obj;
-        if (obj instanceof Date) return new Date(obj.getTime());
-        if (obj instanceof Array) return obj.map(item => this.deepClone(item));
-
-        const cloned = {};
-        for (const key in obj) {
-            if (obj.hasOwnProperty(key)) {
-                cloned[key] = this.deepClone(obj[key]);
-            }
-        }
-        return cloned;
-    }
-
-    /**
-     * Format number as currency
+     * Format number as currency (SSOT with validation)
      */
     formatCurrency(amount, currency = 'USD') {
+        if (typeof amount !== 'number' || isNaN(amount)) {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: currency
+            }).format(0);
+        }
         return new Intl.NumberFormat('en-US', {
             style: 'currency',
             currency: currency
         }).format(amount);
     }
 
-    /**
-     * Format date
-     */
-    formatDate(date, format = 'MM/DD/YYYY') {
-        const d = new Date(date);
-        const month = String(d.getMonth() + 1).padStart(2, '0');
-        const day = String(d.getDate()).padStart(2, '0');
-        const year = d.getFullYear();
-
-        return format
-            .replace('MM', month)
-            .replace('DD', day)
-            .replace('YYYY', year);
-    }
+    // NOTE: deepClone removed - use ArrayUtils.deepClone() from utilities/array-utils.js (SSOT)
+    // NOTE: formatDate removed - use TimeUtils.formatDate() from utilities/time-utils.js (SSOT)
 }

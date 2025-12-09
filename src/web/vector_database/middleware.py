@@ -3,6 +3,9 @@ Vector Database Middleware
 =========================
 
 Request/response processing middleware for vector database operations.
+
+<!-- SSOT Domain: web -->
+
 V2 Compliance: < 300 lines, single responsibility, middleware processing.
 
 Author: Agent-3 - Infrastructure & DevOps Specialist

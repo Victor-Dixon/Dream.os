@@ -32,6 +32,20 @@ from dataclasses import dataclass
 
 logger = logging.getLogger(__name__)
 
+ACTIVITY_EVENT_FILE = Path("runtime") / "agent_comms" / "activity_events.jsonl"
+DEFAULT_EVENT_WINDOW_SECONDS = 3600
+EVENT_WEIGHTS = {
+    "TASK_COMPLETED": 5,
+    "GIT_PUSH": 5,
+    "MONEY_METRIC": 5,
+    "TOOL_RUN_SUCCESS": 2,
+    "TOOL_RUN_FAILURE": 4,
+    "BRAIN_WRITE": 3,
+    "TASK_CLAIMED": 1,
+    "DEVLOG_CREATED": 1,
+}
+TIER1_EVENT_TYPES = {"TASK_COMPLETED", "GIT_PUSH", "MONEY_METRIC", "TOOL_RUN_FAILURE"}
+
 
 @dataclass
 class AgentActivity:
@@ -54,6 +68,31 @@ class AgentActivitySummary:
     recent_actions: List[str]  # Recent action descriptions
 
 
+@dataclass
+class ActivityEvent:
+    """Represents a single telemetry event emitted by ActivityEmitter."""
+    agent_id: str
+    event_type: str
+    source: str
+    summary: str
+    artifact: Optional[Dict]
+    timestamp: datetime
+
+
+@dataclass
+class ActivitySignal:
+    """Calculated activity signal derived from telemetry events."""
+    active: bool
+    score: float
+    tier1_hits: int
+    tier2_hits: int
+    last_event: Optional[datetime]
+    inactivity_minutes: float
+    activities: List[AgentActivity]
+    event_count: int
+    used_events: bool
+
+
 class AgentActivityDetector:
     """Detects agent activity from multiple sources."""
     
@@ -66,11 +105,14 @@ class AgentActivityDetector:
         self.workspace_root = Path(workspace_root) if workspace_root else Path("agent_workspaces")
         self.devlogs_dir = Path("devlogs")
         self.cycle_planner_dir = self.workspace_root / "swarm_cycle_planner" / "cycles"
+        self.activity_event_file = ACTIVITY_EVENT_FILE
         
     def detect_agent_activity(
         self,
         agent_id: str,
-        lookback_minutes: int = 60
+        lookback_minutes: int = 60,
+        use_events: bool = True,
+        activity_threshold: int = 3
     ) -> AgentActivitySummary:
         """
         Detect agent activity from all sources.
@@ -78,13 +120,35 @@ class AgentActivityDetector:
         Args:
             agent_id: Agent identifier
             lookback_minutes: How far back to look for activity
+            use_events: Include ActivityEmitter telemetry when available
+            activity_threshold: Minimum score to consider agent active from telemetry
             
         Returns:
             AgentActivitySummary with activity information
         """
         lookback_time = datetime.now() - timedelta(minutes=lookback_minutes)
         activities: List[AgentActivity] = []
-        
+
+        event_signal = self._build_event_signal(
+            agent_id,
+            lookback_time,
+            activity_threshold=activity_threshold,
+        ) if use_events else ActivitySignal(
+            active=False,
+            score=0,
+            tier1_hits=0,
+            tier2_hits=0,
+            last_event=None,
+            inactivity_minutes=float("inf"),
+            activities=[],
+            event_count=0,
+            used_events=False,
+        )
+
+        # ActivityEmitter telemetry events (preferred)
+        if event_signal.activities:
+            activities.extend(event_signal.activities)
+
         # Check all activity sources
         activities.extend(self._check_status_updates(agent_id, lookback_time))
         activities.extend(self._check_file_modifications(agent_id, lookback_time))
@@ -97,21 +161,28 @@ class AgentActivityDetector:
         # Sort by timestamp (most recent first)
         activities.sort(key=lambda x: x.timestamp, reverse=True)
         
-        # Determine if agent is active
-        last_activity = activities[0].timestamp if activities else None
+        # Determine meaningful activity (filters out chat/noise)
+        meaningful_activities = [
+            a for a in activities if self._is_meaningful_activity(a)
+        ]
+        last_activity = meaningful_activities[0].timestamp if meaningful_activities else None
         is_active = last_activity is not None and last_activity >= lookback_time
-        
-        # Calculate inactivity duration
-        if last_activity:
-            inactivity_duration = (datetime.now() - last_activity).total_seconds() / 60
-        else:
-            inactivity_duration = float('inf')
-        
-        # Get unique activity sources
+        inactivity_duration = (
+            (datetime.now() - last_activity).total_seconds() / 60
+            if last_activity else float("inf")
+        )
+
+        # Prefer ActivityEmitter telemetry for activity signal when available
+        if event_signal.used_events and event_signal.event_count > 0:
+            last_activity = event_signal.last_event or last_activity
+            inactivity_duration = event_signal.inactivity_minutes
+            is_active = event_signal.active
+
+        # Get unique activity sources (full picture) and recent actions (prioritize meaningful)
         activity_sources = list(set(a.source for a in activities))
         
-        # Get recent actions (last 5)
-        recent_actions = [a.action for a in activities[:5]]
+        recent_pool = meaningful_activities if meaningful_activities else activities
+        recent_actions = [a.action for a in recent_pool[:5]]
         
         return AgentActivitySummary(
             agent_id=agent_id,
@@ -122,6 +193,39 @@ class AgentActivityDetector:
             recent_actions=recent_actions
         )
     
+    def is_active(
+        self,
+        agent_id: str,
+        window_s: int = DEFAULT_EVENT_WINDOW_SECONDS,
+        activity_threshold: int = 3
+    ) -> bool:
+        """
+        Return True if agent is considered active within the window using telemetry first.
+
+        Args:
+            agent_id: Agent identifier
+            window_s: Time window (seconds) to inspect telemetry
+            activity_threshold: Minimum score to consider active when no tier1 events
+        """
+        lookback_time = datetime.now() - timedelta(seconds=window_s)
+        event_signal = self._build_event_signal(
+            agent_id,
+            lookback_time,
+            activity_threshold=activity_threshold,
+        )
+        if event_signal.used_events and event_signal.event_count > 0:
+            return event_signal.active
+
+        # Fallback to legacy heuristics if telemetry not available
+        fallback_minutes = max(1, int(window_s / 60))
+        summary = self.detect_agent_activity(
+            agent_id,
+            lookback_minutes=fallback_minutes,
+            use_events=False,
+            activity_threshold=activity_threshold,
+        )
+        return summary.is_active
+
     def _check_status_updates(
         self,
         agent_id: str,
@@ -392,12 +496,18 @@ class AgentActivityDetector:
                 queue_data = json.load(f)
             
             messages = queue_data.get("messages", [])
+            resume_markers = {"RESUMER PROMPT", "Inactivity Detected", "STALL-RECOVERY", "NO-ACKNOWLEDGMENTS"}
             for msg in messages:
                 # Check if message is for this agent
                 recipient = msg.get("recipient", "")
                 if agent_id.lower() in recipient.lower():
                     # Check message timestamp
                     msg_time_str = msg.get("timestamp", "")
+                    msg_text = msg.get("message", "") or ""
+                    msg_type = (msg.get("message_type") or "").lower()
+                    # Skip resumer/control messages to avoid counting as progress
+                    if any(marker in msg_text for marker in resume_markers) or "resume" in msg_type:
+                        continue
                     try:
                         msg_time = datetime.fromisoformat(msg_time_str.replace("Z", "+00:00"))
                         msg_time = msg_time.replace(tzinfo=None)
@@ -415,6 +525,179 @@ class AgentActivityDetector:
             logger.warning(f"Error checking message queue activity for {agent_id}: {e}")
         
         return activities
+
+    def _is_meaningful_activity(self, activity: AgentActivity) -> bool:
+        """Return True if activity represents real progress (not chat/ack)."""
+        if activity.source == "activity_event":
+            meta = activity.metadata or {}
+            tier = meta.get("tier")
+            weight = meta.get("weight", 0)
+            return tier == 1 or weight >= 2
+        if activity.source in {"file", "devlog", "task", "git"}:
+            return True
+        if activity.source == "status":
+            # Require structured metadata and non-empty mission/status to count
+            meta = activity.metadata or {}
+            mission = meta.get("mission") or ""
+            status_val = meta.get("status") or ""
+            return bool(mission.strip() or status_val.strip())
+        # Inbox/message queue events are considered noise for progress
+        return False
+
+    def _load_activity_events(
+        self,
+        agent_id: str,
+        lookback_time: datetime
+    ) -> List[ActivityEvent]:
+        """Load ActivityEmitter events for the agent within the lookback window."""
+        if not self.activity_event_file.exists():
+            return []
+
+        events: List[ActivityEvent] = []
+        try:
+            with open(self.activity_event_file, "r", encoding="utf-8") as f:
+                for line in f:
+                    if not line.strip():
+                        continue
+                    try:
+                        raw = json.loads(line)
+                    except json.JSONDecodeError:
+                        continue
+
+                    if raw.get("agent", "").lower() != agent_id.lower():
+                        continue
+
+                    ts_raw = raw.get("ts")
+                    if not ts_raw:
+                        continue
+                    try:
+                        ts = datetime.fromisoformat(
+                            str(ts_raw).replace("Z", "+00:00")
+                        ).replace(tzinfo=None)
+                    except Exception:
+                        continue
+
+                    if ts < lookback_time:
+                        continue
+
+                    events.append(ActivityEvent(
+                        agent_id=agent_id,
+                        event_type=(raw.get("type") or "").upper(),
+                        source=raw.get("source") or "",
+                        summary=raw.get("summary") or "",
+                        artifact=raw.get("artifact"),
+                        timestamp=ts,
+                    ))
+        except Exception as e:
+            logger.warning(f"Error reading activity events for {agent_id}: {e}")
+
+        events.sort(key=lambda e: e.timestamp, reverse=True)
+        return events
+
+    def _normalize_event(
+        self,
+        event: ActivityEvent
+    ) -> Tuple[str, int, int]:
+        """Normalize event type into weighted category and tier."""
+        base_type = (event.event_type or "").upper()
+        normalized_type = base_type
+        tier = 2
+
+        if base_type == "TOOL_RUN":
+            artifact = event.artifact or {}
+            outcome_text = (
+                str(artifact.get("outcome") or artifact.get("status") or "") or event.summary
+            )
+            outcome_lower = outcome_text.lower()
+            if "fail" in outcome_lower or "error" in outcome_lower or "timeout" in outcome_lower:
+                normalized_type = "TOOL_RUN_FAILURE"
+                tier = 1
+            else:
+                normalized_type = "TOOL_RUN_SUCCESS"
+                tier = 2
+        elif base_type in TIER1_EVENT_TYPES:
+            normalized_type = base_type
+            tier = 1
+        else:
+            normalized_type = base_type or "UNKNOWN"
+            tier = 2
+
+        weight = EVENT_WEIGHTS.get(normalized_type, EVENT_WEIGHTS.get(base_type, 0))
+        return normalized_type, weight, tier
+
+    def _event_to_activity(
+        self,
+        event: ActivityEvent,
+        normalized_type: str,
+        weight: int,
+        tier: int
+    ) -> AgentActivity:
+        """Convert ActivityEvent into AgentActivity for unified summaries."""
+        action = f"{normalized_type}: {event.summary or event.source or 'activity detected'}"
+        metadata = {
+            "type": normalized_type,
+            "raw_type": event.event_type,
+            "source": event.source,
+            "weight": weight,
+            "tier": tier,
+        }
+        if event.artifact is not None:
+            metadata["artifact"] = event.artifact
+
+        return AgentActivity(
+            agent_id=event.agent_id,
+            source="activity_event",
+            timestamp=event.timestamp,
+            action=action[:120],
+            metadata=metadata,
+        )
+
+    def _build_event_signal(
+        self,
+        agent_id: str,
+        lookback_time: datetime,
+        activity_threshold: int = 3
+    ) -> ActivitySignal:
+        """Compute activity signal from telemetry events."""
+        events = self._load_activity_events(agent_id, lookback_time)
+        score = 0
+        tier1_hits = 0
+        tier2_hits = 0
+        activity_records: List[AgentActivity] = []
+
+        for event in events:
+            normalized_type, weight, tier = self._normalize_event(event)
+            score += weight
+            if tier == 1:
+                tier1_hits += 1
+            else:
+                tier2_hits += 1
+
+            activity_records.append(self._event_to_activity(
+                event,
+                normalized_type,
+                weight,
+                tier,
+            ))
+
+        last_event = events[0].timestamp if events else None
+        inactivity_minutes = (
+            (datetime.now() - last_event).total_seconds() / 60
+            if last_event else float("inf")
+        )
+        active = bool(events) and (tier1_hits > 0 or score >= activity_threshold)
+
+        return ActivitySignal(
+            active=active,
+            score=score,
+            tier1_hits=tier1_hits,
+            tier2_hits=tier2_hits,
+            last_event=last_event,
+            inactivity_minutes=inactivity_minutes,
+            activities=activity_records,
+            event_count=len(events),
+            used_events=True,
+        )
     
     def find_inactive_agents(
         self,

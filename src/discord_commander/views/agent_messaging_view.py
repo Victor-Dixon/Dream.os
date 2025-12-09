@@ -17,6 +17,7 @@ License: MIT
 
 import logging
 from typing import Any
+from src.core.config.timeout_constants import TimeoutConstants
 
 try:
     import discord
@@ -36,7 +37,7 @@ class AgentMessagingGUIView(discord.ui.View):
     """Complete agent messaging GUI with all controls."""
 
     def __init__(self, messaging_service: ConsolidatedMessagingService):
-        super().__init__(timeout=600)
+        super().__init__(timeout=TimeoutConstants.HTTP_EXTENDED)
         self.messaging_service = messaging_service
         self.agents = self._load_agents()
         self._setup_ui_components()

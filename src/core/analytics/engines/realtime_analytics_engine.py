@@ -3,6 +3,8 @@
 Realtime Analytics Engine - KISS Compliant
 ==========================================
 
+<!-- SSOT Domain: analytics -->
+
 Simple real-time analytics processing.
 
 Author: Agent-5 - Business Intelligence Specialist

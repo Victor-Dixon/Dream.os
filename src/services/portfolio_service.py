@@ -6,6 +6,8 @@ Portfolio Service - DreamBank Integration
 Unified portfolio management service integrating DreamBank logic.
 Service Enhancement pattern: Extracts core portfolio logic from merged repos.
 
+Consolidated: Uses BaseService (33% code reduction).
+
 Author: Agent-2 (Architecture & Design Specialist)
 Date: 2025-11-27
 V2 Compliance: <400 lines
@@ -18,15 +20,13 @@ from typing import Dict, List, Optional, Any
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
-import logging
 
 # Add project root to path
 project_root = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(project_root))
 
+from src.core.base.base_service import BaseService
 from src.core.config.timeout_constants import TimeoutConstants
-
-logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -55,7 +55,7 @@ class Portfolio:
             self.created_at = datetime.now()
 
 
-class PortfolioService:
+class PortfolioService(BaseService):
     """
     Unified portfolio management service.
     
@@ -68,10 +68,10 @@ class PortfolioService:
     
     def __init__(self, repository=None):
         """Initialize portfolio service."""
+        super().__init__("PortfolioService")
         self.repository = repository
         self.api_key = os.getenv("ALPHA_VANTAGE_API_KEY")
         self.portfolios: Dict[str, Portfolio] = {}
-        logger.info("Portfolio Service initialized")
     
     def create_portfolio(
         self, 
@@ -96,7 +96,7 @@ class PortfolioService:
             stocks=[]
         )
         self.portfolios[portfolio_id] = portfolio
-        logger.info(f"Created portfolio {portfolio_id} for user {user_id}")
+        self.logger.info(f"Created portfolio {portfolio_id} for user {user_id}")
         return portfolio
     
     def add_stock(
@@ -115,7 +115,7 @@ class PortfolioService:
             Success status
         """
         if portfolio_id not in self.portfolios:
-            logger.error(f"Portfolio {portfolio_id} not found")
+            self.logger.error(f"Portfolio {portfolio_id} not found")
             return False
         
         portfolio = self.portfolios[portfolio_id]
@@ -134,7 +134,7 @@ class PortfolioService:
         else:
             portfolio.stocks.append(stock)
         
-        logger.info(f"Added stock {stock.symbol} to portfolio {portfolio_id}")
+        self.logger.info(f"Added stock {stock.symbol} to portfolio {portfolio_id}")
         return True
     
     def remove_stock(
@@ -153,14 +153,14 @@ class PortfolioService:
             Success status
         """
         if portfolio_id not in self.portfolios:
-            logger.error(f"Portfolio {portfolio_id} not found")
+            self.logger.error(f"Portfolio {portfolio_id} not found")
             return False
         
         portfolio = self.portfolios[portfolio_id]
         portfolio.stocks = [
             s for s in portfolio.stocks if s.symbol != symbol
         ]
-        logger.info(f"Removed stock {symbol} from portfolio {portfolio_id}")
+        self.logger.info(f"Removed stock {symbol} from portfolio {portfolio_id}")
         return True
     
     def analyze_portfolio(
@@ -177,7 +177,7 @@ class PortfolioService:
             Analysis results
         """
         if portfolio_id not in self.portfolios:
-            logger.error(f"Portfolio {portfolio_id} not found")
+            self.logger.error(f"Portfolio {portfolio_id} not found")
             return {}
         
         portfolio = self.portfolios[portfolio_id]
@@ -276,7 +276,7 @@ class PortfolioService:
             Current price
         """
         if not self.api_key:
-            logger.warning("Alpha Vantage API key not configured")
+            self.logger.warning("Alpha Vantage API key not configured")
             return 0.0
         
         try:
@@ -292,14 +292,14 @@ class PortfolioService:
             json_data = response.json()
             
             if "Time Series (1min)" not in json_data:
-                logger.warning(f"No intraday data for {symbol}")
+                self.logger.warning(f"No intraday data for {symbol}")
                 return 0.0
             
             latest_data = list(json_data["Time Series (1min)"].values())[0]
             return float(latest_data["1. open"])
         
         except Exception as e:
-            logger.error(f"Error fetching price for {symbol}: {e}")
+            self.logger.error(f"Error fetching price for {symbol}: {e}")
             return 0.0
     
     def _calculate_change(

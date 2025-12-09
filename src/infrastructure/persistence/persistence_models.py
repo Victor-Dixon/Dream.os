@@ -13,6 +13,8 @@ License: MIT
 from dataclasses import dataclass
 from datetime import datetime
 
+from ...core.config.timeout_constants import TimeoutConstants
+
 
 @dataclass
 class PersistenceConfig:
@@ -20,7 +22,7 @@ class PersistenceConfig:
 
     db_path: str = "data/unified.db"
     auto_migrate: bool = True
-    connection_timeout: float = 30.0
+    connection_timeout: float = TimeoutConstants.DATABASE_DEFAULT
     enable_foreign_keys: bool = True
     enable_wal_mode: bool = True
 
@@ -55,6 +57,7 @@ class TaskPersistenceModel:
     status: str = "pending"
     priority: int = 1
     created_at: datetime = None
+    assigned_at: datetime | None = None
     completed_at: datetime | None = None
 
     def __post_init__(self):

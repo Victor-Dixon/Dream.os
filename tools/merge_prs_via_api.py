@@ -27,12 +27,11 @@ except ImportError:
 # Import TimeoutConstants with fallback
 try:
     from src.core.config.timeout_constants import TimeoutConstants
+    from src.core.utils.github_utils import create_github_pr_headers, check_existing_pr
 except ImportError:
     TimeoutConstants = None
-except ImportError:
-    REQUESTS_AVAILABLE = False
-    print("❌ requests library not available. Install with: pip install requests")
-    sys.exit(1)
+    create_github_pr_headers = None
+    check_existing_pr = None
 
 
 def get_github_token() -> Optional[str]:
@@ -63,11 +62,7 @@ def merge_pr(
 ) -> bool:
     """Merge a PR using GitHub REST API."""
     url = f"https://api.github.com/repos/{owner}/{repo}/pulls/{pr_number}/merge"
-    headers = {
-        "Authorization": f"token {token}",
-        "Accept": "application/vnd.github.v3+json",
-        "Content-Type": "application/json"
-    }
+    headers = create_github_pr_headers(token)
     data = {
         "merge_method": merge_method  # merge, squash, or rebase
     }
@@ -110,11 +105,7 @@ def create_pr(
 ) -> Optional[Dict[str, Any]]:
     """Create a PR using GitHub REST API."""
     url = f"https://api.github.com/repos/{owner}/{repo}/pulls"
-    headers = {
-        "Authorization": f"token {token}",
-        "Accept": "application/vnd.github.v3+json",
-        "Content-Type": "application/json"
-    }
+    headers = create_github_pr_headers(token)
     data = {
         "title": title,
         "body": body,
@@ -133,19 +124,12 @@ def create_pr(
             error_data = response.json()
             if "already exists" in str(error_data).lower() or "No commits between" in str(error_data):
                 print(f"⚠️ PR already exists or no commits for {repo}: {head} → {base}")
-                # Check for existing PR
-                list_url = f"https://api.github.com/repos/{owner}/{repo}/pulls"
-                list_response = requests.get(
-                    list_url,
-                    headers=headers,
-                    params={"head": f"{owner}:{head}", "state": "open"},
-                    timeout=timeout
-                )
-                if list_response.status_code == 200:
-                    prs = list_response.json()
-                    if prs:
-                        print(f"✅ Found existing PR: {prs[0].get('html_url')}")
-                        return prs[0]
+                # Check for existing PR using SSOT utility
+                if check_existing_pr:
+                    existing_pr = check_existing_pr(owner, repo, head, token, timeout)
+                    if existing_pr:
+                        print(f"✅ Found existing PR: {existing_pr.get('html_url')}")
+                        return existing_pr
             print(f"❌ PR creation failed for {repo}: {error_data}")
             return None
         else:

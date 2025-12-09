@@ -8,6 +8,7 @@ Handles coordination statistics tracking and reporting.
 Extracted from messaging_coordination_handler.py for V2 compliance.
 
 V2 Compliance: < 300 lines, single responsibility.
+Migrated to BaseService for consolidated initialization and error handling.
 
 Author: Agent-7 - Web Development Specialist
 License: MIT
@@ -16,8 +17,10 @@ License: MIT
 from datetime import datetime
 from typing import Any
 
+from ...core.base.base_service import BaseService
 
-class StatsTracker:
+
+class StatsTracker(BaseService):
     """Handles coordination statistics tracking and reporting.
 
     Manages statistics collection, calculation, and reporting for coordination
@@ -26,6 +29,7 @@ class StatsTracker:
 
     def __init__(self):
         """Initialize stats tracker."""
+        super().__init__("StatsTracker")
         self.coordination_stats = {
             "total_coordinations": 0,
             "successful_coordinations": 0,

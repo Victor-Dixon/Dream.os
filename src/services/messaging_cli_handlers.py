@@ -27,18 +27,9 @@ from .messaging_cli_formatters import (
     SURVEY_MESSAGE_TEMPLATE,
 )
 
-logger = logging.getLogger(__name__)
+from src.core.constants.agent_constants import AGENT_LIST
 
-SWARM_AGENTS = [
-    "Agent-1",
-    "Agent-2",
-    "Agent-3",
-    "Agent-4",
-    "Agent-5",
-    "Agent-6",
-    "Agent-7",
-    "Agent-8",
-]
+logger = logging.getLogger(__name__)
 
 
 # Stubs for PyAutoGUI messaging now routed through core messaging
@@ -83,7 +74,7 @@ class MessageCoordinator:
     def broadcast_to_all(message: str, priority=UnifiedMessagePriority.REGULAR):
         return sum(
             1
-            for agent in SWARM_AGENTS
+            for agent in AGENT_LIST
             if send_message(
                 content=message,
                 sender="CAPTAIN",

@@ -6,6 +6,8 @@ Run Discord Bot with Auto-Restart Support
 Enhanced runner script that supports !restart command.
 When !restart is used, bot gracefully shuts down and automatically restarts.
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-6 (Co-Captain) - Implementation
 Spec: Agent-2 (Architecture LEAD)
 Date: 2025-10-15

@@ -3,6 +3,8 @@
 Caching Engine - Memory-Safe Version
 ====================================
 
+<!-- SSOT Domain: analytics -->
+
 Simple caching with LRU eviction to prevent memory leaks.
 
 FIXES:

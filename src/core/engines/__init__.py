@@ -1,6 +1,10 @@
 # AUTO-GENERATED __init__.py
 # DO NOT EDIT MANUALLY - changes may be overwritten
 
+from .base_engine import BaseEngine
+
+__all__ = ["BaseEngine"]
+
 # Registry removed from __init__.py to avoid circular dependencies
 # Import directly: from src.core.engines.registry import EngineRegistry
 

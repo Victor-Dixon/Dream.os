@@ -19,7 +19,6 @@ import subprocess
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, Any, Optional, List, Tuple
-import hashlib
 
 from .config.timeout_constants import TimeoutConstants
 

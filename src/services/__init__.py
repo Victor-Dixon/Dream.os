@@ -11,7 +11,6 @@ from . import config
 from . import constants
 from . import contract_service
 from . import coordinator
-# from . import cursor_db  # DEPRECATED - Deleted 2025-12-02 (replaced by AgentActivityTracker + swarm.pulse)
 from . import hard_onboarding_service
 from . import learning_recommender
 from . import message_batching_service
@@ -49,7 +48,6 @@ __all__ = [
     'constants',
     'contract_service',
     'coordinator',
-    # 'cursor_db',  # DEPRECATED - Deleted 2025-12-02
     'hard_onboarding_service',
     'learning_recommender',
     'message_batching_service',

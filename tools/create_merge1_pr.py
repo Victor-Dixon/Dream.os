@@ -23,23 +23,8 @@ except ImportError:
     print("⚠️ requests library not available. Install with: pip install requests")
 
 
-def get_github_token() -> Optional[str]:
-    """Get GitHub token from environment or .env file."""
-    token = os.getenv("GITHUB_TOKEN") or os.getenv("GH_TOKEN")
-    if token:
-        return token
-    
-    env_file = Path(".env")
-    if env_file.exists():
-        try:
-            with open(env_file, "r") as f:
-                for line in f:
-                    if line.startswith("GITHUB_TOKEN="):
-                        return line.split("=", 1)[1].strip().strip('"').strip("'")
-        except Exception:
-            pass
-    
-    return None
+# Use SSOT utility for GitHub token and PR operations
+from src.core.utils.github_utils import get_github_token, create_github_pr_headers, check_existing_pr
 
 
 def create_pr(
@@ -57,11 +42,7 @@ def create_pr(
         return None
     
     url = f"https://api.github.com/repos/{owner}/{repo}/pulls"
-    headers = {
-        "Authorization": f"token {token}",
-        "Accept": "application/vnd.github.v3+json",
-        "Content-Type": "application/json"
-    }
+    headers = create_github_pr_headers(token)
     data = {
         "title": title,
         "body": body,
@@ -80,19 +61,11 @@ def create_pr(
             if "already exists" in str(error_data).lower() or "No commits between" in str(error_data):
                 print(f"⚠️ PR already exists or no commits for {repo}: {head} → {base}")
                 print(f"   This confirms the merge is already complete!")
-                # Check for existing PR
-                list_url = f"https://api.github.com/repos/{owner}/{repo}/pulls"
-                list_response = requests.get(
-                    list_url,
-                    headers=headers,
-                    params={"head": f"{owner}:{head}", "state": "open"},
-                    timeout=TimeoutConstants.HTTP_DEFAULT
-                )
-                if list_response.status_code == 200:
-                    prs = list_response.json()
-                    if prs:
-                        print(f"✅ Found existing PR: {prs[0].get('html_url')}")
-                        return prs[0]
+                # Check for existing PR using SSOT utility
+                existing_pr = check_existing_pr(owner, repo, head, token, TimeoutConstants.HTTP_DEFAULT)
+                if existing_pr:
+                    print(f"✅ Found existing PR: {existing_pr.get('html_url')}")
+                    return existing_pr
             print(f"❌ PR creation failed for {repo}: {error_data}")
             return None
         else:

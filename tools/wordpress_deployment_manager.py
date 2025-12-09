@@ -9,6 +9,8 @@ WordPress Deployment Manager (Backward Compatibility Wrapper)
 This module provides backward compatibility for code using WordPressDeploymentManager.
 All functionality has been consolidated into wordpress_manager.py.
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-7 (Web Development Specialist)
 """
 

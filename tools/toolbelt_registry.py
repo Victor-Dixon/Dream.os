@@ -66,6 +66,22 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
         "flags": ["--duplication", "--dup"],
         "args_passthrough": True,
     },
+    "technical-debt": {
+        "name": "Technical Debt Analyzer",
+        "module": "tools.technical_debt_analyzer",
+        "main_function": "main",
+        "description": "Analyze technical debt markers and consolidation opportunities",
+        "flags": ["--technical-debt", "--debt"],
+        "args_passthrough": True,
+    },
+    "coverage": {
+        "name": "Coverage Analyzer",
+        "module": "tools.coverage_analyzer",
+        "main_function": "main",
+        "description": "Analyze test coverage gaps and usage patterns",
+        "flags": ["--coverage", "--test-coverage"],
+        "args_passthrough": True,
+    },
     "functionality": {
         "name": "Functionality Verification",
         "module": "tools.functionality_verification",
@@ -309,6 +325,46 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
         "flags": ["--unified-cleanup", "--cleanup"],
         "args_passthrough": True,
     },
+    "unified-agent": {
+        "name": "Unified Agent Tools",
+        "module": "tools.unified_agent",
+        "main_function": "main",
+        "description": "Consolidated agent operations - orient, tasks, status, lifecycle, onboard (consolidates 12+ agent tools)",
+        "flags": ["--unified-agent", "--agent"],
+        "args_passthrough": True,
+    },
+    "unified-wordpress": {
+        "name": "Unified WordPress Tools",
+        "module": "tools.unified_wordpress",
+        "main_function": "main",
+        "description": "Consolidated WordPress operations - deploy, theme, debug, admin (consolidates 16+ WordPress tools)",
+        "flags": ["--unified-wordpress", "--wordpress", "--wp"],
+        "args_passthrough": True,
+    },
+    "unified-discord": {
+        "name": "Unified Discord Tools",
+        "module": "tools.unified_discord",
+        "main_function": "main",
+        "description": "Consolidated Discord operations - system, test, verify, upload (consolidates 14+ Discord tools)",
+        "flags": ["--unified-discord", "--discord"],
+        "args_passthrough": True,
+    },
+    "unified-github": {
+        "name": "Unified GitHub Tools",
+        "module": "tools.unified_github",
+        "main_function": "main",
+        "description": "Consolidated GitHub operations - pr, repo, merge, audit (consolidates 28+ GitHub tools)",
+        "flags": ["--unified-github", "--github", "--gh"],
+        "args_passthrough": True,
+    },
+    "spreadsheet-github": {
+        "name": "Spreadsheet GitHub Adapter",
+        "module": "tools.spreadsheet_github_adapter",
+        "main_function": "main",
+        "description": "Spreadsheet-driven GitHub automation (create_issue, update_file, open_pr) using unified GitHub tools",
+        "flags": ["--spreadsheet-github", "--sheet-github", "--spreadsheet"],
+        "args_passthrough": True,
+    },
     "extraction-roadmap": {
         "name": "Extraction Roadmap Generator",
         "module": "tools.extraction_roadmap_generator",
@@ -507,15 +563,6 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
         "flags": ["--mission-control", "--mission", "--mc"],
         "args_passthrough": True,
     },
-    # Unified Captain Tools (Agent-8 Consolidation)
-    "unified-captain": {
-        "name": "Unified Captain Tools",
-        "module": "tools.unified_captain",
-        "main_function": "main",
-        "description": "Consolidated captain operations - inbox, coordination, monitoring, tasks, cleanup (consolidates 23+ captain tools)",
-        "flags": ["--unified-captain", "--captain"],
-        "args_passthrough": True,
-    },
     # Agent & Captain Tools (Agent-6 Organization)
     "agent-orient": {
         "name": "Agent Orientation",
@@ -631,14 +678,6 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
         "args_passthrough": True,
     },
     # Queue Tools (Agent-6 Organization)
-    "queue-start": {
-        "name": "Start Message Queue Processor",
-        "module": "tools.start_message_queue_processor",
-        "main_function": "main",
-        "description": "Start message queue processor",
-        "flags": ["--queue-start", "--start-queue"],
-        "args_passthrough": True,
-    },
     "queue-diagnose": {
         "name": "Diagnose Queue",
         "module": "tools.diagnose_queue",

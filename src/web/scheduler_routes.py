@@ -5,6 +5,8 @@ Scheduler Routes
 Flask routes for scheduler operations.
 Wires scheduler to web layer.
 
+<!-- SSOT Domain: web -->
+
 V2 Compliance: < 300 lines, single responsibility, route definitions.
 """
 

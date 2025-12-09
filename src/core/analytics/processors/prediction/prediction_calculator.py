@@ -3,6 +3,8 @@
 Prediction Calculator - KISS Compliant
 =====================================
 
+<!-- SSOT Domain: analytics -->
+
 Simple prediction calculations.
 
 Author: Agent-5 - Business Intelligence Specialist

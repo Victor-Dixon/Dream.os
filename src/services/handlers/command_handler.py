@@ -1,7 +1,10 @@
-"""Command Handler - V2 Compliance Module."""
+"""Command Handler - V2 Compliance Module.
+Migrated to BaseService for consolidated initialization and error handling.
+"""
 import logging
 import time
 from typing import Any
+from ...core.base.base_service import BaseService
 try:
     from ..agent_registry import format_agent_list
     from ..utils.agent_registry import list_agents as registry_list_agents
@@ -14,7 +17,7 @@ except ImportError:
         return [f'Agent-{i}' for i in range(1, 9)]
 
 
-class CommandHandler:
+class CommandHandler(BaseService):
     """Handler for CLI command processing and response handling."""
 
     def can_handle(self, args) -> bool:
@@ -23,7 +26,7 @@ class CommandHandler:
 
     def __init__(self) ->None:
         """Initialize command handler."""
-        self.logger = logging.getLogger(__name__)
+        super().__init__("CommandHandler")
         self.command_count = 0
         self.successful_commands = 0
         self.failed_commands = 0

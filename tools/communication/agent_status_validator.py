@@ -25,7 +25,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
-AGENTS = ["Agent-1", "Agent-2", "Agent-3", "Agent-5", "Agent-6", "Agent-7", "Agent-8"]
+from src.core.constants.agent_constants import AGENT_LIST as AGENTS
 STALE_THRESHOLD_HOURS = 6
 RECENT_THRESHOLD_HOURS = 2
 

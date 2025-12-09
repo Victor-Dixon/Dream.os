@@ -11,10 +11,11 @@ License: MIT
 """
 
 import json
-import logging
 import time
 from datetime import datetime, timedelta
 from pathlib import Path
+
+from src.core.base.base_service import BaseService
 
 # Selenium
 try:
@@ -64,10 +65,8 @@ try:
 except ImportError:
     COOKIE_MANAGER_AVAILABLE = False
 
-logger = logging.getLogger(__name__)
 
-
-class TheaService:
+class TheaService(BaseService):
     """
     V2 compliant Thea communication service.
 
@@ -80,6 +79,7 @@ class TheaService:
 
     def __init__(self, cookie_file: str = "thea_cookies.json", headless: bool = False):
         """Initialize Thea service."""
+        super().__init__("TheaService")
         self.cookie_file = Path(cookie_file)
         self.headless = headless
         self.thea_url = "https://chatgpt.com/g/g-67f437d96d7c81918b2dbc12f0423867-thea-manager"
@@ -94,30 +94,30 @@ class TheaService:
             self.cookie_manager = TheaCookieManager(str(cookie_file))
         else:
             self.cookie_manager = None
-            logger.warning("TheaCookieManager not available - using basic cookie handling")
+            self.self.logger.warning("TheaCookieManager not available - using basic cookie handling")
 
         # Validate dependencies
         if not SELENIUM_AVAILABLE:
             raise ImportError("Selenium required: pip install selenium")
         if not PYAUTOGUI_AVAILABLE:
-            logger.warning("PyAutoGUI not available - message sending may not work")
+            self.self.logger.warning("PyAutoGUI not available - message sending may not work")
         if not UNDETECTED_AVAILABLE:
-            logger.warning("undetected-chromedriver not available - will use standard Chrome (may be detected)")
-            logger.info("💡 Install with: pip install undetected-chromedriver")
+            self.self.logger.warning("undetected-chromedriver not available - will use standard Chrome (may be detected)")
+            self.self.logger.info("💡 Install with: pip install undetected-chromedriver")
 
     def start_browser(self) -> bool:
         """Initialize browser with cookies using undetected-chromedriver."""
         try:
-            logger.info("🚀 Starting browser...")
+            self.logger.info("🚀 Starting browser...")
 
             # Try undetected-chromedriver first (bypasses bot detection)
             if UNDETECTED_AVAILABLE:
                 try:
-                    logger.info("🔐 Using undetected-chromedriver for anti-bot bypass...")
+                    self.logger.info("🔐 Using undetected-chromedriver for anti-bot bypass...")
                     
                     options = uc.ChromeOptions()
                     if self.headless:
-                        logger.warning("⚠️ Headless mode may be detected by anti-bot systems")
+                        self.logger.warning("⚠️ Headless mode may be detected by anti-bot systems")
                         options.add_argument("--headless=new")
                     
                     options.add_argument("--no-sandbox")
@@ -131,19 +131,19 @@ class TheaService:
                         use_subprocess=True,
                         driver_executable_path=None  # Auto-download correct version
                     )
-                    logger.info("✅ Undetected Chrome browser started")
+                    self.logger.info("✅ Undetected Chrome browser started")
                     return True
                     
                 except Exception as e:
-                    logger.warning(f"⚠️ Undetected Chrome failed: {e}")
-                    logger.info("🔄 Falling back to standard Chrome...")
+                    self.logger.warning(f"⚠️ Undetected Chrome failed: {e}")
+                    self.logger.info("🔄 Falling back to standard Chrome...")
 
             # Fallback to standard Chrome
             if not SELENIUM_AVAILABLE:
-                logger.error("❌ Selenium not available")
+                self.logger.error("❌ Selenium not available")
                 return False
 
-            logger.info("🚀 Using standard Chrome (may be detected by anti-bot systems)...")
+            self.logger.info("🚀 Using standard Chrome (may be detected by anti-bot systems)...")
             options = Options()
             if self.headless:
                 options.add_argument("--headless=new")
@@ -159,11 +159,11 @@ class TheaService:
             options.add_experimental_option("useAutomationExtension", False)
 
             self.driver = webdriver.Chrome(options=options)
-            logger.info("✅ Standard Chrome browser started")
+            self.logger.info("✅ Standard Chrome browser started")
             return True
 
         except Exception as e:
-            logger.error(f"❌ Browser start failed: {e}")
+            self.logger.error(f"❌ Browser start failed: {e}")
             return False
 
     def are_cookies_fresh(self) -> bool:
@@ -172,16 +172,16 @@ class TheaService:
             # Use existing TheaCookieManager.has_valid_cookies() which already checks expiry
             is_valid = self.cookie_manager.has_valid_cookies()
             if is_valid:
-                logger.info("✅ Cookies are fresh (validated by TheaCookieManager)")
+                self.logger.info("✅ Cookies are fresh (validated by TheaCookieManager)")
             else:
-                logger.warning("⚠️ Cookies are stale or invalid (TheaCookieManager check)")
+                self.logger.warning("⚠️ Cookies are stale or invalid (TheaCookieManager check)")
             return is_valid
         else:
             # Fallback to basic check
             if not self.cookie_file.exists():
-                logger.info("🍪 No cookie file found")
+                self.logger.info("🍪 No cookie file found")
                 return False
-            logger.warning("⚠️ Using basic cookie check (TheaCookieManager not available)")
+            self.logger.warning("⚠️ Using basic cookie check (TheaCookieManager not available)")
             return True  # Assume valid if file exists
 
     def validate_cookies(self) -> bool:
@@ -192,7 +192,7 @@ class TheaService:
         
         try:
             # Navigate to domain first
-            logger.info("🔍 Validating cookies...")
+            self.logger.info("🔍 Validating cookies...")
             self.driver.get("https://chatgpt.com/")
             time.sleep(2)
             
@@ -208,26 +208,26 @@ class TheaService:
                         try:
                             self.driver.add_cookie(cookie)
                         except Exception as e:
-                            logger.debug(f"Skipped cookie: {e}")
+                            self.logger.debug(f"Skipped cookie: {e}")
             
             # Navigate to Thea and check login
             self.driver.get(self.thea_url)
             time.sleep(3)
             
             if self._is_logged_in():
-                logger.info("✅ Cookie validation successful")
+                self.logger.info("✅ Cookie validation successful")
                 return True
             else:
-                logger.warning("⚠️ Cookie validation failed - cookies don't work")
+                self.logger.warning("⚠️ Cookie validation failed - cookies don't work")
                 return False
                 
         except Exception as e:
-            logger.error(f"❌ Cookie validation error: {e}")
+            self.logger.error(f"❌ Cookie validation error: {e}")
             return False
 
     def refresh_cookies(self) -> bool:
         """Refresh cookies by re-authenticating."""
-        logger.info("🔄 Refreshing cookies...")
+        self.logger.info("🔄 Refreshing cookies...")
         
         if not self.driver:
             if not self.start_browser():
@@ -249,13 +249,13 @@ class TheaService:
                     self.cookie_file.parent.mkdir(parents=True, exist_ok=True)
                     with open(self.cookie_file, "w") as f:
                         json.dump(cookies, f, indent=2)
-                logger.info("✅ Cookies refreshed")
+                self.logger.info("✅ Cookies refreshed")
                 return True
             
             # Manual login required
-            logger.info("⚠️ Manual login required to refresh cookies")
-            logger.info("Please log in to ChatGPT in the browser window...")
-            logger.info("⏳ Waiting 60 seconds for manual login...")
+            self.logger.info("⚠️ Manual login required to refresh cookies")
+            self.logger.info("Please log in to ChatGPT in the browser window...")
+            self.logger.info("⏳ Waiting 60 seconds for manual login...")
             time.sleep(60)
             
             if self._is_logged_in():
@@ -268,14 +268,14 @@ class TheaService:
                     self.cookie_file.parent.mkdir(parents=True, exist_ok=True)
                     with open(self.cookie_file, "w") as f:
                         json.dump(cookies, f, indent=2)
-                logger.info("✅ Cookies refreshed after manual login")
+                self.logger.info("✅ Cookies refreshed after manual login")
                 return True
             
-            logger.error("❌ Cookie refresh failed")
+            self.logger.error("❌ Cookie refresh failed")
             return False
             
         except Exception as e:
-            logger.error(f"❌ Cookie refresh error: {e}")
+            self.logger.error(f"❌ Cookie refresh error: {e}")
             return False
 
     def ensure_login(self, force_refresh: bool = False) -> bool:
@@ -289,10 +289,10 @@ class TheaService:
             if not force_refresh and self.are_cookies_fresh():
                 # Validate cookies work
                 if self.validate_cookies():
-                    logger.info("✅ Using fresh, valid cookies")
+                    self.logger.info("✅ Using fresh, valid cookies")
                     return True
                 else:
-                    logger.warning("⚠️ Cookies are fresh but invalid, refreshing...")
+                    self.logger.warning("⚠️ Cookies are fresh but invalid, refreshing...")
                     force_refresh = True
 
             # Refresh cookies if needed
@@ -302,14 +302,14 @@ class TheaService:
                 
                 # Validate after refresh
                 if not self.validate_cookies():
-                    logger.error("❌ Cookies refreshed but validation failed")
+                    self.logger.error("❌ Cookies refreshed but validation failed")
                     return False
             
-            logger.info("✅ Login ensured with fresh cookies")
+            self.logger.info("✅ Login ensured with fresh cookies")
             return True
 
         except Exception as e:
-            logger.error(f"❌ Login error: {e}")
+            self.logger.error(f"❌ Login error: {e}")
             return False
 
     def _is_logged_in(self) -> bool:
@@ -353,16 +353,16 @@ class TheaService:
 
             # Send message via PyAutoGUI (proven working method)
             if PYAUTOGUI_AVAILABLE:
-                logger.info(f"📤 Sending message: {message[:50]}...")
+                self.logger.info(f"📤 Sending message: {message[:50]}...")
                 pyperclip.copy(message)
                 time.sleep(0.5)
 
                 pyautogui.hotkey("ctrl", "v")
                 time.sleep(0.5)
                 pyautogui.press("enter")
-                logger.info("✅ Message sent")
+                self.logger.info("✅ Message sent")
             else:
-                logger.error("❌ PyAutoGUI not available")
+                self.logger.error("❌ PyAutoGUI not available")
                 return None
 
             # Wait for response if requested
@@ -372,16 +372,16 @@ class TheaService:
             return None
 
         except Exception as e:
-            logger.error(f"❌ Send message failed: {e}")
+            self.logger.error(f"❌ Send message failed: {e}")
             return None
 
     def wait_for_response(self, timeout: int = 120) -> str | None:
         """Wait for and capture Thea's response."""
         try:
-            logger.info("⏳ Waiting for response...")
+            self.logger.info("⏳ Waiting for response...")
 
             if not DETECTOR_AVAILABLE:
-                logger.warning("ResponseDetector not available - basic wait")
+                self.logger.warning("ResponseDetector not available - basic wait")
                 time.sleep(15)
                 return self._extract_basic_response()
 
@@ -394,16 +394,16 @@ class TheaService:
             )
 
             if result == ResponseWaitResult.COMPLETE:
-                logger.info("✅ Response complete")
+                self.logger.info("✅ Response complete")
                 response = self.detector.extract_response_text()
                 return response
             else:
-                logger.warning(f"⚠️ Response status: {result}")
+                self.logger.warning(f"⚠️ Response status: {result}")
                 response = self.detector.extract_response_text()
                 return response or f"⚠️ Incomplete: {result}"
 
         except Exception as e:
-            logger.error(f"❌ Response capture failed: {e}")
+            self.logger.error(f"❌ Response capture failed: {e}")
             return None
 
     def _extract_basic_response(self) -> str | None:
@@ -461,11 +461,11 @@ class TheaService:
             with open(filename, "w", encoding="utf-8") as f:
                 json.dump(data, f, indent=2, ensure_ascii=False)
 
-            logger.info(f"💾 Saved to: {filename}")
+            self.logger.info(f"💾 Saved to: {filename}")
             return str(filename)
 
         except Exception as e:
-            logger.error(f"❌ Save failed: {e}")
+            self.logger.error(f"❌ Save failed: {e}")
             return ""
 
     def cleanup(self):
@@ -473,7 +473,7 @@ class TheaService:
         if self.driver:
             try:
                 self.driver.quit()
-                logger.info("✅ Browser closed")
+                self.logger.info("✅ Browser closed")
             except:
                 pass
             finally:

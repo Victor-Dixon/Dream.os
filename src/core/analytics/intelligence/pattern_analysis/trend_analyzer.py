@@ -2,6 +2,8 @@
 Trend Analyzer - V2 Compliance Module
 =====================================
 
+<!-- SSOT Domain: analytics -->
+
 Trend analysis functionality for analytics.
 
 V2 Compliance: < 300 lines, single responsibility, trend analysis.

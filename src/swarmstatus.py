@@ -1,3 +1,11 @@
+"""
+Single Source of Truth (SSOT) for Swarm System Status
+Domain: coordination
+Owner: Agent-2 (Architecture & Design)
+Last Updated: 2025-12-08
+Related SSOT: src/commandresult.py, src/agent_registry.py
+"""
+
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import List, Optional

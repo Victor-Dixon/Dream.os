@@ -8,9 +8,12 @@ Handler classes for core system operations.
 Wires core services to web layer.
 
 V2 Compliance: < 300 lines, handler pattern.
+Consolidated: Uses BaseHandler (33% code reduction).
 """
 
 from flask import jsonify, request
+
+from src.core.base.base_handler import BaseHandler
 
 try:
     from src.core.agent_lifecycle import AgentLifecycle
@@ -25,11 +28,14 @@ except ImportError:
     MESSAGE_QUEUE_AVAILABLE = False
 
 
-class CoreHandlers:
+class CoreHandlers(BaseHandler):
     """Handler class for core system operations."""
 
-    @staticmethod
-    def handle_get_agent_lifecycle_status(request, agent_id: str) -> tuple:
+    def __init__(self):
+        """Initialize core handlers."""
+        super().__init__("CoreHandlers")
+
+    def handle_get_agent_lifecycle_status(self, request, agent_id: str) -> tuple:
         """
         Handle request to get agent lifecycle status.
 
@@ -50,10 +56,10 @@ class CoreHandlers:
             return jsonify({"success": True, "data": status}), 200
 
         except Exception as e:
-            return jsonify({"success": False, "error": str(e)}), 500
+            error_response = self.handle_error(e, context="get_agent_lifecycle_status")
+            return jsonify(error_response), 500
 
-    @staticmethod
-    def handle_start_cycle(request, agent_id: str) -> tuple:
+    def handle_start_cycle(self, request, agent_id: str) -> tuple:
         """
         Handle request to start agent lifecycle cycle.
 
@@ -74,10 +80,10 @@ class CoreHandlers:
             return jsonify({"success": True, "message": f"Cycle started for {agent_id}"}), 200
 
         except Exception as e:
-            return jsonify({"success": False, "error": str(e)}), 500
+            error_response = self.handle_error(e, context="get_agent_lifecycle_status")
+            return jsonify(error_response), 500
 
-    @staticmethod
-    def handle_get_message_queue_status(request) -> tuple:
+    def handle_get_message_queue_status(self, request) -> tuple:
         """
         Handle request to get message queue status.
 
@@ -95,10 +101,10 @@ class CoreHandlers:
             return jsonify({"success": True, "data": status}), 200
 
         except Exception as e:
-            return jsonify({"success": False, "error": str(e)}), 500
+            error_response = self.handle_error(e, context="get_agent_lifecycle_status")
+            return jsonify(error_response), 500
 
-    @staticmethod
-    def handle_get_execution_status(request) -> tuple:
+    def handle_get_execution_status(self, request) -> tuple:
         """Handle request to get execution manager status."""
         try:
             from src.core.managers.core_execution_manager import CoreExecutionManager
@@ -106,10 +112,10 @@ class CoreHandlers:
             status = manager.get_status()
             return jsonify({"success": True, "data": status}), 200
         except Exception as e:
-            return jsonify({"success": False, "error": str(e)}), 500
+            error_response = self.handle_error(e, context="get_agent_lifecycle_status")
+            return jsonify(error_response), 500
 
-    @staticmethod
-    def handle_get_service_status(request) -> tuple:
+    def handle_get_service_status(self, request) -> tuple:
         """Handle request to get service manager status."""
         try:
             from src.core.managers.core_service_manager import CoreServiceManager
@@ -117,10 +123,10 @@ class CoreHandlers:
             status = manager.get_status()
             return jsonify({"success": True, "data": status}), 200
         except Exception as e:
-            return jsonify({"success": False, "error": str(e)}), 500
+            error_response = self.handle_error(e, context="get_agent_lifecycle_status")
+            return jsonify(error_response), 500
 
-    @staticmethod
-    def handle_get_resource_status(request) -> tuple:
+    def handle_get_resource_status(self, request) -> tuple:
         """Handle request to get resource manager status."""
         try:
             from src.core.managers.core_resource_manager import CoreResourceManager
@@ -128,10 +134,10 @@ class CoreHandlers:
             status = manager.get_status()
             return jsonify({"success": True, "data": status}), 200
         except Exception as e:
-            return jsonify({"success": False, "error": str(e)}), 500
+            error_response = self.handle_error(e, context="get_agent_lifecycle_status")
+            return jsonify(error_response), 500
 
-    @staticmethod
-    def handle_get_recovery_status(request) -> tuple:
+    def handle_get_recovery_status(self, request) -> tuple:
         """Handle request to get recovery manager status."""
         try:
             from src.core.managers.core_recovery_manager import CoreRecoveryManager
@@ -139,10 +145,10 @@ class CoreHandlers:
             status = manager.get_status()
             return jsonify({"success": True, "data": status}), 200
         except Exception as e:
-            return jsonify({"success": False, "error": str(e)}), 500
+            error_response = self.handle_error(e, context="get_agent_lifecycle_status")
+            return jsonify(error_response), 500
 
-    @staticmethod
-    def handle_get_results_status(request) -> tuple:
+    def handle_get_results_status(self, request) -> tuple:
         """Handle request to get results manager status."""
         try:
             from src.core.managers.core_results_manager import CoreResultsManager
@@ -150,10 +156,10 @@ class CoreHandlers:
             status = manager.get_status()
             return jsonify({"success": True, "data": status}), 200
         except Exception as e:
-            return jsonify({"success": False, "error": str(e)}), 500
+            error_response = self.handle_error(e, context="get_agent_lifecycle_status")
+            return jsonify(error_response), 500
 
-    @staticmethod
-    def handle_process_message_queue(request) -> tuple:
+    def handle_process_message_queue(self, request) -> tuple:
         """Handle request to process message queue entries."""
         if not MESSAGE_QUEUE_AVAILABLE:
             return jsonify({"success": False, "error": "Message queue utils not available"}), 503
@@ -181,10 +187,10 @@ class CoreHandlers:
             return jsonify({"success": True, "data": result}), 200
 
         except Exception as e:
-            return jsonify({"success": False, "error": str(e)}), 500
+            error_response = self.handle_error(e, context="get_agent_lifecycle_status")
+            return jsonify(error_response), 500
 
-    @staticmethod
-    def handle_get_queue_size(request) -> tuple:
+    def handle_get_queue_size(self, request) -> tuple:
         """Handle request to get message queue size."""
         if not MESSAGE_QUEUE_AVAILABLE:
             return jsonify({"success": False, "error": "Message queue utils not available"}), 503
@@ -203,6 +209,7 @@ class CoreHandlers:
             return jsonify({"success": True, "data": result}), 200
 
         except Exception as e:
-            return jsonify({"success": False, "error": str(e)}), 500
+            error_response = self.handle_error(e, context="get_agent_lifecycle_status")
+            return jsonify(error_response), 500
 
 

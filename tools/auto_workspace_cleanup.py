@@ -6,6 +6,8 @@ Auto-Workspace Cleanup Tool
 Automatically cleans agent workspaces by archiving old mission files,
 maintaining only active/recent files for optimal workspace efficiency.
 
+<!-- SSOT Domain: infrastructure -->
+
 Created: 2025-10-15
 Author: Agent-3 (Infrastructure & Monitoring Engineer)
 Purpose: Autonomous efficient development - eliminate manual cleanup

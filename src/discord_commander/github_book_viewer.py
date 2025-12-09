@@ -374,7 +374,8 @@ class GitHubBookNavigator(discord.ui.View):
     """Interactive navigation for GitHub book."""
 
     def __init__(self, book_data: GitHubBookData, start_repo: int = 1):
-        super().__init__(timeout=600)  # 10 minute timeout
+        from src.core.config.timeout_constants import TimeoutConstants
+        super().__init__(timeout=TimeoutConstants.HTTP_EXTENDED * 2)  # 10 minute timeout
         self.book_data = book_data
         self.current_repo = start_repo
 

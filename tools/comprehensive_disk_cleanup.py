@@ -6,6 +6,8 @@ Comprehensive Disk Space Cleanup Tool - For GitHub Repo Consolidation
 Cleans up all temporary files, old repos, and archives to free disk space
 for GitHub repo consolidation operations.
 
+<!-- SSOT Domain: infrastructure -->
+
 USAGE:
     # Dry run (show what would be cleaned)
     python tools/comprehensive_disk_cleanup.py --dry-run

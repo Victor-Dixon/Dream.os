@@ -6,6 +6,8 @@ Heal Stalled Agents - CLI Tool
 Immediate healing tool for stalled agents. Can be run manually or
 scheduled to prevent agent stalls from accumulating.
 
+<!-- SSOT Domain: infrastructure -->
+
 Usage:
     python tools/heal_stalled_agents.py [--start-daemon] [--check-now]
 

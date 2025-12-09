@@ -66,26 +66,8 @@ except ImportError as e:
     print(f"⚠️ GitHub Bypass System not available - using legacy method: {e}")
 
 
-def get_github_token() -> Optional[str]:
-    """Get GitHub token from environment or .env file."""
-    # Check environment variable first
-    token = os.getenv("GITHUB_TOKEN") or os.getenv("GH_TOKEN")
-    if token:
-        return token
-
-    # Check .env file
-    env_file = project_root / ".env"
-    if env_file.exists():
-        try:
-            with open(env_file, "r") as f:
-                for line in f:
-                    line = line.strip()
-                    if line.startswith("GITHUB_TOKEN=") or line.startswith("GH_TOKEN="):
-                        return line.split("=", 1)[1].strip().strip('"').strip("'")
-        except Exception:
-            pass
-
-    return None
+# Use SSOT utility for GitHub token
+from src.core.utils.github_utils import get_github_token
 
 
 class SafeRepoMerge:
@@ -694,28 +676,11 @@ This merge is part of repository consolidation.
 
             print(f"📥 Cloning repositories to temporary directory...")
 
-            # Explicit cleanup function to ensure directories are completely removed
-            def ensure_dir_removed(dir_path, name):
-                """Ensure directory is completely removed."""
-                if dir_path.exists():
-                    print(f"🧹 Removing existing {name} directory: {dir_path}")
-                    shutil.rmtree(dir_path, ignore_errors=True)
-                    time.sleep(1.0)  # Wait for Windows file handle release
-                    if dir_path.exists():
-                        # Force removal on Windows
-                        import stat
-
-                        def remove_readonly(func, path, exc):
-                            os.chmod(path, stat.S_IWRITE)
-                            func(path)
-                        shutil.rmtree(dir_path, onerror=remove_readonly)
-                        time.sleep(0.5)
-                    if dir_path.exists():
-                        raise Exception(
-                            f"Failed to remove {name} directory: {dir_path}")
+            # Use SSOT utility for directory removal
+            from src.core.utils.file_utils import ensure_directory_removed
 
             # Clean up before target clone
-            ensure_dir_removed(target_dir, "target")
+            ensure_directory_removed(target_dir, "target")
 
             # Get GitHub token for authentication (from env or .env file)
             github_token = get_github_token()

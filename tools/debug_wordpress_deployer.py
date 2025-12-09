@@ -6,6 +6,8 @@ WordPress Deployer Debug Tool
 Comprehensive debugging and testing tool for WordPress deployment system.
 Tests all functionality and identifies issues.
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-4 (Captain)
 """
 

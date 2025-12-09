@@ -5,6 +5,8 @@ Vision Routes
 Flask routes for vision/analysis operations.
 Wires vision services to web layer.
 
+<!-- SSOT Domain: web -->
+
 V2 Compliance: < 300 lines, single responsibility, route definitions.
 """
 

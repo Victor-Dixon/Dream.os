@@ -3,12 +3,14 @@ Message Router - V2 Compliant Module
 =====================================
 
 Routes messages based on priority, type, and routing strategies.
+Migrated to BaseService for consolidated initialization and error handling.
 """
 
 import logging
 from datetime import datetime
 from typing import Any
 
+from ...core.base.base_service import BaseService
 from ...core.messaging_models_core import (
     UnifiedMessage,
     UnifiedMessagePriority,
@@ -26,11 +28,12 @@ from .routers.route_analyzer import RouteAnalyzer
 logger = logging.getLogger(__name__)
 
 
-class MessageRouter:
+class MessageRouter(BaseService):
     """Routes messages based on priority, type, and strategies."""
 
     def __init__(self, config: OptimizationConfig | None = None):
         """Initialize message router."""
+        super().__init__("MessageRouter")
         self.config = config or create_default_config()
         self.analyzer = RouteAnalyzer(self.config)
         self.route_cache: dict[str, RouteOptimization] = {}

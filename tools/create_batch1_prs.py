@@ -17,32 +17,19 @@ from typing import Optional, Dict, Any
 
 try:
     import requests
-from src.core.config.timeout_constants import TimeoutConstants
+    from src.core.config.timeout_constants import TimeoutConstants
     REQUESTS_AVAILABLE = True
 except ImportError:
     REQUESTS_AVAILABLE = False
+    TimeoutConstants = None
     print("⚠️ requests library not available. Install with: pip install requests")
 
 
 def get_github_token() -> Optional[str]:
-    """Get GitHub token from environment or .env file."""
-    # Check environment variable
-    token = os.getenv("GITHUB_TOKEN") or os.getenv("GH_TOKEN")
-    if token:
-        return token
-    
-    # Check .env file
-    env_file = Path(".env")
-    if env_file.exists():
-        try:
-            with open(env_file, "r") as f:
-                for line in f:
-                    if line.startswith("GITHUB_TOKEN="):
-                        return line.split("=", 1)[1].strip().strip('"').strip("'")
-        except Exception:
-            pass
-    
-    return None
+    """Get GitHub token from environment or .env file (uses SSOT utility)."""
+    from src.core.utils.github_utils import get_github_token as get_token_ssot
+    project_root = Path(__file__).resolve().parent.parent
+    return get_token_ssot(project_root)
 
 
 def create_pr(
@@ -85,14 +72,13 @@ def create_pr(
             error_data = response.json()
             if "already exists" in str(error_data).lower():
                 print(f"⚠️ PR already exists for {repo}: {head} → {base}")
-                # Try to find existing PR
-                list_url = f"https://api.github.com/repos/{owner}/{repo}/pulls"
-                list_response = requests.get(list_url, headers=headers, params={"head": f"{owner}:{head}", "state": "open"}, timeout=TimeoutConstants.HTTP_DEFAULT)
-                if list_response.status_code == 200:
-                    prs = list_response.json()
-                    if prs:
-                        print(f"✅ Found existing PR: {prs[0].get('html_url')}")
-                        return prs[0]
+                # Check for existing PR using SSOT utility
+                from src.core.utils.github_utils import check_existing_pr
+                timeout = TimeoutConstants.HTTP_DEFAULT if TimeoutConstants else 30
+                existing_pr = check_existing_pr(owner, repo, head, token, timeout)
+                if existing_pr:
+                    print(f"✅ Found existing PR: {existing_pr.get('html_url')}")
+                    return existing_pr
             else:
                 print(f"❌ PR creation failed for {repo}: {error_data}")
         else:

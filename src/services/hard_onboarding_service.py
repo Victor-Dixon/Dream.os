@@ -13,10 +13,13 @@ Hard onboarding = Complete reset, no session cleanup required.
 Use for major resets, not regular session transitions.
 
 V2 Compliance: < 400 lines, single responsibility
+Migrated to BaseService for consolidated initialization and error handling.
 """
 
 import logging
 import time
+
+from src.core.base.base_service import BaseService
 
 logger = logging.getLogger(__name__)
 
@@ -40,11 +43,12 @@ except ImportError:
     logger.warning("PyAutoGUI not available for hard onboarding")
 
 
-class HardOnboardingService:
+class HardOnboardingService(BaseService):
     """Handles hard onboarding with complete reset protocol."""
 
     def __init__(self):
         """Initialize hard onboarding service."""
+        super().__init__("HardOnboardingService")
         if not PYAUTOGUI_AVAILABLE:
             raise ImportError("PyAutoGUI required for hard onboarding")
         self.pyautogui = pyautogui
@@ -82,17 +86,17 @@ class HardOnboardingService:
             # Get chat coordinates
             chat_coords, _ = self._load_agent_coordinates(agent_id)
             if not chat_coords:
-                logger.error(f"❌ No chat coordinates for {agent_id}")
+                self.logger.error(f"❌ No chat coordinates for {agent_id}")
                 return False
 
             # Validate coordinates
             if not self._validate_coordinates(agent_id, chat_coords):
-                logger.error(f"❌ Coordinate validation failed for {agent_id}")
+                self.logger.error(f"❌ Coordinate validation failed for {agent_id}")
                 return False
 
             x, y = chat_coords
 
-            logger.info(
+            self.logger.info(
                 f"🗑️ Step 1: Clearing chat for {agent_id} at {chat_coords}")
 
             # Click chat input - wait for app to respond to interaction
@@ -104,11 +108,11 @@ class HardOnboardingService:
             self.pyautogui.hotkey("ctrl", "shift", "backspace")
             time.sleep(0.8)  # Wait for clear operation
 
-            logger.info(f"✅ Chat cleared for {agent_id}")
+            self.logger.info(f"✅ Chat cleared for {agent_id}")
             return True
 
         except Exception as e:
-            logger.error(f"❌ Failed to clear chat: {e}")
+            self.logger.error(f"❌ Failed to clear chat: {e}")
             return False
 
     def step_2_send_execute(self) -> bool:
@@ -119,14 +123,14 @@ class HardOnboardingService:
             True if successful
         """
         try:
-            logger.info("⚡ Step 2: Executing Ctrl+Enter")
+            self.logger.info("⚡ Step 2: Executing Ctrl+Enter")
             self.pyautogui.hotkey("ctrl", "enter")
             time.sleep(0.8)  # Increased from 0.5s for reliability
-            logger.info("✅ Ctrl+Enter executed")
+            self.logger.info("✅ Ctrl+Enter executed")
             return True
 
         except Exception as e:
-            logger.error(f"❌ Failed to execute Ctrl+Enter: {e}")
+            self.logger.error(f"❌ Failed to execute Ctrl+Enter: {e}")
             return False
 
     def step_3_new_window(self) -> bool:
@@ -137,15 +141,15 @@ class HardOnboardingService:
             True if successful
         """
         try:
-            logger.info("🆕 Step 3: Creating new window (Ctrl+N)")
+            self.logger.info("🆕 Step 3: Creating new window (Ctrl+N)")
             self.pyautogui.hotkey("ctrl", "n")
             # Increased from 1.5s for reliability - critical window initialization
             time.sleep(2.0)
-            logger.info("✅ New window created")
+            self.logger.info("✅ New window created")
             return True
 
         except Exception as e:
-            logger.error(f"❌ Failed to create new window: {e}")
+            self.logger.error(f"❌ Failed to create new window: {e}")
             return False
 
     def step_4_navigate_to_onboarding(self, agent_id: str) -> bool:
@@ -757,12 +761,12 @@ WE. ARE. SWARM. AUTONOMOUS. POWERFUL. 🐝⚡🔥🚀"""
             self.pyautogui.press("enter")
             time.sleep(0.8)  # Increased from 0.5s for reliability
 
-            logger.info(
+            self.logger.info(
                 f"✅ Onboarding message sent to {agent_id} (with Jet Fuel)")
             return True
 
         except Exception as e:
-            logger.error(f"❌ Failed to send onboarding message: {e}")
+            self.logger.error(f"❌ Failed to send onboarding message: {e}")
             return False
 
     def execute_hard_onboarding(
@@ -829,7 +833,7 @@ def hard_onboard_agent(agent_id: str, onboarding_message: str, role: str | None 
         service = HardOnboardingService()
         return service.execute_hard_onboarding(agent_id, onboarding_message, role)
     except Exception as e:
-        logger.error(f"❌ Hard onboarding failed: {e}")
+        self.logger.error(f"❌ Hard onboarding failed: {e}")
         return False
 
 

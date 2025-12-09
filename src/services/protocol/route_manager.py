@@ -3,21 +3,24 @@ Route Manager - V2 Compliant Module
 ===================================
 
 Manages message routes (add, remove, get, list).
+Migrated to BaseService for consolidated initialization and error handling.
 """
 
 import logging
 from typing import Any
 
+from ...core.base.base_service import BaseService
 from .messaging_protocol_models import MessageRoute, RouteOptimization
 
 logger = logging.getLogger(__name__)
 
 
-class RouteManager:
+class RouteManager(BaseService):
     """Manages message routes."""
 
     def __init__(self):
         """Initialize route manager."""
+        super().__init__("RouteManager")
         self.routes: dict[str, RouteOptimization] = {}
         self.route_configs: dict[str, dict[str, Any]] = {}
 
@@ -49,10 +52,10 @@ class RouteManager:
                 "type": route_type,
                 "config": config or {},
             }
-            logger.info(f"Added route: {route_name} ({route_type.value})")
+            self.logger.info(f"Added route: {route_name} ({route_type.value})")
             return True
         except Exception as e:
-            logger.error(f"Failed to add route {route_name}: {e}")
+            self.logger.error(f"Failed to add route {route_name}: {e}")
             return False
 
     def remove_route(self, route_name: str) -> bool:
@@ -66,14 +69,14 @@ class RouteManager:
             True if route removed successfully
         """
         if route_name not in self.routes:
-            logger.warning(f"Route {route_name} not found")
+            self.logger.warning(f"Route {route_name} not found")
             return False
 
         del self.routes[route_name]
         if route_name in self.route_configs:
             del self.route_configs[route_name]
 
-        logger.info(f"Removed route: {route_name}")
+        self.logger.info(f"Removed route: {route_name}")
         return True
 
     def get_route(self, route_name: str) -> dict[str, Any] | None:

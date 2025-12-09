@@ -3,6 +3,8 @@
 Insight Processor - KISS Compliant
 ==================================
 
+<!-- SSOT Domain: analytics -->
+
 Simple analytics insight processing.
 
 Author: Agent-5 - Business Intelligence Specialist

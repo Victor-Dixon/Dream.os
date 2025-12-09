@@ -6,6 +6,8 @@ Reset Stuck Messages in Queue
 Resets messages stuck in PROCESSING status back to PENDING for retry,
 or marks them as FAILED if they're too old.
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-7 (Web Development Specialist)
 Date: 2025-01-27
 """

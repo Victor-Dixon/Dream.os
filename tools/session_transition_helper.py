@@ -13,6 +13,8 @@ This tool automates the creation of session transition deliverables:
 - Cycle planner task creation
 - Swarm Brain contributions
 
+<!-- SSOT Domain: infrastructure -->
+
 USAGE:
     python tools/session_transition_helper.py --agent Agent-8
     python tools/session_transition_helper.py --agent Agent-8 --devlog-only

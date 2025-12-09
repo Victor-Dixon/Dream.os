@@ -18,13 +18,17 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Any
 
+from ..config.timeout_constants import TimeoutConstants
+
+from src.core.utils.serialization_utils import to_dict
+
 # Define CircuitBreakerConfig and RetryConfig locally (Infrastructure SSOT may not have them yet)
 @dataclass
 class CircuitBreakerConfig:
     """Circuit breaker configuration."""
     name: str
     failure_threshold: int = 5
-    recovery_timeout: float = 60.0
+    recovery_timeout: float = TimeoutConstants.HTTP_MEDIUM
     
     @property
     def timeout(self) -> float:
@@ -72,13 +76,8 @@ class ErrorSummary:
             self.timestamp = datetime.now().isoformat()
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary."""
-        return {
-            "total_errors": self.total_errors,
-            "error_types": self.error_types,
-            "operations": self.operations,
-            "timestamp": self.timestamp,
-        }
+        """Convert to dictionary using SSOT utility."""
+        return to_dict(self)
 
 
 __all__ = [

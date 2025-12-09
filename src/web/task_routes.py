@@ -5,6 +5,8 @@ Task Management Routes
 Flask routes for task assignment and completion use cases.
 Wires application layer use cases to web layer.
 
+<!-- SSOT Domain: web -->
+
 V2 Compliance: < 300 lines, single responsibility, route definitions.
 """
 

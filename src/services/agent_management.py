@@ -4,6 +4,7 @@ Unified Agent Management Module
 
 Consolidates agent assignment, status, and task context management.
 V2 Compliance: Single module for all agent management operations.
+Migrated to BaseService for consolidated initialization and error handling.
 
 Author: Agent-2 - Architecture & Design Specialist
 License: MIT
@@ -16,6 +17,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+from ..core.base.base_service import BaseService
 from .agent_vector_utils import format_search_result, generate_recommendations
 from .architectural_models import ArchitecturalPrinciple
 
@@ -66,11 +68,12 @@ except ImportError:
             )
 
 
-class AgentAssignmentManager:
+class AgentAssignmentManager(BaseService):
     """Manages agent-to-principle assignments with persistence."""
 
     def __init__(self, config_path: str = "src/config/architectural_assignments.json"):
         """Initialize assignment manager."""
+        super().__init__("AgentAssignmentManager")
         self.config_path = config_path
         self.assignments: dict[str, ArchitecturalPrinciple] = {}
         self._load_assignments()
@@ -132,13 +135,13 @@ class AgentAssignmentManager:
         ]
 
 
-class AgentStatusManager:
+class AgentStatusManager(BaseService):
     """Handles agent status and utility functions."""
 
     def __init__(self, agent_id: str, config_path: str | None = None):
         """Initialize agent status manager."""
+        super().__init__("AgentStatusManager")
         self.agent_id = agent_id
-        self.logger = logging.getLogger(__name__)
         self.workspace_path = Path(f"agent_workspaces/{agent_id}")
 
         try:
@@ -259,13 +262,13 @@ class AgentStatusManager:
             return 0
 
 
-class TaskContextManager:
+class TaskContextManager(BaseService):
     """Manages task context and search operations."""
 
     def __init__(self, agent_id: str, config_path: str | None = None):
         """Initialize task context manager."""
+        super().__init__("TaskContextManager")
         self.agent_id = agent_id
-        self.logger = logging.getLogger(__name__)
 
         try:
             self.vector_db = get_vector_database_service()

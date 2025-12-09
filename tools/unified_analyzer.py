@@ -27,6 +27,7 @@ import json
 import os
 import re
 import subprocess
+import time
 from collections import Counter, defaultdict
 from datetime import datetime
 from difflib import SequenceMatcher
@@ -35,6 +36,16 @@ from typing import Any, Dict, List, Optional, Set
 
 # Add project root to path
 project_root = Path(__file__).resolve().parent.parent
+
+# Import metrics tracker (optional - graceful fallback if not available)
+try:
+    from systems.output_flywheel.unified_tools_metrics import track_tool_usage
+    METRICS_AVAILABLE = True
+except ImportError:
+    METRICS_AVAILABLE = False
+    def track_tool_usage(*args, **kwargs):
+        """Fallback if metrics not available."""
+        pass
 
 
 class UnifiedAnalyzer:
@@ -312,6 +323,8 @@ def main():
     )
     
     args = parser.parse_args()
+    start_time = time.time()
+    category_used = args.category if args.category else "unknown"
     
     project_root_path = Path(args.project_root) if args.project_root else Path.cwd()
     analyzer = UnifiedAnalyzer(project_root=project_root_path)
@@ -346,6 +359,32 @@ def main():
             results = {"analysis": analyzer.analyze_overlaps(Path(args.analysis_dir))}
         else:
             results = {"analysis": {"error": "Analysis directory required"}}
+    
+    # Track metrics
+    execution_time = time.time() - start_time
+    
+    # Determine success (no errors in results)
+    success = True
+    if "analysis" in results:
+        analysis_result = results["analysis"]
+        if isinstance(analysis_result, dict) and analysis_result.get("error"):
+            success = False
+    elif "analyses" in results:
+        analyses = results["analyses"]
+        if isinstance(analyses, list):
+            for a in analyses:
+                if isinstance(a, dict) and a.get("error"):
+                    success = False
+    
+    if METRICS_AVAILABLE:
+        from systems.output_flywheel.unified_tools_metrics import UnifiedToolsMetricsTracker
+        tracker = UnifiedToolsMetricsTracker()
+        tracker.track_tool_usage(
+            tool_name="unified_analyzer",
+            category=category_used,
+            success=success,
+            execution_time=execution_time
+        )
     
     if args.json:
         print(json.dumps(results, indent=2))

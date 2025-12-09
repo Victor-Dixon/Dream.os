@@ -6,6 +6,8 @@ WordPress Admin Deployer - Enhanced Automation Tool
 Deploys files to WordPress sites via admin interface using browser automation.
 Supports multiple sites and provides fallback to manual instructions.
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-7 (Web Development Specialist)
 V2 Compliant: <400 lines
 """

@@ -30,6 +30,9 @@ import sys
 import time
 from pathlib import Path
 
+from src.infrastructure.browser.thea_browser_service import TheaBrowserService
+from src.infrastructure.browser.browser_models import BrowserConfig, TheaConfig
+
 # Add project root to path FIRST (before any src imports)
 project_root = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(project_root))
@@ -160,6 +163,9 @@ class UnifiedDiscordBot(commands.Bot):
         # Discord user ID to developer name mapping
         self.discord_user_map = self._load_discord_user_map()
 
+        # Thea browser services
+        self._thea_browser_service: TheaBrowserService | None = None
+
     def _load_discord_user_map(self) -> dict[str, str]:
         """Load Discord user ID to developer name mapping from profiles."""
         user_map = {}
@@ -210,6 +216,33 @@ class UnifiedDiscordBot(commands.Bot):
                     f"Failed to load Discord user map config: {e}")
 
         return user_map
+
+    # ---------- Thea helpers ----------
+    def _get_thea_service(self, headless: bool = True) -> TheaBrowserService:
+        if self._thea_browser_service:
+            return self._thea_browser_service
+        browser_cfg = BrowserConfig(headless=headless)
+        thea_cfg = TheaConfig()
+        self._thea_browser_service = TheaBrowserService(config=browser_cfg, thea_config=thea_cfg)
+        return self._thea_browser_service
+
+    async def refresh_thea_session(self, headless: bool = True) -> bool:
+        """Refresh Thea cookies; headless uses saved cookies, manual opens window."""
+        try:
+            svc = self._get_thea_service(headless=headless)
+            if not svc.initialize():
+                self.logger.error("Thea refresh: initialize failed (uc missing or disabled)")
+                return False
+            ok = svc.ensure_thea_authenticated(allow_manual=not headless)
+            svc.close()
+            if ok:
+                self.logger.info("✅ Thea session refresh completed (cookies saved)")
+            else:
+                self.logger.error("❌ Thea session refresh failed")
+            return ok
+        except Exception as e:
+            self.logger.error(f"❌ Thea refresh error: {e}")
+            return False
 
     def _get_developer_prefix(self, discord_user_id: str) -> str:
         """Get developer prefix from Discord user ID mapping."""
@@ -279,12 +312,42 @@ class UnifiedDiscordBot(commands.Bot):
                     type=discord.ActivityType.watching, name="the swarm 🐝")
             )
 
+            # Optional: auto-refresh Thea cookies headless on startup if env set
+            if os.getenv("THEA_AUTO_REFRESH", "0") == "1":
+                await self._refresh_thea_session(headless=True)
+
             # Send startup message with control panel (only once)
             await self.send_startup_message()
             self._startup_sent = True
         else:
             # Reconnection - just log, don't spam startup message
             self.logger.info(f"🔄 Discord Bot reconnected: {self.user}")
+
+    # ---------- Thea helpers ----------
+    def _get_thea_service(self, headless: bool = True) -> TheaBrowserService:
+        if self._thea_browser_service:
+            return self._thea_browser_service
+        browser_cfg = BrowserConfig(headless=headless)
+        thea_cfg = TheaConfig()
+        self._thea_browser_service = TheaBrowserService(config=browser_cfg, thea_config=thea_cfg)
+        return self._thea_browser_service
+
+    async def _refresh_thea_session(self, headless: bool = True) -> bool:
+        try:
+            svc = self._get_thea_service(headless=headless)
+            if not svc.initialize():
+                self.logger.error("Thea refresh: initialize failed (uc missing or disabled)")
+                return False
+            ok = svc.ensure_thea_authenticated(allow_manual=not headless)
+            svc.close()
+            if ok:
+                self.logger.info("✅ Thea session refresh completed (cookies saved)")
+            else:
+                self.logger.error("❌ Thea session refresh failed")
+            return ok
+        except Exception as e:
+            self.logger.error(f"❌ Thea refresh error: {e}")
+            return False
 
     async def on_message(self, message: discord.Message):
         """Handle incoming messages with developer prefix mapping."""
@@ -694,6 +757,22 @@ class MessagingCommands(commands.Cog):
         self.bot = bot
         self.gui_controller = gui_controller
         self.logger = logging.getLogger(__name__)
+
+    @commands.command(name="thea-refresh", description="Refresh Thea cookies (headless or manual login)")
+    async def thea_refresh(self, ctx: commands.Context, mode: str = "headless"):
+        """
+        Refresh Thea cookies using undetected Chrome.
+        Usage: !thea-refresh [headless|manual]
+        headless: reuse saved cookies and refresh silently
+        manual: open browser for manual login, then save cookies
+        """
+        headless = mode.lower() != "manual"
+        await ctx.send("🔄 Refreshing Thea session..." if headless else "🪟 Opening Thea for manual login; please authenticate (cookies will be saved).")
+        success = await self.bot.refresh_thea_session(headless=headless)
+        if success:
+            await ctx.send("✅ Thea session refreshed and cookies saved.")
+        else:
+            await ctx.send("❌ Thea session refresh failed. If headless failed, try `!thea-refresh manual`.")
 
     @commands.command(name="control", aliases=["panel", "menu"], description="Open main control panel")
     async def control_panel(self, ctx: commands.Context):

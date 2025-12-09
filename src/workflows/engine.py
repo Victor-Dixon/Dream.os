@@ -18,6 +18,8 @@ import time
 from pathlib import Path
 from typing import Any
 
+from src.core.config.timeout_constants import TimeoutConstants
+
 from .models import (
     AIResponse,
     ResponseType,
@@ -440,7 +442,7 @@ class WorkflowEngine:
             req = urllib.request.Request(
                 webhook_url, data=data, headers={"Content-Type": "application/json"}
             )
-            urllib.request.urlopen(req, timeout=6)
+            urllib.request.urlopen(req, timeout=TimeoutConstants.HTTP_QUICK)
 
         except Exception as e:
             self.logger.warning(f"Failed to send devlog: {e}")

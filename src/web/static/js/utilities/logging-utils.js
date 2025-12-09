@@ -1,9 +1,14 @@
 /**
  * Logging Utilities Module - V2 Compliant
- * Structured logging with multiple levels and formats
+ * Unified logging system with level-based and operation-focused logging
+ * Consolidates LoggingUtils and UnifiedLoggingSystem into single SSOT
+ * 
+ * @SSOT Domain: logging-operations
+ * @SSOT Location: utilities/logging-utils.js
+ * @SSOT Scope: Logging, error reporting, operation tracking
  *
  * @author Agent-7 - Web Development Specialist
- * @version 1.0.0 - V2 COMPLIANCE EXTRACTION
+ * @version 2.0.0 - CONSOLIDATED (LoggingUtils + UnifiedLoggingSystem)
  * @license MIT
  */
 
@@ -31,6 +36,9 @@ export class LoggingUtils {
         this.maxLogSize = options.maxLogSize || 1000;
         this.logs = [];
         this.listeners = new Set();
+        // Operation tracking (from UnifiedLoggingSystem)
+        this.name = options.name || "LoggingUtils";
+        this.operationTimers = new Map();
     }
 
     /**
@@ -240,12 +248,92 @@ export class LoggingUtils {
     exportLogs() {
         return JSON.stringify(this.logs, null, 2);
     }
+
+    // ================================
+    // OPERATION-FOCUSED LOGGING (from UnifiedLoggingSystem)
+    // ================================
+
+    /**
+     * Log operation start with timer tracking
+     */
+    logOperationStart(operationName, extra = {}) {
+        const message = `Starting ${operationName}`;
+        this.info(`[${this.name}] ${message}`, extra);
+        this.operationTimers.set(operationName, Date.now());
+    }
+
+    /**
+     * Log operation completion with duration tracking
+     */
+    logOperationComplete(operationName, extra = {}) {
+        const message = `Completed ${operationName}`;
+        this.info(`[${this.name}] ${message}`, extra);
+
+        if (this.operationTimers.has(operationName)) {
+            const duration = Date.now() - this.operationTimers.get(operationName);
+            this.logPerformanceMetric(`${operationName}_duration`, duration);
+            this.operationTimers.delete(operationName);
+        }
+    }
+
+    /**
+     * Log operation failure
+     */
+    logOperationFailed(operationName, error, extra = {}) {
+        const message = `Failed to ${operationName}: ${error}`;
+        this.error(`[${this.name}] ${message}`, extra);
+        this.operationTimers.delete(operationName);
+    }
+
+    /**
+     * Log performance metric
+     */
+    logPerformanceMetric(metricName, metricValue, extra = {}) {
+        const message = `Performance metric: ${metricName} = ${metricValue}`;
+        this.info(`[${this.name}] ${message}`, extra);
+    }
+
+    /**
+     * Log generic error
+     */
+    logErrorGeneric(moduleName, error, extra = {}) {
+        const message = `Error in ${moduleName}: ${error}`;
+        this.error(`[${this.name}] ${message}`, extra);
+    }
+
+    /**
+     * Log validation start
+     */
+    logValidationStart(itemType, itemId, extra = {}) {
+        const message = `Starting validation of ${itemType}: ${itemId}`;
+        this.info(`[${this.name}] ${message}`, extra);
+    }
+
+    /**
+     * Log validation passed
+     */
+    logValidationPassed(itemType, itemId, extra = {}) {
+        const message = `Validation passed for ${itemType}: ${itemId}`;
+        this.info(`[${this.name}] ${message}`, extra);
+    }
+
+    /**
+     * Log validation failed
+     */
+    logValidationFailed(itemType, itemId, error, extra = {}) {
+        const message = `Validation failed for ${itemType}: ${itemId} - ${error}`;
+        this.error(`[${this.name}] ${message}`, extra);
+    }
 }
 
 // Factory function for creating logging utils instance
 export function createLoggingUtils(options = {}) {
     return new LoggingUtils(options);
 }
+
+// Backward compatibility: Export UnifiedLoggingSystem as alias
+// This allows existing code using UnifiedLoggingSystem to continue working
+export const UnifiedLoggingSystem = LoggingUtils;
 
 // Global logger instance
 export const globalLogger = createLoggingUtils();

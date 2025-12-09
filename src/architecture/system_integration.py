@@ -3,8 +3,10 @@ Unified System Integration - KISS Principle Implementation
 =========================================================
 
 Simplified system integration patterns consolidated into a single module.
-Follows KISS principle: Keep It Simple, Stupid.
 
+SSOT Domain: architecture
+
+Follows KISS principle: Keep It Simple, Stupid.
 V2 Compliance: < 150 lines, single responsibility.
 
 Author: Agent-2 (Architecture & Design Specialist) - KISS Leadership

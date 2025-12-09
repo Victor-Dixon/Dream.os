@@ -1,24 +1,38 @@
-# AUTO-GENERATED __init__.py
-# DO NOT EDIT MANUALLY - changes may be overwritten
+"""
+Handler module loader.
 
-from . import batch_message_handler
-from . import command_handler
-from . import contract_handler
-from . import coordinate_handler
-from . import hard_onboarding_handler
-from . import onboarding_handler
-from . import soft_onboarding_handler
-from . import task_handler
-from . import utility_handler
+Wrap imports to avoid hard failures when optional handler dependencies are
+missing (e.g., onboarding_handler depends on src.utils.confirm). This keeps
+critical handlers like task_handler available for CLI operations.
+"""
 
-__all__ = [
-    'batch_message_handler',
-    'command_handler',
-    'contract_handler',
-    'coordinate_handler',
-    'hard_onboarding_handler',
-    'onboarding_handler',
-    'soft_onboarding_handler',
-    'task_handler',
-    'utility_handler',
+import importlib
+import logging
+
+logger = logging.getLogger(__name__)
+
+__all__ = []
+_HANDLERS = [
+    "batch_message_handler",
+    "command_handler",
+    "contract_handler",
+    "coordinate_handler",
+    "hard_onboarding_handler",
+    "onboarding_handler",
+    "soft_onboarding_handler",
+    "task_handler",
+    "utility_handler",
 ]
+
+
+def _safe_import(handler_name: str):
+    """Attempt to import a handler without breaking the package."""
+    try:
+        importlib.import_module(f"{__name__}.{handler_name}")
+        __all__.append(handler_name)
+    except ImportError as exc:
+        logger.warning("Skipping handler import %s: %s", handler_name, exc)
+
+
+for _handler in _HANDLERS:
+    _safe_import(_handler)

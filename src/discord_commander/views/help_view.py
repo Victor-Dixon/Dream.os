@@ -16,6 +16,7 @@ License: MIT
 """
 
 import logging
+from src.core.config.timeout_constants import TimeoutConstants
 
 try:
     import discord
@@ -32,7 +33,7 @@ class HelpGUIView(discord.ui.View):
     """Interactive help menu with navigation buttons."""
 
     def __init__(self):
-        super().__init__(timeout=300)  # 5 minute timeout
+        super().__init__(timeout=TimeoutConstants.HTTP_EXTENDED)
         self.current_page = "main"
         self._setup_buttons()
 

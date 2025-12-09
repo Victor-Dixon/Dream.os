@@ -3,6 +3,8 @@
 Coordination Analytics Orchestrator - KISS Compliant
 ====================================================
 
+<!-- SSOT Domain: analytics -->
+
 Simple coordination analytics orchestrator.
 
 Author: Agent-5 - Business Intelligence Specialist

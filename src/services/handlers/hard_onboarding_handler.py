@@ -6,19 +6,23 @@ Handles hard onboarding commands for messaging CLI.
 Integrates with hard_onboarding_service for 5-step protocol.
 
 V2 Compliance: < 300 lines, single responsibility
+Migrated to BaseService for consolidated initialization and error handling.
 """
 
 import logging
 from pathlib import Path
 
+from ...core.base.base_service import BaseService
+
 logger = logging.getLogger(__name__)
 
 
-class HardOnboardingHandler:
+class HardOnboardingHandler(BaseService):
     """Handles hard onboarding commands for messaging CLI."""
 
     def __init__(self):
         """Initialize hard onboarding handler."""
+        super().__init__("HardOnboardingHandler")
         self.exit_code = 0
 
     def can_handle(self, args) -> bool:

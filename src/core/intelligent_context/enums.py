@@ -3,6 +3,8 @@
 Intelligent Context Enumerations
 =================================
 
+<!-- SSOT Domain: core -->
+
 Enum types for intelligent context operations.
 
 Author: Agent-7 - Knowledge & OSS Contribution Specialist

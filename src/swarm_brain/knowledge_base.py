@@ -3,6 +3,8 @@
 Swarm Knowledge Base
 ====================
 
+<!-- SSOT Domain: qa -->
+
 Shared knowledge repository for all agents.
 
 Author: Agent-7 - Repository Cloning Specialist
@@ -155,20 +157,29 @@ class KnowledgeBase:
         results = []
 
         for entry_data in self.kb["entries"].values():
+            # Skip malformed records instead of crashing search
+            if not isinstance(entry_data, dict):
+                logger.warning("Skipping malformed knowledge entry: %s", entry_data)
+                continue
+
+            title = entry_data.get("title", "")
+            content = entry_data.get("content", "")
+            tags = entry_data.get("tags", [])
+
             if (
-                query_lower in entry_data["title"].lower()
-                or query_lower in entry_data["content"].lower()
-                or any(query_lower in tag.lower() for tag in entry_data["tags"])
+                query_lower in title.lower()
+                or query_lower in content.lower()
+                or any(query_lower in str(tag).lower() for tag in tags)
             ):
                 results.append(
                     KnowledgeEntry(
-                        id=entry_data["id"],
-                        title=entry_data["title"],
-                        content=entry_data["content"],
-                        author=entry_data["author"],
-                        category=entry_data["category"],
-                        tags=entry_data["tags"],
-                        timestamp=entry_data["timestamp"],
+                        id=entry_data.get("id", ""),
+                        title=title,
+                        content=content,
+                        author=entry_data.get("author", ""),
+                        category=entry_data.get("category", ""),
+                        tags=list(tags) if isinstance(tags, list) else [str(tags)],
+                        timestamp=entry_data.get("timestamp", datetime.now().isoformat()),
                         metadata=entry_data.get("metadata", {}),
                     )
                 )

@@ -232,7 +232,9 @@ class BrowserSessionManager(BaseSessionManager):
             page = await context.new_page()
 
             # Navigate to ChatGPT and check for authentication
-            await page.goto("https://chat.openai.com/", timeout=30000)
+            from src.core.config.timeout_constants import TimeoutConstants
+            # Playwright timeout is in milliseconds, HTTP_EXTENDED is 300 seconds = 300000 ms
+            await page.goto("https://chat.openai.com/", timeout=TimeoutConstants.HTTP_EXTENDED * 1000)
 
             # Check if we're authenticated (look for sign-in button or user menu)
             sign_in_button = await page.query_selector('a[href*="auth"]')

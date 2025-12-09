@@ -2,11 +2,23 @@
  * Dashboard UI Helpers Module - V2 Compliant
  * UI helper functions for dashboard communication and display
  * EXTRACTED from dashboard-communication.js for V2 compliance
+ * NOTE: All utility functions delegate to SSOT utilities (DashboardFormatters, FunctionUtils, DOMUtilsOrchestrator, StringUtils)
  *
  * @author Agent-7 - Web Development Specialist
- * @version 2.0.0 - V2 COMPLIANCE CORRECTION
+ * @version 2.2.0 - CONSOLIDATED (all utilities delegate to SSOT)
  * @license MIT
  */
+
+import { DashboardFormatters } from './dashboard/formatters.js';
+import { FunctionUtils } from '../services/utilities/function-utils.js';
+import { DOMUtilsOrchestrator } from './dashboard/dom-utils-orchestrator.js';
+import { StringUtils } from './utilities/string-utils.js';
+
+// SSOT instances for delegation
+const formatters = DashboardFormatters;
+const functionUtils = new FunctionUtils();
+const domUtils = new DOMUtilsOrchestrator();
+const stringUtils = new StringUtils();
 
 // ================================
 // UI HELPER FUNCTIONS
@@ -123,90 +135,59 @@ export function getStatusClass(value, warningThreshold = 70, criticalThreshold =
 }
 
 /**
- * Format percentage value
+ * Format percentage value (delegates to DashboardFormatters SSOT)
  */
 export function formatPercentage(value) {
-    return value !== null && value !== undefined ? `${value.toFixed(1)}%` : '0.0%';
+    return formatters.formatPercentage(value);
 }
 
 /**
- * Format number value
+ * Format number value (delegates to DashboardFormatters SSOT)
  */
 export function formatNumber(value) {
-    return value !== null && value !== undefined ? value.toString() : '0';
+    return formatters.formatNumber(value);
 }
 
 /**
- * Debounce function calls
+ * Debounce function calls (delegates to FunctionUtils SSOT)
  */
 export function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
+    return functionUtils.debounce(func, wait);
 }
 
 // ================================
 // DOM HELPER FUNCTIONS (MERGED FROM dashboard-helpers.js)
 // ================================
 
-/**
- * Sanitize HTML string to prevent XSS
- * @param {string} str - String to sanitize
- * @returns {string} Sanitized string
- */
-export function sanitizeHtml(str) {
-    const div = document.createElement('div');
-    div.textContent = str;
-    return div.innerHTML;
-}
+// Sanitize/escape HTML (SSOT delegation to StringUtils)
+export const sanitizeHtml = stringUtils.escapeHTML;
+export const escapeHTML = stringUtils.escapeHTML;
 
 /**
- * HTML escape utility
- * @param {string} str - String to escape
- * @returns {string} Escaped string
- */
-export function escapeHTML(str) {
-    const div = document.createElement('div');
-    div.textContent = str;
-    return div.innerHTML;
-}
-
-/**
- * Get element dimensions and position
+ * Get element dimensions and position (delegates to DOMUtilsOrchestrator SSOT)
  * @param {HTMLElement} element - Element to measure
  * @returns {Object} Element dimensions and position
  */
 export function getElementDimensions(element) {
-    const rect = element.getBoundingClientRect();
+    const dimensions = domUtils.getDimensions(element);
+    if (!dimensions) return null;
+    // Add page offset for compatibility
     return {
-        width: rect.width,
-        height: rect.height,
-        top: rect.top + window.pageYOffset,
-        left: rect.left + window.pageXOffset,
-        right: rect.right + window.pageXOffset,
-        bottom: rect.bottom + window.pageYOffset
+        ...dimensions,
+        top: dimensions.top + window.pageYOffset,
+        left: dimensions.left + window.pageXOffset,
+        right: dimensions.right + window.pageXOffset,
+        bottom: dimensions.bottom + window.pageYOffset
     };
 }
 
 /**
- * Check if element is in viewport
+ * Check if element is in viewport (delegates to DOMUtilsOrchestrator SSOT)
  * @param {HTMLElement} element - Element to check
  * @returns {boolean} True if element is in viewport
  */
 export function isInViewport(element) {
-    const rect = element.getBoundingClientRect();
-    return (
-        rect.top >= 0 &&
-        rect.left >= 0 &&
-        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-    );
+    return domUtils.isElementVisible(element);
 }
 
 /**

@@ -4,6 +4,7 @@ Conversation Extractor - V2 Compliant Facade
 
 Conversation extraction and management for ChatGPT interactions.
 Refactored for preventive optimization: 349L → <300L (14%+ reduction).
+Migrated to BaseService for consolidated initialization and error handling.
 
 This facade coordinates between:
 - MessageParser: Message extraction and parsing
@@ -19,6 +20,8 @@ License: MIT
 import logging
 from pathlib import Path
 from typing import Any
+
+from ...core.base.base_service import BaseService
 
 # Optional dependencies
 try:
@@ -49,7 +52,7 @@ from .extractor_message_parser import MessageParser
 from .extractor_storage import ConversationStorage
 
 
-class ConversationExtractor:
+class ConversationExtractor(BaseService):
     """
     ChatGPT conversation extraction and management facade.
 
@@ -67,8 +70,8 @@ class ConversationExtractor:
         Args:
             config: Configuration dictionary (uses config/chatgpt.yml if None)
         """
+        super().__init__("ConversationExtractor")
         self.config = config or {}
-        self.logger = get_logger(__name__)
 
         # V2 Integration
         self.unified_config = get_unified_config()

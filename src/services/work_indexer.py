@@ -4,6 +4,7 @@ Work Indexer
 
 Agent work indexing operations for vector database.
 V2 Compliance: < 100 lines, single responsibility.
+Migrated to BaseService for consolidated initialization and error handling.
 
 Author: Agent-7 - Web Development Specialist
 """
@@ -12,12 +13,15 @@ import logging
 from pathlib import Path
 from datetime import datetime
 
+from ..core.base.base_service import BaseService
+
 # Optional vector database imports
 try:
     from .vector_database_service_unified import (
         get_vector_database_service,
     )
-    from .vector_database.vector_database_models import VectorDocument, DocumentType
+    from .vector_database.vector_database_models import VectorDocument
+    from src.services.models.vector_models import DocumentType  # SSOT
     def add_document_to_vector_db(doc: VectorDocument):
         service = get_vector_database_service()
         if service:
@@ -30,12 +34,9 @@ except ImportError:
         return None
     def add_document_to_vector_db(doc):
         return False
-    from enum import Enum
+    # SSOT: Import DocumentType from SSOT instead of defining locally
+    from src.services.models.vector_models import DocumentType
     from dataclasses import dataclass
-    class DocumentType(Enum):
-        MESSAGE = "message"
-        DEVLOG = "devlog"
-        CONTRACT = "contract"
     @dataclass
     class VectorDocument:
         id: str
@@ -44,14 +45,14 @@ except ImportError:
         metadata: dict
 
 
-class WorkIndexer:
+class WorkIndexer(BaseService):
     """Handles agent work indexing operations."""
 
     def __init__(self, agent_id: str, config_path: str | None = None):
         """Initialize work indexer."""
+        super().__init__("WorkIndexer")
         self.agent_id = agent_id
         self.workspace_path = Path(f"agent_workspaces/{agent_id}")
-        self.logger = logging.getLogger(__name__)
 
         # Initialize vector integration
         try:

@@ -3,11 +3,13 @@ Protocol Validator - V2 Compliant Module
 ========================================
 
 Validates protocol compliance for messages and routes.
+Migrated to BaseService for consolidated initialization and error handling.
 """
 
 import logging
 from typing import Any
 
+from ...core.base.base_service import BaseService
 from ...core.messaging_models_core import (
     UnifiedMessage,
     UnifiedMessagePriority,
@@ -18,12 +20,12 @@ from .messaging_protocol_models import MessageRoute
 logger = logging.getLogger(__name__)
 
 
-class ProtocolValidator:
+class ProtocolValidator(BaseService):
     """Validates protocol compliance."""
 
     def __init__(self):
         """Initialize protocol validator."""
-        self.logger = logging.getLogger(__name__)
+        super().__init__("ProtocolValidator")
 
     def validate_protocol(self, protocol_data: dict[str, Any]) -> tuple[bool, list[str]]:
         """

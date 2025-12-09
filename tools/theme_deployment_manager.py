@@ -6,6 +6,8 @@ Theme Deployment Manager - Multi-Site Theme Deployment
 Deploys entire WordPress themes to multiple sites with verification.
 Ensures all sites have the correct theme deployed.
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-3 (Infrastructure & DevOps Specialist)
 V2 Compliant: <400 lines
 """

@@ -12,6 +12,7 @@ Created: 2025-11-30
 import logging
 from pathlib import Path
 import sys
+from src.core.config.timeout_constants import TimeoutConstants
 
 try:
     import discord
@@ -31,7 +32,7 @@ class BumpAgentView(discord.ui.View):
     """View for selecting agents to bump."""
     
     def __init__(self):
-        super().__init__(timeout=300)  # 5 minute timeout
+        super().__init__(timeout=TimeoutConstants.HTTP_EXTENDED)
         self.selected_agents = []
         self._setup_buttons()
     

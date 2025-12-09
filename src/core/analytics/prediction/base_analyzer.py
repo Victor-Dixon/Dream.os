@@ -1,5 +1,7 @@
 """Base prediction analyzer utilities.
 
+<!-- SSOT Domain: analytics -->
+
 This module centralizes probability normalization and confidence-level
 computations to maintain a single source of truth (SSOT) across prediction
 analyzers.

@@ -6,18 +6,22 @@ Handles message batching commands for messaging CLI.
 Integrates with message_batching_service.
 
 V2 Compliance: < 300 lines, single responsibility
+Migrated to BaseService for consolidated initialization and error handling.
 """
 
 import logging
 
+from ...core.base.base_service import BaseService
+
 logger = logging.getLogger(__name__)
 
 
-class BatchMessageHandler:
+class BatchMessageHandler(BaseService):
     """Handles message batching commands for messaging CLI."""
 
     def __init__(self):
         """Initialize batch message handler."""
+        super().__init__("BatchMessageHandler")
         self.exit_code = 0
 
     def can_handle(self, args) -> bool:

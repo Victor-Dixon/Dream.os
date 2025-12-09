@@ -7,6 +7,7 @@ Unified orchestrator for chat presence system.
 Coordinates Twitch, Discord, OBS caption integration.
 
 V2 Compliance: <400 lines, single responsibility
+Migrated to BaseService for consolidated initialization and error handling.
 Author: Agent-7 (Web Development Specialist)
 License: MIT
 """
@@ -17,6 +18,7 @@ from src.core.messaging_models_core import (
     UnifiedMessageType,
 )
 from src.core.messaging_core import send_message
+from src.core.base.base_service import BaseService
 import asyncio
 import logging
 from pathlib import Path
@@ -65,7 +67,7 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 
-class ChatPresenceOrchestrator:
+class ChatPresenceOrchestrator(BaseService):
     """
     Orchestrates chat presence system.
 
@@ -88,6 +90,7 @@ class ChatPresenceOrchestrator:
             twitch_config: Twitch configuration dict
             obs_config: OBS configuration dict
         """
+        super().__init__("ChatPresenceOrchestrator")
         self.twitch_config = twitch_config or {}
         self.obs_config = obs_config or {}
 
@@ -316,7 +319,7 @@ class ChatPresenceOrchestrator:
             import subprocess
             import sys
             from pathlib import Path
-from src.core.config.timeout_constants import TimeoutConstants
+            from src.core.config.timeout_constants import TimeoutConstants
 
             message_text = f"Twitch Chat Message from {username}: {message_content}"
             cmd = [

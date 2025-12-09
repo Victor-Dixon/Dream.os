@@ -10,21 +10,20 @@ Wraps ConsolidatedMessagingService for backward compatibility.
 V2 Compliance: Wrapper pattern, <400 lines
 """
 
-import logging
 from typing import Any
 
+from src.core.base.base_service import BaseService
 from .messaging_infrastructure import ConsolidatedMessagingService
 
-logger = logging.getLogger(__name__)
 
-
-class UnifiedMessagingService:
+class UnifiedMessagingService(BaseService):
     """Unified messaging service wrapper."""
 
     def __init__(self):
         """Initialize unified messaging service."""
+        super().__init__("UnifiedMessagingService")
         self.messaging = ConsolidatedMessagingService()
-        logger.info("UnifiedMessagingService initialized")
+        self.logger.info("UnifiedMessagingService initialized")
 
     def send_message(
         self,

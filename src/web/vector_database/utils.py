@@ -3,6 +3,9 @@ Vector Database Utilities
 ========================
 
 Main utility orchestrator for vector database operations.
+
+<!-- SSOT Domain: web -->
+
 V2 Compliance: < 100 lines, facade pattern, single responsibility.
 
 REFACTORED: Split into focused utility classes for V2 compliance

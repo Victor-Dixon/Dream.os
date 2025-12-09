@@ -57,7 +57,8 @@ class SwarmTasksControllerView(discord.ui.View):
     """
 
     def __init__(self, messaging_service: ConsolidatedMessagingService | None = None):
-        super().__init__(timeout=300)
+        from src.core.config.timeout_constants import TimeoutConstants
+        super().__init__(timeout=TimeoutConstants.HTTP_EXTENDED)
         self.messaging_service = messaging_service
         self.workspace_path = Path("agent_workspaces")
         self.current_page = 0

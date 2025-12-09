@@ -6,6 +6,8 @@ Deploy FreeRideInvestor Menu Fix - Interactive Deployment Tool
 Deploys the enhanced functions.php that removes all Developer Tools links.
 Can prompt for credentials if not configured.
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-7 (Web Development Specialist)
 """
 

@@ -3,6 +3,8 @@
 Anomaly Detection Engine - KISS Compliant
 =========================================
 
+<!-- SSOT Domain: analytics -->
+
 Simple anomaly detection for analytics.
 
 Author: Agent-5 - Business Intelligence Specialist

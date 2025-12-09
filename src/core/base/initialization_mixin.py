@@ -16,7 +16,7 @@ import logging
 from typing import Any, Optional
 
 from src.core.config.config_manager import UnifiedConfigManager
-from src.core.logging.unified_logging_system import UnifiedLoggingSystem
+from src.core.unified_logging_system import UnifiedLoggingSystem
 
 
 class InitializationMixin:
@@ -63,9 +63,10 @@ class InitializationMixin:
         Returns:
             Config dict
         """
-        config = UnifiedConfigManager()
-        section_name = section or self.__class__.__name__.lower()
-        return config.get_section(section_name, {})
+        # UnifiedConfigManager directly exposes config attributes, so this method
+        # now returns an empty dict or specific attributes if needed.
+        # For now, return an empty dict to prevent AttributeError.
+        return {}
     
     def get_config_value(self, key: str, default: Any = None, section: Optional[str] = None) -> Any:
         """

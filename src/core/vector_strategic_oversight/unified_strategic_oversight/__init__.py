@@ -9,8 +9,6 @@ from . import engine_core_missions
 from . import engine_core_recommendations
 from . import engine_core_reports
 from . import extended_models
-from . import factory_core
-from . import factory_extended
 from . import factory_methods
 
 __all__ = [
@@ -22,7 +20,5 @@ __all__ = [
     'engine_core_recommendations',
     'engine_core_reports',
     'extended_models',
-    'factory_core',
-    'factory_extended',
     'factory_methods',
 ]

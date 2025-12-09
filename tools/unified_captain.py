@@ -1,32 +1,32 @@
 #!/usr/bin/env python3
 """
-Unified Captain Tools - Consolidated Captain Operations
-========================================================
+Unified Captain - Consolidated Captain Operations Tool
+====================================================
 
-<!-- SSOT Domain: core -->
+<!-- SSOT Domain: coordination -->
 
-Consolidates all Captain tools into a single unified tool.
+Consolidates all Captain (Agent-4) operations into a single unified tool.
 Replaces 23+ individual captain tools with modular captain system.
 
 Captain Categories:
-- inbox: Inbox management operations
-- coordination: Swarm coordination
-- monitoring: Status monitoring
-- tasks: Task assignment
-- cleanup: Workspace cleanup
+- inbox - Inbox management operations
+- coordination - Swarm coordination
+- monitoring - Status monitoring
+- tasks - Task assignment
+- cleanup - Workspace cleanup
 
-Author: Agent-8 (SSOT & System Integration Specialist)
+Author: Agent-5 (Business Intelligence Specialist) - Executing Agent-8's Consolidation Plan
 Date: 2025-12-06
-V2 Compliant: Yes (<400 lines)
+V2 Compliant: Yes
 """
 
 import argparse
 import json
 import logging
 import sys
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
-from typing import Dict, List, Optional, Any
+from typing import Any, Dict, List, Optional
 
 # Add project root to path
 project_root = Path(__file__).resolve().parent.parent
@@ -40,258 +40,230 @@ logger = logging.getLogger(__name__)
 
 
 class UnifiedCaptain:
-    """Unified captain system consolidating all captain capabilities."""
+    """Unified captain operations system consolidating all captain capabilities."""
     
     def __init__(self):
         """Initialize unified captain."""
         self.project_root = project_root
         self.agent_workspaces = project_root / "agent_workspaces"
-        
-    def handle_inbox(self, action: str = "analyze", **kwargs) -> Dict[str, Any]:
-        """Handle inbox operations."""
+        self.captain_inbox = self.agent_workspaces / "Agent-4" / "inbox"
+    
+    def inbox_analyze(self) -> Dict[str, Any]:
+        """Analyze Captain's inbox messages."""
         try:
-            from tools.captain_inbox_manager import analyze_inbox, categorize_message
+            from tools.captain_inbox_manager import analyze_inbox
             
-            inbox_path = self.agent_workspaces / "Agent-4" / "inbox"
-            
-            if action == "analyze":
-                result = analyze_inbox(inbox_path)
+            if not self.captain_inbox.exists():
                 return {
                     "category": "inbox",
-                    "action": "analyze",
-                    "result": result,
+                    "error": f"Inbox not found: {self.captain_inbox}",
                     "timestamp": datetime.now().isoformat()
                 }
-            elif action == "categorize":
-                file_path = kwargs.get("file")
-                if file_path:
-                    msg_file = inbox_path / file_path
-                    if msg_file.exists():
-                        result = categorize_message(msg_file)
-                        return {
-                            "category": "inbox",
-                            "action": "categorize",
-                            "result": result,
-                            "timestamp": datetime.now().isoformat()
-                        }
-                    else:
-                        return {
-                            "category": "inbox",
-                            "action": "categorize",
-                            "error": f"File not found: {file_path}",
-                            "timestamp": datetime.now().isoformat()
-                        }
-                else:
-                    return {
-                        "category": "inbox",
-                        "action": "categorize",
-                        "error": "File path required",
-                        "timestamp": datetime.now().isoformat()
-                    }
-            else:
-                return {
-                    "category": "inbox",
-                    "error": f"Unknown action: {action}",
-                    "available_actions": ["analyze", "categorize"],
-                    "timestamp": datetime.now().isoformat()
-                }
+            
+            analysis = analyze_inbox(self.captain_inbox)
+            return {
+                "category": "inbox",
+                "analysis": analysis,
+                "timestamp": datetime.now().isoformat()
+            }
         except Exception as e:
-            logger.error(f"Inbox operation failed: {e}")
+            logger.error(f"Inbox analysis failed: {e}")
             return {
                 "category": "inbox",
                 "error": str(e),
                 "timestamp": datetime.now().isoformat()
             }
     
-    def handle_coordination(self, action: str = "status", **kwargs) -> Dict[str, Any]:
-        """Handle swarm coordination operations."""
+    def inbox_summary(self) -> Dict[str, Any]:
+        """Generate inbox summary report."""
         try:
-            from tools.captain_swarm_coordinator import CaptainSwarmCoordinator
+            from tools.captain_inbox_manager import analyze_inbox, generate_summary_report
             
-            coordinator = CaptainSwarmCoordinator()
-            
-            if action == "status":
-                statuses = coordinator.check_all_agent_statuses()
+            if not self.captain_inbox.exists():
                 return {
-                    "category": "coordination",
-                    "action": "status",
-                    "statuses": statuses,
+                    "category": "inbox",
+                    "error": f"Inbox not found: {self.captain_inbox}",
                     "timestamp": datetime.now().isoformat()
                 }
-            elif action == "open-loops":
-                coordinator.check_all_agent_statuses()  # Populate cache
-                loops = coordinator.identify_open_loops()
-                return {
-                    "category": "coordination",
-                    "action": "open-loops",
-                    "loops": loops,
-                    "count": len(loops),
-                    "timestamp": datetime.now().isoformat()
-                }
-            elif action == "assign-task":
-                agent_id = kwargs.get("agent")
-                task = kwargs.get("task")
-                priority = kwargs.get("priority", "NORMAL")
-                
-                if agent_id and task:
-                    result = coordinator.assign_task_to_agent(
-                        agent_id=agent_id,
-                        task=task,
-                        priority=priority,
-                        description=kwargs.get("description", "")
+            
+            analysis = analyze_inbox(self.captain_inbox)
+            report = generate_summary_report(analysis)
+            
+            return {
+                "category": "inbox",
+                "summary": report,
+                "analysis": analysis,
+                "timestamp": datetime.now().isoformat()
+            }
+        except Exception as e:
+            logger.error(f"Inbox summary failed: {e}")
+            return {
+                "category": "inbox",
+                "error": str(e),
+                "timestamp": datetime.now().isoformat()
+            }
+    
+    def coordination_assign_tasks(self, tasks: List[Dict[str, Any]] = None) -> Dict[str, Any]:
+        """Assign tasks to agents using swarm coordinator."""
+        try:
+            from tools.captain_task_assigner import CaptainTaskAssigner
+            
+            assigner = CaptainTaskAssigner()
+            
+            if tasks:
+                # Assign provided tasks
+                assignments = []
+                for task in tasks:
+                    assignment = assigner.coordinator.assign_task_to_agent(
+                        agent_id=task.get("agent"),
+                        task=task.get("task"),
+                        priority=task.get("priority", "NORMAL"),
+                        description=task.get("description", ""),
                     )
-                    return {
-                        "category": "coordination",
-                        "action": "assign-task",
-                        "result": result,
-                        "timestamp": datetime.now().isoformat()
-                    }
-                else:
-                    return {
-                        "category": "coordination",
-                        "action": "assign-task",
-                        "error": "Agent ID and task required",
-                        "timestamp": datetime.now().isoformat()
-                    }
-            else:
+                    assignments.append(assignment)
                 return {
                     "category": "coordination",
-                    "error": f"Unknown action: {action}",
-                    "available_actions": ["status", "open-loops", "assign-task"],
+                    "action": "assign_tasks",
+                    "assignments": assignments,
+                    "timestamp": datetime.now().isoformat()
+                }
+            else:
+                # Assign critical tasks
+                assigner.assign_critical_tasks()
+                return {
+                    "category": "coordination",
+                    "action": "assign_critical_tasks",
+                    "status": "completed",
                     "timestamp": datetime.now().isoformat()
                 }
         except Exception as e:
-            logger.error(f"Coordination operation failed: {e}")
+            logger.error(f"Task assignment failed: {e}")
             return {
                 "category": "coordination",
                 "error": str(e),
                 "timestamp": datetime.now().isoformat()
             }
     
-    def handle_monitoring(self, action: str = "snapshot", **kwargs) -> Dict[str, Any]:
-        """Handle monitoring operations."""
+    def coordination_close_loops(self) -> Dict[str, Any]:
+        """Close open loops using loop closer."""
         try:
-            if action == "snapshot":
-                from tools.captain_snapshot import generate_snapshot
-                snapshot = generate_snapshot()
-                return {
-                    "category": "monitoring",
-                    "action": "snapshot",
-                    "snapshot": snapshot,
-                    "timestamp": datetime.now().isoformat()
-                }
-            elif action == "find-idle":
-                from tools.captain_find_idle_agents import find_idle_agents
-                idle = find_idle_agents()
-                return {
-                    "category": "monitoring",
-                    "action": "find-idle",
-                    "idle_agents": idle,
-                    "count": len(idle),
-                    "timestamp": datetime.now().isoformat()
-                }
-            elif action == "progress":
-                from tools.captain_progress_dashboard import generate_dashboard
-                dashboard = generate_dashboard()
-                return {
-                    "category": "monitoring",
-                    "action": "progress",
-                    "dashboard": dashboard,
-                    "timestamp": datetime.now().isoformat()
-                }
-            elif action == "gas-check":
-                from tools.captain_gas_check import check_gas_levels
-                gas = check_gas_levels()
-                return {
-                    "category": "monitoring",
-                    "action": "gas-check",
-                    "gas_levels": gas,
-                    "timestamp": datetime.now().isoformat()
-                }
-            else:
-                return {
-                    "category": "monitoring",
-                    "error": f"Unknown action: {action}",
-                    "available_actions": ["snapshot", "find-idle", "progress", "gas-check"],
-                    "timestamp": datetime.now().isoformat()
-                }
+            from tools.captain_loop_closer import CaptainLoopCloser
+            
+            closer = CaptainLoopCloser()
+            closer.load_loop_tracker()
+            
+            closable = closer.identify_closable_loops()
+            blockers = closer.identify_blockers()
+            
+            return {
+                "category": "coordination",
+                "action": "close_loops",
+                "closable_loops": closable,
+                "blockers": blockers,
+                "timestamp": datetime.now().isoformat()
+            }
         except Exception as e:
-            logger.error(f"Monitoring operation failed: {e}")
+            logger.error(f"Loop closing failed: {e}")
+            return {
+                "category": "coordination",
+                "error": str(e),
+                "timestamp": datetime.now().isoformat()
+            }
+    
+    def monitoring_status_check(self) -> Dict[str, Any]:
+        """Check all agent statuses."""
+        try:
+            from tools.captain_swarm_coordinator import CaptainSwarmCoordinator
+            
+            coordinator = CaptainSwarmCoordinator()
+            statuses = coordinator.check_all_agent_statuses()
+            
+            return {
+                "category": "monitoring",
+                "action": "status_check",
+                "agent_statuses": statuses,
+                "timestamp": datetime.now().isoformat()
+            }
+        except Exception as e:
+            logger.error(f"Status check failed: {e}")
             return {
                 "category": "monitoring",
                 "error": str(e),
                 "timestamp": datetime.now().isoformat()
             }
     
-    def handle_tasks(self, action: str = "assign", **kwargs) -> Dict[str, Any]:
-        """Handle task assignment operations."""
+    def monitoring_find_idle(self, hours_threshold: int = 1) -> Dict[str, Any]:
+        """Find idle agents."""
+        try:
+            from tools.captain_find_idle_agents import find_idle_agents
+            
+            idle_agents = find_idle_agents(hours_threshold)
+            
+            return {
+                "category": "monitoring",
+                "action": "find_idle",
+                "idle_agents": idle_agents,
+                "threshold_hours": hours_threshold,
+                "timestamp": datetime.now().isoformat()
+            }
+        except Exception as e:
+            logger.error(f"Find idle agents failed: {e}")
+            return {
+                "category": "monitoring",
+                "error": str(e),
+                "timestamp": datetime.now().isoformat()
+            }
+    
+    def tasks_assign(self, agent: str = None, task: str = None, priority: str = "NORMAL") -> Dict[str, Any]:
+        """Assign a task to an agent."""
         try:
             from tools.captain_task_assigner import CaptainTaskAssigner
             
             assigner = CaptainTaskAssigner()
             
-            if action == "assign":
-                assigner.assign_critical_tasks()
+            if agent and task:
+                assignment = assigner.coordinator.assign_task_to_agent(
+                    agent_id=agent,
+                    task=task,
+                    priority=priority,
+                    description="",
+                )
                 return {
                     "category": "tasks",
                     "action": "assign",
-                    "message": "Critical tasks assigned",
-                    "timestamp": datetime.now().isoformat()
-                }
-            elif action == "next":
-                from tools.captain_next_task_picker import pick_next_task
-                task = pick_next_task()
-                return {
-                    "category": "tasks",
-                    "action": "next",
-                    "task": task,
+                    "assignment": assignment,
                     "timestamp": datetime.now().isoformat()
                 }
             else:
                 return {
                     "category": "tasks",
-                    "error": f"Unknown action: {action}",
-                    "available_actions": ["assign", "next"],
+                    "error": "Agent and task required",
                     "timestamp": datetime.now().isoformat()
                 }
         except Exception as e:
-            logger.error(f"Task operation failed: {e}")
+            logger.error(f"Task assignment failed: {e}")
             return {
                 "category": "tasks",
                 "error": str(e),
                 "timestamp": datetime.now().isoformat()
             }
     
-    def handle_cleanup(self, action: str = "workspace", **kwargs) -> Dict[str, Any]:
-        """Handle cleanup operations."""
+    def cleanup_workspace(self, days_old: int = 30, dry_run: bool = False) -> Dict[str, Any]:
+        """Clean up Captain workspace."""
         try:
-            if action == "workspace":
-                from tools.captain_workspace_cleanup import cleanup_workspace
-                result = cleanup_workspace()
-                return {
-                    "category": "cleanup",
-                    "action": "workspace",
-                    "result": result,
-                    "timestamp": datetime.now().isoformat()
-                }
-            elif action == "archive-inbox":
-                from tools.archive_captain_inbox import archive_old_messages
-                result = archive_old_messages()
-                return {
-                    "category": "cleanup",
-                    "action": "archive-inbox",
-                    "result": result,
-                    "timestamp": datetime.now().isoformat()
-                }
-            else:
-                return {
-                    "category": "cleanup",
-                    "error": f"Unknown action: {action}",
-                    "available_actions": ["workspace", "archive-inbox"],
-                    "timestamp": datetime.now().isoformat()
-                }
+            from tools.captain_workspace_cleanup import CaptainWorkspaceCleanup
+            
+            cleanup = CaptainWorkspaceCleanup()
+            result = cleanup.cleanup_workspace(days_old=days_old, dry_run=dry_run)
+            
+            return {
+                "category": "cleanup",
+                "action": "workspace",
+                "result": result,
+                "timestamp": datetime.now().isoformat()
+            }
         except Exception as e:
-            logger.error(f"Cleanup operation failed: {e}")
+            logger.error(f"Workspace cleanup failed: {e}")
             return {
                 "category": "cleanup",
                 "error": str(e),
@@ -299,121 +271,110 @@ class UnifiedCaptain:
             }
 
 
-def create_parser() -> argparse.ArgumentParser:
-    """Create argument parser for unified captain."""
+def main():
+    """CLI entry point for unified captain tool."""
     parser = argparse.ArgumentParser(
-        description="Unified Captain Tools - Consolidated Captain Operations",
-        formatter_class=argparse.RawDescriptionHelpFormatter
+        description="Unified Captain Operations Tool",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  python -m tools.unified_captain inbox analyze
+  python -m tools.unified_captain inbox summary
+  python -m tools.unified_captain coordination assign-tasks
+  python -m tools.unified_captain coordination close-loops
+  python -m tools.unified_captain monitoring status-check
+  python -m tools.unified_captain monitoring find-idle
+  python -m tools.unified_captain tasks assign --agent Agent-1 --task "Test task"
+  python -m tools.unified_captain cleanup workspace --agent Agent-1
+        """
     )
     
     parser.add_argument(
-        "--category",
-        choices=["inbox", "coordination", "monitoring", "tasks", "cleanup", "all"],
-        default="all",
-        help="Category of captain operations"
+        "category",
+        choices=["inbox", "coordination", "monitoring", "tasks", "cleanup"],
+        help="Captain operation category"
     )
     
     parser.add_argument(
-        "--action",
-        type=str,
-        help="Specific action to perform (varies by category)"
+        "action",
+        help="Action to perform within category"
     )
     
-    parser.add_argument(
-        "--agent",
-        type=str,
-        help="Agent ID for task assignment"
-    )
+    # Inbox actions
+    parser.add_argument("--output", type=Path, help="Output file for reports")
     
-    parser.add_argument(
-        "--task",
-        type=str,
-        help="Task description"
-    )
+    # Task assignment
+    parser.add_argument("--agent", help="Agent ID for task assignment")
+    parser.add_argument("--task", help="Task description")
+    parser.add_argument("--priority", default="NORMAL", help="Task priority")
     
-    parser.add_argument(
-        "--priority",
-        type=str,
-        default="NORMAL",
-        help="Task priority (NORMAL, HIGH, CRITICAL)"
-    )
+    # Monitoring
+    parser.add_argument("--hours", type=int, default=1, help="Hours threshold for idle detection")
     
-    parser.add_argument(
-        "--file",
-        type=str,
-        help="File path for file-specific operations"
-    )
+    # Cleanup
+    parser.add_argument("--days", type=int, default=30, help="Archive files older than N days")
+    parser.add_argument("--dry-run", action="store_true", help="Show what would be cleaned without cleaning")
     
-    parser.add_argument(
-        "--json",
-        action="store_true",
-        help="Output results as JSON"
-    )
+    parser.add_argument("--json", action="store_true", help="Output as JSON")
     
-    return parser
-
-
-def main() -> int:
-    """Main CLI entry point."""
-    parser = create_parser()
     args = parser.parse_args()
     
     captain = UnifiedCaptain()
-    results = []
+    results = {}
     
-    categories = ["inbox", "coordination", "monitoring", "tasks", "cleanup"] if args.category == "all" else [args.category]
-    
-    for category in categories:
-        action = args.action or {
-            "inbox": "analyze",
-            "coordination": "status",
-            "monitoring": "snapshot",
-            "tasks": "assign",
-            "cleanup": "workspace"
-        }.get(category, "status")
-        
-        kwargs = {
-            "agent": args.agent,
-            "task": args.task,
-            "priority": args.priority,
-            "file": args.file,
-            "description": args.task  # Use task as description if provided
-        }
-        
-        if category == "inbox":
-            result = captain.handle_inbox(action=action, **kwargs)
-        elif category == "coordination":
-            result = captain.handle_coordination(action=action, **kwargs)
-        elif category == "monitoring":
-            result = captain.handle_monitoring(action=action, **kwargs)
-        elif category == "tasks":
-            result = captain.handle_tasks(action=action, **kwargs)
-        elif category == "cleanup":
-            result = captain.handle_cleanup(action=action, **kwargs)
+    # Route to appropriate category method
+    if args.category == "inbox":
+        if args.action == "analyze":
+            results = captain.inbox_analyze()
+        elif args.action == "summary":
+            results = captain.inbox_summary()
         else:
-            result = {
-                "category": category,
-                "error": "Unknown category",
-                "timestamp": datetime.now().isoformat()
-            }
-        
-        results.append(result)
+            results = {"error": f"Unknown inbox action: {args.action}"}
+    
+    elif args.category == "coordination":
+        if args.action == "assign-tasks" or args.action == "assign":
+            results = captain.coordination_assign_tasks()
+        elif args.action == "close-loops" or args.action == "close":
+            results = captain.coordination_close_loops()
+        else:
+            results = {"error": f"Unknown coordination action: {args.action}"}
+    
+    elif args.category == "monitoring":
+        if args.action == "status-check" or args.action == "status":
+            results = captain.monitoring_status_check()
+        elif args.action == "find-idle" or args.action == "idle":
+            results = captain.monitoring_find_idle(args.hours)
+        else:
+            results = {"error": f"Unknown monitoring action: {args.action}"}
+    
+    elif args.category == "tasks":
+        if args.action == "assign":
+            if args.agent and args.task:
+                results = captain.tasks_assign(args.agent, args.task, args.priority)
+            else:
+                results = {"error": "Agent and task required for assignment"}
+        else:
+            results = {"error": f"Unknown tasks action: {args.action}"}
+    
+    elif args.category == "cleanup":
+        if args.action == "workspace":
+            results = captain.cleanup_workspace(days_old=args.days, dry_run=args.dry_run)
+        else:
+            results = {"error": f"Unknown cleanup action: {args.action}"}
     
     # Output results
     if args.json:
-        print(json.dumps(results, indent=2))
+        print(json.dumps(results, indent=2, default=str))
     else:
-        for result in results:
-            if "error" in result:
-                print(f"❌ {result['category']}: {result['error']}")
-            else:
-                print(f"✅ {result['category']}: {result.get('action', 'completed')}")
-                if "count" in result:
-                    print(f"   Count: {result['count']}")
+        if "error" in results:
+            print(f"❌ Error: {results['error']}")
+        elif "summary" in results:
+            print(results["summary"])
+        else:
+            print(json.dumps(results, indent=2, default=str))
     
-    return 0
+    return 0 if "error" not in results else 1
 
 
 if __name__ == "__main__":
     sys.exit(main())
-

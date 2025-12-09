@@ -2,6 +2,8 @@
 Task Entity - Core Domain Object
 =================================
 
+<!-- SSOT Domain: domain -->
+
 Represents a task in the agent coordination system.
 Tasks have identity and encapsulate business rules.
 """

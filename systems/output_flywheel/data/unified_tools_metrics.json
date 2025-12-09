@@ -1,0 +1,36 @@
+{
+  "tool_usage": {
+    "unified_validator": {
+      "total_calls": 2,
+      "successful_calls": 1,
+      "failed_calls": 1,
+      "categories": {
+        "ssot_config": 1,
+        "imports": 1
+      }
+    }
+  },
+  "category_usage": {
+    "ssot_config": 1,
+    "imports": 1
+  },
+  "performance_metrics": {
+    "unified_validator": {
+      "execution_times": [
+        3.99979305267334,
+        0.5935399532318115
+      ],
+      "avg_execution_time": 2.2966665029525757,
+      "min_execution_time": 0.5935399532318115,
+      "max_execution_time": 3.99979305267334
+    }
+  },
+  "error_rates": {
+    "unified_validator": {
+      "total": 2,
+      "errors": 1,
+      "rate": 0.5
+    }
+  },
+  "last_updated": "2025-12-08T16:25:58.533373"
+}

@@ -8,9 +8,19 @@ V2 Compliance: Under 300-line limit with focused functionality
 @License: MIT
 """
 
-from dataclasses import dataclass
-from typing import List, Dict, Any
 from dataclasses import dataclass, field
+from typing import List, Dict, Any
+
+# Import unified validator
+try:
+    from ...validation.unified_validation_system import get_unified_validator
+except ImportError:
+    # Fallback validator if not available
+    def get_unified_validator():
+        class FallbackValidator:
+            def validate_required(self, value):
+                return value is not None and value != []
+        return FallbackValidator()
 
 
 @dataclass

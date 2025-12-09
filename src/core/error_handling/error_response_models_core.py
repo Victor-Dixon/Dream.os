@@ -5,6 +5,8 @@ Error Response Models - V2 Compliant
 
 Error response dataclasses extracted from error_handling_core.py for V2 compliance.
 
+<!-- SSOT Domain: core -->
+
 Author: Agent-3 (Infrastructure & DevOps Specialist)
 V2 Compliant: <400 lines, ≤5 classes
 """

@@ -27,6 +27,7 @@ except ImportError:  # pragma: no cover - optional dependency
     ChromaCollection = None
 
 from src.core.unified_logging_system import get_logger
+from src.core.base.base_service import BaseService
 from src.services.models.vector_models import VectorDocument
 from src.web.vector_database.models import (
     Collection as WebCollection,
@@ -285,7 +286,7 @@ class LocalVectorStore:
         )
 
 
-class VectorDatabaseService:
+class VectorDatabaseService(BaseService):
     """Unified interface that prefers ChromaDB but gracefully degrades."""
 
     def __init__(
@@ -293,7 +294,7 @@ class VectorDatabaseService:
         persist_path: str = "data/vector_db",
         default_collection: str = DEFAULT_COLLECTION,
     ) -> None:
-        self.logger = LOGGER
+        super().__init__("VectorDatabaseService")
         self.persist_path = Path(persist_path)
         self.default_collection = default_collection
         self._client: chromadb.Client | None = None

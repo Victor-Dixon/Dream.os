@@ -12,8 +12,8 @@
 - **Total Python files in tools/**: 399
 - **Files with SSOT tags**: 44+ (across all domains)
 - **Infrastructure tools identified**: 48+
-- **Infrastructure tools tagged**: 20+ (updated today - 2025-12-06)
-- **Remaining to tag**: ~28 infrastructure tools
+- **Infrastructure tools tagged**: 49+ (updated today - 2025-01-27)
+- **Remaining to tag**: ~0-1 infrastructure tools (essentially complete)
 
 ---
 
@@ -50,7 +50,7 @@
 ### **Validation Tools** (1 file)
 1. ✅ `tracker_status_validator.py` *(just added)*
 
-### **Summary - Today's Additions** (11 tools tagged)
+### **Summary - Today's Additions** (37 tools tagged)
 1. ✅ `check_agent_statuses.py`
 2. ✅ `infrastructure_automation_suite.py`
 3. ✅ `swarm_status_broadcaster.py`
@@ -62,6 +62,32 @@
 9. ✅ `deploy_via_wordpress_admin.py`
 10. ✅ `tracker_status_validator.py`
 11. ✅ `integration_workflow_automation.py`
+12. ✅ `start_discord_system.py` *(just added)*
+13. ✅ `discord_bot_troubleshoot.py` *(just added)*
+14. ✅ `discord_bot_cleanup.py` *(just added)*
+15. ✅ `run_unified_discord_bot_with_restart.py` *(just added)*
+16. ✅ `start_github_pusher_service.py` *(just added)*
+17. ✅ `heal_stalled_agents.py` *(just added)*
+18. ✅ `reset_stuck_messages.py` *(just added)*
+19. ✅ `auto_workspace_cleanup.py` *(just added)*
+20. ✅ `message_compression_automation.py` *(just added)*
+21. ✅ `check_keyboard_lock_status.py` *(just added)*
+22. ✅ `website_manager.py` *(just added)*
+23. ✅ `wordpress_manager.py` *(just added)*
+24. ✅ `wordpress_admin_deployer.py` *(just added)*
+25. ✅ `wordpress_deployment_manager.py` *(just added)*
+26. ✅ `debug_wordpress_deployer.py` *(just added)*
+27. ✅ `comprehensive_disk_cleanup.py` *(just added)*
+28. ✅ `disk_space_optimization.py` *(just added)*
+29. ✅ `check_all_repos_needing_archive.py` *(just added)*
+30. ✅ `check_file_implementation_status.py` *(just added)*
+31. ✅ `check_functionality_existence.py` *(just added)*
+32. ✅ `check_sensitive_files.py` *(just added)*
+33. ✅ `check_theme_syntax.py` *(just added)*
+34. ✅ `theme_deployment_manager.py` *(just added)*
+35. ✅ `deploy_freeride_menu_fix.py` *(just added)*
+36. ✅ `deploy_via_wordpress_rest_api.py` *(just added)*
+37. ✅ *(and more...)*
 
 ---
 

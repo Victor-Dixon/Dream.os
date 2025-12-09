@@ -11,6 +11,8 @@ from __future__ import annotations
 import threading
 from typing import Any
 
+from src.core.config.timeout_constants import TimeoutConstants
+
 from ..base_manager import BaseManager
 from ..contracts import ManagerContext, ManagerResult
 from ..manager_state import ManagerType
@@ -201,7 +203,6 @@ class BaseExecutionManager(BaseManager):
                     except Exception as e:
                         self.logger.error(f"Error in task processor loop: {e}")
                         import time
-from src.core.config.timeout_constants import TimeoutConstants
                         time.sleep(1.0)
             
             # Start background thread

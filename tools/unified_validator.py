@@ -27,6 +27,7 @@ import logging
 import sys
 import ast
 import re
+import time
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional, Any, Tuple, Set
@@ -34,6 +35,16 @@ from typing import Dict, List, Optional, Any, Tuple, Set
 # Add project root to path
 project_root = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(project_root))
+
+# Import metrics tracker (optional - graceful fallback if not available)
+try:
+    from systems.output_flywheel.unified_tools_metrics import track_tool_usage
+    METRICS_AVAILABLE = True
+except ImportError:
+    METRICS_AVAILABLE = False
+    def track_tool_usage(*args, **kwargs):
+        """Fallback if metrics not available."""
+        pass
 
 logging.basicConfig(
     level=logging.INFO,
@@ -440,6 +451,10 @@ class UnifiedValidator:
 
 def main():
     """Main entry point."""
+    start_time = time.time()
+    category_used = None
+    success = False
+    
     parser = argparse.ArgumentParser(
         description="Unified Validator - Consolidated validation for all systems",
         formatter_class=argparse.RawDescriptionHelpFormatter
@@ -490,6 +505,7 @@ def main():
     )
     
     args = parser.parse_args()
+    category_used = args.category if args.category else "unknown"
     
     validator = UnifiedValidator()
     
@@ -525,6 +541,33 @@ def main():
             results = {"validation": {"error": "File or directory path required for refactor validation"}}
     elif args.category == "tracker":
         results = {"validation": validator.validate_tracker_status()}
+    
+    # Track metrics
+    execution_time = time.time() - start_time
+    
+    # Determine success (no errors in results)
+    success = True
+    if "validation" in results:
+        validation_result = results["validation"]
+        if isinstance(validation_result, dict):
+            if validation_result.get("valid") is False or validation_result.get("error"):
+                success = False
+    elif "validations" in results:
+        validations = results["validations"]
+        if isinstance(validations, list):
+            for v in validations:
+                if isinstance(v, dict) and (v.get("valid") is False or v.get("error")):
+                    success = False
+    
+    if METRICS_AVAILABLE:
+        from systems.output_flywheel.unified_tools_metrics import UnifiedToolsMetricsTracker
+        tracker = UnifiedToolsMetricsTracker()
+        tracker.track_tool_usage(
+            tool_name="unified_validator",
+            category=category_used,
+            success=success,
+            execution_time=execution_time
+        )
     
     if args.json:
         print(json.dumps(results, indent=2))

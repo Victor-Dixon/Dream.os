@@ -12,15 +12,17 @@ V2 Compliance | Author: Agent-2 | Date: 2025-10-15
 from __future__ import annotations
 
 import argparse
+import json
 import logging
 import subprocess
 import time
 from datetime import datetime
 from pathlib import Path
-from typing import Any
+from typing import Any, Dict, Optional
 
-from ..utils.swarm_time import format_swarm_timestamp, get_swarm_time_display
+from ..utils.swarm_time import get_swarm_time_display
 from ..core.config.timeout_constants import TimeoutConstants
+from ..core.base.base_service import BaseService
 
 import pyautogui
 
@@ -32,8 +34,85 @@ from src.core.messaging_core import (
     UnifiedMessageType,
     send_message,
 )
+from src.core.messaging_models_core import MessageCategory, MESSAGE_TEMPLATES
 
 logger = logging.getLogger(__name__)
+
+# Delivery modes for UI send
+class SendMode:
+    ENTER = "enter"
+    CTRL_ENTER = "ctrl_enter"
+
+# Persist lightweight category tracking for no-ack enforcement.
+LAST_INBOUND_FILE = Path("runtime") / "last_inbound_category.json"
+
+
+def _load_last_inbound_categories() -> Dict[str, str]:
+    try:
+        if LAST_INBOUND_FILE.exists():
+            with open(LAST_INBOUND_FILE, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                if isinstance(data, dict):
+                    return data
+    except Exception:
+        logger.warning("⚠️ Could not load last inbound categories", exc_info=True)
+    return {}
+
+
+def _save_last_inbound_categories(data: Dict[str, str]) -> None:
+    try:
+        LAST_INBOUND_FILE.parent.mkdir(parents=True, exist_ok=True)
+        with open(LAST_INBOUND_FILE, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=2)
+    except Exception:
+        logger.warning("⚠️ Could not persist last inbound categories", exc_info=True)
+
+
+def _map_category_from_type(message_type: UnifiedMessageType) -> Optional[MessageCategory]:
+    if message_type == UnifiedMessageType.SYSTEM_TO_AGENT:
+        return MessageCategory.S2A
+    if message_type == UnifiedMessageType.CAPTAIN_TO_AGENT:
+        return MessageCategory.C2A
+    if message_type == UnifiedMessageType.AGENT_TO_AGENT:
+        return MessageCategory.A2A
+    return None
+
+
+def _is_ack_text(message: str) -> bool:
+    text = (message or "").lower().strip()
+    noise = ["ack", "ack.", "acknowledged", "resuming", "got it", "copy", "copy that", "noted"]
+    return any(text == n or text.startswith(n + " ") for n in noise)
+
+
+def _apply_template(
+    category: MessageCategory,
+    message: str,
+    sender: str,
+    recipient: str,
+    priority: UnifiedMessagePriority,
+    message_id: str,
+    extra: Optional[Dict[str, Any]] = None,
+) -> str:
+    tmpl = MESSAGE_TEMPLATES.get(category)
+    if not tmpl:
+        return message
+    now = datetime.now().isoformat(timespec="seconds")
+    meta = extra or {}
+    return tmpl.format(
+        sender=sender,
+        recipient=recipient,
+        priority=priority.value,
+        message_id=message_id,
+        timestamp=now,
+        context=meta.get("context", ""),
+        actions=meta.get("actions", message),
+        fallback=meta.get("fallback", "Escalate to Captain"),
+        task=meta.get("task", message),
+        deliverable=meta.get("deliverable", ""),
+        eta=meta.get("eta", ""),
+        ask=meta.get("ask", message),
+        next_step=meta.get("next_step", ""),
+    )
 
 
 def _format_multi_agent_request_message(
@@ -240,16 +319,8 @@ AGENT_ASSIGNMENTS = {
     "Agent-8": "Integration & Coordination - Analyze integration points",
 }
 
-SWARM_AGENTS = [
-    "Agent-1",
-    "Agent-2",
-    "Agent-3",
-    "Agent-4",
-    "Agent-5",
-    "Agent-6",
-    "Agent-7",
-    "Agent-8",
-]
+# Use SSOT agent constants
+from src.core.constants.agent_constants import AGENT_LIST as SWARM_AGENTS
 
 # ============================================================================
 # ARGUMENT PARSER
@@ -384,6 +455,54 @@ def create_messaging_parser() -> argparse.ArgumentParser:
         help="Dry run mode - show what would be done without executing",
     )
 
+    # Cycle V2 flags
+    parser.add_argument(
+        "--cycle-v2",
+        action="store_true",
+        help="Use CYCLE_V2 template for high-throughput cycle (requires --agent and cycle fields)",
+    )
+    parser.add_argument(
+        "--mission",
+        type=str,
+        help="Mission statement (single sentence) for CYCLE_V2",
+    )
+    parser.add_argument(
+        "--dod",
+        type=str,
+        help="Definition of Done (3 bullets max, use \\n for newlines) for CYCLE_V2",
+    )
+    parser.add_argument(
+        "--ssot-constraint",
+        type=str,
+        help="SSOT constraint (domain) for CYCLE_V2",
+    )
+    parser.add_argument(
+        "--v2-constraint",
+        type=str,
+        help="V2 constraint (e.g., 'file <400 lines') for CYCLE_V2",
+    )
+    parser.add_argument(
+        "--touch-surface",
+        type=str,
+        help="Touch surface (files/modules to be changed) for CYCLE_V2",
+    )
+    parser.add_argument(
+        "--validation",
+        type=str,
+        help="Validation required (tests/lint commands) for CYCLE_V2",
+    )
+    parser.add_argument(
+        "--priority-level",
+        type=str,
+        default="P1",
+        help="Priority level (P0/P1) for CYCLE_V2 (default: P1)",
+    )
+    parser.add_argument(
+        "--handoff",
+        type=str,
+        help="Handoff expectation (what 'done' looks like) for CYCLE_V2",
+    )
+
     return parser
 
 
@@ -430,11 +549,14 @@ class MessageCoordinator:
     @staticmethod
     def send_to_agent(
         agent: str,
-        message: str,
+        message,
         priority=UnifiedMessagePriority.REGULAR,
         use_pyautogui=False,
         stalled: bool = False,
+        send_mode: Optional[str] = None,
         sender: str = None,
+        message_category: Optional[MessageCategory] = None,
+        message_metadata: Optional[Dict[str, Any]] = None,
     ):
         """
         Send message to agent via message queue (prevents race conditions).
@@ -450,6 +572,7 @@ class MessageCoordinator:
             priority: Message priority
             use_pyautogui: Use PyAutoGUI delivery
             stalled: Use stalled delivery mode
+            send_mode: Optional UI send mode override ("enter" | "ctrl_enter")
             sender: Optional sender ID (auto-detected if not provided)
         """
         try:
@@ -459,6 +582,19 @@ class MessageCoordinator:
             
             # DETERMINE MESSAGE TYPE based on sender
             message_type, sender_final = MessageCoordinator._determine_message_type(sender, agent)
+            category = message_category or _map_category_from_type(message_type)
+            
+            # Enforce no-ack policy: if sender is agent and last inbound was S2A, block ack/noise replies
+            if sender_final.upper().startswith("AGENT-"):
+                last_inbound = _load_last_inbound_categories()
+                if last_inbound.get(sender_final) == MessageCategory.S2A.value and _is_ack_text(message):
+                    logger.warning(f"❌ Message blocked: ack/noise reply after S2A inbound for {sender_final}")
+                    return {
+                        "success": False,
+                        "blocked": True,
+                        "reason": "ack_blocked_after_s2a",
+                        "agent": agent,
+                    }
             
             # VALIDATION LAYER 1: Check if recipient has pending multi-agent request
             # This prevents messages from being queued when recipient can't respond
@@ -494,10 +630,21 @@ class MessageCoordinator:
                 metadata = {
                     "stalled": stalled,
                     "use_pyautogui": use_pyautogui,
+                    "send_mode": send_mode,
                 }
                 
-                # Format message with response instructions for normal message
-                formatted_message = _format_normal_message_with_instructions(message, "NORMAL")
+                # If caller provided category, assume message is already rendered; skip legacy formatter
+                if category:
+                    metadata["message_category"] = category.value
+                    message_text = str(message)
+                else:
+                    # Legacy path: format only if message is str
+                    if isinstance(message, str):
+                        message_text = _format_normal_message_with_instructions(message, "NORMAL")
+                    else:
+                        message_text = str(message)
+                
+                formatted_message = message_text
                 
                 queue_id = queue.enqueue(
                     message={
@@ -515,13 +662,25 @@ class MessageCoordinator:
                 logger.info(
                     f"✅ Message queued for {agent} (ID: {queue_id}): {message[:50]}..."
                 )
+                if category and agent.upper().startswith("AGENT-"):
+                    last_inbound = _load_last_inbound_categories()
+                    last_inbound[agent] = category.value
+                    _save_last_inbound_categories(last_inbound)
                 return {"success": True, "queue_id": queue_id, "agent": agent}
             else:
                 # Fallback to direct send if queue unavailable (should not happen in production)
                 logger.warning("⚠️ Queue unavailable, falling back to direct send")
-                metadata = {"stalled": stalled} if stalled else {}
-                return send_message(
-                    content=message,
+                metadata = {"stalled": stalled, "send_mode": send_mode} if (stalled or send_mode) else {}
+                if category:
+                    metadata["message_category"] = category.value
+                    message_text = str(message)
+                else:
+                    if isinstance(message, str):
+                        message_text = _format_normal_message_with_instructions(message, "NORMAL")
+                    else:
+                        message_text = str(message)
+                result = send_message(
+                    content=message_text,
                     sender=sender_final,
                     recipient=agent,
                     message_type=message_type,
@@ -529,6 +688,11 @@ class MessageCoordinator:
                     tags=[UnifiedMessageTag.SYSTEM],
                     metadata=metadata,
                 )
+                if category and agent.upper().startswith("AGENT-"):
+                    last_inbound = _load_last_inbound_categories()
+                    last_inbound[agent] = category.value
+                    _save_last_inbound_categories(last_inbound)
+                return result
         except Exception as e:
             logger.error(f"Error sending message to {agent}: {e}")
             return False
@@ -841,9 +1005,104 @@ class MessageCoordinator:
         return UnifiedMessageType.SYSTEM_TO_AGENT, sender or "SYSTEM"
 
 
+def handle_cycle_v2_message(args, parser) -> int:
+    """Handle CYCLE_V2 message sending with template."""
+    try:
+        if not args.agent:
+            print("❌ ERROR: --agent required for --cycle-v2")
+            parser.print_help()
+            return 1
+        
+        # Validate required fields
+        required_fields = {
+            "mission": args.mission,
+            "dod": args.dod,
+            "ssot_constraint": args.ssot_constraint,
+            "v2_constraint": args.v2_constraint,
+            "touch_surface": args.touch_surface,
+            "validation": args.validation,
+            "handoff": args.handoff,
+        }
+        
+        missing = [k for k, v in required_fields.items() if not v]
+        if missing:
+            print(f"❌ ERROR: Missing required CYCLE_V2 fields: {', '.join(missing)}")
+            print("Required: --mission, --dod, --ssot-constraint, --v2-constraint, --touch-surface, --validation, --handoff")
+            return 1
+        
+        # Normalize priority
+        normalized_priority = "regular" if args.priority == "normal" else args.priority
+        priority = (
+            UnifiedMessagePriority.URGENT
+            if normalized_priority == "urgent"
+            else UnifiedMessagePriority.REGULAR
+        )
+        
+        # Render CYCLE_V2 template (stored in S2A templates but used for C2A)
+        from src.core.messaging_models_core import MessageCategory, MESSAGE_TEMPLATES
+        
+        # Get CYCLE_V2 template from S2A templates
+        cycle_v2_template = MESSAGE_TEMPLATES.get(MessageCategory.S2A, {}).get("CYCLE_V2")
+        
+        if not cycle_v2_template:
+            print("❌ ERROR: CYCLE_V2 template not found")
+            return 1
+        
+        # Format template directly
+        message_id = f"msg_{int(time.time() * 1000)}"
+        timestamp = datetime.now().isoformat()
+        
+        # Replace \n in dod with actual newlines
+        dod = args.dod.replace("\\n", "\n") if args.dod else ""
+        
+        rendered = cycle_v2_template.format(
+            sender="Captain Agent-4",
+            recipient=args.agent,
+            priority=priority.value if hasattr(priority, "value") else str(priority),
+            message_id=message_id,
+            timestamp=timestamp,
+            mission=args.mission,
+            dod=dod,
+            ssot_constraint=args.ssot_constraint,
+            v2_constraint=args.v2_constraint,
+            touch_surface=args.touch_surface,
+            validation_required=args.validation,
+            priority_level=args.priority_level or "P1",
+            handoff_expectation=args.handoff,
+            fallback="Escalate to Captain if blocked with proposed fix"
+        )
+        
+        # Send via MessageCoordinator
+        result = MessageCoordinator.send_to_agent(
+            args.agent,
+            rendered,
+            priority,
+            stalled=getattr(args, "stalled", False),
+            message_category=MessageCategory.C2A
+        )
+        
+        if isinstance(result, dict) and result.get("success"):
+            print(f"✅ CYCLE_V2 message sent to {args.agent}")
+            print(f"   Mission: {args.mission[:50]}...")
+            return 0
+        else:
+            print(f"❌ Failed to send CYCLE_V2 message to {args.agent}")
+            return 1
+            
+    except Exception as e:
+        logger.error(f"CYCLE_V2 message handling error: {e}")
+        import traceback
+        traceback.print_exc()
+        return 1
+
+
 def handle_message(args, parser) -> int:
     """Handle message sending."""
     try:
+        # Check for cycle-v2 flag first
+        if getattr(args, "cycle_v2", False):
+            return handle_cycle_v2_message(args, parser)
+        
         if not args.agent and not args.broadcast:
             print("❌ ERROR: Either --agent or --broadcast must be specified")
             parser.print_help()
@@ -1027,7 +1286,7 @@ def handle_leaderboard() -> int:
 # ============================================================================
 
 
-class ConsolidatedMessagingService:
+class ConsolidatedMessagingService(BaseService):
     """
     Consolidated messaging service adapter for Discord bot.
     
@@ -1038,17 +1297,18 @@ class ConsolidatedMessagingService:
 
     def __init__(self):
         """Initialize messaging service."""
+        super().__init__("ConsolidatedMessagingService")
         self.project_root = Path(__file__).parent.parent.parent
         self.messaging_cli = self.project_root / "src" / "services" / "messaging_cli.py"
-        
+
         # CRITICAL: Initialize message queue for synchronization
         try:
             from src.core.message_queue import MessageQueue
-            
+
             self.queue = MessageQueue()
-            logger.info("✅ ConsolidatedMessagingService initialized with message queue")
+            self.logger.info("✅ ConsolidatedMessagingService initialized with message queue")
         except Exception as e:
-            logger.error(f"⚠️ Failed to initialize message queue: {e}")
+            self.logger.error(f"⚠️ Failed to initialize message queue: {e}")
             self.queue = None
 
     def send_message(
@@ -1097,7 +1357,7 @@ class ConsolidatedMessagingService:
             
             if not can_send:
                 # Agent has pending request - block and return error
-                logger.warning(
+                self.logger.warning(
                     f"❌ Message blocked for {agent} - pending multi-agent request"
                 )
                 return {
@@ -1161,17 +1421,17 @@ class ConsolidatedMessagingService:
                         },
                     }
                 )
-                
-                logger.info(
+
+                self.logger.info(
                     f"✅ Message queued for {agent} (ID: {queue_id}): {message[:50]}..."
                 )
-                
+
                 # CRITICAL: Wait for delivery if requested (blocking mode)
                 if wait_for_delivery:
-                    logger.debug(f"⏳ Waiting for message {queue_id} delivery...")
+                    self.logger.debug(f"⏳ Waiting for message {queue_id} delivery...")
                     delivered = self.queue.wait_for_delivery(queue_id, timeout=timeout)
                     if delivered:
-                        logger.info(f"✅ Message {queue_id} delivered successfully")
+                        self.logger.info(f"✅ Message {queue_id} delivered successfully")
                         return {
                             "success": True,
                             "message": f"Message delivered to {agent}",
@@ -1180,7 +1440,7 @@ class ConsolidatedMessagingService:
                             "delivered": True,
                         }
                     else:
-                        logger.warning(f"⚠️ Message {queue_id} delivery failed or timeout")
+                        self.logger.warning(f"⚠️ Message {queue_id} delivery failed or timeout")
                         return {
                             "success": False,
                             "message": f"Message delivery failed or timeout for {agent}",
@@ -1220,11 +1480,11 @@ class ConsolidatedMessagingService:
             )
 
             if result.returncode == 0:
-                logger.info(f"Message sent to {agent}: {message[:50]}...")
+                self.logger.info(f"Message sent to {agent}: {message[:50]}...")
                 return {"success": True, "message": f"Message sent to {agent}", "agent": agent}
             else:
                 error_msg = result.stderr or "Unknown error"
-                logger.error(f"Failed to send message to {agent}: {error_msg}")
+                self.logger.error(f"Failed to send message to {agent}: {error_msg}")
                 return {
                     "success": False,
                     "message": f"Failed to send message: {error_msg}",

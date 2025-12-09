@@ -10,14 +10,19 @@ License: MIT
 
 from typing import Any, Dict, Optional
 
+from ..core.base.base_service import BaseService
 
-class Coordinator:
+
+class Coordinator(BaseService):
     """Basic coordinator implementation."""
 
     def __init__(self, name: str, logger: Optional[Any] = None):
         """Initialize coordinator."""
+        super().__init__("Coordinator")
         self.name = name
-        self.logger = logger
+        # Use BaseService logger if no custom logger provided
+        if logger:
+            self.custom_logger = logger
         self.status = {"name": name, "status": "active"}
 
     def get_status(self) -> Dict[str, Any]:
@@ -31,5 +36,7 @@ class Coordinator:
     def shutdown(self) -> None:
         """Shutdown coordinator."""
         self.status["status"] = "shutdown"
-        if self.logger:
-            self.logger.info(f"Coordinator {self.name} shut down")
+        # Use custom logger if provided, otherwise use BaseService logger
+        logger = getattr(self, 'custom_logger', None) or self.logger
+        if logger:
+            logger.info(f"Coordinator {self.name} shut down")

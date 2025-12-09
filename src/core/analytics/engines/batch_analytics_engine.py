@@ -3,6 +3,8 @@
 Batch Analytics Engine - KISS Compliant
 =======================================
 
+<!-- SSOT Domain: analytics -->
+
 Simple batch analytics processing.
 
 Author: Agent-5 - Business Intelligence Specialist

@@ -190,7 +190,6 @@ class CoordinationValidator:
             errors=self.errors,
             warnings=self.warnings,
         )
-            print("✅ All validations passed!")
 
 
 def main() -> int:

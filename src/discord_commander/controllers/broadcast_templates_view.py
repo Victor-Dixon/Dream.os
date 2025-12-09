@@ -170,7 +170,8 @@ class BroadcastTemplatesView(discord.ui.View):
     """
 
     def __init__(self, messaging_service: ConsolidatedMessagingService):
-        super().__init__(timeout=600)
+        from src.core.config.timeout_constants import TimeoutConstants
+        super().__init__(timeout=TimeoutConstants.HTTP_EXTENDED * 2)
         self.messaging_service = messaging_service
         self.current_mode = "regular"
         self._create_template_buttons()
@@ -226,21 +227,29 @@ class BroadcastTemplatesView(discord.ui.View):
         else:
             templates = BROADCAST_TEMPLATES.get(self.current_mode, [])
         row = 1
+        max_rows = 2
+        max_cols = 5  # Discord view grid is 5 columns per row
         for idx, template in enumerate(templates):
-            if idx > 0 and idx % 3 == 0:
-                row += 1
-                if row > 2:  # Max 2 rows for templates
-                    break
-
-            btn = discord.ui.Button(
-                label=template["name"],
-                style=discord.ButtonStyle.primary,
-                emoji=template["emoji"],
-                custom_id=f"template_{self.current_mode}_{idx}",
-                row=row,
-            )
-            btn.callback = lambda i, t=template: self.on_template_select(i, t)
-            self.add_item(btn)
+            # compute target row/col in a 5-column grid starting at row 1
+            row = 1 + (idx // max_cols)
+            if row > 1 + max_rows:
+                logger.warning(
+                    f"Skipping template button idx={idx} (row {row}) - exceeds max_rows {max_rows}."
+                )
+                continue
+            col = idx % max_cols
+            try:
+                btn = discord.ui.Button(
+                    label=template.get("name", f"Template {idx+1}"),
+                    style=discord.ButtonStyle.primary,
+                    emoji=template.get("emoji"),
+                    custom_id=f"template_{self.current_mode}_{idx}",
+                    row=row,
+                )
+                btn.callback = lambda i, t=template: self.on_template_select(i, t)
+                self.add_item(btn)
+            except Exception as e:
+                logger.error(f"Error adding template button to grid: {e}", exc_info=True)
 
     async def on_mode_select(self, interaction: discord.Interaction, mode: str):
         """Handle mode selection."""

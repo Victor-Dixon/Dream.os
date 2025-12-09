@@ -67,6 +67,52 @@
       ]
     },
     {
+      "contract_id": "A8-SPREADSHEET-AUTOMATION-001",
+      "title": "Spreadsheet-Driven Project Automation",
+      "description": "Use spreadsheet adapter to automate project tasks from dashboard metrics. Generate project dashboard, review actionable tasks, execute via spreadsheet adapter.",
+      "priority": "MEDIUM",
+      "points": 200,
+      "status": "PENDING",
+      "dependencies": [],
+      "estimated_time": "1-2 hours",
+      "agent_assigned": "Agent-8",
+      "blockers": [],
+      "tools": [
+        "tools/project_metrics_to_spreadsheet.py",
+        "tools/spreadsheet_github_adapter.py",
+        "tools/generate_tools_consolidation_prs.py"
+      ],
+      "workflow": [
+        "1. Generate project dashboard: python tools/project_metrics_to_spreadsheet.py --output dashboard.csv",
+        "2. Review actionable tasks in dashboard_tasks.csv",
+        "3. Execute via spreadsheet adapter: python tools/spreadsheet_github_adapter.py --file dashboard_tasks.csv --repo owner/repo",
+        "4. Track results and update dashboard"
+      ]
+    },
+    {
+      "contract_id": "A8-TOOLS-CONSOLIDATION-SPREADSHEET-001",
+      "title": "Tools Consolidation via Spreadsheet Automation",
+      "description": "Use spreadsheet-driven workflow to finish tools consolidation tasks. Generate consolidation PR tasks, review, and execute via spreadsheet adapter.",
+      "priority": "HIGH",
+      "points": 300,
+      "status": "PENDING",
+      "dependencies": [],
+      "estimated_time": "2-3 hours",
+      "agent_assigned": "Agent-8",
+      "blockers": [],
+      "tools": [
+        "tools/generate_tools_consolidation_prs.py",
+        "tools/spreadsheet_github_adapter.py",
+        "tools/unified_analyzer.py"
+      ],
+      "workflow": [
+        "1. Generate consolidation tasks: python tools/generate_tools_consolidation_prs.py --auto-generate --output consolidation.csv",
+        "2. Review/edit spreadsheet",
+        "3. Execute PR creation: python tools/spreadsheet_github_adapter.py --file consolidation.csv --repo owner/repo",
+        "4. Track PR results"
+      ]
+    },
+    {
       "contract_id": "A8-SSOT-AGENT1-SUPPORT-001",
       "title": "Support Agent-1 Stage 1 Integration with SSOT Expertise",
       "description": "Provide SSOT verification support as needed during Agent-1's Stage 1 integration work. Ensure SSOT compliance throughout integration process.",

@@ -15,7 +15,6 @@ from . import recovery_handlers
 from . import recovery_messaging
 from . import recovery_state
 from . import scheduler
-from . import scheduler_deprecated
 from . import scheduler_helpers
 from . import scheduler_models
 from . import scheduler_queue
@@ -37,7 +36,6 @@ __all__ = [
     'recovery_messaging',
     'recovery_state',
     'scheduler',
-    'scheduler_deprecated',
     'scheduler_helpers',
     'scheduler_models',
     'scheduler_queue',

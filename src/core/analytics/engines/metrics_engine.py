@@ -3,6 +3,8 @@
 Metrics Engine - KISS Compliant
 ===============================
 
+<!-- SSOT Domain: analytics -->
+
 Simple metrics collection and monitoring.
 
 Author: Agent-5 - Business Intelligence Specialist

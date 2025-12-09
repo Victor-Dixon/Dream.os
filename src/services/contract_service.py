@@ -1,5 +1,3 @@
-import logging
-logger = logging.getLogger(__name__)
 """
 Contract Service - Agent Cellphone V2
 ====================================
@@ -7,12 +5,16 @@ Contract Service - Agent Cellphone V2
 SOLID-compliant contract management service.
 Refactored to follow Single Responsibility, Open-Closed, and Dependency Inversion principles.
 
+V2 Compliance: Migrated to BaseService for consolidated initialization and error handling.
+
 Author: Agent-6 (SOLID Sentinel)
 License: MIT
 """
 import json
 import os
 from typing import Any, Protocol
+
+from src.core.base.base_service import BaseService
 
 
 class IContractStorage(Protocol):
@@ -77,7 +79,7 @@ class ContractDefinitions:
 class AgentStatusChecker:
     """Responsible for checking agent status only."""
 
-    def check_agent_status(self) ->None:
+    def check_agent_status(self, logger) ->None:
         """Check and display status of all agents."""
         logger.info('📊 AGENT STATUS & CONTRACT AVAILABILITY')
         logger.info('=' * 50)
@@ -108,7 +110,7 @@ class ContractDisplay:
     """Responsible for displaying contract information only."""
 
     def display_contract_assignment(self, agent_id: str, contract: dict[str,
-        Any]) ->None:
+        Any], logger) ->None:
         """Display contract assignment details."""
         logger.info(f"✅ CONTRACT ASSIGNED: {contract['name']}")
         logger.info(f"📋 Category: {contract['category']}")
@@ -126,11 +128,12 @@ class ContractDisplay:
         logger.info('⚡ WE. ARE. SWARM.')
 
 
-class ContractService:
+class ContractService(BaseService):
     """SOLID-compliant contract service with dependency injection."""
 
     def __init__(self, storage: (IContractStorage | None)=None):
         """Initialize contract service with dependency injection."""
+        super().__init__("ContractService")
         self.contract_definitions = ContractDefinitions()
         self.contracts = self.contract_definitions.get_contract_definitions()
         self.storage = storage
@@ -144,11 +147,11 @@ class ContractService:
     def display_contract_assignment(self, agent_id: str, contract: dict[str,
         Any]) ->None:
         """Display contract assignment details."""
-        self.display.display_contract_assignment(agent_id, contract)
+        self.display.display_contract_assignment(agent_id, contract, self.logger)
 
     def check_agent_status(self) ->None:
         """Check and display status of all agents."""
-        self.status_checker.check_agent_status()
+        self.status_checker.check_agent_status(self.logger)
 
     def save_contract(self, agent_id: str, contract_data: dict[str, Any]
         ) ->bool:

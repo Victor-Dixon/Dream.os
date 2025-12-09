@@ -357,7 +357,8 @@ class WebhookDeleteConfirmView(discord.ui.View):
     """Confirmation view for webhook deletion."""
 
     def __init__(self, webhook: discord.Webhook, user: discord.User):
-        super().__init__(timeout=30)
+        from src.core.config.timeout_constants import TimeoutConstants
+        super().__init__(timeout=TimeoutConstants.HTTP_DEFAULT)
         self.webhook = webhook
         self.user = user
         self.confirmed = False

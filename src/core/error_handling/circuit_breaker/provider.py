@@ -53,6 +53,7 @@ class CircuitBreakerProvider:
             Default Circuit Breaker instance
         """
         from src.core.config.config_dataclasses import CircuitBreakerConfig
+        from src.core.config.timeout_constants import TimeoutConstants
         
         config = CircuitBreakerConfig(
             name="default",
@@ -65,7 +66,7 @@ class CircuitBreakerProvider:
     def create_with_config(
         name: str,
         failure_threshold: int = 5,
-        recovery_timeout: float = 60.0
+        recovery_timeout: float = None
     ) -> ICircuitBreaker:
         """
         Create Circuit Breaker with inline configuration.
@@ -80,6 +81,10 @@ class CircuitBreakerProvider:
         """
         from src.core.config.config_dataclasses import CircuitBreakerConfig
         from src.core.config.timeout_constants import TimeoutConstants
+        
+        # Use SSOT timeout if not provided
+        if recovery_timeout is None:
+            recovery_timeout = TimeoutConstants.HTTP_MEDIUM
         
         config = CircuitBreakerConfig(
             name=name,

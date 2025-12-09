@@ -17,23 +17,26 @@ from src.web.assignment_handlers import AssignmentHandlers
 # Create blueprint
 assignment_bp = Blueprint("assignment", __name__, url_prefix="/api/assignments")
 
+# Create handler instance (BaseHandler pattern)
+assignment_handlers = AssignmentHandlers()
+
 
 @assignment_bp.route("/assign", methods=["POST"])
 def assign():
     """Assign task to best agent."""
-    return AssignmentHandlers.handle_assign(request)
+    return assignment_handlers.handle_assign(request)
 
 
 @assignment_bp.route("/list", methods=["GET"])
 def list_assignments():
     """List all assignments."""
-    return AssignmentHandlers.handle_list(request)
+    return assignment_handlers.handle_list(request)
 
 
 @assignment_bp.route("/status", methods=["GET"])
 def get_status():
     """Get assignment service status."""
-    return AssignmentHandlers.handle_get_status(request)
+    return assignment_handlers.handle_get_status(request)
 
 
 @assignment_bp.route("/health", methods=["GET"])

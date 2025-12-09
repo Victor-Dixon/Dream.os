@@ -4,7 +4,6 @@ from dataclasses import dataclass
 from typing import Any
 
 from .config_ssot import get_config
-from dataclasses import dataclass, field
 
 
 

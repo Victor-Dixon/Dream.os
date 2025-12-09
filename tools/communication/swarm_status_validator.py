@@ -24,7 +24,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-AGENTS = ["Agent-1", "Agent-2", "Agent-3", "Agent-5", "Agent-6", "Agent-7", "Agent-8"]
+from src.core.constants.agent_constants import AGENT_LIST as AGENTS
 
 
 class SwarmStatusValidator:
@@ -149,16 +149,11 @@ class SwarmStatusValidator:
         print(f"  Stale agents: {swarm_status['stale_agents']}")
         print(f"  Missing agents: {swarm_status['missing_agents']}")
 
-        if self.errors:
-            print("\n❌ VALIDATION ERRORS:")
-            for error in self.errors:
-                print(f"  • {error}")
-        if self.warnings:
-            print("\n⚠️  WARNINGS:")
-            for warning in self.warnings:
-                print(f"  • {warning}")
-        if not self.errors and not self.warnings:
-            print("\n✅ All validations passed!")
+        from src.core.utils.validation_utils import print_validation_report
+        print_validation_report(
+            errors=self.errors,
+            warnings=self.warnings,
+        )
 
 
 def main() -> int:

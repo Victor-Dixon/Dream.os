@@ -1,162 +1,94 @@
 {
   "agent_id": "Agent-7",
   "agent_name": "Web Development Specialist",
-  "session_date": "2025-12-05",
-  "last_updated": "2025-12-05T23:59:00Z",
+  "session_date": "2025-12-08",
+  "last_updated": "2025-12-08T22:40:00Z",
   "status": "SESSION_CLEANUP_COMPLETE",
   "current_phase": "READY_FOR_NEW_ASSIGNMENTS",
-  
+
   "session_summary": {
-    "session_type": "Stage 1 Web Integration - Loop 2 Acceleration",
-    "primary_mission": "Complete remaining 25 web integrations - Target: 50%+ (12+ files)",
-    "status": "✅ TARGET EXCEEDED",
-    "progress": "12/25 files (48%) - EXCEEDED 50% target"
+    "session_type": "Activity Telemetry v1 integration",
+    "primary_mission": "Trust ActivityEmitter events for stall/resume and activity detection",
+    "status": "✅ DELIVERED",
+    "progress": "Event ingestion + weighted scoring + is_active API shipped"
   },
-  
+
   "major_achievements": {
-    "loop2_acceleration": {
+    "telemetry_ingestion": {
       "status": "COMPLETE",
-      "target": "50%+ (12+ files) by next cycle",
-      "achieved": "12/25 files (48%)",
-      "result": "✅ TARGET EXCEEDED",
-      "points": 200
+      "details": "AgentActivityDetector now reads runtime/agent_comms/activity_events.jsonl with schema ts/agent/type/source/summary/artifact"
     },
-    "web_integration_wiring": {
-      "status": "IN PROGRESS",
-      "progress": "12/25 files (48%)",
-      "files_wired_this_session": [
-        "assignment_service.py → /api/assignments",
-        "chat_presence_orchestrator.py → /api/chat-presence"
-      ],
-      "files_already_wired": [
-        "agent_lifecycle.py",
-        "contract_system/manager.py",
-        "message_queue_utils.py",
-        "monitoring_lifecycle.py",
-        "task_coordination_engine.py",
-        "scheduler_refactored.py",
-        "jarvis/conversation_engine.py",
-        "jarvis/vision_system.py",
-        "workflows/engine.py",
-        "vision/analyzers/color_analyzer.py"
-      ]
-    },
-    "web_ssot_audit": {
+    "weighted_scoring": {
       "status": "COMPLETE",
-      "compliance_rate": "100%",
-      "files_tagged": 19,
-      "files_updated": [
-        "contract_routes.py",
-        "coordination_routes.py",
-        "integrations_routes.py",
-        "monitoring_routes.py"
-      ]
+      "details": "Tiered weights: Tier1 = TASK_COMPLETED/GIT_PUSH/MONEY_METRIC/TOOL_RUN failure (score 4-5); Tier2 = TOOL_RUN success, BRAIN_WRITE, TASK_CLAIMED, DEVLOG_CREATED"
     },
-    "discord_test_mocks": {
-      "status": "IN PROGRESS",
-      "progress": "3/9 locations found (33%)",
-      "ssot_created": "test_utils.py (unified mocks)"
-    },
-    "stage1_logic_extraction": {
-      "status": "PENDING",
-      "progress": "Starting pattern extraction",
-      "coordination": "Coordinating with Agent-2 and Agent-1"
+    "is_active_api": {
+      "status": "COMPLETE",
+      "details": "New is_active(agent, window_s, activity_threshold=3) preferring telemetry; falls back to legacy heuristics"
     }
   },
-  
+
   "deliverables": {
-    "files_created": [
-      "src/web/assignment_routes.py",
-      "src/web/assignment_handlers.py",
-      "src/web/chat_presence_routes.py",
-      "src/web/chat_presence_handlers.py"
-    ],
     "files_updated": [
-      "src/web/__init__.py - Registered new blueprints",
-      "src/web/contract_routes.py - Added SSOT tag",
-      "src/web/coordination_routes.py - Added SSOT tag",
-      "src/web/integrations_routes.py - Added SSOT tag",
-      "src/web/monitoring_routes.py - Added SSOT tag"
+      "tools/agent_activity_detector.py (telemetry ingestion, scoring, is_active)",
+      "runtime/swarm_brain_insights_agent-7_2025-10-11.md (new insight)",
+      "agent_workspaces/Agent-7/passdown.json (this file)"
     ],
     "documentation": [
-      "LOOP2_ACCELERATION_COMPLETE.md",
-      "QUICK_WINS_STATUS.md",
-      "VERIFICATION_SUMMARY.md",
-      "PHASE1_VERIFICATION_COMPLETE.md",
-      "ACCELERATION_PROGRESS_REPORT.md"
+      "devlogs/2025-12-08_agent-7_activity_telemetry_detector_integration.md",
+      "devlogs/2025-12-08_agent-7_session_cleanup.md"
     ]
   },
-  
+
   "next_actions": [
-    "🚀 Continue Stage 1 Web Integration - Wire remaining 13 files to reach 100%",
-    "🚀 Complete Discord Test Mocks Consolidation - Find remaining 6 locations",
-    "🚀 Resume Stage 1 Logic Extraction - Extract patterns from Priority 1 repos",
-    "⏳ Verify all wired endpoints are functional",
-    "⏳ Coordinate with Agent-1 and Agent-2 on integration work"
+    "Monitor ActivityEmitter event volume and adjust activity_threshold if noisy",
+    "Add unit tests for event normalization and scoring (TOOL_RUN success/failure cases)",
+    "Wire telemetry signal into any downstream stall/resume hooks if additional consumers appear"
   ],
-  
+
   "blockers": [],
-  
+
   "coordination_needs": [
-    "Captain: Loop 2 acceleration target exceeded, ready for next phase",
-    "Agent-1: Web integration support for remaining 13 files - MESSAGE SENT",
-    "Agent-2: Pattern extraction methodology for Stage 1 repos - MESSAGE SENT",
-    "Agent-8: Testing support for wired endpoints - MESSAGE SENT",
-    "Agent-3: Infrastructure verification - MESSAGE SENT",
-    "Agent-5: Business intelligence metrics tracking - MESSAGE SENT",
-    "Agent-6: Coordination support for work distribution - MESSAGE SENT"
+    "Captain: Telemetry-backed detector shipped; thresholds adjustable if needed",
+    "Agent-6: Coordination ready for stall/resume visibility",
+    "Agent-3: Heads-up in case runtime file path changes (runtime/agent_comms/activity_events.jsonl)"
   ],
-  
+
   "key_achievements": [
-    "Loop 2 Acceleration: Exceeded 50% target (12/25 files - 48%)",
-    "Web Integration: Wired 2 additional files with full route/handler implementation",
-    "Web SSOT Audit: 100% compliance achieved (19 files tagged)",
-    "Quick Wins: Identified 10 files already wired during verification",
-    "Discord Bot: Confirmed running and operational"
+    "Telemetry ingestion over status-only heuristics",
+    "Weighted activity scoring with Tier1 overrides",
+    "Event-backed is_active API for stall/resume"
   ],
-  
+
   "lessons_learned": [
-    "Verification before execution reveals existing work - discovered 40% already complete",
-    "Quick wins identification accelerates progress significantly",
-    "Batch processing checklist enables systematic progress tracking",
-    "Coordination with other agents distributes work efficiently",
-    "SSOT compliance verification prevents future technical debt"
+    "Event tiering reduces noise; Tier1 hits remove dependence on thresholds",
+    "Fallback to legacy sources keeps detector resilient when emitter is absent"
   ],
-  
+
   "swarm_contributions": [
-    "Assignment service routes - Task assignment API endpoints",
-    "Chat presence routes - Chat presence orchestration API",
-    "Web SSOT compliance - 4 route files updated with tags",
-    "Integration verification methodology - Established verification pattern",
-    "Acceleration execution plan - Documented quick wins and batch processing",
-    "Perpetual Motion Protocol - Sent 6 coordination messages to maintain swarm momentum"
+    "ActivityEmitter ingestion path with weighted scoring",
+    "is_active(agent, window_s) API for quick checks",
+    "Devlog + passdown updates for continuity"
   ],
-  
+
   "technical_state": {
-    "web_integration": "48% complete (12/25 files)",
-    "web_ssot_compliance": "100% (19 files tagged)",
-    "discord_test_mocks": "33% (3/9 locations found)",
-    "stage1_logic_extraction": "0% (starting)",
-    "discord_bot": "Running and operational",
-    "execution_ready": "Yes, ready for next phase"
+    "telemetry_signal": "Active (prefers ActivityEmitter JSONL)",
+    "legacy_sources": "Enabled as fallback",
+    "testing": "Manual verification; add unit tests next session"
   },
-  
+
   "session_metrics": {
-    "web_integration_files_wired": 2,
-    "web_integration_progress": "12/25 (48%)",
-    "ssot_tags_added": 4,
-    "ssot_compliance_rate": "100%",
-    "devlog_posts": 1,
-    "coordination_requests": 3,
-    "target_achievement": "EXCEEDED"
+    "devlog_posts": 2,
+    "files_updated": 2,
+    "new_apis": 1,
+    "blockers": 0
   },
-  
+
   "handoff_notes": {
-    "priority": "Continue Stage 1 Web Integration - 13 files remaining",
-    "immediate_action": "Wire remaining 13 files to reach 100% completion",
-    "tools_available": "Integration execution plan, verification methodology, batch processing checklist",
-    "execution_plan": "INTEGRATION_WIRING_EXECUTION_PLAN_2025-12-04.md",
-    "coordination": "Ready to coordinate with Agent-1 and Agent-2 on remaining work",
-    "session_cleanup": "✅ IN PROGRESS - Completing cleanup protocol"
+    "priority": "Monitor telemetry noise; tune threshold if false positives/negatives",
+    "immediate_action": "Consider adding tests for TOOL_RUN normalization and tier checks",
+    "tools_available": "Telemetry scoring, is_active helper, devlogs for context",
+    "coordination": "Notify stall/resume consumers to use telemetry-backed is_active",
+    "session_cleanup": "✅ Complete"
   }
 }

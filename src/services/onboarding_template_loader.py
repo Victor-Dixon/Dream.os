@@ -14,20 +14,24 @@ This ensures agents receive:
 - All standard onboarding procedures
 
 V2 Compliance: <300 lines
+Migrated to BaseService for consolidated initialization and error handling.
 Author: Captain Agent-4 - Fixing Onboarding Template System
 """
 
 import logging
 from pathlib import Path
 
+from ..core.base.base_service import BaseService
+
 logger = logging.getLogger(__name__)
 
 
-class OnboardingTemplateLoader:
+class OnboardingTemplateLoader(BaseService):
     """Loads and merges onboarding templates."""
 
     def __init__(self):
         """Initialize template loader."""
+        super().__init__("OnboardingTemplateLoader")
         self.project_root = Path(__file__).resolve().parents[2]
         self.template_path = self.project_root / "prompts" / "agents" / "onboarding.md"
 
@@ -35,17 +39,17 @@ class OnboardingTemplateLoader:
         """Load the full onboarding template with operating cycle duties."""
         try:
             if not self.template_path.exists():
-                logger.warning(f"Template not found: {self.template_path}")
+                self.logger.warning(f"Template not found: {self.template_path}")
                 return ""
 
             with open(self.template_path, encoding="utf-8") as f:
                 template = f.read()
 
-            logger.info(f"✅ Loaded full onboarding template ({len(template)} chars)")
+            self.logger.info(f"✅ Loaded full onboarding template ({len(template)} chars)")
             return template
 
         except Exception as e:
-            logger.error(f"Error loading template: {e}")
+            self.logger.error(f"Error loading template: {e}")
             return ""
 
     def create_onboarding_message(
@@ -68,7 +72,7 @@ class OnboardingTemplateLoader:
 
         if not template:
             # Fallback to custom message only if template missing
-            logger.warning("Using custom message only (template missing)")
+            self.logger.warning("Using custom message only (template missing)")
             return self._format_custom_message(agent_id, role, custom_message)
 
         # Replace placeholders in template
@@ -81,7 +85,7 @@ class OnboardingTemplateLoader:
             "{custom_message}", custom_message or "No additional instructions"
         )
 
-        logger.info(f"✅ Created full onboarding message for {agent_id} ({len(message)} chars)")
+        self.logger.info(f"✅ Created full onboarding message for {agent_id} ({len(message)} chars)")
         return message
 
     def _format_custom_message(self, agent_id: str, role: str, custom_message: str) -> str:

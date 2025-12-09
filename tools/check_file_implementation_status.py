@@ -10,6 +10,8 @@ Looks for:
 - Implementation plans
 - Related files that might need this
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-4 (Captain)
 """
 

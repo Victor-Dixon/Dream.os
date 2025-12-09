@@ -17,6 +17,9 @@ import time
 from pathlib import Path
 
 # Add project root to path
+from src.core.config.timeout_constants import TimeoutConstants
+
+# Add project root to path
 project_root = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(project_root))
 
@@ -28,7 +31,7 @@ def check_existing_bot():
                 ["tasklist", "/FI", "IMAGENAME eq python.exe", "/FO", "CSV"],
                 capture_output=True,
                 text=True,
-                timeout=5
+                timeout=TimeoutConstants.HTTP_QUICK
             )
             if "unified_discord_bot" in result.stdout.lower():
                 print("⚠️  Found existing Discord bot process")
@@ -38,7 +41,7 @@ def check_existing_bot():
                 ["ps", "aux"],
                 capture_output=True,
                 text=True,
-                timeout=5
+                timeout=TimeoutConstants.HTTP_QUICK
             )
             if "unified_discord_bot" in result.stdout:
                 print("⚠️  Found existing Discord bot process")

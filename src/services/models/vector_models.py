@@ -6,7 +6,7 @@ Data models for vector database operations.
 
 <!-- SSOT Domain: data -->
 
-SSOT for SearchResult and SearchQuery - All vector/search operations should use these models.
+SSOT for SearchResult, SearchQuery, DocumentType, EmbeddingModel, and SearchType - All vector/search operations should use these models.
 
 Author: Agent-1 (System Recovery Specialist)
 Enhanced by: Agent-8 (Testing & Quality Assurance Specialist) - SSOT Consolidation

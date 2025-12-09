@@ -52,7 +52,7 @@ class IntegrationWorkflow:
         if dup_tool.exists():
             result = subprocess.run(
                 ["python", str(dup_tool), self.repo_name],
-                capture_output=True, text=True, timeout=600
+                capture_output=True, text=True, timeout=TimeoutConstants.HTTP_EXTENDED
             )
             if result.returncode != 0:
                 print(f"  ⚠️ Duplicate detection warning: {result.stderr}")
@@ -89,7 +89,7 @@ class IntegrationWorkflow:
         if pattern_tool.exists():
             result = subprocess.run(
                 ["python", str(pattern_tool)],
-                capture_output=True, text=True, timeout=600
+                capture_output=True, text=True, timeout=TimeoutConstants.HTTP_EXTENDED
             )
             if result.returncode != 0:
                 print(f"  ⚠️ Pattern extraction warning: {result.stderr}")

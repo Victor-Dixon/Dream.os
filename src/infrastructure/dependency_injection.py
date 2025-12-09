@@ -216,6 +216,26 @@ class SimpleMessageBus(MessageBus):
         """Publish domain event."""
         print(f"EVENT: {event_type} {event_data}")
 
+    def subscribe(self, event_type: str, handler: callable) -> None:
+        """Subscribe to event type."""
+        pass  # Simple implementation - no-op
+
+    def unsubscribe(self, event_type: str, handler: callable) -> None:
+        """Unsubscribe from event type."""
+        pass  # Simple implementation - no-op
+
+    def get_subscribers(self, event_type: str) -> list:
+        """Get subscribers for event type."""
+        return []  # Simple implementation - no subscribers
+
+    def is_available(self) -> bool:
+        """Check if message bus is available."""
+        return True
+
+    def get_stats(self) -> Dict[str, Any]:
+        """Get message bus statistics."""
+        return {"events_published": 0}
+
 
 # Singleton instances
 _task_repository: TaskRepository | None = None

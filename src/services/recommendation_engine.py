@@ -4,6 +4,7 @@ Recommendation Engine
 
 Recommendation and insight generation for agent workflows.
 V2 Compliance: < 100 lines, single responsibility.
+Migrated to BaseService for consolidated initialization and error handling.
 
 Author: Agent-7 - Web Development Specialist
 """
@@ -11,6 +12,8 @@ Author: Agent-7 - Web Development Specialist
 import logging
 from typing import Any
 from collections import Counter
+
+from ..core.base.base_service import BaseService
 
 # Optional vector database imports (SSOT)
 from .vector_database import (
@@ -21,13 +24,13 @@ from .vector_database import (
 )
 
 
-class RecommendationEngine:
+class RecommendationEngine(BaseService):
     """Handles recommendation and insight generation."""
 
     def __init__(self, agent_id: str, config_path: str | None = None):
         """Initialize recommendation engine."""
+        super().__init__("RecommendationEngine")
         self.agent_id = agent_id
-        self.logger = logging.getLogger(__name__)
 
         # Initialize vector integration
         try:

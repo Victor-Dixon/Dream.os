@@ -5,6 +5,8 @@ Message History API Routes - V2 Compliant
 API endpoints for message history dashboard.
 Provides message history, statistics, and filtering.
 
+<!-- SSOT Domain: web -->
+
 Author: Agent-1 (Integration & Core Systems Specialist)
 Date: 2025-01-27
 """
