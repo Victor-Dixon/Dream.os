@@ -126,6 +126,9 @@ __all__ = [
     "AGENT_OPERATING_CYCLE_TEXT",
     "CYCLE_CHECKLIST_TEXT",
     "DISCORD_REPORTING_TEXT",
+    "D2A_RESPONSE_POLICY_TEXT",
+    "D2A_REPORT_FORMAT_TEXT",
+    "format_d2a_payload",
     "format_s2a_message",
 ]
 
