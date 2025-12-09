@@ -96,43 +96,45 @@ def check_code_issues():
     
     issues = []
     
-    # Check if event_loop is properly passed
+    # Check TwitchChatBridge signature
     try:
         from src.services.chat_presence.twitch_bridge import TwitchChatBridge
         import inspect
         sig = inspect.signature(TwitchChatBridge.__init__)
         params = list(sig.parameters.keys())
-        if 'event_loop' not in params:
-            issues.append("❌ TwitchChatBridge.__init__ missing 'event_loop' parameter")
+        required_params = ['username', 'oauth_token', 'channel']
+        missing_params = [p for p in required_params if p not in params]
+        if missing_params:
+            issues.append(f"❌ TwitchChatBridge.__init__ missing required parameters: {missing_params}")
         else:
-            print("✅ TwitchChatBridge accepts event_loop parameter")
+            print("✅ TwitchChatBridge has all required parameters")
     except Exception as e:
         issues.append(f"❌ Error checking TwitchChatBridge signature: {e}")
     
-    # Check if orchestrator passes event_loop
+    # Check if orchestrator creates bridge correctly
     try:
         with open("src/services/chat_presence/chat_presence_orchestrator.py", "r") as f:
             content = f.read()
-            if "event_loop=event_loop" in content or "event_loop=event_loop," in content:
-                print("✅ Orchestrator passes event_loop to bridge")
+            if "TwitchChatBridge(" in content:
+                print("✅ Orchestrator creates TwitchChatBridge")
             else:
-                issues.append("❌ Orchestrator may not be passing event_loop to bridge")
+                issues.append("❌ Orchestrator may not be creating TwitchChatBridge")
     except Exception as e:
         issues.append(f"❌ Error checking orchestrator: {e}")
     
-    # Check on_pubmsg callback handling
+    # Check callback handling
     try:
         with open("src/services/chat_presence/twitch_bridge.py", "r") as f:
             content = f.read()
-            if "run_coroutine_threadsafe" in content:
-                print("✅ on_pubmsg uses run_coroutine_threadsafe")
+            if "_handle_message" in content:
+                print("✅ Bridge has message handler")
             else:
-                issues.append("❌ on_pubmsg may not be using run_coroutine_threadsafe")
+                issues.append("❌ Bridge may not have message handler")
             
-            if "bridge_instance.event_loop" in content:
-                print("✅ on_pubmsg checks bridge_instance.event_loop")
+            if "on_message" in content:
+                print("✅ Bridge supports on_message callback")
             else:
-                issues.append("⚠️ on_pubmsg may not be checking bridge_instance.event_loop")
+                issues.append("⚠️ Bridge may not support on_message callback")
     except Exception as e:
         issues.append(f"❌ Error checking twitch_bridge: {e}")
     
@@ -164,7 +166,6 @@ async def test_message_callback():
             oauth_token="oauth:test",
             channel="test",
             on_message=test_callback,
-            event_loop=asyncio.get_running_loop(),
         )
         print("✅ Bridge created with async callback")
         
