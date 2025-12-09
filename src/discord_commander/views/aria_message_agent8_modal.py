@@ -213,13 +213,9 @@ class AriaMessageAgent8Modal(discord.ui.Modal):
             return True
         
         except Exception as e:
-            logger.error(f"Error writing to inbox (direct): {e}", exc_info=True)
-            return False
-        
-        except Exception as e:
             logger.error(f"Error in Aria message modal: {e}", exc_info=True)
             if not interaction.response.is_done():
-                await interaction.response.send_message(
+                interaction.response.send_message(
                     f"❌ Error: {e}",
                     ephemeral=True
                 )

@@ -231,24 +231,23 @@ class TwitchIRCBot(irc.bot.SingleServerIRCBot):
             oauth_token: OAuth token for authentication
         """
         # Store OAuth token BEFORE calling super().__init__()
-        # We'll set it on the connection after it's created
         self.oauth_token = oauth_token
         
+        # Call parent WITHOUT password in connect_params (we'll set it after)
+        # The IRC library's connect_params mechanism seems to conflict with our setup
         super().__init__(server_list, nickname, realname)
+        
         self.channel = channel
         self.on_message = on_message
         self.bridge_instance = bridge_instance
         
-        # Set OAuth token immediately after parent __init__ creates connection
-        # The connection object exists after super().__init__()
+        # Set password on connection after parent __init__ creates it
         if self.oauth_token and hasattr(self, 'connection') and self.connection:
             try:
                 self.connection.password = self.oauth_token
                 logger.info("🔐 Set OAuth token on connection (in __init__)")
             except Exception as e:
                 logger.error(f"❌ Failed to set password: {e}", exc_info=True)
-        else:
-            logger.warning("⚠️ Could not set OAuth token in __init__ - connection or token missing")
     
     def _connect(self):
         """
@@ -258,31 +257,17 @@ class TwitchIRCBot(irc.bot.SingleServerIRCBot):
         because that's when the IRC handshake (PASS/NICK/USER) begins.
         """
         # CRITICAL: Set password BEFORE calling parent _connect()
-        # The parent _connect() starts the IRC handshake, and the password
-        # must be sent as the first command (PASS <password>)
         if self.oauth_token and hasattr(self, 'connection') and self.connection:
             try:
                 self.connection.password = self.oauth_token
                 logger.info("🔐 Set OAuth token BEFORE connection (in _connect)")
                 print(f"🔐 DEBUG: Set OAuth token BEFORE _connect(): {self.oauth_token[:20]}...", flush=True)
-                print(f"🔐 DEBUG: Connection password verified: {getattr(self.connection, 'password', 'NOT SET')[:20] if getattr(self.connection, 'password', None) else 'NOT SET'}...", flush=True)
             except Exception as e:
                 logger.error(f"❌ CRITICAL: Failed to set password before _connect: {e}", exc_info=True)
                 print(f"❌ DEBUG: Failed to set password: {e}", flush=True)
-                import traceback
-                traceback.print_exc()
-        else:
-            logger.error("❌ CRITICAL: Cannot set password - token or connection missing!")
-            print("❌ DEBUG: Cannot set password!", flush=True)
-            if not self.oauth_token:
-                print("   ❌ OAuth token is None!", flush=True)
-            if not hasattr(self, 'connection'):
-                print("   ❌ Connection attribute missing!", flush=True)
-            elif not self.connection:
-                print("   ❌ Connection object is None!", flush=True)
         
-        # NOW call parent _connect() - this will use the password we just set
-        logger.info("🔌 Calling parent _connect() - handshake will use password above")
+        # Call parent _connect() - it will use the password we just set
+        logger.info("🔌 Calling parent _connect() - password set above")
         print("🔌 DEBUG: Calling parent _connect() now...", flush=True)
         return super()._connect()
 

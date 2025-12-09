@@ -172,7 +172,7 @@ class OpenSourceProjectManager:
             # Observability: Log failure
             try:
                 from src.obs.metrics import log_oss_clone_failure
-from src.core.config.timeout_constants import TimeoutConstants
+                from src.core.config.timeout_constants import TimeoutConstants
 
                 log_oss_clone_failure()
             except ImportError:

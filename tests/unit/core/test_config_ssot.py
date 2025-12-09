@@ -44,7 +44,7 @@ from src.core.config_ssot import (
     BrowserConfig,
     ThresholdConfig,
     FilePatternConfig,
-    TestConfig,
+    TestConfiguration,
     ReportConfig,
 )
 
@@ -162,7 +162,7 @@ class TestConfigDataclasses:
         assert hasattr(config, "architecture_files")
 
     def test_test_config_creation(self):
-        """Test TestConfig dataclass creation."""
+        """Test TestConfiguration dataclass creation."""
         config = TestConfig()
         assert hasattr(config, "coverage_report_precision")
         assert hasattr(config, "history_window")

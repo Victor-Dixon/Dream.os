@@ -29,7 +29,7 @@ from typing import Any, Protocol
 from ..utils.swarm_time import format_swarm_timestamp, get_swarm_time_display
 
 # Import models from extracted module
-from .messaging_models_core import (
+from .messaging_models import (
     DeliveryMethod,
     RecipientType,
     SenderType,

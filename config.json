@@ -17,7 +17,7 @@
             "threshold2": 91,
             "sobel_ksize": 3,
             "blur": 3,
-            "overlay": true,
+            "overlay": false,
             "glow": true,
             "glow_intensity": 1.0,
             "color_mode": "White",
@@ -148,7 +148,7 @@
         },
         "Cartoon Effects": {
             "intensity": 50,
-            "preset": "Fast"
+            "preset": "Classic"
         },
         "Color Effects": {
             "intensity": 50,

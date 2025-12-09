@@ -25,7 +25,7 @@ if TYPE_CHECKING:
         BrowserConfig,
         FilePatternConfig,
         ReportConfig,
-        TestConfig,
+        TestConfiguration,
         ThresholdConfig,
         TimeoutConfig,
     )
@@ -81,7 +81,7 @@ def get_file_pattern_config() -> "FilePatternConfig":
     return _config_manager.file_patterns
 
 
-def get_test_config() -> "TestConfig":
+def get_test_config() -> "TestConfiguration":
     """Get test configuration."""
     from .config_manager import _config_manager
 

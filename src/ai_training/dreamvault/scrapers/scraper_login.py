@@ -62,7 +62,7 @@ class ScraperLoginHelper:
             from selenium.webdriver.common.by import By
             from selenium.webdriver.support import expected_conditions as EC
             from selenium.webdriver.support.ui import WebDriverWait
-from src.core.config.timeout_constants import TimeoutConstants
+            from src.core.config.timeout_constants import TimeoutConstants
 
             wait = WebDriverWait(driver, 5)
             modal = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "[role='dialog']")))

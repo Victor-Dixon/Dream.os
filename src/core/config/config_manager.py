@@ -43,7 +43,7 @@ from .config_dataclasses import (
     BrowserConfig,
     FilePatternConfig,
     ReportConfig,
-    TestConfig,
+    TestConfiguration,
     ThresholdConfig,
     TimeoutConfig,
 )
@@ -92,7 +92,7 @@ class UnifiedConfigManager(Singleton):
         self.browser = BrowserConfig()
         self.thresholds = ThresholdConfig()
         self.file_patterns = FilePatternConfig()
-        self.tests = TestConfig()
+        self.tests = TestConfiguration()
         self.reports = ReportConfig()
 
         # Track initialization
@@ -212,7 +212,7 @@ class UnifiedConfigManager(Singleton):
         self.browser = BrowserConfig()
         self.thresholds = ThresholdConfig()
         self.file_patterns = FilePatternConfig()
-        self.tests = TestConfig()
+        self.tests = TestConfiguration()
         self.reports = ReportConfig()
         self._record_event("config_reload", {"timestamp": datetime.now().isoformat()})
 

@@ -13,6 +13,11 @@ import time
 import threading
 from datetime import timedelta
 from typing import Dict, Any
+try:
+    from src.core.config.timeout_constants import TimeoutConstants
+except ImportError:
+    class TimeoutConstants:
+        HTTP_QUICK = 5
 
 # Import dependencies
 try:
@@ -115,8 +120,6 @@ class CoordinationPerformanceMonitor:
         # Record memory usage (simplified)
         try:
             import psutil
-from src.core.config.timeout_constants import TimeoutConstants
-
             memory = psutil.virtual_memory()
             self.collector.record_metric("system_memory_usage", memory.percent)
             self.collector.record_metric(

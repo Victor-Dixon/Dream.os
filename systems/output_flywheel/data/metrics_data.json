@@ -48,6 +48,15 @@
   "repositories": [],
   "trading_sessions": [],
   "publications": [],
-  "weekly_summaries": [],
-  "last_updated": "2025-12-02T05:25:55.603856"
+  "weekly_summaries": [
+    {
+      "week_start": "2025-12-08",
+      "artifacts_per_week": 0,
+      "repos_with_clean_readmes": 0,
+      "trading_days_documented": 0,
+      "publication_rate": 0.0,
+      "generated_at": "2025-12-09T09:39:08.913133"
+    }
+  ],
+  "last_updated": "2025-12-09T09:39:08.913133"
 }

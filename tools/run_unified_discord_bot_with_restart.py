@@ -81,9 +81,13 @@ def run_bot():
         
         # Spawn new Python process to run bot
         # This ensures fresh module imports (no cache)
+        env = os.environ.copy()
+        env['PYTHONPATH'] = str(project_root)
+
         process = subprocess.Popen(
             [sys.executable, str(bot_script)],
             cwd=str(project_root),
+            env=env,
             stdout=sys.stdout,
             stderr=sys.stderr,
         )

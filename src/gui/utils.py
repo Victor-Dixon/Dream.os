@@ -11,8 +11,8 @@ Date: 2025-12-04
 License: MIT
 """
 
-# Redirect to SSOT
-from ...core.utils.v2_integration_utils import (
+# Redirect to SSOT using absolute imports to avoid relative import errors
+from src.core.utils.v2_integration_utils import (
     get_coordinate_loader,
     get_logger,
     get_unified_config,

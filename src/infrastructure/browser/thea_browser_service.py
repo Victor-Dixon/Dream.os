@@ -69,10 +69,8 @@ class TheaBrowserService:
                 prof_name = profile_name or self.profile.get("profile_name")
                 options.add_argument(f"--profile-directory={prof_name}")
 
-            # Anti-detection options
+            # Anti-detection options (minimal for uc compatibility)
             options.add_argument("--disable-blink-features=AutomationControlled")
-            options.add_experimental_option("excludeSwitches", ["enable-automation"])
-            options.add_experimental_option("useAutomationExtension", False)
             w, h = self.config.window_size
             options.add_argument(f"--window-size={w}x{h}")
 
@@ -153,7 +151,10 @@ class TheaBrowserService:
         try:
             # Check for authenticated page elements
             current_url = self.driver.current_url
-            return "chat.openai.com" in current_url and "auth" not in current_url
+            return (
+                ("chat.openai.com" in current_url or "chatgpt.com" in current_url)
+                and "auth" not in current_url
+            )
         except:
             return False
 
