@@ -92,3 +92,30 @@ class LogHandlerManager:
         for handler in self._handlers:
             self.logger.removeHandler(handler)
         self._handlers.clear()
+
+
+# Compatibility helpers for tests
+def setup_logging(*args, **kwargs):
+    """Simple setup_logging stub for compatibility."""
+    logging.basicConfig(level=logging.INFO)
+    return logging.getLogger(kwargs.get("name", __name__))
+
+
+def configure_logging(*args, **kwargs):
+    """Simple configure_logging stub for compatibility."""
+    logging.basicConfig(level=logging.INFO)
+    return logging.getLogger(kwargs.get("name", __name__))
+
+
+def get_logger(name: str = __name__) -> logging.Logger:
+    """Return a logger."""
+    return logging.getLogger(name)
+
+
+__all__ = [
+    "LogHandlerFactory",
+    "LogHandlerManager",
+    "setup_logging",
+    "configure_logging",
+    "get_logger",
+]

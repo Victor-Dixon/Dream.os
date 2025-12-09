@@ -101,9 +101,6 @@ class LockMetrics:
     def to_dict(self) -> dict[str, Any]:
         """Convert to dictionary using SSOT utility."""
         return to_dict(self)
-            "active_locks": self.active_locks,
-            "last_updated": self.last_updated,
-        }
 
     def update_averages(self) -> None:
         """Update average execution times."""

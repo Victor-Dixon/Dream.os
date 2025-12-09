@@ -13,7 +13,7 @@ License: MIT
 import logging
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Any
+from typing import Any, Optional
 
 import psutil
 
@@ -240,3 +240,23 @@ def create_performance_monitoring_system(
 def get_performance_monitor() -> PerformanceMonitoringSystem:
     """Get performance monitor instance."""
     return create_performance_monitoring_system()
+
+
+# Backward compatibility exports expected by performance_cli/tests
+_performance_monitor: Optional[PerformanceMonitoringSystem] = None
+
+
+def start_performance_monitoring():
+    global _performance_monitor
+    if _performance_monitor is None:
+        _performance_monitor = create_performance_monitoring_system()
+    _performance_monitor.start_monitoring()
+    return _performance_monitor
+
+
+def stop_performance_monitoring():
+    global _performance_monitor
+    if _performance_monitor is None:
+        _performance_monitor = create_performance_monitoring_system()
+    _performance_monitor.stop_monitoring()
+    return _performance_monitor

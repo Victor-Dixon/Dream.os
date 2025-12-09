@@ -47,7 +47,7 @@ from .config.config_dataclasses import (
     BrowserConfig,
     FilePatternConfig,
     ReportConfig,
-    TestConfig,
+    TestConfiguration,
     ThresholdConfig,
     TimeoutConfig,
 )
@@ -66,7 +66,7 @@ __all__ = [
     "BrowserConfig",
     "ThresholdConfig",
     "FilePatternConfig",
-    "TestConfig",
+    "TestConfiguration",
     "ReportConfig",
     # Manager
     "UnifiedConfigManager",

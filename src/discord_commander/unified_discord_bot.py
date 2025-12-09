@@ -165,6 +165,11 @@ class UnifiedDiscordBot(commands.Bot):
 
         # Thea browser services
         self._thea_browser_service: TheaBrowserService | None = None
+        self.thea_last_refresh_path = Path("data/thea_last_refresh.json")
+        try:
+            self.thea_min_interval_minutes = int(os.getenv("THEA_MIN_INTERVAL_MINUTES", "60"))
+        except ValueError:
+            self.thea_min_interval_minutes = 60
 
     def _load_discord_user_map(self) -> dict[str, str]:
         """Load Discord user ID to developer name mapping from profiles."""
@@ -226,22 +231,66 @@ class UnifiedDiscordBot(commands.Bot):
         self._thea_browser_service = TheaBrowserService(config=browser_cfg, thea_config=thea_cfg)
         return self._thea_browser_service
 
-    async def refresh_thea_session(self, headless: bool = True) -> bool:
-        """Refresh Thea cookies; headless uses saved cookies, manual opens window."""
+    def _read_last_thea_refresh(self) -> float | None:
         try:
-            svc = self._get_thea_service(headless=headless)
+            if self.thea_last_refresh_path.exists():
+                data = json.loads(self.thea_last_refresh_path.read_text(encoding="utf-8"))
+                return float(data.get("ts"))
+        except Exception:
+            return None
+        return None
+
+    def _write_last_thea_refresh(self, ts: float) -> None:
+        try:
+            self.thea_last_refresh_path.parent.mkdir(parents=True, exist_ok=True)
+            self.thea_last_refresh_path.write_text(json.dumps({"ts": ts}, indent=2), encoding="utf-8")
+        except Exception as e:
+            self.logger.warning(f"Could not write Thea last refresh: {e}")
+
+    async def ensure_thea_session(self, allow_interactive: bool, min_interval_minutes: int | None = None) -> bool:
+        """Self-throttling Thea session ensure; headless by default, interactive only on demand."""
+        min_interval = min_interval_minutes or self.thea_min_interval_minutes
+        last = self._read_last_thea_refresh()
+        now = time.time()
+        if last and (now - last) < (min_interval * 60):
+            self.logger.info(f"⏭️  Thea refresh skipped (age {(now - last)/60:.1f}m < {min_interval}m)")
+            return True
+
+        # Headless attempt
+        try:
+            svc = self._get_thea_service(headless=True)
             if not svc.initialize():
                 self.logger.error("Thea refresh: initialize failed (uc missing or disabled)")
                 return False
-            ok = svc.ensure_thea_authenticated(allow_manual=not headless)
+            ok = svc.ensure_thea_authenticated(allow_manual=False)
             svc.close()
             if ok:
-                self.logger.info("✅ Thea session refresh completed (cookies saved)")
-            else:
-                self.logger.error("❌ Thea session refresh failed")
-            return ok
+                self.logger.info("✅ Thea session refreshed headlessly (cookies saved)")
+                self._write_last_thea_refresh(now)
+                return True
+            self.logger.warning("⚠️ Thea headless refresh failed")
         except Exception as e:
-            self.logger.error(f"❌ Thea refresh error: {e}")
+            self.logger.error(f"❌ Thea headless refresh error: {e}")
+
+        if not allow_interactive:
+            return False
+
+        # Interactive fallback
+        try:
+            svc = self._get_thea_service(headless=False)
+            if not svc.initialize():
+                self.logger.error("Thea interactive init failed (uc missing or disabled)")
+                return False
+            ok = svc.ensure_thea_authenticated(allow_manual=True)
+            svc.close()
+            if ok:
+                self.logger.info("✅ Thea session refreshed interactively (cookies saved)")
+                self._write_last_thea_refresh(now)
+                return True
+            self.logger.error("❌ Thea interactive refresh failed")
+            return False
+        except Exception as e:
+            self.logger.error(f"❌ Thea interactive refresh error: {e}")
             return False
 
     def _get_developer_prefix(self, discord_user_id: str) -> str:
@@ -314,7 +363,7 @@ class UnifiedDiscordBot(commands.Bot):
 
             # Optional: auto-refresh Thea cookies headless on startup if env set
             if os.getenv("THEA_AUTO_REFRESH", "0") == "1":
-                await self._refresh_thea_session(headless=True)
+                await self.ensure_thea_session(allow_interactive=False, min_interval_minutes=self.thea_min_interval_minutes)
 
             # Send startup message with control panel (only once)
             await self.send_startup_message()
@@ -451,7 +500,7 @@ class UnifiedDiscordBot(commands.Bot):
             # Priority is always regular for Discord messages
             priority = "regular"
 
-            # Apply D2A template to Discord messages
+            # Apply D2A template to Discord messages (wrap fully)
             from src.core.messaging_models_core import (
                 UnifiedMessage,
                 MessageCategory,
@@ -459,8 +508,16 @@ class UnifiedDiscordBot(commands.Bot):
                 UnifiedMessagePriority,
             )
             from src.core.messaging_templates import render_message
+            from src.services.messaging_infrastructure import MessageCoordinator
             import uuid
             from datetime import datetime
+
+            # Build per-agent devlog command for the recipient
+            devlog_command = (
+                f"python tools/devlog_poster.py --agent {recipient} --file <devlog_path>\n"
+                f"# Fallback:\n"
+                f"python -m tools.toolbelt --devlog-post --agent {recipient}"
+            )
 
             # Create UnifiedMessage with D2A category
             msg = UnifiedMessage(
@@ -474,23 +531,20 @@ class UnifiedDiscordBot(commands.Bot):
                 timestamp=datetime.now().isoformat(),
             )
 
-            # Render message with D2A template (lightweight, human-first)
+            # Render message with D2A template and explicit devlog command
             rendered_message = render_message(
                 msg,
-                # Defaults will be applied by render_message for D2A
+                devlog_command=devlog_command,
             )
 
             self.logger.info(
                 f"📨 Processing {message_prefix} message: {recipient} - {message_content[:50]}...")
 
             # Queue message for PyAutoGUI delivery (with template applied)
-            result = self.messaging_service.send_message(
+            result = MessageCoordinator.send_to_agent(
                 agent=recipient,
                 message=rendered_message,
                 priority=priority,
-                use_pyautogui=True,
-                wait_for_delivery=False,
-                discord_user_id=str(message.author.id),
             )
 
             if result.get("success"):
@@ -758,21 +812,22 @@ class MessagingCommands(commands.Cog):
         self.gui_controller = gui_controller
         self.logger = logging.getLogger(__name__)
 
-    @commands.command(name="thea-refresh", description="Refresh Thea cookies (headless or manual login)")
-    async def thea_refresh(self, ctx: commands.Context, mode: str = "headless"):
+    @commands.command(name="thea", aliases=["thea-refresh"], description="Ensure Thea session (headless keepalive, interactive only if needed)")
+    async def thea(self, ctx: commands.Context, force: str = ""):
         """
-        Refresh Thea cookies using undetected Chrome.
-        Usage: !thea-refresh [headless|manual]
-        headless: reuse saved cookies and refresh silently
-        manual: open browser for manual login, then save cookies
+        Ensure Thea session with self-throttling keepalive.
+        Usage: !thea [force]
+        - Default: headless refresh if stale; interactive fallback if headless fails.
+        - force: bypass throttle (set any value to force refresh).
         """
-        headless = mode.lower() != "manual"
-        await ctx.send("🔄 Refreshing Thea session..." if headless else "🪟 Opening Thea for manual login; please authenticate (cookies will be saved).")
-        success = await self.bot.refresh_thea_session(headless=headless)
+        allow_interactive = True
+        min_interval = 0 if force else self.bot.thea_min_interval_minutes
+        await ctx.send("🔄 Ensuring Thea session (headless)...")
+        success = await self.bot.ensure_thea_session(allow_interactive=allow_interactive, min_interval_minutes=min_interval)
         if success:
-            await ctx.send("✅ Thea session refreshed and cookies saved.")
+            await ctx.send("✅ Thea session is healthy (cookies saved).")
         else:
-            await ctx.send("❌ Thea session refresh failed. If headless failed, try `!thea-refresh manual`.")
+            await ctx.send("❌ Thea session failed. Try again to trigger interactive login.")
 
     @commands.command(name="control", aliases=["panel", "menu"], description="Open main control panel")
     async def control_panel(self, ctx: commands.Context):

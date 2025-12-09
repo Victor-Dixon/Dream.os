@@ -11,10 +11,12 @@ from src.services.messaging_infrastructure import (
     MessageCoordinator,
     _format_multi_agent_request_message,
     _format_normal_message_with_instructions,
+    _apply_template,
     create_messaging_parser,
     send_message_pyautogui,
     send_message_to_onboarding_coords,
 )
+from src.core.messaging_models_core import MessageCategory, UnifiedMessagePriority
 
 
 class TestConsolidatedMessagingService:
@@ -94,6 +96,49 @@ class TestConsolidatedMessagingService:
         result = service.send_message("Agent-1", "Test message")
 
         assert result["success"] is False
+
+
+def test_apply_template_d2a_includes_required_fields():
+    """D2A should include interpretation/actions/policy/report/fallback fields."""
+    rendered = _apply_template(
+        category=MessageCategory.D2A,
+        message="Hello from Discord",
+        sender="User",
+        recipient="Agent-6",
+        priority=UnifiedMessagePriority.REGULAR,
+        message_id="msg-1",
+        extra={"interpretation": "Greet", "actions": "Acknowledge"},
+    )
+    assert "D2A DISCORD INTAKE" in rendered
+    assert "Hello from Discord" in rendered
+    assert "Interpretation" in rendered
+    assert "Proposed Action" in rendered
+    # Response policy/report defaults should be injected
+    assert "Preferred Reply Format" in rendered or "Preferred reply format" in rendered
+    assert "If clarification needed" in rendered
+    assert "python tools/devlog_poster.py --agent Agent-6" in rendered
+    assert "#DISCORD #D2A" in rendered
+
+
+def test_apply_template_a2a_populates_fields():
+    """A2A should render ask/context/next_step/fallback without empty placeholders."""
+    rendered = _apply_template(
+        category=MessageCategory.A2A,
+        message="coordination ping",
+        sender="Agent-7",
+        recipient="Agent-6",
+        priority=UnifiedMessagePriority.REGULAR,
+        message_id="msg-2",
+        extra={
+            "ask": "Need verification status",
+            "context": "Batch2 DreamVault PRs",
+            "next_step": "Confirm merged state",
+        },
+    )
+    assert "[HEADER] A2A COORDINATION" in rendered
+    assert "Need verification status" in rendered
+    assert "Batch2 DreamVault PRs" in rendered
+    assert "Confirm merged state" in rendered
 
     @patch("src.core.message_queue.MessageQueue")
     @patch("src.core.multi_agent_request_validator.get_multi_agent_validator")

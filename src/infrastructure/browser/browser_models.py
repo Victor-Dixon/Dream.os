@@ -36,7 +36,7 @@ class BrowserConfig:
 
     def __post_init__(self):
         """Initialize from unified config if available."""
-        if _unified_config:
+        if _unified_config and hasattr(_unified_config, "get_timeout_config"):
             timeout_config = _unified_config.get_timeout_config()
             self.timeout = timeout_config.get("SCRAPE_TIMEOUT", self.timeout)
             self.implicit_wait = timeout_config.get("QUALITY_CHECK_INTERVAL", self.implicit_wait)

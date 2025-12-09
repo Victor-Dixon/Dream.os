@@ -24,6 +24,8 @@ from typing import Any, Optional
 from .messaging_models import MessageCategory, UnifiedMessage, UnifiedMessageTag, UnifiedMessageType
 from .messaging_template_texts import (
     AGENT_OPERATING_CYCLE_TEXT,
+    CYCLE_CHECKLIST_TEXT,
+    DISCORD_REPORTING_TEXT,
     MESSAGE_TEMPLATES,
     format_d2a_payload,
 )
@@ -143,6 +145,30 @@ def render_message(
     }
     base.update(payload)
 
+    # Provide safe defaults to avoid KeyErrors in templates
+    base.setdefault("context", "")
+    base.setdefault("actions", "")
+    base.setdefault("fallback", "Escalate to Captain.")
+    base.setdefault("cycle_checklist", CYCLE_CHECKLIST_TEXT)
+    base.setdefault("discord_reporting", DISCORD_REPORTING_TEXT)
+    
+    # C2A template defaults
+    base.setdefault("task", base.get("actions", "Complete assigned task"))
+    
+    # A2A template defaults
+    base.setdefault("ask", base.get("actions", "Coordination request"))
+    base.setdefault("next_step", base.get("actions", "Proceed with coordination"))
+    
+    # CYCLE_V2 template defaults
+    base.setdefault("mission", base.get("context", "Complete assigned mission"))
+    base.setdefault("dod", "Definition of Done: Complete task with evidence")
+    base.setdefault("ssot_constraint", "Maintain SSOT compliance")
+    base.setdefault("v2_constraint", "Follow V2 compliance standards")
+    base.setdefault("touch_surface", "Minimal - only necessary files")
+    base.setdefault("validation_required", "Run tests and verify changes")
+    base.setdefault("priority_level", base.get("priority", "normal"))
+    base.setdefault("handoff_expectation", "Report completion with evidence")
+
     category = getattr(msg, "category", None)
 
     # If older code hasn't added msg.category yet, infer from types:
@@ -151,12 +177,15 @@ def render_message(
             UnifiedMessageType.SYSTEM_TO_AGENT,
             UnifiedMessageType.ONBOARDING,
             UnifiedMessageType.MULTI_AGENT_REQUEST,
+            UnifiedMessageType.BROADCAST,
         ):
             category = MessageCategory.S2A
         elif msg.message_type == UnifiedMessageType.CAPTAIN_TO_AGENT:
             category = MessageCategory.C2A
         elif msg.message_type == UnifiedMessageType.AGENT_TO_AGENT:
             category = MessageCategory.A2A
+        elif msg.message_type == UnifiedMessageType.BROADCAST:
+            category = MessageCategory.S2A  # BROADCAST is S2A
         else:
             category = MessageCategory.D2A
 

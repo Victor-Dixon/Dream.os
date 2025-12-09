@@ -34,7 +34,11 @@ from src.core.messaging_core import (
     UnifiedMessageType,
     send_message,
 )
-from src.core.messaging_models_core import MessageCategory, MESSAGE_TEMPLATES
+from src.core.messaging_models_core import (
+    MessageCategory,
+    MESSAGE_TEMPLATES,
+    format_d2a_payload,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -98,6 +102,51 @@ def _apply_template(
         return message
     now = datetime.now().isoformat(timespec="seconds")
     meta = extra or {}
+    # D2A requires extra fields; use canonical formatter to avoid KeyErrors.
+    if category == MessageCategory.D2A:
+        d2a_payload = {
+            k: v
+            for k, v in {
+                "interpretation": meta.get("interpretation"),
+                "actions": meta.get("actions", message),
+                "fallback": meta.get("fallback"),
+                "discord_response_policy": meta.get("discord_response_policy"),
+                "d2a_report_format": meta.get("d2a_report_format"),
+            }.items()
+            if v is not None
+        }
+        d2a_meta = format_d2a_payload(d2a_payload)
+        return tmpl.format(
+            sender=sender,
+            recipient=recipient,
+            priority=priority.value,
+            message_id=message_id,
+            timestamp=now,
+            content=message,
+            interpretation=d2a_meta["interpretation"],
+            actions=d2a_meta["actions"],
+            discord_response_policy=d2a_meta["discord_response_policy"],
+            d2a_report_format=d2a_meta["d2a_report_format"],
+            fallback=d2a_meta["fallback"],
+        )
+
+    # A2A needs ask/context/next_step/fallback populated for clean rendering.
+    if category == MessageCategory.A2A:
+        return tmpl.format(
+            sender=sender,
+            recipient=recipient,
+            priority=priority.value,
+            message_id=message_id,
+            timestamp=now,
+            ask=meta.get("ask", message),
+            context=meta.get("context", ""),
+            next_step=meta.get("next_step", ""),
+            fallback=meta.get(
+                "fallback",
+                "If blocked: send blocker + proposed fix + owner.",
+            ),
+        )
+
     return tmpl.format(
         sender=sender,
         recipient=recipient,

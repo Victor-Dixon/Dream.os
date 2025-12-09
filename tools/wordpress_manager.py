@@ -172,20 +172,37 @@ class ConnectionManager:
         self.transport = None
     
     def upload_file(self, local_path: Path, remote_path: str) -> bool:
-        """Upload file via SFTP."""
+        """Upload file via SFTP with recursive dir ensure."""
         if not self.sftp:
             return False
         try:
-            remote_dir = '/'.join(remote_path.split('/')[:-1])
-            try:
-                self.sftp.mkdir(remote_dir)
-            except:
-                pass
+            self._ensure_remote_dir(remote_path)
             self.sftp.put(str(local_path), remote_path)
             return True
         except Exception as e:
             logger.error(f"Upload failed: {e}")
             return False
+
+    def _ensure_remote_dir(self, remote_path: str):
+        """Recursively ensure remote directory exists."""
+        remote_dir = '/'.join(remote_path.split('/')[:-1])
+        if not remote_dir or remote_dir == "/":
+            return
+        parts = remote_dir.strip("/").split("/")
+        current = ""
+        for part in parts:
+            current = f"{current}/{part}" if current else f"/{part}"
+            try:
+                self.sftp.stat(current)
+            except FileNotFoundError:
+                try:
+                    self.sftp.mkdir(current)
+                except Exception:
+                    # If created concurrently, verify existence; otherwise raise
+                    try:
+                        self.sftp.stat(current)
+                    except Exception as e:
+                        raise e
     
     def execute_command(self, command: str) -> Tuple[str, str, int]:
         """Execute SSH command."""
@@ -277,12 +294,23 @@ class WordPressManager:
                     all_creds.get(self.site_key.replace(".online", ""))
                 )
                 # Validate credentials are not empty
-                if self.credentials and self._validate_credentials(self.credentials):
-                    logger.info(f"Loaded credentials from sites.json for {self.site_key}")
-                    return
-                elif self.credentials:
-                    logger.warning(f"Credentials found in sites.json for {self.site_key} but are empty/invalid")
-                    self.credentials = None
+                if self.credentials:
+                    # Normalize port and allow remote_base/remote_path overrides per-site
+                    try:
+                        self.credentials["port"] = int(self.credentials.get("port", 65002))
+                    except Exception:
+                        self.credentials["port"] = 65002
+                    if self.credentials.get("remote_base"):
+                        self.config["remote_base"] = self.credentials["remote_base"]
+                    if self.credentials.get("remote_path"):
+                        self.credentials["remote_path"] = self.credentials["remote_path"]
+
+                    if self._validate_credentials(self.credentials):
+                        logger.info(f"Loaded credentials from sites.json for {self.site_key}")
+                        return
+                    else:
+                        logger.warning(f"Credentials found in sites.json for {self.site_key} but are empty/invalid")
+                        self.credentials = None
             except Exception as e:
                 logger.error(f"Failed to load credentials from sites.json: {e}")
         
@@ -439,7 +467,7 @@ add_action('after_switch_theme', '{function_name}');"""
         host = self.credentials.get("host", "").strip()
         username = self.credentials.get("username", "").strip()
         password = self.credentials.get("password", "").strip()
-        port = self.credentials.get("port", 22)
+        port = self.credentials.get("port", 65002)
 
         # Apply CLI overrides when provided
         if self.override_port:

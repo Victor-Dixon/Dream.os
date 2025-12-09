@@ -239,6 +239,29 @@ class MetricsClient:
             "timestamp": datetime.now().isoformat(),
         }
 
+    def get_metrics_summary(
+        self,
+        start_date: datetime | None = None,
+        end_date: datetime | None = None,
+    ) -> Dict[str, Any]:
+        """
+        Provide a consolidated metrics summary.
+
+        - Uses weekly summary as the primary rollup.
+        - Includes current snapshot and unified metrics (if available).
+        """
+        weekly = self.generate_weekly_summary()
+        current = self.get_current_metrics()
+        unified = self.get_unified_metrics() or {}
+        return {
+            "weekly_summary": weekly,
+            "current_snapshot": current,
+            "unified_metrics": unified,
+            "start_date": start_date.isoformat() if start_date else None,
+            "end_date": end_date.isoformat() if end_date else None,
+            "generated_at": datetime.now().isoformat(),
+        }
+
     def export_fresh_unified_metrics(self, output_path: Optional[Path] = None) -> Optional[Path]:
         """Export fresh unified metrics."""
         if self.exporter is None:

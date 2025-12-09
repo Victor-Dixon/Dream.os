@@ -395,6 +395,8 @@ MESSAGE_TEMPLATES: dict[MessageCategory, Any] = {
         "{actions}\n\n"
         "{discord_response_policy}\n"
         "{d2a_report_format}\n"
+        "Devlog Command (for recipient):\n"
+        "python tools/devlog_poster.py --agent {recipient} --file <devlog_path>\n\n"
         "If clarification needed:\n"
         "{fallback}\n"
         "#DISCORD #D2A\n"

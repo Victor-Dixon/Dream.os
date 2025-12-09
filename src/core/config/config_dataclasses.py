@@ -238,7 +238,7 @@ class FilePatternConfig:
 
 
 @dataclass
-class TestConfig:
+class TestConfiguration:
     """Centralized test configuration."""
 
     # Coverage configuration
