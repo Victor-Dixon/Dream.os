@@ -1,4 +1,3 @@
-from dataclasses import dataclass, field
 """
 Coordination Utilities - Shared V2 Compliant Utilities
 Main coordination utilities module that aggregates focused utility modules
@@ -9,21 +8,152 @@ V2 Compliance: Under 300-line limit with modular architecture
 @License: MIT
 """
 
-# Import all functionality from focused utility modules
+from dataclasses import dataclass, field
 from typing import Dict, Any, List
 
 from .agent_matching import AgentMatchingUtils
 
-# Stubs for missing utility classes
+# Performance Metrics Utilities - Lightweight implementation
 class PerformanceMetricsUtils:
+    """Lightweight performance metrics utilities.
+    
+    Provides basic metrics tracking without heavy dependencies.
+    For advanced features, use StatsTracker or PerformanceMonitoringEngine.
+    """
+    _metrics_store: Dict[str, Any] = {}
+    _history_store: List[Dict[str, Any]] = []
+    _max_history_size: int = 1000
+
     @staticmethod
-    def update_coordination_metrics(*args, **kwargs): pass
+    def update_coordination_metrics(
+        success: bool = True,
+        coordination_time: float = 0.0,
+        **kwargs
+    ) -> None:
+        """Update coordination metrics.
+        
+        Args:
+            success: Whether coordination was successful
+            coordination_time: Time taken for coordination
+            **kwargs: Additional metric data
+        """
+        if "coordination" not in PerformanceMetricsUtils._metrics_store:
+            PerformanceMetricsUtils._metrics_store["coordination"] = {
+                "total": 0,
+                "successful": 0,
+                "failed": 0,
+                "total_time": 0.0,
+                "avg_time": 0.0,
+            }
+        
+        metrics = PerformanceMetricsUtils._metrics_store["coordination"]
+        metrics["total"] += 1
+        
+        if success:
+            metrics["successful"] += 1
+        else:
+            metrics["failed"] += 1
+        
+        if coordination_time > 0:
+            metrics["total_time"] += coordination_time
+            metrics["avg_time"] = metrics["total_time"] / metrics["total"]
+
     @staticmethod
-    def update_performance_metrics(*args, **kwargs): pass
+    def update_performance_metrics(
+        task_id: str = None,
+        execution_time: float = 0.0,
+        success: bool = True,
+        **kwargs
+    ) -> None:
+        """Update performance metrics.
+        
+        Args:
+            task_id: Task identifier
+            execution_time: Task execution time
+            success: Whether task was successful
+            **kwargs: Additional metric data
+        """
+        if "performance" not in PerformanceMetricsUtils._metrics_store:
+            PerformanceMetricsUtils._metrics_store["performance"] = {
+                "total_tasks": 0,
+                "successful_tasks": 0,
+                "failed_tasks": 0,
+                "total_execution_time": 0.0,
+                "avg_execution_time": 0.0,
+            }
+        
+        metrics = PerformanceMetricsUtils._metrics_store["performance"]
+        metrics["total_tasks"] += 1
+        
+        if success:
+            metrics["successful_tasks"] += 1
+        else:
+            metrics["failed_tasks"] += 1
+        
+        if execution_time > 0:
+            metrics["total_execution_time"] += execution_time
+            metrics["avg_execution_time"] = (
+                metrics["total_execution_time"] / metrics["total_tasks"]
+            )
+
     @staticmethod
-    def store_coordination_history(*args, **kwargs): pass
+    def store_coordination_history(
+        entry: Dict[str, Any] = None,
+        **kwargs
+    ) -> None:
+        """Store coordination history entry.
+        
+        Args:
+            entry: History entry dictionary
+            **kwargs: Additional history data (merged into entry)
+        """
+        from datetime import datetime
+        
+        if entry is None:
+            entry = {}
+        
+        # Merge kwargs into entry
+        entry.update(kwargs)
+        
+        # Add timestamp if not present
+        if "timestamp" not in entry:
+            entry["timestamp"] = datetime.now().isoformat()
+        
+        PerformanceMetricsUtils._history_store.append(entry)
+        
+        # Limit history size
+        if len(PerformanceMetricsUtils._history_store) > PerformanceMetricsUtils._max_history_size:
+            PerformanceMetricsUtils._history_store = (
+                PerformanceMetricsUtils._history_store[-PerformanceMetricsUtils._max_history_size:]
+            )
+
     @staticmethod
-    def get_performance_summary(metrics): return {"timestamp": "unknown"}
+    def get_performance_summary(metrics: Dict[str, Any] = None) -> Dict[str, Any]:
+        """Get performance summary.
+        
+        Args:
+            metrics: Optional metrics dictionary (uses stored if None)
+        
+        Returns:
+            Performance summary dictionary
+        """
+        from datetime import datetime
+        
+        if metrics is None:
+            metrics = PerformanceMetricsUtils._metrics_store.get("performance", {})
+        
+        return {
+            "timestamp": datetime.now().isoformat(),
+            "total_tasks": metrics.get("total_tasks", 0),
+            "successful_tasks": metrics.get("successful_tasks", 0),
+            "failed_tasks": metrics.get("failed_tasks", 0),
+            "avg_execution_time": metrics.get("avg_execution_time", 0.0),
+            "success_rate": (
+                metrics.get("successful_tasks", 0) / metrics.get("total_tasks", 1)
+                if metrics.get("total_tasks", 0) > 0
+                else 0.0
+            ),
+        }
 
 class VectorInsightsUtils:
     @staticmethod
