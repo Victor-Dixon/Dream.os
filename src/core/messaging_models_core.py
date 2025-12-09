@@ -224,6 +224,25 @@ D2A_REPORT_FORMAT_TEXT = (
     "- Status (✅ done or 🟡 blocked + next step)\n"
 )
 
+
+def format_d2a_payload(payload: dict) -> dict:
+    """Format D2A payload with default values.
+    
+    Recommended default injection wherever you render D2A messages.
+    
+    Args:
+        payload: Dictionary of template variables
+        
+    Returns:
+        Dictionary with defaults applied
+    """
+    payload.setdefault("interpretation", "Pending agent interpretation.")
+    payload.setdefault("actions", "Evaluate request and execute if safe/within scope.")
+    payload.setdefault("fallback", "Ask for clarification in Discord with one focused question.")
+    payload.setdefault("discord_response_policy", D2A_RESPONSE_POLICY_TEXT)
+    payload.setdefault("d2a_report_format", D2A_REPORT_FORMAT_TEXT)
+    return payload
+
 # Template strings for standard headers. Payloads should be formatted by the caller.
 MESSAGE_TEMPLATES = {
     # S2A: System-to-Agent (control/ops/cycles)
