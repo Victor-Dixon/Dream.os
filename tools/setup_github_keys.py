@@ -47,24 +47,40 @@ except ImportError:
 
 def get_github_token() -> Optional[str]:
     """Get GitHub token from environment or .env file."""
-    # Use SSOT if available
-    if USE_SSOT:
-        try:
-            return get_github_token_ssot(project_root)
-        except Exception:
-            pass
+    # Priority order:
+    # 1. New professional development account token
+    # 2. Standard GITHUB_TOKEN
+    # 3. SSOT utility (if available)
+    # 4. Direct .env reading
     
-    # Fallback to direct reading
-    # Try environment variable first
+    # Try new professional development account token first
+    token = os.getenv("FG_PROFESSIONAL_DEVELOPMENT_ACCOUNT_GITHUB_TOKEN")
+    if token:
+        return token
+    
+    # Try standard GITHUB_TOKEN
     token = os.getenv("GITHUB_TOKEN")
     if token:
         return token
     
-    # Try .env file
+    # Try SSOT if available
+    if USE_SSOT:
+        try:
+            token = get_github_token_ssot(project_root)
+            if token:
+                return token
+        except Exception:
+            pass
+    
+    # Fallback to direct .env reading
     env_file = project_root / ".env"
     if env_file.exists():
         with open(env_file, "r") as f:
             for line in f:
+                # Try new token first
+                if line.startswith("FG_PROFESSIONAL_DEVELOPMENT_ACCOUNT_GITHUB_TOKEN="):
+                    return line.split("=", 1)[1].strip().strip('"').strip("'")
+                # Then standard token
                 if line.startswith("GITHUB_TOKEN="):
                     return line.split("=", 1)[1].strip().strip('"').strip("'")
     
@@ -181,6 +197,13 @@ def add_ssh_key_to_github(token: str, key_content: str, title: str) -> bool:
             print(f"❌ Failed to add SSH key: {error_msg}")
             if response.status_code == 401:
                 print("   → Check if token has 'write:public_key' scope")
+                print("   → For fine-grained tokens, ensure 'Public SSH keys' permission is granted")
+            elif response.status_code == 403:
+                print("   → Token may not have required permissions")
+                print("   → For fine-grained tokens:")
+                print("     - Go to: https://github.com/settings/tokens")
+                print("     - Edit your token")
+                print("     - Under 'Account permissions' → 'Public SSH keys' → Set to 'Read and write'")
             elif response.status_code == 422:
                 print("   → Key might already exist or be invalid")
             return False
@@ -221,6 +244,13 @@ def add_gpg_key_to_github(token: str, key_content: str, name: str = "GPG Key") -
             print(f"❌ Failed to add GPG key: {error_msg}")
             if response.status_code == 401:
                 print("   → Check if token has 'write:gpg_key' scope")
+                print("   → For fine-grained tokens, ensure 'GPG keys' permission is granted")
+            elif response.status_code == 403:
+                print("   → Token may not have required permissions")
+                print("   → For fine-grained tokens:")
+                print("     - Go to: https://github.com/settings/tokens")
+                print("     - Edit your token")
+                print("     - Under 'Account permissions' → 'GPG keys' → Set to 'Read and write'")
             elif response.status_code == 422:
                 print("   → Key might already exist or be invalid")
             return False
@@ -270,6 +300,15 @@ def list_github_keys(token: str, key_type: str = "ssh") -> bool:
         else:
             error_msg = response.json().get("message", "Unknown error")
             print(f"❌ Failed to list keys: {error_msg}")
+            if response.status_code == 403:
+                print("   → Token may not have required permissions")
+                print("   → For fine-grained tokens:")
+                print("     - Go to: https://github.com/settings/tokens")
+                print("     - Edit your token")
+                if key_type == "ssh":
+                    print("     - Under 'Account permissions' → 'Public SSH keys' → Set to 'Read' or 'Read and write'")
+                else:
+                    print("     - Under 'Account permissions' → 'GPG keys' → Set to 'Read' or 'Read and write'")
             return False
     except Exception as e:
         print(f"❌ Error listing keys: {e}")
@@ -295,8 +334,10 @@ def main():
         print("❌ GitHub token not found")
         print()
         print("💡 Setup options:")
-        print("   1. Set GITHUB_TOKEN environment variable")
-        print("   2. Add GITHUB_TOKEN=your_token to .env file")
+        print("   1. Set FG_PROFESSIONAL_DEVELOPMENT_ACCOUNT_GITHUB_TOKEN environment variable")
+        print("   2. Set GITHUB_TOKEN environment variable")
+        print("   3. Add FG_PROFESSIONAL_DEVELOPMENT_ACCOUNT_GITHUB_TOKEN=your_token to .env file")
+        print("   4. Add GITHUB_TOKEN=your_token to .env file")
         print()
         print("📋 Required token scopes:")
         print("   - write:public_key (for SSH keys)")
@@ -305,7 +346,16 @@ def main():
         print("🔗 Create token at: https://github.com/settings/tokens")
         return 1
     
-    print(f"✅ GitHub token found: {token[:10]}...")
+    # Detect which token was used
+    token_source = "unknown"
+    if os.getenv("FG_PROFESSIONAL_DEVELOPMENT_ACCOUNT_GITHUB_TOKEN"):
+        token_source = "FG_PROFESSIONAL_DEVELOPMENT_ACCOUNT_GITHUB_TOKEN"
+    elif os.getenv("GITHUB_TOKEN"):
+        token_source = "GITHUB_TOKEN"
+    else:
+        token_source = ".env file"
+    
+    print(f"✅ GitHub token found: {token[:10]}... (from {token_source})")
     print()
     
     # Parse command line arguments
