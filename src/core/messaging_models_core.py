@@ -163,7 +163,7 @@ CYCLE_CHECKLIST_TEXT = (
     "- Share learnings to Swarm Brain\n"
 )
 
-# Discord reporting policy to enforce completion visibility
+# Discord reporting policy to enforce completion visibility (for S2A/C2A)
 DISCORD_REPORTING_TEXT = (
     "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     "DISCORD REPORTING POLICY — CRITICAL VISIBILITY\n"
@@ -204,6 +204,24 @@ DISCORD_REPORTING_TEXT = (
     "python tools/devlog_manager.py post --agent Agent-1 --file devlogs/2025-12-08_agent-1_task_complete.md\n"
     "```\n\n"
     "**This may be the ONLY way users see your messages!**\n"
+)
+
+# D2A (Discord → Agent) response policy - lightweight and human-first
+D2A_RESPONSE_POLICY_TEXT = (
+    "Discord Response Policy:\n"
+    "- This message originated from Discord.\n"
+    "- Reply in Discord with your status/answer when you act on this.\n"
+    "- I may not be at the computer; Discord is the primary visibility channel.\n"
+    "- Keep replies short and high-signal.\n"
+)
+
+# D2A preferred reply format - compact reminder
+D2A_REPORT_FORMAT_TEXT = (
+    "Preferred Reply Format (short):\n"
+    "- Task\n"
+    "- Actions Taken\n"
+    "- Commit Message (if code touched)\n"
+    "- Status (✅ done or 🟡 blocked + next step)\n"
 )
 
 # Template strings for standard headers. Payloads should be formatted by the caller.
@@ -455,7 +473,7 @@ MESSAGE_TEMPLATES = {
             "#CYCLE_V2 #C2A\n"
         ),
     },
-    # D2A: Discord-to-Agent
+    # D2A: Discord-to-Agent (lightweight, human-first)
     MessageCategory.D2A: (
         "[HEADER] D2A DISCORD INTAKE\n"
         "From: {sender}\n"
@@ -463,55 +481,18 @@ MESSAGE_TEMPLATES = {
         "Priority: {priority}\n"
         "Message ID: {message_id}\n"
         "Timestamp: {timestamp}\n\n"
-        "Identity:\n"
-        "You are {recipient}. Act as this agent for this message.\n"
-        "If you are not {recipient}, do NOT reply; forward to {recipient}.\n\n"
-        "No-Ack Policy:\n"
-        "- Do not send empty acknowledgments.\n"
-        "- Respond with action/result or 1 blocker (blocker + proposed fix + owner).\n\n"
-        "{discord_reporting}\n"
-        "{cycle_checklist}\n"
-        "User Request:\n{content}\n\n"
-        "Interpretation:\n{interpretation}\n\n"
-        "Proposed Action:\n{actions}\n\n"
-        "If clarification needed:\n{fallback}\n"
-        "How to respond:\n"
-        "- If unclear: ask 1 clarifying question.\n"
-        "- If clear: execute and reply with result/evidence.\n\n"
-        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-        "AGENT OPERATING CYCLE (MANDATORY)\n"
-        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-        "1) Claim - Check Contract System (--get-next-task)\n"
-        "2) Sync SSOT/context - Review mission, check Swarm Brain\n"
-        "3) Slice - Break work into executable pieces\n"
-        "4) Execute - Do the work\n"
-        "5) Validate - Verify results (tests, checks, evidence)\n"
-        "6) Commit - Git commit with evidence\n"
-        "7) Report evidence - Post Discord devlog (see below)\n\n"
-        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-        "DISCORD DEVLOG POSTING (HOW TO REPLY)\n"
-        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-        "**This may be the ONLY way users see your messages!**\n\n"
-        "**Command:**\n"
-        "```bash\n"
-        "python tools/devlog_manager.py post --agent {recipient} --file <devlog_file.md>\n"
-        "```\n\n"
-        "**Steps:**\n"
-        "1. Create devlog file: `devlogs/YYYY-MM-DD_agent-X_topic.md`\n"
-        "2. Write your response/update in the file\n"
-        "3. Post to Discord: `python tools/devlog_manager.py post --agent {recipient} --file devlogs/YYYY-MM-DD_agent-X_topic.md`\n"
-        "4. For major updates: Add `--major` flag\n\n"
-        "**Example:**\n"
-        "```bash\n"
-        "# Create devlog\n"
-        "echo '# Agent-1 Response\\n\\nWork completed: ...' > devlogs/2025-12-08_agent-1_response.md\n"
-        "# Post to Discord\n"
-        "python tools/devlog_manager.py post --agent Agent-1 --file devlogs/2025-12-08_agent-1_response.md\n"
-        "```\n\n"
-        "**Full Documentation:**\n"
-        "- `docs/DEVLOG_POSTING_GUIDE.md` - Complete devlog posting guide\n"
-        "- `docs/DISCORD_ROUTER_USAGE_INSTRUCTIONS.md` - Discord router usage\n"
-        "- `swarm_brain/protocols/CYCLE_PROTOCOLS.md` - Full cycle protocols\n\n"
+        "Origin:\n"
+        "- Discord → Agent intake\n\n"
+        "User Message:\n"
+        "{content}\n\n"
+        "Interpretation (agent):\n"
+        "{interpretation}\n\n"
+        "Proposed Action:\n"
+        "{actions}\n\n"
+        "{discord_response_policy}\n"
+        "{d2a_report_format}\n"
+        "If clarification needed:\n"
+        "{fallback}\n"
         "#DISCORD #D2A\n"
     ),
     # C2A: Captain-to-Agent

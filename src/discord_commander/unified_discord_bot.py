@@ -262,9 +262,13 @@ class UnifiedDiscordBot(commands.Bot):
                     self.logger.info(
                         "✅ Scheduler-StatusMonitor integration wired")
 
-                # Do NOT auto-start; start via Discord view button/!monitor start
-                self.logger.info(
-                    "✅ Status change monitor initialized (manual start via UI)")
+                # Auto-start status monitor to ensure resumer runs without manual action
+                if self.status_monitor:
+                    try:
+                        self.status_monitor.start_monitoring()
+                        self.logger.info("✅ Status change monitor started (auto)")
+                    except Exception as e:
+                        self.logger.warning(f"⚠️ Could not auto-start status monitor: {e}")
             except Exception as e:
                 self.logger.warning(f"⚠️ Could not start status monitor: {e}")
             self.logger.info(f"🤖 Latency: {round(self.latency * 1000, 2)}ms")
@@ -407,19 +411,10 @@ class UnifiedDiscordBot(commands.Bot):
                 timestamp=datetime.now().isoformat(),
             )
 
-            # Render message with D2A template
-            # Extract interpretation and actions from message content
-            # For now, use message content as both interpretation and actions
-            # Get cycle checklist and discord reporting from template helpers
-            from src.core.messaging_models_core import CYCLE_CHECKLIST_TEXT, DISCORD_REPORTING_TEXT
-            
+            # Render message with D2A template (lightweight, human-first)
             rendered_message = render_message(
                 msg,
-                interpretation=message_content,
-                actions=message_content,
-                fallback="If clarification needed, ask 1 clarifying question.",
-                cycle_checklist=CYCLE_CHECKLIST_TEXT,
-                discord_reporting=DISCORD_REPORTING_TEXT,
+                # Defaults will be applied by render_message for D2A
             )
 
             self.logger.info(
