@@ -301,6 +301,46 @@ class TwitchIRCBot(irc.bot.SingleServerIRCBot):
         logger.info(f"📺 Join command sent for channel: {self.channel}")
         print(f"📺 DEBUG: Join command sent")
     
+    def on_ping(self, connection, event) -> None:
+        """
+        Handle PING messages from Twitch IRC server.
+        
+        CRITICAL: Twitch sends PING every ~5 minutes. If we don't respond with PONG,
+        the connection will be closed with "Connection reset by peer".
+        """
+        logger.debug("🏓 Received PING from Twitch IRC server")
+        print("🏓 DEBUG: Received PING - responding with PONG", flush=True)
+        
+        # Respond with PONG (required to keep connection alive)
+        try:
+            connection.pong(event.target if hasattr(event, 'target') else "")
+            logger.debug("🏓 Sent PONG response")
+            print("🏓 DEBUG: PONG sent successfully", flush=True)
+        except Exception as e:
+            logger.error(f"❌ Failed to send PONG: {e}", exc_info=True)
+            print(f"❌ DEBUG: Failed to send PONG: {e}", flush=True)
+    
+    def on_cap(self, connection, event) -> None:
+        """
+        Handle CAP (capabilities) responses from Twitch IRC server.
+        
+        Twitch responds to CAP REQ with ACK (acknowledged) or NAK (not acknowledged).
+        We should acknowledge the ACK before proceeding.
+        """
+        if len(event.arguments) >= 2:
+            cap_cmd = event.arguments[0]  # ACK or NAK
+            cap_name = event.arguments[1] if len(event.arguments) > 1 else ""
+            
+            logger.info(f"📋 CAP response: {cap_cmd} {cap_name}")
+            print(f"📋 DEBUG: CAP {cap_cmd} {cap_name}", flush=True)
+            
+            if cap_cmd == "ACK":
+                logger.info(f"✅ Capability acknowledged: {cap_name}")
+                print(f"✅ DEBUG: Capability {cap_name} acknowledged", flush=True)
+            elif cap_cmd == "NAK":
+                logger.warning(f"⚠️ Capability not acknowledged: {cap_name}")
+                print(f"⚠️ DEBUG: Capability {cap_name} NOT acknowledged", flush=True)
+    
     def on_nicknameinuse(self, connection, event) -> None:
         """Called when nickname is already in use."""
         logger.error("❌ Nickname already in use!")
