@@ -14,13 +14,21 @@ License: MIT
 import logging
 from typing import Any
 
-from .implementations import PortfolioRepositoryImpl, PositionRepositoryImpl, TradingRepositoryImpl
 from .interfaces import (
     PortfolioRepositoryInterface,
     PositionRepositoryInterface,
     TradingRepositoryInterface,
 )
 from .models import Portfolio, Position, Trade
+
+# Optional implementations - may not exist
+try:
+    from .implementations import PortfolioRepositoryImpl, PositionRepositoryImpl, TradingRepositoryImpl
+except ImportError:
+    # Stub classes if implementations don't exist
+    PortfolioRepositoryImpl = None
+    PositionRepositoryImpl = None
+    TradingRepositoryImpl = None
 
 
 class TradingRepository:
@@ -33,10 +41,21 @@ class TradingRepository:
         """Initialize trading repository."""
         self.logger = logging.getLogger(__name__)
 
-        # Initialize implementations
-        self.trade_repo: TradingRepositoryInterface = TradingRepositoryImpl()
-        self.position_repo: PositionRepositoryInterface = PositionRepositoryImpl()
-        self.portfolio_repo: PortfolioRepositoryInterface = PortfolioRepositoryImpl()
+        # Initialize implementations (with fallback if not available)
+        if TradingRepositoryImpl is not None:
+            self.trade_repo: TradingRepositoryInterface = TradingRepositoryImpl()
+        else:
+            raise ImportError("TradingRepositoryImpl not available - trading repository implementations missing")
+        
+        if PositionRepositoryImpl is not None:
+            self.position_repo: PositionRepositoryInterface = PositionRepositoryImpl()
+        else:
+            raise ImportError("PositionRepositoryImpl not available - position repository implementations missing")
+        
+        if PortfolioRepositoryImpl is not None:
+            self.portfolio_repo: PortfolioRepositoryInterface = PortfolioRepositoryImpl()
+        else:
+            raise ImportError("PortfolioRepositoryImpl not available - portfolio repository implementations missing")
 
         self.logger.info("Trading Repository V2 initialized")
 

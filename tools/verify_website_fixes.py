@@ -12,6 +12,12 @@ import sys
 from pathlib import Path
 
 try:
+    from src.core.config.timeout_constants import TimeoutConstants
+except Exception:
+    class TimeoutConstants:
+        HTTP_SHORT = 10
+
+try:
     import requests
     from bs4 import BeautifulSoup
     HAS_REQUESTS = True
@@ -245,7 +251,6 @@ def main():
     # Save report
     import json
     from datetime import datetime
-from src.core.config.timeout_constants import TimeoutConstants
     report_file = Path("agent_workspaces/Agent-7/WEBSITE_VERIFICATION_REPORT.json")
     report_file.parent.mkdir(parents=True, exist_ok=True)
     

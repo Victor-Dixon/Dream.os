@@ -44,7 +44,10 @@ class DiscordService:
 
     def __init__(self, webhook_url: str | None = None):
         """Initialize Discord service."""
-        self.webhook_url = webhook_url or self._load_webhook_url()
+        if webhook_url is None:
+            self.webhook_url = self._load_webhook_url()
+        else:
+            self.webhook_url = webhook_url
         self.agent_engine = AgentCommunicationEngine()
         self.devlogs_path = Path("devlogs")
         self.last_check_time = datetime.utcnow()
@@ -144,12 +147,13 @@ class DiscordService:
 
     def _parse_devlog_filename(self, filename: str) -> dict[str, str]:
         """Parse metadata from devlog filename."""
-        parts = filename.replace(".md", "").split("_")
+        clean_filename = filename.replace(".md", "")
+        parts = clean_filename.split("_")
         metadata = {
             "timestamp": "unknown",
             "category": "general",
             "agent": "Unknown",
-            "title": filename,
+            "title": clean_filename,
         }
 
         if len(parts) >= 4:

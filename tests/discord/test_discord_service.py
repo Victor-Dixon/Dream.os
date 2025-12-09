@@ -192,14 +192,14 @@ class TestDiscordService:
         
         assert "V2_SWARM monitoring system" in result
 
-    @patch.object(DiscordService, 'session')
-    def test_send_devlog_notification_success(self, mock_session):
+    @patch('requests.Session.post')
+    def test_send_devlog_notification_success(self, mock_post):
         """Test successful devlog notification sending."""
         service = DiscordService(webhook_url="https://test.webhook.url")
         mock_response = Mock()
         mock_response.status_code = 204
-        mock_session.post.return_value = mock_response
-        
+        mock_post.return_value = mock_response
+
         devlog_data = {
             "title": "Test DevLog",
             "description": "Test description",
@@ -208,94 +208,97 @@ class TestDiscordService:
             "filepath": "test.md",
             "timestamp": datetime.utcnow().isoformat()
         }
-        
+
         result = service.send_devlog_notification(devlog_data)
         assert result is True
-        mock_session.post.assert_called_once()
+        mock_post.assert_called_once()
 
-    def test_send_devlog_notification_no_webhook(self):
+    @patch.object(DiscordService, '_load_webhook_url', return_value=None)
+    def test_send_devlog_notification_no_webhook(self, mock_load_webhook):
         """Test devlog notification when webhook URL is not set."""
         service = DiscordService(webhook_url=None)
         devlog_data = {"title": "Test"}
-        
+
         result = service.send_devlog_notification(devlog_data)
         assert result is False
 
-    @patch.object(DiscordService, 'session')
-    def test_send_devlog_notification_failure(self, mock_session):
+    @patch('requests.Session.post')
+    def test_send_devlog_notification_failure(self, mock_post):
         """Test devlog notification when request fails."""
         service = DiscordService(webhook_url="https://test.webhook.url")
-        mock_session.post.side_effect = Exception("Network error")
+        mock_post.side_effect = Exception("Network error")
         
         devlog_data = {"title": "Test"}
         result = service.send_devlog_notification(devlog_data)
         assert result is False
 
-    @patch.object(DiscordService, 'session')
-    def test_send_agent_status_notification_success(self, mock_session):
+    @patch('requests.Session.post')
+    def test_send_agent_status_notification_success(self, mock_post):
         """Test successful agent status notification."""
         service = DiscordService(webhook_url="https://test.webhook.url")
         mock_response = Mock()
         mock_response.status_code = 204
-        mock_session.post.return_value = mock_response
+        mock_post.return_value = mock_response
         
         agent_status = {"agent_id": "Agent-7", "status": "active"}
         result = service.send_agent_status_notification(agent_status)
         assert result is True
 
-    def test_send_agent_status_notification_no_webhook(self):
+    @patch.object(DiscordService, '_load_webhook_url', return_value=None)
+    def test_send_agent_status_notification_no_webhook(self, mock_load_webhook):
         """Test agent status notification when webhook URL is not set."""
         service = DiscordService(webhook_url=None)
         agent_status = {"agent_id": "Agent-7"}
-        
+
         result = service.send_agent_status_notification(agent_status)
         assert result is False
 
-    @patch.object(DiscordService, 'session')
-    def test_send_swarm_coordination_notification_success(self, mock_session):
+    @patch('requests.Session.post')
+    def test_send_swarm_coordination_notification_success(self, mock_post):
         """Test successful swarm coordination notification."""
         service = DiscordService(webhook_url="https://test.webhook.url")
         mock_response = Mock()
         mock_response.status_code = 204
-        mock_session.post.return_value = mock_response
+        mock_post.return_value = mock_response
         
         coordination_data = {"message": "Test coordination"}
         result = service.send_swarm_coordination_notification(coordination_data)
         assert result is True
 
-    @patch.object(DiscordService, 'session')
-    def test_test_webhook_connection_success(self, mock_session):
+    @patch('requests.Session.post')
+    def test_test_webhook_connection_success(self, mock_post):
         """Test successful webhook connection test."""
         service = DiscordService(webhook_url="https://test.webhook.url")
         mock_response = Mock()
         mock_response.status_code = 204
-        mock_session.post.return_value = mock_response
+        mock_post.return_value = mock_response
         
         result = service.test_webhook_connection()
         assert result is True
 
-    def test_test_webhook_connection_no_webhook(self):
+    @patch.object(DiscordService, '_load_webhook_url', return_value=None)
+    def test_test_webhook_connection_no_webhook(self, mock_load_webhook):
         """Test webhook connection when webhook URL is not set."""
         service = DiscordService(webhook_url=None)
         result = service.test_webhook_connection()
         assert result is False
 
-    @patch.object(DiscordService, 'session')
-    def test_test_webhook_connection_failure(self, mock_session):
+    @patch('requests.Session.post')
+    def test_test_webhook_connection_failure(self, mock_post):
         """Test webhook connection when request fails."""
         service = DiscordService(webhook_url="https://test.webhook.url")
         mock_response = Mock()
         mock_response.status_code = 400
-        mock_session.post.return_value = mock_response
-        
+        mock_post.return_value = mock_response
+
         result = service.test_webhook_connection()
         assert result is False
 
-    @patch.object(DiscordService, 'session')
-    def test_test_webhook_connection_exception(self, mock_session):
+    @patch('requests.Session.post')
+    def test_test_webhook_connection_exception(self, mock_post):
         """Test webhook connection when exception occurs."""
         service = DiscordService(webhook_url="https://test.webhook.url")
-        mock_session.post.side_effect = Exception("Connection error")
+        mock_post.side_effect = Exception("Connection error")
         
         result = service.test_webhook_connection()
         assert result is False

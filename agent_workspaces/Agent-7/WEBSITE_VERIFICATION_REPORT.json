@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-12-01T13:14:27.007802",
+  "timestamp": "2025-12-09T11:47:10.113680",
   "results": [
     {
       "site": "prismblossom.online",
@@ -43,15 +43,9 @@
         },
         {
           "type": "navigation_menu",
-          "status": "warning",
-          "developer_tools_links_found": 18,
-          "links": [
-            "https://freerideinvestor.com/developer-tools/",
-            "https://freerideinvestor.com/developer-tools-2/",
-            "https://freerideinvestor.com/developer-tools-3/",
-            "https://freerideinvestor.com/developer-tools-4/",
-            "https://freerideinvestor.com/developer-tools-5/"
-          ]
+          "status": "success",
+          "developer_tools_links_found": 0,
+          "links": []
         }
       ]
     }
