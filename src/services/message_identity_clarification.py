@@ -10,14 +10,15 @@ License: MIT
 """
 
 from src.core.messaging_core import UnifiedMessage
+from src.core.base.base_service import BaseService
 
 
-class MessageIdentityClarification:
+class MessageIdentityClarification(BaseService):
     """Handles message formatting with agent identity clarification."""
 
     def __init__(self):
         """Initialize the message identity clarification system."""
-        pass
+        super().__init__("MessageIdentityClarification")
 
     def format_message_with_identity_clarification(
         self, message: UnifiedMessage, recipient: str

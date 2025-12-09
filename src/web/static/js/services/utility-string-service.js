@@ -9,52 +9,10 @@
  */
 
 // ================================
-// UNIFIED LOGGING INTEGRATION
+// UNIFIED LOGGING INTEGRATION (SSOT)
 // ================================
 
-/**
- * Unified logging system integration for JavaScript
- * Eliminates duplicate logging patterns across utility services
- */
-class UnifiedLoggingSystem {
-    constructor(name = "UtilityStringService") {
-        this.name = name;
-        this.operationTimers = new Map();
-    }
-
-    logOperationStart(operationName, extra = {}) {
-        const message = `Starting ${operationName}`;
-        console.info(`[${this.name}] ${message}`, extra);
-        this.operationTimers.set(operationName, Date.now());
-    }
-
-    logOperationComplete(operationName, extra = {}) {
-        const message = `Completed ${operationName}`;
-        console.info(`[${this.name}] ${message}`, extra);
-
-        if (this.operationTimers.has(operationName)) {
-            const duration = Date.now() - this.operationTimers.get(operationName);
-            this.logPerformanceMetric(`${operationName}_duration`, duration);
-            this.operationTimers.delete(operationName);
-        }
-    }
-
-    logOperationFailed(operationName, error, extra = {}) {
-        const message = `Failed to ${operationName}: ${error}`;
-        console.error(`[${this.name}] ${message}`, extra);
-        this.operationTimers.delete(operationName);
-    }
-
-    logPerformanceMetric(metricName, metricValue, extra = {}) {
-        const message = `Performance metric: ${metricName} = ${metricValue}`;
-        console.info(`[${this.name}] ${message}`, extra);
-    }
-
-    logErrorGeneric(moduleName, error, extra = {}) {
-        const message = `Error in ${moduleName}: ${error}`;
-        console.error(`[${this.name}] ${message}`, extra);
-    }
-}
+import { LoggingUtils } from '../../utilities/logging-utils.js';
 
 // ================================
 // UTILITY STRING SERVICE
@@ -62,11 +20,11 @@ class UnifiedLoggingSystem {
 
 /**
  * String manipulation utility functions
- * ENHANCED: Integrated with unified logging system
+ * ENHANCED: Integrated with unified logging system (SSOT)
  */
 class UtilityStringService {
     constructor() {
-        this.logger = new UnifiedLoggingSystem("UtilityStringService");
+        this.logger = new LoggingUtils({ name: "UtilityStringService" });
     }
 
     /**

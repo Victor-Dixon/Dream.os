@@ -3,6 +3,8 @@
 Business Intelligence Engine Operations - V2 Compliance Module
 ==============================================================
 
+<!-- SSOT Domain: analytics -->
+
 Extended operations for business intelligence.
 
 Author: Agent-2 (Architecture & Design Specialist) - V2 Refactoring

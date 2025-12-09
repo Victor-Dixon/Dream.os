@@ -3,6 +3,8 @@
 Prediction Validator - KISS Compliant
 ====================================
 
+<!-- SSOT Domain: analytics -->
+
 Simple prediction validation.
 
 Author: Agent-5 - Business Intelligence Specialist

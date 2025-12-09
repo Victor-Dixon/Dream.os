@@ -11,6 +11,8 @@ Compression Levels:
 - Level 2 (7-30 days): Truncated content
 - Level 3 (30+ days): Aggregated statistics
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-3 (Infrastructure & DevOps) - JET FUEL AUTONOMOUS MODE
 Created: 2025-01-27
 Priority: CRITICAL

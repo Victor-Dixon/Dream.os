@@ -4,6 +4,7 @@ Contract Manager - Agent Cellphone V2
 ====================================
 
 Manages contract operations and task assignments.
+Migrated to BaseService for consolidated initialization and error handling.
 
 Author: Agent-7 (Web Development Specialist)
 License: MIT
@@ -13,18 +14,19 @@ import logging
 from datetime import datetime
 from typing import Any
 
+from ...core.base.base_service import BaseService
 from .storage import ContractStorage
 
 logger = logging.getLogger(__name__)
 
 
-class ContractManager:
+class ContractManager(BaseService):
     """Manages contract operations and task assignments."""
 
     def __init__(self):
         """Initialize contract manager."""
+        super().__init__("ContractManager")
         self.storage = ContractStorage()
-        self.logger = logger
 
     def get_system_status(self) -> dict[str, Any]:
         """Get overall system contract status."""

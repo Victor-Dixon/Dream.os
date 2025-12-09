@@ -1,6 +1,8 @@
 # MIGRATED: This file has been migrated to the centralized configuration system
 """Shared configuration for frontend modules.
 
+<!-- SSOT Domain: web -->
+
 This module centralizes configuration values used across the frontend
 application to provide a single source of truth (SSOT).
 """

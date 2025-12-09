@@ -895,12 +895,6 @@ COMMAND_REGISTRY: Dict[str, Dict] = {
         "category": "communication",
         "file": "message_compression_automation.py",
     },
-    "message-queue-processor": {
-        "module": "tools.start_message_queue_processor",
-        "function": "main",
-        "category": "communication",
-        "file": "start_message_queue_processor.py",
-    },
     "message-validator": {
         "module": "tools.communication.message_validator",
         "function": "main",

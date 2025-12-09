@@ -4,6 +4,7 @@ ChatGPT Navigator - V2 Compliant
 
 Browser navigation for ChatGPT conversations using Playwright.
 Extends V2's existing browser infrastructure for ChatGPT automation.
+Migrated to BaseService for consolidated initialization and error handling.
 
 V2 Compliance: ≤400 lines, SOLID principles, comprehensive error handling.
 
@@ -16,6 +17,8 @@ import time
 from pathlib import Path
 from typing import Optional, Dict, Any
 import logging
+
+from ...core.base.base_service import BaseService
 
 # Optional dependencies for browser automation
 try:
@@ -43,7 +46,7 @@ except ImportError as e:
         pass
 
 
-class ChatGPTNavigator:
+class ChatGPTNavigator(BaseService):
     """
     ChatGPT browser navigation helper.
     
@@ -58,8 +61,8 @@ class ChatGPTNavigator:
         Args:
             config: Configuration dictionary (uses config/chatgpt.yml if None)
         """
+        super().__init__("ChatGPTNavigator")
         self.config = config or {}
-        self.logger = get_logger(__name__)
         
         # V2 Integration
         self.unified_config = get_unified_config()

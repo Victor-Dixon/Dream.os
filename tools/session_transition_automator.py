@@ -15,6 +15,8 @@ Automates the creation of all 9 required session transition deliverables:
 
 BONUS: Sends handoff message to self (will be received by new agent in next session)
 
+<!-- SSOT Domain: infrastructure -->
+
 V2 Compliant: <400 lines
 """
 

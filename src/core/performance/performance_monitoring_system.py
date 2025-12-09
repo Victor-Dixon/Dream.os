@@ -11,12 +11,13 @@ License: MIT
 """
 
 import logging
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Any
 
 import psutil
-from dataclasses import dataclass, field
+
+from src.core.utils.serialization_utils import to_dict
 
 
 

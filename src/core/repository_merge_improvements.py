@@ -24,7 +24,8 @@ from datetime import datetime, timedelta
 from enum import Enum
 from pathlib import Path
 from typing import Dict, Optional, Tuple, List
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass
+from src.core.utils.serialization_utils import to_dict
 
 logger = logging.getLogger(__name__)
 
@@ -112,7 +113,7 @@ class RepositoryMergeImprovements:
             REPO_STATUS_FILE.parent.mkdir(parents=True, exist_ok=True)
             data = {
                 name: {
-                    **asdict(meta),
+                    **to_dict(meta),
                     'status': meta.status.value
                 }
                 for name, meta in self.repo_statuses.items()
@@ -128,7 +129,7 @@ class RepositoryMergeImprovements:
             ATTEMPT_TRACKING_FILE.parent.mkdir(parents=True, exist_ok=True)
             data = {
                 pair: {
-                    **asdict(attempt),
+                    **to_dict(attempt),
                     'error_type': attempt.error_type.value if attempt.error_type else None
                 }
                 for pair, attempt in self.merge_attempts.items()

@@ -10,11 +10,13 @@ Handles onboarding-related commands for messaging CLI.
 Extracted from messaging_cli_handlers.py for V2 compliance.
 
 V2 Compliance: < 300 lines, single responsibility.
+Migrated to BaseService for consolidated initialization and error handling.
 
 Author: Agent-7 - Web Development Specialist
 License: MIT
 """
 from datetime import datetime
+from ...core.base.base_service import BaseService
 from ...automation.ui_onboarding import UIOnboarder, UIUnavailableError
 from ...core.workspace_agent_registry import AgentRegistry
 from ...quality.proof_ledger import run_tdd_proof
@@ -23,7 +25,7 @@ from ...utils.backup import BackupManager
 from ...utils.confirm import confirm
 
 
-class OnboardingHandler:
+class OnboardingHandler(BaseService):
 
     def can_handle(self, args) ->bool:
         """Check if this handler can handle the given arguments."""
@@ -36,6 +38,7 @@ class OnboardingHandler:
         return self.handle_onboarding_commands(args)
 
     def __init__(self) ->None:
+        super().__init__("OnboardingHandler")
         self.exit_code = 0
 
     def handle_onboarding_commands(self, args) ->bool:

@@ -17,9 +17,11 @@ import { DataUtils } from './utilities/data-utils.js';
 import { DeviceUtils } from './utilities/device-utils.js';
 import { FunctionUtils } from './utilities/function-utils.js';
 import { MathUtils } from './utilities/math-utils.js';
-import { StringUtils } from './utilities/string-utils.js';
-import { UnifiedLoggingSystem } from './utilities/logging-utils.js';
+import { StringUtils } from '../../utilities/string-utils.js';
+import { LoggingUtils } from '../../utilities/logging-utils.js';
 import { ValidationUtils } from '../../utilities/validation-utils.js';
+import { ArrayUtils } from '../../utilities/array-utils.js';
+import { TimeUtils } from '../../utilities/time-utils.js';
 
 // ================================
 // UTILITY FUNCTION SERVICE V4
@@ -31,13 +33,15 @@ import { ValidationUtils } from '../../utilities/validation-utils.js';
  */
 export class UtilityFunctionService {
     constructor() {
-        this.logger = new UnifiedLoggingSystem("UtilityFunctionService");
+        this.logger = new LoggingUtils({ name: "UtilityFunctionService" });
         this.functionUtils = new FunctionUtils();
         this.dataUtils = new DataUtils();
         this.mathUtils = new MathUtils();
         this.stringUtils = new StringUtils();
         this.deviceUtils = new DeviceUtils();
         this.validationUtils = new ValidationUtils();
+        this.arrayUtils = new ArrayUtils(this.logger);
+        this.timeUtils = new TimeUtils(this.logger);
     }
 
     // ================================
@@ -84,17 +88,24 @@ export class UtilityFunctionService {
     }
 
     /**
-     * Format date
+     * Format date (delegates to TimeUtils SSOT)
      */
     formatDate(date, format = 'MM/DD/YYYY') {
-        return this.dataUtils.formatDate(date, format);
+        // Use TimeUtils SSOT for date formatting
+        // TimeUtils uses Intl.DateTimeFormat, so convert simple format to options
+        if (format === 'MM/DD/YYYY') {
+            // Simple format - use TimeUtils with medium date style
+            return this.timeUtils.formatDate(date, { dateStyle: 'medium' });
+        }
+        // For other formats, try to map to TimeUtils options or use as-is
+        return this.timeUtils.formatDate(date, { dateStyle: format });
     }
 
     /**
-     * Deep clone an object
+     * Deep clone an object (delegates to ArrayUtils SSOT)
      */
     deepClone(obj) {
-        return this.dataUtils.deepClone(obj);
+        return this.arrayUtils.deepClone(obj);
     }
 
     // ================================

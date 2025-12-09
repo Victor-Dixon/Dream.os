@@ -1,4 +1,16 @@
 # src/quality/proof_ledger.py
+"""
+Proof Ledger - TDD Proof Artifact Generation
+============================================
+
+<!-- SSOT Domain: qa -->
+
+Generates proof artifacts from test execution for quality assurance.
+
+Author: Agent-8 (SSOT & System Integration Specialist)
+Date: 2025-12-07
+"""
+
 from __future__ import annotations
 
 import json

@@ -19,6 +19,8 @@ from pathlib import Path
 from datetime import datetime
 from typing import Dict, List, Tuple
 
+from src.core.config.timeout_constants import TimeoutConstants
+
 def check_agent_statuses() -> Tuple[List[Dict], List[Dict], List[Dict], List[Dict]]:
     """Check all agent statuses and categorize by staleness."""
     
@@ -153,7 +155,7 @@ def send_resume_message(agent_id: str, hours_old: float) -> bool:
             cmd,
             capture_output=True,
             text=True,
-            timeout=30,
+            timeout=TimeoutConstants.HTTP_DEFAULT,
             env=env,
             cwd=str(project_root)
         )
@@ -210,7 +212,7 @@ def send_task_assignment(agent_id: str, mission: str, tasks: List[str], priority
             cmd,
             capture_output=True,
             text=True,
-            timeout=30,
+            timeout=TimeoutConstants.HTTP_DEFAULT,
             env=env,
             cwd=str(project_root)
         )

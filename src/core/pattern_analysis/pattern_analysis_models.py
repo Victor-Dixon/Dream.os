@@ -142,7 +142,6 @@ class PatternMetrics:
     def to_dict(self) -> dict[str, Any]:
         """Convert metrics to dictionary using SSOT utility."""
         return to_dict(self)
-        }
 
 
 @dataclass

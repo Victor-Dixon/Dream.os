@@ -8,6 +8,7 @@ Coordinates replay sessions, agent integration, and behavioral scoring.
 <!-- SSOT Domain: business-intelligence -->
 
 V2 Compliance: <400 lines, orchestrator pattern
+Migrated to BaseService for consolidated initialization and error handling.
 Author: Agent-3 (Infrastructure & DevOps Specialist)
 License: MIT
 """
@@ -17,6 +18,7 @@ from pathlib import Path
 from typing import Optional, Dict, Any, List
 from datetime import datetime
 
+from src.core.base.base_service import BaseService
 from src.core.unified_logging_system import get_logger, configure_logging
 from src.services.unified_messaging_service import UnifiedMessagingService
 
@@ -39,7 +41,7 @@ configure_logging(level="DEBUG", log_file=log_file)
 logger = get_logger(__name__)
 
 
-class TraderReplayOrchestrator:
+class TraderReplayOrchestrator(BaseService):
     """
     Orchestrates trading replay and journaling system.
 
@@ -62,6 +64,7 @@ class TraderReplayOrchestrator:
             db_path: Path to SQLite database (default: agent_workspaces/data/trader_replay.db)
             agent_workspace_path: Base path for agent workspaces
         """
+        super().__init__("TraderReplayOrchestrator")
         # Set default database path
         if db_path is None:
             base_path = (
@@ -86,7 +89,7 @@ class TraderReplayOrchestrator:
         # Active replay sessions
         self.active_sessions: Dict[int, Dict[str, Any]] = {}
 
-        logger.info(
+        self.logger.info(
             f"TraderReplayOrchestrator initialized (db: {db_path})"
         )
 
@@ -137,13 +140,13 @@ class TraderReplayOrchestrator:
                     f"✅ Trading replay session created: {symbol} on {session_date} (Session ID: {session_id})",
                 )
 
-            logger.info(
+            self.logger.info(
                 f"Created replay session {session_id} for {symbol} on {session_date}"
             )
             return session_id
 
         except Exception as e:
-            logger.error(f"Failed to create replay session: {e}", exc_info=True)
+            self.logger.error(f"Failed to create replay session: {e}", exc_info=True)
             raise
 
     def start_replay(self, session_id: int) -> Dict[str, Any]:
@@ -173,11 +176,11 @@ class TraderReplayOrchestrator:
                 ReplaySessionStatus.IN_PROGRESS
             )
 
-            logger.info(f"Started replay session {session_id}")
+            self.logger.info(f"Started replay session {session_id}")
             return replay_state.to_dict()
 
         except Exception as e:
-            logger.error(
+            self.logger.error(
                 f"Failed to start replay session {session_id}: {e}",
                 exc_info=True,
             )
@@ -203,7 +206,7 @@ class TraderReplayOrchestrator:
             return replay_state.to_dict()
 
         except Exception as e:
-            logger.error(
+            self.logger.error(
                 f"Failed to step replay session {session_id}: {e}",
                 exc_info=True,
             )
@@ -217,10 +220,10 @@ class TraderReplayOrchestrator:
                 self.active_sessions[session_id]["status"] = (
                     ReplaySessionStatus.PAUSED
                 )
-            logger.info(f"Paused replay session {session_id}")
+            self.logger.info(f"Paused replay session {session_id}")
 
         except Exception as e:
-            logger.error(
+            self.logger.error(
                 f"Failed to pause replay session {session_id}: {e}",
                 exc_info=True,
             )
@@ -259,11 +262,11 @@ class TraderReplayOrchestrator:
                     f"✅ Trading replay session {session_id} completed. Summary available.",
                 )
 
-            logger.info(f"Completed replay session {session_id}")
+            self.logger.info(f"Completed replay session {session_id}")
             return summary
 
         except Exception as e:
-            logger.error(
+            self.logger.error(
                 f"Failed to complete replay session {session_id}: {e}",
                 exc_info=True,
             )
@@ -284,10 +287,10 @@ class TraderReplayOrchestrator:
                 priority="normal",
                 use_pyautogui=False,
             )
-            logger.debug(f"Sent notification to {agent_id}")
+            self.logger.debug(f"Sent notification to {agent_id}")
 
         except Exception as e:
-            logger.warning(
+            self.logger.warning(
                 f"Failed to notify agent {agent_id}: {e}",
                 exc_info=True,
             )
@@ -310,7 +313,7 @@ class TraderReplayOrchestrator:
             return session_info or {}
 
         except Exception as e:
-            logger.error(
+            self.logger.error(
                 f"Failed to get session status {session_id}: {e}",
                 exc_info=True,
             )

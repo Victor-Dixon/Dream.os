@@ -7,11 +7,23 @@ Target: ≥85% coverage, 12+ test methods.
 import pytest
 from unittest.mock import Mock, patch, MagicMock, AsyncMock
 import sys
+from pathlib import Path
 
-# Mock discord imports
-sys.modules['discord'] = MagicMock()
-sys.modules['discord.ext'] = MagicMock()
-sys.modules['discord.ext.commands'] = MagicMock()
+# Add project root to path
+_project_root = Path(__file__).parent.parent.parent
+if str(_project_root) not in sys.path:
+    sys.path.insert(0, str(_project_root))
+
+# Setup Discord mocks (SSOT)
+# Import with path handling
+import importlib.util
+_discord_utils_path = _project_root / "tests" / "utils" / "discord_test_utils.py"
+spec = importlib.util.spec_from_file_location("discord_test_utils", _discord_utils_path)
+discord_test_utils = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(discord_test_utils)
+setup_discord_mocks = discord_test_utils.setup_discord_mocks
+create_mock_messaging_service = discord_test_utils.create_mock_messaging_service
+setup_discord_mocks()
 
 from src.discord_commander.messaging_controller import DiscordMessagingController
 from src.services.messaging_infrastructure import ConsolidatedMessagingService
@@ -23,14 +35,16 @@ class TestDiscordMessagingController:
     @pytest.fixture
     def mock_messaging_service(self):
         """Create mock messaging service."""
-        service = MagicMock(spec=ConsolidatedMessagingService)
-        service.send_message = MagicMock(return_value=True)
-        service.broadcast_message = MagicMock(return_value=True)
-        service.agent_data = {
+        agent_data = {
             "Agent-1": {"active": True, "coordinates": (100, 200), "name": "Agent-1"},
             "Agent-2": {"active": False, "coordinates": (300, 400), "name": "Agent-2"}
         }
-        return service
+        return create_mock_messaging_service(
+            service_class=ConsolidatedMessagingService,
+            send_message_return=True,
+            broadcast_message_return=True,
+            agent_data=agent_data
+        )
 
     @pytest.fixture
     def controller(self, mock_messaging_service):

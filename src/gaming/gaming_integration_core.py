@@ -70,7 +70,6 @@ class GameSessionManager:
     def create_session(self, game_type: str, player_id: str) -> Optional[Dict[str, Any]]:
         """Create a new game session."""
         try:
-            from dataclasses import asdict
             session_id = f"session_{int(datetime.now().timestamp())}"
             game_type_enum = GameType(game_type)
             # SSOT uses dataclass - create with all required fields
@@ -87,16 +86,17 @@ class GameSessionManager:
 
             logger.info(f"Created game session: {session_id}")
             # Convert dataclass to dict
-            return asdict(session)
+            from src.core.utils.serialization_utils import to_dict
+            return to_dict(session)
         except Exception as e:
             logger.error(f"Error creating game session: {e}")
             return None
 
     def get_session(self, session_id: str) -> Optional[Dict[str, Any]]:
         """Get game session."""
-        from dataclasses import asdict
         session = self.sessions.get(session_id)
-        return asdict(session) if session else None
+        from src.core.utils.serialization_utils import to_dict
+        return to_dict(session) if session else None
 
     def end_session(self, session_id: str) -> bool:
         """End game session."""
@@ -113,9 +113,9 @@ class GameSessionManager:
 
     def get_active_sessions(self) -> List[Dict[str, Any]]:
         """Get active game sessions."""
-        from dataclasses import asdict
+        from src.core.utils.serialization_utils import to_dict
         return [
-            asdict(session)
+            to_dict(session)
             for session in self.sessions.values()
             if session.status == "active"
         ]
@@ -150,14 +150,14 @@ class EntertainmentSystemManager:
 
     def get_system(self, system_id: str) -> Optional[Dict[str, Any]]:
         """Get entertainment system."""
-        from dataclasses import asdict
         system = self.systems.get(system_id)
-        return asdict(system) if system else None
+        from src.core.utils.serialization_utils import to_dict
+        return to_dict(system) if system else None
 
     def get_all_systems(self) -> List[Dict[str, Any]]:
         """Get all entertainment systems."""
-        from dataclasses import asdict
-        return [asdict(system) for system in self.systems.values()]
+        from src.core.utils.serialization_utils import to_dict
+        return [to_dict(system) for system in self.systems.values()]
 
 
 # SRP: IntegrationEventHandler handles only event processing

@@ -18,6 +18,8 @@ from pathlib import Path
 from typing import Dict, List, Optional, Any, Tuple
 import logging
 
+from src.core.config.timeout_constants import TimeoutConstants
+
 logger = logging.getLogger(__name__)
 
 
@@ -531,7 +533,6 @@ class EnhancedAgentActivityDetector:
                     if last_cycle_str:
                         try:
                             from datetime import datetime
-from src.core.config.timeout_constants import TimeoutConstants
                             # Parse ISO format timestamp
                             last_cycle_time = datetime.fromisoformat(
                                 last_cycle_str.replace("Z", "+00:00")

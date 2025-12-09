@@ -6,6 +6,8 @@ Error Response Models
 Error response classes for comprehensive error handling.
 Extracted from error_handling_models.py for V2 compliance (class count limit).
 
+<!-- SSOT Domain: core -->
+
 Author: Agent-3 (Infrastructure & DevOps) - ROI Refactoring (500 pts, ROI 33.33)
 License: MIT
 """

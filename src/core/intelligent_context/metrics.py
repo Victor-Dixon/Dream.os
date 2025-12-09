@@ -35,6 +35,3 @@ class ContextMetrics:
     def to_dict(self) -> dict[str, Any]:
         """Convert to dictionary using SSOT utility."""
         return to_dict(self)
-            "success_predictions": self.success_predictions,
-            "last_updated": self.last_updated.isoformat(),
-        }

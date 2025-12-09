@@ -1,3 +1,11 @@
+"""
+Single Source of Truth (SSOT) for Command Execution Results
+Domain: core
+Owner: Agent-2 (Architecture & Design)
+Last Updated: 2025-12-08
+Related SSOT: src/swarmstatus.py, src/agent_registry.py
+"""
+
 from dataclasses import dataclass
 from typing import Any, Optional
 

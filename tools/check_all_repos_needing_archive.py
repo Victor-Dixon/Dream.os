@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """
 Check all repos that need to be archived (not yet archived).
+
+<!-- SSOT Domain: infrastructure -->
 """
 import os
 import sys

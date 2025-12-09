@@ -1,6 +1,10 @@
 /**
  * DOM Utils Orchestrator - V2 Compliant
  * Main orchestrator for DOM utilities framework
+ * 
+ * @SSOT Domain: dom-operations
+ * @SSOT Location: dashboard/dom-utils-orchestrator.js
+ * @SSOT Scope: DOM manipulation, element selection, event management, cache management
  *
  * @author Agent-7 - Web Development Specialist
  * @version 1.0.0 - V2 COMPLIANCE MODULARIZATION

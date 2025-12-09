@@ -3,6 +3,8 @@
 Swarm Memory System
 ===================
 
+<!-- SSOT Domain: qa -->
+
 Unified memory system combining agent notes and shared knowledge.
 
 Author: Agent-7 - Repository Cloning Specialist

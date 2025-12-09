@@ -1,6 +1,10 @@
 /**
  * Time Utilities Module - V2 Compliant
  * Date and time manipulation functions
+ * 
+ * @SSOT Domain: time-operations
+ * @SSOT Location: utilities/time-utils.js
+ * @SSOT Scope: formatDate, formatDuration, time calculations, date formatting
  *
  * @author Agent-7 - Web Development Specialist
  * @version 1.0.0 - V2 COMPLIANCE EXTRACTION

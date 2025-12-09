@@ -1,3 +1,4 @@
+<!-- SSOT Domain: architecture -->
 # BaseManager Architecture Documentation
 
 **Date**: 2025-12-04  

@@ -3,6 +3,8 @@
 Coordination Analytics Engine - KISS Compliant
 ==============================================
 
+<!-- SSOT Domain: analytics -->
+
 Simple coordination analytics processing.
 
 Author: Agent-5 - Business Intelligence Specialist

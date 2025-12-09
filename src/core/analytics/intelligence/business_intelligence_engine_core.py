@@ -3,6 +3,8 @@
 Business Intelligence Engine Core - V2 Compliance Module
 ========================================================
 
+<!-- SSOT Domain: analytics -->
+
 Core business intelligence functionality.
 
 Author: Agent-2 (Architecture & Design Specialist) - V2 Refactoring

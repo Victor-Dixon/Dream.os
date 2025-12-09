@@ -124,17 +124,7 @@ class MainControlPanelView(discord.ui.View):
         self.help_btn.callback = self.show_help
         self.add_item(self.help_btn)
 
-        self.commands_btn = discord.ui.Button(
-            label="All Commands",
-            style=discord.ButtonStyle.secondary,
-            emoji="📋",
-            custom_id="control_commands",
-            row=1,
-        )
-        self.commands_btn.callback = self.show_all_commands
-        self.add_item(self.commands_btn)
-
-        # Row 2: System management buttons
+        # Row 2: System management buttons (moved "All Commands" here to fix row 1 overflow)
         self.restart_btn = discord.ui.Button(
             label="Restart Bot",
             style=discord.ButtonStyle.danger,
@@ -174,6 +164,16 @@ class MainControlPanelView(discord.ui.View):
         )
         self.bump_btn.callback = self.show_bump_selector
         self.add_item(self.bump_btn)
+
+        self.commands_btn = discord.ui.Button(
+            label="All Commands",
+            style=discord.ButtonStyle.secondary,
+            emoji="📋",
+            custom_id="control_commands",
+            row=2,
+        )
+        self.commands_btn.callback = self.show_all_commands
+        self.add_item(self.commands_btn)
 
         # Row 3: Onboarding and additional showcase buttons
         self.soft_onboard_btn = discord.ui.Button(

@@ -35,6 +35,10 @@ class TaskPriority(Enum):
     CRITICAL = "critical"
 
 
+# Alias for backward compatibility
+CoordinationPriority = TaskPriority
+
+
 class TaskStatus(Enum):
     """Simple task status states."""
 
@@ -160,3 +164,25 @@ def create_agent_coordination_status(
 def create_coordination_metrics() -> CoordinationMetrics:
     """Create coordination metrics."""
     return CoordinationMetrics()
+
+
+@dataclass
+class CoordinationConfig:
+    """Simple coordination configuration model."""
+
+    max_concurrent_tasks: int = 10
+    task_timeout: float = 300.0
+    retry_attempts: int = 3
+    enable_metrics: bool = True
+    coordination_strategy: CoordinationStrategy = CoordinationStrategy.COLLABORATIVE
+    metadata: dict[str, Any] = None
+
+    def __post_init__(self):
+        """Initialize default values."""
+        if self.metadata is None:
+            self.metadata = {}
+
+
+def create_default_config() -> CoordinationConfig:
+    """Create default coordination configuration."""
+    return CoordinationConfig()

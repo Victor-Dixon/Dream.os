@@ -47,7 +47,8 @@ class BroadcastControllerView(discord.ui.View):
     """
 
     def __init__(self, messaging_service: ConsolidatedMessagingService):
-        super().__init__(timeout=600)
+        from src.core.config.timeout_constants import TimeoutConstants
+        super().__init__(timeout=TimeoutConstants.HTTP_EXTENDED * 2)
         self.messaging_service = messaging_service
 
         # Broadcast action buttons - Row 0 (max 5 per row)

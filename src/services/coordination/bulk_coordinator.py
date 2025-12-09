@@ -8,6 +8,7 @@ Handles bulk message coordination and grouping.
 Extracted from messaging_coordination_handler.py for V2 compliance.
 
 V2 Compliance: < 300 lines, single responsibility.
+Migrated to BaseService for consolidated initialization and error handling.
 
 Author: Agent-7 - Web Development Specialist
 License: MIT
@@ -16,11 +17,12 @@ License: MIT
 import time
 from typing import Any
 
+from ...core.base.base_service import BaseService
 from ...core.messaging_models_core import UnifiedMessage, UnifiedMessagePriority
 from .strategy_coordinator import StrategyCoordinator
 
 
-class BulkCoordinator:
+class BulkCoordinator(BaseService):
     """Handles bulk message coordination and grouping.
 
     Manages bulk message processing, grouping by strategy, and batch coordination.
@@ -28,6 +30,7 @@ class BulkCoordinator:
 
     def __init__(self):
         """Initialize bulk coordinator."""
+        super().__init__("BulkCoordinator")
         self.strategy_coordinator = StrategyCoordinator()
 
     def coordinate_bulk_messages(self, messages: list[UnifiedMessage]) -> dict[str, Any]:

@@ -5,6 +5,8 @@ Task Management Handlers
 Handler classes for task management operations.
 Wires use cases to web layer with dependency injection.
 
+<!-- SSOT Domain: web -->
+
 V2 Compliance: < 300 lines, handler pattern.
 Consolidated: Uses BaseHandler (33% code reduction).
 """

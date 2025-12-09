@@ -1,5 +1,10 @@
-#!/usr/bin/env python3
 """
+Single Source of Truth (SSOT) for Agent Context Management
+Domain: core
+Owner: Agent-2 (Architecture & Design)
+Last Updated: 2025-12-08
+Related SSOT: src/agent_registry.py, src/swarmstatus.py
+
 Agent Context Manager - V2 Compliant Module
 ==========================================
 

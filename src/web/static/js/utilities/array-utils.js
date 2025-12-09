@@ -1,6 +1,10 @@
 /**
  * Array Utilities Module - V2 Compliant
  * Array and object manipulation functions
+ * 
+ * @SSOT Domain: array-operations
+ * @SSOT Location: utilities/array-utils.js
+ * @SSOT Scope: deepClone, array manipulation, array utilities
  *
  * @author Agent-7 - Web Development Specialist
  * @version 1.0.0 - V2 COMPLIANCE EXTRACTION

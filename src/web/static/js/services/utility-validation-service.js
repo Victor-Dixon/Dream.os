@@ -13,7 +13,7 @@
 // IMPORT MODULAR VALIDATION COMPONENTS
 // ================================
 
-import { UnifiedLoggingSystem } from './utilities/logging-utils.js';
+import { LoggingUtils } from '../../utilities/logging-utils.js';
 import { ValidationUtils } from '../../utilities/validation-utils.js';
 
 // ================================
@@ -26,7 +26,7 @@ import { ValidationUtils } from '../../utilities/validation-utils.js';
  */
 export class UtilityValidationService {
     constructor() {
-        this.logger = new UnifiedLoggingSystem("UtilityValidationService");
+        this.logger = new LoggingUtils({ name: "UtilityValidationService" });
         this.validationUtils = new ValidationUtils();
     }
 

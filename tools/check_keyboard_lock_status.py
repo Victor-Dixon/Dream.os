@@ -4,6 +4,8 @@ Check Keyboard Lock Status
 ===========================
 
 Quick diagnostic tool to check if keyboard lock is held and by what.
+
+<!-- SSOT Domain: infrastructure -->
 """
 
 from src.core.keyboard_control_lock import (

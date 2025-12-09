@@ -5,6 +5,8 @@ Integrations Handlers
 Handler classes for integration services operations.
 Wires integration services to web layer.
 
+<!-- SSOT Domain: web -->
+
 V2 Compliance: < 300 lines, handler pattern.
 Consolidated: Uses BaseHandler + AvailabilityMixin (33% code reduction).
 """

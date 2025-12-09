@@ -4,6 +4,8 @@
 This module provides a minimal SSOT interface for storing agent status
 embeddings. It uses SQLite under the hood and exposes helper functions for
 interacting with the ``agent_status_embeddings`` table.
+
+<!-- SSOT Domain: data -->
 """
 
 from __future__ import annotations
@@ -15,111 +17,15 @@ from pathlib import Path
 from dataclasses import dataclass
 from typing import Dict, Any, Optional
 from enum import Enum
-from dataclasses import dataclass, field
 
 
 
-class DocumentType(Enum):
-    """Document types for vector database."""
-    MESSAGE = "message"
-    DEVLOG = "devlog"
-    CONTRACT = "contract"
-    STATUS = "status"
-    CODE = "code"
-    DOCUMENTATION = "documentation"
+# SSOT: DocumentType, EmbeddingModel, SearchType are now in src.services.models.vector_models
+# Import from SSOT instead of defining here
+from src.services.models.vector_models import DocumentType, EmbeddingModel, SearchType
 
-
-class SearchType(Enum):
-    """Search types for vector database."""
-    SIMILARITY = "similarity"
-    MAX_MARGINAL_RELEVANCE = "mmr"
-    FILTERED = "filtered"
-
-
-# Backward compatibility shim - use SSOT from src.services.models.vector_models
-import warnings
-from src.services.models.vector_models import SearchResult as SSOTSearchResult
-
-class SearchResult(SSOTSearchResult):
-    """
-    Backward compatibility shim for SearchResult - SSOT consolidated.
-    
-    DEPRECATED: Use src.services.models.vector_models.SearchResult instead.
-    This class is maintained for backward compatibility only.
-    
-    Supports both legacy initialization patterns:
-    1. document_id, content, similarity_score, metadata (original pattern)
-    2. document (VectorDocument), score, metadata (VectorDocument variant)
-    
-    <!-- SSOT Domain: data -->
-    """
-    
-    def __init__(self, document_id: str = None, content: str = None, 
-                 similarity_score: float = None, metadata: Dict[str, Any] = None,
-                 document: 'VectorDocument' = None, score: float = None):
-        """Initialize with legacy parameters - supports both patterns."""
-        # Handle VectorDocument variant
-        if document is not None:
-            warnings.warn(
-                "SearchResult (VectorDocument variant) is deprecated. "
-                "Use src.services.models.vector_models.SearchResult instead. "
-                "Use create_search_result_from_document() to convert.",
-                DeprecationWarning,
-                stacklevel=2
-            )
-            document_id = document.id
-            content = document.content
-            similarity_score = score or 0.0
-            metadata = metadata or {}
-            # Store document reference for backward compatibility
-            super().__init__(
-                document_id=document_id,
-                content=content,
-                similarity_score=similarity_score,
-                metadata=metadata,
-                document=document,
-                score=score
-            )
-        else:
-            # Handle standard pattern
-            if document_id is None or content is None or similarity_score is None:
-                raise ValueError("Either (document_id, content, similarity_score, metadata) or (document, score, metadata) must be provided")
-            super().__init__(
-                document_id=document_id,
-                content=content,
-                similarity_score=similarity_score,
-                metadata=metadata or {}
-            )
-    
-    def to_ssot(self) -> 'SSOTSearchResult':
-        """Convert to SSOT SearchResult (for VectorDocument variant compatibility)."""
-        return self
-
-
-class VectorDocument:
-    """Vector document representation."""
-
-    def __init__(self, id: str, content: str, embedding: list, metadata: Dict[str, Any]):
-        self.id = id
-        self.content = content
-        self.embedding = embedding
-        self.metadata = metadata
-
-
-class EmbeddingModel(Enum):
-    """Supported embedding models."""
-    SENTENCE_TRANSFORMERS = "sentence_transformers"
-    OPENAI_ADA = "openai-ada-002"
-    OPENAI_3_SMALL = "openai-3-small"
-    OPENAI_3_LARGE = "openai-3-large"
-
-
-class VectorDatabaseStats:
-    """Vector database statistics."""
-
-    def __init__(self):
-        self.total_documents = 0
-        self.collections = {}
+# SSOT: SearchResult is now in src.services.models.vector_models
+# This file no longer provides SearchResult shim (removed - no usage found)
 
 # ---------------------------------------------------------------------------
 # Single source of truth constants
@@ -214,92 +120,16 @@ def fetch_agent_status(
     return stored_id, raw_status, json.loads(embedding_json), last_updated
 
 
-@dataclass
-class VectorDocument:
-    """Document for vector database operations."""
-
-    content: str
-    metadata: Dict[str, Any]
-    document_id: Optional[str] = None
-    document_type: Optional['DocumentType'] = None
+# SSOT: VectorDocument is now in src.services.models.vector_models
+# Import from SSOT instead of defining here
+from src.services.models.vector_models import VectorDocument
 
 
-class DocumentType(Enum):
-    """Document types for vector database."""
-
-    AGENT_STATUS = "agent_status"
-    MESSAGE = "message"
-    LOG = "log"
-    CONFIG = "config"
+# Duplicate DocumentType, EmbeddingModel, SearchType removed - using enum versions above
 
 
-class EmbeddingModel(Enum):
-    """Embedding model types."""
-
-    SENTENCE_TRANSFORMERS = "sentence_transformers"
-    OPENAI_ADA = "openai_ada"
-    OPENAI_3_SMALL = "openai_3_small"
-    OPENAI_3_LARGE = "openai_3_large"
-
-
-# Backward compatibility shim - use SSOT from src.services.models.vector_models
-import warnings
-from src.services.models.vector_models import SearchQuery as SSOTSearchQuery
-
-@dataclass
-class SearchQuery(SSOTSearchQuery):
-    """
-    Backward compatibility shim for SearchQuery.
-    
-    DEPRECATED: Use src.services.models.vector_models.SearchQuery instead.
-    This class is maintained for backward compatibility only.
-    This class will be removed in a future version.
-    
-    <!-- SSOT Domain: data -->
-    """
-    
-    def __init__(self, query_text: str, limit: int = 10, threshold: float = 0.0, 
-                 search_type: Optional['SearchType'] = None, 
-                 metadata_filter: Optional[Dict[str, Any]] = None):
-        """Initialize with legacy parameters."""
-        warnings.warn(
-            "SearchQuery from src.core.vector_database is deprecated. "
-            "Use src.services.models.vector_models.SearchQuery instead.",
-            DeprecationWarning,
-            stacklevel=2
-        )
-        super().__init__(
-            query_text=query_text,
-            limit=limit,
-            threshold=threshold,  # Maps to similarity_threshold
-            search_type=search_type,
-            metadata_filter=metadata_filter  # Maps to filters
-        )
-
-
-class SearchType(Enum):
-    """Search types for vector operations."""
-
-    SEMANTIC = "semantic"
-    KEYWORD = "keyword"
-    HYBRID = "hybrid"
-
-
-# Backward compatibility: Create adapter function for VectorDocument variant
-def create_search_result_from_document(document: VectorDocument, score: float, metadata: Dict[str, Any]) -> 'SSOTSearchResult':
-    """
-    Create SSOT SearchResult from VectorDocument variant.
-    
-    DEPRECATED: Use SearchResult(document=document, score=score, metadata=metadata) instead.
-    This function is maintained for backward compatibility only.
-    """
-    warnings.warn(
-        "create_search_result_from_document() is deprecated. "
-        "Use SearchResult(document=document, score=score, metadata=metadata) instead.",
-        DeprecationWarning,
-        stacklevel=2
-    )
-    return SearchResult(document=document, score=score, metadata=metadata)
+# SSOT: create_search_result_from_document removed (no usage found)
+# Use src.services.models.vector_models.SearchResult directly
 
 
 @dataclass
@@ -318,8 +148,6 @@ __all__ = [
     "DocumentType",
     "EmbeddingModel",
     "get_connection",
-    "SearchQuery",
-    "SearchResult",
     "SearchType",
     "upsert_agent_status",
     "VectorDatabaseStats",

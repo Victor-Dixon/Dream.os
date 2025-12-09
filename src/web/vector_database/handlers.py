@@ -5,6 +5,8 @@ Vector Database Handlers
 Handler facade for vector database operations.
 Maps handler classes from utility modules for clean imports.
 
+<!-- SSOT Domain: web -->
+
 V2 Compliance: < 100 lines, facade pattern.
 
 Author: Agent-7 - Repository Cloning & Consolidation Specialist

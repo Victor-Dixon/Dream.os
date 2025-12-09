@@ -12,13 +12,12 @@ V2 Compliance: <400 lines
 """
 
 import json
-import logging
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
 
-logger = logging.getLogger(__name__)
+from src.core.base.base_service import BaseService
 
 
 @dataclass
@@ -48,7 +47,7 @@ class Conversation:
         self.updated_at = datetime.now()
 
 
-class AIService:
+class AIService(BaseService):
     """
     Unified AI service.
     
@@ -61,10 +60,11 @@ class AIService:
     
     def __init__(self, repository=None):
         """Initialize AI service."""
+        super().__init__("AIService")
         self.repository = repository
         self.conversations: Dict[str, Conversation] = {}
         self.context_data: Dict[str, Any] = {}
-        logger.info("AI Service initialized")
+        self.logger.info("AI Service initialized")
     
     def process_message(
         self, 
@@ -149,7 +149,7 @@ class AIService:
             conversation.add_message(msg)
         
         self.conversations[conversation_id] = conversation
-        logger.info(f"Started conversation {conversation_id}")
+        self.logger.info(f"Started conversation {conversation_id}")
         return conversation
     
     def continue_conversation(

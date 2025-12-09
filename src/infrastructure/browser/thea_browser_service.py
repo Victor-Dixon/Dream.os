@@ -12,20 +12,21 @@ Author: Agent-3 (Infrastructure & DevOps) - Browser Consolidation
 License: MIT
 """
 
+import json
 import logging
+import os
 import time
+from pathlib import Path
 from typing import Any
 
 try:
-    from selenium import webdriver
-    from selenium.common.exceptions import WebDriverException
-    from selenium.webdriver.chrome.options import Options
+    import undetected_chromedriver as uc
 
-    SELENIUM_AVAILABLE = True
+    UC_AVAILABLE = True
 except ImportError:
-    SELENIUM_AVAILABLE = False
+    UC_AVAILABLE = False
 
-from .browser_models import BrowserConfig
+from .browser_models import BrowserConfig, TheaConfig
 
 logger = logging.getLogger(__name__)
 
@@ -33,26 +34,32 @@ logger = logging.getLogger(__name__)
 class TheaBrowserService:
     """Unified browser service for Thea Manager automation."""
 
-    def __init__(self, config: BrowserConfig | None = None):
+    def __init__(self, config: BrowserConfig | None = None, thea_config: TheaConfig | None = None):
         """Initialize browser service."""
         self.config = config or BrowserConfig()
+        self.thea_config = thea_config or TheaConfig()
         self.driver = None
         self.profile = None
         self._initialized = False
 
     def initialize(self, profile_name: str | None = None, user_data_dir: str | None = None) -> bool:
         """Initialize browser with optional profile."""
-        if not SELENIUM_AVAILABLE:
-            logger.error("Selenium not available - cannot initialize browser")
+        if os.getenv("DISABLE_BROWSER") == "1":
+            logger.warning("Browser disabled via DISABLE_BROWSER=1")
+            return False
+
+        if not UC_AVAILABLE:
+            logger.error("undetected_chromedriver not available - install with `pip install undetected-chromedriver`")
             return False
 
         try:
             self.profile = {"profile_name": profile_name, "user_data_dir": user_data_dir}
 
-            # Setup Chrome options
-            options = Options()
+            # Setup Chrome options (undetected only)
+            options = uc.ChromeOptions()
+
             if self.config.headless:
-                options.add_argument("--headless")
+                options.add_argument("--headless=new")
 
             if user_data_dir or (self.profile and self.profile.get("user_data_dir")):
                 data_dir = user_data_dir or self.profile.get("user_data_dir")
@@ -66,9 +73,17 @@ class TheaBrowserService:
             options.add_argument("--disable-blink-features=AutomationControlled")
             options.add_experimental_option("excludeSwitches", ["enable-automation"])
             options.add_experimental_option("useAutomationExtension", False)
+            w, h = self.config.window_size
+            options.add_argument(f"--window-size={w}x{h}")
 
             # Initialize driver
-            self.driver = webdriver.Chrome(options=options)
+            self.driver = uc.Chrome(options=options, headless=self.config.headless)
+
+            self.driver.implicitly_wait(self.config.implicit_wait)
+            try:
+                self.driver.set_page_load_timeout(self.config.page_load_timeout)
+            except Exception:
+                pass
             self._initialized = True
 
             logger.info("✅ Browser initialized successfully")
@@ -93,20 +108,26 @@ class TheaBrowserService:
             logger.error(f"❌ Navigation failed: {e}")
             return False
 
-    def ensure_thea_authenticated(self, thea_url: str, allow_manual: bool = True) -> bool:
+    def ensure_thea_authenticated(self, thea_url: str | None = None, allow_manual: bool = True) -> bool:
         """Ensure authenticated to Thea Manager."""
         if not self._initialized:
             return False
 
         try:
+            target_url = thea_url or self.thea_config.conversation_url
             # Navigate to Thea
-            if not self.navigate_to(thea_url):
+            if not self.navigate_to(target_url):
                 return False
 
-            # Check if already authenticated
+            # Try loading cookies if available
+            self._load_cookies(target_url)
+            self.driver.refresh()
             time.sleep(2)
+
+            # Check if already authenticated
             if self._is_thea_authenticated():
-                logger.info("✅ Already authenticated to Thea")
+                logger.info("✅ Already authenticated to Thea (via cookies)")
+                self._save_cookies()
                 return True
 
             # Manual authentication if allowed
@@ -117,6 +138,7 @@ class TheaBrowserService:
 
                 if self._is_thea_authenticated():
                     logger.info("✅ Authentication successful")
+                    self._save_cookies()
                     return True
 
             logger.error("❌ Authentication failed")
@@ -265,6 +287,40 @@ class TheaBrowserService:
     def __exit__(self, exc_type, exc_val, exc_tb):
         """Context manager exit."""
         self.close()
+
+    # ========== Cookie helpers ==========
+    def _cookie_file(self) -> Path:
+        return Path(self.thea_config.cookie_file)
+
+    def _load_cookies(self, base_url: str) -> None:
+        try:
+            cookie_path = self._cookie_file()
+            if not cookie_path.exists():
+                return
+            with open(cookie_path, "r", encoding="utf-8") as f:
+                cookies = json.load(f)
+            self.driver.get(base_url)
+            for cookie in cookies:
+                # Selenium/uc requires domain stripped when adding after navigation
+                cookie.pop("domain", None)
+                try:
+                    self.driver.add_cookie(cookie)
+                except Exception:
+                    continue
+            logger.info("✅ Cookies loaded")
+        except Exception as e:
+            logger.debug(f"Cookie load skipped: {e}")
+
+    def _save_cookies(self) -> None:
+        try:
+            cookies = self.driver.get_cookies()
+            cookie_path = self._cookie_file()
+            cookie_path.parent.mkdir(parents=True, exist_ok=True)
+            with open(cookie_path, "w", encoding="utf-8") as f:
+                json.dump(cookies, f, indent=2)
+            logger.info("✅ Cookies saved")
+        except Exception as e:
+            logger.debug(f"Cookie save skipped: {e}")
 
 
 # Factory function

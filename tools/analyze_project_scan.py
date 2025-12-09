@@ -11,9 +11,10 @@ Date: 2025-12-04
 """
 
 import json
+import re
 from pathlib import Path
 from collections import defaultdict
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Optional
 
 PROJECT_ROOT = Path(__file__).parent.parent
 
@@ -192,6 +193,17 @@ def generate_consolidation_report():
         print(f"   Estimated coverage: {coverage['coverage_estimate']:.1f}%")
         print()
     
+    # Loop closure scan (incomplete loops)
+    loop_scan = scan_loop_closure_trackers()
+    if loop_scan["incomplete_loops"]:
+        print("🔍 Loop closure scan: Incomplete loops detected")
+        for loop in loop_scan["incomplete_loops"]:
+            print(f"   • Loop {loop['loop_id']}: {loop['name']} ({loop['status']}) [{loop['source']}]")
+        print()
+    else:
+        print("✅ Loop closure scan: No incomplete loops found")
+        print()
+
     # Generate report
     report = {
         "summary": {
@@ -200,7 +212,8 @@ def generate_consolidation_report():
             "duplicate_classes": duplicates['total_duplicate_classes'],
             "high_complexity_files": len(high_complexity),
             "low_complexity_files": len(low_complexity),
-            "similar_file_names": len(similar_names)
+            "similar_file_names": len(similar_names),
+            "incomplete_loops": len(loop_scan["incomplete_loops"])
         },
         "duplicates": {
             "top_duplicate_functions": dict(list(duplicates['duplicate_functions'].items())[:20]),
@@ -209,7 +222,8 @@ def generate_consolidation_report():
         "high_complexity": high_complexity[:20],
         "consolidation_candidates": low_complexity[:50],
         "similar_names": dict(list(similar_names.items())[:30]),
-        "test_coverage": coverage if test_analysis else None
+        "test_coverage": coverage if test_analysis else None,
+        "loop_closure": loop_scan
     }
     
     # Save report
@@ -226,6 +240,81 @@ def generate_consolidation_report():
     print(f"   • {len(high_complexity)} files need complexity reduction")
     print(f"   • {len(low_complexity)} files are consolidation candidates")
     print(f"   • {len(similar_names)} file name groups may indicate duplicates")
+    print(f"   • {len(loop_scan['incomplete_loops'])} incomplete loops detected")
+
+
+def scan_loop_closure_trackers() -> Dict[str, object]:
+    """Scan loop closure tracker files and return incomplete loops."""
+    tracker_files = list(
+        Path(".").glob("agent_workspaces/**/LOOP_CLOSURE_*TRACKER*.md")
+    ) + list(
+        Path("agent_workspaces").glob("**/LOOP_CLOSURE_UPDATE_*.md")
+    ) + list(
+        Path("docs/organization").glob("CAPTAIN_LOOP_CLOSURE_ASSIGNMENTS_*.md")
+    )
+
+    incomplete_loops: List[Dict[str, str]] = []
+
+    for file_path in tracker_files:
+        try:
+            content = file_path.read_text(encoding="utf-8")
+        except FileNotFoundError:
+            continue
+
+        for loop in parse_loops(content):
+            normalized_status = normalize_status(loop["status"])
+            if not is_complete_status(normalized_status):
+                incomplete_loops.append(
+                    {
+                        "loop_id": loop["loop_id"],
+                        "name": loop["name"],
+                        "status": normalized_status,
+                        "source": str(file_path),
+                    }
+                )
+
+    return {
+        "files_scanned": [str(p) for p in tracker_files],
+        "incomplete_loops": incomplete_loops,
+    }
+
+
+def parse_loops(content: str) -> List[Dict[str, str]]:
+    """Parse loop sections from tracker markdown."""
+    loops: List[Dict[str, str]] = []
+    sections = re.split(r"(?=### \*\*Loop\s*\d+)", content)
+    for section in sections:
+        loop_match = re.match(
+            r"### \*\*Loop\s*(\d+):\s*(.*?)\*\*.*?\n", section, re.DOTALL
+        )
+        if not loop_match:
+            continue
+        loop_id = loop_match.group(1)
+        name = loop_match.group(2).strip()
+        status_match = re.search(r"Status\*\*:\s*[^\n]*\*\*(.*?)\*\*", section)
+        status = status_match.group(1).strip() if status_match else "UNKNOWN"
+        loops.append({"loop_id": loop_id, "name": name, "status": status})
+    return loops
+
+
+def normalize_status(status: str) -> str:
+    """Normalize status text by stripping emojis and uppercasing."""
+    cleaned = re.sub(r"[^\w\s]", " ", status).upper()
+    return " ".join(cleaned.split())
+
+
+def is_complete_status(status: str) -> bool:
+    """Return True if status indicates completion."""
+    return any(
+        keyword in status
+        for keyword in [
+            "COMPLETE",
+            "DONE",
+            "CLOSED",
+            "VERIFIED COMPLETE",
+            "FINALIZED",
+        ]
+    )
 
 if __name__ == "__main__":
     generate_consolidation_report()

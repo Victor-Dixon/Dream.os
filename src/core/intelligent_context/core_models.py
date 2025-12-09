@@ -59,6 +59,3 @@ class AgentCapability:
         if "skills" in result and isinstance(result["skills"], set):
             result["skills"] = list(result["skills"])
         return result
-            "last_active": self.last_active.isoformat(),
-            "metadata": self.metadata,
-        }

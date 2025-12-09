@@ -5,6 +5,8 @@ Contract Management Handlers
 Handler classes for contract management operations.
 Wires contract manager to web layer.
 
+<!-- SSOT Domain: web -->
+
 V2 Compliance: < 300 lines, handler pattern.
 Consolidated: Uses BaseHandler (30% code reduction).
 """

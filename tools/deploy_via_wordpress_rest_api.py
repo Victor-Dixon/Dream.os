@@ -5,6 +5,8 @@ Deploy via WordPress REST API
 Uses WordPress REST API to deploy theme files programmatically.
 More reliable than browser automation - direct API calls.
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-7 (Web Development Specialist)
 """
 

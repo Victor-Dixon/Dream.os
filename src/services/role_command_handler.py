@@ -1,11 +1,10 @@
-import logging
-logger = logging.getLogger(__name__)
 """
 Role Command Handler - V2 Compliant Module
 =========================================
 
 Handles role-related commands for messaging CLI.
 Extracted for V2 compliance and single responsibility.
+Migrated to BaseService for consolidated initialization and error handling.
 
 V2 Compliance: < 300 lines, single responsibility.
 
@@ -14,9 +13,15 @@ License: MIT
 """
 from typing import Any
 
+from ..core.base.base_service import BaseService
 
-class RoleCommandHandler:
+
+class RoleCommandHandler(BaseService):
     """Handles role-related operations."""
+
+    def __init__(self):
+        """Initialize role command handler."""
+        super().__init__("RoleCommandHandler")
 
     def can_handle(self, args: Any) ->bool:
         """Check if this handler can handle the given arguments."""
@@ -24,7 +29,7 @@ class RoleCommandHandler:
 
     def handle(self, args: Any) ->bool:
         """Handle role operations."""
-        logger.info(f'🎭 Setting role mode: {args.role_mode}')
-        logger.info('Role management feature is currently under development.')
-        logger.info('Use standard messaging CLI commands for communication.')
+        self.logger.info(f'🎭 Setting role mode: {args.role_mode}')
+        self.logger.info('Role management feature is currently under development.')
+        self.logger.info('Use standard messaging CLI commands for communication.')
         return True

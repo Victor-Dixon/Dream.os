@@ -5,6 +5,8 @@ Unified Design Patterns - KISS Principle Implementation
 Essential design patterns consolidated into a single, simple module.
 Provides usable base classes that consolidate existing patterns in codebase.
 
+SSOT Domain: architecture
+
 Follows KISS principle: Keep It Simple, Stupid.
 V2 Compliance: < 400 lines, single responsibility.
 

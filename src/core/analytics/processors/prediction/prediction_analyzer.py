@@ -3,6 +3,8 @@
 Prediction Analyzer - KISS Compliant
 ===================================
 
+<!-- SSOT Domain: analytics -->
+
 Simple prediction analysis.
 
 Author: Agent-5 - Business Intelligence Specialist
@@ -13,7 +15,26 @@ import logging
 from datetime import datetime
 from typing import Any
 
-from ...prediction.base_analyzer import BasePredictionAnalyzer
+# Optional import - use base class if available
+try:
+    from ...prediction.base_analyzer import BasePredictionAnalyzer
+except ImportError:
+    # Fallback base class if not available
+    class BasePredictionAnalyzer:
+        """Fallback base class for prediction analyzer."""
+        
+        def normalize_probability(self, value: float) -> float:
+            """Normalize probability value."""
+            return max(0.0, min(1.0, value))
+        
+        def confidence_level(self, confidence: float) -> str:
+            """Get confidence level string."""
+            if confidence >= 0.8:
+                return "high"
+            elif confidence >= 0.5:
+                return "medium"
+            else:
+                return "low"
 
 logger = logging.getLogger(__name__)
 

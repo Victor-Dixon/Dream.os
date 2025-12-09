@@ -55,7 +55,8 @@ class MessagingControllerView(discord.ui.View):
     """
 
     def __init__(self, messaging_service: ConsolidatedMessagingService):
-        super().__init__(timeout=600)  # 10 minute timeout
+        from src.core.config.timeout_constants import TimeoutConstants
+        super().__init__(timeout=TimeoutConstants.HTTP_EXTENDED * 2)  # 10 minute timeout
         self.messaging_service = messaging_service
         self.agents = self._load_agents()
 

@@ -13,6 +13,7 @@ License: MIT
 """
 
 import logging
+from src.core.config.timeout_constants import TimeoutConstants
 
 try:
     import discord

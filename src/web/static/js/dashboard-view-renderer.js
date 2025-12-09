@@ -61,13 +61,21 @@ export class DashboardViewRenderer {
             case 'engine-discovery':
                 content = await this.renderEngineDiscoveryView();
                 break;
+            case 'repository-merge':
+                content = await this.renderRepositoryMergeView();
+                // Initialize view after rendering container
+                setTimeout(async () => {
+                    try {
+                        const { RepositoryMergeView } = await import('./dashboard/dashboard-view-repository-merge.js');
+                        const view = new RepositoryMergeView();
+                        await view.init();
+                    } catch (error) {
+                        console.error('Error initializing repository merge view:', error);
+                    }
+                }, 0);
+                break;
             default:
                 content = this.renderDefaultView(view);
-        }
-
-        // Handle async content (for engine-discovery view)
-        if (content instanceof Promise) {
-            content = await content;
         }
 
         contentDiv.innerHTML = content;
@@ -263,17 +271,41 @@ export class DashboardViewRenderer {
      */
     async renderEngineDiscoveryView() {
         try {
-            // Import and use EngineDiscoveryView
-            const { EngineDiscoveryView } = await import('./dashboard-view-engine-discovery.js');
-            const view = new EngineDiscoveryView();
-            return await view.render();
+            // Import and use the engine discovery view
+            const module = await import('./dashboard-view-engine-discovery.js');
+            return await module.engineDiscoveryView.render();
         } catch (error) {
-            this.logger.error('Failed to render engine discovery view:', error);
+            this.logger.error('Error loading engine discovery view:', error);
             return `
                 <div class="dashboard-view engine-discovery-view">
-                    <div class="error-state">
-                        <h3>❌ Error Loading Engine Discovery</h3>
-                        <p>${error.message}</p>
+                    <div class="alert alert-danger">
+                        <strong>Error loading engine discovery view:</strong> ${error.message}
+                    </div>
+                </div>
+            `;
+        }
+    }
+
+    /**
+     * Render repository merge view
+     */
+    async renderRepositoryMergeView() {
+        try {
+            // Import and use the repository merge view
+            const { RepositoryMergeView } = await import('./dashboard/dashboard-view-repository-merge.js');
+            const view = new RepositoryMergeView();
+            // Return container - view will render into it
+            return `
+                <div class="dashboard-view repository-merge-view" id="repository-merge-view">
+                    <!-- Content will be rendered by RepositoryMergeView.init() -->
+                </div>
+            `;
+        } catch (error) {
+            this.logger.error('Error loading repository merge view:', error);
+            return `
+                <div class="dashboard-view repository-merge-view">
+                    <div class="alert alert-danger">
+                        <strong>Error loading repository merge view:</strong> ${error.message}
                     </div>
                 </div>
             `;

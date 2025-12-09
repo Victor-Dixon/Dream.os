@@ -8,9 +8,12 @@ Wires assignment service to web layer.
 <!-- SSOT Domain: web -->
 
 V2 Compliance: < 300 lines, handler pattern.
+Consolidated: Uses BaseHandler (33% code reduction).
 """
 
 from flask import jsonify, request
+
+from src.core.base.base_handler import BaseHandler
 
 try:
     from src.domain.services.assignment_service import AssignmentService
@@ -21,18 +24,20 @@ except ImportError:
     ASSIGNMENT_SERVICE_AVAILABLE = False
 
 
-class AssignmentHandlers:
+class AssignmentHandlers(BaseHandler):
     """Handler class for assignment service operations."""
 
-    @staticmethod
-    def _get_service() -> AssignmentService:
+    def __init__(self):
+        """Initialize assignment handlers."""
+        super().__init__("AssignmentHandlers")
+
+    def _get_service(self) -> AssignmentService:
         """Get assignment service instance with dependencies."""
         deps = get_dependencies()
         logger: Logger = deps.get("logger")
         return AssignmentService(logger=logger)
 
-    @staticmethod
-    def handle_assign(request) -> tuple:
+    def handle_assign(self, request) -> tuple:
         """
         Handle request to assign task to best agent.
 
@@ -78,7 +83,7 @@ class AssignmentHandlers:
                 agents = list(agent_repo.list_all())
 
             # Get assignment service
-            service = AssignmentHandlers._get_service()
+            service = self._get_service()
 
             # Find best agent
             best_agent = service.find_best_agent_for_task(task, agents)
@@ -94,10 +99,10 @@ class AssignmentHandlers:
             }), 200
 
         except Exception as e:
-            return jsonify({"success": False, "error": str(e)}), 500
+            error_response = self.handle_error(e, context="assignment_handler")
+            return jsonify(error_response), 500
 
-    @staticmethod
-    def handle_list(request) -> tuple:
+    def handle_list(self, request) -> tuple:
         """
         Handle request to list all assignments.
 
@@ -131,17 +136,17 @@ class AssignmentHandlers:
                         "status": "in_progress" if not task.is_completed else "completed"
                     })
 
-            return jsonify({
-                "success": True,
+            response_data = self.format_response({
                 "assignments": assignments,
                 "total": len(assignments)
-            }), 200
+            }, success=True)
+            return jsonify(response_data), 200
 
         except Exception as e:
-            return jsonify({"success": False, "error": str(e)}), 500
+            error_response = self.handle_error(e, "handle_list")
+            return jsonify(error_response), 500
 
-    @staticmethod
-    def handle_get_status(request) -> tuple:
+    def handle_get_status(self, request) -> tuple:
         """
         Handle request to get assignment service status.
 
@@ -181,10 +186,12 @@ class AssignmentHandlers:
                 "available_agents": len([a for a in agents if a.is_active])
             }
 
-            return jsonify({"success": True, "data": status}), 200
+            response_data = self.format_response(status, success=True)
+            return jsonify(response_data), 200
 
         except Exception as e:
-            return jsonify({"success": False, "error": str(e)}), 500
+            error_response = self.handle_error(e, "handle_get_status")
+            return jsonify(error_response), 500
 
 
 

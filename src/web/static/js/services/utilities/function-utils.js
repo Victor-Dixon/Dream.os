@@ -2,15 +2,21 @@
  * Function Utilities - V2 Compliant Module
  * Function-related utilities: debounce, throttle, retry, etc.
  * MODULAR: ~120 lines (V2 compliant)
+ * 
+ * @SSOT Domain: function-operations
+ * @SSOT Location: services/utilities/function-utils.js
+ * @SSOT Scope: debounce, throttle, retry, memoize, pipe
  *
  * @author Agent-7 - Web Development Specialist
  * @version 2.0.0 - V2 COMPLIANCE MODULAR EXTRACTION
  * @license MIT
  */
 
+import { LoggingUtils } from '../../../utilities/logging-utils.js';
+
 export class FunctionUtils {
     constructor() {
-        this.logger = new UnifiedLoggingSystem("FunctionUtils");
+        this.logger = new LoggingUtils({ name: "FunctionUtils" });
     }
 
     /**

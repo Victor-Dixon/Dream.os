@@ -19,6 +19,8 @@ from pathlib import Path
 project_root = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(project_root))
 
+from src.core.config.timeout_constants import TimeoutConstants
+
 
 def clear_gh_token():
     """Clear GH_TOKEN environment variable."""
@@ -42,7 +44,7 @@ def check_gh_auth():
             ["gh", "auth", "status"],
             capture_output=True,
             text=True,
-            timeout=5
+            timeout=TimeoutConstants.HTTP_QUICK
         )
         if result.returncode == 0 and "Logged in" in result.stdout:
             print("✅ GitHub CLI authenticated")
@@ -150,7 +152,7 @@ def authenticate_with_token_stdin(token, env, github_token_backup):
         # Ensure token ends with newline (required by gh auth login --with-token)
         # Also ensure no extra whitespace
         token_clean = token.strip() + "\n"
-        stdout, stderr = process.communicate(input=token_clean, timeout=15)
+        stdout, stderr = process.communicate(input=token_clean, timeout=TimeoutConstants.HTTP_SHORT)
         
         # Restore GITHUB_TOKEN after auth (needed for API calls)
         if github_token_backup:

@@ -5,6 +5,8 @@ Check for Sensitive Files in Git - Security Audit Tool
 
 Checks if any sensitive files are tracked in git that shouldn't be.
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-8 (SSOT & System Integration Specialist)
 Date: 2025-01-27
 Priority: CRITICAL - Security Audit

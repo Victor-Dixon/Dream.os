@@ -88,12 +88,10 @@ class SearchResult(SSOTSearchResult):
         from src.core.utils.serialization_utils import to_dict
         result = to_dict(self)
         # Preserve custom aliases
-        if "result_id" not in result and self.result_id_alias:
+        if "result_id" not in result and hasattr(self, 'result_id_alias') and self.result_id_alias:
             result["result_id"] = self.result_id_alias
-        if "relevance_score" not in result and self.relevance_score_alias:
+        if "relevance_score" not in result and hasattr(self, 'relevance_score_alias') and self.relevance_score_alias:
             result["relevance_score"] = self.relevance_score_alias
         return result
-            "timestamp": (self.timestamp.isoformat() if self.timestamp else datetime.now().isoformat()),
-        }
 
 

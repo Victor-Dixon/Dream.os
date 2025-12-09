@@ -65,6 +65,8 @@ class StatusChangeMonitor:
         self.check_interval = 15  # Check every 15 seconds
         # agent_id -> pending tasks
         self.pending_tasks: Dict[str, List[dict]] = {}
+        # agent_id -> resume attempts (for send mode escalation)
+        self.resume_attempts: Dict[str, int] = {}
 
     def start_monitoring(self):
         """Start the background monitoring task."""
@@ -426,55 +428,94 @@ class StatusChangeMonitor:
 
                     # Also post resumer prompt to Discord for visibility
                     await self._post_resumer_prompt(agent_id, resumer_prompt, summary)
+            else:
+                # Agent active → reset attempts for clean next cycle
+                if agent_id in self.resume_attempts:
+                    self.resume_attempts.pop(agent_id, None)
         except Exception as e:
             logger.error(f"Error checking inactivity for {agent_id}: {e}")
 
     async def _send_resume_message_to_agent(self, agent_id: str, prompt: str, summary, skip_wrapper: bool = False):
         """Send resume message directly to agent via messaging system using PyAutoGUI to chat input coordinates."""
         try:
+            # Attempt-based send mode (enter on first, ctrl+enter on escalations)
+            attempt = self.resume_attempts.get(agent_id, 0) + 1
+            send_mode = "enter" if attempt == 1 else "ctrl_enter"
+
             # Format resume message with context (unless skip_wrapper=True for Agent-4)
             if skip_wrapper:
                 # For Agent-4, prompt already includes resume context
                 resume_message = prompt
             else:
-                # For other agents, wrap with standard resume message format
-                resume_message = f"🚨 RESUMER PROMPT - Inactivity Detected\n\n"
+                # For other agents, wrap with standard resume message format (no-ack, artifact-only)
+                safe_minutes = (
+                    f"{summary.inactivity_duration_minutes:.1f}"
+                    if summary.inactivity_duration_minutes and summary.inactivity_duration_minutes != float('inf')
+                    else "unknown"
+                )
+                resume_message = "🚨 RESUMER PROMPT - Inactivity Detected\n\n"
+                resume_message += "[NO-ACKNOWLEDGMENTS] This is a silent work order. Do not reply with acks; produce an artifact.\n\n"
                 resume_message += f"{prompt}\n\n"
-                resume_message += f"**Inactivity Duration**: {summary.inactivity_duration_minutes:.1f} minutes\n"
+                resume_message += f"**Inactivity Duration**: {safe_minutes} minutes\n"
                 if summary.last_activity:
                     resume_message += f"**Last Activity**: {summary.last_activity.strftime('%Y-%m-%d %H:%M:%S')}\n"
                 if summary.activity_sources:
                     resume_message += f"**Activity Sources**: {', '.join(summary.activity_sources)}\n"
-                resume_message += f"\n**Action Required**: Review your status, update status.json, and resume operations.\n"
+                resume_message += "\n**Action Required**: Resume by producing a real artifact (commit, file update, test run, report). Do not reply with acknowledgments.\n"
                 resume_message += f"\n🐝 WE. ARE. SWARM. ⚡🔥"
 
-            # CRITICAL: Send message directly via unified messaging core with PyAutoGUI enabled
-            # This ensures delivery to chat input coordinates, not just inbox
+            # CRITICAL: Send message via MessageCoordinator with PyAutoGUI explicitly enabled
+            # This ensures delivery to chat input coordinates using the message queue system
             try:
-                from src.core.messaging_core import (
+                from src.services.messaging_infrastructure import MessageCoordinator
+                from src.core.messaging_models_core import (
+                    MessageCategory,
+                    UnifiedMessage,
                     UnifiedMessagePriority,
-                    UnifiedMessageTag,
                     UnifiedMessageType,
-                    send_message,
                 )
+                from src.core.messaging_templates import render_message
                 
-                # Send message via PyAutoGUI to chat input coordinates
-                # Use CAPTAIN_TO_AGENT type to route to chat input coordinates (not onboarding coords)
-                success = send_message(
+                # Use MessageCoordinator.send_to_agent() with use_pyautogui=True
+                # This routes through the message queue and ensures PyAutoGUI delivery
+                # Build canonical UnifiedMessage for rendering
+                msg = UnifiedMessage(
                     content=resume_message,
-                    sender="Status Monitor",
+                    sender="SYSTEM",
                     recipient=agent_id,
-                    message_type=UnifiedMessageType.CAPTAIN_TO_AGENT,  # Routes to chat coords
+                    message_type=UnifiedMessageType.SYSTEM_TO_AGENT,
                     priority=UnifiedMessagePriority.URGENT,
-                    tags=[UnifiedMessageTag.CAPTAIN],
+                    tags=[],
+                    category=MessageCategory.S2A,
                 )
+
+                rendered = render_message(
+                    msg,
+                    template_key="STALL_RECOVERY",
+                    context=f"Inactivity Detected: {safe_minutes} minutes",
+                    actions="Resume by producing an artifact: commit/test/report or real code/doc delta.",
+                    fallback="If blocked, escalate to Captain with concrete blocker + ETA.",
+                )
+
+                result = MessageCoordinator.send_to_agent(
+                    agent=agent_id,
+                    message=rendered,
+                    priority=UnifiedMessagePriority.URGENT,
+                    use_pyautogui=True,  # CRITICAL: Explicitly enable PyAutoGUI
+                    stalled=(send_mode == "ctrl_enter"),  # Escalation: ctrl+enter on 2nd+ attempt
+                    send_mode=send_mode,
+                    message_category=MessageCategory.S2A,
+                )
+                # Track attempt count after dispatch
+                self.resume_attempts[agent_id] = attempt
                 
-                if success:
+                if result and result.get("success"):
                     logger.info(
-                        f"✅ Resume message sent to {agent_id} via PyAutoGUI (chat input coordinates)")
+                        f"✅ Resume message sent to {agent_id} via MessageCoordinator (PyAutoGUI enabled)")
                 else:
+                    error_msg = result.get("error_message", "Unknown error") if result else "No result returned"
                     logger.warning(
-                        f"⚠️ Failed to send resume message to {agent_id} via PyAutoGUI - message may be queued")
+                        f"⚠️ Failed to send resume message to {agent_id}: {error_msg}")
                     
             except ImportError:
                 # Fallback to CLI method if core messaging not available

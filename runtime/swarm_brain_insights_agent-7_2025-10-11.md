@@ -58,6 +58,19 @@
 
 ---
 
+### Telemetry-First Activity Detection
+**Insight**: ActivityEmitter events are a stronger signal than status.json heuristics for stall/resume decisions.
+
+**Why**: Tier1 events (TASK_COMPLETED, GIT_PUSH, MONEY_METRIC, TOOL_RUN failure) should immediately mark activity without waiting for thresholds; Tier2 (TOOL_RUN success, BRAIN_WRITE, TASK_CLAIMED, DEVLOG_CREATED) benefit from weighted scoring.
+
+**Application**: In `AgentActivityDetector`, prefer JSONL telemetry (ts/agent/type/source/summary/artifact), apply weights (Tier1 score 4-5, Tier2 score 1-3), and expose `is_active(agent, window_s, activity_threshold=3)` to downstream monitors.
+
+**Fallback**: When telemetry absent, retain legacy sources (status, files, devlogs, tasks, git) to avoid blind spots.
+
+**Recommendation**: Add regression tests using a replay tool to validate scoring when emitters evolve.
+
+---
+
 ### Conservative Scoping Maximizes Success
 **Insight**: 9.4% of files = 100% functionality (Team Beta methodology).
 

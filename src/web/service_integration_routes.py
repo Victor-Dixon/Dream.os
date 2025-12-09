@@ -16,15 +16,15 @@ V2 Compliant: Yes (<300 lines)
 from flask import Blueprint, jsonify, request
 from typing import Any, Dict
 
-# Lazy imports to avoid circular dependencies
-def _get_portfolio_service():
-    from src.services.portfolio_service import PortfolioService
-    return PortfolioService()
+# Import handlers (BaseHandler pattern)
+from src.web.portfolio_handlers import PortfolioHandlers
+from src.web.ai_handlers import AIHandlers
 
-def _get_ai_service():
-    from src.services.ai_service import AIService
-    return AIService()
+# Create handler instances
+portfolio_handlers = PortfolioHandlers()
+ai_handlers = AIHandlers()
 
+# Lazy imports for other services (to be migrated to handlers)
 def _get_chat_presence_orchestrator():
     from src.services.chat_presence.chat_presence_orchestrator import ChatPresenceOrchestrator
     return ChatPresenceOrchestrator()
@@ -58,54 +58,13 @@ service_integration_bp = Blueprint(
 @service_integration_bp.route("/portfolio", methods=["GET"])
 def list_portfolios():
     """List all portfolios."""
-    try:
-        service = _get_portfolio_service()
-        portfolios = list(service.portfolios.values())
-        
-        return jsonify({
-            "status": "success",
-            "portfolios": [
-                {
-                    "id": p.id,
-                    "user_id": p.user_id,
-                    "name": p.name,
-                    "stock_count": len(p.stocks) if p.stocks else 0
-                }
-                for p in portfolios
-            ],
-            "total": len(portfolios)
-        }), 200
-    except Exception as e:
-        return jsonify({"status": "error", "error": str(e)}), 500
+    return portfolio_handlers.handle_list_portfolios(request)
 
 
 @service_integration_bp.route("/portfolio", methods=["POST"])
 def create_portfolio():
     """Create a new portfolio."""
-    try:
-        data = request.get_json()
-        if not data:
-            return jsonify({"status": "error", "error": "No data provided"}), 400
-        
-        user_id = data.get("user_id")
-        portfolio_data = data.get("portfolio_data", {})
-        
-        if not user_id:
-            return jsonify({"status": "error", "error": "user_id is required"}), 400
-        
-        service = _get_portfolio_service()
-        portfolio = service.create_portfolio(user_id, portfolio_data)
-        
-        return jsonify({
-            "status": "success",
-            "portfolio": {
-                "id": portfolio.id,
-                "user_id": portfolio.user_id,
-                "name": portfolio.name
-            }
-        }), 201
-    except Exception as e:
-        return jsonify({"status": "error", "error": str(e)}), 500
+    return portfolio_handlers.handle_create_portfolio(request)
 
 
 # --- AI Service Routes ---
@@ -113,54 +72,13 @@ def create_portfolio():
 @service_integration_bp.route("/ai/conversations", methods=["GET"])
 def list_conversations():
     """List all AI conversations."""
-    try:
-        service = _get_ai_service()
-        conversations = list(service.conversations.values())
-        
-        return jsonify({
-            "status": "success",
-            "conversations": [
-                {
-                    "id": c.id,
-                    "user_id": c.user_id,
-                    "title": c.title,
-                    "message_count": len(c.messages)
-                }
-                for c in conversations
-            ],
-            "total": len(conversations)
-        }), 200
-    except Exception as e:
-        return jsonify({"status": "error", "error": str(e)}), 500
+    return ai_handlers.handle_list_conversations(request)
 
 
 @service_integration_bp.route("/ai/process", methods=["POST"])
 def process_ai_message():
     """Process an AI message."""
-    try:
-        data = request.get_json()
-        if not data:
-            return jsonify({"status": "error", "error": "No data provided"}), 400
-        
-        message = data.get("message")
-        user_id = data.get("user_id")
-        conversation_id = data.get("conversation_id")
-        
-        if not message or not user_id:
-            return jsonify({
-                "status": "error",
-                "error": "message and user_id are required"
-            }), 400
-        
-        service = _get_ai_service()
-        result = service.process_message(message, user_id, conversation_id)
-        
-        return jsonify({
-            "status": "success",
-            "result": result
-        }), 200
-    except Exception as e:
-        return jsonify({"status": "error", "error": str(e)}), 500
+    return ai_handlers.handle_process_message(request)
 
 
 # --- Chat Presence Routes ---

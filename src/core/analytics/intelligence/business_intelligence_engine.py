@@ -3,6 +3,8 @@
 Business Intelligence Engine - KISS Compliant
 =============================================
 
+<!-- SSOT Domain: analytics -->
+
 Backward compatibility wrapper for business intelligence engine.
 
 Author: Agent-2 (Architecture & Design Specialist) - V2 Refactoring

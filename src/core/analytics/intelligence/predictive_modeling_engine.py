@@ -3,6 +3,8 @@
 Predictive Modeling Engine - KISS Compliant
 ===========================================
 
+<!-- SSOT Domain: analytics -->
+
 Simple predictive modeling for analytics.
 
 Author: Agent-5 - Business Intelligence Specialist

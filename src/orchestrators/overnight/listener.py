@@ -20,6 +20,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, Optional
 
+from src.core.config.timeout_constants import TimeoutConstants
+
 # V2 Integration imports
 try:
     from ...core.config_ssot import get_unified_config
@@ -458,6 +460,5 @@ def main() -> int:
 
 if __name__ == "__main__":
     import sys
-from src.core.config.timeout_constants import TimeoutConstants
     sys.exit(main())
 

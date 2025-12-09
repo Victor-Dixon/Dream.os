@@ -19,7 +19,7 @@ License: MIT
 import json
 import logging
 import time
-from dataclasses import asdict
+from src.core.utils.serialization_utils import to_dict
 from datetime import datetime
 from pathlib import Path
 
@@ -63,7 +63,7 @@ class FSMFileOperations:
         try:
             task_file = self.tasks_dir / f"{task.id}.json"
             with open(task_file, "w", encoding="utf-8") as f:
-                json.dump(asdict(task), f, indent=2, default=str)
+                json.dump(to_dict(task), f, indent=2, default=str)
             return True
         except Exception as e:
             logger.error(f"Error saving task {task.id}: {e}")

@@ -5,6 +5,8 @@ Monitoring Handlers
 Handler classes for monitoring lifecycle operations.
 Wires monitoring services to web layer.
 
+<!-- SSOT Domain: web -->
+
 V2 Compliance: < 300 lines, handler pattern.
 Consolidated: Uses BaseHandler + AvailabilityMixin (30% code reduction).
 """

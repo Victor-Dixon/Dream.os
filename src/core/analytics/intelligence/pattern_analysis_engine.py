@@ -2,6 +2,8 @@
 Pattern Analysis Engine - V2 Compliance Refactored
 =================================================
 
+<!-- SSOT Domain: analytics -->
+
 Simple pattern analysis for analytics.
 Refactored into modular architecture for V2 compliance.
 

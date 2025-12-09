@@ -6,6 +6,8 @@ Start Complete Discord System
 Starts both Discord bot and message queue processor.
 Ensures .env file is loaded properly.
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-3 (Infrastructure & DevOps)
 Date: 2025-01-27
 Priority: CRITICAL

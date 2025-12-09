@@ -12,16 +12,16 @@
  */
 
 import { DOMUtilsOrchestrator } from './dashboard/dom-utils-orchestrator.js';
-import { CacheUtils } from './cache-utils.js';
-import { ValidationUtils } from './validation-utils.js';
-import { EventUtils } from './event-utils.js';
+import { ValidationUtils } from './utilities/validation-utils.js';
 
 export class UnifiedFrontendUtilities {
     constructor() {
         this.dom = new DOMUtilsOrchestrator();
-        this.cache = new CacheUtils();
+        // Cache operations use DOMUtilsOrchestrator.cacheManagement (SSOT)
+        this.cache = this.dom.cacheManagement;
         this.validation = new ValidationUtils();
-        this.events = new EventUtils();
+        // Event operations use DOMUtilsOrchestrator.eventManagement (SSOT)
+        this.events = this.dom.eventManagement;
         this.logger = console;
     }
 

@@ -14,6 +14,7 @@ Features:
 - Integrates with existing message queue
 
 V2 Compliance: < 400 lines, single responsibility
+Migrated to BaseService for consolidated initialization and error handling.
 """
 
 import json
@@ -22,6 +23,8 @@ import threading
 from datetime import datetime
 from pathlib import Path
 from typing import Any
+
+from src.core.base.base_service import BaseService
 
 logger = logging.getLogger(__name__)
 
@@ -87,11 +90,12 @@ class MessageBatch:
         return len(self.messages)
 
 
-class MessageBatchingService:
+class MessageBatchingService(BaseService):
     """Service for batching multiple messages into one."""
 
     def __init__(self):
         """Initialize batching service."""
+        super().__init__("MessageBatchingService")
         self._batches: dict[str, MessageBatch] = {}
         self._lock = threading.Lock()
         self._batch_dir = Path("runtime/message_batches")
@@ -116,11 +120,11 @@ class MessageBatchingService:
             batch_key = self._get_batch_key(agent_id, recipient)
 
             if batch_key in self._batches:
-                logger.warning(f"⚠️ Batch already exists for {agent_id}→{recipient}, clearing it")
+                self.logger.warning(f"⚠️ Batch already exists for {agent_id}→{recipient}, clearing it")
                 self._batches[batch_key].clear()
 
             self._batches[batch_key] = MessageBatch(agent_id, recipient)
-            logger.info(f"🆕 Batch started: {agent_id}→{recipient}")
+            self.logger.info(f"🆕 Batch started: {agent_id}→{recipient}")
             return True
 
     def add_to_batch(self, agent_id: str, recipient: str, message: str) -> bool:
@@ -139,8 +143,8 @@ class MessageBatchingService:
             batch_key = self._get_batch_key(agent_id, recipient)
 
             if batch_key not in self._batches:
-                logger.error(f"❌ No batch found for {agent_id}→{recipient}")
-                logger.info("💡 Use --batch-start first")
+                self.logger.error(f"❌ No batch found for {agent_id}→{recipient}")
+                self.logger.info("💡 Use --batch-start first")
                 return False
 
             self._batches[batch_key].add_message(message)
@@ -164,13 +168,13 @@ class MessageBatchingService:
             batch_key = self._get_batch_key(agent_id, recipient)
 
             if batch_key not in self._batches:
-                logger.error(f"❌ No batch found for {agent_id}→{recipient}")
+                self.logger.error(f"❌ No batch found for {agent_id}→{recipient}")
                 return False, ""
 
             batch = self._batches[batch_key]
 
             if batch.size() == 0:
-                logger.warning(f"⚠️ Batch is empty for {agent_id}→{recipient}")
+                self.logger.warning(f"⚠️ Batch is empty for {agent_id}→{recipient}")
                 return False, ""
 
             consolidated_message = batch.get_consolidated_message()
@@ -181,7 +185,7 @@ class MessageBatchingService:
             # Clear batch
             del self._batches[batch_key]
 
-            logger.info(
+            self.logger.info(
                 f"📤 Batch sent: {agent_id}→{recipient} " f"({batch.size()} messages consolidated)"
             )
 
@@ -232,11 +236,11 @@ class MessageBatchingService:
             batch_key = self._get_batch_key(agent_id, recipient)
 
             if batch_key not in self._batches:
-                logger.warning(f"⚠️ No batch found to cancel for {agent_id}→{recipient}")
+                self.logger.warning(f"⚠️ No batch found to cancel for {agent_id}→{recipient}")
                 return False
 
             del self._batches[batch_key]
-            logger.info(f"🚫 Batch cancelled: {agent_id}→{recipient}")
+            self.logger.info(f"🚫 Batch cancelled: {agent_id}→{recipient}")
             return True
 
     def _save_batch_history(self, batch: MessageBatch, consolidated_message: str) -> None:
@@ -259,10 +263,10 @@ class MessageBatchingService:
             with open(filepath, "w", encoding="utf-8") as f:
                 json.dump(history, f, indent=2, ensure_ascii=False)
 
-            logger.info(f"💾 Batch history saved: {filename}")
+            self.logger.info(f"💾 Batch history saved: {filename}")
 
         except Exception as e:
-            logger.error(f"❌ Failed to save batch history: {e}")
+            self.logger.error(f"❌ Failed to save batch history: {e}")
 
 
 # Global batching service instance

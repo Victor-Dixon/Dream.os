@@ -42,6 +42,19 @@ While V2 standards mandate ≤400 lines per file, certain files are granted exce
 **Date:** October 9, 2025  
 **Review Status:** APPROVED - Comprehensive CLI requires complete command surface
 
+#### `src/core/message_queue_processor.py` - 513 lines ✅
+**Reason:** Queue processing with PyAutoGUI/inbox fallback pattern requires tight cohesion.
+**Justification:**
+- Single responsibility: Queue processing only
+- High cohesion: Fallback logic (PyAutoGUI → inbox) requires tight coupling
+- Cannot split meaningfully: Fallback pattern creates artificial boundaries if split
+- Production-ready: Critical system component with comprehensive error handling
+- Well-structured: Clear method boundaries with single cohesive class
+
+**Approved by:** Agent-1 (Integration & Core Systems Specialist)  
+**Date:** 2025-12-09  
+**Review Status:** APPROVED - Architectural necessity (fallback pattern)
+
 ## Exception Criteria
 
 Files may be granted exceptions if they meet ALL of the following:

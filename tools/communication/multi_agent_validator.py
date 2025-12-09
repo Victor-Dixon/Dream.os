@@ -76,7 +76,8 @@ class MultiAgentValidator:
 
     def validate_all_agents(self) -> Dict[str, Any]:
         """Validate all agents for pending requests."""
-        agents = ["Agent-1", "Agent-2", "Agent-3", "Agent-5", "Agent-6", "Agent-7", "Agent-8"]
+        from src.core.constants.agent_constants import AGENT_LIST
+        agents = AGENT_LIST
         results = {}
         agents_with_pending = []
 
@@ -118,7 +119,6 @@ class MultiAgentValidator:
             errors=self.errors,
             warnings=self.warnings,
         )
-            print("✅ All validations passed!")
 
 
 def main() -> int:

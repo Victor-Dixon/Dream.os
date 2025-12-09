@@ -133,16 +133,7 @@ PRIORITY_TOOLS = [
         "flags": ["--discord-verify", "--verify-discord"],
         "args_passthrough": True,
     },
-    # Queue Tools
-    {
-        "id": "queue-start",
-        "name": "Start Message Queue Processor",
-        "module": "tools.start_message_queue_processor",
-        "main_function": "main",
-        "description": "Start message queue processor",
-        "flags": ["--queue-start", "--start-queue"],
-        "args_passthrough": True,
-    },
+    # Queue Tools - start_message_queue_processor removed (consolidated to unified_monitor.py)
     {
         "id": "queue-diagnose",
         "name": "Diagnose Queue",

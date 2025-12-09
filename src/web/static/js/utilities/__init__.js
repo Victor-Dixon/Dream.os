@@ -13,7 +13,6 @@
 
 // DOM Utils SSOT: Use orchestrator instead of legacy utilities/dom-utils.js
 export { DOMUtilsOrchestrator as DOMUtils } from '../dashboard/dom-utils-orchestrator.js';
-export { CacheUtils } from './cache-utils.js';
 export { ValidationUtils } from './validation-utils.js';
-export { EventUtils } from './event-utils.js';
-export { UnifiedFrontendUtilities } from './unified-utilities.js';
+// NOTE: CacheUtils and EventUtils removed - use DOMUtilsOrchestrator for cache/event operations (SSOT)
+// NOTE: UnifiedFrontendUtilities removed - use individual utility modules (SSOT)

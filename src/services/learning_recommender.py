@@ -4,12 +4,15 @@ Learning Recommender
 
 Learning recommendation operations for agent vector integration.
 V2 Compliance: < 100 lines, single responsibility.
+Migrated to BaseService for consolidated initialization and error handling.
 
 Author: Agent-2 (Architecture & Design Specialist)
 """
 
 import logging
 from typing import Any
+
+from ..core.base.base_service import BaseService
 
 # Optional vector database imports
 try:
@@ -55,13 +58,13 @@ except ImportError:
             )
 
 
-class LearningRecommender:
+class LearningRecommender(BaseService):
     """Handles learning recommendation operations."""
 
     def __init__(self, agent_id: str, config_path: str | None = None):
         """Initialize learning recommender."""
+        super().__init__("LearningRecommender")
         self.agent_id = agent_id
-        self.logger = logging.getLogger(__name__)
 
         # Initialize configuration
         self.config = self._load_config(config_path)

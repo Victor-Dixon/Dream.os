@@ -6,6 +6,8 @@ Check Functionality Existence Tool
 Before implementing or deleting files, check if the functionality already exists
 elsewhere in the project in a different form.
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-5 (Business Intelligence Specialist)
 Date: 2025-12-01
 Priority: CRITICAL - Prevents duplicate implementation or premature deletion

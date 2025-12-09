@@ -45,7 +45,7 @@ class BaseMessageModal(discord.ui.Modal):
                 label="Agent ID",
                 placeholder="Agent-1, Agent-2, etc.",
                 required=True,
-                max_length=20,
+                max_length=200,
             )
             self.add_item(self.agent_input)
 

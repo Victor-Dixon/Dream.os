@@ -73,21 +73,7 @@ def create_pr(
                 if existing_pr:
                     print(f"✅ Found existing PR: {existing_pr.get('html_url')}")
                     return existing_pr
-                # Fallback to manual check if utility returns None
-                list_url = f"https://api.github.com/repos/{owner}/{repo}/pulls"
-                from src.core.config.timeout_constants import TimeoutConstants
-                timeout = TimeoutConstants.HTTP_DEFAULT if TimeoutConstants else 30
-                list_response = requests.get(
-                    list_url,
-                    headers=headers,
-                    params={"head": f"{owner}:{head}", "state": "open"},
-                    timeout=timeout
-                )
-                if list_response.status_code == 200:
-                    prs = list_response.json()
-                    if prs:
-                        print(f"✅ Found existing PR: {prs[0].get('html_url')}")
-                        return prs[0]
+                # SSOT utility already checked above, no fallback needed
             print(f"❌ PR creation failed for {repo}: {error_data}")
             return None
         else:

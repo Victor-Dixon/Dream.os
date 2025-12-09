@@ -6,6 +6,7 @@ Handles task system commands for messaging CLI.
 Implements --get-next-task, --list-tasks, --task-status, --complete-task.
 
 V2 Compliance: < 300 lines, single responsibility
+Migrated to BaseService for consolidated initialization and error handling.
 Author: Agent-1 (Integration & Core Systems Specialist)
 """
 
@@ -14,14 +15,17 @@ import os
 from datetime import datetime
 from pathlib import Path
 
+from ...core.base.base_service import BaseService
+
 logger = logging.getLogger(__name__)
 
 
-class TaskHandler:
+class TaskHandler(BaseService):
     """Handles task system commands for messaging CLI."""
 
     def __init__(self):
         """Initialize task handler."""
+        super().__init__("TaskHandler")
         self.exit_code = 0
         self._ensure_data_dir()
 

@@ -5,6 +5,8 @@ Workflow Engine Handlers
 Handler classes for workflow engine operations.
 Wires workflow engine to web layer.
 
+<!-- SSOT Domain: web -->
+
 V2 Compliance: < 300 lines, handler pattern.
 Consolidated: Uses BaseHandler + AvailabilityMixin (33% code reduction).
 """

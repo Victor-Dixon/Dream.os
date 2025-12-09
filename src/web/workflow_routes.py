@@ -5,6 +5,8 @@ Workflow Engine Routes
 Flask routes for workflow engine operations.
 Wires workflow engine to web layer.
 
+<!-- SSOT Domain: web -->
+
 V2 Compliance: < 300 lines, single responsibility, route definitions.
 """
 

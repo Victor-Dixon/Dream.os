@@ -8,9 +8,13 @@ Wires chat presence orchestrator to web layer.
 <!-- SSOT Domain: web -->
 
 V2 Compliance: < 300 lines, handler pattern.
+Consolidated: Uses BaseHandler (33% code reduction).
 """
 
 from flask import jsonify, request
+
+from src.core.base.availability_mixin import AvailabilityMixin
+from src.core.base.base_handler import BaseHandler
 
 try:
     from src.services.chat_presence.chat_presence_orchestrator import ChatPresenceOrchestrator
@@ -19,17 +23,19 @@ except ImportError:
     CHAT_PRESENCE_AVAILABLE = False
 
 
-class ChatPresenceHandlers:
+class ChatPresenceHandlers(BaseHandler, AvailabilityMixin):
     """Handler class for chat presence orchestrator operations."""
 
-    @staticmethod
-    def _get_orchestrator() -> ChatPresenceOrchestrator:
+    def __init__(self):
+        """Initialize chat presence handlers."""
+        super().__init__("ChatPresenceHandlers")
+
+    def _get_orchestrator(self) -> ChatPresenceOrchestrator:
         """Get chat presence orchestrator instance."""
         # Initialize with optional configs from request or environment
         return ChatPresenceOrchestrator()
 
-    @staticmethod
-    def handle_update(request) -> tuple:
+    def handle_update(self, request) -> tuple:
         """
         Handle request to update chat presence.
 
@@ -39,51 +45,54 @@ class ChatPresenceHandlers:
         Returns:
             Tuple of (response_data, status_code)
         """
-        if not CHAT_PRESENCE_AVAILABLE:
-            return jsonify({"success": False, "error": "ChatPresenceOrchestrator not available"}), 503
+        availability_check = self.check_availability(CHAT_PRESENCE_AVAILABLE, "ChatPresenceOrchestrator")
+        if availability_check:
+            return availability_check
 
         try:
             data = request.get_json() or {}
             action = data.get("action")  # e.g., "start", "stop", "update"
             config = data.get("config", {})
 
-            orchestrator = ChatPresenceHandlers._get_orchestrator()
+            orchestrator = self._get_orchestrator()
 
             if action == "start":
                 # Start chat presence system
                 result = orchestrator.start()
-                return jsonify({
-                    "success": True,
+                response_data = self.format_response({
                     "message": "Chat presence started",
                     "status": result
-                }), 200
+                }, success=True)
+                return jsonify(response_data), 200
             elif action == "stop":
                 # Stop chat presence system
                 result = orchestrator.stop()
-                return jsonify({
-                    "success": True,
+                response_data = self.format_response({
                     "message": "Chat presence stopped",
                     "status": result
-                }), 200
+                }, success=True)
+                return jsonify(response_data), 200
             elif action == "update":
                 # Update configuration
                 # For now, return success - full implementation would update config
-                return jsonify({
-                    "success": True,
+                response_data = self.format_response({
                     "message": "Chat presence updated",
                     "config": config
-                }), 200
+                }, success=True)
+                return jsonify(response_data), 200
             else:
-                return jsonify({
-                    "success": False,
-                    "error": f"Unknown action: {action}. Use 'start', 'stop', or 'update'"
-                }), 400
+                error_response = self.format_response(
+                    None,
+                    success=False,
+                    error=f"Unknown action: {action}. Use 'start', 'stop', or 'update'"
+                )
+                return jsonify(error_response), 400
 
         except Exception as e:
-            return jsonify({"success": False, "error": str(e)}), 500
+            error_response = self.handle_error(e, "handle_update")
+            return jsonify(error_response), 500
 
-    @staticmethod
-    def handle_get_status(request) -> tuple:
+    def handle_get_status(self, request) -> tuple:
         """
         Handle request to get chat presence status.
 
@@ -93,11 +102,12 @@ class ChatPresenceHandlers:
         Returns:
             Tuple of (response_data, status_code)
         """
-        if not CHAT_PRESENCE_AVAILABLE:
-            return jsonify({"success": False, "error": "ChatPresenceOrchestrator not available"}), 503
+        availability_check = self.check_availability(CHAT_PRESENCE_AVAILABLE, "ChatPresenceOrchestrator")
+        if availability_check:
+            return availability_check
 
         try:
-            orchestrator = ChatPresenceHandlers._get_orchestrator()
+            orchestrator = self._get_orchestrator()
 
             # Get status information
             status = {
@@ -108,13 +118,14 @@ class ChatPresenceHandlers:
                 "scheduler_active": hasattr(orchestrator, 'scheduler') and orchestrator.scheduler is not None
             }
 
-            return jsonify({"success": True, "data": status}), 200
+            response_data = self.format_response(status, success=True)
+            return jsonify(response_data), 200
 
         except Exception as e:
-            return jsonify({"success": False, "error": str(e)}), 500
+            error_response = self.handle_error(e, "handle_get_status")
+            return jsonify(error_response), 500
 
-    @staticmethod
-    def handle_list(request) -> tuple:
+    def handle_list(self, request) -> tuple:
         """
         Handle request to list all chat presences.
 
@@ -124,11 +135,12 @@ class ChatPresenceHandlers:
         Returns:
             Tuple of (response_data, status_code)
         """
-        if not CHAT_PRESENCE_AVAILABLE:
-            return jsonify({"success": False, "error": "ChatPresenceOrchestrator not available"}), 503
+        availability_check = self.check_availability(CHAT_PRESENCE_AVAILABLE, "ChatPresenceOrchestrator")
+        if availability_check:
+            return availability_check
 
         try:
-            orchestrator = ChatPresenceHandlers._get_orchestrator()
+            orchestrator = self._get_orchestrator()
 
             # List available chat presences/channels
             presences = []
@@ -153,14 +165,15 @@ class ChatPresenceHandlers:
                     "connected": True
                 })
 
-            return jsonify({
-                "success": True,
+            response_data = self.format_response({
                 "presences": presences,
                 "total": len(presences)
-            }), 200
+            }, success=True)
+            return jsonify(response_data), 200
 
         except Exception as e:
-            return jsonify({"success": False, "error": str(e)}), 500
+            error_response = self.handle_error(e, "handle_list")
+            return jsonify(error_response), 500
 
 
 

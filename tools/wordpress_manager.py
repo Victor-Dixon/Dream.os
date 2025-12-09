@@ -11,6 +11,8 @@ Single comprehensive tool for all WordPress operations:
 - Content updates
 - WP-CLI commands
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-7 (Web Development Specialist)
 V2 Compliant: <400 lines
 """
@@ -255,6 +257,11 @@ class WordPressManager:
         self.conn_manager: Optional[ConnectionManager] = None
         self.credentials: Optional[dict] = None
         self._load_credentials()
+        # Optional overrides (can be set from CLI)
+        self.override_port: Optional[int] = None
+        self.override_username: Optional[str] = None
+        self.override_remote_base: Optional[str] = None
+        self.override_wp_cli_path: Optional[str] = None
     
     def _load_credentials(self):
         """Load deployment credentials from sites.json or .env environment variables."""
@@ -433,6 +440,16 @@ add_action('after_switch_theme', '{function_name}');"""
         username = self.credentials.get("username", "").strip()
         password = self.credentials.get("password", "").strip()
         port = self.credentials.get("port", 22)
+
+        # Apply CLI overrides when provided
+        if self.override_port:
+            port = self.override_port
+            self.credentials["port"] = port
+        if self.override_username:
+            username = self.override_username
+            self.credentials["username"] = username
+        if self.override_remote_base:
+            self.config["remote_base"] = self.override_remote_base
         
         # Validate credentials
         missing = []
@@ -544,7 +561,10 @@ add_filter('wp_nav_menu_items', '{prefix}_add_{page_slug}_menu', 10, 2);"""
         if not self.conn_manager:
             if not self.connect():
                 return "", "Not connected", 1
-        wp_path = self.credentials.get("wp_cli_path", "wp")
+        wp_path = (
+            self.override_wp_cli_path
+            or self.credentials.get("wp_cli_path", "wp")
+        )
         remote_path = self.credentials.get("remote_path", "/public_html")
         full_cmd = f"cd {remote_path} && {wp_path} {command}"
         return self.conn_manager.execute_command(full_cmd)
@@ -657,12 +677,61 @@ add_filter('wp_nav_menu_items', '{prefix}_add_{page_slug}_menu', 10, 2);"""
             logger.error(f"Verification error: {e}")
         return results
 
+    # ========== MENU / CACHE HELPERS ==========
+    def assign_primary_menu(
+        self,
+        menu_name: str = "Main",
+        add_home: bool = True,
+        home_url: Optional[str] = None,
+    ) -> bool:
+        """Create/assign a primary menu; optionally add a Home link."""
+        if not self.connect():
+            return False
+        menus_json, _, _ = self.wp_cli("menu list --format=json")
+        menus = json.loads(menus_json) if menus_json.strip() else []
+        menu_id = None
+        for m in menus:
+            if m.get("name") == menu_name:
+                menu_id = m.get("term_id")
+                break
+        if not menu_id:
+            self.wp_cli(f"menu create {menu_name}")
+            menus_json, _, _ = self.wp_cli("menu list --format=json")
+            menus = json.loads(menus_json) if menus_json.strip() else []
+            for m in menus:
+                if m.get("name") == menu_name:
+                    menu_id = m.get("term_id")
+                    break
+        if not menu_id:
+            logger.error("Menu creation/lookup failed")
+            return False
+        items_json, _, _ = self.wp_cli(f"menu item list {menu_name} --format=json")
+        items = json.loads(items_json) if items_json.strip() else []
+        if add_home and not items:
+            target_url = home_url or self.credentials.get(
+                "home_url", "https://freerideinvestor.com"
+            )
+            self.wp_cli(
+                f"menu item add-custom {menu_name} 'Home' {target_url}"
+            )
+        self.wp_cli(f"menu location assign {menu_name} primary")
+        return True
+
+    def purge_caches(self):
+        """Purge LiteSpeed (if present) and WP cache."""
+        self.wp_cli("litespeed-purge all")
+        self.wp_cli("cache flush")
+
 
 def main():
     """CLI interface."""
     import argparse
     parser = argparse.ArgumentParser(description="Unified WordPress Management Tool")
     parser.add_argument('--site', default='prismblossom', help='Site key')
+    parser.add_argument('--port', type=int, help='Override SFTP port')
+    parser.add_argument('--username', type=str, help='Override SFTP username')
+    parser.add_argument('--remote-base', type=str, help='Override remote theme base path')
+    parser.add_argument('--wp-cli-path', type=str, help='Override wp-cli path (e.g., \"php /usr/local/bin/wp-cli-2.12.0.phar\")')
     parser.add_argument('--create-page', type=str, help='Create page')
     parser.add_argument('--deploy', action='store_true', help='Deploy theme files')
     parser.add_argument('--list', action='store_true', help='List pages')
@@ -671,11 +740,30 @@ def main():
     parser.add_argument('--replace-theme', type=str, help='Replace theme (path to new theme)')
     parser.add_argument('--activate-theme', type=str, help='Activate theme by name')
     parser.add_argument('--list-themes', action='store_true', help='List all themes')
+    parser.add_argument('--deploy-file', type=str, help='Deploy a single file (local path) to remote_base-relative path')
+    parser.add_argument('--assign-menu', action='store_true', help='Create/assign primary menu (default name: Main)')
+    parser.add_argument('--menu-name', type=str, default='Main', help='Menu name to create/assign')
+    parser.add_argument('--add-home-link', type=str, nargs='?', const='https://freerideinvestor.com', help='Add Home link to menu (optional URL, default site home)')
+    parser.add_argument('--purge-cache', action='store_true', help='Purge LiteSpeed/WP caches')
     
     args = parser.parse_args()
     
     try:
         manager = WordPressManager(args.site)
+
+        # Apply overrides
+        if args.port:
+            manager.override_port = args.port
+            manager.credentials["port"] = args.port
+        if args.username:
+            manager.override_username = args.username
+            manager.credentials["username"] = args.username
+        if args.remote_base:
+            manager.override_remote_base = args.remote_base
+            manager.config["remote_base"] = args.remote_base
+        if args.wp_cli_path:
+            manager.override_wp_cli_path = args.wp_cli_path
+            manager.credentials["wp_cli_path"] = args.wp_cli_path
         
         if args.create_page:
             manager.create_page(args.create_page)
@@ -705,6 +793,19 @@ def main():
             for theme in themes:
                 status = "✅ ACTIVE" if theme.get('status') == 'active' else "  "
                 print(f"{status} {theme.get('name', 'Unknown')} - {theme.get('version', 'N/A')}")
+        elif args.deploy_file:
+            local_path = Path(args.deploy_file)
+            ok = manager.deploy_file(local_path)
+            print(f"✅ Deployed file: {local_path}" if ok else f"❌ Deploy failed: {local_path}")
+        elif args.assign_menu or args.add_home_link:
+            home_url = args.add_home_link if args.add_home_link else None
+            if manager.assign_primary_menu(menu_name=args.menu_name, add_home=True, home_url=home_url):
+                print(f"✅ Menu '{args.menu_name}' assigned to primary")
+            else:
+                print(f"❌ Failed to assign menu '{args.menu_name}'")
+        elif args.purge_cache:
+            manager.purge_caches()
+            print("✅ Cache purged")
         else:
             parser.print_help()
     

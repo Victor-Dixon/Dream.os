@@ -3,6 +3,8 @@
 Prediction Processor - KISS Compliant
 =====================================
 
+<!-- SSOT Domain: analytics -->
+
 Simple prediction processor.
 
 Author: Agent-5 - Business Intelligence Specialist

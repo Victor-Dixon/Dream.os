@@ -3,6 +3,9 @@ Document Utils
 ==============
 
 Document CRUD utility functions for vector database operations.
+
+<!-- SSOT Domain: web -->
+
 V2 Compliance: < 100 lines, single responsibility.
 
 Author: Agent-3 - Infrastructure & DevOps Specialist

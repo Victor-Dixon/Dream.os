@@ -2,6 +2,8 @@
 Anomaly Detector - V2 Compliance Module
 ======================================
 
+<!-- SSOT Domain: analytics -->
+
 Anomaly detection functionality for analytics.
 
 V2 Compliance: < 300 lines, single responsibility, anomaly detection.

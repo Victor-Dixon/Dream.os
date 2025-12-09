@@ -50,7 +50,8 @@ class StatusControllerView(discord.ui.View):
     """
 
     def __init__(self, messaging_service: ConsolidatedMessagingService):
-        super().__init__(timeout=300)
+        from src.core.config.timeout_constants import TimeoutConstants
+        super().__init__(timeout=TimeoutConstants.HTTP_EXTENDED)
         self.messaging_service = messaging_service
         self.status_reader = StatusReader()
 
@@ -94,6 +95,27 @@ class StatusControllerView(discord.ui.View):
         )
         self.message_idle_btn.callback = self.on_message_idle
         self.add_item(self.message_idle_btn)
+
+        # Status Monitor Controls (row 1)
+        self.monitor_start_btn = discord.ui.Button(
+            label="Start Monitor",
+            style=discord.ButtonStyle.success,
+            emoji="▶️",
+            custom_id="status_monitor_start",
+            row=1,
+        )
+        self.monitor_start_btn.callback = self.on_monitor_start
+        self.add_item(self.monitor_start_btn)
+
+        self.monitor_stop_btn = discord.ui.Button(
+            label="Stop Monitor",
+            style=discord.ButtonStyle.secondary,
+            emoji="⏸️",
+            custom_id="status_monitor_stop",
+            row=1,
+        )
+        self.monitor_stop_btn.callback = self.on_monitor_stop
+        self.add_item(self.monitor_stop_btn)
 
     async def on_refresh(self, interaction: discord.Interaction):
         """Refresh status display."""
@@ -179,6 +201,40 @@ class StatusControllerView(discord.ui.View):
 
         except Exception as e:
             logger.error(f"Error messaging idle agents: {e}")
+            await interaction.response.send_message(f"❌ Error: {e}", ephemeral=True)
+
+    async def on_monitor_start(self, interaction: discord.Interaction):
+        """Start the status monitor via UI control."""
+        try:
+            bot = interaction.client
+            if hasattr(bot, "status_monitor"):
+                bot.status_monitor.start_monitoring()
+                await interaction.response.send_message(
+                    "✅ Status monitor started (15s interval).", ephemeral=True
+                )
+            else:
+                await interaction.response.send_message(
+                    "⚠️ Status monitor not initialized yet.", ephemeral=True
+                )
+        except Exception as e:
+            logger.error(f"Error starting monitor: {e}", exc_info=True)
+            await interaction.response.send_message(f"❌ Error: {e}", ephemeral=True)
+
+    async def on_monitor_stop(self, interaction: discord.Interaction):
+        """Stop the status monitor via UI control."""
+        try:
+            bot = interaction.client
+            if hasattr(bot, "status_monitor"):
+                bot.status_monitor.stop_monitoring()
+                await interaction.response.send_message(
+                    "🛑 Status monitor stopped.", ephemeral=True
+                )
+            else:
+                await interaction.response.send_message(
+                    "⚠️ Status monitor not initialized.", ephemeral=True
+                )
+        except Exception as e:
+            logger.error(f"Error stopping monitor: {e}", exc_info=True)
             await interaction.response.send_message(f"❌ Error: {e}", ephemeral=True)
 
     def _create_status_embed(self, filter_status: str | None = None) -> discord.Embed:

@@ -8,6 +8,7 @@ Handles coordination strategy determination and application.
 Extracted from messaging_coordination_handler.py for V2 compliance.
 
 V2 Compliance: < 300 lines, single responsibility.
+Migrated to BaseService for consolidated initialization and error handling.
 
 Author: Agent-7 - Web Development Specialist
 License: MIT
@@ -15,6 +16,8 @@ License: MIT
 
 from typing import Any
 
+from ...core.base.base_service import BaseService
+from ...core.config.timeout_constants import TimeoutConstants
 from ...core.messaging_models_core import (
     SenderType,
     UnifiedMessage,
@@ -23,7 +26,7 @@ from ...core.messaging_models_core import (
 )
 
 
-class StrategyCoordinator:
+class StrategyCoordinator(BaseService):
     """Handles coordination strategy determination and application.
 
     Manages strategy selection, rule application, and coordination execution.
@@ -31,6 +34,7 @@ class StrategyCoordinator:
 
     def __init__(self):
         """Initialize strategy coordinator."""
+        super().__init__("StrategyCoordinator")
         self.coordination_rules = self._initialize_coordination_rules()
         self.routing_table = self._initialize_routing_table()
 
@@ -62,22 +66,22 @@ class StrategyCoordinator:
             "captain_priority": {
                 "delivery_method": "immediate",
                 "retry_attempts": 3,
-                "timeout": 5,
+                "timeout": TimeoutConstants.HTTP_QUICK,
             },
             "urgent_delivery": {
                 "delivery_method": "priority",
                 "retry_attempts": 2,
-                "timeout": 10,
+                "timeout": TimeoutConstants.HTTP_SHORT,
             },
             "system_priority": {
                 "delivery_method": "standard",
                 "retry_attempts": 2,
-                "timeout": 15,
+                "timeout": TimeoutConstants.HTTP_SHORT + 5,
             },
             "broadcast_delivery": {
                 "delivery_method": "batch",
                 "retry_attempts": 1,
-                "timeout": 30,
+                "timeout": TimeoutConstants.HTTP_DEFAULT,
             },
             "standard_delivery": {
                 "delivery_method": "standard",

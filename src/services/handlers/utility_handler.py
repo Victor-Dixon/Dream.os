@@ -6,6 +6,7 @@ Utility Handler - V2 Compliant Module
 Handles utility commands for messaging system.
 
 V2 Compliance: < 300 lines, single responsibility.
+Migrated to BaseService for consolidated initialization and error handling.
 
 Author: V2 SWARM CAPTAIN
 License: MIT
@@ -14,6 +15,7 @@ License: MIT
 import logging
 from typing import Any
 
+from ...core.base.base_service import BaseService
 from ..messaging_cli_coordinate_management.utilities import load_coords_file
 from .onboarding_handler import OnboardingHandler
 
@@ -31,12 +33,12 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 
-class UtilityHandler:
+class UtilityHandler(BaseService):
     """Handles utility commands for messaging system."""
 
     def __init__(self):
         """Initialize utility handler."""
-        self.logger = logger
+        super().__init__("UtilityHandler")
 
     def check_status(self, agent_id: str | None = None) -> dict[str, Any]:
         """Check status of agents or specific agent using onboarding handler.

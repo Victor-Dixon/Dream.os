@@ -70,21 +70,8 @@ def get_github_username() -> Optional[str]:
     return None
 
 
-def ensure_dir_removed(dir_path: Path, name: str):
-    """Ensure directory is completely removed."""
-    if dir_path.exists():
-        print(f"🧹 Removing existing {name} directory: {dir_path}")
-        try:
-            shutil.rmtree(dir_path, ignore_errors=True)
-            time.sleep(0.5)
-            if dir_path.exists():
-                def remove_readonly(func, path, exc):
-                    os.chmod(path, stat.S_IWRITE)
-                    func(path)
-                shutil.rmtree(dir_path, onerror=remove_readonly)
-                time.sleep(0.5)
-        except Exception as e:
-            print(f"⚠️ Cleanup warning for {name}: {e}")
+# Use SSOT utility for directory removal
+from src.core.utils.file_utils import ensure_directory_removed as ensure_dir_removed
 
 
 def clone_dreamvault(temp_base: Path, token: str, username: str) -> Optional[Path]:

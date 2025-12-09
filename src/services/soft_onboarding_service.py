@@ -14,6 +14,7 @@ V2 Compliance: <400 lines, single responsibility
 """
 
 from src.core.config.timeout_constants import TimeoutConstants
+from src.core.base.base_service import BaseService
 import logging
 import sys
 import time
@@ -37,16 +38,16 @@ except ImportError:
         "⚠️ PyAutoGUI not available - soft onboarding animations disabled")
 
 
-class SoftOnboardingService:
+class SoftOnboardingService(BaseService):
     """Soft onboarding service with 6-step protocol."""
 
     def __init__(self):
         """Initialize soft onboarding service."""
+        super().__init__("SoftOnboardingService")
         if not PYAUTOGUI_AVAILABLE:
-            logger.warning(
+            self.logger.warning(
                 "⚠️ PyAutoGUI not available - soft onboarding will use messaging only")
         self.pyautogui = pyautogui if PYAUTOGUI_AVAILABLE else None
-        logger.info("SoftOnboardingService initialized")
 
     def _load_agent_coordinates(self, agent_id: str) -> tuple[tuple[int, int] | None, tuple[int, int] | None]:
         """Load chat and onboarding coordinates for agent."""
@@ -61,17 +62,17 @@ class SoftOnboardingService:
     def step_1_click_chat_input(self, agent_id: str) -> bool:
         """Step 1: Click chat input to get agent's attention."""
         if not PYAUTOGUI_AVAILABLE:
-            logger.warning("⚠️ PyAutoGUI not available - skipping step 1")
+            self.logger.warning("⚠️ PyAutoGUI not available - skipping step 1")
             return True  # Non-blocking
 
         try:
             chat_coords, _ = self._load_agent_coordinates(agent_id)
             if not chat_coords:
-                logger.error(f"❌ No chat coordinates for {agent_id}")
+                self.logger.error(f"❌ No chat coordinates for {agent_id}")
                 return False
 
             x, y = chat_coords
-            logger.info(
+            self.logger.info(
                 f"👆 Step 1: Clicking chat input for {agent_id} at {chat_coords}")
 
             # Click chat input - wait for app to respond to interaction
@@ -79,38 +80,38 @@ class SoftOnboardingService:
             self.pyautogui.click()
             time.sleep(1.0)  # Wait for app to respond to click interaction
 
-            logger.info(f"✅ Chat input clicked for {agent_id}")
+            self.logger.info(f"✅ Chat input clicked for {agent_id}")
             return True
         except Exception as e:
-            logger.error(f"❌ Failed to click chat input: {e}")
+            self.logger.error(f"❌ Failed to click chat input: {e}")
             return False
 
     def step_2_save_session(self) -> bool:
         """Step 2: Save session (Ctrl+Enter)."""
         if not PYAUTOGUI_AVAILABLE:
-            logger.warning("⚠️ PyAutoGUI not available - skipping step 2")
+            self.logger.warning("⚠️ PyAutoGUI not available - skipping step 2")
             return True  # Non-blocking
 
         try:
-            logger.info("💾 Step 2: Saving session (Ctrl+Enter)")
+            self.logger.info("💾 Step 2: Saving session (Ctrl+Enter)")
             self.pyautogui.hotkey("ctrl", "enter")
             time.sleep(0.8)  # Wait for session save operation
-            logger.info("✅ Session saved")
+            self.logger.info("✅ Session saved")
             return True
         except Exception as e:
-            logger.error(f"❌ Failed to save session: {e}")
+            self.logger.error(f"❌ Failed to save session: {e}")
             return False
 
     def step_3_send_cleanup_prompt(self, agent_id: str, custom_cleanup_message: str | None = None) -> bool:
         """Step 3: Send cleanup prompt (passdown message)."""
         if not PYAUTOGUI_AVAILABLE:
-            logger.warning(
+            self.logger.warning(
                 "⚠️ PyAutoGUI not available - using messaging system for step 3")
             return self._send_cleanup_via_messaging(agent_id, custom_cleanup_message)
 
         try:
             cleanup_message = custom_cleanup_message or self._get_default_cleanup_message()
-            logger.info(f"📝 Step 3: Sending cleanup prompt to {agent_id}")
+            self.logger.info(f"📝 Step 3: Sending cleanup prompt to {agent_id}")
 
             # Clear input first
             self.pyautogui.hotkey("ctrl", "a")
@@ -125,42 +126,42 @@ class SoftOnboardingService:
             self.pyautogui.press("enter")
             time.sleep(1.0)
 
-            logger.info(f"✅ Cleanup prompt sent to {agent_id}")
+            self.logger.info(f"✅ Cleanup prompt sent to {agent_id}")
             return True
         except Exception as e:
-            logger.error(f"❌ Failed to send cleanup prompt: {e}")
+            self.logger.error(f"❌ Failed to send cleanup prompt: {e}")
             return False
 
     def step_4_open_new_tab(self) -> bool:
         """Step 4: Open new tab (Ctrl+T)."""
         if not PYAUTOGUI_AVAILABLE:
-            logger.warning("⚠️ PyAutoGUI not available - skipping step 4")
+            self.logger.warning("⚠️ PyAutoGUI not available - skipping step 4")
             return True  # Non-blocking
 
         try:
-            logger.info("🆕 Step 4: Opening new tab (Ctrl+T)")
+            self.logger.info("🆕 Step 4: Opening new tab (Ctrl+T)")
             self.pyautogui.hotkey("ctrl", "t")
             time.sleep(2.0)  # Wait for tab to initialize and stabilize
-            logger.info("✅ New tab opened")
+            self.logger.info("✅ New tab opened")
             return True
         except Exception as e:
-            logger.error(f"❌ Failed to open new tab: {e}")
+            self.logger.error(f"❌ Failed to open new tab: {e}")
             return False
 
     def step_5_navigate_to_onboarding(self, agent_id: str) -> bool:
         """Step 5: Navigate to onboarding coordinates."""
         if not PYAUTOGUI_AVAILABLE:
-            logger.warning("⚠️ PyAutoGUI not available - skipping step 5")
+            self.logger.warning("⚠️ PyAutoGUI not available - skipping step 5")
             return True  # Non-blocking
 
         try:
             _, onboarding_coords = self._load_agent_coordinates(agent_id)
             if not onboarding_coords:
-                logger.error(f"❌ No onboarding coordinates for {agent_id}")
+                self.logger.error(f"❌ No onboarding coordinates for {agent_id}")
                 return False
 
             x, y = onboarding_coords
-            logger.info(
+            self.logger.info(
                 f"🎯 Step 5: Navigating to onboarding coords for {agent_id} at {onboarding_coords}")
 
             # Click onboarding input - wait for app to respond to interaction
@@ -168,21 +169,21 @@ class SoftOnboardingService:
             self.pyautogui.click()
             time.sleep(1.0)  # Wait for app to respond to click interaction
 
-            logger.info(f"✅ Navigated to onboarding input for {agent_id}")
+            self.logger.info(f"✅ Navigated to onboarding input for {agent_id}")
             return True
         except Exception as e:
-            logger.error(f"❌ Failed to navigate to onboarding: {e}")
+            self.logger.error(f"❌ Failed to navigate to onboarding: {e}")
             return False
 
     def step_6_paste_onboarding_message(self, agent_id: str, message: str) -> bool:
         """Step 6: Paste and send onboarding message."""
         if not PYAUTOGUI_AVAILABLE:
-            logger.warning(
+            self.logger.warning(
                 "⚠️ PyAutoGUI not available - using messaging system for step 6")
             return self._send_onboarding_via_messaging(agent_id, message)
 
         try:
-            logger.info(f"📝 Step 6: Pasting onboarding message for {agent_id}")
+            self.logger.info(f"📝 Step 6: Pasting onboarding message for {agent_id}")
 
             # Clear input first
             self.pyautogui.hotkey("ctrl", "a")
@@ -197,10 +198,10 @@ class SoftOnboardingService:
             self.pyautogui.press("enter")
             time.sleep(0.8)  # Wait for message send
 
-            logger.info(f"✅ Onboarding message sent to {agent_id}")
+            self.logger.info(f"✅ Onboarding message sent to {agent_id}")
             return True
         except Exception as e:
-            logger.error(f"❌ Failed to paste onboarding message: {e}")
+            self.logger.error(f"❌ Failed to paste onboarding message: {e}")
             return False
 
     def _get_default_cleanup_message(self) -> str:
@@ -221,38 +222,80 @@ Press Enter when complete to proceed to next session onboarding!
 🐝 WE. ARE. SWARM. ⚡"""
 
     def _send_cleanup_via_messaging(self, agent_id: str, custom_message: str | None) -> bool:
-        """Fallback: Send cleanup via messaging system."""
+        """Fallback: Send cleanup via messaging system (S2A template, no-ack)."""
         try:
-            from ..core.messaging_core import send_message, UnifiedMessage, UnifiedMessageType, UnifiedMessagePriority
+            from ..services.messaging_infrastructure import MessageCoordinator
+            from ..core.messaging_models_core import MessageCategory, UnifiedMessageTag
+            from ..core.messaging_core import UnifiedMessagePriority, UnifiedMessage, UnifiedMessageType
+            from ..core.messaging_templates import render_message
 
             message = custom_message or self._get_default_cleanup_message()
             msg = UnifiedMessage(
-                sender="System",
-                recipient=agent_id,
                 content=message,
-                message_type=UnifiedMessageType.TEXT,
-                priority=UnifiedMessagePriority.NORMAL
+                sender="SYSTEM",
+                recipient=agent_id,
+                message_type=UnifiedMessageType.SYSTEM_TO_AGENT,
+                priority=UnifiedMessagePriority.REGULAR,
+                tags=[UnifiedMessageTag.WRAPUP],
+                category=MessageCategory.S2A,
             )
-            return send_message(msg)
+
+            rendered = render_message(
+                msg,
+                template_key="PASSDOWN",
+                context="Passdown/Cleanup",
+                actions=message,
+                fallback="If blocked, escalate to Captain with blockers and partial status.",
+            )
+
+            return MessageCoordinator.send_to_agent(
+                agent=agent_id,
+                message=rendered,
+                priority=UnifiedMessagePriority.REGULAR,
+                use_pyautogui=True,
+                sender="SYSTEM",
+                message_category=MessageCategory.S2A,
+            )
         except Exception as e:
-            logger.error(f"❌ Failed to send cleanup via messaging: {e}")
+            self.logger.error(f"❌ Failed to send cleanup via messaging: {e}")
             return False
 
     def _send_onboarding_via_messaging(self, agent_id: str, message: str) -> bool:
-        """Fallback: Send onboarding via messaging system."""
+        """Fallback: Send onboarding via messaging system (S2A template, no-ack)."""
         try:
-            from ..core.messaging_core import send_message, UnifiedMessage, UnifiedMessageType, UnifiedMessagePriority
+            from ..services.messaging_infrastructure import MessageCoordinator
+            from ..core.messaging_models_core import MessageCategory, UnifiedMessageTag
+            from ..core.messaging_core import UnifiedMessagePriority, UnifiedMessage, UnifiedMessageType
+            from ..core.messaging_templates import render_message
 
             msg = UnifiedMessage(
-                sender="System",
-                recipient=agent_id,
                 content=message,
-                message_type=UnifiedMessageType.TEXT,
-                priority=UnifiedMessagePriority.NORMAL
+                sender="SYSTEM",
+                recipient=agent_id,
+                message_type=UnifiedMessageType.ONBOARDING,
+                priority=UnifiedMessagePriority.REGULAR,
+                tags=[UnifiedMessageTag.ONBOARDING],
+                category=MessageCategory.S2A,
             )
-            return send_message(msg)
+
+            rendered = render_message(
+                msg,
+                template_key="HARD_ONBOARDING",
+                context="Onboarding",
+                actions=message,
+                fallback="If blocked, escalate to Captain.",
+            )
+
+            return MessageCoordinator.send_to_agent(
+                agent=agent_id,
+                message=rendered,
+                priority=UnifiedMessagePriority.REGULAR,
+                use_pyautogui=True,
+                sender="SYSTEM",
+                message_category=MessageCategory.S2A,
+            )
         except Exception as e:
-            logger.error(f"❌ Failed to send onboarding via messaging: {e}")
+            self.logger.error(f"❌ Failed to send onboarding via messaging: {e}")
             return False
 
     def onboard_agent(self, agent_id: str, message: str, **kwargs) -> bool:
@@ -273,7 +316,7 @@ Press Enter when complete to proceed to next session onboarding!
             args = Args(agent_id, message, **kwargs)
             return handler.handle(args)
         except Exception as e:
-            logger.error(f"Soft onboarding failed: {e}")
+            self.logger.error(f"Soft onboarding failed: {e}")
             return False
 
     def execute_soft_onboarding(
@@ -286,43 +329,43 @@ Press Enter when complete to proceed to next session onboarding!
         This method should NOT acquire the lock itself to avoid double-locking.
         """
         try:
-            logger.info(
+            self.logger.info(
                 f"🚀 Starting 6-step soft onboarding for {agent_id}")
 
             # Step 1: Click chat input
             if not self.step_1_click_chat_input(agent_id):
-                logger.error("❌ Step 1 failed: Click chat input")
+                self.logger.error("❌ Step 1 failed: Click chat input")
                 return False
 
             # Step 2: Save session
             if not self.step_2_save_session():
-                logger.error("❌ Step 2 failed: Save session")
+                self.logger.error("❌ Step 2 failed: Save session")
                 return False
 
             # Step 3: Send cleanup prompt
             if not self.step_3_send_cleanup_prompt(agent_id, custom_cleanup_message):
-                logger.error("❌ Step 3 failed: Send cleanup prompt")
+                self.logger.error("❌ Step 3 failed: Send cleanup prompt")
                 return False
 
             # Step 4: Open new tab
             if not self.step_4_open_new_tab():
-                logger.error("❌ Step 4 failed: Open new tab")
+                self.logger.error("❌ Step 4 failed: Open new tab")
                 return False
 
             # Step 5: Navigate to onboarding
             if not self.step_5_navigate_to_onboarding(agent_id):
-                logger.error("❌ Step 5 failed: Navigate to onboarding")
+                self.logger.error("❌ Step 5 failed: Navigate to onboarding")
                 return False
 
             # Step 6: Paste onboarding message
             if not self.step_6_paste_onboarding_message(agent_id, onboarding_message):
-                logger.error("❌ Step 6 failed: Paste onboarding message")
+                self.logger.error("❌ Step 6 failed: Paste onboarding message")
                 return False
 
-            logger.info(f"🎉 Soft onboarding complete for {agent_id}!")
+            self.logger.info(f"🎉 Soft onboarding complete for {agent_id}!")
             return True
         except Exception as e:
-            logger.error(f"Soft onboarding execution failed: {e}")
+            self.logger.error(f"Soft onboarding execution failed: {e}")
             return False
 
 

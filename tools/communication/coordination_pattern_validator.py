@@ -141,16 +141,11 @@ class CoordinationPatternValidator:
 
     def print_report(self) -> None:
         """Print validation report."""
-        if self.errors:
-            print("❌ VALIDATION ERRORS:")
-            for error in self.errors:
-                print(f"  • {error}")
-        if self.warnings:
-            print("⚠️  WARNINGS:")
-            for warning in self.warnings:
-                print(f"  • {warning}")
-        if not self.errors and not self.warnings:
-            print("✅ All validations passed!")
+        from src.core.utils.validation_utils import print_validation_report
+        print_validation_report(
+            errors=self.errors,
+            warnings=self.warnings,
+        )
 
 
 def main() -> int:

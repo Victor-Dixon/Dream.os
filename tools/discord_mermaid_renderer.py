@@ -12,11 +12,13 @@ Date: 2025-01-27
 
 import os
 import re
-import requests
 import base64
 from pathlib import Path
 from typing import List, Tuple, Optional
+
+import requests
 from dotenv import load_dotenv
+from src.core.config.timeout_constants import TimeoutConstants
 
 load_dotenv()
 
@@ -65,25 +67,23 @@ class DiscordMermaidRenderer:
             
             # Use mermaid.ink API
             image_url = f"{self.mermaid_api}/{encoded}"
-            
+
             # Verify URL works
             response = requests.head(image_url, timeout=TimeoutConstants.HTTP_QUICK)
             if response.status_code == 200:
                 return image_url
-            
-            # Fallback to kroki.io (correct API format)
-            import urllib.parse
-from src.core.config.timeout_constants import TimeoutConstants
+
+            # Fallback to kroki.io (base64 payload)
             kroki_diagram = base64.urlsafe_b64encode(
-                diagram_code.encode('utf-8')
-            ).decode('utf-8').rstrip('=')
+                diagram_code.encode("utf-8")
+            ).decode("utf-8").rstrip("=")
             kroki_url = f"{self.kroki_api}/{kroki_diagram}"
-            
+
             kroki_response = requests.get(kroki_url, timeout=TimeoutConstants.HTTP_SHORT)
             if kroki_response.status_code == 200:
                 # kroki returns PNG image directly
                 return f"data:image/png;base64,{base64.b64encode(kroki_response.content).decode()}"
-            
+
             return None
         except Exception as e:
             print(f"⚠️ Failed to render Mermaid: {e}")

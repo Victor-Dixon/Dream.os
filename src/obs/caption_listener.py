@@ -112,8 +112,9 @@ class OBSCaptionListener:
         try:
             while self.running:
                 try:
+                    from src.core.config.timeout_constants import TimeoutConstants
                     message = await asyncio.wait_for(
-                        self.websocket.recv(), timeout=1.0
+                        self.websocket.recv(), timeout=TimeoutConstants.HTTP_QUICK
                     )
                     await self._process_message(message)
 

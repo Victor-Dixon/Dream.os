@@ -3,6 +3,8 @@
 Processing Coordinator - KISS Compliant
 ======================================
 
+<!-- SSOT Domain: analytics -->
+
 Simple processing coordination.
 
 Author: Agent-5 - Business Intelligence Specialist

@@ -4,6 +4,7 @@ Coordinate Handler - V2 Compliance Module
 
 Handles agent coordinate management and validation.
 Extracted from messaging_cli_handlers_orchestrator.py for V2 compliance.
+Migrated to BaseService for consolidated initialization and error handling.
 
 Author: Agent-7 - Web Development Specialist
 License: MIT
@@ -11,10 +12,11 @@ License: MIT
 import logging
 import time
 from typing import Any
+from ...core.base.base_service import BaseService
 from ...core.coordinate_loader import get_coordinate_loader
 
 
-class CoordinateHandler:
+class CoordinateHandler(BaseService):
     """Handler for agent coordinate management and validation."""
 
     def can_handle(self, args) ->bool:
@@ -27,7 +29,7 @@ class CoordinateHandler:
 
     def __init__(self):
         """Initialize coordinate handler."""
-        self.logger = logging.getLogger(__name__)
+        super().__init__("CoordinateHandler")
         self.coordinates_cache: dict[str, list[int]] = {}
         self.last_coordinate_load: float | None = None
         self.cache_ttl_seconds = 300

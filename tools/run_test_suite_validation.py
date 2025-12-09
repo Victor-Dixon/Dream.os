@@ -5,6 +5,8 @@ Test Suite Validation Tool
 
 Runs test suite and captures results for file deletion infrastructure support.
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-7 (Web Development Specialist)
 """
 
@@ -14,7 +16,10 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-def run_test_suite(timeout=600):
+def run_test_suite(timeout=None):
+    from src.core.config.timeout_constants import TimeoutConstants
+    if timeout is None:
+        timeout = TimeoutConstants.HTTP_EXTENDED
     """Run test suite and capture results."""
     print("=" * 60)
     print("🧪 Running Test Suite Validation")

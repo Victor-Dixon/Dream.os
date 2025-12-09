@@ -8,16 +8,18 @@ Handles contract-related commands for messaging CLI.
 Extracted from messaging_cli_handlers.py for V2 compliance.
 
 V2 Compliance: < 300 lines, single responsibility.
+Migrated to BaseService for consolidated initialization and error handling.
 
 Author: Agent-4 - Strategic Oversight & Emergency Intervention Manager
 License: MIT
 """
 from typing import Any
+from ...core.base.base_service import BaseService
 from ..contract_system.manager import ContractManager
 from ..contract_system.storage import ContractStorage
 
 
-class ContractHandler:
+class ContractHandler(BaseService):
     """Handles contract-related commands for messaging CLI.
 
     Manages contract operations like task assignment and status checking.
@@ -35,6 +37,7 @@ class ContractHandler:
 
     def __init__(self):
         """Initialize contract handler."""
+        super().__init__("ContractHandler")
         try:
             from ..contract_system.manager import ContractManager
             self.manager = ContractManager()

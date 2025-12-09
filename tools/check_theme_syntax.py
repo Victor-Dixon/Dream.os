@@ -6,6 +6,8 @@ Check Theme Syntax - PHP and CSS Validation
 Checks theme files for syntax errors that prevent WordPress detection.
 Validates style.css header and functions.php syntax.
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-7 (Web Development Specialist)
 """
 

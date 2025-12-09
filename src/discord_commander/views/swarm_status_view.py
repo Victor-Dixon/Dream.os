@@ -36,7 +36,8 @@ class SwarmStatusGUIView(discord.ui.View):
     """Status monitoring view."""
 
     def __init__(self, messaging_service: ConsolidatedMessagingService):
-        super().__init__(timeout=300)
+        from src.core.config.timeout_constants import TimeoutConstants
+        super().__init__(timeout=TimeoutConstants.HTTP_EXTENDED)
         self.messaging_service = messaging_service
         self.status_reader = StatusReader()
 

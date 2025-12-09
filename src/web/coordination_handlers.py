@@ -5,10 +5,16 @@ Coordination Handlers
 Handler classes for coordination engine operations.
 Wires coordination engines to web layer.
 
+<!-- SSOT Domain: web -->
+
 V2 Compliance: < 300 lines, handler pattern.
+Consolidated: Uses BaseHandler (33% code reduction).
 """
 
 from flask import jsonify, request
+
+from src.core.base.availability_mixin import AvailabilityMixin
+from src.core.base.base_handler import BaseHandler
 
 try:
     from src.core.coordination.swarm.engines.task_coordination_engine import TaskCoordinationEngine
@@ -17,11 +23,14 @@ except ImportError:
     TASK_COORDINATION_AVAILABLE = False
 
 
-class CoordinationHandlers:
+class CoordinationHandlers(BaseHandler, AvailabilityMixin):
     """Handler class for coordination engine operations."""
 
-    @staticmethod
-    def handle_get_task_coordination_status(request) -> tuple:
+    def __init__(self):
+        """Initialize coordination handlers."""
+        super().__init__("CoordinationHandlers")
+
+    def handle_get_task_coordination_status(self, request) -> tuple:
         """
         Handle request to get task coordination status.
 
@@ -31,20 +40,22 @@ class CoordinationHandlers:
         Returns:
             Tuple of (response_data, status_code)
         """
-        if not TASK_COORDINATION_AVAILABLE:
-            return jsonify({"success": False, "error": "TaskCoordinationEngine not available"}), 503
+        availability_check = self.check_availability(TASK_COORDINATION_AVAILABLE, "TaskCoordinationEngine")
+        if availability_check:
+            return availability_check
 
         try:
             engine = TaskCoordinationEngine()
             status = engine.get_status()
 
-            return jsonify({"success": True, "data": status}), 200
+            response_data = self.format_response(status, success=True)
+            return jsonify(response_data), 200
 
         except Exception as e:
-            return jsonify({"success": False, "error": str(e)}), 500
+            error_response = self.handle_error(e, "handle_get_task_coordination_status")
+            return jsonify(error_response), 500
 
-    @staticmethod
-    def handle_execute_task_coordination(request) -> tuple:
+    def handle_execute_task_coordination(self, request) -> tuple:
         """
         Handle request to execute task coordination.
 
@@ -54,26 +65,29 @@ class CoordinationHandlers:
         Returns:
             Tuple of (response_data, status_code)
         """
-        if not TASK_COORDINATION_AVAILABLE:
-            return jsonify({"success": False, "error": "TaskCoordinationEngine not available"}), 503
+        availability_check = self.check_availability(TASK_COORDINATION_AVAILABLE, "TaskCoordinationEngine")
+        if availability_check:
+            return availability_check
 
         try:
             data = request.get_json() or {}
             task_data = data.get("task_data")
 
             if not task_data:
-                return jsonify({"error": "task_data is required"}), 400
+                error_response = self.format_response(None, success=False, error="task_data is required")
+                return jsonify(error_response), 400
 
             engine = TaskCoordinationEngine()
             result = engine.coordinate_task(task_data)
 
-            return jsonify({"success": True, "data": result}), 200
+            response_data = self.format_response(result, success=True)
+            return jsonify(response_data), 200
 
         except Exception as e:
-            return jsonify({"success": False, "error": str(e)}), 500
+            error_response = self.handle_error(e, "handle_execute_task_coordination")
+            return jsonify(error_response), 500
 
-    @staticmethod
-    def handle_coordinate_task(request) -> tuple:
+    def handle_coordinate_task(self, request) -> tuple:
         """
         Handle request to coordinate a specific task.
         
@@ -83,8 +97,9 @@ class CoordinationHandlers:
         Returns:
             Tuple of (response_data, status_code)
         """
-        if not TASK_COORDINATION_AVAILABLE:
-            return jsonify({"success": False, "error": "TaskCoordinationEngine not available"}), 503
+        availability_check = self.check_availability(TASK_COORDINATION_AVAILABLE, "TaskCoordinationEngine")
+        if availability_check:
+            return availability_check
 
         try:
             data = request.get_json() or {}
@@ -92,18 +107,20 @@ class CoordinationHandlers:
             coordination_data = data.get("coordination_data", {})
             
             if not task_id:
-                return jsonify({"error": "task_id is required"}), 400
+                error_response = self.format_response(None, success=False, error="task_id is required")
+                return jsonify(error_response), 400
             
             engine = TaskCoordinationEngine()
             result = engine.coordinate_task(task_id, coordination_data)
             
-            return jsonify({"success": True, "data": result}), 200
+            response_data = self.format_response(result, success=True)
+            return jsonify(response_data), 200
             
         except Exception as e:
-            return jsonify({"success": False, "error": str(e)}), 500
+            error_response = self.handle_error(e, "handle_coordinate_task")
+            return jsonify(error_response), 500
 
-    @staticmethod
-    def handle_resolve_coordination(request) -> tuple:
+    def handle_resolve_coordination(self, request) -> tuple:
         """
         Handle request to resolve coordination conflicts.
         
@@ -113,8 +130,9 @@ class CoordinationHandlers:
         Returns:
             Tuple of (response_data, status_code)
         """
-        if not TASK_COORDINATION_AVAILABLE:
-            return jsonify({"success": False, "error": "TaskCoordinationEngine not available"}), 503
+        availability_check = self.check_availability(TASK_COORDINATION_AVAILABLE, "TaskCoordinationEngine")
+        if availability_check:
+            return availability_check
 
         try:
             data = request.get_json() or {}
@@ -122,15 +140,18 @@ class CoordinationHandlers:
             resolution = data.get("resolution", {})
             
             if not conflict_id:
-                return jsonify({"error": "conflict_id is required"}), 400
+                error_response = self.format_response(None, success=False, error="conflict_id is required")
+                return jsonify(error_response), 400
             
             engine = TaskCoordinationEngine()
             result = engine.resolve_conflict(conflict_id, resolution)
             
-            return jsonify({"success": True, "data": result}), 200
+            response_data = self.format_response(result, success=True)
+            return jsonify(response_data), 200
             
         except Exception as e:
-            return jsonify({"success": False, "error": str(e)}), 500
+            error_response = self.handle_error(e, "handle_resolve_coordination")
+            return jsonify(error_response), 500
 
 
 

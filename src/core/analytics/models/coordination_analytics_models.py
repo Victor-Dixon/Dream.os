@@ -3,6 +3,8 @@
 Coordination Analytics Models - V2 Compliance Module
 ===================================================
 
+<!-- SSOT Domain: analytics -->
+
 Data models for coordination analytics operations.
 Extracted from coordination_analytics_orchestrator.py for V2 compliance.
 
@@ -10,13 +12,13 @@ Author: Agent-7 - Web Development Specialist
 License: MIT
 """
 
-from dataclasses import asdict, dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
 from typing import Any
-from dataclasses import dataclass, field
 
 from src.core.utils.validation_utils import validate_positive, validate_range
+from src.core.utils.serialization_utils import to_dict
 
 
 
@@ -58,8 +60,9 @@ class CoordinationAnalyticsData:
     recommendations: list[str]
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary."""
-        return asdict(self)
+        """Convert to dictionary using SSOT utility."""
+        from src.core.utils.serialization_utils import to_dict
+        return to_dict(self)
 
     def get_summary(self) -> dict[str, Any]:
         """Get summary of key metrics."""
@@ -85,15 +88,13 @@ class AnalyticsReport:
     summary: dict[str, Any]
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary."""
-        return {
-            "report_id": self.report_id,
-            "generated_at": self.generated_at.isoformat(),
-            "data": self.data.to_dict(),
-            "trends": self.trends,
-            "recommendations": self.recommendations,
-            "summary": self.summary,
-        }
+        """Convert to dictionary using SSOT utility."""
+        from src.core.utils.serialization_utils import to_dict
+        result = to_dict(self)
+        # Ensure nested data is serialized
+        if "data" in result and hasattr(self.data, 'to_dict'):
+            result["data"] = self.data.to_dict()
+        return result
 
 
 @dataclass

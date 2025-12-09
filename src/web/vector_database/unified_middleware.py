@@ -5,6 +5,8 @@ Unified Vector Database Middleware
 Consolidated middleware decorators for vector database operations.
 Combines error handling, request processing, response handling, and validation.
 
+<!-- SSOT Domain: web -->
+
 V2 Compliance: <400 lines, focused responsibility
 
 Consolidated from:

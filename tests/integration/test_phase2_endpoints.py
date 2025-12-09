@@ -10,11 +10,21 @@ Target: ≥85% coverage, comprehensive endpoint testing.
 import pytest
 import sys
 from unittest.mock import Mock, patch, MagicMock
+from pathlib import Path
+import importlib.util
 
-# Mock discord imports before importing web modules
-sys.modules['discord'] = MagicMock()
-sys.modules['discord.ext'] = MagicMock()
-sys.modules['discord.ext.commands'] = MagicMock()
+# Add project root to path
+_project_root = Path(__file__).parent.parent.parent
+if str(_project_root) not in sys.path:
+    sys.path.insert(0, str(_project_root))
+
+# Setup Discord mocks (SSOT)
+_discord_utils_path = _project_root / "tests" / "utils" / "discord_test_utils.py"
+spec = importlib.util.spec_from_file_location("discord_test_utils", _discord_utils_path)
+discord_test_utils = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(discord_test_utils)
+setup_discord_mocks = discord_test_utils.setup_discord_mocks
+setup_discord_mocks()
 
 from src.web import create_app
 

@@ -5,6 +5,8 @@ Unified Architecture Core - KISS Principle Implementation
 Single comprehensive architecture system that consolidates all fragmented
 architecture patterns into a unified, simple, and maintainable design.
 
+SSOT Domain: architecture
+
 Follows KISS principle: Keep It Simple, Stupid.
 V2 Compliance: < 200 lines, single responsibility.
 

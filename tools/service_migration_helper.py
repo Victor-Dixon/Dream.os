@@ -9,6 +9,8 @@ Tool I wished I had during service patterns analysis:
 - Verify migration correctness
 - Check for common patterns
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-1 (Integration & Core Systems Specialist)
 Date: 2025-12-05
 License: MIT

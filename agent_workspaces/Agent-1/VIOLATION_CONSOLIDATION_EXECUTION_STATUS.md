@@ -53,9 +53,9 @@
    - `tools/autonomous/task_models.py:18` → Already renamed to `TaskOpportunity` ✅
    - `tools/autonomous_task_engine.py:21` → Already imports `TaskOpportunity` ✅
    - **Status**: Already consolidated and using correct name
-5. ✅ **Markov Optimizer**: `tools/markov_task_optimizer.py`
-   - **Status**: File is empty, no Task class to rename
-   - **Action**: Verified - no action needed
+5. ✅ **Markov Optimizer**: `tools/markov_task_optimizer.py:19`
+   - **Action**: ✅ Already renamed to `OptimizationTask`
+   - **Status**: Already using correct domain-specific name
 6. ✅ **Workflow Tools**: `tools_v2/categories/autonomous_workflow_tools.py:32`
    - Already renamed to `WorkflowAssignmentTask` ✅
    - **Status**: Already using correct domain-specific name

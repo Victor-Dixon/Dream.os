@@ -7,11 +7,22 @@ Target: ≥85% coverage, 15+ test methods.
 import pytest
 from unittest.mock import Mock, patch, MagicMock, AsyncMock
 import sys
+from pathlib import Path
+import importlib.util
 
-# Mock discord imports
-sys.modules['discord'] = MagicMock()
-sys.modules['discord.ext'] = MagicMock()
-sys.modules['discord.ext.commands'] = MagicMock()
+# Add project root to path
+_project_root = Path(__file__).parent.parent.parent
+if str(_project_root) not in sys.path:
+    sys.path.insert(0, str(_project_root))
+
+# Setup Discord mocks (SSOT)
+_discord_utils_path = _project_root / "tests" / "utils" / "discord_test_utils.py"
+spec = importlib.util.spec_from_file_location("discord_test_utils", _discord_utils_path)
+discord_test_utils = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(discord_test_utils)
+setup_discord_mocks = discord_test_utils.setup_discord_mocks
+create_mock_messaging_service = discord_test_utils.create_mock_messaging_service
+setup_discord_mocks()
 
 from src.discord_commander.discord_gui_controller import DiscordGUIController
 from src.services.unified_messaging_service import UnifiedMessagingService
@@ -23,9 +34,10 @@ class TestDiscordGUIController:
     @pytest.fixture
     def mock_messaging_service(self):
         """Create mock messaging service."""
-        service = MagicMock(spec=UnifiedMessagingService)
-        service.send_message = MagicMock(return_value={"success": True})
-        return service
+        return create_mock_messaging_service(
+            service_class=UnifiedMessagingService,
+            send_message_return={"success": True}
+        )
 
     @pytest.fixture
     def controller(self, mock_messaging_service):

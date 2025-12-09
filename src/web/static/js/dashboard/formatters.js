@@ -1,11 +1,23 @@
 /**
  * Dashboard Formatters Module - V2 Compliant
  * Number and data formatting utilities for dashboard components
+ * NOTE: formatCurrency and formatDuration delegate to SSOT utilities (DataUtils, TimeUtils)
+ * 
+ * @SSOT Domain: dashboard-formatting
+ * @SSOT Location: dashboard/formatters.js
+ * @SSOT Scope: formatNumber, formatPercentage, formatFileSize (delegates formatCurrency/formatDuration to SSOT)
  *
  * @author Agent-7 - Web Development Specialist
- * @version 1.0.0 - V2 COMPLIANCE EXTRACTION
+ * @version 1.1.0 - CONSOLIDATED (using SSOT utilities)
  * @license MIT
  */
+
+import { DataUtils } from '../../services/utilities/data-utils.js';
+import { TimeUtils } from '../../utilities/time-utils.js';
+
+// SSOT instances for delegation
+const dataUtils = new DataUtils();
+const timeUtils = new TimeUtils();
 
 export const DashboardFormatters = {
     /**
@@ -39,17 +51,10 @@ export const DashboardFormatters = {
     },
 
     /**
-     * Format currency value
+     * Format currency value (delegates to DataUtils SSOT)
      */
     formatCurrency(amount, currency = 'USD') {
-        if (typeof amount !== 'number' || isNaN(amount)) {
-            return '$0.00';
-        }
-
-        return new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: currency
-        }).format(amount);
+        return dataUtils.formatCurrency(amount, currency);
     },
 
     /**
@@ -68,28 +73,14 @@ export const DashboardFormatters = {
     },
 
     /**
-     * Format duration in milliseconds
+     * Format duration in milliseconds (delegates to TimeUtils SSOT)
      */
     formatDuration(ms) {
         if (typeof ms !== 'number' || isNaN(ms)) {
             return '0ms';
         }
-
-        if (ms < 1000) {
-            return `${Math.round(ms)}ms`;
-        }
-
-        const seconds = Math.floor(ms / 1000);
-        const minutes = Math.floor(seconds / 60);
-        const hours = Math.floor(minutes / 60);
-
-        if (hours > 0) {
-            return `${hours}h ${minutes % 60}m`;
-        } else if (minutes > 0) {
-            return `${minutes}m ${seconds % 60}s`;
-        } else {
-            return `${seconds}s`;
-        }
+        // Use TimeUtils SSOT for duration formatting
+        return timeUtils.formatDuration(ms);
     }
 };
 

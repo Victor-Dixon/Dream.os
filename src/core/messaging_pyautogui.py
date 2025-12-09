@@ -626,18 +626,19 @@ class PyAutoGUIMessagingDelivery:
                     pass  # Non-critical check
 
             # CRITICAL: Send message (use Ctrl+Enter for stalled flag, regular enter for all others)
-            # Check metadata for stalled flag
+            send_mode = None
             is_stalled = False
             if isinstance(message.metadata, dict):
+                send_mode = message.metadata.get("send_mode")
                 is_stalled = message.metadata.get("stalled", False)
             
-            logger.debug(f"📤 Sending message (stalled={is_stalled})")
-            # CRITICAL: Use Enter for normal messages, Ctrl+Enter ONLY for stalled agents
-            if is_stalled:
-                logger.debug("⚠️ Using Ctrl+Enter for stalled agent")
+            logger.debug(f"📤 Sending message (stalled={is_stalled}, send_mode={send_mode})")
+            # Priority: explicit send_mode -> stalled flag -> default enter
+            if send_mode == "ctrl_enter" or (send_mode is None and is_stalled):
+                logger.debug("⚠️ Using Ctrl+Enter send")
                 self.pyautogui.hotkey("ctrl", "enter")
             else:
-                logger.debug("✅ Using Enter for normal message")
+                logger.debug("✅ Using Enter send")
                 self.pyautogui.press("enter")
             time.sleep(1.0)  # Wait for message to be sent
             

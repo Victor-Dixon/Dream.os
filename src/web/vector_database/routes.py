@@ -3,6 +3,9 @@ Vector Database Routes
 =====================
 
 Clean route definitions for vector database operations.
+
+<!-- SSOT Domain: web -->
+
 V2 Compliance: < 300 lines, single responsibility, route definitions.
 
 Author: Agent-3 - Infrastructure & DevOps Specialist

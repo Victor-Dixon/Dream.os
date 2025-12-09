@@ -13,6 +13,8 @@ import subprocess
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
+from src.core.config.timeout_constants import TimeoutConstants
+
 from tools.repo_safe_merge import SafeRepoMerge
 
 # Import GitHub Bypass System (Local-First Architecture)
@@ -144,7 +146,7 @@ def execute_case_variation_merge(source, target, description):
             ],
             capture_output=True,
             text=True,
-            timeout=600,
+            timeout=TimeoutConstants.HTTP_EXTENDED,
             cwd=Path(__file__).parent.parent
         )
         

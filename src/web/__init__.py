@@ -36,8 +36,11 @@ from src.web.pipeline_routes import pipeline_bp
 from src.web.messaging_routes import messaging_bp
 from src.web.vector_database.routes import vector_db_bp
 from src.web.vector_database.message_routes import message_bp
-from src.web.pipeline_routes import pipeline_bp
-from src.web.messaging_routes import messaging_bp
+from src.web.discord_routes import discord_bp
+from src.web.ai_training_routes import ai_training_bp
+from src.web.architecture_routes import architecture_bp
+from src.web.validation_routes import validation_bp
+from src.web.analysis_routes import analysis_bp
 
 
 def create_app() -> Flask:
@@ -75,6 +78,11 @@ def create_app() -> Flask:
     app.register_blueprint(messaging_bp)
     app.register_blueprint(vector_db_bp)
     app.register_blueprint(message_bp)
+    app.register_blueprint(discord_bp)
+    app.register_blueprint(ai_training_bp)
+    app.register_blueprint(architecture_bp)
+    app.register_blueprint(validation_bp)
+    app.register_blueprint(analysis_bp)
 
     return app
 
@@ -111,3 +119,8 @@ def register_all_blueprints(app: Flask) -> None:
     app.register_blueprint(messaging_bp)
     app.register_blueprint(vector_db_bp)
     app.register_blueprint(message_bp)
+    app.register_blueprint(discord_bp)
+    app.register_blueprint(ai_training_bp)
+    app.register_blueprint(architecture_bp)
+    app.register_blueprint(validation_bp)
+    app.register_blueprint(analysis_bp)

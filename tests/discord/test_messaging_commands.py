@@ -9,11 +9,24 @@ import asyncio
 from unittest.mock import Mock, patch, MagicMock, AsyncMock
 from datetime import datetime
 import sys
+from pathlib import Path
+import importlib.util
 
-# Mock discord imports before importing messaging_commands
-sys.modules['discord'] = MagicMock()
-sys.modules['discord.ext'] = MagicMock()
-sys.modules['discord.ext.commands'] = MagicMock()
+# Add project root to path
+_project_root = Path(__file__).parent.parent.parent
+if str(_project_root) not in sys.path:
+    sys.path.insert(0, str(_project_root))
+
+# Setup Discord mocks (SSOT)
+_discord_utils_path = _project_root / "tests" / "utils" / "discord_test_utils.py"
+spec = importlib.util.spec_from_file_location("discord_test_utils", _discord_utils_path)
+discord_test_utils = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(discord_test_utils)
+setup_discord_mocks = discord_test_utils.setup_discord_mocks
+create_mock_discord_bot = discord_test_utils.create_mock_discord_bot
+create_mock_discord_context = discord_test_utils.create_mock_discord_context
+create_mock_messaging_controller = discord_test_utils.create_mock_messaging_controller
+setup_discord_mocks()
 
 from src.discord_commander.messaging_commands import MessagingCommands
 
@@ -24,28 +37,17 @@ class TestMessagingCommands:
     @pytest.fixture
     def mock_bot(self):
         """Create mock Discord bot."""
-        bot = MagicMock()
-        bot.user = MagicMock()
-        bot.user.display_name = "TestBot"
-        return bot
+        return create_mock_discord_bot(display_name="TestBot")
 
     @pytest.fixture
     def mock_messaging_controller(self):
         """Create mock messaging controller."""
-        controller = AsyncMock()
-        controller.send_agent_message = AsyncMock(return_value=True)
-        controller.create_agent_messaging_view = MagicMock(return_value=MagicMock())
-        controller.create_swarm_status_view = MagicMock(return_value=MagicMock())
-        return controller
+        return create_mock_messaging_controller()
 
     @pytest.fixture
     def mock_ctx(self):
         """Create mock Discord context."""
-        ctx = AsyncMock()
-        ctx.user = MagicMock()
-        ctx.user.display_name = "TestUser"
-        ctx.send = AsyncMock()
-        return ctx
+        return create_mock_discord_context(user_display_name="TestUser")
 
     @pytest.fixture
     def messaging_commands(self, mock_bot, mock_messaging_controller):

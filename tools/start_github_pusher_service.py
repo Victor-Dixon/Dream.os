@@ -5,6 +5,8 @@ GitHub Pusher Service - Background Service Launcher
 
 Starts the GitHub Pusher Agent as a background service with continuous mode.
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-3 (Infrastructure & DevOps Specialist)
 Date: 2025-01-27
 License: MIT

@@ -35,7 +35,8 @@ class UnstallAgentView(discord.ui.View):
     """View for selecting agent to unstall."""
 
     def __init__(self, messaging_service: ConsolidatedMessagingService):
-        super().__init__(timeout=300)
+        from src.core.config.timeout_constants import TimeoutConstants
+        super().__init__(timeout=TimeoutConstants.HTTP_EXTENDED)
         self.messaging_service = messaging_service
         self._setup_agent_selector()
 

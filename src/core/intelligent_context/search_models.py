@@ -83,10 +83,8 @@ class ContextRetrievalResult:
 
     def to_dict(self) -> dict[str, Any]:
         """Convert to dictionary using SSOT utility."""
-        return to_dict(self)
-            "agent_recommendations": self.agent_recommendations,
-            "risk_assessment": self.risk_assessment,
-            "success_prediction": self.success_prediction,
-            "execution_time_ms": self.execution_time_ms,
-            "error_message": self.error_message,
-        }
+        result = to_dict(self)
+        # Ensure nested search_results are serialized
+        if "search_results" in result:
+            result["search_results"] = [sr.to_dict() if hasattr(sr, 'to_dict') else sr for sr in self.search_results]
+        return result

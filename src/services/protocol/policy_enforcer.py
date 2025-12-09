@@ -3,24 +3,26 @@ Policy Enforcer - V2 Compliant Module
 =====================================
 
 Enforces policies on messages and routes.
+Migrated to BaseService for consolidated initialization and error handling.
 """
 
 import logging
 from typing import Any
 
+from ...core.base.base_service import BaseService
 from ...core.messaging_models_core import UnifiedMessage
 from ..messaging.policy_loader import load_template_policy
 
 logger = logging.getLogger(__name__)
 
 
-class PolicyEnforcer:
+class PolicyEnforcer(BaseService):
     """Enforces policies on messages and routes."""
 
     def __init__(self, policy_path: str | None = None):
         """Initialize policy enforcer."""
+        super().__init__("PolicyEnforcer")
         self.policy = load_template_policy(policy_path) if policy_path else load_template_policy()
-        self.logger = logging.getLogger(__name__)
 
     def enforce_policy(self, message: UnifiedMessage) -> bool:
         """

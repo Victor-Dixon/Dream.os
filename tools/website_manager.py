@@ -11,6 +11,8 @@ Single comprehensive tool for all website operations:
 - Multi-site support
 - Batch operations
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-7 (Web Development Specialist)
 V2 Compliant: <400 lines
 """

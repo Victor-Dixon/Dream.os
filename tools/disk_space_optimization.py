@@ -5,6 +5,8 @@ Disk Space Optimization Tool - Agent-1
 
 Implements space-saving measures based on analysis.
 
+<!-- SSOT Domain: infrastructure -->
+
 Author: Agent-1 (Integration & Core Systems Specialist)
 Date: 2025-01-27
 """

@@ -14,6 +14,28 @@ This document defines the SSOT (Single Source of Truth) domain boundaries for th
 
 ## 🗺️ SSOT Domains Identified
 
+### 10. **qa** Domain
+**Purpose**: Quality assurance, testing, knowledge management, and proof artifacts
+
+**SSOT Files**:
+- `src/quality/proof_ledger.py` - TDD proof artifact generation (PRIMARY SSOT)
+- `src/swarm_brain/agent_notes.py` - Agent personal note-taking system
+- `src/swarm_brain/knowledge_base.py` - Shared knowledge repository
+- `src/swarm_brain/swarm_memory.py` - Unified memory system
+
+**Boundaries**:
+- ✅ Contains quality assurance and testing utilities
+- ✅ Contains knowledge management systems
+- ✅ Does NOT contain business logic (that's in `services` domain)
+- ✅ Can import from `core` domain
+- ✅ Should NOT import from `services`, `web`, or `infrastructure` domains
+
+**Key SSOT**: `src/quality/proof_ledger.py` is the SSOT for TDD proof artifacts.
+
+---
+
+## 🗺️ SSOT Domains Identified (Original List)
+
 ### 1. **data** Domain
 **Purpose**: Data models, repositories, and data access layer
 
@@ -222,15 +244,22 @@ This document defines the SSOT (Single Source of Truth) domain boundaries for th
 ---
 
 ### 10. **qa** Domain
-**Purpose**: Quality assurance and testing domain
+**Purpose**: Quality assurance, testing, knowledge management, and proof artifacts
 
 **SSOT Files**:
-- `src/swarm_brain/agent_notes.py` - Agent notes (QA domain)
+- `src/quality/proof_ledger.py` - TDD proof artifact generation (PRIMARY SSOT)
+- `src/swarm_brain/agent_notes.py` - Agent personal note-taking system
+- `src/swarm_brain/knowledge_base.py` - Shared knowledge repository
+- `src/swarm_brain/swarm_memory.py` - Unified memory system
 
 **Boundaries**:
-- ✅ Contains QA and testing utilities
-- ✅ Can import from all domains
-- ✅ Provides QA services
+- ✅ Contains quality assurance and testing utilities
+- ✅ Contains knowledge management systems
+- ✅ Does NOT contain business logic (that's in `services` domain)
+- ✅ Can import from `core` domain
+- ✅ Should NOT import from `services`, `web`, or `infrastructure` domains
+
+**Key SSOT**: `src/quality/proof_ledger.py` is the SSOT for TDD proof artifacts.
 
 ---
 

@@ -20,6 +20,8 @@ try:
 except ImportError:
     _unified_config = None
 
+from ...core.config.timeout_constants import TimeoutConstants
+
 
 @dataclass
 class BrowserConfig:
@@ -30,7 +32,7 @@ class BrowserConfig:
     window_size: tuple[int, int] = (1920, 1080)
     timeout: float = 30.0
     implicit_wait: float = 10.0
-    page_load_timeout: float = 120.0
+    page_load_timeout: float = TimeoutConstants.HTTP_LONG
 
     def __post_init__(self):
         """Initialize from unified config if available."""
