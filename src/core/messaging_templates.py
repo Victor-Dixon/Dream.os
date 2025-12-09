@@ -85,6 +85,17 @@ def format_s2a_message(template_key: str, **kwargs: Any) -> str:
     """Public S2A formatter: always injects operating cycle."""
     template = _safe_get_s2a_template(template_key)
     kwargs.setdefault("operating_cycle", AGENT_OPERATING_CYCLE_TEXT)
+    kwargs.setdefault("cycle_checklist", CYCLE_CHECKLIST_TEXT)
+    kwargs.setdefault("discord_reporting", DISCORD_REPORTING_TEXT)
+    # Ensure all required base fields are present
+    kwargs.setdefault("priority", "normal")
+    kwargs.setdefault("message_id", "msg_unknown")
+    kwargs.setdefault("timestamp", "")
+    kwargs.setdefault("sender", "SYSTEM")
+    kwargs.setdefault("recipient", "Agent-1")
+    kwargs.setdefault("context", "")
+    kwargs.setdefault("actions", "")
+    kwargs.setdefault("fallback", "Escalate to Captain.")
     return template.format(**kwargs)
 
 
@@ -154,6 +165,8 @@ def render_message(
     
     # C2A template defaults
     base.setdefault("task", base.get("actions", "Complete assigned task"))
+    base.setdefault("deliverable", base.get("actions", "Complete assigned deliverable"))
+    base.setdefault("eta", "TBD")
     
     # A2A template defaults
     base.setdefault("ask", base.get("actions", "Coordination request"))

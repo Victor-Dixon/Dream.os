@@ -8,6 +8,16 @@ from . import trading_query_operations
 from . import trading_repository_impl
 from . import trading_write_operations
 
+# Export TradingRepositoryImpl if available
+try:
+    from .trading_repository_impl import TradingRepositoryImpl
+except ImportError:
+    TradingRepositoryImpl = None
+
+# Stub classes for missing implementations (to be implemented)
+PortfolioRepositoryImpl = None
+PositionRepositoryImpl = None
+
 __all__ = [
     'in_memory_query_operations',
     'in_memory_trading_repository',
@@ -15,4 +25,7 @@ __all__ = [
     'trading_query_operations',
     'trading_repository_impl',
     'trading_write_operations',
+    'TradingRepositoryImpl',
+    'PortfolioRepositoryImpl',
+    'PositionRepositoryImpl',
 ]

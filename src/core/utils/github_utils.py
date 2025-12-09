@@ -29,9 +29,9 @@ from src.core.config.timeout_constants import TimeoutConstants
 
 
 TOKEN_ENV_KEYS = (
+    "FG_PROFESSIONAL_DEVELOPMENT_ACCOUNT_GITHUB_TOKEN",
     "GITHUB_TOKEN",
     "GH_TOKEN",
-    "FG_PROFESSIONAL_DEVELOPMENT_ACCOUNT__GITHUB_TOKEN",
 )
 
 

@@ -54,6 +54,9 @@ from .config.config_dataclasses import (
 from .config.config_enums import ConfigEnvironment, ConfigSource, ReportFormat
 from .config.config_manager import UnifiedConfigManager
 
+# Backward compatibility alias
+TestConfig = TestConfiguration
+
 # Public API - Backwards compatible with original config_ssot.py
 __all__ = [
     # Enums
@@ -67,6 +70,7 @@ __all__ = [
     "ThresholdConfig",
     "FilePatternConfig",
     "TestConfiguration",
+    "TestConfig",  # Backward compatibility alias
     "ReportConfig",
     # Manager
     "UnifiedConfigManager",

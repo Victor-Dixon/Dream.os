@@ -233,8 +233,8 @@ class TwitchIRCBot(irc.bot.SingleServerIRCBot):
         # Store OAuth token BEFORE calling super().__init__()
         self.oauth_token = oauth_token
         
-        # Call parent WITHOUT password in connect_params (we'll set it after)
-        # The IRC library's connect_params mechanism seems to conflict with our setup
+        # Call parent WITHOUT password in connect_params
+        # We'll set password in _connect() to avoid "multiple values" error
         super().__init__(server_list, nickname, realname)
         
         self.channel = channel
@@ -242,6 +242,7 @@ class TwitchIRCBot(irc.bot.SingleServerIRCBot):
         self.bridge_instance = bridge_instance
         
         # Set password on connection after parent __init__ creates it
+        # This will be used in _connect() when handshake begins
         if self.oauth_token and hasattr(self, 'connection') and self.connection:
             try:
                 self.connection.password = self.oauth_token
@@ -256,12 +257,17 @@ class TwitchIRCBot(irc.bot.SingleServerIRCBot):
         CRITICAL: Password must be set BEFORE super()._connect() is called,
         because that's when the IRC handshake (PASS/NICK/USER) begins.
         """
-        # CRITICAL: Set password BEFORE calling parent _connect()
+        # CRITICAL: Ensure password is set BEFORE calling parent _connect()
         if self.oauth_token and hasattr(self, 'connection') and self.connection:
             try:
-                self.connection.password = self.oauth_token
-                logger.info("🔐 Set OAuth token BEFORE connection (in _connect)")
-                print(f"🔐 DEBUG: Set OAuth token BEFORE _connect(): {self.oauth_token[:20]}...", flush=True)
+                # Double-check password is set (in case it was cleared)
+                if not getattr(self.connection, 'password', None):
+                    self.connection.password = self.oauth_token
+                    logger.info("🔐 Set OAuth token BEFORE connection (in _connect)")
+                    print(f"🔐 DEBUG: Set OAuth token BEFORE _connect(): {self.oauth_token[:20]}...", flush=True)
+                else:
+                    logger.info("🔐 Password already set on connection")
+                    print(f"🔐 DEBUG: Password already set: {getattr(self.connection, 'password', 'NOT SET')[:20]}...", flush=True)
             except Exception as e:
                 logger.error(f"❌ CRITICAL: Failed to set password before _connect: {e}", exc_info=True)
                 print(f"❌ DEBUG: Failed to set password: {e}", flush=True)

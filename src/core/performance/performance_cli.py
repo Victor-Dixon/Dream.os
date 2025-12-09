@@ -16,7 +16,23 @@ import json
 import sys
 from .performance_dashboard import get_performance_dashboard
 from .performance_monitoring_system import get_performance_monitor, start_performance_monitoring, stop_performance_monitoring
-from .performance_optimization_engine import get_optimization_engine, start_performance_optimization, stop_performance_optimization
+
+# Optional optimization engine (may not exist)
+try:
+    from .performance_optimization_engine import get_optimization_engine, start_performance_optimization, stop_performance_optimization
+except ImportError:
+    # Stub functions if module doesn't exist
+    def get_optimization_engine():
+        logger.warning("performance_optimization_engine not available")
+        return None
+
+    def start_performance_optimization():
+        logger.warning("performance_optimization_engine not available")
+        return None
+
+    def stop_performance_optimization():
+        logger.warning("performance_optimization_engine not available")
+        return None
 
 
 def main():

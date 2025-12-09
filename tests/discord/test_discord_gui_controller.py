@@ -193,7 +193,7 @@ class TestDiscordGUIController:
 
     def test_get_agent_status_success(self, controller):
         """Test get_agent_status with successful status retrieval."""
-        with patch('src.discord_commander.discord_gui_controller.StatusReader') as mock_status_reader_class:
+        with patch('src.discord_commander.status_reader.StatusReader') as mock_status_reader_class:
             mock_status_reader = MagicMock()
             mock_status_reader_class.return_value = mock_status_reader
             mock_status_reader.get_agent_status = MagicMock(side_effect=[
@@ -213,7 +213,7 @@ class TestDiscordGUIController:
 
     def test_get_agent_status_exception(self, controller):
         """Test get_agent_status with exception handling."""
-        with patch('src.discord_commander.discord_gui_controller.StatusReader', side_effect=Exception("Test error")):
+        with patch('src.discord_commander.status_reader.StatusReader', side_effect=Exception("Test error")):
             result = controller.get_agent_status()
             
             assert result == {}
