@@ -172,18 +172,11 @@ class ChatPresenceOrchestrator(BaseService):
                 }
             )
 
-            # Get current event loop for async callbacks
-            try:
-                event_loop = asyncio.get_running_loop()
-            except RuntimeError:
-                event_loop = None
-
             self.twitch_bridge = TwitchChatBridge(
                 username=self.twitch_config.get("username", ""),
                 oauth_token=self.twitch_config.get("oauth_token", ""),
                 channel=self.twitch_config.get("channel", ""),
                 on_message=self._handle_twitch_message,
-                event_loop=event_loop,
             )
 
             logger.debug("TwitchChatBridge created, calling connect()...")
