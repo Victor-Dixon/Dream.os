@@ -1,6 +1,6 @@
 {
     "input_device": "video=C270 HD WEBCAM",
-    "style": "Advanced Edge Detection",
+    "style": "Line Art",
     "parameters": {
         "Blur": {
             "blur_intensity": 15
@@ -42,8 +42,8 @@
             "sketch_blend": 0.5
         },
         "Cartoon": {
-            "preset": "Detailed",
-            "bilateral_passes": 2,
+            "preset": "Advanced",
+            "bilateral_passes": 1,
             "bilateral_d": 9,
             "bilateral_sigmaColor": 75,
             "bilateral_sigmaSpace": 75,
@@ -86,8 +86,8 @@
             "threshold2": 200
         },
         "Line Art": {
-            "threshold1": 50,
-            "threshold2": 150,
+            "threshold1": 255,
+            "threshold2": 255,
             "aperture_size": 3
         },
         "Oil Painting": {
