@@ -728,6 +728,14 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
         "flags": ["--test-health", "--health"],
         "args_passthrough": True,
     },
+    "infra-health": {
+        "name": "Infrastructure Health Monitor",
+        "module": "tools.infrastructure_health_monitor",
+        "main_function": "main",
+        "description": "Monitor infrastructure health for automation reliability",
+        "flags": ["--infra-health", "--infra"],
+        "args_passthrough": True,
+    },
 }
 
 

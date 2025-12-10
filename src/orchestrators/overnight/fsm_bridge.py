@@ -55,6 +55,14 @@ WORKFLOWS_DIR.mkdir(parents=True, exist_ok=True)
 
 def _write_inbox_message(agent: str, message: Dict[str, Any]) -> bool:
     """Write a message to an agent's inbox (V2 compliant)."""
+    # Validate agent ID
+    valid_agent_ids = {f"Agent-{i}" for i in range(1, 9)}
+    if agent not in valid_agent_ids:
+        logger.error(
+            f"Invalid agent ID: '{agent}'. Must be one of: {', '.join(sorted(valid_agent_ids))}"
+        )
+        return False
+    
     try:
         inbox_dir = get_agent_inbox(agent)
         inbox_dir.mkdir(parents=True, exist_ok=True)

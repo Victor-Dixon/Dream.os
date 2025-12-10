@@ -1,0 +1,68 @@
+{
+  "agent_id": "Agent-8",
+  "session_date": "2025-12-10",
+  "tasks": [
+    {
+      "task_id": "A8-MESSAGING-COV-001",
+      "title": "Fix pytest-cov coverage blocking issue",
+      "priority": "HIGH",
+      "status": "pending",
+      "description": "Add defensive import guards for pyautogui/cv2 to allow pytest-cov to run without GUI dependencies",
+      "blocker": "cv2.dnn.DictValue AttributeError during pyautogui import chain",
+      "proposed_fix": "Add try/except import guards in messaging_core.py or create cv2 stub for headless test runs",
+      "owner": "Agent-8",
+      "eta": "Next session",
+      "dependencies": [],
+      "validation": "Run pytest-cov successfully after guards are in place"
+    },
+    {
+      "task_id": "A8-MESSAGING-COV-002",
+      "title": "Re-run coverage for messaging templates domain",
+      "priority": "MEDIUM",
+      "status": "pending",
+      "description": "Run coverage report for src.core.messaging_templates, messaging_models, messaging_template_texts after import guards are fixed",
+      "blocker": "Depends on A8-MESSAGING-COV-001",
+      "owner": "Agent-8",
+      "eta": "After A8-MESSAGING-COV-001",
+      "dependencies": ["A8-MESSAGING-COV-001"],
+      "validation": "Coverage report generated successfully with >85% coverage"
+    },
+    {
+      "task_id": "A8-SSOT-REVIEW-001",
+      "title": "Agent-7 SSOT/Compliance Review",
+      "priority": "MEDIUM",
+      "status": "pending",
+      "description": "Review draft requirements/xfail list from Agent-7 for DaDudeKC-Website (Py3.11) and DreamVault/DaDudeKC tests",
+      "blocker": "Awaiting draft requirements/xfail list from Agent-7",
+      "owner": "Agent-8",
+      "eta": "When Agent-7 provides draft",
+      "dependencies": [],
+      "validation": "Requirements reviewed and approved or feedback provided"
+    },
+    {
+      "task_id": "A8-DOCS-001",
+      "title": "Post devlog to Discord",
+      "priority": "LOW",
+      "status": "pending",
+      "description": "Post devlogs/2025-12-10_agent-8_messaging_templates_integration.md to Discord #agent-8-devlogs channel",
+      "owner": "Agent-8",
+      "eta": "Next session",
+      "dependencies": [],
+      "validation": "Devlog posted successfully to Discord"
+    },
+    {
+      "task_id": "A8-KNOWLEDGE-001",
+      "title": "Sync Swarm Brain entry",
+      "priority": "LOW",
+      "status": "pending",
+      "description": "Ensure swarm_brain/kb-messaging-templates-2025-12-10.md is properly indexed and accessible",
+      "owner": "Agent-8",
+      "eta": "Next session",
+      "dependencies": [],
+      "validation": "Swarm Brain entry accessible and searchable"
+    }
+  ],
+  "contracts": [],
+  "notes": "All 64 integration tests passing. Template structure validation ensures agents receive correctly formatted messages. Coverage blocked by upstream dependency issue."
+}
+
