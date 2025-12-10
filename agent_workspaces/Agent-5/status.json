@@ -19,7 +19,8 @@
     "Messaging templates hardened with defaults and broadcast routing; tests updated and passing",
     "FreeRideInvestor main.css refreshed locally toward professional layout",
     "Passdown, devlog, and swarm_brain updated for session cleanup",
-    "swarm_brain.json committed with Thea automation recommendations and trading robot prompt"
+    "swarm_brain.json committed with Thea automation recommendations and trading robot prompt",
+    "Broadcast pytest debugging assignments to all 8 agents as force multiplier task"
   ],
   "achievements": [
     "Headless Thea operations stabilized with cookie persistence",
