@@ -110,28 +110,43 @@ class TheaBrowserService:
     def ensure_thea_authenticated(self, thea_url: str | None = None, allow_manual: bool = True) -> bool:
         """Ensure authenticated to Thea Manager."""
         if not self._initialized:
+            logger.debug("🔍 DEBUG: Browser not initialized")
             return False
 
         try:
             target_url = thea_url or self.thea_config.conversation_url
+            logger.debug(f"🔍 DEBUG: Target URL: {target_url}")
+
             # Navigate to Thea with longer wait for page load
+            logger.debug("🔍 DEBUG: Navigating to Thea page...")
             if not self.navigate_to(target_url, wait_seconds=5.0):
+                logger.debug("🔍 DEBUG: Navigation failed")
                 return False
+            logger.debug("🔍 DEBUG: Navigation successful")
 
             # Wait for page to stabilize
+            logger.debug("🔍 DEBUG: Waiting 3 seconds for page stabilization...")
             time.sleep(3)
+            logger.debug("🔍 DEBUG: Page stabilization wait complete")
 
             # Try loading cookies if available
+            logger.debug("🔍 DEBUG: Loading cookies...")
             self._load_cookies(target_url)
+            logger.debug("🔍 DEBUG: Refreshing page after cookie load...")
             self.driver.refresh()
 
             # Wait longer for page to reload after cookie loading
+            logger.debug("🔍 DEBUG: Waiting 5 seconds for page reload...")
             time.sleep(5)
+            logger.debug("🔍 DEBUG: Page reload wait complete")
 
             # Additional wait for dynamic content to load
+            logger.debug("🔍 DEBUG: Waiting for page to be ready...")
             self._wait_for_page_ready()
+            logger.debug("🔍 DEBUG: Page ready check complete")
 
             # Check if already authenticated
+            logger.debug("🔍 DEBUG: Checking authentication status...")
             if self._is_thea_authenticated():
                 logger.info("✅ Already authenticated to Thea (via cookies)")
                 self._save_cookies()
@@ -145,6 +160,7 @@ class TheaBrowserService:
                 time.sleep(45)  # Allow more time for manual login
 
                 # Check authentication again after manual login
+                logger.debug("🔍 DEBUG: Checking authentication after manual login...")
                 if self._is_thea_authenticated():
                     logger.info("✅ Authentication successful")
                     self._save_cookies()
@@ -212,25 +228,37 @@ class TheaBrowserService:
     def _find_prompt_textarea(self) -> Any | None:
         """Locate Thea/ChatGPT prompt textarea with auto-healing fallbacks."""
         if not self.driver:
+            logger.debug("🔍 DEBUG: Driver not available")
             return None
 
+        logger.debug("🔍 DEBUG: Starting textarea discovery...")
+
         # Phase 1: Try known working selectors (prioritized by success rate)
+        logger.debug("🔍 DEBUG: Phase 1 - Trying known selectors...")
         known_selectors = self._get_prioritized_selectors()
-        for selector in known_selectors:
+        logger.debug(f"🔍 DEBUG: Trying {len(known_selectors)} known selectors")
+        for i, selector in enumerate(known_selectors):
             try:
+                logger.debug(f"🔍 DEBUG: Trying selector {i+1}: {selector}")
                 el = self.driver.find_element("css selector", selector)
                 if el and self._is_textarea_ready(el):
+                    logger.debug(f"🔍 DEBUG: Selector {selector} worked!")
                     self._record_successful_selector(selector)
                     return el
-            except Exception:
+                else:
+                    logger.debug(f"🔍 DEBUG: Selector {selector} found element but not ready")
+            except Exception as e:
+                logger.debug(f"🔍 DEBUG: Selector {selector} failed: {e}")
                 continue
 
         # Phase 2: Dynamic discovery - analyze page for input-like elements
-        logger.info("Known selectors failed, attempting dynamic discovery...")
+        logger.debug("🔍 DEBUG: Phase 1 failed, trying dynamic discovery...")
         discovered_element = self._discover_textarea_dynamically()
         if discovered_element:
-            logger.info("Dynamic discovery successful")
+            logger.debug("🔍 DEBUG: Dynamic discovery successful")
             return discovered_element
+        else:
+            logger.debug("🔍 DEBUG: Dynamic discovery also failed")
 
         # Phase 3: Broad fallback patterns
         fallback_selectors = [
@@ -475,17 +503,27 @@ class TheaBrowserService:
     def _find_send_button(self) -> Any | None:
         """Locate send button with auto-healing fallbacks."""
         if not self.driver:
+            logger.debug("🔍 DEBUG: Driver not available for send button search")
             return None
 
+        logger.debug("🔍 DEBUG: Starting send button discovery...")
+
         # Phase 1: Try known working selectors
+        logger.debug("🔍 DEBUG: Phase 1 - Trying known send button selectors...")
         known_selectors = self._get_prioritized_send_selectors()
-        for selector in known_selectors:
+        logger.debug(f"🔍 DEBUG: Trying {len(known_selectors)} send button selectors")
+        for i, selector in enumerate(known_selectors):
             try:
+                logger.debug(f"🔍 DEBUG: Trying send selector {i+1}: {selector}")
                 el = self.driver.find_element("css selector", selector)
                 if el and self._is_send_button_ready(el):
+                    logger.debug(f"🔍 DEBUG: Send selector {selector} worked!")
                     self._record_successful_selector(f"send:{selector}")
                     return el
-            except Exception:
+                else:
+                    logger.debug(f"🔍 DEBUG: Send selector {selector} found element but not ready")
+            except Exception as e:
+                logger.debug(f"🔍 DEBUG: Send selector {selector} failed: {e}")
                 continue
 
         # Phase 2: Dynamic discovery around textarea
@@ -702,57 +740,82 @@ class TheaBrowserService:
             logger.error("Browser not initialized")
             return None
 
+        logger.debug("🔍 DEBUG: Starting prompt sending process")
+        logger.debug(f"🔍 DEBUG: Prompt length: {len(prompt)} characters")
+
         # Ensure on conversation page
+        logger.debug("🔍 DEBUG: Ensuring on conversation page...")
         self.navigate_to(self.thea_config.conversation_url, wait_seconds=5.0)
 
         # Wait for page to be fully ready before looking for elements
+        logger.debug("🔍 DEBUG: Waiting for page to be fully ready...")
         if not self._wait_for_page_ready(timeout=15.0):
             logger.error("Page failed to load properly")
             return None
+        logger.debug("🔍 DEBUG: Page is ready")
 
         # Additional wait for dynamic content
+        logger.debug("🔍 DEBUG: Waiting 3 seconds for dynamic content...")
         time.sleep(3)
+        logger.debug("🔍 DEBUG: Dynamic content wait complete")
 
+        logger.debug("🔍 DEBUG: Looking for prompt textarea...")
         textarea = self._find_prompt_textarea()
         if not textarea:
             logger.error("Could not find textarea for prompt input")
             return None
+        logger.debug("🔍 DEBUG: Textarea found")
 
+        logger.debug("🔍 DEBUG: Setting textarea value...")
         if not self._set_textarea_value(textarea, prompt):
+            logger.debug("🔍 DEBUG: Failed to set textarea value")
             return None
+        logger.debug("🔍 DEBUG: Textarea value set successfully")
 
         # Send via button if present; fallback to ENTER or other methods
+        logger.debug("🔍 DEBUG: Looking for send button...")
         send_btn = self._find_send_button()
         try:
             if send_btn:
                 logger.info("Found send button, clicking it")
                 send_btn.click()
+                logger.debug("🔍 DEBUG: Send button clicked")
             else:
                 logger.info("No send button found, trying ENTER key")
                 from selenium.webdriver.common.keys import Keys
 
                 # For contenteditable divs, try different approaches
                 tag_name = textarea.tag_name.lower()
+                logger.debug(f"🔍 DEBUG: Textarea tag name: {tag_name}")
+
                 if tag_name == 'div':
+                    logger.debug("🔍 DEBUG: Trying Ctrl+Enter for contenteditable div...")
                     # Try Ctrl+Enter for some interfaces
                     textarea.send_keys(Keys.CONTROL, Keys.ENTER)
                     time.sleep(0.5)
+                    logger.debug("🔍 DEBUG: Trying plain Enter as fallback...")
                     # If that didn't work, try just ENTER
                     textarea.send_keys(Keys.ENTER)
                 else:
+                    logger.debug("🔍 DEBUG: Sending Enter key to textarea...")
                     # For textareas, just ENTER
                     textarea.send_keys(Keys.ENTER)
 
                 # Also try clicking any nearby submit elements as backup
+                logger.debug("🔍 DEBUG: Trying backup submit elements...")
                 try:
                     submit_elements = self.driver.find_elements("css selector",
                         "button[type='submit'], input[type='submit'], [role='button']")
+                    logger.debug(f"🔍 DEBUG: Found {len(submit_elements)} potential submit elements")
                     for elem in submit_elements:
                         if elem.is_displayed() and elem.is_enabled():
+                            logger.debug("🔍 DEBUG: Clicking backup submit element")
                             elem.click()
                             break
-                except Exception:
-                    pass  # Ignore if backup click fails
+                except Exception as e:
+                    logger.debug(f"🔍 DEBUG: Backup submit elements failed: {e}")
+
+            logger.debug("🔍 DEBUG: Prompt submission attempt complete")
 
         except Exception as e:
             logger.error(f"Failed to submit prompt: {e}")
