@@ -100,7 +100,7 @@ class SearchQuery:
     <!-- SSOT Domain: data -->
     """
 
-    query_text: str
+    query_text: str = ""  # Default to empty string for backward compatibility
     search_type: SearchType = SearchType.SIMILARITY
     limit: int = 10
     similarity_threshold: float = 0.0
@@ -114,8 +114,8 @@ class SearchQuery:
     
     def __post_init__(self):
         """Initialize backward compatibility fields."""
-        # Map query to query_text if provided
-        if self.query is not None and self.query_text == "":
+        # Map query to query_text if provided and query_text is empty
+        if self.query is not None and (not self.query_text or self.query_text == ""):
             self.query_text = self.query
         
         # Map threshold to similarity_threshold if provided
