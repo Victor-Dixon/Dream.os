@@ -57,6 +57,8 @@ class CommandHandler(BaseService):
                     message_handler, service)
             elif command == 'status':
                 result = await self._handle_status_command()
+            elif command == 'infra-health':
+                result = await self._handle_infra_health_command(args)
             else:
                 result = {'success': False, 'error':
                     f'Unknown command: {command}'}
@@ -140,6 +142,36 @@ class CommandHandler(BaseService):
             logger.info(f"  Success Rate: {stats['success_rate']:.1f}%")
             return {'success': True, 'statistics': stats}
         except Exception as e:
+            return {'success': False, 'error': str(e)}
+
+    async def _handle_infra_health_command(self, args: dict[str, Any]) -> dict[str, Any]:
+        """Handle infrastructure health command."""
+        try:
+            from ...infrastructure.infrastructure_health_monitor import InfrastructureHealthMonitor
+
+            monitor = InfrastructureHealthMonitor(
+                warning_threshold=args.get('warning_threshold', 85.0),
+                critical_threshold=args.get('critical_threshold', 95.0)
+            )
+
+            result = monitor.perform_full_health_check()
+            monitor.print_health_report(result)
+
+            return {
+                'success': True,
+                'status': result.status,
+                'message': result.message,
+                'metrics': {
+                    'disk_usage_percent': result.metrics.disk_usage_percent,
+                    'disk_free_gb': result.metrics.disk_free_gb,
+                    'memory_usage_percent': result.metrics.memory_usage_percent,
+                    'cpu_usage_percent': result.metrics.cpu_usage_percent,
+                    'browser_ready': result.metrics.browser_ready,
+                },
+                'recommendations': result.recommendations
+            }
+        except Exception as e:
+            logger.error(f"Error in infra-health command: {e}")
             return {'success': False, 'error': str(e)}
 
     def get_command_statistics(self) ->dict[str, Any]:
