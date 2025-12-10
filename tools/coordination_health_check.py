@@ -7,13 +7,18 @@ Checks health of coordination systems:
 - Message queue processor status
 - Broadcast system configuration
 - Coordination workflow validation
+- Basic coordination metrics collection
 
 Author: Agent-6 (Coordination & Communication Specialist)
 Date: 2025-12-10
+V2 Compliance: <300 lines, single responsibility
 """
 
 import sys
+import json
 from pathlib import Path
+from datetime import datetime
+from typing import Dict, Any
 
 # Add project root to path
 project_root = Path(__file__).parent.parent
@@ -152,6 +157,84 @@ def check_coordination_workflows():
     
     return all_present
 
+def collect_coordination_metrics() -> Dict[str, Any]:
+    """
+    Collect basic coordination metrics.
+    
+    Returns:
+        Dictionary with coordination metrics
+    """
+    metrics = {
+        "timestamp": datetime.now().isoformat(),
+        "message_queue_health": False,
+        "broadcast_system_health": False,
+        "coordination_tools_health": False,
+        "metrics_collected": True,
+    }
+    
+    # Check message queue file
+    queue_file = project_root / "runtime" / "agent_comms" / "message_queue.json"
+    if queue_file.exists():
+        try:
+            with open(queue_file, 'r', encoding='utf-8') as f:
+                queue_data = json.load(f)
+                metrics["queue_size"] = len(queue_data.get("queue", []))
+                metrics["queue_processing"] = queue_data.get("processing", False)
+        except Exception:
+            metrics["queue_size"] = 0
+            metrics["queue_processing"] = False
+    else:
+        metrics["queue_size"] = 0
+        metrics["queue_processing"] = False
+    
+    # Check agent status files for engagement
+    agent_workspaces = project_root / "agent_workspaces"
+    active_agents = 0
+    total_agents = 0
+    
+    if agent_workspaces.exists():
+        for agent_dir in agent_workspaces.iterdir():
+            if agent_dir.is_dir() and agent_dir.name.startswith("Agent-"):
+                total_agents += 1
+                status_file = agent_dir / "status.json"
+                if status_file.exists():
+                    try:
+                        with open(status_file, 'r', encoding='utf-8') as f:
+                            status = json.load(f)
+                            if status.get("status") == "ACTIVE_AGENT_MODE":
+                                active_agents += 1
+                    except Exception:
+                        pass
+    
+    metrics["active_agents"] = active_agents
+    metrics["total_agents"] = total_agents
+    metrics["swarm_engagement"] = (
+        (active_agents / total_agents * 100) if total_agents > 0 else 0
+    )
+    
+    return metrics
+
+def display_coordination_metrics(metrics: Dict[str, Any]):
+    """Display coordination metrics."""
+    print("\n" + "=" * 80)
+    print("COORDINATION METRICS")
+    print("=" * 80)
+    
+    print(f"\n📊 Message Queue Status:")
+    print("-" * 80)
+    print(f"   Queue Size: {metrics.get('queue_size', 0)}")
+    print(f"   Processing: {'✅ Active' if metrics.get('queue_processing') else '⏸️  Idle'}")
+    
+    print(f"\n📊 Swarm Engagement:")
+    print("-" * 80)
+    print(f"   Active Agents: {metrics.get('active_agents', 0)}/{metrics.get('total_agents', 0)}")
+    print(f"   Engagement Rate: {metrics.get('swarm_engagement', 0):.1f}%")
+    
+    print(f"\n📊 Metrics Collection:")
+    print("-" * 80)
+    print(f"   Timestamp: {metrics.get('timestamp', 'N/A')}")
+    print(f"   Status: ✅ Metrics collected successfully")
+
 def main():
     """Run all health checks."""
     print("\n" + "=" * 80)
@@ -164,6 +247,15 @@ def main():
         "broadcast_system": check_broadcast_system(),
         "coordination_workflows": check_coordination_workflows(),
     }
+    
+    # Update metrics with health check results
+    metrics = collect_coordination_metrics()
+    metrics["message_queue_health"] = results["message_queue"]
+    metrics["broadcast_system_health"] = results["broadcast_system"]
+    metrics["coordination_tools_health"] = results["coordination_workflows"]
+    
+    # Display metrics
+    display_coordination_metrics(metrics)
     
     print("\n" + "=" * 80)
     print("HEALTH CHECK SUMMARY")
