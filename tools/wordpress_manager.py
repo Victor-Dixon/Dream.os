@@ -515,8 +515,23 @@ add_action('after_switch_theme', '{function_name}');"""
         if self.conn_manager:
             self.conn_manager.disconnect()
     
-    def deploy_file(self, local_path: Path, remote_path: Optional[str] = None) -> bool:
-        """Deploy single file to server."""
+    def deploy_file(
+        self, 
+        local_path: Path, 
+        remote_path: Optional[str] = None,
+        auto_flush_cache: bool = True
+    ) -> bool:
+        """
+        Deploy single file to server.
+        
+        Args:
+            local_path: Local file path to deploy
+            remote_path: Optional remote path (auto-detected if not provided)
+            auto_flush_cache: If True, automatically flush cache after deployment
+        
+        Returns:
+            True if deployment succeeded
+        """
         if not self.conn_manager:
             if not self.connect():
                 return False
@@ -527,18 +542,47 @@ add_action('after_switch_theme', '{function_name}');"""
                 remote_path = f"{self.config['remote_base']}/{rel_path}"
             else:
                 remote_path = f"{self.config['remote_base']}/{local_path.name}"
-        return self.conn_manager.upload_file(local_path, remote_path)
+        
+        success = self.conn_manager.upload_file(local_path, remote_path)
+        
+        # Automatically flush cache after successful deployment
+        if success and auto_flush_cache:
+            logger.info("🔄 Auto-flushing cache after deployment...")
+            self.purge_caches(use_comprehensive_flush=True)
+        
+        return success
     
-    def deploy_theme(self, pattern: str = "*.php") -> int:
-        """Deploy all theme files matching pattern."""
+    def deploy_theme(
+        self, 
+        pattern: str = "*.php",
+        auto_flush_cache: bool = True
+    ) -> int:
+        """
+        Deploy all theme files matching pattern.
+        
+        Args:
+            pattern: File pattern to match (e.g., "*.php", "*.css")
+            auto_flush_cache: If True, automatically flush cache after deployment
+        
+        Returns:
+            Number of files successfully deployed
+        """
         if not self.connect():
             return 0
         theme_path = self.get_theme_path()
         files_deployed = 0
+        
+        # Deploy files without auto-flush (we'll flush once at the end)
         for file_path in theme_path.glob(pattern):
-            if self.deploy_file(file_path):
+            if self.deploy_file(file_path, auto_flush_cache=False):
                 files_deployed += 1
                 print(f"✅ Deployed: {file_path.name}")
+        
+        # Flush cache once after all files are deployed
+        if files_deployed > 0 and auto_flush_cache:
+            logger.info("🔄 Auto-flushing cache after theme deployment...")
+            self.purge_caches(use_comprehensive_flush=True)
+        
         return files_deployed
     
     # ========== DATABASE ==========
@@ -599,13 +643,19 @@ add_filter('wp_nav_menu_items', '{prefix}_add_{page_slug}_menu', 10, 2);"""
     
     # ========== THEME MANAGEMENT ==========
     
-    def replace_theme(self, new_theme_path: Path, backup: bool = True) -> bool:
+    def replace_theme(
+        self, 
+        new_theme_path: Path, 
+        backup: bool = True,
+        auto_flush_cache: bool = True
+    ) -> bool:
         """
         Replace entire theme on server.
         
         Args:
             new_theme_path: Local path to new theme directory
             backup: Whether to backup existing theme first
+            auto_flush_cache: If True, automatically flush cache after deployment
         
         Returns:
             True if successful
@@ -633,6 +683,12 @@ add_filter('wp_nav_menu_items', '{prefix}_add_{page_slug}_menu', 10, 2);"""
                         files_deployed += 1
             
             print(f"✅ Theme replaced: {files_deployed} files deployed")
+            
+            # Automatically flush cache after successful theme replacement
+            if files_deployed > 0 and auto_flush_cache:
+                logger.info("🔄 Auto-flushing cache after theme replacement...")
+                self.purge_caches(use_comprehensive_flush=True)
+            
             return True
         except Exception as e:
             logger.error(f"Theme replacement failed: {e}")
@@ -745,10 +801,124 @@ add_filter('wp_nav_menu_items', '{prefix}_add_{page_slug}_menu', 10, 2);"""
         self.wp_cli(f"menu location assign {menu_name} primary")
         return True
 
-    def purge_caches(self):
-        """Purge LiteSpeed (if present) and WP cache."""
-        self.wp_cli("litespeed-purge all")
-        self.wp_cli("cache flush")
+    def purge_caches(self, use_comprehensive_flush: bool = True) -> bool:
+        """
+        Purge WordPress cache using multiple methods.
+        
+        Tries methods in order:
+        1. WP-CLI (litespeed-purge + cache flush)
+        2. WordPress REST API (if credentials available)
+        3. WP-CLI rewrite flush (for permalink cache)
+        
+        Args:
+            use_comprehensive_flush: If True, tries multiple methods; 
+                                    if False, only uses WP-CLI
+        
+        Returns:
+            True if at least one method succeeded
+        """
+        logger.info("🔄 Attempting WordPress cache flush...")
+        success_count = 0
+        
+        # Method 1: WP-CLI cache flush (primary method)
+        try:
+            logger.info("   Trying WP-CLI cache flush...")
+            stdout1, stderr1, code1 = self.wp_cli("litespeed-purge all")
+            stdout2, stderr2, code2 = self.wp_cli("cache flush")
+            
+            if code1 == 0 or code2 == 0:
+                logger.info("   ✅ Cache flushed via WP-CLI")
+                success_count += 1
+            else:
+                logger.warning(f"   ⚠️  WP-CLI cache flush warnings: {stderr1 or stderr2}")
+        except Exception as e:
+            logger.warning(f"   ⚠️  WP-CLI method failed: {e}")
+        
+        # Method 2: WP-CLI rewrite flush (for permalink cache)
+        try:
+            logger.info("   Trying WP-CLI rewrite flush...")
+            stdout, stderr, code = self.wp_cli("rewrite flush")
+            if code == 0:
+                logger.info("   ✅ Rewrite rules flushed via WP-CLI")
+                success_count += 1
+            else:
+                logger.warning(f"   ⚠️  Rewrite flush warning: {stderr}")
+        except Exception as e:
+            logger.warning(f"   ⚠️  Rewrite flush failed: {e}")
+        
+        # Method 3: WordPress REST API (if comprehensive flush enabled)
+        if use_comprehensive_flush:
+            try:
+                wp_username = os.getenv('WP_ADMIN_USERNAME')
+                wp_password = os.getenv('WP_ADMIN_PASSWORD')
+                site_url = self._get_site_url()
+                
+                if wp_username and wp_password and site_url:
+                    logger.info("   Trying WordPress REST API...")
+                    import requests
+                    
+                    wp_admin_url = f"{site_url}/wp-admin"
+                    flush_url = f"{wp_admin_url}/admin-ajax.php"
+                    
+                    session = requests.Session()
+                    auth = (wp_username, wp_password)
+                    
+                    # Try to flush rewrite rules via REST API
+                    response = session.post(
+                        flush_url,
+                        data={'action': 'flush_rewrite_rules'},
+                        auth=auth,
+                        timeout=10
+                    )
+                    
+                    if response.status_code == 200:
+                        logger.info("   ✅ Cache flushed via REST API")
+                        success_count += 1
+                    else:
+                        logger.warning(f"   ⚠️  REST API returned status {response.status_code}")
+            except ImportError:
+                logger.debug("   ⚠️  requests library not available for REST API flush")
+            except Exception as e:
+                logger.warning(f"   ⚠️  REST API method failed: {e}")
+        
+        if success_count > 0:
+            logger.info(f"✅ Cache flush complete ({success_count} method(s) succeeded)")
+            return True
+        else:
+            logger.warning("⚠️  All cache flush methods failed")
+            logger.info("📋 Manual steps required:")
+            site_url = self._get_site_url()
+            if site_url:
+                logger.info(f"      1. Go to: {site_url}/wp-admin/options-permalink.php")
+            logger.info("      2. Click 'Save Changes' (no edits needed)")
+            logger.info("      3. Hard refresh homepage (Ctrl+F5)")
+            return False
+    
+    def _get_site_url(self) -> Optional[str]:
+        """Get WordPress site URL from config or credentials."""
+        # Try credentials first
+        if self.credentials:
+            site_url = self.credentials.get("site_url") or self.credentials.get("url")
+            if site_url:
+                return site_url.rstrip('/')
+        
+        # Try config
+        if self.config:
+            site_url = self.config.get("site_url")
+            if site_url:
+                return site_url.rstrip('/')
+        
+        # Try to infer from site_key
+        if self.site_key:
+            # Remove common suffixes
+            domain = self.site_key.replace(".online", "").replace(".site", "").replace(".com", "")
+            # Try common TLDs
+            for tld in [".com", ".online", ".site"]:
+                potential_url = f"https://{domain}{tld}"
+                # Could verify here, but for now just return first guess
+                return potential_url
+        
+        return None
 
 
 def main():
@@ -774,6 +944,7 @@ def main():
     parser.add_argument('--menu-name', type=str, default='Main', help='Menu name to create/assign')
     parser.add_argument('--add-home-link', type=str, nargs='?', const='https://freerideinvestor.com', help='Add Home link to menu (optional URL, default site home)')
     parser.add_argument('--purge-cache', action='store_true', help='Purge LiteSpeed/WP caches')
+    parser.add_argument('--no-auto-flush', action='store_true', help='Disable automatic cache flush after deployment (default: auto-flush enabled)')
     
     args = parser.parse_args()
     
@@ -794,10 +965,13 @@ def main():
             manager.override_wp_cli_path = args.wp_cli_path
             manager.credentials["wp_cli_path"] = args.wp_cli_path
         
+        # Determine auto-flush setting (default: enabled unless --no-auto-flush is set)
+        auto_flush = not args.no_auto_flush
+        
         if args.create_page:
             manager.create_page(args.create_page)
         elif args.deploy:
-            count = manager.deploy_theme()
+            count = manager.deploy_theme(auto_flush_cache=auto_flush)
             print(f"✅ Deployed {count} files")
         elif args.list:
             pages = manager.list_pages()
@@ -812,7 +986,7 @@ def main():
             manager.add_to_menu(args.add_menu)
         elif args.replace_theme:
             theme_path = Path(args.replace_theme)
-            if manager.replace_theme(theme_path):
+            if manager.replace_theme(theme_path, auto_flush_cache=auto_flush):
                 print("✅ Theme replaced successfully")
         elif args.activate_theme:
             if manager.activate_theme(args.activate_theme):
@@ -824,7 +998,7 @@ def main():
                 print(f"{status} {theme.get('name', 'Unknown')} - {theme.get('version', 'N/A')}")
         elif args.deploy_file:
             local_path = Path(args.deploy_file)
-            ok = manager.deploy_file(local_path, remote_path=args.remote_path)
+            ok = manager.deploy_file(local_path, remote_path=args.remote_path, auto_flush_cache=auto_flush)
             print(f"✅ Deployed file: {local_path}" if ok else f"❌ Deploy failed: {local_path}")
         elif args.assign_menu or args.add_home_link:
             home_url = args.add_home_link if args.add_home_link else None

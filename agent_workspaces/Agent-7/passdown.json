@@ -2,88 +2,87 @@
   "agent_id": "Agent-7",
   "agent_name": "Web Development Specialist",
   "session_date": "2025-12-10",
-  "last_updated": "2025-12-10T23:59:00Z",
-  "status": "SESSION_CLEANUP_COMPLETE",
-  "current_phase": "READY_FOR_NEXT_SESSION",
+  "last_updated": "2025-12-10T23:59:59Z",
+  "status": "SESSION_CLEANUP_PENDING",
+  "current_phase": "TASK_EXECUTION",
   "session_summary": {
-    "session_type": "WP deployment cleanup + tooling",
-    "primary_mission": "Finish FreeRideInvestor V2 deploy, remove stale Developer Tools traces, harden WordPress deployer",
-    "status": "\u2705 DELIVERED",
-    "progress": "Uploaded missing theme.js, purged caches, added --remote-path flag for single-file SFTP deploys"
+    "session_type": "Control plane site registry consolidation",
+    "primary_mission": "Establish registry + adapter SSOT for all Hostinger sites with safe loader/CLI",
+    "status": "✅ COMPLETE",
+    "progress": "Registry stub created with schema_version and seeded domains; CLI added for list/validate/seed/add; adapter loader added with NoOp fallback; Hostinger adapters mapped by key."
   },
   "major_achievements": {
-    "theme_js_restored": {
+    "sites_registry": {
       "status": "COMPLETE",
-      "details": "Uploaded js/theme.js to wp-content/themes/freerideinvestor; now serves 200 (10,330 bytes)"
+      "details": "Created runtime/control_plane/sites_registry.json with versioned schema and seeded all known Hostinger domains with capabilities disabled by default."
     },
-    "cache_purge": {
+    "registry_cli": {
       "status": "COMPLETE",
-      "details": "Ran wordpress_manager --purge-cache (wp cli cache + litespeed) after theme replace"
+      "details": "Added tools/sites_registry.py supporting list, validate, seed-from-sites-json, add; no behavior change to deploy/post flows."
     },
-    "single_file_deploy_flag": {
+    "adapter_loader": {
       "status": "COMPLETE",
-      "details": "wordpress_manager.py now supports --remote-path for targeted uploads; used to land theme.js"
+      "details": "Added control_plane adapter loader with NoOp fallback; mapped Hostinger adapters (freerideinvestor, prismblossom, weareswarm online/site, tradingrobotplug, ariajet, southwestsecret, dadudekc)."
     }
   },
   "deliverables": {
     "files_updated": [
-      "tools/wordpress_manager.py (--remote-path support for deploy_file)",
-      "agent_workspaces/Agent-7/passdown.json (this file)"
+      "runtime/control_plane/sites_registry.json",
+      "tools/sites_registry.py",
+      "src/control_plane/adapters/loader.py",
+      "src/control_plane/adapters/hostinger/*.py (adapters already in place)"
     ],
     "new_tools": [
-      "tools/tsla_daily_plan_poster.py (daily WP post helper using app password)"
+      "tools/sites_registry.py (registry list/validate/seed/add CLI)"
     ],
-    "documentation": [
-      "devlogs/2025-12-10_agent-7_freerideinvestor_theme_cache_cleanup.md"
-    ],
+    "documentation": [],
     "verifications": [
-      "https://freerideinvestor.com/wp-content/themes/freerideinvestor/js/theme.js => 200, 10330 bytes",
-      "style.css => 200, 6311 bytes after deploy"
+      "Registry validates via tools/sites_registry.py validate"
     ]
   },
   "next_actions": [
-    "Log into wp-admin: Settings -> Permalinks -> Save Changes (forces rewrite + cache refresh)",
-    "Hard refresh homepage and confirm clean text + single Home menu; report if any 404s remain",
-    "Optionally enable the TradingView/TSLA autopost workflow with tsla_daily_plan_poster.py when ready"
+    "Add read-only /sites aggregator in control plane; enrich with health/last_deploy (no writes).",
+    "Decide per-site capabilities (blog/deploy/cache) and flip flags manually after review.",
+    "Keep credentials in .deploy_credentials/sites.json/.env; registry remains non-secret."
   ],
   "blockers": [
-    "Requires wp-admin access to save permalinks and finalize cache flush"
+    "None for registry; capability enablement pending product/security review."
   ],
   "coordination_needs": [
-    "Captain/Owner: please perform wp-admin permalinks Save to lock in V2 assets",
-    "Agent-1: reuse wordpress_manager --remote-path for future single-file fixes (Hostinger SFTP 65002)"
+    "Captain/Owner: approve per-site capabilities before enabling deploy/blog/cache flags.",
+    "Infra/Agent-3: confirm adapter health checks are acceptable for Hostinger endpoints (timeouts/logging)."
   ],
   "key_achievements": [
-    "Theme JS restored; no more 404 on theme.js",
-    "Cache purged via CLI; ready for permalinks save",
-    "Single-file deploys now support explicit remote paths"
+    "Single SSOT registry established for all known Hostinger sites with versioned schema.",
+    "Safe adapter loader with NoOp fallback prevents crashes during gradual adoption.",
+    "Registry CLI enables controlled additions without touching deploy/post flows."
   ],
   "lessons_learned": [
-    "Single-file SFTP deploys need explicit remote paths when theme resides outside default structure",
-    "After theme replace, verify assets (CSS/JS) and force permalinks save to clear WordPress caches"
+    "Feature-flagged registry adoption avoids SSOT drift and keeps rollback trivial.",
+    "NoOp adapters are essential when registry entries may outpace adapter mapping."
   ],
   "swarm_contributions": [
-    "Remote-path capable wordpress_manager for precise uploads",
-    "TSLA daily plan poster helper for rapid content automation",
-    "Documented live asset verification results post-deploy"
+    "Control-plane registry foundation for sites.",
+    "CLI for consistent site entry management.",
+    "Adapter loader mapping for Hostinger sites with safety fallback."
   ],
   "technical_state": {
-    "theme_state": "V2 files live; theme.js/css returning 200",
-    "cache_state": "Cache flushed via wp cli; permalinks save recommended",
-    "deployment_tool": "--remote-path available for deploy_file targeting"
+    "registry_state": "v1 schema stubbed; seeded domains; capabilities disabled.",
+    "adapter_state": "Hostinger adapters mapped; loader added; NoOp fallback ready.",
+    "behavior_change": "None; deploy/post tools untouched."
   },
   "session_metrics": {
-    "devlog_posts": 1,
-    "files_updated": 2,
+    "devlog_posts": 0,
+    "files_updated": 3,
     "new_tools": 1,
-    "blockers": 1
+    "blockers": 0
   },
   "handoff_notes": {
-    "priority": "Finalize permalinks save in wp-admin to ensure caches fully clear",
-    "immediate_action": "Settings -> Permalinks -> Save Changes (no edits) then hard refresh homepage",
-    "tools_available": "wordpress_manager --remote-path; tsla_daily_plan_poster.py; deploy logs in devlog",
-    "coordination": "Notify if any remaining 404s; remote-path uploader ready for targeted fixes",
-    "session_cleanup": "\u2705 Complete"
+    "priority": "Add read-only /sites aggregator; set capabilities after review.",
+    "immediate_action": "Run python tools/sites_registry.py validate; choose capability flags per site; optionally seed from sites.json if new domains are added.",
+    "tools_available": "tools/sites_registry.py; adapter loader; registry stub.",
+    "coordination": "Captain/Owner to approve capabilities; Infra to sign off on health-check approach.",
+    "session_cleanup": "Pending devlog + Discord post + swarm_brain update"
   },
-  "swarm_brain_entry": "insight#1, recommendation#1 (runtime/swarm_brain.json)"
+  "swarm_brain_entry": "insight#5, recommendation#3 (runtime/swarm_brain.json)"
 }

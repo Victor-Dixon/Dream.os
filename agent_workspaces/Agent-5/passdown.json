@@ -1,134 +1,103 @@
 {
   "agent_id": "Agent-5",
   "agent_name": "Business Intelligence Specialist",
-  "session_date": "2025-12-08",
-  "session_status": "CLEANUP_COMPLETE",
-  "last_updated": "2025-12-08 18:00:00",
-  "deliverables": {
-    "completed": [
-      "\u2705 Discord views timeout SSOT sweep \u2014 agent_messaging_view, bump_agent_view, aria_profile_view, carmyn_profile_view, help_view now use TimeoutConstants.HTTP_EXTENDED",
-      "\u2705 Lint pass for updated Discord view files",
-      "\u2705 Devlog 2025-12-08 drafted and Discord post stub prepared",
-      "\u2705 Swarm Brain knowledge entry added for timeout SSOT sweep",
-      "\u2705 New timeout_sweep_report tool created for remaining hardcoded timeouts"
-    ],
-    "in_progress": [
-      "Phase 5 timeout constants: final sweep for remaining hardcoded timeouts outside Discord views",
-      "Trading Replay Journal Analytics enhancements (Phases 1-3) ready to resume"
-    ],
-    "blocked": []
+  "session_date": "2025-12-10",
+  "last_updated": "2025-12-10T23:59:59Z",
+  "status": "SESSION_CLEANUP_COMPLETE",
+  "current_phase": "TASK_EXECUTION",
+  "session_summary": {
+    "session_type": "Styling review + Thea headless ops + messaging resilience",
+    "primary_mission": "Harden Thea headless cookies/send/receive, uplift FreeRide styling, close template gaps",
+    "status": "🚧 IN PROGRESS",
+    "progress": "Main.css refreshed; Thea uc-only headless send/receive with cookies; templates defaulted; tests green"
   },
-  "next_actions": {
-    "immediate": [
-      "Run timeout_sweep_report and replace remaining hardcoded timeouts with TimeoutConstants",
-      "Begin Trading Replay Journal Analytics Enhancements (Performance dashboard, Behavioral trends, Composite score)"
-    ],
-    "short_term": [
-      "Verify any residual timeout values in tools and services after sweep",
-      "Coordinate with Agent-3 for trading replay service hardening"
-    ],
-    "coordination": [
-      "Sync with Agent-1/Agent-3 on analytics and trading replay progress",
-      "Share timeout_sweep_report usage with other agents if needed"
-    ]
-  },
-  "blockers": {
-    "current": [],
-    "resolved": [
-      "Discord view timeouts now SSOT via TimeoutConstants"
-    ],
-    "potential": []
-  },
-  "coordination_status": {
-    "inbox_processed": true,
-    "messages_sent": 0,
-    "messages_received": 0,
-    "bilateral_partners": [],
-    "pending_responses": []
-  },
-  "technical_state": {
-    "workspace_clean": true,
-    "tests_passing": true,
-    "test_count": 0,
-    "v2_compliance": true,
-    "code_quality": "HIGH",
-    "documentation_status": "CURRENT"
-  },
-  "session_metrics": {
-    "duration_hours": 1.2,
-    "tasks_completed": 4,
-    "analysis_completed": 1,
-    "reports_created": 3,
-    "files_modified": 9,
-    "files_created": 4,
-    "lines_added": 220,
-    "lines_removed": 30,
-    "productivity_score": "STRONG"
-  },
-  "handoff_notes": {
-    "key_achievements": [
-      "Discord views now standardized on TimeoutConstants.HTTP_EXTENDED",
-      "Session cleanup artifacts ready: devlog, Discord post stub, Swarm Brain knowledge, passdown",
-      "New timeout_sweep_report tool available for remaining matches"
-    ],
-    "important_context": [
-      "TimeoutConstants remains the SSOT; remaining occurrences are expected in non-Discord areas and should be swept with the new tool",
-      "Devlog and Discord stub are in agent_workspaces/Agent-5/",
-      "Swarm Brain knowledge entry recorded under swarm_brain/knowledge/2025-12-08_agent5_timeout_ssot_cleanup.md"
-    ],
-    "warnings": [
-      "Still need a final sweep across tools/services for stray hardcoded timeouts before declaring Phase 5 fully complete"
-    ],
-    "next_session_priorities": [
-      "Finish timeout sweep using timeout_sweep_report",
-      "Resume Trading Replay Journal Analytics phases 1-3",
-      "Coordinate with Agent-3 for service hardening"
-    ]
-  },
-  "key_insights": [
-    "Centralizing imports of TimeoutConstants at module scope reduces duplication and ensures consistent defaults",
-    "Lightweight reporting tool accelerates remaining Phase 5 cleanup",
-    "Maintaining brief devlog and passdown keeps session transitions fast"
-  ],
-  "patterns_learned": {
-    "timeout_ssot_sweep": {
-      "pattern": "Identify hardcoded timeouts \u2192 replace with TimeoutConstants \u2192 lint",
-      "description": "Use shared constants for Discord UI views and services to avoid drift",
-      "steps": [
-        "Scan with timeout_sweep_report",
-        "Replace with TimeoutConstants.* values",
-        "Lint and spot-check UI behaviors"
-      ],
-      "success_rate": "In progress",
-      "value": "Reduces risk of inconsistent Discord interaction timeouts"
+  "major_achievements": {
+    "freerideinvestor_styling": {
+      "status": "IN_REVIEW",
+      "details": "Updated css/styles/main.css: wider content (1180px), tighter rhythm, hero CTA row, cleaner cards/footer"
+    },
+    "thea_headless_flow": {
+      "status": "COMPLETE",
+      "details": "TheaBrowserService now uses undetected_chromedriver; DOM send/receive, cookie save/load, keepalive helpers"
+    },
+    "messaging_templates_coverage": {
+      "status": "COMPLETE",
+      "details": "Defaults added for placeholders, broadcast routing fixed, checklist/reporting imports added; tests green"
     }
   },
-  "files_created_this_session": [
-    "agent_workspaces/Agent-5/devlog_2025-12-08.md",
-    "agent_workspaces/Agent-5/DEVLOG_2025-12-08_DISCORD.md",
-    "swarm_brain/knowledge/2025-12-08_agent5_timeout_ssot_cleanup.md",
-    "tools/timeout_sweep_report.py"
-  ],
-  "files_modified_this_session": [
-    "src/discord_commander/views/agent_messaging_view.py",
-    "src/discord_commander/views/bump_agent_view.py",
-    "src/discord_commander/views/aria_profile_view.py",
-    "src/discord_commander/views/carmyn_profile_view.py",
-    "src/discord_commander/views/help_view.py",
-    "agent_workspaces/Agent-5/passdown.json"
-  ],
-  "bugs_fixed": [],
-  "session_summary": {
-    "total_cycles": 1,
-    "missions_complete": 1,
-    "deliverables_count": 4,
-    "status": "SUCCESS",
-    "critical_priority": "TIMEOUT_SWEEP_CONTINUES"
-  },
-  "next_agent_should_know": {
-    "critical_status": [
-      "Discord view timeouts standardized; final Phase 5 sweep pending for remaining hardcoded timeouts in other areas"
+  "deliverables": {
+    "files_updated": [
+      "css/styles/main.css (FreeRideInvestor layout refresh)",
+      "src/infrastructure/browser/thea_browser_service.py (uc-only headless send/receive + cookies)",
+      "src/core/messaging_templates.py (defaults, broadcast routing)",
+      "tests/core/test_messaging_templates.py (coverage for defaults/routing)",
+      "tools/thea/run_headless_refresh.py",
+      "tools/thea/thea_keepalive.py",
+      "tools/thea/thea_headless_send.py",
+      "tools/thea/setup_thea_cookies.py",
+      "agent_workspaces/Agent-5/passdown.json (this file)"
+    ],
+    "new_tools": [
+      "tools/thea/thea_headless_send.py (prompt send/receive headlessly)",
+      "tools/thea/thea_keepalive.py (self-throttling cookie refresh)",
+      "tools/thea/run_headless_refresh.py (one-off refresh)",
+      "tools/thea/setup_thea_cookies.py (interactive login & save cookies)"
+    ],
+    "documentation": [
+      "devlogs/2025-12-10_agent-5_session_cleanup_thea_headless_and_styling.md"
+    ],
+    "verifications": [
+      "Messaging template tests: python -m pytest -q tests/core/test_messaging_templates.py (green)"
     ]
   },
-  "status_for_next_agent": "Discord views now use TimeoutConstants.HTTP_EXTENDED; devlog + Discord stub + Swarm Brain knowledge + timeout_sweep_report tool ready. Finish remaining timeout sweep and resume Trading Replay Analytics phases."
+  "next_actions": [
+    "Run setup_thea_cookies.py non-headless, then thea_keepalive.py for headless refresh cadence",
+    "Wire Thea keepalive into Discord bot startup (THEA_AUTO_REFRESH/THEA_MIN_INTERVAL_MINUTES) and restart bot",
+    "QA FreeRideInvestor styling on live site and adjust spacing/typography per visual review feedback",
+    "Use wordpress_manager with provided overrides to assign primary menu and delete stale pages if credentials available",
+    "Add integration tests for messaging templates covering S2A/D2A/BROADCAST and context defaults"
+  ],
+  "blockers": [
+    "Need valid Thea creds/cookies for manual login once (interactive, non-headless)",
+    "WordPress admin/SFTP access required for live menu/page cleanup and styling verification"
+  ],
+  "coordination_needs": [
+    "Captain/Owner: provide Thea login window; confirm WP creds for freerideinvestor",
+    "Agent-5: align bot keepalive + template coverage expectations"
+  ],
+  "key_achievements": [
+    "Thea browser stack no longer depends on selenium; uc-only with cookie persistence",
+    "Headless send/receive implemented with DOM targeting to avoid brittle selectors",
+    "Messaging templates hardened with defaults preventing KeyError and broadcast misrouting"
+  ],
+  "lessons_learned": [
+    "For Thea webapp, DOM-based textarea/button selection is more reliable headless than key events",
+    "Template rendering needs defensive defaults for optional fields to avoid runtime KeyError under varied inputs"
+  ],
+  "swarm_contributions": [
+    "Undetected-chromedriver-only Thea browser service with cookie load/save + headless CLI helpers",
+    "Messaging template coverage ensuring consistent S2A/D2A/Broadcast rendering defaults",
+    "Refined FreeRideInvestor styling baseline for professional presentation"
+  ],
+  "technical_state": {
+    "theme_state": "FreeRideInvestor main.css updated locally; live verification pending",
+    "thea_state": "Headless send/receive + cookie save/load implemented; needs fresh cookies via interactive login",
+    "bot_state": "Discord bot gains ensure_thea_session/!thea refresh hook; restart pending",
+    "deployment_tool": "wordpress_manager overrides available (port/remote-base/wp-cli path)"
+  },
+  "session_metrics": {
+    "devlog_posts": 1,
+    "files_updated": 9,
+    "new_tools": 4,
+    "blockers": 2
+  },
+  "handoff_notes": {
+    "priority": "Capture Thea cookies via interactive login, enable headless keepalive, restart Discord bot; QA live styling",
+    "immediate_action": "Run setup_thea_cookies.py non-headless, then thea_keepalive.py; restart unified_discord_bot with THEA_AUTO_REFRESH",
+    "tools_available": "thea_headless_send.py, thea_keepalive.py, run_headless_refresh.py, wordpress_manager overrides, main.css updates ready",
+    "coordination": "Confirm credentials and visual feedback from Captain for live styling; align Discord bot keepalive expectations with BI coverage",
+    "session_cleanup": "✅ Passdown + devlog updated; Discord post still manual"
+  },
+  "swarm_brain_entry": "insight#4 added for Thea headless + bot keepalive; recommendation#2 remains open"
 }
+

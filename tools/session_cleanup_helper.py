@@ -1,138 +1,60 @@
-#!/usr/bin/env python3
-"""
-Session Cleanup Helper
-======================
-
-Utility to streamline end-of-session tasks:
-- Generate a passdown.json skeleton
-- Generate a devlog markdown file
-- Optionally post the devlog to Discord via webhook
-
-V2 Compliant: Yes (<300 lines)
-"""
+"""Helper to generate a ready-to-post Discord summary from passdown + devlog."""
 
 from __future__ import annotations
 
 import argparse
 import json
-import os
-from datetime import datetime
 from pathlib import Path
-from typing import Any
-
-DEVLOG_TEMPLATE = """# Devlog - {date}
-
-**Agent:** {agent}
-**Session:** {session}
-**Status:** {status}
-
-## What happened
-- {summary}
-
-## Metrics
-- Lint issues: 0 (reported)
-
-## Next actions
-- Post this devlog to Discord via webhook (if configured).
-- Run session cleanup checklist before next session.
-
-🐝 WE. ARE. SWARM. ⚡🔥
-"""
+from typing import Any, Dict, Optional
 
 
-def _write_text(path: Path, content: str) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(content.strip() + "\n", encoding="utf-8")
+DEFAULT_PASSDOWN = Path("agent_workspaces/Agent-7/passdown.json")
 
 
-def _write_json(path: Path, payload: dict[str, Any]) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+def load_json(path: Path) -> Dict[str, Any]:
+  with path.open("r", encoding="utf-8") as handle:
+    return json.load(handle)
 
 
-def generate_passdown(path: Path, agent_id: str, agent_name: str, summary: str) -> None:
-    now = datetime.utcnow().strftime("%Y-%m-%d")
-    payload = {
-        "agent_id": agent_id,
-        "agent_name": agent_name,
-        "session_date": now,
-        "session_status": "COMPLETE",
-        "deliverables": [summary],
-        "next_actions": [
-            "Post devlog to Discord (webhook required)",
-            "Coordinate next-session onboarding",
-        ],
-        "gas_pipeline": {
-            "status": "HEALTHY",
-            "blockers": [],
-            "dependencies": [],
-            "ready_for_new_work": True,
-        },
-        "blockers": [],
-        "achievements": [summary],
-        "learnings": [],
-        "coordination_notes": [],
-        "session_metrics": {"linting_errors": 0},
-        "documentation_created": [],
-        "ready_for_next_session": True,
-    }
-    _write_json(path, payload)
+def summarize_devlog(path: Optional[Path]) -> str:
+  if not path or not path.exists():
+    return "Devlog: pending upload. 📝 DISCORD DEVLOG REMINDER: Create a Discord devlog."
+  lines = path.read_text(encoding="utf-8").splitlines()
+  head = [line for line in lines if line and not line.startswith("#")][:3]
+  summary = " ".join(head) if head else path.name
+  return f"Devlog: {summary}"
 
 
-def generate_devlog(path: Path, agent: str, session: str, status: str, summary: str) -> None:
-    today = datetime.utcnow().strftime("%Y-%m-%d")
-    content = DEVLOG_TEMPLATE.format(
-        date=today,
-        agent=agent,
-        session=session,
-        status=status,
-        summary=summary,
-    )
-    _write_text(path, content)
+def build_discord_message(passdown: Dict[str, Any], devlog_line: str) -> str:
+  summary = passdown.get("session_summary", {})
+  blockers = passdown.get("blockers", [])
+  next_actions = passdown.get("next_actions", [])
+  coordination = passdown.get("coordination_needs", [])
 
-
-def maybe_post_to_discord(content: str, title: str = "Session Devlog") -> bool:
-    try:
-        from tools.post_completion_report_to_discord import post_to_discord
-    except Exception:
-        return False
-    return bool(post_to_discord(content=content, title=title))
+  lines = [
+    "[A2A] Agent-7",
+    f"Session: {summary.get('session_type', 'n/a')}",
+    f"Mission: {summary.get('primary_mission', 'n/a')}",
+    f"Status: {summary.get('status', 'n/a')} | Progress: {summary.get('progress', '')}",
+    f"Blockers: {', '.join(blockers) if blockers else 'None'}",
+    f"Next: {', '.join(next_actions[:3]) if next_actions else 'None'}",
+    f"Coordination: {', '.join(coordination[:3]) if coordination else 'None'}",
+    devlog_line,
+    "📝 DISCORD DEVLOG REMINDER: Create a Discord devlog for this action in devlogs/ directory",
+  ]
+  return "\n".join(lines)
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Session cleanup helper")
-    parser.add_argument("--agent-id", default="Agent-8")
-    parser.add_argument("--agent-name", default="SSOT & System Integration Specialist")
-    parser.add_argument("--session", default="Session Cleanup")
-    parser.add_argument("--summary", required=True, help="Short summary line")
-    parser.add_argument("--passdown-path", default="agent_workspaces/Agent-8/passdown.json")
-    parser.add_argument(
-        "--devlog-path",
-        default="agent_workspaces/Agent-8/DEVLOG_"
-        + datetime.utcnow().strftime("%Y-%m-%d")
-        + ".md",
-    )
-    parser.add_argument("--post-discord", action="store_true", help="Post devlog to Discord webhook")
-    args = parser.parse_args()
+  parser = argparse.ArgumentParser(description="Generate Discord summary from passdown + devlog.")
+  parser.add_argument("--passdown", type=Path, default=DEFAULT_PASSDOWN, help="Path to passdown.json")
+  parser.add_argument("--devlog", type=Path, default=None, help="Optional devlog markdown path")
+  args = parser.parse_args()
 
-    passdown_path = Path(args.passdown_path)
-    devlog_path = Path(args.devlog_path)
-
-    generate_passdown(passdown_path, args.agent_id, args.agent_name, args.summary)
-    generate_devlog(devlog_path, args.agent_name, args.session, "Complete", args.summary)
-
-    if args.post_discord:
-        content = devlog_path.read_text(encoding="utf-8")
-        posted = maybe_post_to_discord(content, title="Session Devlog")
-        if not posted:
-            print("⚠️ Discord post skipped (webhook not configured or post failed)")
-        else:
-            print("✅ Devlog posted to Discord")
-
-    print(f"✅ passdown updated: {passdown_path}")
-    print(f"✅ devlog created: {devlog_path}")
+  passdown = load_json(args.passdown)
+  devlog_line = summarize_devlog(args.devlog)
+  print(build_discord_message(passdown, devlog_line))
 
 
 if __name__ == "__main__":
-    main()
-
+  main()

@@ -4,61 +4,51 @@
   "status": "ACTIVE_AGENT_MODE",
   "fsm_state": "ACTIVE",
   "current_phase": "TASK_EXECUTION",
-  "last_updated": "2025-12-08 22:50:00",
-  "current_mission": "Activity Telemetry v1 done; validate Discord startup; prep resumer escalation; prepare Discord devlog",
+  "last_updated": "2025-12-10 23:59:59",
+  "current_mission": "Session cleanup: Thea headless flow, FreeRideInvestor styling uplift, messaging template resilience + coverage",
   "mission_priority": "HIGH",
   "current_tasks": [
-    "Integrate Activity Telemetry v1 into Cycle V2/Debate/Spreadsheet pipeline (done)",
-    "Prep resumer send_mode escalation (Enter→Ctrl+Enter) for stalled agents",
-    "Coordinate SSOT check with Agent-8 and detector ingestion with Agent-6"
+    "Capture fresh Thea cookies via setup_thea_cookies.py (non-headless) and enable keepalive",
+    "Wire Thea keepalive into Discord bot startup and restart bot with THEA_AUTO_REFRESH",
+    "QA FreeRideInvestor live styling and apply fixes via wordpress_manager overrides",
+    "Extend messaging template integration tests across S2A/D2A/BROADCAST defaults"
   ],
   "completed_tasks": [
-    "✅ Added activity_emitter helper emit_activity_event for one-line telemetry",
-    "✅ Cycle V2 hook: emit TASK_COMPLETED on tracker updates with score/commit/PR/artifacts",
-    "✅ Debate hook: emit TASK_COMPLETED on debate tracker updates with topic/report/decision",
-    "✅ Metrics hook: emit TOOL_RUN heartbeat after project_metrics_to_spreadsheet runs",
-    "✅ Unified Tools Web Integration - All endpoints functional and tested",
-    "✅ Fixed duplicate blueprint imports in Flask app",
-    "✅ Fixed duplicate function definition in service_integration_routes.py",
-    "✅ Flask app verified - 30 blueprints registered successfully",
-    "✅ Validation API endpoints - /api/validation/validate, /api/validation/categories, /api/validation/full",
-    "✅ Analysis API endpoints - /api/analysis/analyze, /api/analysis/categories, /api/analysis/repository",
-    "✅ Integration tests created - test_validation_endpoints.py (8 tests) and test_analysis_endpoints.py (7 tests)",
-    "✅ Code quality fixes - Removed duplicate blueprint imports and duplicate function definitions",
-    "✅ DOM utilities SSOT verification - single SSOT confirmed at src/web/static/js/dashboard/dom-utils-orchestrator.js",
-    "✅ Handler/Service Boundary Verification - 100% compliance verified"
+    "✅ TheaBrowserService refactored to undetected_chromedriver-only with DOM-based headless send/receive + cookie load/save",
+    "✅ Added Thea helpers: setup_thea_cookies.py, run_headless_refresh.py, thea_keepalive.py, thea_headless_send.py",
+    "✅ Messaging templates hardened with defaults and BROADCAST->S2A routing; tests updated and passing",
+    "✅ FreeRideInvestor main.css refreshed locally for professional layout (awaiting live QA)",
+    "✅ passdown.json + devlog + swarm_brain updated for session cleanup",
+    "✅ Session_cleanup_helper tool created to generate Discord-ready summary from passdown/devlog"
   ],
   "achievements": [
-    "Web consolidation foundations retained (BaseHandler/BaseService SSOT patterns in place)",
-    "Telemetry heartbeat integrated without touching SSOT schemas"
+    "Headless Thea operations stabilized with cookie persistence",
+    "Messaging template regressions prevented via defensive defaults and coverage",
+    "FreeRideInvestor styling uplift drafted for production polish"
   ],
   "next_actions": [
-    "Validate !startdiscord startup path (listener + Task Scheduler) from Agent-1",
-    "Coordinate detector ingestion of activity_events.jsonl with Agent-6",
-    "Add resumer send_mode escalation (Enter→Ctrl+Enter on repeat) if still requested",
-    "Prepare and post Discord devlog for yesterday's work"
+    "Perform interactive Thea login to capture cookies; run thea_keepalive.py to refresh headlessly",
+    "Restart unified_discord_bot with THEA_AUTO_REFRESH/THEA_MIN_INTERVAL_MINUTES configured",
+    "Verify FreeRideInvestor live site and adjust spacing/typography if needed",
+    "Add more integration tests for messaging templates across categories and context defaults"
   ],
   "ssot_domain": "web",
-  "blockers": [],
+  "blockers": [
+    "Awaiting interactive Thea login window to capture fresh cookies",
+    "WordPress admin/SFTP confirmation required for live styling/menu cleanup"
+  ],
   "active_work": {
-    "unified_tools_web_integration": {
-      "status": "✅ COMPLETE - Production ready",
-      "endpoints": {
-        "validation": ["/api/validation/validate", "/api/validation/categories", "/api/validation/full"],
-        "analysis": ["/api/analysis/analyze", "/api/analysis/categories", "/api/analysis/repository"]
-      },
-      "files_created": ["validation_routes.py", "validation_handlers.py", "analysis_routes.py", "analysis_handlers.py"],
-      "last_updated": "2025-12-07 20:55:00"
+    "thea_headless_flow": {
+      "status": "IN_PROGRESS",
+      "notes": "uc-only driver, DOM send/receive added; needs fresh cookies + bot restart"
     },
-    "dom_utilities_ssot": {
-      "status": "✅ confirmed single SSOT",
-      "ssot_file": "src/web/static/js/dashboard/dom-utils-orchestrator.js",
-      "last_check": "2025-12-07 20:55:00",
-      "notes": "No extra DOM tool copies; web scrapers limited to ai_training/dreamvault scope"
+    "freerideinvestor_styling": {
+      "status": "IN_PROGRESS",
+      "notes": "main.css refreshed locally; awaiting live QA and menu/page cleanup via wordpress_manager"
     },
-    "handler_service_boundaries": {
-      "status": "✅ COMPLETE - 100% compliance verified",
-      "notes": "All 6 services and 20 handlers verified with proper boundaries"
+    "messaging_templates": {
+      "status": "STABLE",
+      "notes": "Defaults/routing fixed; tests green; more integration cases planned"
     }
   }
 }

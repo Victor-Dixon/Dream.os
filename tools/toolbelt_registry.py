@@ -720,6 +720,14 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
         "flags": ["--git-work-verify", "--verify-work"],
         "args_passthrough": True,
     },
+    "test-health": {
+        "name": "Test Health Monitor",
+        "module": "tools.test_health_monitor",
+        "main_function": "main",
+        "description": "Monitor test suite health and identify improvements",
+        "flags": ["--test-health", "--health"],
+        "args_passthrough": True,
+    },
 }
 
 
