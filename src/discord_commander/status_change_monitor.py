@@ -436,7 +436,10 @@ class StatusChangeMonitor:
             logger.error(f"Error checking inactivity for {agent_id}: {e}")
 
     async def _send_resume_message_to_agent(self, agent_id: str, prompt: str, summary, skip_wrapper: bool = False):
-        """Send resume message directly to agent via messaging system using PyAutoGUI to chat input coordinates."""
+        """Send resume message directly to agent via messaging system using PyAutoGUI to chat input coordinates.
+        
+        Now includes cycle planner task assignment integration - automatically fetches and assigns next available task.
+        """
         try:
             # Attempt-based send mode (enter on first, ctrl+enter on escalations)
             attempt = self.resume_attempts.get(agent_id, 0) + 1
@@ -449,10 +452,48 @@ class StatusChangeMonitor:
                 else "unknown"
             )
 
+            # CRITICAL: Get next task from cycle planner/contract system
+            next_task_info = None
+            task_assignment_text = ""
+            try:
+                from src.services.contract_system.manager import ContractManager
+                contract_manager = ContractManager()
+                task_result = contract_manager.get_next_task(agent_id)
+                
+                if task_result and task_result.get("status") == "assigned" and task_result.get("task"):
+                    next_task_info = task_result.get("task")
+                    task_title = next_task_info.get("title", "Unknown Task")
+                    task_description = next_task_info.get("description", "")
+                    task_source = task_result.get("source", "contract_system")
+                    
+                    task_assignment_text = f"\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+                    task_assignment_text += f"📋 **TASK ASSIGNED FROM {task_source.upper().replace('_', ' ')}**\n"
+                    task_assignment_text += f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+                    task_assignment_text += f"**Task**: {task_title}\n"
+                    if task_description:
+                        task_assignment_text += f"**Description**: {task_description[:200]}{'...' if len(task_description) > 200 else ''}\n"
+                    task_assignment_text += f"\n**Action**: Begin work on this assigned task immediately.\n"
+                    task_assignment_text += f"**Claim Command**: `python -m src.services.messaging_cli --get-next-task --agent {agent_id}`\n"
+                    task_assignment_text += f"\n"
+                    
+                    logger.info(f"✅ Retrieved task assignment for {agent_id}: {task_title} (source: {task_source})")
+                elif task_result and task_result.get("status") == "no_tasks":
+                    task_assignment_text = f"\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+                    task_assignment_text += f"📋 **NO TASKS AVAILABLE**\n"
+                    task_assignment_text += f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+                    task_assignment_text += f"No tasks available in cycle planner or contract system.\n"
+                    task_assignment_text += f"Check inbox for new assignments or continue with current mission.\n\n"
+                    logger.info(f"⚠️ No tasks available for {agent_id} from cycle planner/contract system")
+            except Exception as e:
+                logger.warning(f"⚠️ Failed to get task assignment for {agent_id}: {e}")
+                # Continue without task assignment - non-blocking
+
             # Format resume message with context (unless skip_wrapper=True for Agent-4)
             if skip_wrapper:
                 # For Agent-4, prompt already includes resume context
                 resume_message = prompt
+                if task_assignment_text:
+                    resume_message += task_assignment_text
             else:
                 # For other agents, wrap with standard resume message format (no-ack, artifact-only)
                 resume_message = "🚨 RESUMER PROMPT - Inactivity Detected\n\n"
@@ -463,6 +504,11 @@ class StatusChangeMonitor:
                     resume_message += f"**Last Activity**: {summary.last_activity.strftime('%Y-%m-%d %H:%M:%S')}\n"
                 if summary.activity_sources:
                     resume_message += f"**Activity Sources**: {', '.join(summary.activity_sources)}\n"
+                
+                # Add task assignment section if available
+                if task_assignment_text:
+                    resume_message += task_assignment_text
+                
                 resume_message += "\n**Action Required**: Resume by producing a real artifact (commit, file update, test run, report). Do not reply with acknowledgments.\n"
                 resume_message += f"\n🐝 WE. ARE. SWARM. ⚡🔥"
 
@@ -491,11 +537,28 @@ class StatusChangeMonitor:
                     category=MessageCategory.S2A,
                 )
 
+                # Build actions text with task assignment if available
+                actions_text = "Resume by producing an artifact: commit/test/report or real code/doc delta."
+                if next_task_info:
+                    task_title = next_task_info.get("title", "Unknown Task")
+                    task_description = next_task_info.get("description", "")
+                    task_source = task_result.get("source", "contract_system")
+                    actions_text = f"**TASK ASSIGNED**: {task_title}\n"
+                    if task_description:
+                        actions_text += f"Description: {task_description[:150]}{'...' if len(task_description) > 150 else ''}\n"
+                    actions_text += f"Source: {task_source}\n"
+                    actions_text += f"\n**Action**: Begin work on this assigned task immediately.\n"
+                    actions_text += f"**Claim Command**: `python -m src.services.messaging_cli --get-next-task --agent {agent_id}`\n"
+                    actions_text += f"\nIf task is complete or blocked, produce an artifact (commit/test/report) instead."
+                elif task_result and task_result.get("status") == "no_tasks":
+                    actions_text = "No tasks available in cycle planner. Check inbox for new assignments or continue with current mission.\n"
+                    actions_text += "Resume by producing an artifact: commit/test/report or real code/doc delta."
+
                 rendered = render_message(
                     msg,
                     template_key="STALL_RECOVERY",
                     context=f"Inactivity Detected: {safe_minutes} minutes",
-                    actions="Resume by producing an artifact: commit/test/report or real code/doc delta.",
+                    actions=actions_text,
                     fallback="If blocked, escalate to Captain with concrete blocker + ETA.",
                 )
 
