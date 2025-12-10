@@ -2,43 +2,43 @@
   "session_date": "2025-12-10",
   "agent_id": "Agent-7",
   "agent_role": "Web Development Specialist",
-  "status": "session_complete_ready_for_next",
-  "primary_mission": "Finalize FreeRideInvestor V2 deployment and harden WP deploy tooling",
+  "status": "session_cleanup_pending",
+  "primary_mission": "Consolidate website tooling under a registry + adapter layer for control plane",
   "progress_summary": [
-    "Uploaded missing js/theme.js via SFTP; verified 200 response (10,330 bytes)",
-    "Purged LiteSpeed/WP cache with wordpress_manager; ready for permalinks save",
-    "Added --remote-path flag to wordpress_manager deploy_file for precise single-file uploads",
-    "Prepared TSLA daily plan poster helper (WP App Password flow) for content automation"
+    "Created sites registry stub with schema_version and seeded all known Hostinger domains",
+    "Added registry CLI (list/validate/seed/add) without touching deploy/post behaviors",
+    "Added adapter loader with safe NoOp fallback to avoid crashes during rollout"
   ],
-  "infrastructure_excellence_status": "FreeRideInvestor V2 assets live; cache flush pending permalinks save",
+  "infrastructure_excellence_status": "Registry SSOT established; adapters mapped; behavior changes deferred",
   "current_status": {
     "blocking_items": [
-      "wp-admin login needed to Save Changes on Settings -> Permalinks to finalize cache"
+      "Need to wire read-only sites aggregator and confirm adapter health against live endpoints"
     ],
     "next_session_priorities": [
-      "Perform permalinks Save in wp-admin and hard refresh homepage",
-      "Use wordpress_manager --remote-path for any follow-up single-file fixes",
-      "Optionally schedule tsla_daily_plan_poster.py with WP app password"
+      "Add read-only /sites aggregator in control plane (no writes)",
+      "Decide per-site capabilities (blog/deploy/cache) and flip flags manually",
+      "Keep credentials in .deploy_credentials/sites.json/.env; registry remains non-secret"
     ]
   },
   "knowledge_transfers": [
-    "Explicit remote paths prevent SFTP uploads from landing in wrong dirs on Hostinger",
-    "After theme replacement, always verify CSS/JS endpoints and force permalinks save",
-    "tsla_daily_plan_poster.py posts daily plan via WP REST + application password"
+    "Use registry as SSOT for site metadata; keep credentials separate",
+    "Adapters must stay allowlisted and return NoOp when unknown to prevent runtime failures",
+    "Seed from .deploy_credentials/sites.json but keep capabilities disabled until reviewed"
   ],
   "tools_created": [
-    "tools/tsla_daily_plan_poster.py -- daily TSLA plan poster using WP application password"
+    "tools/sites_registry.py (list/validate/seed/add registry entries)"
   ],
   "lessons_learned": [
-    "Single-file deploys need remote-path targeting; defaults can miss nested theme paths",
-    "Cache flush via CLI helps but permalinks Save is the final step for WP rewrites"
+    "Registry-first with feature flags prevents SSOT drift during consolidation",
+    "NoOp adapters let gradual adoption proceed without breaking callers"
   ],
   "next_actions": [
-    "Captain/Owner: log into wp-admin and Save permalinks",
-    "Recheck homepage for clean text/nav; report if any 404s remain"
+    "Run registry validation and seed as needed: python tools/sites_registry.py validate",
+    "Add /sites read model to control plane (read-only)",
+    "Decide capability flags per site and enable deliberately"
   ],
-  "blockers": "Waiting on wp-admin access to Save permalinks",
-  "recent_devlog": "devlogs/2025-12-10_agent-7_freerideinvestor_theme_cache_cleanup.md",
-  "swarm_brain_entry": "insight#1, recommendation#1 (runtime/swarm_brain.json)",
-  "tool_wishlist": "Automated wp-admin permalinks save via WP-CLI when permissible (needs creds)"
+  "blockers": "None; awaiting capability decisions and aggregator wiring",
+  "recent_devlog": "devlogs/2025-12-10_agent-7_control_plane_sites_registry.md",
+  "swarm_brain_entry": "insight#5, recommendation#3 (runtime/swarm_brain.json)",
+  "tool_wishlist": "Registry health snapshot CLI to ping all sites via adapters"
 }

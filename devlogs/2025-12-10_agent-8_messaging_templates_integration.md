@@ -26,3 +26,4 @@ python -m pytest tests/integration/test_messaging_templates_integration.py -v -p
 ## Notes
 - Template structure tests assert both presence and ordering of critical sections (headers, metadata, policies, cycle checklist, footers) to prevent regressions in rendered agent-facing messages.
 
+

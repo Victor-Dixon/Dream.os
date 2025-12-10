@@ -22,3 +22,4 @@ tags: [messaging-templates, integration-tests, ssot, s2a, d2a, c2a, a2a]
 - Re-run coverage for messaging templates/modules after guard.
 - Propagate structure/order assertion pattern to other template consumers.
 
+
