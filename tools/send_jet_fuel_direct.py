@@ -54,6 +54,12 @@ This message is your fuel - ACT NOW!
 
 def send_jet_fuel_to_agent(agent_id: str) -> bool:
     """Send Jet Fuel message directly to agent inbox."""
+    # Validate agent ID
+    valid_agent_ids = {f"Agent-{i}" for i in range(1, 9)}
+    if agent_id not in valid_agent_ids:
+        print(f"❌ Invalid agent ID: '{agent_id}'. Must be one of: {', '.join(sorted(valid_agent_ids))}")
+        return False
+    
     inbox_dir = WORKSPACE_ROOT / "agent_workspaces" / agent_id / "inbox"
     inbox_dir.mkdir(parents=True, exist_ok=True)
     
