@@ -50,7 +50,7 @@ class TheaConfig:
     """Configuration for Thea Manager interactions with enhanced config integration."""
 
     conversation_url: str = (
-        "https://chat.openai.com/g/g-67f437d96d7c81918b2dbc12f0423867-thea-manager"
+        "https://chatgpt.com/g/g-68fd74b31d84819190eb2588b5c649f6-swarm-commander-thea"
     )
     cookie_file: str = "data/thea_cookies.json"
     auto_save_cookies: bool = True
