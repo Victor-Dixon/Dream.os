@@ -1,0 +1,11 @@
+{
+  "url": "https://chat.openai.com",
+  "cookie_path": "data/thea_cookies.json",
+  "timestamp": "2025-12-10T07:24:28.759574",
+  "input_elements": [],
+  "button_elements": [],
+  "suggested_input_selectors": [],
+  "suggested_button_selectors": [],
+  "recommendations": [],
+  "error": "TheaBrowserService._load_cookies() missing 1 required positional argument: 'base_url'"
+}

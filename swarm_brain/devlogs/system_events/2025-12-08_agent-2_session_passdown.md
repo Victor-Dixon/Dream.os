@@ -13,9 +13,9 @@
 - Monitoring domain SSOT consolidation not yet executed.
 
 ## Next
-- Execute manual deployment with Agent-1.
-- Complete Monitoring domain SSOT and increase BaseManager adoption.
-- Continue SSOT tagging beyond 39% (core + infra focus).
+- Execute manual deployment with Agent-1 (backup → upload 4 FRI + 1 PB file → cache flush → verify assets → rollback if needed; surface blockers with alt times).
+- Complete Monitoring domain SSOT and increase BaseManager adoption (small, reversible changes).
+- Continue SSOT tagging beyond 39% (core + infra focus); tag 5–10 files and log paths; use stall-guard cadence (short sprints, log outcomes).
 - Plan archival/removal of legacy factory files after confirming zero usage.
 
 ## Artifacts

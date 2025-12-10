@@ -56,6 +56,7 @@ class TheaConfig:
     auto_save_cookies: bool = True
     rate_limit_requests_per_minute: int = 10
     rate_limit_burst_limit: int = 5
+    cache_dir: str = "data/cache/thea"
 
 
 @dataclass
