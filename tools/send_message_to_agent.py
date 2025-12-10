@@ -36,6 +36,12 @@ if __name__ == "__main__":
     agent_id = sys.argv[1]
     message = " ".join(sys.argv[2:])
     
+    # Validate agent ID
+    valid_agent_ids = {f"Agent-{i}" for i in range(1, 9)}
+    if agent_id not in valid_agent_ids:
+        print(f"❌ Invalid agent ID: '{agent_id}'. Must be one of: {', '.join(sorted(valid_agent_ids))}")
+        sys.exit(1)
+    
     try:
         send_message(agent_id, message)
     except Exception as e:

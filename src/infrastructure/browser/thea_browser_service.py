@@ -561,6 +561,7 @@ class TheaBrowserService:
     def _get_prioritized_send_selectors(self) -> list[str]:
         """Get send button selectors prioritized by historical success."""
         base_selectors = [
+            "#composer-submit-button",  # Specific ID selector first
             "button[data-testid='send-button']",
             "button[aria-label*='Send message']",
             "button[aria-label*='Send']",

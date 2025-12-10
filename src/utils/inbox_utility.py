@@ -51,7 +51,7 @@ def create_inbox_message(
     Agents should use this when they want to create inbox files directly.
     
     Args:
-        recipient: Agent ID (e.g., "Agent-4")
+        recipient: Agent ID (e.g., "Agent-4") - MUST be Agent-1 through Agent-8
         sender: Sender identifier
         content: Message content
         priority: Message priority (normal, urgent, etc.)
@@ -61,6 +61,15 @@ def create_inbox_message(
     Returns:
         True if file created successfully, False otherwise
     """
+    # Validate agent ID format (Agent-1 through Agent-8 only)
+    valid_agent_ids = {f"Agent-{i}" for i in range(1, 9)}
+    if recipient not in valid_agent_ids:
+        logger.error(
+            f"❌ Invalid recipient agent ID: '{recipient}'. "
+            f"Must be one of: {', '.join(sorted(valid_agent_ids))}"
+        )
+        return False
+    
     try:
         # FIXED: Use absolute path from project root to prevent routing issues
         # when called from different working directories (Discord bot, queue processor, etc.)

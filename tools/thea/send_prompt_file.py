@@ -10,10 +10,17 @@ Thin wrapper around thea_headless_send that:
 
 import argparse
 import json
+import logging
 from pathlib import Path
 
 from src.infrastructure.browser.browser_models import BrowserConfig, TheaConfig
 from src.infrastructure.browser.thea_browser_service import TheaBrowserService
+
+# Configure logging to show debug messages
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
 
 
 def send_prompt_from_file(
