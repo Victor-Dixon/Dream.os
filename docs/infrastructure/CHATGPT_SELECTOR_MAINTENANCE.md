@@ -63,11 +63,18 @@ python tools/thea/debug_chatgpt_elements.py
 - Verify button is enabled and visible
 - Note `data-testid` or `id` attributes
 
+**Current Working Selectors** (as of 2025-12-10):
+- **Input**: `div[contenteditable='true'][id='prompt-textarea']` (Primary)
+- **Input**: `div[contenteditable='true'].ProseMirror` (Fallback)
+- **Send Button**: `button[data-testid*='send-button']` (Primary)
+- **Send Button**: `button[aria-label*='Send message']` (Fallback)
+
 **Common Patterns**:
 - `textarea[data-testid='prompt-textarea']`
 - `div[contenteditable='true'][role='textbox']`
 - `button[data-testid='send-button']`
 - `button[aria-label*='Send']`
+- `div.ProseMirror[contenteditable='true']` (Current ChatGPT)
 
 ### **Step 3: Update Selector Lists**
 
@@ -354,9 +361,10 @@ cache_file.unlink() if cache_file.exists() else None
 
 ---
 
-**Last Updated**: 2025-12-10  
-**Maintained By**: Agent-3 (Infrastructure & DevOps Specialist)  
-**Status**: Active - Update when ChatGPT UI changes
+**Last Updated**: 2025-12-10
+**Maintained By**: Agent-3 (Infrastructure & DevOps Specialist)
+**Status**: Active - Recently tested and validated with current ChatGPT UI
+**Current Selectors**: Working as of 2025-12-10 - div[contenteditable] + ProseMirror pattern
 
 🐝 **WE. ARE. SWARM. ⚡🔥**
 
