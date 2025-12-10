@@ -23,50 +23,71 @@ class TestUnifiedMessagingService:
         """Test successful message sending."""
         service = UnifiedMessagingService()
         service.messaging = Mock()
-        service.messaging.send_message = Mock(return_value=True)
+        service.messaging.send_message = Mock(return_value={"success": True, "queue_id": "test-123"})
 
         result = service.send_message("Agent-1", "Test message")
 
-        assert result is True
+        assert result == {"success": True, "queue_id": "test-123"}
         service.messaging.send_message.assert_called_once_with(
-            "Agent-1", "Test message", "regular", True
+            agent="Agent-1",
+            message="Test message",
+            priority="regular",
+            use_pyautogui=True,
+            wait_for_delivery=False,
+            timeout=30.0,
+            discord_user_id=None,
+            stalled=False,
         )
 
     def test_send_message_with_priority(self):
         """Test message sending with custom priority."""
         service = UnifiedMessagingService()
         service.messaging = Mock()
-        service.messaging.send_message = Mock(return_value=True)
+        service.messaging.send_message = Mock(return_value={"success": True, "queue_id": "test-456"})
 
         result = service.send_message("Agent-1", "Test message", priority="urgent")
 
-        assert result is True
+        assert result == {"success": True, "queue_id": "test-456"}
         service.messaging.send_message.assert_called_once_with(
-            "Agent-1", "Test message", "urgent", True
+            agent="Agent-1",
+            message="Test message",
+            priority="urgent",
+            use_pyautogui=True,
+            wait_for_delivery=False,
+            timeout=30.0,
+            discord_user_id=None,
+            stalled=False,
         )
 
     def test_send_message_no_pyautogui(self):
         """Test message sending without PyAutoGUI."""
         service = UnifiedMessagingService()
         service.messaging = Mock()
-        service.messaging.send_message = Mock(return_value=True)
+        service.messaging.send_message = Mock(return_value={"success": True, "queue_id": "test-789"})
 
         result = service.send_message("Agent-1", "Test message", use_pyautogui=False)
 
-        assert result is True
+        assert result == {"success": True, "queue_id": "test-789"}
         service.messaging.send_message.assert_called_once_with(
-            "Agent-1", "Test message", "regular", False
+            agent="Agent-1",
+            message="Test message",
+            priority="regular",
+            use_pyautogui=False,
+            wait_for_delivery=False,
+            timeout=30.0,
+            discord_user_id=None,
+            stalled=False,
         )
 
     def test_send_message_failure(self):
         """Test message sending failure."""
         service = UnifiedMessagingService()
         service.messaging = Mock()
-        service.messaging.send_message = Mock(return_value=False)
+        service.messaging.send_message = Mock(return_value={"success": False, "error": "Failed"})
 
         result = service.send_message("Agent-1", "Test message")
 
-        assert result is False
+        assert result == {"success": False, "error": "Failed"}
 
     def test_send_message_exception(self):
         """Test message sending with exception."""
@@ -126,22 +147,31 @@ class TestUnifiedMessagingService:
         """Test sending empty message."""
         service = UnifiedMessagingService()
         service.messaging = Mock()
-        service.messaging.send_message = Mock(return_value=True)
+        service.messaging.send_message = Mock(return_value={"success": True, "queue_id": "test-empty"})
 
         result = service.send_message("Agent-1", "")
 
-        assert result is True
-        service.messaging.send_message.assert_called_once_with("Agent-1", "", "regular", True)
+        assert result == {"success": True, "queue_id": "test-empty"}
+        service.messaging.send_message.assert_called_once_with(
+            agent="Agent-1",
+            message="",
+            priority="regular",
+            use_pyautogui=True,
+            wait_for_delivery=False,
+            timeout=30.0,
+            discord_user_id=None,
+            stalled=False,
+        )
 
     def test_send_message_none_agent(self):
         """Test sending message with None agent."""
         service = UnifiedMessagingService()
         service.messaging = Mock()
-        service.messaging.send_message = Mock(return_value=False)
+        service.messaging.send_message = Mock(return_value={"success": False, "error": "Invalid agent"})
 
         result = service.send_message(None, "Test message")
 
-        assert result is False
+        assert result == {"success": False, "error": "Invalid agent"}
 
     def test_broadcast_message_empty(self):
         """Test broadcasting empty message."""
