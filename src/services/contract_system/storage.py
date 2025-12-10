@@ -37,11 +37,14 @@ class ContractStorage:
             contracts = self.load_all_contracts()
             contracts[contract.contract_id] = contract.to_dict()
             self._write_json(self.contracts_file, contracts)
-            agent_file = (self.agent_contracts_dir /
-                f'{contract.agent_id}_contracts.json')
-            agent_contracts = self.load_agent_contracts(contract.agent_id)
-            agent_contracts[contract.contract_id] = contract.to_dict()
-            self._write_json(agent_file, agent_contracts)
+            # Use assigned_to instead of agent_id (Contract model uses assigned_to)
+            agent_id = getattr(contract, 'assigned_to', None) or getattr(contract, 'agent_id', None)
+            if agent_id:
+                agent_file = (self.agent_contracts_dir /
+                    f'{agent_id}_contracts.json')
+                agent_contracts = self.load_agent_contracts(agent_id)
+                agent_contracts[contract.contract_id] = contract.to_dict()
+                self._write_json(agent_file, agent_contracts)
             return True
         except Exception as e:
             logger.info(f'ERROR: Error saving contract: {e}')
