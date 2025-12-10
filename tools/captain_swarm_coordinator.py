@@ -140,6 +140,13 @@ class CaptainSwarmCoordinator:
         description: str = None,
     ) -> Dict[str, Any]:
         """Assign task to agent via inbox message."""
+        # Validate agent ID
+        valid_agent_ids = {f"Agent-{i}" for i in range(1, 9)}
+        if agent_id not in valid_agent_ids:
+            raise ValueError(
+                f"Invalid agent ID: '{agent_id}'. Must be one of: {', '.join(sorted(valid_agent_ids))}"
+            )
+        
         inbox_dir = self.AGENT_WORKSPACES / agent_id / "inbox"
         inbox_dir.mkdir(parents=True, exist_ok=True)
         

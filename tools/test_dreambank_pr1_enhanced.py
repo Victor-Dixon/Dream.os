@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+⚠️ TEMPORARY TEST SCRIPT - Can be removed/archived
+
 Test Enhanced Unified GitHub Tool with DreamBank PR #1
 =======================================================
 
