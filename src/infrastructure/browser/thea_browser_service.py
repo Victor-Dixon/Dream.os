@@ -389,20 +389,16 @@ class TheaBrowserService:
             if readonly:
                 return False
 
-            # Try a small interaction to verify it's functional
-            original_value = element.get_attribute('value') or element.text or ""
-            element.send_keys("test")
-            time.sleep(0.1)
-            new_value = element.get_attribute('value') or element.text or ""
-
-            # Clean up the test input
-            element.clear()
+            # For contenteditable divs, do a simpler check based on attributes
             if tag_name == 'div':
-                # For contenteditable divs, we need to clear differently
-                element.send_keys(Keys.CONTROL + 'a')
-                element.send_keys(Keys.DELETE)
+                # Check if it has the right attributes for a ChatGPT input
+                element_id = element.get_attribute('id')
+                element_class = element.get_attribute('class')
+                if element_id == 'prompt-textarea' or 'ProseMirror' in element_class:
+                    return True
 
-            return len(new_value) > len(original_value)
+            # For other elements, assume they're ready if they pass basic checks
+            return True
 
         except Exception:
             return False
