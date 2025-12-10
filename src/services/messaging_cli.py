@@ -114,6 +114,21 @@ class MessagingCLI:
                 return handle_save(parsed_args, self.parser)
             elif parsed_args.leaderboard:
                 return handle_leaderboard()
+            elif parsed_args.infra_health:
+                # Import here to avoid circular imports
+                from src.infrastructure.infrastructure_health_monitor import InfrastructureHealthMonitor
+
+                monitor = InfrastructureHealthMonitor()
+                result = monitor.perform_full_health_check()
+                monitor.print_health_report(result)
+
+                # Return appropriate exit code based on health status
+                if result.status == "critical":
+                    return 2  # Critical health issues
+                elif result.status == "warning":
+                    return 1  # Health warnings
+                else:
+                    return 0  # Healthy
             else:
                 self.parser.print_help()
                 return 0

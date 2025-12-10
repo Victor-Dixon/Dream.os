@@ -563,6 +563,13 @@ def create_messaging_parser() -> argparse.ArgumentParser:
         help="Handoff expectation (what 'done' looks like) for CYCLE_V2",
     )
 
+    # Infrastructure health monitoring
+    parser.add_argument(
+        "--infra-health",
+        action="store_true",
+        help="Check infrastructure health metrics (disk, memory, CPU, browser automation)",
+    )
+
     return parser
 
 
