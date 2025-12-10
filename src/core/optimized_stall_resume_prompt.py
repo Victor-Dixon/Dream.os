@@ -348,7 +348,7 @@ class OptimizedStallResumePrompt:
             task_status = next_task.get("status", "pending")
             task_desc = next_task.get("description", "")
             task_priority = next_task.get("priority", "MEDIUM")
-            
+
             if task_status == "assigned":
                 task_section = f"""
 
