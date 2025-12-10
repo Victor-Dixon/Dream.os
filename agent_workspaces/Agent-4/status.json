@@ -46,7 +46,8 @@
     "✅ COMPLETE: Cycle accomplishments report created and posted",
     "✅ COMPLETE: Pytest debugging assignment executed - Fixed test_contract_manager.py (14/14 tests passing)",
     "✅ COMPLETE: Swarm pytest progress report generated - 5/8 agents reporting, 3 complete, 15+ fixes applied",
-    "✅ COMPLETE: Resume prompt + cycle planner integration - Automatic task assignment on agent resume"
+    "✅ COMPLETE: Resume prompt + cycle planner integration - Automatic task assignment on agent resume",
+    "✅ COMPLETE: Agent operating cycle workflow documentation - When to add tasks and message agents clarified"
   ],
   "completed_tasks": [
     "Comprehensive system assessment complete",
