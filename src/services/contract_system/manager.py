@@ -12,9 +12,10 @@ License: MIT
 
 import logging
 from datetime import datetime
-from typing import Any
+from typing import Any, Optional
 
 from ...core.base.base_service import BaseService
+from .cycle_planner_integration import CyclePlannerIntegration
 from .storage import ContractStorage
 
 logger = logging.getLogger(__name__)
@@ -27,6 +28,7 @@ class ContractManager(BaseService):
         """Initialize contract manager."""
         super().__init__("ContractManager")
         self.storage = ContractStorage()
+        self.cycle_planner = CyclePlannerIntegration()
 
     def get_system_status(self) -> dict[str, Any]:
         """Get overall system contract status."""
@@ -74,9 +76,42 @@ class ContractManager(BaseService):
             return {"error": str(e), "agent_id": agent_id}
 
     def get_next_task(self, agent_id: str) -> dict[str, Any]:
-        """Get next available task for agent."""
+        """
+        Get next available task for agent.
+        
+        Checks cycle planner first, then falls back to contract system.
+        
+        Args:
+            agent_id: Agent ID (e.g., "Agent-1", "Agent-2")
+            
+        Returns:
+            Dictionary with task information and status
+        """
         try:
-            # Get available tasks
+            # First, check cycle planner for tasks
+            cycle_task = self.cycle_planner.get_next_cycle_task(agent_id)
+            
+            if cycle_task:
+                logger.info(
+                    f"✅ Found cycle planner task for {agent_id}: {cycle_task.get('title', 'Unknown')}"
+                )
+                
+                # Mark task as assigned in cycle planner
+                task_id = cycle_task.get("task_id", "")
+                if task_id:
+                    # Update cycle planner file to mark as active
+                    self._mark_cycle_task_active(agent_id, task_id)
+                
+                # Return in expected format
+                return {
+                    "agent_id": agent_id,
+                    "task": cycle_task,
+                    "status": "assigned",
+                    "source": "cycle_planner",
+                }
+            
+            # Fall back to contract system
+            logger.debug(f"No cycle planner tasks found for {agent_id}, checking contracts...")
             all_contracts = self.storage.get_all_contracts()
             available_tasks = [c for c in all_contracts if c.get("status") == "pending"]
 
@@ -97,11 +132,80 @@ class ContractManager(BaseService):
             # Save updated task
             self.storage.save_contract(task)
 
-            return {"agent_id": agent_id, "task": task, "status": "assigned"}
+            return {
+                "agent_id": agent_id,
+                "task": task,
+                "status": "assigned",
+                "source": "contract_system",
+            }
 
         except Exception as e:
             self.logger.error(f"Error getting next task for {agent_id}: {e}")
             return {"error": str(e), "agent_id": agent_id}
+    
+    def _mark_cycle_task_active(self, agent_id: str, task_id: str) -> bool:
+        """
+        Mark cycle planner task as active/assigned.
+        
+        Args:
+            agent_id: Agent ID
+            task_id: Task ID to mark active
+            
+        Returns:
+            True if task was marked active
+        """
+        try:
+            from datetime import date
+            
+            # Load cycle planner tasks
+            tasks = self.cycle_planner.load_cycle_planner_tasks(agent_id)
+            
+            # Find and update task
+            for task in tasks:
+                if task.get("task_id") == task_id:
+                    task["status"] = "active"
+                    task["assigned_at"] = datetime.now().isoformat()
+                    
+                    # Save back to file
+                    target_date = date.today()
+                    date_str = target_date.isoformat()
+                    agent_dir = self.cycle_planner.agent_workspaces_dir / agent_id
+                    
+                    patterns = [
+                        f"cycle_planner_tasks_{date_str}.json",
+                        f"{date_str}_{agent_id.lower()}_pending_tasks.json",
+                    ]
+                    
+                    for pattern in patterns:
+                        task_file = agent_dir / pattern
+                        if task_file.exists():
+                            import json
+                            with open(task_file, "r", encoding="utf-8") as f:
+                                data = json.load(f)
+                            
+                            # Update task in data structure
+                            if "pending_tasks" in data:
+                                for t in data["pending_tasks"]:
+                                    if t.get("task_id") == task_id:
+                                        t.update(task)
+                                        break
+                            elif "tasks" in data:
+                                for t in data["tasks"]:
+                                    if t.get("task_id") == task_id:
+                                        t.update(task)
+                                        break
+                            
+                            with open(task_file, "w", encoding="utf-8") as f:
+                                json.dump(data, f, indent=2, ensure_ascii=False)
+                            
+                            logger.info(f"✅ Marked cycle planner task {task_id} as active")
+                            return True
+            
+            return False
+            
+        except Exception as e:
+            logger.warning(f"⚠️ Failed to mark cycle task active: {e}")
+            return False
 
     def add_task_to_contract(self, contract_id: str, task: dict[str, Any]) -> bool:
         """Add a task to an existing contract."""
