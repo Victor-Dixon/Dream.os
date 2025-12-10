@@ -115,13 +115,11 @@
   - cleanup_obsolete_docs.py - Documentation cleanup automation
 - **Status**: MEDIUM PRIORITY complete, Stage 1 integration work active
 
-### **Agent-7** ⏳ **IN PROGRESS**
-- **8 repos** assigned for logic integration
-- **Steps 3, 5-7 COMPLETE**: Integration planning, duplicate resolution, venv cleanup, integration review
-- **Critical**: Superpowered-TTRPG venv cleanup complete (2,079 files removed)
-- **Test coverage**: 27 Discord test files (exceeded 19 target)
-- **Tools created**: cleanup_superpowered_venv.py, create_pr_rest_api.py, stage1_readiness_checker.py
-- **Status**: Ready for Step 4 (Repository Merging) when API allows
+### **Agent-7** ✅ **PYTEST ASSIGNMENT SLICE COMPLETE**
+- Ran assigned domain tests: `tests/unit/gui` (expected skips), `tests/unit/infrastructure/browser/unified` (4 passed, 5 skipped by stub guards); no regressions.
+- New productivity tool: `tools/pytest_quick_report.py` (pytest runner emitting JSON/MD summaries, <400 LOC).
+- Workspace cleanup: removed `.pytest_cache`, `htmlcov`, and `__pycache__` trees to reduce disk pressure.
+- Blocker: DreamBank PR #1 still draft (manual undraft/merge needed).
 
 ### **Agent-8** ⏳ **MESSAGING TEMPLATES INTEGRATION COMPLETE**
 - **Messaging Templates Integration**: ✅ **COMPLETE** (64 tests, all passing)
