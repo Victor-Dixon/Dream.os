@@ -101,7 +101,36 @@ class TaskHandler(BaseService):
         logger.info(f"🎯 Getting next task for {agent_id}...")
 
         try:
-            # Get pending tasks
+            # First, try contract system with cycle planner integration
+            try:
+                from src.services.handlers.contract_handler import ContractHandler
+                contract_handler = ContractHandler()
+                if contract_handler.manager:
+                    task_result = contract_handler.manager.get_next_task(agent_id)
+                    
+                    if task_result and task_result.get("task"):
+                        task = task_result["task"]
+                        source = task_result.get("source", "contract_system")
+                        
+                        logger.info(f"✅ Task found from {source}")
+                        print("\n" + "=" * 60)
+                        print("📋 TASK ASSIGNED")
+                        print("=" * 60)
+                        print(f"Title: {task.get('title', 'Unknown')}")
+                        print(f"Description: {task.get('description', 'No description')}")
+                        print(f"Priority: {task.get('priority', 'MEDIUM')}")
+                        print(f"Source: {source}")
+                        if task.get('task_id'):
+                            print(f"Task ID: {task.get('task_id')}")
+                        if task.get('estimated_time'):
+                            print(f"Estimated Time: {task.get('estimated_time')}")
+                        print("=" * 60)
+                        print("\n🐝 WE. ARE. SWARM. ⚡⚡")
+                        return True
+            except Exception as e:
+                logger.debug(f"Contract system check failed: {e}, trying task repository...")
+            
+            # Fall back to task repository
             pending_tasks = list(repo.get_pending(limit=1))
 
             if not pending_tasks:
