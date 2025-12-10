@@ -39,11 +39,51 @@ class ChromeBrowserAdapter:
 
 class BrowserOperations:
     """Stub for missing browser operations."""
-    def __init__(self, adapter, config): pass
+    def __init__(self, adapter, config): 
+        self.adapter = adapter
+        self.config = config
+    
+    def navigate_to_conversation(self, url: str | None = None) -> bool:
+        """Navigate to conversation page."""
+        return False  # Stub implementation
+    
+    def send_message(self, message: str) -> bool:
+        """Send a message."""
+        return False  # Stub implementation
+    
+    def wait_for_response_ready(self, timeout: float = 30.0) -> bool:
+        """Wait for response to be ready."""
+        return False  # Stub implementation
+    
+    def get_page_status(self) -> dict[str, Any]:
+        """Get current page status."""
+        return {}  # Stub implementation
 
 class SessionManager:
     """Stub for missing session manager."""
-    def __init__(self, config): pass
+    def __init__(self, config): 
+        self.config = config
+        self.sessions: dict[str, Any] = {}
+    
+    def create_session(self, service_name: str) -> str | None:
+        """Create a new browser session."""
+        return None  # Stub implementation
+    
+    def can_make_request(self, service_name: str, session_id: str) -> tuple[bool, str]:
+        """Check if a request can be made."""
+        return (False, "stub")  # Stub implementation
+    
+    def record_request(self, service_name: str, session_id: str, success: bool = True) -> None:
+        """Record a request."""
+        pass  # Stub implementation
+    
+    def get_session_info(self, session_id: str) -> dict[str, Any]:
+        """Get session information."""
+        return {}  # Stub implementation
+    
+    def get_rate_limit_status(self, service_name: str) -> dict[str, Any]:
+        """Get rate limit status."""
+        return {}  # Stub implementation
 
 
 class UnifiedBrowserService:
