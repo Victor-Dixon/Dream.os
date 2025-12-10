@@ -136,7 +136,7 @@ class UnifiedBrowserService:
 
     def save_cookies(self, service_name: str) -> bool:
         """Save cookies for a service."""
-        return self.cookie_manager.save_cookies(self.browser_adapter, service_name)
+        return self.cookie_manager.save_cookies_for_service(self.browser_adapter, service_name)
 
     def load_cookies(self, service_name: str) -> bool:
         """Load cookies for a service."""
