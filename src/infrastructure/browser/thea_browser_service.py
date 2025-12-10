@@ -114,14 +114,22 @@ class TheaBrowserService:
 
         try:
             target_url = thea_url or self.thea_config.conversation_url
-            # Navigate to Thea
-            if not self.navigate_to(target_url):
+            # Navigate to Thea with longer wait for page load
+            if not self.navigate_to(target_url, wait_seconds=5.0):
                 return False
+
+            # Wait for page to stabilize
+            time.sleep(3)
 
             # Try loading cookies if available
             self._load_cookies(target_url)
             self.driver.refresh()
-            time.sleep(2)
+
+            # Wait longer for page to reload after cookie loading
+            time.sleep(5)
+
+            # Additional wait for dynamic content to load
+            self._wait_for_page_ready()
 
             # Check if already authenticated
             if self._is_thea_authenticated():
@@ -133,8 +141,10 @@ class TheaBrowserService:
             if allow_manual:
                 logger.info("⚠️  Manual authentication required")
                 logger.info("Please log in to Thea Manager in the browser window...")
-                time.sleep(30)  # Allow time for manual login
+                logger.info("Waiting 45 seconds for manual login...")
+                time.sleep(45)  # Allow more time for manual login
 
+                # Check authentication again after manual login
                 if self._is_thea_authenticated():
                     logger.info("✅ Authentication successful")
                     self._save_cookies()
@@ -145,6 +155,45 @@ class TheaBrowserService:
 
         except Exception as e:
             logger.error(f"❌ Authentication error: {e}")
+            return False
+
+    def _wait_for_page_ready(self, timeout: float = 10.0) -> bool:
+        """Wait for page to be ready by checking for common elements."""
+        try:
+            from selenium.webdriver.support import expected_conditions as EC
+            from selenium.webdriver.support.ui import WebDriverWait
+
+            # Wait for at least one of these elements to be present
+            ready_selectors = [
+                "textarea",
+                "div[contenteditable='true']",
+                "[data-testid]",
+                ".composer",
+                "form",
+                "[role='textbox']",
+                "button",
+                "input"
+            ]
+
+            for selector in ready_selectors:
+                try:
+                    WebDriverWait(self.driver, 2).until(
+                        EC.presence_of_element_located(("css selector", selector))
+                    )
+                    logger.debug(f"Page ready indicator found: {selector}")
+                    return True
+                except:
+                    continue
+
+            # If no specific elements found, wait for document ready state
+            WebDriverWait(self.driver, timeout).until(
+                lambda driver: driver.execute_script("return document.readyState") == "complete"
+            )
+            logger.debug("Page ready state: complete")
+            return True
+
+        except Exception as e:
+            logger.debug(f"Page ready wait failed: {e}")
             return False
 
     def _is_thea_authenticated(self) -> bool:
@@ -188,6 +237,7 @@ class TheaBrowserService:
             "textarea",
             "div[contenteditable='true']",
             "div[role='textbox']",
+            "#prompt-textarea",
             "div[contenteditable='true'][aria-label*='message']",
             "div[contenteditable='true'][aria-label*='Send']",
             "div[contenteditable='true'][placeholder*='message']",
@@ -218,6 +268,7 @@ class TheaBrowserService:
             "textarea[data-testid='prompt-textarea']",
             "div[data-testid='prompt-textarea']",
             "div[contenteditable='true'][data-testid='prompt-textarea']",
+            "#prompt-textarea",
             "textarea[aria-label*='Send a message']",
             "textarea[placeholder*='Send a message']",
             "textarea[aria-label*='Message']",
@@ -652,10 +703,19 @@ class TheaBrowserService:
             return None
 
         # Ensure on conversation page
-        self.navigate_to(self.thea_config.conversation_url)
+        self.navigate_to(self.thea_config.conversation_url, wait_seconds=5.0)
+
+        # Wait for page to be fully ready before looking for elements
+        if not self._wait_for_page_ready(timeout=15.0):
+            logger.error("Page failed to load properly")
+            return None
+
+        # Additional wait for dynamic content
+        time.sleep(3)
 
         textarea = self._find_prompt_textarea()
         if not textarea:
+            logger.error("Could not find textarea for prompt input")
             return None
 
         if not self._set_textarea_value(textarea, prompt):
