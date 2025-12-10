@@ -6,14 +6,37 @@ Agent Activity Detector - Multi-Source Activity Monitoring
 Monitors agent activity from multiple sources to detect when agents are active or inactive.
 Integrates with resumer prompt system to send prompts when agents are inactive.
 
-Activity Sources:
-- status.json updates (last_updated timestamp)
-- File modifications in agent workspace
-- Devlog creation (devlogs/ directory)
-- Inbox messages sent/received
+Activity Sources (Operating Cycle Aligned):
+Claim Phase:
 - Task claims (cycle planner)
-- Git commits (if agent workspace is a git repo)
-- Message queue activity (if agent has messages)
+- Contract system activity
+
+Sync Phase:
+- Swarm Brain activity (reads/writes)
+
+Slice Phase:
+- Planning documents (plans, strategies, breakdowns)
+
+Execute Phase:
+- File modifications in agent workspace
+- Tool runs (via ActivityEmitter telemetry)
+
+Validate Phase:
+- Test runs (pytest cache, test results)
+- Validation results (validation files, test files)
+
+Commit Phase:
+- Git commits
+- Git push activity
+
+Report Phase:
+- Devlog creation (devlogs/ directory)
+- Evidence files (reports, artifacts, deliverables)
+
+General:
+- status.json updates (last_updated timestamp)
+- Inbox messages sent/received
+- Message queue activity
 
 Author: Agent-6 (Coordination & Communication Specialist)
 Created: 2025-11-30
@@ -29,6 +52,13 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 from dataclasses import dataclass
+
+try:
+    from src.core.config.timeout_constants import TimeoutConstants
+except ImportError:
+    # Fallback if not available
+    class TimeoutConstants:
+        HTTP_QUICK = 5
 
 logger = logging.getLogger(__name__)
 
@@ -149,13 +179,35 @@ class AgentActivityDetector:
         if event_signal.activities:
             activities.extend(event_signal.activities)
 
-        # Check all activity sources
-        activities.extend(self._check_status_updates(agent_id, lookback_time))
-        activities.extend(self._check_file_modifications(agent_id, lookback_time))
-        activities.extend(self._check_devlog_creation(agent_id, lookback_time))
-        activities.extend(self._check_inbox_activity(agent_id, lookback_time))
+        # Check all activity sources (Operating Cycle aligned)
+        # Claim phase: Task claims, contract system
         activities.extend(self._check_task_claims(agent_id, lookback_time))
+        activities.extend(self._check_contract_system_activity(agent_id, lookback_time))
+        
+        # Sync phase: Swarm Brain activity, SSOT reads
+        activities.extend(self._check_swarm_brain_activity(agent_id, lookback_time))
+        
+        # Slice phase: Planning documents, task breakdowns
+        activities.extend(self._check_planning_documents(agent_id, lookback_time))
+        
+        # Execute phase: File modifications, tool runs (via ActivityEmitter)
+        activities.extend(self._check_file_modifications(agent_id, lookback_time))
+        
+        # Validate phase: Test runs, validation results
+        activities.extend(self._check_test_runs(agent_id, lookback_time))
+        activities.extend(self._check_validation_results(agent_id, lookback_time))
+        
+        # Commit phase: Git commits, git push
         activities.extend(self._check_git_commits(agent_id, lookback_time))
+        activities.extend(self._check_git_push_activity(agent_id, lookback_time))
+        
+        # Report phase: Devlogs, evidence files, Discord posts
+        activities.extend(self._check_devlog_creation(agent_id, lookback_time))
+        activities.extend(self._check_evidence_files(agent_id, lookback_time))
+        
+        # General: Status updates, inbox, message queue
+        activities.extend(self._check_status_updates(agent_id, lookback_time))
+        activities.extend(self._check_inbox_activity(agent_id, lookback_time))
         activities.extend(self._check_message_queue_activity(agent_id, lookback_time))
         
         # Sort by timestamp (most recent first)
@@ -525,6 +577,293 @@ class AgentActivityDetector:
             logger.warning(f"Error checking message queue activity for {agent_id}: {e}")
         
         return activities
+    
+    def _check_contract_system_activity(
+        self,
+        agent_id: str,
+        lookback_time: datetime
+    ) -> List[AgentActivity]:
+        """Check contract system activity (Claim phase)."""
+        activities = []
+        contracts_dir = self.workspace_root / "contracts"
+        
+        if not contracts_dir.exists():
+            return activities
+        
+        try:
+            # Check contract files for this agent
+            contract_file = contracts_dir / "agent_contracts" / f"{agent_id}_contracts.json"
+            if contract_file.exists():
+                mtime = datetime.fromtimestamp(contract_file.stat().st_mtime)
+                if mtime >= lookback_time:
+                    try:
+                        with open(contract_file, 'r', encoding='utf-8') as f:
+                            data = json.load(f)
+                            contracts = data.get("contracts", [])
+                            claimed = [c for c in contracts if c.get("status", "").upper() in ["CLAIMED", "ASSIGNED", "IN_PROGRESS"]]
+                            if claimed:
+                                activities.append(AgentActivity(
+                                    agent_id=agent_id,
+                                    source="contract",
+                                    timestamp=mtime,
+                                    action=f"Contract claimed: {claimed[0].get('title', 'Unknown')[:50]}",
+                                    metadata={"contracts": len(claimed), "status": "claimed"}
+                                ))
+                    except Exception:
+                        activities.append(AgentActivity(
+                            agent_id=agent_id,
+                            source="contract",
+                            timestamp=mtime,
+                            action="Contract file modified",
+                            metadata={"file": contract_file.name}
+                        ))
+        except Exception as e:
+            logger.warning(f"Error checking contract system activity for {agent_id}: {e}")
+        
+        return activities
+    
+    def _check_swarm_brain_activity(
+        self,
+        agent_id: str,
+        lookback_time: datetime
+    ) -> List[AgentActivity]:
+        """Check Swarm Brain activity (Sync phase)."""
+        activities = []
+        swarm_brain_dir = Path("swarm_brain")
+        
+        if not swarm_brain_dir.exists():
+            return activities
+        
+        try:
+            # Check for agent-specific brain writes
+            # Look for files with agent ID in path or content
+            for brain_file in swarm_brain_dir.rglob("*.md"):
+                try:
+                    mtime = datetime.fromtimestamp(brain_file.stat().st_mtime)
+                    if mtime >= lookback_time:
+                        # Check if file relates to this agent
+                        if agent_id.lower() in brain_file.name.lower() or agent_id.lower() in str(brain_file):
+                            activities.append(AgentActivity(
+                                agent_id=agent_id,
+                                source="swarm_brain",
+                                timestamp=mtime,
+                                action=f"Swarm Brain activity: {brain_file.name}",
+                                metadata={"file": str(brain_file.relative_to(swarm_brain_dir))}
+                            ))
+                except (OSError, PermissionError):
+                    continue
+        except Exception as e:
+            logger.warning(f"Error checking Swarm Brain activity for {agent_id}: {e}")
+        
+        return activities
+    
+    def _check_planning_documents(
+        self,
+        agent_id: str,
+        lookback_time: datetime
+    ) -> List[AgentActivity]:
+        """Check planning/slicing documents (Slice phase)."""
+        activities = []
+        agent_dir = self.workspace_root / agent_id
+        
+        if not agent_dir.exists():
+            return activities
+        
+        try:
+            # Look for planning documents (plans, strategies, breakdowns)
+            planning_patterns = ["*plan*.md", "*strategy*.md", "*breakdown*.md", "*slice*.md", "*design*.md"]
+            for pattern in planning_patterns:
+                for plan_file in agent_dir.rglob(pattern):
+                    try:
+                        mtime = datetime.fromtimestamp(plan_file.stat().st_mtime)
+                        if mtime >= lookback_time:
+                            relative_path = plan_file.relative_to(agent_dir)
+                            activities.append(AgentActivity(
+                                agent_id=agent_id,
+                                source="planning",
+                                timestamp=mtime,
+                                action=f"Planning document: {relative_path}",
+                                metadata={"file": str(relative_path), "type": "slice"}
+                            ))
+                    except (OSError, PermissionError):
+                        continue
+        except Exception as e:
+            logger.warning(f"Error checking planning documents for {agent_id}: {e}")
+        
+        return activities
+    
+    def _check_test_runs(
+        self,
+        agent_id: str,
+        lookback_time: datetime
+    ) -> List[AgentActivity]:
+        """Check test runs (Validate phase)."""
+        activities = []
+        
+        # Check for pytest cache or test results
+        pytest_cache = Path(".pytest_cache")
+        test_results = Path("test_results")
+        
+        # Check pytest cache for recent test runs
+        if pytest_cache.exists():
+            try:
+                vcache = pytest_cache / "v" / "cache"
+                if vcache.exists():
+                    for cache_file in vcache.glob("*"):
+                        try:
+                            mtime = datetime.fromtimestamp(cache_file.stat().st_mtime)
+                            if mtime >= lookback_time:
+                                activities.append(AgentActivity(
+                                    agent_id=agent_id,
+                                    source="test",
+                                    timestamp=mtime,
+                                    action=f"Test run detected: {cache_file.name}",
+                                    metadata={"type": "pytest", "file": cache_file.name}
+                                ))
+                        except (OSError, PermissionError):
+                            continue
+            except Exception as e:
+                logger.debug(f"Error checking pytest cache: {e}")
+        
+        # Check test results directory
+        if test_results.exists():
+            try:
+                for result_file in test_results.rglob("*"):
+                    if result_file.is_file():
+                        try:
+                            mtime = datetime.fromtimestamp(result_file.stat().st_mtime)
+                            if mtime >= lookback_time:
+                                activities.append(AgentActivity(
+                                    agent_id=agent_id,
+                                    source="test",
+                                    timestamp=mtime,
+                                    action=f"Test result: {result_file.name}",
+                                    metadata={"type": "result", "file": str(result_file.relative_to(test_results))}
+                                ))
+                        except (OSError, PermissionError):
+                            continue
+            except Exception as e:
+                logger.debug(f"Error checking test results: {e}")
+        
+        return activities
+    
+    def _check_validation_results(
+        self,
+        agent_id: str,
+        lookback_time: datetime
+    ) -> List[AgentActivity]:
+        """Check validation results (Validate phase)."""
+        activities = []
+        agent_dir = self.workspace_root / agent_id
+        
+        if not agent_dir.exists():
+            return activities
+        
+        try:
+            # Look for validation files
+            validation_patterns = ["*validation*.md", "*validate*.py", "*test*.py", "*check*.py"]
+            for pattern in validation_patterns:
+                for val_file in agent_dir.rglob(pattern):
+                    try:
+                        mtime = datetime.fromtimestamp(val_file.stat().st_mtime)
+                        if mtime >= lookback_time:
+                            relative_path = val_file.relative_to(agent_dir)
+                            activities.append(AgentActivity(
+                                agent_id=agent_id,
+                                source="validation",
+                                timestamp=mtime,
+                                action=f"Validation: {relative_path}",
+                                metadata={"file": str(relative_path), "type": "validate"}
+                            ))
+                    except (OSError, PermissionError):
+                        continue
+        except Exception as e:
+            logger.warning(f"Error checking validation results for {agent_id}: {e}")
+        
+        return activities
+    
+    def _check_git_push_activity(
+        self,
+        agent_id: str,
+        lookback_time: datetime
+    ) -> List[AgentActivity]:
+        """Check git push activity (Commit phase)."""
+        activities = []
+        agent_dir = self.workspace_root / agent_id
+        
+        # Check main repo git activity (pushes show up as remote tracking updates)
+        repo_root = Path(".")
+        if (repo_root / ".git").exists():
+            try:
+                import subprocess
+                # Check for recent pushes (refs/remotes updates)
+                result = subprocess.run(
+                    ["git", "log", "--since", lookback_time.isoformat(), "--all", "--format=%H|%ai|%s", "--grep", agent_id],
+                    cwd=repo_root,
+                    capture_output=True,
+                    text=True,
+                    timeout=TimeoutConstants.HTTP_QUICK
+                )
+                
+                if result.returncode == 0 and result.stdout.strip():
+                    # Check if commits mention this agent
+                    for line in result.stdout.strip().split("\n"):
+                        if line and agent_id.lower() in line.lower():
+                            parts = line.split("|", 2)
+                            if len(parts) >= 3:
+                                commit_hash, commit_date, commit_msg = parts
+                                try:
+                                    commit_time = datetime.strptime(commit_date, "%Y-%m-%d %H:%M:%S %z")
+                                    commit_time = commit_time.replace(tzinfo=None)
+                                    if commit_time >= lookback_time:
+                                        activities.append(AgentActivity(
+                                            agent_id=agent_id,
+                                            source="git_push",
+                                            timestamp=commit_time,
+                                            action=f"Git push: {commit_msg[:50]}",
+                                            metadata={"hash": commit_hash[:8], "message": commit_msg}
+                                        ))
+                                except ValueError:
+                                    continue
+            except Exception:
+                pass
+        
+        return activities
+    
+    def _check_evidence_files(
+        self,
+        agent_id: str,
+        lookback_time: datetime
+    ) -> List[AgentActivity]:
+        """Check evidence files (Report phase)."""
+        activities = []
+        agent_dir = self.workspace_root / agent_id
+        
+        if not agent_dir.exists():
+            return activities
+        
+        try:
+            # Look for evidence files (reports, artifacts, deliverables)
+            evidence_patterns = ["*evidence*.md", "*report*.md", "*artifact*.md", "*deliverable*.md", "*result*.md"]
+            for pattern in evidence_patterns:
+                for evidence_file in agent_dir.rglob(pattern):
+                    try:
+                        mtime = datetime.fromtimestamp(evidence_file.stat().st_mtime)
+                        if mtime >= lookback_time:
+                            relative_path = evidence_file.relative_to(agent_dir)
+                            activities.append(AgentActivity(
+                                agent_id=agent_id,
+                                source="evidence",
+                                timestamp=mtime,
+                                action=f"Evidence file: {relative_path}",
+                                metadata={"file": str(relative_path), "type": "report"}
+                            ))
+                    except (OSError, PermissionError):
+                        continue
+        except Exception as e:
+            logger.warning(f"Error checking evidence files for {agent_id}: {e}")
+        
+        return activities
 
     def _is_meaningful_activity(self, activity: AgentActivity) -> bool:
         """Return True if activity represents real progress (not chat/ack)."""
@@ -533,14 +872,23 @@ class AgentActivityDetector:
             tier = meta.get("tier")
             weight = meta.get("weight", 0)
             return tier == 1 or weight >= 2
-        if activity.source in {"file", "devlog", "task", "git"}:
+        
+        # Operating cycle activities (all meaningful)
+        meaningful_sources = {
+            "file", "devlog", "task", "git", "git_push",
+            "contract", "swarm_brain", "planning", "test",
+            "validation", "evidence"
+        }
+        if activity.source in meaningful_sources:
             return True
+        
         if activity.source == "status":
             # Require structured metadata and non-empty mission/status to count
             meta = activity.metadata or {}
             mission = meta.get("mission") or ""
             status_val = meta.get("status") or ""
             return bool(mission.strip() or status_val.strip())
+        
         # Inbox/message queue events are considered noise for progress
         return False
 
@@ -756,7 +1104,6 @@ Recent Actions:
 def main():
     """CLI entry point."""
     import argparse
-    from src.core.config.timeout_constants import TimeoutConstants
     
     parser = argparse.ArgumentParser(description="Agent Activity Detector")
     parser.add_argument("--agent", help="Check specific agent")
