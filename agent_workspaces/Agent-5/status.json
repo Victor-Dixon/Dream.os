@@ -20,7 +20,8 @@
     "FreeRideInvestor main.css refreshed locally toward professional layout",
     "Passdown, devlog, and swarm_brain updated for session cleanup",
     "swarm_brain.json committed with Thea automation recommendations and trading robot prompt",
-    "Broadcast pytest debugging assignments to all 8 agents as force multiplier task"
+    "Broadcast pytest debugging assignments to all 8 agents as force multiplier task",
+    "Fixed SearchQuery backward compatibility in test_vector_models.py - all 86 assigned tests now passing"
   ],
   "achievements": [
     "Headless Thea operations stabilized with cookie persistence",
