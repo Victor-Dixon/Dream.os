@@ -39,6 +39,25 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
+def _mask_token(tok: str) -> str:
+    """
+    Mask OAuth token for safe logging.
+    
+    Args:
+        tok: OAuth token string
+        
+    Returns:
+        Masked token string (oauth:xxxx...xxxx format)
+    """
+    if not tok:
+        return ""
+    # Remove oauth: prefix if present
+    t = tok.replace("oauth:", "")
+    if len(t) <= 8:
+        return "oauth:***"
+    return "oauth:" + t[:4] + "..." + t[-4:]
+
+
 def check_config():
     """Check if configuration is ready."""
     issues = []
@@ -118,23 +137,53 @@ async def main():
         oauth_token = access_token
         if not oauth_token.startswith("oauth:"):
             oauth_token = f"oauth:{oauth_token}"
+        
+        # Validate token format
+        if not oauth_token.startswith("oauth:"):
+            print("❌ ERROR: OAuth token must start with 'oauth:' for IRC login")
+            return
+        
+        # Warn if username != channel (token must match username, not channel)
+        if username.lower() != channel.lower():
+            print(f"⚠️  WARNING: Bot username ({username}) != channel ({channel})")
+            print(f"⚠️  Token must match the BOT USERNAME, not the channel name")
+        
         twitch_config = {
             "username": username,
             "oauth_token": oauth_token,
             "channel": channel,
         }
         print(f"✅ Using OAuth token for channel: {channel}")
+        print(f"🔐 Using OAuth token: {_mask_token(oauth_token)}")
+        print(f"👤 Bot username: {username}")
+        print(f"⚠️  CRITICAL: OAuth token must be for account '{username}'")
+        print(f"⚠️  Token must be a USER access token (not app token)")
+        print(f"⚠️  Token must have 'chat:read' and 'chat:edit' scopes")
     elif swarm_voice:
         parts = swarm_voice.split("|")
         if len(parts) == 3:
             # Full format: username|token|channel
             username, oauth_token, channel = [p.strip() for p in parts]
+            # Validate token format
+            if not oauth_token.startswith("oauth:"):
+                print("❌ ERROR: OAuth token must start with 'oauth:' for IRC login")
+                return
+            
+            # Warn if username != channel
+            if username.lower() != channel.lower():
+                print(f"⚠️  WARNING: Bot username ({username}) != channel ({channel})")
+                print(f"⚠️  Token must match the BOT USERNAME, not the channel name")
+            
             twitch_config = {
                 "username": username,
                 "oauth_token": oauth_token,
                 "channel": channel,
             }
             print(f"✅ Using TWITCH_SWARM_VOICE for channel: {channel}")
+            print(f"🔐 Using OAuth token: {_mask_token(oauth_token)}")
+            print(f"👤 Bot username: {username}")
+            print(f"⚠️  CRITICAL: OAuth token must be for account '{username}'")
+            print(f"⚠️  Token must be a USER access token with chat:read + chat:edit scopes")
         elif len(parts) == 1 and channel:
             # Only token in TWITCH_SWARM_VOICE, but channel set separately
             username = os.getenv("TWITCH_BOT_USERNAME") or channel
@@ -142,12 +191,26 @@ async def main():
             # Ensure token has oauth: prefix
             if not oauth_token.startswith("oauth:"):
                 oauth_token = f"oauth:{oauth_token}"
+            # Validate token format
+            if not oauth_token.startswith("oauth:"):
+                print("❌ ERROR: OAuth token must start with 'oauth:' for IRC login")
+                return
+            
+            # Warn if username != channel
+            if username.lower() != channel.lower():
+                print(f"⚠️  WARNING: Bot username ({username}) != channel ({channel})")
+                print(f"⚠️  Token must match the BOT USERNAME, not the channel name")
+            
             twitch_config = {
                 "username": username,
                 "oauth_token": oauth_token,
                 "channel": channel,
             }
             print(f"✅ Using TWITCH_SWARM_VOICE (token) + TWITCH_CHANNEL: {channel}")
+            print(f"🔐 Using OAuth token: {_mask_token(oauth_token)}")
+            print(f"👤 Bot username: {username}")
+            print(f"⚠️  CRITICAL: OAuth token must be for account '{username}'")
+            print(f"⚠️  Token must be a USER access token with chat:read + chat:edit scopes")
         elif len(parts) == 1:
             # Only token, no channel
             print("❌ TWITCH_SWARM_VOICE has token but no channel")

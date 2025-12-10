@@ -17,7 +17,7 @@ import json
 import os
 from datetime import datetime
 from pathlib import Path
-from typing import Any
+from typing import Any, Optional
 
 import requests
 
@@ -42,7 +42,7 @@ from src.core.config.timeout_constants import TimeoutConstants
 class DiscordService:
     """Unified Discord service for DevLog monitoring, webhooks, and agent communication."""
 
-    def __init__(self, webhook_url: str | None = None):
+    def __init__(self, webhook_url: str | None = None, session=None):
         """Initialize Discord service."""
         if webhook_url is None:
             self.webhook_url = self._load_webhook_url()
@@ -52,8 +52,9 @@ class DiscordService:
         self.devlogs_path = Path("devlogs")
         self.last_check_time = datetime.utcnow()
         self.is_running = False
-        self.session = requests.Session()
-        self.session.timeout=TimeoutConstants.HTTP_SHORT
+        # ensure session attribute exists for tests that patch it
+        self.session = session or requests.Session()
+        self.session.timeout = TimeoutConstants.HTTP_SHORT
 
     def _load_webhook_url(self) -> str | None:
         """Load webhook URL from environment or config."""
@@ -161,6 +162,9 @@ class DiscordService:
             metadata["category"] = parts[2]
             metadata["agent"] = parts[3]
             metadata["title"] = "_".join(parts[4:]) if len(parts) > 4 else "DevLog Update"
+        else:
+            # fallback: strip extension for title
+            metadata["title"] = clean_filename
 
         return metadata
 
@@ -214,6 +218,7 @@ class DiscordService:
     def send_devlog_notification(self, devlog_data: dict[str, Any]) -> bool:
         """Send devlog notification to Discord."""
         if not self.webhook_url:
+            get_logger().warning("❌ Discord webhook URL not set")
             return False
 
         try:
@@ -234,6 +239,7 @@ class DiscordService:
     def send_agent_status_notification(self, agent_status: dict[str, Any]) -> bool:
         """Send agent status notification to Discord."""
         if not self.webhook_url:
+            get_logger().warning("❌ Discord webhook URL not set")
             return False
 
         try:
@@ -286,6 +292,7 @@ class DiscordService:
     def test_webhook_connection(self) -> bool:
         """Test Discord webhook connection."""
         if not self.webhook_url:
+            get_logger().warning("❌ Discord webhook URL not set")
             return False
 
         try:

@@ -46,3 +46,4 @@ feat(thea): add TheaSessionManager + single !thea command with self-throttling k
   - Missing dependency message
   - Write error messaging
 
+

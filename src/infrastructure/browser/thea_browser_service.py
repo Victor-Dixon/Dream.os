@@ -158,6 +158,117 @@ class TheaBrowserService:
         except:
             return False
 
+    # ========== Prompt & response helpers ==========
+    def _find_prompt_textarea(self) -> Any | None:
+        """Locate Thea/ChatGPT prompt textarea with fallbacks."""
+        if not self.driver:
+            return None
+        selectors = [
+            "textarea[data-testid='prompt-textarea']",
+            "textarea[aria-label*='Send a message']",
+            "textarea[placeholder*='Send a message']",
+            "textarea",
+        ]
+        for selector in selectors:
+            try:
+                el = self.driver.find_element("css selector", selector)
+                if el:
+                    return el
+            except Exception:
+                continue
+        logger.debug("Prompt textarea not found")
+        return None
+
+    def _find_send_button(self) -> Any | None:
+        """Locate send button; return None if not found."""
+        if not self.driver:
+            return None
+        selectors = [
+            "button[data-testid='send-button']",
+            "button[aria-label*='Send message']",
+            "button[aria-label*='Send']",
+        ]
+        for selector in selectors:
+            try:
+                el = self.driver.find_element("css selector", selector)
+                if el:
+                    return el
+            except Exception:
+                continue
+        logger.debug("Send button not found; will use ENTER fallback")
+        return None
+
+    def _set_textarea_value(self, textarea: Any, prompt: str) -> bool:
+        """Inject prompt text via JS to avoid flaky send_keys."""
+        try:
+            self.driver.execute_script(
+                "arguments[0].value = arguments[1];"
+                "arguments[0].dispatchEvent(new Event('input', {bubbles: true}));",
+                textarea,
+                prompt,
+            )
+            return True
+        except Exception as e:
+            logger.error(f"Failed to set prompt value: {e}")
+            return False
+
+    def _get_latest_assistant_message_text(self) -> str | None:
+        """Return latest assistant message text."""
+        try:
+            script = """
+                const nodes = Array.from(document.querySelectorAll('[data-message-author-role="assistant"]'));
+                if (!nodes.length) return null;
+                const last = nodes[nodes.length - 1];
+                return last.innerText || last.textContent || null;
+            """
+            return self.driver.execute_script(script)
+        except Exception:
+            return None
+
+    def send_prompt_and_get_response_text(
+        self, prompt: str, timeout: float = 90.0, poll_interval: float = 2.0
+    ) -> str | None:
+        """Send a prompt and return the assistant reply text (headless-safe)."""
+        if not self._initialized or not self.driver:
+            logger.error("Browser not initialized")
+            return None
+
+        # Ensure on conversation page
+        self.navigate_to(self.thea_config.conversation_url)
+
+        textarea = self._find_prompt_textarea()
+        if not textarea:
+            return None
+
+        if not self._set_textarea_value(textarea, prompt):
+            return None
+
+        # Send via button if present; fallback to ENTER
+        send_btn = self._find_send_button()
+        try:
+            if send_btn:
+                send_btn.click()
+            else:
+                from selenium.webdriver.common.keys import Keys
+
+                textarea.send_keys(Keys.ENTER)
+        except Exception as e:
+            logger.error(f"Failed to submit prompt: {e}")
+            return None
+
+        # Wait for response
+        start = time.time()
+        baseline = self._get_latest_assistant_message_text()
+        while time.time() - start < timeout:
+            time.sleep(poll_interval)
+            latest = self._get_latest_assistant_message_text()
+            if latest and latest != baseline:
+                logger.info("✅ Received assistant response")
+                return latest.strip()
+
+        logger.error("❌ Timed out waiting for assistant response")
+        return None
+
     def execute_script(self, script: str) -> Any:
         """Execute JavaScript in browser."""
         if not self._initialized:

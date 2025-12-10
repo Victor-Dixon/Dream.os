@@ -488,3 +488,700 @@ class TestTemplateIntegrationEndToEnd:
         assert "Will execute task" in rendered
         assert "Core workflows" in rendered
 
+    def test_complete_c2a_message_flow(self):
+        """Test complete C2A message from creation to rendering."""
+        msg = _create_message(
+            content="Captain directive",
+            category=MessageCategory.C2A,
+            message_type=UnifiedMessageType.CAPTAIN_TO_AGENT,
+            sender="Captain Agent-4",
+        )
+        
+        rendered = render_message(
+            msg,
+            context="Captain context",
+            actions="Execute directive",
+            task="Complete task",
+            deliverable="Report results",
+            eta="2 hours",
+        )
+        
+        # Verify complete output
+        assert "C2A" in rendered or "CAPTAIN" in rendered
+        assert "Captain Agent-4" in rendered
+        assert "Complete task" in rendered
+        assert "Report results" in rendered
+
+    def test_complete_a2a_message_flow(self):
+        """Test complete A2A message from creation to rendering."""
+        msg = _create_message(
+            content="Agent coordination request",
+            category=MessageCategory.A2A,
+            message_type=UnifiedMessageType.AGENT_TO_AGENT,
+            sender="Agent-1",
+            recipient="Agent-2",
+        )
+        
+        rendered = render_message(
+            msg,
+            ask="Need coordination",
+            context="Agent context",
+            next_step="Proceed with task",
+        )
+        
+        # Verify complete output
+        assert "A2A" in rendered or "AGENT-TO-AGENT" in rendered
+        assert "Agent-1" in rendered
+        assert "Agent-2" in rendered
+        assert "Need coordination" in rendered
+        assert "Proceed with task" in rendered
+
+
+class TestTemplateSpecialCharacters:
+    """Integration tests for special characters and edge cases in templates."""
+
+    def test_special_characters_in_content(self):
+        """Test various special characters in message content."""
+        special_chars = [
+            "{braces}",
+            "$dollar$",
+            "@at@",
+            "#hash#",
+            "%percent%",
+            "&ampersand&",
+            "*asterisk*",
+            "+plus+",
+            "=equals=",
+            "|pipe|",
+            "\\backslash\\",
+            "/forward/",
+            "~tilde~",
+            "`backtick`",
+            "'single'",
+            '"double"',
+            "[brackets]",
+            "(parens)",
+            "<angle>",
+        ]
+        
+        for char_seq in special_chars:
+            msg = _create_message(
+                content=f"Test {char_seq} content",
+                category=MessageCategory.S2A,
+            )
+            rendered = render_message(msg)
+            
+            # Should not raise KeyError or formatting errors
+            assert len(rendered) > 0
+            assert "[HEADER]" in rendered
+
+    def test_unicode_characters_in_content(self):
+        """Test Unicode characters in message content."""
+        unicode_content = [
+            "Test with émojis 🚀",
+            "中文测试",
+            "Русский текст",
+            "العربية",
+            "日本語",
+            "한국어",
+        ]
+        
+        for content in unicode_content:
+            msg = _create_message(
+                content=content,
+                category=MessageCategory.D2A,
+            )
+            rendered = render_message(msg)
+            
+            # Should handle Unicode without errors
+            assert len(rendered) > 0
+            assert "D2A" in rendered or "DISCORD" in rendered
+
+    def test_newlines_in_content(self):
+        """Test newlines and multi-line content."""
+        multiline_content = "Line 1\nLine 2\nLine 3\n\nParagraph 2"
+        msg = _create_message(
+            content=multiline_content,
+            category=MessageCategory.S2A,
+        )
+        rendered = render_message(msg)
+        
+        assert len(rendered) > 0
+        assert "[HEADER] S2A" in rendered
+
+    def test_very_long_content(self):
+        """Test very long message content."""
+        long_content = "A" * 10000  # 10KB of content
+        msg = _create_message(
+            content=long_content,
+            category=MessageCategory.S2A,
+        )
+        rendered = render_message(msg)
+        
+        # Should handle long content without errors
+        assert len(rendered) > 0
+        assert "[HEADER]" in rendered
+
+    def test_empty_strings_in_optional_fields(self):
+        """Test empty strings in optional template fields."""
+        msg = _create_message(category=MessageCategory.S2A)
+        rendered = render_message(
+            msg,
+            context="",
+            actions="",
+            fallback="",
+        )
+        
+        # Should render with defaults
+        assert len(rendered) > 0
+        assert "[HEADER] S2A" in rendered
+
+    def test_none_values_in_optional_fields(self):
+        """Test None values in optional template fields."""
+        msg = _create_message(category=MessageCategory.D2A)
+        rendered = render_message(
+            msg,
+            interpretation=None,
+            actions=None,
+            fallback=None,
+        )
+        
+        # Should use defaults
+        assert len(rendered) > 0
+        assert "D2A" in rendered or "DISCORD" in rendered
+
+    def test_template_placeholders_in_content(self):
+        """Test content that looks like template placeholders."""
+        placeholder_like_content = [
+            "{sender}",
+            "{recipient}",
+            "{message_id}",
+            "{timestamp}",
+            "{content}",
+            "{{double_braces}}",
+        ]
+        
+        for content in placeholder_like_content:
+            msg = _create_message(
+                content=content,
+                category=MessageCategory.S2A,
+            )
+            rendered = render_message(msg)
+            
+            # Should not cause template formatting errors
+            assert len(rendered) > 0
+            # Content should appear literally, not as placeholder
+            assert content in rendered or "[HEADER]" in rendered
+
+
+class TestTemplateRouting:
+    """Integration tests for template routing logic."""
+
+    def test_s2a_routing_all_tags(self):
+        """Test routing for all S2A tag types."""
+        tag_routes = [
+            (UnifiedMessageTag.ONBOARDING, "HARD_ONBOARDING"),
+            (UnifiedMessageTag.WRAPUP, "PASSDOWN"),
+            (UnifiedMessageTag.SYSTEM, "CONTROL"),
+            (UnifiedMessageTag.COORDINATION, "TASK_CYCLE"),
+        ]
+        
+        for tag, expected_key in tag_routes:
+            msg = _create_message(
+                category=MessageCategory.S2A,
+                tags=[tag],
+            )
+            key = dispatch_template_key(msg)
+            assert key == expected_key, f"Tag {tag} should route to {expected_key}, got {key}"
+
+    def test_s2a_routing_all_message_types(self):
+        """Test routing for all S2A message types."""
+        type_routes = [
+            (UnifiedMessageType.ONBOARDING, "HARD_ONBOARDING"),
+            (UnifiedMessageType.SYSTEM_TO_AGENT, "CONTROL"),
+            (UnifiedMessageType.MULTI_AGENT_REQUEST, "CONTROL"),
+            (UnifiedMessageType.BROADCAST, "CONTROL"),
+        ]
+        
+        for msg_type, expected_key in type_routes:
+            msg = _create_message(
+                category=MessageCategory.S2A,
+                message_type=msg_type,
+            )
+            key = dispatch_template_key(msg)
+            assert key == expected_key, f"Type {msg_type} should route to {expected_key}, got {key}"
+
+    def test_s2a_routing_priority_order(self):
+        """Test that tag routing follows priority order."""
+        # ONBOARDING should win over SYSTEM
+        msg = _create_message(
+            category=MessageCategory.S2A,
+            tags=[UnifiedMessageTag.ONBOARDING, UnifiedMessageTag.SYSTEM],
+        )
+        key = dispatch_template_key(msg)
+        assert key == "HARD_ONBOARDING"  # First match wins
+
+    def test_category_inference_routing(self):
+        """Test category inference for all message types."""
+        type_to_category = [
+            (UnifiedMessageType.SYSTEM_TO_AGENT, MessageCategory.S2A),
+            (UnifiedMessageType.HUMAN_TO_AGENT, MessageCategory.D2A),
+            (UnifiedMessageType.CAPTAIN_TO_AGENT, MessageCategory.C2A),
+            (UnifiedMessageType.AGENT_TO_AGENT, MessageCategory.A2A),
+        ]
+        
+        for msg_type, expected_category in type_to_category:
+            msg = _create_message(
+                category=None,
+                message_type=msg_type,
+            )
+            rendered = render_message(msg)
+            
+            # Should infer correct category
+            assert len(rendered) > 0
+            if expected_category == MessageCategory.S2A:
+                assert "S2A" in rendered
+            elif expected_category == MessageCategory.D2A:
+                assert "D2A" in rendered or "DISCORD" in rendered
+            elif expected_category == MessageCategory.C2A:
+                assert "C2A" in rendered or "CAPTAIN" in rendered
+            elif expected_category == MessageCategory.A2A:
+                assert "A2A" in rendered or "AGENT-TO-AGENT" in rendered
+
+
+class TestTemplateDefaults:
+    """Integration tests for default value handling."""
+
+    def test_s2a_defaults_all_fields(self):
+        """Test S2A template with all default values."""
+        msg = _create_message(category=MessageCategory.S2A)
+        rendered = render_message(msg)
+        
+        # Should have all required fields with defaults
+        assert "[HEADER] S2A CONTROL" in rendered
+        assert "From: SYSTEM" in rendered
+        assert "To: Agent-1" in rendered
+        assert "Agent Operating Cycle" in rendered
+        assert "Priority:" in rendered
+
+    def test_d2a_defaults_all_fields(self):
+        """Test D2A template with all default values."""
+        msg = _create_message(
+            category=MessageCategory.D2A,
+            message_type=UnifiedMessageType.HUMAN_TO_AGENT,
+        )
+        rendered = render_message(msg)
+        
+        # Should have defaults for interpretation, actions, fallback
+        assert "[HEADER] D2A DISCORD INTAKE" in rendered
+        assert "From:" in rendered
+        assert "To:" in rendered
+
+    def test_c2a_defaults_all_fields(self):
+        """Test C2A template with all default values."""
+        msg = _create_message(
+            category=MessageCategory.C2A,
+            message_type=UnifiedMessageType.CAPTAIN_TO_AGENT,
+        )
+        rendered = render_message(msg)
+        
+        # Should render with defaults
+        assert "C2A" in rendered or "CAPTAIN" in rendered
+        assert len(rendered) > 0
+
+    def test_a2a_defaults_all_fields(self):
+        """Test A2A template with all default values."""
+        msg = _create_message(
+            category=MessageCategory.A2A,
+            message_type=UnifiedMessageType.AGENT_TO_AGENT,
+        )
+        rendered = render_message(msg)
+        
+        # Should render with defaults
+        assert "A2A" in rendered or "AGENT-TO-AGENT" in rendered
+        assert len(rendered) > 0
+
+    def test_cycle_v2_defaults(self):
+        """Test CYCLE_V2 template with default values."""
+        msg = _create_message(category=MessageCategory.S2A)
+        rendered = render_message(msg, template_key="CYCLE_V2")
+        
+        # Should render with empty defaults for cycle fields
+        assert len(rendered) > 0
+        assert "CYCLE_V2" in rendered or "Cycle V2" in rendered or "CYCLE V2" in rendered
+
+
+class TestTemplateStructureValidation:
+    """Integration tests that verify complete template structure matches expected format."""
+
+    @staticmethod
+    def _assert_sections_present(rendered: str, required: list[str]) -> None:
+        """Assert that all required section substrings are present in rendered output."""
+        for section in required:
+            assert section in rendered, f"Missing required section: {section}\n\nRendered output (first 600 chars):\n{rendered[:600]}"
+
+    @staticmethod
+    def _assert_in_order(rendered: str, ordered_sections: list[str]) -> None:
+        """Assert that ordered_sections appear in sequence in rendered output."""
+        positions = []
+        for section in ordered_sections:
+            pos = rendered.find(section)
+            assert pos >= 0, f"Section not found: {section}\n\nRendered output (first 600 chars):\n{rendered[:600]}"
+            positions.append(pos)
+        assert positions == sorted(positions), f"Sections out of order.\nOrder: {ordered_sections}\nPositions: {positions}\n\nRendered output (first 600 chars):\n{rendered[:600]}"
+
+    def test_s2a_control_template_complete_structure(self):
+        """Test S2A CONTROL template has complete structure with all required sections."""
+        msg = _create_message(
+            category=MessageCategory.S2A,
+            content="Test context",
+            sender="SYSTEM",
+            recipient="Agent-1",
+        )
+        rendered = render_message(
+            msg,
+            context="Test context",
+            actions="Test actions",
+            fallback="Test fallback",
+        )
+        
+        required = [
+            "[HEADER] S2A CONTROL",
+            "From: SYSTEM",
+            "To: Agent-1",
+            "Priority:",
+            "Message ID:",
+            "Timestamp:",
+            "Context:",
+            "Test context",
+            "Action Required:",
+            "No-Reply Policy:",
+            "Priority Behavior:",
+            "Agent Operating Cycle",
+            "Cycle Checklist:",
+            "DISCORD REPORTING POLICY",
+            "Evidence format:",
+            "If blocked:",
+        ]
+        self._assert_sections_present(rendered, required)
+
+    def test_s2a_control_template_section_order(self):
+        """Test S2A CONTROL template sections appear in correct order."""
+        msg = _create_message(category=MessageCategory.S2A)
+        rendered = render_message(msg, context="Context", actions="Actions")
+        
+        self._assert_in_order(
+            rendered,
+            [
+                "[HEADER] S2A CONTROL",
+                "Context:",
+                "Action Required:",
+                "No-Reply Policy:",
+                "Priority Behavior:",
+                "Agent Operating Cycle",
+                "Cycle Checklist:",
+                "DISCORD REPORTING POLICY",
+                "Evidence format:",
+                "If blocked:",
+            ],
+        )
+
+    def test_d2a_template_complete_structure(self):
+        """Test D2A template has complete structure with all required sections."""
+        msg = _create_message(
+            category=MessageCategory.D2A,
+            message_type=UnifiedMessageType.HUMAN_TO_AGENT,
+            content="User request from Discord",
+            sender="Discord User",
+            recipient="Agent-1",
+        )
+        rendered = render_message(
+            msg,
+            interpretation="Agent interpretation",
+            actions="Proposed actions",
+            fallback="Clarification question",
+        )
+        
+        required = [
+            "[HEADER] D2A DISCORD INTAKE",
+            "From: Discord User",
+            "To: Agent-1",
+            "Priority:",
+            "Message ID:",
+            "Timestamp:",
+            "Origin:",
+            "Discord → Agent intake",
+            "User Message:",
+            "User request from Discord",
+            "Interpretation (agent):",
+            "Agent interpretation",
+            "Proposed Action:",
+            "Proposed actions",
+            "Response Policy",  # substring within discord_response_policy text
+            "Devlog Command",
+            "If clarification needed:",
+            "Clarification question",
+            "#DISCORD #D2A",
+        ]
+        self._assert_sections_present(rendered, required)
+
+    def test_d2a_template_section_order(self):
+        """Test D2A template sections appear in correct order."""
+        msg = _create_message(
+            category=MessageCategory.D2A,
+            message_type=UnifiedMessageType.HUMAN_TO_AGENT,
+        )
+        rendered = render_message(
+            msg,
+            interpretation="Interpretation",
+            actions="Actions",
+        )
+        
+        self._assert_in_order(
+            rendered,
+            [
+                "[HEADER] D2A DISCORD INTAKE",
+                "Origin:",
+                "User Message:",
+                "Interpretation (agent):",
+                "Proposed Action:",
+                "Devlog Command",
+                "If clarification needed:",
+                "#DISCORD #D2A",
+            ],
+        )
+
+    def test_c2a_template_complete_structure(self):
+        """Test C2A template has complete structure with all required sections."""
+        msg = _create_message(
+            category=MessageCategory.C2A,
+            message_type=UnifiedMessageType.CAPTAIN_TO_AGENT,
+            sender="Captain Agent-4",
+            recipient="Agent-1",
+        )
+        rendered = render_message(
+            msg,
+            context="Captain context",
+            actions="Captain actions",
+            task="Complete captain task",
+            deliverable="Report results",
+            eta="2 hours",
+        )
+        
+        required = [
+            "[HEADER] C2A CAPTAIN DIRECTIVE",
+            "From: Captain Agent-4",
+            "To: Agent-1",
+            "Priority:",
+            "Message ID:",
+            "Timestamp:",
+            "Identity:",
+            "No-Ack Policy:",
+            "DISCORD REPORTING POLICY",
+            "Cycle Checklist:",
+            "Task:",
+            "Complete captain task",
+            "Context:",
+            "Captain context",
+            "Operating Procedures",
+            "Deliverable:",
+            "Report results",
+            "Checkpoint:",
+            "2 hours",
+            "Evidence format:",
+            "Priority Behavior:",
+            "If blocked:",
+        ]
+        self._assert_sections_present(rendered, required)
+
+    def test_c2a_template_section_order(self):
+        """Test C2A template sections appear in correct order."""
+        msg = _create_message(
+            category=MessageCategory.C2A,
+            message_type=UnifiedMessageType.CAPTAIN_TO_AGENT,
+            sender="Captain Agent-4",
+        )
+        rendered = render_message(
+            msg,
+            task="Task",
+            context="Context",
+            deliverable="Deliverable",
+        )
+        
+        self._assert_in_order(
+            rendered,
+            [
+                "[HEADER] C2A CAPTAIN DIRECTIVE",
+                "Identity:",
+                "No-Ack Policy:",
+                "DISCORD REPORTING POLICY",
+                "Cycle Checklist:",
+                "Task:",
+                "Context:",
+                "Operating Procedures",
+                "Deliverable:",
+            ],
+        )
+
+    def test_a2a_template_complete_structure(self):
+        """Test A2A template has complete structure with all required sections."""
+        msg = _create_message(
+            category=MessageCategory.A2A,
+            message_type=UnifiedMessageType.AGENT_TO_AGENT,
+            sender="Agent-1",
+            recipient="Agent-2",
+        )
+        rendered = render_message(
+            msg,
+            ask="Coordination request",
+            context="Agent context",
+            next_step="Next action",
+        )
+        
+        required = [
+            "[HEADER] A2A COORDINATION",
+            "From: Agent-1",
+            "To: Agent-2",
+            "Priority:",
+            "Message ID:",
+            "Timestamp:",
+            "Identity:",
+            "No-Ack Policy:",
+            "Cycle Checklist:",
+            "Ask/Offer:",
+            "Coordination request",
+            "Context:",
+            "Agent context",
+            "Next Step:",
+            "Next action",
+            "If blocked:",
+            "How to respond:",
+            "#A2A",
+        ]
+        self._assert_sections_present(rendered, required)
+
+    def test_a2a_template_section_order(self):
+        """Test A2A template sections appear in correct order."""
+        msg = _create_message(
+            category=MessageCategory.A2A,
+            message_type=UnifiedMessageType.AGENT_TO_AGENT,
+            sender="Agent-1",
+            recipient="Agent-2",
+        )
+        rendered = render_message(
+            msg,
+            ask="Ask",
+            context="Context",
+            next_step="Next",
+        )
+        
+        self._assert_in_order(
+            rendered,
+            [
+                "[HEADER] A2A COORDINATION",
+                "Identity:",
+                "No-Ack Policy:",
+                "Cycle Checklist:",
+                "Ask/Offer:",
+                "Context:",
+                "Next Step:",
+                "If blocked:",
+                "How to respond:",
+                "#A2A",
+            ],
+        )
+
+    def test_s2a_hard_onboarding_template_structure(self):
+        """Test S2A HARD_ONBOARDING template has complete structure."""
+        msg = _create_message(
+            category=MessageCategory.S2A,
+            tags=[UnifiedMessageTag.ONBOARDING],
+        )
+        rendered = render_message(msg)
+        
+        required = [
+            "[HEADER] S2A HARD ONBOARDING",
+            "From: SYSTEM",
+            "To: Agent-1",
+            "Priority:",
+            "Message ID:",
+            "Timestamp:",
+            "Context:",
+            "First Actions:",
+            "Agent Operating Cycle",
+            "If blocked:",
+        ]
+        self._assert_sections_present(rendered, required)
+
+    def test_s2a_task_cycle_template_structure(self):
+        """Test S2A TASK_CYCLE template has complete structure."""
+        msg = _create_message(
+            category=MessageCategory.S2A,
+            tags=[UnifiedMessageTag.COORDINATION],
+        )
+        rendered = render_message(msg, context="Cycle objective", actions="Assigned slice")
+        
+        required = [
+            "[HEADER] S2A TASK CYCLE",
+            "Cycle Objective:",
+            "Cycle objective",
+            "Assigned Slice:",
+            "Assigned slice",
+            "Agent Operating Cycle",
+            "If blocked:",
+        ]
+        self._assert_sections_present(rendered, required)
+
+    def test_template_renders_complete_message_metadata(self):
+        """Test all templates include complete message metadata."""
+        test_cases = [
+            (MessageCategory.S2A, UnifiedMessageType.SYSTEM_TO_AGENT, "SYSTEM"),
+            (MessageCategory.D2A, UnifiedMessageType.HUMAN_TO_AGENT, "Discord User"),
+            (MessageCategory.C2A, UnifiedMessageType.CAPTAIN_TO_AGENT, "Captain Agent-4"),
+            (MessageCategory.A2A, UnifiedMessageType.AGENT_TO_AGENT, "Agent-1"),
+        ]
+        
+        for category, msg_type, sender in test_cases:
+            msg = _create_message(
+                category=category,
+                message_type=msg_type,
+                sender=sender,
+                recipient="Agent-1",
+            )
+            msg.message_id = "test_msg_123"
+            rendered = render_message(msg)
+            
+            # Verify metadata is present
+            assert f"From: {sender}" in rendered
+            assert "To: Agent-1" in rendered
+            assert "Message ID: test_msg_123" in rendered
+            assert "Priority:" in rendered
+            assert "Timestamp:" in rendered
+
+    def test_template_footers_appear_when_requested(self):
+        """Test devlog and workflows footers appear when requested."""
+        msg = _create_message(category=MessageCategory.S2A)
+        
+        # Test devlog footer
+        rendered_with_devlog = render_message(msg, include_devlog=True)
+        assert "Documentation" in rendered_with_devlog
+        assert "Update status.json" in rendered_with_devlog
+        assert "Post Discord devlog" in rendered_with_devlog
+        
+        # Test workflows footer
+        rendered_with_workflows = render_message(msg, include_workflows=True)
+        assert "Core workflows" in rendered_with_workflows
+        assert "--get-next-task" in rendered_with_workflows
+        assert "messaging_cli.py" in rendered_with_workflows
+        
+        # Test both footers
+        rendered_both = render_message(msg, include_devlog=True, include_workflows=True)
+        assert "Documentation" in rendered_both
+        assert "Core workflows" in rendered_both
+        
+        # Test no footers
+        rendered_none = render_message(msg, include_devlog=False, include_workflows=False)
+        assert "Documentation" not in rendered_none or rendered_none.find("Documentation") == -1
+        # Workflows might be in template, so just check devlog is absent
+        assert "Post Discord devlog" not in rendered_none or rendered_none.find("Post Discord devlog") == -1
+

@@ -11,3 +11,4 @@ def get_logger(name: str = __name__) -> logging.Logger:
 
 __all__ = ["get_logger"]
 
+

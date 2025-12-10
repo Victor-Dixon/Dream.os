@@ -1,6 +1,6 @@
 {
     "input_device": "video=C270 HD WEBCAM",
-    "style": "Line Art",
+    "style": "Advanced Edge Detection",
     "parameters": {
         "Blur": {
             "blur_intensity": 15
@@ -113,7 +113,7 @@
             "detail_level": 3
         },
         "Watercolor": {
-            "sigma_s": 60,
+            "sigma_s": 26,
             "sigma_r": 0.5
         },
         "Brightness Only": {
