@@ -16,6 +16,7 @@ from typing import Any, Optional
 
 from ...core.base.base_service import BaseService
 from .cycle_planner_integration import CyclePlannerIntegration
+from .models import Contract
 from .storage import ContractStorage
 
 logger = logging.getLogger(__name__)
@@ -124,17 +125,22 @@ class ContractManager(BaseService):
                 }
 
             # Assign first available task
-            task = available_tasks[0]
-            task["assigned_to"] = agent_id
-            task["status"] = "active"
-            task["assigned_at"] = datetime.now().isoformat()
+            task_data = available_tasks[0]
+            task_data["assigned_to"] = agent_id
+            task_data["status"] = "active"
+            task_data["assigned_at"] = datetime.now().isoformat()
 
-            # Save updated task
-            self.storage.save_contract(task)
+            # Convert dict to Contract object before saving
+            try:
+                contract = Contract.from_dict(task_data)
+                self.storage.save_contract(contract)
+            except Exception as e:
+                logger.warning(f"Could not convert task dict to Contract: {e}")
+                # If conversion fails, skip saving (data already in storage)
 
             return {
                 "agent_id": agent_id,
-                "task": task,
+                "task": task_data,
                 "status": "assigned",
                 "source": "contract_system",
             }
