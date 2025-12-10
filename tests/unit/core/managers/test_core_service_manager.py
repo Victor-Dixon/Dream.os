@@ -6,6 +6,7 @@ Target: ≥85% coverage, 10+ tests.
 
 import pytest
 from unittest.mock import Mock, patch, MagicMock
+from datetime import datetime
 
 # Import with patching to avoid circular import from __init__.py
 with patch('src.core.managers.core_configuration_manager', create=True):
@@ -53,7 +54,12 @@ class TestCoreServiceManager:
     def test_is_initialized_true(self):
         """Test is_initialized returns True after initialization."""
         manager = CoreServiceManager()
-        context = Mock(spec=ManagerContext)
+        context = ManagerContext(
+            config={},
+            logger=Mock(),
+            metrics={},
+            timestamp=datetime.now()
+        )
         manager.initialize(context)
         assert manager.is_initialized() is True
 
@@ -72,7 +78,12 @@ class TestCoreServiceManager:
     def test_get_status_after_init(self):
         """Test get_status after initialization."""
         manager = CoreServiceManager()
-        context = Mock(spec=ManagerContext)
+        context = ManagerContext(
+            config={},
+            logger=Mock(),
+            metrics={},
+            timestamp=datetime.now()
+        )
         manager.initialize(context)
         
         status = manager.get_status()
@@ -87,7 +98,12 @@ class TestCoreServiceManager:
     def test_execute_delegates_to_coordinator(self):
         """Test that execute method delegates to coordinator."""
         manager = CoreServiceManager()
-        context = Mock(spec=ManagerContext)
+        context = ManagerContext(
+            config={},
+            logger=Mock(),
+            metrics={},
+            timestamp=datetime.now()
+        )
         manager.initialize(context)
         
         result = manager.execute(context, "onboard_agent", {"agent_id": "Agent-1"})
