@@ -1,0 +1,8 @@
+{
+  "div[contenteditable='true'][id='prompt-textarea']": {
+    "attempts": 2,
+    "successes": 2,
+    "success_rate": 1.0,
+    "last_success": "2025-12-10T14:31:07.256005"
+  }
+}
