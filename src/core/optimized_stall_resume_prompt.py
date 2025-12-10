@@ -119,16 +119,13 @@ class OptimizedStallResumePrompt:
         self.cycle_planner_dir = self.workspace_root / "swarm_cycle_planner" / "cycles"
         self.scheduler = scheduler
         self.auto_claim_tasks = auto_claim_tasks
-        
+
         # Initialize resume cycle planner integration
         try:
             from src.core.resume_cycle_planner_integration import ResumeCyclePlannerIntegration
-            self.resume_planner = ResumeCyclePlannerIntegration(workspace_root=self.workspace_root)
+            self.resume_planner = ResumeCyclePlannerIntegration()
         except ImportError:
             logger.warning("Resume cycle planner integration not available")
-            self.resume_planner = None
-        except Exception as e:
-            logger.warning(f"Error initializing resume cycle planner integration: {e}")
             self.resume_planner = None
 
     def generate_resume_prompt(
@@ -160,11 +157,15 @@ class OptimizedStallResumePrompt:
         if last_mission is None:
             last_mission = agent_state.get("current_mission", "Unknown")
 
-        # Get and claim next task from Cycle Planner (if auto_claim enabled)
+        # Get next task from Cycle Planner (with auto-claim if enabled)
         if self.auto_claim_tasks and self.resume_planner:
-            next_task = self.resume_planner.claim_next_task_for_agent(agent_id)
+            next_task = self.resume_planner.get_and_claim_next_task(agent_id)
         else:
-            next_task = self._get_next_cycle_planner_task(agent_id)
+            # Preview mode - don't claim yet
+            if self.resume_planner:
+                next_task = self.resume_planner.get_next_task_preview(agent_id)
+            else:
+                next_task = self._get_next_cycle_planner_task(agent_id)
 
         # Load agent-specific assignments (NEW)
         agent_assignments = self._load_agent_assignments(agent_id)
@@ -252,39 +253,30 @@ class OptimizedStallResumePrompt:
             return {}
 
     def _get_next_cycle_planner_task(self, agent_id: str) -> Optional[Dict[str, Any]]:
-        """Get next available task from Cycle Planner."""
+        """Get next available task from Cycle Planner (fallback method)."""
+        # Use cycle planner integration if available
+        if self.resume_planner:
+            return self.resume_planner.get_next_task_preview(agent_id)
+        
+        # Fallback to old method (deprecated)
         today = date.today().isoformat()
-
-        # Try today's file first
-        cycle_file = self.cycle_planner_dir / \
-            f"{today}_{agent_id.lower()}_pending_tasks.json"
-
-        # If not found, try most recent file
+        cycle_file = self.workspace_root / agent_id / f"cycle_planner_tasks_{today}.json"
+        
         if not cycle_file.exists():
-            pattern = f"*_{agent_id.lower()}_pending_tasks.json"
-            cycle_files = sorted(
-                self.cycle_planner_dir.glob(pattern), reverse=True)
-            if cycle_files:
-                cycle_file = cycle_files[0]
-            else:
-                return None
-
+            return None
+            
         try:
             with open(cycle_file, 'r', encoding='utf-8') as f:
                 data = json.load(f)
-                contracts = data.get("contracts", [])
-
-                # Find first PENDING or READY task
-                for contract in contracts:
-                    status = contract.get("status", "").upper()
-                    if status in ["PENDING", "READY"]:
-                        return contract
-
-                # If no PENDING/READY, return first contract
-                if contracts:
-                    return contracts[0]
-
-                return None
+                tasks = data.get("pending_tasks", data.get("tasks", []))
+                
+                # Find first pending task
+                for task in tasks:
+                    status = task.get("status", "").lower()
+                    if status in ["pending", "ready"]:
+                        return task
+                
+                return tasks[0] if tasks else None
         except Exception as e:
             logger.warning(f"Error loading cycle planner for {agent_id}: {e}")
             return None
@@ -347,34 +339,18 @@ class OptimizedStallResumePrompt:
         agent_state: Dict[str, Any] = None
     ) -> str:
         """Build a non-interactive stall recovery prompt (silent work order)."""
-        # Build task assignment section if task was claimed
-        task_section = ""
-        if next_task and self.resume_planner:
-            task_section = self.resume_planner.format_task_for_prompt(next_task)
-        elif next_task:
-            # Fallback formatting if resume_planner not available
-            title = next_task.get("title", "Untitled Task")
-            task_id = next_task.get("task_id") or next_task.get("contract_id", "")
-            priority = next_task.get("priority", "MEDIUM")
-            task_section = f"""**📋 YOUR NEXT ASSIGNMENT** (from Cycle Planner):
+        _ = (agent_id, fsm_state, last_mission, next_task, recovery_actions,
+             stall_duration_minutes, scheduled_tasks_section, agent_assignments, agent_state)
 
-**Task ID**: {task_id}
-**Title**: {title}
-**Priority**: {priority}
-
-**Action**: Begin work on this task immediately. Update status.json when started.
-
-"""
-
-        prompt = f"""Title: 🚨 STALL RECOVERY — DO NOT REPLY
+        return """Title: 🚨 STALL RECOVERY — DO NOT REPLY
 
 Body:
 - This is a control message. Do not send any response.
 - Do not update status.json just to acknowledge receipt.
 - Resume work immediately and produce a tangible artifact (code, tests, or report).
-- The inactivity timer resets only on meaningful progress.
+- The inactivity timer resets only on meaningful progress.{task_section}
 
-{task_section}Progress definition:
+Progress definition:
 - Progress counts as:
   - A git commit that reflects real work
   - A test pass or validation run tied to the active task
@@ -382,12 +358,13 @@ Body:
   - A code/file change with real delta
 - Progress does not include:
   - Chat replies of any kind
-  - "Acknowledged / resuming / got it" messages
+  - “Acknowledged / resuming / got it” messages
   - status.json updates with no substantive work
 
 Execution rules:
 - Do not respond to this message.
 - Do not count chat replies as progress.
+- If a task is assigned above, begin work on it immediately.
 - If the task is too large:
   - Break it into smaller executable slices
   - Execute a slice immediately or delegate via the task system
@@ -404,9 +381,8 @@ Marker flags:
 #STALL-RECOVERY #NO-REPLY #PROGRESS-ONLY #ARTIFACT-REQUIRED
 
 Optional footer (if you want it):
-- "This prompt is intentionally non-interactive. Silence is expected. Output is the response."
+- “This prompt is intentionally non-interactive. Silence is expected. Output is the response.”
 """
-        return prompt
 
     def _build_goal_aligned_actions(self, agent_id: str, agent_assignments: Dict[str, Any], base_actions: List[str]) -> List[str]:
         """Build goal-aligned recovery actions based on agent assignments and project priorities."""
