@@ -89,7 +89,8 @@
     "⏳ ACTIVE: Monitor agent activity and progress across swarm",
     "⏳ ACTIVE: Await Phase 2 Violation Consolidation coordination (Agent-8)",
     "⏳ ACTIVE: Monitor Phase 2 Tools Consolidation execution status (Agent-5, Agent-3)",
-    "⏳ ACTIVE: Monitor SSOT Remediation domain checks (Agent-7, Agent-1)"
+    "⏳ ACTIVE: Monitor SSOT Remediation domain checks (Agent-7, Agent-1)",
+    "⏳ ACTIVE: Monitor pytest debugging progress across swarm (Agent-1, Agent-3, Agent-8 completed)"
   ],
   "healing_applied": [
     {
