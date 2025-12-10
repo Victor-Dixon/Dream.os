@@ -1,6 +1,6 @@
 {
   "created_at": "2025-10-13T16:54:04.804842",
-  "last_updated": "2025-12-09T13:02:55.705042",
+  "last_updated": "2025-12-10T18:00:00.000000",
   "entries": {
     "kb-1": {
       "id": "kb-1",
@@ -2209,12 +2209,28 @@
       ],
       "timestamp": "2025-12-09T13:02:55.705042",
       "metadata": {}
+    },
+    "kb-144": {
+      "id": "kb-144",
+      "title": "Twitch Bot Keep-Alive: PING/PONG Handler and Stability Harness",
+      "content": "# Twitch Bot Keep-Alive (Dec 10, 2025)\n\n## Summary\n- Implemented IRC PING handler to reply with PONG and prevent disconnects (connection resets were caused by missing PONG).\n- Added CAP ACK/NAK logging to confirm twitch.tv/membership, tags, and commands capabilities.\n- Hardened PING parsing: extract server name from event.arguments[0] → event.target → fallback tmi.twitch.tv before sending PONG.\n- Built stability harness `tools/test_twitch_ping_pong.py` (30s monitor with status every 5s) to validate keep-alive behavior.\n- Added env preflight checker `tools/ensure_twitch_env.py` to fail fast when credentials are missing.\n\n## Status\n- Code ready; verification blocked locally by missing TWITCH_CHANNEL/TWITCH_ACCESS_TOKEN.\n- Commit pending (terminal timeout); intended commit: `fix: Improve Twitch PING/PONG handling and add stability test`.\n\n## Next Steps\n1) Set TWITCH_CHANNEL, TWITCH_ACCESS_TOKEN (oauth:...), TWITCH_BOT_USERNAME (optional).\n2) Run `python tools/ensure_twitch_env.py` then `python tools/test_twitch_ping_pong.py` (expect SUCCESS after 30s).\n3) Restart bot via `python tools/START_CHAT_BOT_NOW.py` and observe ≥5 minutes.\n4) If stable, git add/commit/push twitch_bridge + test harness; capture logs if disconnects persist.\n\n## Key Learnings\n- Twitch IRC drops connections without timely PONG; treat keep-alive as mandatory.\n- Event structures vary; robust server extraction avoids empty PONG targets.\n- Preflight env checks prevent wasted debugging cycles.\n",
+      "author": "Agent-7",
+      "category": "learning",
+      "tags": [
+        "twitch",
+        "irc",
+        "ping-pong",
+        "keep-alive",
+        "observability"
+      ],
+      "timestamp": "2025-12-10T18:00:00.000000",
+      "metadata": {}
     }
   },
   "stats": {
-    "total_entries": 143,
+    "total_entries": 144,
     "contributors": {
-      "Agent-7": 16,
+      "Agent-7": 17,
       "Agent-5": 18,
       "Agent-6": 45,
       "Agent-2": 39,

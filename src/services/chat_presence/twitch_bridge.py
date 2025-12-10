@@ -65,72 +65,154 @@ class TwitchChatBridge:
         self.running = False
         self.connected = False  # True when actually joined channel
         self._has_sent_online_message = False
+        
+        # Reconnect state management (persistent across bot instances)
+        self._stop_event = threading.Event()
+        self._reconnect_attempt = 0
+        self._reconnect_thread = None
+
+    @staticmethod
+    def _mask_token(tok: str) -> str:
+        """
+        Mask OAuth token for safe logging.
+        
+        Args:
+            tok: OAuth token string
+            
+        Returns:
+            Masked token string (first 10 chars + ... + last 4 chars)
+        """
+        if not tok:
+            return ""
+        if len(tok) <= 14:
+            return "***"
+        return tok[:10] + "..." + tok[-4:]
 
     async def connect(self) -> bool:
         """
-        Connect to Twitch IRC.
+        Connect to Twitch IRC with automatic reconnection loop.
 
         Returns:
-            True if connected successfully
+            True if connection thread started successfully
         """
         try:
             logger.info(f"🔌 Connecting to Twitch IRC as {self.username}")
+            logger.info(f"🔐 Using OAuth token: {self._mask_token(self.oauth_token)}")
+            logger.info(f"📺 Channel: {self.channel}")
 
-            # Create IRC bot with OAuth token
-            self.bot = TwitchIRCBot(
-                server_list=[("irc.chat.twitch.tv", 6667)],
-                nickname=self.username,
-                realname=self.username,
-                channel=self.channel,
-                on_message=self._handle_message,
-                bridge_instance=self,  # Pass bridge instance for shared state
-                oauth_token=self.oauth_token,  # Pass OAuth token to bot
-            )
-
-            # Connect in separate thread (bot.start() is blocking)
-            bot_thread = threading.Thread(
-                target=self._run_bot,
-                daemon=True,
-                name="TwitchIRCBot"
-            )
-            bot_thread.start()
+            # Clear stop event
+            self._stop_event.clear()
+            self.running = True
             
-            # Wait a moment for connection to establish
+            # Start single reconnect loop in separate thread
+            if self._reconnect_thread is None or not self._reconnect_thread.is_alive():
+                self._reconnect_thread = threading.Thread(
+                    target=self._run_reconnect_loop,
+                    daemon=True,
+                    name="TwitchIRCReconnectLoop"
+                )
+                self._reconnect_thread.start()
+            
+            # Wait a moment for initial connection attempt
             await asyncio.sleep(2)
             
-            # Set running flag - connection will complete in background thread
-            self.running = True
-            logger.info(f"🔄 Twitch bot starting in background thread...")
-            logger.info(f"📺 Will connect to channel: {self.channel}")
+            logger.info(f"🔄 Twitch bot reconnect loop started")
             return True
 
         except Exception as e:
-            logger.error(f"❌ Failed to connect to Twitch: {e}", exc_info=True)
+            logger.error(f"❌ Failed to start Twitch connection: {e}", exc_info=True)
+            self.running = False
             return False
 
-    def _run_bot(self) -> None:
-        """Run IRC bot in separate thread (blocking call)."""
-        try:
-            logger.info("🔄 Starting IRC bot in background thread...")
-            print("🔄 DEBUG: Starting IRC bot in background thread...", flush=True)
-            print(f"🔄 DEBUG: Bot object: {self.bot}", flush=True)
-            if self.bot:
-                print(f"🔄 DEBUG: Bot has connection: {hasattr(self.bot, 'connection')}", flush=True)
-                if hasattr(self.bot, 'connection') and self.bot.connection:
-                    print(f"🔄 DEBUG: Connection password set: {bool(getattr(self.bot.connection, 'password', None))}", flush=True)
-                    pwd = getattr(self.bot.connection, 'password', None)
-                    if pwd:
-                        print(f"🔄 DEBUG: Password value: {pwd[:20]}...", flush=True)
-            print("🔄 DEBUG: About to call bot.start()...", flush=True)
-            self.bot.start()
-            print("🔄 DEBUG: bot.start() returned (unexpected - it's blocking)", flush=True)
-        except Exception as e:
-            logger.error(f"❌ IRC bot thread error: {e}", exc_info=True)
-            print(f"❌ DEBUG: IRC bot thread error: {e}", flush=True)
-            import traceback
-            traceback.print_exc()
-            self.running = False
-            self.connected = False
+    def _run_reconnect_loop(self) -> None:
+        """
+        Single persistent reconnect loop.
+        
+        Manages one bot instance at a time with exponential backoff.
+        Backoff state persists across bot instances.
+        """
+        import time
+        import irc.client
+        
+        while not self._stop_event.is_set():
+            try:
+                self._reconnect_attempt += 1
+                
+                logger.info(f"🔌 IRC connect attempt {self._reconnect_attempt}")
+                print(f"🔌 DEBUG: IRC connect attempt {self._reconnect_attempt}", flush=True)
+                
+                # Create new bot instance
+                self.bot = TwitchIRCBot(
+                    server_list=[("irc.chat.twitch.tv", 6667)],
+                    nickname=self.username,
+                    realname=self.username,
+                    channel=self.channel,
+                    on_message=self._handle_message,
+                    bridge_instance=self,
+                    oauth_token=self.oauth_token,
+                )
+                
+                # Start bot (blocks until disconnect or reactor stops)
+                logger.info("🔄 Starting IRC bot...")
+                print("🔄 DEBUG: Starting IRC bot...", flush=True)
+                
+                try:
+                    # Start bot - this blocks until reactor stops
+                    self.bot.start()
+                    logger.warning("⚠️ bot.start() returned (reactor stopped)")
+                except Exception as e:
+                    logger.error(f"❌ Error in bot.start(): {e}", exc_info=True)
+                finally:
+                    # Stop reactor explicitly to ensure cleanup
+                    try:
+                        reactor = irc.client.IRC().reactor
+                        if reactor.is_alive():
+                            reactor.disconnect_all()
+                    except Exception:
+                        pass
+                
+                # Calculate exponential backoff (persistent across attempts)
+                # Cap at 120s, max exponent of 6 (2^6 = 64s)
+                backoff = min(120, 2 ** min(self._reconnect_attempt, 6))
+                
+                logger.warning(
+                    f"⚠️ IRC disconnected. "
+                    f"Reconnecting in {backoff}s... (attempt {self._reconnect_attempt})"
+                )
+                print(f"⚠️ DEBUG: Reconnecting in {backoff}s... (attempt {self._reconnect_attempt})", flush=True)
+                
+                # Reset connection state
+                self.connected = False
+                self.bot = None
+                
+                # Wait with backoff (check stop event periodically)
+                for _ in range(int(backoff)):
+                    if self._stop_event.is_set():
+                        logger.info("🛑 Stop requested - aborting reconnect")
+                        return
+                    time.sleep(1)
+                
+                # Continue loop for next attempt
+                
+            except KeyboardInterrupt:
+                logger.info("🛑 Reconnect loop stopped by user")
+                break
+                
+            except Exception as e:
+                logger.exception(f"❌ Reconnect loop error: {e}")
+                # Calculate exponential backoff
+                backoff = min(120, 2 ** min(self._reconnect_attempt, 6))
+                logger.warning(f"⚠️ Error in reconnect loop. Retrying in {backoff}s...")
+                
+                # Reset connection state
+                self.connected = False
+                self.bot = None
+                
+                # Wait with backoff
+                for _ in range(int(backoff)):
+                    if self._stop_event.is_set():
+                        return
+                    time.sleep(1)
 
     def _handle_message(self, message_data: dict) -> None:
         """
@@ -194,15 +276,27 @@ class TwitchChatBridge:
         return await self.send_message(formatted)
 
     def stop(self) -> None:
-        """Stop Twitch connection."""
+        """Stop Twitch connection and reconnect loop."""
         self.running = False
-        self._has_sent_online_message = False  # Reset for next connection
+        self._has_sent_online_message = False
+        
+        # Signal stop to reconnect loop
+        self._stop_event.set()
+        
+        # Stop current bot instance
         if self.bot:
             try:
-                self.bot.connection.quit("Agent system shutdown")
+                if hasattr(self.bot, 'stop'):
+                    self.bot.stop()
+                if hasattr(self.bot, 'connection') and self.bot.connection:
+                    self.bot.connection.quit("Agent system shutdown")
                 logger.info("🔌 Disconnected from Twitch")
             except Exception:
                 pass
+        
+        # Wait for reconnect thread to finish (with timeout)
+        if self._reconnect_thread and self._reconnect_thread.is_alive():
+            self._reconnect_thread.join(timeout=2.0)
 
 
 class TwitchIRCBot(irc.bot.SingleServerIRCBot):
@@ -246,9 +340,27 @@ class TwitchIRCBot(irc.bot.SingleServerIRCBot):
         if self.oauth_token and hasattr(self, 'connection') and self.connection:
             try:
                 self.connection.password = self.oauth_token
-                logger.info("🔐 Set OAuth token on connection (in __init__)")
+                masked = self._mask_token(self.oauth_token)
+                logger.info(f"🔐 Set OAuth token on connection (in __init__): {masked}")
             except Exception as e:
                 logger.error(f"❌ Failed to set password: {e}", exc_info=True)
+    
+    @staticmethod
+    def _mask_token(tok: str) -> str:
+        """
+        Mask OAuth token for safe logging.
+        
+        Args:
+            tok: OAuth token string
+            
+        Returns:
+            Masked token string (first 10 chars + ... + last 4 chars)
+        """
+        if not tok:
+            return ""
+        if len(tok) <= 14:
+            return "***"
+        return tok[:10] + "..." + tok[-4:]
     
     def _connect(self):
         """
@@ -263,11 +375,13 @@ class TwitchIRCBot(irc.bot.SingleServerIRCBot):
                 # Double-check password is set (in case it was cleared)
                 if not getattr(self.connection, 'password', None):
                     self.connection.password = self.oauth_token
-                    logger.info("🔐 Set OAuth token BEFORE connection (in _connect)")
-                    print(f"🔐 DEBUG: Set OAuth token BEFORE _connect(): {self.oauth_token[:20]}...", flush=True)
+                    masked = self._mask_token(self.oauth_token)
+                    logger.info(f"🔐 Set OAuth token BEFORE connection (in _connect): {masked}")
+                    print(f"🔐 DEBUG: Set OAuth token BEFORE _connect(): {masked}", flush=True)
                 else:
                     logger.info("🔐 Password already set on connection")
-                    print(f"🔐 DEBUG: Password already set: {getattr(self.connection, 'password', 'NOT SET')[:20]}...", flush=True)
+                    masked = self._mask_token(getattr(self.connection, 'password', 'NOT SET'))
+                    print(f"🔐 DEBUG: Password already set: {masked}", flush=True)
             except Exception as e:
                 logger.error(f"❌ CRITICAL: Failed to set password before _connect: {e}", exc_info=True)
                 print(f"❌ DEBUG: Failed to set password: {e}", flush=True)
@@ -312,10 +426,23 @@ class TwitchIRCBot(irc.bot.SingleServerIRCBot):
         print("🏓 DEBUG: Received PING - responding with PONG", flush=True)
         
         # Respond with PONG (required to keep connection alive)
+        # PING format: PING :server_name
+        # PONG format: PONG :server_name
         try:
-            connection.pong(event.target if hasattr(event, 'target') else "")
-            logger.debug("🏓 Sent PONG response")
-            print("🏓 DEBUG: PONG sent successfully", flush=True)
+            # Extract server name from event arguments or target
+            server_name = ""
+            if hasattr(event, 'arguments') and event.arguments:
+                server_name = event.arguments[0] if len(event.arguments) > 0 else ""
+            elif hasattr(event, 'target') and event.target:
+                server_name = event.target
+            else:
+                # Default Twitch server name
+                server_name = "tmi.twitch.tv"
+            
+            # Send PONG response
+            connection.pong(server_name)
+            logger.debug(f"🏓 Sent PONG response to {server_name}")
+            print(f"🏓 DEBUG: PONG sent successfully to {server_name}", flush=True)
         except Exception as e:
             logger.error(f"❌ Failed to send PONG: {e}", exc_info=True)
             print(f"❌ DEBUG: Failed to send PONG: {e}", flush=True)
@@ -348,23 +475,48 @@ class TwitchIRCBot(irc.bot.SingleServerIRCBot):
     
     def on_disconnect(self, connection, event) -> None:
         """Called when disconnected from IRC."""
-        logger.warning("⚠️ Disconnected from Twitch IRC")
-        print("⚠️ DEBUG: Disconnected from Twitch IRC")
-        print(f"⚠️ DEBUG: Disconnect event type: {event.type}")
-        print(f"⚠️ DEBUG: Disconnect event args: {getattr(event, 'arguments', 'N/A')}")
-        print(f"⚠️ DEBUG: Connection state: {getattr(connection, 'connected', 'N/A')}")
+        import irc.client
+        
+        args = getattr(event, 'arguments', [])
+        error_msg = ' '.join(args) if isinstance(args, list) else str(args)
+        
+        logger.warning(f"⚠️ Disconnected from Twitch IRC: {error_msg}")
+        print(f"⚠️ DEBUG: Disconnected from Twitch IRC: {error_msg}", flush=True)
         
         # Log authentication failure details if available
-        if hasattr(event, 'arguments') and event.arguments:
-            error_msg = ' '.join(event.arguments) if isinstance(event.arguments, list) else str(event.arguments)
-            if any(keyword in error_msg.lower() for keyword in ['authentication', 'password', 'login', 'invalid', 'bad']):
+        if args:
+            if any(keyword in error_msg.lower() for keyword in ['authentication', 'password', 'login', 'invalid', 'bad', 'incorrect']):
+                masked = self._mask_token(self.oauth_token) if self.oauth_token else 'MISSING'
                 logger.error(f"❌ AUTHENTICATION FAILURE DETECTED: {error_msg}")
+                logger.error(f"❌ OAuth token: {masked}")
+                logger.error("❌ Possible causes:")
+                logger.error("   1. Token is for a different user than nickname")
+                logger.error("   2. Token is expired or invalid")
+                logger.error("   3. Token is an app token (needs user token)")
+                logger.error("   4. Token missing chat:read or chat:edit scopes")
                 print(f"❌ DEBUG: AUTHENTICATION FAILURE: {error_msg}", flush=True)
-                print(f"❌ DEBUG: OAuth token was: {self.oauth_token[:20] if self.oauth_token else 'MISSING'}...", flush=True)
+                print(f"❌ DEBUG: OAuth token: {masked}", flush=True)
         
+        # Update bridge state (bridge loop handles reconnection)
         if self.bridge_instance:
             self.bridge_instance.connected = False
-            self.bridge_instance.running = False
+        
+        # Stop reactor to allow reconnect loop to continue
+        # This ensures bot.start() returns so the reconnect loop can create a new bot
+        try:
+            import time as time_module
+            reactor = connection.reactor if hasattr(connection, 'reactor') else None
+            if reactor and hasattr(reactor, 'disconnect_all'):
+                # Schedule reactor stop (don't block here)
+                def stop_reactor():
+                    time_module.sleep(0.5)  # Brief delay to let disconnect complete
+                    try:
+                        reactor.disconnect_all()
+                    except Exception:
+                        pass
+                threading.Thread(target=stop_reactor, daemon=True).start()
+        except Exception as e:
+            logger.debug(f"Could not stop reactor: {e}")
     
     def on_error(self, connection, event) -> None:
         """Called on IRC errors."""
@@ -383,22 +535,30 @@ class TwitchIRCBot(irc.bot.SingleServerIRCBot):
         
         # Check for authentication-related errors
         error_str = f"{error_msg} {error_args}".lower()
-        if any(keyword in error_str for keyword in ['authentication', 'password', 'login', 'invalid', 'bad', 'incorrect']):
+        if any(keyword in error_str for keyword in ['authentication', 'password', 'login', 'invalid', 'bad', 'incorrect', 'unauthorized']):
+            masked = self._mask_token(self.oauth_token) if self.oauth_token else 'MISSING'
             logger.error("❌ AUTHENTICATION ERROR DETECTED!")
+            logger.error(f"❌ OAuth token: {masked}")
+            logger.error("❌ Possible causes:")
+            logger.error("   1. Token is for a different user than nickname")
+            logger.error("   2. Token is expired or invalid")
+            logger.error("   3. Token is an app token (needs user token)")
+            logger.error("   4. Token missing chat:read or chat:edit scopes")
             print("❌ DEBUG: This appears to be an AUTHENTICATION ERROR!", flush=True)
-            print(f"❌ DEBUG: OAuth token was: {self.oauth_token[:20] if self.oauth_token else 'MISSING'}...", flush=True)
-            print(f"❌ DEBUG: Check if OAuth token is valid and not expired", flush=True)
-        
-        # Check for authentication errors
-        error_str = str(error_msg).lower() + " " + " ".join(str(arg).lower() for arg in error_args)
-        if any(keyword in error_str for keyword in ['authentication', 'password', 'login', 'invalid', 'unauthorized']):
-            logger.error("❌ AUTHENTICATION FAILURE DETECTED!")
-            logger.error("❌ OAuth token may be invalid, expired, or incorrectly formatted")
-            print("❌ DEBUG: AUTHENTICATION FAILURE - OAuth token likely invalid/expired", flush=True)
-            print("❌ DEBUG: Verify token at: https://twitchapps.com/tmi/", flush=True)
+            print(f"❌ DEBUG: OAuth token: {masked}", flush=True)
         
         if self.bridge_instance:
             self.bridge_instance.connected = False
+    
+    def stop(self) -> None:
+        """Stop the bot and prevent reconnection."""
+        self._stop_event.set()
+        self._reconnecting = False
+        try:
+            if hasattr(self, 'connection') and self.connection:
+                self.connection.disconnect()
+        except Exception:
+            pass
     
     def on_notice(self, connection, event) -> None:
         """Called on IRC NOTICE messages - Twitch uses these for auth errors."""
@@ -408,10 +568,16 @@ class TwitchIRCBot(irc.bot.SingleServerIRCBot):
         
         # Twitch sends authentication errors as NOTICE messages
         if any(keyword in notice_msg.lower() for keyword in ['login', 'authentication', 'password', 'invalid', 'unauthorized', 'error']):
+            masked = self._mask_token(self.oauth_token) if self.oauth_token else 'MISSING'
             logger.error(f"❌ AUTHENTICATION ERROR from Twitch: {notice_msg}")
+            logger.error(f"❌ OAuth token: {masked}")
+            logger.error("❌ Possible causes:")
+            logger.error("   1. Token is for a different user than nickname")
+            logger.error("   2. Token is expired or invalid")
+            logger.error("   3. Token is an app token (needs user token)")
+            logger.error("   4. Token missing chat:read or chat:edit scopes")
             print(f"❌ DEBUG: AUTHENTICATION ERROR: {notice_msg}", flush=True)
-            print("❌ DEBUG: Your OAuth token is likely invalid or expired", flush=True)
-            print("❌ DEBUG: Get a new token at: https://twitchapps.com/tmi/", flush=True)
+            print(f"❌ DEBUG: OAuth token: {masked}", flush=True)
             if self.bridge_instance:
                 self.bridge_instance.connected = False
     
@@ -428,10 +594,13 @@ class TwitchIRCBot(irc.bot.SingleServerIRCBot):
         logger.info(f"✅ Joined {event.target}")
         print(f"✅ DEBUG: Joined {event.target}")
         
-        # Mark as connected when we actually join the channel
+        # Reset reconnect attempts on successful connection (bridge handles this)
         if self.bridge_instance:
+            # Reset attempt counter on successful connection
+            self.bridge_instance._reconnect_attempt = 0
             self.bridge_instance.connected = True
             logger.info("✅ Connection fully established - ready to send messages")
+            logger.info(f"✅ Reconnect attempts reset to 0")
             print("✅ DEBUG: Connection fully established")
         
         # Send online message when bot joins (only once)

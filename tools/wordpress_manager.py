@@ -769,6 +769,7 @@ def main():
     parser.add_argument('--activate-theme', type=str, help='Activate theme by name')
     parser.add_argument('--list-themes', action='store_true', help='List all themes')
     parser.add_argument('--deploy-file', type=str, help='Deploy a single file (local path) to remote_base-relative path')
+    parser.add_argument('--remote-path', type=str, help='Optional explicit remote path (relative to site root)')
     parser.add_argument('--assign-menu', action='store_true', help='Create/assign primary menu (default name: Main)')
     parser.add_argument('--menu-name', type=str, default='Main', help='Menu name to create/assign')
     parser.add_argument('--add-home-link', type=str, nargs='?', const='https://freerideinvestor.com', help='Add Home link to menu (optional URL, default site home)')
@@ -823,7 +824,7 @@ def main():
                 print(f"{status} {theme.get('name', 'Unknown')} - {theme.get('version', 'N/A')}")
         elif args.deploy_file:
             local_path = Path(args.deploy_file)
-            ok = manager.deploy_file(local_path)
+            ok = manager.deploy_file(local_path, remote_path=args.remote_path)
             print(f"✅ Deployed file: {local_path}" if ok else f"❌ Deploy failed: {local_path}")
         elif args.assign_menu or args.add_home_link:
             home_url = args.add_home_link if args.add_home_link else None

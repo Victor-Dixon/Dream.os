@@ -103,3 +103,4 @@ fix: Twitch bot password authentication - set password in _connect() before pare
 
 **🐝 WE. ARE. SWARM. ⚡🔥**
 
+

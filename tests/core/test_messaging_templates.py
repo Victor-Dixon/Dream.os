@@ -57,3 +57,4 @@ def test_broadcast_infers_s2a_and_renders():
     rendered = render_message(msg)
     assert "[HEADER] S2A CONTROL" in rendered
 
+

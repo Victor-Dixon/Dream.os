@@ -199,7 +199,7 @@ class TestDiscordService:
         mock_response = Mock()
         mock_response.status_code = 204
         mock_post.return_value = mock_response
-
+        
         devlog_data = {
             "title": "Test DevLog",
             "description": "Test description",
@@ -208,7 +208,7 @@ class TestDiscordService:
             "filepath": "test.md",
             "timestamp": datetime.utcnow().isoformat()
         }
-
+        
         result = service.send_devlog_notification(devlog_data)
         assert result is True
         mock_post.assert_called_once()
@@ -218,7 +218,7 @@ class TestDiscordService:
         """Test devlog notification when webhook URL is not set."""
         service = DiscordService(webhook_url=None)
         devlog_data = {"title": "Test"}
-
+        
         result = service.send_devlog_notification(devlog_data)
         assert result is False
 
@@ -249,7 +249,7 @@ class TestDiscordService:
         """Test agent status notification when webhook URL is not set."""
         service = DiscordService(webhook_url=None)
         agent_status = {"agent_id": "Agent-7"}
-
+        
         result = service.send_agent_status_notification(agent_status)
         assert result is False
 
@@ -290,7 +290,7 @@ class TestDiscordService:
         mock_response = Mock()
         mock_response.status_code = 400
         mock_post.return_value = mock_response
-
+        
         result = service.test_webhook_connection()
         assert result is False
 

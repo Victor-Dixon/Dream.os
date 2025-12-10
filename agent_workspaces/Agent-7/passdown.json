@@ -1,94 +1,89 @@
 {
   "agent_id": "Agent-7",
   "agent_name": "Web Development Specialist",
-  "session_date": "2025-12-08",
-  "last_updated": "2025-12-08T22:40:00Z",
+  "session_date": "2025-12-10",
+  "last_updated": "2025-12-10T23:59:00Z",
   "status": "SESSION_CLEANUP_COMPLETE",
-  "current_phase": "READY_FOR_NEW_ASSIGNMENTS",
-
+  "current_phase": "READY_FOR_NEXT_SESSION",
   "session_summary": {
-    "session_type": "Activity Telemetry v1 integration",
-    "primary_mission": "Trust ActivityEmitter events for stall/resume and activity detection",
-    "status": "✅ DELIVERED",
-    "progress": "Event ingestion + weighted scoring + is_active API shipped"
+    "session_type": "WP deployment cleanup + tooling",
+    "primary_mission": "Finish FreeRideInvestor V2 deploy, remove stale Developer Tools traces, harden WordPress deployer",
+    "status": "\u2705 DELIVERED",
+    "progress": "Uploaded missing theme.js, purged caches, added --remote-path flag for single-file SFTP deploys"
   },
-
   "major_achievements": {
-    "telemetry_ingestion": {
+    "theme_js_restored": {
       "status": "COMPLETE",
-      "details": "AgentActivityDetector now reads runtime/agent_comms/activity_events.jsonl with schema ts/agent/type/source/summary/artifact"
+      "details": "Uploaded js/theme.js to wp-content/themes/freerideinvestor; now serves 200 (10,330 bytes)"
     },
-    "weighted_scoring": {
+    "cache_purge": {
       "status": "COMPLETE",
-      "details": "Tiered weights: Tier1 = TASK_COMPLETED/GIT_PUSH/MONEY_METRIC/TOOL_RUN failure (score 4-5); Tier2 = TOOL_RUN success, BRAIN_WRITE, TASK_CLAIMED, DEVLOG_CREATED"
+      "details": "Ran wordpress_manager --purge-cache (wp cli cache + litespeed) after theme replace"
     },
-    "is_active_api": {
+    "single_file_deploy_flag": {
       "status": "COMPLETE",
-      "details": "New is_active(agent, window_s, activity_threshold=3) preferring telemetry; falls back to legacy heuristics"
+      "details": "wordpress_manager.py now supports --remote-path for targeted uploads; used to land theme.js"
     }
   },
-
   "deliverables": {
     "files_updated": [
-      "tools/agent_activity_detector.py (telemetry ingestion, scoring, is_active)",
-      "runtime/swarm_brain_insights_agent-7_2025-10-11.md (new insight)",
+      "tools/wordpress_manager.py (--remote-path support for deploy_file)",
       "agent_workspaces/Agent-7/passdown.json (this file)"
     ],
+    "new_tools": [
+      "tools/tsla_daily_plan_poster.py (daily WP post helper using app password)"
+    ],
     "documentation": [
-      "devlogs/2025-12-08_agent-7_activity_telemetry_detector_integration.md",
-      "devlogs/2025-12-08_agent-7_session_cleanup.md"
+      "devlogs/2025-12-10_agent-7_freerideinvestor_theme_cache_cleanup.md"
+    ],
+    "verifications": [
+      "https://freerideinvestor.com/wp-content/themes/freerideinvestor/js/theme.js => 200, 10330 bytes",
+      "style.css => 200, 6311 bytes after deploy"
     ]
   },
-
   "next_actions": [
-    "Monitor ActivityEmitter event volume and adjust activity_threshold if noisy",
-    "Add unit tests for event normalization and scoring (TOOL_RUN success/failure cases)",
-    "Wire telemetry signal into any downstream stall/resume hooks if additional consumers appear"
+    "Log into wp-admin: Settings -> Permalinks -> Save Changes (forces rewrite + cache refresh)",
+    "Hard refresh homepage and confirm clean text + single Home menu; report if any 404s remain",
+    "Optionally enable the TradingView/TSLA autopost workflow with tsla_daily_plan_poster.py when ready"
   ],
-
-  "blockers": [],
-
+  "blockers": [
+    "Requires wp-admin access to save permalinks and finalize cache flush"
+  ],
   "coordination_needs": [
-    "Captain: Telemetry-backed detector shipped; thresholds adjustable if needed",
-    "Agent-6: Coordination ready for stall/resume visibility",
-    "Agent-3: Heads-up in case runtime file path changes (runtime/agent_comms/activity_events.jsonl)"
+    "Captain/Owner: please perform wp-admin permalinks Save to lock in V2 assets",
+    "Agent-1: reuse wordpress_manager --remote-path for future single-file fixes (Hostinger SFTP 65002)"
   ],
-
   "key_achievements": [
-    "Telemetry ingestion over status-only heuristics",
-    "Weighted activity scoring with Tier1 overrides",
-    "Event-backed is_active API for stall/resume"
+    "Theme JS restored; no more 404 on theme.js",
+    "Cache purged via CLI; ready for permalinks save",
+    "Single-file deploys now support explicit remote paths"
   ],
-
   "lessons_learned": [
-    "Event tiering reduces noise; Tier1 hits remove dependence on thresholds",
-    "Fallback to legacy sources keeps detector resilient when emitter is absent"
+    "Single-file SFTP deploys need explicit remote paths when theme resides outside default structure",
+    "After theme replace, verify assets (CSS/JS) and force permalinks save to clear WordPress caches"
   ],
-
   "swarm_contributions": [
-    "ActivityEmitter ingestion path with weighted scoring",
-    "is_active(agent, window_s) API for quick checks",
-    "Devlog + passdown updates for continuity"
+    "Remote-path capable wordpress_manager for precise uploads",
+    "TSLA daily plan poster helper for rapid content automation",
+    "Documented live asset verification results post-deploy"
   ],
-
   "technical_state": {
-    "telemetry_signal": "Active (prefers ActivityEmitter JSONL)",
-    "legacy_sources": "Enabled as fallback",
-    "testing": "Manual verification; add unit tests next session"
+    "theme_state": "V2 files live; theme.js/css returning 200",
+    "cache_state": "Cache flushed via wp cli; permalinks save recommended",
+    "deployment_tool": "--remote-path available for deploy_file targeting"
   },
-
   "session_metrics": {
-    "devlog_posts": 2,
+    "devlog_posts": 1,
     "files_updated": 2,
-    "new_apis": 1,
-    "blockers": 0
+    "new_tools": 1,
+    "blockers": 1
   },
-
   "handoff_notes": {
-    "priority": "Monitor telemetry noise; tune threshold if false positives/negatives",
-    "immediate_action": "Consider adding tests for TOOL_RUN normalization and tier checks",
-    "tools_available": "Telemetry scoring, is_active helper, devlogs for context",
-    "coordination": "Notify stall/resume consumers to use telemetry-backed is_active",
-    "session_cleanup": "✅ Complete"
-  }
+    "priority": "Finalize permalinks save in wp-admin to ensure caches fully clear",
+    "immediate_action": "Settings -> Permalinks -> Save Changes (no edits) then hard refresh homepage",
+    "tools_available": "wordpress_manager --remote-path; tsla_daily_plan_poster.py; deploy logs in devlog",
+    "coordination": "Notify if any remaining 404s; remote-path uploader ready for targeted fixes",
+    "session_cleanup": "\u2705 Complete"
+  },
+  "swarm_brain_entry": "insight#1, recommendation#1 (runtime/swarm_brain.json)"
 }
