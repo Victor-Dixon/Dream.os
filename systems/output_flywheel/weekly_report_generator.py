@@ -119,3 +119,4 @@ if __name__ == "__main__":
     generator = WeeklyReportGenerator()
     report = generator.generate_weekly_report()
     print(f"✅ Weekly report generated: {report['generated_at']}")
+``

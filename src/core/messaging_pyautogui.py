@@ -277,6 +277,18 @@ class PyAutoGUIMessagingDelivery:
                 else:
                     tags.append(tag)
             
+            # Extract category from metadata if present
+            category = None
+            metadata_dict = message.get('metadata', {})
+            if isinstance(metadata_dict, dict):
+                category_str = metadata_dict.get('message_category')
+                if category_str:
+                    try:
+                        from .messaging_models_core import MessageCategory
+                        category = MessageCategory(category_str.lower())
+                    except (ValueError, AttributeError):
+                        pass
+            
             # Create UnifiedMessage object from dict
             message = UnifiedMessage(
                 content=message.get('content', ''),
@@ -285,7 +297,8 @@ class PyAutoGUIMessagingDelivery:
                 message_type=message_type,
                 priority=priority,
                 tags=tags if tags else [UnifiedMessageTag.SYSTEM],
-                metadata=message.get('metadata', {})
+                metadata=metadata_dict,
+                category=category if category else None  # Preserve category from metadata
             )
         
         # Get sender for lock identifier
@@ -521,12 +534,72 @@ class PyAutoGUIMessagingDelivery:
             x, y = coords
 
             # Format message content using lean compact formatter with sender
-            msg_content = format_c2a_message(
-                recipient=message.recipient,
-                content=message.content,
-                priority=message.priority.value,
-                sender=sender  # NEW: Pass sender for correct tagging!
+            # CRITICAL: Check if message already has a template header (e.g., [HEADER] S2A STALL RECOVERY, [HEADER] D2A DISCORD INTAKE)
+            # Also check metadata for message_category to detect D2A/C2A/A2A/S2A templates
+            # If it does, don't add another prefix - the template is already complete
+            metadata = message.metadata if isinstance(message.metadata, dict) else {}
+            message_category = metadata.get("message_category") or getattr(message, "category", None)
+            
+            # Log for debugging
+            logger.info(f"🔍 Template detection for {message.recipient}: content_length={len(message.content)}, category={message_category}, content_preview={message.content[:100]}")
+            
+            # Check if content has template header (D2A, S2A, C2A, A2A templates all start with [HEADER])
+            # CRITICAL: Check anywhere in content, not just start, because prefix may have been added
+            content_has_template_header = (
+                message.content.startswith("[HEADER]") or 
+                "[HEADER]" in message.content or  # Check entire content for template headers
+                "[HEADER] D2A" in message.content or
+                "[HEADER] S2A" in message.content or
+                "[HEADER] C2A" in message.content or
+                "[HEADER] A2A" in message.content
             )
+            
+            # Also check if metadata indicates this is a templated message (D2A, C2A, A2A, S2A)
+            # Handle both string values and MessageCategory enum values
+            category_value = None
+            if message_category:
+                if isinstance(message_category, str):
+                    category_value = message_category.lower()
+                elif hasattr(message_category, 'value'):
+                    category_value = message_category.value.lower()
+                elif hasattr(message_category, 'name'):
+                    category_value = message_category.name.lower()
+            
+            is_templated_message = (
+                category_value in ["d2a", "c2a", "a2a", "s2a"] or
+                content_has_template_header
+            )
+            
+            logger.info(f"🔍 Template check result: has_header={content_has_template_header}, category={category_value}, is_templated={is_templated_message}")
+            
+            if is_templated_message:
+                # Message already has template applied - use content as-is
+                # CRITICAL: If content has prefix but also has template header, extract just the template part
+                # This handles cases where format_c2a_message was called before template detection
+                content_to_use = message.content
+                
+                # If content has both prefix AND template header, extract template part
+                if "[HEADER]" in content_to_use and not content_to_use.startswith("[HEADER]"):
+                    # Find where template actually starts
+                    header_index = content_to_use.find("[HEADER]")
+                    if header_index > 0:
+                        # Extract template part (everything from [HEADER] onwards)
+                        original_length = len(content_to_use)
+                        content_to_use = content_to_use[header_index:]
+                        logger.info(f"🔧 Extracted template content: removed {header_index} chars prefix, template length: {len(content_to_use)} (was {original_length})")
+                
+                # Don't add any prefix - template is complete as-is
+                msg_content = content_to_use
+                logger.info(f"✅ Using pre-rendered template content (category: {category_value}, has_header: {content_has_template_header}, final_length: {len(msg_content)})")
+            else:
+                # No template header - format with prefix
+                logger.info(f"📝 No template detected - formatting with prefix (category: {category_value}, has_header: {content_has_template_header})")
+                msg_content = format_c2a_message(
+                    recipient=message.recipient,
+                    content=message.content,
+                    priority=message.priority.value,
+                    sender=sender  # Pass sender for correct tagging
+                )
 
             # Click agent chat input - ensure proper focus
             logger.debug(f"📍 Moving to coordinates: ({x}, {y})")

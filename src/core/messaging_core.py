@@ -177,6 +177,18 @@ class UnifiedMessagingCore:
                 self.logger.debug(f"Error validating recipient: {e}")
                 # Continue with normal flow
         
+        # Extract category from metadata if present (for template detection)
+        category = None
+        metadata_dict = metadata or {}
+        if isinstance(metadata_dict, dict):
+            category_str = metadata_dict.get('message_category')
+            if category_str:
+                try:
+                    from .messaging_models import MessageCategory
+                    category = MessageCategory(category_str.lower())
+                except (ValueError, AttributeError):
+                    pass
+        
         message = UnifiedMessage(
             content=content,
             sender=sender,
@@ -184,7 +196,8 @@ class UnifiedMessagingCore:
             message_type=message_type,
             priority=priority,
             tags=tags or [],
-            metadata=metadata or {},
+            metadata=metadata_dict,
+            category=category if category else None,  # Preserve category from metadata
         )
 
         return self.send_message_object(message)

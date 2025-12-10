@@ -117,8 +117,18 @@ async def main():
         # Extract channel name from URL if needed
         if "twitch.tv/" in channel.lower():
             # Extract channel name from URL
-            parts = [p for p in channel.split("/") if p.strip()]  # Filter empty parts
-            channel = parts[-1].strip() if parts else channel
+            # Handle both https://www.twitch.tv/channel and https://twitch.tv/channel
+            url_parts = channel.lower().split("twitch.tv/")
+            if len(url_parts) > 1:
+                # Get everything after twitch.tv/
+                after_twitch = url_parts[-1]
+                # Remove query params, fragments, and trailing slashes
+                channel = after_twitch.split("?")[0].split("#")[0].rstrip("/").strip()
+            else:
+                # Fallback: try splitting by /
+                parts = [p for p in channel.split("/") if p.strip()]
+                channel = parts[-1].strip() if parts else channel
+            
             # Remove trailing slash or empty string
             channel = channel.rstrip("/").strip()
             if channel.startswith("#"):
@@ -127,6 +137,11 @@ async def main():
         # Remove any # prefix
         if channel.startswith("#"):
             channel = channel[1:]
+        
+        # Final validation - channel should be lowercase alphanumeric/underscore only
+        if channel and not channel.replace("_", "").replace("-", "").isalnum():
+            print(f"⚠️  WARNING: Channel name '{channel}' may contain invalid characters")
+            print(f"⚠️  Twitch channel names should be lowercase alphanumeric with underscores/hyphens")
     
     # Build config
     twitch_config = None

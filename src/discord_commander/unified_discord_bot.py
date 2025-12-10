@@ -541,10 +541,13 @@ class UnifiedDiscordBot(commands.Bot):
                 f"📨 Processing {message_prefix} message: {recipient} - {message_content[:50]}...")
 
             # Queue message for PyAutoGUI delivery (with template applied)
+            # CRITICAL: Pass message_category=D2A and use_pyautogui=True to preserve template and ensure PyAutoGUI delivery
             result = MessageCoordinator.send_to_agent(
                 agent=recipient,
                 message=rendered_message,
                 priority=priority,
+                use_pyautogui=True,  # CRITICAL: Explicitly enable PyAutoGUI delivery
+                message_category=MessageCategory.D2A,  # CRITICAL: Preserve D2A category so template format is maintained
             )
 
             if result.get("success"):
