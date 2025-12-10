@@ -20,9 +20,9 @@ class TestBaseFileRepository:
 
     def test_base_file_repository_initialization(self):
         """Test BaseFileRepository initializes correctly with temp file."""
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
-            temp_path = Path(f.name)
-        
+        # Create a temporary file path that doesn't exist yet
+        temp_path = Path(tempfile.mktemp(suffix='.json'))
+
         try:
             # BaseFileRepository is abstract, so we'll test via mock
             # We can't instantiate it directly, but we can test file handling

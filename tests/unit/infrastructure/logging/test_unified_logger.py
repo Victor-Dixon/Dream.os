@@ -69,8 +69,8 @@ class TestUnifiedLogger:
         """Test logging with context."""
         config = LoggingConfig()
         logger = UnifiedLogger(name="test_logger", config=config)
-        # Should not raise exception
-        logger.info("Test message", module="test", version="1.0")
+        # Should not raise exception - use non-conflicting context keys
+        logger.info("Test message", component="test", ver="1.0")
 
     def test_unified_logger_different_log_levels(self):
         """Test logger with different log levels."""

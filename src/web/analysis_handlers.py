@@ -86,12 +86,15 @@ class AnalysisHandlers(BaseHandler):
             else:
                 return self.format_error(f"Invalid category: {category}", 400)
             
-            return self.format_response({
+            from flask import jsonify
+            return jsonify(self.format_response({
                 "category": category,
                 "analysis": result
-            })
+            })), 200
         except Exception as e:
-            return self.handle_error(e, "Analysis failed")
+            error_response = self.handle_error(e, "Analysis failed")
+            from flask import jsonify
+            return jsonify(error_response), 500
 
     def handle_get_categories(self, request) -> tuple:
         """List available analysis categories."""
@@ -103,10 +106,11 @@ class AnalysisHandlers(BaseHandler):
             "overlaps",
             "all"
         ]
-        return self.format_response({
+        from flask import jsonify
+        return jsonify(self.format_response({
             "categories": categories,
             "count": len(categories)
-        })
+        })), 200
 
     def handle_repository_analysis(self, request) -> tuple:
         """
@@ -127,10 +131,13 @@ class AnalysisHandlers(BaseHandler):
                 repos_list = repos_list.split(",")
             
             repo_metadata = [self.analyzer.analyze_repository(Path(r)) for r in repos_list]
-            return self.format_response({
+            from flask import jsonify
+            return jsonify(self.format_response({
                 "repositories": repo_metadata,
                 "count": len(repo_metadata)
-            })
+            })), 200
         except Exception as e:
-            return self.handle_error(e, "Repository analysis failed")
+            error_response = self.handle_error(e, "Repository analysis failed")
+            from flask import jsonify
+            return jsonify(error_response), 500
 

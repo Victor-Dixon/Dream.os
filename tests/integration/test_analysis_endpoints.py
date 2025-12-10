@@ -45,10 +45,11 @@ class TestAnalysisEndpoints:
         response = client.get('/api/analysis/categories')
         assert response.status_code == 200
         data = response.get_json()
-        assert 'categories' in data
-        assert 'count' in data
-        assert isinstance(data['categories'], list)
-        assert len(data['categories']) > 0
+        assert 'data' in data
+        assert 'categories' in data['data']
+        assert 'count' in data['data']
+        assert isinstance(data['data']['categories'], list)
+        assert len(data['data']['categories']) > 0
 
     @patch('src.web.analysis_handlers.UnifiedAnalyzer.analyze_project_structure')
     def test_analyze_structure_endpoint(self, mock_analyze, client):
@@ -63,8 +64,9 @@ class TestAnalysisEndpoints:
         })
         assert response.status_code == 200
         data = response.get_json()
-        assert 'category' in data
-        assert 'analysis' in data
+        assert 'data' in data
+        assert 'category' in data['data']
+        assert 'analysis' in data['data']
 
     def test_analyze_file_missing_file(self, client):
         """Test file analysis with missing file."""
@@ -90,7 +92,8 @@ class TestAnalysisEndpoints:
         })
         assert response.status_code == 200
         data = response.get_json()
-        assert data['category'] == 'file'
+        assert 'data' in data
+        assert data['data']['category'] == 'file'
 
     def test_repository_analysis_missing_repos(self, client):
         """Test repository analysis with missing repos."""
@@ -113,8 +116,9 @@ class TestAnalysisEndpoints:
         })
         assert response.status_code == 200
         data = response.get_json()
-        assert 'repositories' in data
-        assert 'count' in data
+        assert 'data' in data
+        assert 'repositories' in data['data']
+        assert 'count' in data['data']
 
     def test_analyze_invalid_category(self, client):
         """Test analysis with invalid category."""

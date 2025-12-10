@@ -45,10 +45,11 @@ class TestValidationEndpoints:
         response = client.get('/api/validation/categories')
         assert response.status_code == 200
         data = response.get_json()
-        assert 'categories' in data
-        assert 'count' in data
-        assert isinstance(data['categories'], list)
-        assert len(data['categories']) > 0
+        assert 'data' in data
+        assert 'categories' in data['data']
+        assert 'count' in data['data']
+        assert isinstance(data['data']['categories'], list)
+        assert len(data['data']['categories']) > 0
 
     @patch('src.web.validation_handlers.UnifiedValidator.validate_ssot_config')
     def test_validate_ssot_config_endpoint(self, mock_validate, client):
@@ -63,8 +64,9 @@ class TestValidationEndpoints:
         })
         assert response.status_code == 200
         data = response.get_json()
-        assert 'category' in data
-        assert 'validation' in data
+        assert 'data' in data
+        assert 'category' in data['data']
+        assert 'validation' in data['data']
 
     def test_validate_imports_missing_file(self, client):
         """Test import validation with missing file."""
@@ -90,7 +92,8 @@ class TestValidationEndpoints:
         })
         assert response.status_code == 200
         data = response.get_json()
-        assert data['category'] == 'imports'
+        assert 'data' in data
+        assert data['data']['category'] == 'imports'
 
     @patch('src.web.validation_handlers.UnifiedValidator.run_full_validation')
     def test_full_validation_endpoint(self, mock_full, client):
@@ -101,7 +104,8 @@ class TestValidationEndpoints:
         response = client.post('/api/validation/full', json={})
         assert response.status_code == 200
         data = response.get_json()
-        assert 'full_validation' in data
+        assert 'data' in data
+        assert 'full_validation' in data['data']
 
     def test_validate_invalid_category(self, client):
         """Test validation with invalid category."""
