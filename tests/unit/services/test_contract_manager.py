@@ -44,7 +44,8 @@ class TestContractManager:
     def test_get_system_status_exception(self):
         """Test system status retrieval with exception."""
         manager = ContractManager()
-        manager.storage.get_all_contracts = Mock(side_effect=Exception("Error"))
+        manager.storage.get_all_contracts = Mock(
+            side_effect=Exception("Error"))
 
         status = manager.get_system_status()
 
@@ -82,7 +83,8 @@ class TestContractManager:
     def test_get_agent_status_exception(self):
         """Test agent status retrieval with exception."""
         manager = ContractManager()
-        manager.storage.get_agent_contracts = Mock(side_effect=Exception("Error"))
+        manager.storage.get_agent_contracts = Mock(
+            side_effect=Exception("Error"))
 
         status = manager.get_agent_status("Agent-1")
 
@@ -112,6 +114,8 @@ class TestContractManager:
     def test_get_next_task_no_tasks(self):
         """Test next task retrieval with no available tasks."""
         manager = ContractManager()
+        # Mock both cycle planner and storage to return no tasks
+        manager.cycle_planner.get_next_cycle_task = Mock(return_value=None)
         manager.storage.get_all_contracts = Mock(return_value=[])
 
         result = manager.get_next_task("Agent-1")
@@ -138,7 +142,8 @@ class TestContractManager:
     def test_get_next_task_exception(self):
         """Test next task retrieval with exception."""
         manager = ContractManager()
-        manager.storage.get_all_contracts = Mock(side_effect=Exception("Error"))
+        manager.storage.get_all_contracts = Mock(
+            side_effect=Exception("Error"))
 
         result = manager.get_next_task("Agent-1")
 
@@ -201,7 +206,3 @@ class TestContractManager:
         result = manager.add_task_to_contract("contract1", {"id": "task1"})
 
         assert result is False
-
-
-
-
