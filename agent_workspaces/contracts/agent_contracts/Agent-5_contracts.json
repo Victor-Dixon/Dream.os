@@ -46,5 +46,41 @@
     "assigned_at": "2025-12-10T17:05:40.574888",
     "tasks": [],
     "last_updated": "2025-12-10T17:05:40.574888"
+  },
+  "contract_Agent-3_e3f8b936": {
+    "contract_id": "contract_Agent-3_e3f8b936",
+    "title": "Agent-3 Default Contract",
+    "description": "Default contract for Agent-3",
+    "status": "active",
+    "priority": "medium",
+    "assigned_to": "Agent-5",
+    "created_at": "2025-09-05T15:54:07.443090",
+    "assigned_at": "2025-12-10T17:11:28.292201",
+    "tasks": [],
+    "last_updated": "2025-12-10T17:11:28.295205"
+  },
+  "contract_Agent-4_b0fe79ff": {
+    "contract_id": "contract_Agent-4_b0fe79ff",
+    "title": "Agent-4 Default Contract",
+    "description": "Default contract for Agent-4",
+    "status": "active",
+    "priority": "medium",
+    "assigned_to": "Agent-5",
+    "created_at": "2025-09-05T15:54:07.616295",
+    "assigned_at": "2025-12-10T17:11:28.357261",
+    "tasks": [],
+    "last_updated": "2025-12-10T17:11:28.357261"
+  },
+  "contract_Agent-4_7b5c33b4": {
+    "contract_id": "contract_Agent-4_7b5c33b4",
+    "title": "Agent-4 Default Contract",
+    "description": "Default contract for Agent-4",
+    "status": "active",
+    "priority": "medium",
+    "assigned_to": "Agent-5",
+    "created_at": "2025-09-06T15:32:16.277060",
+    "assigned_at": "2025-12-10T17:19:41.118401",
+    "tasks": [],
+    "last_updated": "2025-12-10T17:19:41.118401"
   }
 }
