@@ -81,6 +81,17 @@ class CyclePlannerIntegration:
                             for t in data["tasks"]
                             if t.get("status", "").lower() in ["pending", "ready"]
                         ]
+                    elif "high_priority_tasks" in data or "medium_priority_tasks" in data or "low_priority_tasks" in data:
+                        # Agent-3 format: tasks organized by priority
+                        all_tasks = []
+                        for priority_key in ["high_priority_tasks", "medium_priority_tasks", "low_priority_tasks"]:
+                            if priority_key in data:
+                                for task in data[priority_key]:
+                                    # Convert to standard format
+                                    task["task_id"] = task.get("id", task.get("task_id", ""))
+                                    task["status"] = "pending"  # All tasks in this format are pending
+                                    all_tasks.append(task)
+                        tasks = all_tasks
                     elif isinstance(data, list):
                         tasks = [
                             t
