@@ -45,6 +45,7 @@ from src.core.config_ssot import (
     ThresholdConfig,
     FilePatternConfig,
     TestConfiguration,
+    TestConfig,  # Backward compatibility alias
     ReportConfig,
 )
 

@@ -68,12 +68,16 @@ class KnowledgeBase:
         if self.kb_file.exists():
             return json.loads(self.kb_file.read_text(encoding="utf-8"))
 
-        return {
+        # Create new knowledge base file
+        kb_data = {
             "created_at": datetime.now().isoformat(),
             "last_updated": datetime.now().isoformat(),
             "entries": {},
             "stats": {"total_entries": 0, "contributors": {}},
         }
+        # Save to file immediately
+        self.kb_file.write_text(json.dumps(kb_data, indent=2, ensure_ascii=False), encoding="utf-8")
+        return kb_data
 
     def _save_kb(self):
         """Save knowledge base."""

@@ -36,6 +36,8 @@ def run_tdd_proof(mode: str, role_map: dict[str, str]) -> str:
     outdir = os.path.join("runtime", "quality", "proofs", "tdd")
     os.makedirs(outdir, exist_ok=True)
     proof_path = os.path.join(outdir, f"proof-{ts}.json")
+    # Ensure parent directory exists (handle case where makedirs was mocked)
+    os.makedirs(os.path.dirname(proof_path), exist_ok=True)
 
     pytest_available = True
     start = time.time()
