@@ -801,6 +801,52 @@ class TestTemplateDefaults:
         assert "A2A" in rendered or "AGENT-TO-AGENT" in rendered
         assert len(rendered) > 0
 
+    def test_broadcast_defaults_all_fields(self):
+        """Test BROADCAST message type with default values."""
+        msg = _create_message(
+            category=None,
+            message_type=UnifiedMessageType.BROADCAST,
+            sender="SYSTEM",
+        )
+        rendered = render_message(msg)
+        
+        # BROADCAST infers S2A category, should render with defaults
+        assert "[HEADER] S2A CONTROL" in rendered or "BROADCAST" in rendered
+        assert "From:" in rendered or "SYSTEM" in rendered
+        assert "Priority:" in rendered
+        assert len(rendered) > 0
+
+    def test_broadcast_template_defaults_via_utils(self):
+        """Test BROADCAST template from utils with default values."""
+        from src.services.utils.messaging_templates import get_broadcast_template
+        
+        # Test with minimal required fields
+        rendered = get_broadcast_template(
+            sender="SYSTEM",
+            content="Test broadcast message"
+        )
+        
+        # Should have all required fields with defaults
+        assert "🚨 BROADCAST MESSAGE 🚨" in rendered
+        assert "**FROM:** SYSTEM" in rendered
+        assert "**PRIORITY:** NORMAL" in rendered  # Default priority
+        assert "Test broadcast message" in rendered
+        assert "🐝 WE. ARE. SWARM." in rendered
+
+    def test_broadcast_template_with_custom_priority(self):
+        """Test BROADCAST template with custom priority."""
+        from src.services.utils.messaging_templates import get_broadcast_template
+        
+        rendered = get_broadcast_template(
+            sender="SYSTEM",
+            content="Urgent broadcast",
+            priority="urgent"
+        )
+        
+        assert "🚨 BROADCAST MESSAGE 🚨" in rendered
+        assert "**PRIORITY:** URGENT" in rendered
+        assert "Urgent broadcast" in rendered
+
     def test_cycle_v2_defaults(self):
         """Test CYCLE_V2 template with default values."""
         msg = _create_message(category=MessageCategory.S2A)
