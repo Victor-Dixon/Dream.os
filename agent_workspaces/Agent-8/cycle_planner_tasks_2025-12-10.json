@@ -6,14 +6,15 @@
       "task_id": "A8-MESSAGING-COV-001",
       "title": "Fix pytest-cov coverage blocking issue",
       "priority": "HIGH",
-      "status": "pending",
+      "status": "active",
       "description": "Add defensive import guards for pyautogui/cv2 to allow pytest-cov to run without GUI dependencies",
       "blocker": "cv2.dnn.DictValue AttributeError during pyautogui import chain",
       "proposed_fix": "Add try/except import guards in messaging_core.py or create cv2 stub for headless test runs",
       "owner": "Agent-8",
       "eta": "Next session",
       "dependencies": [],
-      "validation": "Run pytest-cov successfully after guards are in place"
+      "validation": "Run pytest-cov successfully after guards are in place",
+      "assigned_at": "2025-12-10T11:35:17.860050"
     },
     {
       "task_id": "A8-MESSAGING-COV-002",
@@ -24,7 +25,9 @@
       "blocker": "Depends on A8-MESSAGING-COV-001",
       "owner": "Agent-8",
       "eta": "After A8-MESSAGING-COV-001",
-      "dependencies": ["A8-MESSAGING-COV-001"],
+      "dependencies": [
+        "A8-MESSAGING-COV-001"
+      ],
       "validation": "Coverage report generated successfully with >85% coverage"
     },
     {
@@ -65,4 +68,3 @@
   "contracts": [],
   "notes": "All 64 integration tests passing. Template structure validation ensures agents receive correctly formatted messages. Coverage blocked by upstream dependency issue."
 }
-

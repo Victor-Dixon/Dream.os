@@ -27,6 +27,7 @@ from .messaging_template_texts import (
     CYCLE_CHECKLIST_TEXT,
     DISCORD_REPORTING_TEXT,
     MESSAGE_TEMPLATES,
+    SWARM_COORDINATION_TEXT,
     format_d2a_payload,
 )
 
@@ -162,6 +163,7 @@ def render_message(
     base.setdefault("fallback", "Escalate to Captain.")
     base.setdefault("cycle_checklist", CYCLE_CHECKLIST_TEXT)
     base.setdefault("discord_reporting", DISCORD_REPORTING_TEXT)
+    base.setdefault("swarm_coordination", SWARM_COORDINATION_TEXT)
     
     # C2A template defaults
     base.setdefault("task", base.get("actions", "Complete assigned task"))

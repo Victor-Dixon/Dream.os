@@ -294,6 +294,18 @@ class MessageQueueProcessor:
             True if delivery successful, False otherwise
         """
         try:
+            metadata = metadata or {}
+            
+            # CRITICAL: Check use_pyautogui flag from metadata
+            # If explicitly set to False, skip PyAutoGUI and use inbox only
+            use_pyautogui = metadata.get("use_pyautogui", True)  # Default to True for backward compatibility
+            
+            if not use_pyautogui:
+                logger.info(
+                    f"use_pyautogui=False in metadata for {recipient}, using inbox delivery"
+                )
+                return self._deliver_fallback_inbox(recipient, content, metadata, sender, priority_str)
+            
             # Check if queue is full (skip PyAutoGUI if so)
             try:
                 from ..utils.agent_queue_status import AgentQueueStatus
@@ -302,7 +314,7 @@ class MessageQueueProcessor:
                     logger.warning(
                         f"Queue full for {recipient}, skipping PyAutoGUI, using inbox"
                     )
-                    return self._deliver_fallback_inbox(recipient, content, metadata or {}, sender, priority_str)
+                    return self._deliver_fallback_inbox(recipient, content, metadata, sender, priority_str)
             except ImportError:
                 # Queue status utility not available, proceed normally
                 pass
@@ -312,7 +324,7 @@ class MessageQueueProcessor:
 
             # PRIMARY: Try PyAutoGUI delivery first
             success = self._deliver_via_core(
-                recipient, content, metadata or {}, message_type_str, sender, priority_str, tags_list or []
+                recipient, content, metadata, message_type_str, sender, priority_str, tags_list or []
             )
             if success:
                 return True
@@ -322,7 +334,7 @@ class MessageQueueProcessor:
             logger.warning(
                 f"PyAutoGUI delivery failed for {recipient}, using inbox fallback"
             )
-            return self._deliver_fallback_inbox(recipient, content, metadata or {}, sender, priority_str)
+            return self._deliver_fallback_inbox(recipient, content, metadata, sender, priority_str)
         except Exception as e:
             logger.error(f"Delivery routing error: {e}")
             # Last resort: try inbox fallback
@@ -451,6 +463,23 @@ class MessageQueueProcessor:
                 from .messaging_core import send_message
                 from .keyboard_control_lock import keyboard_control
 
+                # CRITICAL: Preserve message category in metadata for template detection
+                # Extract category from metadata if present
+                category_from_meta = None
+                if isinstance(metadata, dict):
+                    category_str = metadata.get('message_category')
+                    if category_str:
+                        try:
+                            from .messaging_models_core import MessageCategory
+                            category_from_meta = MessageCategory(category_str.lower())
+                        except (ValueError, AttributeError):
+                            pass
+                
+                # Ensure metadata includes category for downstream template detection
+                delivery_metadata = dict(metadata) if metadata else {}
+                if category_from_meta:
+                    delivery_metadata['message_category'] = category_from_meta.value
+                
                 # Wrap in keyboard control to prevent race conditions
                 with keyboard_control(f"queue_delivery::{recipient}"):
                     ok = send_message(
@@ -460,7 +489,7 @@ class MessageQueueProcessor:
                         message_type=message_type,
                         priority=priority,
                         tags=tags,
-                        metadata=metadata or {},
+                        metadata=delivery_metadata,
                     )
 
             return ok

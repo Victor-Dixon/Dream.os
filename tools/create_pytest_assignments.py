@@ -5,6 +5,12 @@ Create Pytest Debugging Assignments for All Agents
 Force multiplier - assign pytest debugging tasks based on agent specializations
 """
 
+from src.core.messaging_core import (
+    UnifiedMessagingCore,
+    UnifiedMessageType,
+    UnifiedMessagePriority,
+    UnifiedMessageTag
+)
 import sys
 from pathlib import Path
 from datetime import datetime
@@ -12,13 +18,6 @@ from datetime import datetime
 # Add project root
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
-
-from src.core.messaging_core import (
-    UnifiedMessagingCore,
-    UnifiedMessageType,
-    UnifiedMessagePriority,
-    UnifiedMessageTag
-)
 
 
 AGENT_ASSIGNMENTS = {
@@ -109,7 +108,7 @@ def create_assignment_message(agent_id: str, assignment: dict) -> str:
     focus = assignment["focus"]
     test_paths = assignment["test_paths"]
     priority = assignment["priority"]
-    
+
     message = f"""# 🧪 PYTEST DEBUGGING ASSIGNMENT - {priority} PRIORITY
 
 **Agent**: {agent_id}  
@@ -179,42 +178,42 @@ pytest {test_paths[0] if test_paths else 'tests/'} --cov --cov-report=html
 
 ---
 *Assignment delivered via Unified Messaging Service*"""
-    
+
     return message
 
 
 def send_assignments():
     """Send pytest debugging assignments to all agents"""
     print("🧪 Creating pytest debugging assignments for all agents...\n")
-    
+
     for agent_id, assignment in AGENT_ASSIGNMENTS.items():
         try:
             message = create_assignment_message(agent_id, assignment)
-            
+
             # Send message via inbox
             from src.core.messaging_core import UnifiedMessagingCore
             messaging = UnifiedMessagingCore()
-            
+
             result = messaging.send_message(
                 content=message,
                 recipient=agent_id,
                 sender="Captain Agent-4",
                 message_type=UnifiedMessageType.TEXT,
-                priority=UnifiedMessagePriority.URGENT if assignment["priority"] in ["CRITICAL", "HIGH"] else UnifiedMessagePriority.REGULAR,
+                priority=UnifiedMessagePriority.URGENT if assignment["priority"] in [
+                    "CRITICAL", "HIGH"] else UnifiedMessagePriority.REGULAR,
                 tags=[UnifiedMessageTag.CAPTAIN]
             )
-            
+
             if result:
                 print(f"✅ Assignment sent to {agent_id}")
             else:
                 print(f"❌ Failed to send assignment to {agent_id}")
-                
+
         except Exception as e:
             print(f"❌ Error sending to {agent_id}: {e}")
-    
+
     print(f"\n✅ Assignments sent to {len(AGENT_ASSIGNMENTS)} agents")
 
 
 if __name__ == "__main__":
     send_assignments()
-

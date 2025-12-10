@@ -293,10 +293,15 @@ class TheaBrowserService:
     def _get_prioritized_selectors(self) -> list[str]:
         """Get selectors prioritized by historical success rate."""
         base_selectors = [
+            # Updated selectors based on current ChatGPT UI analysis
+            "div[contenteditable='true'][id='prompt-textarea']",  # Primary: visible contenteditable div
+            "#prompt-textarea",  # ID selector for the input area
+            "div[contenteditable='true'].ProseMirror",  # ProseMirror contenteditable
+            "div.ProseMirror[contenteditable='true']",
             "textarea[data-testid='prompt-textarea']",
             "div[data-testid='prompt-textarea']",
             "div[contenteditable='true'][data-testid='prompt-textarea']",
-            "#prompt-textarea",
+            # Fallback patterns
             "textarea[aria-label*='Send a message']",
             "textarea[placeholder*='Send a message']",
             "textarea[aria-label*='Message']",
@@ -308,8 +313,6 @@ class TheaBrowserService:
             "div[contenteditable='true'][role='textbox']",
             "div[contenteditable='true'][aria-label*='Send a message']",
             "div[contenteditable='true'][aria-label*='Message']",
-            "div.ProseMirror",
-            "div[contenteditable='true'].ProseMirror",
             "form textarea",
             ".composer textarea",
             "#composer textarea",
@@ -561,24 +564,28 @@ class TheaBrowserService:
     def _get_prioritized_send_selectors(self) -> list[str]:
         """Get send button selectors prioritized by historical success."""
         base_selectors = [
-            "#composer-submit-button",  # Specific ID selector first
-            "button[data-testid='send-button']",
+            # Updated selectors based on current ChatGPT UI analysis
+            "button[data-testid*='send-button']",
             "button[aria-label*='Send message']",
             "button[aria-label*='Send']",
+            "button[data-testid*='composer-send-button']",
+            "button[data-testid*='send']",
+            ".composer-send-button",
+            "[data-testid='send-button']",
+            "button[type='submit'][aria-label*='Send']",
+            "button svg",  # Look for buttons containing SVG icons
+            "svg[aria-label*='Send']",
+            "[role='button'][aria-label*='Send']",
+            # Fallback to common patterns
+            "#composer-submit-button",
             "button[data-testid*='submit']",
             "button[type='submit']",
             "form button[type='submit']",
-            ".composer button",
-            "#composer button",
+            ".composer button:last-child",  # Last button in composer area
             "button[class*='send']",
-            # New selectors for modern ChatGPT
-            "button[data-testid*='send']",
             "button[aria-label*='Submit']",
             "button[aria-label*='Send prompt']",
-            "[data-testid='send-button']",
             ".send-button",
-            "button svg[aria-hidden='true']",  # Icon buttons
-            "[role='button'][aria-label*='send']",
             "[role='button'][data-testid*='send']",
         ]
 

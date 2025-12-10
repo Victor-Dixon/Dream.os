@@ -4,7 +4,6 @@
   "agent_role": "Infrastructure & DevOps Specialist",
   "cycle_type": "SESSION_TRANSITION",
   "status": "PENDING_NEXT_SESSION",
-
   "high_priority_tasks": [
     {
       "id": "chatgpt_selector_update",
@@ -13,7 +12,9 @@
       "priority": "HIGH",
       "estimated_effort": "30-60 minutes",
       "blocking_items": [],
-      "dependencies": ["Browser dev tools access"],
+      "dependencies": [
+        "Browser dev tools access"
+      ],
       "deliverables": [
         "Updated selectors in TheaBrowserService",
         "Verified textarea discovery working",
@@ -31,8 +32,12 @@
       "description": "Test the full Thea prompt submission and response retrieval workflow with the trading robot report",
       "priority": "HIGH",
       "estimated_effort": "15-30 minutes",
-      "blocking_items": ["ChatGPT selector updates"],
-      "dependencies": ["Working ChatGPT selectors"],
+      "blocking_items": [
+        "ChatGPT selector updates"
+      ],
+      "dependencies": [
+        "Working ChatGPT selectors"
+      ],
       "deliverables": [
         "Successful prompt submission to Thea",
         "Response retrieval from Thea",
@@ -45,7 +50,6 @@
       ]
     }
   ],
-
   "medium_priority_tasks": [
     {
       "id": "selector_maintenance_docs",
@@ -73,7 +77,9 @@
       "priority": "MEDIUM",
       "estimated_effort": "15-20 minutes",
       "blocking_items": [],
-      "dependencies": ["Working ChatGPT selectors"],
+      "dependencies": [
+        "Working ChatGPT selectors"
+      ],
       "deliverables": [
         "Auto-healing system tested with multiple selector scenarios",
         "Success rate caching verified",
@@ -86,7 +92,6 @@
       ]
     }
   ],
-
   "low_priority_tasks": [
     {
       "id": "infrastructure_health_monitoring",
@@ -108,14 +113,12 @@
       ]
     }
   ],
-
   "context_notes": {
     "session_summary": "Successfully established infrastructure foundation for Thea automation with auto-healing selector system. Resolved disk space crisis and implemented comprehensive browser automation resilience patterns.",
     "critical_carryover": "ChatGPT selectors need updating to match current UI - this is the final blocker for complete Thea automation functionality.",
     "coordination_needed": "May need to coordinate with Captain or other agents if ChatGPT access requires specific permissions or if UI changes affect other automation.",
     "risks": "ChatGPT UI changes frequently - selector maintenance will be ongoing requirement."
   },
-
   "estimated_total_effort": "90-155 minutes",
   "recommended_session_focus": "Complete ChatGPT selector updates and test full Thea automation workflow",
   "success_criteria": "Thea automation fully functional for prompt submission and response retrieval"

@@ -19,9 +19,9 @@ The cycle planner integration works for **all agents**. The system:
 ## 📊 **AGENT COVERAGE**
 
 ### **Agents with Cycle Planner Tasks**:
-- ✅ **Agent-1**: 4 tasks loaded from `cycle_planner_tasks_2025-12-10.json`
-- ✅ **Agent-3**: Has `cycle_planner_tasks_2025-12-10.json` file
-- ✅ **Agent-8**: 5 tasks loaded from `cycle_planner_tasks_2025-12-10.json`
+- ✅ **Agent-1**: 4 tasks loaded from `cycle_planner_tasks_2025-12-10.json` (standard format)
+- ✅ **Agent-3**: 5 tasks loaded from `cycle_planner_tasks_2025-12-10.json` (priority-based format)
+- ✅ **Agent-8**: 5 tasks loaded from `cycle_planner_tasks_2025-12-10.json` (standard format)
 
 ### **Agents without Cycle Planner Tasks**:
 - ✅ **Agent-2**: Falls back to contract system (works correctly)
@@ -73,6 +73,16 @@ agent_workspaces/
 1. `cycle_planner_tasks_YYYY-MM-DD.json` (primary)
 2. `YYYY-MM-DD_{agent_id}_pending_tasks.json` (alternative)
 
+### **Supported JSON Structures**:
+1. **Standard Format** (Agent-1, Agent-8):
+   - `{"pending_tasks": [...]}` or `{"tasks": [...]}`
+   - Tasks have `task_id`, `status`, `title`, `description`, `priority`
+
+2. **Priority-Based Format** (Agent-3):
+   - `{"high_priority_tasks": [...], "medium_priority_tasks": [...], "low_priority_tasks": [...]}`
+   - Tasks have `id` (converted to `task_id`), `title`, `description`, `priority`
+   - All tasks treated as `pending` status
+
 ### **Task Assignment Flow**:
 ```
 --get-next-task --agent Agent-X
@@ -106,7 +116,7 @@ python -m src.services.messaging_cli --get-next-task --agent Agent-X
 
 - ✅ Agent-1: Cycle planner tasks loaded and assigned
 - ✅ Agent-2: Falls back to contract system (correct behavior)
-- ✅ Agent-3: Has cycle planner file (ready to use)
+- ✅ Agent-3: Cycle planner tasks loaded and assigned (priority-based format)
 - ✅ Agent-8: Cycle planner tasks loaded and assigned
 - ✅ All other agents: Will work with contract system fallback
 

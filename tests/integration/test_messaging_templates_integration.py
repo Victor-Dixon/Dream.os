@@ -1056,7 +1056,7 @@ class TestTemplateStructureValidation:
             "Next action",
             "If blocked:",
             "How to respond:",
-            "#A2A",
+            "#A2A",  # Substring check - template has "#A2A #BILATERAL-COORDINATION #SWARM-FORCE-MULTIPLIER"
         ]
         self._assert_sections_present(rendered, required)
 
@@ -1087,7 +1087,7 @@ class TestTemplateStructureValidation:
                 "Next Step:",
                 "If blocked:",
                 "How to respond:",
-                "#A2A",
+                "#A2A",  # Substring check - template has "#A2A #BILATERAL-COORDINATION #SWARM-FORCE-MULTIPLIER"
             ],
         )
 
