@@ -257,25 +257,26 @@ class OptimizedStallResumePrompt:
         # Use cycle planner integration if available
         if self.resume_planner:
             return self.resume_planner.get_next_task_preview(agent_id)
-        
+
         # Fallback to old method (deprecated)
         today = date.today().isoformat()
-        cycle_file = self.workspace_root / agent_id / f"cycle_planner_tasks_{today}.json"
-        
+        cycle_file = self.workspace_root / agent_id / \
+            f"cycle_planner_tasks_{today}.json"
+
         if not cycle_file.exists():
             return None
-            
+
         try:
             with open(cycle_file, 'r', encoding='utf-8') as f:
                 data = json.load(f)
                 tasks = data.get("pending_tasks", data.get("tasks", []))
-                
+
                 # Find first pending task
                 for task in tasks:
                     status = task.get("status", "").lower()
                     if status in ["pending", "ready"]:
                         return task
-                
+
                 return tasks[0] if tasks else None
         except Exception as e:
             logger.warning(f"Error loading cycle planner for {agent_id}: {e}")
@@ -339,10 +340,40 @@ class OptimizedStallResumePrompt:
         agent_state: Dict[str, Any] = None
     ) -> str:
         """Build a non-interactive stall recovery prompt (silent work order)."""
-        _ = (agent_id, fsm_state, last_mission, next_task, recovery_actions,
-             stall_duration_minutes, scheduled_tasks_section, agent_assignments, agent_state)
+        # Build task assignment section if task was claimed
+        task_section = ""
+        if next_task:
+            task_title = next_task.get("title", "Untitled Task")
+            task_id = next_task.get("task_id", "")
+            task_status = next_task.get("status", "pending")
+            task_desc = next_task.get("description", "")
+            task_priority = next_task.get("priority", "MEDIUM")
+            
+            if task_status == "assigned":
+                task_section = f"""
 
-        return """Title: 🚨 STALL RECOVERY — DO NOT REPLY
+**✅ TASK ASSIGNED FROM CYCLE PLANNER:**
+- **Task ID**: {task_id}
+- **Title**: {task_title}
+- **Priority**: {task_priority}
+- **Status**: ASSIGNED (already claimed for you)
+{f'- **Description**: {task_desc[:200]}...' if task_desc and len(task_desc) > 200 else f'- **Description**: {task_desc}' if task_desc else ''}
+
+**Action Required**: Begin work on this assigned task immediately.
+
+"""
+            else:
+                task_section = f"""
+
+**📋 AVAILABLE TASK IN CYCLE PLANNER:**
+- **Task ID**: {task_id}
+- **Title**: {task_title}
+- **Priority**: {task_priority}
+- **To Claim**: Run `python -m src.services.messaging_cli --agent {agent_id} --get-next-task`
+
+"""
+
+        return f"""Title: 🚨 STALL RECOVERY — DO NOT REPLY
 
 Body:
 - This is a control message. Do not send any response.
