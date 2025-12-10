@@ -1,0 +1,16 @@
+{
+  "date": "2025-12-10",
+  "agent": "Agent-7",
+  "topic": "pytest_guard_patterns",
+  "insights": [
+    "Guarded skips for stubbed GUI/browser services keep suites stable while implementations evolve.",
+    "Lightweight local reporters (pytest_quick_report.py) lower friction for Discord/SSOT evidence and reduce stalled handoffs.",
+    "Cleanup of caches/htmlcov/__pycache__ should be part of every pytest slice to prevent disk pressure during batch runs."
+  ],
+  "next_steps": [
+    "Tighten stub skip guards once concrete browser service implementations land.",
+    "Adopt pytest_quick_report across agents for consistent JSON/MD evidence.",
+    "Add optional emission of activity events from pytest_quick_report when ActivityEmitter is wired."
+  ]
+}
+
