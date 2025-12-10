@@ -50,7 +50,11 @@ from .config_dataclasses import (
 from .config_enums import ConfigEnvironment, ConfigSource
 
 # Import Singleton base class for standardized pattern
-from src.architecture.design_patterns import Singleton
+try:
+    from src.architecture import Singleton
+except ImportError:
+    # Fallback for pytest collection issues
+    from src.architecture.design_patterns import Singleton
 
 logger = logging.getLogger(__name__)
 
