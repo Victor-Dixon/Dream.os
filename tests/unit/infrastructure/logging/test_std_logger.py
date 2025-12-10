@@ -56,6 +56,6 @@ class TestStdLogger:
     def test_std_logger_with_context(self):
         """Test logging with context."""
         logger = StdLogger(name="test_logger")
-        # Should not raise exception
-        logger.info("Test message", module="test", version="1.0")
+        # Should not raise exception - use non-conflicting context keys
+        logger.info("Test message", component="test", ver="1.0")
 

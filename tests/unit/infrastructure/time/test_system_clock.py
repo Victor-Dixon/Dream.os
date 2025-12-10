@@ -11,7 +11,7 @@ import pytest
 from datetime import datetime
 from unittest.mock import Mock, patch, MagicMock
 
-from src.infrastructure.time.system_clock import SystemClock
+from src.infrastructure.time.system_clock import SystemClock, TimeConfig
 
 
 class TestSystemClock:
@@ -19,32 +19,31 @@ class TestSystemClock:
 
     def test_system_clock_initialization(self):
         """Test SystemClock initializes correctly."""
-        clock = SystemClock()
+        config = TimeConfig()
+        clock = SystemClock(config)
         assert clock is not None
 
     def test_system_clock_now(self):
         """Test now() returns current time."""
-        clock = SystemClock()
-        now = clock.now() if hasattr(clock, 'now') else datetime.now()
+        config = TimeConfig()
+        clock = SystemClock(config)
+        now = clock.now()
         assert isinstance(now, datetime)
 
     def test_system_clock_utc_now(self):
-        """Test utc_now() returns UTC time if available."""
-        clock = SystemClock()
-        if hasattr(clock, 'utc_now'):
-            utc_now = clock.utc_now()
-            assert isinstance(utc_now, datetime)
-        else:
-            # Function doesn't exist, test passes
-            assert True
+        """Test utcnow() returns UTC time."""
+        config = TimeConfig()
+        clock = SystemClock(config)
+        utc_now = clock.utcnow()
+        assert isinstance(utc_now, datetime)
 
     def test_system_clock_timestamp(self):
-        """Test timestamp() returns timestamp if available."""
-        clock = SystemClock()
-        if hasattr(clock, 'timestamp'):
-            timestamp = clock.timestamp()
-            assert isinstance(timestamp, (int, float))
-        else:
-            # Function doesn't exist, test passes
-            assert True
+        """Test timestamp operations work correctly."""
+        config = TimeConfig()
+        clock = SystemClock(config)
+        dt = clock.now()
+        timestamp = clock.to_timestamp(dt)
+        dt_from_ts = clock.from_timestamp(timestamp)
+        assert isinstance(timestamp, float)
+        assert isinstance(dt_from_ts, datetime)
 

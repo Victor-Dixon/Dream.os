@@ -108,6 +108,25 @@ class BaseHandler(ABC, InitializationMixin, ErrorHandlingMixin):
         
         return response
     
+    def format_error(self, error_message: str, status_code: int = 400) -> tuple:
+        """
+        Format error response as Flask tuple (response, status_code).
+        
+        Args:
+            error_message: Error message
+            status_code: HTTP status code (default: 400)
+        
+        Returns:
+            Tuple of (jsonified response, status_code)
+        """
+        from flask import jsonify
+        error_response = self.format_response(
+            result=None,
+            success=False,
+            error=error_message
+        )
+        return jsonify(error_response), status_code
+    
     def handle_error(self, error: Exception, context: Optional[str] = None) -> dict[str, Any]:
         """
         Handle error and format error response.

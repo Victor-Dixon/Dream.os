@@ -84,12 +84,15 @@ class ValidationHandlers(BaseHandler):
             else:
                 return self.format_error(f"Invalid category: {category}", 400)
             
-            return self.format_response({
+            from flask import jsonify
+            return jsonify(self.format_response({
                 "category": category,
                 "validation": result
-            })
+            })), 200
         except Exception as e:
-            return self.handle_error(e, "Validation failed")
+            error_response = self.handle_error(e, "Validation failed")
+            from flask import jsonify
+            return jsonify(error_response), 500
 
     def handle_get_categories(self, request) -> tuple:
         """List available validation categories."""
@@ -103,10 +106,11 @@ class ValidationHandlers(BaseHandler):
             "tracker",
             "all"
         ]
-        return self.format_response({
+        from flask import jsonify
+        return jsonify(self.format_response({
             "categories": categories,
             "count": len(categories)
-        })
+        })), 200
 
     def handle_full_validation(self, request) -> tuple:
         """
@@ -121,11 +125,14 @@ class ValidationHandlers(BaseHandler):
             data = request.get_json() or {}
             file_path = data.get("file")
             results = self.validator.run_full_validation(file_path)
-            return self.format_response({
+            from flask import jsonify
+            return jsonify(self.format_response({
                 "full_validation": results
-            })
+            })), 200
         except Exception as e:
-            return self.handle_error(e, "Full validation failed")
+            error_response = self.handle_error(e, "Full validation failed")
+            from flask import jsonify
+            return jsonify(error_response), 500
 
 
 

@@ -73,3 +73,20 @@ class DatabaseConnection:
         except Exception as e:
             logger.error(f"❌ Failed to create tables: {e}")
             return False
+
+    def __enter__(self):
+        """Context manager entry - return the connection."""
+        self._conn = sqlite3.connect(self.db_path, timeout=self.config.connection_timeout)
+
+        if self.config.enable_foreign_keys:
+            self._conn.execute("PRAGMA foreign_keys = ON")
+
+        if self.config.enable_wal_mode:
+            self._conn.execute("PRAGMA journal_mode = WAL")
+
+        return self._conn
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        """Context manager exit - close the connection."""
+        if hasattr(self, '_conn') and self._conn:
+            self._conn.close()
