@@ -16,6 +16,7 @@ import json
 import logging
 import os
 import time
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
@@ -160,42 +161,459 @@ class TheaBrowserService:
 
     # ========== Prompt & response helpers ==========
     def _find_prompt_textarea(self) -> Any | None:
-        """Locate Thea/ChatGPT prompt textarea with fallbacks."""
+        """Locate Thea/ChatGPT prompt textarea with auto-healing fallbacks."""
         if not self.driver:
             return None
-        selectors = [
-            "textarea[data-testid='prompt-textarea']",
-            "textarea[aria-label*='Send a message']",
-            "textarea[placeholder*='Send a message']",
-            "textarea",
-        ]
-        for selector in selectors:
+
+        # Phase 1: Try known working selectors (prioritized by success rate)
+        known_selectors = self._get_prioritized_selectors()
+        for selector in known_selectors:
             try:
                 el = self.driver.find_element("css selector", selector)
-                if el:
+                if el and self._is_textarea_ready(el):
+                    self._record_successful_selector(selector)
                     return el
             except Exception:
                 continue
-        logger.debug("Prompt textarea not found")
+
+        # Phase 2: Dynamic discovery - analyze page for input-like elements
+        logger.info("Known selectors failed, attempting dynamic discovery...")
+        discovered_element = self._discover_textarea_dynamically()
+        if discovered_element:
+            logger.info("Dynamic discovery successful")
+            return discovered_element
+
+        # Phase 3: Broad fallback patterns
+        fallback_selectors = [
+            "textarea",
+            "div[contenteditable='true']",
+            "div[role='textbox']",
+            "div[contenteditable='true'][aria-label*='message']",
+            "div[contenteditable='true'][aria-label*='Send']",
+            "div[contenteditable='true'][placeholder*='message']",
+            "input[type='text']",
+            "[data-testid*='input']",
+            "[aria-label*='message']",
+            "[placeholder*='message']",
+            "[data-placeholder*='message']",
+            "p[data-placeholder]",
+        ]
+
+        for selector in fallback_selectors:
+            try:
+                elements = self.driver.find_elements("css selector", selector)
+                for el in elements:
+                    if self._is_textarea_ready(el):
+                        logger.info(f"Fallback selector worked: {selector}")
+                        return el
+            except Exception:
+                continue
+
+        logger.error("All textarea discovery methods failed")
+        return None
+
+    def _get_prioritized_selectors(self) -> list[str]:
+        """Get selectors prioritized by historical success rate."""
+        base_selectors = [
+            "textarea[data-testid='prompt-textarea']",
+            "div[data-testid='prompt-textarea']",
+            "div[contenteditable='true'][data-testid='prompt-textarea']",
+            "textarea[aria-label*='Send a message']",
+            "textarea[placeholder*='Send a message']",
+            "textarea[aria-label*='Message']",
+            "textarea[placeholder*='Message']",
+            "textarea[aria-label*='Ask anything']",
+            "textarea[placeholder*='Ask anything']",
+            "[data-placeholder*='Ask anything']",
+            "[data-placeholder*='Message']",
+            "div[contenteditable='true'][role='textbox']",
+            "div[contenteditable='true'][aria-label*='Send a message']",
+            "div[contenteditable='true'][aria-label*='Message']",
+            "div.ProseMirror",
+            "div[contenteditable='true'].ProseMirror",
+            "form textarea",
+            ".composer textarea",
+            "#composer textarea",
+        ]
+
+        # Try to load successful selectors from cache
+        try:
+            cache_file = Path(self.thea_config.cache_dir) / "selector_success.json"
+            if cache_file.exists():
+                with open(cache_file, 'r') as f:
+                    success_data = json.load(f)
+                    # Sort by success rate
+                    sorted_selectors = sorted(
+                        success_data.items(),
+                        key=lambda x: x[1].get('success_rate', 0),
+                        reverse=True
+                    )
+                    prioritized = [sel for sel, _ in sorted_selectors]
+                    # Combine with base selectors, putting successful ones first
+                    return prioritized + [s for s in base_selectors if s not in prioritized]
+        except Exception:
+            logger.debug("Could not load selector cache")
+
+        return base_selectors
+
+    def _record_successful_selector(self, selector: str) -> None:
+        """Record a successful selector for future prioritization."""
+        try:
+            cache_file = Path(self.thea_config.cache_dir) / "selector_success.json"
+            cache_file.parent.mkdir(parents=True, exist_ok=True)
+
+            success_data = {}
+            if cache_file.exists():
+                with open(cache_file, 'r') as f:
+                    success_data = json.load(f)
+
+            # Update success metrics
+            if selector not in success_data:
+                success_data[selector] = {'attempts': 0, 'successes': 0}
+
+            success_data[selector]['attempts'] += 1
+            success_data[selector]['successes'] += 1
+            success_data[selector]['success_rate'] = (
+                success_data[selector]['successes'] / success_data[selector]['attempts']
+            )
+            success_data[selector]['last_success'] = datetime.now().isoformat()
+
+            with open(cache_file, 'w') as f:
+                json.dump(success_data, f, indent=2)
+
+        except Exception as e:
+            logger.debug(f"Could not record selector success: {e}")
+
+    def _is_textarea_ready(self, element: Any) -> bool:
+        """Check if an element is a ready-to-use textarea/input."""
+        try:
+            # Check if element is visible and enabled
+            if not element.is_displayed() or not element.is_enabled():
+                return False
+
+            # Check if it's actually an input element
+            tag_name = element.tag_name.lower()
+            if tag_name not in ['textarea', 'input', 'div']:
+                return False
+
+            # For div elements, check if they're contenteditable
+            if tag_name == 'div':
+                contenteditable = element.get_attribute('contenteditable')
+                if contenteditable != 'true':
+                    return False
+
+            # Check if element can accept input (not readonly)
+            readonly = element.get_attribute('readonly')
+            if readonly:
+                return False
+
+            # Try a small interaction to verify it's functional
+            original_value = element.get_attribute('value') or element.text or ""
+            element.send_keys("test")
+            time.sleep(0.1)
+            new_value = element.get_attribute('value') or element.text or ""
+
+            # Clean up the test input
+            element.clear()
+            if tag_name == 'div':
+                # For contenteditable divs, we need to clear differently
+                element.send_keys(Keys.CONTROL + 'a')
+                element.send_keys(Keys.DELETE)
+
+            return len(new_value) > len(original_value)
+
+        except Exception:
+            return False
+
+    def _discover_textarea_dynamically(self) -> Any | None:
+        """Dynamically discover textarea-like elements by analyzing page structure."""
+        try:
+            # Strategy 1: Look for forms with text inputs
+            forms = self.driver.find_elements("css selector", "form")
+            for form in forms:
+                text_inputs = form.find_elements("css selector",
+                    "textarea, input[type='text'], input:not([type]), div[contenteditable='true']")
+                for input_el in text_inputs:
+                    if self._is_textarea_ready(input_el):
+                        return input_el
+
+            # Strategy 2: Look for common chat interface patterns
+            chat_patterns = [
+                ".chat-input textarea",
+                ".composer textarea",
+                ".message-input textarea",
+                "[data-testid*='composer'] textarea",
+                "[data-testid*='input'] textarea",
+                "[data-testid*='composer'] div[contenteditable='true']",
+                "[data-testid='prompt-textarea']",
+                "div[contenteditable='true'][data-testid='prompt-textarea']",
+                ".conversation textarea",
+                ".chat-form textarea"
+            ]
+
+            for pattern in chat_patterns:
+                try:
+                    elements = self.driver.find_elements("css selector", pattern)
+                    for el in elements:
+                        if self._is_textarea_ready(el):
+                            return el
+                except Exception:
+                    continue
+
+            # Strategy 3: Find all textareas and divs, filter by heuristics
+            all_candidates = []
+            all_candidates.extend(self.driver.find_elements("css selector", "textarea"))
+            all_candidates.extend(self.driver.find_elements("css selector",
+                "div[contenteditable='true']"))
+            all_candidates.extend(self.driver.find_elements("css selector",
+                "input[type='text']"))
+
+            # Strategy 3b: Find placeholder nodes and climb to contenteditable parent
+            try:
+                placeholders = self.driver.find_elements("css selector", "p[data-placeholder], div[data-placeholder]")
+                for node in placeholders:
+                    try:
+                        parent = node.find_element("xpath", "ancestor-or-self::*[@contenteditable='true'][1]")
+                        if parent and self._is_textarea_ready(parent):
+                            return parent
+                    except Exception:
+                        continue
+            except Exception:
+                pass
+
+            # Score candidates by relevance
+            scored_candidates = []
+            for el in all_candidates:
+                if not self._is_textarea_ready(el):
+                    continue
+
+                score = 0
+                # Prefer elements near bottom of page (chat inputs are usually at bottom)
+                location = el.location
+                size = el.size
+                if location['y'] > 500:  # Below fold
+                    score += 10
+
+                # Prefer larger elements (chat inputs are usually substantial)
+                if size['height'] > 20:
+                    score += 5
+
+                # Prefer elements with chat-related attributes
+                attrs = ['placeholder', 'aria-label', 'data-testid']
+                for attr in attrs:
+                    value = el.get_attribute(attr) or ""
+                    if any(keyword in value.lower() for keyword in
+                           ['message', 'chat', 'send', 'ask', 'prompt', 'input']):
+                        score += 15
+                        break
+
+                scored_candidates.append((score, el))
+
+            # Return highest scoring candidate
+            if scored_candidates:
+                scored_candidates.sort(key=lambda x: x[0], reverse=True)
+                best_candidate = scored_candidates[0][1]
+                logger.info(f"Dynamic discovery found candidate with score {scored_candidates[0][0]}")
+                return best_candidate
+
+        except Exception as e:
+            logger.debug(f"Dynamic discovery failed: {e}")
+
         return None
 
     def _find_send_button(self) -> Any | None:
-        """Locate send button; return None if not found."""
+        """Locate send button with auto-healing fallbacks."""
         if not self.driver:
             return None
-        selectors = [
-            "button[data-testid='send-button']",
-            "button[aria-label*='Send message']",
-            "button[aria-label*='Send']",
-        ]
-        for selector in selectors:
+
+        # Phase 1: Try known working selectors
+        known_selectors = self._get_prioritized_send_selectors()
+        for selector in known_selectors:
             try:
                 el = self.driver.find_element("css selector", selector)
-                if el:
+                if el and self._is_send_button_ready(el):
+                    self._record_successful_selector(f"send:{selector}")
                     return el
             except Exception:
                 continue
+
+        # Phase 2: Dynamic discovery around textarea
+        textarea = self._find_prompt_textarea()
+        if textarea:
+            discovered_button = self._discover_send_button_near_textarea(textarea)
+            if discovered_button:
+                logger.info("Dynamic send button discovery successful")
+                return discovered_button
+
+        # Phase 3: Broad fallback patterns
+        fallback_selectors = [
+            "button[type='submit']",
+            "button[data-testid*='send']",
+            "button[aria-label*='send']",
+            "input[type='submit']",
+            "button[class*='send']",
+            "svg[aria-label*='send']",
+            "[role='button'][aria-label*='send']",
+        ]
+
+        for selector in fallback_selectors:
+            try:
+                elements = self.driver.find_elements("css selector", selector)
+                for el in elements:
+                    if self._is_send_button_ready(el):
+                        logger.info(f"Fallback send button selector worked: {selector}")
+                        return el
+            except Exception:
+                continue
+
         logger.debug("Send button not found; will use ENTER fallback")
+        return None
+
+    def _get_prioritized_send_selectors(self) -> list[str]:
+        """Get send button selectors prioritized by historical success."""
+        base_selectors = [
+            "button[data-testid='send-button']",
+            "button[aria-label*='Send message']",
+            "button[aria-label*='Send']",
+            "button[data-testid*='submit']",
+            "button[type='submit']",
+            "form button[type='submit']",
+            ".composer button",
+            "#composer button",
+            "button[class*='send']",
+            # New selectors for modern ChatGPT
+            "button[data-testid*='send']",
+            "button[aria-label*='Submit']",
+            "button[aria-label*='Send prompt']",
+            "[data-testid='send-button']",
+            ".send-button",
+            "button svg[aria-hidden='true']",  # Icon buttons
+            "[role='button'][aria-label*='send']",
+            "[role='button'][data-testid*='send']",
+        ]
+
+        # Try to load successful selectors from cache
+        try:
+            cache_file = Path(self.thea_config.cache_dir) / "selector_success.json"
+            if cache_file.exists():
+                with open(cache_file, 'r') as f:
+                    success_data = json.load(f)
+                    # Filter for send button selectors and sort by success rate
+                    send_selectors = {k: v for k, v in success_data.items() if k.startswith('send:')}
+                    sorted_selectors = sorted(
+                        send_selectors.items(),
+                        key=lambda x: x[1].get('success_rate', 0),
+                        reverse=True
+                    )
+                    prioritized = [sel.replace('send:', '') for sel, _ in sorted_selectors]
+                    # Combine with base selectors
+                    return prioritized + [s for s in base_selectors if s not in prioritized]
+        except Exception:
+            logger.debug("Could not load send button selector cache")
+
+        return base_selectors
+
+    def _is_send_button_ready(self, element: Any) -> bool:
+        """Check if an element is a ready-to-use send button."""
+        try:
+            # Check if element is visible and enabled
+            if not element.is_displayed() or not element.is_enabled():
+                return False
+
+            # Check tag name
+            tag_name = element.tag_name.lower()
+            if tag_name not in ['button', 'input', 'a', 'div', 'span', 'svg']:
+                return False
+
+            # Check for send-related attributes
+            attrs_to_check = ['aria-label', 'data-testid', 'class', 'title', 'type', 'name']
+            text_content = ""
+            for attr in attrs_to_check:
+                value = element.get_attribute(attr) or ""
+                text_content += value + " "
+
+            # Look for send-related keywords
+            send_keywords = ['send', 'submit', 'enter', 'go', 'arrow', 'prompt']
+            if any(keyword in text_content.lower() for keyword in send_keywords):
+                return True
+
+            # Check if element has click-like behavior (common for SVG icons)
+            if tag_name in ['svg', 'path']:
+                try:
+                    parent = element.find_element("xpath", "..")
+                    if parent:
+                        parent_attrs = ['aria-label', 'data-testid', 'class', 'title']
+                        for attr in parent_attrs:
+                            value = parent.get_attribute(attr) or ""
+                            if any(keyword in value.lower() for keyword in send_keywords):
+                                return True
+                except Exception:
+                    pass
+
+            # Check for icon-based send buttons (common in modern UIs)
+            try:
+                # Look for SVG paths that might represent send arrows
+                if tag_name == 'svg':
+                    # Check if it contains path elements that look like arrows
+                    paths = element.find_elements("tag name", "path")
+                    if paths:
+                        # Simple heuristic: if SVG has paths, it might be an icon
+                        return True
+            except Exception:
+                pass
+
+            # Position-based heuristic: send buttons are often near input areas
+            try:
+                location = element.location
+                if location.get('x', 0) > 500:  # Far right side of screen
+                    return True
+            except Exception:
+                pass
+
+            return False
+
+        except Exception:
+            return False
+
+    def _discover_send_button_near_textarea(self, textarea: Any) -> Any | None:
+        """Find send button near the textarea element."""
+        try:
+            # Look in the same form or parent container
+            textarea_location = textarea.location
+            textarea_size = textarea.size
+
+            # Search within reasonable distance (right side, below, etc.)
+            search_area = {
+                'x': textarea_location['x'] - 50,
+                'y': textarea_location['y'] - 20,
+                'width': textarea_size['width'] + 200,
+                'height': textarea_size['height'] + 100
+            }
+
+            # Find all clickable elements in the area
+            candidates = self.driver.find_elements("css selector",
+                "button, input[type='submit'], [role='button'], svg")
+
+            for candidate in candidates:
+                try:
+                    loc = candidate.location
+                    size = candidate.size
+
+                    # Check if candidate is within search area
+                    if (loc['x'] >= search_area['x'] and
+                        loc['y'] >= search_area['y'] and
+                        loc['x'] + size['width'] <= search_area['x'] + search_area['width'] and
+                        loc['y'] + size['height'] <= search_area['y'] + search_area['height']):
+
+                        if self._is_send_button_ready(candidate):
+                            return candidate
+
+                except Exception:
+                    continue
+
+        except Exception as e:
+            logger.debug(f"Send button discovery near textarea failed: {e}")
+
         return None
 
     def _set_textarea_value(self, textarea: Any, prompt: str) -> bool:
@@ -243,15 +661,39 @@ class TheaBrowserService:
         if not self._set_textarea_value(textarea, prompt):
             return None
 
-        # Send via button if present; fallback to ENTER
+        # Send via button if present; fallback to ENTER or other methods
         send_btn = self._find_send_button()
         try:
             if send_btn:
+                logger.info("Found send button, clicking it")
                 send_btn.click()
             else:
+                logger.info("No send button found, trying ENTER key")
                 from selenium.webdriver.common.keys import Keys
 
-                textarea.send_keys(Keys.ENTER)
+                # For contenteditable divs, try different approaches
+                tag_name = textarea.tag_name.lower()
+                if tag_name == 'div':
+                    # Try Ctrl+Enter for some interfaces
+                    textarea.send_keys(Keys.CONTROL, Keys.ENTER)
+                    time.sleep(0.5)
+                    # If that didn't work, try just ENTER
+                    textarea.send_keys(Keys.ENTER)
+                else:
+                    # For textareas, just ENTER
+                    textarea.send_keys(Keys.ENTER)
+
+                # Also try clicking any nearby submit elements as backup
+                try:
+                    submit_elements = self.driver.find_elements("css selector",
+                        "button[type='submit'], input[type='submit'], [role='button']")
+                    for elem in submit_elements:
+                        if elem.is_displayed() and elem.is_enabled():
+                            elem.click()
+                            break
+                except Exception:
+                    pass  # Ignore if backup click fails
+
         except Exception as e:
             logger.error(f"Failed to submit prompt: {e}")
             return None

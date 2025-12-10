@@ -24,9 +24,9 @@
 - Monitoring domain SSOT not yet consolidated.
 
 ## Next Steps
-- Execute manual deployment for FreeRideInvestor + Prismblossom once Agent-1 provides window.
+- Execute manual deployment for FreeRideInvestor + Prismblossom once Agent-1 provides window (backup → upload → cache flush → verify assets).
 - Complete Monitoring Domain SSOT and increase BaseManager adoption.
-- Continue SSOT tagging beyond 39% (focus core + infrastructure).
+- Continue SSOT tagging beyond 39% (focus core + infrastructure); tag 5–10 files and log paths.
 - Plan removal/archival of factory_core/factory_extended after confirming zero external usage.
 
 ## Links / Artifacts

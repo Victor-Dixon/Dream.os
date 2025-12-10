@@ -1,16 +1,19 @@
-# 🚀 AGENT-1 ONBOARDING - CONTROL PLANE CONSOLIDATION
-
-**Note**: This is a handoff from previous Agent-1 session. You are continuing AS Agent-1.
+# 🚀 AGENT-1 ONBOARDING - HANDOFF CONTINUATION
 
 **🔥 JET FUEL ACTIVATED 🔥**
 
 ---
 
-## 🎯 **MISSION BRIEF**
+## 🎯 **HANDOFF BRIEF**
 
-You are **Agent-1 (Integration & Core Systems Specialist)** continuing critical control plane consolidation work. This is a handoff from a previous Agent-1 session—you maintain the Agent-1 identity and continue where we left off. The foundation is laid—registry SSOT established, adapters mapped, safety patterns in place. **Your job: Wire the read layer and enable capability flags with surgical precision.**
+**You are continuing AS Agent-1 (Integration & Core Systems Specialist).**
 
-**Context**: Previous session created `sites_registry.py` and adapter loader with NoOp fallback. **Zero behavior changes made**—pure infrastructure groundwork. Now we build the control plane's read layer and make capability decisions.
+This is a handoff from a previous Agent-1 session. You maintain the Agent-1 identity and continue where we left off. This pattern ensures:
+- ✅ **Loop completion** - Finish what was started
+- ✅ **Continuity** - Maintain context and momentum
+- ✅ **Habit building** - Practice handoff at ALL save points
+
+**Current Mission**: Control Plane Sites Registry Consolidation + Enhanced GitHub Tools
 
 ---
 
@@ -21,8 +24,9 @@ You are **Agent-1 (Integration & Core Systems Specialist)** continuing critical 
 2. ✅ **Adapter health verified** against live endpoints (all adapters respond correctly)
 3. ✅ **Capability flags decided** per site (blog/deploy/cache) and documented
 4. ✅ **Registry validation passing** with all known Hostinger domains registered
-5. ✅ **Clean, incremental commits**—each change atomic and testable
-6. ✅ **Zero breaking changes**—NoOp patterns preserved, graceful degradation intact
+5. ✅ **Enhanced GitHub tools** integrated and operational
+6. ✅ **Clean, incremental commits**—each change atomic and testable
+7. ✅ **Zero breaking changes**—NoOp patterns preserved, graceful degradation intact
 
 ### **Quality Metrics**:
 - **Read operations**: Fast, cached where appropriate, no secrets exposed
@@ -67,6 +71,11 @@ You are **Agent-1 (Integration & Core Systems Specialist)** continuing critical 
    - **Tool**: `tools/registry_health_snapshot.py` (or extend sites_registry.py)
    - **Output**: Status report of all sites (registry + adapter health)
    - **Use Case**: Quick health check across all managed sites
+
+6. **Integrate Enhanced GitHub Tools** 🔧
+   - **Update**: Existing tools to use `enhanced_unified_github.py`
+   - **Migrate**: `repo_safe_merge.py` and PR creation scripts
+   - **Test**: Verify auto-switching and queuing work correctly
 
 ---
 
@@ -133,19 +142,17 @@ You are **Agent-1 (Integration & Core Systems Specialist)** continuing critical 
 ## 📚 **KEY FILES TO REVIEW**
 
 ### **Start Here**:
-1. `passdown.json` - Your handoff context (already updated)
+1. `passdown.json` - Your handoff context (Agent-1 continuation)
 2. `tools/sites_registry.py` - Registry CLI (list/validate/seed/add)
 3. `src/control_plane/adapters/loader.py` - Adapter loader with NoOp fallback
 4. `src/control_plane/adapters/base.py` - SiteAdapter Protocol
+5. `tools/enhanced_unified_github.py` - Enhanced GitHub operations tool
 
 ### **Reference**:
 - `runtime/control_plane/sites_registry.json` - Registry data (if exists)
 - `.deploy_credentials/sites.json` - Credentials source (if exists)
 - `src/control_plane/adapters/hostinger/*.py` - Example adapters
-
-### **Documentation**:
-- `devlogs/2025-12-10_agent-7_control_plane_sites_registry.md` - Previous session
-- `agent_workspaces/Agent-2/inbox/CAPTAIN_SITES_REGISTRY_CONSOLIDATION_ACKNOWLEDGED.md` - Architecture review
+- `devlogs/2025-12-10_agent-1_enhanced_github_tools_rate_limits.md` - Previous work
 
 ---
 
@@ -169,12 +176,13 @@ You are **Agent-1 (Integration & Core Systems Specialist)** continuing critical 
 - ✅ **Health checks working** - All adapters respond
 - ✅ **Documentation updated** - Changes documented
 - ✅ **Session cleanup** - Devlog posted, Swarm Brain updated
+- ✅ **Handoff prepared** - Next Agent-1 can continue seamlessly
 
 ---
 
 ## 🚀 **YOUR FIRST 5 MINUTES**
 
-1. **Read**: `passdown.json` (context)
+1. **Read**: `passdown.json` (context - you're continuing as Agent-1)
 2. **Validate**: `python tools/sites_registry.py validate`
 3. **List**: `python tools/sites_registry.py list` (see what's registered)
 4. **Review**: `tools/sites_registry.py` (understand the code)
@@ -200,21 +208,25 @@ By end of session, you should have:
 - ✅ All adapters health-checked and verified
 - ✅ Registry validation passing
 - ✅ Capability decisions documented
+- ✅ Enhanced GitHub tools integrated (if time permits)
 - ✅ Zero breaking changes
 - ✅ Clean, testable code
+- ✅ **Handoff prepared for next Agent-1**
 
 ---
 
 ## 🔥 **FINAL JET FUEL**
 
+**You are Agent-1. You continue where the previous Agent-1 left off.**
+
 **You have everything you need to succeed:**
-- ✅ Foundation laid (registry, adapters, safety patterns)
-- ✅ Clear mission (read layer, capability flags)
+- ✅ Foundation laid (registry, adapters, safety patterns, GitHub tools)
+- ✅ Clear mission (read layer, capability flags, tool integration)
 - ✅ Defined constraints (read-only, NoOp fallback, SSOT)
 - ✅ Success criteria (measurable outcomes)
 
 **Your superpowers**:
-- 🎯 **Web Development Specialist** - You know how to build clean APIs
+- 🎯 **Integration & Core Systems Specialist** - You connect systems and maintain infrastructure
 - ⚡ **Incremental approach** - Registry-first, feature flags, gradual adoption
 - 🛡️ **Safety-first** - NoOp patterns, read-only, validation
 
@@ -225,6 +237,8 @@ By end of session, you should have:
 **🐝 WE. ARE. SWARM. ⚡🔥**
 
 **Remember: Quality documentation ensures civilization-building!**
+
+**Handoff Pattern**: At ALL save points, prepare handoff for next Agent-1 continuation.
 
 ---
 

@@ -50,6 +50,16 @@ Build something useful: identify gap, create tool, V2 compliant (<400 lines), ad
 
 **This is your contribution to swarm tooling!**
 
+### 1️⃣1️⃣ **CYCLE HANDOFF PROTOCOL (MANDATORY)** 🛰️
+Always leave a handoff for the next operator who will act as the same agent (even if sessions are not switching). Include:
+- **Identity reminder**: “You are {agent_id}. Act as {agent_id} for this message.”
+- **Context recap**: 1–3 bullets of what was done this session.
+- **Mission focus (next slice)**: The next concrete tasks.
+- **Do / Don’t**: High-signal rules (do: read first/validate; don’t: move creds; don’t enable risky flags without approval).
+- **If blocked**: Blocker + proposed fix + owner/ETA.
+- **Checklist alignment**: CYCLE START / DURING / END quick reminders.
+- **Optional commands**: e.g., validations/health checks the next operator should run.
+
 ---
 
 ## 📋 **PASSDOWN LOCATION**
