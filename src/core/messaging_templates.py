@@ -88,6 +88,7 @@ def format_s2a_message(template_key: str, **kwargs: Any) -> str:
     kwargs.setdefault("operating_cycle", AGENT_OPERATING_CYCLE_TEXT)
     kwargs.setdefault("cycle_checklist", CYCLE_CHECKLIST_TEXT)
     kwargs.setdefault("discord_reporting", DISCORD_REPORTING_TEXT)
+    kwargs.setdefault("swarm_coordination", SWARM_COORDINATION_TEXT)
     # Ensure all required base fields are present
     kwargs.setdefault("priority", "normal")
     kwargs.setdefault("message_id", "msg_unknown")
