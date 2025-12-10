@@ -106,17 +106,30 @@ class OptimizedStallResumePrompt:
         "Agent-4": "Strategic Coordination"
     }
 
-    def __init__(self, workspace_root: Optional[Path] = None, scheduler=None):
+    def __init__(self, workspace_root: Optional[Path] = None, scheduler=None, auto_claim_tasks: bool = True):
         """Initialize prompt generator.
 
         Args:
             workspace_root: Root directory for agent workspaces
             scheduler: Optional TaskScheduler instance for scheduled tasks
+            auto_claim_tasks: If True, automatically claim tasks when resuming (default: True)
         """
         self.workspace_root = Path(
             workspace_root) if workspace_root else Path("agent_workspaces")
         self.cycle_planner_dir = self.workspace_root / "swarm_cycle_planner" / "cycles"
         self.scheduler = scheduler
+        self.auto_claim_tasks = auto_claim_tasks
+        
+        # Initialize resume cycle planner integration
+        try:
+            from src.core.resume_cycle_planner_integration import ResumeCyclePlannerIntegration
+            self.resume_planner = ResumeCyclePlannerIntegration(workspace_root=self.workspace_root)
+        except ImportError:
+            logger.warning("Resume cycle planner integration not available")
+            self.resume_planner = None
+        except Exception as e:
+            logger.warning(f"Error initializing resume cycle planner integration: {e}")
+            self.resume_planner = None
 
     def generate_resume_prompt(
         self,
@@ -147,8 +160,11 @@ class OptimizedStallResumePrompt:
         if last_mission is None:
             last_mission = agent_state.get("current_mission", "Unknown")
 
-        # Get next task from Cycle Planner
-        next_task = self._get_next_cycle_planner_task(agent_id)
+        # Get and claim next task from Cycle Planner (if auto_claim enabled)
+        if self.auto_claim_tasks and self.resume_planner:
+            next_task = self.resume_planner.claim_next_task_for_agent(agent_id)
+        else:
+            next_task = self._get_next_cycle_planner_task(agent_id)
 
         # Load agent-specific assignments (NEW)
         agent_assignments = self._load_agent_assignments(agent_id)
@@ -331,10 +347,26 @@ class OptimizedStallResumePrompt:
         agent_state: Dict[str, Any] = None
     ) -> str:
         """Build a non-interactive stall recovery prompt (silent work order)."""
-        _ = (agent_id, fsm_state, last_mission, next_task, recovery_actions,
-             stall_duration_minutes, scheduled_tasks_section, agent_assignments, agent_state)
+        # Build task assignment section if task was claimed
+        task_section = ""
+        if next_task and self.resume_planner:
+            task_section = self.resume_planner.format_task_for_prompt(next_task)
+        elif next_task:
+            # Fallback formatting if resume_planner not available
+            title = next_task.get("title", "Untitled Task")
+            task_id = next_task.get("task_id") or next_task.get("contract_id", "")
+            priority = next_task.get("priority", "MEDIUM")
+            task_section = f"""**📋 YOUR NEXT ASSIGNMENT** (from Cycle Planner):
 
-        return """Title: 🚨 STALL RECOVERY — DO NOT REPLY
+**Task ID**: {task_id}
+**Title**: {title}
+**Priority**: {priority}
+
+**Action**: Begin work on this task immediately. Update status.json when started.
+
+"""
+
+        prompt = f"""Title: 🚨 STALL RECOVERY — DO NOT REPLY
 
 Body:
 - This is a control message. Do not send any response.
@@ -342,7 +374,7 @@ Body:
 - Resume work immediately and produce a tangible artifact (code, tests, or report).
 - The inactivity timer resets only on meaningful progress.
 
-Progress definition:
+{task_section}Progress definition:
 - Progress counts as:
   - A git commit that reflects real work
   - A test pass or validation run tied to the active task
@@ -350,7 +382,7 @@ Progress definition:
   - A code/file change with real delta
 - Progress does not include:
   - Chat replies of any kind
-  - “Acknowledged / resuming / got it” messages
+  - "Acknowledged / resuming / got it" messages
   - status.json updates with no substantive work
 
 Execution rules:
@@ -372,8 +404,9 @@ Marker flags:
 #STALL-RECOVERY #NO-REPLY #PROGRESS-ONLY #ARTIFACT-REQUIRED
 
 Optional footer (if you want it):
-- “This prompt is intentionally non-interactive. Silence is expected. Output is the response.”
+- "This prompt is intentionally non-interactive. Silence is expected. Output is the response."
 """
+        return prompt
 
     def _build_goal_aligned_actions(self, agent_id: str, agent_assignments: Dict[str, Any], base_actions: List[str]) -> List[str]:
         """Build goal-aligned recovery actions based on agent assignments and project priorities."""
