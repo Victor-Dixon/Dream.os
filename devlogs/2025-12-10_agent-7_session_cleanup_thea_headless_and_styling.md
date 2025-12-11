@@ -28,3 +28,4 @@
 - Summary: Styling uplift pushed locally; Thea now uc-only with headless send/receive + cookie persistence; messaging templates covered and tests green.
 - Requests: Need interactive Thea login window + WP creds confirmation to verify live styling and menu cleanup.
 
+
