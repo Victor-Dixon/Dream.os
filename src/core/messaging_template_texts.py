@@ -258,7 +258,8 @@ D2A_REPORT_FORMAT_TEXT = (
 def format_d2a_payload(payload: dict[str, Any]) -> dict[str, Any]:
     """Format D2A payload with default values."""
     payload.setdefault("interpretation", "Pending agent interpretation.")
-    payload.setdefault("actions", "Evaluate request and execute if safe/within scope.")
+    payload.setdefault(
+        "actions", "Evaluate request and execute if safe/within scope.")
     payload.setdefault(
         "fallback",
         "Ask for clarification in Discord with one focused question.",
@@ -738,4 +739,3 @@ __all__ = [
     "format_d2a_payload",
     "format_s2a_message",
 ]
-
