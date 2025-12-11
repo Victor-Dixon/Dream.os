@@ -1285,3 +1285,83 @@ class EnhancedAgentActivityDetector:
         # Sort by age (oldest first)
         stale_agents.sort(key=lambda x: x[1], reverse=True)
         return stale_agents
+
+    def _check_contract_activity(self, agent_id: str) -> Optional[Dict[str, Any]]:
+        """Check contract system for agent task activity (Agent-5 Phase 1 - HIGH priority)."""
+        try:
+            from src.services.contract_system.manager import ContractManager
+            manager = ContractManager()
+            agent_status = manager.get_agent_status(agent_id)
+
+            # Check for active contracts or recent completions
+            active_contracts = agent_status.get("active_contracts", 0)
+            if active_contracts > 0:
+                # Check contract timestamps
+                contracts = agent_status.get("contracts", [])
+                if contracts:
+                    latest_contract = max(
+                        contracts,
+                        key=lambda c: c.get("assigned_at", 0) or c.get("updated_at", 0) or 0
+                    )
+                    timestamp = latest_contract.get("assigned_at") or latest_contract.get("updated_at")
+                    if timestamp:
+                        # Convert to unix timestamp if needed
+                        if isinstance(timestamp, str):
+                            try:
+                                from datetime import datetime
+                                timestamp = datetime.fromisoformat(
+                                    timestamp.replace("Z", "+00:00")
+                                ).timestamp()
+                            except Exception:
+                                return None
+                        return {
+                            "source": "contract_system",
+                            "timestamp": timestamp,
+                            "active_contracts": active_contracts,
+                            "age_seconds": time.time() - timestamp,
+                        }
+        except Exception as e:
+            logger.debug(f"Could not check contract activity: {e}")
+        return None
+
+    def _check_inbox_processing(self, agent_id: str) -> Optional[Dict[str, Any]]:
+        """Check inbox message processing activity (Agent-5 Phase 1 - HIGH priority)."""
+        inbox_dir = self.agent_workspaces / agent_id / "inbox"
+        if not inbox_dir.exists():
+            return None
+
+        # Check for processed/read indicators
+        processed_files = list(inbox_dir.glob("*_processed.md"))
+        read_files = list(inbox_dir.glob("*_read.md"))
+
+        all_processed = processed_files + read_files
+        if all_processed:
+            latest = max(all_processed, key=lambda p: p.stat().st_mtime)
+            mtime = latest.stat().st_mtime
+            return {
+                "source": "inbox_processing",
+                "timestamp": mtime,
+                "file": latest.name,
+                "age_seconds": time.time() - mtime,
+            }
+
+        # Alternative: Check inbox file content for processing markers
+        inbox_files = list(inbox_dir.glob("*.md"))
+        for inbox_file in sorted(inbox_files, key=lambda p: p.stat().st_mtime, reverse=True)[:5]:
+            try:
+                content = inbox_file.read_text(encoding="utf-8")
+                # Check for processing indicators
+                if "✅" in content or "COMPLETE" in content.upper() or "DONE" in content.upper():
+                    mtime = inbox_file.stat().st_mtime
+                    # Only if recent (within last 24 hours)
+                    if time.time() - mtime < (24 * 3600):
+                        return {
+                            "source": "inbox_processing",
+                            "timestamp": mtime,
+                            "file": inbox_file.name,
+                            "age_seconds": time.time() - mtime,
+                        }
+            except Exception:
+                continue
+
+        return None
