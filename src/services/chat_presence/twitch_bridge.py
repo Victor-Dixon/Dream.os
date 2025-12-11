@@ -29,6 +29,32 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 
+# Custom exception classes for better error handling
+class TwitchBridgeError(Exception):
+    """Base exception for Twitch bridge errors."""
+    pass
+
+
+class TwitchAuthError(TwitchBridgeError):
+    """Authentication-related errors."""
+    pass
+
+
+class TwitchConnectionError(TwitchBridgeError):
+    """Connection-related errors."""
+    pass
+
+
+class TwitchMessageError(TwitchBridgeError):
+    """Message sending/receiving errors."""
+    pass
+
+
+class TwitchReconnectError(TwitchBridgeError):
+    """Reconnection errors."""
+    pass
+
+
 class TwitchChatBridge:
     """
     Twitch IRC bridge for chat presence.
@@ -221,14 +247,44 @@ class TwitchChatBridge:
         Args:
             message_data: Message data dictionary
         """
-        if self.on_message:
-            try:
-                if asyncio.iscoroutinefunction(self.on_message):
+        if not self.on_message:
+            return
+        
+        try:
+            # Validate message data structure
+            if not isinstance(message_data, dict):
+                logger.warning(f"⚠️ Invalid message data type: {type(message_data)}")
+                return
+            
+            if not message_data.get("message") or not message_data.get("username"):
+                logger.warning(f"⚠️ Invalid message data structure: missing required fields")
+                return
+            
+            # Handle async or sync callbacks
+            if asyncio.iscoroutinefunction(self.on_message):
+                try:
                     asyncio.create_task(self.on_message(message_data))
-                else:
-                    self.on_message(message_data)
-            except Exception as e:
-                logger.error(f"Error in message callback: {e}", exc_info=True)
+                except RuntimeError as e:
+                    # Event loop not running - create new one or use sync fallback
+                    logger.warning(f"⚠️ Event loop not available, using sync fallback: {e}")
+                    # Try to get or create event loop
+                    try:
+                        loop = asyncio.get_event_loop()
+                        if loop.is_closed():
+                            loop = asyncio.new_event_loop()
+                            asyncio.set_event_loop(loop)
+                        loop.run_until_complete(self.on_message(message_data))
+                    except Exception as loop_error:
+                        logger.error(f"❌ Failed to handle async callback: {loop_error}", exc_info=True)
+            else:
+                self.on_message(message_data)
+                
+        except TypeError as e:
+            logger.error(f"❌ Type error in message callback: {e}", exc_info=True)
+        except ValueError as e:
+            logger.error(f"❌ Value error in message callback: {e}", exc_info=True)
+        except Exception as e:
+            logger.error(f"❌ Unexpected error in message callback: {e}", exc_info=True)
 
     async def send_message(self, message: str) -> bool:
         """
