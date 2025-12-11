@@ -189,6 +189,19 @@ class EnhancedAgentActivityDetector:
             activities.append(notes_activity)
             activity_details["notes"] = notes_activity
 
+        # Phase 1: Agent-5 High-Priority Additional Signals (2025-12-11)
+        # 16. Check contract system activity (HIGH priority - direct task indicator)
+        contract_activity = self._check_contract_activity(agent_id)
+        if contract_activity:
+            activities.append(contract_activity)
+            activity_details["contract_system"] = contract_activity
+
+        # 17. Check inbox message processing (HIGH priority - direct engagement)
+        inbox_processing_activity = self._check_inbox_processing(agent_id)
+        if inbox_processing_activity:
+            activities.append(inbox_processing_activity)
+            activity_details["inbox_processing"] = inbox_processing_activity
+
         # 16. Check git working directory changes (Phase 2 - HIGH priority)
         git_working_activity = self._check_git_working_directory(agent_id)
         if git_working_activity:
