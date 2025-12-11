@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 class EnhancedAgentActivityDetector:
     """
     Detects agent activity through multiple indicators.
-    
+
     Tracks:
     - File modifications (status.json, inbox, devlogs, reports)
     - Message operations (queue, inbox processing)
@@ -40,11 +40,11 @@ class EnhancedAgentActivityDetector:
         self.workspace_root = workspace_root or Path(".")
         self.agent_workspaces = self.workspace_root / "agent_workspaces"
         self.devlogs_dir = self.workspace_root / "devlogs"
-        
+
     def detect_agent_activity(self, agent_id: str) -> Dict[str, Any]:
         """
         Detect all activity indicators for an agent.
-        
+
         Returns dict with:
         - latest_activity: Most recent activity timestamp
         - activity_sources: List of activity sources found
@@ -53,78 +53,114 @@ class EnhancedAgentActivityDetector:
         current_time = time.time()
         activities = []
         activity_details = {}
-        
+
         # 1. Check status.json modification
         status_activity = self._check_status_json(agent_id)
         if status_activity:
             activities.append(status_activity)
             activity_details["status_json"] = status_activity
-        
+
         # 2. Check inbox file modifications
         inbox_activity = self._check_inbox_files(agent_id)
         if inbox_activity:
             activities.append(inbox_activity)
             activity_details["inbox"] = inbox_activity
-        
+
         # 3. Check devlog creation/modification
         devlog_activity = self._check_devlogs(agent_id)
         if devlog_activity:
             activities.append(devlog_activity)
             activity_details["devlogs"] = devlog_activity
-        
+
         # 4. Check report files in workspace
         report_activity = self._check_reports(agent_id)
         if report_activity:
             activities.append(report_activity)
             activity_details["reports"] = report_activity
-        
+
         # 5. Check message queue activity
         queue_activity = self._check_message_queue(agent_id)
         if queue_activity:
             activities.append(queue_activity)
             activity_details["message_queue"] = queue_activity
-        
+
         # 6. Check any file modifications in agent workspace
         workspace_activity = self._check_workspace_files(agent_id)
         if workspace_activity:
             activities.append(workspace_activity)
             activity_details["workspace_files"] = workspace_activity
-        
+
         # 7. Check git commits (if agent name in commit)
         git_activity = self._check_git_commits(agent_id)
         if git_activity:
             activities.append(git_activity)
             activity_details["git_commits"] = git_activity
-        
+
         # 8. Check Discord devlog posts (Agent-1 proposal - MEDIUM priority)
         discord_activity = self._check_discord_posts(agent_id)
         if discord_activity:
             activities.append(discord_activity)
             activity_details["discord_posts"] = discord_activity
-        
+
         # 9. Check tool execution (Agent-1 proposal - MEDIUM priority)
         tool_activity = self._check_tool_execution(agent_id)
         if tool_activity:
             activities.append(tool_activity)
             activity_details["tool_execution"] = tool_activity
-        
+
         # 10. Check Swarm Brain contributions (Agent-1 proposal - LOW priority)
         swarm_brain_activity = self._check_swarm_brain(agent_id)
         if swarm_brain_activity:
             activities.append(swarm_brain_activity)
             activity_details["swarm_brain"] = swarm_brain_activity
-        
+
         # 11. Check Agent lifecycle events (Agent-1 proposal - MEDIUM priority)
         lifecycle_activity = self._check_agent_lifecycle(agent_id)
         if lifecycle_activity:
             activities.append(lifecycle_activity)
             activity_details["agent_lifecycle"] = lifecycle_activity
-        
+
+        # 12. Check passdown.json modifications (Phase 2 - HIGH priority)
+        passdown_activity = self._check_passdown_json(agent_id)
+        if passdown_activity:
+            activities.append(passdown_activity)
+            activity_details["passdown"] = passdown_activity
+
+        # 13. Check artifacts directory (root level) (Phase 2 - HIGH priority)
+        artifacts_activity = self._check_artifacts_directory(agent_id)
+        if artifacts_activity:
+            activities.append(artifacts_activity)
+            activity_details["artifacts"] = artifacts_activity
+
+        # 14. Check cycle planner task files (Phase 2 - HIGH priority)
+        cycle_planner_activity = self._check_cycle_planner(agent_id)
+        if cycle_planner_activity:
+            activities.append(cycle_planner_activity)
+            activity_details["cycle_planner"] = cycle_planner_activity
+
+        # 15. Check notes directory (Phase 2 - HIGH priority)
+        notes_activity = self._check_notes_directory(agent_id)
+        if notes_activity:
+            activities.append(notes_activity)
+            activity_details["notes"] = notes_activity
+
+        # 16. Check git working directory changes (Phase 2 - HIGH priority)
+        git_working_activity = self._check_git_working_directory(agent_id)
+        if git_working_activity:
+            activities.append(git_working_activity)
+            activity_details["git_working"] = git_working_activity
+
+        # 17. Check activity log files (Agent-7 improvement - HIGH priority)
+        activity_logs_activity = self._check_activity_logs(agent_id)
+        if activity_logs_activity:
+            activities.append(activity_logs_activity)
+            activity_details["activity_logs"] = activity_logs_activity
+
         # Determine latest activity
         latest_activity = None
         if activities:
             latest_activity = max(activities, key=lambda x: x["timestamp"])
-        
+
         return {
             "agent_id": agent_id,
             "latest_activity": latest_activity["timestamp"] if latest_activity else None,
@@ -134,15 +170,15 @@ class EnhancedAgentActivityDetector:
             "activity_details": activity_details,
             "detected_at": current_time,
         }
-    
+
     def _check_status_json(self, agent_id: str) -> Optional[Dict[str, Any]]:
         """Check status.json file modification."""
         status_file = self.agent_workspaces / agent_id / "status.json"
         if not status_file.exists():
             return None
-        
+
         mtime = status_file.stat().st_mtime
-        
+
         # Also check last_updated field in JSON
         last_updated_str = None
         try:
@@ -150,7 +186,7 @@ class EnhancedAgentActivityDetector:
             last_updated_str = status_data.get("last_updated")
         except Exception:
             pass
-        
+
         return {
             "source": "status_json",
             "timestamp": mtime,
@@ -158,21 +194,21 @@ class EnhancedAgentActivityDetector:
             "last_updated_field": last_updated_str,
             "age_seconds": time.time() - mtime,
         }
-    
+
     def _check_inbox_files(self, agent_id: str) -> Optional[Dict[str, Any]]:
         """Check inbox file modifications."""
         inbox_dir = self.agent_workspaces / agent_id / "inbox"
         if not inbox_dir.exists():
             return None
-        
+
         inbox_files = list(inbox_dir.glob("*.md"))
         if not inbox_files:
             return None
-        
+
         # Get most recent inbox file
         latest_file = max(inbox_files, key=lambda p: p.stat().st_mtime)
         mtime = latest_file.stat().st_mtime
-        
+
         return {
             "source": "inbox",
             "timestamp": mtime,
@@ -180,11 +216,11 @@ class EnhancedAgentActivityDetector:
             "file_count": len(inbox_files),
             "age_seconds": time.time() - mtime,
         }
-    
+
     def _check_devlogs(self, agent_id: str) -> Optional[Dict[str, Any]]:
         """Check devlog creation/modification."""
         devlogs = []
-        
+
         # Check main devlogs directory
         if self.devlogs_dir.exists():
             patterns = [
@@ -194,18 +230,18 @@ class EnhancedAgentActivityDetector:
             ]
             for pattern in patterns:
                 devlogs.extend(list(self.devlogs_dir.glob(f"{pattern}.md")))
-        
+
         # Check agent workspace devlogs
         agent_devlogs_dir = self.agent_workspaces / agent_id / "devlogs"
         if agent_devlogs_dir.exists():
             devlogs.extend(list(agent_devlogs_dir.glob("*.md")))
-        
+
         if not devlogs:
             return None
-        
+
         latest_devlog = max(devlogs, key=lambda p: p.stat().st_mtime)
         mtime = latest_devlog.stat().st_mtime
-        
+
         return {
             "source": "devlogs",
             "timestamp": mtime,
@@ -213,21 +249,21 @@ class EnhancedAgentActivityDetector:
             "devlog_count": len(devlogs),
             "age_seconds": time.time() - mtime,
         }
-    
+
     def _check_reports(self, agent_id: str) -> Optional[Dict[str, Any]]:
         """Check report files in agent workspace."""
         agent_dir = self.agent_workspaces / agent_id
         if not agent_dir.exists():
             return None
-        
+
         # Find report files (markdown files in workspace root)
         reports = [f for f in agent_dir.glob("*.md") if f.name != "README.md"]
         if not reports:
             return None
-        
+
         latest_report = max(reports, key=lambda p: p.stat().st_mtime)
         mtime = latest_report.stat().st_mtime
-        
+
         return {
             "source": "reports",
             "timestamp": mtime,
@@ -235,15 +271,15 @@ class EnhancedAgentActivityDetector:
             "report_count": len(reports),
             "age_seconds": time.time() - mtime,
         }
-    
+
     def _check_message_queue(self, agent_id: str) -> Optional[Dict[str, Any]]:
         """Check message queue activity for agent."""
         try:
             from src.core.message_queue import MessageQueue
-            
+
             queue = MessageQueue()
             queue_data = queue.get_queue_status()
-            
+
             # Check for messages to/from this agent
             entries = queue_data.get("entries", [])
             agent_messages = [
@@ -253,20 +289,20 @@ class EnhancedAgentActivityDetector:
                     e.get("sender") == agent_id
                 )
             ]
-            
+
             if not agent_messages:
                 return None
-            
+
             # Get most recent message
             latest_message = max(
                 agent_messages,
                 key=lambda e: e.get("created_at", 0)
             )
-            
+
             created_at = latest_message.get("created_at", 0)
             if created_at == 0:
                 return None
-            
+
             return {
                 "source": "message_queue",
                 "timestamp": created_at,
@@ -277,13 +313,13 @@ class EnhancedAgentActivityDetector:
         except Exception as e:
             logger.debug(f"Could not check message queue: {e}")
             return None
-    
+
     def _check_workspace_files(self, agent_id: str) -> Optional[Dict[str, Any]]:
         """Check any file modifications in agent workspace."""
         agent_dir = self.agent_workspaces / agent_id
         if not agent_dir.exists():
             return None
-        
+
         # Find all files (excluding common directories)
         exclude_dirs = {"__pycache__", ".git", "node_modules", ".venv"}
         all_files = []
@@ -292,19 +328,19 @@ class EnhancedAgentActivityDetector:
                 exclude in file_path.parts for exclude in exclude_dirs
             ):
                 all_files.append(file_path)
-        
+
         if not all_files:
             return None
-        
+
         # Get most recent file modification
         latest_file = max(all_files, key=lambda p: p.stat().st_mtime)
         mtime = latest_file.stat().st_mtime
-        
+
         # Only return if recent (within last 24 hours)
         age_seconds = time.time() - mtime
         if age_seconds > 86400:  # 24 hours
             return None
-        
+
         return {
             "source": "workspace_files",
             "timestamp": mtime,
@@ -312,12 +348,12 @@ class EnhancedAgentActivityDetector:
             "file_count": len(all_files),
             "age_seconds": age_seconds,
         }
-    
+
     def _check_git_commits(self, agent_id: str) -> Optional[Dict[str, Any]]:
         """Check git commits with agent name."""
         try:
             import subprocess
-            
+
             # Check if git is available
             result = subprocess.run(
                 ["git", "log", "--all", "--format=%H|%ct|%s", "--grep", agent_id],
@@ -326,23 +362,23 @@ class EnhancedAgentActivityDetector:
                 timeout=TimeoutConstants.HTTP_QUICK,
                 cwd=self.workspace_root,
             )
-            
+
             if result.returncode != 0 or not result.stdout.strip():
                 return None
-            
+
             # Parse most recent commit
             lines = result.stdout.strip().split("\n")
             if not lines:
                 return None
-            
+
             # Get first commit (most recent)
             parts = lines[0].split("|", 2)
             if len(parts) < 2:
                 return None
-            
+
             commit_timestamp = int(parts[1])
             commit_message = parts[2] if len(parts) > 2 else ""
-            
+
             return {
                 "source": "git_commits",
                 "timestamp": commit_timestamp,
@@ -352,7 +388,7 @@ class EnhancedAgentActivityDetector:
         except Exception as e:
             logger.debug(f"Could not check git commits: {e}")
             return None
-    
+
     def _check_discord_posts(self, agent_id: str) -> Optional[Dict[str, Any]]:
         """Check Discord devlog posts (Agent-1 proposal - MEDIUM priority)."""
         try:
@@ -365,7 +401,8 @@ class EnhancedAgentActivityDetector:
                     if isinstance(p, dict) and p.get("agent_id", "").lower() == agent_id.lower()
                 ]
                 if agent_posts:
-                    latest_post = max(agent_posts, key=lambda p: p.get("timestamp", 0))
+                    latest_post = max(
+                        agent_posts, key=lambda p: p.get("timestamp", 0))
                     post_timestamp = latest_post.get("timestamp", 0)
                     if post_timestamp > 0:
                         return {
@@ -374,7 +411,7 @@ class EnhancedAgentActivityDetector:
                             "post_title": latest_post.get("title", "")[:100],
                             "age_seconds": time.time() - post_timestamp,
                         }
-            
+
             # Check swarm_brain/devlogs for agent-specific devlogs (may have been posted)
             swarm_devlogs = self.workspace_root / "swarm_brain" / "devlogs"
             if swarm_devlogs.exists():
@@ -385,10 +422,12 @@ class EnhancedAgentActivityDetector:
                 ]
                 all_devlogs = []
                 for pattern in agent_patterns:
-                    all_devlogs.extend(list(swarm_devlogs.rglob(f"{pattern}.md")))
-                
+                    all_devlogs.extend(
+                        list(swarm_devlogs.rglob(f"{pattern}.md")))
+
                 if all_devlogs:
-                    latest_devlog = max(all_devlogs, key=lambda p: p.stat().st_mtime)
+                    latest_devlog = max(
+                        all_devlogs, key=lambda p: p.stat().st_mtime)
                     mtime = latest_devlog.stat().st_mtime
                     # Only return if recent (within 7 days - likely posted to Discord)
                     if time.time() - mtime < (7 * 24 * 3600):
@@ -398,25 +437,27 @@ class EnhancedAgentActivityDetector:
                             "file": latest_devlog.name,
                             "age_seconds": time.time() - mtime,
                         }
-            
+
             return None
         except Exception as e:
             logger.debug(f"Could not check Discord posts: {e}")
             return None
-    
+
     def _check_tool_execution(self, agent_id: str) -> Optional[Dict[str, Any]]:
         """Check tool execution activity (Agent-1 proposal - MEDIUM priority)."""
         try:
             # Check tool execution logs
             tool_logs = Path("logs/tool_executions.json")
             if tool_logs.exists():
-                executions_data = json.loads(tool_logs.read_text(encoding="utf-8"))
+                executions_data = json.loads(
+                    tool_logs.read_text(encoding="utf-8"))
                 agent_executions = [
                     e for e in executions_data
                     if isinstance(e, dict) and e.get("agent_id", "").lower() == agent_id.lower()
                 ]
                 if agent_executions:
-                    latest_execution = max(agent_executions, key=lambda e: e.get("timestamp", 0))
+                    latest_execution = max(
+                        agent_executions, key=lambda e: e.get("timestamp", 0))
                     exec_timestamp = latest_execution.get("timestamp", 0)
                     if exec_timestamp > 0:
                         return {
@@ -425,7 +466,7 @@ class EnhancedAgentActivityDetector:
                             "tool_name": latest_execution.get("tool_name", ""),
                             "age_seconds": time.time() - exec_timestamp,
                         }
-            
+
             # Check toolbelt registry for recent tool runs
             try:
                 from tools.toolbelt_registry import ToolbeltRegistry
@@ -434,19 +475,19 @@ class EnhancedAgentActivityDetector:
                 # For now, return None if registry doesn't support this
             except Exception:
                 pass
-            
+
             return None
         except Exception as e:
             logger.debug(f"Could not check tool execution: {e}")
             return None
-    
+
     def _check_swarm_brain(self, agent_id: str) -> Optional[Dict[str, Any]]:
         """Check Swarm Brain contributions (Agent-1 proposal - LOW priority)."""
         try:
             swarm_brain_dir = self.workspace_root / "swarm_brain"
             if not swarm_brain_dir.exists():
                 return None
-            
+
             # Check learning entries
             learning_files = list(swarm_brain_dir.rglob("*learning*.md"))
             agent_patterns = [
@@ -454,7 +495,7 @@ class EnhancedAgentActivityDetector:
                 agent_id.replace('-', '_').lower(),
                 agent_id,
             ]
-            
+
             agent_learnings = []
             for learning_file in learning_files:
                 try:
@@ -463,9 +504,10 @@ class EnhancedAgentActivityDetector:
                         agent_learnings.append(learning_file)
                 except Exception:
                     continue
-            
+
             if agent_learnings:
-                latest_learning = max(agent_learnings, key=lambda p: p.stat().st_mtime)
+                latest_learning = max(
+                    agent_learnings, key=lambda p: p.stat().st_mtime)
                 mtime = latest_learning.stat().st_mtime
                 return {
                     "source": "swarm_brain",
@@ -473,12 +515,13 @@ class EnhancedAgentActivityDetector:
                     "file": latest_learning.name,
                     "age_seconds": time.time() - mtime,
                 }
-            
+
             # Check swarm memory data file if it exists
             swarm_memory_file = swarm_brain_dir / "swarm_memory.json"
             if swarm_memory_file.exists():
                 try:
-                    memory_data = json.loads(swarm_memory_file.read_text(encoding="utf-8"))
+                    memory_data = json.loads(
+                        swarm_memory_file.read_text(encoding="utf-8"))
                     # Check for agent contributions in memory
                     if isinstance(memory_data, dict):
                         learnings = memory_data.get("learnings", [])
@@ -492,7 +535,8 @@ class EnhancedAgentActivityDetector:
                                 agent_contributions,
                                 key=lambda c: c.get("timestamp", 0)
                             )
-                            contrib_timestamp = latest_contrib.get("timestamp", 0)
+                            contrib_timestamp = latest_contrib.get(
+                                "timestamp", 0)
                             if contrib_timestamp > 0:
                                 return {
                                     "source": "swarm_brain",
@@ -502,12 +546,12 @@ class EnhancedAgentActivityDetector:
                                 }
                 except Exception:
                     pass
-            
+
             return None
         except Exception as e:
             logger.debug(f"Could not check Swarm Brain: {e}")
             return None
-    
+
     def _check_agent_lifecycle(self, agent_id: str) -> Optional[Dict[str, Any]]:
         """Check AgentLifecycle class events (Agent-1 proposal - MEDIUM priority)."""
         try:
@@ -515,17 +559,18 @@ class EnhancedAgentActivityDetector:
             status_file = self.agent_workspaces / agent_id / "status.json"
             if not status_file.exists():
                 return None
-            
+
             try:
-                status_data = json.loads(status_file.read_text(encoding="utf-8"))
-                
+                status_data = json.loads(
+                    status_file.read_text(encoding="utf-8"))
+
                 # Check for lifecycle indicators
                 lifecycle_indicators = {
                     "cycle_count": status_data.get("cycle_count"),
                     "last_cycle": status_data.get("last_cycle"),
                     "fsm_state": status_data.get("fsm_state"),
                 }
-                
+
                 # If cycle_count exists, AgentLifecycle is likely being used
                 if lifecycle_indicators.get("cycle_count") is not None:
                     # Check last_cycle timestamp
@@ -537,7 +582,7 @@ class EnhancedAgentActivityDetector:
                             last_cycle_time = datetime.fromisoformat(
                                 last_cycle_str.replace("Z", "+00:00")
                             ).timestamp()
-                            
+
                             return {
                                 "source": "agent_lifecycle",
                                 "timestamp": last_cycle_time,
@@ -547,7 +592,7 @@ class EnhancedAgentActivityDetector:
                             }
                         except Exception:
                             pass
-                
+
                 # Fallback: Check status.json modification time if lifecycle indicators exist
                 if any(lifecycle_indicators.values()):
                     mtime = status_file.stat().st_mtime
@@ -560,39 +605,204 @@ class EnhancedAgentActivityDetector:
                     }
             except Exception:
                 pass
-            
+
             return None
         except Exception as e:
             logger.debug(f"Could not check Agent lifecycle: {e}")
             return None
-    
+
+    def _check_passdown_json(self, agent_id: str) -> Optional[Dict[str, Any]]:
+        """Check passdown.json file modification (Phase 2)."""
+        passdown_file = self.agent_workspaces / agent_id / "passdown.json"
+        if not passdown_file.exists():
+            return None
+
+        mtime = passdown_file.stat().st_mtime
+
+        # Check session_date field in JSON
+        session_date = None
+        try:
+            passdown_data = json.loads(
+                passdown_file.read_text(encoding="utf-8"))
+            session_date = passdown_data.get("session_date")
+        except Exception:
+            pass
+
+        return {
+            "source": "passdown",
+            "timestamp": mtime,
+            "file": str(passdown_file),
+            "session_date": session_date,
+            "age_seconds": time.time() - mtime,
+        }
+
+    def _check_artifacts_directory(self, agent_id: str) -> Optional[Dict[str, Any]]:
+        """Check artifacts directory for agent-specific files (Phase 2)."""
+        artifacts_dir = self.workspace_root / "artifacts"
+        if not artifacts_dir.exists():
+            return None
+
+        # Look for agent-specific artifact files
+        patterns = [
+            f"*{agent_id.lower()}*",
+            f"*{agent_id.replace('-', '_').lower()}*",
+            f"*{agent_id}*",
+        ]
+
+        artifact_files = []
+        for pattern in patterns:
+            artifact_files.extend(list(artifacts_dir.glob(f"{pattern}.md")))
+
+        if not artifact_files:
+            return None
+
+        # Get most recent artifact
+        latest_artifact = max(artifact_files, key=lambda p: p.stat().st_mtime)
+        mtime = latest_artifact.stat().st_mtime
+
+        # Only return if recent (within last 7 days)
+        age_seconds = time.time() - mtime
+        if age_seconds > (7 * 24 * 3600):
+            return None
+
+        return {
+            "source": "artifacts",
+            "timestamp": mtime,
+            "file": latest_artifact.name,
+            "artifact_count": len(artifact_files),
+            "age_seconds": age_seconds,
+        }
+
+    def _check_cycle_planner(self, agent_id: str) -> Optional[Dict[str, Any]]:
+        """Check cycle planner task files (Phase 2)."""
+        agent_dir = self.agent_workspaces / agent_id
+        if not agent_dir.exists():
+            return None
+
+        # Look for cycle planner task files
+        cycle_planner_files = list(
+            agent_dir.glob("cycle_planner_tasks_*.json"))
+
+        if not cycle_planner_files:
+            return None
+
+        # Get most recent cycle planner file
+        latest_file = max(cycle_planner_files, key=lambda p: p.stat().st_mtime)
+        mtime = latest_file.stat().st_mtime
+
+        return {
+            "source": "cycle_planner",
+            "timestamp": mtime,
+            "file": latest_file.name,
+            "file_count": len(cycle_planner_files),
+            "age_seconds": time.time() - mtime,
+        }
+
+    def _check_notes_directory(self, agent_id: str) -> Optional[Dict[str, Any]]:
+        """Check notes directory for agent notes (Phase 2)."""
+        notes_dir = self.agent_workspaces / agent_id / "notes"
+        if not notes_dir.exists():
+            return None
+
+        note_files = list(notes_dir.glob("*.md"))
+        if not note_files:
+            return None
+
+        # Get most recent note
+        latest_note = max(note_files, key=lambda p: p.stat().st_mtime)
+        mtime = latest_note.stat().st_mtime
+
+        return {
+            "source": "notes",
+            "timestamp": mtime,
+            "file": latest_note.name,
+            "note_count": len(note_files),
+            "age_seconds": time.time() - mtime,
+        }
+
+    def _check_git_working_directory(self, agent_id: str) -> Optional[Dict[str, Any]]:
+        """Check git working directory for uncommitted changes in agent workspace (Phase 2)."""
+        try:
+            import subprocess
+
+            agent_dir = self.agent_workspaces / agent_id
+            if not agent_dir.exists():
+                return None
+
+            # Get relative path from workspace root
+            try:
+                agent_relative = agent_dir.relative_to(self.workspace_root)
+            except ValueError:
+                return None
+
+            # Check for uncommitted changes in agent workspace
+            result = subprocess.run(
+                ["git", "diff", "--name-only", str(agent_relative)],
+                capture_output=True,
+                text=True,
+                timeout=TimeoutConstants.HTTP_QUICK,
+                cwd=self.workspace_root,
+            )
+
+            if result.returncode != 0 or not result.stdout.strip():
+                return None
+
+            # Get most recent modification time of changed files
+            changed_files = result.stdout.strip().split("\n")
+            if not changed_files:
+                return None
+
+            # Get modification times for changed files
+            max_mtime = 0
+            for file_path_str in changed_files:
+                try:
+                    file_path = self.workspace_root / file_path_str
+                    if file_path.exists():
+                        mtime = file_path.stat().st_mtime
+                        max_mtime = max(max_mtime, mtime)
+                except Exception:
+                    continue
+
+            if max_mtime == 0:
+                return None
+
+            return {
+                "source": "git_working",
+                "timestamp": max_mtime,
+                "changed_files_count": len(changed_files),
+                "age_seconds": time.time() - max_mtime,
+            }
+        except Exception as e:
+            logger.debug(f"Could not check git working directory: {e}")
+            return None
+
     def get_all_agents_activity(self) -> Dict[str, Dict[str, Any]]:
         """Get activity for all agents."""
         all_activity = {}
-        
+
         if not self.agent_workspaces.exists():
             return all_activity
-        
+
         for agent_dir in self.agent_workspaces.iterdir():
             if agent_dir.is_dir() and agent_dir.name.startswith("Agent-"):
                 agent_id = agent_dir.name
                 activity = self.detect_agent_activity(agent_id)
                 all_activity[agent_id] = activity
-        
+
         return all_activity
-    
+
     def get_stale_agents(
-        self, 
+        self,
         max_age_seconds: int = 3600  # 1 hour default
     ) -> List[Tuple[str, float]]:
         """
         Get list of agents with no recent activity.
-        
+
         Returns list of (agent_id, age_seconds) tuples.
         """
         stale_agents = []
         all_activity = self.get_all_agents_activity()
-        
+
         for agent_id, activity in all_activity.items():
             latest = activity.get("latest_activity")
             if latest is None:
@@ -601,8 +811,7 @@ class EnhancedAgentActivityDetector:
                 age = time.time() - latest
                 if age > max_age_seconds:
                     stale_agents.append((agent_id, age))
-        
+
         # Sort by age (oldest first)
         stale_agents.sort(key=lambda x: x[1], reverse=True)
         return stale_agents
-
