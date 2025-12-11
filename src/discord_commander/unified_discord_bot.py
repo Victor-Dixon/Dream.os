@@ -576,8 +576,75 @@ class UnifiedDiscordBot(commands.Bot):
                 f"❌ Error processing message: {e}", exc_info=True)
             await message.add_reaction("❌")
 
+    def _get_swarm_snapshot(self) -> dict:
+        """Get current swarm work snapshot."""
+        snapshot = {
+            "active_agents": [],
+            "recent_activity": [],
+            "current_focus": [],
+            "engagement_rate": 0.0,
+        }
+        
+        try:
+            import json
+            from pathlib import Path
+            from datetime import datetime, timedelta
+            
+            workspace_root = Path("agent_workspaces")
+            active_count = 0
+            total_agents = 8
+            
+            # Get agent statuses
+            for i in range(1, 9):
+                agent_id = f"Agent-{i}"
+                status_file = workspace_root / agent_id / "status.json"
+                
+                if not status_file.exists():
+                    continue
+                
+                try:
+                    with open(status_file, 'r', encoding='utf-8') as f:
+                        status = json.load(f)
+                    
+                    agent_status = status.get("status", "")
+                    if "ACTIVE" in agent_status.upper():
+                        active_count += 1
+                        mission = status.get("current_mission", "No active mission")[:80]
+                        phase = status.get("current_phase", "Unknown")
+                        priority = status.get("mission_priority", "MEDIUM")
+                        
+                        snapshot["active_agents"].append({
+                            "id": agent_id,
+                            "mission": mission,
+                            "phase": phase,
+                            "priority": priority,
+                        })
+                        
+                        # Get recent completed tasks
+                        completed = status.get("completed_tasks", [])
+                        if completed:
+                            recent = completed[0][:100] if isinstance(completed[0], str) else str(completed[0])[:100]
+                            snapshot["recent_activity"].append(f"{agent_id}: {recent}")
+                        
+                        # Get current focus
+                        current_tasks = status.get("current_tasks", [])
+                        if current_tasks:
+                            focus = current_tasks[0][:80] if isinstance(current_tasks[0], str) else str(current_tasks[0])[:80]
+                            snapshot["current_focus"].append(f"{agent_id}: {focus}")
+                
+                except Exception as e:
+                    self.logger.debug(f"Error reading status for {agent_id}: {e}")
+                    continue
+            
+            snapshot["engagement_rate"] = (active_count / total_agents * 100) if total_agents > 0 else 0.0
+            
+        except Exception as e:
+            self.logger.warning(f"Error getting swarm snapshot: {e}")
+        
+        return snapshot
+
     async def send_startup_message(self):
-        """Send startup message to configured channel."""
+        """Send startup message to configured channel with swarm work snapshot."""
         try:
             channel = None
 
@@ -600,6 +667,9 @@ class UnifiedDiscordBot(commands.Bot):
                     "No text channels available for startup message")
                 return
 
+            # Get swarm snapshot
+            snapshot = self._get_swarm_snapshot()
+            
             embed = discord.Embed(
                 title="🐝 Discord Commander - SWARM CONTROL CENTER",
                 description="**Complete Multi-Agent Command & Showcase System**",
@@ -607,9 +677,49 @@ class UnifiedDiscordBot(commands.Bot):
                 timestamp=discord.utils.utcnow(),
             )
 
+            # Swarm Work Snapshot
+            if snapshot["active_agents"]:
+                active_list = []
+                for agent in snapshot["active_agents"][:5]:  # Show top 5
+                    priority_emoji = "🔴" if agent["priority"] == "HIGH" else "🟡" if agent["priority"] == "MEDIUM" else "🟢"
+                    active_list.append(
+                        f"{priority_emoji} **{agent['id']}** ({agent['phase']}): {agent['mission']}"
+                    )
+                
+                if len(snapshot["active_agents"]) > 5:
+                    active_list.append(f"... and {len(snapshot['active_agents']) - 5} more")
+                
+                embed.add_field(
+                    name=f"📊 Current Work Snapshot ({snapshot['engagement_rate']:.0f}% Engagement)",
+                    value="\n".join(active_list) if active_list else "No active agents",
+                    inline=False,
+                )
+            
+            # Recent Activity
+            if snapshot["recent_activity"]:
+                activity_text = "\n".join(snapshot["recent_activity"][:3])
+                if len(snapshot["recent_activity"]) > 3:
+                    activity_text += f"\n... and {len(snapshot['recent_activity']) - 3} more"
+                embed.add_field(
+                    name="✅ Recent Activity",
+                    value=activity_text[:1024],  # Discord field limit
+                    inline=False,
+                )
+            
+            # Current Focus
+            if snapshot["current_focus"]:
+                focus_text = "\n".join(snapshot["current_focus"][:3])
+                if len(snapshot["current_focus"]) > 3:
+                    focus_text += f"\n... and {len(snapshot['current_focus']) - 3} more"
+                embed.add_field(
+                    name="🎯 Current Focus",
+                    value=focus_text[:1024],
+                    inline=False,
+                )
+
             embed.add_field(
                 name="✅ System Status",
-                value="All systems operational • 3 command modules loaded • WOW FACTOR ready!",
+                value="All systems operational • 3 command modules loaded • Enhanced activity monitoring active!",
                 inline=False,
             )
 
