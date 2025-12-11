@@ -263,15 +263,15 @@ class WordPressManager:
             "function_prefix": "ariajet"
         },
         "weareswarm.online": {
-            "local_path": "D:/websites/Swarm_website",
+            "local_path": "D:/websites/Swarm_website/wp-content/themes/swarm-theme",
             "theme_name": "swarm-theme",
-            "remote_base": "/public_html/wp-content/themes/swarm-theme",
+            "remote_base": "/domains/weareswarm.online/public_html/wp-content/themes/swarm-theme",
             "function_prefix": "swarm"
         },
         "weareswarm.site": {
-            "local_path": "D:/websites/Swarm_website",
+            "local_path": "D:/websites/Swarm_website/wp-content/themes/swarm-theme",
             "theme_name": "swarm-theme",
-            "remote_base": "/public_html/wp-content/themes/swarm-theme",
+            "remote_base": "/domains/weareswarm.site/public_html/wp-content/themes/swarm-theme",
             "function_prefix": "swarm"
         }
     }
