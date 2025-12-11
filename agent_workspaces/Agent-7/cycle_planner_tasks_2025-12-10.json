@@ -10,12 +10,12 @@
     {
       "id": "state-report-update",
       "content": "Update STATE_OF_THE_PROJECT_REPORT.md with pytest assignment slice",
-      "status": "pending"
+      "status": "completed"
     },
     {
       "id": "swarm-brain-update",
       "content": "Add insight about guarded skips + quick reporter to Swarm Brain",
-      "status": "pending"
+      "status": "completed"
     },
     {
       "id": "dreambank-pr1-track",
