@@ -24,6 +24,10 @@ from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional, Any
 
+# Add project root to path
+project_root = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(project_root))
+
 try:
     import requests
     from requests.auth import HTTPBasicAuth
@@ -31,7 +35,13 @@ try:
 except ImportError:
     HAS_REQUESTS = False
 
-from src.core.config.timeout_constants import TimeoutConstants
+try:
+    from src.core.config.timeout_constants import TimeoutConstants
+except ImportError:
+    # Fallback if timeout constants not available
+    class TimeoutConstants:
+        HTTP_QUICK = 5
+        HTTP_DEFAULT = 30
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
