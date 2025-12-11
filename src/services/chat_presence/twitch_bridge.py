@@ -744,11 +744,38 @@ class TwitchIRCBot(irc.bot.SingleServerIRCBot):
     
     def on_all_events(self, connection, event) -> None:
         """Called for all IRC events - useful for debugging."""
-        # Only log important events to avoid spam
-        if event.type in ['disconnect', 'error', 'welcome', 'join', 'privmsg', 'pubmsg']:
-            logger.debug(f"📡 IRC Event: {event.type} - {getattr(event, 'arguments', '')}")
-            if event.type in ['disconnect', 'error']:
-                print(f"📡 DEBUG: IRC Event: {event.type} - {getattr(event, 'arguments', '')}")
+        # Enhanced logging for connection diagnostics
+        event_type = getattr(event, 'type', 'unknown')
+        source = getattr(event, 'source', '')
+        args = getattr(event, 'arguments', [])
+        
+        # Log all IRC protocol messages for diagnostics
+        logger.info(f"🔍 IRC Protocol Event: {event_type} from {source}")
+        if args:
+            logger.info(f"   Arguments: {args}")
+        print(f"🔍 DEBUG: IRC Event [{event_type}] from [{source}]: {args}", flush=True)
+        
+        # Special handling for numeric IRC responses (001-999)
+        if event_type.isdigit():
+            numeric_code = int(event_type)
+            if numeric_code == 001:
+                logger.info("✅ IRC 001: Welcome message received")
+            elif numeric_code == 002:
+                logger.info("✅ IRC 002: Host info received")
+            elif numeric_code == 003:
+                logger.info("✅ IRC 003: Server info received")
+            elif numeric_code == 004:
+                logger.info("✅ IRC 004: Server version received")
+            elif numeric_code == 375:
+                logger.info("✅ IRC 375: MOTD start")
+            elif numeric_code == 372:
+                logger.info("✅ IRC 372: MOTD line")
+            elif numeric_code == 376:
+                logger.info("✅ IRC 376: MOTD end - connection fully established")
+            elif 400 <= numeric_code < 500:
+                logger.warning(f"⚠️ IRC {numeric_code}: Client error")
+            elif 500 <= numeric_code < 600:
+                logger.error(f"❌ IRC {numeric_code}: Server error")
 
     def on_join(self, connection, event) -> None:
         """Called when bot joins channel."""
