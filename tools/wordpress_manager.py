@@ -184,14 +184,18 @@ class ConnectionManager:
             return False
 
     def _ensure_remote_dir(self, remote_path: str):
-        """Recursively ensure remote directory exists."""
+        """Recursively ensure remote directory exists (using relative paths)."""
+        # Remove leading slash if present (paths should be relative)
+        remote_path = remote_path.lstrip("/")
         remote_dir = '/'.join(remote_path.split('/')[:-1])
-        if not remote_dir or remote_dir == "/":
+        if not remote_dir:
             return
-        parts = remote_dir.strip("/").split("/")
+        parts = remote_dir.split("/")
         current = ""
         for part in parts:
-            current = f"{current}/{part}" if current else f"/{part}"
+            if not part:  # Skip empty parts
+                continue
+            current = f"{current}/{part}" if current else part
             try:
                 self.sftp.stat(current)
             except FileNotFoundError:
@@ -223,55 +227,55 @@ class WordPressManager:
         "southwestsecret": {
             "local_path": "D:/websites/southwestsecret.com",
             "theme_name": "southwestsecret",
-            "remote_base": "/domains/southwestsecret.com/public_html/wp-content/themes/southwestsecret",
+            "remote_base": "domains/southwestsecret.com/public_html/wp-content/themes/southwestsecret",
             "function_prefix": "southwestsecret"
         },
         "prismblossom": {
             "local_path": "D:/websites/prismblossom.online",
             "theme_name": "prismblossom",
-            "remote_base": "/domains/prismblossom.online/public_html/wp-content/themes/prismblossom",
+            "remote_base": "domains/prismblossom.online/public_html/wp-content/themes/prismblossom",
             "function_prefix": "prismblossom"
         },
         "prismblossom.online": {
             "local_path": "D:/websites/prismblossom.online",
             "theme_name": "prismblossom",
-            "remote_base": "/domains/prismblossom.online/public_html/wp-content/themes/prismblossom",
+            "remote_base": "domains/prismblossom.online/public_html/wp-content/themes/prismblossom",
             "function_prefix": "prismblossom"
         },
         "freerideinvestor": {
             "local_path": "D:/websites/FreeRideInvestor",
             "theme_name": "freerideinvestor",
-            "remote_base": "/domains/freerideinvestor.com/public_html/wp-content/themes/freerideinvestor",
+            "remote_base": "domains/freerideinvestor.com/public_html/wp-content/themes/freerideinvestor",
             "function_prefix": "freerideinvestor"
         },
         "FreeRideInvestor": {
             "local_path": "D:/websites/FreeRideInvestor",
             "theme_name": "freerideinvestor",
-            "remote_base": "/domains/freerideinvestor.com/public_html/wp-content/themes/freerideinvestor",
+            "remote_base": "domains/freerideinvestor.com/public_html/wp-content/themes/freerideinvestor",
             "function_prefix": "freerideinvestor"
         },
         "ariajet": {
             "local_path": "D:/websites/ariajet.site",
             "theme_name": "ariajet",
-            "remote_base": "/domains/ariajet.site/public_html/wp-content/themes/ariajet",
+            "remote_base": "domains/ariajet.site/public_html/wp-content/themes/ariajet",
             "function_prefix": "ariajet"
         },
         "ariajet.site": {
             "local_path": "D:/websites/ariajet.site",
             "theme_name": "ariajet",
-            "remote_base": "/domains/ariajet.site/public_html/wp-content/themes/ariajet",
+            "remote_base": "domains/ariajet.site/public_html/wp-content/themes/ariajet",
             "function_prefix": "ariajet"
         },
         "weareswarm.online": {
             "local_path": "D:/websites/Swarm_website/wp-content/themes/swarm-theme",
             "theme_name": "swarm-theme",
-            "remote_base": "/domains/weareswarm.online/public_html/wp-content/themes",
+            "remote_base": "domains/weareswarm.online/public_html/wp-content/themes",
             "function_prefix": "swarm"
         },
         "weareswarm.site": {
             "local_path": "D:/websites/Swarm_website/wp-content/themes/swarm-theme",
             "theme_name": "swarm-theme",
-            "remote_base": "/domains/weareswarm.site/public_html/wp-content/themes",
+            "remote_base": "domains/weareswarm.site/public_html/wp-content/themes",
             "function_prefix": "swarm"
         }
     }
