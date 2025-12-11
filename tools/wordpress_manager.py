@@ -297,9 +297,10 @@ class WordPressManager:
         }
     }
 
-    def __init__(self, site_key: str = "prismblossom"):
+    def __init__(self, site_key: str = "prismblossom", dry_run: bool = False):
         """Initialize WordPress manager."""
         self.site_key = site_key
+        self.dry_run = dry_run
         self.config = self.SITE_CONFIGS.get(site_key)
         if not self.config:
             raise ValueError(f"Unknown site: {site_key}")
@@ -312,6 +313,9 @@ class WordPressManager:
         self.override_username: Optional[str] = None
         self.override_remote_base: Optional[str] = None
         self.override_wp_cli_path: Optional[str] = None
+        
+        if self.dry_run:
+            logger.info("🔍 DRY-RUN MODE ENABLED - No changes will be made")
 
     def _load_credentials(self):
         """Load deployment credentials from sites.json or .env environment variables."""
@@ -587,6 +591,19 @@ add_action('after_switch_theme', '{function_name}');"""
         Returns:
             True if deployment succeeded
         """
+        if self.dry_run:
+            if not remote_path:
+                theme_path = self.get_theme_path()
+                if theme_path in local_path.parents:
+                    rel_path = local_path.relative_to(theme_path)
+                    remote_path = f"{self.config['remote_base']}/{rel_path}"
+                else:
+                    remote_path = f"{self.config['remote_base']}/{local_path.name}"
+            logger.info(f"🔍 DRY-RUN: Would deploy {local_path} → {remote_path}")
+            if auto_flush_cache:
+                logger.info("🔍 DRY-RUN: Would auto-flush cache after deployment")
+            return True
+            
         if not self.conn_manager:
             if not self.connect():
                 return False
@@ -1129,7 +1146,7 @@ def main():
     args = parser.parse_args()
 
     try:
-        manager = WordPressManager(args.site)
+        manager = WordPressManager(args.site, dry_run=args.dry_run)
 
         # Apply overrides
         if args.port:
