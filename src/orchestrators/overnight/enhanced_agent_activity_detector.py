@@ -120,7 +120,26 @@ class EnhancedAgentActivityDetector:
             activities.append(lifecycle_activity)
             activity_details["agent_lifecycle"] = lifecycle_activity
 
-        # 12. Check ActivityEmitter telemetry events (HIGH priority - most reliable)
+        # Phase 2: Medium-priority signals
+        # 12. Check process/application activity
+        process_activity = self._check_process_activity(agent_id)
+        if process_activity:
+            activities.append(process_activity)
+            activity_details["process"] = process_activity
+        
+        # 13. Check IDE/editor activity
+        ide_activity = self._check_ide_activity(agent_id)
+        if ide_activity:
+            activities.append(ide_activity)
+            activity_details["ide"] = ide_activity
+        
+        # 14. Check database activity
+        database_activity = self._check_database_activity(agent_id)
+        if database_activity:
+            activities.append(database_activity)
+            activity_details["database"] = database_activity
+
+        # 15. Check ActivityEmitter telemetry events (HIGH priority - most reliable)
         activity_emitter_activity = self._check_activity_emitter_events(
             agent_id)
         if activity_emitter_activity:
@@ -919,6 +938,192 @@ class EnhancedAgentActivityDetector:
             "file_count": len(activity_files),
             "age_seconds": age_seconds,
         }
+    
+    def _check_process_activity(self, agent_id: str) -> Optional[Dict[str, Any]]:
+        """Check process/application activity (Phase 2 - MEDIUM priority)."""
+        try:
+            import psutil
+        except ImportError:
+            return None
+        
+        try:
+            agent_pattern = agent_id.lower().replace('-', '')
+            recent_processes = []
+            
+            for proc in psutil.process_iter(['pid', 'name', 'cmdline', 'create_time']):
+                try:
+                    proc_info = proc.info
+                    cmdline = proc_info.get('cmdline', [])
+                    if not cmdline:
+                        continue
+                    
+                    proc_name = proc_info.get('name', '').lower()
+                    if 'python' not in proc_name and 'cursor' not in proc_name and 'code' not in proc_name:
+                        continue
+                    
+                    create_time = proc_info.get('create_time', 0)
+                    if create_time == 0:
+                        continue
+                    
+                    # Only check processes from last 24 hours
+                    if time.time() - create_time > 86400:
+                        continue
+                    
+                    cmdline_str = ' '.join(cmdline).lower()
+                    if agent_pattern in cmdline_str or 'agent' in cmdline_str:
+                        recent_processes.append({
+                            "pid": proc_info.get('pid'),
+                            "name": proc_name,
+                            "create_time": create_time
+                        })
+                except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+                    continue
+            
+            if recent_processes:
+                latest_proc = max(recent_processes, key=lambda p: p["create_time"])
+                return {
+                    "source": "process",
+                    "timestamp": latest_proc["create_time"],
+                    "process_count": len(recent_processes),
+                    "process_name": latest_proc["name"],
+                    "age_seconds": time.time() - latest_proc["create_time"],
+                }
+        except Exception as e:
+            logger.debug(f"Could not check process activity: {e}")
+        
+        return None
+    
+    def _check_ide_activity(self, agent_id: str) -> Optional[Dict[str, Any]]:
+        """Check IDE/editor activity (Phase 2 - MEDIUM priority)."""
+        try:
+            agent_dir = self.agent_workspaces / agent_id
+            if not agent_dir.exists():
+                return None
+            
+            vscode_storage = Path.home() / ".vscode" / "User" / "workspaceStorage"
+            cursor_storage = Path.home() / ".cursor" / "User" / "workspaceStorage"
+            
+            latest_activity = None
+            ide_type = None
+            
+            for storage_path, ide_name in [(vscode_storage, "vscode"), (cursor_storage, "cursor")]:
+                if not storage_path.exists():
+                    continue
+                
+                for workspace_folder in storage_path.iterdir():
+                    if not workspace_folder.is_dir():
+                        continue
+                    
+                    state_files = list(workspace_folder.glob("**/*.json"))
+                    for state_file in state_files:
+                        try:
+                            mtime = state_file.stat().st_mtime
+                            if latest_activity is None or mtime > latest_activity:
+                                # Check if file references agent workspace
+                                try:
+                                    content = state_file.read_text(encoding='utf-8', errors='ignore')
+                                    if agent_id.lower() in content.lower() or str(agent_dir).lower() in content.lower():
+                                        latest_activity = mtime
+                                        ide_type = ide_name
+                                except Exception:
+                                    # Still count recent modification
+                                    if latest_activity is None or mtime > latest_activity:
+                                        latest_activity = mtime
+                                        ide_type = ide_name
+                        except (OSError, PermissionError):
+                            continue
+            
+            if latest_activity and time.time() - latest_activity < 86400:  # Last 24 hours
+                return {
+                    "source": "ide",
+                    "timestamp": latest_activity,
+                    "ide_type": ide_type or "unknown",
+                    "age_seconds": time.time() - latest_activity,
+                }
+        except Exception as e:
+            logger.debug(f"Could not check IDE activity: {e}")
+        
+        return None
+    
+    def _check_database_activity(self, agent_id: str) -> Optional[Dict[str, Any]]:
+        """Check database activity (Phase 2 - MEDIUM priority)."""
+        try:
+            agent_pattern = agent_id.lower().replace('-', '')
+            log_dirs = [
+                Path("logs"),
+                Path("runtime") / "logs",
+                Path("data") / "logs",
+                Path("data") / "database",
+            ]
+            
+            latest_activity = None
+            activity_type = None
+            
+            # Check database log files
+            for log_dir in log_dirs:
+                if not log_dir.exists():
+                    continue
+                
+                db_log_patterns = ["*db*.log", "*database*.log", "*query*.log", "*sql*.log"]
+                for pattern in db_log_patterns:
+                    for log_file in log_dir.rglob(pattern):
+                        try:
+                            mtime = log_file.stat().st_mtime
+                            if time.time() - mtime > 86400:  # Only last 24 hours
+                                continue
+                            
+                            if latest_activity is None or mtime > latest_activity:
+                                try:
+                                    with open(log_file, 'r', encoding='utf-8', errors='ignore') as f:
+                                        lines = f.readlines()
+                                        recent_lines = ''.join(lines[-50:]).lower()
+                                        if agent_pattern in recent_lines or agent_id.lower() in recent_lines:
+                                            latest_activity = mtime
+                                            activity_type = "query_log"
+                                except Exception:
+                                    latest_activity = mtime
+                                    activity_type = "log_file"
+                        except (OSError, PermissionError):
+                            continue
+            
+            # Check repository files
+            repo_files = [
+                Path("data") / "activity_repository.json",
+                Path("data") / "message_repository.json",
+            ]
+            
+            for repo_file in repo_files:
+                if repo_file.exists():
+                    try:
+                        mtime = repo_file.stat().st_mtime
+                        if time.time() - mtime > 86400:
+                            continue
+                        
+                        if latest_activity is None or mtime > latest_activity:
+                            try:
+                                with open(repo_file, 'r', encoding='utf-8') as f:
+                                    data = json.load(f)
+                                    data_str = json.dumps(data).lower()
+                                    if agent_pattern in data_str or agent_id.lower() in data_str:
+                                        latest_activity = mtime
+                                        activity_type = "repository"
+                            except Exception:
+                                latest_activity = mtime
+                                activity_type = "repository"
+                    except (OSError, PermissionError):
+                        continue
+            
+            if latest_activity:
+                return {
+                    "source": "database",
+                    "timestamp": latest_activity,
+                    "activity_type": activity_type or "unknown",
+                    "age_seconds": time.time() - latest_activity,
+                }
+        except Exception as e:
+            logger.debug(f"Could not check database activity: {e}")
+        
+        return None
 
     def get_all_agents_activity(self) -> Dict[str, Dict[str, Any]]:
         """Get activity for all agents."""
