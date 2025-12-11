@@ -8,7 +8,7 @@
  * @license MIT
  */
 
-export class EngineDiscoveryView {
+class EngineDiscoveryView {
     constructor() {
         this.engines = [];
         this.summary = {
@@ -18,41 +18,48 @@ export class EngineDiscoveryView {
             pending: 0
         };
         this.discoveryLog = [];
-        this.isLoading = false;
     }
 
     /**
      * Render engine discovery view
+     * @param {Object} data - Optional pre-loaded data
+     * @returns {Promise<string>} HTML content
      */
-    async render() {
-        this.isLoading = true;
+    async render(data = null) {
         try {
-            const data = await this.fetchEngineData();
+            // Fetch engine data from API if not provided
+            if (!data) {
+                data = await this.fetchEngineData();
+            }
+
+            // Update summary
             this.updateSummary(data);
             this.engines = data.engines || [];
             this.discoveryLog = data.discovery_log || [];
-            this.isLoading = false;
+
+            // Render view
             return this.renderView();
         } catch (error) {
-            this.isLoading = false;
-            console.error('Failed to load engine discovery data:', error);
+            console.error('Error rendering engine discovery view:', error);
             return this.renderError(error);
         }
     }
 
     /**
      * Fetch engine discovery data from API
+     * @returns {Promise<Object>} Engine discovery data
      */
     async fetchEngineData() {
         const response = await fetch('/api/engines/discovery');
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            throw new Error(`API error: ${response.status}`);
         }
         return await response.json();
     }
 
     /**
      * Update summary statistics
+     * @param {Object} data - Engine discovery data
      */
     updateSummary(data) {
         this.summary = data.summary || {
@@ -65,155 +72,54 @@ export class EngineDiscoveryView {
 
     /**
      * Render the complete view
+     * @returns {string} HTML content
      */
     renderView() {
         return `
-            <div class="dashboard-view engine-discovery-view">
-                <div class="view-header">
-                    <h3>🔌 Engine Discovery Dashboard</h3>
-                    <button class="btn btn-sm btn-primary" onclick="window.engineDiscoveryView?.refreshDiscovery()">
-                        🔄 Refresh Discovery
-                    </button>
+            <div class="engine-discovery-view">
+                <div class="view-header mb-4">
+                    <h2>🔌 Engine Discovery Dashboard</h2>
+                    <p class="text-muted">Plugin Discovery Pattern - Auto-discovered engines</p>
                 </div>
                 
                 ${this.renderSummaryCards()}
+                ${this.renderBulkActions()}
                 ${this.renderEngineList()}
                 ${this.renderDiscoveryLog()}
-                ${this.renderBulkActions()}
             </div>
         `;
     }
 
     /**
      * Render summary cards
+     * @returns {string} HTML for summary cards
      */
     renderSummaryCards() {
         return `
-            <div class="summary-cards">
-                <div class="summary-card">
-                    <div class="card-value">${this.summary.total}</div>
-                    <div class="card-label">Total Engines</div>
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="metric-card">
+                        <div class="metric-value text-primary">${this.summary.total}</div>
+                        <div class="metric-label">Total Engines</div>
+                    </div>
                 </div>
-                <div class="summary-card active">
-                    <div class="card-value">${this.summary.active}</div>
-                    <div class="card-label">Active Engines</div>
+                <div class="col-md-3">
+                    <div class="metric-card">
+                        <div class="metric-value status-healthy">${this.summary.active}</div>
+                        <div class="metric-label">Active Engines</div>
+                    </div>
                 </div>
-                <div class="summary-card failed">
-                    <div class="card-value">${this.summary.failed}</div>
-                    <div class="card-label">Failed Engines</div>
+                <div class="col-md-3">
+                    <div class="metric-card">
+                        <div class="metric-value status-warning">${this.summary.pending}</div>
+                        <div class="metric-label">Pending Init</div>
+                    </div>
                 </div>
-                <div class="summary-card pending">
-                    <div class="card-value">${this.summary.pending}</div>
-                    <div class="card-label">Pending Init</div>
-                </div>
-            </div>
-        `;
-    }
-
-    /**
-     * Render engine list
-     */
-    renderEngineList() {
-        if (this.engines.length === 0) {
-            return '<div class="no-engines">No engines discovered yet.</div>';
-        }
-
-        const engineRows = this.engines.map(engine => {
-            const statusIcon = this.getStatusIcon(engine.status);
-            const statusClass = this.getStatusClass(engine.status);
-            
-            return `
-                <tr class="engine-row ${statusClass}">
-                    <td>${engine.engine_type}</td>
-                    <td>${engine.engine_class}</td>
-                    <td>
-                        <span class="status-badge ${statusClass}">
-                            ${statusIcon} ${engine.status}
-                        </span>
-                    </td>
-                    <td>
-                        ${this.renderEngineActions(engine)}
-                    </td>
-                    <td>
-                        <button class="btn btn-sm btn-link" onclick="window.engineDiscoveryView?.showEngineDetails('${engine.engine_type}')">
-                            View Details
-                        </button>
-                    </td>
-                </tr>
-            `;
-        }).join('');
-
-        return `
-            <div class="engine-list-section">
-                <h4>Discovered Engines</h4>
-                <table class="engine-table">
-                    <thead>
-                        <tr>
-                            <th>Engine Type</th>
-                            <th>Engine Class</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                            <th>Details</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${engineRows}
-                    </tbody>
-                </table>
-            </div>
-        `;
-    }
-
-    /**
-     * Render engine actions
-     */
-    renderEngineActions(engine) {
-        const actions = [];
-        
-        if (engine.status === 'discovered') {
-            actions.push(`
-                <button class="btn btn-sm btn-success" 
-                        onclick="window.engineDiscoveryView?.initializeEngine('${engine.engine_type}')">
-                    Initialize
-                </button>
-            `);
-        }
-        
-        if (engine.status === 'initialized') {
-            actions.push(`
-                <button class="btn btn-sm btn-warning" 
-                        onclick="window.engineDiscoveryView?.cleanupEngine('${engine.engine_type}')">
-                    Cleanup
-                </button>
-            `);
-        }
-        
-        return actions.join(' ');
-    }
-
-    /**
-     * Render discovery log
-     */
-    renderDiscoveryLog() {
-        if (this.discoveryLog.length === 0) {
-            return '';
-        }
-
-        const logEntries = this.discoveryLog.map(log => {
-            const levelClass = log.level || 'info';
-            return `
-                <div class="log-entry ${levelClass}">
-                    <span class="log-timestamp">[${log.timestamp || 'N/A'}]</span>
-                    <span class="log-message">${log.message}</span>
-                </div>
-            `;
-        }).join('');
-
-        return `
-            <div class="discovery-log-section">
-                <h4>Discovery Log</h4>
-                <div class="discovery-log">
-                    ${logEntries}
+                <div class="col-md-3">
+                    <div class="metric-card">
+                        <div class="metric-value status-critical">${this.summary.failed}</div>
+                        <div class="metric-label">Failed Engines</div>
+                    </div>
                 </div>
             </div>
         `;
@@ -221,19 +127,20 @@ export class EngineDiscoveryView {
 
     /**
      * Render bulk actions panel
+     * @returns {string} HTML for bulk actions
      */
     renderBulkActions() {
         return `
-            <div class="bulk-actions-panel">
-                <h4>Bulk Actions</h4>
-                <div class="bulk-actions-buttons">
-                    <button class="btn btn-primary" 
-                            onclick="window.engineDiscoveryView?.initializeAllEngines()">
-                        Initialize All Engines
+            <div class="bulk-actions-panel mb-4">
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-primary" onclick="engineDiscoveryView.initializeAll()">
+                        Initialize All
                     </button>
-                    <button class="btn btn-warning" 
-                            onclick="window.engineDiscoveryView?.cleanupAllEngines()">
-                        Cleanup All Engines
+                    <button type="button" class="btn btn-secondary" onclick="engineDiscoveryView.refreshDiscovery()">
+                        Refresh Discovery
+                    </button>
+                    <button type="button" class="btn btn-info" onclick="engineDiscoveryView.exportStatus()">
+                        Export Status
                     </button>
                 </div>
             </div>
@@ -241,44 +148,201 @@ export class EngineDiscoveryView {
     }
 
     /**
-     * Render error state
+     * Render engine list
+     * @returns {string} HTML for engine list
      */
-    renderError(error) {
+    renderEngineList() {
+        if (this.engines.length === 0) {
+            return `
+                <div class="alert alert-info">
+                    <strong>No engines discovered.</strong> Check discovery logs for details.
+                </div>
+            `;
+        }
+
+        const engineRows = this.engines.map(engine => this.renderEngineRow(engine)).join('');
+
         return `
-            <div class="dashboard-view engine-discovery-view">
-                <div class="error-state">
-                    <h3>❌ Error Loading Engine Discovery</h3>
-                    <p>${error.message}</p>
-                    <button class="btn btn-primary" onclick="window.engineDiscoveryView?.render()">
-                        Retry
-                    </button>
+            <div class="engine-list-section mb-4">
+                <h3>Discovered Engines</h3>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Engine Type</th>
+                                <th>Class Name</th>
+                                <th>Status</th>
+                                <th>Initialized</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${engineRows}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         `;
+    }
+
+    /**
+     * Render single engine row
+     * @param {Object} engine - Engine data
+     * @returns {string} HTML for engine row
+     */
+    renderEngineRow(engine) {
+        const statusClass = this.getStatusClass(engine.status);
+        const statusIcon = this.getStatusIcon(engine.status);
+        const initializedBadge = engine.initialized
+            ? '<span class="badge bg-success">Yes</span>'
+            : '<span class="badge bg-secondary">No</span>';
+
+        return `
+            <tr>
+                <td><strong>${engine.engine_type}</strong></td>
+                <td><code>${engine.engine_class}</code></td>
+                <td>
+                    <span class="badge ${statusClass}">
+                        ${statusIcon} ${engine.status}
+                    </span>
+                </td>
+                <td>${initializedBadge}</td>
+                <td>
+                    <button class="btn btn-sm btn-primary" onclick="engineDiscoveryView.initializeEngine('${engine.engine_type}')">
+                        Initialize
+                    </button>
+                    <button class="btn btn-sm btn-info" onclick="engineDiscoveryView.viewDetails('${engine.engine_type}')">
+                        Details
+                    </button>
+                    ${engine.initialized ? `
+                        <button class="btn btn-sm btn-warning" onclick="engineDiscoveryView.cleanupEngine('${engine.engine_type}')">
+                            Cleanup
+                        </button>
+                    ` : ''}
+                </td>
+            </tr>
+        `;
+    }
+
+    /**
+     * Render discovery log
+     * @returns {string} HTML for discovery log
+     */
+    renderDiscoveryLog() {
+        if (this.discoveryLog.length === 0) {
+            return '';
+        }
+
+        const logEntries = this.discoveryLog.map(log => `
+            <div class="log-entry">
+                <span class="log-timestamp">[${log.timestamp}]</span>
+                <span class="log-level log-${log.level}">${log.level.toUpperCase()}</span>
+                <span class="log-message">${log.message}</span>
+            </div>
+        `).join('');
+
+        return `
+            <div class="discovery-log-section">
+                <h3>
+                    Discovery Log
+                    <button class="btn btn-sm btn-link" onclick="this.parentElement.nextElementSibling.classList.toggle('collapsed')">
+                        Toggle
+                    </button>
+                </h3>
+                <div class="discovery-log collapsed">
+                    ${logEntries}
+                </div>
+            </div>
+        `;
+    }
+
+    /**
+     * Get status CSS class
+     * @param {string} status - Engine status
+     * @returns {string} CSS class
+     */
+    getStatusClass(status) {
+        const classes = {
+            'initialized': 'bg-success',
+            'discovered': 'bg-info',
+            'error': 'bg-danger',
+            'pending': 'bg-warning'
+        };
+        return classes[status] || 'bg-secondary';
     }
 
     /**
      * Get status icon
+     * @param {string} status - Engine status
+     * @returns {string} Icon HTML
      */
     getStatusIcon(status) {
         const icons = {
             'initialized': '✅',
-            'discovered': '⏳',
-            'error': '❌'
+            'discovered': '🔍',
+            'error': '❌',
+            'pending': '⏳'
         };
         return icons[status] || '❓';
     }
 
     /**
-     * Get status class
+     * Render error state
+     * @param {Error} error - Error object
+     * @returns {string} HTML for error
      */
-    getStatusClass(status) {
-        const classes = {
-            'initialized': 'status-active',
-            'discovered': 'status-pending',
-            'error': 'status-error'
-        };
-        return classes[status] || 'status-unknown';
+    renderError(error) {
+        return `
+            <div class="alert alert-danger">
+                <strong>Error loading engine discovery:</strong> ${error.message}
+                <button class="btn btn-sm btn-primary mt-2" onclick="location.reload()">
+                    Retry
+                </button>
+            </div>
+        `;
+    }
+
+    /**
+     * Initialize a specific engine
+     * @param {string} engineType - Engine type
+     */
+    async initializeEngine(engineType) {
+        try {
+            const response = await fetch(`/api/engines/${engineType}/initialize`, {
+                method: 'POST'
+            });
+            const result = await response.json();
+
+            if (result.success) {
+                alert(`Engine ${engineType} initialized successfully!`);
+                await this.refreshView();
+            } else {
+                alert(`Failed to initialize engine: ${result.message}`);
+            }
+        } catch (error) {
+            alert(`Error: ${error.message}`);
+        }
+    }
+
+    /**
+     * Initialize all engines
+     */
+    async initializeAll() {
+        if (!confirm('Initialize all engines?')) {
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/engines/initialize-all', {
+                method: 'POST'
+            });
+            const result = await response.json();
+
+            alert(`Initialized ${result.summary.successful} of ${result.summary.total} engines`);
+            await this.refreshView();
+        } catch (error) {
+            alert(`Error: ${error.message}`);
+        }
     }
 
     /**
@@ -289,126 +353,91 @@ export class EngineDiscoveryView {
             const response = await fetch('/api/engines/discovery/refresh', {
                 method: 'POST'
             });
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
             const result = await response.json();
+
             alert(`Discovery refreshed: ${result.discovered_count} engines found`);
-            await this.render();
+            await this.refreshView();
         } catch (error) {
-            console.error('Failed to refresh discovery:', error);
-            alert(`Failed to refresh discovery: ${error.message}`);
+            alert(`Error: ${error.message}`);
         }
     }
 
     /**
-     * Initialize engine
+     * View engine details
+     * @param {string} engineType - Engine type
      */
-    async initializeEngine(engineType) {
+    async viewDetails(engineType) {
         try {
-            const response = await fetch(`/api/engines/${engineType}/initialize`, {
-                method: 'POST'
-            });
+            const response = await fetch(`/api/engines/${engineType}`);
             const result = await response.json();
-            if (result.success) {
-                alert(`Engine ${engineType} initialized successfully`);
-                await this.render();
-            } else {
-                alert(`Failed to initialize engine: ${result.message}`);
-            }
+
+            const details = JSON.stringify(result, null, 2);
+            alert(`Engine Details:\n\n${details}`);
         } catch (error) {
-            console.error('Failed to initialize engine:', error);
-            alert(`Failed to initialize engine: ${error.message}`);
+            alert(`Error: ${error.message}`);
         }
     }
 
     /**
      * Cleanup engine
+     * @param {string} engineType - Engine type
      */
     async cleanupEngine(engineType) {
+        if (!confirm(`Cleanup engine ${engineType}?`)) {
+            return;
+        }
+
         try {
             const response = await fetch(`/api/engines/${engineType}/cleanup`, {
                 method: 'POST'
             });
             const result = await response.json();
+
             if (result.success) {
-                alert(`Engine ${engineType} cleaned up successfully`);
-                await this.render();
+                alert(`Engine ${engineType} cleaned up successfully!`);
+                await this.refreshView();
             } else {
                 alert(`Failed to cleanup engine: ${result.message}`);
             }
         } catch (error) {
-            console.error('Failed to cleanup engine:', error);
-            alert(`Failed to cleanup engine: ${error.message}`);
+            alert(`Error: ${error.message}`);
         }
     }
 
     /**
-     * Initialize all engines
+     * Export status
      */
-    async initializeAllEngines() {
-        if (!confirm('Initialize all engines?')) {
-            return;
-        }
-        
+    async exportStatus() {
         try {
-            const response = await fetch('/api/engines/initialize-all', {
-                method: 'POST'
-            });
-            const result = await response.json();
-            const successful = result.summary?.successful || 0;
-            const failed = result.summary?.failed || 0;
-            alert(`Initialized ${successful} engines, ${failed} failed`);
-            await this.render();
+            const data = await this.fetchEngineData();
+            const json = JSON.stringify(data, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `engine-discovery-status-${new Date().toISOString()}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
         } catch (error) {
-            console.error('Failed to initialize all engines:', error);
-            alert(`Failed to initialize all engines: ${error.message}`);
+            alert(`Error: ${error.message}`);
         }
     }
 
     /**
-     * Cleanup all engines
+     * Refresh view
      */
-    async cleanupAllEngines() {
-        if (!confirm('Cleanup all engines? This will remove all engine instances.')) {
-            return;
-        }
-        
-        // Note: Cleanup all endpoint not implemented in API yet
-        // This would need to be added to engines_routes.py
-        alert('Cleanup all functionality not yet implemented');
-    }
-
-    /**
-     * Show engine details
-     */
-    async showEngineDetails(engineType) {
-        try {
-            const response = await fetch(`/api/engines/${engineType}`);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const engine = await response.json();
-            
-            const details = `
-                <h4>${engine.engine_type} Engine Details</h4>
-                <p><strong>Class:</strong> ${engine.engine_class}</p>
-                <p><strong>Status:</strong> ${engine.status}</p>
-                <p><strong>Module:</strong> ${engine.metadata.module_name}</p>
-                <p><strong>Protocol Compliant:</strong> ${engine.metadata.protocol_compliant ? 'Yes' : 'No'}</p>
-                <pre>${JSON.stringify(engine.status_info, null, 2)}</pre>
-            `;
-            
-            // Simple alert for now - could be enhanced with modal
-            alert(details);
-        } catch (error) {
-            console.error('Failed to get engine details:', error);
-            alert(`Failed to get engine details: ${error.message}`);
+    async refreshView() {
+        const container = document.querySelector('.engine-discovery-view');
+        if (container) {
+            const newContent = await this.render();
+            container.outerHTML = newContent;
         }
     }
 }
 
-// Make view accessible globally for onclick handlers
-if (typeof window !== 'undefined') {
-    window.engineDiscoveryView = new EngineDiscoveryView();
-}
+// Global instance for dashboard integration
+const engineDiscoveryView = new EngineDiscoveryView();
+
+// Export for module import
+export { engineDiscoveryView };
+

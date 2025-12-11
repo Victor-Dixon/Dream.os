@@ -1,79 +1,72 @@
 {
-  "session_date": "2025-12-10",
+  "session_date": "2025-12-11",
   "agent_id": "Agent-1",
   "agent_role": "Integration & Core Systems Specialist",
-  "status": "ready_for_agent_1_continuation",
-  "primary_mission": "Enhanced GitHub Tools & Infrastructure Fixes",
+  "status": "handoff_ready",
+  "primary_mission": "Twitch bot recovery & Hostinger deployments",
   "progress_summary": [
-    "Enhanced Unified GitHub Tool created - Auto-switches between REST and GraphQL APIs with intelligent queuing",
-    "Queue processor implemented - Automatic retry when rate limits reset",
-    "GitHub rate limit solutions guide created - Comprehensive legitimate solutions documented",
-    "Tool deprecation analysis complete - Migration plan for unified_github_pr_creator.py",
-    "Invalid workspace directories fixed - 6 invalid directories removed, validation added to 6 code locations",
-    "Session cleanup complete - Passdown, devlog, Swarm Brain all updated"
+    "Twitch bot Phase 1 diagnostics completed; root cause identified as invalid OAuth token in config/chat_presence.json (shell command present instead of token)",
+    "Enhanced IRC logging + syntax fix landed in twitch_bridge.py; diagnostics tool added (twitch_connection_diagnostics.py) and validated",
+    "Hostinger SFTP pathing fixed: wordpress_manager now uses relative domains/... paths with recursive mkdir and wp_cli path derivation",
+    "SFTP path structure validator added; confirmed Hostinger root is /home/u996867598 with domains/... required",
+    "Cycle planner + status updated through cycle 6; validation report generated for Twitch diagnostics work",
+    "Ready to start Phase 2 once valid Twitch OAuth token is supplied"
   ],
-  "infrastructure_excellence_status": "Enhanced GitHub tools operational - 2x API capacity (REST + GraphQL), queuing system active. Workspace structure validated and enforced.",
+  "infrastructure_excellence_status": "Twitch diagnostics stable; Hostinger deploy tooling aligned to domains/ relative paths; wp_cli uses derived public_html roots.",
   "current_status": {
     "blocking_items": [
-      "DreamBank PR #1 requires manual UI undraft (GitHub API limitation - cannot automate draft PR transitions)",
-      "GitHub CLI rate-limited (GraphQL exhausted) - Using REST API successfully (4868/5000 requests available)"
+      "Twitch OAuth token missing/invalid in config/chat_presence.json (contains shell command, needs real oauth: token)",
+      "weareswarm.online SFTP username may still use domain format; needs account-id username confirmation before deploy"
     ],
     "next_session_priorities": [
-      "Update repo_safe_merge.py to use enhanced unified GitHub tool",
-      "Migrate PR creation scripts to use enhanced tool (create_batch2_prs.py, etc.)",
-      "Test queue processor with queued operations",
-      "Consider GitHub App setup for production automation (recommended for highest limits)"
+      "Insert valid Twitch OAuth token and rerun diagnostics to confirm stable connect (Phase 2)",
+      "Add connection retry/backoff + message handling fixes after token is corrected",
+      "Verify weareswarm.online credentials (account-id username) and deploy swarm-theme; activate theme in wp-admin",
+      "Run wp_cli cache flush after deploys using updated wordpress_manager",
+      "If time permits: integrate GitHub enhanced tools into repo_safe_merge.py and queue processor tests"
     ]
   },
   "knowledge_transfers": [
-    "Enhanced unified GitHub tool provides 2x API capacity (REST 5,000/hr + GraphQL 5,000/hr = 10,000/hr effectively)",
-    "Auto-switching logic selects best API based on remaining rate limits and operation type",
-    "Queue system preserves operations when rate-limited - automatic retry when limits reset",
-    "GitHub Apps provide highest limits (5,000/hour per installation) - recommended for production",
-    "Draft PRs cannot be merged via API - requires manual GitHub UI intervention",
-    "Agent workspace validation must check Agent-1 through Agent-8 only - prevents invalid directory creation"
+    "Hostinger SFTP root is /home/u996867598; use relative paths like domains/example.com/public_html/...",
+    "wordpress_manager._ensure_remote_dir now creates relative directories safely; remote_base values should not start with /",
+    "wp_cli derives public_html root from remote_base and uses relative paths, enabling cache flush and theme tasks",
+    "Twitch OAuth token must start with oauth: and be placed directly in config/chat_presence.json (no commands/quotes)",
+    "twitch_connection_diagnostics.py validates token format and logs IRC handshake for Phase 1/2 checks"
   ],
   "tools_created": [
-    "tools/enhanced_unified_github.py - Auto-switching GitHub operations with queuing (V2 compliant)",
-    "tools/github_queue_processor.py - Automatic queue processing with retry logic",
-    "tools/github_app_setup_helper.py - Interactive guide for GitHub App setup",
-    "tools/fix_invalid_agent_workspaces.py - Cleanup tool for invalid workspace directories",
-    "tools/test_dreambank_pr1_enhanced.py - Test script (temporary, can be archived)"
+    "tools/twitch_connection_diagnostics.py - Phase 1/2 Twitch connect validator with token format check and IRC logging",
+    "tools/test_sftp_path_structure.py - Hostinger SFTP path structure validator (confirms domains/... relative paths)",
+    "tools/oauth_token_checker.ts - Static checker for config/chat_presence.json token format (Node/ts-node)"
   ],
   "bugs_fixed": [
-    "Invalid workspace directories (--agent, Agent-, Agent, can, i, yall) - All removed and messages archived",
-    "Missing agent ID validation - Added to 6 code locations (inbox_utility, send_message_to_agent, send_jet_fuel_direct, send_resume_directives_all_agents, captain_swarm_coordinator, fsm_bridge)"
+    "Twitch IRC logging syntax error (leading zero numerics) resolved; enhanced numeric event handling added",
+    "Hostinger SFTP 'No such file' resolved by switching to relative domains/... paths and recursive mkdir",
+    "WP-CLI cache flush failures resolved by deriving wp_root from remote_base"
   ],
   "lessons_learned": [
-    "Multiple GitHub accounts technically possible but not best practice - GitHub Apps preferred",
-    "REST API has separate rate limits from GraphQL - effectively doubles capacity when using both",
-    "Queue system prevents operation loss - all rate-limited operations preserved for retry",
-    "Auto-switching maximizes API usage - always uses best available API",
-    "Draft PR transitions require GitHub UI - API limitation cannot be bypassed",
-    "Workspace validation must be enforced at creation time - prevents invalid directory proliferation"
+    "Config files must store actual secrets/tokens, not shell commands; validate oauth: prefix before runtime",
+    "Hostinger directory creation should be relative to account root; leading slashes break mkdir over SFTP",
+    "When wp_cli fails, derive root from remote_base instead of assuming /public_html"
   ],
   "next_actions": [
-    "DreamBank PR #1: Manual UI undraft required (1-2 min) or wait for rate limit reset for gh pr ready command",
-    "Update existing tools to use enhanced unified GitHub tool (repo_safe_merge.py, create_*_prs.py scripts)",
-    "Process queued operations when rate limits reset",
-    "Plan GitHub App setup for production automation (recommended for highest limits)"
+    "Provide valid Twitch OAuth token and rerun twitch_connection_diagnostics.py for handshake verification",
+    "Implement connection retry/backoff and message handling fixes (Phase 2/3) after token is corrected",
+    "Deploy swarm-theme to weareswarm.online once credentials confirmed; activate theme and flush caches",
+    "Optionally integrate enhanced GitHub tools into merge/PR scripts if time remains"
   ],
-  "blockers": "DreamBank PR #1 in draft status (GitHub API limitation - manual UI required)",
-  "recent_devlog": "devlogs/2025-12-10_agent-1_enhanced_github_tools_rate_limits.md",
-  "swarm_brain_entry": "insight#5-6, lesson#1, recommendation#4, pattern#1 (runtime/swarm_brain.json)",
-  "tool_wishlist": "GitHub App setup tool - Automated creation and installation of GitHub Apps for maximum rate limits (5,000/hour per installation) - CREATED ✅",
-  "gas_pipeline_status": "No blockers - Enhanced tools ready for production use",
+  "blockers": "Valid Twitch OAuth token needed in config/chat_presence.json; weareswarm.online credentials pending confirmation",
+  "recent_devlog": "devlogs/2025-12-11_agent-1_session_cleanup.md",
+  "swarm_brain_entry": "insight#8 (Twitch OAuth validation) added 2025-12-11 (runtime/swarm_brain.json)",
+  "tool_wishlist": "Created oauth_token_checker.ts for fast config validation; next desired: auto-token fetcher once credentials available",
+  "gas_pipeline_status": "Twitch bot blocked on token; Hostinger deployments unblocked post-path fix",
   "coordination_notes": [
-    "GitHub consolidation status provided to Captain - REST API working, CLI rate-limited",
-    "Twitch monitoring tools verification complete - Agent-3 informed (tools remain active, domain-specific)",
-    "Tool deprecation analysis shared - Migration plan for unified_github_pr_creator.py documented"
+    "Twitch diagnostics ready for handoff; token fix required from credentials owner",
+    "Hostinger deployment guidance ready for Agent-7/web deployers (use relative domains/... paths and wp_cli cd)",
+    "weareswarm.online pending credential format confirmation before deploy + activation"
   ],
   "deliverables": [
-    "Enhanced Unified GitHub Tool (production-ready)",
-    "GitHub Queue Processor (automatic retry system)",
-    "Rate Limit Solutions Guide (comprehensive documentation)",
-    "Tool Deprecation Analysis (migration plan)",
-    "Invalid Workspace Fix (validation enforcement)",
-    "GitHub App Setup Helper (interactive guide)"
+    "Twitch Phase 1 diagnostics (tool + logging) with root-cause documented",
+    "Hostinger SFTP path validator and wordpress_manager path fixes",
+    "Session cleanup passdown, devlog, Swarm Brain update, and OAuth token checker tool"
   ]
 }

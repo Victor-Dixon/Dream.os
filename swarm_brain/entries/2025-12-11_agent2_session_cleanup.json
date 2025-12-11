@@ -1,0 +1,29 @@
+{
+  "date": "2025-12-11",
+  "agent": "Agent-2",
+  "topic": "session_cleanup_operating_cycle",
+  "insights": [
+    "End-of-session cleanup must produce evidence: refreshed passdown, posted devlog, and Swarm Brain entry to avoid stall recovery loops.",
+    "Automated templates reduce friction and keep artifacts consistent across cycles.",
+    "Mapping deliverables to SSOT locations (passdown, devlog, Swarm Brain entry) improves observability for Captain review."
+  ],
+  "patterns": [
+    "Session cleanup bundle: passdown.json + devlog (Discord posted) + Swarm Brain entry + helper tooling for repeatability.",
+    "Track outstanding deployment gates explicitly (e.g., WordPress window with Agent-1) to prevent hidden blockers."
+  ],
+  "actions": [
+    "Updated passdown.json with session cleanup status, artifacts, and next-session priorities.",
+    "Authored and posted final session cleanup devlog to Discord.",
+    "Added session_cleanup_helper utility to pre-seed cleanup artifacts for future cycles."
+  ],
+  "next_steps": [
+    "Use session_cleanup_helper to initialize the next session’s passdown/devlog/Swarm Brain drafts.",
+    "Secure deployment window with Agent-1 to push FreeRideInvestor + Prismblossom updates."
+  ],
+  "evidence": [
+    "devlogs/2025-12-11_agent-2_session_cleanup.md",
+    "agent_workspaces/Agent-2/passdown.json",
+    "tools/session_cleanup_helper.py"
+  ]
+}
+
