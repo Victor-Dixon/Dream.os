@@ -120,26 +120,39 @@ class EnhancedAgentActivityDetector:
             activities.append(lifecycle_activity)
             activity_details["agent_lifecycle"] = lifecycle_activity
 
+        # Phase 1: High-priority signals
+        # 12. Check terminal/command execution activity
+        terminal_activity = self._check_terminal_activity(agent_id)
+        if terminal_activity:
+            activities.append(terminal_activity)
+            activity_details["terminal"] = terminal_activity
+        
+        # 13. Check log file activity
+        log_activity = self._check_log_file_activity(agent_id)
+        if log_activity:
+            activities.append(log_activity)
+            activity_details["log"] = log_activity
+        
         # Phase 2: Medium-priority signals
-        # 12. Check process/application activity
+        # 14. Check process/application activity
         process_activity = self._check_process_activity(agent_id)
         if process_activity:
             activities.append(process_activity)
             activity_details["process"] = process_activity
         
-        # 13. Check IDE/editor activity
+        # 15. Check IDE/editor activity
         ide_activity = self._check_ide_activity(agent_id)
         if ide_activity:
             activities.append(ide_activity)
             activity_details["ide"] = ide_activity
         
-        # 14. Check database activity
+        # 16. Check database activity
         database_activity = self._check_database_activity(agent_id)
         if database_activity:
             activities.append(database_activity)
             activity_details["database"] = database_activity
 
-        # 15. Check ActivityEmitter telemetry events (HIGH priority - most reliable)
+        # 17. Check ActivityEmitter telemetry events (HIGH priority - most reliable)
         activity_emitter_activity = self._check_activity_emitter_events(
             agent_id)
         if activity_emitter_activity:
