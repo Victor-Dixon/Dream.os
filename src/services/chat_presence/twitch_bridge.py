@@ -85,7 +85,11 @@ class TwitchChatBridge:
 
         self.username = username
         self.oauth_token = oauth_token
-        self.channel = channel if channel.startswith("#") else f"#{channel}"
+        # Normalize channel name (add # if missing, but preserve empty string)
+        if channel:
+            self.channel = channel if channel.startswith("#") else f"#{channel}"
+        else:
+            self.channel = ""
         self.on_message = on_message
         self.bot = None
         self.running = False
@@ -119,8 +123,24 @@ class TwitchChatBridge:
         Connect to Twitch IRC with automatic reconnection loop.
 
         Returns:
-            True if connection thread started successfully
+            True if connection thread started successfully, False otherwise
         """
+        # Validate required parameters
+        if not self.username:
+            logger.error("❌ Username is required")
+            raise TwitchConnectionError("Username is required")
+        
+        if not self.oauth_token:
+            logger.error("❌ OAuth token is required")
+            raise TwitchAuthError("OAuth token is required")
+        
+        if not self.oauth_token.startswith("oauth:"):
+            logger.warning("⚠️ OAuth token should start with 'oauth:' prefix")
+        
+        if not self.channel:
+            logger.error("❌ Channel is required")
+            raise TwitchConnectionError("Channel is required")
+
         try:
             logger.info(f"🔌 Connecting to Twitch IRC as {self.username}")
             logger.info(f"🔐 Using OAuth token: {self._mask_token(self.oauth_token)}")
@@ -132,12 +152,20 @@ class TwitchChatBridge:
             
             # Start single reconnect loop in separate thread
             if self._reconnect_thread is None or not self._reconnect_thread.is_alive():
-                self._reconnect_thread = threading.Thread(
-                    target=self._run_reconnect_loop,
-                    daemon=True,
-                    name="TwitchIRCReconnectLoop"
-                )
-                self._reconnect_thread.start()
+                try:
+                    self._reconnect_thread = threading.Thread(
+                        target=self._run_reconnect_loop,
+                        daemon=True,
+                        name="TwitchIRCReconnectLoop"
+                    )
+                    self._reconnect_thread.start()
+                    logger.info("✅ Reconnect thread started")
+                except RuntimeError as e:
+                    logger.error(f"❌ Failed to start reconnect thread: {e}")
+                    self.running = False
+                    raise TwitchConnectionError(f"Failed to start reconnect thread: {e}") from e
+            else:
+                logger.warning("⚠️ Reconnect thread already running")
             
             # Wait a moment for initial connection attempt
             await asyncio.sleep(2)
@@ -145,10 +173,17 @@ class TwitchChatBridge:
             logger.info(f"🔄 Twitch bot reconnect loop started")
             return True
 
-        except Exception as e:
-            logger.error(f"❌ Failed to start Twitch connection: {e}", exc_info=True)
+        except (TwitchConnectionError, TwitchAuthError):
+            # Re-raise our custom exceptions
+            raise
+        except RuntimeError as e:
+            logger.error(f"❌ Runtime error starting connection: {e}", exc_info=True)
             self.running = False
-            return False
+            raise TwitchConnectionError(f"Runtime error: {e}") from e
+        except Exception as e:
+            logger.error(f"❌ Unexpected error starting Twitch connection: {e}", exc_info=True)
+            self.running = False
+            raise TwitchConnectionError(f"Unexpected error: {e}") from e
 
     def _run_reconnect_loop(self) -> None:
         """
@@ -223,9 +258,32 @@ class TwitchChatBridge:
             except KeyboardInterrupt:
                 logger.info("🛑 Reconnect loop stopped by user")
                 break
+            except (ConnectionError, OSError, TimeoutError) as e:
+                # Network-related errors - retry with backoff
+                logger.warning(f"⚠️ Network error in reconnect loop: {e}")
+                backoff = min(120, 2 ** min(self._reconnect_attempt, 6))
+                logger.warning(f"⚠️ Retrying in {backoff}s...")
                 
+                self.connected = False
+                self.bot = None
+                
+                for _ in range(int(backoff)):
+                    if self._stop_event.is_set():
+                        return
+                    time.sleep(1)
+            except TwitchAuthError as e:
+                # Authentication errors - don't retry indefinitely
+                logger.error(f"❌ Authentication error: {e}")
+                logger.error("❌ Stopping reconnect loop - check OAuth token")
+                self.connected = False
+                self.bot = None
+                # Wait before stopping to allow manual intervention
+                time.sleep(60)
+                if self._stop_event.is_set():
+                    return
+                # Continue after delay (token might be fixed)
             except Exception as e:
-                logger.exception(f"❌ Reconnect loop error: {e}")
+                logger.exception(f"❌ Unexpected error in reconnect loop: {e}")
                 # Calculate exponential backoff
                 backoff = min(120, 2 ** min(self._reconnect_attempt, 6))
                 logger.warning(f"⚠️ Error in reconnect loop. Retrying in {backoff}s...")
@@ -288,31 +346,78 @@ class TwitchChatBridge:
 
     async def send_message(self, message: str) -> bool:
         """
-        Send message to Twitch chat.
+        Send message to Twitch chat with improved error handling.
 
         Args:
             message: Message to send
 
         Returns:
-            True if sent successfully
+            True if sent successfully, False otherwise
         """
-        if not self.bot or not self.running or not self.connected:
-            logger.warning("⚠️ Not connected to Twitch (bot not ready)")
+        # Validate input
+        if not message or not isinstance(message, str):
+            logger.warning("⚠️ Invalid message: must be non-empty string")
+            return False
+        
+        if len(message) > 500:  # Twitch message limit
+            logger.warning(f"⚠️ Message too long ({len(message)} chars), truncating to 500")
+            message = message[:497] + "..."
+        
+        # Check connection state
+        if not self.running:
+            logger.warning("⚠️ Bridge not running")
+            return False
+        
+        if not self.connected:
+            logger.warning("⚠️ Not connected to Twitch channel")
+            return False
+        
+        if not self.bot:
+            logger.warning("⚠️ Bot instance not available")
             return False
 
         try:
-            # Check if connection is actually ready
-            if not hasattr(self.bot, 'connection') or not self.bot.connection:
-                logger.warning("⚠️ IRC connection not ready")
+            # Verify connection object exists and is ready
+            if not hasattr(self.bot, 'connection'):
+                logger.warning("⚠️ Bot has no connection attribute")
                 return False
                 
-            # Twitch IRC message format
-            self.bot.connection.privmsg(self.channel, message)
-            logger.info(f"📤 Sent to Twitch: {message[:50]}...")
-            return True
+            if not self.bot.connection:
+                logger.warning("⚠️ IRC connection object is None")
+                return False
+            
+            # Check if connection is actually connected
+            if hasattr(self.bot.connection, 'is_connected'):
+                if not self.bot.connection.is_connected():
+                    logger.warning("⚠️ IRC connection not connected")
+                    self.connected = False
+                    return False
+            
+            # Send message with error handling
+            try:
+                self.bot.connection.privmsg(self.channel, message)
+                logger.info(f"📤 Sent to Twitch: {message[:50]}...")
+                return True
+            except AttributeError as e:
+                logger.error(f"❌ Connection missing privmsg method: {e}")
+                self.connected = False
+                return False
+            except (ConnectionError, OSError) as e:
+                logger.error(f"❌ Network error sending message: {e}")
+                self.connected = False
+                raise TwitchConnectionError(f"Network error: {e}") from e
+            except Exception as e:
+                logger.error(f"❌ Unexpected error sending message: {e}", exc_info=True)
+                raise TwitchMessageError(f"Failed to send message: {e}") from e
 
+        except TwitchConnectionError:
+            # Reconnection will be handled by reconnect loop
+            return False
+        except TwitchMessageError:
+            # Message-specific error, don't trigger reconnection
+            return False
         except Exception as e:
-            logger.error(f"❌ Failed to send message: {e}")
+            logger.error(f"❌ Unexpected error in send_message: {e}", exc_info=True)
             return False
 
     async def send_as_agent(self, agent_id: str, message: str) -> bool:
@@ -806,7 +911,16 @@ class TwitchWebSocketBridge:
         return False
 
 
-__all__ = ["TwitchChatBridge", "TwitchIRCBot", "TwitchWebSocketBridge"]
+__all__ = [
+    "TwitchChatBridge",
+    "TwitchIRCBot",
+    "TwitchWebSocketBridge",
+    "TwitchBridgeError",
+    "TwitchAuthError",
+    "TwitchConnectionError",
+    "TwitchMessageError",
+    "TwitchReconnectError",
+]
 
 
 
