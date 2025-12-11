@@ -776,6 +776,32 @@ class EnhancedAgentActivityDetector:
             logger.debug(f"Could not check git working directory: {e}")
             return None
 
+    def _check_activity_logs(self, agent_id: str) -> Optional[Dict[str, Any]]:
+        """Check activity log files (Agent-7 improvement - HIGH priority)."""
+        activity_dir = self.agent_workspaces / agent_id / "activity"
+        if not activity_dir.exists():
+            return None
+
+        activity_files = list(activity_dir.glob("*.md"))
+        if not activity_files:
+            return None
+
+        latest_file = max(activity_files, key=lambda p: p.stat().st_mtime)
+        mtime = latest_file.stat().st_mtime
+
+        # Only return if recent (within 24 hours)
+        age_seconds = time.time() - mtime
+        if age_seconds > 86400:
+            return None
+
+        return {
+            "source": "activity_logs",
+            "timestamp": mtime,
+            "file": latest_file.name,
+            "file_count": len(activity_files),
+            "age_seconds": age_seconds,
+        }
+
     def get_all_agents_activity(self) -> Dict[str, Dict[str, Any]]:
         """Get activity for all agents."""
         all_activity = {}
