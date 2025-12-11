@@ -120,7 +120,19 @@ class EnhancedAgentActivityDetector:
             activities.append(lifecycle_activity)
             activity_details["agent_lifecycle"] = lifecycle_activity
 
-        # 12. Check passdown.json modifications (Phase 2 - HIGH priority)
+        # 12. Check ActivityEmitter telemetry events (HIGH priority - most reliable)
+        activity_emitter_activity = self._check_activity_emitter_events(agent_id)
+        if activity_emitter_activity:
+            activities.append(activity_emitter_activity)
+            activity_details["activity_emitter"] = activity_emitter_activity
+
+        # 13. Check test execution activity (HIGH priority)
+        test_execution_activity = self._check_test_execution(agent_id)
+        if test_execution_activity:
+            activities.append(test_execution_activity)
+            activity_details["test_execution"] = test_execution_activity
+
+        # 14. Check passdown.json modifications (Phase 2 - HIGH priority)
         passdown_activity = self._check_passdown_json(agent_id)
         if passdown_activity:
             activities.append(passdown_activity)
@@ -610,6 +622,110 @@ class EnhancedAgentActivityDetector:
         except Exception as e:
             logger.debug(f"Could not check Agent lifecycle: {e}")
             return None
+
+    def _check_activity_emitter_events(self, agent_id: str) -> Optional[Dict[str, Any]]:
+        """Check ActivityEmitter telemetry events (HIGH priority - most reliable)."""
+        try:
+            event_file = self.workspace_root / "runtime" / "agent_comms" / "activity_events.jsonl"
+            if not event_file.exists():
+                return None
+
+            # Read last N lines (most recent events)
+            try:
+                with open(event_file, 'r', encoding='utf-8') as f:
+                    lines = f.readlines()
+                    # Check last 100 lines for agent events
+                    recent_lines = lines[-100:] if len(lines) > 100 else lines
+
+                    agent_events = []
+                    for line in recent_lines:
+                        try:
+                            event = json.loads(line.strip())
+                            if event.get("agent_id", "").lower() == agent_id.lower():
+                                agent_events.append(event)
+                        except json.JSONDecodeError:
+                            continue
+
+                    if agent_events:
+                        # Get most recent event
+                        latest_event = max(
+                            agent_events,
+                            key=lambda e: e.get("timestamp", 0)
+                        )
+                        event_timestamp = latest_event.get("timestamp", 0)
+                        if event_timestamp > 0:
+                            return {
+                                "source": "activity_emitter",
+                                "timestamp": event_timestamp,
+                                "event_type": latest_event.get("event_type", ""),
+                                "event_count": len(agent_events),
+                                "age_seconds": time.time() - event_timestamp,
+                            }
+            except Exception as e:
+                logger.debug(f"Could not read activity events file: {e}")
+                return None
+        except Exception as e:
+            logger.debug(f"Could not check ActivityEmitter events: {e}")
+            return None
+
+    def _check_test_execution(self, agent_id: str) -> Optional[Dict[str, Any]]:
+        """Check pytest/test execution activity (HIGH priority)."""
+        try:
+            # Check pytest cache
+            pytest_cache = self.workspace_root / ".pytest_cache"
+            if pytest_cache.exists():
+                mtime = pytest_cache.stat().st_mtime
+                if time.time() - mtime < 3600:  # Within last hour
+                    return {
+                        "source": "test_execution",
+                        "timestamp": mtime,
+                        "cache_type": "pytest_cache",
+                        "age_seconds": time.time() - mtime,
+                    }
+
+            # Check test result files
+            test_results = self.workspace_root / "test_results"
+            if test_results.exists():
+                result_files = list(test_results.glob(f"*{agent_id}*.json"))
+                if result_files:
+                    latest = max(result_files, key=lambda p: p.stat().st_mtime)
+                    mtime = latest.stat().st_mtime
+                    if time.time() - mtime < 3600:
+                        return {
+                            "source": "test_execution",
+                            "timestamp": mtime,
+                            "file": latest.name,
+                            "age_seconds": time.time() - mtime,
+                        }
+
+            # Check coverage reports
+            coverage_file = self.workspace_root / ".coverage"
+            if coverage_file.exists():
+                mtime = coverage_file.stat().st_mtime
+                if time.time() - mtime < 3600:
+                    return {
+                        "source": "test_execution",
+                        "timestamp": mtime,
+                        "cache_type": "coverage",
+                        "age_seconds": time.time() - mtime,
+                    }
+
+            # Check htmlcov directory
+            htmlcov_dir = self.workspace_root / "htmlcov"
+            if htmlcov_dir.exists() and htmlcov_dir.is_dir():
+                mtime = htmlcov_dir.stat().st_mtime
+                if time.time() - mtime < 3600:
+                    return {
+                        "source": "test_execution",
+                        "timestamp": mtime,
+                        "cache_type": "htmlcov",
+                        "age_seconds": time.time() - mtime,
+                    }
+        except Exception as e:
+            logger.debug(f"Could not check test execution: {e}")
+            return None
+
+        return None
 
     def _check_passdown_json(self, agent_id: str) -> Optional[Dict[str, Any]]:
         """Check passdown.json file modification (Phase 2)."""
