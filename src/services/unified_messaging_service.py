@@ -35,6 +35,9 @@ class UnifiedMessagingService(BaseService):
         timeout: float = 30.0,
         discord_user_id: str | None = None,
         stalled: bool = False,
+        apply_template: bool = False,
+        message_category=None,
+        sender: str | None = None,
     ) -> dict[str, Any]:
         """
         Send message to agent.
@@ -48,6 +51,9 @@ class UnifiedMessagingService(BaseService):
             timeout: Timeout in seconds
             discord_user_id: Discord user ID (optional)
             stalled: Whether message is for stalled agent
+            apply_template: Apply SSOT template before sending (default: False)
+            message_category: Explicit template category (defaults to D2A for Discord)
+            sender: Override sender name when templating
 
         Returns:
             Dictionary with success status and queue_id
@@ -61,6 +67,9 @@ class UnifiedMessagingService(BaseService):
             timeout=timeout,
             discord_user_id=discord_user_id,
             stalled=stalled,
+            apply_template=apply_template,
+            message_category=message_category,
+            sender=sender,
         )
 
     def broadcast_message(self, message: str, priority: str = "regular") -> dict:

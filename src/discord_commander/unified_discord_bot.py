@@ -25,6 +25,7 @@ from src.discord_commander.discord_gui_controller import DiscordGUIController
 import asyncio
 import logging
 import os
+import json
 import subprocess
 import sys
 import time
@@ -901,6 +902,15 @@ class UnifiedDiscordBot(commands.Bot):
             except Exception as e:
                 self.logger.warning(f"⚠️ Could not load tools commands: {e}")
 
+            # Load file share commands
+            try:
+                from src.discord_commander.file_share_commands import setup as setup_file_share
+                await setup_file_share(self)
+                self.logger.info("✅ File share commands loaded")
+            except Exception as e:
+                self.logger.warning(
+                    f"⚠️ Could not load file share commands: {e}")
+
             # Load music commands
             try:
                 from src.discord_commander.music_commands import setup
@@ -1146,7 +1156,10 @@ class MessagingCommands(commands.Cog):
         """Send direct message to agent."""
         try:
             success = await self.gui_controller.send_message(
-                agent_id=agent_id, message=message, priority="regular"
+                agent_id=agent_id,
+                message=message,
+                priority="regular",
+                discord_user=ctx.author,
             )
 
             if success:
@@ -1230,7 +1243,9 @@ class MessagingCommands(commands.Cog):
         """Broadcast message to all agents."""
         try:
             success = await self.gui_controller.broadcast_message(
-                message=message, priority="regular"
+                message=message,
+                priority="regular",
+                discord_user=ctx.author,
             )
 
             if success:
@@ -1989,7 +2004,8 @@ Agent, you appear stalled. CONTINUE AUTONOMOUSLY NOW.
                 agent_id=agent_id,
                 message=unstall_message,
                 priority="urgent",
-                stalled=True
+                stalled=True,
+                discord_user=ctx.author,
             )
 
             if success:

@@ -1,3 +1,4 @@
+from __future__ import annotations
 import logging
 logger = logging.getLogger(__name__)
 """Authoritative cleanup auditor.
@@ -8,7 +9,6 @@ logger = logging.getLogger(__name__)
 - Risk guards: abort if .py count < MIN_PY or drop > MAX_PY_DROP unless --force
 - Emits JSON and Markdown reports under runtime/reports/
 """
-from __future__ import annotations
 import argparse
 import fnmatch
 import hashlib
