@@ -693,6 +693,16 @@ class UnifiedDiscordBot(commands.Bot):
             # Get swarm snapshot
             snapshot = self._get_swarm_snapshot()
 
+            # Create swarm snapshot view
+            try:
+                from src.discord_commander.views.swarm_snapshot_view import SwarmSnapshotView
+                snapshot_view = SwarmSnapshotView(snapshot)
+                snapshot_embed = snapshot_view.create_snapshot_embed()
+            except Exception as e:
+                self.logger.warning(f"Could not create snapshot view: {e}")
+                snapshot_view = None
+                snapshot_embed = None
+
             embed = discord.Embed(
                 title="🐝 Discord Commander - SWARM CONTROL CENTER",
                 description="**Complete Multi-Agent Command & Showcase System**",
@@ -700,47 +710,46 @@ class UnifiedDiscordBot(commands.Bot):
                 timestamp=discord.utils.utcnow(),
             )
 
-            # Swarm Work Snapshot
-            if snapshot["active_agents"]:
-                active_list = []
-                for agent in snapshot["active_agents"][:5]:  # Show top 5
-                    priority_emoji = "🔴" if agent["priority"] == "HIGH" else "🟡" if agent["priority"] == "MEDIUM" else "🟢"
-                    active_list.append(
-                        f"{priority_emoji} **{agent['id']}** ({agent['phase']}): {agent['mission']}"
+            # Add snapshot embed as first message, or add snapshot fields to main embed
+            if snapshot_embed:
+                # Send snapshot view as separate message first
+                await channel.send(embed=snapshot_embed, view=snapshot_view)
+            else:
+                # Fallback: Add snapshot fields to main embed
+                if snapshot["active_agents"]:
+                    active_list = []
+                    for agent in snapshot["active_agents"][:5]:
+                        priority_emoji = "🔴" if agent["priority"] == "HIGH" else "🟡" if agent["priority"] == "MEDIUM" else "🟢"
+                        active_list.append(
+                            f"{priority_emoji} **{agent['id']}** ({agent['phase']}): {agent['mission']}"
+                        )
+                    if len(snapshot["active_agents"]) > 5:
+                        active_list.append(f"... and {len(snapshot['active_agents']) - 5} more")
+                    embed.add_field(
+                        name=f"📊 Current Work Snapshot ({snapshot['engagement_rate']:.0f}% Engagement)",
+                        value="\n".join(active_list) if active_list else "No active agents",
+                        inline=False,
                     )
-
-                if len(snapshot["active_agents"]) > 5:
-                    active_list.append(
-                        f"... and {len(snapshot['active_agents']) - 5} more")
-
-                embed.add_field(
-                    name=f"📊 Current Work Snapshot ({snapshot['engagement_rate']:.0f}% Engagement)",
-                    value="\n".join(
-                        active_list) if active_list else "No active agents",
-                    inline=False,
-                )
-
-            # Recent Activity
-            if snapshot["recent_activity"]:
-                activity_text = "\n".join(snapshot["recent_activity"][:3])
-                if len(snapshot["recent_activity"]) > 3:
-                    activity_text += f"\n... and {len(snapshot['recent_activity']) - 3} more"
-                embed.add_field(
-                    name="✅ Recent Activity",
-                    value=activity_text[:1024],  # Discord field limit
-                    inline=False,
-                )
-
-            # Current Focus
-            if snapshot["current_focus"]:
-                focus_text = "\n".join(snapshot["current_focus"][:3])
-                if len(snapshot["current_focus"]) > 3:
-                    focus_text += f"\n... and {len(snapshot['current_focus']) - 3} more"
-                embed.add_field(
-                    name="🎯 Current Focus",
-                    value=focus_text[:1024],
-                    inline=False,
-                )
+                
+                if snapshot["recent_activity"]:
+                    activity_text = "\n".join(snapshot["recent_activity"][:3])
+                    if len(snapshot["recent_activity"]) > 3:
+                        activity_text += f"\n... and {len(snapshot['recent_activity']) - 3} more"
+                    embed.add_field(
+                        name="✅ Recent Activity",
+                        value=activity_text[:1024],
+                        inline=False,
+                    )
+                
+                if snapshot["current_focus"]:
+                    focus_text = "\n".join(snapshot["current_focus"][:3])
+                    if len(snapshot["current_focus"]) > 3:
+                        focus_text += f"\n... and {len(snapshot['current_focus']) - 3} more"
+                    embed.add_field(
+                        name="🎯 Current Focus",
+                        value=focus_text[:1024],
+                        inline=False,
+                    )
 
             embed.add_field(
                 name="✅ System Status",
