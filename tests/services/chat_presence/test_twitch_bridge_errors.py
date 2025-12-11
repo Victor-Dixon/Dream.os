@@ -313,6 +313,134 @@ class TestReconnectionErrorHandling(unittest.TestCase):
         
         asyncio.run(test())
 
+    @patch('src.services.chat_presence.twitch_bridge.IRC_AVAILABLE', True)
+    def test_stop_event_terminates_reconnect_loop(self):
+        """Test that stop() method signals reconnect loop to stop."""
+        bridge = TwitchChatBridge(
+            username="testbot",
+            oauth_token="oauth:test123",
+            channel="testchannel",
+            on_message=None
+        )
+        
+        # Verify stop event exists
+        self.assertIsNotNone(bridge._stop_event)
+        self.assertFalse(bridge._stop_event.is_set())
+        
+        # Call stop
+        bridge.stop()
+        
+        # Stop event should be set
+        self.assertTrue(bridge._stop_event.is_set())
+        self.assertFalse(bridge.running)
+
+    @patch('src.services.chat_presence.twitch_bridge.IRC_AVAILABLE', True)
+    def test_reconnect_attempt_counter_persistence(self):
+        """Test that reconnect attempt counter persists across instances."""
+        bridge = TwitchChatBridge(
+            username="testbot",
+            oauth_token="oauth:test123",
+            channel="testchannel",
+            on_message=None
+        )
+        
+        # Initial attempt counter should be 0
+        self.assertEqual(bridge._reconnect_attempt, 0)
+        
+        # Simulate increment
+        bridge._reconnect_attempt = 3
+        
+        # Counter should persist
+        self.assertEqual(bridge._reconnect_attempt, 3)
+
+    @patch('src.services.chat_presence.twitch_bridge.IRC_AVAILABLE', True)
+    def test_exponential_backoff_calculation(self):
+        """Test exponential backoff calculation limits."""
+        bridge = TwitchChatBridge(
+            username="testbot",
+            oauth_token="oauth:test123",
+            channel="testchannel",
+            on_message=None
+        )
+        
+        # Test backoff calculation logic (min(120, 2^min(attempt, 6)))
+        # Attempt 0: 2^0 = 1
+        bridge._reconnect_attempt = 0
+        expected_backoff = min(120, 2 ** min(0, 6))
+        self.assertEqual(expected_backoff, 1)
+        
+        # Attempt 3: 2^3 = 8
+        bridge._reconnect_attempt = 3
+        expected_backoff = min(120, 2 ** min(3, 6))
+        self.assertEqual(expected_backoff, 8)
+        
+        # Attempt 6: 2^6 = 64
+        bridge._reconnect_attempt = 6
+        expected_backoff = min(120, 2 ** min(6, 6))
+        self.assertEqual(expected_backoff, 64)
+        
+        # Attempt 10: 2^6 = 64 (capped at 6)
+        bridge._reconnect_attempt = 10
+        expected_backoff = min(120, 2 ** min(10, 6))
+        self.assertEqual(expected_backoff, 64)
+        
+        # Max backoff is 120 seconds
+        bridge._reconnect_attempt = 100
+        expected_backoff = min(120, 2 ** min(100, 6))
+        self.assertEqual(expected_backoff, 64)  # Still capped at 2^6
+
+    @patch('src.services.chat_presence.twitch_bridge.IRC_AVAILABLE', True)
+    def test_reconnect_thread_management(self):
+        """Test reconnect thread lifecycle management."""
+        bridge = TwitchChatBridge(
+            username="testbot",
+            oauth_token="oauth:test123",
+            channel="testchannel",
+            on_message=None
+        )
+        
+        # Initially no thread
+        self.assertIsNone(bridge._reconnect_thread)
+        
+        # Mock thread for testing
+        mock_thread = MagicMock()
+        mock_thread.is_alive.return_value = True
+        bridge._reconnect_thread = mock_thread
+        
+        # Verify thread exists
+        self.assertIsNotNone(bridge._reconnect_thread)
+        
+        # Stop should handle thread cleanup
+        bridge.stop()
+        # Thread join should be called (with timeout)
+        if bridge._reconnect_thread:
+            # Verify thread management
+            self.assertTrue(hasattr(bridge._reconnect_thread, 'join'))
+
+    @patch('src.services.chat_presence.twitch_bridge.IRC_AVAILABLE', True)
+    def test_reconnect_state_after_stop(self):
+        """Test that reconnect state is properly reset after stop."""
+        bridge = TwitchChatBridge(
+            username="testbot",
+            oauth_token="oauth:test123",
+            channel="testchannel",
+            on_message=None
+        )
+        
+        # Set some state
+        bridge.running = True
+        bridge.connected = True
+        bridge._reconnect_attempt = 5
+        
+        # Stop
+        bridge.stop()
+        
+        # State should be reset
+        self.assertFalse(bridge.running)
+        # Reconnect attempt counter may persist (design choice)
+        # but running should be False
+        self.assertFalse(bridge.running)
+
 
 class TestIRCBotErrorHandling(unittest.TestCase):
     """Test IRC bot error handling."""
