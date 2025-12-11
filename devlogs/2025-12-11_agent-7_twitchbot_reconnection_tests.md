@@ -43,3 +43,5 @@ test: add comprehensive reconnection logic tests for twitch_bridge
 - `tests/services/chat_presence/test_twitch_bridge_errors.py` - Updated with 5 new reconnection tests
 - All tests passing: 27/27 ✅
 
+
+
