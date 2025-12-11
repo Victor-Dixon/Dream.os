@@ -18,19 +18,34 @@ For each WordPress site, create an Application Password:
 5. Click **Add New Application Password**
 6. Copy the generated password (you won't see it again!)
 
-### **Step 2: Create Configuration File**
+### **Step 2: Configure Credentials**
 
-Copy the example configuration:
+The configuration file has been created at `.deploy_credentials/blogging_api.json`.
 
-```bash
-cp .deploy_credentials/blogging_api.json.example .deploy_credentials/blogging_api.json
-```
+Edit `.deploy_credentials/blogging_api.json` and replace for each site:
+- `REPLACE_WITH_WORDPRESS_USERNAME`: Your WordPress username
+- `REPLACE_WITH_APPLICATION_PASSWORD`: The application password from Step 1
 
-Edit `.deploy_credentials/blogging_api.json` and fill in:
-- `username`: Your WordPress username
-- `app_password`: The application password from Step 1
+**Note**: Each site can have different usernames/passwords if needed.
 
 ### **Step 3: Test API Connectivity**
+
+Use the dedicated connectivity test script:
+
+```bash
+# Test all sites
+python tools/test_blogging_api_connectivity.py
+
+# Test specific site
+python tools/test_blogging_api_connectivity.py --site freerideinvestor
+```
+
+This will verify:
+- ✅ REST API availability
+- ✅ Authentication credentials
+- ✅ User permissions
+
+Alternatively, test with the automation tool:
 
 ```bash
 python tools/unified_blogging_automation.py \
