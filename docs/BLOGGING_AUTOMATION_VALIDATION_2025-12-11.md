@@ -28,9 +28,10 @@ Testing the unified blogging automation tool (`tools/unified_blogging_automation
 - **Status**: ✅ **PASS**
 - **Result**: Module imports successfully
 - **Classes Available**:
-  - `WordPressBlogClient` ✅
-  - `BloggingAutomation` ✅
-- **Note**: Classes are defined in module (CLI interface confirms functionality)
+  - `WordPressBlogClient` ✅ (line 50)
+  - `ContentAdapter` ✅ (line 193)
+  - `UnifiedBloggingAutomation` ✅ (line 243)
+- **Note**: All classes defined and accessible (CLI interface confirms functionality)
 
 ### **3. Configuration Loading** ✅
 - **Test**: Initialize `BloggingAutomation` with config path
