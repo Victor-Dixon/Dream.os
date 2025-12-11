@@ -952,6 +952,101 @@ class EnhancedAgentActivityDetector:
             "age_seconds": age_seconds,
         }
     
+    def _check_terminal_activity(self, agent_id: str) -> Optional[Dict[str, Any]]:
+        """Check terminal/command execution activity (Phase 1 - HIGH priority)."""
+        try:
+            # Check for terminal history files
+            terminal_history_paths = [
+                Path.home() / ".bash_history",
+                Path.home() / ".zsh_history",
+                Path.home() / ".powershell_history",
+            ]
+            
+            latest_activity = None
+            for history_path in terminal_history_paths:
+                if history_path.exists():
+                    mtime = history_path.stat().st_mtime
+                    if time.time() - mtime < 3600:  # Within last hour
+                        # Check if file contains agent-related commands
+                        try:
+                            with open(history_path, 'r', encoding='utf-8', errors='ignore') as f:
+                                lines = f.readlines()
+                                recent_lines = ''.join(lines[-100:]).lower()
+                                if agent_id.lower() in recent_lines or 'agent' in recent_lines:
+                                    if latest_activity is None or mtime > latest_activity:
+                                        latest_activity = mtime
+                        except Exception:
+                            if latest_activity is None or mtime > latest_activity:
+                                latest_activity = mtime
+            
+            if latest_activity:
+                return {
+                    "source": "terminal",
+                    "timestamp": latest_activity,
+                    "age_seconds": time.time() - latest_activity,
+                }
+        except Exception as e:
+            logger.debug(f"Could not check terminal activity: {e}")
+        
+        return None
+    
+    def _check_log_file_activity(self, agent_id: str) -> Optional[Dict[str, Any]]:
+        """Check log file activity (Phase 1 - HIGH priority)."""
+        try:
+            log_dirs = [
+                Path("logs"),
+                Path("runtime") / "logs",
+                Path("data") / "logs",
+                self.agent_workspaces / agent_id / "logs",
+            ]
+            
+            agent_pattern = agent_id.lower().replace('-', '')
+            latest_activity = None
+            latest_file = None
+            
+            for log_dir in log_dirs:
+                if not log_dir.exists():
+                    continue
+                
+                # Check for log files
+                log_files = list(log_dir.rglob("*.log"))
+                log_files.extend(list(log_dir.rglob("*.txt")))
+                
+                for log_file in log_files:
+                    try:
+                        mtime = log_file.stat().st_mtime
+                        if time.time() - mtime > 3600:  # Only last hour
+                            continue
+                        
+                        if latest_activity is None or mtime > latest_activity:
+                            # Check if file contains agent references
+                            try:
+                                with open(log_file, 'r', encoding='utf-8', errors='ignore') as f:
+                                    lines = f.readlines()
+                                    recent_lines = ''.join(lines[-50:]).lower()
+                                    if agent_pattern in recent_lines or agent_id.lower() in recent_lines:
+                                        latest_activity = mtime
+                                        latest_file = log_file.name
+                            except Exception:
+                                # Still count recent modification
+                                if latest_activity is None or mtime > latest_activity:
+                                    latest_activity = mtime
+                                    latest_file = log_file.name
+                    except (OSError, PermissionError):
+                        continue
+            
+            if latest_activity:
+                return {
+                    "source": "log",
+                    "timestamp": latest_activity,
+                    "file": latest_file,
+                    "age_seconds": time.time() - latest_activity,
+                }
+        except Exception as e:
+            logger.debug(f"Could not check log file activity: {e}")
+        
+        return None
+    
     def _check_process_activity(self, agent_id: str) -> Optional[Dict[str, Any]]:
         """Check process/application activity (Phase 2 - MEDIUM priority)."""
         try:

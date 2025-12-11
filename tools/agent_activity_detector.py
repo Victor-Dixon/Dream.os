@@ -210,6 +210,11 @@ class AgentActivityDetector:
         activities.extend(self._check_inbox_activity(agent_id, lookback_time))
         activities.extend(self._check_message_queue_activity(agent_id, lookback_time))
         
+        # Phase 1: High-priority signals (Terminal, Logs, Enhanced Cycle Planner, Enhanced Test)
+        activities.extend(self._check_terminal_activity(agent_id, lookback_time))
+        activities.extend(self._check_log_file_activity(agent_id, lookback_time))
+        # Cycle planner and test runs already checked above, but enhanced inline
+        
         # Phase 2: Medium-priority signals (Process, IDE, Database, Enhanced Contract)
         activities.extend(self._check_process_activity(agent_id, lookback_time))
         activities.extend(self._check_ide_activity(agent_id, lookback_time))
@@ -445,7 +450,7 @@ class AgentActivityDetector:
         agent_id: str,
         lookback_time: datetime
     ) -> List[AgentActivity]:
-        """Check task claims from cycle planner."""
+        """Check task claims from cycle planner - Enhanced for Phase 1."""
         activities = []
         
         if not self.cycle_planner_dir.exists():
@@ -458,19 +463,75 @@ class AgentActivityDetector:
                 try:
                     mtime = datetime.fromtimestamp(cycle_file.stat().st_mtime)
                     if mtime >= lookback_time:
-                        # Read cycle file to check for claimed tasks
+                        # Read cycle file to check for task activity
                         try:
                             with open(cycle_file, 'r', encoding='utf-8') as f:
                                 data = json.load(f)
                                 contracts = data.get("contracts", [])
+                                
+                                # Enhanced: Check multiple statuses
                                 claimed = [c for c in contracts if c.get("status", "").upper() == "CLAIMED"]
+                                completed = [c for c in contracts if c.get("status", "").upper() in ["COMPLETED", "DONE", "FINISHED"]]
+                                in_progress = [c for c in contracts if c.get("status", "").upper() in ["IN_PROGRESS", "ASSIGNED"]]
+                                
+                                # Check for task updates (last_updated timestamps)
+                                updated = []
+                                for contract in contracts:
+                                    last_updated_str = contract.get("last_updated") or contract.get("updated_at")
+                                    if last_updated_str:
+                                        try:
+                                            updated_time = datetime.fromisoformat(last_updated_str.replace("Z", "+00:00")).replace(tzinfo=None)
+                                            if updated_time >= lookback_time:
+                                                updated.append(contract)
+                                        except Exception:
+                                            pass
+                                
+                                # Report claimed tasks
                                 if claimed:
                                     activities.append(AgentActivity(
                                         agent_id=agent_id,
                                         source="task",
                                         timestamp=mtime,
                                         action=f"Task claimed: {claimed[0].get('title', 'Unknown')[:50]}",
-                                        metadata={"contracts": len(claimed), "file": cycle_file.name}
+                                        metadata={"contracts": len(claimed), "file": cycle_file.name, "status": "claimed"}
+                                    ))
+                                
+                                # Report completed tasks
+                                if completed:
+                                    for contract in completed:
+                                        completed_time_str = contract.get("completed_at") or contract.get("finished_at")
+                                        if completed_time_str:
+                                            try:
+                                                completed_time = datetime.fromisoformat(completed_time_str.replace("Z", "+00:00")).replace(tzinfo=None)
+                                                if completed_time >= lookback_time:
+                                                    activities.append(AgentActivity(
+                                                        agent_id=agent_id,
+                                                        source="task",
+                                                        timestamp=completed_time,
+                                                        action=f"Task completed: {contract.get('title', 'Unknown')[:50]}",
+                                                        metadata={"contracts": len(completed), "status": "completed"}
+                                                    ))
+                                            except Exception:
+                                                pass
+                                
+                                # Report in-progress tasks
+                                if in_progress:
+                                    activities.append(AgentActivity(
+                                        agent_id=agent_id,
+                                        source="task",
+                                        timestamp=mtime,
+                                        action=f"Task in progress: {in_progress[0].get('title', 'Unknown')[:50]}",
+                                        metadata={"contracts": len(in_progress), "status": "in_progress"}
+                                    ))
+                                
+                                # Report updated tasks
+                                if updated:
+                                    activities.append(AgentActivity(
+                                        agent_id=agent_id,
+                                        source="task",
+                                        timestamp=mtime,
+                                        action=f"Task updated: {len(updated)} tasks",
+                                        metadata={"contracts": len(updated), "status": "updated"}
                                     ))
                         except Exception:
                             activities.append(AgentActivity(
@@ -735,12 +796,14 @@ class AgentActivityDetector:
         agent_id: str,
         lookback_time: datetime
     ) -> List[AgentActivity]:
-        """Check test runs (Validate phase)."""
+        """Check test runs (Validate phase) - Enhanced for Phase 1."""
         activities = []
         
         # Check for pytest cache or test results
         pytest_cache = Path(".pytest_cache")
         test_results = Path("test_results")
+        coverage_file = Path(".coverage")
+        htmlcov_dir = Path("htmlcov")
         
         # Check pytest cache for recent test runs
         if pytest_cache.exists():
@@ -771,17 +834,67 @@ class AgentActivityDetector:
                         try:
                             mtime = datetime.fromtimestamp(result_file.stat().st_mtime)
                             if mtime >= lookback_time:
-                                activities.append(AgentActivity(
-                                    agent_id=agent_id,
-                                    source="test",
-                                    timestamp=mtime,
-                                    action=f"Test result: {result_file.name}",
-                                    metadata={"type": "result", "file": str(result_file.relative_to(test_results))}
-                                ))
+                                # Check if result file mentions agent
+                                try:
+                                    content = result_file.read_text(encoding='utf-8', errors='ignore').lower()
+                                    if agent_id.lower() in content:
+                                        activities.append(AgentActivity(
+                                            agent_id=agent_id,
+                                            source="test",
+                                            timestamp=mtime,
+                                            action=f"Test result: {result_file.name}",
+                                            metadata={"type": "result", "file": str(result_file.relative_to(test_results)), "agent_mentioned": True}
+                                        ))
+                                    else:
+                                        activities.append(AgentActivity(
+                                            agent_id=agent_id,
+                                            source="test",
+                                            timestamp=mtime,
+                                            action=f"Test result: {result_file.name}",
+                                            metadata={"type": "result", "file": str(result_file.relative_to(test_results))}
+                                        ))
+                                except Exception:
+                                    activities.append(AgentActivity(
+                                        agent_id=agent_id,
+                                        source="test",
+                                        timestamp=mtime,
+                                        action=f"Test result: {result_file.name}",
+                                        metadata={"type": "result", "file": str(result_file.relative_to(test_results))}
+                                    ))
                         except (OSError, PermissionError):
                             continue
             except Exception as e:
                 logger.debug(f"Error checking test results: {e}")
+        
+        # Enhanced: Check coverage files
+        if coverage_file.exists():
+            try:
+                mtime = datetime.fromtimestamp(coverage_file.stat().st_mtime)
+                if mtime >= lookback_time:
+                    activities.append(AgentActivity(
+                        agent_id=agent_id,
+                        source="test",
+                        timestamp=mtime,
+                        action="Coverage report generated",
+                        metadata={"type": "coverage", "file": ".coverage"}
+                    ))
+            except (OSError, PermissionError):
+                pass
+        
+        # Enhanced: Check htmlcov directory
+        if htmlcov_dir.exists() and htmlcov_dir.is_dir():
+            try:
+                mtime = datetime.fromtimestamp(htmlcov_dir.stat().st_mtime)
+                if mtime >= lookback_time:
+                    activities.append(AgentActivity(
+                        agent_id=agent_id,
+                        source="test",
+                        timestamp=mtime,
+                        action="HTML coverage report generated",
+                        metadata={"type": "coverage_html", "dir": "htmlcov"}
+                    ))
+            except (OSError, PermissionError):
+                pass
         
         return activities
     
@@ -1130,7 +1243,8 @@ class AgentActivityDetector:
         meaningful_sources = {
             "file", "devlog", "task", "git", "git_push",
             "contract", "swarm_brain", "planning", "test",
-            "validation", "evidence", "process", "ide", "database"
+            "validation", "evidence", "process", "ide", "database",
+            "terminal", "log"
         }
         if activity.source in meaningful_sources:
             return True
