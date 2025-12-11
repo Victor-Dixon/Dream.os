@@ -645,7 +645,7 @@ add_filter('wp_nav_menu_items', '{prefix}_add_{page_slug}_menu', 10, 2);"""
     # ========== WP-CLI ==========
     
     def wp_cli(self, command: str) -> Tuple[str, str, int]:
-        """Execute WP-CLI command."""
+        """Execute WP-CLI command using relative paths."""
         if not self.conn_manager:
             if not self.connect():
                 return "", "Not connected", 1
@@ -653,8 +653,31 @@ add_filter('wp_nav_menu_items', '{prefix}_add_{page_slug}_menu', 10, 2);"""
             self.override_wp_cli_path
             or self.credentials.get("wp_cli_path", "wp")
         )
-        remote_path = self.credentials.get("remote_path", "/public_html")
-        full_cmd = f"cd {remote_path} && {wp_path} {command}"
+        
+        # Construct WordPress root path from remote_base (relative path)
+        # remote_base format: "domains/{domain}/public_html/wp-content/themes/{theme}"
+        # WordPress root: "domains/{domain}/public_html"
+        remote_base = self.config.get("remote_base", "")
+        if remote_base:
+            # Extract WordPress root from theme path
+            # Remove "/wp-content/themes/{theme}" to get to public_html
+            if "/wp-content/themes/" in remote_base:
+                wp_root = remote_base.split("/wp-content/themes/")[0]
+            elif "/public_html" in remote_base:
+                wp_root = remote_base.split("/public_html")[0] + "/public_html"
+            else:
+                # Fallback: try to use remote_path from credentials
+                wp_root = self.credentials.get("remote_path", "domains")
+                if wp_root.startswith("/"):
+                    wp_root = wp_root.lstrip("/")
+        else:
+            # Fallback to credentials or default
+            wp_root = self.credentials.get("remote_path", "domains")
+            if wp_root.startswith("/"):
+                wp_root = wp_root.lstrip("/")
+        
+        # Use relative path (no leading slash)
+        full_cmd = f"cd {wp_root} && {wp_path} {command}"
         return self.conn_manager.execute_command(full_cmd)
     
     # ========== THEME MANAGEMENT ==========
