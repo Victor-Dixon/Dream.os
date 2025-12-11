@@ -261,3 +261,26 @@ chroma.sqlite3
 
 # Check for accidentally tracked sensitive files
 # Run: git ls-files | grep -E "\.env|secret|key|token|password|credential"
+# ============================================================================
+# INTERNAL COORDINATION ARTIFACTS (Not for professional repository)
+# ============================================================================
+# These directories contain internal swarm coordination artifacts and should
+# NOT be included in professional GitHub repository migration.
+
+# Agent coordination artifacts
+devlogs/
+agent_workspaces/
+swarm_brain/
+docs/organization/
+artifacts/
+
+# Runtime data (exceptions below)
+runtime/
+data/
+
+# Exceptions: Keep templates and examples
+!data/templates/
+!data/examples/
+!runtime/**/*.config.json
+!runtime/**/*.template.json
+
