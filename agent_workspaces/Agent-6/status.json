@@ -4,9 +4,10 @@
   "status": "ACTIVE_AGENT_MODE",
   "current_phase": "TASK_EXECUTION",
   "last_updated": "2025-12-11 11:00:00",
-  "current_mission": "Swarm coordination and communication - maintain swarm momentum and coordination workflows",
+  "current_mission": "Repository hygiene coordination - gather input from Agent-5, Agent-7, Agent-8 on professional repository cleanup strategy",
   "mission_priority": "HIGH",
   "current_tasks": [
+    "Repository hygiene coordination - coordinating with Agent-5 (data retention), Agent-7 (professional standards), Agent-8 (SSOT structure) on repository cleanup strategy for GitHub migration",
     "Swarm stall recovery coordination - tracking Agent-5 and Agent-3 status, identifying coordination opportunities",
     "Push Agent-1 to undraft/merge DreamBank PR #1 (critical blocker).",
     "Manually verify PR #3 (Thea → DreamVault) and PR #4 (DigitalDreamscape → DreamVault) via GitHub UI; update Batch2 tracker.",
