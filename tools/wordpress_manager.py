@@ -1142,6 +1142,8 @@ def main():
                         help='Purge LiteSpeed/WP caches')
     parser.add_argument('--no-auto-flush', action='store_true',
                         help='Disable automatic cache flush after deployment (default: auto-flush enabled)')
+    parser.add_argument('--dry-run', action='store_true',
+                        help='Dry-run mode: simulate operations without making changes')
 
     args = parser.parse_args()
 
