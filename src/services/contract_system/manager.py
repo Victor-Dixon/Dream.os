@@ -124,8 +124,38 @@ class ContractManager(BaseService):
                     "status": "no_tasks",
                 }
 
-            # Assign first available task
+            # Assign first available task with validation
             task_data = available_tasks[0]
+            
+            # Validate task has actionable content (only if tasks field exists and is explicitly empty)
+            if "tasks" in task_data:
+                tasks_list = task_data.get("tasks", [])
+                if isinstance(tasks_list, list) and len(tasks_list) == 0:
+                    logger.warning(
+                        f"⚠️ Contract {task_data.get('contract_id', task_data.get('id', 'unknown'))} "
+                        f"has empty tasks array. Skipping assignment to {agent_id}."
+                    )
+                    # Try next available task if any
+                    if len(available_tasks) > 1:
+                        task_data = available_tasks[1]
+                        if "tasks" in task_data:
+                            tasks_list = task_data.get("tasks", [])
+                            if isinstance(tasks_list, list) and len(tasks_list) == 0:
+                                logger.warning("⚠️ All available contracts have empty tasks arrays.")
+                                return {
+                                    "agent_id": agent_id,
+                                    "task": None,
+                                    "message": "No actionable tasks available (all contracts have empty task arrays)",
+                                    "status": "no_tasks",
+                                }
+                    else:
+                        return {
+                            "agent_id": agent_id,
+                            "task": None,
+                            "message": "No actionable tasks available (contract has empty task array)",
+                            "status": "no_tasks",
+                        }
+            
             task_data["assigned_to"] = agent_id
             task_data["status"] = "active"
             task_data["assigned_at"] = datetime.now().isoformat()
