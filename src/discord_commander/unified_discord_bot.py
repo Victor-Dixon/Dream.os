@@ -724,13 +724,15 @@ class UnifiedDiscordBot(commands.Bot):
                             f"{priority_emoji} **{agent['id']}** ({agent['phase']}): {agent['mission']}"
                         )
                     if len(snapshot["active_agents"]) > 5:
-                        active_list.append(f"... and {len(snapshot['active_agents']) - 5} more")
+                        active_list.append(
+                            f"... and {len(snapshot['active_agents']) - 5} more")
                     embed.add_field(
                         name=f"📊 Current Work Snapshot ({snapshot['engagement_rate']:.0f}% Engagement)",
-                        value="\n".join(active_list) if active_list else "No active agents",
+                        value="\n".join(
+                            active_list) if active_list else "No active agents",
                         inline=False,
                     )
-                
+
                 if snapshot["recent_activity"]:
                     activity_text = "\n".join(snapshot["recent_activity"][:3])
                     if len(snapshot["recent_activity"]) > 3:
@@ -740,7 +742,7 @@ class UnifiedDiscordBot(commands.Bot):
                         value=activity_text[:1024],
                         inline=False,
                     )
-                
+
                 if snapshot["current_focus"]:
                     focus_text = "\n".join(snapshot["current_focus"][:3])
                     if len(snapshot["current_focus"]) > 3:
