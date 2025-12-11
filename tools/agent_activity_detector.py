@@ -210,6 +210,12 @@ class AgentActivityDetector:
         activities.extend(self._check_inbox_activity(agent_id, lookback_time))
         activities.extend(self._check_message_queue_activity(agent_id, lookback_time))
         
+        # Phase 2: Medium-priority signals (Process, IDE, Database, Enhanced Contract)
+        activities.extend(self._check_process_activity(agent_id, lookback_time))
+        activities.extend(self._check_ide_activity(agent_id, lookback_time))
+        activities.extend(self._check_database_activity(agent_id, lookback_time))
+        # Contract system already checked above, but we enhance it inline
+        
         # Sort by timestamp (most recent first)
         activities.sort(key=lambda x: x.timestamp, reverse=True)
         
@@ -583,7 +589,7 @@ class AgentActivityDetector:
         agent_id: str,
         lookback_time: datetime
     ) -> List[AgentActivity]:
-        """Check contract system activity (Claim phase)."""
+        """Check contract system activity (Claim phase) - Enhanced for Phase 2."""
         activities = []
         contracts_dir = self.workspace_root / "contracts"
         
@@ -600,14 +606,46 @@ class AgentActivityDetector:
                         with open(contract_file, 'r', encoding='utf-8') as f:
                             data = json.load(f)
                             contracts = data.get("contracts", [])
+                            
+                            # Enhanced: Check multiple contract statuses
                             claimed = [c for c in contracts if c.get("status", "").upper() in ["CLAIMED", "ASSIGNED", "IN_PROGRESS"]]
+                            completed = [c for c in contracts if c.get("status", "").upper() in ["COMPLETED", "DONE", "FINISHED"]]
+                            updated = [c for c in contracts if c.get("last_updated") and datetime.fromisoformat(c.get("last_updated", "").replace("Z", "+00:00")).replace(tzinfo=None) >= lookback_time]
+                            
                             if claimed:
                                 activities.append(AgentActivity(
                                     agent_id=agent_id,
                                     source="contract",
                                     timestamp=mtime,
                                     action=f"Contract claimed: {claimed[0].get('title', 'Unknown')[:50]}",
-                                    metadata={"contracts": len(claimed), "status": "claimed"}
+                                    metadata={"contracts": len(claimed), "status": "claimed", "total": len(contracts)}
+                                ))
+                            
+                            if completed:
+                                # Check completion timestamps
+                                for contract in completed:
+                                    completed_time_str = contract.get("completed_at") or contract.get("finished_at")
+                                    if completed_time_str:
+                                        try:
+                                            completed_time = datetime.fromisoformat(completed_time_str.replace("Z", "+00:00")).replace(tzinfo=None)
+                                            if completed_time >= lookback_time:
+                                                activities.append(AgentActivity(
+                                                    agent_id=agent_id,
+                                                    source="contract",
+                                                    timestamp=completed_time,
+                                                    action=f"Contract completed: {contract.get('title', 'Unknown')[:50]}",
+                                                    metadata={"contracts": len(completed), "status": "completed"}
+                                                ))
+                                        except Exception:
+                                            pass
+                            
+                            if updated:
+                                activities.append(AgentActivity(
+                                    agent_id=agent_id,
+                                    source="contract",
+                                    timestamp=mtime,
+                                    action=f"Contract updated: {len(updated)} contracts",
+                                    metadata={"contracts": len(updated), "status": "updated"}
                                 ))
                     except Exception:
                         activities.append(AgentActivity(
@@ -864,6 +902,221 @@ class AgentActivityDetector:
             logger.warning(f"Error checking evidence files for {agent_id}: {e}")
         
         return activities
+    
+    def _check_process_activity(
+        self,
+        agent_id: str,
+        lookback_time: datetime
+    ) -> List[AgentActivity]:
+        """Check process/application activity (Phase 2 - MEDIUM priority)."""
+        activities = []
+        
+        try:
+            import psutil
+        except ImportError:
+            # psutil not available, skip process checking
+            return activities
+        
+        try:
+            # Check for Python processes that might be agent-related
+            agent_pattern = agent_id.lower().replace('-', '')
+            for proc in psutil.process_iter(['pid', 'name', 'cmdline', 'create_time']):
+                try:
+                    proc_info = proc.info
+                    cmdline = proc_info.get('cmdline', [])
+                    if not cmdline:
+                        continue
+                    
+                    # Check if process is Python-related and recent
+                    proc_name = proc_info.get('name', '').lower()
+                    if 'python' not in proc_name and 'cursor' not in proc_name and 'code' not in proc_name:
+                        continue
+                    
+                    # Check if process was created within lookback window
+                    create_time = proc_info.get('create_time', 0)
+                    if create_time == 0:
+                        continue
+                    
+                    proc_create_time = datetime.fromtimestamp(create_time)
+                    if proc_create_time < lookback_time:
+                        continue
+                    
+                    # Check if command line contains agent-related patterns
+                    cmdline_str = ' '.join(cmdline).lower()
+                    if agent_pattern in cmdline_str or 'agent' in cmdline_str:
+                        activities.append(AgentActivity(
+                            agent_id=agent_id,
+                            source="process",
+                            timestamp=proc_create_time,
+                            action=f"Process activity: {proc_name}",
+                            metadata={"pid": proc_info.get('pid'), "name": proc_name, "cmdline": cmdline_str[:100]}
+                        ))
+                except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+                    continue
+        except Exception as e:
+            logger.debug(f"Error checking process activity for {agent_id}: {e}")
+        
+        return activities
+    
+    def _check_ide_activity(
+        self,
+        agent_id: str,
+        lookback_time: datetime
+    ) -> List[AgentActivity]:
+        """Check IDE/editor activity (Phase 2 - MEDIUM priority)."""
+        activities = []
+        agent_dir = self.workspace_root / agent_id
+        
+        if not agent_dir.exists():
+            return activities
+        
+        try:
+            # Check VS Code workspace storage
+            vscode_storage = Path.home() / ".vscode" / "User" / "workspaceStorage"
+            cursor_storage = Path.home() / ".cursor" / "User" / "workspaceStorage"
+            
+            workspace_paths = [vscode_storage, cursor_storage]
+            
+            for storage_path in workspace_paths:
+                if not storage_path.exists():
+                    continue
+                
+                # Look for workspace folders that might contain agent workspace
+                for workspace_folder in storage_path.iterdir():
+                    if not workspace_folder.is_dir():
+                        continue
+                    
+                    # Check workspace state files
+                    state_files = list(workspace_folder.glob("**/*.json"))
+                    for state_file in state_files:
+                        try:
+                            mtime = datetime.fromtimestamp(state_file.stat().st_mtime)
+                            if mtime >= lookback_time:
+                                # Check if file content references agent workspace
+                                try:
+                                    content = state_file.read_text(encoding='utf-8', errors='ignore')
+                                    if agent_id.lower() in content.lower() or str(agent_dir).lower() in content.lower():
+                                        activities.append(AgentActivity(
+                                            agent_id=agent_id,
+                                            source="ide",
+                                            timestamp=mtime,
+                                            action=f"IDE activity: {state_file.name}",
+                                            metadata={"file": state_file.name, "ide": "vscode" if "vscode" in str(storage_path) else "cursor"}
+                                        ))
+                                except Exception:
+                                    # If we can't read, still count file modification
+                                    activities.append(AgentActivity(
+                                        agent_id=agent_id,
+                                        source="ide",
+                                        timestamp=mtime,
+                                        action=f"IDE state modified: {state_file.name}",
+                                        metadata={"file": state_file.name}
+                                    ))
+                        except (OSError, PermissionError):
+                            continue
+        except Exception as e:
+            logger.debug(f"Error checking IDE activity for {agent_id}: {e}")
+        
+        return activities
+    
+    def _check_database_activity(
+        self,
+        agent_id: str,
+        lookback_time: datetime
+    ) -> List[AgentActivity]:
+        """Check database activity (Phase 2 - MEDIUM priority)."""
+        activities = []
+        
+        # Check for database log files
+        log_dirs = [
+            Path("logs"),
+            Path("runtime") / "logs",
+            Path("data") / "logs",
+            Path("data") / "database",
+        ]
+        
+        agent_pattern = agent_id.lower().replace('-', '')
+        
+        for log_dir in log_dirs:
+            if not log_dir.exists():
+                continue
+            
+            try:
+                # Look for database-related log files
+                db_log_patterns = ["*db*.log", "*database*.log", "*query*.log", "*sql*.log"]
+                for pattern in db_log_patterns:
+                    for log_file in log_dir.rglob(pattern):
+                        try:
+                            mtime = datetime.fromtimestamp(log_file.stat().st_mtime)
+                            if mtime >= lookback_time:
+                                # Check if log file mentions agent
+                                try:
+                                    # Read last few lines to check for agent mentions
+                                    with open(log_file, 'r', encoding='utf-8', errors='ignore') as f:
+                                        lines = f.readlines()
+                                        # Check last 50 lines
+                                        recent_lines = ''.join(lines[-50:]).lower()
+                                        if agent_pattern in recent_lines or agent_id.lower() in recent_lines:
+                                            activities.append(AgentActivity(
+                                                agent_id=agent_id,
+                                                source="database",
+                                                timestamp=mtime,
+                                                action=f"Database activity: {log_file.name}",
+                                                metadata={"file": log_file.name, "type": "query_log"}
+                                            ))
+                                except Exception:
+                                    # If we can't read, still count recent modification
+                                    activities.append(AgentActivity(
+                                        agent_id=agent_id,
+                                        source="database",
+                                        timestamp=mtime,
+                                        action=f"Database log modified: {log_file.name}",
+                                        metadata={"file": log_file.name}
+                                    ))
+                        except (OSError, PermissionError):
+                            continue
+            except Exception as e:
+                logger.debug(f"Error checking database logs in {log_dir}: {e}")
+        
+        # Check for activity repository or message repository activity
+        try:
+            activity_repo = Path("data") / "activity_repository.json"
+            message_repo = Path("data") / "message_repository.json"
+            
+            for repo_file in [activity_repo, message_repo]:
+                if repo_file.exists():
+                    try:
+                        mtime = datetime.fromtimestamp(repo_file.stat().st_mtime)
+                        if mtime >= lookback_time:
+                            # Check if repository contains agent activity
+                            try:
+                                with open(repo_file, 'r', encoding='utf-8') as f:
+                                    data = json.load(f)
+                                    # Look for agent ID in repository data
+                                    data_str = json.dumps(data).lower()
+                                    if agent_pattern in data_str or agent_id.lower() in data_str:
+                                        activities.append(AgentActivity(
+                                            agent_id=agent_id,
+                                            source="database",
+                                            timestamp=mtime,
+                                            action=f"Repository activity: {repo_file.name}",
+                                            metadata={"file": repo_file.name, "type": "repository"}
+                                        ))
+                            except Exception:
+                                # If we can't parse, still count recent modification
+                                activities.append(AgentActivity(
+                                    agent_id=agent_id,
+                                    source="database",
+                                    timestamp=mtime,
+                                    action=f"Repository modified: {repo_file.name}",
+                                    metadata={"file": repo_file.name}
+                                ))
+                    except (OSError, PermissionError):
+                        continue
+        except Exception as e:
+            logger.debug(f"Error checking repository activity for {agent_id}: {e}")
+        
+        return activities
 
     def _is_meaningful_activity(self, activity: AgentActivity) -> bool:
         """Return True if activity represents real progress (not chat/ack)."""
@@ -877,7 +1130,7 @@ class AgentActivityDetector:
         meaningful_sources = {
             "file", "devlog", "task", "git", "git_push",
             "contract", "swarm_brain", "planning", "test",
-            "validation", "evidence"
+            "validation", "evidence", "process", "ide", "database"
         }
         if activity.source in meaningful_sources:
             return True

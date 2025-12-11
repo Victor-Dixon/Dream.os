@@ -121,7 +121,8 @@ class EnhancedAgentActivityDetector:
             activity_details["agent_lifecycle"] = lifecycle_activity
 
         # 12. Check ActivityEmitter telemetry events (HIGH priority - most reliable)
-        activity_emitter_activity = self._check_activity_emitter_events(agent_id)
+        activity_emitter_activity = self._check_activity_emitter_events(
+            agent_id)
         if activity_emitter_activity:
             activities.append(activity_emitter_activity)
             activity_details["activity_emitter"] = activity_emitter_activity
@@ -626,7 +627,8 @@ class EnhancedAgentActivityDetector:
     def _check_activity_emitter_events(self, agent_id: str) -> Optional[Dict[str, Any]]:
         """Check ActivityEmitter telemetry events (HIGH priority - most reliable)."""
         try:
-            event_file = self.workspace_root / "runtime" / "agent_comms" / "activity_events.jsonl"
+            event_file = self.workspace_root / "runtime" / \
+                "agent_comms" / "activity_events.jsonl"
             if not event_file.exists():
                 return None
 
