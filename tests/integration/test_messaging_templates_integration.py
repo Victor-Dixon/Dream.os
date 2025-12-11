@@ -1227,7 +1227,12 @@ class TestTemplateStructureValidation:
         
         # Test no footers
         rendered_none = render_message(msg, include_devlog=False, include_workflows=False)
-        assert "Documentation" not in rendered_none or rendered_none.find("Documentation") == -1
-        # Workflows might be in template, so just check devlog is absent
-        assert "Post Discord devlog" not in rendered_none or rendered_none.find("Post Discord devlog") == -1
+        # Check for footer-specific format - footer has "\n\nDocumentation\n" followed by bullet points
+        # The footer format is unique: "\n\nDocumentation\n- Update status.json\n- Post Discord devlog for completed actions\n"
+        # Check for the exact footer pattern that only appears in DEVLOG_FOOTER
+        footer_pattern = "\n\nDocumentation\n- Update status.json\n- Post Discord devlog for completed actions\n"
+        assert footer_pattern not in rendered_none
+        # Also verify workflows footer is absent (check for unique workflows footer content)
+        workflows_footer_pattern = "\n\nCore workflows\n"
+        assert workflows_footer_pattern not in rendered_none or rendered_none.count(workflows_footer_pattern) == 0
 
