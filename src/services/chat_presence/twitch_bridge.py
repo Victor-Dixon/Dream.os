@@ -758,13 +758,13 @@ class TwitchIRCBot(irc.bot.SingleServerIRCBot):
         # Special handling for numeric IRC responses (001-999)
         if event_type.isdigit():
             numeric_code = int(event_type)
-            if numeric_code == 001:
+            if numeric_code == 1:
                 logger.info("✅ IRC 001: Welcome message received")
-            elif numeric_code == 002:
+            elif numeric_code == 2:
                 logger.info("✅ IRC 002: Host info received")
-            elif numeric_code == 003:
+            elif numeric_code == 3:
                 logger.info("✅ IRC 003: Server info received")
-            elif numeric_code == 004:
+            elif numeric_code == 4:
                 logger.info("✅ IRC 004: Server version received")
             elif numeric_code == 375:
                 logger.info("✅ IRC 375: MOTD start")
