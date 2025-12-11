@@ -80,15 +80,17 @@ def get_tracked_files() -> Set[str]:
 
 def should_exclude_file(filepath: str) -> bool:
     """Check if file should be excluded from professional repository."""
+    # Check keep patterns FIRST (preservation takes priority)
+    for keep_pattern in KEEP_PATTERNS:
+        pattern_clean = keep_pattern.replace("**/", "").rstrip("/")
+        if pattern_clean in filepath:
+            return False  # Preserve this file
+    
     # Check if file matches any exclude directory
     for exclude_dir in EXCLUDE_DIRS:
         if filepath.startswith(exclude_dir):
-            # Check if file matches any keep pattern
-            for keep_pattern in KEEP_PATTERNS:
-                if keep_pattern.replace("**/", "") in filepath:
-                    return False
-            return True
-    return False
+            return True  # Exclude this file
+    return False  # Keep this file (not in excluded directories)
 
 
 def find_files_to_remove() -> List[str]:
