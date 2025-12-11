@@ -92,6 +92,17 @@ def run_tdd_proof(mode: str, role_map: dict[str, str]) -> str:
         result["notes"] = f"pytest run error: {e}"
         result["duration_sec"] = round(time.time() - start, 3)
 
+    # Ensure directory exists right before writing (handles mocked filesystems)
+    # Use outdir directly to ensure it matches mocked path transformations
+    try:
+        os.makedirs(outdir, exist_ok=True)
+    except (OSError, FileNotFoundError):
+        # Fallback: try creating parent directories
+        parent = os.path.dirname(outdir)
+        if parent and parent != outdir:
+            os.makedirs(parent, exist_ok=True)
+        os.makedirs(outdir, exist_ok=True)
+    
     with open(proof_path, "w", encoding="utf-8") as f:
         json.dump(result, f, indent=2)
     return proof_path
