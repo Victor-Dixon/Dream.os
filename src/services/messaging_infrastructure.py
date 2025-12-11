@@ -20,6 +20,7 @@ import time
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, Optional
+import uuid
 
 from ..utils.swarm_time import get_swarm_time_display
 from ..core.config.timeout_constants import TimeoutConstants
@@ -1418,7 +1419,10 @@ class ConsolidatedMessagingService(BaseService):
         wait_for_delivery: bool = False,
         timeout: float = 30.0,
         discord_user_id: str | None = None,
-        stalled: bool = False
+        stalled: bool = False,
+        apply_template: bool = False,
+        message_category: MessageCategory | None = None,
+        sender: str | None = None,
     ) -> dict[str, Any]:
         """
         Send message to agent via message queue (synchronized delivery).
@@ -1438,11 +1442,40 @@ class ConsolidatedMessagingService(BaseService):
             timeout: Maximum time to wait for delivery in seconds (default: 30.0)
             discord_user_id: Discord user ID for username resolution (optional)
             stalled: Whether to use stalled delivery mode
+            apply_template: Apply SSOT messaging template before sending (default: False)
+            message_category: Explicit template category (defaults to D2A when templating)
+            sender: Override sender name when templating (Discord user display name)
 
         Returns:
             Dictionary with success status and queue ID, or blocked status with error message
         """
         try:
+            priority_value = (priority or "regular").lower()
+            priority_enum = (
+                UnifiedMessagePriority.URGENT
+                if priority_value == "urgent"
+                else UnifiedMessagePriority.REGULAR
+            )
+
+            resolved_sender = sender or (
+                self._resolve_discord_sender(discord_user_id)
+                if discord_user_id
+                else "DISCORD"
+            )
+
+            templated_message = message
+            if apply_template:
+                category = message_category or MessageCategory.D2A
+                templated_message = _apply_template(
+                    category=category,
+                    message=message,
+                    sender=resolved_sender,
+                    recipient=agent,
+                    priority=priority_enum,
+                    message_id=str(uuid.uuid4()),
+                    extra={},
+                )
+
             # Validate agent can receive messages (check for pending multi-agent requests)
             from ..core.multi_agent_request_validator import get_multi_agent_validator
 
@@ -1501,11 +1534,11 @@ class ConsolidatedMessagingService(BaseService):
                 queue_id = self.queue.enqueue(
                     message={
                         "type": "agent_message",
-                        "sender": self._resolve_discord_sender(discord_user_id) if discord_user_id else "DISCORD",
+                        "sender": resolved_sender,
                         "discord_username": self._get_discord_username(discord_user_id) if discord_user_id else None,
                         "discord_user_id": discord_user_id if discord_user_id else None,
                         "recipient": agent,
-                        "content": message,
+                        "content": templated_message,
                         "priority": priority,
                         "source": "discord",
                         # CRITICAL FIX: Explicitly set message_type
@@ -1513,11 +1546,13 @@ class ConsolidatedMessagingService(BaseService):
                         "tags": [],
                         "metadata": {
                             "source": "discord",
-                            "sender": self._resolve_discord_sender(discord_user_id) if discord_user_id else "DISCORD",
+                            "sender": resolved_sender,
                             "discord_username": self._get_discord_username(discord_user_id) if discord_user_id else None,
                             "discord_user_id": discord_user_id if discord_user_id else None,
                             "use_pyautogui": True,
                             "stalled": stalled,
+                            "raw_message": message,
+                            "message_category": (message_category or MessageCategory.D2A).value if apply_template else None,
                         },
                     }
                 )
@@ -1568,7 +1603,7 @@ class ConsolidatedMessagingService(BaseService):
                 "--agent",
                 agent,
                 "--message",
-                message,
+                templated_message,
                 "--priority",
                 priority,
             ]

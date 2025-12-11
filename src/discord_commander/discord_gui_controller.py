@@ -16,6 +16,7 @@ License: MIT
 import logging
 from typing import Any
 
+from src.core.messaging_models_core import MessageCategory
 from src.services.unified_messaging_service import UnifiedMessagingService
 
 from .discord_gui_modals import AgentMessageModal, BroadcastMessageModal
@@ -69,9 +70,23 @@ class DiscordGUIController:
         """Create modal for broadcasting to all agents."""
         return BroadcastMessageModal(self.messaging_service)
 
-    async def send_message(self, agent_id: str, message: str, priority: str = "regular", stalled: bool = False) -> bool:
+    async def send_message(
+        self,
+        agent_id: str,
+        message: str,
+        priority: str = "regular",
+        stalled: bool = False,
+        discord_user=None,
+    ) -> bool:
         """Send message to specific agent via PyAutoGUI chat input coordinates."""
         try:
+            sender = (
+                f"Discord User ({getattr(discord_user, 'name', '')})"
+                if discord_user
+                else "Discord GUI"
+            )
+            discord_user_id = str(getattr(discord_user, "id", "")) if discord_user else None
+
             result = self.messaging_service.send_message(
                 agent=agent_id, 
                 message=message, 
@@ -79,17 +94,32 @@ class DiscordGUIController:
                 use_pyautogui=True,
                 wait_for_delivery=False,  # Don't wait - queue processor will handle delivery
                 stalled=stalled,
+                discord_user_id=discord_user_id,
+                apply_template=True,
+                message_category=MessageCategory.D2A,
+                sender=sender,
             )
             return result.get("success", False)
         except Exception as e:
             self.logger.error(f"Error sending message: {e}")
             return False
 
-    async def broadcast_message(self, message: str, priority: str = "regular") -> bool:
+    async def broadcast_message(
+        self,
+        message: str,
+        priority: str = "regular",
+        discord_user=None,
+    ) -> bool:
         """Broadcast message to all agents via PyAutoGUI chat input coordinates."""
         try:
             agents = [f"Agent-{i}" for i in range(1, 9)]
             success_count = 0
+            sender = (
+                f"Discord User ({getattr(discord_user, 'name', '')})"
+                if discord_user
+                else "Discord GUI"
+            )
+            discord_user_id = str(getattr(discord_user, "id", "")) if discord_user else None
 
             for agent in agents:
                 result = self.messaging_service.send_message(
@@ -98,6 +128,10 @@ class DiscordGUIController:
                     priority=priority, 
                     use_pyautogui=True,
                     wait_for_delivery=False,  # Don't wait - queue processor will handle delivery
+                    discord_user_id=discord_user_id,
+                    apply_template=True,
+                    message_category=MessageCategory.D2A,
+                    sender=sender,
                 )
                 if result.get("success"):
                     success_count += 1

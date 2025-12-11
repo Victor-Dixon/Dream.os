@@ -19,6 +19,7 @@ except ImportError:
     DISCORD_AVAILABLE = False
     discord = None
 
+from src.core.messaging_models_core import MessageCategory
 from src.services.messaging_infrastructure import ConsolidatedMessagingService
 
 logger = logging.getLogger(__name__)
@@ -75,19 +76,43 @@ class BaseMessageModal(discord.ui.Modal):
         return message if len(message) <= max_length else message[:max_length - 3] + "..."
 
     def _send_to_agent(
-        self, agent_id: str, message: str, priority: str = "regular", jet_fuel: bool = False
+        self,
+        agent_id: str,
+        message: str,
+        priority: str = "regular",
+        jet_fuel: bool = False,
+        discord_user=None,
     ) -> dict:
         """Send message to single agent."""
         if jet_fuel:
             message = f"🚀 JET FUEL MESSAGE - AUTONOMOUS MODE ACTIVATED\n\n{message}"
             priority = "urgent"
 
+        sender = (
+            f"Discord User ({getattr(discord_user, 'name', '')})"
+            if discord_user
+            else "Discord GUI"
+        )
+        discord_user_id = str(getattr(discord_user, "id", "")) if discord_user else None
+
         return self.messaging_service.send_message(
-            agent=agent_id, message=message, priority=priority, use_pyautogui=True
+            agent=agent_id,
+            message=message,
+            priority=priority,
+            use_pyautogui=True,
+            discord_user_id=discord_user_id,
+            apply_template=True,
+            message_category=MessageCategory.D2A,
+            sender=sender,
         )
 
     def _broadcast_to_agents(
-        self, agents: list[str], message: str, priority: str = "regular", jet_fuel: bool = False
+        self,
+        agents: list[str],
+        message: str,
+        priority: str = "regular",
+        jet_fuel: bool = False,
+        discord_user=None,
     ) -> tuple[int, list[str]]:
         """Broadcast message to multiple agents. Returns (success_count, errors)."""
         if jet_fuel:
@@ -98,7 +123,13 @@ class BaseMessageModal(discord.ui.Modal):
         errors = []
 
         for agent in agents:
-            result = self._send_to_agent(agent, message, priority, jet_fuel=False)  # Already handled
+            result = self._send_to_agent(
+                agent,
+                message,
+                priority,
+                jet_fuel=False,
+                discord_user=discord_user,
+            )
             if result.get("success"):
                 success_count += 1
             else:

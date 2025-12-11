@@ -45,7 +45,12 @@ class AgentMessageModal(BaseMessageModal):
             message = self.message_input.value
             priority = self.priority_input.value or "regular"
 
-            result = self._send_to_agent(self.agent_id, message, priority)
+            result = self._send_to_agent(
+                self.agent_id,
+                message,
+                priority,
+                discord_user=interaction.user,
+            )
 
             if result.get("success"):
                 preview = self._get_message_preview(message)
@@ -81,7 +86,11 @@ class BroadcastMessageModal(BaseMessageModal):
             agents = self._get_all_agents()
 
             success_count, errors = self._broadcast_to_agents(
-                agents, message, priority)
+                agents,
+                message,
+                priority,
+                discord_user=interaction.user,
+            )
 
             if success_count == len(agents):
                 preview = self._get_message_preview(message)
@@ -121,7 +130,12 @@ class JetFuelMessageModal(BaseMessageModal):
             agent_id = self.agent_input.value.strip()
             message = self.message_input.value
 
-            result = self._send_to_agent(agent_id, message, jet_fuel=True)
+            result = self._send_to_agent(
+                agent_id,
+                message,
+                jet_fuel=True,
+                discord_user=interaction.user,
+            )
 
             if result.get("success"):
                 preview = self._get_message_preview(message)
@@ -170,7 +184,11 @@ class SelectiveBroadcastModal(BaseMessageModal):
                 return
 
             success_count, errors = self._broadcast_to_agents(
-                agent_ids, message, priority)
+                agent_ids,
+                message,
+                priority,
+                discord_user=interaction.user,
+            )
 
             if success_count == len(agent_ids):
                 preview = self._get_message_preview(message)
@@ -208,7 +226,11 @@ class JetFuelBroadcastModal(BaseMessageModal):
             agents = self._get_all_agents()
 
             success_count, errors = self._broadcast_to_agents(
-                agents, message, jet_fuel=True)
+                agents,
+                message,
+                jet_fuel=True,
+                discord_user=interaction.user,
+            )
 
             if success_count == len(agents):
                 preview = self._get_message_preview(message)
