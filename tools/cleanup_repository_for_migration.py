@@ -47,6 +47,12 @@ KEEP_PATTERNS = [
     "data/examples/",
     "runtime/**/*.config.json",
     "runtime/**/*.template.json",
+    # SSOT documentation preservation (after migration to docs/architecture/ssot/)
+    "docs/architecture/ssot/",
+    "docs/architecture/ssot-domains/",
+    "docs/architecture/ssot-standards/",
+    "docs/architecture/ssot-audits/",
+    "docs/architecture/ssot-remediation/",
 ]
 
 
