@@ -167,7 +167,8 @@ class UnifiedDiscordBot(commands.Bot):
         self._thea_browser_service: TheaBrowserService | None = None
         self.thea_last_refresh_path = Path("data/thea_last_refresh.json")
         try:
-            self.thea_min_interval_minutes = int(os.getenv("THEA_MIN_INTERVAL_MINUTES", "60"))
+            self.thea_min_interval_minutes = int(
+                os.getenv("THEA_MIN_INTERVAL_MINUTES", "60"))
         except ValueError:
             self.thea_min_interval_minutes = 60
 
@@ -228,13 +229,15 @@ class UnifiedDiscordBot(commands.Bot):
             return self._thea_browser_service
         browser_cfg = BrowserConfig(headless=headless)
         thea_cfg = TheaConfig()
-        self._thea_browser_service = TheaBrowserService(config=browser_cfg, thea_config=thea_cfg)
+        self._thea_browser_service = TheaBrowserService(
+            config=browser_cfg, thea_config=thea_cfg)
         return self._thea_browser_service
 
     def _read_last_thea_refresh(self) -> float | None:
         try:
             if self.thea_last_refresh_path.exists():
-                data = json.loads(self.thea_last_refresh_path.read_text(encoding="utf-8"))
+                data = json.loads(
+                    self.thea_last_refresh_path.read_text(encoding="utf-8"))
                 return float(data.get("ts"))
         except Exception:
             return None
@@ -242,8 +245,10 @@ class UnifiedDiscordBot(commands.Bot):
 
     def _write_last_thea_refresh(self, ts: float) -> None:
         try:
-            self.thea_last_refresh_path.parent.mkdir(parents=True, exist_ok=True)
-            self.thea_last_refresh_path.write_text(json.dumps({"ts": ts}, indent=2), encoding="utf-8")
+            self.thea_last_refresh_path.parent.mkdir(
+                parents=True, exist_ok=True)
+            self.thea_last_refresh_path.write_text(
+                json.dumps({"ts": ts}, indent=2), encoding="utf-8")
         except Exception as e:
             self.logger.warning(f"Could not write Thea last refresh: {e}")
 
@@ -253,19 +258,22 @@ class UnifiedDiscordBot(commands.Bot):
         last = self._read_last_thea_refresh()
         now = time.time()
         if last and (now - last) < (min_interval * 60):
-            self.logger.info(f"⏭️  Thea refresh skipped (age {(now - last)/60:.1f}m < {min_interval}m)")
+            self.logger.info(
+                f"⏭️  Thea refresh skipped (age {(now - last)/60:.1f}m < {min_interval}m)")
             return True
 
         # Headless attempt
         try:
             svc = self._get_thea_service(headless=True)
             if not svc.initialize():
-                self.logger.error("Thea refresh: initialize failed (uc missing or disabled)")
+                self.logger.error(
+                    "Thea refresh: initialize failed (uc missing or disabled)")
                 return False
             ok = svc.ensure_thea_authenticated(allow_manual=False)
             svc.close()
             if ok:
-                self.logger.info("✅ Thea session refreshed headlessly (cookies saved)")
+                self.logger.info(
+                    "✅ Thea session refreshed headlessly (cookies saved)")
                 self._write_last_thea_refresh(now)
                 return True
             self.logger.warning("⚠️ Thea headless refresh failed")
@@ -279,12 +287,14 @@ class UnifiedDiscordBot(commands.Bot):
         try:
             svc = self._get_thea_service(headless=False)
             if not svc.initialize():
-                self.logger.error("Thea interactive init failed (uc missing or disabled)")
+                self.logger.error(
+                    "Thea interactive init failed (uc missing or disabled)")
                 return False
             ok = svc.ensure_thea_authenticated(allow_manual=True)
             svc.close()
             if ok:
-                self.logger.info("✅ Thea session refreshed interactively (cookies saved)")
+                self.logger.info(
+                    "✅ Thea session refreshed interactively (cookies saved)")
                 self._write_last_thea_refresh(now)
                 return True
             self.logger.error("❌ Thea interactive refresh failed")
@@ -348,9 +358,11 @@ class UnifiedDiscordBot(commands.Bot):
                 if self.status_monitor:
                     try:
                         self.status_monitor.start_monitoring()
-                        self.logger.info("✅ Status change monitor started (auto)")
+                        self.logger.info(
+                            "✅ Status change monitor started (auto)")
                     except Exception as e:
-                        self.logger.warning(f"⚠️ Could not auto-start status monitor: {e}")
+                        self.logger.warning(
+                            f"⚠️ Could not auto-start status monitor: {e}")
             except Exception as e:
                 self.logger.warning(f"⚠️ Could not start status monitor: {e}")
             self.logger.info(f"🤖 Latency: {round(self.latency * 1000, 2)}ms")
@@ -378,19 +390,22 @@ class UnifiedDiscordBot(commands.Bot):
             return self._thea_browser_service
         browser_cfg = BrowserConfig(headless=headless)
         thea_cfg = TheaConfig()
-        self._thea_browser_service = TheaBrowserService(config=browser_cfg, thea_config=thea_cfg)
+        self._thea_browser_service = TheaBrowserService(
+            config=browser_cfg, thea_config=thea_cfg)
         return self._thea_browser_service
 
     async def _refresh_thea_session(self, headless: bool = True) -> bool:
         try:
             svc = self._get_thea_service(headless=headless)
             if not svc.initialize():
-                self.logger.error("Thea refresh: initialize failed (uc missing or disabled)")
+                self.logger.error(
+                    "Thea refresh: initialize failed (uc missing or disabled)")
                 return False
             ok = svc.ensure_thea_authenticated(allow_manual=not headless)
             svc.close()
             if ok:
-                self.logger.info("✅ Thea session refresh completed (cookies saved)")
+                self.logger.info(
+                    "✅ Thea session refresh completed (cookies saved)")
             else:
                 self.logger.error("❌ Thea session refresh failed")
             return ok
@@ -547,7 +562,8 @@ class UnifiedDiscordBot(commands.Bot):
                 message=rendered_message,
                 priority=priority,
                 use_pyautogui=True,  # CRITICAL: Explicitly enable PyAutoGUI delivery
-                message_category=MessageCategory.D2A,  # CRITICAL: Preserve D2A category so template format is maintained
+                # CRITICAL: Preserve D2A category so template format is maintained
+                message_category=MessageCategory.D2A,
             )
 
             if result.get("success"):
@@ -584,63 +600,70 @@ class UnifiedDiscordBot(commands.Bot):
             "current_focus": [],
             "engagement_rate": 0.0,
         }
-        
+
         try:
             import json
             from pathlib import Path
             from datetime import datetime, timedelta
-            
+
             workspace_root = Path("agent_workspaces")
             active_count = 0
             total_agents = 8
-            
+
             # Get agent statuses
             for i in range(1, 9):
                 agent_id = f"Agent-{i}"
                 status_file = workspace_root / agent_id / "status.json"
-                
+
                 if not status_file.exists():
                     continue
-                
+
                 try:
                     with open(status_file, 'r', encoding='utf-8') as f:
                         status = json.load(f)
-                    
+
                     agent_status = status.get("status", "")
                     if "ACTIVE" in agent_status.upper():
                         active_count += 1
-                        mission = status.get("current_mission", "No active mission")[:80]
+                        mission = status.get(
+                            "current_mission", "No active mission")[:80]
                         phase = status.get("current_phase", "Unknown")
                         priority = status.get("mission_priority", "MEDIUM")
-                        
+
                         snapshot["active_agents"].append({
                             "id": agent_id,
                             "mission": mission,
                             "phase": phase,
                             "priority": priority,
                         })
-                        
+
                         # Get recent completed tasks
                         completed = status.get("completed_tasks", [])
                         if completed:
-                            recent = completed[0][:100] if isinstance(completed[0], str) else str(completed[0])[:100]
-                            snapshot["recent_activity"].append(f"{agent_id}: {recent}")
-                        
+                            recent = completed[0][:100] if isinstance(
+                                completed[0], str) else str(completed[0])[:100]
+                            snapshot["recent_activity"].append(
+                                f"{agent_id}: {recent}")
+
                         # Get current focus
                         current_tasks = status.get("current_tasks", [])
                         if current_tasks:
-                            focus = current_tasks[0][:80] if isinstance(current_tasks[0], str) else str(current_tasks[0])[:80]
-                            snapshot["current_focus"].append(f"{agent_id}: {focus}")
-                
+                            focus = current_tasks[0][:80] if isinstance(
+                                current_tasks[0], str) else str(current_tasks[0])[:80]
+                            snapshot["current_focus"].append(
+                                f"{agent_id}: {focus}")
+
                 except Exception as e:
-                    self.logger.debug(f"Error reading status for {agent_id}: {e}")
+                    self.logger.debug(
+                        f"Error reading status for {agent_id}: {e}")
                     continue
-            
-            snapshot["engagement_rate"] = (active_count / total_agents * 100) if total_agents > 0 else 0.0
-            
+
+            snapshot["engagement_rate"] = (
+                active_count / total_agents * 100) if total_agents > 0 else 0.0
+
         except Exception as e:
             self.logger.warning(f"Error getting swarm snapshot: {e}")
-        
+
         return snapshot
 
     async def send_startup_message(self):
@@ -669,7 +692,7 @@ class UnifiedDiscordBot(commands.Bot):
 
             # Get swarm snapshot
             snapshot = self._get_swarm_snapshot()
-            
+
             embed = discord.Embed(
                 title="🐝 Discord Commander - SWARM CONTROL CENTER",
                 description="**Complete Multi-Agent Command & Showcase System**",
@@ -685,16 +708,18 @@ class UnifiedDiscordBot(commands.Bot):
                     active_list.append(
                         f"{priority_emoji} **{agent['id']}** ({agent['phase']}): {agent['mission']}"
                     )
-                
+
                 if len(snapshot["active_agents"]) > 5:
-                    active_list.append(f"... and {len(snapshot['active_agents']) - 5} more")
-                
+                    active_list.append(
+                        f"... and {len(snapshot['active_agents']) - 5} more")
+
                 embed.add_field(
                     name=f"📊 Current Work Snapshot ({snapshot['engagement_rate']:.0f}% Engagement)",
-                    value="\n".join(active_list) if active_list else "No active agents",
+                    value="\n".join(
+                        active_list) if active_list else "No active agents",
                     inline=False,
                 )
-            
+
             # Recent Activity
             if snapshot["recent_activity"]:
                 activity_text = "\n".join(snapshot["recent_activity"][:3])
@@ -705,7 +730,7 @@ class UnifiedDiscordBot(commands.Bot):
                     value=activity_text[:1024],  # Discord field limit
                     inline=False,
                 )
-            
+
             # Current Focus
             if snapshot["current_focus"]:
                 focus_text = "\n".join(snapshot["current_focus"][:3])
@@ -1291,17 +1316,17 @@ class MessagingCommands(commands.Cog):
                 ),
                 color=discord.Color.blue(),
             )
-            
+
             embed.add_field(
                 name="💡 Quick Access",
                 value="Type `!control` (or `!panel`, `!menu`) to open Control Panel anytime!",
                 inline=False,
             )
-            
+
             embed.set_footer(
                 text="🐝 WE. ARE. SWARM. ⚡ Buttons > Commands!"
             )
-            
+
             await ctx.send(embed=embed, view=control_view)
         except Exception as e:
             self.logger.error(f"Error listing commands: {e}")
@@ -1386,7 +1411,8 @@ class MessagingCommands(commands.Cog):
                 await ctx.send(embed=restart_embed)
 
                 # Log restart
-                self.logger.info("🔄 True restart command received - killing process and starting fresh")
+                self.logger.info(
+                    "🔄 True restart command received - killing process and starting fresh")
 
                 # Perform true restart: spawn new process, then exit current
                 self._perform_true_restart()
@@ -1398,24 +1424,24 @@ class MessagingCommands(commands.Cog):
         except Exception as e:
             self.logger.error(f"Error in restart command: {e}", exc_info=True)
             await ctx.send(f"❌ Error: {e}")
-    
+
     def _perform_true_restart(self):
         """Perform true restart: spawn fresh process for bot + queue processor, then exit current."""
         import subprocess
         import sys
         import os
         from pathlib import Path
-        
+
         try:
             project_root = Path(__file__).parent.parent.parent
             # Use start_discord_system.py to start BOTH bot + queue processor
             # This ensures messages can be sent (queue processor is required)
             start_script = project_root / "tools" / "start_discord_system.py"
-            
+
             if not start_script.exists():
                 self.logger.error(f"Start script not found: {start_script}")
                 return False
-            
+
             # Spawn new process to start bot + queue processor fresh
             # This ensures all code is reloaded from disk (no module cache)
             # AND ensures message queue processor is running (required for message delivery)
@@ -1437,16 +1463,18 @@ class MessagingCommands(commands.Cog):
                     stderr=subprocess.DEVNULL,
                     start_new_session=True
                 )
-            
+
             # Give new process a moment to start
             import time
             time.sleep(2)
-            
-            self.logger.info("✅ New bot + queue processor processes spawned - current process will exit")
+
+            self.logger.info(
+                "✅ New bot + queue processor processes spawned - current process will exit")
             return True
-            
+
         except Exception as e:
-            self.logger.error(f"Error performing true restart: {e}", exc_info=True)
+            self.logger.error(
+                f"Error performing true restart: {e}", exc_info=True)
             return False
 
     @commands.command(name="soft_onboard", aliases=["soft"], description="Soft onboard agent(s)")
