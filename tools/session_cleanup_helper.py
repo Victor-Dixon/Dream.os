@@ -1,3 +1,136 @@
+"""Session cleanup helper to generate passdown/devlog/Swarm Brain templates.
+
+Usage:
+  python tools/session_cleanup_helper.py --agent Agent-2 --summary "End-of-day" \
+    --output-passdown agent_workspaces/Agent-2/passdown_draft.json \
+    --output-devlog devlogs/2025-12-11_agent-2_session_cleanup_draft.md \
+    --output-swarm swarm_brain/entries/2025-12-11_agent2_session_cleanup_draft.json
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+from datetime import datetime
+from pathlib import Path
+from typing import List, Optional
+
+
+def build_passdown(agent: str, summary: str, date: str) -> str:
+    content = {
+        "session_date": date,
+        "agent_id": agent,
+        "session_summary": summary,
+        "status": "ACTIVE_AGENT_MODE",
+        "current_phase": "SESSION_CLEANUP",
+        "completed_work": {},
+        "in_progress": {},
+        "progress_metrics": {},
+        "key_documents": {},
+        "next_session_priorities": {"high": [], "medium": []},
+        "blockers": [],
+        "notes": [],
+        "tools_created": [],
+        "lessons_learned": [],
+    }
+    return json.dumps(content, indent=2)
+
+
+def build_devlog(agent: str, summary: str, date: str) -> str:
+    lines = [
+        f"# Session Cleanup ({agent})",
+        "",
+        f"- Date: {date}",
+        "- Status: ✅ complete",
+        "",
+        "## Summary",
+        summary,
+        "",
+        "## Actions",
+        "- Passdown refreshed",
+        "- Swarm Brain entry drafted",
+        "- Discord devlog ready",
+        "- Helper tool available: tools/session_cleanup_helper.py",
+        "",
+        "## Next Steps",
+        "- Post devlog to Discord",
+        "- Capture any blockers and update passdown",
+    ]
+    return "\n".join(lines)
+
+
+def build_swarm_entry(agent: str, summary: str, date: str) -> str:
+    content = {
+        "date": date,
+        "agent": agent,
+        "topic": "session_cleanup_template",
+        "insights": [summary],
+        "patterns": [
+            "Bundle passdown + devlog + Swarm Brain entry for each session cleanup.",
+            "Keep blockers explicit (deploy windows, approvals) to avoid hidden stalls.",
+        ],
+        "actions": [
+            "Generated session cleanup templates for reuse.",
+            "Pre-seeded evidence paths for devlog/Swarm Brain/passdown drafts.",
+        ],
+        "next_steps": ["Fill templates with real data and post devlog to Discord."],
+        "evidence": [],
+    }
+    return json.dumps(content, indent=2)
+
+
+def write_file(path: Optional[str], content: str) -> Optional[Path]:
+    if not path:
+        return None
+    target = Path(path)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(content, encoding="utf-8")
+    return target
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Generate session cleanup templates for passdown/devlog/Swarm Brain entries."
+    )
+    parser.add_argument("--agent", required=True, help="Agent id (e.g., Agent-2).")
+    parser.add_argument("--summary", required=True, help="Short session summary.")
+    parser.add_argument(
+        "--date", default=datetime.utcnow().strftime("%Y-%m-%d"), help="ISO date."
+    )
+    parser.add_argument("--output-passdown", help="Path to write passdown JSON draft.")
+    parser.add_argument("--output-devlog", help="Path to write devlog markdown draft.")
+    parser.add_argument("--output-swarm", help="Path to write Swarm Brain JSON draft.")
+    return parser.parse_args()
+
+
+def main() -> None:
+    args = parse_args()
+    passdown = build_passdown(args.agent, args.summary, args.date)
+    devlog = build_devlog(args.agent, args.summary, args.date)
+    swarm_entry = build_swarm_entry(args.agent, args.summary, args.date)
+
+    written: List[Path] = []
+    for path, content in (
+        (args.output_passdown, passdown),
+        (args.output_devlog, devlog),
+        (args.output_swarm, swarm_entry),
+    ):
+        target = write_file(path, content)
+        if target:
+            written.append(target)
+
+    if written:
+        print("Generated templates:", ", ".join(str(p) for p in written))
+    else:
+        print(passdown)
+        print()
+        print(devlog)
+        print()
+        print(swarm_entry)
+
+
+if __name__ == "__main__":
+    main()
 #!/usr/bin/env python3
 """
 Session Cleanup Helper

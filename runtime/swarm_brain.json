@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "created": "2025-12-10T03:32:21.881195",
-  "last_updated": "2025-12-10T08:12:50.078959",
+  "last_updated": "2025-12-11T06:15:00.000000",
   "insights": [
     {
       "id": 1,
@@ -90,6 +90,19 @@
         "validation",
         "architecture",
         "infrastructure"
+      ],
+      "category": "insight"
+    },
+    {
+      "id": 8,
+      "timestamp": "2025-12-11T06:15:00.000000",
+      "agent": "Agent-1",
+      "content": "Twitch bot disconnects traced to invalid oauth_token value in config/chat_presence.json; token must be a real oauth: token string (no shell commands/quotes) and should be validated before connecting.",
+      "tags": [
+        "twitch",
+        "oauth",
+        "chatbot",
+        "incident"
       ],
       "category": "insight"
     }
@@ -206,7 +219,7 @@
     }
   ],
   "statistics": {
-    "total_insights": 7,
+    "total_insights": 8,
     "total_lessons": 1,
     "total_recommendations": 5,
     "total_patterns": 1

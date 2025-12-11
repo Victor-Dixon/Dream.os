@@ -10,7 +10,6 @@ Date: 2025-11-24
 Priority: HIGH
 """
 
-from src.core.config.timeout_constants import TimeoutConstants
 import json
 import sys
 import os
@@ -23,15 +22,6 @@ import shutil
 # Add project root to path
 project_root = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(project_root))
-
-# Timeout constants (inline to avoid import issues)
-
-
-class TimeoutConstants:
-    SUBPROCESS_DEFAULT = 120  # 2 minutes for subprocess operations
-    HTTP_DEFAULT = 60  # 1 minute for HTTP operations
-    HTTP_LONG = 300  # 5 minutes for long HTTP operations
-
 
 # Import rate limit handler
 try:
@@ -66,8 +56,26 @@ except ImportError as e:
     print(f"⚠️ GitHub Bypass System not available - using legacy method: {e}")
 
 
-# Use SSOT utility for GitHub token
-from src.core.utils.github_utils import get_github_token
+def get_github_token() -> Optional[str]:
+    """Get GitHub token from environment or .env file."""
+    # Check environment variable first
+    token = os.getenv("GITHUB_TOKEN") or os.getenv("GH_TOKEN")
+    if token:
+        return token
+
+    # Check .env file
+    env_file = project_root / ".env"
+    if env_file.exists():
+        try:
+            with open(env_file, "r") as f:
+                for line in f:
+                    line = line.strip()
+                    if line.startswith("GITHUB_TOKEN=") or line.startswith("GH_TOKEN="):
+                        return line.split("=", 1)[1].strip().strip('"').strip("'")
+        except Exception:
+            pass
+
+    return None
 
 
 class SafeRepoMerge:
@@ -328,11 +336,35 @@ class SafeRepoMerge:
 
                 print("✅ Merge executed successfully!")
                 self.generate_merge_report("SUCCESS", conflicts)
+
+                # Record successful merge in improvements system
+                try:
+                    from src.core.repository_merge_improvements import get_merge_improvements, RepoStatus
+                    improvements = get_merge_improvements()
+                    improvements.record_merge_attempt(
+                        source_repo=self.source_repo,
+                        target_repo=self.target_repo,
+                        success=True,
+                        error=None
+                    )
+                    improvements.update_repo_status(
+                        self.source_repo, RepoStatus.MERGED, merged_into=self.target_repo)
+                except ImportError:
+                    pass  # Improvements not available
+
                 return True
 
     def _execute_merge_local_first(self, conflicts: Dict[str, Any]) -> bool:
         """
         Execute merge using Local-First Architecture (zero blocking).
+
+        Enhanced with merge improvements:
+        - Error classification (permanent vs transient)
+        - Pre-flight checks (verify repos exist)
+        - Duplicate prevention (track attempts)
+        - Name resolution (normalize repo names)
+        - Status tracking (exists/merged/deleted)
+        - Strategy review (verify consolidation direction)
 
         Args:
             conflicts: Conflict check results
@@ -341,6 +373,66 @@ class SafeRepoMerge:
             True if merge successful, False otherwise
         """
         print("🚀 EXECUTING MERGE via Local-First Architecture (Zero Blocking)...")
+
+        # Import merge improvements
+        try:
+            from src.core.repository_merge_improvements import get_merge_improvements, RepoStatus
+            improvements = get_merge_improvements()
+            use_improvements = True
+        except ImportError:
+            print("⚠️ Merge improvements not available - using legacy validation")
+            use_improvements = False
+            improvements = None
+
+        # ENHANCED: Pre-merge validation with all improvements
+        if use_improvements:
+            print("🔍 Running pre-merge validation (enhanced checks)...")
+            should_proceed, validation_error, validation_details = improvements.pre_merge_validation(
+                source_repo=self.source_repo,
+                target_repo=self.target_repo,
+                github_client=self.github if hasattr(self, 'github') else None
+            )
+
+            if not should_proceed:
+                error_type = improvements.classify_error(validation_error)
+                print(f"❌ Pre-merge validation failed: {validation_error}")
+                print(
+                    f"   Error type: {error_type.value} ({'permanent - will not retry' if error_type == improvements.ErrorType.PERMANENT else 'transient - may retry'})")
+
+                # Record attempt with error classification
+                improvements.record_merge_attempt(
+                    source_repo=self.source_repo,
+                    target_repo=self.target_repo,
+                    success=False,
+                    error=validation_error
+                )
+
+                # Update repo status if permanent error
+                if error_type == improvements.ErrorType.PERMANENT:
+                    if "source repo" in validation_error.lower():
+                        improvements.update_repo_status(
+                            self.source_repo, RepoStatus.DELETED)
+                    elif "target repo" in validation_error.lower():
+                        improvements.update_repo_status(
+                            self.target_repo, RepoStatus.DELETED)
+
+                # Don't create merge plan for permanent failures
+                if error_type == improvements.ErrorType.PERMANENT:
+                    self.generate_merge_report(
+                        "FAILED", conflicts, validation_error)
+                    return False
+                else:
+                    # Transient error - create plan but mark as failed
+                    merge_plan = self.buffer.create_merge_plan(
+                        source_repo=self.source_repo,
+                        target_repo=self.target_repo,
+                        description=f"Merge {self.source_repo} into {self.target_repo} (repo #{self.source_repo_num} → #{self.target_repo_num})"
+                    )
+                    self.buffer.mark_failed(
+                        merge_plan.plan_id, validation_error)
+                    self.generate_merge_report(
+                        "FAILED", conflicts, validation_error)
+                    return False
 
         # Step 1: Create merge plan in consolidation buffer
         print(f"📋 Creating merge plan...")
@@ -357,21 +449,54 @@ class SafeRepoMerge:
             self.source_repo, github_user=self.github_username
         )
         if not success:
-            self.buffer.mark_failed(
-                merge_plan.plan_id, "Source repo not available")
-            self.generate_merge_report(
-                "FAILED", conflicts, "Source repo not available")
+            error_msg = "Source repo not available"
+            error_type = improvements.classify_error(
+                error_msg) if use_improvements else None
+
+            # Record attempt
+            if use_improvements:
+                improvements.record_merge_attempt(
+                    source_repo=self.source_repo,
+                    target_repo=self.target_repo,
+                    success=False,
+                    error=error_msg
+                )
+                improvements.update_repo_status(
+                    self.source_repo, RepoStatus.DELETED)
+
+            self.buffer.mark_failed(merge_plan.plan_id, error_msg)
+            self.generate_merge_report("FAILED", conflicts, error_msg)
             return False
 
         success, target_path, target_was_local = self.github.get_repo(
             self.target_repo, github_user=self.github_username
         )
         if not success:
-            self.buffer.mark_failed(
-                merge_plan.plan_id, "Target repo not available")
-            self.generate_merge_report(
-                "FAILED", conflicts, "Target repo not available")
+            error_msg = "Target repo not available"
+            error_type = improvements.classify_error(
+                error_msg) if use_improvements else None
+
+            # Record attempt
+            if use_improvements:
+                improvements.record_merge_attempt(
+                    source_repo=self.source_repo,
+                    target_repo=self.target_repo,
+                    success=False,
+                    error=error_msg
+                )
+                improvements.update_repo_status(
+                    self.target_repo, RepoStatus.DELETED)
+
+            self.buffer.mark_failed(merge_plan.plan_id, error_msg)
+            self.generate_merge_report("FAILED", conflicts, error_msg)
             return False
+
+        # Update repo statuses to EXISTS
+        if use_improvements:
+            improvements.update_repo_status(
+                self.source_repo, RepoStatus.EXISTS)
+            improvements.update_repo_status(
+                self.target_repo, RepoStatus.EXISTS)
 
         print(
             f"✅ Repositories ready (source: {'local' if source_was_local else 'cloned'}, target: {'local' if target_was_local else 'cloned'})")
@@ -416,6 +541,17 @@ class SafeRepoMerge:
 
         print(f"✅ Local merge successful")
         self.buffer.mark_merged(merge_plan.plan_id)
+
+        # Record successful merge in improvements system
+        if use_improvements:
+            improvements.record_merge_attempt(
+                source_repo=self.source_repo,
+                target_repo=self.target_repo,
+                success=True,
+                error=None
+            )
+            improvements.update_repo_status(
+                self.source_repo, RepoStatus.MERGED, merged_into=self.target_repo)
 
         # Step 5: Generate patch (for review/debugging)
         patch_file = self.repo_manager.generate_patch(
@@ -481,6 +617,17 @@ This merge is part of repository consolidation.
             print(f"   - PR: {pr_url_or_error}")
         else:
             print(f"   - PR: Queued for later (check deferred_push_queue.json)")
+
+        # Record successful merge in improvements system (if not already recorded)
+        if use_improvements:
+            improvements.record_merge_attempt(
+                source_repo=self.source_repo,
+                target_repo=self.target_repo,
+                success=True,
+                error=None
+            )
+            improvements.update_repo_status(
+                self.source_repo, RepoStatus.MERGED, merged_into=self.target_repo)
 
         self.generate_merge_report("SUCCESS", {
             "plan_id": merge_plan.plan_id,
@@ -597,7 +744,7 @@ This merge is part of repository consolidation.
                         print(
                             f"🔗 Attempting PR creation: {self.source_repo} → {self.target_repo} (base: {base_branch}, head: {head_branch})")
                         result = subprocess.run(
-                            cmd, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_MEDIUM, check=False)
+                            cmd, capture_output=True, text=True, timeout=60, check=False)
 
                         if result.returncode == 0:
                             pr_url = result.stdout.strip()
@@ -676,11 +823,28 @@ This merge is part of repository consolidation.
 
             print(f"📥 Cloning repositories to temporary directory...")
 
-            # Use SSOT utility for directory removal
-            from src.core.utils.file_utils import ensure_directory_removed
+            # Explicit cleanup function to ensure directories are completely removed
+            def ensure_dir_removed(dir_path, name):
+                """Ensure directory is completely removed."""
+                if dir_path.exists():
+                    print(f"🧹 Removing existing {name} directory: {dir_path}")
+                    shutil.rmtree(dir_path, ignore_errors=True)
+                    time.sleep(1.0)  # Wait for Windows file handle release
+                    if dir_path.exists():
+                        # Force removal on Windows
+                        import stat
+
+                        def remove_readonly(func, path, exc):
+                            os.chmod(path, stat.S_IWRITE)
+                            func(path)
+                        shutil.rmtree(dir_path, onerror=remove_readonly)
+                        time.sleep(0.5)
+                    if dir_path.exists():
+                        raise Exception(
+                            f"Failed to remove {name} directory: {dir_path}")
 
             # Clean up before target clone
-            ensure_directory_removed(target_dir, "target")
+            ensure_dir_removed(target_dir, "target")
 
             # Get GitHub token for authentication (from env or .env file)
             github_token = get_github_token()
@@ -721,7 +885,7 @@ This merge is part of repository consolidation.
                 capture_output=True,
                 text=True,
                 check=False,  # Don't raise on error, capture output
-                timeout=TimeoutConstants.HTTP_LONG,
+                timeout=120,
                 env=git_env
             )
 
@@ -740,7 +904,7 @@ This merge is part of repository consolidation.
                         capture_output=True,
                         text=True,
                         check=False,
-                        timeout=TimeoutConstants.HTTP_LONG,
+                        timeout=120,
                         env=git_env
                     )
                     if clone_result.returncode != 0:
@@ -767,7 +931,7 @@ This merge is part of repository consolidation.
                 capture_output=True,
                 text=True,
                 check=False,  # Don't raise on error, capture output
-                timeout=TimeoutConstants.HTTP_LONG,
+                timeout=120,
                 env=git_env
             )
 
@@ -779,7 +943,6 @@ This merge is part of repository consolidation.
                     if source_dir.exists():
                         shutil.rmtree(source_dir, ignore_errors=True)
                         import time
-
                         time.sleep(0.5)
                     # Retry clone
                     clone_result = subprocess.run(
@@ -787,7 +950,7 @@ This merge is part of repository consolidation.
                         capture_output=True,
                         text=True,
                         check=False,
-                        timeout=TimeoutConstants.HTTP_LONG,
+                        timeout=120,
                         env=git_env
                     )
                     if clone_result.returncode != 0:
@@ -807,19 +970,19 @@ This merge is part of repository consolidation.
             # Add source as remote to target
             print(f"🔗 Adding source repo as remote...")
             subprocess.run(["git", "remote", "add", "source-merge", str(source_dir)],
-                           cwd=target_dir, check=True, timeout=TimeoutConstants.HTTP_DEFAULT)
+                           cwd=target_dir, check=True, timeout=30)
 
             # Ensure we're on a clean state before proceeding
             # Check current branch and ensure it's clean
             current_branch = subprocess.run(
                 ["git", "rev-parse", "--abbrev-ref", "HEAD"],
-                cwd=target_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_DEFAULT
+                cwd=target_dir, capture_output=True, text=True, timeout=30
             ).stdout.strip()
 
             # Check for unmerged files in current state
             unmerged_check = subprocess.run(
                 ["git", "diff", "--name-only", "--diff-filter=U"],
-                cwd=target_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_DEFAULT
+                cwd=target_dir, capture_output=True, text=True, timeout=30
             )
 
             if unmerged_check.returncode == 0 and unmerged_check.stdout.strip():
@@ -828,13 +991,13 @@ This merge is part of repository consolidation.
                 # Check if there's an in-progress merge
                 merge_head_check = subprocess.run(
                     ["git", "rev-parse", "--verify", "MERGE_HEAD"],
-                    cwd=target_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_DEFAULT
+                    cwd=target_dir, capture_output=True, text=True, timeout=30
                 )
 
                 if merge_head_check.returncode == 0:
                     print(f"⚠️ In-progress merge detected, aborting...")
                     subprocess.run(["git", "merge", "--abort"],
-                                   cwd=target_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_DEFAULT)
+                                   cwd=target_dir, capture_output=True, text=True, timeout=30)
                     print(f"✅ Previous merge aborted")
                 else:
                     # Resolve unmerged files
@@ -845,29 +1008,29 @@ This merge is part of repository consolidation.
                     for file in files:
                         subprocess.run(
                             ["git", "checkout", "--ours", file],
-                            cwd=target_dir, check=False, timeout=TimeoutConstants.HTTP_DEFAULT
+                            cwd=target_dir, check=False, timeout=30
                         )
                         subprocess.run(
                             ["git", "add", file],
-                            cwd=target_dir, check=False, timeout=TimeoutConstants.HTTP_DEFAULT
+                            cwd=target_dir, check=False, timeout=30
                         )
                     # Commit the resolution
                     commit_result = subprocess.run(
                         ["git", "commit", "-m",
                             "Resolve unmerged files using 'ours' strategy"],
-                        cwd=target_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_DEFAULT
+                        cwd=target_dir, capture_output=True, text=True, timeout=30
                     )
                     if commit_result.returncode == 0:
                         print(f"✅ Unmerged files resolved")
 
             # Fetch from source
             subprocess.run(["git", "fetch", "source-merge"],
-                           cwd=target_dir, check=True, timeout=TimeoutConstants.HTTP_MEDIUM)
+                           cwd=target_dir, check=True, timeout=60)
 
             # Create merge branch from clean state
             merge_branch = f"merge-{self.source_repo}-{datetime.now().strftime('%Y%m%d')}"
             subprocess.run(["git", "checkout", "-b", merge_branch],
-                           cwd=target_dir, check=True, timeout=TimeoutConstants.HTTP_DEFAULT)
+                           cwd=target_dir, check=True, timeout=30)
 
             # Merge source into target
             print(f"🔀 Merging {self.source_repo} into {self.target_repo}...")
@@ -904,7 +1067,7 @@ This merge is part of repository consolidation.
                 merge_result = subprocess.run(
                     ["git", "merge", "source-merge/main", "--allow-unrelated-histories",
                         "--no-edit", "-m", f"Merge {self.source_repo} into {self.target_repo}"],
-                    cwd=target_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_LONG
+                    cwd=target_dir, capture_output=True, text=True, timeout=120
                 )
 
                 if merge_result.returncode != 0:
@@ -912,7 +1075,7 @@ This merge is part of repository consolidation.
                     merge_result = subprocess.run(
                         ["git", "merge", "source-merge/master", "--allow-unrelated-histories",
                             "--no-edit", "-m", f"Merge {self.source_repo} into {self.target_repo}"],
-                        cwd=target_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_LONG
+                        cwd=target_dir, capture_output=True, text=True, timeout=120
                     )
 
                 if merge_result.returncode != 0:
@@ -924,7 +1087,7 @@ This merge is part of repository consolidation.
                         # Check for unmerged files
                         unmerged = subprocess.run(
                             ["git", "diff", "--name-only", "--diff-filter=U"],
-                            cwd=target_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_DEFAULT
+                            cwd=target_dir, capture_output=True, text=True, timeout=30
                         )
                         if unmerged.returncode == 0 and unmerged.stdout.strip():
                             files = [f.strip() for f in unmerged.stdout.strip().split(
@@ -934,17 +1097,17 @@ This merge is part of repository consolidation.
                             for file in files:
                                 subprocess.run(
                                     ["git", "checkout", "--ours", file],
-                                    cwd=target_dir, check=False, timeout=TimeoutConstants.HTTP_DEFAULT
+                                    cwd=target_dir, check=False, timeout=30
                                 )
                                 subprocess.run(
                                     ["git", "add", file],
-                                    cwd=target_dir, check=False, timeout=TimeoutConstants.HTTP_DEFAULT
+                                    cwd=target_dir, check=False, timeout=30
                                 )
                             # Commit the resolution
                             commit_result = subprocess.run(
                                 ["git", "commit", "-m",
                                     f"Merge {self.source_repo} into {self.target_repo} - Conflicts resolved using 'ours' strategy"],
-                                cwd=target_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_DEFAULT
+                                cwd=target_dir, capture_output=True, text=True, timeout=30
                             )
                             if commit_result.returncode == 0:
                                 print(
@@ -958,12 +1121,12 @@ This merge is part of repository consolidation.
                             print(
                                 f"⚠️ No unmerged files found, but merge failed. Aborting and retrying...")
                             subprocess.run(["git", "merge", "--abort"],
-                                           cwd=target_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_DEFAULT)
+                                           cwd=target_dir, capture_output=True, text=True, timeout=30)
                             # Retry merge
                             merge_result = subprocess.run(
                                 ["git", "merge", "source-merge/main", "--allow-unrelated-histories",
                                     "--no-edit", "-m", f"Merge {self.source_repo} into {self.target_repo}"],
-                                cwd=target_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_LONG
+                                cwd=target_dir, capture_output=True, text=True, timeout=120
                             )
                             if merge_result.returncode != 0:
                                 print(
@@ -997,7 +1160,7 @@ This merge is part of repository consolidation.
                 # Legacy push method
                 push_result = subprocess.run(
                     ["git", "push", "-u", "origin", merge_branch],
-                    cwd=target_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_MEDIUM
+                    cwd=target_dir, capture_output=True, text=True, timeout=60
                 )
 
                 if push_result.returncode != 0:
@@ -1039,7 +1202,7 @@ This merge is part of repository consolidation.
                 pr_result = subprocess.run(
                     ["gh", "pr", "create", "--repo", repo_spec, "--base", "main",
                      "--head", merge_branch, "--title", title, "--body", description],
-                    capture_output=True, text=True, timeout=TimeoutConstants.HTTP_MEDIUM
+                    capture_output=True, text=True, timeout=60
                 )
 
                 if pr_result.returncode == 0:
@@ -1076,14 +1239,14 @@ This merge is part of repository consolidation.
     ) -> Optional[str]:
         """
         Create merge from local repositories using Local-First Architecture.
-        
+
         Args:
             target_path: Path to target repository
             source_path: Path to source repository
             username: GitHub username
             title: PR title
             description: PR description
-        
+
         Returns:
             PR URL or None
         """
@@ -1093,16 +1256,16 @@ This merge is part of repository consolidation.
             print(f"🌿 Creating merge branch: {merge_branch}")
 
             # Checkout target and create branch
-            subprocess.run(["git", "checkout", "main"], cwd=target_path,
-                           capture_output=True, timeout=TimeoutConstants.HTTP_DEFAULT)
-            subprocess.run(["git", "checkout", "-b", merge_branch], cwd=target_path,
-                           capture_output=True, timeout=TimeoutConstants.HTTP_DEFAULT)
+            subprocess.run(["git", "checkout", "main"],
+                           cwd=target_path, capture_output=True, timeout=30)
+            subprocess.run(["git", "checkout", "-b", merge_branch],
+                           cwd=target_path, capture_output=True, timeout=30)
 
             # Add source as remote
             subprocess.run(["git", "remote", "add", "source-merge", str(source_path)],
-                           cwd=target_path, capture_output=True, timeout=TimeoutConstants.HTTP_DEFAULT)
-            subprocess.run(["git", "fetch", "source-merge"], cwd=target_path,
-                           capture_output=True, timeout=TimeoutConstants.HTTP_MEDIUM)
+                           cwd=target_path, capture_output=True, timeout=30)
+            subprocess.run(["git", "fetch", "source-merge"],
+                           cwd=target_path, capture_output=True, timeout=60)
 
             # Merge using conflict resolver
             success, conflict_files, error = self.conflict_resolver.merge_with_conflict_resolution(
@@ -1183,7 +1346,7 @@ This merge is part of repository consolidation.
                 ]
 
                 result = subprocess.run(
-                    cmd, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_MEDIUM, check=False)
+                    cmd, capture_output=True, text=True, timeout=60, check=False)
 
                 if result.returncode == 0:
                     print(f"✅ PR merged successfully!")
