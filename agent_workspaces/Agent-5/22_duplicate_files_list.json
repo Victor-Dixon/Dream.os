@@ -1,385 +1,274 @@
 {
   "summary": {
-    "total_duplicate_files": 35,
-    "functionality_exists": 8,
-    "possible_duplicates": 27
+    "total_duplicate_files": 36,
+    "functionality_exists": 5,
+    "possible_duplicates": 31
   },
   "functionality_exists_files": [
     {
-      "file_path": "src\\discord_commander\\messaging_controller_views.py",
-      "relative_path": "discord_commander\\messaging_controller_views.py",
+      "file_path": "src\\core\\managers\\core_execution_manager.py",
+      "relative_path": "core\\managers\\core_execution_manager.py",
       "functionality_exists": true,
       "similar_files": [
         {
-          "file": "discord_commander\\controllers\\messaging_controller_view.py",
+          "file": "core\\managers\\execution\\execution_coordinator.py",
+          "similarity_score": 0.62,
+          "common_keywords": [
+            "initialize",
+            "__init__",
+            "create_task",
+            "coordinator",
+            "cleanup"
+          ],
+          "classes": [
+            "ExecutionCoordinator"
+          ],
+          "functions": [
+            "__init__",
+            "initialize",
+            "execute",
+            "cleanup",
+            "get_status"
+          ]
+        },
+        {
+          "file": "core\\managers\\core_recovery_manager.py",
+          "similarity_score": 0.44,
+          "common_keywords": [
+            "initialize",
+            "__init__",
+            "cleanup",
+            "get_status",
+            "manager"
+          ],
+          "classes": [
+            "CoreRecoveryManager"
+          ],
+          "functions": [
+            "__init__",
+            "initialize",
+            "execute",
+            "cleanup",
+            "get_status"
+          ]
+        },
+        {
+          "file": "core\\managers\\core_results_manager.py",
+          "similarity_score": 0.44,
+          "common_keywords": [
+            "initialize",
+            "__init__",
+            "cleanup",
+            "get_status",
+            "manager"
+          ],
+          "classes": [
+            "CoreResultsManager"
+          ],
+          "functions": [
+            "__init__",
+            "initialize",
+            "execute",
+            "cleanup",
+            "get_status"
+          ]
+        },
+        {
+          "file": "core\\managers\\core_service_coordinator.py",
+          "similarity_score": 0.44,
+          "common_keywords": [
+            "initialize",
+            "__init__",
+            "coordinator",
+            "cleanup",
+            "get_status"
+          ],
+          "classes": [
+            "CoreServiceCoordinator"
+          ],
+          "functions": [
+            "__init__",
+            "initialize",
+            "execute",
+            "cleanup",
+            "get_status"
+          ]
+        },
+        {
+          "file": "core\\managers\\base_manager.py",
+          "similarity_score": 0.44,
+          "common_keywords": [
+            "initialize",
+            "__init__",
+            "cleanup",
+            "get_status",
+            "manager"
+          ],
+          "classes": [
+            "BaseManager"
+          ],
+          "functions": [
+            "__init__",
+            "initialize",
+            "execute",
+            "_execute_operation",
+            "cleanup"
+          ]
+        }
+      ],
+      "recommendation": "CHECK_IF_DUPLICATE - Similar functionality exists, verify if duplicate"
+    },
+    {
+      "file_path": "src\\core\\managers\\core_recovery_manager.py",
+      "relative_path": "core\\managers\\core_recovery_manager.py",
+      "functionality_exists": true,
+      "similar_files": [
+        {
+          "file": "core\\managers\\domains\\lifecycle_domain_manager.py",
+          "similarity_score": 0.59,
+          "common_keywords": [
+            "initialize",
+            "__init__",
+            "recover_from_error",
+            "cleanup",
+            "get_status"
+          ],
+          "classes": [
+            "OnboardingSession",
+            "LifecycleDomainManager"
+          ],
+          "functions": [
+            "__init__",
+            "initialize",
+            "execute",
+            "cleanup",
+            "get_status"
+          ]
+        },
+        {
+          "file": "core\\managers\\core_results_manager.py",
           "similarity_score": 0.54,
           "common_keywords": [
-            "MockSelect",
-            "MockSelectOption",
-            "service",
-            "MockButtonStyle",
-            "MockDiscord"
+            "initialize",
+            "__init__",
+            "cleanup",
+            "get_status",
+            "manager"
           ],
           "classes": [
-            "MessagingControllerView",
-            "MockView",
-            "MockSelect",
-            "MockButton",
-            "MockSelectOption",
-            "MockUI",
-            "MockButtonStyle",
-            "MockCog",
-            "MockCommands",
-            "MockExt",
-            "MockDiscord",
-            "ui"
+            "CoreResultsManager"
           ],
           "functions": [
             "__init__",
-            "_load_agents",
-            "_create_agent_options",
-            "_get_status_emoji",
-            "_extract_points"
+            "initialize",
+            "execute",
+            "cleanup",
+            "get_status"
           ]
-        }
-      ],
-      "recommendation": "CHECK_IF_DUPLICATE - Similar functionality exists, verify if duplicate"
-    },
-    {
-      "file_path": "src\\discord_commander\\controllers\\messaging_controller_view.py",
-      "relative_path": "discord_commander\\controllers\\messaging_controller_view.py",
-      "functionality_exists": true,
-      "similar_files": [
+        },
         {
-          "file": "discord_commander\\messaging_controller_views.py",
+          "file": "core\\managers\\core_service_coordinator.py",
           "similarity_score": 0.54,
           "common_keywords": [
-            "MockSelect",
-            "MockSelectOption",
+            "initialize",
+            "__init__",
             "service",
-            "MockButtonStyle",
-            "MockDiscord"
+            "cleanup",
+            "get_status"
           ],
           "classes": [
-            "AgentMessagingView",
-            "SwarmStatusView",
-            "MockView",
-            "MockSelect",
-            "MockButton",
-            "MockSelectOption",
-            "MockUI",
-            "MockButtonStyle",
-            "MockDiscord",
-            "ui"
+            "CoreServiceCoordinator"
           ],
           "functions": [
             "__init__",
-            "_load_agent_list",
-            "_create_agent_options",
-            "__init__",
-            "__init__"
+            "initialize",
+            "execute",
+            "cleanup",
+            "get_status"
           ]
         },
         {
-          "file": "discord_commander\\github_book_viewer.py",
-          "similarity_score": 0.32,
+          "file": "core\\managers\\core_onboarding_manager.py",
+          "similarity_score": 0.5,
           "common_keywords": [
-            "MockSelectOption",
-            "MockSelect",
-            "MockExt",
-            "MockButton",
-            "MockCog"
+            "initialize",
+            "__init__",
+            "cleanup",
+            "get_status",
+            "manager"
           ],
           "classes": [
-            "GitHubBookData",
-            "GitHubBookNavigator",
-            "GitHubBookCommands",
-            "MockView",
-            "MockSelect",
-            "MockButton",
-            "MockSelectOption",
-            "MockUI",
-            "MockButtonStyle",
-            "MockCog",
-            "MockCommands",
-            "MockExt",
-            "MockDiscord",
-            "ui"
+            "OnboardingSession",
+            "CoreOnboardingManager"
           ],
           "functions": [
             "__init__",
-            "_load_master_list",
-            "_load_all_repos",
-            "_extract_repo_number",
-            "_parse_devlog"
+            "initialize",
+            "execute",
+            "cleanup",
+            "get_status"
+          ]
+        },
+        {
+          "file": "core\\managers\\base_manager.py",
+          "similarity_score": 0.47,
+          "common_keywords": [
+            "initialize",
+            "__init__",
+            "cleanup",
+            "get_status",
+            "manager"
+          ],
+          "classes": [
+            "BaseManager"
+          ],
+          "functions": [
+            "__init__",
+            "initialize",
+            "execute",
+            "_execute_operation",
+            "cleanup"
           ]
         }
       ],
       "recommendation": "CHECK_IF_DUPLICATE - Similar functionality exists, verify if duplicate"
-    },
-    {
-      "file_path": "src\\core\\error_handling\\coordination_error_handler.py",
-      "relative_path": "core\\error_handling\\coordination_error_handler.py",
-      "functionality_exists": true,
-      "similar_files": [
-        {
-          "file": "core\\error_handling\\component_management.py",
-          "similarity_score": 0.6,
-          "common_keywords": [
-            "reset_component",
-            "manager",
-            "get_component_status",
-            "add_recovery_strategy",
-            "register_circuit_breaker"
-          ],
-          "classes": [
-            "ComponentManager"
-          ],
-          "functions": [
-            "register_circuit_breaker",
-            "register_retry_mechanism",
-            "add_recovery_strategy",
-            "get_component_status",
-            "reset_component"
-          ]
-        },
-        {
-          "file": "core\\error_handling\\error_handling_system.py",
-          "similarity_score": 0.31,
-          "common_keywords": [
-            "reset_component",
-            "manager",
-            "get_component_status",
-            "register_circuit_breaker",
-            "register_retry_mechanism"
-          ],
-          "classes": [
-            "ErrorRecoveryManager",
-            "UnifiedErrorHandlingOrchestrator"
-          ],
-          "functions": [
-            "with_error_recovery",
-            "get_error_handling_orchestrator",
-            "__init__",
-            "add_strategy",
-            "attempt_recovery"
-          ]
-        },
-        {
-          "file": "core\\orchestration\\orchestrator_events.py",
-          "similarity_score": 0.31,
-          "common_keywords": [
-            "orchestrator",
-            "manager",
-            "__init__",
-            "handler"
-          ],
-          "classes": [
-            "OrchestratorEvents"
-          ],
-          "functions": [
-            "__init__",
-            "on",
-            "off",
-            "emit",
-            "clear_listeners"
-          ]
-        },
-        {
-          "file": "services\\chat_presence\\chat_presence_orchestrator.py",
-          "similarity_score": 0.31,
-          "common_keywords": [
-            "orchestrator",
-            "manager",
-            "__init__",
-            "handler"
-          ],
-          "classes": [
-            "ChatPresenceOrchestrator"
-          ],
-          "functions": [
-            "__init__"
-          ]
-        }
-      ],
-      "recommendation": "CHECK_IF_DUPLICATE - Similar functionality exists, verify if duplicate"
-    }
-  ],
-  "possible_duplicate_files": [
-    {
-      "file_path": "src\\discord_commander\\github_book_viewer.py",
-      "relative_path": "discord_commander\\github_book_viewer.py",
-      "functionality_exists": false,
-      "similar_files": [
-        {
-          "file": "discord_commander\\controllers\\messaging_controller_view.py",
-          "similarity_score": 0.32,
-          "common_keywords": [
-            "MockSelectOption",
-            "MockSelect",
-            "MockExt",
-            "MockButton",
-            "MockCog"
-          ],
-          "classes": [
-            "MessagingControllerView",
-            "MockView",
-            "MockSelect",
-            "MockButton",
-            "MockSelectOption",
-            "MockUI",
-            "MockButtonStyle",
-            "MockCog",
-            "MockCommands",
-            "MockExt",
-            "MockDiscord",
-            "ui"
-          ],
-          "functions": [
-            "__init__",
-            "_load_agents",
-            "_create_agent_options",
-            "_get_status_emoji",
-            "_extract_points"
-          ]
-        }
-      ],
-      "recommendation": "POSSIBLE_DUPLICATE - Some similar functionality, investigate"
-    },
-    {
-      "file_path": "src\\ai_training\\dreamvault\\scrapers\\scraper_login.py",
-      "relative_path": "ai_training\\dreamvault\\scrapers\\scraper_login.py",
-      "functionality_exists": false,
-      "similar_files": [
-        {
-          "file": "ai_training\\dreamvault\\scrapers\\__init__.py",
-          "similarity_score": 0.43,
-          "common_keywords": [
-            "manager",
-            "scraper",
-            "handler"
-          ],
-          "classes": [],
-          "functions": []
-        }
-      ],
-      "recommendation": "POSSIBLE_DUPLICATE - Some similar functionality, investigate"
-    },
-    {
-      "file_path": "src\\application\\use_cases\\assign_task_uc.py",
-      "relative_path": "application\\use_cases\\assign_task_uc.py",
-      "functionality_exists": false,
-      "similar_files": [
-        {
-          "file": "core\\orchestration\\service_orchestrator.py",
-          "similarity_score": 0.38,
-          "common_keywords": [
-            "service",
-            "execute",
-            "__init__"
-          ],
-          "classes": [
-            "ServiceOrchestrator"
-          ],
-          "functions": [
-            "__init__",
-            "plan",
-            "execute",
-            "report"
-          ]
-        },
-        {
-          "file": "services\\messaging_cli.py",
-          "similarity_score": 0.38,
-          "common_keywords": [
-            "service",
-            "execute",
-            "__init__"
-          ],
-          "classes": [
-            "MessagingCLI"
-          ],
-          "functions": [
-            "main",
-            "__init__",
-            "execute"
-          ]
-        }
-      ],
-      "recommendation": "POSSIBLE_DUPLICATE - Some similar functionality, investigate"
-    },
-    {
-      "file_path": "src\\core\\vector_database.py",
-      "relative_path": "core\\vector_database.py",
-      "functionality_exists": false,
-      "similar_files": [
-        {
-          "file": "services\\models\\vector_models.py",
-          "similarity_score": 0.46,
-          "common_keywords": [
-            "EmbeddingModel",
-            "SearchResult",
-            "SearchType",
-            "SearchQuery",
-            "DocumentType"
-          ],
-          "classes": [
-            "EmbeddingModel",
-            "DocumentType",
-            "SearchType",
-            "VectorDocument",
-            "EmbeddingResult",
-            "SearchQuery",
-            "SearchResult",
-            "SimilaritySearchResult"
-          ],
-          "functions": [
-            "from_dict",
-            "to_dict"
-          ]
-        }
-      ],
-      "recommendation": "POSSIBLE_DUPLICATE - Some similar functionality, investigate"
-    },
-    {
-      "file_path": "src\\core\\error_handling\\error_utilities_core.py",
-      "relative_path": "core\\error_handling\\error_utilities_core.py",
-      "functionality_exists": false,
-      "similar_files": [
-        {
-          "file": "core\\error_handling\\error_config.py",
-          "similarity_score": 0.33,
-          "common_keywords": [
-            "RecoverableErrors",
-            "ErrorSeverityMapping"
-          ],
-          "classes": [
-            "RetryConfig",
-            "CircuitBreakerConfig",
-            "RecoverableErrors",
-            "ErrorSeverityMapping"
-          ],
-          "functions": [
-            "calculate_delay"
-          ]
-        }
-      ],
-      "recommendation": "POSSIBLE_DUPLICATE - Some similar functionality, investigate"
     },
     {
       "file_path": "src\\core\\managers\\core_onboarding_manager.py",
       "relative_path": "core\\managers\\core_onboarding_manager.py",
-      "functionality_exists": false,
+      "functionality_exists": true,
       "similar_files": [
+        {
+          "file": "core\\managers\\domains\\lifecycle_domain_manager.py",
+          "similarity_score": 0.71,
+          "common_keywords": [
+            "complete_onboarding",
+            "start_onboarding",
+            "initialize",
+            "__init__",
+            "OnboardingSession"
+          ],
+          "classes": [
+            "OnboardingSession",
+            "LifecycleDomainManager"
+          ],
+          "functions": [
+            "__init__",
+            "initialize",
+            "execute",
+            "cleanup",
+            "get_status"
+          ]
+        },
         {
           "file": "core\\managers\\core_recovery_manager.py",
           "similarity_score": 0.5,
           "common_keywords": [
-            "manager",
             "initialize",
-            "handler",
-            "execute",
-            "cleanup"
+            "__init__",
+            "cleanup",
+            "get_status",
+            "manager"
           ],
           "classes": [
             "CoreRecoveryManager"
@@ -396,11 +285,11 @@
           "file": "core\\managers\\core_results_manager.py",
           "similarity_score": 0.5,
           "common_keywords": [
-            "manager",
             "initialize",
-            "handler",
-            "execute",
-            "cleanup"
+            "__init__",
+            "cleanup",
+            "get_status",
+            "manager"
           ],
           "classes": [
             "CoreResultsManager"
@@ -417,11 +306,11 @@
           "file": "core\\managers\\base_manager.py",
           "similarity_score": 0.47,
           "common_keywords": [
-            "manager",
             "initialize",
-            "handler",
-            "execute",
-            "cleanup"
+            "__init__",
+            "cleanup",
+            "get_status",
+            "manager"
           ],
           "classes": [
             "BaseManager"
@@ -438,11 +327,11 @@
           "file": "core\\managers\\core_execution_manager.py",
           "similarity_score": 0.44,
           "common_keywords": [
-            "manager",
             "initialize",
-            "handler",
-            "execute",
-            "cleanup"
+            "__init__",
+            "cleanup",
+            "get_status",
+            "manager"
           ],
           "classes": [
             "CoreExecutionManager"
@@ -454,26 +343,91 @@
             "execute_task",
             "register_protocol"
           ]
-        },
+        }
+      ],
+      "recommendation": "REVIEW_DUPLICATE - Similar functionality exists, may be duplicate"
+    }
+  ],
+  "possible_duplicate_files": [
+    {
+      "file_path": "src\\ai_training\\dreamvault\\scrapers\\scraper_login.py",
+      "relative_path": "ai_training\\dreamvault\\scrapers\\scraper_login.py",
+      "functionality_exists": false,
+      "similar_files": [
         {
-          "file": "core\\managers\\core_monitoring_manager.py",
+          "file": "ai_training\\dreamvault\\scrapers\\__init__.py",
           "similarity_score": 0.43,
           "common_keywords": [
             "manager",
-            "initialize",
-            "execute",
-            "cleanup",
-            "get_status"
+            "handler",
+            "scraper"
+          ],
+          "classes": [],
+          "functions": []
+        }
+      ],
+      "recommendation": "POSSIBLE_DUPLICATE - Some similar functionality, investigate"
+    },
+    {
+      "file_path": "src\\application\\use_cases\\assign_task_uc.py",
+      "relative_path": "application\\use_cases\\assign_task_uc.py",
+      "functionality_exists": false,
+      "similar_files": [
+        {
+          "file": "core\\orchestration\\service_orchestrator.py",
+          "similarity_score": 0.38,
+          "common_keywords": [
+            "__init__",
+            "service",
+            "execute"
           ],
           "classes": [
-            "CoreMonitoringManager"
+            "ServiceOrchestrator"
           ],
           "functions": [
             "__init__",
-            "initialize",
+            "plan",
             "execute",
-            "create_alert",
-            "record_metric"
+            "report"
+          ]
+        },
+        {
+          "file": "services\\messaging_cli.py",
+          "similarity_score": 0.33,
+          "common_keywords": [
+            "__init__",
+            "service",
+            "execute"
+          ],
+          "classes": [
+            "MessagingCLI"
+          ],
+          "functions": [
+            "main",
+            "__init__",
+            "execute"
+          ]
+        }
+      ],
+      "recommendation": "POSSIBLE_DUPLICATE - Some similar functionality, investigate"
+    },
+    {
+      "file_path": "src\\core\\messaging_templates.py",
+      "relative_path": "core\\messaging_templates.py",
+      "functionality_exists": false,
+      "similar_files": [
+        {
+          "file": "core\\messaging_template_texts.py",
+          "similarity_score": 0.38,
+          "common_keywords": [
+            "format_s2a_message",
+            "manager",
+            "service"
+          ],
+          "classes": [],
+          "functions": [
+            "format_d2a_payload",
+            "format_s2a_message"
           ]
         }
       ],
@@ -488,11 +442,11 @@
           "file": "core\\managers\\core_results_manager.py",
           "similarity_score": 0.5,
           "common_keywords": [
-            "manager",
             "initialize",
-            "execute",
+            "__init__",
             "cleanup",
-            "get_status"
+            "get_status",
+            "manager"
           ],
           "classes": [
             "CoreResultsManager"
@@ -509,11 +463,11 @@
           "file": "core\\managers\\core_service_coordinator.py",
           "similarity_score": 0.5,
           "common_keywords": [
-            "manager",
             "initialize",
-            "execute",
+            "__init__",
             "cleanup",
-            "get_status"
+            "get_status",
+            "manager"
           ],
           "classes": [
             "CoreServiceCoordinator"
@@ -530,11 +484,11 @@
           "file": "core\\managers\\resource_crud_operations.py",
           "similarity_score": 0.5,
           "common_keywords": [
+            "delete_resource",
+            "__init__",
             "get_resource",
             "manager",
-            "delete_resource",
-            "update_resource",
-            "create_resource"
+            "update_resource"
           ],
           "classes": [
             "ResourceCRUDOperations"
@@ -548,38 +502,38 @@
           ]
         },
         {
-          "file": "core\\managers\\core_monitoring_manager.py",
+          "file": "core\\managers\\core_recovery_manager.py",
           "similarity_score": 0.46,
           "common_keywords": [
-            "manager",
             "initialize",
-            "execute",
+            "__init__",
             "cleanup",
-            "get_status"
+            "get_status",
+            "manager"
           ],
           "classes": [
-            "CoreMonitoringManager"
+            "CoreRecoveryManager"
           ],
           "functions": [
             "__init__",
             "initialize",
             "execute",
-            "create_alert",
-            "record_metric"
+            "cleanup",
+            "get_status"
           ]
         },
         {
-          "file": "core\\managers\\core_recovery_manager.py",
+          "file": "core\\managers\\execution\\execution_coordinator.py",
           "similarity_score": 0.46,
           "common_keywords": [
-            "manager",
             "initialize",
-            "execute",
+            "__init__",
             "cleanup",
-            "get_status"
+            "get_status",
+            "manager"
           ],
           "classes": [
-            "CoreRecoveryManager"
+            "ExecutionCoordinator"
           ],
           "functions": [
             "__init__",
@@ -602,8 +556,8 @@
           "similarity_score": 0.5,
           "common_keywords": [
             "cleanup",
-            "__init__",
-            "initialize"
+            "initialize",
+            "__init__"
           ],
           "classes": [
             "BaseUtility"
@@ -615,19 +569,35 @@
           ]
         },
         {
-          "file": "core\\utilities\\cleanup_utilities.py",
-          "similarity_score": 0.44,
+          "file": "core\\shared_utilities\\base_utility.py",
+          "similarity_score": 0.5,
           "common_keywords": [
-            "manager",
             "cleanup",
+            "initialize",
+            "__init__"
+          ],
+          "classes": [
+            "BaseUtility"
+          ],
+          "functions": [
             "__init__",
-            "initialize"
+            "initialize",
+            "cleanup"
+          ]
+        },
+        {
+          "file": "core\\shared_utilities\\cleanup_manager.py",
+          "similarity_score": 0.5,
+          "common_keywords": [
+            "cleanup",
+            "initialize",
+            "__init__",
+            "manager"
           ],
           "classes": [
             "CleanupManager"
           ],
           "functions": [
-            "create_cleanup_manager",
             "__init__",
             "initialize",
             "cleanup",
@@ -635,63 +605,43 @@
           ]
         },
         {
-          "file": "core\\utilities\\config_utilities.py",
-          "similarity_score": 0.44,
+          "file": "core\\shared_utilities\\configuration_manager_util.py",
+          "similarity_score": 0.5,
           "common_keywords": [
-            "manager",
             "cleanup",
+            "initialize",
             "__init__",
-            "initialize"
+            "manager"
           ],
           "classes": [
-            "ConfigurationManager"
+            "ConfigurationManagerUtil"
           ],
           "functions": [
-            "create_configuration_manager",
             "__init__",
             "initialize",
             "cleanup",
-            "set_config"
+            "set_config",
+            "get_config"
           ]
         },
         {
-          "file": "core\\utilities\\init_utilities.py",
-          "similarity_score": 0.44,
+          "file": "core\\shared_utilities\\initialization_manager.py",
+          "similarity_score": 0.5,
           "common_keywords": [
-            "manager",
             "cleanup",
+            "initialize",
             "__init__",
-            "initialize"
+            "manager"
           ],
           "classes": [
             "InitializationManager"
           ],
           "functions": [
-            "create_initialization_manager",
             "__init__",
             "initialize",
             "cleanup",
-            "is_initialized"
-          ]
-        },
-        {
-          "file": "core\\managers\\core_service_coordinator.py",
-          "similarity_score": 0.4,
-          "common_keywords": [
-            "manager",
-            "cleanup",
-            "__init__",
-            "initialize"
-          ],
-          "classes": [
-            "CoreServiceCoordinator"
-          ],
-          "functions": [
-            "__init__",
-            "initialize",
-            "execute",
-            "cleanup",
-            "get_status"
+            "is_initialized",
+            "get_init_time"
           ]
         }
       ],
@@ -707,8 +657,8 @@
           "similarity_score": 0.5,
           "common_keywords": [
             "manager",
-            "handler",
-            "__init__"
+            "__init__",
+            "handler"
           ],
           "classes": [],
           "functions": []
@@ -718,46 +668,57 @@
           "similarity_score": 0.5,
           "common_keywords": [
             "manager",
-            "handler",
-            "__init__"
+            "__init__",
+            "handler"
           ],
           "classes": [],
           "functions": []
         },
         {
-          "file": "services\\chat_presence\\chat_presence_orchestrator.py",
+          "file": "core\\shared_utilities\\__init__.py",
           "similarity_score": 0.5,
           "common_keywords": [
             "manager",
             "__init__",
             "handler"
           ],
+          "classes": [],
+          "functions": []
+        },
+        {
+          "file": "core\\shared_utilities\\cleanup_manager.py",
+          "similarity_score": 0.38,
+          "common_keywords": [
+            "manager",
+            "__init__",
+            "handler"
+          ],
           "classes": [
-            "ChatPresenceOrchestrator"
+            "CleanupManager"
           ],
           "functions": [
-            "__init__"
+            "__init__",
+            "initialize",
+            "cleanup",
+            "register_handler"
           ]
         },
         {
-          "file": "core\\__init__.py",
-          "similarity_score": 0.33,
+          "file": "services\\overnight_command_handler.py",
+          "similarity_score": 0.38,
           "common_keywords": [
             "manager",
-            "__init__"
+            "__init__",
+            "handler"
           ],
-          "classes": [],
-          "functions": []
-        },
-        {
-          "file": "core\\config\\__init__.py",
-          "similarity_score": 0.33,
-          "common_keywords": [
-            "manager",
-            "__init__"
+          "classes": [
+            "OvernightCommandHandler"
           ],
-          "classes": [],
-          "functions": []
+          "functions": [
+            "__init__",
+            "can_handle",
+            "handle"
+          ]
         }
       ],
       "recommendation": "POSSIBLE_DUPLICATE - Some similar functionality, investigate"
@@ -771,11 +732,11 @@
           "file": "core\\managers\\core_resource_manager.py",
           "similarity_score": 0.5,
           "common_keywords": [
+            "delete_resource",
+            "__init__",
             "get_resource",
             "manager",
-            "delete_resource",
-            "update_resource",
-            "create_resource"
+            "update_resource"
           ],
           "classes": [
             "CoreResourceManager"
@@ -793,8 +754,8 @@
           "similarity_score": 0.33,
           "common_keywords": [
             "manager",
-            "handler",
-            "__init__"
+            "__init__",
+            "handler"
           ],
           "classes": [],
           "functions": []
@@ -839,78 +800,11 @@
           "similarity_score": 0.33,
           "common_keywords": [
             "manager",
-            "handler",
-            "__init__"
+            "__init__",
+            "handler"
           ],
           "classes": [],
           "functions": []
-        }
-      ],
-      "recommendation": "POSSIBLE_DUPLICATE - Some similar functionality, investigate"
-    },
-    {
-      "file_path": "src\\core\\managers\\execution\\base_execution_manager.py",
-      "relative_path": "core\\managers\\execution\\base_execution_manager.py",
-      "functionality_exists": false,
-      "similar_files": [
-        {
-          "file": "core\\managers\\core_execution_manager.py",
-          "similarity_score": 0.38,
-          "common_keywords": [
-            "manager",
-            "initialize",
-            "register_protocol",
-            "get_execution_status",
-            "execute_task"
-          ],
-          "classes": [
-            "CoreExecutionManager"
-          ],
-          "functions": [
-            "__init__",
-            "initialize",
-            "execute",
-            "execute_task",
-            "register_protocol"
-          ]
-        },
-        {
-          "file": "core\\managers\\execution\\execution_runner.py",
-          "similarity_score": 0.31,
-          "common_keywords": [
-            "manager",
-            "get_execution_status",
-            "execute_task",
-            "__init__"
-          ],
-          "classes": [
-            "ExecutionRunner"
-          ],
-          "functions": [
-            "__init__",
-            "execute_task",
-            "get_execution_status"
-          ]
-        },
-        {
-          "file": "core\\managers\\results\\base_results_manager.py",
-          "similarity_score": 0.31,
-          "common_keywords": [
-            "manager",
-            "_execute_operation",
-            "processor",
-            "__init__"
-          ],
-          "classes": [
-            "BaseResultsManager"
-          ],
-          "functions": [
-            "__init__",
-            "_execute_operation",
-            "process_results",
-            "cleanup",
-            "get_status"
-          ]
         }
       ],
       "recommendation": "POSSIBLE_DUPLICATE - Some similar functionality, investigate"
@@ -974,6 +868,91 @@
       "recommendation": "POSSIBLE_DUPLICATE - Some similar functionality, investigate"
     },
     {
+      "file_path": "src\\core\\managers\\execution\\base_execution_manager.py",
+      "relative_path": "core\\managers\\execution\\base_execution_manager.py",
+      "functionality_exists": false,
+      "similar_files": [
+        {
+          "file": "core\\managers\\core_execution_manager.py",
+          "similarity_score": 0.38,
+          "common_keywords": [
+            "initialize",
+            "__init__",
+            "register_protocol",
+            "execute_task",
+            "manager"
+          ],
+          "classes": [
+            "CoreExecutionManager"
+          ],
+          "functions": [
+            "__init__",
+            "initialize",
+            "execute",
+            "execute_task",
+            "register_protocol"
+          ]
+        },
+        {
+          "file": "core\\managers\\execution\\execution_runner.py",
+          "similarity_score": 0.31,
+          "common_keywords": [
+            "execute_task",
+            "manager",
+            "__init__",
+            "get_execution_status"
+          ],
+          "classes": [
+            "ExecutionRunner"
+          ],
+          "functions": [
+            "__init__",
+            "execute_task",
+            "get_execution_status"
+          ]
+        },
+        {
+          "file": "core\\managers\\results\\base_results_manager.py",
+          "similarity_score": 0.31,
+          "common_keywords": [
+            "processor",
+            "manager",
+            "__init__",
+            "_execute_operation"
+          ],
+          "classes": [
+            "BaseResultsManager"
+          ],
+          "functions": [
+            "__init__",
+            "_execute_operation",
+            "process_results",
+            "cleanup",
+            "get_status"
+          ]
+        },
+        {
+          "file": "web\\execution_coordinator_routes.py",
+          "similarity_score": 0.31,
+          "common_keywords": [
+            "execute_task",
+            "manager",
+            "register_protocol",
+            "get_execution_status"
+          ],
+          "classes": [],
+          "functions": [
+            "_get_execution_coordinator",
+            "get_execution_status",
+            "list_tasks",
+            "create_task",
+            "get_task_status"
+          ]
+        }
+      ],
+      "recommendation": "POSSIBLE_DUPLICATE - Some similar functionality, investigate"
+    },
+    {
       "file_path": "src\\core\\managers\\monitoring\\metric_manager.py",
       "relative_path": "core\\managers\\monitoring\\metric_manager.py",
       "functionality_exists": false,
@@ -982,11 +961,11 @@
           "file": "core\\managers\\monitoring\\monitoring_crud.py",
           "similarity_score": 0.45,
           "common_keywords": [
-            "manager",
+            "__init__",
             "MetricType",
-            "record_metric",
+            "manager",
             "monitor",
-            "__init__"
+            "record_metric"
           ],
           "classes": [
             "AlertLevel",
@@ -1005,10 +984,10 @@
           "file": "core\\managers\\monitoring\\monitoring_query.py",
           "similarity_score": 0.4,
           "common_keywords": [
-            "get_metrics",
-            "manager",
             "monitor",
-            "__init__"
+            "manager",
+            "__init__",
+            "get_metrics"
           ],
           "classes": [
             "MonitoringQuery"
@@ -1025,10 +1004,10 @@
           "file": "core\\performance\\performance_collector.py",
           "similarity_score": 0.4,
           "common_keywords": [
-            "get_metrics",
-            "record_metric",
             "MetricType",
-            "__init__"
+            "record_metric",
+            "__init__",
+            "get_metrics"
           ],
           "classes": [
             "MetricType",
@@ -1047,50 +1026,29 @@
           "file": "core\\managers\\__init__.py",
           "similarity_score": 0.38,
           "common_keywords": [
-            "manager",
             "monitor",
+            "manager",
             "__init__"
           ],
           "classes": [],
           "functions": []
         },
         {
-          "file": "core\\managers\\monitoring\\__init__.py",
+          "file": "core\\managers\\monitoring\\widget_manager.py",
           "similarity_score": 0.38,
           "common_keywords": [
-            "manager",
             "monitor",
+            "manager",
             "__init__"
           ],
-          "classes": [],
-          "functions": []
-        }
-      ],
-      "recommendation": "POSSIBLE_DUPLICATE - Some similar functionality, investigate"
-    },
-    {
-      "file_path": "src\\core\\managers\\monitoring\\metrics_manager.py",
-      "relative_path": "core\\managers\\monitoring\\metrics_manager.py",
-      "functionality_exists": false,
-      "similar_files": [
-        {
-          "file": "core\\managers\\core_monitoring_manager.py",
-          "similarity_score": 0.31,
-          "common_keywords": [
-            "execute",
-            "manager",
-            "get_status",
-            "monitor"
-          ],
           "classes": [
-            "CoreMonitoringManager"
+            "WidgetType",
+            "WidgetManager"
           ],
           "functions": [
             "__init__",
-            "initialize",
-            "execute",
-            "create_alert",
-            "record_metric"
+            "create_widget",
+            "get_widgets"
           ]
         }
       ],
@@ -1105,9 +1063,9 @@
           "file": "core\\managers\\results\\validation_results_processor.py",
           "similarity_score": 0.5,
           "common_keywords": [
-            "manager",
+            "processor",
             "_process_result_by_type",
-            "processor"
+            "manager"
           ],
           "classes": [
             "ValidationResultsProcessor"
@@ -1118,69 +1076,14 @@
           ]
         },
         {
-          "file": "core\\managers\\results\\general_results_processor.py",
-          "similarity_score": 0.38,
-          "common_keywords": [
-            "manager",
-            "_process_result_by_type",
-            "processor"
-          ],
-          "classes": [
-            "GeneralResultsProcessor"
-          ],
-          "functions": [
-            "_process_result_by_type",
-            "_process_general_result",
-            "_analyze_dict_data",
-            "_analyze_list_data"
-          ]
-        },
-        {
-          "file": "core\\managers\\results\\performance_results_processor.py",
-          "similarity_score": 0.38,
-          "common_keywords": [
-            "manager",
-            "_process_result_by_type",
-            "processor"
-          ],
-          "classes": [
-            "PerformanceResultsProcessor"
-          ],
-          "functions": [
-            "_process_result_by_type",
-            "_process_performance_result",
-            "_calculate_performance_score",
-            "_analyze_performance_trends"
-          ]
-        },
-        {
           "file": "core\\managers\\results\\__init__.py",
           "similarity_score": 0.33,
           "common_keywords": [
-            "manager",
-            "processor"
+            "processor",
+            "manager"
           ],
           "classes": [],
           "functions": []
-        },
-        {
-          "file": "core\\managers\\results\\integration_results_processor.py",
-          "similarity_score": 0.33,
-          "common_keywords": [
-            "manager",
-            "_process_result_by_type",
-            "processor"
-          ],
-          "classes": [
-            "IntegrationResultsProcessor"
-          ],
-          "functions": [
-            "_process_result_by_type",
-            "_process_integration_result",
-            "_process_api_integration",
-            "_process_database_integration",
-            "_process_file_integration"
-          ]
         }
       ],
       "recommendation": "POSSIBLE_DUPLICATE - Some similar functionality, investigate"
@@ -1194,9 +1097,9 @@
           "file": "core\\managers\\results\\analysis_results_processor.py",
           "similarity_score": 0.5,
           "common_keywords": [
-            "manager",
+            "processor",
             "_process_result_by_type",
-            "processor"
+            "manager"
           ],
           "classes": [
             "AnalysisResultsProcessor"
@@ -1207,68 +1110,239 @@
           ]
         },
         {
-          "file": "core\\managers\\results\\general_results_processor.py",
-          "similarity_score": 0.38,
-          "common_keywords": [
-            "manager",
-            "_process_result_by_type",
-            "processor"
-          ],
-          "classes": [
-            "GeneralResultsProcessor"
-          ],
-          "functions": [
-            "_process_result_by_type",
-            "_process_general_result",
-            "_analyze_dict_data",
-            "_analyze_list_data"
-          ]
-        },
-        {
-          "file": "core\\managers\\results\\performance_results_processor.py",
-          "similarity_score": 0.38,
-          "common_keywords": [
-            "manager",
-            "_process_result_by_type",
-            "processor"
-          ],
-          "classes": [
-            "PerformanceResultsProcessor"
-          ],
-          "functions": [
-            "_process_result_by_type",
-            "_process_performance_result",
-            "_calculate_performance_score",
-            "_analyze_performance_trends"
-          ]
-        },
-        {
           "file": "core\\managers\\results\\__init__.py",
           "similarity_score": 0.33,
           "common_keywords": [
-            "manager",
-            "processor"
+            "processor",
+            "manager"
           ],
           "classes": [],
           "functions": []
-        },
+        }
+      ],
+      "recommendation": "POSSIBLE_DUPLICATE - Some similar functionality, investigate"
+    },
+    {
+      "file_path": "src\\core\\managers\\domains\\execution_domain_manager.py",
+      "relative_path": "core\\managers\\domains\\execution_domain_manager.py",
+      "functionality_exists": false,
+      "similar_files": [
         {
-          "file": "core\\managers\\results\\integration_results_processor.py",
-          "similarity_score": 0.33,
+          "file": "core\\managers\\core_execution_manager.py",
+          "similarity_score": 0.43,
           "common_keywords": [
-            "manager",
-            "_process_result_by_type",
-            "processor"
+            "initialize",
+            "__init__",
+            "register_protocol",
+            "coordinator",
+            "cleanup"
           ],
           "classes": [
-            "IntegrationResultsProcessor"
+            "CoreExecutionManager"
           ],
           "functions": [
-            "_process_result_by_type",
-            "_process_integration_result",
-            "_process_api_integration",
-            "_process_database_integration",
-            "_process_file_integration"
+            "__init__",
+            "initialize",
+            "execute",
+            "execute_task",
+            "register_protocol"
+          ]
+        },
+        {
+          "file": "core\\managers\\core_recovery_manager.py",
+          "similarity_score": 0.38,
+          "common_keywords": [
+            "initialize",
+            "__init__",
+            "service",
+            "cleanup",
+            "get_status"
+          ],
+          "classes": [
+            "CoreRecoveryManager"
+          ],
+          "functions": [
+            "__init__",
+            "initialize",
+            "execute",
+            "cleanup",
+            "get_status"
+          ]
+        },
+        {
+          "file": "core\\managers\\core_service_coordinator.py",
+          "similarity_score": 0.38,
+          "common_keywords": [
+            "initialize",
+            "__init__",
+            "coordinator",
+            "service",
+            "cleanup"
+          ],
+          "classes": [
+            "CoreServiceCoordinator"
+          ],
+          "functions": [
+            "__init__",
+            "initialize",
+            "execute",
+            "cleanup",
+            "get_status"
+          ]
+        },
+        {
+          "file": "core\\managers\\core_results_manager.py",
+          "similarity_score": 0.33,
+          "common_keywords": [
+            "initialize",
+            "__init__",
+            "cleanup",
+            "get_status",
+            "manager"
+          ],
+          "classes": [
+            "CoreResultsManager"
+          ],
+          "functions": [
+            "__init__",
+            "initialize",
+            "execute",
+            "cleanup",
+            "get_status"
+          ]
+        },
+        {
+          "file": "core\\managers\\base_manager.py",
+          "similarity_score": 0.33,
+          "common_keywords": [
+            "initialize",
+            "__init__",
+            "cleanup",
+            "get_status",
+            "manager"
+          ],
+          "classes": [
+            "BaseManager"
+          ],
+          "functions": [
+            "__init__",
+            "initialize",
+            "execute",
+            "_execute_operation",
+            "cleanup"
+          ]
+        }
+      ],
+      "recommendation": "POSSIBLE_DUPLICATE - Some similar functionality, investigate"
+    },
+    {
+      "file_path": "src\\core\\managers\\domains\\resource_domain_manager.py",
+      "relative_path": "core\\managers\\domains\\resource_domain_manager.py",
+      "functionality_exists": false,
+      "similar_files": [
+        {
+          "file": "core\\engines\\monitoring_core_engine.py",
+          "similarity_score": 0.33,
+          "common_keywords": [
+            "initialize",
+            "__init__",
+            "cleanup",
+            "get_status",
+            "monitor"
+          ],
+          "classes": [
+            "MonitoringCoreEngine"
+          ],
+          "functions": [
+            "__init__",
+            "initialize",
+            "execute",
+            "_collect_metrics",
+            "_check_health"
+          ]
+        },
+        {
+          "file": "core\\engines\\coordination_core_engine.py",
+          "similarity_score": 0.33,
+          "common_keywords": [
+            "initialize",
+            "__init__",
+            "cleanup",
+            "get_status",
+            "monitor"
+          ],
+          "classes": [
+            "CoordinationCoreEngine"
+          ],
+          "functions": [
+            "__init__",
+            "is_initialized",
+            "initialize",
+            "execute",
+            "coordinate"
+          ]
+        },
+        {
+          "file": "core\\managers\\core_execution_manager.py",
+          "similarity_score": 0.33,
+          "common_keywords": [
+            "initialize",
+            "__init__",
+            "cleanup",
+            "get_status",
+            "manager"
+          ],
+          "classes": [
+            "CoreExecutionManager"
+          ],
+          "functions": [
+            "__init__",
+            "initialize",
+            "execute",
+            "execute_task",
+            "register_protocol"
+          ]
+        },
+        {
+          "file": "core\\managers\\core_recovery_manager.py",
+          "similarity_score": 0.33,
+          "common_keywords": [
+            "initialize",
+            "__init__",
+            "cleanup",
+            "get_status",
+            "manager"
+          ],
+          "classes": [
+            "CoreRecoveryManager"
+          ],
+          "functions": [
+            "__init__",
+            "initialize",
+            "execute",
+            "cleanup",
+            "get_status"
+          ]
+        },
+        {
+          "file": "core\\managers\\core_resource_manager.py",
+          "similarity_score": 0.33,
+          "common_keywords": [
+            "initialize",
+            "__init__",
+            "cleanup",
+            "get_status",
+            "manager"
+          ],
+          "classes": [
+            "CoreResourceManager"
+          ],
+          "functions": [
+            "__init__",
+            "initialize",
+            "execute",
+            "create_resource",
+            "get_resource"
           ]
         }
       ],
@@ -1283,10 +1357,10 @@
           "file": "core\\managers\\monitoring\\metric_manager.py",
           "similarity_score": 0.4,
           "common_keywords": [
-            "get_metrics",
-            "record_metric",
             "MetricType",
-            "__init__"
+            "record_metric",
+            "__init__",
+            "get_metrics"
           ],
           "classes": [
             "MetricType",
@@ -1310,10 +1384,10 @@
           "file": "core\\unified_logging_system.py",
           "similarity_score": 0.4,
           "common_keywords": [
-            "configure_logging",
             "get_logger",
             "handler",
-            "__init__"
+            "__init__",
+            "configure_logging"
           ],
           "classes": [
             "UnifiedLoggingSystem"
@@ -1335,30 +1409,12 @@
       "functionality_exists": false,
       "similar_files": [
         {
-          "file": "core\\analytics\\processors\\prediction\\prediction_analyzer.py",
-          "similarity_score": 0.38,
-          "common_keywords": [
-            "analyzer",
-            "monitor",
-            "__init__"
-          ],
-          "classes": [
-            "PredictionAnalyzer"
-          ],
-          "functions": [
-            "__init__",
-            "analyze_prediction",
-            "_calculate_quality_score",
-            "_generate_recommendations"
-          ]
-        },
-        {
           "file": "discord_commander\\swarm_showcase_commands.py",
           "similarity_score": 0.33,
           "common_keywords": [
-            "analyzer",
             "monitor",
-            "__init__"
+            "__init__",
+            "analyzer"
           ],
           "classes": [
             "SwarmShowcaseCommands"
@@ -1367,6 +1423,166 @@
             "__init__",
             "_load_all_agent_statuses",
             "_load_roadmap_data"
+          ]
+        }
+      ],
+      "recommendation": "POSSIBLE_DUPLICATE - Some similar functionality, investigate"
+    },
+    {
+      "file_path": "src\\core\\base\\availability_mixin.py",
+      "relative_path": "core\\base\\availability_mixin.py",
+      "functionality_exists": false,
+      "similar_files": [
+        {
+          "file": "core\\base\\__init__.py",
+          "similarity_score": 0.4,
+          "common_keywords": [
+            "service",
+            "handler"
+          ],
+          "classes": [],
+          "functions": []
+        },
+        {
+          "file": "web\\vision_routes.py",
+          "similarity_score": 0.4,
+          "common_keywords": [
+            "service",
+            "handler"
+          ],
+          "classes": [],
+          "functions": [
+            "analyze_color",
+            "health_check"
+          ]
+        },
+        {
+          "file": "services\\messaging_handlers.py",
+          "similarity_score": 0.33,
+          "common_keywords": [
+            "service",
+            "handler"
+          ],
+          "classes": [],
+          "functions": [
+            "handle_message",
+            "handle_broadcast"
+          ]
+        },
+        {
+          "file": "services\\cli\\__main__.py",
+          "similarity_score": 0.33,
+          "common_keywords": [
+            "service",
+            "handler"
+          ],
+          "classes": [],
+          "functions": [
+            "create_parser",
+            "main"
+          ]
+        },
+        {
+          "file": "web\\integrations_routes.py",
+          "similarity_score": 0.33,
+          "common_keywords": [
+            "service",
+            "handler"
+          ],
+          "classes": [],
+          "functions": [
+            "jarvis_conversation",
+            "jarvis_vision",
+            "health_check"
+          ]
+        }
+      ],
+      "recommendation": "POSSIBLE_DUPLICATE - Some similar functionality, investigate"
+    },
+    {
+      "file_path": "src\\core\\base\\error_handling_mixin.py",
+      "relative_path": "core\\base\\error_handling_mixin.py",
+      "functionality_exists": false,
+      "similar_files": [
+        {
+          "file": "core\\error_handling\\coordination_strategies.py",
+          "similarity_score": 0.33,
+          "common_keywords": [
+            "manager",
+            "service",
+            "handler"
+          ],
+          "classes": [],
+          "functions": [
+            "create_service_restart_strategy",
+            "create_config_reset_strategy",
+            "register_default_coordination_strategies",
+            "restart_service",
+            "reset_config"
+          ]
+        },
+        {
+          "file": "core\\base\\__init__.py",
+          "similarity_score": 0.33,
+          "common_keywords": [
+            "manager",
+            "service",
+            "handler"
+          ],
+          "classes": [],
+          "functions": []
+        },
+        {
+          "file": "core\\shared_utilities\\error_handler.py",
+          "similarity_score": 0.33,
+          "common_keywords": [
+            "manager",
+            "handle_error",
+            "handler"
+          ],
+          "classes": [
+            "ErrorHandler"
+          ],
+          "functions": [
+            "__init__",
+            "initialize",
+            "cleanup",
+            "handle_error",
+            "get_error_summary"
+          ]
+        },
+        {
+          "file": "services\\overnight_command_handler.py",
+          "similarity_score": 0.33,
+          "common_keywords": [
+            "manager",
+            "service",
+            "handler"
+          ],
+          "classes": [
+            "OvernightCommandHandler"
+          ],
+          "functions": [
+            "__init__",
+            "can_handle",
+            "handle"
+          ]
+        },
+        {
+          "file": "services\\role_command_handler.py",
+          "similarity_score": 0.33,
+          "common_keywords": [
+            "manager",
+            "service",
+            "handler"
+          ],
+          "classes": [
+            "RoleCommandHandler"
+          ],
+          "functions": [
+            "__init__",
+            "can_handle",
+            "handle"
           ]
         }
       ],
@@ -1375,378 +1591,269 @@
   ],
   "all_22_files": [
     {
-      "file_path": "src\\discord_commander\\messaging_controller_views.py",
-      "relative_path": "discord_commander\\messaging_controller_views.py",
+      "file_path": "src\\core\\managers\\core_execution_manager.py",
+      "relative_path": "core\\managers\\core_execution_manager.py",
       "functionality_exists": true,
       "similar_files": [
         {
-          "file": "discord_commander\\controllers\\messaging_controller_view.py",
+          "file": "core\\managers\\execution\\execution_coordinator.py",
+          "similarity_score": 0.62,
+          "common_keywords": [
+            "initialize",
+            "__init__",
+            "create_task",
+            "coordinator",
+            "cleanup"
+          ],
+          "classes": [
+            "ExecutionCoordinator"
+          ],
+          "functions": [
+            "__init__",
+            "initialize",
+            "execute",
+            "cleanup",
+            "get_status"
+          ]
+        },
+        {
+          "file": "core\\managers\\core_recovery_manager.py",
+          "similarity_score": 0.44,
+          "common_keywords": [
+            "initialize",
+            "__init__",
+            "cleanup",
+            "get_status",
+            "manager"
+          ],
+          "classes": [
+            "CoreRecoveryManager"
+          ],
+          "functions": [
+            "__init__",
+            "initialize",
+            "execute",
+            "cleanup",
+            "get_status"
+          ]
+        },
+        {
+          "file": "core\\managers\\core_results_manager.py",
+          "similarity_score": 0.44,
+          "common_keywords": [
+            "initialize",
+            "__init__",
+            "cleanup",
+            "get_status",
+            "manager"
+          ],
+          "classes": [
+            "CoreResultsManager"
+          ],
+          "functions": [
+            "__init__",
+            "initialize",
+            "execute",
+            "cleanup",
+            "get_status"
+          ]
+        },
+        {
+          "file": "core\\managers\\core_service_coordinator.py",
+          "similarity_score": 0.44,
+          "common_keywords": [
+            "initialize",
+            "__init__",
+            "coordinator",
+            "cleanup",
+            "get_status"
+          ],
+          "classes": [
+            "CoreServiceCoordinator"
+          ],
+          "functions": [
+            "__init__",
+            "initialize",
+            "execute",
+            "cleanup",
+            "get_status"
+          ]
+        },
+        {
+          "file": "core\\managers\\base_manager.py",
+          "similarity_score": 0.44,
+          "common_keywords": [
+            "initialize",
+            "__init__",
+            "cleanup",
+            "get_status",
+            "manager"
+          ],
+          "classes": [
+            "BaseManager"
+          ],
+          "functions": [
+            "__init__",
+            "initialize",
+            "execute",
+            "_execute_operation",
+            "cleanup"
+          ]
+        }
+      ],
+      "recommendation": "CHECK_IF_DUPLICATE - Similar functionality exists, verify if duplicate"
+    },
+    {
+      "file_path": "src\\core\\managers\\core_recovery_manager.py",
+      "relative_path": "core\\managers\\core_recovery_manager.py",
+      "functionality_exists": true,
+      "similar_files": [
+        {
+          "file": "core\\managers\\domains\\lifecycle_domain_manager.py",
+          "similarity_score": 0.59,
+          "common_keywords": [
+            "initialize",
+            "__init__",
+            "recover_from_error",
+            "cleanup",
+            "get_status"
+          ],
+          "classes": [
+            "OnboardingSession",
+            "LifecycleDomainManager"
+          ],
+          "functions": [
+            "__init__",
+            "initialize",
+            "execute",
+            "cleanup",
+            "get_status"
+          ]
+        },
+        {
+          "file": "core\\managers\\core_results_manager.py",
           "similarity_score": 0.54,
           "common_keywords": [
-            "MockSelect",
-            "MockSelectOption",
-            "service",
-            "MockButtonStyle",
-            "MockDiscord"
+            "initialize",
+            "__init__",
+            "cleanup",
+            "get_status",
+            "manager"
           ],
           "classes": [
-            "MessagingControllerView",
-            "MockView",
-            "MockSelect",
-            "MockButton",
-            "MockSelectOption",
-            "MockUI",
-            "MockButtonStyle",
-            "MockCog",
-            "MockCommands",
-            "MockExt",
-            "MockDiscord",
-            "ui"
+            "CoreResultsManager"
           ],
           "functions": [
             "__init__",
-            "_load_agents",
-            "_create_agent_options",
-            "_get_status_emoji",
-            "_extract_points"
+            "initialize",
+            "execute",
+            "cleanup",
+            "get_status"
           ]
-        }
-      ],
-      "recommendation": "CHECK_IF_DUPLICATE - Similar functionality exists, verify if duplicate"
-    },
-    {
-      "file_path": "src\\discord_commander\\controllers\\messaging_controller_view.py",
-      "relative_path": "discord_commander\\controllers\\messaging_controller_view.py",
-      "functionality_exists": true,
-      "similar_files": [
+        },
         {
-          "file": "discord_commander\\messaging_controller_views.py",
+          "file": "core\\managers\\core_service_coordinator.py",
           "similarity_score": 0.54,
           "common_keywords": [
-            "MockSelect",
-            "MockSelectOption",
+            "initialize",
+            "__init__",
             "service",
-            "MockButtonStyle",
-            "MockDiscord"
+            "cleanup",
+            "get_status"
           ],
           "classes": [
-            "AgentMessagingView",
-            "SwarmStatusView",
-            "MockView",
-            "MockSelect",
-            "MockButton",
-            "MockSelectOption",
-            "MockUI",
-            "MockButtonStyle",
-            "MockDiscord",
-            "ui"
+            "CoreServiceCoordinator"
           ],
           "functions": [
             "__init__",
-            "_load_agent_list",
-            "_create_agent_options",
-            "__init__",
-            "__init__"
+            "initialize",
+            "execute",
+            "cleanup",
+            "get_status"
           ]
         },
         {
-          "file": "discord_commander\\github_book_viewer.py",
-          "similarity_score": 0.32,
+          "file": "core\\managers\\core_onboarding_manager.py",
+          "similarity_score": 0.5,
           "common_keywords": [
-            "MockSelectOption",
-            "MockSelect",
-            "MockExt",
-            "MockButton",
-            "MockCog"
+            "initialize",
+            "__init__",
+            "cleanup",
+            "get_status",
+            "manager"
           ],
           "classes": [
-            "GitHubBookData",
-            "GitHubBookNavigator",
-            "GitHubBookCommands",
-            "MockView",
-            "MockSelect",
-            "MockButton",
-            "MockSelectOption",
-            "MockUI",
-            "MockButtonStyle",
-            "MockCog",
-            "MockCommands",
-            "MockExt",
-            "MockDiscord",
-            "ui"
+            "OnboardingSession",
+            "CoreOnboardingManager"
           ],
           "functions": [
             "__init__",
-            "_load_master_list",
-            "_load_all_repos",
-            "_extract_repo_number",
-            "_parse_devlog"
+            "initialize",
+            "execute",
+            "cleanup",
+            "get_status"
+          ]
+        },
+        {
+          "file": "core\\managers\\base_manager.py",
+          "similarity_score": 0.47,
+          "common_keywords": [
+            "initialize",
+            "__init__",
+            "cleanup",
+            "get_status",
+            "manager"
+          ],
+          "classes": [
+            "BaseManager"
+          ],
+          "functions": [
+            "__init__",
+            "initialize",
+            "execute",
+            "_execute_operation",
+            "cleanup"
           ]
         }
       ],
       "recommendation": "CHECK_IF_DUPLICATE - Similar functionality exists, verify if duplicate"
-    },
-    {
-      "file_path": "src\\core\\error_handling\\coordination_error_handler.py",
-      "relative_path": "core\\error_handling\\coordination_error_handler.py",
-      "functionality_exists": true,
-      "similar_files": [
-        {
-          "file": "core\\error_handling\\component_management.py",
-          "similarity_score": 0.6,
-          "common_keywords": [
-            "reset_component",
-            "manager",
-            "get_component_status",
-            "add_recovery_strategy",
-            "register_circuit_breaker"
-          ],
-          "classes": [
-            "ComponentManager"
-          ],
-          "functions": [
-            "register_circuit_breaker",
-            "register_retry_mechanism",
-            "add_recovery_strategy",
-            "get_component_status",
-            "reset_component"
-          ]
-        },
-        {
-          "file": "core\\error_handling\\error_handling_system.py",
-          "similarity_score": 0.31,
-          "common_keywords": [
-            "reset_component",
-            "manager",
-            "get_component_status",
-            "register_circuit_breaker",
-            "register_retry_mechanism"
-          ],
-          "classes": [
-            "ErrorRecoveryManager",
-            "UnifiedErrorHandlingOrchestrator"
-          ],
-          "functions": [
-            "with_error_recovery",
-            "get_error_handling_orchestrator",
-            "__init__",
-            "add_strategy",
-            "attempt_recovery"
-          ]
-        },
-        {
-          "file": "core\\orchestration\\orchestrator_events.py",
-          "similarity_score": 0.31,
-          "common_keywords": [
-            "orchestrator",
-            "manager",
-            "__init__",
-            "handler"
-          ],
-          "classes": [
-            "OrchestratorEvents"
-          ],
-          "functions": [
-            "__init__",
-            "on",
-            "off",
-            "emit",
-            "clear_listeners"
-          ]
-        },
-        {
-          "file": "services\\chat_presence\\chat_presence_orchestrator.py",
-          "similarity_score": 0.31,
-          "common_keywords": [
-            "orchestrator",
-            "manager",
-            "__init__",
-            "handler"
-          ],
-          "classes": [
-            "ChatPresenceOrchestrator"
-          ],
-          "functions": [
-            "__init__"
-          ]
-        }
-      ],
-      "recommendation": "CHECK_IF_DUPLICATE - Similar functionality exists, verify if duplicate"
-    },
-    {
-      "file_path": "src\\discord_commander\\github_book_viewer.py",
-      "relative_path": "discord_commander\\github_book_viewer.py",
-      "functionality_exists": false,
-      "similar_files": [
-        {
-          "file": "discord_commander\\controllers\\messaging_controller_view.py",
-          "similarity_score": 0.32,
-          "common_keywords": [
-            "MockSelectOption",
-            "MockSelect",
-            "MockExt",
-            "MockButton",
-            "MockCog"
-          ],
-          "classes": [
-            "MessagingControllerView",
-            "MockView",
-            "MockSelect",
-            "MockButton",
-            "MockSelectOption",
-            "MockUI",
-            "MockButtonStyle",
-            "MockCog",
-            "MockCommands",
-            "MockExt",
-            "MockDiscord",
-            "ui"
-          ],
-          "functions": [
-            "__init__",
-            "_load_agents",
-            "_create_agent_options",
-            "_get_status_emoji",
-            "_extract_points"
-          ]
-        }
-      ],
-      "recommendation": "POSSIBLE_DUPLICATE - Some similar functionality, investigate"
-    },
-    {
-      "file_path": "src\\ai_training\\dreamvault\\scrapers\\scraper_login.py",
-      "relative_path": "ai_training\\dreamvault\\scrapers\\scraper_login.py",
-      "functionality_exists": false,
-      "similar_files": [
-        {
-          "file": "ai_training\\dreamvault\\scrapers\\__init__.py",
-          "similarity_score": 0.43,
-          "common_keywords": [
-            "manager",
-            "scraper",
-            "handler"
-          ],
-          "classes": [],
-          "functions": []
-        }
-      ],
-      "recommendation": "POSSIBLE_DUPLICATE - Some similar functionality, investigate"
-    },
-    {
-      "file_path": "src\\application\\use_cases\\assign_task_uc.py",
-      "relative_path": "application\\use_cases\\assign_task_uc.py",
-      "functionality_exists": false,
-      "similar_files": [
-        {
-          "file": "core\\orchestration\\service_orchestrator.py",
-          "similarity_score": 0.38,
-          "common_keywords": [
-            "service",
-            "execute",
-            "__init__"
-          ],
-          "classes": [
-            "ServiceOrchestrator"
-          ],
-          "functions": [
-            "__init__",
-            "plan",
-            "execute",
-            "report"
-          ]
-        },
-        {
-          "file": "services\\messaging_cli.py",
-          "similarity_score": 0.38,
-          "common_keywords": [
-            "service",
-            "execute",
-            "__init__"
-          ],
-          "classes": [
-            "MessagingCLI"
-          ],
-          "functions": [
-            "main",
-            "__init__",
-            "execute"
-          ]
-        }
-      ],
-      "recommendation": "POSSIBLE_DUPLICATE - Some similar functionality, investigate"
-    },
-    {
-      "file_path": "src\\core\\vector_database.py",
-      "relative_path": "core\\vector_database.py",
-      "functionality_exists": false,
-      "similar_files": [
-        {
-          "file": "services\\models\\vector_models.py",
-          "similarity_score": 0.46,
-          "common_keywords": [
-            "EmbeddingModel",
-            "SearchResult",
-            "SearchType",
-            "SearchQuery",
-            "DocumentType"
-          ],
-          "classes": [
-            "EmbeddingModel",
-            "DocumentType",
-            "SearchType",
-            "VectorDocument",
-            "EmbeddingResult",
-            "SearchQuery",
-            "SearchResult",
-            "SimilaritySearchResult"
-          ],
-          "functions": [
-            "from_dict",
-            "to_dict"
-          ]
-        }
-      ],
-      "recommendation": "POSSIBLE_DUPLICATE - Some similar functionality, investigate"
-    },
-    {
-      "file_path": "src\\core\\error_handling\\error_utilities_core.py",
-      "relative_path": "core\\error_handling\\error_utilities_core.py",
-      "functionality_exists": false,
-      "similar_files": [
-        {
-          "file": "core\\error_handling\\error_config.py",
-          "similarity_score": 0.33,
-          "common_keywords": [
-            "RecoverableErrors",
-            "ErrorSeverityMapping"
-          ],
-          "classes": [
-            "RetryConfig",
-            "CircuitBreakerConfig",
-            "RecoverableErrors",
-            "ErrorSeverityMapping"
-          ],
-          "functions": [
-            "calculate_delay"
-          ]
-        }
-      ],
-      "recommendation": "POSSIBLE_DUPLICATE - Some similar functionality, investigate"
     },
     {
       "file_path": "src\\core\\managers\\core_onboarding_manager.py",
       "relative_path": "core\\managers\\core_onboarding_manager.py",
-      "functionality_exists": false,
+      "functionality_exists": true,
       "similar_files": [
+        {
+          "file": "core\\managers\\domains\\lifecycle_domain_manager.py",
+          "similarity_score": 0.71,
+          "common_keywords": [
+            "complete_onboarding",
+            "start_onboarding",
+            "initialize",
+            "__init__",
+            "OnboardingSession"
+          ],
+          "classes": [
+            "OnboardingSession",
+            "LifecycleDomainManager"
+          ],
+          "functions": [
+            "__init__",
+            "initialize",
+            "execute",
+            "cleanup",
+            "get_status"
+          ]
+        },
         {
           "file": "core\\managers\\core_recovery_manager.py",
           "similarity_score": 0.5,
           "common_keywords": [
-            "manager",
             "initialize",
-            "handler",
-            "execute",
-            "cleanup"
+            "__init__",
+            "cleanup",
+            "get_status",
+            "manager"
           ],
           "classes": [
             "CoreRecoveryManager"
@@ -1763,11 +1870,11 @@
           "file": "core\\managers\\core_results_manager.py",
           "similarity_score": 0.5,
           "common_keywords": [
-            "manager",
             "initialize",
-            "handler",
-            "execute",
-            "cleanup"
+            "__init__",
+            "cleanup",
+            "get_status",
+            "manager"
           ],
           "classes": [
             "CoreResultsManager"
@@ -1784,11 +1891,11 @@
           "file": "core\\managers\\base_manager.py",
           "similarity_score": 0.47,
           "common_keywords": [
-            "manager",
             "initialize",
-            "handler",
-            "execute",
-            "cleanup"
+            "__init__",
+            "cleanup",
+            "get_status",
+            "manager"
           ],
           "classes": [
             "BaseManager"
@@ -1805,11 +1912,11 @@
           "file": "core\\managers\\core_execution_manager.py",
           "similarity_score": 0.44,
           "common_keywords": [
-            "manager",
             "initialize",
-            "handler",
-            "execute",
-            "cleanup"
+            "__init__",
+            "cleanup",
+            "get_status",
+            "manager"
           ],
           "classes": [
             "CoreExecutionManager"
@@ -1821,26 +1928,89 @@
             "execute_task",
             "register_protocol"
           ]
-        },
+        }
+      ],
+      "recommendation": "REVIEW_DUPLICATE - Similar functionality exists, may be duplicate"
+    },
+    {
+      "file_path": "src\\ai_training\\dreamvault\\scrapers\\scraper_login.py",
+      "relative_path": "ai_training\\dreamvault\\scrapers\\scraper_login.py",
+      "functionality_exists": false,
+      "similar_files": [
         {
-          "file": "core\\managers\\core_monitoring_manager.py",
+          "file": "ai_training\\dreamvault\\scrapers\\__init__.py",
           "similarity_score": 0.43,
           "common_keywords": [
             "manager",
-            "initialize",
-            "execute",
-            "cleanup",
-            "get_status"
+            "handler",
+            "scraper"
+          ],
+          "classes": [],
+          "functions": []
+        }
+      ],
+      "recommendation": "POSSIBLE_DUPLICATE - Some similar functionality, investigate"
+    },
+    {
+      "file_path": "src\\application\\use_cases\\assign_task_uc.py",
+      "relative_path": "application\\use_cases\\assign_task_uc.py",
+      "functionality_exists": false,
+      "similar_files": [
+        {
+          "file": "core\\orchestration\\service_orchestrator.py",
+          "similarity_score": 0.38,
+          "common_keywords": [
+            "__init__",
+            "service",
+            "execute"
           ],
           "classes": [
-            "CoreMonitoringManager"
+            "ServiceOrchestrator"
           ],
           "functions": [
             "__init__",
-            "initialize",
+            "plan",
             "execute",
-            "create_alert",
-            "record_metric"
+            "report"
+          ]
+        },
+        {
+          "file": "services\\messaging_cli.py",
+          "similarity_score": 0.33,
+          "common_keywords": [
+            "__init__",
+            "service",
+            "execute"
+          ],
+          "classes": [
+            "MessagingCLI"
+          ],
+          "functions": [
+            "main",
+            "__init__",
+            "execute"
+          ]
+        }
+      ],
+      "recommendation": "POSSIBLE_DUPLICATE - Some similar functionality, investigate"
+    },
+    {
+      "file_path": "src\\core\\messaging_templates.py",
+      "relative_path": "core\\messaging_templates.py",
+      "functionality_exists": false,
+      "similar_files": [
+        {
+          "file": "core\\messaging_template_texts.py",
+          "similarity_score": 0.38,
+          "common_keywords": [
+            "format_s2a_message",
+            "manager",
+            "service"
+          ],
+          "classes": [],
+          "functions": [
+            "format_d2a_payload",
+            "format_s2a_message"
           ]
         }
       ],
@@ -1855,11 +2025,11 @@
           "file": "core\\managers\\core_results_manager.py",
           "similarity_score": 0.5,
           "common_keywords": [
-            "manager",
             "initialize",
-            "execute",
+            "__init__",
             "cleanup",
-            "get_status"
+            "get_status",
+            "manager"
           ],
           "classes": [
             "CoreResultsManager"
@@ -1876,11 +2046,11 @@
           "file": "core\\managers\\core_service_coordinator.py",
           "similarity_score": 0.5,
           "common_keywords": [
-            "manager",
             "initialize",
-            "execute",
+            "__init__",
             "cleanup",
-            "get_status"
+            "get_status",
+            "manager"
           ],
           "classes": [
             "CoreServiceCoordinator"
@@ -1897,11 +2067,11 @@
           "file": "core\\managers\\resource_crud_operations.py",
           "similarity_score": 0.5,
           "common_keywords": [
+            "delete_resource",
+            "__init__",
             "get_resource",
             "manager",
-            "delete_resource",
-            "update_resource",
-            "create_resource"
+            "update_resource"
           ],
           "classes": [
             "ResourceCRUDOperations"
@@ -1915,38 +2085,38 @@
           ]
         },
         {
-          "file": "core\\managers\\core_monitoring_manager.py",
+          "file": "core\\managers\\core_recovery_manager.py",
           "similarity_score": 0.46,
           "common_keywords": [
-            "manager",
             "initialize",
-            "execute",
+            "__init__",
             "cleanup",
-            "get_status"
+            "get_status",
+            "manager"
           ],
           "classes": [
-            "CoreMonitoringManager"
+            "CoreRecoveryManager"
           ],
           "functions": [
             "__init__",
             "initialize",
             "execute",
-            "create_alert",
-            "record_metric"
+            "cleanup",
+            "get_status"
           ]
         },
         {
-          "file": "core\\managers\\core_recovery_manager.py",
+          "file": "core\\managers\\execution\\execution_coordinator.py",
           "similarity_score": 0.46,
           "common_keywords": [
-            "manager",
             "initialize",
-            "execute",
+            "__init__",
             "cleanup",
-            "get_status"
+            "get_status",
+            "manager"
           ],
           "classes": [
-            "CoreRecoveryManager"
+            "ExecutionCoordinator"
           ],
           "functions": [
             "__init__",
@@ -1969,8 +2139,8 @@
           "similarity_score": 0.5,
           "common_keywords": [
             "cleanup",
-            "__init__",
-            "initialize"
+            "initialize",
+            "__init__"
           ],
           "classes": [
             "BaseUtility"
@@ -1982,19 +2152,35 @@
           ]
         },
         {
-          "file": "core\\utilities\\cleanup_utilities.py",
-          "similarity_score": 0.44,
+          "file": "core\\shared_utilities\\base_utility.py",
+          "similarity_score": 0.5,
           "common_keywords": [
-            "manager",
             "cleanup",
+            "initialize",
+            "__init__"
+          ],
+          "classes": [
+            "BaseUtility"
+          ],
+          "functions": [
             "__init__",
-            "initialize"
+            "initialize",
+            "cleanup"
+          ]
+        },
+        {
+          "file": "core\\shared_utilities\\cleanup_manager.py",
+          "similarity_score": 0.5,
+          "common_keywords": [
+            "cleanup",
+            "initialize",
+            "__init__",
+            "manager"
           ],
           "classes": [
             "CleanupManager"
           ],
           "functions": [
-            "create_cleanup_manager",
             "__init__",
             "initialize",
             "cleanup",
@@ -2002,63 +2188,43 @@
           ]
         },
         {
-          "file": "core\\utilities\\config_utilities.py",
-          "similarity_score": 0.44,
+          "file": "core\\shared_utilities\\configuration_manager_util.py",
+          "similarity_score": 0.5,
           "common_keywords": [
-            "manager",
             "cleanup",
+            "initialize",
             "__init__",
-            "initialize"
+            "manager"
           ],
           "classes": [
-            "ConfigurationManager"
+            "ConfigurationManagerUtil"
           ],
           "functions": [
-            "create_configuration_manager",
             "__init__",
             "initialize",
             "cleanup",
-            "set_config"
+            "set_config",
+            "get_config"
           ]
         },
         {
-          "file": "core\\utilities\\init_utilities.py",
-          "similarity_score": 0.44,
+          "file": "core\\shared_utilities\\initialization_manager.py",
+          "similarity_score": 0.5,
           "common_keywords": [
-            "manager",
             "cleanup",
+            "initialize",
             "__init__",
-            "initialize"
+            "manager"
           ],
           "classes": [
             "InitializationManager"
           ],
           "functions": [
-            "create_initialization_manager",
             "__init__",
             "initialize",
             "cleanup",
-            "is_initialized"
-          ]
-        },
-        {
-          "file": "core\\managers\\core_service_coordinator.py",
-          "similarity_score": 0.4,
-          "common_keywords": [
-            "manager",
-            "cleanup",
-            "__init__",
-            "initialize"
-          ],
-          "classes": [
-            "CoreServiceCoordinator"
-          ],
-          "functions": [
-            "__init__",
-            "initialize",
-            "execute",
-            "cleanup",
-            "get_status"
+            "is_initialized",
+            "get_init_time"
           ]
         }
       ],
@@ -2074,8 +2240,8 @@
           "similarity_score": 0.5,
           "common_keywords": [
             "manager",
-            "handler",
-            "__init__"
+            "__init__",
+            "handler"
           ],
           "classes": [],
           "functions": []
@@ -2085,46 +2251,57 @@
           "similarity_score": 0.5,
           "common_keywords": [
             "manager",
-            "handler",
-            "__init__"
+            "__init__",
+            "handler"
           ],
           "classes": [],
           "functions": []
         },
         {
-          "file": "services\\chat_presence\\chat_presence_orchestrator.py",
+          "file": "core\\shared_utilities\\__init__.py",
           "similarity_score": 0.5,
           "common_keywords": [
             "manager",
             "__init__",
             "handler"
           ],
+          "classes": [],
+          "functions": []
+        },
+        {
+          "file": "core\\shared_utilities\\cleanup_manager.py",
+          "similarity_score": 0.38,
+          "common_keywords": [
+            "manager",
+            "__init__",
+            "handler"
+          ],
           "classes": [
-            "ChatPresenceOrchestrator"
+            "CleanupManager"
           ],
           "functions": [
-            "__init__"
+            "__init__",
+            "initialize",
+            "cleanup",
+            "register_handler"
           ]
         },
         {
-          "file": "core\\__init__.py",
-          "similarity_score": 0.33,
+          "file": "services\\overnight_command_handler.py",
+          "similarity_score": 0.38,
           "common_keywords": [
             "manager",
-            "__init__"
+            "__init__",
+            "handler"
           ],
-          "classes": [],
-          "functions": []
-        },
-        {
-          "file": "core\\config\\__init__.py",
-          "similarity_score": 0.33,
-          "common_keywords": [
-            "manager",
-            "__init__"
+          "classes": [
+            "OvernightCommandHandler"
           ],
-          "classes": [],
-          "functions": []
+          "functions": [
+            "__init__",
+            "can_handle",
+            "handle"
+          ]
         }
       ],
       "recommendation": "POSSIBLE_DUPLICATE - Some similar functionality, investigate"
@@ -2138,11 +2315,11 @@
           "file": "core\\managers\\core_resource_manager.py",
           "similarity_score": 0.5,
           "common_keywords": [
+            "delete_resource",
+            "__init__",
             "get_resource",
             "manager",
-            "delete_resource",
-            "update_resource",
-            "create_resource"
+            "update_resource"
           ],
           "classes": [
             "CoreResourceManager"
@@ -2160,8 +2337,8 @@
           "similarity_score": 0.33,
           "common_keywords": [
             "manager",
-            "handler",
-            "__init__"
+            "__init__",
+            "handler"
           ],
           "classes": [],
           "functions": []
@@ -2206,78 +2383,11 @@
           "similarity_score": 0.33,
           "common_keywords": [
             "manager",
-            "handler",
-            "__init__"
+            "__init__",
+            "handler"
           ],
           "classes": [],
           "functions": []
-        }
-      ],
-      "recommendation": "POSSIBLE_DUPLICATE - Some similar functionality, investigate"
-    },
-    {
-      "file_path": "src\\core\\managers\\execution\\base_execution_manager.py",
-      "relative_path": "core\\managers\\execution\\base_execution_manager.py",
-      "functionality_exists": false,
-      "similar_files": [
-        {
-          "file": "core\\managers\\core_execution_manager.py",
-          "similarity_score": 0.38,
-          "common_keywords": [
-            "manager",
-            "initialize",
-            "register_protocol",
-            "get_execution_status",
-            "execute_task"
-          ],
-          "classes": [
-            "CoreExecutionManager"
-          ],
-          "functions": [
-            "__init__",
-            "initialize",
-            "execute",
-            "execute_task",
-            "register_protocol"
-          ]
-        },
-        {
-          "file": "core\\managers\\execution\\execution_runner.py",
-          "similarity_score": 0.31,
-          "common_keywords": [
-            "manager",
-            "get_execution_status",
-            "execute_task",
-            "__init__"
-          ],
-          "classes": [
-            "ExecutionRunner"
-          ],
-          "functions": [
-            "__init__",
-            "execute_task",
-            "get_execution_status"
-          ]
-        },
-        {
-          "file": "core\\managers\\results\\base_results_manager.py",
-          "similarity_score": 0.31,
-          "common_keywords": [
-            "manager",
-            "_execute_operation",
-            "processor",
-            "__init__"
-          ],
-          "classes": [
-            "BaseResultsManager"
-          ],
-          "functions": [
-            "__init__",
-            "_execute_operation",
-            "process_results",
-            "cleanup",
-            "get_status"
-          ]
         }
       ],
       "recommendation": "POSSIBLE_DUPLICATE - Some similar functionality, investigate"
@@ -2341,6 +2451,91 @@
       "recommendation": "POSSIBLE_DUPLICATE - Some similar functionality, investigate"
     },
     {
+      "file_path": "src\\core\\managers\\execution\\base_execution_manager.py",
+      "relative_path": "core\\managers\\execution\\base_execution_manager.py",
+      "functionality_exists": false,
+      "similar_files": [
+        {
+          "file": "core\\managers\\core_execution_manager.py",
+          "similarity_score": 0.38,
+          "common_keywords": [
+            "initialize",
+            "__init__",
+            "register_protocol",
+            "execute_task",
+            "manager"
+          ],
+          "classes": [
+            "CoreExecutionManager"
+          ],
+          "functions": [
+            "__init__",
+            "initialize",
+            "execute",
+            "execute_task",
+            "register_protocol"
+          ]
+        },
+        {
+          "file": "core\\managers\\execution\\execution_runner.py",
+          "similarity_score": 0.31,
+          "common_keywords": [
+            "execute_task",
+            "manager",
+            "__init__",
+            "get_execution_status"
+          ],
+          "classes": [
+            "ExecutionRunner"
+          ],
+          "functions": [
+            "__init__",
+            "execute_task",
+            "get_execution_status"
+          ]
+        },
+        {
+          "file": "core\\managers\\results\\base_results_manager.py",
+          "similarity_score": 0.31,
+          "common_keywords": [
+            "processor",
+            "manager",
+            "__init__",
+            "_execute_operation"
+          ],
+          "classes": [
+            "BaseResultsManager"
+          ],
+          "functions": [
+            "__init__",
+            "_execute_operation",
+            "process_results",
+            "cleanup",
+            "get_status"
+          ]
+        },
+        {
+          "file": "web\\execution_coordinator_routes.py",
+          "similarity_score": 0.31,
+          "common_keywords": [
+            "execute_task",
+            "manager",
+            "register_protocol",
+            "get_execution_status"
+          ],
+          "classes": [],
+          "functions": [
+            "_get_execution_coordinator",
+            "get_execution_status",
+            "list_tasks",
+            "create_task",
+            "get_task_status"
+          ]
+        }
+      ],
+      "recommendation": "POSSIBLE_DUPLICATE - Some similar functionality, investigate"
+    },
+    {
       "file_path": "src\\core\\managers\\monitoring\\metric_manager.py",
       "relative_path": "core\\managers\\monitoring\\metric_manager.py",
       "functionality_exists": false,
@@ -2349,11 +2544,11 @@
           "file": "core\\managers\\monitoring\\monitoring_crud.py",
           "similarity_score": 0.45,
           "common_keywords": [
-            "manager",
+            "__init__",
             "MetricType",
-            "record_metric",
+            "manager",
             "monitor",
-            "__init__"
+            "record_metric"
           ],
           "classes": [
             "AlertLevel",
@@ -2372,10 +2567,10 @@
           "file": "core\\managers\\monitoring\\monitoring_query.py",
           "similarity_score": 0.4,
           "common_keywords": [
-            "get_metrics",
-            "manager",
             "monitor",
-            "__init__"
+            "manager",
+            "__init__",
+            "get_metrics"
           ],
           "classes": [
             "MonitoringQuery"
@@ -2392,10 +2587,10 @@
           "file": "core\\performance\\performance_collector.py",
           "similarity_score": 0.4,
           "common_keywords": [
-            "get_metrics",
-            "record_metric",
             "MetricType",
-            "__init__"
+            "record_metric",
+            "__init__",
+            "get_metrics"
           ],
           "classes": [
             "MetricType",
@@ -2414,50 +2609,29 @@
           "file": "core\\managers\\__init__.py",
           "similarity_score": 0.38,
           "common_keywords": [
-            "manager",
             "monitor",
+            "manager",
             "__init__"
           ],
           "classes": [],
           "functions": []
         },
         {
-          "file": "core\\managers\\monitoring\\__init__.py",
+          "file": "core\\managers\\monitoring\\widget_manager.py",
           "similarity_score": 0.38,
           "common_keywords": [
-            "manager",
             "monitor",
+            "manager",
             "__init__"
           ],
-          "classes": [],
-          "functions": []
-        }
-      ],
-      "recommendation": "POSSIBLE_DUPLICATE - Some similar functionality, investigate"
-    },
-    {
-      "file_path": "src\\core\\managers\\monitoring\\metrics_manager.py",
-      "relative_path": "core\\managers\\monitoring\\metrics_manager.py",
-      "functionality_exists": false,
-      "similar_files": [
-        {
-          "file": "core\\managers\\core_monitoring_manager.py",
-          "similarity_score": 0.31,
-          "common_keywords": [
-            "execute",
-            "manager",
-            "get_status",
-            "monitor"
-          ],
           "classes": [
-            "CoreMonitoringManager"
+            "WidgetType",
+            "WidgetManager"
           ],
           "functions": [
             "__init__",
-            "initialize",
-            "execute",
-            "create_alert",
-            "record_metric"
+            "create_widget",
+            "get_widgets"
           ]
         }
       ],
@@ -2472,9 +2646,9 @@
           "file": "core\\managers\\results\\validation_results_processor.py",
           "similarity_score": 0.5,
           "common_keywords": [
-            "manager",
+            "processor",
             "_process_result_by_type",
-            "processor"
+            "manager"
           ],
           "classes": [
             "ValidationResultsProcessor"
@@ -2485,69 +2659,14 @@
           ]
         },
         {
-          "file": "core\\managers\\results\\general_results_processor.py",
-          "similarity_score": 0.38,
-          "common_keywords": [
-            "manager",
-            "_process_result_by_type",
-            "processor"
-          ],
-          "classes": [
-            "GeneralResultsProcessor"
-          ],
-          "functions": [
-            "_process_result_by_type",
-            "_process_general_result",
-            "_analyze_dict_data",
-            "_analyze_list_data"
-          ]
-        },
-        {
-          "file": "core\\managers\\results\\performance_results_processor.py",
-          "similarity_score": 0.38,
-          "common_keywords": [
-            "manager",
-            "_process_result_by_type",
-            "processor"
-          ],
-          "classes": [
-            "PerformanceResultsProcessor"
-          ],
-          "functions": [
-            "_process_result_by_type",
-            "_process_performance_result",
-            "_calculate_performance_score",
-            "_analyze_performance_trends"
-          ]
-        },
-        {
           "file": "core\\managers\\results\\__init__.py",
           "similarity_score": 0.33,
           "common_keywords": [
-            "manager",
-            "processor"
+            "processor",
+            "manager"
           ],
           "classes": [],
           "functions": []
-        },
-        {
-          "file": "core\\managers\\results\\integration_results_processor.py",
-          "similarity_score": 0.33,
-          "common_keywords": [
-            "manager",
-            "_process_result_by_type",
-            "processor"
-          ],
-          "classes": [
-            "IntegrationResultsProcessor"
-          ],
-          "functions": [
-            "_process_result_by_type",
-            "_process_integration_result",
-            "_process_api_integration",
-            "_process_database_integration",
-            "_process_file_integration"
-          ]
         }
       ],
       "recommendation": "POSSIBLE_DUPLICATE - Some similar functionality, investigate"
@@ -2561,9 +2680,9 @@
           "file": "core\\managers\\results\\analysis_results_processor.py",
           "similarity_score": 0.5,
           "common_keywords": [
-            "manager",
+            "processor",
             "_process_result_by_type",
-            "processor"
+            "manager"
           ],
           "classes": [
             "AnalysisResultsProcessor"
@@ -2574,68 +2693,239 @@
           ]
         },
         {
-          "file": "core\\managers\\results\\general_results_processor.py",
-          "similarity_score": 0.38,
-          "common_keywords": [
-            "manager",
-            "_process_result_by_type",
-            "processor"
-          ],
-          "classes": [
-            "GeneralResultsProcessor"
-          ],
-          "functions": [
-            "_process_result_by_type",
-            "_process_general_result",
-            "_analyze_dict_data",
-            "_analyze_list_data"
-          ]
-        },
-        {
-          "file": "core\\managers\\results\\performance_results_processor.py",
-          "similarity_score": 0.38,
-          "common_keywords": [
-            "manager",
-            "_process_result_by_type",
-            "processor"
-          ],
-          "classes": [
-            "PerformanceResultsProcessor"
-          ],
-          "functions": [
-            "_process_result_by_type",
-            "_process_performance_result",
-            "_calculate_performance_score",
-            "_analyze_performance_trends"
-          ]
-        },
-        {
           "file": "core\\managers\\results\\__init__.py",
           "similarity_score": 0.33,
           "common_keywords": [
-            "manager",
-            "processor"
+            "processor",
+            "manager"
           ],
           "classes": [],
           "functions": []
-        },
+        }
+      ],
+      "recommendation": "POSSIBLE_DUPLICATE - Some similar functionality, investigate"
+    },
+    {
+      "file_path": "src\\core\\managers\\domains\\execution_domain_manager.py",
+      "relative_path": "core\\managers\\domains\\execution_domain_manager.py",
+      "functionality_exists": false,
+      "similar_files": [
         {
-          "file": "core\\managers\\results\\integration_results_processor.py",
-          "similarity_score": 0.33,
+          "file": "core\\managers\\core_execution_manager.py",
+          "similarity_score": 0.43,
           "common_keywords": [
-            "manager",
-            "_process_result_by_type",
-            "processor"
+            "initialize",
+            "__init__",
+            "register_protocol",
+            "coordinator",
+            "cleanup"
           ],
           "classes": [
-            "IntegrationResultsProcessor"
+            "CoreExecutionManager"
           ],
           "functions": [
-            "_process_result_by_type",
-            "_process_integration_result",
-            "_process_api_integration",
-            "_process_database_integration",
-            "_process_file_integration"
+            "__init__",
+            "initialize",
+            "execute",
+            "execute_task",
+            "register_protocol"
+          ]
+        },
+        {
+          "file": "core\\managers\\core_recovery_manager.py",
+          "similarity_score": 0.38,
+          "common_keywords": [
+            "initialize",
+            "__init__",
+            "service",
+            "cleanup",
+            "get_status"
+          ],
+          "classes": [
+            "CoreRecoveryManager"
+          ],
+          "functions": [
+            "__init__",
+            "initialize",
+            "execute",
+            "cleanup",
+            "get_status"
+          ]
+        },
+        {
+          "file": "core\\managers\\core_service_coordinator.py",
+          "similarity_score": 0.38,
+          "common_keywords": [
+            "initialize",
+            "__init__",
+            "coordinator",
+            "service",
+            "cleanup"
+          ],
+          "classes": [
+            "CoreServiceCoordinator"
+          ],
+          "functions": [
+            "__init__",
+            "initialize",
+            "execute",
+            "cleanup",
+            "get_status"
+          ]
+        },
+        {
+          "file": "core\\managers\\core_results_manager.py",
+          "similarity_score": 0.33,
+          "common_keywords": [
+            "initialize",
+            "__init__",
+            "cleanup",
+            "get_status",
+            "manager"
+          ],
+          "classes": [
+            "CoreResultsManager"
+          ],
+          "functions": [
+            "__init__",
+            "initialize",
+            "execute",
+            "cleanup",
+            "get_status"
+          ]
+        },
+        {
+          "file": "core\\managers\\base_manager.py",
+          "similarity_score": 0.33,
+          "common_keywords": [
+            "initialize",
+            "__init__",
+            "cleanup",
+            "get_status",
+            "manager"
+          ],
+          "classes": [
+            "BaseManager"
+          ],
+          "functions": [
+            "__init__",
+            "initialize",
+            "execute",
+            "_execute_operation",
+            "cleanup"
+          ]
+        }
+      ],
+      "recommendation": "POSSIBLE_DUPLICATE - Some similar functionality, investigate"
+    },
+    {
+      "file_path": "src\\core\\managers\\domains\\resource_domain_manager.py",
+      "relative_path": "core\\managers\\domains\\resource_domain_manager.py",
+      "functionality_exists": false,
+      "similar_files": [
+        {
+          "file": "core\\engines\\monitoring_core_engine.py",
+          "similarity_score": 0.33,
+          "common_keywords": [
+            "initialize",
+            "__init__",
+            "cleanup",
+            "get_status",
+            "monitor"
+          ],
+          "classes": [
+            "MonitoringCoreEngine"
+          ],
+          "functions": [
+            "__init__",
+            "initialize",
+            "execute",
+            "_collect_metrics",
+            "_check_health"
+          ]
+        },
+        {
+          "file": "core\\engines\\coordination_core_engine.py",
+          "similarity_score": 0.33,
+          "common_keywords": [
+            "initialize",
+            "__init__",
+            "cleanup",
+            "get_status",
+            "monitor"
+          ],
+          "classes": [
+            "CoordinationCoreEngine"
+          ],
+          "functions": [
+            "__init__",
+            "is_initialized",
+            "initialize",
+            "execute",
+            "coordinate"
+          ]
+        },
+        {
+          "file": "core\\managers\\core_execution_manager.py",
+          "similarity_score": 0.33,
+          "common_keywords": [
+            "initialize",
+            "__init__",
+            "cleanup",
+            "get_status",
+            "manager"
+          ],
+          "classes": [
+            "CoreExecutionManager"
+          ],
+          "functions": [
+            "__init__",
+            "initialize",
+            "execute",
+            "execute_task",
+            "register_protocol"
+          ]
+        },
+        {
+          "file": "core\\managers\\core_recovery_manager.py",
+          "similarity_score": 0.33,
+          "common_keywords": [
+            "initialize",
+            "__init__",
+            "cleanup",
+            "get_status",
+            "manager"
+          ],
+          "classes": [
+            "CoreRecoveryManager"
+          ],
+          "functions": [
+            "__init__",
+            "initialize",
+            "execute",
+            "cleanup",
+            "get_status"
+          ]
+        },
+        {
+          "file": "core\\managers\\core_resource_manager.py",
+          "similarity_score": 0.33,
+          "common_keywords": [
+            "initialize",
+            "__init__",
+            "cleanup",
+            "get_status",
+            "manager"
+          ],
+          "classes": [
+            "CoreResourceManager"
+          ],
+          "functions": [
+            "__init__",
+            "initialize",
+            "execute",
+            "create_resource",
+            "get_resource"
           ]
         }
       ],
@@ -2650,10 +2940,10 @@
           "file": "core\\managers\\monitoring\\metric_manager.py",
           "similarity_score": 0.4,
           "common_keywords": [
-            "get_metrics",
-            "record_metric",
             "MetricType",
-            "__init__"
+            "record_metric",
+            "__init__",
+            "get_metrics"
           ],
           "classes": [
             "MetricType",
@@ -2677,10 +2967,10 @@
           "file": "core\\unified_logging_system.py",
           "similarity_score": 0.4,
           "common_keywords": [
-            "configure_logging",
             "get_logger",
             "handler",
-            "__init__"
+            "__init__",
+            "configure_logging"
           ],
           "classes": [
             "UnifiedLoggingSystem"
@@ -2702,30 +2992,12 @@
       "functionality_exists": false,
       "similar_files": [
         {
-          "file": "core\\analytics\\processors\\prediction\\prediction_analyzer.py",
-          "similarity_score": 0.38,
-          "common_keywords": [
-            "analyzer",
-            "monitor",
-            "__init__"
-          ],
-          "classes": [
-            "PredictionAnalyzer"
-          ],
-          "functions": [
-            "__init__",
-            "analyze_prediction",
-            "_calculate_quality_score",
-            "_generate_recommendations"
-          ]
-        },
-        {
           "file": "discord_commander\\swarm_showcase_commands.py",
           "similarity_score": 0.33,
           "common_keywords": [
-            "analyzer",
             "monitor",
-            "__init__"
+            "__init__",
+            "analyzer"
           ],
           "classes": [
             "SwarmShowcaseCommands"
@@ -2734,6 +3006,166 @@
             "__init__",
             "_load_all_agent_statuses",
             "_load_roadmap_data"
+          ]
+        }
+      ],
+      "recommendation": "POSSIBLE_DUPLICATE - Some similar functionality, investigate"
+    },
+    {
+      "file_path": "src\\core\\base\\availability_mixin.py",
+      "relative_path": "core\\base\\availability_mixin.py",
+      "functionality_exists": false,
+      "similar_files": [
+        {
+          "file": "core\\base\\__init__.py",
+          "similarity_score": 0.4,
+          "common_keywords": [
+            "service",
+            "handler"
+          ],
+          "classes": [],
+          "functions": []
+        },
+        {
+          "file": "web\\vision_routes.py",
+          "similarity_score": 0.4,
+          "common_keywords": [
+            "service",
+            "handler"
+          ],
+          "classes": [],
+          "functions": [
+            "analyze_color",
+            "health_check"
+          ]
+        },
+        {
+          "file": "services\\messaging_handlers.py",
+          "similarity_score": 0.33,
+          "common_keywords": [
+            "service",
+            "handler"
+          ],
+          "classes": [],
+          "functions": [
+            "handle_message",
+            "handle_broadcast"
+          ]
+        },
+        {
+          "file": "services\\cli\\__main__.py",
+          "similarity_score": 0.33,
+          "common_keywords": [
+            "service",
+            "handler"
+          ],
+          "classes": [],
+          "functions": [
+            "create_parser",
+            "main"
+          ]
+        },
+        {
+          "file": "web\\integrations_routes.py",
+          "similarity_score": 0.33,
+          "common_keywords": [
+            "service",
+            "handler"
+          ],
+          "classes": [],
+          "functions": [
+            "jarvis_conversation",
+            "jarvis_vision",
+            "health_check"
+          ]
+        }
+      ],
+      "recommendation": "POSSIBLE_DUPLICATE - Some similar functionality, investigate"
+    },
+    {
+      "file_path": "src\\core\\base\\error_handling_mixin.py",
+      "relative_path": "core\\base\\error_handling_mixin.py",
+      "functionality_exists": false,
+      "similar_files": [
+        {
+          "file": "core\\error_handling\\coordination_strategies.py",
+          "similarity_score": 0.33,
+          "common_keywords": [
+            "manager",
+            "service",
+            "handler"
+          ],
+          "classes": [],
+          "functions": [
+            "create_service_restart_strategy",
+            "create_config_reset_strategy",
+            "register_default_coordination_strategies",
+            "restart_service",
+            "reset_config"
+          ]
+        },
+        {
+          "file": "core\\base\\__init__.py",
+          "similarity_score": 0.33,
+          "common_keywords": [
+            "manager",
+            "service",
+            "handler"
+          ],
+          "classes": [],
+          "functions": []
+        },
+        {
+          "file": "core\\shared_utilities\\error_handler.py",
+          "similarity_score": 0.33,
+          "common_keywords": [
+            "manager",
+            "handle_error",
+            "handler"
+          ],
+          "classes": [
+            "ErrorHandler"
+          ],
+          "functions": [
+            "__init__",
+            "initialize",
+            "cleanup",
+            "handle_error",
+            "get_error_summary"
+          ]
+        },
+        {
+          "file": "services\\overnight_command_handler.py",
+          "similarity_score": 0.33,
+          "common_keywords": [
+            "manager",
+            "service",
+            "handler"
+          ],
+          "classes": [
+            "OvernightCommandHandler"
+          ],
+          "functions": [
+            "__init__",
+            "can_handle",
+            "handle"
+          ]
+        },
+        {
+          "file": "services\\role_command_handler.py",
+          "similarity_score": 0.33,
+          "common_keywords": [
+            "manager",
+            "service",
+            "handler"
+          ],
+          "classes": [
+            "RoleCommandHandler"
+          ],
+          "functions": [
+            "__init__",
+            "can_handle",
+            "handle"
           ]
         }
       ],

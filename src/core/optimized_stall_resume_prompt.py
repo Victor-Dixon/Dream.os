@@ -133,8 +133,9 @@ class OptimizedStallResumePrompt:
         agent_id: str,
         fsm_state: Optional[str] = None,
         last_mission: Optional[str] = None,
-        stall_duration_minutes: float = 0.0
-    ) -> str:
+        stall_duration_minutes: float = 0.0,
+        validate_activity: bool = True
+    ) -> Optional[str]:
         """
         Generate optimized resume prompt based on FSM state and Cycle Planner.
 
@@ -143,10 +144,27 @@ class OptimizedStallResumePrompt:
             fsm_state: Current FSM state (from status.json)
             last_mission: Last known mission (from status.json)
             stall_duration_minutes: How long agent has been stalled
+            validate_activity: If True, validate agent is inactive before generating
 
         Returns:
-            Optimized resume prompt
+            Optimized resume prompt, or None if agent is active (when validate_activity=True)
         """
+        # Validate agent activity before generating resume prompt
+        if validate_activity:
+            try:
+                from src.core.stall_resumer_guard import should_send_resume
+                should_send, reason = should_send_resume(agent_id, lookback_minutes=60)
+                
+                if not should_send:
+                    logger.info(
+                        f"⏸️ Skipping resume prompt for {agent_id}: {reason}"
+                    )
+                    return None
+            except Exception as e:
+                logger.warning(
+                    f"Activity validation failed for {agent_id}, proceeding anyway: {e}"
+                )
+        
         # Load agent's current state
         agent_state = self._load_agent_state(agent_id)
 

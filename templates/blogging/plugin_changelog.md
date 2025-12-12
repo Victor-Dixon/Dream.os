@@ -39,3 +39,4 @@ TradingRobotPlug Update v[Version]: [Feature Name]
 - `{features}` - New features list
 - `{fixes}` - Bug fixes list
 
+

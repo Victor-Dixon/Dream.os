@@ -44,3 +44,4 @@ Verified that empty task array validation in contract manager is working correct
 
 
 
+

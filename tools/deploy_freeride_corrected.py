@@ -11,13 +11,19 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# SFTP credentials
+# SFTP credentials - load from environment variables
+# Set these in .env file (not committed to git):
+# FREERIDE_SFTP_HOST=your_host
+# FREERIDE_SFTP_PORT=22
+# FREERIDE_SFTP_USER=your_username
+# FREERIDE_SFTP_PASS=your_password
+# FREERIDE_SFTP_REMOTE_PATH=/path/to/remote
 SFTP_CONFIG = {
-    'host': '185.224.138.49',
-    'port': 22,
-    'username': 'u996867598',
-    'password': 'FreeRideInvestor2024!',
-    'remote_path': '/home/u996867598/domains/freerideinvestor.com/public_html/wp-content/themes/freerideinvestor'
+    'host': os.getenv('FREERIDE_SFTP_HOST', ''),
+    'port': int(os.getenv('FREERIDE_SFTP_PORT', '22')),
+    'username': os.getenv('FREERIDE_SFTP_USER', ''),
+    'password': os.getenv('FREERIDE_SFTP_PASS', ''),
+    'remote_path': os.getenv('FREERIDE_SFTP_REMOTE_PATH', '')
 }
 
 # Files to deploy
