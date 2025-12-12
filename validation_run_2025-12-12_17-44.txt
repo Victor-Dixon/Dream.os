@@ -1,0 +1,16 @@
+Γ£à Loaded V2 rules from config\v2_rules.yaml
+
+ΓÜá∩╕Å  Found 107 V2 compliance issues:
+  ΓÜá∩╕Å  src\swarm_pulse\intelligence.py: 339 lines (limit: 300)
+  ΓÜá∩╕Å  src\discord_commander\discord_embeds.py: 340 lines (limit: 300)
+  ΓÜá∩╕Å  src\discord_commander\discord_gui_modals.py: 600 lines (limit: 300)
+  ΓÜá∩╕Å  src\discord_commander\discord_service.py: 386 lines (limit: 300)
+  ΓÜá∩╕Å  src\discord_commander\github_book_viewer.py: 1164 lines (limit: 300)
+  ΓÜá∩╕Å  src\discord_commander\messaging_commands.py: 425 lines (limit: 300)
+  ΓÜá∩╕Å  src\discord_commander\status_change_monitor.py: 811 lines (limit: 300)
+  ΓÜá∩╕Å  src\discord_commander\swarm_showcase_commands.py: 650 lines (limit: 300)
+  ΓÜá∩╕Å  src\discord_commander\systems_inventory_commands.py: 353 lines (limit: 300)
+  ΓÜá∩╕Å  src\discord_commander\unified_discord_bot.py: 2692 lines (limit: 300)
+  ... and 97 more
+
+≡ƒÆí Consider refactoring large files to meet V2 standards
