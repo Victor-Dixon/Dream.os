@@ -105,38 +105,128 @@ def _apply_template(
     message_id: str,
     extra: Optional[Dict[str, Any]] = None,
 ) -> str:
+    # #region agent log
+    import json
+    log_path = Path(r"d:\Agent_Cellphone_V2_Repository\.cursor\debug.log")
+    try:
+        with open(log_path, "a", encoding="utf-8") as f:
+            f.write(json.dumps({"id": f"log_{int(datetime.now().timestamp() * 1000)}_apply_template_entry", "timestamp": int(datetime.now().timestamp() * 1000), "location": "messaging_infrastructure.py:99", "message": "_apply_template entry", "data": {"category": str(category), "message_length": len(message), "message_preview": message[:100], "sender": sender, "recipient": recipient}, "sessionId": "debug-session", "runId": "run1", "hypothesisId": "A"}) + "\n")
+    except: pass
+    # #endregion
     tmpl = MESSAGE_TEMPLATES.get(category)
+    # #region agent log
+    try:
+        with open(log_path, "a", encoding="utf-8") as f:
+            f.write(json.dumps({"id": f"log_{int(datetime.now().timestamp() * 1000)}_template_check", "timestamp": int(datetime.now().timestamp() * 1000), "location": "messaging_infrastructure.py:108", "message": "Template lookup result", "data": {"template_found": tmpl is not None, "template_type": type(tmpl).__name__ if tmpl else None}, "sessionId": "debug-session", "runId": "run1", "hypothesisId": "C"}) + "\n")
+    except: pass
+    # #endregion
     if not tmpl:
+        # #region agent log
+        try:
+            with open(log_path, "a", encoding="utf-8") as f:
+                f.write(json.dumps({"id": f"log_{int(datetime.now().timestamp() * 1000)}_no_template", "timestamp": int(datetime.now().timestamp() * 1000), "location": "messaging_infrastructure.py:110", "message": "No template found, returning original message", "data": {"category": str(category)}, "sessionId": "debug-session", "runId": "run1", "hypothesisId": "C"}) + "\n")
+        except: pass
+        # #endregion
         return message
     now = datetime.now().isoformat(timespec="seconds")
     meta = extra or {}
     # D2A requires extra fields; use canonical formatter to avoid KeyErrors.
     if category == MessageCategory.D2A:
+        # CRITICAL FIX: Don't default actions to message - let format_d2a_payload set proper default
+        # Otherwise message appears twice: once in {content} and once in {actions}
         d2a_payload = {
             k: v
             for k, v in {
                 "interpretation": meta.get("interpretation"),
-                "actions": meta.get("actions", message),
+                "actions": meta.get("actions"),  # Only include if explicitly provided
                 "fallback": meta.get("fallback"),
                 "discord_response_policy": meta.get("discord_response_policy"),
                 "d2a_report_format": meta.get("d2a_report_format"),
             }.items()
             if v is not None
         }
+        # #region agent log
+        try:
+            with open(log_path, "a", encoding="utf-8") as f:
+                f.write(json.dumps({"id": f"log_{int(datetime.now().timestamp() * 1000)}_d2a_payload", "timestamp": int(datetime.now().timestamp() * 1000), "location": "messaging_infrastructure.py:125", "message": "D2A payload before format_d2a_payload", "data": {"payload_keys": list(d2a_payload.keys()), "actions_value": d2a_payload.get("actions", "")[:100] if d2a_payload.get("actions") else None}, "sessionId": "debug-session", "runId": "run1", "hypothesisId": "D"}) + "\n")
+        except: pass
+        # #endregion
         d2a_meta = format_d2a_payload(d2a_payload)
-        return tmpl.format(
-            sender=sender,
-            recipient=recipient,
-            priority=priority.value,
-            message_id=message_id,
-            timestamp=now,
-            content=message,
-            interpretation=d2a_meta["interpretation"],
-            actions=d2a_meta["actions"],
-            discord_response_policy=d2a_meta["discord_response_policy"],
-            d2a_report_format=d2a_meta["d2a_report_format"],
-            fallback=d2a_meta["fallback"],
-        )
+        # #region agent log
+        try:
+            with open(log_path, "a", encoding="utf-8") as f:
+                f.write(json.dumps({"id": f"log_{int(datetime.now().timestamp() * 1000)}_d2a_meta", "timestamp": int(datetime.now().timestamp() * 1000), "location": "messaging_infrastructure.py:126", "message": "D2A meta after format_d2a_payload", "data": {"meta_keys": list(d2a_meta.keys()), "actions_value": d2a_meta.get("actions", "")[:100] if d2a_meta.get("actions") else None}, "sessionId": "debug-session", "runId": "run1", "hypothesisId": "D"}) + "\n")
+        except: pass
+        # #endregion
+        # #region agent log
+        try:
+            template_preview = str(tmpl)[:200] if tmpl else None
+            with open(log_path, "a", encoding="utf-8") as f:
+                f.write(json.dumps({"id": f"log_{int(datetime.now().timestamp() * 1000)}_before_format", "timestamp": int(datetime.now().timestamp() * 1000), "location": "messaging_infrastructure.py:127", "message": "Before tmpl.format() call", "data": {"template_preview": template_preview, "content_param": message[:100], "has_content_placeholder": "{content}" in str(tmpl) if tmpl else False}, "sessionId": "debug-session", "runId": "run1", "hypothesisId": "A"}) + "\n")
+        except: pass
+        # #endregion
+        try:
+            result = tmpl.format(
+                sender=sender,
+                recipient=recipient,
+                priority=priority.value,
+                message_id=message_id,
+                timestamp=now,
+                content=message,
+                interpretation=d2a_meta["interpretation"],
+                actions=d2a_meta["actions"],
+                discord_response_policy=d2a_meta["discord_response_policy"],
+                d2a_report_format=d2a_meta["d2a_report_format"],
+                fallback=d2a_meta["fallback"],
+            )
+            # #region agent log
+            try:
+                message_count = result.count(message)
+                with open(log_path, "a", encoding="utf-8") as f:
+                    f.write(json.dumps({"id": f"log_{int(datetime.now().timestamp() * 1000)}_format_success", "timestamp": int(datetime.now().timestamp() * 1000), "location": "messaging_infrastructure.py:139", "message": "tmpl.format() succeeded", "data": {"result_length": len(result), "result_preview": result[:200], "result_ends_with_message": result.endswith(message), "message_in_result": message in result, "message_appears_count": message_count}, "sessionId": "debug-session", "runId": "run1", "hypothesisId": "A"}) + "\n")
+            except: pass
+            # #endregion
+            # CRITICAL FIX: Validate message appears exactly once in template
+            # If message appears multiple times, it means it's being duplicated (e.g., in {content} AND {actions})
+            message_count = result.count(message)
+            if message_count > 1:
+                # Message appears multiple times - this is the bug!
+                # Find where it appears and log for debugging
+                import re
+                positions = [m.start() for m in re.finditer(re.escape(message), result)]
+                # #region agent log
+                try:
+                    with open(log_path, "a", encoding="utf-8") as f:
+                        f.write(json.dumps({"id": f"log_{int(datetime.now().timestamp() * 1000)}_duplicate_detected", "timestamp": int(datetime.now().timestamp() * 1000), "location": "messaging_infrastructure.py:175", "message": "DUPLICATE MESSAGE DETECTED", "data": {"message_count": message_count, "positions": positions}, "sessionId": "debug-session", "runId": "run1", "hypothesisId": "B"}) + "\n")
+                except: pass
+                # #endregion
+                # Fix: Remove duplicate occurrences, keep only the first one (in {content})
+                # The message should only appear in the "User Message:" section
+                user_message_section = "User Message:\n"
+                if user_message_section in result:
+                    # Find the content section and ensure message only appears there
+                    section_start = result.find(user_message_section) + len(user_message_section)
+                    section_end = result.find("\n\n", section_start)
+                    if section_end == -1:
+                        section_end = len(result)
+                    content_section = result[section_start:section_end]
+                    # If message appears in content section, remove it from elsewhere
+                    if message in content_section:
+                        # Remove message from after the template (if appended)
+                        if result.endswith(message):
+                            result = result[:-len(message)].rstrip()
+                        # Remove message from actions if it's there
+                        if f"Proposed Action:\n{message}" in result:
+                            result = result.replace(f"Proposed Action:\n{message}", f"Proposed Action:\n{d2a_meta['actions']}")
+            return result
+        except Exception as e:
+            # #region agent log
+            try:
+                with open(log_path, "a", encoding="utf-8") as f:
+                    f.write(json.dumps({"id": f"log_{int(datetime.now().timestamp() * 1000)}_format_error", "timestamp": int(datetime.now().timestamp() * 1000), "location": "messaging_infrastructure.py:139", "message": "tmpl.format() raised exception", "data": {"error_type": type(e).__name__, "error_message": str(e)}, "sessionId": "debug-session", "runId": "run1", "hypothesisId": "A"}) + "\n")
+            except: pass
+            # #endregion
+            return message
 
     # A2A needs ask/context/next_step/fallback populated for clean rendering.
     if category == MessageCategory.A2A:
@@ -1463,6 +1553,15 @@ class ConsolidatedMessagingService(BaseService):
                 else "DISCORD"
             )
 
+            # #region agent log
+            import json
+            from pathlib import Path
+            log_path = Path(r"d:\Agent_Cellphone_V2_Repository\.cursor\debug.log")
+            try:
+                with open(log_path, "a", encoding="utf-8") as f:
+                    f.write(json.dumps({"id": f"log_{int(datetime.now().timestamp() * 1000)}_before_template", "timestamp": int(datetime.now().timestamp() * 1000), "location": "messaging_infrastructure.py:1466", "message": "Before template application", "data": {"apply_template": apply_template, "message_length": len(message), "message_preview": message[:100], "message_category": str(message_category) if message_category else None}, "sessionId": "debug-session", "runId": "run1", "hypothesisId": "B"}) + "\n")
+            except: pass
+            # #endregion
             templated_message = message
             if apply_template:
                 category = message_category or MessageCategory.D2A
@@ -1475,6 +1574,24 @@ class ConsolidatedMessagingService(BaseService):
                     message_id=str(uuid.uuid4()),
                     extra={},
                 )
+                # #region agent log
+                try:
+                    message_count = templated_message.count(message)
+                    with open(log_path, "a", encoding="utf-8") as f:
+                        f.write(json.dumps({"id": f"log_{int(datetime.now().timestamp() * 1000)}_after_template", "timestamp": int(datetime.now().timestamp() * 1000), "location": "messaging_infrastructure.py:1477", "message": "After template application", "data": {"templated_length": len(templated_message), "templated_preview": templated_message[:200], "original_in_templated": message in templated_message, "templated_ends_with_original": templated_message.endswith(message), "message_appears_count": message_count}, "sessionId": "debug-session", "runId": "run1", "hypothesisId": "B"}) + "\n")
+                except: pass
+                # #endregion
+                # CRITICAL FIX: If templated message ends with original message, it was appended incorrectly
+                # Remove the appended message (it should only be in {content} placeholder)
+                if templated_message.endswith(message) and message_count > 1:
+                    # Message was appended - remove it
+                    templated_message = templated_message[:-len(message)].rstrip()
+                    # #region agent log
+                    try:
+                        with open(log_path, "a", encoding="utf-8") as f:
+                            f.write(json.dumps({"id": f"log_{int(datetime.now().timestamp() * 1000)}_removed_append", "timestamp": int(datetime.now().timestamp() * 1000), "location": "messaging_infrastructure.py:1485", "message": "Removed appended message from templated result", "data": {"new_length": len(templated_message)}, "sessionId": "debug-session", "runId": "run1", "hypothesisId": "B"}) + "\n")
+                    except: pass
+                    # #endregion
 
             # Validate agent can receive messages (check for pending multi-agent requests)
             from ..core.multi_agent_request_validator import get_multi_agent_validator
