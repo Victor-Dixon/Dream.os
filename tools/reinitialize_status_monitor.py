@@ -8,6 +8,8 @@ Resets monitor state and starts fresh monitoring cycle.
 
 Author: Agent-3 (Infrastructure & DevOps Specialist)
 Date: 2025-12-12
+
+<!-- SSOT Domain: infrastructure -->
 """
 
 import sys

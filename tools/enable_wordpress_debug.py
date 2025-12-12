@@ -7,6 +7,8 @@ Enables WordPress debug mode to capture runtime errors.
 Helps identify fatal errors preventing theme detection.
 
 Author: Agent-7 (Web Development Specialist)
+
+<!-- SSOT Domain: infrastructure -->
 """
 
 import sys
