@@ -12,6 +12,8 @@ Checks various causes of WordPress login problems:
 - File permissions
 
 Author: Agent-3 (Infrastructure & DevOps Specialist)
+
+<!-- SSOT Domain: infrastructure -->
 """
 
 import sys

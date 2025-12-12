@@ -7,6 +7,8 @@ Analyzes CI workflow files for performance issues and optimization opportunities
 
 Author: Agent-3 (Infrastructure & DevOps Specialist)
 Task: CP-010
+
+<!-- SSOT Domain: infrastructure -->
 """
 
 import yaml

@@ -9,6 +9,8 @@ Fixes common causes of wp-admin redirect loops:
 3. Plugin conflicts
 
 Author: Agent-3 (Infrastructure & DevOps Specialist)
+
+<!-- SSOT Domain: infrastructure -->
 """
 
 import sys
