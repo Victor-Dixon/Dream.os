@@ -66,11 +66,29 @@ line_length = 100
 [tool.ruff]
 line-length = 100
 target-version = "py311"
+exclude = [
+  "tests/**/data/**",
+  "archive/**",
+  "temp_repos/**",
+  "temp/**",
+  "*.egg-info/**",
+  "build/**",
+  "dist/**",
+  ".git/**",
+  "__pycache__/**",
+  ".venv/**",
+  "venv/**",
+]
+
+[tool.ruff.lint]
 extend-select = ["E","F","W","I","UP","B","C4","S","TCH","TID"]
 ignore = [
   "W505",  # docstring line length
 ]
-exclude = ["tests/**/data/**"]
+
+[tool.ruff.lint.per-file-ignores]
+"archive/**" = ["E501", "I001", "E401", "C408", "E702"]
+"agent1_response.py" = ["E501"]
 
 [tool.flake8]
 max-line-length = 88

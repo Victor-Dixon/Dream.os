@@ -60,8 +60,20 @@ def enable_debug_mode(site: str, enable: bool = True) -> bool:
         print("📡 Connected to server")
         print()
         
-        # Path to wp-config.php
-        wp_config_path = "/public_html/wp-config.php"
+        # Path to wp-config.php - use site-specific path
+        site_config = manager.SITE_CONFIGS.get(site, {})
+        remote_base = site_config.get("remote_base", "")
+        if remote_base:
+            # Extract domain from remote_base (e.g., "domains/freerideinvestor.com/public_html/wp-content/themes/...")
+            # wp-config.php is at: domains/{domain}/public_html/wp-config.php
+            parts = remote_base.split("/")
+            if len(parts) >= 3 and parts[0] == "domains":
+                domain = parts[1]
+                wp_config_path = f"domains/{domain}/public_html/wp-config.php"
+            else:
+                wp_config_path = "/public_html/wp-config.php"
+        else:
+            wp_config_path = "/public_html/wp-config.php"
         
         # Read current wp-config.php
         print(f"📖 Reading wp-config.php...")
