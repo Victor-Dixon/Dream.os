@@ -59,11 +59,19 @@ def validate_workflow_syntax(workflow_path: Path) -> Dict[str, Any]:
             return result
 
         # GitHub Actions uses 'on' as trigger field (can be dict or string)
-        if "on" not in workflow:
+        # Note: 'on' can be parsed as boolean True in YAML, so check both
+        on_key = None
+        if "on" in workflow:
+            on_key = "on"
+        elif True in workflow and isinstance(workflow[True], (dict, str, list)):
+            # YAML parser may interpret 'on:' as boolean True key
+            on_key = True
+        
+        if on_key is None:
             result["errors"].append("Missing 'on' trigger field")
         else:
             # 'on' field exists, validate it's not empty
-            on_value = workflow.get("on")
+            on_value = workflow.get(on_key)
             if not on_value:
                 result["errors"].append("'on' field is empty")
 
