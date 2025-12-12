@@ -4,6 +4,8 @@ Fetch Dream.os CI Status from GitHub API
 Agent-3 (Infrastructure & DevOps)
 
 Fetches the latest CI/CD workflow run status for Dream.os repository.
+
+<!-- SSOT Domain: infrastructure -->
 """
 
 import os

@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """
 Check for missing dependencies that might cause CI failures
+
+<!-- SSOT Domain: infrastructure -->
 """
 
 import ast

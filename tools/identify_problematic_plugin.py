@@ -6,6 +6,8 @@ Identify Problematic WordPress Plugin
 Re-enables plugins one by one to identify which plugin causes the error.
 
 Author: Agent-3 (Infrastructure & DevOps Specialist)
+
+<!-- SSOT Domain: infrastructure -->
 """
 
 import sys

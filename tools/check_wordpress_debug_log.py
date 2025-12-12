@@ -6,6 +6,8 @@ Check WordPress Debug Log - Read Error Logs
 Reads WordPress debug.log to identify actual errors.
 
 Author: Agent-3 (Infrastructure & DevOps Specialist)
+
+<!-- SSOT Domain: infrastructure -->
 """
 
 import sys

@@ -7,6 +7,8 @@ Disables WordPress plugins by renaming the plugins folder.
 Helps identify if a plugin is causing the critical error.
 
 Author: Agent-3 (Infrastructure & DevOps Specialist)
+
+<!-- SSOT Domain: infrastructure -->
 """
 
 import sys

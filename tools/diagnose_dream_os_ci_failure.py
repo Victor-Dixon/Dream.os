@@ -4,6 +4,8 @@ Dream.os CI Failure Diagnostic Tool
 Agent-3 (Infrastructure & DevOps)
 
 Diagnoses common CI/CD failure patterns for the Dream.os repository.
+
+<!-- SSOT Domain: infrastructure -->
 """
 
 import os
