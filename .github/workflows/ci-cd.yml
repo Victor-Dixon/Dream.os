@@ -100,7 +100,13 @@ jobs:
           python -c "import pytest; print('✅ pytest installed')" || (echo "❌ pytest check failed" && exit 1)
 
       - name: 🔧 Install pre-commit hooks
-        run: pre-commit install
+        continue-on-error: true
+        run: |
+          if [ -f .pre-commit-config.yaml ]; then
+            pre-commit install || echo "⚠️  Pre-commit install had issues"
+          else
+            echo "⚠️  .pre-commit-config.yaml not found, skipping pre-commit install"
+          fi
 
       - name: ✅ Run pre-commit checks
         continue-on-error: true
