@@ -160,11 +160,11 @@
     "Zero duplicate class definitions found"
   ],
   "next_actions": [
-    "Check inbox for Agent-3 proof_ledger update and pull patch",
-    "Run pytest on proof_ledger suite after Agent-3 fix; capture validation artifact",
-    "Update passdown and Swarm Brain with resolution patterns; notify Captain",
-    "Proceed with pending Agent-7 SSOT review once requirements/xfail list arrives",
-    "Continue SSOT compliance monitoring for new assignments"
+    "Continue SSOT compliance monitoring for new code",
+    "Remove debug instrumentation after template fix confirmation",
+    "Expand QA domain test coverage",
+    "Verify SSOT consolidation completeness",
+    "Update SSOT documentation with latest patterns"
   ],
   "mission_details": {
     "phase": "Phase 2/3: Tools Consolidation Execution - IN PROGRESS",
