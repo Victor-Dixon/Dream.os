@@ -52,9 +52,9 @@ jobs:
       - name: ⚡ Run all linters in parallel
         run: |
           # Run linters in background for parallel execution
-          ruff check . --output-format=github &
-          black --check . &
-          isort --check-only . &
+          ruff check . --exclude "agent_workspaces,temp_repos,archive,.git,__pycache__,*.pyc,venv,.venv" --output-format=github &
+          black --check . --exclude "/(agent_workspaces|temp_repos|archive|.git|__pycache__|venv|.venv)/" &
+          isort --check-only . --skip "agent_workspaces,temp_repos,archive" &
           wait
           echo "✅ All linters passed"
       
@@ -98,12 +98,12 @@ jobs:
           else
             echo "⚠️  requirements.txt not found, installing minimal deps"
           fi
-          pip install pytest pytest-cov pytest-xdist
+          pip install pytest pytest-cov pytest-xdist --ignore=agent_workspaces --ignore=temp_repos --ignore=archive
       
       - name: 🧪 Run tests with parallel execution
         continue-on-error: true
         run: |
-          pytest -n auto \
+          pytest -n auto \ --ignore=agent_workspaces --ignore=temp_repos --ignore=archive
             --cov=src --cov=scripts \
             --cov-report=xml --cov-report=term \
             --cov-fail-under=${{ env.COVERAGE_THRESHOLD }} \
@@ -147,11 +147,11 @@ jobs:
           else
             echo "⚠️  requirements.txt not found, installing minimal deps"
           fi
-          pip install pytest pytest-cov
+          pip install pytest pytest-cov --ignore=agent_workspaces --ignore=temp_repos --ignore=archive
       
       - name: 🧪 Run tests
         continue-on-error: true
-        run: pytest -q --maxfail=1 --disable-warnings --cov=src --cov-report=xml
+        run: pytest -q --maxfail=1 --disable-warnings --cov=src --cov-report=xml --ignore=agent_workspaces --ignore=temp_repos --ignore=archive
   
   # 🚀 Deploy - Only on main after all tests pass
   deploy:
@@ -177,7 +177,7 @@ jobs:
 # 1. Parallel linter execution (3x faster)
 # 2. Reduced Python version matrix (3.11 only for core, 2 versions for extended)
 # 3. Reduced OS matrix (2 instead of 3)
-# 4. pytest-xdist for parallel test execution
+# 4. pytest-xdist for parallel test execution --ignore=agent_workspaces --ignore=temp_repos --ignore=archive
 # 5. pip caching with actions/setup-python
 # 6. Fast-fail strategy for extended tests
 # 7. Conditional extended tests (only on PR/main)

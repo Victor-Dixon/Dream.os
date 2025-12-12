@@ -21,7 +21,10 @@ jobs:
           # Install requirements if they exist
           if [ -f requirements.txt ]; then
             echo "Installing from requirements.txt..."
-            pip install -r requirements.txt
+            pip install -r requirements.txt || {
+              echo "⚠️  requirements.txt installation had errors, trying individual packages..."
+              pip install pytest pytest-cov ruff black isort pyyaml python-dotenv pydantic requests || true
+            }
           else
             echo "⚠️  requirements.txt not found, installing minimal deps"
             pip install pytest pytest-cov ruff black isort pyyaml
@@ -34,6 +37,8 @@ jobs:
           pip install pytest pytest-cov ruff black isort || true
           # Handle optional dependencies that may fail in CI (e.g., pyautogui on headless systems)
           pip install pyautogui || echo "⚠️  pyautogui installation failed (may not work in headless CI)"
+          pip install discord.py || echo "⚠️  discord.py installation failed (optional)"
+          pip install aiohttp || echo "⚠️  aiohttp installation failed (optional)"
           # Verify critical dependencies
           python -c "import pytest; import ruff; print('✅ Core dependencies installed')" || echo "⚠️  Dependency check failed"
       - name: V2 compliance rules
@@ -49,15 +54,16 @@ jobs:
       - name: Lint
         continue-on-error: true
         run: |
-          ruff check . || echo "⚠️  Ruff check failed"
-          black --check . || echo "⚠️  Black check failed"
-          isort --check-only . || echo "⚠️  isort check failed"
+          ruff check . --exclude "agent_workspaces,temp_repos,archive,.git,__pycache__,*.pyc,venv,.venv" || echo "⚠️  Ruff check failed"
+          black --check . --exclude "/(agent_workspaces|temp_repos|archive|.git|__pycache__|venv|.venv)/" || echo "⚠️  Black check failed"
+          isort --check-only . --skip "agent_workspaces,temp_repos,archive" || echo "⚠️  isort check failed"
       - name: Tests
         continue-on-error: true
         run: |
           # Run tests if tests directory exists and has Python files
           if [ -d "tests" ] && [ "$(find tests -name 'test_*.py' -type f 2>/dev/null | wc -l)" -gt 0 ]; then
             pytest -q --maxfail=5 --disable-warnings \
+              --ignore=agent_workspaces --ignore=temp_repos --ignore=archive \
               --cov=scripts --cov=src \
               --cov-report=xml --cov-report=term \
               --cov-fail-under=0 || echo "⚠️ Some tests failed"
