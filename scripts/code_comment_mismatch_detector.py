@@ -104,10 +104,17 @@ class CodeCommentAnalyzer:
                         func_params.remove('cls')
                     
                     # Look for parameter mentions in docstring
+                    # Exclude docstring section headers (Args:, Returns:, Raises:, etc.)
+                    docstring_sections = ['Args', 'Returns', 'Raises', 'Yields', 'Note', 'Example', 'Warning']
                     param_pattern = r'(\w+)\s*:.*?(\w+)'
                     doc_params = re.findall(r':param\s+(\w+)', docstring, re.IGNORECASE)
                     doc_params.extend(re.findall(r':type\s+(\w+)', docstring, re.IGNORECASE))
-                    doc_params.extend(re.findall(r'Args:.*?(\w+)\s*:', docstring, re.IGNORECASE | re.DOTALL))
+                    # Only extract from Args section, not Returns section
+                    args_section = re.search(r'Args?:.*?(?=Returns?:|Raises?:|Yields?:|$)', docstring, re.IGNORECASE | re.DOTALL)
+                    if args_section:
+                        doc_params.extend(re.findall(r'(\w+)\s*:', args_section.group(0), re.IGNORECASE))
+                    # Filter out docstring section headers
+                    doc_params = [p for p in doc_params if p not in docstring_sections]
                     
                     # Check for documented params that don't exist
                     for doc_param in set(doc_params):
@@ -177,17 +184,22 @@ class CodeCommentAnalyzer:
                 comment = comment_match.group(1).strip()
                 
                 # Check for common mismatch patterns
+                # Look ahead up to 5 lines for return statements (not just next line)
                 if i < len(lines):
+                    next_lines = lines[i:min(i+5, len(lines))]
+                    next_lines_text = '\n'.join(next_lines)
                     next_line = lines[i].strip() if i < len(lines) else ""
                     
                     # Pattern: Comment says "returns X" but code doesn't return
                     if re.search(r'returns?\s+(\w+)', comment, re.IGNORECASE):
-                        if 'return' not in next_line and not next_line.startswith('def'):
+                        # Check if return appears in next 5 lines (not just next line)
+                        if 'return' not in next_lines_text and not next_line.startswith('def'):
+                            # Only flag if we're in a function context and no return found
                             issues.append({
                                 "type": "return_mismatch",
                                 "severity": "medium",
                                 "line": i,
-                                "message": f"Comment says 'returns' but next line doesn't return: {comment[:50]}",
+                                "message": f"Comment says 'returns' but no return found in next 5 lines: {comment[:50]}",
                                 "file": str(file_path.relative_to(self.project_root))
                             })
                     
