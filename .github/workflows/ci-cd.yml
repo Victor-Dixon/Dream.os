@@ -75,6 +75,7 @@ jobs:
       - name: 📦 Install dependencies
         continue-on-error: false
         run: |
+          set +e  # Allow optional dependencies to fail
           python -m pip install --upgrade pip setuptools wheel
           # Install requirements if they exist (handle optional GUI dependencies)
           if [ -f requirements.txt ]; then
@@ -84,18 +85,18 @@ jobs:
           fi
           if [ -f requirements-dev.txt ]; then
             # Install dev requirements, handling pyautogui gracefully
+            # First install base requirements if referenced
+            if grep -q "^-r requirements.txt" requirements-dev.txt; then
+              grep -v "^pyautogui" requirements.txt | grep -v "^#" | grep -v "^$" | xargs pip install || true
+            fi
+            # Then install dev-specific dependencies
             grep -v "^pyautogui" requirements-dev.txt | grep -v "^#" | grep -v "^$" | grep -v "^-r" | xargs pip install || true
             pip install pyautogui || echo "⚠️  pyautogui skipped (headless CI - expected)"
           fi
-          if [ -f requirements.txt ]; then
-            pip install -r requirements.txt
-          fi
-          if [ -f requirements-dev.txt ]; then
-            pip install -r requirements-dev.txt || echo "⚠️  requirements-dev.txt install had warnings"
-          fi
           # Install minimal testing dependencies as fallback
           pip install pytest pytest-cov ruff black isort pre-commit || echo "⚠️  Some dependencies may have failed"
-          # Verify critical dependencies
+          set -e  # Re-enable strict error handling
+          # Verify critical dependencies (must succeed)
           python -c "import pytest; print('✅ pytest installed')" || (echo "❌ pytest check failed" && exit 1)
 
       - name: 🔧 Install pre-commit hooks
@@ -146,30 +147,27 @@ jobs:
       - name: 📦 Install dependencies
         continue-on-error: false
         run: |
+          set +e  # Allow optional dependencies to fail
           python -m pip install --upgrade pip setuptools wheel
           # Install requirements if they exist (handle optional GUI dependencies in headless CI)
           if [ -f requirements.txt ]; then
             # Install all dependencies except pyautogui (fails in headless CI)
-            pip install $(grep -v "^pyautogui" requirements.txt | grep -v "^#" | grep -v "^$" | tr '\n' ' ') || \
-            (pip install -r requirements.txt 2>&1 | grep -v "pyautogui" || true) || \
-            echo "⚠️  Some optional dependencies (pyautogui) skipped in headless CI"
+            grep -v "^pyautogui" requirements.txt | grep -v "^#" | grep -v "^$" | xargs pip install || true
+            pip install pyautogui || echo "⚠️  pyautogui skipped (headless CI - expected)"
           fi
           if [ -f requirements-dev.txt ]; then
             # Install dev requirements, handling pyautogui gracefully
-            pip install $(grep -v "^pyautogui" requirements-dev.txt | grep -v "^#" | grep -v "^$" | grep -v "^-r" | tr '\n' ' ') || \
-            (pip install -r requirements-dev.txt 2>&1 | grep -v "pyautogui" || true) || \
-            echo "⚠️  Some dev dependencies (pyautogui) skipped in headless CI"
-          fi
-          if [ -f requirements.txt ]; then
-            pip install -r requirements.txt
-          fi
-          if [ -f requirements-dev.txt ]; then
-            pip install -r requirements-dev.txt || echo "⚠️  requirements-dev.txt install had warnings"
+            # First install base requirements if referenced
+            if grep -q "^-r requirements.txt" requirements-dev.txt && [ -f requirements.txt ]; then
+              grep -v "^pyautogui" requirements.txt | grep -v "^#" | grep -v "^$" | xargs pip install || true
+            fi
+            # Then install dev-specific dependencies
+            grep -v "^pyautogui" requirements-dev.txt | grep -v "^#" | grep -v "^$" | grep -v "^-r" | xargs pip install || true
+            pip install pyautogui || echo "⚠️  pyautogui skipped (headless CI - expected)"
           fi
           # Install minimal testing dependencies as fallback
           pip install pytest pytest-cov || echo "⚠️  Some dependencies may have failed"
-          # Handle optional dependencies that may fail in CI
-          pip install pyautogui || echo "⚠️  pyautogui installation failed (expected in headless CI)"
+          set -e  # Re-enable strict error handling
           # Verify pytest is available (critical - must succeed)
           python -c "import pytest; print('✅ pytest installed')" || (echo "❌ pytest check failed" && exit 1)
 
@@ -242,30 +240,27 @@ jobs:
       - name: 📦 Install dependencies
         continue-on-error: false
         run: |
+          set +e  # Allow optional dependencies to fail
           python -m pip install --upgrade pip setuptools wheel
           # Install requirements if they exist (handle optional GUI dependencies in headless CI)
           if [ -f requirements.txt ]; then
             # Install all dependencies except pyautogui (fails in headless CI)
-            pip install $(grep -v "^pyautogui" requirements.txt | grep -v "^#" | grep -v "^$" | tr '\n' ' ') || \
-            (pip install -r requirements.txt 2>&1 | grep -v "pyautogui" || true) || \
-            echo "⚠️  Some optional dependencies (pyautogui) skipped in headless CI"
+            grep -v "^pyautogui" requirements.txt | grep -v "^#" | grep -v "^$" | xargs pip install || true
+            pip install pyautogui || echo "⚠️  pyautogui skipped (headless CI - expected)"
           fi
           if [ -f requirements-dev.txt ]; then
             # Install dev requirements, handling pyautogui gracefully
-            pip install $(grep -v "^pyautogui" requirements-dev.txt | grep -v "^#" | grep -v "^$" | grep -v "^-r" | tr '\n' ' ') || \
-            (pip install -r requirements-dev.txt 2>&1 | grep -v "pyautogui" || true) || \
-            echo "⚠️  Some dev dependencies (pyautogui) skipped in headless CI"
-          fi
-          if [ -f requirements.txt ]; then
-            pip install -r requirements.txt
-          fi
-          if [ -f requirements-dev.txt ]; then
-            pip install -r requirements-dev.txt || echo "⚠️  requirements-dev.txt install had warnings"
+            # First install base requirements if referenced
+            if grep -q "^-r requirements.txt" requirements-dev.txt && [ -f requirements.txt ]; then
+              grep -v "^pyautogui" requirements.txt | grep -v "^#" | grep -v "^$" | xargs pip install || true
+            fi
+            # Then install dev-specific dependencies
+            grep -v "^pyautogui" requirements-dev.txt | grep -v "^#" | grep -v "^$" | grep -v "^-r" | xargs pip install || true
+            pip install pyautogui || echo "⚠️  pyautogui skipped (headless CI - expected)"
           fi
           # Install minimal testing dependencies as fallback
           pip install pytest pytest-cov || echo "⚠️  Some dependencies may have failed"
-          # Handle optional dependencies that may fail in CI
-          pip install pyautogui || echo "⚠️  pyautogui installation failed (expected in headless CI)"
+          set -e  # Re-enable strict error handling
           # Verify pytest is available (critical - must succeed)
           python -c "import pytest; print('✅ pytest installed')" || (echo "❌ pytest check failed" && exit 1)
 
@@ -312,30 +307,27 @@ jobs:
       - name: 📦 Install dependencies
         continue-on-error: false
         run: |
+          set +e  # Allow optional dependencies to fail
           python -m pip install --upgrade pip setuptools wheel
           # Install requirements if they exist (handle optional GUI dependencies in headless CI)
           if [ -f requirements.txt ]; then
             # Install all dependencies except pyautogui (fails in headless CI)
-            pip install $(grep -v "^pyautogui" requirements.txt | grep -v "^#" | grep -v "^$" | tr '\n' ' ') || \
-            (pip install -r requirements.txt 2>&1 | grep -v "pyautogui" || true) || \
-            echo "⚠️  Some optional dependencies (pyautogui) skipped in headless CI"
+            grep -v "^pyautogui" requirements.txt | grep -v "^#" | grep -v "^$" | xargs pip install || true
+            pip install pyautogui || echo "⚠️  pyautogui skipped (headless CI - expected)"
           fi
           if [ -f requirements-dev.txt ]; then
             # Install dev requirements, handling pyautogui gracefully
-            pip install $(grep -v "^pyautogui" requirements-dev.txt | grep -v "^#" | grep -v "^$" | grep -v "^-r" | tr '\n' ' ') || \
-            (pip install -r requirements-dev.txt 2>&1 | grep -v "pyautogui" || true) || \
-            echo "⚠️  Some dev dependencies (pyautogui) skipped in headless CI"
-          fi
-          if [ -f requirements.txt ]; then
-            pip install -r requirements.txt
-          fi
-          if [ -f requirements-dev.txt ]; then
-            pip install -r requirements-dev.txt || echo "⚠️  requirements-dev.txt install had warnings"
+            # First install base requirements if referenced
+            if grep -q "^-r requirements.txt" requirements-dev.txt && [ -f requirements.txt ]; then
+              grep -v "^pyautogui" requirements.txt | grep -v "^#" | grep -v "^$" | xargs pip install || true
+            fi
+            # Then install dev-specific dependencies
+            grep -v "^pyautogui" requirements-dev.txt | grep -v "^#" | grep -v "^$" | grep -v "^-r" | xargs pip install || true
+            pip install pyautogui || echo "⚠️  pyautogui skipped (headless CI - expected)"
           fi
           # Install minimal testing dependencies as fallback
           pip install pytest pytest-cov || echo "⚠️  Some dependencies may have failed"
-          # Handle optional dependencies that may fail in CI
-          pip install pyautogui || echo "⚠️  pyautogui installation failed (expected in headless CI)"
+          set -e  # Re-enable strict error handling
           # Verify pytest is available (critical - must succeed)
           python -c "import pytest; print('✅ pytest installed')" || (echo "❌ pytest check failed" && exit 1)
 
@@ -393,30 +385,27 @@ jobs:
       - name: 📦 Install dependencies
         continue-on-error: false
         run: |
+          set +e  # Allow optional dependencies to fail
           python -m pip install --upgrade pip setuptools wheel
           # Install requirements if they exist (handle optional GUI dependencies in headless CI)
           if [ -f requirements.txt ]; then
             # Install all dependencies except pyautogui (fails in headless CI)
-            pip install $(grep -v "^pyautogui" requirements.txt | grep -v "^#" | grep -v "^$" | tr '\n' ' ') || \
-            (pip install -r requirements.txt 2>&1 | grep -v "pyautogui" || true) || \
-            echo "⚠️  Some optional dependencies (pyautogui) skipped in headless CI"
+            grep -v "^pyautogui" requirements.txt | grep -v "^#" | grep -v "^$" | xargs pip install || true
+            pip install pyautogui || echo "⚠️  pyautogui skipped (headless CI - expected)"
           fi
           if [ -f requirements-dev.txt ]; then
             # Install dev requirements, handling pyautogui gracefully
-            pip install $(grep -v "^pyautogui" requirements-dev.txt | grep -v "^#" | grep -v "^$" | grep -v "^-r" | tr '\n' ' ') || \
-            (pip install -r requirements-dev.txt 2>&1 | grep -v "pyautogui" || true) || \
-            echo "⚠️  Some dev dependencies (pyautogui) skipped in headless CI"
-          fi
-          if [ -f requirements.txt ]; then
-            pip install -r requirements.txt
-          fi
-          if [ -f requirements-dev.txt ]; then
-            pip install -r requirements-dev.txt || echo "⚠️  requirements-dev.txt install had warnings"
+            # First install base requirements if referenced
+            if grep -q "^-r requirements.txt" requirements-dev.txt && [ -f requirements.txt ]; then
+              grep -v "^pyautogui" requirements.txt | grep -v "^#" | grep -v "^$" | xargs pip install || true
+            fi
+            # Then install dev-specific dependencies
+            grep -v "^pyautogui" requirements-dev.txt | grep -v "^#" | grep -v "^$" | grep -v "^-r" | xargs pip install || true
+            pip install pyautogui || echo "⚠️  pyautogui skipped (headless CI - expected)"
           fi
           # Install minimal testing dependencies as fallback
           pip install pytest pytest-cov || echo "⚠️  Some dependencies may have failed"
-          # Handle optional dependencies that may fail in CI
-          pip install pyautogui || echo "⚠️  pyautogui installation failed (expected in headless CI)"
+          set -e  # Re-enable strict error handling
           # Verify pytest is available (critical - must succeed)
           python -c "import pytest; print('✅ pytest installed')" || (echo "❌ pytest check failed" && exit 1)
 
@@ -476,30 +465,27 @@ jobs:
       - name: 📦 Install dependencies
         continue-on-error: false
         run: |
+          set +e  # Allow optional dependencies to fail
           python -m pip install --upgrade pip setuptools wheel
           # Install requirements if they exist (handle optional GUI dependencies in headless CI)
           if [ -f requirements.txt ]; then
             # Install all dependencies except pyautogui (fails in headless CI)
-            pip install $(grep -v "^pyautogui" requirements.txt | grep -v "^#" | grep -v "^$" | tr '\n' ' ') || \
-            (pip install -r requirements.txt 2>&1 | grep -v "pyautogui" || true) || \
-            echo "⚠️  Some optional dependencies (pyautogui) skipped in headless CI"
+            grep -v "^pyautogui" requirements.txt | grep -v "^#" | grep -v "^$" | xargs pip install || true
+            pip install pyautogui || echo "⚠️  pyautogui skipped (headless CI - expected)"
           fi
           if [ -f requirements-dev.txt ]; then
             # Install dev requirements, handling pyautogui gracefully
-            pip install $(grep -v "^pyautogui" requirements-dev.txt | grep -v "^#" | grep -v "^$" | grep -v "^-r" | tr '\n' ' ') || \
-            (pip install -r requirements-dev.txt 2>&1 | grep -v "pyautogui" || true) || \
-            echo "⚠️  Some dev dependencies (pyautogui) skipped in headless CI"
-          fi
-          if [ -f requirements.txt ]; then
-            pip install -r requirements.txt
-          fi
-          if [ -f requirements-dev.txt ]; then
-            pip install -r requirements-dev.txt || echo "⚠️  requirements-dev.txt install had warnings"
+            # First install base requirements if referenced
+            if grep -q "^-r requirements.txt" requirements-dev.txt && [ -f requirements.txt ]; then
+              grep -v "^pyautogui" requirements.txt | grep -v "^#" | grep -v "^$" | xargs pip install || true
+            fi
+            # Then install dev-specific dependencies
+            grep -v "^pyautogui" requirements-dev.txt | grep -v "^#" | grep -v "^$" | grep -v "^-r" | xargs pip install || true
+            pip install pyautogui || echo "⚠️  pyautogui skipped (headless CI - expected)"
           fi
           # Install minimal testing dependencies as fallback
           pip install pytest pytest-cov || echo "⚠️  Some dependencies may have failed"
-          # Handle optional dependencies that may fail in CI
-          pip install pyautogui || echo "⚠️  pyautogui installation failed (expected in headless CI)"
+          set -e  # Re-enable strict error handling
           # Verify pytest is available (critical - must succeed)
           python -c "import pytest; print('✅ pytest installed')" || (echo "❌ pytest check failed" && exit 1)
 
