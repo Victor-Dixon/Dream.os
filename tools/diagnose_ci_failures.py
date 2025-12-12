@@ -16,8 +16,9 @@ def check_python_syntax():
     print("=" * 60)
     
     errors = []
+    exclude_dirs = [".git", "__pycache__", "venv", ".venv", "node_modules", "agent_workspaces", "temp_repos", "archive"]
     for py_file in Path(".").rglob("*.py"):
-        if any(skip in str(py_file) for skip in [".git", "__pycache__", "venv", ".venv", "node_modules"]):
+        if any(skip in str(py_file) for skip in exclude_dirs):
             continue
         try:
             compile(open(py_file, encoding='utf-8').read(), str(py_file), 'exec')
