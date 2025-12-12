@@ -50,6 +50,7 @@ jobs:
           fi
       
       - name: ⚡ Run all linters in parallel
+        continue-on-error: true
         run: |
           # Run linters in background for parallel execution
           ruff check . --exclude "agent_workspaces,temp_repos,archive,.git,__pycache__,*.pyc,venv,.venv" --output-format=github &

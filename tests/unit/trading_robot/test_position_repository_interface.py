@@ -281,4 +281,3 @@ class TestPositionRepositoryInterface:
         assert result is True
         assert await mock_repo.get_position_count() == 0
         assert len(await mock_repo.get_all_positions()) == 0
-
