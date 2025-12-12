@@ -1,7 +1,7 @@
-# 🚀 **AutoDream OS - Agent Cellphone V2**
+# 🚀 **Dream.os**
 **WE. ARE. SWARM.**
 
-> **Self-optimizing operating system for creators and architects. Converges workflows, automates execution, scales systems in real time. Modular, adaptive, and autonomous—Dream.OS evolves with you.**
+> **Self-optimizing operating system for creators and architects. Converges workflows, automates execution, scales systems in real time. Modular, adaptive, and autonomous—Dream.os evolves with you.**
 
 ## 🐝 **What "WE ARE SWARM" Means**
 
