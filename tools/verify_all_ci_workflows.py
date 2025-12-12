@@ -46,27 +46,36 @@ def validate_workflow_syntax(workflow_path: Path) -> Dict[str, Any]:
     
     try:
         with open(workflow_path, 'r', encoding='utf-8') as f:
-            workflow = yaml.safe_load(f)
+            content = f.read()
+            workflow = yaml.safe_load(content)
         
         if not workflow:
             result["errors"].append("Empty workflow file")
             return result
         
-        # Basic validation
-        if "name" not in workflow:
-            result["errors"].append("Missing 'name' field")
+        # Basic validation - check if it's a valid GitHub Actions workflow
+        if not isinstance(workflow, dict):
+            result["errors"].append("Workflow must be a YAML dictionary")
+            return result
         
-        # GitHub Actions uses 'on' as trigger field
+        # GitHub Actions uses 'on' as trigger field (can be dict or string)
         if "on" not in workflow:
             result["errors"].append("Missing 'on' trigger field")
+        else:
+            # 'on' field exists, validate it's not empty
+            on_value = workflow.get("on")
+            if not on_value:
+                result["errors"].append("'on' field is empty")
         
-        # Jobs are required for workflows
-        if "jobs" not in workflow and "workflow_call" not in workflow.get("on", {}):
-            result["errors"].append("Missing 'jobs' field (or workflow_call)")
+        # Jobs are required for workflows (unless it's a reusable workflow)
+        if "jobs" not in workflow:
+            on_value = workflow.get("on", {})
+            if isinstance(on_value, dict) and "workflow_call" not in on_value:
+                result["errors"].append("Missing 'jobs' field (and not a reusable workflow)")
         
         result["valid"] = len(result["errors"]) == 0
         result["name"] = workflow.get("name", "Unknown")
-        result["jobs"] = list(workflow.get("jobs", {}).keys())
+        result["jobs"] = list(workflow.get("jobs", {}).keys()) if "jobs" in workflow else []
         
     except yaml.YAMLError as e:
         result["errors"].append(f"YAML syntax error: {e}")
