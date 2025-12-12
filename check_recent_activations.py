@@ -61,7 +61,12 @@ for entry in entries:
 
 print(f"\nFound {len(found)} activation messages:\n")
 for i, msg in enumerate(found, 1):
-    status_icon = "✅" if msg['status'] == 'DELIVERED' else "⏳" if msg['status'] == 'PROCESSING' else "❌"
+    if msg['status'] == 'DELIVERED':
+        status_icon = "✅"
+    elif msg['status'] == 'PROCESSING':
+        status_icon = "⏳"
+    else:
+        status_icon = "❌"
     print(f"{status_icon} Message {i}:")
     print(f"   ID: {msg['id'][:32]}...")
     print(f"   Status: {msg['status']}")
