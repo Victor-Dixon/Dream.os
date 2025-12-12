@@ -205,10 +205,11 @@ class AgentActivityDetector:
         activities.extend(self._check_devlog_creation(agent_id, lookback_time))
         activities.extend(self._check_evidence_files(agent_id, lookback_time))
         
-        # General: Status updates, inbox, message queue
+        # General: Status updates, inbox, message queue, sent messages
         activities.extend(self._check_status_updates(agent_id, lookback_time))
         activities.extend(self._check_inbox_activity(agent_id, lookback_time))
         activities.extend(self._check_message_queue_activity(agent_id, lookback_time))
+        activities.extend(self._check_sent_messages(agent_id, lookback_time))
         
         # Phase 1: High-priority signals (Terminal, Logs, Enhanced Cycle Planner, Enhanced Test)
         activities.extend(self._check_terminal_activity(agent_id, lookback_time))
@@ -442,6 +443,91 @@ class AgentActivityDetector:
                     continue
         except Exception as e:
             logger.warning(f"Error checking inbox activity for {agent_id}: {e}")
+        
+        return activities
+    
+    def _check_sent_messages(
+        self,
+        agent_id: str,
+        lookback_time: datetime
+    ) -> List[AgentActivity]:
+        """Check messages sent to other agents."""
+        activities = []
+        
+        # Method 1: Check message history file
+        message_history = Path("data") / "message_history.json"
+        if message_history.exists():
+            try:
+                with open(message_history, 'r', encoding='utf-8') as f:
+                    history = json.load(f)
+                    messages = history.get("messages", [])
+                    
+                    for msg in messages:
+                        sender = msg.get("sender", "")
+                        if sender.lower() == agent_id.lower():
+                            timestamp_str = msg.get("timestamp", "")
+                            try:
+                                msg_time = datetime.fromisoformat(
+                                    timestamp_str.replace("Z", "+00:00")
+                                ).replace(tzinfo=None)
+                                if msg_time >= lookback_time:
+                                    recipient = msg.get("recipient", "unknown")
+                                    # Skip resume/stall recovery messages
+                                    msg_text = msg.get("message", "") or ""
+                                    if any(marker in msg_text.upper() for marker in 
+                                           ["STALL-RECOVERY", "NO-REPLY", "RESUMER PROMPT"]):
+                                        continue
+                                    activities.append(AgentActivity(
+                                        agent_id=agent_id,
+                                        source="message_sent",
+                                        timestamp=msg_time,
+                                        action=f"Message sent to {recipient}",
+                                        metadata={
+                                            "recipient": recipient,
+                                            "message_id": msg.get("message_id", "")
+                                        }
+                                    ))
+                            except Exception:
+                                continue
+            except Exception as e:
+                logger.debug(f"Error reading message history: {e}")
+        
+        # Method 2: Check recipient agent inboxes for messages from this agent
+        from src.core.constants.agent_constants import AGENT_LIST
+        for recipient_id in AGENT_LIST:
+            if recipient_id == agent_id:
+                continue
+            
+            recipient_inbox = self.workspace_root / recipient_id / "inbox"
+            if not recipient_inbox.exists():
+                continue
+            
+            try:
+                for msg_file in recipient_inbox.glob("*.md"):
+                    try:
+                        with open(msg_file, 'r', encoding='utf-8') as f:
+                            content = f.read(500)
+                            if f"From: {agent_id}" in content or f"From: {agent_id.replace('-', '_')}" in content:
+                                mtime = datetime.fromtimestamp(msg_file.stat().st_mtime)
+                                if mtime >= lookback_time:
+                                    # Skip resume/stall recovery messages
+                                    if any(marker in content.upper() for marker in 
+                                           ["STALL-RECOVERY", "NO-REPLY", "RESUMER PROMPT", "S2A STALL"]):
+                                        continue
+                                    activities.append(AgentActivity(
+                                        agent_id=agent_id,
+                                        source="message_sent",
+                                        timestamp=mtime,
+                                        action=f"Message sent to {recipient_id}",
+                                        metadata={
+                                            "recipient": recipient_id,
+                                            "file": msg_file.name
+                                        }
+                                    ))
+                    except Exception:
+                        continue
+            except Exception as e:
+                logger.debug(f"Error checking recipient inbox {recipient_id}: {e}")
         
         return activities
     
@@ -1230,6 +1316,115 @@ class AgentActivityDetector:
             logger.debug(f"Error checking repository activity for {agent_id}: {e}")
         
         return activities
+    
+    def _check_terminal_activity(
+        self,
+        agent_id: str,
+        lookback_time: datetime
+    ) -> List[AgentActivity]:
+        """Check terminal/command execution activity (Phase 1 - HIGH priority)."""
+        activities = []
+        
+        try:
+            # Check for terminal history files
+            terminal_history_paths = [
+                Path.home() / ".bash_history",
+                Path.home() / ".zsh_history",
+                Path.home() / ".powershell_history",
+            ]
+            
+            for history_path in terminal_history_paths:
+                if history_path.exists():
+                    try:
+                        mtime = datetime.fromtimestamp(history_path.stat().st_mtime)
+                        if mtime >= lookback_time:
+                            # Check if file contains agent-related commands
+                            try:
+                                with open(history_path, 'r', encoding='utf-8', errors='ignore') as f:
+                                    lines = f.readlines()
+                                    recent_lines = ''.join(lines[-100:]).lower()
+                                    if agent_id.lower() in recent_lines or 'agent' in recent_lines:
+                                        activities.append(AgentActivity(
+                                            agent_id=agent_id,
+                                            source="terminal",
+                                            timestamp=mtime,
+                                            action=f"Terminal activity: {history_path.name}",
+                                            metadata={"file": str(history_path), "type": "history"}
+                                        ))
+                            except Exception:
+                                # Still count recent modification
+                                activities.append(AgentActivity(
+                                    agent_id=agent_id,
+                                    source="terminal",
+                                    timestamp=mtime,
+                                    action=f"Terminal history modified: {history_path.name}",
+                                    metadata={"file": str(history_path)}
+                                ))
+                    except (OSError, PermissionError):
+                        continue
+        except Exception as e:
+            logger.debug(f"Error checking terminal activity for {agent_id}: {e}")
+        
+        return activities
+    
+    def _check_log_file_activity(
+        self,
+        agent_id: str,
+        lookback_time: datetime
+    ) -> List[AgentActivity]:
+        """Check log file activity (Phase 1 - HIGH priority)."""
+        activities = []
+        
+        try:
+            log_dirs = [
+                Path("logs"),
+                Path("runtime") / "logs",
+                Path("data") / "logs",
+                self.workspace_root / agent_id / "logs",
+            ]
+            
+            agent_pattern = agent_id.lower().replace('-', '')
+            
+            for log_dir in log_dirs:
+                if not log_dir.exists():
+                    continue
+                
+                # Check for log files
+                log_files = list(log_dir.rglob("*.log"))
+                log_files.extend(list(log_dir.rglob("*.txt")))
+                
+                for log_file in log_files:
+                    try:
+                        mtime = datetime.fromtimestamp(log_file.stat().st_mtime)
+                        if mtime >= lookback_time:
+                            # Check if file contains agent references
+                            try:
+                                with open(log_file, 'r', encoding='utf-8', errors='ignore') as f:
+                                    lines = f.readlines()
+                                    recent_lines = ''.join(lines[-50:]).lower()
+                                    if agent_pattern in recent_lines or agent_id.lower() in recent_lines:
+                                        activities.append(AgentActivity(
+                                            agent_id=agent_id,
+                                            source="log",
+                                            timestamp=mtime,
+                                            action=f"Log file activity: {log_file.name}",
+                                            metadata={"file": str(log_file.relative_to(log_dir)), "type": "log"}
+                                        ))
+                            except Exception:
+                                # Still count recent modification
+                                activities.append(AgentActivity(
+                                    agent_id=agent_id,
+                                    source="log",
+                                    timestamp=mtime,
+                                    action=f"Log file modified: {log_file.name}",
+                                    metadata={"file": str(log_file.relative_to(log_dir))}
+                                ))
+                    except (OSError, PermissionError):
+                        continue
+        except Exception as e:
+            logger.debug(f"Error checking log file activity for {agent_id}: {e}")
+        
+        return activities
 
     def _is_meaningful_activity(self, activity: AgentActivity) -> bool:
         """Return True if activity represents real progress (not chat/ack)."""
@@ -1244,7 +1439,7 @@ class AgentActivityDetector:
             "file", "devlog", "task", "git", "git_push",
             "contract", "swarm_brain", "planning", "test",
             "validation", "evidence", "process", "ide", "database",
-            "terminal", "log"
+            "terminal", "log", "message_sent"
         }
         if activity.source in meaningful_sources:
             return True
