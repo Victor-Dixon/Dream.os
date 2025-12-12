@@ -133,6 +133,7 @@ jobs:
     
     steps:
       - name: 📊 Job Summary
+        continue-on-error: true
         run: |
           echo "## CI/CD Pipeline Summary" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
