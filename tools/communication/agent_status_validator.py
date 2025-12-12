@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """
-Unified Agent Status Validator
-===============================
+Unified Agent Status Validator - Enhanced with Multi-Source Activity Detection
+==============================================================================
 
-Consolidates agent status validation tools.
-Combines functionality from check_agent_status_staleness.py, agent_status_quick_check.py,
-and check_status_monitor_and_agent_statuses.py.
+Consolidates agent status validation tools with enhanced activity detection.
+Uses multi-source activity detection to reduce false stall detections.
 
 Features:
-- Agent status staleness detection
+- Multi-source activity detection (status.json, files, devlogs, git, inbox, etc.)
+- Agent status staleness detection (hardened with activity verification)
 - Quick status verification
 - Status monitor validation
 - Health checks
@@ -16,34 +16,57 @@ Features:
 V2 Compliance: ≤300 lines, ≤200 lines/class, ≤30 lines/function
 Author: Agent-6 (Coordination & Communication Specialist)
 Date: 2025-12-03
+Updated: 2025-12-11 - Added multi-source activity detection
 Task: Phase 2 Tools Consolidation - Communication Validation
 """
 
 import json
 import sys
+import logging
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
 from src.core.constants.agent_constants import AGENT_LIST as AGENTS
+
+logger = logging.getLogger(__name__)
+
 STALE_THRESHOLD_HOURS = 6
 RECENT_THRESHOLD_HOURS = 2
+ACTIVITY_LOOKBACK_MINUTES = 60  # Check activity within last hour
 
 
 class AgentStatusValidator:
-    """Unified agent status validation."""
+    """Unified agent status validation with multi-source activity detection."""
 
-    def __init__(self, workspace_root: Optional[Path] = None):
-        """Initialize validator."""
+    def __init__(self, workspace_root: Optional[Path] = None, use_activity_detection: bool = True):
+        """Initialize validator.
+
+        Args:
+            workspace_root: Root workspace directory
+            use_activity_detection: Enable multi-source activity detection (default: True)
+        """
         if workspace_root is None:
             workspace_root = Path(__file__).parent.parent.parent
         self.workspace_root = workspace_root
         self.agent_workspaces = workspace_root / "agent_workspaces"
+        self.use_activity_detection = use_activity_detection
         self.errors: List[str] = []
         self.warnings: List[str] = []
 
+        # Initialize activity detector if enabled
+        self.activity_detector = None
+        if use_activity_detection:
+            try:
+                from tools.agent_activity_detector import AgentActivityDetector
+                self.activity_detector = AgentActivityDetector(workspace_root)
+            except ImportError:
+                logger.warning(
+                    "AgentActivityDetector not available, using status.json only")
+                self.use_activity_detection = False
+
     def check_status_staleness(self) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
-        """Check all agent status files for staleness."""
+        """Check all agent status files for staleness with multi-source activity verification."""
         stale_agents = []
         current_agents = []
 
@@ -55,7 +78,8 @@ class AgentStatusValidator:
                     "agent_id": agent_id,
                     "status": "MISSING",
                     "last_updated": None,
-                    "hours_old": None
+                    "hours_old": None,
+                    "activity_verified": False
                 })
                 continue
 
@@ -69,7 +93,8 @@ class AgentStatusValidator:
                         "agent_id": agent_id,
                         "status": "NO_TIMESTAMP",
                         "last_updated": None,
-                        "hours_old": None
+                        "hours_old": None,
+                        "activity_verified": False
                     })
                     continue
 
@@ -79,25 +104,43 @@ class AgentStatusValidator:
                         "agent_id": agent_id,
                         "status": "INVALID_TIMESTAMP",
                         "last_updated": last_updated_str,
-                        "hours_old": None
+                        "hours_old": None,
+                        "activity_verified": False
                     })
                     continue
 
-                hours_old = (datetime.now() - last_updated).total_seconds() / 3600
+                hours_old = (datetime.now() -
+                             last_updated).total_seconds() / 3600
 
-                if hours_old > STALE_THRESHOLD_HOURS:
+                # Enhanced: Check multi-source activity if status appears stale
+                is_actually_active = False
+                activity_sources = []
+                if hours_old > STALE_THRESHOLD_HOURS and self.use_activity_detection:
+                    is_actually_active, activity_sources = self._verify_agent_activity(
+                        agent_id, last_updated
+                    )
+
+                # Only mark as stale if status is old AND no recent activity detected
+                if hours_old > STALE_THRESHOLD_HOURS and not is_actually_active:
                     stale_agents.append({
                         "agent_id": agent_id,
                         "status": "STALE",
                         "last_updated": last_updated_str,
-                        "hours_old": round(hours_old, 1)
+                        "hours_old": round(hours_old, 1),
+                        "activity_verified": True,
+                        "activity_sources": activity_sources
                     })
                 else:
-                    current_agents.append({
+                    agent_info = {
                         "agent_id": agent_id,
                         "last_updated": last_updated_str,
                         "hours_old": round(hours_old, 1)
-                    })
+                    }
+                    if is_actually_active:
+                        agent_info["activity_verified"] = True
+                        agent_info["activity_sources"] = activity_sources
+                        agent_info["note"] = "Status stale but recent activity detected"
+                    current_agents.append(agent_info)
 
             except Exception as e:
                 stale_agents.append({
@@ -105,10 +148,43 @@ class AgentStatusValidator:
                     "status": "ERROR",
                     "last_updated": None,
                     "hours_old": None,
-                    "error": str(e)
+                    "error": str(e),
+                    "activity_verified": False
                 })
 
         return stale_agents, current_agents
+
+    def _verify_agent_activity(
+        self, agent_id: str, status_timestamp: datetime
+    ) -> Tuple[bool, List[str]]:
+        """Verify agent has recent activity from multiple sources.
+
+        Returns:
+            Tuple of (is_active, activity_sources)
+        """
+        if not self.activity_detector:
+            return False, []
+
+        try:
+            # Check activity within lookback window
+            summary = self.activity_detector.detect_agent_activity(
+                agent_id,
+                lookback_minutes=ACTIVITY_LOOKBACK_MINUTES,
+                use_events=True
+            )
+
+            # Agent is active if activity detected OR if last activity is more recent than status
+            is_active = summary.is_active
+            if summary.last_activity and status_timestamp:
+                # Also check if activity is more recent than status timestamp
+                if summary.last_activity > status_timestamp:
+                    is_active = True
+
+            return is_active, summary.activity_sources
+
+        except Exception as e:
+            logger.warning(f"Error verifying activity for {agent_id}: {e}")
+            return False, []
 
     def _parse_timestamp(self, timestamp_str: str) -> Optional[datetime]:
         """Parse timestamp string."""
@@ -139,7 +215,8 @@ class AgentStatusValidator:
         if stale_agents:
             for agent in stale_agents:
                 if agent["status"] == "MISSING":
-                    self.errors.append(f"{agent['agent_id']}: status.json missing")
+                    self.errors.append(
+                        f"{agent['agent_id']}: status.json missing")
                     valid = False
                 elif agent["status"] == "STALE":
                     hours = agent.get("hours_old", 0)
@@ -178,6 +255,13 @@ class AgentStatusValidator:
                 print(f"  {agent['agent_id']}: {status}")
                 if hours != "N/A" and hours is not None:
                     print(f"    Last updated: {last_up} ({hours} hours ago)")
+                if agent.get("activity_verified"):
+                    sources = agent.get("activity_sources", [])
+                    if sources:
+                        print(
+                            f"    ⚠️  No recent activity from: {', '.join(sources[:3])}")
+                    else:
+                        print(f"    ⚠️  No recent activity detected from any source")
                 if "error" in agent:
                     print(f"    Error: {agent['error']}")
             print()
@@ -189,7 +273,14 @@ class AgentStatusValidator:
             print("=" * 60)
             for agent in current_agents:
                 hours = agent["hours_old"]
-                print(f"  {agent['agent_id']}: {agent['last_updated']} ({hours}h ago)")
+                note = agent.get("note", "")
+                sources = agent.get("activity_sources", [])
+                print(
+                    f"  {agent['agent_id']}: {agent['last_updated']} ({hours}h ago)")
+                if note:
+                    print(f"    ℹ️  {note}")
+                if sources:
+                    print(f"    📊 Activity sources: {', '.join(sources[:5])}")
             print()
 
 
@@ -209,9 +300,14 @@ def main() -> int:
     parser.add_argument(
         "--json", action="store_true", help="Output as JSON"
     )
+    parser.add_argument(
+        "--no-activity-check", action="store_true",
+        help="Disable multi-source activity detection (use status.json only)"
+    )
 
     args = parser.parse_args()
-    validator = AgentStatusValidator()
+    validator = AgentStatusValidator(
+        use_activity_detection=not args.no_activity_check)
 
     if args.agent:
         status = validator.get_agent_status(args.agent)
@@ -242,5 +338,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
-
-
