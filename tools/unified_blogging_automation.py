@@ -24,6 +24,18 @@ from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional, Any
 
+# Try to import markdown converter
+try:
+    import markdown
+    HAS_MARKDOWN = True
+except ImportError:
+    try:
+        import markdown2
+        HAS_MARKDOWN = True
+        markdown = markdown2  # Alias for compatibility
+    except ImportError:
+        HAS_MARKDOWN = False
+
 # Add project root to path
 project_root = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(project_root))
@@ -118,6 +130,34 @@ class WordPressBlogClient:
         
         return None
     
+    def convert_markdown_to_html(self, content: str) -> str:
+        """Convert markdown content to HTML for WordPress."""
+        # Check if content is already HTML (contains HTML tags)
+        if "<div" in content or "<h1" in content or "<p>" in content:
+            # Already HTML, return as-is
+            return content
+        
+        # Try to convert markdown to HTML
+        if HAS_MARKDOWN:
+            try:
+                # Use markdown library with extensions for better HTML output
+                if hasattr(markdown, 'markdown'):
+                    html = markdown.markdown(
+                        content,
+                        extensions=['extra', 'codehilite', 'fenced_code']
+                    )
+                else:
+                    # markdown2 library
+                    html = markdown.markdown(content, extras=['fenced-code-blocks'])
+                return html
+            except Exception as e:
+                logger.warning(f"Markdown conversion failed: {e}, using raw content")
+                return content
+        
+        # No markdown library available, return as-is
+        logger.warning("Markdown library not available, sending raw content")
+        return content
+    
     def create_post(
         self,
         title: str,
@@ -130,6 +170,9 @@ class WordPressBlogClient:
     ) -> Dict[str, Any]:
         """Create WordPress blog post."""
         endpoint = f"{self.api_url}/posts"
+        
+        # Convert markdown to HTML if needed
+        html_content = self.convert_markdown_to_html(content)
         
         # Resolve category IDs
         category_ids = []
@@ -150,7 +193,7 @@ class WordPressBlogClient:
         # Prepare post data
         post_data = {
             "title": title,
-            "content": content,
+            "content": html_content,  # Use converted HTML
             "status": status,
         }
         
