@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: infrastructure -->
 Enhanced CI/CD Verification Tool for Merged Repos
 =================================================
 

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: infrastructure -->
 WordPress Admin Login Troubleshooter
 =====================================
 
@@ -8,6 +9,8 @@ Helps diagnose and fix WordPress admin login issues.
 Usage:
     python tools/fix_wordpress_admin_login.py --site freerideinvestor.com
     python tools/fix_wordpress_admin_login.py --site freerideinvestor.com --reset-password
+
+Author: Agent-3 (Infrastructure & DevOps Specialist)
 """
 
 import argparse

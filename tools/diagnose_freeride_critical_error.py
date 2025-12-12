@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: infrastructure -->
 FreeRideInvestor Critical Error Diagnostic & Fix Tool
 ======================================================
 Diagnoses and provides fixes for WordPress critical error (HTTP 500).
+
+Author: Agent-3 (Infrastructure & DevOps Specialist)
 """
 
 import requests

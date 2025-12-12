@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Monitor bilateral coordination status across the swarm."""
+"""
+<!-- SSOT Domain: infrastructure -->
+Monitor bilateral coordination status across the swarm.
+
+Author: Agent-6 (Coordination & Communication Specialist)
+"""
 import json
 from pathlib import Path
 from datetime import datetime, timedelta

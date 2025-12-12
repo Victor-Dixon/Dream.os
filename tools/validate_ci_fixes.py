@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Quick validation script for CI/CD fixes."""
+"""
+<!-- SSOT Domain: infrastructure -->
+Quick validation script for CI/CD fixes.
+
+Author: Agent-3 (Infrastructure & DevOps Specialist)
+"""
 import json
 from pathlib import Path
 

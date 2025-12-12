@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: infrastructure -->
 CI/CD Failure Diagnostic Tool
 =============================
 Identifies common CI/CD failure points before pushing.
+
+Author: Agent-3 (Infrastructure & DevOps Specialist)
 """
 
 import subprocess

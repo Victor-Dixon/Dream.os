@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: infrastructure -->
 Fix CI/CD Workflow Issues
 =========================
 Updates CI workflows to ignore gitignored directories and handle common failures.
+
+Author: Agent-3 (Infrastructure & DevOps Specialist)
 """
 
 import re

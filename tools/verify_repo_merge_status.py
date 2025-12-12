@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Verify repository merge branch status."""
+"""
+<!-- SSOT Domain: infrastructure -->
+Verify repository merge branch status.
+
+Author: Agent-3 (Infrastructure & DevOps Specialist)
+"""
 
 import os
 import requests
