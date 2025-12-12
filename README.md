@@ -60,14 +60,18 @@ Our swarm intelligence works through **physical Cursor IDE automation**:
 - **Democratic Process**: All agents participate in important decisions
 - **Scalable Architecture**: Can coordinate across multiple monitors/screens
 
-AutoDream OS is a **production-grade, V2 compliant** platform for building sophisticated multi-agent communication systems. It provides **unified coordinate architecture**, **intelligent role management**, and **SOLID-compliant messaging infrastructure** for AI developers and ops teams.
+AutoDream OS is a **production-grade platform** working toward full V2 compliance (~90% compliant, refactoring in progress) for building sophisticated multi-agent communication systems. It provides **unified coordinate architecture**, **intelligent role management**, and **SOLID-compliant messaging infrastructure** for AI developers and ops teams.
 
-## 🎯 **V2 COMPLIANCE ACHIEVEMENTS**
+## 🎯 **V2 COMPLIANCE STATUS**
 
-### ✅ **File Size Compliance**: 100% Compliant
-- **All files ≤ 400 lines** (main registry: 138 lines)
-- **Zero critical violations** (>600 lines eliminated)
-- **Modular architecture** with focused responsibilities
+### ⚠️ **File Size Compliance**: ~90% Compliant
+- **Core files compliant**: Most files ≤ 400 lines (main registry: 138 lines)
+- **Approved exceptions**: 11 files with documented justifications
+- **Unapproved violations**: 57 files > 400 lines (refactoring in progress)
+- **Critical violations eliminated**: All files >600 lines have been addressed
+- **Modular architecture**: Focused responsibilities maintained where compliant
+
+**Note**: See `docs/V2_COMPLIANCE_EXCEPTIONS.md` for approved exceptions and `docs/V2_COMPLIANCE_ACTUAL_STATUS.md` for detailed compliance report.
 
 ### ✅ **SOLID Principles**: Fully Implemented
 - **SRP**: Each module has single responsibility (role_command_handler.py, utility_command_handler.py, etc.)
@@ -263,7 +267,7 @@ python -m src.gui.app
 **WE. ARE. SWARM.**
 
 ### 📊 **Project Overview**
-Agent Cellphone V2 is a **production-grade, SOLID-compliant** multi-agent communication system featuring **intelligent role management**, **unified coordinate architecture**, and **comprehensive testing infrastructure**. It provides a single source of truth for all agent operations with **zero duplicate code** and **100% V2 compliance**.
+Agent Cellphone V2 is a **production-grade, SOLID-compliant** multi-agent communication system featuring **intelligent role management**, **unified coordinate architecture**, and **comprehensive testing infrastructure**. It provides a single source of truth for all agent operations with **zero duplicate code** and **~90% V2 compliance** (refactoring in progress).
 
 ### 🏆 **Recent Major Achievements**
 
@@ -288,7 +292,7 @@ Agent Cellphone V2 is a **production-grade, SOLID-compliant** multi-agent commun
 - **Open-Closed Principle**: Extensible handler registry
 
 ### 🎯 **Coding Standards & Compliance**
-- **V2 Standards**: 100% compliant with line-count limits and OOP design
+- **V2 Standards**: ~90% compliant with line-count limits and OOP design (refactoring in progress)
 - **SOLID Principles**: Full implementation (SRP, OCP, LSP, ISP, DIP)
 - **Test-Driven Development**: Comprehensive test suites with 100% coverage
 - **Documentation**: JSDoc-style documentation for all functions
@@ -319,7 +323,7 @@ Agent Cellphone V2 supports **6 specialized role modes** for different project p
 - **Multi-Mode Support** - 2-agent, 4-agent, 5-agent, and 8-agent configurations
 - **Advanced Coordinate Features** - Mapping, calibration, consolidation, and validation
 - **Fallback Compatibility** - Graceful degradation for legacy systems
-- **100% V2 Compliance** - Clean, modular, production-grade code
+- **~90% V2 Compliance** - Clean, modular, production-grade code (refactoring in progress)
 
 ## New Unified Architecture
 ### Core Components
@@ -523,8 +527,9 @@ examples/ # examples and demos
 
 ## 🏆 **Recent Major Achievements & Refactoring**
 
-### 🎯 **V2 Compliance Implementation** (100% Complete)
-- **File Size Compliance**: ✅ All files ≤400 lines (main registry: 138 lines)
+### ⚠️ **V2 Compliance Implementation** (~90% Complete)
+- **File Size Compliance**: ~90% compliant (57 files >400 lines, refactoring in progress)
+- **Approved Exceptions**: 11 files with documented justifications
 - **Zero Critical Violations**: ✅ Eliminated all files >600 lines
 - **Modular Architecture**: ✅ Clean separation of concerns
 - **SOLID Principles**: ✅ Full implementation across all modules
@@ -589,7 +594,7 @@ examples/ # examples and demos
 ## 🏆 **Project Achievements & Status**
 
 ### ✅ **What's Been Accomplished**
-- **V2 Compliance**: 100% complete with all files ≤400 lines
+- **V2 Compliance**: ~90% complete (57 files >400 lines, refactoring in progress)
 - **SOLID Principles**: Full implementation across all modules
 - **Test Coverage**: 19/19 tests passing (100% success rate)
 - **Branch Cleanup**: 7 extra branches removed, clean repository
@@ -606,8 +611,8 @@ examples/ # examples and demos
 - **Future-Proof**: Extensible design for continued development
 
 ### 🚀 **System Status**
-- **V2 Compliance**: ✅ **100% Complete**
-- **File Size Limits**: ✅ **All files ≤400 lines**
+- **V2 Compliance**: ⚠️ **~90% Complete** (refactoring in progress)
+- **File Size Limits**: ⚠️ **~90% compliant** (57 files >400 lines remain)
 - **SOLID Implementation**: ✅ **All 5 principles enforced**
 - **Test Coverage**: ✅ **19/19 tests passing**
 - **Branch Health**: ✅ **Clean repository structure**
