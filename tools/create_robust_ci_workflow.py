@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: infrastructure -->
 Create Robust CI Workflow
 =========================
 Creates a simplified, robust CI workflow that handles common failure scenarios.
+
+Author: Agent-3 (Infrastructure & DevOps Specialist)
 """
 
 WORKFLOW_CONTENT = """name: CI - Robust

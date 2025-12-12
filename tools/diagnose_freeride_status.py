@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: infrastructure -->
 FreeRideInvestor Site Diagnostic Tool
 =====================================
 Quick diagnostic for site status issues.
+
+Author: Agent-3 (Infrastructure & DevOps Specialist)
 """
 
 from src.control_plane.adapters.hostinger.freeride_adapter import get_freeride_adapter

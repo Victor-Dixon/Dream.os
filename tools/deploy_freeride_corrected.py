@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Deploy corrected FreeRideInvestor V2 theme via SFTP with automatic cache flush."""
+"""
+<!-- SSOT Domain: infrastructure -->
+Deploy corrected FreeRideInvestor V2 theme via SFTP with automatic cache flush.
+
+Author: Agent-3 (Infrastructure & DevOps Specialist)
+"""
 
 import os
 import sys

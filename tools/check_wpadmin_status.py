@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Check WordPress wp-admin login page status."""
+"""
+<!-- SSOT Domain: infrastructure -->
+Check WordPress wp-admin login page status.
+
+Author: Agent-3 (Infrastructure & DevOps Specialist)
+"""
 
 import requests
 import sys
