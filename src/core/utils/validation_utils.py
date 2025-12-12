@@ -46,10 +46,13 @@ def print_validation_report(
 
 class ValidationReporter:
     """
-    Mixin class for validators to use print_validation_report.
+    Mixin class for validators to use validation reporting.
     
-    Validators can inherit from this class or call print_validation_report()
-    directly with their errors/warnings attributes.
+    Validators can either:
+    1. Inherit from this class and call self.print_report()
+    2. Call the standalone function print_validation_report() directly
+    
+    The print_validation_report() function is available at module level.
     """
     
     def print_report(self) -> None:

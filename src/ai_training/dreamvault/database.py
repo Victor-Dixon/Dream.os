@@ -34,8 +34,9 @@ class DatabaseConnection:
         # Explicit URL
         db = DatabaseConnection("postgresql://user:pass@localhost:5432/dreamvault")
 
-        # Get connection
+        # Get connection (returns sqlite3.Connection or psycopg.Connection)
         with db.get_connection() as conn:
+            # Connection object has cursor() method (standard DB-API)
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM conversations")
     """
