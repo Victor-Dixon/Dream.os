@@ -129,12 +129,12 @@ def sample_position():
 
 @pytest.fixture
 def sample_short_position():
-    """Create sample short position."""
+    """Create sample short position (losing position)."""
     return Position(
         symbol="TSLA",
         quantity=-50.0,
         average_price=200.0,
-        current_price=195.0,
+        current_price=205.0,  # Higher price = losing for short position
         timestamp=datetime.now()
     )
 
