@@ -134,6 +134,7 @@ class HardenedActivityDetector:
         # Collect signals from all sources
         signals.extend(self._check_telemetry_events(agent_id, lookback_time))
         signals.extend(self._check_git_activity(agent_id, lookback_time))
+        signals.extend(self._check_git_activity_by_path(agent_id, lookback_time))
         signals.extend(self._check_contract_activity(agent_id, lookback_time))
         signals.extend(self._check_test_execution(agent_id, lookback_time))
         signals.extend(self._check_status_updates(agent_id, lookback_time))
@@ -312,6 +313,152 @@ class HardenedActivityDetector:
             logger.debug(f"Error checking git activity: {e}")
         
         return signals
+    
+    def _check_git_activity_by_path(
+        self,
+        agent_id: str,
+        lookback_time: datetime
+    ) -> List[ActivitySignal]:
+        """
+        Check git commits that modify agent-specific files (Tier 1).
+        
+        This complements _check_git_activity by detecting commits that modify
+        agent files even if the agent ID isn't in the commit message.
+        """
+        signals = []
+        
+        try:
+            import subprocess
+            from src.core.config.timeout_constants import TimeoutConstants
+            
+            # Agent-specific paths to check
+            agent_paths = [f"agent_workspaces/{agent_id}/"]
+            
+            # Add captain reports for Agent-4
+            if agent_id == "Agent-4":
+                agent_paths.append("docs/captain_reports/")
+            
+            for path_pattern in agent_paths:
+                try:
+                    result = subprocess.run(
+                        ["git", "log", "--since", lookback_time.isoformat(),
+                         "--format=%H|%ct|%s", "--name-only", "--", path_pattern],
+                        capture_output=True,
+                        text=True,
+                        timeout=TimeoutConstants.HTTP_QUICK,
+                        cwd=self.workspace_root,
+                    )
+                    
+                    if result.returncode != 0 or not result.stdout.strip():
+                        continue
+                    
+                    # Parse git log output with file names
+                    # Format: commit_hash|timestamp|message\nfile1\nfile2\n\ncommit_hash|...
+                    commits = self._parse_git_log_with_files(result.stdout)
+                    
+                    for commit in commits:
+                        commit_time = commit['timestamp']
+                        commit_msg = commit['message']
+                        
+                        # Skip if before lookback time
+                        if commit_time < lookback_time.timestamp():
+                            continue
+                        
+                        # Filter out resume-related commits
+                        if any(noise in commit_msg.lower() 
+                               for noise in self.noise_patterns):
+                            continue
+                        
+                        # Only add if we haven't already detected this commit
+                        # (avoid duplicates from _check_git_activity)
+                        commit_hash = commit['hash']
+                        duplicate = any(
+                            s.metadata.get("hash") == commit_hash[:8]
+                            for s in signals
+                        )
+                        
+                        if not duplicate:
+                            signals.append(ActivitySignal(
+                                source=ActivitySource.GIT_COMMIT,
+                                timestamp=commit_time,
+                                confidence=ActivitySource.GIT_COMMIT.base_confidence,
+                                metadata={
+                                    "hash": commit_hash[:8],
+                                    "message": commit_msg[:100],
+                                    "files": commit.get('files', [])[:5],  # Limit file list
+                                    "detection_method": "file_path"
+                                },
+                                agent_id=agent_id
+                            ))
+                except Exception as e:
+                    logger.debug(
+                        f"Error checking git activity by path {path_pattern} "
+                        f"for {agent_id}: {e}"
+                    )
+                    continue
+        except Exception as e:
+            logger.debug(f"Error in git activity by path check for {agent_id}: {e}")
+        
+        return signals
+    
+    def _parse_git_log_with_files(self, output: str) -> List[Dict[str, Any]]:
+        """
+        Parse git log output with --name-only format.
+        
+        Format:
+        commit_hash|timestamp|message
+        file1
+        file2
+        file3
+        
+        commit_hash|timestamp|message
+        ...
+        """
+        commits = []
+        lines = output.strip().split("\n")
+        
+        i = 0
+        while i < len(lines):
+            line = lines[i].strip()
+            if not line:
+                i += 1
+                continue
+            
+            # Check if this is a commit line (has | separator)
+            if "|" in line:
+                parts = line.split("|", 2)
+                if len(parts) >= 2:
+                    commit_hash = parts[0]
+                    try:
+                        commit_time = int(parts[1])
+                        commit_msg = parts[2] if len(parts) > 2 else ""
+                        
+                        # Collect files for this commit
+                        files = []
+                        i += 1
+                        while i < len(lines):
+                            file_line = lines[i].strip()
+                            if not file_line:
+                                i += 1
+                                break
+                            if "|" in file_line:
+                                # Next commit, go back one line
+                                i -= 1
+                                break
+                            files.append(file_line)
+                            i += 1
+                        
+                        commits.append({
+                            "hash": commit_hash,
+                            "timestamp": commit_time,
+                            "message": commit_msg,
+                            "files": files
+                        })
+                    except (ValueError, IndexError):
+                        pass
+            i += 1
+        
+        return commits
     
     def _check_contract_activity(
         self,
