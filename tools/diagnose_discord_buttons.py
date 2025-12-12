@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: infrastructure -->
 Discord Button Diagnostic Tool
 ==============================
 
@@ -9,6 +10,8 @@ Comprehensive diagnostic tool to check all Discord buttons for:
 - Modal label length issues
 - Response handling issues
 - View registration issues
+
+Author: Agent-3 (Infrastructure & DevOps Specialist)
 """
 
 import ast

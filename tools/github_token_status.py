@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: infrastructure -->
 GitHub Token Status Helper
 ==========================
 
@@ -8,6 +9,8 @@ Quickly verify GitHub token availability without consuming rate limit by default
 Usage:
     python tools/github_token_status.py
     python tools/github_token_status.py --rate-limit   # optional single rate_limit call
+
+Author: Agent-3 (Infrastructure & DevOps Specialist)
 """
 
 import argparse

@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: infrastructure -->
 Twitch Bot Diagnostic Tool
 ==========================
 
 Diagnoses Twitch bot connection and message handling issues.
+
+Author: Agent-3 (Infrastructure & DevOps Specialist)
 """
 
 import sys

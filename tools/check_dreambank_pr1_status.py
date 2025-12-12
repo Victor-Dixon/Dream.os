@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Check DreamBank PR #1 status via GitHub API."""
+"""
+<!-- SSOT Domain: infrastructure -->
+Check DreamBank PR #1 status via GitHub API.
+
+Author: Agent-3 (Infrastructure & DevOps Specialist)
+"""
 
 import os
 import sys
