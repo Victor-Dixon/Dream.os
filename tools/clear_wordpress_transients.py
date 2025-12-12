@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: infrastructure -->
 Clear WordPress Transients - Theme Detection Fix
 ================================================
 

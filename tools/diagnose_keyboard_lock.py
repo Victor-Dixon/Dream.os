@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: infrastructure -->
 Keyboard Lock Diagnostics Tool
 ==============================
 
@@ -8,6 +9,8 @@ Diagnoses and fixes keyboard lock issues.
 Usage:
     python tools/diagnose_keyboard_lock.py          # Check status
     python tools/diagnose_keyboard_lock.py --force  # Force release if stuck
+
+Author: Agent-3 (Infrastructure & DevOps Specialist)
 """
 
 import sys

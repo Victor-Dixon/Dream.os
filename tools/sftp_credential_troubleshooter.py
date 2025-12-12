@@ -1,4 +1,5 @@
 """
+<!-- SSOT Domain: infrastructure -->
 SFTP Credential Troubleshooter - V2 Compliant
 =============================================
 

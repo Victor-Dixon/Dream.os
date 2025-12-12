@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: infrastructure -->
 Diagnose AriaJet WordPress Path Issue
 =====================================
 
