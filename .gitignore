@@ -189,6 +189,7 @@ config/*_secret.txt
 .deploy_credentials/
 .deploy_credentials/**
 *.deploy_credentials.json
+.deploy_credentials/blogging_api.json
 sites.json
 
 # Discord tokens and webhooks
