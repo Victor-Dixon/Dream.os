@@ -8,6 +8,8 @@ Runs cycle health checks across all agents and produces validation report.
 Author: Agent-4 (Captain)
 Date: 2025-12-10
 Purpose: Produce validation artifact for stall recovery protocol
+
+<!-- SSOT Domain: infrastructure -->
 """
 
 import json

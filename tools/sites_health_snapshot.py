@@ -5,6 +5,8 @@ Sites Health Snapshot
 Read-only utility that loads the sites registry and prints health + last_deploy
 info via the configured adapters. This is intended as a "wish we had" tool to
 quickly see site status without touching deploy/post behavior.
+
+<!-- SSOT Domain: infrastructure -->
 """
 
 from __future__ import annotations

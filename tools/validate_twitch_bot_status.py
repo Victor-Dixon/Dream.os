@@ -9,6 +9,8 @@ V2 Compliance: <300 lines, single responsibility
 Author: Agent-4 (Captain)
 Date: 2025-12-11
 Priority: HIGH - Supports Twitch bot coordination diagnostics
+
+<!-- SSOT Domain: infrastructure -->
 """
 
 import json

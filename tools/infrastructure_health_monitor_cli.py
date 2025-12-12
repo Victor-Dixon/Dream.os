@@ -10,6 +10,8 @@ Usage:
     python tools/infrastructure_health_monitor_cli.py --check
     python tools/infrastructure_health_monitor_cli.py --disk
     python tools/infrastructure_health_monitor_cli.py --memory
+
+<!-- SSOT Domain: infrastructure -->
 """
 
 import sys

@@ -15,6 +15,8 @@ Features:
     - PING/PONG activity monitoring
     - Automatic reconnection detection
     - Health status reporting
+
+<!-- SSOT Domain: infrastructure -->
 """
 
 import asyncio
