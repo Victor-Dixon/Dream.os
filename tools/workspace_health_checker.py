@@ -10,6 +10,8 @@ Author: Agent-1 (Integration & Core Systems Specialist)
 Date: 2025-12-10
 Priority: HIGH
 V2 Compliant: Yes
+
+<!-- SSOT Domain: infrastructure -->
 """
 
 import json

@@ -3,6 +3,8 @@
 Infrastructure Health Monitor
 
 Monitors critical infrastructure components for automation reliability.
+
+<!-- SSOT Domain: infrastructure -->
 """
 
 import argparse

@@ -12,6 +12,8 @@ Checks health of coordination systems:
 Author: Agent-6 (Coordination & Communication Specialist)
 Date: 2025-12-10
 V2 Compliance: <300 lines, single responsibility
+
+<!-- SSOT Domain: infrastructure -->
 """
 
 import sys

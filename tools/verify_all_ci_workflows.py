@@ -7,6 +7,8 @@ Verifies all CI workflows are passing consistently.
 Task: CP-008
 
 Author: Agent-1 (Integration & Core Systems Specialist)
+
+<!-- SSOT Domain: infrastructure -->
 """
 
 import sys

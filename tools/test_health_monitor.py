@@ -13,6 +13,9 @@ Usage:
     python tools/test_health_monitor.py --analyze
     python tools/test_health_monitor.py --flaky-detect --runs 5
     python tools/test_health_monitor.py --coverage-report
+
+<!-- SSOT Domain: infrastructure -->
+"""
     python tools/test_health_monitor.py --suggest-fixes
 """
 
