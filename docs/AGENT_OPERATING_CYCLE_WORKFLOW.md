@@ -27,6 +27,22 @@
 
 ### **DURING CYCLE** (Active Execution)
 
+#### **Phase 3: Slice** (Planning & Technical Design)
+
+**Technical Implementation Planning Workflow** (Informed by CTO best practices):
+1. ✅ **Start with explicit technical instructions** - Avoid general "build this feature" tasks
+2. ✅ **Request full technical implementation plan** - Ask AI to provide complete plan first
+3. ✅ **Vet the plan** - Review and validate before execution
+4. ✅ **Convert plan to detailed prompt** - Ask AI to convert validated plan into detailed prompt for model
+5. ✅ **Code review before implementation** - Have prompt writer review to confirm implementation won't be spaghetti
+6. ✅ **Confirm clean architecture** - Ensure implementation follows patterns, not spaghetti code
+
+**This workflow ensures:**
+- Technical clarity before execution
+- Validated plans reduce rework
+- Clean, maintainable implementations
+- Better code quality from the start
+
 **Actions:**
 1. ✅ Update status when phase changes
 2. ✅ Update when tasks complete
@@ -209,6 +225,13 @@ CYCLE START:
 └── ❌ DO NOT: Add tasks or message (unless urgent)
 
 DURING CYCLE:
+├── Phase 3: Slice (Technical Planning) ✓
+│   ├── Explicit technical instructions (not general tasks)
+│   ├── Request full technical implementation plan
+│   ├── Vet plan before execution
+│   ├── Convert plan to detailed prompt
+│   ├── Code review: Confirm no spaghetti
+│   └── Ensure clean architecture patterns
 ├── Execute work ✓
 ├── Update status on progress ✓
 ├── ✅ MESSAGE IF: Task expands, needs expertise, 75% done, blocked
@@ -253,11 +276,12 @@ CYCLE END:
 
 ## 🔑 KEY PRINCIPLES
 
-1. **Cycle Planner Tasks:** Added at CYCLE END (not during cycle)
-2. **Agent Messaging:** Primary during DURING CYCLE, secondary at CYCLE END
-3. **Force Multiplier:** Break down and coordinate when task is large
-4. **Pipeline Continuity:** Send gas at 75-80% completion
-5. **Domain Expertise:** Message relevant agents when needed
+1. **Technical Implementation Planning:** Plan before code - Request full technical plan, vet it, convert to detailed prompt, review for spaghetti code
+2. **Cycle Planner Tasks:** Added at CYCLE END (not during cycle)
+3. **Agent Messaging:** Primary during DURING CYCLE, secondary at CYCLE END
+4. **Force Multiplier:** Break down and coordinate when task is large
+5. **Pipeline Continuity:** Send gas at 75-80% completion
+6. **Domain Expertise:** Message relevant agents when needed
 
 ---
 
@@ -295,17 +319,25 @@ Agent-1 working on repos 1-10:
 
 ## ✅ BEST PRACTICES
 
-1. **Task Management:**
+1. **Technical Planning (Phase 3: Slice):**
+   - Start with explicit technical instructions, not general "build this" tasks
+   - Request full technical implementation plan from AI first
+   - Vet the plan thoroughly before execution
+   - Convert validated plan into detailed prompt for model
+   - Code review: Confirm implementation follows patterns, not spaghetti
+   - This workflow (informed by CTO best practices) ensures clean, maintainable code
+
+2. **Task Management:**
    - Add tasks to cycle planner at CYCLE END only
    - Use cycle planner for continuity between sessions
    - Don't add tasks during active execution
 
-2. **Messaging:**
+3. **Messaging:**
    - Message during cycle when coordination needed
    - Use force multiplier pattern for large tasks
    - Send gas early (75-80%) not late (100%)
 
-3. **Coordination:**
+4. **Coordination:**
    - Break down before struggling alone
    - Leverage domain expertise
    - Maintain pipeline continuity
