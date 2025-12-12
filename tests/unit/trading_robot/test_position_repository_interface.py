@@ -223,12 +223,16 @@ class TestPositionRepositoryInterface:
     @pytest.mark.asyncio
     async def test_get_flat_positions(self, mock_repo):
         """Test retrieving flat positions."""
+        # Create position with non-zero quantity first (validation requirement)
         flat_position = Position(
             symbol="FLAT",
-            quantity=0.0,
+            quantity=1.0,  # Start with non-zero
             average_price=100.0,
-            current_price=100.0
+            current_price=100.0,
+            timestamp=datetime.now()
         )
+        # Set to flat after creation (bypasses __post_init__ validation)
+        flat_position.quantity = 0.0
         await mock_repo.save_position(flat_position)
         flat_positions = await mock_repo.get_flat_positions()
         assert len(flat_positions) == 1
