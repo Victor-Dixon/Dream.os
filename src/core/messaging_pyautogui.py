@@ -572,6 +572,16 @@ class PyAutoGUIMessagingDelivery:
             
             logger.info(f"🔍 Template check result: has_header={content_has_template_header}, category={category_value}, is_templated={is_templated_message}")
             
+            # #region agent log
+            import json
+            from pathlib import Path
+            from datetime import datetime
+            log_path = Path(r"d:\Agent_Cellphone_V2_Repository\.cursor\debug.log")
+            try:
+                with open(log_path, "a", encoding="utf-8") as f:
+                    f.write(json.dumps({"id": f"log_{int(datetime.now().timestamp() * 1000)}_pyautogui_before", "timestamp": int(datetime.now().timestamp() * 1000), "location": "messaging_pyautogui.py:575", "message": "PyAutoGUI before content selection", "data": {"is_templated": is_templated_message, "content_length": len(message.content), "content_preview": message.content[:200], "has_header": content_has_template_header}, "sessionId": "debug-session", "runId": "run1", "hypothesisId": "E"}) + "\n")
+            except: pass
+            # #endregion
             if is_templated_message:
                 # Message already has template applied - use content as-is
                 # CRITICAL: If content has prefix but also has template header, extract just the template part
@@ -591,15 +601,28 @@ class PyAutoGUIMessagingDelivery:
                 # Don't add any prefix - template is complete as-is
                 msg_content = content_to_use
                 logger.info(f"✅ Using pre-rendered template content (category: {category_value}, has_header: {content_has_template_header}, final_length: {len(msg_content)})")
+                # #region agent log
+                try:
+                    with open(log_path, "a", encoding="utf-8") as f:
+                        f.write(json.dumps({"id": f"log_{int(datetime.now().timestamp() * 1000)}_pyautogui_templated", "timestamp": int(datetime.now().timestamp() * 1000), "location": "messaging_pyautogui.py:592", "message": "PyAutoGUI using templated content", "data": {"msg_content_length": len(msg_content), "msg_content_preview": msg_content[:200]}, "sessionId": "debug-session", "runId": "run1", "hypothesisId": "E"}) + "\n")
+                except: pass
+                # #endregion
             else:
                 # No template header - format with prefix
                 logger.info(f"📝 No template detected - formatting with prefix (category: {category_value}, has_header: {content_has_template_header})")
+                msg_content_before = message.content
                 msg_content = format_c2a_message(
                     recipient=message.recipient,
                     content=message.content,
                     priority=message.priority.value,
                     sender=sender  # Pass sender for correct tagging
                 )
+                # #region agent log
+                try:
+                    with open(log_path, "a", encoding="utf-8") as f:
+                        f.write(json.dumps({"id": f"log_{int(datetime.now().timestamp() * 1000)}_pyautogui_formatted", "timestamp": int(datetime.now().timestamp() * 1000), "location": "messaging_pyautogui.py:602", "message": "PyAutoGUI after format_c2a_message", "data": {"before_length": len(msg_content_before), "after_length": len(msg_content), "after_preview": msg_content[:200]}, "sessionId": "debug-session", "runId": "run1", "hypothesisId": "E"}) + "\n")
+                except: pass
+                # #endregion
 
             # Click agent chat input - ensure proper focus
             logger.debug(f"📍 Moving to coordinates: ({x}, {y})")
