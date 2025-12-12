@@ -66,7 +66,7 @@ def validate_workflow_syntax(workflow_path: Path) -> Dict[str, Any]:
         elif True in workflow and isinstance(workflow[True], (dict, str, list)):
             # YAML parser may interpret 'on:' as boolean True key
             on_key = True
-        
+
         if on_key is None:
             result["errors"].append("Missing 'on' trigger field")
         else:
