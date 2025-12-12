@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """
 Disable a specific WordPress plugin by renaming its directory
+
+<!-- SSOT Domain: infrastructure -->
 """
 
 import sys

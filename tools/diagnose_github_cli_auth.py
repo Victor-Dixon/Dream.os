@@ -7,6 +7,8 @@ Identifies GitHub CLI authentication problems and provides solutions.
 
 Author: Agent-3 (Infrastructure & DevOps Specialist)
 Task: CP-004
+
+<!-- SSOT Domain: infrastructure -->
 """
 
 import os
