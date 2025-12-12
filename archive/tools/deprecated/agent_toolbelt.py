@@ -60,7 +60,12 @@ def brain_search(args):
     print(json.dumps(res, indent=2))
 
 def brain_share(args):
-    entry = dict(ts=time.time(), topic=args.topic, recipients=args.recipients, actionable=args.actionable)
+    entry = dict(
+        ts=time.time(),
+        topic=args.topic,
+        recipients=args.recipients,
+        actionable=args.actionable
+    )
     _append_jsonl(DATA / "brain.shares.jsonl", entry)
     print("OK: brain.share recorded")
 
@@ -77,7 +82,12 @@ def oss_issues(args):
     print("OK: oss.issues query recorded")
 
 def oss_import(args):
-    rec = dict(ts=time.time(), assign_to=args.assign_to, source="oss.issues.result", count=args.count)
+    rec = dict(
+        ts=time.time(),
+        assign_to=args.assign_to,
+        source="oss.issues.result",
+        count=args.count
+    )
     _append_jsonl(DATA / "oss.import.jsonl", rec)
     print("OK: oss.import staged")
 
@@ -86,7 +96,12 @@ def oss_status(args):
 
 # ---------- debate.* ----------
 def debate_start(args):
-    rec = dict(ts=time.time(), topic=args.topic, participants=args.participants, duration_hours=args.duration)
+    rec = dict(
+        ts=time.time(),
+        topic=args.topic,
+        participants=args.participants,
+        duration_hours=args.duration
+    )
     _append_jsonl(DATA / "debate.sessions.jsonl", rec)
     print("OK: debate.start created")
 
