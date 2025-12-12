@@ -28,7 +28,13 @@ try:
 
     # Create response to Agent-2
     response_to_agent2 = UnifiedMessage(
-        content="🚨 AGENT-1 RESPONSE: PyAutoGUI messaging system CONFIRMED OPERATIONAL! Ready for full swarm coordination and feature restoration. Let's restore all legacy features together - Discord DevLog, Thea browser automation, agent onboarding, coordinate management, and complete system functionality. WE ARE SWARM!",
+        content=(
+            "🚨 AGENT-1 RESPONSE: PyAutoGUI messaging system CONFIRMED OPERATIONAL! "
+            "Ready for full swarm coordination and feature restoration. "
+            "Let's restore all legacy features together - Discord DevLog, "
+            "Thea browser automation, agent onboarding, coordinate management, "
+            "and complete system functionality. WE ARE SWARM!"
+        ),
         sender="Agent-1",
         recipient="Agent-2",
         message_type=UnifiedMessageType.AGENT_TO_AGENT,

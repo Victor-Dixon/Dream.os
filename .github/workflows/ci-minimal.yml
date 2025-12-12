@@ -38,7 +38,9 @@ jobs:
         continue-on-error: true
         run: |
           if [ -d "tests" ] && [ "$(find tests -name '*.py' -type f | wc -l)" -gt 0 ]; then
-            pytest tests/ -v --tb=short || echo "⚠️ Some tests failed"
+            pytest tests/ -v --tb=short \
+              --ignore=agent_workspaces --ignore=temp_repos --ignore=archive \
+              || echo "⚠️ Some tests failed"
           else
             echo "⚠️ No tests directory found, skipping tests"
           fi
@@ -47,4 +49,10 @@ jobs:
         continue-on-error: true
         run: |
           echo "Checking Python syntax..."
-          find . -name "*.py" -not -path "./.*" -not -path "*/venv/*" -exec python -m py_compile {} \; || echo "⚠️ Some syntax errors found"
+          find . -name "*.py" \
+            -not -path "./.*" \
+            -not -path "*/venv/*" \
+            -not -path "*/agent_workspaces/*" \
+            -not -path "*/temp_repos/*" \
+            -not -path "*/archive/*" \
+            -exec python -m py_compile {} \; || echo "⚠️ Some syntax errors found"

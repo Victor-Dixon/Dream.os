@@ -6,7 +6,10 @@ Archived: 2025-01-27
 """
 from dataclasses import dataclass, asdict
 from pathlib import Path
-import argparse, json, sys, time
+import argparse
+import json
+import sys
+import time
 
 DATA = Path("data/knowledge")
 DATA.mkdir(parents=True, exist_ok=True)
