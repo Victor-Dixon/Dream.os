@@ -204,3 +204,4 @@ class AgentManagementCommands(commands.Cog):
             self.logger.error(f"Error in heal command: {e}", exc_info=True)
             await ctx.send(f"❌ Error: {e}")
 
+

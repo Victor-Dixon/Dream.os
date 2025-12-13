@@ -318,3 +318,4 @@ class OnboardingCommands(commands.Cog):
             self.logger.error(f"Error in hard_onboard: {e}", exc_info=True)
             await ctx.send(f"❌ Error: {e}")
 
+

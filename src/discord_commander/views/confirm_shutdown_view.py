@@ -53,3 +53,4 @@ class ConfirmShutdownView(discord.ui.View):
                     f"❌ Error: {e}", ephemeral=True
                 )
 
+

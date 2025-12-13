@@ -125,3 +125,5 @@ signal.signal(signal.SIGINT, signal_handler)
 4. **Medium-term**: Add heartbeat monitoring
 5. **Medium-term**: Add process management (prevent duplicate instances)
 
+
+
