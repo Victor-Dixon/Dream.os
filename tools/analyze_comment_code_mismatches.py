@@ -173,29 +173,55 @@ class CommentCodeAnalyzer:
                 returns_section = re.search(r'Returns?:?\s*\n(.*?)(?=\n\s*(?:Args?|Raises?|Yields?|Note|Example|See|Warning|\w+):|$)', 
                                            docstring, re.DOTALL | re.IGNORECASE)
                 if returns_section:
-                    # IMPROVEMENT 3: Context-aware analysis using AST
+                    # IMPROVEMENT 3: Enhanced context-aware analysis using AST
                     # Check if function actually returns something (more thorough)
-                    has_return = any(
-                        isinstance(n, ast.Return) 
+                    # Look for return statements in all code paths
+                    has_return = False
+                    returns_text = returns_section.group(1).strip().lower()
+                    
+                    # Check for explicit return statements
+                    for n in ast.walk(node):
+                        if isinstance(n, ast.Return):
+                            has_return = True
+                            break
+                    
+                    # Check for generator functions (yield statements)
+                    has_yield = any(
+                        isinstance(n, ast.Yield) or isinstance(n, ast.YieldFrom)
                         for n in ast.walk(node)
                     )
-                    # Also check for implicit returns (functions that might return None)
-                    # Don't flag if Returns section says None or nothing
-                    returns_text = returns_section.group(1).strip().lower()
-                    if not has_return and 'none' not in returns_text and 'nothing' not in returns_text:
-                        # Only flag if it's a clear mismatch
-                        mismatches.append(Mismatch(
-                            file_path=str(file_path),
-                            line_number=node.lineno,
-                            mismatch_type="return_mismatch",
-                            description=(
-                                f"Function '{func_name}' docstring describes return "
-                                f"value but function has no return statement"
-                            ),
-                            code_snippet=f"def {func_name}(...)",
-                            comment_snippet=returns_section.group(1).strip()[:100],
-                            severity="medium"
-                        ))
+                    
+                    # Check if Returns section explicitly says None or nothing
+                    returns_none = (
+                        'none' in returns_text or 
+                        'nothing' in returns_text or
+                        'void' in returns_text or
+                        returns_text.strip() == ''
+                    )
+                    
+                    # Only flag if:
+                    # 1. Returns section describes a value (not None/nothing)
+                    # 2. Function has no return statement
+                    # 3. Function is not a generator (yield would be different)
+                    if not has_return and not has_yield and not returns_none:
+                        # Check if it's a property or setter (these don't need returns)
+                        is_property = any(
+                            isinstance(d, ast.Name) and d.id == 'property'
+                            for d in node.decorator_list
+                        )
+                        if not is_property:
+                            mismatches.append(Mismatch(
+                                file_path=str(file_path),
+                                line_number=node.lineno,
+                                mismatch_type="return_mismatch",
+                                description=(
+                                    f"Function '{func_name}' docstring describes return "
+                                    f"value but function has no return statement"
+                                ),
+                                code_snippet=f"def {func_name}(...)",
+                                comment_snippet=returns_section.group(1).strip()[:100],
+                                severity="medium"
+                            ))
         
         return mismatches
     
@@ -251,9 +277,23 @@ class CommentCodeAnalyzer:
         """Check for inline comments that don't match code.
         
         IMPROVEMENT: Multi-line return detection - checks lines i+1 through i+5
-        for return statements when comment mentions "return".
+        for return statements when comment mentions "return", using AST for context.
         """
         mismatches = []
+        
+        # Parse AST for context-aware analysis
+        try:
+            content = '\n'.join(lines)
+            tree = ast.parse(content)
+            # Build line-to-function mapping
+            line_to_func = {}
+            for node in ast.walk(tree):
+                if isinstance(node, ast.FunctionDef):
+                    for line_num in range(node.lineno, node.end_lineno + 1):
+                        line_to_func[line_num] = node
+        except SyntaxError:
+            tree = None
+            line_to_func = {}
         
         for i, line in enumerate(lines, 1):
             # Skip docstrings
@@ -271,27 +311,62 @@ class CommentCodeAnalyzer:
                     severity="low"
                 ))
             
-            # IMPROVEMENT 1: Multi-line return detection
+            # IMPROVEMENT 1: Enhanced multi-line return detection with AST context
             # Check if comment mentions "return" and look for return statement
-            # in next 5 lines (not just next line)
+            # in next 5 lines (not just next line), using AST for accuracy
             comment_text = line.split('#', 1)[1] if '#' in line else ''
             if comment_text and re.search(r'\breturn\b', comment_text, re.I):
-                # Look for return statement in next 5 lines
+                # Skip if we're inside a docstring or string literal
+                if tree and i in line_to_func:
+                    func_node = line_to_func[i]
+                    # Check if this line is within the function's docstring
+                    if func_node.body and isinstance(func_node.body[0], ast.Expr):
+                        docstring_node = func_node.body[0]
+                        if isinstance(docstring_node.value, (ast.Str, ast.Constant)):
+                            docstring_end = docstring_node.end_lineno if hasattr(docstring_node, 'end_lineno') else docstring_node.lineno
+                            if i <= docstring_end:
+                                continue  # Skip docstring lines
+                
+                # Look for return statement in next 5 lines using AST
                 found_return = False
-                for j in range(i, min(i + 6, len(lines) + 1)):
-                    if j > len(lines):
-                        break
-                    check_line = lines[j - 1] if j > 0 else ''
-                    # Check if line contains return statement (not in comment)
-                    if re.search(r'^\s*return\b', check_line) and '#' not in check_line.split('return')[0]:
-                        found_return = True
-                        break
+                
+                # First try AST-based detection (more accurate)
+                if tree and i in line_to_func:
+                    func_node = line_to_func[i]
+                    # Check if there's a return statement in this function after line i
+                    for node in ast.walk(func_node):
+                        if isinstance(node, ast.Return):
+                            if node.lineno > i and node.lineno <= i + 5:
+                                found_return = True
+                                break
+                
+                # Fallback to regex if AST didn't find it
+                if not found_return:
+                    for j in range(i + 1, min(i + 6, len(lines) + 1)):
+                        if j > len(lines):
+                            break
+                        check_line = lines[j - 1] if j > 0 else ''
+                        # Check if line contains return statement (not in comment)
+                        code_part = check_line.split('#')[0] if '#' in check_line else check_line
+                        if re.search(r'^\s*return\b', code_part):
+                            found_return = True
+                            break
                 
                 # Only flag if comment says "return" but no return found in next 5 lines
-                if not found_return:
-                    # This might be a real issue, but lower severity since it could be
-                    # a description of what the function does, not what this line does
-                    pass  # Don't flag as mismatch - too many false positives
+                # AND we're in a context where return would be expected (inside function)
+                if not found_return and tree and i in line_to_func:
+                    # Lower severity - could be describing function behavior, not this line
+                    mismatches.append(Mismatch(
+                        file_path=str(file_path),
+                        line_number=i,
+                        mismatch_type="return_comment_mismatch",
+                        description=(
+                            f"Comment mentions 'return' but no return statement found "
+                            f"in next 5 lines (may be describing function behavior)"
+                        ),
+                        code_snippet=line.strip()[:100],
+                        severity="low"
+                    ))
             
             # Check for function calls in comments that might not exist
             comment_match = re.search(r'#.*?(\w+)\s*\(', line)
