@@ -1,6 +1,21 @@
-Easy Deletions - 1 files
+Easy Deletions - 6 files
 ================================================================================
 
-agent_workspaces\Agent-6\inbox\A2A_LOOP3_ACCELERATION_COORDINATION_2025-12-06.md
+agent_workspaces\Agent-3\s2a_template_coordination_review_2025-12-12.md
+  Reason: Matches redundant pattern (.*_\d{4}-\d{2}-\d{2}.*\.(md|txt)$)
+
+agent_workspaces\Agent-3\s2a_template_coordination_review_2025-12-12.md
+  Reason: Duplicate of s2a_template_coordination_review_2025-12-12.md
+
+docs\archive\cycles\CYCLE_ACCOMPLISHMENTS_2025-12-12_18-27-25.md
+  Reason: Matches redundant pattern (.*_\d{4}-\d{2}-\d{2}.*\.(md|txt)$)
+
+docs\archive\cycles\CYCLE_ACCOMPLISHMENTS_2025-12-12_18-27-25.md
+  Reason: Duplicate of CYCLE_ACCOMPLISHMENTS_2025-12-12_18-31-29.md
+
+docs\archive\cycles\CYCLE_ACCOMPLISHMENTS_2025-12-12_18-31-29.md
+  Reason: Matches redundant pattern (.*_\d{4}-\d{2}-\d{2}.*\.(md|txt)$)
+
+docs\captain_reports\s2a_template_coordination_review_2025-12-12.md
   Reason: Matches redundant pattern (.*_\d{4}-\d{2}-\d{2}.*\.(md|txt)$)
 
