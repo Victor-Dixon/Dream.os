@@ -58,6 +58,7 @@ class MessagingControllerView(discord.ui.View):
         from src.core.config.timeout_constants import TimeoutConstants
         super().__init__(timeout=TimeoutConstants.HTTP_EXTENDED * 2)  # 10 minute timeout
         self.messaging_service = messaging_service
+        # Load agents synchronously for initialization (cached, should be fast)
         self.agents = self._load_agents()
 
         # Agent selection dropdown (WOW FACTOR: Live status indicators!)
@@ -110,8 +111,37 @@ class MessagingControllerView(discord.ui.View):
         self.refresh_btn.callback = self.on_refresh
         self.add_item(self.refresh_btn)
 
+    async def _load_agents_async(self) -> list[dict]:
+        """Load agent information with live status (async version)."""
+        try:
+            status_reader = StatusReader()
+            all_statuses = await status_reader.read_all_statuses_async()
+            agents = []
+
+            for i in range(1, 9):
+                agent_id = f"Agent-{i}"
+                status_data = all_statuses.get(agent_id, {})
+
+                agents.append(
+                    {
+                        "id": agent_id,
+                        "name": status_data.get("agent_name", f"Agent-{i}"),
+                        "status": status_data.get("status", "unknown"),
+                        "points": self._extract_points(status_data.get("points_earned", 0)),
+                        "mission": status_data.get("current_mission", "No mission")[:50],
+                    }
+                )
+
+            return agents
+        except Exception as e:
+            logger.error(f"Error loading agents: {e}")
+            return [
+                {"id": f"Agent-{i}", "name": f"Agent-{i}", "status": "unknown", "points": 0, "mission": "Unknown"}
+                for i in range(1, 9)
+            ]
+
     def _load_agents(self) -> list[dict]:
-        """Load agent information with live status."""
+        """Load agent information with live status (synchronous version for backward compatibility)."""
         try:
             status_reader = StatusReader()
             all_statuses = status_reader.read_all_statuses()
@@ -186,6 +216,24 @@ class MessagingControllerView(discord.ui.View):
             modal = AgentMessageModal(agent_id, self.messaging_service)
             
             await interaction.response.send_modal(modal)
+        except discord.errors.HTTPException as e:
+            # Handle interaction already acknowledged errors
+            if "already been acknowledged" in str(e):
+                logger.warning(f"Interaction already acknowledged for agent select: {e}")
+                # Try to send as followup instead
+                try:
+                    await interaction.followup.send(
+                        f"⚠️ Interaction already processed. Please try selecting an agent again.",
+                        ephemeral=True
+                    )
+                except Exception as followup_error:
+                    logger.error(f"Failed to send followup message: {followup_error}")
+            else:
+                logger.error(f"HTTP error opening agent message modal: {e}", exc_info=True)
+                if not interaction.response.is_done():
+                    await interaction.response.send_message(
+                        f"❌ Error: {e}", ephemeral=True
+                    )
         except Exception as e:
             logger.error(f"Error opening agent message modal: {e}", exc_info=True)
             if not interaction.response.is_done():
@@ -240,7 +288,8 @@ class MessagingControllerView(discord.ui.View):
     async def on_refresh(self, interaction: discord.Interaction):
         """Handle refresh button - reloads agent list."""
         try:
-            self.agents = self._load_agents()
+            # Use async version to avoid blocking event loop
+            self.agents = await self._load_agents_async()
             self.agent_select.options = self._create_agent_options()
 
             await interaction.response.send_message("✅ Agent list refreshed with latest status!", ephemeral=True)

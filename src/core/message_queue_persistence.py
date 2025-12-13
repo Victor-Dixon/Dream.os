@@ -221,10 +221,21 @@ class FileQueuePersistence(IQueuePersistence):
         
         # Write to temp file first
         try:
+            # CRITICAL FIX: Ensure temp file directory exists before writing
+            temp_file.parent.mkdir(parents=True, exist_ok=True)
             with open(temp_file, "w", encoding="utf-8") as f:
                 json.dump(data, f, separators=(',', ':'), ensure_ascii=False, default=str)
+            # CRITICAL FIX: Verify temp file was actually written before proceeding
+            if not temp_file.exists() or temp_file.stat().st_size == 0:
+                raise IOError(f"Temp file was not created or is empty: {temp_file}")
         except Exception as e:
             print(f"❌ Failed to write temp file: {e}")
+            # Clean up partial temp file if it exists
+            if temp_file.exists():
+                try:
+                    temp_file.unlink()
+                except Exception:
+                    pass
             raise
         
         # Atomic rename with retry logic for Windows file locking
@@ -243,6 +254,13 @@ class FileQueuePersistence(IQueuePersistence):
                             continue
                         else:
                             raise
+                
+                # CRITICAL FIX: Verify temp file exists before attempting move
+                if not temp_file.exists():
+                    raise FileNotFoundError(
+                        f"Temp file does not exist before move: {temp_file}. "
+                        f"This indicates the write operation failed silently."
+                    )
                 
                 # Use shutil.move instead of rename for better Windows compatibility
                 shutil.move(str(temp_file), str(self.queue_file))

@@ -47,3 +47,5 @@ for f in files_to_delete:
 
 print(f"\nTotal size to free: {sum(f.stat().st_size for f in files_to_delete):,} bytes")
 
+
+
