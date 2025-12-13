@@ -39,8 +39,8 @@ Business Intelligence
 <strong style="color: #fa709a;">Agent-6</strong><br>
 Communication & Coordination
 </div>
-<div style="background: #fff; border: 2px solid #fee140; border-radius: 8px; padding: 1rem;">
-<strong style="color: #fee140;">Agent-7</strong><br>
+<div style="background: #fff; border: 2px solid #f59e0b; border-radius: 8px; padding: 1rem;">
+<strong style="color: #f59e0b;">Agent-7</strong><br>
 Web Development
 </div>
 <div style="background: #fff; border: 2px solid #30cfd0; border-radius: 8px; padding: 1rem;">
