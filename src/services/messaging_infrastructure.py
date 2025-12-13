@@ -648,6 +648,13 @@ def create_messaging_parser() -> argparse.ArgumentParser:
         default="P1",
         help="Priority level (P0/P1) for CYCLE_V2 (default: P1)",
     )
+    
+    # Queue management flags
+    parser.add_argument(
+        "--resend-failed",
+        action="store_true",
+        help="Resend failed messages from queue (resets failed messages to PENDING for retry)",
+    )
     parser.add_argument(
         "--handoff",
         type=str,
@@ -1187,285 +1194,22 @@ class MessageCoordinator:
         return UnifiedMessageType.SYSTEM_TO_AGENT, sender or "SYSTEM"
 
 
-def handle_cycle_v2_message(args, parser) -> int:
-    """Handle CYCLE_V2 message sending with template."""
-    try:
-        if not args.agent:
-            print("❌ ERROR: --agent required for --cycle-v2")
-            parser.print_help()
-            return 1
-
-        # Validate required fields
-        required_fields = {
-            "mission": args.mission,
-            "dod": args.dod,
-            "ssot_constraint": args.ssot_constraint,
-            "v2_constraint": args.v2_constraint,
-            "touch_surface": args.touch_surface,
-            "validation": args.validation,
-            "handoff": args.handoff,
-        }
-
-        missing = [k for k, v in required_fields.items() if not v]
-        if missing:
-            print(
-                f"❌ ERROR: Missing required CYCLE_V2 fields: {', '.join(missing)}")
-            print("Required: --mission, --dod, --ssot-constraint, --v2-constraint, --touch-surface, --validation, --handoff")
-            return 1
-
-        # Normalize priority
-        normalized_priority = "regular" if args.priority == "normal" else args.priority
-        priority = (
-            UnifiedMessagePriority.URGENT
-            if normalized_priority == "urgent"
-            else UnifiedMessagePriority.REGULAR
-        )
-
-        # Render CYCLE_V2 template (stored in S2A templates but used for C2A)
-        from src.core.messaging_models_core import MessageCategory, MESSAGE_TEMPLATES
-
-        # Get CYCLE_V2 template from S2A templates
-        cycle_v2_template = MESSAGE_TEMPLATES.get(
-            MessageCategory.S2A, {}).get("CYCLE_V2")
-
-        if not cycle_v2_template:
-            print("❌ ERROR: CYCLE_V2 template not found")
-            return 1
-
-        # Format template directly
-        message_id = f"msg_{int(time.time() * 1000)}"
-        timestamp = datetime.now().isoformat()
-
-        # Replace \n in dod with actual newlines
-        dod = args.dod.replace("\\n", "\n") if args.dod else ""
-
-        rendered = cycle_v2_template.format(
-            sender="Captain Agent-4",
-            recipient=args.agent,
-            priority=priority.value if hasattr(
-                priority, "value") else str(priority),
-            message_id=message_id,
-            timestamp=timestamp,
-            mission=args.mission,
-            dod=dod,
-            ssot_constraint=args.ssot_constraint,
-            v2_constraint=args.v2_constraint,
-            touch_surface=args.touch_surface,
-            validation_required=args.validation,
-            priority_level=args.priority_level or "P1",
-            handoff_expectation=args.handoff,
-            fallback="Escalate to Captain if blocked with proposed fix"
-        )
-
-        # Send via MessageCoordinator
-        result = MessageCoordinator.send_to_agent(
-            args.agent,
-            rendered,
-            priority,
-            stalled=getattr(args, "stalled", False),
-            message_category=MessageCategory.C2A
-        )
-
-        if isinstance(result, dict) and result.get("success"):
-            print(f"✅ CYCLE_V2 message sent to {args.agent}")
-            print(f"   Mission: {args.mission[:50]}...")
-            return 0
-        else:
-            print(f"❌ Failed to send CYCLE_V2 message to {args.agent}")
-            return 1
-
-    except Exception as e:
-        logger.error(f"CYCLE_V2 message handling error: {e}")
-        import traceback
-        traceback.print_exc()
-        return 1
+# CLI Handlers extracted to src/services/messaging/cli_handlers.py
+# Import for backward compatibility
+from .messaging.cli_handlers import (
+    handle_cycle_v2_message,
+    handle_message,
+    handle_survey,
+    handle_consolidation,
+    handle_coordinates,
+    handle_start_agents,
+    handle_save,
+    handle_leaderboard,
+)
 
 
-def handle_message(args, parser) -> int:
-    """Handle message sending."""
-    try:
-        # Check for cycle-v2 flag first
-        if getattr(args, "cycle_v2", False):
-            return handle_cycle_v2_message(args, parser)
-
-        if not args.agent and not args.broadcast:
-            print("❌ ERROR: Either --agent or --broadcast must be specified")
-            parser.print_help()
-            return 1
-
-        # Normalize "normal" to "regular" for consistency
-        normalized_priority = "regular" if args.priority == "normal" else args.priority
-
-        priority = (
-            UnifiedMessagePriority.URGENT
-            if normalized_priority == "urgent"
-            else UnifiedMessagePriority.REGULAR
-        )
-
-        # Get stalled flag from args (defaults to False if not present)
-        stalled = getattr(args, "stalled", False)
-
-        if args.broadcast:
-            success_count = MessageCoordinator.broadcast_to_all(
-                args.message, priority, stalled=stalled
-            )
-            if success_count > 0:
-                print(f"✅ Broadcast to {success_count} agents successful")
-                return 0
-            else:
-                print("❌ Broadcast failed")
-                return 1
-        else:
-            result = MessageCoordinator.send_to_agent(
-                args.agent, args.message, priority, use_pyautogui=True, stalled=stalled
-            )
-
-            # Check if result is dict (new format) or bool (old format)
-            if isinstance(result, dict):
-                if result.get("success"):
-                    print(f"✅ Message sent to {args.agent}")
-                    return 0
-                elif result.get("blocked"):
-                    # Message blocked - show pending request
-                    print("❌ MESSAGE BLOCKED - Pending Multi-Agent Request")
-                    print()
-                    print(result.get("error_message",
-                          "Pending request details unavailable"))
-                    return 1
-                else:
-                    print(f"❌ Failed to send message to {args.agent}")
-                    return 1
-            elif result:
-                # Old format (bool) - success
-                print(f"✅ Message sent to {args.agent}")
-                return 0
-            else:
-                print(f"❌ Failed to send message to {args.agent}")
-                return 1
-
-    except Exception as e:
-        logger.error(f"Message handling error: {e}")
-        return 1
-
-
-def handle_survey() -> int:
-    """Handle survey coordination initiation."""
-    try:
-        if MessageCoordinator.coordinate_survey():
-            print("✅ Survey coordination initiated successfully")
-            return 0
-        else:
-            print("❌ Survey coordination failed")
-            return 1
-    except Exception as e:
-        logger.error(f"Survey coordination error: {e}")
-        return 1
-
-
-def handle_consolidation(args) -> int:
-    """Handle consolidation coordination."""
-    try:
-        if MessageCoordinator.coordinate_consolidation(
-            args.consolidation_batch, args.consolidation_status
-        ):
-            print("✅ Consolidation coordination successful")
-            return 0
-        else:
-            print("❌ Consolidation coordination failed")
-            return 1
-    except Exception as e:
-        logger.error(f"Consolidation coordination error: {e}")
-        return 1
-
-
-def handle_coordinates() -> int:
-    """Display agent coordinates."""
-    try:
-        coord_loader = get_coordinate_loader()
-        print("\n🐝 SWARM AGENT COORDINATES")
-        print("=" * 50)
-        for agent in SWARM_AGENTS:
-            chat_coords = coord_loader.get_chat_coordinates(agent)
-            onboard_coords = coord_loader.get_onboarding_coordinates(agent)
-            print(f"\n{agent}:")
-            print(f"  Chat:      {chat_coords}")
-            print(f"  Onboarding: {onboard_coords}")
-        print("\n" + "=" * 50)
-        return 0
-    except Exception as e:
-        logger.error(f"Coordinates display error: {e}")
-        return 1
-
-
-def handle_start_agents(args) -> int:
-    """Handle starting agents via onboarding coordinates."""
-    try:
-        agent_numbers = args.start
-        message = args.message if hasattr(
-            args, "message") and args.message else "START"
-
-        for num in agent_numbers:
-            agent_id = f"Agent-{num}"
-            if agent_id not in SWARM_AGENTS:
-                print(f"⚠️  Invalid agent: {agent_id}")
-                continue
-
-            if send_message_to_onboarding_coords(agent_id, message):
-                print(f"✅ Started {agent_id}")
-            else:
-                print(f"❌ Failed to start {agent_id}")
-
-        return 0
-    except Exception as e:
-        logger.error(f"Start agents error: {e}")
-        return 1
-
-
-def handle_save(args, parser) -> int:
-    """Handle save operation (Ctrl+Enter to all agents)."""
-    try:
-        if not args.message:
-            print("❌ ERROR: --message required for save operation")
-            return 1
-
-        coord_loader = get_coordinate_loader()
-        for agent in SWARM_AGENTS:
-            try:
-                chat_coords = coord_loader.get_chat_coordinates(agent)
-                pyautogui.click(chat_coords[0], chat_coords[1])
-                time.sleep(0.2)
-                pyautogui.write(args.message, interval=0.01)
-                pyautogui.hotkey("ctrl", "enter")
-                print(f"✅ Saved to {agent}")
-                time.sleep(0.5)
-            except Exception as e:
-                print(f"❌ Failed to save to {agent}: {e}")
-
-        return 0
-    except Exception as e:
-        logger.error(f"Save operation error: {e}")
-        return 1
-
-
-def handle_leaderboard() -> int:
-    """Display the autonomous competition leaderboard."""
-    try:
-        competition_system = get_competition_system()
-        leaderboard = competition_system.get_leaderboard()
-
-        print("\n🏆 AUTONOMOUS COMPETITION LEADERBOARD")
-        print("=" * 60)
-        for rank, entry in enumerate(leaderboard, start=1):
-            agent = entry["agent_id"]
-            score = entry["score"]
-            completed = entry.get("contracts_completed", 0)
-            print(f"{rank}. {agent:10s} - {score:5d} pts ({completed} contracts)")
-        print("=" * 60)
-        return 0
-    except Exception as e:
-        logger.error(f"Leaderboard error: {e}")
-        print("❌ Failed to display leaderboard")
-        return 1
+# Handler functions extracted to src/services/messaging/cli_handlers.py
+# See imports above for backward compatibility
 
 
 # ============================================================================
@@ -1474,89 +1218,6 @@ def handle_leaderboard() -> int:
 
 
 class ConsolidatedMessagingService(BaseService):
-    """
-    Consolidated messaging service adapter for Discord bot.
-
-    CRITICAL UPDATE (2025-01-27): Uses message queue for synchronization
-    Prevents race conditions when Discord + computer + agents send messages.
-    All messages go through queue for sequential delivery with global lock.
-    """
-
-    def __init__(self):
-        """Initialize messaging service."""
-        super().__init__("ConsolidatedMessagingService")
-        self.project_root = Path(__file__).parent.parent.parent
-        self.messaging_cli = self.project_root / \
-            "src" / "services" / "messaging_cli.py"
-
-        # CRITICAL: Initialize message queue for synchronization
-        try:
-            from src.core.message_queue import MessageQueue
-
-            self.queue = MessageQueue()
-            self.logger.info(
-                "✅ ConsolidatedMessagingService initialized with message queue")
-        except Exception as e:
-            self.logger.error(f"⚠️ Failed to initialize message queue: {e}")
-            self.queue = None
-
-    def send_message(
-        self,
-        agent: str,
-        message: str,
-        priority: str = "regular",
-        use_pyautogui: bool = True,
-        wait_for_delivery: bool = False,
-        timeout: float = 30.0,
-        discord_user_id: str | None = None,
-        stalled: bool = False,
-        apply_template: bool = False,
-        message_category: MessageCategory | None = None,
-        sender: str | None = None,
-    ) -> dict[str, Any]:
-        """
-        Send message to agent via message queue (synchronized delivery).
-
-        VALIDATION: Checks if agent has pending multi-agent request.
-        If pending, blocks message and returns error with pending request details.
-
-        CRITICAL: All messages go through queue to prevent race conditions.
-        Discord + computer + agents synchronized through global keyboard lock.
-
-        Args:
-            agent: Target agent ID (e.g., "Agent-1")
-            message: Message content
-            priority: Message priority ("regular" or "urgent")
-            use_pyautogui: Whether to use PyAutoGUI delivery (default: True)
-            wait_for_delivery: Wait for message to be delivered before returning (default: False)
-            timeout: Maximum time to wait for delivery in seconds (default: 30.0)
-            discord_user_id: Discord user ID for username resolution (optional)
-            stalled: Whether to use stalled delivery mode
-            apply_template: Apply SSOT messaging template before sending (default: False)
-            message_category: Explicit template category (defaults to D2A when templating)
-            sender: Override sender name when templating (Discord user display name)
-
-        Returns:
-            Dictionary with success status and queue ID, or blocked status with error message
-        """
-        try:
-            priority_value = (priority or "regular").lower()
-            priority_enum = (
-                UnifiedMessagePriority.URGENT
-                if priority_value == "urgent"
-                else UnifiedMessagePriority.REGULAR
-            )
-
-            resolved_sender = sender or (
-                self._resolve_discord_sender(discord_user_id)
-                if discord_user_id
-                else "DISCORD"
-            )
-
-            # #region agent log
-            import json
-            from pathlib import Path
-            log_path = Path(r"d:\Agent_Cellphone_V2_Repository\.cursor\debug.log")
             try:
                 with open(log_path, "a", encoding="utf-8") as f:
                     f.write(json.dumps({"id": f"log_{int(datetime.now().timestamp() * 1000)}_before_template", "timestamp": int(datetime.now().timestamp() * 1000), "location": "messaging_infrastructure.py:1466", "message": "Before template application", "data": {"apply_template": apply_template, "message_length": len(message), "message_preview": message[:100], "message_category": str(message_category) if message_category else None}, "sessionId": "debug-session", "runId": "run1", "hypothesisId": "B"}) + "\n")
