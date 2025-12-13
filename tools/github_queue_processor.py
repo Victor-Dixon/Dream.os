@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: infrastructure -->
 GitHub Queue Processor - Automatic Retry System
 ================================================
 
