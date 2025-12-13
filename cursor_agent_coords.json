@@ -16,7 +16,7 @@
     },
     "Agent-2": {
       "chat_input_coordinates": [-308, 500],
-      "onboarding_input_coords": [-296, 180],
+      "onboarding_input_coords": [-296, 190],
       "description": "Architecture & Design Specialist",
       "active": true
     },
