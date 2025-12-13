@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: infrastructure -->
 SFTP Connection Validation Tool for Swarm Websites
 
 Validates SFTP connections and paths for all swarm websites to ensure

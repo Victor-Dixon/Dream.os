@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: infrastructure -->
 SFTP Path Structure Validation Tool
 ===================================
 
@@ -7,6 +8,8 @@ Tests SFTP connection and verifies actual path structure for Hostinger deploymen
 
 Usage:
     python tools/test_sftp_path_structure.py --site freerideinvestor
+
+Author: Agent-3 (Infrastructure & DevOps Specialist)
 """
 
 import argparse
