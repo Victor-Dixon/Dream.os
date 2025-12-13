@@ -1317,7 +1317,7 @@ def handle_message(args, parser) -> int:
                 return 1
         else:
             result = MessageCoordinator.send_to_agent(
-                args.agent, args.message, priority, stalled=stalled
+                args.agent, args.message, priority, use_pyautogui=True, stalled=stalled
             )
 
             # Check if result is dict (new format) or bool (old format)
