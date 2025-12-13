@@ -36,13 +36,16 @@ class ContractManager(BaseService):
         try:
             contracts = self.storage.get_all_contracts()
 
+            # Convert Contract objects to dicts for status checking
+            contracts_data = [c.to_dict() if hasattr(c, 'to_dict') else c.__dict__ if hasattr(c, '__dict__') else {} for c in contracts]
+            
             status = {
                 "total_contracts": len(contracts),
-                "active_contracts": len([c for c in contracts if c.get("status") == "active"]),
+                "active_contracts": len([c for c in contracts_data if c.get("status") == "active"]),
                 "completed_contracts": len(
-                    [c for c in contracts if c.get("status") == "completed"]
+                    [c for c in contracts_data if c.get("status") == "completed"]
                 ),
-                "pending_contracts": len([c for c in contracts if c.get("status") == "pending"]),
+                "pending_contracts": len([c for c in contracts_data if c.get("status") == "pending"]),
                 "last_updated": datetime.now().isoformat(),
             }
 
@@ -57,16 +60,19 @@ class ContractManager(BaseService):
         try:
             agent_contracts = self.storage.get_agent_contracts(agent_id)
 
+            # Convert Contract objects to dicts for status checking
+            contracts_data = [c.to_dict() if hasattr(c, 'to_dict') else c.__dict__ if hasattr(c, '__dict__') else {} for c in agent_contracts]
+
             status = {
                 "agent_id": agent_id,
                 "total_contracts": len(agent_contracts),
                 "active_contracts": len(
-                    [c for c in agent_contracts if c.get("status") == "active"]
+                    [c for c in contracts_data if c.get("status") == "active"]
                 ),
                 "completed_contracts": len(
-                    [c for c in agent_contracts if c.get("status") == "completed"]
+                    [c for c in contracts_data if c.get("status") == "completed"]
                 ),
-                "contracts": agent_contracts,
+                "contracts": contracts_data,
                 "last_updated": datetime.now().isoformat(),
             }
 
