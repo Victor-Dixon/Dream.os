@@ -1,61 +1,161 @@
 #!/usr/bin/env python3
-"""Identify old and redundant files for easy deletion."""
+"""
+Find easy deletions: redundant docs, orphaned code, unnecessary complexity.
+Focus on safe, obvious deletions.
+"""
+
+import os
+import re
 from pathlib import Path
-from datetime import datetime
+from collections import defaultdict
+from datetime import datetime, timedelta
 
-# Old devlogs (2025-01-27 is way old)
-old_devlogs = list(Path("devlogs").glob("2025-01-27_*.md"))
+REPO_ROOT = Path(__file__).parent.parent
 
-# Redundant artifacts
-redundant_artifacts = [
-    # Agent-5 duplicate/redundant reports
-    "artifacts/2025-12-12_agent-5_audit-quick-reference.md",
-    "artifacts/2025-12-12_agent-5_audit-quick-reference-guide.md",  # duplicate
-    "artifacts/2025-12-12_agent-5_complete-delta-report.md",  # redundant
-    "artifacts/2025-12-12_agent-5_final-handoff-document.md",  # redundant
-    "artifacts/2025-12-12_agent-5_final-session-summary.md",  # redundant
-    "artifacts/2025-12-12_agent-5_session-metrics-summary.md",  # redundant
-    "artifacts/2025-12-12_agent-5_session-artifact-index.md",  # redundant
+# Patterns for redundant files
+REDUNDANT_PATTERNS = [
+    # Duplicate validation/summary files
+    r'.*_(FINAL|COMPLETE|SUMMARY|DELTA|CERTIFICATE|RECORD|VALIDATION).*\.(md|txt|json)$',
+    # Old dated files (older than 7 days for validation/summary files)
+    r'.*_\d{4}-\d{2}-\d{2}.*\.(md|txt)$',
+    # Temporary/backup files
+    r'.*_(OLD|BACKUP|TEMP|TMP|BAK)\.(py|md|txt|json)$',
+    # Duplicate agent summaries
+    r'AGENT\d+_(SESSION|DAILY|WORK|DELTA|VALIDATION).*\.md$',
+]
+
+# Directories to check
+CHECK_DIRS = [
+    'docs',
+    'artifacts',
+    'agent_workspaces',
+]
+
+# Directories to skip
+SKIP_DIRS = {
+    'archive/tools/deprecated',  # Already archived
+    'node_modules',
+    '.git',
+    '__pycache__',
+    '.pytest_cache',
+}
+
+# Files to keep (important ones)
+KEEP_FILES = {
+    'docs/AGENT_OPERATING_CYCLE_WORKFLOW.md',
+    'docs/README.md',
+    'docs/DOCUMENTATION_INDEX.md',
+}
+
+def is_redundant_file(filepath: Path) -> tuple[bool, str]:
+    """Check if file is redundant."""
+    rel_path = filepath.relative_to(REPO_ROOT)
     
-    # Agent-7 redundant validation files
-    "artifacts/2025-12-12_agent-7_ci_cd_validation.json",
-    "artifacts/2025-12-12_agent-7_validation_record.txt",
-    "artifacts/AGENT7_CI_CD_WORK_COMPLETE_2025-12-12.txt",
-    "artifacts/AGENT7_CODE_COMMENT_REVIEW_VALIDATION_2025-12-12.txt",
-    "artifacts/AGENT7_COMMENT_CODE_ANALYZER_VALIDATION_2025-12-12.txt",
-    "artifacts/DELETION_CANDIDATES_AGENT7_CI_CD.txt",
-    "artifacts/REDUNDANT_DOCS_ANALYSIS_2025-12-12.md",
-    "artifacts/VALIDATION_RESULT_2025-12-12.json",
-]
+    # Skip important files
+    if str(rel_path) in KEEP_FILES:
+        return False, ""
+    
+    # Skip archived deprecated code
+    if 'archive/tools/deprecated' in str(rel_path):
+        return False, ""
+    
+    filename = filepath.name
+    
+    # Check patterns
+    for pattern in REDUNDANT_PATTERNS:
+        if re.match(pattern, filename, re.IGNORECASE):
+            # Check if it's old (older than 7 days for validation/summary files)
+            if '_FINAL' in filename.upper() or '_COMPLETE' in filename.upper() or '_VALIDATION' in filename.upper():
+                try:
+                    mtime = datetime.fromtimestamp(filepath.stat().st_mtime)
+                    if mtime < datetime.now() - timedelta(days=7):
+                        return True, f"Old validation/summary file ({pattern})"
+                except:
+                    pass
+            return True, f"Matches redundant pattern ({pattern})"
+    
+    # Check for duplicate agent summaries (keep only most recent)
+    agent_match = re.match(r'AGENT(\d+)_(SESSION|DAILY|WORK|DELTA|VALIDATION).*\.md$', filename, re.IGNORECASE)
+    if agent_match:
+        return True, "Duplicate agent summary file"
+    
+    return False, ""
 
-# Tools redundant reports
-redundant_tools = [
-    "tools/COORDINATION_RESULTS_REPORT.md",  # redundant with validation report
-    "tools/COORDINATION_FINAL_VALIDATION_REPORT.md",  # redundant
-    "tools/COORDINATION_EFFECTIVENESS_ANALYSIS.md",  # redundant
-    "tools/COORDINATION_METRICS_SNAPSHOT.md",  # redundant
-    "tools/COORDINATION_TOOLS_SUMMARY.md",  # redundant
-    "tools/COORDINATION_TOOLS_VALIDATION_REPORT.md",  # redundant
-    "tools/COORDINATION_INFRASTRUCTURE_SUMMARY.md",  # redundant
-    "tools/COORDINATION_ACTIVITY_LOG.md",  # redundant
-]
+def find_duplicate_groups(files: list[Path]) -> dict[str, list[Path]]:
+    """Group files by base name to find duplicates."""
+    groups = defaultdict(list)
+    for f in files:
+        # Extract base name (without date suffixes)
+        base = re.sub(r'_\d{4}-\d{2}-\d{2}.*', '', f.stem)
+        base = re.sub(r'_(FINAL|COMPLETE|SUMMARY|DELTA|VALIDATION).*', '', base, flags=re.IGNORECASE)
+        groups[base].append(f)
+    
+    # Return only groups with duplicates
+    return {k: v for k, v in groups.items() if len(v) > 1}
 
-all_files_to_delete = []
-for f in old_devlogs:
-    if f.exists():
-        all_files_to_delete.append(f)
+def main():
+    """Find easy deletions."""
+    deletions = []
+    duplicates = defaultdict(list)
+    
+    print("🔍 Scanning for easy deletions...\n")
+    
+    for check_dir in CHECK_DIRS:
+        dir_path = REPO_ROOT / check_dir
+        if not dir_path.exists():
+            continue
+        
+        for filepath in dir_path.rglob('*'):
+            # Skip directories and files in skip dirs
+            if filepath.is_dir():
+                continue
+            
+            rel_path = filepath.relative_to(REPO_ROOT)
+            if any(skip in str(rel_path) for skip in SKIP_DIRS):
+                continue
+            
+            # Check if redundant
+            is_redundant, reason = is_redundant_file(filepath)
+            if is_redundant:
+                deletions.append((filepath, reason))
+    
+    # Find duplicate groups
+    all_files = [f for f, _ in deletions]
+    dup_groups = find_duplicate_groups(all_files)
+    
+    # For duplicates, keep most recent, delete others
+    for base, files in dup_groups.items():
+        files.sort(key=lambda f: f.stat().st_mtime, reverse=True)
+        # Keep most recent, mark others for deletion
+        for f in files[1:]:
+            deletions.append((f, f"Duplicate of {files[0].name}"))
+    
+    # Sort by path
+    deletions.sort(key=lambda x: str(x[0]))
+    
+    print(f"📋 Found {len(deletions)} easy deletions:\n")
+    
+    for filepath, reason in deletions[:50]:  # Show first 50
+        rel_path = filepath.relative_to(REPO_ROOT)
+        print(f"  ❌ {rel_path}")
+        print(f"     Reason: {reason}\n")
+    
+    if len(deletions) > 50:
+        print(f"  ... and {len(deletions) - 50} more\n")
+    
+    # Write deletion list
+    deletion_list = REPO_ROOT / 'DELETION_CANDIDATES_EASY.txt'
+    with open(deletion_list, 'w') as f:
+        f.write(f"Easy Deletions - {len(deletions)} files\n")
+        f.write("=" * 80 + "\n\n")
+        for filepath, reason in deletions:
+            rel_path = filepath.relative_to(REPO_ROOT)
+            f.write(f"{rel_path}\n")
+            f.write(f"  Reason: {reason}\n\n")
+    
+    print(f"✅ Deletion list written to: {deletion_list}")
+    print(f"\n💡 To delete these files, run:")
+    print(f"   python tools/delete_easy_files.py")
 
-for f_path in redundant_artifacts + redundant_tools:
-    f = Path(f_path)
-    if f.exists():
-        all_files_to_delete.append(f)
-
-print(f"Found {len(all_files_to_delete)} files to delete:\n")
-total_size = 0
-for f in all_files_to_delete:
-    size = f.stat().st_size
-    total_size += size
-    print(f"  {f} ({size:,} bytes)")
-
-print(f"\nTotal: {len(all_files_to_delete)} files, {total_size:,} bytes ({total_size/1024:.1f} KB)")
-
+if __name__ == '__main__':
+    main()
