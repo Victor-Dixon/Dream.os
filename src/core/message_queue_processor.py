@@ -16,6 +16,8 @@ License: MIT
 
 import logging
 import time
+from datetime import datetime
+from pathlib import Path
 from typing import Any, Optional
 
 from .message_queue import MessageQueue, QueueConfig
@@ -145,6 +147,9 @@ class MessageQueueProcessor:
 
         Error isolation: Each step wrapped in try/except to prevent
         cascade failures. One entry failure doesn't stop processing.
+        
+        Retry Logic: Failed deliveries are retried with exponential backoff.
+        Max retries: 3 attempts with delays: 5s, 15s, 45s
 
         Args:
             entry: Queue entry with message data
@@ -164,9 +169,23 @@ class MessageQueueProcessor:
             pass  # Non-critical if tracker unavailable
         
         try:
-            # Extract message data
-            message = getattr(entry, 'message', None)
+            # Extract message data first
             queue_id = getattr(entry, 'queue_id', 'unknown')
+            message = getattr(entry, 'message', None)
+            
+            # Check if this is a retry attempt
+            entry_metadata = getattr(entry, 'metadata', {})
+            delivery_attempts = entry_metadata.get('delivery_attempts', 0)
+            max_retries = 3
+            
+            # If already failed max retries, skip
+            if delivery_attempts >= max_retries:
+                logger.warning(
+                    f"Entry {queue_id} exceeded max retries ({max_retries}), "
+                    f"marking as permanently failed"
+                )
+                self.queue.mark_failed(queue_id, f"max_retries_exceeded ({max_retries})")
+                return False
 
             if not message:
                 logger.warning(f"Entry {queue_id} missing message")
@@ -232,6 +251,16 @@ class MessageQueueProcessor:
             success = self._route_delivery(
                 recipient, content, metadata, message_type_str, sender, priority_str, tags_list
             )
+            
+            # VERIFICATION: After PyAutoGUI delivery, verify message reached inbox
+            if success and metadata.get("use_pyautogui", True):
+                # Verify delivery by checking inbox
+                verified = self._verify_delivery(recipient, content, sender)
+                if not verified:
+                    logger.warning(
+                        f"PyAutoGUI delivery reported success but verification failed for {recipient}"
+                    )
+                    success = False  # Treat as failure if verification fails
 
             if success:
                 self.queue.mark_delivered(queue_id)
@@ -248,7 +277,37 @@ class MessageQueueProcessor:
                         pass  # Non-critical tracking failure
                 return True
             else:
-                self.queue.mark_failed(queue_id, "delivery_failed")
+                # Increment retry count
+                metadata = getattr(entry, 'metadata', {})
+                current_attempts = metadata.get('delivery_attempts', 0)
+                new_attempts = current_attempts + 1
+                
+                # Calculate exponential backoff delay: 5s, 15s, 45s
+                backoff_delays = [5.0, 15.0, 45.0]
+                delay = backoff_delays[min(new_attempts - 1, len(backoff_delays) - 1)]
+                
+                # Update entry metadata with retry info
+                if not hasattr(entry, 'metadata'):
+                    entry.metadata = {}
+                entry.metadata['delivery_attempts'] = new_attempts
+                entry.metadata['last_retry_time'] = datetime.now().isoformat()
+                entry.metadata['next_retry_delay'] = delay
+                
+                # Mark as failed but reset to PENDING for retry (unless max retries exceeded)
+                if new_attempts < max_retries:
+                    logger.info(
+                        f"Delivery failed for {queue_id} (attempt {new_attempts}/{max_retries}), "
+                        f"will retry in {delay}s"
+                    )
+                    # Reset to PENDING so it can be retried
+                    self.queue._reset_entry_for_retry(queue_id, new_attempts, delay)
+                else:
+                    logger.error(
+                        f"Delivery failed for {queue_id} after {new_attempts} attempts, "
+                        f"marking as permanently failed"
+                    )
+                    self.queue.mark_failed(queue_id, f"delivery_failed_after_{new_attempts}_attempts")
+                
                 # Mark agent as inactive after failed delivery
                 if tracker and recipient and recipient.startswith("Agent-"):
                     try:
@@ -551,3 +610,84 @@ class MessageQueueProcessor:
         except Exception as e:
             logger.error(f"Inbox delivery error: {e}", exc_info=True)
             return False
+    
+    def _verify_delivery(
+        self, recipient: str, content: str, sender: str, timeout_seconds: int = 10
+    ) -> bool:
+        """
+        Verify message delivery by checking recipient's inbox directory.
+        
+        After PyAutoGUI delivery, check if message file exists in inbox.
+        Uses content hash matching to verify correct message was delivered.
+        
+        Args:
+            recipient: Agent ID to check
+            content: Message content to verify
+            sender: Sender identifier
+            timeout_seconds: Maximum time to wait for file to appear
+            
+        Returns:
+            True if message verified in inbox, False otherwise
+        """
+        try:
+            import hashlib
+            from pathlib import Path
+            
+            # Calculate content hash for matching
+            content_hash = hashlib.md5(content.encode('utf-8')).hexdigest()[:8]
+            
+            # Get inbox directory
+            project_root = Path(__file__).resolve().parent.parent.parent
+            inbox_dir = project_root / "agent_workspaces" / recipient / "inbox"
+            
+            if not inbox_dir.exists():
+                logger.debug(f"Inbox directory does not exist: {inbox_dir}")
+                return False
+            
+            # Poll for message file (PyAutoGUI delivery may take a moment)
+            start_time = time.time()
+            check_interval = 0.5
+            
+            while time.time() - start_time < timeout_seconds:
+                # Check for recent inbox files
+                try:
+                    inbox_files = list(inbox_dir.glob("*.md"))
+                    
+                    # Check files created in last timeout window
+                    for inbox_file in inbox_files:
+                        try:
+                            # Check file age (must be recent)
+                            file_age = time.time() - inbox_file.stat().st_mtime
+                            if file_age > timeout_seconds:
+                                continue  # Skip old files
+                            
+                            # Read file content
+                            file_content = inbox_file.read_text(encoding="utf-8")
+                            
+                            # Check if content matches (by hash or substring)
+                            if content_hash in file_content or content[:100] in file_content:
+                                logger.info(
+                                    f"✅ Delivery verified for {recipient}: "
+                                    f"found matching message in {inbox_file.name}"
+                                )
+                                return True
+                        except Exception as e:
+                            logger.debug(f"Error checking inbox file {inbox_file}: {e}")
+                            continue
+                
+                except Exception as e:
+                    logger.debug(f"Error listing inbox files: {e}")
+                
+                # Wait before next check
+                time.sleep(check_interval)
+            
+            # Timeout - message not found in inbox
+            logger.warning(
+                f"⚠️ Delivery verification timeout for {recipient}: "
+                f"message not found in inbox after {timeout_seconds}s"
+            )
+            return False
+            
+        except Exception as e:
+            logger.error(f"Error verifying delivery for {recipient}: {e}", exc_info=True)
+            return False  # Treat verification failure as delivery failure
