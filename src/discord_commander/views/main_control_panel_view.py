@@ -413,7 +413,7 @@ class MainControlPanelView(discord.ui.View):
     async def show_restart_confirm(self, interaction: discord.Interaction):
         """Show restart confirmation."""
         try:
-            from ..unified_discord_bot import ConfirmRestartView
+            from .confirm_restart_view import ConfirmRestartView
 
             embed = discord.Embed(
                 title="🔄 Restart Requested",
@@ -447,7 +447,7 @@ class MainControlPanelView(discord.ui.View):
     async def show_shutdown_confirm(self, interaction: discord.Interaction):
         """Show shutdown confirmation."""
         try:
-            from ..unified_discord_bot import ConfirmShutdownView
+            from .confirm_shutdown_view import ConfirmShutdownView
 
             embed = discord.Embed(
                 title="🛑 Shutdown Requested",
