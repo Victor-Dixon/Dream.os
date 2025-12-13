@@ -22,6 +22,7 @@ License: MIT
 from src.core.config.timeout_constants import TimeoutConstants
 from src.services.unified_messaging_service import UnifiedMessagingService
 from src.discord_commander.discord_gui_controller import DiscordGUIController
+from src.discord_commander.views import ConfirmShutdownView, ConfirmRestartView
 import asyncio
 import logging
 import os
@@ -66,78 +67,8 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 
-# Confirmation Views for Shutdown/Restart Commands
-class ConfirmShutdownView(discord.ui.View):
-    """Confirmation view for shutdown command."""
-
-    def __init__(self):
-        super().__init__(timeout=TimeoutConstants.HTTP_DEFAULT)
-        self.confirmed = False
-
-    @discord.ui.button(label="Confirm Shutdown", emoji="✅", style=discord.ButtonStyle.danger)
-    async def confirm(self, interaction: discord.Interaction, button: discord.ui.Button):
-        """Confirm shutdown button."""
-        try:
-            self.confirmed = True
-            await interaction.response.send_message("✅ Shutdown confirmed", ephemeral=True)
-            self.stop()
-        except Exception as e:
-            logger.error(f"Error in shutdown confirm: {e}", exc_info=True)
-            if not interaction.response.is_done():
-                await interaction.response.send_message(
-                    f"❌ Error: {e}", ephemeral=True
-                )
-
-    @discord.ui.button(label="Cancel", emoji="❌", style=discord.ButtonStyle.secondary)
-    async def cancel(self, interaction: discord.Interaction, button: discord.ui.Button):
-        """Cancel shutdown button."""
-        try:
-            self.confirmed = False
-            await interaction.response.send_message("❌ Cancelled", ephemeral=True)
-            self.stop()
-        except Exception as e:
-            logger.error(f"Error in shutdown cancel: {e}", exc_info=True)
-            if not interaction.response.is_done():
-                await interaction.response.send_message(
-                    f"❌ Error: {e}", ephemeral=True
-                )
-
-
-class ConfirmRestartView(discord.ui.View):
-    """Confirmation view for restart command."""
-
-    def __init__(self):
-        super().__init__(timeout=TimeoutConstants.HTTP_DEFAULT)
-        self.confirmed = False
-
-    @discord.ui.button(label="Confirm Restart", emoji="🔄", style=discord.ButtonStyle.primary)
-    async def confirm(self, interaction: discord.Interaction, button: discord.ui.Button):
-        """Confirm restart button."""
-        try:
-            self.confirmed = True
-            await interaction.response.send_message("✅ Restart confirmed", ephemeral=True)
-            self.stop()
-        except Exception as e:
-            logger.error(f"Error in restart confirm: {e}", exc_info=True)
-            if not interaction.response.is_done():
-                await interaction.response.send_message(
-                    f"❌ Error: {e}", ephemeral=True
-                )
-
-    @discord.ui.button(label="Cancel", emoji="❌", style=discord.ButtonStyle.secondary)
-    async def cancel(self, interaction: discord.Interaction, button: discord.ui.Button):
-        """Cancel restart button."""
-        try:
-            self.confirmed = False
-            await interaction.response.send_message("❌ Cancelled", ephemeral=True)
-            self.stop()
-        except Exception as e:
-            logger.error(f"Error in restart cancel: {e}", exc_info=True)
-            if not interaction.response.is_done():
-                await interaction.response.send_message(
-                    f"❌ Error: {e}", ephemeral=True
-                )
-
+# Confirmation Views extracted to src/discord_commander/views/
+# Imported from: ConfirmShutdownView, ConfirmRestartView
 
 class UnifiedDiscordBot(commands.Bot):
     """Single unified Discord bot for agent messaging system."""
