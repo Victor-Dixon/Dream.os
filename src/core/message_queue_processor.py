@@ -67,6 +67,15 @@ class MessageQueueProcessor:
         # Injected core (None = use default real core)
         self.messaging_core = messaging_core
         self.running = False
+        
+        # Initialize performance metrics collector
+        try:
+            from .message_queue_performance_metrics import MessageQueuePerformanceMetrics
+            self.performance_metrics = MessageQueuePerformanceMetrics()
+            self.performance_metrics.start_session()
+        except Exception as e:
+            logger.warning(f"Performance metrics not available: {e}")
+            self.performance_metrics = None
 
     def process_queue(
         self,
@@ -122,6 +131,12 @@ class MessageQueueProcessor:
             logger.error(f"Fatal queue loop error: {e}", exc_info=True)
         finally:
             self.running = False
+            
+            # End performance metrics session
+            if self.performance_metrics:
+                session_summary = self.performance_metrics.end_session()
+                logger.info(f"📊 Performance metrics: {session_summary}")
+            
             logger.info(f"✅ Queue processor complete: {processed} delivered")
 
         return processed
@@ -167,6 +182,14 @@ class MessageQueueProcessor:
             tracker = get_activity_tracker()
         except Exception:
             pass  # Non-critical if tracker unavailable
+        
+        # Start performance tracking
+        delivery_start_time = None
+        use_pyautogui = True  # Default, will be updated later
+        if self.performance_metrics:
+            delivery_start_time = self.performance_metrics.start_delivery_tracking(
+                getattr(entry, 'queue_id', 'unknown')
+            )
         
         try:
             # Extract message data first
@@ -271,6 +294,25 @@ class MessageQueueProcessor:
                 )
                 # No verification needed - PyAutoGUI delivery to Discord chat is verified by the delivery service
 
+            # Record performance metrics
+            if self.performance_metrics and delivery_start_time:
+                delivery_method = 'pyautogui' if use_pyautogui else 'inbox'
+                content_len = len(content) if content else 0
+                entry_metadata = getattr(entry, 'metadata', {})
+                attempt_num = entry_metadata.get('delivery_attempts', 0) + 1
+                retry_delay = entry_metadata.get('next_retry_delay')
+                
+                self.performance_metrics.end_delivery_tracking(
+                    queue_id=queue_id,
+                    recipient=recipient,
+                    delivery_method=delivery_method,
+                    success=success,
+                    start_time=delivery_start_time,
+                    attempt_number=attempt_num,
+                    content_length=content_len,
+                    retry_delay=retry_delay
+                )
+            
             if success:
                 self.queue.mark_delivered(queue_id)
                 if self.message_repository:
@@ -328,6 +370,27 @@ class MessageQueueProcessor:
         except Exception as e:
             queue_id = getattr(entry, 'queue_id', 'unknown')
             logger.error(f"Delivery error for {queue_id}: {e}", exc_info=True)
+            
+            # Record performance metrics for error case
+            if self.performance_metrics and delivery_start_time:
+                try:
+                    delivery_method = 'pyautogui' if use_pyautogui else 'inbox'
+                    content_len = len(content) if content else 0
+                    entry_metadata = getattr(entry, 'metadata', {})
+                    attempt_num = entry_metadata.get('delivery_attempts', 0) + 1
+                    
+                    self.performance_metrics.end_delivery_tracking(
+                        queue_id=queue_id,
+                        recipient=recipient or 'unknown',
+                        delivery_method=delivery_method,
+                        success=False,
+                        start_time=delivery_start_time,
+                        attempt_number=attempt_num,
+                        content_length=content_len
+                    )
+                except Exception:
+                    pass  # Non-critical metrics failure
+            
             self.queue.mark_failed(queue_id, str(e))
             # Mark agent as inactive on error
             if tracker and recipient and recipient.startswith("Agent-"):
