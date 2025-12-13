@@ -53,7 +53,8 @@ class LocalRouter:
         Args:
             repo_name: Name of repository
             branch_name: Name of new branch
-            source_branch: Source branch to branch from
+            source_branch: Source branch to branch from (accepted for API consistency,
+                         but underlying local_repo_manager.create_branch() doesn't use it)
         
         Returns:
             True if successful
@@ -64,6 +65,8 @@ class LocalRouter:
             return False
         
         # Create branch locally
+        # Note: local_repo_manager.create_branch() only accepts repo_name and branch_name
+        # source_branch parameter is accepted for API consistency but not used here
         success = self.local_repo_manager.create_branch(repo_name, branch_name)
         
         if success:
@@ -127,6 +130,9 @@ class LocalRouter:
         
         Returns:
             Tuple of (success, conflict_message)
+        
+        Note: Method name is plural (merge_branches) for API consistency,
+        but delegates to local_repo_manager.merge_branch() (singular).
         """
         return self.local_repo_manager.merge_branch(
             repo_name, source_branch, target_branch
