@@ -68,3 +68,5 @@ class SendMode:
     ENTER = "enter"
     CTRL_ENTER = "ctrl_enter"
 
+
+

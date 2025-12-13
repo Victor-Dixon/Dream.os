@@ -2571,21 +2571,26 @@ async def main() -> int:
             logger.info("🔌 Connecting to Discord...")
             await bot.start(token)
 
-            # If we get here, bot started successfully
-            reconnect_count = 0  # Reset on successful connection
-            consecutive_failures = 0
+            # If we get here, bot.start() has returned (bot disconnected or closed)
+            # Check if this was an intentional shutdown
+            if hasattr(bot, '_intentional_shutdown') and bot._intentional_shutdown:
+                logger.info("✅ Bot shutdown requested - exiting cleanly")
+                return 0  # Clean exit for intentional shutdown
+            
+            # Bot disconnected unexpectedly - continue loop to reconnect
+            logger.warning("⚠️ Bot disconnected - will reconnect in next iteration")
+            reconnect_count += 1
+            consecutive_failures = 0  # Reset failures since we did connect successfully
             reconnect_delay = base_delay  # Reset delay
-
-            # Bot will run until disconnected
-            # When disconnected, loop will restart
-            return 0  # Clean exit (shouldn't normally reach here)
+            # Continue loop for reconnection
 
         except KeyboardInterrupt:
             print("\n🛑 Bot stopped by user")
+            logger.info("🛑 Bot stopped by user (KeyboardInterrupt)")
             try:
                 await bot.close()
-            except:
-                pass
+            except Exception as e:
+                logger.error(f"Error closing bot on KeyboardInterrupt: {e}", exc_info=True)
             return 0  # Clean exit
 
         except discord.LoginFailure as e:
@@ -2594,8 +2599,8 @@ async def main() -> int:
             # Don't retry on login failure - token is wrong
             try:
                 await bot.close()
-            except:
-                pass
+            except Exception as e:
+                logger.error(f"Error closing bot on login failure: {e}", exc_info=True)
             return 1  # Exit with error code
 
         except discord.PrivilegedIntentsRequired as e:
