@@ -14,10 +14,12 @@
 - Artifacts: project_analysis.json, test_analysis.json, chatgpt_project_context.json, dependency_cache.json.
 - Documented overnight consistency enhancements in
   `docs/specs/OVERNIGHT_CONSISTENCY_ENHANCEMENTS_PRD.md`.
+- V2 violations tracking summary document (2025-12-13) with progress monitoring.
 ### Changed
 - Consolidated captain documentation into `docs/guides/captain_handbook.md`.
 - Updated `AGENTS.md` to emphasize Python-first guidelines and exempt the monitoring component from language restrictions.
 - Refactored dashboard demo to use Enum-based agent statuses for type safety.
+- Verified A2A (agent-to-agent) messaging system functionality - all messaging verified operational.
 ### Removed
 - Removed obsolete `urgent_agent_activation.py` and `ai_ml_cli.py` after confirming no in-repo usage.
 - Deleted redundant `docs/CAPTAIN_HANDBOOK.md` and `docs/guides/CAPTAIN_AGENT_4_OPERATIONAL_HANDBOOK.md`.
