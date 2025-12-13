@@ -33,6 +33,7 @@
 
 #### Medium-Priority Violations (84 files) - Swarm Assignment:
 - **Agent-1, Agent-3, Agent-7, Agent-8**: Parallel refactoring (21 files each)
+- **Agent-8**: QA Validation Coordinator - Validates all refactored work + SSOT compliance verification
 
 ---
 
@@ -69,6 +70,7 @@
 2. **Swarm Assignments (3+ agent tasks)**:
    - Agent-1, Agent-7, Agent-3: Critical V2 violations (6 files)
    - Agent-1, Agent-3, Agent-7, Agent-8: Medium V2 violations (84 files)
+   - Agent-8: QA Validation Coordinator (validates all refactored work)
    - Agent-1, Agent-3, Agent-8: Manager consolidation
 
 ---
