@@ -225,7 +225,7 @@ class ReportTruthfulnessEnhancer:
     def extract_claims_from_content(self, content: str) -> List[str]:
         """Extract verifiable claims from report content."""
         claims = []
-        
+
         # Pattern 1: "Created X" or "Generated X" statements
         created_pattern = r'[✅✅⏳❌]\s*(?:Created|Generated|Built|Implemented|Added|Fixed|Completed|Finished)\s+([^.\n]+)'
         matches = re.finditer(created_pattern, content, re.IGNORECASE)
@@ -233,7 +233,7 @@ class ReportTruthfulnessEnhancer:
             claim = match.group(1).strip()
             if len(claim) > 10 and len(claim) < 200:  # Reasonable claim length
                 claims.append(f"Created/Generated: {claim}")
-        
+
         # Pattern 2: Findings with "Found" or "Identified"
         found_pattern = r'(?:Found|Identified|Discovered|Detected)\s+([^.\n]+(?:issue|problem|bug|error|violation|duplicate|missing))'
         matches = re.finditer(found_pattern, content, re.IGNORECASE)
@@ -241,7 +241,7 @@ class ReportTruthfulnessEnhancer:
             claim = match.group(1).strip()
             if len(claim) > 10 and len(claim) < 200:
                 claims.append(f"Found/Identified: {claim}")
-        
+
         # Pattern 3: Status statements with numbers/metrics
         metric_pattern = r'(\d+[/\s]+(?:files|posts|sites|tests|violations|agents|lines|modules)[^.\n]*)'
         matches = re.finditer(metric_pattern, content, re.IGNORECASE)
@@ -249,7 +249,7 @@ class ReportTruthfulnessEnhancer:
             claim = match.group(1).strip()
             if claim not in [c.split(': ')[-1] for c in claims]:  # Avoid duplicates
                 claims.append(f"Metric: {claim}")
-        
+
         # Pattern 4: Tool/artifact mentions with paths
         tool_pattern = r'`([^`]+\.(?:py|md|json|yaml|yml))`'
         matches = re.finditer(tool_pattern, content)
@@ -257,7 +257,7 @@ class ReportTruthfulnessEnhancer:
             tool_path = match.group(1)
             if tool_path not in [c.split(': ')[-1] for c in claims]:
                 claims.append(f"Tool/Artifact: {tool_path}")
-        
+
         # Remove duplicates while preserving order
         seen = set()
         unique_claims = []
@@ -266,19 +266,19 @@ class ReportTruthfulnessEnhancer:
             if claim_key not in seen:
                 seen.add(claim_key)
                 unique_claims.append(claim)
-        
+
         return unique_claims[:10]  # Limit to top 10 most relevant
-    
+
     def add_verification_section(self, content: str, claims: Optional[List[str]] = None) -> str:
         """Add verification section with evidence for claims."""
         # Auto-extract claims if not provided
         if not claims:
             claims = self.extract_claims_from_content(content)
-        
+
         # If still no claims, provide default guidance
         if not claims:
             claims = ["Report content requires manual claim verification"]
-        
+
         verification_section = "\n\n## Verification & Evidence\n\n"
         verification_section += "**Claims Made in This Report:**\n\n"
 
@@ -318,22 +318,22 @@ class ReportTruthfulnessEnhancer:
         """Enhance a report with truthfulness improvements."""
         if not report_path.exists():
             raise FileNotFoundError(f"Report not found: {report_path}")
-        
+
         content = report_path.read_text(encoding='utf-8')
-        
+
         # Add scope tags
         content = self.add_scope_tags(content, scope)
-        
+
         # Enhance artifacts section
         content = self.enhance_artifacts_section(content, artifacts)
-        
+
         # Add verification section (auto-extract claims if not provided and enabled)
         if auto_extract_claims and not claims:
             claims = self.extract_claims_from_content(content)
-        
+
         if claims or auto_extract_claims:
             content = self.add_verification_section(content, claims)
-        
+
         return content
 
 
@@ -349,7 +349,7 @@ def main():
     parser.add_argument(
         "--scope", help="SSOT domain scope (e.g., web, infrastructure)")
     parser.add_argument("--claims", help="Claims file (JSON array of strings)")
-    parser.add_argument("--no-auto-claims", action="store_true", 
+    parser.add_argument("--no-auto-claims", action="store_true",
                         help="Disable automatic claim extraction")
     parser.add_argument(
         "--output", help="Output file (default: overwrite input)")
@@ -402,7 +402,7 @@ def main():
             claims=claims,
             auto_extract_claims=not args.no_auto_claims
         )
-        
+
         if args.dry_run:
             print(enhanced_content)
         else:

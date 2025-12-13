@@ -104,7 +104,9 @@
     "✅ COMPLETE: Captain broadcast posted - Agent-5 execution checklist broadcast to all agents via messaging system",
     "✅ ACKNOWLEDGED: Gap Closure Order summary received - All 6 tasks confirmed distributed: Agent-1 (verify limits), Agent-7 (integration tests), Agent-6 (perf metrics), Agent-4 (remove stubs), Agent-5 (reduce overhead), Agent-2 (report truthfulness)",
     "✅ COMPLETE: Captain task assignment round - Assigned viable tasks to all 8 agents based on last 5 status updates: Agent-1 (complete Batch 1), Agent-2 (report truthfulness), Agent-3 (continue Module 3), Agent-5 (Phase 3 reports + delegation overhead), Agent-6 (performance metrics), Agent-7 (Phase 2D + integration tests), Agent-8 (SSOT verification), Agent-4 (self: review statuses + prepare next round)",
-    "✅ COMPLETE: Monitor status check + stall recovery - Found 4 idle agents (>2h): Agent-5 (9.8h), Agent-6 (14.9h), Agent-7 (12.4h), Agent-8 (7.6h). Monitoring system NOT running. Sent stall recovery messages to all 4 idle agents. Created diagnostic script. Root cause: Monitoring system needs to be running continuously to auto-detect stalls."
+    "✅ COMPLETE: Monitor status check + stall recovery - Found 4 idle agents (>2h): Agent-5 (9.8h), Agent-6 (14.9h), Agent-7 (12.4h), Agent-8 (7.6h). Monitoring system NOT running. Sent stall recovery messages to all 4 idle agents. Created diagnostic script. Root cause: Monitoring system needs to be running continuously to auto-detect stalls.",
+    "✅ FIXED: Monitoring system import error - Created ProgressMonitor class wrapper in monitor.py. ProgressMonitor now properly wraps MonitorState and provides async interface. Import errors resolved. Monitoring system ready to start.",
+    "✅ COMPLETE: Grouped task assignment strategy implemented - Assigned 3 contextually related tasks per agent (24 tasks total across 8 agents). Tasks grouped by similar work type and viable next steps for efficient execution. Strategy: Group similar tasks (like viable next steps) contextually for maximum efficiency."
   ],
   "completed_tasks": [
     "Comprehensive system assessment complete",
