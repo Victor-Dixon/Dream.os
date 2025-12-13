@@ -29,6 +29,7 @@ import json
 import subprocess
 import sys
 import time
+from datetime import datetime
 from pathlib import Path
 
 from src.infrastructure.browser.thea_browser_service import TheaBrowserService
@@ -959,6 +960,8 @@ class UnifiedDiscordBot(commands.Bot):
     async def close(self):
         """Clean shutdown."""
         self.logger.info("🛑 Unified Discord Bot shutting down...")
+        # Mark as intentional shutdown to prevent reconnection loop
+        self._intentional_shutdown = True
         await super().close()
 
 
@@ -2569,7 +2572,40 @@ async def main() -> int:
                 await asyncio.sleep(reconnect_delay)
 
             logger.info("🔌 Connecting to Discord...")
-            await bot.start(token)
+            try:
+                await bot.start(token)
+            except Exception as runtime_error:
+                # Runtime error during bot operation (after successful connection)
+                # This catches errors that occur during bot runtime, not during connection
+                logger.error(
+                    f"❌ Runtime error during bot operation: {runtime_error}\n"
+                    f"   This error occurred after bot connected successfully.\n"
+                    f"   Attempt {reconnect_count + 1}, consecutive failures: {consecutive_failures + 1}\n"
+                    f"   Retrying in {reconnect_delay} seconds...",
+                    exc_info=True
+                )
+                consecutive_failures += 1
+                reconnect_count += 1
+                
+                # Exponential backoff for runtime errors
+                if consecutive_failures >= max_consecutive_failures:
+                    reconnect_delay = min(max_delay, reconnect_delay * 2)
+                else:
+                    reconnect_delay = min(max_delay, reconnect_delay * 1.5)
+                
+                # Add jitter
+                import random
+                jitter = random.uniform(0.8, 1.2)
+                reconnect_delay = int(reconnect_delay * jitter)
+                
+                # Close bot before retry
+                try:
+                    await bot.close()
+                except Exception as close_error:
+                    logger.error(f"Error closing bot after runtime error: {close_error}", exc_info=True)
+                
+                # Wait before retry
+                continue
 
             # If we get here, bot.start() has returned (bot disconnected or closed)
             # Check if this was an intentional shutdown
@@ -2587,6 +2623,7 @@ async def main() -> int:
         except KeyboardInterrupt:
             print("\n🛑 Bot stopped by user")
             logger.info("🛑 Bot stopped by user (KeyboardInterrupt)")
+            bot._intentional_shutdown = True  # Mark as intentional shutdown
             try:
                 await bot.close()
             except Exception as e:
@@ -2609,10 +2646,28 @@ async def main() -> int:
             # Don't retry on intents error - configuration issue
             try:
                 await bot.close()
-            except:
-                pass
+            except Exception as e:
+                logger.error(f"Error closing bot on intents error: {e}", exc_info=True)
             return 1  # Exit with error code
 
+        except discord.errors.ConnectionClosed as e:
+            # Discord connection closed - attempt to reconnect
+            logger.warning(
+                f"⚠️ Discord connection closed (code: {e.code}): {e}\n"
+                f"   Attempt {reconnect_count + 1}, will reconnect..."
+            )
+            reconnect_count += 1
+            consecutive_failures = 0  # Connection closed isn't a failure, it's expected
+            
+            # Close bot before retry
+            try:
+                await bot.close()
+            except Exception as close_error:
+                logger.error(f"Error closing bot after ConnectionClosed: {close_error}", exc_info=True)
+            
+            # Wait before retry
+            continue
+            
         except (ConnectionError, OSError, asyncio.TimeoutError) as e:
             # Network-related errors - retry with backoff
             consecutive_failures += 1
@@ -2641,8 +2696,8 @@ async def main() -> int:
             # Close bot before retry
             try:
                 await bot.close()
-            except:
-                pass
+            except Exception as e:
+                logger.error(f"Error closing bot after network error: {e}", exc_info=True)
 
             # Wait before retry
             continue
@@ -2673,8 +2728,8 @@ async def main() -> int:
             # Close bot before retry
             try:
                 await bot.close()
-            except:
-                pass
+            except Exception as e:
+                logger.error(f"Error closing bot after network error: {e}", exc_info=True)
 
             # Wait before retry
             continue
@@ -2683,8 +2738,8 @@ async def main() -> int:
     logger.error("❌ Max reconnection attempts reached")
     try:
         await bot.close()
-    except:
-        pass
+    except Exception as e:
+        logger.error(f"Error closing bot after max attempts: {e}", exc_info=True)
     return 1
 
 
