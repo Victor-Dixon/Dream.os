@@ -12,9 +12,9 @@ Key Features:
 - Noise filtering (resume prompts, acknowledgments)
 - Temporal validation (activity recency checks)
 
-V2 Compliance: <400 lines, single responsibility
-Author: Agent-1 (Integration & Core Systems Specialist)
-Date: 2025-01-27
+V2 Compliance: Refactored - models extracted to activity_detector_models.py
+Author: Agent-1 (Integration & Core Systems Specialist) / Agent-3 (V2 Refactoring)
+Date: 2025-01-27 / 2025-12-14
 Priority: CRITICAL - Prevents false resume prompts
 """
 
@@ -24,65 +24,15 @@ import time
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Any
-from dataclasses import dataclass
-from enum import Enum
+
+from .activity_detector_models import (
+    ActivityConfidence,
+    ActivitySource,
+    ActivitySignal,
+    ActivityAssessment,
+)
 
 logger = logging.getLogger(__name__)
-
-
-class ActivityConfidence(Enum):
-    """Confidence levels for activity detection."""
-    VERY_HIGH = 0.9  # Multiple tier-1 sources agree
-    HIGH = 0.7  # Single tier-1 source or multiple tier-2
-    MEDIUM = 0.5  # Single tier-2 source
-    LOW = 0.3  # Weak signal, needs validation
-    VERY_LOW = 0.1  # Unreliable signal
-
-
-class ActivitySource(Enum):
-    """Activity source types with reliability tiers."""
-    # Tier 1: Most reliable (direct agent actions)
-    TELEMETRY_EVENT = (1, 0.9)  # ActivityEmitter events
-    GIT_COMMIT = (1, 0.85)  # Git commits with agent name
-    CONTRACT_CLAIMED = (1, 0.85)  # Contract system activity
-    TEST_EXECUTION = (1, 0.8)  # Test runs
-    
-    # Tier 2: Reliable (file modifications)
-    STATUS_UPDATE = (2, 0.7)  # status.json with meaningful content
-    FILE_MODIFICATION = (2, 0.65)  # Workspace file changes
-    DEVLOG_CREATED = (2, 0.7)  # Devlog creation
-    INBOX_PROCESSING = (2, 0.6)  # Inbox message processing
-    
-    # Tier 3: Less reliable (indirect signals)
-    MESSAGE_QUEUE = (3, 0.4)  # Message queue activity
-    WORKSPACE_ACCESS = (3, 0.3)  # File access patterns
-    
-    def __init__(self, tier: int, base_confidence: float):
-        self.tier = tier
-        self.base_confidence = base_confidence
-
-
-@dataclass
-class ActivitySignal:
-    """Detected activity signal with metadata."""
-    source: ActivitySource
-    timestamp: float
-    confidence: float
-    metadata: Dict[str, Any]
-    agent_id: str
-
-
-@dataclass
-class ActivityAssessment:
-    """Final assessment of agent activity."""
-    agent_id: str
-    is_active: bool
-    confidence: float
-    last_activity: Optional[datetime]
-    inactivity_minutes: float
-    signals: List[ActivitySignal]
-    validation_passed: bool
-    reasons: List[str]
 
 
 class HardenedActivityDetector:
@@ -849,5 +799,11 @@ class HardenedActivityDetector:
         return has_reliable_signal
 
 
-__all__ = ["HardenedActivityDetector", "ActivityAssessment", "ActivityConfidence"]
+__all__ = [
+    "HardenedActivityDetector",
+    "ActivityAssessment",
+    "ActivityConfidence",
+    "ActivitySource",
+    "ActivitySignal",
+]
 

@@ -5,38 +5,28 @@ Coordination Handlers Module - Messaging Infrastructure
 
 <!-- SSOT Domain: integration -->
 
-Extracted from messaging_infrastructure.py for V2 compliance.
-Handles agent coordination, message routing, and multi-agent requests.
+Orchestrator for agent coordination, message routing, and multi-agent requests.
+Delegates to specialized handlers for V2 compliance.
 
-V2 Compliance | Author: Agent-1 | Date: 2025-12-13
+V2 Compliance | Author: Agent-1 | Date: 2025-12-14
 """
 
 from __future__ import annotations
 
 import logging
-import time
 from typing import Any, Dict, Optional
 
-from src.core.constants.agent_constants import AGENT_LIST as SWARM_AGENTS
-from src.core.messaging_core import (
-    UnifiedMessagePriority,
-    UnifiedMessageTag,
-    UnifiedMessageType,
-    send_message,
-)
+from src.core.messaging_core import UnifiedMessagePriority
 from src.core.messaging_models_core import MessageCategory
 from src.utils.swarm_time import get_swarm_time_display
 
+from .broadcast_handler import broadcast_to_all as _broadcast_to_all
 from .message_formatters import (
     CONSOLIDATION_MESSAGE_TEMPLATE,
     SURVEY_MESSAGE_TEMPLATE,
-    _format_multi_agent_request_message,
-    _format_normal_message_with_instructions,
-    _is_ack_text,
-    _load_last_inbound_categories,
-    _map_category_from_type,
-    _save_last_inbound_categories,
 )
+from .agent_message_handler import send_to_agent as _send_to_agent
+from .multi_agent_request_handler import send_multi_agent_request as _send_multi_agent_request
 
 logger = logging.getLogger(__name__)
 
@@ -75,148 +65,23 @@ class MessageCoordinator:
         """
         Send message to agent via message queue (prevents race conditions).
 
-        CRITICAL: All messages route through queue for proper PyAutoGUI orchestration.
-        Queue processor handles keyboard locks to prevent concurrent operations.
-
-        VALIDATION: Checks if agent has pending multi-agent request and blocks if needed.
-
-        Args:
-            agent: Recipient agent ID
-            message: Message content
-            priority: Message priority
-            use_pyautogui: Use PyAutoGUI delivery
-            stalled: Use stalled delivery mode
-            send_mode: Optional UI send mode override ("enter" | "ctrl_enter")
-            sender: Optional sender ID (auto-detected if not provided)
+        Delegates to agent_message_handler for V2 compliance.
         """
-        try:
-            # DETECT SENDER: Auto-detect if not provided
-            if sender is None:
-                sender = MessageCoordinator._detect_sender()
-
-            # DETERMINE MESSAGE TYPE based on sender
-            message_type, sender_final = MessageCoordinator._determine_message_type(
-                sender, agent)
-            category = message_category or _map_category_from_type(
-                message_type)
-
-            # Enforce no-ack policy: if sender is agent and last inbound was S2A, block ack/noise replies
-            if sender_final.upper().startswith("AGENT-"):
-                last_inbound = _load_last_inbound_categories()
-                if last_inbound.get(sender_final) == MessageCategory.S2A.value and _is_ack_text(message):
-                    logger.warning(
-                        f"❌ Message blocked: ack/noise reply after S2A inbound for {sender_final}")
-                    return {
-                        "success": False,
-                        "blocked": True,
-                        "reason": "ack_blocked_after_s2a",
-                        "agent": agent,
-                    }
-
-            # VALIDATION LAYER 1: Check if recipient has pending multi-agent request
-            # This prevents messages from being queued when recipient can't respond
-            from ..core.multi_agent_request_validator import get_multi_agent_validator
-
-            validator = get_multi_agent_validator()
-            # Check if RECIPIENT has pending request (agent is the recipient)
-            can_send, error_message, pending_info = validator.validate_agent_can_send_message(
-                agent_id=agent,  # Recipient to check
-                target_recipient=None,  # Not responding to specific recipient
-                message_content=message
-            )
-
-            if not can_send:
-                logger.warning(
-                    f"❌ Message blocked - recipient {agent} has pending multi-agent request"
-                )
-                # Return error with pending request details
-                return {
-                    "success": False,
-                    "blocked": True,
-                    "reason": "pending_multi_agent_request",
-                    "error_message": error_message,
-                    "agent": agent,
-                    "pending_info": pending_info  # Include pending info for caller
-                }
-
-            queue = MessageCoordinator._get_queue()
-
-            # If queue available, enqueue for sequential processing
-            if queue:
-                # Pass stalled flag in metadata for Ctrl+Enter behavior
-                metadata = {
-                    "stalled": stalled,
-                    "use_pyautogui": use_pyautogui,
-                    "send_mode": send_mode,
-                }
-
-                # If caller provided category, assume message is already rendered; skip legacy formatter
-                if category:
-                    metadata["message_category"] = category.value
-                    message_text = str(message)
-                else:
-                    # Legacy path: format only if message is str
-                    if isinstance(message, str):
-                        message_text = _format_normal_message_with_instructions(
-                            message, "NORMAL")
-                    else:
-                        message_text = str(message)
-
-                formatted_message = message_text
-
-                queue_id = queue.enqueue(
-                    message={
-                        "type": "agent_message",
-                        "sender": sender_final,
-                        "recipient": agent,
-                        "content": formatted_message,
-                        "priority": priority.value if hasattr(priority, "value") else str(priority),
-                        "message_type": message_type.value,
-                        "tags": [UnifiedMessageTag.SYSTEM.value],
-                        "metadata": metadata,
-                    }
-                )
-
-                logger.info(
-                    f"✅ Message queued for {agent} (ID: {queue_id}): {message[:50]}..."
-                )
-                if category and agent.upper().startswith("AGENT-"):
-                    last_inbound = _load_last_inbound_categories()
-                    last_inbound[agent] = category.value
-                    _save_last_inbound_categories(last_inbound)
-                return {"success": True, "queue_id": queue_id, "agent": agent}
-            else:
-                # Fallback to direct send if queue unavailable (should not happen in production)
-                logger.warning(
-                    "⚠️ Queue unavailable, falling back to direct send")
-                metadata = {"stalled": stalled, "send_mode": send_mode} if (
-                    stalled or send_mode) else {}
-                if category:
-                    metadata["message_category"] = category.value
-                    message_text = str(message)
-                else:
-                    if isinstance(message, str):
-                        message_text = _format_normal_message_with_instructions(
-                            message, "NORMAL")
-                    else:
-                        message_text = str(message)
-                result = send_message(
-                    content=message_text,
-                    sender=sender_final,
-                    recipient=agent,
-                    message_type=message_type,
-                    priority=priority,
-                    tags=[UnifiedMessageTag.SYSTEM],
-                    metadata=metadata,
-                )
-                if category and agent.upper().startswith("AGENT-"):
-                    last_inbound = _load_last_inbound_categories()
-                    last_inbound[agent] = category.value
-                    _save_last_inbound_categories(last_inbound)
-                return result
-        except Exception as e:
-            logger.error(f"Error sending message to {agent}: {e}")
-            return False
+        queue = MessageCoordinator._get_queue()
+        return _send_to_agent(
+            agent=agent,
+            message=message,
+            priority=priority,
+            use_pyautogui=use_pyautogui,
+            stalled=stalled,
+            send_mode=send_mode,
+            sender=sender,
+            message_category=message_category,
+            message_metadata=message_metadata,
+            queue=queue,
+            detect_sender_func=MessageCoordinator._detect_sender,
+            determine_message_type_func=MessageCoordinator._determine_message_type,
+        )
 
     @staticmethod
     def send_multi_agent_request(
@@ -231,86 +96,19 @@ class MessageCoordinator:
         """
         Send multi-agent request that collects responses and combines them.
 
-        Creates a response collector, sends message to all recipients,
-        and will deliver combined response when all agents respond (or timeout).
-
-        Args:
-            recipients: List of agent IDs to send to
-            message: Message content
-            sender: Message sender (default: CAPTAIN)
-            priority: Message priority
-            timeout_seconds: Maximum time to wait for responses
-            wait_for_all: If True, wait for all responses; if False, send on timeout
-            stalled: Whether to use stalled delivery mode
-
-        Returns:
-            Collector ID for tracking responses
+        Delegates to multi_agent_request_handler for V2 compliance.
         """
-        try:
-            from ..core.multi_agent_responder import get_multi_agent_responder
-            import uuid
-
-            # Create unique request ID
-            request_id = f"req_{uuid.uuid4().hex[:8]}"
-
-            # Create response collector
-            responder = get_multi_agent_responder()
-            collector_id = responder.create_request(
-                request_id=request_id,
-                sender=sender,
-                recipients=recipients,
-                content=message,
-                timeout_seconds=timeout_seconds,
-                wait_for_all=wait_for_all
-            )
-
-            # Send message to each recipient with collector ID in metadata
-            queue = MessageCoordinator._get_queue()
-            if queue:
-                metadata = {
-                    "stalled": stalled,
-                    "use_pyautogui": True,
-                    "collector_id": collector_id,
-                    "request_id": request_id,
-                    "is_multi_agent_request": True
-                }
-
-                priority_value = priority.value if hasattr(
-                    priority, "value") else str(priority)
-
-                # Format message with response instructions
-                formatted_message = _format_multi_agent_request_message(
-                    message, collector_id, request_id, len(
-                        recipients), timeout_seconds
-                )
-
-                queue_ids = []
-                for recipient in recipients:
-                    queue_id = queue.enqueue(
-                        message={
-                            "type": "multi_agent_request",
-                            "sender": sender,
-                            "recipient": recipient,
-                            "content": formatted_message,
-                            "priority": priority_value,
-                            "message_type": UnifiedMessageType.MULTI_AGENT_REQUEST.value,
-                            "tags": [UnifiedMessageTag.COORDINATION.value],
-                            "metadata": metadata,
-                        }
-                    )
-                    queue_ids.append(queue_id)
-
-                logger.info(
-                    f"✅ Multi-agent request {collector_id} queued for {len(recipients)} agents"
-                )
-                return collector_id
-            else:
-                logger.error("Queue unavailable for multi-agent request")
-                return ""
-
-        except Exception as e:
-            logger.error(f"Error creating multi-agent request: {e}")
-            return ""
+        queue = MessageCoordinator._get_queue()
+        return _send_multi_agent_request(
+            recipients=recipients,
+            message=message,
+            sender=sender,
+            priority=priority,
+            timeout_seconds=timeout_seconds,
+            wait_for_all=wait_for_all,
+            stalled=stalled,
+            queue=queue,
+        )
 
     @staticmethod
     def broadcast_to_all(
@@ -319,116 +117,15 @@ class MessageCoordinator:
         """
         Broadcast message to all agents via message queue.
 
-        CRITICAL: All messages route through queue for proper PyAutoGUI orchestration.
-        Queue processor ensures sequential delivery with keyboard locks.
-
-        VALIDATION: Checks each recipient for pending multi-agent requests.
-        Skips agents with pending requests to prevent queue buildup.
+        Delegates to broadcast_handler for V2 compliance.
         """
-        try:
-            # VALIDATION LAYER 1: Check each recipient for pending requests
-            from ..core.multi_agent_request_validator import get_multi_agent_validator
-
-            validator = get_multi_agent_validator()
-
-            queue = MessageCoordinator._get_queue()
-
-            # If queue available, enqueue all messages for sequential processing
-            if queue:
-                metadata = {
-                    "stalled": stalled,
-                    "use_pyautogui": True,  # Always use PyAutoGUI for broadcasts
-                }
-
-                priority_value = priority.value if hasattr(
-                    priority, "value") else str(priority)
-
-                # Format message with response instructions for normal broadcast
-                formatted_message = _format_normal_message_with_instructions(
-                    message, "BROADCAST")
-
-                # Enqueue messages for all agents (with validation)
-                queue_ids = []
-                skipped_agents = []
-                for agent in SWARM_AGENTS:
-                    # Check if recipient has pending multi-agent request
-                    can_send, error_message, pending_info = validator.validate_agent_can_send_message(
-                        agent_id=agent,  # Recipient to check
-                        target_recipient=None,  # Not responding to specific recipient
-                        message_content=message
-                    )
-
-                    if not can_send:
-                        # Skip this agent - they have pending request
-                        logger.warning(
-                            f"⏭️  Skipping {agent} in broadcast - has pending multi-agent request"
-                        )
-                        skipped_agents.append({
-                            "agent": agent,
-                            "reason": "pending_multi_agent_request",
-                            "error_message": error_message,
-                            "pending_info": pending_info
-                        })
-                        continue
-                    queue_id = queue.enqueue(
-                        message={
-                            "type": "agent_message",
-                            "sender": "CAPTAIN",
-                            "recipient": agent,
-                            "content": formatted_message,
-                            "priority": priority_value,
-                            "message_type": UnifiedMessageType.BROADCAST.value,
-                            "tags": [
-                                UnifiedMessageTag.SYSTEM.value,
-                                UnifiedMessageTag.COORDINATION.value,
-                            ],
-                            "metadata": metadata,
-                        }
-                    )
-                    queue_ids.append(queue_id)
-
-                # Log results including skipped agents
-                if skipped_agents:
-                    logger.warning(
-                        f"⏭️  Broadcast skipped {len(skipped_agents)} agents with pending requests: "
-                        f"{[a['agent'] for a in skipped_agents]}"
-                    )
-
-                logger.info(
-                    f"✅ Broadcast queued for {len(queue_ids)} agents (skipped {len(skipped_agents)}): {message[:50]}..."
-                )
-                return len(queue_ids)
-            else:
-                # Fallback to direct send with keyboard lock if queue unavailable
-                logger.warning(
-                    "⚠️ Queue unavailable, falling back to direct broadcast")
-                from ..core.keyboard_control_lock import keyboard_control
-
-                with keyboard_control("broadcast_all_agents"):
-                    metadata = {"stalled": stalled} if stalled else {}
-                    success_count = 0
-                    for agent in SWARM_AGENTS:
-                        ok = send_message(
-                            content=message,
-                            sender="CAPTAIN",
-                            recipient=agent,
-                            message_type=UnifiedMessageType.BROADCAST,
-                            priority=priority,
-                            tags=[UnifiedMessageTag.SYSTEM,
-                                  UnifiedMessageTag.COORDINATION],
-                            metadata=metadata,
-                        )
-                        if ok:
-                            success_count += 1
-                            # Throttle to ensure UI/transport completes before next send
-                            time.sleep(1.0)
-                        else:
-                            # Brief pause after failure to avoid rapid-fire retries
-                            time.sleep(1.0)
-                    return success_count
-        except Exception as e:
-            logger.error(f"Error broadcasting message: {e}")
-            return 0
+        queue = MessageCoordinator._get_queue()
+        return _broadcast_to_all(
+            message=message,
+            priority=priority,
+            stalled=stalled,
+            queue=queue,
+        )
 
     @staticmethod
     def coordinate_survey():
