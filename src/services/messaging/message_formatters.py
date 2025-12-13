@@ -248,6 +248,63 @@ Just type your response normally. The system will automatically:
 🐝 WE. ARE. SWARM. ⚡🔥"""
 
 
+# Helper functions for category tracking and message processing
+def _load_last_inbound_categories() -> Dict[str, str]:
+    """Load last inbound message categories from persistent storage."""
+    from pathlib import Path
+    import json
+    
+    LAST_INBOUND_FILE = Path("runtime") / "last_inbound_category.json"
+    try:
+        if LAST_INBOUND_FILE.exists():
+            with open(LAST_INBOUND_FILE, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                if isinstance(data, dict):
+                    return data
+    except Exception:
+        import logging
+        logger = logging.getLogger(__name__)
+        logger.warning(
+            "⚠️ Could not load last inbound categories", exc_info=True)
+    return {}
+
+
+def _save_last_inbound_categories(data: Dict[str, str]) -> None:
+    """Save last inbound message categories to persistent storage."""
+    from pathlib import Path
+    import json
+    
+    LAST_INBOUND_FILE = Path("runtime") / "last_inbound_category.json"
+    try:
+        LAST_INBOUND_FILE.parent.mkdir(parents=True, exist_ok=True)
+        with open(LAST_INBOUND_FILE, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=2)
+    except Exception:
+        import logging
+        logger = logging.getLogger(__name__)
+        logger.warning(
+            "⚠️ Could not persist last inbound categories", exc_info=True)
+
+
+def _map_category_from_type(message_type: UnifiedMessageType) -> Optional[MessageCategory]:
+    """Map UnifiedMessageType to MessageCategory."""
+    if message_type == UnifiedMessageType.SYSTEM_TO_AGENT:
+        return MessageCategory.S2A
+    if message_type == UnifiedMessageType.CAPTAIN_TO_AGENT:
+        return MessageCategory.C2A
+    if message_type == UnifiedMessageType.AGENT_TO_AGENT:
+        return MessageCategory.A2A
+    return None
+
+
+def _is_ack_text(message: str) -> bool:
+    """Check if message is an acknowledgment."""
+    text = (message or "").lower().strip()
+    noise = ["ack", "ack.", "acknowledged", "resuming",
+             "got it", "copy", "copy that", "noted"]
+    return any(text == n or text.startswith(n + " ") for n in noise)
+
+
 def _format_normal_message_with_instructions(message: str, message_type: str = "NORMAL") -> str:
     """
     Format normal message with response instructions.
