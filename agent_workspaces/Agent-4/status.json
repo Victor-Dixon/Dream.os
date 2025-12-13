@@ -100,7 +100,8 @@
     "✅ COMPLETE: Posted onboarding template preview to Discord - Generated sample message and posted to Captain channel for review",
     "✅ COMPLETE: Critical assessment of onboarding template - Conducted impartial analysis based on verifiable facts, identified strengths/weaknesses/limitations, posted to Discord devlog channel",
     "✅ COMPLETE: Task distribution - Close the Gaps cycle - Assigned tasks to Agent-1 (verify limits), Agent-7 (integration tests), Agent-6 (performance metrics) via inbox messaging",
-    "✅ COMPLETE: Task distribution (batch 2) - Close the Gaps cycle - Assigned tasks to Agent-4 (remove stubs), Agent-5 (reduce overhead), Agent-2 (report truthfulness) via inbox messaging"
+    "✅ COMPLETE: Task distribution (batch 2) - Close the Gaps cycle - Assigned tasks to Agent-4 (remove stubs), Agent-5 (reduce overhead), Agent-2 (report truthfulness) via inbox messaging",
+    "✅ COMPLETE: Captain broadcast posted - Agent-5 execution checklist broadcast to all agents via messaging system"
   ],
   "completed_tasks": [
     "Comprehensive system assessment complete",
