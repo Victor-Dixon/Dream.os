@@ -1218,180 +1218,242 @@ from .messaging.cli_handlers import (
 
 
 class ConsolidatedMessagingService(BaseService):
+    """
+    Consolidated messaging service adapter for Discord bot.
+
+    CRITICAL UPDATE (2025-01-27): Uses message queue for synchronization
+    Prevents race conditions when Discord + computer + agents send messages.
+    All messages go through queue for sequential delivery with global lock.
+    """
+
+    def __init__(self):
+        """Initialize ConsolidatedMessagingService."""
+        super().__init__()
+        self.project_root = Path(__file__).parent.parent.parent
+        self.messaging_cli = self.project_root / "src" / "services" / "messaging_cli.py"
+        from ..core.message_queue import MessageQueue
+        self.queue = MessageQueue()
+        self.logger = logging.getLogger(__name__)
+
+    def send_message(
+        self,
+        agent: str,
+        message: str,
+        priority: str = "regular",
+        use_pyautogui: bool = True,
+        stalled: bool = False,
+        wait_for_delivery: bool = False,
+        timeout: int = 30,
+        apply_template: bool = True,
+        message_category=None,
+        discord_user_id: str | None = None,
+    ) -> dict[str, Any]:
+        """
+        Send message to agent via message queue or subprocess.
+
+        Args:
+            agent: Target agent ID
+            message: Message content
+            priority: Message priority (regular/urgent)
+            use_pyautogui: Use PyAutoGUI delivery
+            stalled: Mark as stalled
+            wait_for_delivery: Wait for delivery confirmation
+            timeout: Delivery timeout
+            apply_template: Apply message template
+            message_category: Message category
+            discord_user_id: Discord user ID
+
+        Returns:
+            Result dict with success status
+        """
+        # Resolve sender
+        resolved_sender = MessageCoordinator._detect_sender()
+
+        # Normalize priority
+        priority_enum = (
+            UnifiedMessagePriority.URGENT
+            if priority == "urgent"
+            else UnifiedMessagePriority.REGULAR
+        )
+
+        # Apply template if requested
+        log_path = Path(r"d:\Agent_Cellphone_V2_Repository\.cursor\debug.log")
+        # #region agent log
+        try:
+            with open(log_path, "a", encoding="utf-8") as f:
+                f.write(json.dumps({"id": f"log_{int(datetime.now().timestamp() * 1000)}_before_template", "timestamp": int(datetime.now().timestamp() * 1000), "location": "messaging_infrastructure.py:1466", "message": "Before template application", "data": {"apply_template": apply_template, "message_length": len(message), "message_preview": message[:100], "message_category": str(message_category) if message_category else None}, "sessionId": "debug-session", "runId": "run1", "hypothesisId": "B"}) + "\n")
+        except: pass
+        # #endregion
+        templated_message = message
+        if apply_template:
+            category = message_category or MessageCategory.D2A
+            templated_message = _apply_template(
+                category=category,
+                message=message,
+                sender=resolved_sender,
+                recipient=agent,
+                priority=priority_enum,
+                message_id=str(uuid.uuid4()),
+                extra={},
+            )
+            # #region agent log
             try:
+                message_count = templated_message.count(message)
                 with open(log_path, "a", encoding="utf-8") as f:
-                    f.write(json.dumps({"id": f"log_{int(datetime.now().timestamp() * 1000)}_before_template", "timestamp": int(datetime.now().timestamp() * 1000), "location": "messaging_infrastructure.py:1466", "message": "Before template application", "data": {"apply_template": apply_template, "message_length": len(message), "message_preview": message[:100], "message_category": str(message_category) if message_category else None}, "sessionId": "debug-session", "runId": "run1", "hypothesisId": "B"}) + "\n")
+                    f.write(json.dumps({"id": f"log_{int(datetime.now().timestamp() * 1000)}_after_template", "timestamp": int(datetime.now().timestamp() * 1000), "location": "messaging_infrastructure.py:1477", "message": "After template application", "data": {"templated_length": len(templated_message), "templated_preview": templated_message[:200], "original_in_templated": message in templated_message, "templated_ends_with_original": templated_message.endswith(message), "message_appears_count": message_count}, "sessionId": "debug-session", "runId": "run1", "hypothesisId": "B"}) + "\n")
             except: pass
             # #endregion
-            templated_message = message
-            if apply_template:
-                category = message_category or MessageCategory.D2A
-                templated_message = _apply_template(
-                    category=category,
-                    message=message,
-                    sender=resolved_sender,
-                    recipient=agent,
-                    priority=priority_enum,
-                    message_id=str(uuid.uuid4()),
-                    extra={},
-                )
+            # CRITICAL FIX: If templated message ends with original message, it was appended incorrectly
+            # Remove the appended message (it should only be in {content} placeholder)
+            if templated_message.endswith(message) and message_count > 1:
+                # Message was appended - remove it
+                templated_message = templated_message[:-len(message)].rstrip()
                 # #region agent log
                 try:
-                    message_count = templated_message.count(message)
                     with open(log_path, "a", encoding="utf-8") as f:
-                        f.write(json.dumps({"id": f"log_{int(datetime.now().timestamp() * 1000)}_after_template", "timestamp": int(datetime.now().timestamp() * 1000), "location": "messaging_infrastructure.py:1477", "message": "After template application", "data": {"templated_length": len(templated_message), "templated_preview": templated_message[:200], "original_in_templated": message in templated_message, "templated_ends_with_original": templated_message.endswith(message), "message_appears_count": message_count}, "sessionId": "debug-session", "runId": "run1", "hypothesisId": "B"}) + "\n")
+                        f.write(json.dumps({"id": f"log_{int(datetime.now().timestamp() * 1000)}_removed_append", "timestamp": int(datetime.now().timestamp() * 1000), "location": "messaging_infrastructure.py:1485", "message": "Removed appended message from templated result", "data": {"new_length": len(templated_message)}, "sessionId": "debug-session", "runId": "run1", "hypothesisId": "B"}) + "\n")
                 except: pass
                 # #endregion
-                # CRITICAL FIX: If templated message ends with original message, it was appended incorrectly
-                # Remove the appended message (it should only be in {content} placeholder)
-                if templated_message.endswith(message) and message_count > 1:
-                    # Message was appended - remove it
-                    templated_message = templated_message[:-len(message)].rstrip()
-                    # #region agent log
-                    try:
-                        with open(log_path, "a", encoding="utf-8") as f:
-                            f.write(json.dumps({"id": f"log_{int(datetime.now().timestamp() * 1000)}_removed_append", "timestamp": int(datetime.now().timestamp() * 1000), "location": "messaging_infrastructure.py:1485", "message": "Removed appended message from templated result", "data": {"new_length": len(templated_message)}, "sessionId": "debug-session", "runId": "run1", "hypothesisId": "B"}) + "\n")
-                    except: pass
-                    # #endregion
 
-            # Validate agent can receive messages (check for pending multi-agent requests)
-            from ..core.multi_agent_request_validator import get_multi_agent_validator
+        # Validate agent can receive messages (check for pending multi-agent requests)
+        from ..core.multi_agent_request_validator import get_multi_agent_validator
 
-            validator = get_multi_agent_validator()
-            can_send, error_message, pending_info = validator.validate_agent_can_send_message(
-                agent_id=agent,
-                target_recipient=None,  # Not checking recipient, just blocking if pending
-                message_content=message
+        validator = get_multi_agent_validator()
+        can_send, error_message, pending_info = validator.validate_agent_can_send_message(
+            agent_id=agent,
+            target_recipient=None,  # Not checking recipient, just blocking if pending
+            message_content=message
+        )
+
+        if not can_send:
+            # Agent has pending request - block and return error
+            self.logger.warning(
+                f"❌ Message blocked for {agent} - pending multi-agent request"
+            )
+            return {
+                "success": False,
+                "blocked": True,
+                "reason": "pending_multi_agent_request",
+                "error_message": error_message,
+                "agent": agent,
+                "pending_request_message": error_message,  # Full error with pending request
+                "pending_info": pending_info  # Include pending request data
+            }
+        # CRITICAL: Use message queue for PyAutoGUI delivery (synchronized delivery)
+        # This ensures sequential delivery with global keyboard lock
+        if self.queue and use_pyautogui:
+            # Determine message type explicitly for Discord messages
+            # CRITICAL FIX: Always use HUMAN_TO_AGENT for Discord messages (never ONBOARDING)
+            # Only onboarding commands (!hard onboard, !soft onboard, !start) should use ONBOARDING type
+            # Regular Discord messages should ALWAYS use HUMAN_TO_AGENT to route to chat input coords
+            from ..core.messaging_models_core import UnifiedMessageType
+
+            # Check if this is an onboarding command (hard onboard, soft onboard, start)
+            import re
+            message_lower = message.lower().strip()
+
+            # More specific matching: only match "start" when followed by agent identifier
+            is_onboarding_command = (
+                "hard onboard" in message_lower or
+                "soft onboard" in message_lower or
+                message_lower.startswith("!start") or
+                # Only match "start Agent-X" or "start X" where X is 1-8 (not generic "start")
+                bool(
+                    re.match(r'^start\s+(agent-)?[1-8](\s|$)', message_lower, re.IGNORECASE))
             )
 
-            if not can_send:
-                # Agent has pending request - block and return error
-                self.logger.warning(
-                    f"❌ Message blocked for {agent} - pending multi-agent request"
-                )
-                return {
-                    "success": False,
-                    "blocked": True,
-                    "reason": "pending_multi_agent_request",
-                    "error_message": error_message,
-                    "agent": agent,
-                    "pending_request_message": error_message,  # Full error with pending request
-                    "pending_info": pending_info  # Include pending request data
-                }
-            # CRITICAL: Use message queue for PyAutoGUI delivery (synchronized delivery)
-            # This ensures sequential delivery with global keyboard lock
-            if self.queue and use_pyautogui:
-                # Determine message type explicitly for Discord messages
-                # CRITICAL FIX: Always use HUMAN_TO_AGENT for Discord messages (never ONBOARDING)
-                # Only onboarding commands (!hard onboard, !soft onboard, !start) should use ONBOARDING type
-                # Regular Discord messages should ALWAYS use HUMAN_TO_AGENT to route to chat input coords
-                from ..core.messaging_models_core import UnifiedMessageType
+            # Set message_type explicitly: ONBOARDING only for onboarding commands, HUMAN_TO_AGENT for all others
+            if is_onboarding_command:
+                explicit_message_type = UnifiedMessageType.ONBOARDING.value
+            else:
+                # CRITICAL: Regular Discord messages ALWAYS use HUMAN_TO_AGENT (routes to chat input coords)
+                explicit_message_type = UnifiedMessageType.HUMAN_TO_AGENT.value
 
-                # Check if this is an onboarding command (hard onboard, soft onboard, start)
-                import re
-                message_lower = message.lower().strip()
-
-                # More specific matching: only match "start" when followed by agent identifier
-                is_onboarding_command = (
-                    "hard onboard" in message_lower or
-                    "soft onboard" in message_lower or
-                    message_lower.startswith("!start") or
-                    # Only match "start Agent-X" or "start X" where X is 1-8 (not generic "start")
-                    bool(
-                        re.match(r'^start\s+(agent-)?[1-8](\s|$)', message_lower, re.IGNORECASE))
-                )
-
-                # Set message_type explicitly: ONBOARDING only for onboarding commands, HUMAN_TO_AGENT for all others
-                if is_onboarding_command:
-                    explicit_message_type = UnifiedMessageType.ONBOARDING.value
-                else:
-                    # CRITICAL: Regular Discord messages ALWAYS use HUMAN_TO_AGENT (routes to chat input coords)
-                    explicit_message_type = UnifiedMessageType.HUMAN_TO_AGENT.value
-
-                # Enqueue message for sequential processing
-                queue_id = self.queue.enqueue(
-                    message={
-                        "type": "agent_message",
+            # Enqueue message for sequential processing
+            queue_id = self.queue.enqueue(
+                message={
+                    "type": "agent_message",
+                    "sender": resolved_sender,
+                    "discord_username": self._get_discord_username(discord_user_id) if discord_user_id else None,
+                    "discord_user_id": discord_user_id if discord_user_id else None,
+                    "recipient": agent,
+                    "content": templated_message,
+                    "priority": priority,
+                    "source": "discord",
+                    # CRITICAL FIX: Explicitly set message_type
+                    "message_type": explicit_message_type,
+                    "tags": [],
+                    "metadata": {
+                        "source": "discord",
                         "sender": resolved_sender,
                         "discord_username": self._get_discord_username(discord_user_id) if discord_user_id else None,
                         "discord_user_id": discord_user_id if discord_user_id else None,
-                        "recipient": agent,
-                        "content": templated_message,
-                        "priority": priority,
-                        "source": "discord",
-                        # CRITICAL FIX: Explicitly set message_type
-                        "message_type": explicit_message_type,
-                        "tags": [],
-                        "metadata": {
-                            "source": "discord",
-                            "sender": resolved_sender,
-                            "discord_username": self._get_discord_username(discord_user_id) if discord_user_id else None,
-                            "discord_user_id": discord_user_id if discord_user_id else None,
-                            "use_pyautogui": True,
-                            "stalled": stalled,
-                            "raw_message": message,
-                            "message_category": (message_category or MessageCategory.D2A).value if apply_template else None,
-                        },
+                        "use_pyautogui": True,
+                        "stalled": stalled,
+                        "raw_message": message,
+                        "message_category": (message_category or MessageCategory.D2A).value if apply_template else None,
+                    },
+                }
+            )
+
+            self.logger.info(
+                f"✅ Message queued for {agent} (ID: {queue_id}): {message[:50]}..."
+            )
+
+            # CRITICAL: Wait for delivery if requested (blocking mode)
+            if wait_for_delivery:
+                self.logger.debug(
+                    f"⏳ Waiting for message {queue_id} delivery...")
+                delivered = self.queue.wait_for_delivery(
+                    queue_id, timeout=timeout)
+                if delivered:
+                    self.logger.info(
+                        f"✅ Message {queue_id} delivered successfully")
+                    return {
+                        "success": True,
+                        "message": f"Message delivered to {agent}",
+                        "agent": agent,
+                        "queue_id": queue_id,
+                        "delivered": True,
                     }
-                )
+                else:
+                    self.logger.warning(
+                        f"⚠️ Message {queue_id} delivery failed or timeout")
+                    return {
+                        "success": False,
+                        "message": f"Message delivery failed or timeout for {agent}",
+                        "agent": agent,
+                        "queue_id": queue_id,
+                        "delivered": False,
+                    }
 
-                self.logger.info(
-                    f"✅ Message queued for {agent} (ID: {queue_id}): {message[:50]}..."
-                )
-
-                # CRITICAL: Wait for delivery if requested (blocking mode)
-                if wait_for_delivery:
-                    self.logger.debug(
-                        f"⏳ Waiting for message {queue_id} delivery...")
-                    delivered = self.queue.wait_for_delivery(
-                        queue_id, timeout=timeout)
-                    if delivered:
-                        self.logger.info(
-                            f"✅ Message {queue_id} delivered successfully")
-                        return {
-                            "success": True,
-                            "message": f"Message delivered to {agent}",
-                            "agent": agent,
-                            "queue_id": queue_id,
-                            "delivered": True,
-                        }
-                    else:
-                        self.logger.warning(
-                            f"⚠️ Message {queue_id} delivery failed or timeout")
-                        return {
-                            "success": False,
-                            "message": f"Message delivery failed or timeout for {agent}",
-                            "agent": agent,
-                            "queue_id": queue_id,
-                            "delivered": False,
-                        }
-
-                # Non-blocking: return immediately after enqueue
-                return {
-                    "success": True,
-                    "message": f"Message queued for {agent}",
-                    "agent": agent,
-                    "queue_id": queue_id,
+            # Non-blocking: return immediately after enqueue
+            return {
+                "success": True,
+                "message": f"Message queued for {agent}",
+                "agent": agent,
+                "queue_id": queue_id,
                 }
 
-            # Fallback to subprocess if queue not available
-            cmd = [
-                "python",
-                str(self.messaging_cli),
-                "--agent",
-                agent,
-                "--message",
-                templated_message,
-                "--priority",
-                priority,
-            ]
+        # Fallback to subprocess if queue not available
+        cmd = [
+            "python",
+            str(self.messaging_cli),
+            "--agent",
+            agent,
+            "--message",
+            templated_message,
+            "--priority",
+            priority,
+        ]
 
-            if use_pyautogui:
-                cmd.append("--pyautogui")
+        if use_pyautogui:
+            cmd.append("--pyautogui")
 
-            # Set PYTHONPATH
-            env = {"PYTHONPATH": str(self.project_root)}
+        # Set PYTHONPATH
+        env = {"PYTHONPATH": str(self.project_root)}
 
+        try:
             result = subprocess.run(
                 cmd, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_DEFAULT, env=env, cwd=str(self.project_root)
             )
@@ -1473,83 +1535,6 @@ class ConsolidatedMessagingService(BaseService):
                 "message": f"Broadcast to {success_count}/{len(agents)} agents ({delivered_count} delivered)",
                 "results": results,
             }
-        """
-        Detect actual sender from environment and context.
-        
-        Checks:
-        1. AGENT_CONTEXT environment variable
-        2. Current working directory for agent workspace
-        3. Defaults to CAPTAIN if not detected
-        
-        Returns:
-            Detected sender ID (Agent-X, CAPTAIN, SYSTEM, etc.)
-        """
-        import os
-        from pathlib import Path
-
-        # Check environment variable first
-        agent_context = os.getenv("AGENT_CONTEXT") or os.getenv("AGENT_ID")
-        if agent_context:
-            # Normalize to Agent-X format
-            if agent_context.startswith("Agent-"):
-                return agent_context
-            elif agent_context.isdigit():
-                return f"Agent-{agent_context}"
-            else:
-                return f"Agent-{agent_context}"
-
-        # Check current working directory
-        try:
-            cwd = Path.cwd().as_posix()
-            for agent_id in SWARM_AGENTS:
-                if f"agent_workspaces/{agent_id}" in cwd or f"/{agent_id}/" in cwd:
-                    logger.debug(
-                        f"📍 Detected sender from directory: {agent_id}")
-                    return agent_id
-        except Exception as e:
-            logger.debug(f"Could not detect sender from directory: {e}")
-
-        # Default to CAPTAIN
-        logger.debug("📍 No sender detected, defaulting to CAPTAIN")
-        return "CAPTAIN"
-
-    @staticmethod
-    def _determine_message_type(sender: str, recipient: str) -> tuple[UnifiedMessageType, str]:
-        """
-        Determine message type and normalize sender based on sender/recipient.
-
-        Args:
-            sender: Detected or provided sender
-            recipient: Message recipient
-
-        Returns:
-            Tuple of (message_type, normalized_sender)
-        """
-        sender_upper = sender.upper() if sender else ""
-        recipient_upper = recipient.upper() if recipient else ""
-
-        # Agent-to-Agent
-        if sender.startswith("Agent-") and recipient.startswith("Agent-"):
-            return UnifiedMessageType.AGENT_TO_AGENT, sender
-
-        # Agent-to-Captain
-        if sender.startswith("Agent-") and recipient_upper in ["CAPTAIN", "AGENT-4"]:
-            return UnifiedMessageType.AGENT_TO_CAPTAIN, sender
-
-        # Captain-to-Agent
-        if sender_upper in ["CAPTAIN", "AGENT-4"]:
-            return UnifiedMessageType.CAPTAIN_TO_AGENT, "CAPTAIN"
-
-        # System-to-Agent
-        if sender_upper in ["SYSTEM", "DISCORD", "COMMANDER"]:
-            return UnifiedMessageType.SYSTEM_TO_AGENT, sender
-
-        # Human-to-Agent
-        if sender_upper in ["HUMAN", "USER", "GENERAL"]:
-            return UnifiedMessageType.HUMAN_TO_AGENT, sender
-
-        # Default: System-to-Agent
-        return UnifiedMessageType.SYSTEM_TO_AGENT, sender or "SYSTEM"
 
     def _get_discord_username(self, discord_user_id: str | None) -> str | None:
         """
