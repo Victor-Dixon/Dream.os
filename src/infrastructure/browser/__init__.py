@@ -1,5 +1,6 @@
 # AUTO-GENERATED __init__.py
 # DO NOT EDIT MANUALLY - changes may be overwritten
+# <!-- SSOT Domain: infrastructure -->
 
 from . import browser_models
 from . import thea_browser_service
