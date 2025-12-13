@@ -45,6 +45,18 @@ from .service_adapters import (
     broadcast_discord_message,
 )
 
+# CLI Handlers
+from .cli_handlers import (
+    handle_cycle_v2_message,
+    handle_message,
+    handle_survey,
+    handle_consolidation,
+    handle_coordinates,
+    handle_start_agents,
+    handle_save,
+    handle_leaderboard,
+)
+
 __all__ = [
     # CLI Parser
     "create_messaging_parser",
@@ -65,4 +77,13 @@ __all__ = [
     "ConsolidatedMessagingService",
     "send_discord_message",
     "broadcast_discord_message",
+    # CLI Handlers
+    "handle_cycle_v2_message",
+    "handle_message",
+    "handle_survey",
+    "handle_consolidation",
+    "handle_coordinates",
+    "handle_start_agents",
+    "handle_save",
+    "handle_leaderboard",
 ]

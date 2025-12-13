@@ -337,3 +337,4 @@ class PlaceholderCommands(commands.Cog):
             self.logger.error(f"Error in session command: {e}", exc_info=True)
             await ctx.send(f"❌ Error: {e}")
 
+

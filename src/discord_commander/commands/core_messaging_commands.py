@@ -227,3 +227,4 @@ class CoreMessagingCommands(commands.Cog):
             self.logger.error(f"Error broadcasting: {e}")
             await ctx.send(f"❌ Error: {e}")
 
+

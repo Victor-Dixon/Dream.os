@@ -90,19 +90,21 @@ def check_queue_status() -> Dict:
     config = QueueConfig()
 
     try:
-        entries = queue._load_entries()
+        entries = queue.persistence.load_entries()
         total = len(entries)
-        pending = sum(1 for e in entries if e.status == "PENDING")
-        processing = sum(1 for e in entries if e.status == "PROCESSING")
-        delivered = sum(1 for e in entries if e.status == "DELIVERED")
-        failed = sum(1 for e in entries if e.status == "FAILED")
+        pending = sum(1 for e in entries if getattr(e, 'status', None) == "PENDING")
+        processing = sum(1 for e in entries if getattr(e, 'status', None) == "PROCESSING")
+        delivered = sum(1 for e in entries if getattr(e, 'status', None) == "DELIVERED")
+        failed = sum(1 for e in entries if getattr(e, 'status', None) == "FAILED")
 
         # Check for stuck messages (processing > 1 hour)
         now = datetime.now()
         stuck = []
         for entry in entries:
-            if entry.status == "PROCESSING":
-                metadata = entry.metadata or {}
+            if getattr(entry, 'status', None) == "PROCESSING":
+                metadata = getattr(entry, 'metadata', {}) or {}
+                message = getattr(entry, 'message', {}) or {}
+                recipient = message.get("recipient") if isinstance(message, dict) else getattr(message, 'recipient', 'unknown')
                 if "processing_started_at" in metadata:
                     try:
                         started_at = datetime.fromisoformat(
@@ -111,8 +113,8 @@ def check_queue_status() -> Dict:
                         if (now - started_at).total_seconds() > 3600:
                             stuck.append(
                                 {
-                                    "queue_id": entry.queue_id,
-                                    "recipient": entry.recipient,
+                                    "queue_id": getattr(entry, 'queue_id', 'unknown'),
+                                    "recipient": recipient,
                                     "stuck_for_seconds": int(
                                         (now - started_at).total_seconds()
                                     ),
@@ -124,14 +126,16 @@ def check_queue_status() -> Dict:
         # Check failed messages with retry attempts
         failed_with_retries = []
         for entry in entries:
-            if entry.status == "FAILED":
-                metadata = entry.metadata or {}
+            if getattr(entry, 'status', None) == "FAILED":
+                metadata = getattr(entry, 'metadata', {}) or {}
+                message = getattr(entry, 'message', {}) or {}
+                recipient = message.get("recipient") if isinstance(message, dict) else getattr(message, 'recipient', 'unknown')
                 attempts = metadata.get("delivery_attempts", 0)
                 if attempts > 0:
                     failed_with_retries.append(
                         {
-                            "queue_id": entry.queue_id,
-                            "recipient": entry.recipient,
+                            "queue_id": getattr(entry, 'queue_id', 'unknown'),
+                            "recipient": recipient,
                             "attempts": attempts,
                             "last_retry": metadata.get("last_retry_time"),
                             "next_retry": metadata.get("next_retry_time"),
@@ -172,23 +176,30 @@ def verify_message_delivery(recipient: str, message_id: str) -> Dict:
     # Check queue
     queue = MessageQueue()
     try:
-        entries = queue._load_entries()
-        matching_entries = [
-            e
-            for e in entries
-            if e.recipient == recipient and message_id in (e.metadata or {}).get(
-                "message_id", ""
-            )
-        ]
+        entries = queue.persistence.load_entries()
+        matching_entries = []
+        for e in entries:
+            msg = getattr(e, 'message', {}) or {}
+            recipient_match = False
+            if isinstance(msg, dict):
+                recipient_match = msg.get("recipient") == recipient
+            else:
+                recipient_match = getattr(msg, 'recipient', None) == recipient
+            
+            metadata = getattr(e, 'metadata', {}) or {}
+            msg_id = metadata.get("message_id", "")
+            if recipient_match and message_id in str(msg_id):
+                matching_entries.append(e)
 
         if matching_entries:
             entry = matching_entries[0]
+            metadata = getattr(entry, 'metadata', {}) or {}
             result["queue_status"] = {
-                "status": entry.status,
-                "queue_id": entry.queue_id,
-                "created_at": entry.created_at,
-                "attempts": (entry.metadata or {}).get("delivery_attempts", 0),
-                "last_retry": (entry.metadata or {}).get("last_retry_time"),
+                "status": getattr(entry, 'status', 'unknown'),
+                "queue_id": getattr(entry, 'queue_id', 'unknown'),
+                "created_at": getattr(entry, 'created_at', 'unknown'),
+                "attempts": metadata.get("delivery_attempts", 0),
+                "last_retry": metadata.get("last_retry_time"),
             }
         else:
             result["queue_status"] = {
@@ -218,7 +229,7 @@ def get_delivery_stats() -> Dict:
     """Get delivery statistics."""
     queue = MessageQueue()
     try:
-        entries = queue._load_entries()
+        entries = queue.persistence.load_entries()
         now = datetime.now()
         last_24h = now - timedelta(hours=24)
 
@@ -228,8 +239,8 @@ def get_delivery_stats() -> Dict:
             if datetime.fromisoformat(e.created_at) >= last_24h
         ]
 
-        delivered = [e for e in recent_entries if e.status == "DELIVERED"]
-        failed = [e for e in recent_entries if e.status == "FAILED"]
+        delivered = [e for e in recent_entries if getattr(e, 'status', None) == "DELIVERED"]
+        failed = [e for e in recent_entries if getattr(e, 'status', None) == "FAILED"]
 
         # Calculate delivery rate
         total_recent = len(recent_entries)
@@ -241,7 +252,7 @@ def get_delivery_stats() -> Dict:
         avg_attempts = 0
         if delivered:
             total_attempts = sum(
-                (e.metadata or {}).get("delivery_attempts", 1) for e in delivered
+                (getattr(e, 'metadata', {}) or {}).get("delivery_attempts", 1) for e in delivered
             )
             avg_attempts = total_attempts / len(delivered)
 
@@ -256,8 +267,8 @@ def get_delivery_stats() -> Dict:
             },
             "all_time": {
                 "total": len(entries),
-                "delivered": sum(1 for e in entries if e.status == "DELIVERED"),
-                "failed": sum(1 for e in entries if e.status == "FAILED"),
+                "delivered": sum(1 for e in entries if getattr(e, 'status', None) == "DELIVERED"),
+                "failed": sum(1 for e in entries if getattr(e, 'status', None) == "FAILED"),
             },
         }
     except Exception as e:
