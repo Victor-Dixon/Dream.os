@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: infrastructure -->
 Run Birthday Website Workflow
 =============================
 
 Demonstrates the unified tool using the birthday website workflow template.
 Applies all 4 steps to prismblossom.online.
+
+Author: Agent-3 (Infrastructure & DevOps Specialist)
 """
 
 import sys
