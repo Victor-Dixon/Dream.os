@@ -1,0 +1,6 @@
+Easy Deletions - 1 files
+================================================================================
+
+agent_workspaces\Agent-6\inbox\A2A_LOOP3_ACCELERATION_COORDINATION_2025-12-06.md
+  Reason: Matches redundant pattern (.*_\d{4}-\d{2}-\d{2}.*\.(md|txt)$)
+
