@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Quick status check for Discord system."""
+"""
+<!-- SSOT Domain: infrastructure -->
+Quick status check for Discord system.
+
+Author: Agent-3 (Infrastructure & DevOps Specialist)
+"""
 
 import os
 import psutil

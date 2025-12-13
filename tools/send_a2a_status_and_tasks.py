@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: infrastructure -->
 Send A2A directives to all agents with two tasks:
 1) Update status.json with current focus (enables Discord bot start).
 2) Execute a concrete follow-up per domain.
+
+Author: Agent-3 (Infrastructure & DevOps Specialist)
 """
 
 from src.core.messaging_templates import render_message
