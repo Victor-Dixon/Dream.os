@@ -4,10 +4,13 @@ Delete easy deletion candidates - safe deletions only.
 """
 from pathlib import Path
 
-DELETION_LIST = Path("DELETION_CANDIDATES_EASY.txt")
+# Try both deletion lists
+DELETION_LIST = Path("DELETION_CANDIDATES_MORE.txt")
+if not DELETION_LIST.exists():
+    DELETION_LIST = Path("DELETION_CANDIDATES_EASY.txt")
 
 if not DELETION_LIST.exists():
-    print("❌ DELETION_CANDIDATES_EASY.txt not found. Run find_easy_deletions.py first.")
+    print("❌ No deletion list found. Run find_easy_deletions.py or find_more_redundant_files.py first.")
     exit(1)
 
 # Read deletion list
