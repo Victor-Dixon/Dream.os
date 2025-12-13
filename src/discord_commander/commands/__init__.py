@@ -11,19 +11,21 @@ V2 Compliance: Each module <300 lines, <5 classes, <10 functions
 # Import all command cogs for easy registration
 from .core_messaging_commands import CoreMessagingCommands
 from .system_control_commands import SystemControlCommands
-from .onboarding_commands import OnboardingCommands
-from .utility_commands import UtilityCommands
-from .profile_commands import ProfileCommands
-from .agent_management_commands import AgentManagementCommands
-from .placeholder_commands import PlaceholderCommands
+# TODO: Add remaining command modules as they are extracted
+# from .onboarding_commands import OnboardingCommands
+# from .utility_commands import UtilityCommands
+# from .profile_commands import ProfileCommands
+# from .agent_management_commands import AgentManagementCommands
+# from .placeholder_commands import PlaceholderCommands
 
 __all__ = [
     "CoreMessagingCommands",
     "SystemControlCommands",
-    "OnboardingCommands",
-    "UtilityCommands",
-    "ProfileCommands",
-    "AgentManagementCommands",
-    "PlaceholderCommands",
+    # TODO: Add remaining command modules as they are extracted
+    # "OnboardingCommands",
+    # "UtilityCommands",
+    # "ProfileCommands",
+    # "AgentManagementCommands",
+    # "PlaceholderCommands",
 ]
 
