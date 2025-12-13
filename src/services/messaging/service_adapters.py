@@ -25,7 +25,7 @@ from typing import Any
 from src.core.config.timeout_constants import TimeoutConstants
 from src.core.messaging_core import UnifiedMessagePriority, UnifiedMessageType
 from src.core.messaging_models_core import MessageCategory
-from src.services.base.base_service import BaseService
+from ..core.base.base_service import BaseService
 
 from .message_formatters import _apply_template
 
