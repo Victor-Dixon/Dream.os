@@ -190,13 +190,23 @@ class StatusChangeMonitor:
         for i in range(1, 9):
             agent_id = f"Agent-{i}"
             status_file = self.workspace_path / agent_id / "status.json"
-            if status_file.exists():
-                self.last_modified[agent_id] = status_file.stat().st_mtime
-                try:
-                    with open(status_file, 'r', encoding='utf-8') as f:
-                        self.last_status[agent_id] = json.load(f)
-                except Exception:
-                    pass
+            
+            # Use asyncio.to_thread for file operations to avoid blocking
+            try:
+                exists = await asyncio.to_thread(status_file.exists)
+                if exists:
+                    # Get file modification time
+                    def get_file_mtime():
+                        return status_file.stat().st_mtime
+                    self.last_modified[agent_id] = await asyncio.to_thread(get_file_mtime)
+                    
+                    # Read status file
+                    def read_status_file():
+                        with open(status_file, 'r', encoding='utf-8') as f:
+                            return json.load(f)
+                    self.last_status[agent_id] = await asyncio.to_thread(read_status_file)
+            except Exception:
+                pass
 
     def _detect_changes(self, old_status: dict, new_status: dict) -> Dict[str, any]:
         """Detect significant status changes."""
