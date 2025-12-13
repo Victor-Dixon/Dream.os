@@ -1472,10 +1472,10 @@ class ConsolidatedMessagingService(BaseService):
                 }
 
         except subprocess.TimeoutExpired:
-            logger.error(f"Timeout sending message to {agent}")
+            self.logger.error(f"Timeout sending message to {agent}")
             return {"success": False, "message": "Message timeout", "agent": agent}
         except Exception as e:
-            logger.error(f"Error sending message to {agent}: {e}")
+            self.logger.error(f"Error sending message to {agent}: {e}")
             return {"success": False, "message": str(e), "agent": agent}
 
     def broadcast_message(self, message: str, priority: str = "regular") -> dict[str, Any]:
