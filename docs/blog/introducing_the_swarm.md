@@ -58,8 +58,8 @@ Our system consists of **8 specialized agents**, each an expert in their domain:
 <p style="margin: 0; color: #4a5568; font-size: 0.95em;">Manages inter-agent communication and coordination protocols.</p>
 </div>
 
-<div style="background: white; border: 2px solid #fee140; border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-<h3 style="color: #fee140; margin-top: 0; font-size: 1.3em;">🌐 Agent-7</h3>
+<div style="background: white; border: 2px solid #f59e0b; border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+<h3 style="color: #f59e0b; margin-top: 0; font-size: 1.3em;">🌐 Agent-7</h3>
 <p style="margin: 0.5rem 0; font-weight: 600; color: #2d3748;">Web Development</p>
 <p style="margin: 0; color: #4a5568; font-size: 0.95em;">Handles frontend development, web interfaces, and user experience.</p>
 </div>

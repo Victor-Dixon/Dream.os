@@ -135,7 +135,7 @@ This template standardizes all blog posts with consistent styling, structure, an
 - `#4facfe` - Blue
 - `#43e97b` - Green
 - `#fa709a` - Coral
-- `#fee140` - Yellow
+- `#f59e0b` - Amber/Orange (better contrast than yellow)
 - `#30cfd0` - Cyan
 
 ### 4. Callout Box
