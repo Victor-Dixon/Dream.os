@@ -528,12 +528,23 @@ class MessageQueueProcessor:
             actual_priority = priority_str or metadata.get(
                 "priority", "normal")
 
-            return create_inbox_message(
+            success = create_inbox_message(
                 recipient=recipient,
                 content=content,
                 sender=actual_sender,
                 priority=actual_priority,
             )
+            
+            # VERIFICATION: Verify delivery succeeded
+            if not success:
+                logger.error(
+                    f"❌ Inbox delivery failed for {recipient} - "
+                    f"create_inbox_message returned False"
+                )
+                return False
+            
+            logger.info(f"✅ Inbox delivery verified for {recipient}")
+            return True
         except ImportError:
             logger.warning("Inbox utility not available")
             return False

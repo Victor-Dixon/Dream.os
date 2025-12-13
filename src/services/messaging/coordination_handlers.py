@@ -463,81 +463,13 @@ class MessageCoordinator:
 
     @staticmethod
     def _detect_sender() -> str:
-        """
-        Detect actual sender from environment and context.
-
-        Checks:
-        1. AGENT_CONTEXT environment variable
-        2. Current working directory for agent workspace
-        3. Defaults to CAPTAIN if not detected
-
-        Returns:
-            Detected sender ID (Agent-X, CAPTAIN, SYSTEM, etc.)
-        """
-        import os
-        from pathlib import Path
-
-        # Check environment variable first
-        agent_context = os.getenv("AGENT_CONTEXT") or os.getenv("AGENT_ID")
-        if agent_context:
-            # Normalize to Agent-X format
-            if agent_context.startswith("Agent-"):
-                return agent_context
-            elif agent_context.isdigit():
-                return f"Agent-{agent_context}"
-            else:
-                return f"Agent-{agent_context}"
-
-        # Check current working directory
-        try:
-            cwd = Path.cwd().as_posix()
-            for agent_id in SWARM_AGENTS:
-                if f"agent_workspaces/{agent_id}" in cwd or f"/{agent_id}/" in cwd:
-                    logger.debug(
-                        f"📍 Detected sender from directory: {agent_id}")
-                    return agent_id
-        except Exception as e:
-            logger.debug(f"Could not detect sender from directory: {e}")
-
-        # Default to CAPTAIN
-        logger.debug("📍 No sender detected, defaulting to CAPTAIN")
-        return "CAPTAIN"
+        """Detect actual sender from environment and context."""
+        from .coordination_helpers import detect_sender
+        return detect_sender()
 
     @staticmethod
     def _determine_message_type(sender: str, recipient: str) -> tuple[UnifiedMessageType, str]:
-        """
-        Determine message type and normalize sender based on sender/recipient.
-
-        Args:
-            sender: Detected or provided sender
-            recipient: Message recipient
-
-        Returns:
-            Tuple of (message_type, normalized_sender)
-        """
-        sender_upper = sender.upper() if sender else ""
-        recipient_upper = recipient.upper() if recipient else ""
-
-        # Agent-to-Agent
-        if sender and sender.startswith("Agent-") and recipient and recipient.startswith("Agent-"):
-            return UnifiedMessageType.AGENT_TO_AGENT, sender
-
-        # Agent-to-Captain
-        if sender and sender.startswith("Agent-") and recipient_upper in ["CAPTAIN", "AGENT-4"]:
-            return UnifiedMessageType.AGENT_TO_CAPTAIN, sender
-
-        # Captain-to-Agent
-        if sender_upper in ["CAPTAIN", "AGENT-4"]:
-            return UnifiedMessageType.CAPTAIN_TO_AGENT, "CAPTAIN"
-
-        # System-to-Agent
-        if sender_upper in ["SYSTEM", "DISCORD", "COMMANDER"]:
-            return UnifiedMessageType.SYSTEM_TO_AGENT, sender
-
-        # Human-to-Agent
-        if sender_upper in ["HUMAN", "USER", "GENERAL"]:
-            return UnifiedMessageType.HUMAN_TO_AGENT, sender
-
-        # Default: System-to-Agent
-        return UnifiedMessageType.SYSTEM_TO_AGENT, sender or "SYSTEM"
+        """Determine message type and normalize sender based on sender/recipient."""
+        from .coordination_helpers import determine_message_type
+        return determine_message_type(sender, recipient)
 
