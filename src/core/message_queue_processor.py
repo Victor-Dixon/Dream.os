@@ -252,15 +252,24 @@ class MessageQueueProcessor:
                 recipient, content, metadata, message_type_str, sender, priority_str, tags_list
             )
             
-            # VERIFICATION: After PyAutoGUI delivery, verify message reached inbox
-            if success and metadata.get("use_pyautogui", True):
-                # Verify delivery by checking inbox
-                verified = self._verify_delivery(recipient, content, sender)
-                if not verified:
-                    logger.warning(
-                        f"PyAutoGUI delivery reported success but verification failed for {recipient}"
-                    )
-                    success = False  # Treat as failure if verification fails
+            # VERIFICATION: Skip inbox verification for PyAutoGUI messages
+            # PyAutoGUI sends directly to Discord chat, not inbox, so inbox verification is not applicable
+            # The PyAutoGUI delivery service already reports success/failure, which is sufficient
+            # CRITICAL: Check metadata from both entry and message to ensure we catch use_pyautogui flag
+            use_pyautogui = True  # Default to True for backward compatibility
+            if isinstance(metadata, dict):
+                use_pyautogui = metadata.get("use_pyautogui", True)
+            elif hasattr(entry, 'metadata') and isinstance(entry.metadata, dict):
+                use_pyautogui = entry.metadata.get("use_pyautogui", True)
+            
+            if success and use_pyautogui:
+                # PyAutoGUI messages go to Discord chat, not inbox
+                # Trust the PyAutoGUI delivery service's success/failure report
+                logger.info(
+                    f"✅ PyAutoGUI delivery successful for {recipient} (skipping inbox verification - "
+                    f"message sent to Discord chat, not inbox)"
+                )
+                # No verification needed - PyAutoGUI delivery to Discord chat is verified by the delivery service
 
             if success:
                 self.queue.mark_delivered(queue_id)
