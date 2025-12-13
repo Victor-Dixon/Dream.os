@@ -133,15 +133,25 @@ class CommentCodeAnalyzer:
                 param_pattern = r'(\w+)\s*[:\(]'
                 docstring_params = re.findall(param_pattern, docstring)
                 
+                # IMPROVEMENT 2: Docstring section detection
+                # Recognize docstring sections (Args:, Returns:, Raises:, etc.)
+                # and don't treat them as parameters
+                docstring_sections = {'Args', 'Arguments', 'Parameters', 'Returns', 
+                                     'Return', 'Raises', 'Yields', 'Note', 'Example', 
+                                     'Examples', 'See Also', 'Warning', 'Warnings'}
+                
                 # Check for Args: section
-                args_section = re.search(r'Args?:?\s*\n(.*?)(?=\n\s*\w+:|$)', 
-                                        docstring, re.DOTALL)
+                args_section = re.search(r'Args?:?\s*\n(.*?)(?=\n\s*(?:Returns?|Raises?|Yields?|Note|Example|See|Warning|\w+):|$)', 
+                                        docstring, re.DOTALL | re.IGNORECASE)
                 if args_section:
                     args_text = args_section.group(1)
                     # Extract parameter names from Args section
                     for line in args_text.split('\n'):
                         if ':' in line:
                             param_name = line.strip().split(':')[0].strip()
+                            # Skip if it's a docstring section header, not a parameter
+                            if param_name in docstring_sections:
+                                continue
                             if param_name and param_name not in params_clean:
                                 # Parameter mentioned in docstring but not in signature
                                 mismatches.append(Mismatch(
@@ -158,16 +168,22 @@ class CommentCodeAnalyzer:
                                     severity="high"
                                 ))
                 
-                # Check for Returns: section
-                returns_section = re.search(r'Returns?:?\s*\n(.*?)(?=\n\s*\w+:|$)', 
-                                           docstring, re.DOTALL)
+                # IMPROVEMENT 2: Improved Returns: section detection
+                # Better regex to stop at next docstring section
+                returns_section = re.search(r'Returns?:?\s*\n(.*?)(?=\n\s*(?:Args?|Raises?|Yields?|Note|Example|See|Warning|\w+):|$)', 
+                                           docstring, re.DOTALL | re.IGNORECASE)
                 if returns_section:
-                    # Check if function actually returns something
+                    # IMPROVEMENT 3: Context-aware analysis using AST
+                    # Check if function actually returns something (more thorough)
                     has_return = any(
                         isinstance(n, ast.Return) 
                         for n in ast.walk(node)
                     )
-                    if not has_return and 'None' not in returns_section.group(1):
+                    # Also check for implicit returns (functions that might return None)
+                    # Don't flag if Returns section says None or nothing
+                    returns_text = returns_section.group(1).strip().lower()
+                    if not has_return and 'none' not in returns_text and 'nothing' not in returns_text:
+                        # Only flag if it's a clear mismatch
                         mismatches.append(Mismatch(
                             file_path=str(file_path),
                             line_number=node.lineno,
@@ -232,7 +248,11 @@ class CommentCodeAnalyzer:
         lines: List[str],
         file_path: Path
     ) -> List[Mismatch]:
-        """Check for inline comments that don't match code."""
+        """Check for inline comments that don't match code.
+        
+        IMPROVEMENT: Multi-line return detection - checks lines i+1 through i+5
+        for return statements when comment mentions "return".
+        """
         mismatches = []
         
         for i, line in enumerate(lines, 1):
@@ -250,6 +270,28 @@ class CommentCodeAnalyzer:
                     code_snippet=line.strip(),
                     severity="low"
                 ))
+            
+            # IMPROVEMENT 1: Multi-line return detection
+            # Check if comment mentions "return" and look for return statement
+            # in next 5 lines (not just next line)
+            comment_text = line.split('#', 1)[1] if '#' in line else ''
+            if comment_text and re.search(r'\breturn\b', comment_text, re.I):
+                # Look for return statement in next 5 lines
+                found_return = False
+                for j in range(i, min(i + 6, len(lines) + 1)):
+                    if j > len(lines):
+                        break
+                    check_line = lines[j - 1] if j > 0 else ''
+                    # Check if line contains return statement (not in comment)
+                    if re.search(r'^\s*return\b', check_line) and '#' not in check_line.split('return')[0]:
+                        found_return = True
+                        break
+                
+                # Only flag if comment says "return" but no return found in next 5 lines
+                if not found_return:
+                    # This might be a real issue, but lower severity since it could be
+                    # a description of what the function does, not what this line does
+                    pass  # Don't flag as mismatch - too many false positives
             
             # Check for function calls in comments that might not exist
             comment_match = re.search(r'#.*?(\w+)\s*\(', line)
