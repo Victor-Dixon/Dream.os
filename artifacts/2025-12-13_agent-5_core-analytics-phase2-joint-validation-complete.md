@@ -128,6 +128,14 @@
 
 ✅ **PHASE 2 JOINT VALIDATION COMPLETE** - All checkpoints validated jointly, all integration points secure, 0 security issues, ready for Phase 3 final report
 
+## Scope Limitations
+
+**Important**: This validation covers **Core Systems ↔ Analytics domain pair only**.
+- **Validated**: 1 of 7+ domain pairs in the system
+- **Security Status**: Secure within validated scope
+- **Full System Status**: Cannot be determined without validating all domain pairs
+- **Remaining Work**: Other domain pairs (Web ↔ Core, Analytics ↔ Infrastructure, etc.) require separate validation
+
 ---
 
 **Coordination**: Bilateral plan active, Phase 2 complete, Phase 3 final report ready
