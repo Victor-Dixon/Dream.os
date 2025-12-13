@@ -2525,10 +2525,22 @@ Agent, you appear stalled. CONTINUE AUTONOMOUSLY NOW.
 
 async def main() -> int:
     """Main function to run the unified Discord bot with automatic reconnection. Returns exit code."""
-    # Setup logging
+    # Setup logging with file output for debugging
+    log_dir = Path("runtime/logs")
+    log_dir.mkdir(parents=True, exist_ok=True)
+    log_file = log_dir / f"discord_bot_{datetime.now().strftime('%Y%m%d')}.log"
+    
+    # Configure logging with both console and file handlers
     logging.basicConfig(
-        level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+        level=logging.INFO,
+        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        handlers=[
+            logging.StreamHandler(),  # Console output
+            logging.FileHandler(log_file, encoding='utf-8')  # File output
+        ]
     )
+    
+    logger.info(f"📝 Logging to file: {log_file}")
 
     # Get token from environment
     token = os.getenv("DISCORD_BOT_TOKEN")
