@@ -911,7 +911,7 @@ class ConsolidatedMessagingService(BaseService):
 
     def __init__(self):
         """Initialize ConsolidatedMessagingService."""
-        super().__init__()
+        super().__init__("ConsolidatedMessagingService")
         self.project_root = Path(__file__).parent.parent.parent
         self.messaging_cli = self.project_root / "src" / "services" / "messaging_cli.py"
         from ..core.message_queue import MessageQueue
