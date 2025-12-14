@@ -4,6 +4,7 @@ Tests for discord_commander/messaging_commands.py - MessagingCommands class.
 Target: ≥85% coverage, 15+ test methods.
 """
 
+import os
 import pytest
 import asyncio
 from unittest.mock import Mock, patch, MagicMock, AsyncMock
@@ -11,6 +12,9 @@ from datetime import datetime
 import sys
 from pathlib import Path
 import importlib.util
+
+# Set pytest environment variable BEFORE imports to enable command decorator stripping
+os.environ["PYTEST_CURRENT_TEST"] = "test"
 
 # Add project root to path
 _project_root = Path(__file__).parent.parent.parent
@@ -42,7 +46,11 @@ class TestMessagingCommands:
     @pytest.fixture
     def mock_messaging_controller(self):
         """Create mock messaging controller."""
-        return create_mock_messaging_controller()
+        controller = create_mock_messaging_controller()
+        # Ensure all async methods are AsyncMock
+        controller.send_agent_message = AsyncMock(return_value=True)
+        controller.broadcast_to_swarm = AsyncMock(return_value=True)
+        return controller
 
     @pytest.fixture
     def mock_ctx(self):
