@@ -23,6 +23,9 @@ import sys
 from pathlib import Path
 from datetime import datetime
 from src.trading_robot.repositories.models.position import Position
+from src.trading_robot.repositories.interfaces.position_repository_interface import (
+    PositionRepositoryInterface
+)
 from unittest.mock import AsyncMock, MagicMock
 
 # Add project root to path
