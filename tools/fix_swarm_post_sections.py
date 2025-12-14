@@ -51,58 +51,110 @@ def load_config() -> Dict[str, Any]:
 def fix_swarm_post_content(content: str) -> str:
     """Fix specific white-on-white sections in The Swarm post."""
     
-    # Fix 1: The Core Philosophy paragraph
-    # Find: <p style="font-size: 1.1em; margin-bottom: 0;"> without color
+    original = content
+    
+    # Fix 1: The Core Philosophy paragraph - add color if missing
+    # Pattern: <p style="...font-size: 1.1em...margin-bottom: 0..."> without color
+    def add_color_to_philosophy(match):
+        style = match.group(1)
+        if 'color:' not in style:
+            # Add color before closing quote
+            if style.rstrip().endswith(';'):
+                return f'<p style="{style.rstrip()} color: #2d3748">'
+            else:
+                return f'<p style="{style}; color: #2d3748">'
+        return match.group(0)
+    
     content = re.sub(
-        r'(<p style="font-size:\s*1\.1em[^"]*?margin-bottom:\s*0[^"]*?)"',
-        r'\1; color: #2d3748"',
+        r'<p style="([^"]*font-size:\s*1\.1em[^"]*?margin-bottom:\s*0[^"]*?)"',
+        add_color_to_philosophy,
         content
     )
     
-    # Fix 2: Plain <p> tags in white background cards (#fff or #ffffff)
-    # These are the Activity Detection, Unified Messaging, Test-Driven Development sections
-    # Pattern: <div...background: #fff...><p> (plain p tag, no style)
-    def fix_card_paragraphs(html):
-        # Find all plain <p> tags that come after card divs
-        # Match pattern: card div opening, then any content, then plain <p>
-        pattern = r'(<div[^>]*background:\s*#fff[^>]*>.*?)(<p)(?!\s+style=")'
+    # Fix 2: Plain <p> tags (no style) in white background cards
+    # These are Activity Detection, Unified Messaging, Test-Driven Development
+    # Match: <div...background: #fff...> ... <p> (with no style attribute)
+    # Use a more targeted approach - find each card and fix its <p> tag
+    def fix_plain_p_in_cards(html):
+        # Split by card divs to process each card separately
+        # Pattern to find: card div, h3, then plain <p>
+        # More specific: look for the pattern where we have Activity Detection, etc.
         
-        def replace_func(match):
-            before = match.group(1)
-            p_tag = match.group(2)
-            # Check if there's already content between div and p
-            # We want to add style="color: #2d3748" to the <p> tag
-            return f'{before}{p_tag} style="color: #2d3748"'
+        # Fix plain <p> tags that come after h3 in white cards
+        # Pattern: <h3...Activity Detection...>...</h3> then plain <p>
+        patterns_to_fix = [
+            (r'(<h3[^>]*Activity Detection[^>]*>.*?</h3>\s*)(<p)(?!\s+style=)',
+             r'\1\2 style="color: #2d3748"'),
+            (r'(<h3[^>]*Unified Messaging[^>]*>.*?</h3>\s*)(<p)(?!\s+style=)',
+             r'\1\2 style="color: #2d3748"'),
+            (r'(<h3[^>]*Test-Driven Development[^>]*>.*?</h3>\s*)(<p)(?!\s+style=)',
+             r'\1\2 style="color: #2d3748"'),
+        ]
         
-        # Use DOTALL to match across newlines
-        fixed = re.sub(pattern, replace_func, html, flags=re.DOTALL)
-        return fixed
+        for pattern, replacement in patterns_to_fix:
+            html = re.sub(pattern, replacement, html, flags=re.DOTALL | re.IGNORECASE)
+        
+        # Also fix any plain <p> in white background divs more generally
+        # Match div with background #fff, then find plain <p> tag
+        def fix_p_in_white_div(match):
+            div_start = match.start()
+            div_end = match.end()
+            div_content = match.group(0)
+            
+            # Find plain <p> tags within this div
+            # Look for <p> that doesn't have style="...
+            fixed = re.sub(r'(<p)(?!\s+style=")', r'\1 style="color: #2d3748"', div_content)
+            return fixed
+        
+        # Match white background divs
+        white_div_pattern = r'<div[^>]*background:\s*#fff[^>]*>.*?</div>'
+        html = re.sub(white_div_pattern, fix_p_in_white_div, html, flags=re.DOTALL | re.IGNORECASE)
+        
+        return html
     
-    content = fix_card_paragraphs(content)
+    content = fix_plain_p_in_cards(content)
     
-    # Fix 3: Why The Swarm Matters section (plain <p> with font-size but no color)
+    # Fix 3: Why The Swarm Matters section - paragraph with font-size but no color
+    def add_color_to_conclusion(match):
+        style = match.group(1)
+        if 'color:' not in style:
+            if style.rstrip().endswith(';'):
+                return f'<p style="{style.rstrip()} color: #2d3748">'
+            else:
+                return f'<p style="{style}; color: #2d3748">'
+        return match.group(0)
+    
     content = re.sub(
-        r'(<p style="font-size:\s*1\.15em[^"]*?line-height:\s*1\.8[^"]*?margin:\s*0[^"]*?)"',
-        r'\1; color: #2d3748"',
+        r'<p style="([^"]*font-size:\s*1\.15em[^"]*?)"',
+        add_color_to_conclusion,
         content
     )
     
-    # Fix 4: Any other plain <p> tags in sections with background: #f7fafc or #f8f9fa
-    # These are highlighted/conclusion sections
-    def fix_highlighted_plain_p(html):
-        # Match highlighted divs, then plain <p> tags
-        pattern = r'(<div[^>]*(?:background:\s*#f[78]f[89]fa[fc]|border-left:\s*5px)[^>]*>.*?)(<p)(?!\s+style="[^"]*color)'
-        
-        def replace_func(match):
-            before = match.group(1)
-            p_tag = match.group(2)
-            # Check if p tag already has style with color
-            # If not, add it
-            return f'{before}{p_tag} style="color: #2d3748"'
-        
-        return re.sub(pattern, replace_func, html, flags=re.DOTALL | re.IGNORECASE)
+    # Fix 4: Any other plain <p> tags without style in highlighted sections
+    # Fix all plain <p> tags that don't have style attribute
+    # But only if they're likely in a styled section (after specific content)
+    # Be careful not to break things - only fix if in context of our sections
     
-    content = fix_highlighted_plain_p(content)
+    # More aggressive: fix all plain <p> tags that appear in cards/highlighted sections
+    # Check if <p> is inside a div with background styling
+    lines = content.split('\n')
+    fixed_lines = []
+    in_styled_section = False
+    
+    for i, line in enumerate(lines):
+        # Check if we're entering a styled section
+        if 'background:' in line and ('#fff' in line or '#f8f9fa' in line or '#f7fafc' in line):
+            in_styled_section = True
+        elif '</div>' in line and in_styled_section:
+            in_styled_section = False
+        
+        # Fix plain <p> tags in styled sections
+        if in_styled_section and re.search(r'<p(?!\s+style=)', line):
+            line = re.sub(r'(<p)(?!\s+style=)', r'\1 style="color: #2d3748"', line)
+        
+        fixed_lines.append(line)
+    
+    content = '\n'.join(fixed_lines)
     
     return content
 
