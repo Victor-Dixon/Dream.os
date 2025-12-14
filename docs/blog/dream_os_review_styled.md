@@ -146,6 +146,7 @@ SSOT & Quality Assurance
 
 <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 2rem; border-radius: 10px; color: white; margin: 2rem 0;">
 <h3 style="color: white; margin-top: 0;">✨ How I Built Dream.os</h3>
+<p style="color: white; margin: 0;">Building sophisticated systems requires balance between structure and intuition.</p>
 </div>
 
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0;">
@@ -216,19 +217,19 @@ SSOT & Quality Assurance
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
 <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 1.5rem; border-radius: 10px; color: white;">
 <h4 style="color: white; margin-top: 0;">🎨 Constraints Enable Creativity</h4>
-<p>The V2 compliance standards (LOC limits, complexity limits) force better design. Instead of limiting creativity, they channel it into better solutions.</p>
+<p style="color: white;">The V2 compliance standards (LOC limits, complexity limits) force better design. Instead of limiting creativity, they channel it into better solutions.</p>
 </div>
 <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 1.5rem; border-radius: 10px; color: white;">
 <h4 style="color: white; margin-top: 0;">🔲 Domain Separation is Critical</h4>
-<p>Clear boundaries between domains prevent chaos. Each agent knowing its role makes the system manageable.</p>
+<p style="color: white;">Clear boundaries between domains prevent chaos. Each agent knowing its role makes the system manageable.</p>
 </div>
 <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 1.5rem; border-radius: 10px; color: white;">
 <h4 style="color: white; margin-top: 0;">⚙️ Automation is Essential</h4>
-<p>I've automated repetitive tasks (deployment, testing, monitoring) so I can focus on solving interesting problems.</p>
+<p style="color: white;">I've automated repetitive tasks (deployment, testing, monitoring) so I can focus on solving interesting problems.</p>
 </div>
 <div style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); padding: 1.5rem; border-radius: 10px; color: white;">
 <h4 style="color: white; margin-top: 0;">🧪 TDD Works for Infrastructure Too</h4>
-<p>Using TDD to fix CI/CD pipelines showed me that test-driven development isn't just for application code—it works for infrastructure and tooling too.</p>
+<p style="color: white;">Using TDD to fix CI/CD pipelines showed me that test-driven development isn't just for application code—it works for infrastructure and tooling too.</p>
 </div>
 </div>
 
@@ -283,12 +284,12 @@ SSOT & Quality Assurance
 ## 🌟 The Dream.os Philosophy
 
 <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 2rem; border-radius: 10px; color: white; margin: 2rem 0;">
-<p style="font-size: 1.2em; margin-bottom: 1rem;">Dream.os isn't just a project—it's a demonstration of what's possible when you combine:</p>
-<ul style="font-size: 1.1em;">
-<li>💭 <strong>Intuition and structure</strong>: Trusting your instincts while following best practices</li>
-<li>🗺️ <strong>Planning and iteration</strong>: Knowing where you're going while adapting along the way</li>
-<li>📏 <strong>Standards and pragmatism</strong>: Following best practices when they make sense</li>
-<li>✅ <strong>Testing and validation</strong>: Using TDD to ensure quality</li>
+<p style="font-size: 1.2em; margin-bottom: 1rem; color: white;">Dream.os isn't just a project—it's a demonstration of what's possible when you combine:</p>
+<ul style="font-size: 1.1em; color: white;">
+<li style="color: white;">💭 <strong>Intuition and structure</strong>: Trusting your instincts while following best practices</li>
+<li style="color: white;">🗺️ <strong>Planning and iteration</strong>: Knowing where you're going while adapting along the way</li>
+<li style="color: white;">📏 <strong>Standards and pragmatism</strong>: Following best practices when they make sense</li>
+<li style="color: white;">✅ <strong>Testing and validation</strong>: Using TDD to ensure quality</li>
 </ul>
 </div>
 
@@ -318,11 +319,11 @@ The project shows that <strong style="color: #667eea;">great code isn't just abo
 ### 🎁 The Takeaway
 
 <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 2rem; border-radius: 10px; color: white; margin: 2rem 0;">
-<p style="font-size: 1.15em; line-height: 1.8;">
-Dream.os proves that you can build <strong>sophisticated, professional systems</strong> while maintaining the joy and flow of development. It's possible to have both structure and flexibility, planning and iteration, standards and pragmatism.
+<p style="font-size: 1.15em; line-height: 1.8; color: white;">
+Dream.os proves that you can build <strong style="color: white;">sophisticated, professional systems</strong> while maintaining the joy and flow of development. It's possible to have both structure and flexibility, planning and iteration, standards and pragmatism.
 </p>
-<p style="font-size: 1.1em; margin-top: 1rem;">
-The project is <strong>open source</strong> and available on GitHub, representing not just code, but a philosophy of development that balances intuition with professionalism.
+<p style="font-size: 1.1em; margin-top: 1rem; color: white;">
+The project is <strong style="color: white;">open source</strong> and available on GitHub, representing not just code, but a philosophy of development that balances intuition with professionalism.
 </p>
 </div>
 
