@@ -36,9 +36,32 @@ def setup_discord_mocks():
     # Force mock setup - always replace with mocks for testing
     # Create a proper Cog class that can be inherited from
     class MockCog:
-        """Mock Cog class for testing."""
+        """Mock Cog class for testing that properly supports inheritance."""
         def __init__(self, *args, **kwargs):
-            pass
+            """Initialize mock Cog - store args/kwargs if needed."""
+            # Store any attributes that might be set
+            self._args = args
+            self._kwargs = kwargs
+            # Allow attributes to be set dynamically
+            for key, value in kwargs.items():
+                if not key.startswith('_'):
+                    setattr(self, key, value)
+        
+        def __getattr__(self, name):
+            """Prevent StopIteration on attribute access."""
+            # Return a MagicMock for undefined attributes
+            mock_attr = MagicMock()
+            setattr(self, name, mock_attr)
+            return mock_attr
+        
+        def __iter__(self):
+            """Prevent StopIteration in iteration contexts."""
+            # Return empty iterator
+            return iter([])
+        
+        def __contains__(self, item):
+            """Prevent StopIteration in 'in' checks."""
+            return False
     
     mock_discord = MagicMock()
     mock_discord.Client = MagicMock()
@@ -65,8 +88,17 @@ def setup_discord_mocks():
     
     mock_commands = MagicMock()
     mock_commands.Bot = MagicMock()
-    mock_commands.Cog = MockCog
+    mock_commands.Cog = MockCog  # Use proper MockCog class
     mock_commands.Context = MagicMock()
+    
+    # Make commands.command a no-op decorator (for tests)
+    def noop_command(*args, **kwargs):
+        """No-op command decorator for tests."""
+        def decorator(func):
+            return func
+        return decorator
+    mock_commands.command = noop_command
+    
     sys.modules['discord.ext.commands'] = mock_commands
 
 
