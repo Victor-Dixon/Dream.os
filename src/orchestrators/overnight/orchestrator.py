@@ -419,9 +419,17 @@ Execute this task autonomously. Report completion or issues.
         self.logger.info(f"Creating workflow for cycle {self.current_cycle}")
 
     async def _get_active_agents(self) -> List[str]:
-        """Get list of active agents."""
-        # Default agent list - would integrate with agent registry
-        return [f"Agent-{i}" for i in range(1, 9)]
+        """Get list of active agents (mode-aware)."""
+        # Use agent mode manager to get active agents for current mode
+        try:
+            from src.core.agent_mode_manager import get_active_agents
+            active = get_active_agents()
+            self.logger.info(f"Mode-aware: Active agents ({len(active)}): {', '.join(active)}")
+            return active
+        except Exception as e:
+            self.logger.warning(f"Failed to load mode-aware agents, using fallback: {e}")
+            # Fallback to 4-agent mode
+            return ["Agent-1", "Agent-2", "Agent-3", "Agent-4"]
 
     async def _check_recovery(self) -> None:
         """Check if recovery actions are needed."""

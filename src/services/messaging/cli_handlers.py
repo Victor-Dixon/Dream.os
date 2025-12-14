@@ -131,16 +131,23 @@ def handle_coordinates() -> int:
 
 
 def handle_start_agents(args) -> int:
-    """Handle starting agents via onboarding coordinates."""
+    """Handle starting agents via onboarding coordinates (mode-aware)."""
     try:
+        from src.core.agent_mode_manager import get_active_agents, is_agent_active
+        
         agent_numbers = args.start
         message = args.message if hasattr(
             args, "message") and args.message else "START"
+        
+        # Get active agents for current mode
+        active_agents = get_active_agents()
+        print(f"📋 Mode-aware: Active agents: {', '.join(active_agents)}")
 
         for num in agent_numbers:
             agent_id = f"Agent-{num}"
-            if agent_id not in SWARM_AGENTS:
-                print(f"⚠️  Invalid agent: {agent_id}")
+            # Check if agent is active in current mode
+            if not is_agent_active(agent_id):
+                print(f"⚠️  Agent {agent_id} is not active in current mode (skipping)")
                 continue
 
             if send_message_to_onboarding_coords(agent_id, message):

@@ -86,6 +86,23 @@ Every task you work on must follow this sequence:
 
 ---
 
+## 🤖 **AGENT MODE SYSTEM**
+
+**IMPORTANT:** The system operates in different agent modes (4-agent, 5-agent, 6-agent, 8-agent). Your agent may be active or paused depending on the current mode:
+
+- **4-agent mode**: Agent-1, Agent-2, Agent-3, Agent-4 (single monitor)
+- **5-agent mode**: Adds Agent-5 (single monitor)
+- **6-agent mode**: Adds Agent-6 (dual monitor)
+- **8-agent mode**: All agents active (dual monitor)
+
+**Mode Switching:**
+- Mode changes are managed by Captain (Agent-4)
+- If you are paused, you'll receive a notification
+- Resume directives will only be sent to active agents in the current mode
+- Use `python tools/switch_agent_mode.py --list` to check current mode
+
+---
+
 ## ⏰ **TIME CHECKING SYSTEM - MANDATORY FOR ACCURATE TIMESTAMPS**
 
 **🚨 CRITICAL**: Always use the swarm time checking system to get accurate timestamps. File metadata can show incorrect creation dates, breaking chronological history.

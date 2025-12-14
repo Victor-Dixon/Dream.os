@@ -2,14 +2,21 @@
 """
 Send Resume Directives to All Agents
 Forces status updates and reactivates all agents
+
+Mode-aware: Uses current agent mode to determine which agents to resume.
 """
 
 from pathlib import Path
 from datetime import datetime
 import uuid
+import sys
 
-AGENTS = ["Agent-1", "Agent-2", "Agent-3", "Agent-5", "Agent-6", "Agent-7", "Agent-8"]
+# Add project root to path for imports
 WORKSPACE_ROOT = Path(__file__).parent.parent
+sys.path.insert(0, str(WORKSPACE_ROOT))
+
+# Mode-aware: Get active agents from agent mode manager
+from src.core.agent_mode_manager import get_active_agents
 
 RESUME_TEMPLATE = """# 🚨 CAPTAIN MESSAGE - RESUME DIRECTIVE
 
@@ -90,14 +97,18 @@ def send_resume_directive(agent_id: str) -> bool:
         return False
 
 def main():
-    """Send resume directives to all agents."""
+    """Send resume directives to all active agents (mode-aware)."""
+    # Get active agents from current agent mode
+    active_agents = get_active_agents()
+    
     print("=" * 60)
-    print("🚨 CAPTAIN RESUME DIRECTIVE DEPLOYMENT")
+    print("🚨 CAPTAIN RESUME DIRECTIVE DEPLOYMENT (MODE-AWARE)")
     print("=" * 60)
+    print(f"Current Mode: Active agents ({len(active_agents)}): {', '.join(active_agents)}")
     print()
     
     results = {}
-    for agent_id in AGENTS:
+    for agent_id in active_agents:
         results[agent_id] = send_resume_directive(agent_id)
     
     print()
