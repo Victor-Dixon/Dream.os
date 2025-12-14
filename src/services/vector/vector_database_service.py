@@ -31,6 +31,12 @@ except ImportError:
 from src.core.base.base_service import BaseService
 from src.core.unified_logging_system import get_logger
 from src.services.models.vector_models import VectorDocument
+from src.services.vector.vector_database_chromadb_helpers import (
+    metadata_matches,
+    metadata_to_document,
+    sort_documents,
+    to_csv,
+)
 from src.services.vector.vector_database_helpers import (
     DEFAULT_COLLECTION,
     VectorOperationResult,
@@ -98,7 +104,7 @@ class VectorDatabaseService(BaseService):
         if self._client:
             documents = self._get_collection_documents(request.collection, request.filters or {})
             body = (
-                self._to_csv(documents)
+                to_csv(documents)
                 if request.format.lower() == "csv"
                 else json.dumps(documents, indent=2)
             )
@@ -212,7 +218,7 @@ class VectorDatabaseService(BaseService):
         distances = results.get("distances", [[]])[0]
 
         for doc_id, content, metadata, distance in zip(ids, documents, metadatas, distances):
-            document = self._metadata_to_document(doc_id, content, metadata)
+            document = metadata_to_document(doc_id, content, metadata)
             relevance = 1.0 - distance if distance is not None else 0.0
             mapped_results.append(
                 SearchResult(
@@ -235,7 +241,7 @@ class VectorDatabaseService(BaseService):
     def _fetch_documents(self, request: PaginationRequest) -> dict[str, Any]:
         """Fetch paginated documents."""
         documents = self._get_collection_documents(request.collection, request.filters or {})
-        documents = self._sort_documents(documents, request.sort_by, request.sort_order)
+        documents = sort_documents(documents, request.sort_by, request.sort_order)
 
         total = len(documents)
         start = max((request.page - 1) * request.per_page, 0)
@@ -268,10 +274,10 @@ class VectorDatabaseService(BaseService):
         mapped_docs: list[dict[str, Any]] = []
         for doc_id, content, metadata in zip(ids, documents, metadatas):
             metadata = metadata or {}
-            if filters and not self._metadata_matches(metadata, filters):
+            if filters and not metadata_matches(metadata, filters):
                 continue
 
-            document = self._metadata_to_document(doc_id, content, metadata)
+            document = metadata_to_document(doc_id, content, metadata)
             mapped_docs.append(document.__dict__)
 
         return mapped_docs
@@ -298,64 +304,6 @@ class VectorDatabaseService(BaseService):
             )
         return collections
 
-    @staticmethod
-    def _metadata_matches(metadata: dict[str, Any], filters: dict[str, Any]) -> bool:
-        """Check if metadata matches filters."""
-        for key, expected in filters.items():
-            if metadata.get(key) != expected:
-                return False
-        return True
-
-    @staticmethod
-    def _metadata_to_document(
-        doc_id: str, content: str | None, metadata: dict[str, Any]
-    ) -> Document:
-        """Convert metadata to Document."""
-        content_value = content or metadata.get("content", "")
-        title = metadata.get("title", doc_id)
-        collection_name = metadata.get("collection", metadata.get("category", DEFAULT_COLLECTION))
-        return Document(
-            id=doc_id,
-            title=title,
-            content=content_value,
-            collection=collection_name,
-            tags=metadata.get("tags", []),
-            size=metadata.get("size", f"{len(content_value) / 1024:.1f} KB"),
-            created_at=metadata.get("created_at", metadata.get("timestamp", "")),
-            updated_at=metadata.get("updated_at", metadata.get("last_updated", "")),
-            metadata=metadata,
-        )
-
-    @staticmethod
-    def _sort_documents(
-        documents: list[dict[str, Any]], sort_by: str, sort_order: str
-    ) -> list[dict[str, Any]]:
-        """Sort documents by field."""
-        reverse = sort_order.lower() == "desc"
-        try:
-            return sorted(documents, key=lambda doc: doc.get(sort_by, ""), reverse=reverse)
-        except Exception:
-            return documents
-
-    @staticmethod
-    def _to_csv(documents: list[dict[str, Any]]) -> str:
-        """Convert documents to CSV format."""
-        if not documents:
-            return ""
-        headers = set()
-        for doc in documents:
-            headers.update(doc.keys())
-        ordered_headers = sorted(headers)
-        lines = [",".join(ordered_headers)]
-        for doc in documents:
-            row = []
-            for header in ordered_headers:
-                value = doc.get(header, "")
-                if isinstance(value, (dict, list)):
-                    value = json.dumps(value)
-                row.append(str(value).replace("\n", " ").replace(",", ";"))
-            lines.append(",".join(row))
-        return "\n".join(lines)
 
 
 def get_vector_database_service() -> VectorDatabaseService:
