@@ -239,7 +239,7 @@ class DiscordService:
     def send_agent_status_notification(self, agent_status: dict[str, Any]) -> bool:
         """Send agent status notification to Discord."""
         if not self.webhook_url:
-            get_logger().warning("❌ Discord webhook URL not set")
+            logger.warning("❌ Discord webhook URL not set")
             return False
 
         try:
