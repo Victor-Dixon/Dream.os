@@ -5,11 +5,15 @@ Mock Coordinate Loader for Testing
 <!-- SSOT Domain: integration -->
 
 Provides mock coordinate loading functionality for smoke testing.
+Mode-aware: Filters coordinates by active agents in current mode.
 """
 
 import json
+import logging
 from pathlib import Path
 from typing import Any
+
+logger = logging.getLogger(__name__)
 
 
 def _load_coordinates() -> dict[str, dict[str, Any]]:
@@ -17,11 +21,32 @@ def _load_coordinates() -> dict[str, dict[str, Any]]:
     
     CRITICAL: chat_input_coordinates goes to "coords", onboarding_input_coords goes to "onboarding_coords".
     These must NEVER be swapped.
+    
+    Mode-aware: Only loads coordinates for agents active in current mode.
     """
+    import logging
+    logger = logging.getLogger(__name__)
+    
     coord_file = Path("cursor_agent_coords.json")
     data = json.loads(coord_file.read_text(encoding="utf-8"))
+    
+    # Get active agents from mode manager
+    try:
+        from .agent_mode_manager import get_mode_manager
+        mode_manager = get_mode_manager()
+        active_agents = set(mode_manager.get_active_agents())
+        current_mode = mode_manager.get_current_mode()
+        logger.debug(f"📍 Loading coordinates for mode: {current_mode} ({len(active_agents)} agents)")
+    except Exception as e:
+        logger.warning(f"⚠️ Could not load mode manager, loading all agents: {e}")
+        active_agents = None  # Load all if mode manager unavailable
+    
     agents: dict[str, dict[str, Any]] = {}
     for agent_id, info in data.get("agents", {}).items():
+        # Filter by active agents if mode manager is available
+        if active_agents is not None and agent_id not in active_agents:
+            logger.debug(f"⏭️  Skipping {agent_id} (not active in current mode)")
+            continue
         # CRITICAL: chat_input_coordinates is the PRIMARY chat input field
         chat = info.get("chat_input_coordinates", [0, 0])
         # onboarding_input_coords is ONLY for onboarding messages

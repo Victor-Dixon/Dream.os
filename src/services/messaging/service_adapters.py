@@ -67,99 +67,22 @@ class ConsolidatedMessagingService(BaseService):
         message_category: MessageCategory | None = None,
         sender: str | None = None,
     ) -> dict[str, Any]:
-        """
-        Send message to agent via message queue (synchronized delivery).
-
-        Delegates to discord_message_handler for V2 compliance.
-
-        Args:
-            agent: Target agent ID (e.g., "Agent-1")
-            message: Message content
-            priority: Message priority ("regular" or "urgent")
-            use_pyautogui: Whether to use PyAutoGUI delivery (default: True)
-            wait_for_delivery: Wait for message to be delivered before returning
-            timeout: Maximum time to wait for delivery in seconds
-            discord_user_id: Discord user ID for username resolution (optional)
-            stalled: Whether to use stalled delivery mode
-            apply_template: Apply SSOT messaging template before sending
-            message_category: Explicit template category (defaults to D2A when templating)
-            sender: Override sender name when templating (Discord user display name)
-
-        Returns:
-            Dictionary with success status and queue ID, or blocked status with error message
-        """
+        """Send message to agent via message queue (synchronized delivery)."""
         return _send_discord_message_to_agent(
-            agent=agent,
-            message=message,
-            priority=priority,
-            use_pyautogui=use_pyautogui,
-            wait_for_delivery=wait_for_delivery,
-            timeout=timeout,
-            discord_user_id=discord_user_id,
-            stalled=stalled,
-            apply_template=apply_template,
-            message_category=message_category,
-            sender=sender,
-            queue=self.queue,
-            messaging_cli_path=self.messaging_cli,
+            agent=agent, message=message, priority=priority,
+            use_pyautogui=use_pyautogui, wait_for_delivery=wait_for_delivery,
+            timeout=timeout, discord_user_id=discord_user_id, stalled=stalled,
+            apply_template=apply_template, message_category=message_category,
+            sender=sender, queue=self.queue, messaging_cli_path=self.messaging_cli,
             project_root=self.project_root,
             resolve_discord_sender_func=self._resolve_discord_sender,
             get_discord_username_func=self._get_discord_username,
         )
 
     def broadcast_message(self, message: str, priority: str = "regular") -> dict[str, Any]:
-        """
-        Broadcast message to all agents.
-
-        CRITICAL: Wraps entire operation in keyboard lock to prevent conflicts.
-        All 8 messages must complete before other operations can proceed.
-
-        Args:
-            message: Message content
-            priority: Message priority
-
-        Returns:
-            Dictionary with success status
-        """
-        from ..core.keyboard_control_lock import keyboard_control
-
-        # Get list of all agents (SSOT)
-        from src.core.constants.agent_constants import AGENT_LIST
-        agents = AGENT_LIST
-
-        # CRITICAL: Wrap entire broadcast in keyboard lock
-        with keyboard_control("broadcast_operation"):
-            results = []
-            for agent in agents:
-                # CRITICAL: Wait for each message to be delivered before sending next
-                result = self.send_message(
-                    agent,
-                    message,
-                    priority,
-                    use_pyautogui=True,
-                    wait_for_delivery=True,  # Block until delivered
-                    timeout=TimeoutConstants.HTTP_DEFAULT  # 30 second timeout per message
-                )
-                results.append(result)
-
-                # Small delay between agents for stability
-                time.sleep(0.5)
-
-            success_count = sum(1 for r in results if r.get("success"))
-            delivered_count = sum(
-                1 for r in results if r.get("delivered", False))
-
-            logger.info(
-                f"✅ Broadcast complete: {success_count}/{len(agents)} queued, "
-                f"{delivered_count}/{len(agents)} delivered "
-                f"(locked during entire operation to prevent conflicts)"
-            )
-
-            return {
-                "success": success_count > 0,
-                "message": f"Broadcast to {success_count}/{len(agents)} agents ({delivered_count} delivered)",
-                "results": results,
-            }
+        """Broadcast message to all agents with keyboard lock."""
+        from .service_adapter_helpers import execute_broadcast_operation
+        return execute_broadcast_operation(self.send_message, message, priority)
 
     def _resolve_discord_sender(self, discord_user_id: str | None) -> str:
         """Resolve Discord user ID to sender name."""

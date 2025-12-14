@@ -1,0 +1,64 @@
+================================================================================
+V2 FUNCTION/CLASS LIMIT VERIFICATION REPORT
+================================================================================
+
+Function Limit: 30 lines
+Class Limit: 200 lines
+
+Γ¥î FUNCTION OFFENDERS (12):
+--------------------------------------------------------------------------------
+  agent_message_handler.py:37
+    Function: send_to_agent
+    Lines: 140 (limit: 30, excess: 110)
+
+  broadcast_handler.py:33
+    Function: broadcast_to_all
+    Lines: 104 (limit: 30, excess: 74)
+
+  cli_handlers.py:35
+    Function: handle_cycle_v2_message
+    Lines: 72 (limit: 30, excess: 42)
+
+  cli_handlers.py:126
+    Function: handle_message
+    Lines: 52 (limit: 30, excess: 22)
+
+  cli_parser.py:37
+    Function: create_messaging_parser
+    Lines: 157 (limit: 30, excess: 127)
+
+  discord_message_handler.py:35
+    Function: send_discord_message_to_agent
+    Lines: 98 (limit: 30, excess: 68)
+
+  message_formatters.py:81
+    Function: _apply_template
+    Lines: 104 (limit: 30, excess: 74)
+
+  message_formatters.py:206
+    Function: _format_multi_agent_request_message
+    Lines: 37 (limit: 30, excess: 7)
+
+  message_formatters.py:308
+    Function: _format_normal_message_with_instructions
+    Lines: 56 (limit: 30, excess: 26)
+
+  multi_agent_request_handler.py:31
+    Function: send_multi_agent_request
+    Lines: 77 (limit: 30, excess: 47)
+
+  service_adapters.py:56
+    Function: send_message
+    Lines: 50 (limit: 30, excess: 20)
+
+  service_adapters.py:110
+    Function: broadcast_message
+    Lines: 40 (limit: 30, excess: 10)
+
+Γ£à No class limit violations found
+
+================================================================================
+Γ¥î V2 COMPLIANCE: FAIL - 12 violations found
+   Functions: 12
+   Classes: 0
+================================================================================

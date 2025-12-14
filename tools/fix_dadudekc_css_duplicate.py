@@ -53,7 +53,8 @@ session.auth = HTTPBasicAuth(username, app_password)
 print("🔍 Fetching posts from dadudekc.com...\n")
 
 # Fetch posts
-response = session.get(f"{api_url}/posts", params={"per_page": 100}, timeout=TimeoutConstants.HTTP_DEFAULT)
+response = session.get(
+    f"{api_url}/posts", params={"per_page": 100}, timeout=TimeoutConstants.HTTP_DEFAULT)
 if response.status_code != 200:
     print(f"❌ Failed to fetch posts: HTTP {response.status_code}")
     sys.exit(1)
@@ -69,26 +70,26 @@ for post in posts:
     post_id = post.get('id')
     title = post.get('title', {}).get('rendered', '')
     content = post.get('content', {}).get('rendered', '')
-    
+
     soup = BeautifulSoup(content, 'html.parser')
     style_tags = soup.find_all('style')
-    
+
     if style_tags:
         # Extract CSS
         post_css = '\n'.join([tag.get_text() for tag in style_tags])
-        
+
         if not css_content:
             css_content = post_css
             print(f"📝 Extracted CSS from post ID {post_id}: '{title}'")
             print(f"   CSS length: {len(css_content)} chars\n")
-        
+
         # Remove style tags
         for tag in style_tags:
             tag.decompose()
-        
+
         # Get clean content
         clean_content = str(soup)
-        
+
         posts_to_fix.append({
             'id': post_id,
             'title': title,
@@ -96,7 +97,7 @@ for post in posts:
             'clean_content': clean_content,
             'has_css': len(style_tags) > 0
         })
-        
+
         print(f"✅ Prepared fix for post ID {post_id}: '{title}'")
 
 if not css_content:
@@ -116,24 +117,25 @@ print("\n🔧 Removing embedded CSS from posts...\n")
 for post_info in posts_to_fix:
     if not post_info['has_css']:
         continue
-    
+
     update_url = f"{api_url}/posts/{post_info['id']}"
-    
+
     update_data = {
         "content": post_info['clean_content']
     }
-    
+
     try:
         update_response = session.post(
             update_url,
             json=update_data,
             timeout=TimeoutConstants.HTTP_DEFAULT
         )
-        
+
         if update_response.status_code in (200, 201):
             print(f"✅ Post ID {post_info['id']}: Removed embedded CSS")
         else:
-            print(f"❌ Post ID {post_info['id']}: Failed - HTTP {update_response.status_code}")
+            print(
+                f"❌ Post ID {post_info['id']}: Failed - HTTP {update_response.status_code}")
             print(f"   Error: {update_response.text[:200]}")
     except Exception as e:
         print(f"❌ Post ID {post_info['id']}: Error - {e}")

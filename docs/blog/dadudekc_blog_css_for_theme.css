@@ -27,9 +27,9 @@
 }
 
 /* Main content area - Optimal reading width */
-article, 
-.post-content, 
-.entry-content, 
+article,
+.post-content,
+.entry-content,
 .content,
 .single-post article,
 .blog article {
@@ -41,20 +41,22 @@ article,
 }
 
 /* Typography improvements - Readable base size with dark theme */
-article p, 
-.post-content p, 
+article p,
+.post-content p,
 .entry-content p,
 .single-post p,
 .blog p {
-    font-size: 17px !important; /* 1.0625em - improved from 18px */
-    line-height: 1.8 !important; /* Better line spacing */
+    font-size: 17px !important;
+    /* 1.0625em - improved from 18px */
+    line-height: 1.8 !important;
+    /* Better line spacing */
     margin-bottom: 1.5em !important;
     color: var(--blog-text-primary) !important;
     font-weight: 400 !important;
 }
 
 /* Headings - Proper hierarchy with dark theme */
-article h1, 
+article h1,
 .post-content h1,
 .single-post h1 {
     font-size: 2.5em !important;
@@ -65,29 +67,31 @@ article h1,
     font-weight: 700 !important;
 }
 
-article h2, 
+article h2,
 .post-content h2,
 .single-post h2 {
     font-size: 2em !important;
     line-height: 1.3 !important;
     margin-top: 1.5em !important;
     margin-bottom: 0.5em !important;
-    color: var(--blog-accent-blue) !important; /* Blue accent for visibility */
+    color: var(--blog-accent-blue) !important;
+    /* Blue accent for visibility */
     font-weight: 600 !important;
 }
 
-article h3, 
+article h3,
 .post-content h3,
 .single-post h3 {
     font-size: 1.5em !important;
     line-height: 1.4 !important;
     margin-top: 1.25em !important;
     margin-bottom: 0.5em !important;
-    color: var(--blog-text-primary) !important; /* White for hierarchy */
+    color: var(--blog-text-primary) !important;
+    /* White for hierarchy */
     font-weight: 600 !important;
 }
 
-article h4, 
+article h4,
 .post-content h4,
 .single-post h4 {
     font-size: 1.25em !important;
@@ -99,7 +103,7 @@ article h4,
 }
 
 /* Links - Clear and accessible with hover effects */
-article a, 
+article a,
 .post-content a,
 .single-post a {
     color: var(--blog-link-color) !important;
@@ -107,7 +111,7 @@ article a,
     transition: color 0.2s ease !important;
 }
 
-article a:hover, 
+article a:hover,
 .post-content a:hover,
 .single-post a:hover {
     color: var(--blog-link-hover) !important;
@@ -115,9 +119,9 @@ article a:hover,
 }
 
 /* Lists - Proper spacing */
-article ul, 
-article ol, 
-.post-content ul, 
+article ul,
+article ol,
+.post-content ul,
 .post-content ol,
 .single-post ul,
 .single-post ol {
@@ -135,7 +139,7 @@ article li,
 }
 
 /* Code blocks - Dark theme with syntax highlighting colors */
-article pre, 
+article pre,
 .post-content pre,
 .single-post pre {
     background: var(--blog-code-bg) !important;
@@ -161,7 +165,7 @@ article code,
 }
 
 /* Images - Responsive and properly spaced */
-article img, 
+article img,
 .post-content img,
 .single-post img {
     max-width: 100% !important;
@@ -219,7 +223,8 @@ article table td,
 }
 
 /* Gradient header/footer support */
-.header, .footer {
+.header,
+.footer {
     background: linear-gradient(135deg, var(--blog-bg-secondary) 0%, var(--blog-code-bg) 100%) !important;
 }
 
@@ -232,9 +237,10 @@ article,
 
 /* Mobile responsiveness */
 @media (max-width: 768px) {
-    article, 
-    .post-content, 
-    .entry-content, 
+
+    article,
+    .post-content,
+    .entry-content,
     .content {
         padding: 1rem !important;
     }
@@ -242,7 +248,8 @@ article,
     article p,
     .post-content p,
     .entry-content p {
-        font-size: 16px !important; /* Slightly smaller on mobile */
+        font-size: 16px !important;
+        /* Slightly smaller on mobile */
         line-height: 1.7 !important;
     }
 
@@ -255,7 +262,7 @@ article,
     .post-content h2 {
         font-size: 1.75em !important;
     }
-    
+
     article ul,
     article ol {
         margin-left: 1.5em !important;
