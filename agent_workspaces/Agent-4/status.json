@@ -107,7 +107,7 @@
     "✅ COMPLETE: Monitor status check + stall recovery - Found 4 idle agents (>2h): Agent-5 (9.8h), Agent-6 (14.9h), Agent-7 (12.4h), Agent-8 (7.6h). Monitoring system NOT running. Sent stall recovery messages to all 4 idle agents. Created diagnostic script. Root cause: Monitoring system needs to be running continuously to auto-detect stalls.",
     "✅ FIXED: Monitoring system import error - Created ProgressMonitor class wrapper in monitor.py. ProgressMonitor now properly wraps MonitorState and provides async interface. Import errors resolved. Monitoring system ready to start.",
     "✅ COMPLETE: Grouped task assignment strategy implemented - Assigned 3 contextually related tasks per agent (24 tasks total across 8 agents). Tasks grouped by similar work type and viable next steps for efficient execution. Strategy: Group similar tasks (like viable next steps) contextually for maximum efficiency.",
-    "⚠️ CORRECTED: Resent grouped task assignments via PyAutoGUI - Initial assignment used inbox utility (file creation only). Corrected to use messaging CLI with --pyautogui flag for actual delivery to agent chat windows. All 8 agents received messages via PyAutoGUI."
+    "✅ CORRECTED: Resent grouped task assignments via message queue (PyAutoGUI) - Initial assignment used inbox utility (file creation only). Fixed ConsolidatedMessagingService.__init__() missing service_name. Resent all 8 messages via message queue with PyAutoGUI enabled. All 8 messages successfully queued (Queue IDs assigned). Queue processor will deliver to agent chat windows."
   ],
   "completed_tasks": [
     "Comprehensive system assessment complete",
