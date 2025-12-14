@@ -62,15 +62,18 @@ class TheaBrowserOperations:
 
     def refresh(self) -> bool:
         """Refresh current page."""
-        return self._safe_driver_call(lambda: self.driver.refresh(), False)
+        result = self._safe_driver_call(lambda: self.driver.refresh(), False)
+        return result is not False
 
     def back(self) -> bool:
         """Navigate back."""
-        return self._safe_driver_call(lambda: self.driver.back(), False)
+        result = self._safe_driver_call(lambda: self.driver.back(), False)
+        return result is not False
 
     def forward(self) -> bool:
         """Navigate forward."""
-        return self._safe_driver_call(lambda: self.driver.forward(), False)
+        result = self._safe_driver_call(lambda: self.driver.forward(), False)
+        return result is not False
 
     def get_current_url(self) -> str | None:
         """Get current URL."""
