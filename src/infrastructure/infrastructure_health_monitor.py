@@ -338,13 +338,13 @@ class InfrastructureHealthMonitor:
         print()
 
         print("📊 METRICS:")
-        print(".1f")
-        print(".1f")
-        print(".1f")
-        print(".1f")
-        print(".1f")
-        print(f"Browser Ready: {'✅ Yes' if result.metrics.browser_ready else '❌ No'}")
-        print(f"Automation Ready: {'✅ Yes' if result.metrics.automation_ready else '❌ No'}")
+        print(f"  Disk Usage: {result.metrics.disk_usage_percent:.1f}% ({result.metrics.disk_free_gb:.1f} GB free / {result.metrics.disk_total_gb:.1f} GB total)")
+        print(f"  Memory Usage: {result.metrics.memory_usage_percent:.1f}% ({result.metrics.memory_free_gb:.1f} GB free)")
+        print(f"  CPU Usage: {result.metrics.cpu_usage_percent:.1f}%")
+        if result.metrics.system_load:
+            print(f"  System Load: {result.metrics.system_load:.2f}")
+        print(f"  Browser Ready: {'✅ Yes' if result.metrics.browser_ready else '❌ No'}")
+        print(f"  Automation Ready: {'✅ Yes' if result.metrics.automation_ready else '❌ No'}")
         print()
 
         if result.recommendations:
