@@ -33,33 +33,41 @@ def setup_discord_mocks():
         
         from src.discord_commander.some_module import SomeClass
     """
-    # Only mock if discord module doesn't exist or is not already imported
-    if 'discord' not in sys.modules or not hasattr(sys.modules.get('discord', None), 'Client'):
-        mock_discord = MagicMock()
-        mock_discord.Client = MagicMock()
-        mock_discord.Embed = MagicMock()
-        mock_discord.ui = MagicMock()
-        mock_discord.ui.View = MagicMock()
-        mock_discord.ui.Modal = MagicMock()
-        mock_discord.ui.Button = MagicMock()
-        mock_discord.ui.Select = MagicMock()
-        mock_discord.Activity = MagicMock()
-        mock_discord.ActivityType = MagicMock()
-        mock_discord.utils = MagicMock()
-        mock_discord.utils.utcnow = MagicMock()
-        mock_discord.Intents = MagicMock()
-        mock_discord.Intents.default = MagicMock(return_value=MagicMock())
-        sys.modules['discord'] = mock_discord
+    # Force mock setup - always replace with mocks for testing
+    # Create a proper Cog class that can be inherited from
+    class MockCog:
+        """Mock Cog class for testing."""
+        def __init__(self, *args, **kwargs):
+            pass
     
-    if 'discord.ext' not in sys.modules:
-        sys.modules['discord.ext'] = MagicMock()
+    mock_discord = MagicMock()
+    mock_discord.Client = MagicMock()
+    mock_discord.Embed = MagicMock()
+    mock_discord.Color = MagicMock()
+    mock_discord.Color.green = MagicMock()
+    mock_discord.Color.red = MagicMock()
+    mock_discord.Color.blue = MagicMock()
+    mock_discord.ui = MagicMock()
+    mock_discord.ui.View = MagicMock()
+    mock_discord.ui.Modal = MagicMock()
+    mock_discord.ui.Button = MagicMock()
+    mock_discord.ui.Select = MagicMock()
+    mock_discord.Activity = MagicMock()
+    mock_discord.ActivityType = MagicMock()
+    mock_discord.utils = MagicMock()
+    mock_discord.utils.utcnow = MagicMock()
+    mock_discord.Intents = MagicMock()
+    mock_discord.Intents.default = MagicMock(return_value=MagicMock())
+    sys.modules['discord'] = mock_discord
     
-    if 'discord.ext.commands' not in sys.modules:
-        mock_commands = MagicMock()
-        mock_commands.Bot = MagicMock()
-        mock_commands.Cog = MagicMock()
-        mock_commands.Context = MagicMock()
-        sys.modules['discord.ext.commands'] = mock_commands
+    mock_ext = MagicMock()
+    sys.modules['discord.ext'] = mock_ext
+    
+    mock_commands = MagicMock()
+    mock_commands.Bot = MagicMock()
+    mock_commands.Cog = MockCog
+    mock_commands.Context = MagicMock()
+    sys.modules['discord.ext.commands'] = mock_commands
 
 
 def create_mock_discord_bot(
@@ -188,7 +196,7 @@ def create_mock_messaging_controller(
     send_agent_message_return: bool = True,
     broadcast_to_swarm_return: bool = True,
     get_agent_status_return: Optional[Dict] = None
-) -> AsyncMock:
+) -> MagicMock:
     """
     Create a mock messaging controller.
     
@@ -200,7 +208,8 @@ def create_mock_messaging_controller(
     Returns:
         Mock messaging controller
     """
-    controller = AsyncMock()
+    # Use MagicMock as base, not AsyncMock, to avoid issues with non-async methods
+    controller = MagicMock()
     controller.send_agent_message = AsyncMock(return_value=send_agent_message_return)
     controller.broadcast_to_swarm = AsyncMock(return_value=broadcast_to_swarm_return)
     controller.create_agent_messaging_view = MagicMock(return_value=MagicMock())
