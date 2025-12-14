@@ -47,7 +47,9 @@ class TestMessagingCommands:
     @pytest.fixture
     def mock_ctx(self):
         """Create mock Discord context."""
-        return create_mock_discord_context(user_display_name="TestUser")
+        ctx = create_mock_discord_context(user_display_name="TestUser")
+        # ctx.send is already AsyncMock from create_mock_discord_context
+        return ctx
 
     @pytest.fixture
     def messaging_commands(self, mock_bot, mock_messaging_controller):
