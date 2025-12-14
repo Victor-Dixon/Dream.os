@@ -1,0 +1,12 @@
+{
+  "level": "warning",
+  "title": "\u26a0\ufe0f WARNING: Disk Space High",
+  "message": "Disk usage at 86.3% - 32.6 GB free",
+  "source": "disk_monitor",
+  "timestamp": "2025-12-14T17:23:35.917369",
+  "metadata": {
+    "usage_percent": 86.3,
+    "free_gb": 32.57,
+    "threshold": 85.0
+  }
+}

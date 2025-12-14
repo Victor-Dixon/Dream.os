@@ -60,7 +60,8 @@ def setup_discord_mocks():
             # __getattr__ is only called when attribute is not found via normal lookup
             # This means the attribute wasn't found in __dict__, so create a mock
             if name.startswith('_'):
-                raise AttributeError(f"'{type(self).__name__}' object has no attribute '{name}'")
+                raise AttributeError(
+                    f"'{type(self).__name__}' object has no attribute '{name}'")
             # Create a mock for undefined attributes
             mock_attr = MagicMock()
             object.__setattr__(self, name, mock_attr)
@@ -77,7 +78,7 @@ def setup_discord_mocks():
 
     mock_discord = MagicMock()
     mock_discord.Client = MagicMock()
-    
+
     # Make Embed work as a class that can be instantiated
     def create_embed(*args, **kwargs):
         """Create a mock Embed instance."""
@@ -90,7 +91,7 @@ def setup_discord_mocks():
         embed.timestamp = kwargs.get('timestamp')
         return embed
     mock_discord.Embed = create_embed
-    
+
     mock_discord.Color = MagicMock()
     mock_discord.Color.green = lambda: MagicMock()
     mock_discord.Color.red = lambda: MagicMock()
@@ -128,7 +129,7 @@ def setup_discord_mocks():
             return func
         return decorator
     mock_commands.command = noop_command
-    
+
     # Make other command decorators no-ops
     def noop_decorator(*args, **kwargs):
         """No-op decorator for command decorators."""
