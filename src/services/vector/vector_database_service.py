@@ -31,11 +31,12 @@ except ImportError:
 from src.core.base.base_service import BaseService
 from src.core.unified_logging_system import get_logger
 from src.services.models.vector_models import VectorDocument
-from src.services.vector.vector_database_chromadb_helpers import (
-    metadata_matches,
-    metadata_to_document,
-    sort_documents,
-    to_csv,
+from src.services.vector.vector_database_chromadb_helpers import to_csv
+from src.services.vector.vector_database_chromadb_operations import (
+    fetch_documents as _fetch_documents_chromadb,
+    get_collection_documents as _get_collection_documents_chromadb,
+    list_chroma_collections as _list_chroma_collections,
+    search_chromadb as _search_chromadb,
 )
 from src.services.vector.vector_database_helpers import (
     DEFAULT_COLLECTION,
@@ -77,7 +78,8 @@ class VectorDatabaseService(BaseService):
     def search(self, request: SearchRequest) -> list[SearchResult]:
         """Search documents."""
         if self._client:
-            return self._search_chromadb(request)
+            collection = self._get_collection(request.collection)
+            return _search_chromadb(collection, request)
         if self._fallback_store:
             return self._fallback_store.search(request)
         raise RuntimeError("Vector database is not available")
@@ -85,8 +87,8 @@ class VectorDatabaseService(BaseService):
     def get_documents(self, request: PaginationRequest) -> dict[str, Any]:
         """Get paginated documents."""
         if self._client:
-            documents = self._fetch_documents(request)
-            return documents
+            collection = self._get_collection(request.collection)
+            return _fetch_documents_chromadb(collection, request, request.filters or {})
         if self._fallback_store:
             return self._fallback_store.get_documents(request)
         raise RuntimeError("Vector database is not available")
@@ -94,7 +96,7 @@ class VectorDatabaseService(BaseService):
     def list_collections(self) -> list[WebCollection]:
         """List all collections."""
         if self._client:
-            return self._list_chroma_collections()
+            return _list_chroma_collections(self._client)
         if self._fallback_store:
             return self._fallback_store.list_collections()
         return []
@@ -102,7 +104,8 @@ class VectorDatabaseService(BaseService):
     def export_collection(self, request: ExportRequest) -> ExportData:
         """Export collection data."""
         if self._client:
-            documents = self._get_collection_documents(request.collection, request.filters or {})
+            collection = self._get_collection(request.collection)
+            documents = _get_collection_documents_chromadb(collection, request.filters or {})
             body = (
                 to_csv(documents)
                 if request.format.lower() == "csv"
@@ -196,113 +199,6 @@ class VectorDatabaseService(BaseService):
             )
         return self._collection_cache[resolved]
 
-    def _search_chromadb(self, request: SearchRequest) -> list[SearchResult]:
-        """Search ChromaDB."""
-        collection = self._get_collection(request.collection)
-        where_filter = request.filters or None
-        try:
-            results = collection.query(
-                query_texts=[request.query],
-                n_results=request.limit,
-                where=where_filter,
-                include=["documents", "metadatas", "distances"],
-            )
-        except Exception as exc:
-            self.logger.error("ChromaDB query failed: %s", exc)
-            return []
-
-        mapped_results: list[SearchResult] = []
-        ids = results.get("ids", [[]])[0]
-        documents = results.get("documents", [[]])[0]
-        metadatas = results.get("metadatas", [[]])[0]
-        distances = results.get("distances", [[]])[0]
-
-        for doc_id, content, metadata, distance in zip(ids, documents, metadatas, distances):
-            document = metadata_to_document(doc_id, content, metadata)
-            relevance = 1.0 - distance if distance is not None else 0.0
-            mapped_results.append(
-                SearchResult(
-                    id=document.id,
-                    title=document.title,
-                    content=document.content,
-                    collection=document.collection,
-                    relevance=relevance,
-                    tags=document.tags,
-                    created_at=document.created_at,
-                    updated_at=document.updated_at,
-                    size=document.size,
-                    metadata=document.metadata,
-                    score=relevance,
-                )
-            )
-
-        return mapped_results
-
-    def _fetch_documents(self, request: PaginationRequest) -> dict[str, Any]:
-        """Fetch paginated documents."""
-        documents = self._get_collection_documents(request.collection, request.filters or {})
-        documents = sort_documents(documents, request.sort_by, request.sort_order)
-
-        total = len(documents)
-        start = max((request.page - 1) * request.per_page, 0)
-        end = start + request.per_page
-        page_docs = documents[start:end]
-
-        return {
-            "documents": page_docs,
-            "pagination": {
-                "page": request.page,
-                "per_page": request.per_page,
-                "total": total,
-                "total_pages": (total + request.per_page - 1) // request.per_page,
-                "has_prev": request.page > 1,
-                "has_next": end < total,
-            },
-            "total": total,
-        }
-
-    def _get_collection_documents(
-        self, collection_name: str, filters: dict[str, Any]
-    ) -> list[dict[str, Any]]:
-        """Get all documents in collection."""
-        collection = self._get_collection(collection_name)
-        records = collection.get(include=["documents", "metadatas"])
-        ids = records.get("ids", [])
-        documents = records.get("documents", [])
-        metadatas = records.get("metadatas", [])
-
-        mapped_docs: list[dict[str, Any]] = []
-        for doc_id, content, metadata in zip(ids, documents, metadatas):
-            metadata = metadata or {}
-            if filters and not metadata_matches(metadata, filters):
-                continue
-
-            document = metadata_to_document(doc_id, content, metadata)
-            mapped_docs.append(document.__dict__)
-
-        return mapped_docs
-
-    def _list_chroma_collections(self) -> list[WebCollection]:
-        """List ChromaDB collections."""
-        collections: list[WebCollection] = []
-        for collection in self._client.list_collections():  # type: ignore[union-attr]
-            try:
-                count = self._client.get_collection(collection.name).count()  # type: ignore[union-attr]
-            except Exception:
-                count = 0
-
-            metadata = getattr(collection, "metadata", {}) or {}
-            collections.append(
-                WebCollection(
-                    id=collection.name,
-                    name=collection.name,
-                    document_count=count,
-                    description=metadata.get("description", ""),
-                    last_updated=metadata.get("last_updated", ""),
-                    metadata=metadata,
-                )
-            )
-        return collections
 
 
 
