@@ -90,19 +90,30 @@ class DocumentationAnalyzer:
         """Find all markdown and text documentation files."""
         docs = []
         
-        # Search docs directory
+        # Search docs directory (limit to avoid huge scans)
         if self.docs_dir.exists():
-            docs.extend(self.docs_dir.rglob("*.md"))
-            docs.extend(self.docs_dir.rglob("*.txt"))
+            try:
+                docs.extend(list(self.docs_dir.rglob("*.md"))[:500])  # Limit to 500
+                docs.extend(list(self.docs_dir.rglob("*.txt"))[:200])  # Limit to 200
+            except Exception as e:
+                print(f"⚠️  Error scanning docs directory: {e}")
         
-        # Search agent workspaces (excluding inbox/archive)
+        # Search agent workspaces (excluding inbox/archive) - limit scope
         if self.agent_workspaces.exists():
-            for agent_dir in self.agent_workspaces.iterdir():
-                if agent_dir.is_dir():
-                    # Skip inbox and archive directories
-                    for doc_file in agent_dir.rglob("*.md"):
-                        if "inbox" not in str(doc_file) and "archive" not in str(doc_file):
-                            docs.append(doc_file)
+            try:
+                for agent_dir in self.agent_workspaces.iterdir():
+                    if agent_dir.is_dir() and agent_dir.name.startswith("Agent-"):
+                        # Only scan top-level files, not deep recursion
+                        for doc_file in agent_dir.glob("*.md"):
+                            if "inbox" not in str(doc_file) and "archive" not in str(doc_file):
+                                docs.append(doc_file)
+                        # Also check one level deep
+                        for subdir in agent_dir.iterdir():
+                            if subdir.is_dir() and subdir.name not in ["inbox", "archive"]:
+                                for doc_file in subdir.glob("*.md"):
+                                    docs.append(doc_file)
+            except Exception as e:
+                print(f"⚠️  Error scanning agent workspaces: {e}")
         
         return docs
     
@@ -163,29 +174,37 @@ class DocumentationAnalyzer:
         Returns: (is_referenced, reference_locations)
         """
         filename = file_path.name
+        stem = file_path.stem
         references = []
         
-        # Search in Python files
-        for py_file in self.project_root.rglob("*.py"):
-            if py_file == file_path:
-                continue
-            try:
-                content = py_file.read_text(encoding='utf-8', errors='ignore')
-                if filename in content:
-                    references.append(str(py_file.relative_to(self.project_root)))
-            except Exception:
-                continue
+        # Quick check: search in key files only (README, main docs)
+        key_files = [
+            self.project_root / "README.md",
+            self.project_root / "docs" / "DOCUMENTATION_INDEX.md",
+        ]
         
-        # Search in markdown files
-        for md_file in self.project_root.rglob("*.md"):
-            if md_file == file_path:
-                continue
-            try:
-                content = md_file.read_text(encoding='utf-8', errors='ignore')
-                if filename in content or file_path.stem in content:
-                    references.append(str(md_file.relative_to(self.project_root)))
-            except Exception:
-                continue
+        for key_file in key_files:
+            if key_file.exists() and key_file != file_path:
+                try:
+                    content = key_file.read_text(encoding='utf-8', errors='ignore')
+                    if filename in content or stem in content:
+                        references.append(str(key_file.relative_to(self.project_root)))
+                except Exception:
+                    continue
+        
+        # Limited search in Python files (only in src/)
+        try:
+            for py_file in (self.project_root / "src").rglob("*.py"):
+                if len(references) >= 3:  # Limit to 3 references
+                    break
+                try:
+                    content = py_file.read_text(encoding='utf-8', errors='ignore')
+                    if filename in content:
+                        references.append(str(py_file.relative_to(self.project_root)))
+                except Exception:
+                    continue
+        except Exception:
+            pass
         
         return len(references) > 0, references
     
