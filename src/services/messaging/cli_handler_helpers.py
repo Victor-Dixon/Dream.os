@@ -133,3 +133,27 @@ def handle_message_result(result: Any, agent: str) -> tuple[bool, str]:
     else:
         return False, f"❌ Failed to send message to {agent}"
 
+
+def route_message_delivery(
+    args: Any,
+    priority: UnifiedMessagePriority,
+    stalled: bool,
+) -> int:
+    """
+    Route message delivery based on args (broadcast or single agent).
+    
+    Args:
+        args: Parsed CLI arguments
+        priority: Message priority
+        stalled: Whether this is a stalled agent recovery message
+    
+    Returns:
+        Exit code (0 for success, 1 for failure)
+    """
+    if args.broadcast:
+        return send_broadcast_message(args.message, priority, stalled)
+    elif args.agent:
+        return send_single_agent_message(args.agent, args.message, priority, stalled)
+    else:
+        print("❌ ERROR: Either --agent or --broadcast must be specified")
+        return 1

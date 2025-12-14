@@ -41,7 +41,7 @@ class MessageCoordinator:
         """Lazy initialization of message queue."""
         if cls._queue is None:
             try:
-                from ..core.message_queue import MessageQueue
+                from src.core.message_queue import MessageQueue
                 cls._queue = MessageQueue()
                 logger.info(
                     "✅ MessageCoordinator initialized with message queue")
