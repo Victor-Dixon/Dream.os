@@ -3,6 +3,8 @@
 Base Service Class - Code Consolidation
 ========================================
 
+<!-- SSOT Domain: core -->
+
 Base class for Service classes to consolidate duplicate initialization,
 lifecycle, and error handling patterns.
 

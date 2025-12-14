@@ -3,6 +3,8 @@
 Initialization Mixin - Code Consolidation
 ==========================================
 
+<!-- SSOT Domain: core -->
+
 Mixin class for common initialization patterns across services, handlers, and managers.
 
 V2 Compliance: < 300 lines, single responsibility.

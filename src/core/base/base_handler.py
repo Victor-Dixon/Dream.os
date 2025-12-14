@@ -3,6 +3,8 @@
 Base Handler Class - Code Consolidation
 =======================================
 
+<!-- SSOT Domain: core -->
+
 Base class for Handler classes to consolidate duplicate initialization,
 error handling, and validation patterns.
 
