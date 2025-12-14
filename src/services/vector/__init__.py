@@ -24,6 +24,12 @@ from .vector_database_helpers import (
     VectorOperationResult,
     DEFAULT_COLLECTION,
 )
+from .vector_database_chromadb_helpers import (
+    metadata_matches,
+    metadata_to_document,
+    sort_documents,
+    to_csv,
+)
 
 # Factory function
 from .vector_database_service import get_vector_database_service
@@ -36,6 +42,11 @@ __all__ = [
     # Helpers
     "VectorOperationResult",
     "DEFAULT_COLLECTION",
+    # ChromaDB Helpers
+    "metadata_matches",
+    "metadata_to_document",
+    "sort_documents",
+    "to_csv",
     # Factory
     "get_vector_database_service",
 ]
