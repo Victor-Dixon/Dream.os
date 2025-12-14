@@ -43,11 +43,12 @@
 ✅ **All modules <300 lines (V2 compliant):**
 - `vector_database_helpers.py`: 28 lines
 - `vector_database_integration.py`: 275 lines
-- `vector_database_chromadb_helpers.py`: 89 lines (extracted helper functions)
-- `vector_database_service.py`: 280 lines ✅ (V2 compliant)
+- `vector_database_chromadb_helpers.py`: 80 lines (helper functions)
+- `vector_database_chromadb_operations.py`: 140 lines (ChromaDB operations)
+- `vector_database_service.py`: 217 lines ✅ (V2 compliant)
 - `vector_database_service_unified.py`: 39 lines (shim)
 
-**Optimization:** Extracted ChromaDB helper functions to separate module to ensure V2 compliance.
+**Optimization:** Extracted ChromaDB operations and helper functions to separate modules to ensure V2 compliance.
 
 ✅ **Backward compatibility maintained:**
 - All public APIs exported via shim
