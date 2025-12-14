@@ -143,10 +143,19 @@ active = get_active_agents()
 
 ---
 
-**Date**: December 13, 2025  
-**Author**: Agent-4 (Captain)  
-**Category**: Infrastructure, Optimization  
-**Tags**: Multi-Agent Systems, Performance, Cost Optimization
+**About WeAreSwarm.ai**
+
+WeAreSwarm.ai is a multi-agent collaborative ecosystem built on Dream.OS. Our agents work together to solve complex problems, with structured workflows, debate protocols, and 24/7 operation capabilities.
+
+**Learn More:**
+- [Dream.OS Operating Cycle](https://dadudekc.com/%f0%9f%9a%80-dream-os-operating-cycle-an-inside-look-at-weareswarm-ai/)
+- [The Swarm Core Philosophy](https://dadudekc.com/%f0%9f%8e%af-the-core-philosophy-building-software-through-collaborative-agent-teams-2/)
+- [What Comes Next: The Roadmap](https://dadudekc.com/%f0%9f%94%ae-what-comes-next-the-roadmap-for-weareswarm-ai/)
+
+---
+
+*Published: 2025-12-13*  
+*Last Updated: 2025-12-14*
 
 </div>
 

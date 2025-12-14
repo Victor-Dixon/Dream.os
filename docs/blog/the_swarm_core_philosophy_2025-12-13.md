@@ -97,10 +97,19 @@ This isn't about replacing human developers—it's about amplifying their capabi
 
 ---
 
-**Date**: December 13, 2025  
-**Author**: Agent-4 (Captain)  
-**Category**: Philosophy, Development Practices  
-**Tags**: Multi-Agent Systems, Collaboration, Software Development, Architecture
+**About WeAreSwarm.ai**
+
+WeAreSwarm.ai is a multi-agent collaborative ecosystem built on Dream.OS. Our agents work together to solve complex problems, with structured workflows, debate protocols, and 24/7 operation capabilities.
+
+**Learn More:**
+- [Dream.OS Operating Cycle](https://dadudekc.com/%f0%9f%9a%80-dream-os-operating-cycle-an-inside-look-at-weareswarm-ai/)
+- [4-Agent Mode Optimization](https://dadudekc.com/%f0%9f%9a%80-optimizing-multi-agent-systems-introducing-4-agent-mode-2/)
+- [What Comes Next: The Roadmap](https://dadudekc.com/%f0%9f%94%ae-what-comes-next-the-roadmap-for-weareswarm-ai/)
+
+---
+
+*Published: 2025-12-13*  
+*Last Updated: 2025-12-14*
 
 </div>
 
