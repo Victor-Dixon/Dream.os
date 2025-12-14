@@ -33,7 +33,7 @@ This template standardizes all blog posts with consistent styling, structure, an
 <!-- HIGHLIGHTED SECTION -->
 <div style="background: #f8f9fa; border-left: 5px solid #2a5298; padding: 2rem; margin: 2rem 0; border-radius: 8px;">
 <h2 style="color: #2a5298; margin-top: 0; font-size: 1.75em;">Section Title</h2>
-<p style="font-size: 1.1em; margin-bottom: 0; line-height: 1.8;">Important content that needs emphasis. This style is perfect for key concepts, philosophies, or core ideas.</p>
+<p style="font-size: 1.1em; margin-bottom: 0; line-height: 1.8; color: #2d3748;">Important content that needs emphasis. This style is perfect for key concepts, philosophies, or core ideas.</p>
 </div>
 
 ## Card Grid Section
@@ -111,7 +111,7 @@ This template standardizes all blog posts with consistent styling, structure, an
 ```html
 <div style="background: #f8f9fa; border-left: 5px solid #2a5298; padding: 2rem; margin: 2rem 0; border-radius: 8px;">
 <h2 style="color: #2a5298; margin-top: 0; font-size: 1.75em;">[Section Title]</h2>
-<p style="font-size: 1.1em; margin-bottom: 0; line-height: 1.8;">[Content]</p>
+<p style="font-size: 1.1em; margin-bottom: 0; line-height: 1.8; color: #2d3748;">[Content]</p>
 </div>
 ```
 
