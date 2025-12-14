@@ -105,6 +105,10 @@ def main():
         {
             "file": "docs/blog/what_comes_next_2025-12-14.md",
             "slug": "%f0%9f%94%ae-what-comes-next-the-roadmap-for-weareswarm-ai",
+        },
+        {
+            "file": "docs/blog/dream_os_review_styled.md",
+            "slug": "%f0%9f%9a%80-a-professional-review-of-my-vibe-coded-project-dream-os",
         }
     ]
 
