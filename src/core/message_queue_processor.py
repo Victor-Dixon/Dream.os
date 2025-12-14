@@ -112,15 +112,23 @@ class MessageQueueProcessor:
 
                     # CRITICAL: Wait for full delivery sequence to complete before moving to next
                     # This ensures proper sequencing and prevents race conditions
+                    # The delivery function already includes UI settlement waits, but we add extra
+                    # buffer here to ensure coordinate validation completes fully before next agent
                     ok = self._deliver_entry(entry)
                     processed += 1
                     
-                    # CRITICAL: Small delay between messages to ensure UI settles
+                    # CRITICAL: Extended delay between messages to ensure UI fully settles
                     # This prevents rapid-fire messages from interfering with each other
+                    # and ensures coordinate validation completes before processing next agent
                     if ok:
-                        time.sleep(0.5)  # Brief pause after successful delivery
+                        # Successful delivery: Wait for coordinate validation + UI settlement
+                        # Total wait: 2.0s (in delivery) + 3.0s (here) = 5.0s between agents
+                        time.sleep(3.0)  # Extended pause after successful delivery
+                        logger.debug(f"✅ Delivery complete for {getattr(entry, 'recipient', 'unknown')}, waiting 3.0s before next agent")
                     else:
-                        time.sleep(1.0)  # Longer pause after failed delivery for recovery
+                        # Failed delivery: Longer pause for recovery and UI stabilization
+                        time.sleep(5.0)  # Extended pause after failed delivery for recovery
+                        logger.debug(f"⚠️ Delivery failed, waiting 5.0s for recovery before next agent")
 
                 if max_messages and processed >= max_messages:
                     break
