@@ -203,8 +203,8 @@ def main():
     )
     parser.add_argument(
         '--repo-url',
-        required=True,
-        help='GitHub repository URL (e.g., https://github.com/Dadudekc/websites.git)'
+        default='git@github.com:Victor-Dixon/Websites.git',
+        help='GitHub repository URL (default: git@github.com:Victor-Dixon/Websites.git)'
     )
     parser.add_argument(
         '--websites-path',

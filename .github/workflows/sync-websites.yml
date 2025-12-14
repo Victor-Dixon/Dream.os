@@ -39,7 +39,7 @@ jobs:
       - name: Checkout Websites Repository
         uses: actions/checkout@v4
         with:
-          repository: ${{ secrets.WEBSITES_REPO }}  # e.g., Dadudekc/websites
+          repository: Victor-Dixon/Websites
           path: websites
           token: ${{ secrets.WEBSITES_REPO_TOKEN }}
       
