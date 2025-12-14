@@ -372,12 +372,31 @@ def main():
     
     if args.delete and total_candidates > 0:
         print("⚠️  DELETE MODE - This will permanently delete files!")
-        response = input(f"Delete {total_candidates} files? (yes/no): ")
-        if response.lower() == 'yes':
-            # Implementation for actual deletion would go here
-            print("✅ Deletion would be performed here (safety check)")
-        else:
-            print("❌ Deletion cancelled")
+        print(f"About to delete {total_candidates} files")
+        
+        # Get list of files to delete
+        files_to_delete = []
+        for item in results['safe_to_delete']:
+            if not item['referenced']:
+                files_to_delete.append(Path(project_root / item['file']))
+        for item in results['old_session_files']:
+            if not item['referenced']:
+                files_to_delete.append(Path(project_root / item['file']))
+        
+        deleted_count = 0
+        failed_count = 0
+        
+        for file_path in files_to_delete:
+            try:
+                if file_path.exists():
+                    file_path.unlink()
+                    deleted_count += 1
+                    print(f"✅ Deleted: {file_path.relative_to(project_root)}")
+            except Exception as e:
+                failed_count += 1
+                print(f"❌ Failed to delete {file_path}: {e}")
+        
+        print(f"\n✅ Deletion complete: {deleted_count} deleted, {failed_count} failed")
     
     sys.exit(0)
 
