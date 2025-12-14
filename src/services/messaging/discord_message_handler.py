@@ -20,11 +20,7 @@ from typing import Any
 from src.core.messaging_models_core import MessageCategory
 
 from .discord_message_helpers import (
-    determine_discord_message_type,
-    fallback_subprocess_delivery,
     prepare_discord_message,
-    send_discord_via_queue,
-    validate_agent_can_receive,
 )
 
 logger = logging.getLogger(__name__)
@@ -39,42 +35,14 @@ def send_discord_message_to_agent(
 ) -> dict[str, Any]:
     """Send Discord message to agent via message queue (synchronized delivery)."""
     try:
+        from .discord_message_helpers import route_discord_delivery
         priority_enum, resolved_sender, templated_message = prepare_discord_message(
-            message, agent, priority, sender, discord_user_id, apply_template, 
-            message_category, resolve_discord_sender_func
+            message, agent, priority, sender, discord_user_id, apply_template, message_category, resolve_discord_sender_func
         )
-        
-        # Use send_discord_via_queue for delivery
-        if queue:
-            explicit_message_type = determine_discord_message_type(message)
-            result = send_discord_via_queue(
-                queue=queue,
-                agent=agent,
-                templated_message=templated_message,
-                resolved_sender=resolved_sender,
-                priority=priority_enum.value,
-                explicit_message_type=explicit_message_type,
-                discord_user_id=discord_user_id,
-                discord_username=None,  # Will be resolved if needed
-                stalled=stalled,
-                message=message,
-                message_category=message_category,
-                apply_template=apply_template,
-                wait_for_delivery=wait_for_delivery,
-                timeout=timeout,
-            )
-            return result
-        else:
-            # Fallback to subprocess delivery
-            return fallback_subprocess_delivery(
-                agent=agent,
-                message=templated_message,
-                priority=priority_enum,
-                messaging_cli_path=messaging_cli_path,
-                project_root=project_root,
-                use_pyautogui=use_pyautogui,
-                stalled=stalled,
-            )
+        return route_discord_delivery(
+            queue, agent, message, templated_message, resolved_sender, priority_enum,
+            stalled, messaging_cli_path, project_root, use_pyautogui, message_category, apply_template, wait_for_delivery, timeout, discord_user_id
+        )
     except Exception as e:
         logger.error(f"Error sending message to {agent}: {e}")
         return {"success": False, "message": str(e), "agent": agent}

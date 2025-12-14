@@ -314,6 +314,29 @@ def build_and_enqueue_discord_message(
     return queue_id
 
 
+def route_discord_delivery(
+    queue: Any, agent: str, message: str, templated_message: str, resolved_sender: str,
+    priority_enum: UnifiedMessagePriority, stalled: bool, messaging_cli_path: Path | None,
+    project_root: Path | None, use_pyautogui: bool, message_category: MessageCategory | None,
+    apply_template: bool, wait_for_delivery: bool, timeout: float, discord_user_id: str | None,
+) -> dict[str, Any]:
+    """Route Discord message delivery via queue or fallback."""
+    if queue:
+        return send_discord_via_queue(
+            queue=queue, agent=agent, templated_message=templated_message,
+            resolved_sender=resolved_sender, priority=priority_enum.value,
+            explicit_message_type=determine_discord_message_type(message),
+            discord_user_id=discord_user_id, discord_username=None, stalled=stalled,
+            message=message, message_category=message_category, apply_template=apply_template,
+            wait_for_delivery=wait_for_delivery, timeout=timeout,
+        )
+    return fallback_subprocess_delivery(
+        agent=agent, message=templated_message, priority=priority_enum,
+        messaging_cli_path=messaging_cli_path, project_root=project_root,
+        use_pyautogui=use_pyautogui, stalled=stalled,
+    )
+
+
 def send_discord_via_queue(
     queue,
     agent: str,
