@@ -101,8 +101,15 @@ def generate_cycle_report(
     logger.info("📊 Generating cycle accomplishments report...")
     logger.info(f"   Output: {report_path}")
     
-    # Load all agent statuses
-    agents = [f"Agent-{i}" for i in range(1, 9)]
+    # Load active agent statuses (mode-aware)
+    try:
+        from src.core.agent_mode_manager import get_active_agents
+        agents = get_active_agents()
+        logger.info(f"Mode-aware: Loading status for {len(agents)} active agents")
+    except Exception as e:
+        logger.warning(f"Failed to load mode-aware agents, using fallback: {e}")
+        agents = [f"Agent-{i}" for i in range(1, 9)]
+    
     agent_data = {}
     total_completed_tasks = 0
     total_achievements = 0
@@ -132,7 +139,7 @@ def generate_cycle_report(
     # Summary statistics
     report_lines.append("## 📊 SWARM SUMMARY")
     report_lines.append("")
-    report_lines.append(f"- **Agents Active**: {len(agent_data)}/8")
+    report_lines.append(f"- **Agents Active**: {len(agent_data)}/{len(agents)}")
     report_lines.append(f"- **Total Completed Tasks**: {total_completed_tasks}")
     report_lines.append(f"- **Total Achievements**: {total_achievements}")
     report_lines.append(f"- **Total Points Earned**: {total_points:,}")
