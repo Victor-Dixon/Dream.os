@@ -119,9 +119,11 @@ def handle_message(args, parser):
         else UnifiedMessagePriority.REGULAR
     )
     if args.broadcast:
+        from src.core.agent_mode_manager import get_active_agents
+        active_count = len(get_active_agents())
         success = MessageCoordinator.broadcast_to_all(args.message, priority)
         logger.info(
-            f"📢 Broadcast successful to {success}/8 agents"
+            f"📢 Broadcast successful to {success}/{active_count} agents"
             if success > 0
             else "❌ Broadcast failed"
         )

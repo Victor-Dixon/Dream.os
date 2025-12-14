@@ -22,17 +22,17 @@ class AvailabilityMixin:
     """Mixin for availability checking in handlers."""
 
     def check_availability(
-        self, 
-        available: bool, 
+        self,
+        available: bool,
         service_name: str
     ) -> Optional[Tuple]:
         """
         Check if a service/module is available.
-        
+
         Args:
             available: Whether the service is available
             service_name: Name of the service/module
-            
+
         Returns:
             Error response tuple if not available, None if available
         """
@@ -45,4 +45,3 @@ class AvailabilityMixin:
                 503
             )
         return None
-

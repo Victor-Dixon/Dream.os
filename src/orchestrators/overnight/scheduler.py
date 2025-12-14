@@ -101,8 +101,14 @@ class TaskScheduler:
     async def initialize(self) -> None:
         """Initialize scheduler components."""
         try:
-            # Initialize agent load tracking
-            self.agent_load = {f"Agent-{i}": 0 for i in range(1, 9)}
+            # Initialize agent load tracking (mode-aware)
+            try:
+                from src.core.agent_mode_manager import get_active_agents
+                active_agents = get_active_agents()
+            except Exception:
+                # Fallback to 4-agent mode
+                active_agents = ["Agent-1", "Agent-2", "Agent-3", "Agent-4"]
+            self.agent_load = {agent_id: 0 for agent_id in active_agents}
 
             # Load any persisted tasks
             await self._load_persisted_tasks()

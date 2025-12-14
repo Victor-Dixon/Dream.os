@@ -39,10 +39,16 @@ class MonitorState:
         self.is_monitoring = True
         self.start_time = time.time()
 
-        # Initialize agent tracking
+        # Initialize agent tracking (mode-aware)
         current_time = time.time()
-        for i in range(1, 9):
-            agent_id = f"Agent-{i}"
+        try:
+            from src.core.agent_mode_manager import get_active_agents
+            active_agents = get_active_agents()
+        except Exception:
+            # Fallback to 4-agent mode
+            active_agents = ["Agent-1", "Agent-2", "Agent-3", "Agent-4"]
+        
+        for agent_id in active_agents:
             self.agent_activity[agent_id] = current_time
             self.agent_tasks[agent_id] = None
 
