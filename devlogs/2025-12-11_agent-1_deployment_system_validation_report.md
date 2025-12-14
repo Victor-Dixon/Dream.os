@@ -1,3 +1,4 @@
+<!-- SSOT Domain: web -->
 # Deployment System End-to-End Validation Report
 
 **Date**: 2025-12-11  
@@ -131,3 +132,29 @@ python tools/wordpress_manager.py --site freerideinvestor --purge-cache
 
 **Artifact**: End-to-end validation report confirming all deployment system components are operational and working correctly.
 
+
+
+## Artifacts Created
+
+
+
+
+## Verification & Evidence
+
+**Claims Made in This Report:**
+
+1. Metric: 6 sites configured with relative paths
+2. Metric: 2 sites (Prismblossom, weareswarm
+3. Tool/Artifact: tools/test_sftp_path_structure.py
+
+**Evidence Links:**
+- All artifacts linked above with commit hashes
+- File paths are relative to repository root
+- Line counts verified at report generation time
+- Commit hashes provide git verification
+
+**Verification Instructions:**
+1. Check artifact links - files should exist at specified paths
+2. Verify commit hashes using: `git log --oneline <file_path>`
+3. Confirm line counts match reported values
+4. Review scope tags for SSOT domain alignment
