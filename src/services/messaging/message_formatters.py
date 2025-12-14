@@ -18,7 +18,10 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, Optional
 
-from src.core.messaging_core import UnifiedMessagePriority
+from src.core.messaging_core import (
+    UnifiedMessagePriority,
+    UnifiedMessageType,
+)
 from src.core.messaging_models_core import (
     MessageCategory,
     MESSAGE_TEMPLATES,
