@@ -23,12 +23,19 @@ class TestContractManager:
         """Test successful system status retrieval."""
         manager = ContractManager()
 
-        # Mock storage
+        # Mock storage - create mock Contract objects with to_dict method
+        class MockContract:
+            def __init__(self, status, id_val):
+                self.status = status
+                self.id = id_val
+            def to_dict(self):
+                return {"status": self.status, "id": self.id}
+
         mock_contracts = [
-            {"status": "active", "id": "1"},
-            {"status": "active", "id": "2"},
-            {"status": "completed", "id": "3"},
-            {"status": "pending", "id": "4"},
+            MockContract("active", "1"),
+            MockContract("active", "2"),
+            MockContract("completed", "3"),
+            MockContract("pending", "4"),
         ]
 
         manager.storage.get_all_contracts = Mock(return_value=mock_contracts)
@@ -55,9 +62,17 @@ class TestContractManager:
         """Test successful agent status retrieval."""
         manager = ContractManager()
 
+        # Mock storage - create mock Contract objects with to_dict method
+        class MockContract:
+            def __init__(self, status, id_val):
+                self.status = status
+                self.id = id_val
+            def to_dict(self):
+                return {"status": self.status, "id": self.id}
+
         mock_contracts = [
-            {"status": "active", "id": "1"},
-            {"status": "completed", "id": "2"},
+            MockContract("active", "1"),
+            MockContract("completed", "2"),
         ]
 
         manager.storage.get_agent_contracts = Mock(return_value=mock_contracts)

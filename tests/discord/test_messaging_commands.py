@@ -64,6 +64,7 @@ class TestMessagingCommands:
         assert commands.logger is not None
 
     @pytest.mark.asyncio
+    @pytest.mark.timeout(5)
     async def test_message_agent_success(self, messaging_commands, mock_ctx, mock_messaging_controller):
         """Test message_agent command with successful send."""
         mock_messaging_controller.send_agent_message = AsyncMock(return_value=True)
@@ -81,6 +82,7 @@ class TestMessagingCommands:
         assert "Agent-1" in embed.description
 
     @pytest.mark.asyncio
+    @pytest.mark.timeout(5)
     async def test_message_agent_failure(self, messaging_commands, mock_ctx, mock_messaging_controller):
         """Test message_agent command with failed send."""
         mock_messaging_controller.send_agent_message = AsyncMock(return_value=False)
@@ -92,6 +94,7 @@ class TestMessagingCommands:
         assert embed.title == "❌ Message Failed"
 
     @pytest.mark.asyncio
+    @pytest.mark.timeout(5)
     async def test_message_agent_invalid_priority(self, messaging_commands, mock_ctx, mock_messaging_controller):
         """Test message_agent command with invalid priority (defaults to NORMAL)."""
         await messaging_commands.message_agent(mock_ctx, "Agent-1", "Test message", "INVALID")
@@ -103,6 +106,7 @@ class TestMessagingCommands:
         )
 
     @pytest.mark.asyncio
+    @pytest.mark.timeout(5)
     async def test_message_agent_exception(self, messaging_commands, mock_ctx, mock_messaging_controller):
         """Test message_agent command with exception handling."""
         mock_messaging_controller.send_agent_message = AsyncMock(side_effect=Exception("Test error"))
@@ -114,6 +118,7 @@ class TestMessagingCommands:
         assert embed.title == "❌ Error"
 
     @pytest.mark.asyncio
+    @pytest.mark.timeout(5)
     async def test_message_agent_priority_critical(self, messaging_commands, mock_ctx, mock_messaging_controller):
         """Test message_agent command with CRITICAL priority."""
         await messaging_commands.message_agent(mock_ctx, "Agent-1", "Test message", "CRITICAL")
@@ -125,6 +130,7 @@ class TestMessagingCommands:
         )
 
     @pytest.mark.asyncio
+    @pytest.mark.timeout(5)
     async def test_agent_interact_success(self, messaging_commands, mock_ctx, mock_messaging_controller):
         """Test agent_interact command success."""
         mock_view = MagicMock()
@@ -138,6 +144,7 @@ class TestMessagingCommands:
         assert call_args[1]['view'] == mock_view
 
     @pytest.mark.asyncio
+    @pytest.mark.timeout(5)
     async def test_agent_interact_exception(self, messaging_commands, mock_ctx, mock_messaging_controller):
         """Test agent_interact command with exception handling."""
         mock_messaging_controller.create_agent_messaging_view = MagicMock(side_effect=Exception("Test error"))
@@ -148,6 +155,7 @@ class TestMessagingCommands:
         assert "Error creating interface" in mock_ctx.send.call_args[0][0]
 
     @pytest.mark.asyncio
+    @pytest.mark.timeout(5)
     async def test_swarm_status_success(self, messaging_commands, mock_ctx, mock_messaging_controller):
         """Test swarm_status command success."""
         mock_view = MagicMock()
@@ -164,6 +172,7 @@ class TestMessagingCommands:
         assert call_args[1]['view'] == mock_view
 
     @pytest.mark.asyncio
+    @pytest.mark.timeout(5)
     async def test_swarm_status_exception(self, messaging_commands, mock_ctx, mock_messaging_controller):
         """Test swarm_status command with exception handling."""
         mock_messaging_controller.create_swarm_status_view = MagicMock(side_effect=Exception("Test error"))
@@ -175,6 +184,7 @@ class TestMessagingCommands:
         assert embed.title == "❌ Error"
 
     @pytest.mark.asyncio
+    @pytest.mark.timeout(5)
     async def test_message_agent_long_message(self, messaging_commands, mock_ctx, mock_messaging_controller):
         """Test message_agent command with long message (truncation)."""
         long_message = "A" * 1000
@@ -186,6 +196,7 @@ class TestMessagingCommands:
         assert len(embed.fields[0].value) <= 500
 
     @pytest.mark.asyncio
+    @pytest.mark.timeout(5)
     async def test_message_agent_all_priorities(self, messaging_commands, mock_ctx, mock_messaging_controller):
         """Test message_agent command with all valid priorities."""
         priorities = ["NORMAL", "HIGH", "CRITICAL"]
@@ -204,6 +215,7 @@ class TestMessagingCommands:
         assert messaging_commands.logger.name == "src.discord_commander.messaging_commands"
 
     @pytest.mark.asyncio
+    @pytest.mark.timeout(5)
     async def test_broadcast_success(self, messaging_commands, mock_ctx, mock_messaging_controller):
         """Test broadcast command with successful broadcast."""
         mock_messaging_controller.broadcast_to_swarm = AsyncMock(return_value=True)
@@ -219,6 +231,7 @@ class TestMessagingCommands:
         assert embed.title == "✅ Broadcast Sent"
 
     @pytest.mark.asyncio
+    @pytest.mark.timeout(5)
     async def test_broadcast_failure(self, messaging_commands, mock_ctx, mock_messaging_controller):
         """Test broadcast command with failed broadcast."""
         mock_messaging_controller.broadcast_to_swarm = AsyncMock(return_value=False)
@@ -230,6 +243,7 @@ class TestMessagingCommands:
         assert embed.title == "❌ Broadcast Failed"
 
     @pytest.mark.asyncio
+    @pytest.mark.timeout(5)
     async def test_broadcast_exception(self, messaging_commands, mock_ctx, mock_messaging_controller):
         """Test broadcast command with exception handling."""
         mock_messaging_controller.broadcast_to_swarm = AsyncMock(side_effect=Exception("Test error"))
@@ -241,6 +255,7 @@ class TestMessagingCommands:
         assert embed.title == "❌ Error"
 
     @pytest.mark.asyncio
+    @pytest.mark.timeout(5)
     async def test_agent_list_success(self, messaging_commands, mock_ctx, mock_messaging_controller):
         """Test agent_list command with agents available."""
         mock_status = {
@@ -258,6 +273,7 @@ class TestMessagingCommands:
         assert len(embed.fields) == 2
 
     @pytest.mark.asyncio
+    @pytest.mark.timeout(5)
     async def test_agent_list_no_agents(self, messaging_commands, mock_ctx, mock_messaging_controller):
         """Test agent_list command with no agents available."""
         mock_messaging_controller.get_agent_status = MagicMock(return_value={})
@@ -269,6 +285,7 @@ class TestMessagingCommands:
         assert embed.title == "❌ No Agents Found"
 
     @pytest.mark.asyncio
+    @pytest.mark.timeout(5)
     async def test_agent_list_exception(self, messaging_commands, mock_ctx, mock_messaging_controller):
         """Test agent_list command with exception handling."""
         mock_messaging_controller.get_agent_status = MagicMock(side_effect=Exception("Test error"))
