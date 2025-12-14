@@ -5,23 +5,26 @@
   "current_phase": "TASK_EXECUTION",
   "last_updated": "2025-12-14 12:50:00",
   "cycle_count": 36,
-  "current_mission": "Infrastructure V2 Violations Refactoring - Batch 1 & Batch 2",
+  "current_mission": "Infrastructure V2 Violations Refactoring + Downsizing Reassignments (Agent-6, Agent-7 duties)",
   "mission_priority": "HIGH",
-  "mission_description": "Refactor infrastructure domain V2 violations in parallel with Agent-1 (integration) and Agent-7 (web). Coordinated by Agent-2, monitored by Agent-6, validated by Agent-8.",
+  "mission_description": "Refactor infrastructure domain V2 violations. NEW: Taking on Agent-6 (repository cleanup, infrastructure coordination) and Agent-7 (infrastructure integration testing, deployment coordination) duties due to downsizing. Coordinated by Agent-2, validated by Agent-4 (Captain).",
   "current_tasks": [
+    "🚨 PRIORITY 1: Batch 1 Module 3 - Create thea_browser_operations.py (~280 lines)",
+    "🚨 PRIORITY 2: Continue SSOT tagging coordination (Batch 2: Core infrastructure files)",
+    "🚨 PRIORITY 3: Repository cleanup coordination (FROM Agent-6)",
+    "🚨 PRIORITY 4: Infrastructure integration testing (FROM Agent-7)",
     "README.md comprehensive update COMPLETE ✅ (327 lines, full project documentation)",
     "passdown.json created ✅ (session handoff documentation)",
     "README validation tool created ✅ (validate_readme.py - automated quality checking)",
     "Devlog posted to Discord and Swarm Brain ✅",
-    "Batch 1: thea_browser_service.py (867 lines) - Module 2/5 COMPLETE ✅ (thea_browser_elements.py: 3 modules extracted - textarea_finder, send_button_finder, orchestrator, all V2 compliant) - READY FOR REVIEW",
+    "Batch 1: thea_browser_service.py (867 lines) - Module 2/5 COMPLETE ✅ (thea_browser_elements.py: 3 modules extracted - textarea_finder, send_button_finder, orchestrator, all V2 compliant)",
     "Awaiting Agent-1 review of Batch 1 Module 2 (thea_browser_elements.py)",
-    "Awaiting Agent-8 validation of Batch 1 Module 2 (thea_browser_elements.py)",
-    "Batch 1: thea_browser_service.py - Module 3/5: Create thea_browser_operations.py (~280 lines) - PENDING ASSIGNMENT",
+    "Awaiting Agent-4 (Captain) validation of Batch 1 Module 2 (Agent-8 paused)",
     "Batch 1: thea_browser_service.py - Module 4/5: Create thea_browser_core.py (~200 lines) - Pending",
     "Batch 1: thea_browser_service.py - Module 5/5: Refactor main service file (~200 lines) - Pending",
     "Batch 2: hardened_activity_detector.py (854 lines) - Module 1/4 COMPLETE ✅ (activity_detector_models.py: 68 lines, V2 compliant, backward compatible)",
     "Batch 2: hardened_activity_detector.py - Module 2/4 NEXT: activity_source_checkers.py (~280 lines)",
-    "SSOT Remediation: Continue coordination with Agent-8 for Batch 2 SSOT tagging (6 batches: Core, Browser, Logging, Persistence, Time, Tools)"
+    "SSOT Remediation: Continue SSOT tagging coordination (Batch 2: Core infrastructure files, 50-70 files estimated)"
   ],
   "completed_tasks": [
     "README.md comprehensive update COMPLETE ✅ (327 lines, full project documentation)",
@@ -57,23 +60,35 @@
     "Fixed message queue stuck messages issue"
   ],
   "next_actions": [
-    "Continue Batch 1 Module 3: Create thea_browser_operations.py (~280 lines)",
-    "Coordinate with Agent-8 for SSOT tagging Batch 2",
-    "Begin Batch 2: hardened_activity_detector.py (853 lines) - plan module breakdown",
+    "🚨 PRIORITY 1: Complete Batch 1 Module 3 - Create thea_browser_operations.py (~280 lines)",
+    "🚨 PRIORITY 2: Continue SSOT tagging coordination (Batch 2: Core infrastructure files)",
+    "🚨 PRIORITY 3: Begin repository cleanup coordination (FROM Agent-6)",
+    "🚨 PRIORITY 4: Set up infrastructure integration testing workflow (FROM Agent-7)",
+    "Coordinate with Agent-2 for SSOT tagging Batch 2 (Agent-8 paused)",
+    "Coordinate with Agent-4 (Captain) for validation (Agent-8 paused)",
     "Update status.json after each module completion",
-    "Coordinate via status.json updates with Agent-6 (monitoring)",
-    "Maintain parallel execution coordination with Agent-1 and Agent-7"
+    "Maintain parallel execution coordination with Agent-1"
   ],
   "coordination_status": {
     "coordinator": "Agent-2 (Architecture & Design)",
-    "monitor": "Agent-6 (Coordination & Communication)",
-    "qa_validator": "Agent-8 (SSOT & System Integration)",
+    "monitor": "Agent-4 (Captain) - Taking over Agent-6 monitoring duties",
+    "qa_validator": "Agent-4 (Captain) - Taking over Agent-8 QA validation duties",
+    "downsizing_status": "Active - Agent-6, Agent-7, Agent-8 paused",
+    "reassigned_duties": {
+      "from_agent6": [
+        "Repository cleanup coordination",
+        "Infrastructure coordination management"
+      ],
+      "from_agent7": [
+        "Infrastructure integration testing",
+        "Deployment coordination for web components"
+      ]
+    },
     "parallel_agents": [
-      "Agent-1 (Integration & Core Systems) - Integration violations",
-      "Agent-7 (Web Development) - Web violations"
+      "Agent-1 (Integration & Core Systems) - Integration violations"
     ],
     "coordination_method": "status.json updates + bilateral messaging",
-    "validation_workflow": "Agent-3 completes module → requests Agent-8 validation → fixes issues → proceeds",
+    "validation_workflow": "Agent-3 completes module → requests Agent-4 (Captain) validation → fixes issues → proceeds",
     "qa_handoff": {
       "status": "active",
       "document": "agent_workspaces/Agent-3/qa_validation_handoff_coordination.md",
@@ -84,7 +99,7 @@
     "ssot_remediation": {
       "status": "batch_2_pending",
       "executor": "Agent-3",
-      "verifier": "Agent-8",
+      "verifier": "Agent-2 (taking over Agent-8 SSOT verification)",
       "scope": "src/core/ infrastructure files (6 batches: Core, Browser, Logging, Persistence, Time, Tools)",
       "batches": 6,
       "status_detail": "Batch 1 complete (32 files), Batch 2 ready to begin",
@@ -101,7 +116,7 @@
         "status": "awaiting_coordination",
         "scope": "Core infrastructure files in src/core/",
         "estimated_files": "50-70",
-        "coordination_needed": "Agent-8"
+        "coordination_needed": "Agent-2 (Agent-8 paused)"
       }
     },
     "agent1_coordination": {
@@ -116,7 +131,7 @@
       "module2_status": "complete_awaiting_review",
       "module2_review_status": {
         "agent1_review": "pending",
-        "agent8_validation": "pending",
+        "agent4_validation": "pending",
         "ready_for_next": false
       },
       "integration_testing": {
@@ -138,7 +153,7 @@
         "ready_for_validation": true,
         "awaiting": [
           "agent1_review",
-          "agent8_validation"
+          "agent4_validation"
         ]
       },
       "sequential_plan": "confirmed"
@@ -282,5 +297,5 @@
       "Created dadudekc.com dark theme blog fix CSS and deployment guide"
     ]
   },
-  "notes": "Infrastructure refactoring momentum strong! Batch 1 Module 2 complete with 3 modules extracted (thea_browser_elements.py → 3 modules). Status: READY FOR REVIEW - awaiting Agent-1 review and Agent-8 validation. Will proceed with Module 3 when assigned after validation. Continuing SSOT tagging coordination with Agent-8 for Batch 2."
+  "notes": "🚨 DOWNSIZING REASSIGNMENT ACKNOWLEDGED: Taking on Agent-6 (repository cleanup, infrastructure coordination) and Agent-7 (infrastructure integration testing, deployment coordination) duties. Priority: 1) Batch 1 Module 3, 2) SSOT tagging, 3) Repository cleanup, 4) Integration testing. Infrastructure refactoring momentum strong! Batch 1 Module 2 complete with 3 modules extracted. Status: READY FOR REVIEW - awaiting Agent-1 review and Agent-4 (Captain) validation. Continuing SSOT tagging coordination with Agent-2 (Agent-8 paused)."
 }
