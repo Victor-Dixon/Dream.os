@@ -14,12 +14,15 @@ License: MIT
 
 import asyncio
 import json
+import logging
 import os
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Optional
 
 import requests
+
+logger = logging.getLogger(__name__)
 
 try:
     from .discord_agent_communication import AgentCommunicationEngine
