@@ -96,16 +96,28 @@
 
 ## 🚨 REMAINING V2 VIOLATIONS
 
-### 🎉 MAJOR PROGRESS: 6 → 1 violation (Batches 1 & 3 complete!)
+### ⚠️ ACTUAL STATUS: 1,941 Total Violations
 
-### Total Remaining: 1 violation (94% reduction achieved!)
+### File Size Violations (113 files):
 
-**Remaining Violations** (3 files):
+**Tier 1: Critical (>1000 lines)** - 4 files:
+1. `unified_discord_bot.py` - 2,636 lines (exceeds by 2,336)
+2. `messaging_template_texts.py` - 1,419 lines (exceeds by 1,119)
+3. `enhanced_agent_activity_detector.py` - 1,367 lines (exceeds by 1,067)
+4. `github_book_viewer.py` - 1,164 lines (exceeds by 864)
 
-**Refactorable** (3 files):
-1. `unified_discord_bot.py` - 2,695 lines (Batch 2: Phase 2D - 80% complete, Phase 5 pending)
-2. `hard_onboarding_service.py` - 870 lines (Batch 4 - 20% complete, handlers pending)
-3. `soft_onboarding_service.py` - 533 lines (Batch 4 - 20% complete, handlers pending)
+**Tier 2: High Priority (700-1000 lines)** - 6 files:
+5. `thea_browser_service.py` - 1,013 lines
+6. `twitch_bridge.py` - 954 lines
+7. `main_control_panel_view.py` - 877 lines
+8. `hard_onboarding_service.py` - 870 lines
+9. `status_change_monitor.py` - 826 lines
+10. `broadcast_templates.py` - 819 lines
+
+**Tier 3: Medium Priority (500-700 lines)** - 10 files  
+**Tier 4: Lower Priority (300-500 lines)** - 93 files
+
+**See**: `docs/v2_compliance/V2_REFACTORING_PLAN_2025-12-14.md` for complete prioritized list
 
 **Batch 1 - COMPLETE** ✅ (2025-12-14):
 - ~~`base_monitoring_manager.py` - 117 lines~~ ✅ COMPLIANT (was 530)
