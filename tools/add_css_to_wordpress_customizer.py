@@ -67,11 +67,12 @@ customizer_url = f"{site_url}/wp-json/wp/v2/settings"
 
 # Get current settings
 try:
-    response = session.get(customizer_url, timeout=TimeoutConstants.HTTP_DEFAULT)
+    response = session.get(
+        customizer_url, timeout=TimeoutConstants.HTTP_DEFAULT)
     if response.status_code == 200:
         settings = response.json()
         current_css = settings.get("custom_css", "")
-        
+
         # Append our CSS
         if current_css and css_content not in current_css:
             new_css = current_css + "\n\n/* DaDudeKC Blog Post Readability Fix */\n" + css_content
@@ -80,7 +81,7 @@ try:
         else:
             print("✅ CSS already in Customizer")
             sys.exit(0)
-        
+
         # Update settings
         update_data = {"custom_css": new_css}
         update_response = session.post(
@@ -88,14 +89,15 @@ try:
             json=update_data,
             timeout=TimeoutConstants.HTTP_DEFAULT
         )
-        
+
         if update_response.status_code in (200, 201):
             print("✅ CSS added to WordPress Customizer Additional CSS")
             print(f"   Total CSS length: {len(new_css)} chars")
         else:
-            print(f"⚠️  Settings API returned: HTTP {update_response.status_code}")
+            print(
+                f"⚠️  Settings API returned: HTTP {update_response.status_code}")
             print("   Trying alternative method...\n")
-            
+
             # Alternative: Use theme mods endpoint
             # Note: This requires a plugin or custom endpoint
             print("⚠️  Direct Customizer API update not available")
@@ -116,6 +118,7 @@ except Exception as e:
     print(f"   1. Go to: {site_url}/wp-admin/customize.php")
     print("   2. Navigate to: Additional CSS")
     print(f"   3. Add the CSS from: {css_path}")
-    print(f"\n   CSS content ({len(css_content)} chars) ready for manual addition")
+    print(
+        f"\n   CSS content ({len(css_content)} chars) ready for manual addition")
 
 print("\n✅ CSS ready for theme - posts already cleaned up!")
