@@ -3,6 +3,8 @@
 UNIFIED CONFIGURATION SSOT - SINGLE SOURCE OF TRUTH
 ===================================================
 
+<!-- SSOT Domain: core -->
+
 THE definitive configuration system for Agent Cellphone V2.
 Consolidates ALL configuration from 12 files into 1 unified SSOT.
 

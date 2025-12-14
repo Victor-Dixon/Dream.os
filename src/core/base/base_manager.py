@@ -3,6 +3,8 @@
 Base Manager Class - Code Consolidation
 ========================================
 
+<!-- SSOT Domain: core -->
+
 Base class for Manager classes to consolidate duplicate initialization,
 logging, and lifecycle patterns.
 

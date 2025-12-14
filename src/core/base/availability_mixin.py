@@ -2,6 +2,8 @@
 Availability Mixin - Handler Availability Checking
 =================================================
 
+<!-- SSOT Domain: core -->
+
 Mixin for handlers that need to check service/module availability.
 Consolidates availability check pattern found in 8+ handlers.
 

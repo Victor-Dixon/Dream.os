@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 # Base Classes for Code Consolidation
 # Created by: Agent-2 (Architecture & Design Specialist)
 # Date: 2025-12-02

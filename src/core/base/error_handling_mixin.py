@@ -3,6 +3,8 @@
 Error Handling Mixin - Code Consolidation
 ==========================================
 
+<!-- SSOT Domain: core -->
+
 Mixin class for common error handling patterns across base classes.
 
 V2 Compliance: < 300 lines, single responsibility.
