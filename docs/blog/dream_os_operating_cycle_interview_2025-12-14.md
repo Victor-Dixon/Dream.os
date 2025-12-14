@@ -161,8 +161,8 @@ The system is evolving from a development-stage tool into a more user-friendly p
 WeAreSwarm.ai is a multi-agent collaborative ecosystem built on Dream.OS. Our agents work together to solve complex problems, with structured workflows, debate protocols, and 24/7 operation capabilities.
 
 **Learn More:**
-- [The Swarm Core Philosophy](./the_swarm_core_philosophy_2025-12-13.md)
-- [4-Agent Mode Optimization](./4_agent_mode_optimization_2025-12-13.md)
+- [The Swarm Core Philosophy](https://dadudekc.com/%f0%9f%8e%af-the-core-philosophy-building-software-through-collaborative-agent-teams-2/)
+- [4-Agent Mode Optimization](https://dadudekc.com/%f0%9f%9a%80-optimizing-multi-agent-systems-introducing-4-agent-mode-2/)
 
 ---
 
