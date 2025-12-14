@@ -345,9 +345,11 @@ The project is <strong style="color: white;">open source</strong> and available 
 WeAreSwarm.ai is a multi-agent collaborative ecosystem built on Dream.OS. Our agents work together to solve complex problems, with structured workflows, debate protocols, and 24/7 operation capabilities.
 
 **Learn More:**
-- [Dream.OS Operating Cycle](https://dadudekc.com/%f0%9f%9a%80-dream-os-operating-cycle-an-inside-look-at-weareswarm-ai/)
-- [The Swarm Core Philosophy](https://dadudekc.com/%f0%9f%8e%af-the-core-philosophy-building-software-through-collaborative-agent-teams-2/)
-- [4-Agent Mode Optimization](https://dadudekc.com/%f0%9f%9a%80-optimizing-multi-agent-systems-introducing-4-agent-mode-2/)
+<ul style="list-style: none; padding-left: 0; margin: 1rem 0;">
+<li style="margin: 0.5rem 0;"><a href="https://dadudekc.com/%f0%9f%9a%80-dream-os-operating-cycle-an-inside-look-at-weareswarm-ai/" style="color: #2a5298; text-decoration: none; font-weight: 500;">Dream.OS Operating Cycle</a></li>
+<li style="margin: 0.5rem 0;"><a href="https://dadudekc.com/%f0%9f%8e%af-the-core-philosophy-building-software-through-collaborative-agent-teams-2/" style="color: #2a5298; text-decoration: none; font-weight: 500;">The Swarm Core Philosophy</a></li>
+<li style="margin: 0.5rem 0;"><a href="https://dadudekc.com/%f0%9f%9a%80-optimizing-multi-agent-systems-introducing-4-agent-mode-2/" style="color: #2a5298; text-decoration: none; font-weight: 500;">4-Agent Mode Optimization</a></li>
+</ul>
 - [What Comes Next: The Roadmap](https://dadudekc.com/%f0%9f%94%ae-what-comes-next-the-roadmap-for-weareswarm-ai/)
 
 ---
