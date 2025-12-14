@@ -39,9 +39,42 @@ def send_discord_message_to_agent(
 ) -> dict[str, Any]:
     """Send Discord message to agent via message queue (synchronized delivery)."""
     try:
-        from .discord_message_helpers import execute_discord_delivery, prepare_discord_message
-        priority_enum, resolved_sender, templated_message = prepare_discord_message(message, agent, priority, sender, discord_user_id, apply_template, message_category, resolve_discord_sender_func)
-        return execute_discord_delivery(agent, message, templated_message, resolved_sender, priority_enum, queue, use_pyautogui, messaging_cli_path, project_root, discord_user_id, get_discord_username_func, stalled, message_category, apply_template, wait_for_delivery, timeout)
+        priority_enum, resolved_sender, templated_message = prepare_discord_message(
+            message, agent, priority, sender, discord_user_id, apply_template, 
+            message_category, resolve_discord_sender_func
+        )
+        
+        # Use send_discord_via_queue for delivery
+        if queue:
+            explicit_message_type = determine_discord_message_type(message)
+            result = send_discord_via_queue(
+                queue=queue,
+                agent=agent,
+                templated_message=templated_message,
+                resolved_sender=resolved_sender,
+                priority=priority_enum.value,
+                explicit_message_type=explicit_message_type,
+                discord_user_id=discord_user_id,
+                discord_username=None,  # Will be resolved if needed
+                stalled=stalled,
+                message=message,
+                message_category=message_category,
+                apply_template=apply_template,
+                wait_for_delivery=wait_for_delivery,
+                timeout=timeout,
+            )
+            return result
+        else:
+            # Fallback to subprocess delivery
+            return fallback_subprocess_delivery(
+                agent=agent,
+                message=templated_message,
+                priority=priority_enum,
+                messaging_cli_path=messaging_cli_path,
+                project_root=project_root,
+                use_pyautogui=use_pyautogui,
+                stalled=stalled,
+            )
     except Exception as e:
         logger.error(f"Error sending message to {agent}: {e}")
         return {"success": False, "message": str(e), "agent": agent}
