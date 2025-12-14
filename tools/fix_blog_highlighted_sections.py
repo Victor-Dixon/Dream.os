@@ -24,11 +24,6 @@ sys.path.insert(0, str(project_root))
 def fix_highlighted_section_html(html_content: str) -> str:
     """Fix highlighted sections by adding text color to paragraph elements."""
     
-    # First, find all highlighted sections (divs with background: #f8f9fa)
-    # Then fix paragraphs within those sections
-    
-    # Pattern 1: Fix paragraphs in highlighted sections that don't have color
-    # This matches <p> tags that are within a highlighted section div
     def fix_paragraph(match):
         """Fix a paragraph style attribute."""
         full_tag = match.group(0)
@@ -47,15 +42,53 @@ def fix_highlighted_section_html(html_content: str) -> str:
         
         return f'<p style="{new_style}>'
     
-    # Pattern to match <p style="..."> where style doesn't contain color
-    # Specifically looking for paragraphs that are likely in highlighted sections
-    # (have font-size: 1.1em and line-height: 1.8, which are our highlighted section markers)
-    pattern = r'<p style="([^"]*font-size:\s*1\.1em[^"]*?line-height:\s*1\.8[^"]*?)"'
+    def fix_plain_paragraph(match):
+        """Fix a plain <p> tag (no style) by adding style with color."""
+        # Check if this is inside a white background card or highlighted section
+        # We'll add color to plain <p> tags in cards
+        return '<p style="color: #2d3748;">'
+    
+    # Pattern 1: Fix paragraphs with style attributes that don't have color
+    # Highlighted sections with font-size: 1.1em
+    pattern = r'<p style="([^"]*font-size:\s*1\.1em[^"]*?)"'
     fixed = re.sub(pattern, fix_paragraph, html_content)
     
-    # Also handle cases where margin-bottom is present (another marker)
-    pattern2 = r'<p style="([^"]*font-size:\s*1\.1em[^"]*?margin-bottom[^"]*?)"'
+    # Pattern 2: Fix paragraphs with margin-bottom (highlighted sections)
+    pattern2 = r'<p style="([^"]*margin-bottom[^"]*?)"'
     fixed = re.sub(pattern2, fix_paragraph, fixed)
+    
+    # Pattern 3: Fix plain <p> tags that are in white background cards
+    # These are in divs with background: #fff or #ffffff
+    # We need to be careful - only fix <p> tags that are inside specific card divs
+    # Look for <p> tags after card div opening (background: #fff)
+    def fix_card_paragraphs(content):
+        """Fix plain <p> tags inside white background cards."""
+        # Pattern: card div opening, then plain <p> (no style)
+        # Match: <div ... background: #fff ...> ... <p> or <div ... background: #ffffff ...>
+        card_pattern = r'(<div[^>]*background:\s*#fff[^>]*>.*?)(<p)(?!\s+style)'
+        
+        def replace_card_p(m):
+            prefix = m.group(1)
+            p_tag = m.group(2)
+            # Find where this <p> ends (at the next >)
+            # We need to insert style attribute
+            return f'{prefix}{p_tag} style="color: #2d3748"'
+        
+        content = re.sub(card_pattern, replace_card_p, content, flags=re.DOTALL)
+        return content
+    
+    # Fix plain <p> tags in cards
+    fixed = fix_card_paragraphs(fixed)
+    
+    # Pattern 4: Also fix plain <p> tags that might be in highlighted sections
+    # Look for <p> without style that comes after highlighted section div
+    highlighted_pattern = r'(<div[^>]*background:\s*#f8f9fa[^>]*>.*?)(<p)(?!\s+style)'
+    def replace_highlighted_p(m):
+        prefix = m.group(1)
+        p_tag = m.group(2)
+        return f'{prefix}{p_tag} style="color: #2d3748"'
+    
+    fixed = re.sub(highlighted_pattern, replace_highlighted_p, fixed, flags=re.DOTALL)
     
     return fixed
 
