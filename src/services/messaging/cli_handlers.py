@@ -35,86 +35,21 @@ logger = logging.getLogger(__name__)
 def handle_cycle_v2_message(args, parser) -> int:
     """Handle CYCLE_V2 message sending with template."""
     try:
+        from .cli_handler_helpers import (
+            send_cycle_v2_message,
+            validate_cycle_v2_fields,
+        )
+
         if not args.agent:
             print("❌ ERROR: --agent required for --cycle-v2")
             parser.print_help()
             return 1
-
-        # Validate required fields
-        required_fields = {
-            "mission": args.mission,
-            "dod": args.dod,
-            "ssot_constraint": args.ssot_constraint,
-            "v2_constraint": args.v2_constraint,
-            "touch_surface": args.touch_surface,
-            "validation": args.validation,
-            "handoff": args.handoff,
-        }
-
-        missing = [k for k, v in required_fields.items() if not v]
-        if missing:
-            print(
-                f"❌ ERROR: Missing required CYCLE_V2 fields: {', '.join(missing)}")
+        is_valid, missing = validate_cycle_v2_fields(args)
+        if not is_valid:
+            print(f"❌ ERROR: Missing required CYCLE_V2 fields: {', '.join(missing)}")
             print("Required: --mission, --dod, --ssot-constraint, --v2-constraint, --touch-surface, --validation, --handoff")
             return 1
-
-        # Normalize priority
-        normalized_priority = "regular" if args.priority == "normal" else args.priority
-        priority = (
-            UnifiedMessagePriority.URGENT
-            if normalized_priority == "urgent"
-            else UnifiedMessagePriority.REGULAR
-        )
-
-        # Get CYCLE_V2 template from S2A templates
-        cycle_v2_template = MESSAGE_TEMPLATES.get(
-            MessageCategory.S2A, {}).get("CYCLE_V2")
-
-        if not cycle_v2_template:
-            print("❌ ERROR: CYCLE_V2 template not found")
-            return 1
-
-        # Format template directly
-        message_id = f"msg_{int(time.time() * 1000)}"
-        timestamp = datetime.now().isoformat()
-
-        # Replace \n in dod with actual newlines
-        dod = args.dod.replace("\\n", "\n") if args.dod else ""
-
-        rendered = cycle_v2_template.format(
-            sender="Captain Agent-4",
-            recipient=args.agent,
-            priority=priority.value if hasattr(
-                priority, "value") else str(priority),
-            message_id=message_id,
-            timestamp=timestamp,
-            mission=args.mission,
-            dod=dod,
-            ssot_constraint=args.ssot_constraint,
-            v2_constraint=args.v2_constraint,
-            touch_surface=args.touch_surface,
-            validation_required=args.validation,
-            priority_level=args.priority_level or "P1",
-            handoff_expectation=args.handoff,
-            fallback="Escalate to Captain if blocked with proposed fix"
-        )
-
-        # Send via MessageCoordinator
-        result = MessageCoordinator.send_to_agent(
-            args.agent,
-            rendered,
-            priority,
-            stalled=getattr(args, "stalled", False),
-            message_category=MessageCategory.C2A
-        )
-
-        if isinstance(result, dict) and result.get("success"):
-            print(f"✅ CYCLE_V2 message sent to {args.agent}")
-            print(f"   Mission: {args.mission[:50]}...")
-            return 0
-        else:
-            print(f"❌ Failed to send CYCLE_V2 message to {args.agent}")
-            return 1
+        return send_cycle_v2_message(args)
 
     except Exception as e:
         logger.error(f"CYCLE_V2 message handling error: {e}")
@@ -126,63 +61,20 @@ def handle_cycle_v2_message(args, parser) -> int:
 def handle_message(args, parser) -> int:
     """Handle message sending."""
     try:
-        # Check for cycle-v2 flag first
+        from .cli_handler_helpers import (
+            normalize_priority,
+            route_message_delivery,
+        )
+
         if getattr(args, "cycle_v2", False):
             return handle_cycle_v2_message(args, parser)
-
         if not args.agent and not args.broadcast:
             print("❌ ERROR: Either --agent or --broadcast must be specified")
             parser.print_help()
             return 1
-
-        # Normalize "normal" to "regular" for consistency
-        normalized_priority = "regular" if args.priority == "normal" else args.priority
-        priority = (
-            UnifiedMessagePriority.URGENT
-            if normalized_priority == "urgent"
-            else UnifiedMessagePriority.REGULAR
-        )
-
-        # Get stalled flag from args (defaults to False if not present)
+        priority = normalize_priority(args.priority)
         stalled = getattr(args, "stalled", False)
-
-        if args.broadcast:
-            success_count = MessageCoordinator.broadcast_to_all(
-                args.message, priority, stalled=stalled
-            )
-            if success_count > 0:
-                print(f"✅ Broadcast to {success_count} agents successful")
-                return 0
-            else:
-                print("❌ Broadcast failed")
-                return 1
-        else:
-            result = MessageCoordinator.send_to_agent(
-                args.agent, args.message, priority, use_pyautogui=True, stalled=stalled
-            )
-
-            # Check if result is dict (new format) or bool (old format)
-            if isinstance(result, dict):
-                if result.get("success"):
-                    print(f"✅ Message sent to {args.agent}")
-                    return 0
-                elif result.get("blocked"):
-                    # Message blocked - show pending request
-                    print("❌ MESSAGE BLOCKED - Pending Multi-Agent Request")
-                    print()
-                    print(result.get("error_message",
-                          "Pending request details unavailable"))
-                    return 1
-                else:
-                    print(f"❌ Failed to send message to {args.agent}")
-                    return 1
-            elif result:
-                # Old format (bool) - success
-                print(f"✅ Message sent to {args.agent}")
-                return 0
-            else:
-                print(f"❌ Failed to send message to {args.agent}")
-                return 1
+        return route_message_delivery(args, priority, stalled)
 
     except Exception as e:
         logger.error(f"Message handling error: {e}")

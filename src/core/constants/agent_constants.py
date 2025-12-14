@@ -13,7 +13,8 @@ Date: 2025-12-04
 V2 Compliant: Yes (<300 lines)
 """
 
-# All agents in the swarm
+# All agents in the swarm (ALL possible agents)
+# NOTE: Use get_active_agents() from agent_mode_manager for mode-aware active agents
 AGENT_LIST = [
     "Agent-1",
     "Agent-2",
@@ -28,7 +29,8 @@ AGENT_LIST = [
 # Agent IDs as tuple for immutability
 AGENT_IDS = tuple(AGENT_LIST)
 
-# Agent count
+# Agent count (ALL agents)
+# NOTE: Use len(get_active_agents()) for mode-aware count
 AGENT_COUNT = len(AGENT_LIST)
 
 # Agent roles mapping
@@ -55,7 +57,8 @@ AGENT_COORDINATES = {
     "Agent-4": (-308, 1000),  # Captain always last
 }
 
-# Agent processing order (for bulk operations)
+# Agent processing order (for bulk operations - DEFAULT 8-agent order)
+# NOTE: Use get_processing_order() from agent_mode_manager for mode-aware order
 AGENT_PROCESSING_ORDER = [
     "Agent-1",
     "Agent-2",

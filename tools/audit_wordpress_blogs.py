@@ -353,51 +353,55 @@ class WordPressBlogAuditor:
     def get_or_create_category(self, name: str) -> Optional[int]:
         """Get or create category, return category ID."""
         endpoint = f"{self.api_url}/categories"
-        
+
         # Search for existing category
         params = {"search": name, "per_page": 100}
         try:
-            response = self.session.get(endpoint, params=params, timeout=TimeoutConstants.HTTP_DEFAULT)
+            response = self.session.get(
+                endpoint, params=params, timeout=TimeoutConstants.HTTP_DEFAULT)
             if response.status_code == 200:
                 categories = response.json()
                 for cat in categories:
                     if cat["name"].lower() == name.lower():
                         return cat["id"]
-            
+
             # Create if not found
             payload = {"name": name}
-            response = self.session.post(endpoint, json=payload, timeout=TimeoutConstants.HTTP_DEFAULT)
+            response = self.session.post(
+                endpoint, json=payload, timeout=TimeoutConstants.HTTP_DEFAULT)
             if response.status_code == 201:
                 return response.json()["id"]
         except Exception as e:
             logger.error(f"Category operation failed: {e}")
-        
+
         return None
-    
+
     def get_or_create_tag(self, name: str) -> Optional[int]:
         """Get or create tag, return tag ID."""
         endpoint = f"{self.api_url}/tags"
-        
+
         # Search for existing tag
         params = {"search": name, "per_page": 100}
         try:
-            response = self.session.get(endpoint, params=params, timeout=TimeoutConstants.HTTP_DEFAULT)
+            response = self.session.get(
+                endpoint, params=params, timeout=TimeoutConstants.HTTP_DEFAULT)
             if response.status_code == 200:
                 tags = response.json()
                 for tag in tags:
                     if tag["name"].lower() == name.lower():
                         return tag["id"]
-            
+
             # Create if not found
             payload = {"name": name}
-            response = self.session.post(endpoint, json=payload, timeout=TimeoutConstants.HTTP_DEFAULT)
+            response = self.session.post(
+                endpoint, json=payload, timeout=TimeoutConstants.HTTP_DEFAULT)
             if response.status_code == 201:
                 return response.json()["id"]
         except Exception as e:
             logger.error(f"Tag operation failed: {e}")
-        
+
         return None
-    
+
     def create_initial_post(
         self,
         title: str,
@@ -412,13 +416,13 @@ class WordPressBlogAuditor:
             }
 
         endpoint = f"{self.api_url}/posts"
-        
+
         # Resolve category IDs
         category_ids = []
         cat_id = self.get_or_create_category("Site Information")
         if cat_id:
             category_ids.append(cat_id)
-        
+
         # Resolve tag IDs
         tag_ids = []
         for tag_name in ["about", "welcome"]:
@@ -431,7 +435,7 @@ class WordPressBlogAuditor:
             "content": content,
             "status": status,
         }
-        
+
         if category_ids:
             post_data["categories"] = category_ids
         if tag_ids:

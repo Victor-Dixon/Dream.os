@@ -1,0 +1,65 @@
+#!/usr/bin/env python3
+"""
+Agent Message Handler - Messaging Infrastructure
+===============================================
+
+<!-- SSOT Domain: integration -->
+
+Handles single-agent message delivery via message queue.
+Extracted from coordination_handlers.py for V2 compliance.
+
+V2 Compliance | Author: Agent-1 | Date: 2025-12-14
+"""
+
+from __future__ import annotations
+
+import logging
+from typing import Any, Dict, Optional
+
+from src.core.messaging_core import (
+    UnifiedMessagePriority,
+    UnifiedMessageTag,
+    send_message,
+)
+from src.core.messaging_models_core import MessageCategory
+
+from .agent_message_helpers import (
+    build_queue_metadata,
+    detect_and_determine_sender,
+    format_message_for_queue,
+    send_message_with_fallback,
+    update_last_inbound_category,
+    validate_and_prepare_message,
+)
+from .message_formatters import _map_category_from_type
+
+logger = logging.getLogger(__name__)
+
+
+def send_to_agent(
+    agent: str,
+    message,
+    priority=UnifiedMessagePriority.REGULAR,
+    use_pyautogui=False,
+    stalled: bool = False,
+    send_mode: Optional[str] = None,
+    sender: str = None,
+    message_category: Optional[MessageCategory] = None,
+    message_metadata: Optional[Dict[str, Any]] = None,
+    queue=None,
+    detect_sender_func=None,
+    determine_message_type_func=None,
+):
+    """Send message to agent via message queue. Routes through queue for PyAutoGUI orchestration."""
+    try:
+        message_type, sender_final = detect_and_determine_sender(sender, agent, detect_sender_func, determine_message_type_func)
+        category = message_category or _map_category_from_type(message_type)
+        block_result, _ = validate_and_prepare_message(sender_final, agent, message, category)
+        if block_result:
+            handle_blocked_message(block_result, agent)
+            return block_result
+        return send_validated_message(queue, sender_final, agent, message, category, stalled, use_pyautogui, send_mode, priority, message_type)
+    except Exception as e:
+        logger.error(f"Error sending message to {agent}: {e}")
+        return False
+

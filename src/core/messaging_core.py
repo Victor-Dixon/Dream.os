@@ -361,9 +361,14 @@ class UnifiedMessagingCore:
         CRITICAL FIX: Expands "ALL_AGENTS" into individual messages for each agent.
         This ensures broadcast messages are properly queued and delivered to all agents.
         """
-        # Get list of all agents (SSOT)
-        from src.core.constants.agent_constants import AGENT_LIST
-        agents = AGENT_LIST
+        # Get list of active agents (mode-aware)
+        try:
+            from .agent_mode_manager import get_active_agents
+            agents = get_active_agents()
+        except Exception:
+            # Fallback to all agents if mode manager unavailable
+            from src.core.constants.agent_constants import AGENT_LIST
+            agents = AGENT_LIST
         
         # Send individual message to each agent (ensures proper queue processing)
         success_count = 0
@@ -383,19 +388,18 @@ class UnifiedMessagingCore:
         return success_count > 0
 
     def list_agents(self):
-        """List all available agents."""
-        # This would integrate with agent registry
-        agents = [
-            "Agent-1",
-            "Agent-2",
-            "Agent-3",
-            "Agent-4",
-            "Agent-5",
-            "Agent-6",
-            "Agent-7",
-            "Agent-8",
-        ]
-        self.logger.info("🤖 Available Agents:")
+        """List all available agents (mode-aware)."""
+        try:
+            from .agent_mode_manager import get_active_agents, get_mode_manager
+            mode_manager = get_mode_manager()
+            current_mode = mode_manager.get_current_mode()
+            agents = get_active_agents()
+            self.logger.info(f"🤖 Available Agents (Mode: {current_mode}, {len(agents)} active):")
+        except Exception:
+            # Fallback to all agents if mode manager unavailable
+            from src.core.constants.agent_constants import AGENT_LIST
+            agents = AGENT_LIST
+            self.logger.info("🤖 Available Agents:")
         for agent in agents:
             self.logger.info(f"  • {agent}")
 

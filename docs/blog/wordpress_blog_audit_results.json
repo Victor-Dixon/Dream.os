@@ -1,11 +1,14 @@
 {
-  "audit_date": "2025-12-13T19:04:57.225652",
+  "audit_date": "2025-12-13T19:17:22.204957",
   "sites_audited": [
-    "freerideinvestor.com"
+    "dadudekc.com"
   ],
   "results": {
-    "freerideinvestor.com": {
-      "error": "Could not fetch posts"
+    "dadudekc.com": {
+      "total_posts": 3,
+      "duplicates": [],
+      "has_initial_post": false,
+      "initial_post_created": false
     }
   }
 }
