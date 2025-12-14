@@ -21,7 +21,17 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, List, Any, Optional
 
-logger = logging.getLogger(__name__)
+# Import alerting system
+try:
+    from src.infrastructure.alerting_system import AlertingSystem, AlertLevel
+    ALERTING_AVAILABLE = True
+except ImportError:
+    ALERTING_AVAILABLE = False
+    logger = logging.getLogger(__name__)
+    logger.warning("Alerting system not available")
+
+if ALERTING_AVAILABLE:
+    logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -50,16 +60,27 @@ class HealthCheckResult:
 class InfrastructureHealthMonitor:
     """Monitors infrastructure health for automation reliability."""
 
-    def __init__(self, warning_threshold: float = 85.0, critical_threshold: float = 95.0):
+    def __init__(
+        self,
+        warning_threshold: float = 85.0,
+        critical_threshold: float = 95.0,
+        enable_alerting: bool = True
+    ):
         """
         Initialize health monitor.
 
         Args:
             warning_threshold: Percentage threshold for warnings (default: 85%)
             critical_threshold: Percentage threshold for critical alerts (default: 95%)
+            enable_alerting: Enable alerting system integration
         """
         self.warning_threshold = warning_threshold
         self.critical_threshold = critical_threshold
+        self.enable_alerting = enable_alerting and ALERTING_AVAILABLE
+        if self.enable_alerting:
+            self.alerting = AlertingSystem()
+        else:
+            self.alerting = None
 
     def check_disk_space(self, path: str = "/") -> Dict[str, Any]:
         """
@@ -275,6 +296,48 @@ class InfrastructureHealthMonitor:
             message = "⚠️ Infrastructure health check warning - monitor resource usage"
         else:
             message = "🚨 Infrastructure health check critical - immediate action required"
+        
+        # Send alerts if enabled
+        if self.enable_alerting and self.alerting:
+            # Alert on disk space
+            if disk_info.get("usage_percent", 0) >= self.warning_threshold:
+                self.alerting.alert_disk_space(
+                    disk_info.get("usage_percent", 0),
+                    disk_info.get("free_gb", 0),
+                    self.warning_threshold,
+                    self.critical_threshold
+                )
+            
+            # Alert on memory usage
+            if memory_info.get("usage_percent", 0) >= self.warning_threshold:
+                self.alerting.alert_memory_usage(
+                    memory_info.get("usage_percent", 0),
+                    memory_info.get("free_gb", 0),
+                    self.warning_threshold,
+                    self.critical_threshold
+                )
+            
+            # Alert on CPU usage
+            if cpu_info.get("usage_percent", 0) >= 90.0:
+                self.alerting.alert_cpu_usage(
+                    cpu_info.get("usage_percent", 0),
+                    90.0,
+                    95.0
+                )
+            
+            # Send overall status alert if critical
+            if overall_status == "critical":
+                self.alerting.send_alert(
+                    AlertLevel.CRITICAL,
+                    "Infrastructure Health Critical",
+                    message,
+                    source="health_monitor",
+                    metadata={
+                        "disk_usage": disk_info.get("usage_percent", 0),
+                        "memory_usage": memory_info.get("usage_percent", 0),
+                        "cpu_usage": cpu_info.get("usage_percent", 0)
+                    }
+                )
 
         # Generate recommendations
         recommendations = self._generate_recommendations(metrics, disk_info, browser_info)

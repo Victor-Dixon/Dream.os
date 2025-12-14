@@ -1,0 +1,8 @@
+{
+  "level": "warning",
+  "title": "Test Alert",
+  "message": "Testing alerting system integration",
+  "source": "cli_test",
+  "timestamp": "2025-12-14T17:23:05.755722",
+  "metadata": {}
+}
