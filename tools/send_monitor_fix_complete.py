@@ -1,4 +1,19 @@
 #!/usr/bin/env python3
+"""
+DEPRECATED:
+This script is deprecated. Prefer using the canonical messaging CLI instead.
+
+Equivalent CLI command (A2A self-report or A2C to Agent-4):
+  python -m src.services.messaging_cli --agent Agent-2 -m "**✅ Discord Monitor Button Fix Complete - [your message]**" --type text --category a2a
+  # OR to Agent-4:
+  python -m src.services.messaging_cli --agent Agent-4 -m "[your message]" --type text --category a2c
+
+For A2A/A2C message formatting and reply instructions, see:
+  src/core/messaging_template_texts.py (MessageCategory.A2A / MessageCategory.A2C templates)
+
+This script is kept for backward compatibility only. New workflows should use messaging_cli.
+"""
+
 """Send monitor button fix completion."""
 
 import sys
@@ -6,9 +21,6 @@ from pathlib import Path
 project_root = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(project_root))
 
-from src.core.messaging_core import (
-    UnifiedMessagePriority, UnifiedMessageTag, UnifiedMessageType, send_message,
-)
 
 msg = """**✅ Discord Monitor Button Fix Complete**
 
@@ -43,4 +55,3 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"❌ Error: {e}")
         sys.exit(1)
-

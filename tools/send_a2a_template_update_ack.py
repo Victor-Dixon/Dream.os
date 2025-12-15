@@ -1,11 +1,18 @@
 #!/usr/bin/env python3
+"""
+DEPRECATED:
+This script is deprecated. Prefer using the canonical messaging CLI instead.
+
+Equivalent CLI command (A2C to Agent-4):
+  python -m src.services.messaging_cli --agent Agent-4 -m "**✅ A2A TEMPLATE ENHANCED - [your message]**" --type text --category a2c
+
+For A2A/A2C message formatting and reply instructions, see:
+  src/core/messaging_template_texts.py (MessageCategory.A2A / MessageCategory.A2C templates)
+
+This script is kept for backward compatibility only. New workflows should use messaging_cli.
+"""
+
 """Send A2A template enhancement acknowledgment."""
-from src.core.messaging_core import (
-    send_message,
-    UnifiedMessageType,
-    UnifiedMessagePriority,
-    UnifiedMessageTag,
-)
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))

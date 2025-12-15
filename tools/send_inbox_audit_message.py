@@ -1,5 +1,20 @@
 #!/usr/bin/env python3
 """
+DEPRECATED:
+This script is deprecated. Prefer using the canonical messaging CLI instead.
+
+Equivalent CLI command (send audit to individual agents):
+  python -m src.services.messaging_cli --agent <agent_id> -m "**🚨 PRE-PUBLIC PUSH AUDIT - [your message]**" --type text --category a2c --priority urgent
+  # Or use bulk mode for all agents:
+  python -m src.services.messaging_cli --bulk -m "[your message]" --priority urgent
+
+For A2A/A2C message formatting and reply instructions, see:
+  src/core/messaging_template_texts.py (MessageCategory.A2A / MessageCategory.A2C templates)
+
+This script is kept for backward compatibility only. New workflows should use messaging_cli.
+
+---
+
 Send Audit Message Directly to Agent Inboxes
 =============================================
 
@@ -15,7 +30,8 @@ from datetime import datetime
 from pathlib import Path
 
 # Agent list
-AGENTS = ['Agent-1', 'Agent-2', 'Agent-3', 'Agent-5', 'Agent-6', 'Agent-7', 'Agent-8', 'Agent-4']
+AGENTS = ['Agent-1', 'Agent-2', 'Agent-3', 'Agent-5',
+          'Agent-6', 'Agent-7', 'Agent-8', 'Agent-4']
 
 # Audit message
 AUDIT_MESSAGE = """# 🚨 CAPTAIN MESSAGE - PRE-PUBLIC PUSH AUDIT
@@ -160,26 +176,27 @@ def send_inbox_message(agent_id: str, workspace_root: Path = None) -> bool:
     """Send audit message directly to agent inbox."""
     if workspace_root is None:
         workspace_root = Path(__file__).parent.parent
-    
+
     inbox_dir = workspace_root / "agent_workspaces" / agent_id / "inbox"
-    
+
     # Create inbox directory if it doesn't exist
     inbox_dir.mkdir(parents=True, exist_ok=True)
-    
+
     # Generate message with agent-specific domain checks
     timestamp = datetime.now().isoformat()
-    domain_checks = DOMAIN_CHECKS.get(agent_id, "• Review your domain for all security and quality issues")
-    
+    domain_checks = DOMAIN_CHECKS.get(
+        agent_id, "• Review your domain for all security and quality issues")
+
     message_content = AUDIT_MESSAGE.format(
         agent_id=agent_id,
         timestamp=timestamp,
         domain_checks=domain_checks
     )
-    
+
     # Create message filename
     message_filename = f"CAPTAIN_MESSAGE_AUDIT_PRE_PUBLIC_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{agent_id}.md"
     message_path = inbox_dir / message_filename
-    
+
     try:
         # Write message to inbox
         message_path.write_text(message_content, encoding='utf-8')
@@ -197,26 +214,25 @@ def main():
     print("PRE-PUBLIC PUSH AUDIT - DIRECT INBOX DELIVERY")
     print("=" * 70)
     print()
-    
+
     success_count = 0
     failed_count = 0
-    
+
     for agent_id in AGENTS:
         if send_inbox_message(agent_id, workspace_root):
             success_count += 1
         else:
             failed_count += 1
-    
+
     print()
     print("=" * 70)
     print(f"✅ Successfully delivered: {success_count}/{len(AGENTS)}")
     if failed_count > 0:
         print(f"❌ Failed: {failed_count}/{len(AGENTS)}")
     print("=" * 70)
-    
+
     return 0 if failed_count == 0 else 1
 
 
 if __name__ == "__main__":
     sys.exit(main())
-

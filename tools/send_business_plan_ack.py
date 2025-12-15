@@ -1,4 +1,17 @@
 #!/usr/bin/env python3
+"""
+DEPRECATED:
+This script is deprecated. Prefer using the canonical messaging CLI instead.
+
+Equivalent CLI command (A2A to Agent-1):
+  python -m src.services.messaging_cli --agent Agent-1 -m "**✅ BUSINESS PLAN COMPLETE - ACKNOWLEDGED (A2A)** [your message]" --type text --category a2a
+
+For A2A/A2C message formatting and reply instructions, see:
+  src/core/messaging_template_texts.py (MessageCategory.A2A / MessageCategory.A2C templates)
+
+This script is kept for backward compatibility only. New workflows should use messaging_cli.
+"""
+
 """Send acknowledgment message for business plan completion."""
 from src.core.messaging_core import (
     send_message,
