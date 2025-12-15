@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """
 Local Repo Layer - GitHub Bypass System
+
+<!-- SSOT Domain: infrastructure -->
+
 ========================================
 
 Creates a local-first repository system where GitHub is optional.

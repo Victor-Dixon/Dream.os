@@ -130,8 +130,14 @@ class MessageInterpreter:
             True if status command
         """
         message_lower = message.lower().strip()
+        # Core status commands
         status_commands = ["!status", "!swarm", "!agents"]
-        return any(message_lower.startswith(cmd) for cmd in status_commands)
+        if any(message_lower.startswith(cmd) for cmd in status_commands):
+            return True
+        # Aliases like "!team status" / "!swarm status"
+        if message_lower.startswith("!team status") or message_lower.startswith("!swarm status"):
+            return True
+        return False
 
     def parse_status_command(self, message: str) -> tuple[str, Optional[str]]:
         """
@@ -147,6 +153,10 @@ class MessageInterpreter:
         """
         message_lower = message.lower().strip()
         parts = message_lower.split()
+
+        # Aliases that should show full team status
+        if message_lower.startswith("!team status") or message_lower.startswith("!swarm status"):
+            return ("all", None)
 
         if len(parts) == 1:
             # !status - show all
@@ -200,9 +210,14 @@ class MessageInterpreter:
         Returns:
             True if broadcast command
         """
-        message_lower = message.lower()
-        broadcast_commands = ["!team", "!swarm", "!all", "!everyone", "!broadcast"]
+        message_lower = message.lower().strip()
 
+        # Treat status aliases as pure status, not broadcast
+        if message_lower.startswith("!team status") or message_lower.startswith("!swarm status"):
+            return False
+
+        broadcast_commands = ["!team", "!swarm",
+                              "!all", "!everyone", "!broadcast"]
         return any(message_lower.startswith(cmd) for cmd in broadcast_commands)
 
     def _find_best_agent_match(self, message: str) -> Optional[str]:
@@ -346,7 +361,3 @@ class MessageInterpreter:
 
 
 __all__ = ["MessageInterpreter"]
-
-
-
-

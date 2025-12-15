@@ -118,3 +118,4 @@
 - **Coordination:** Captain handles increased coordination load
 - **System Stability:** Reduced agent count should improve system stability
 
+

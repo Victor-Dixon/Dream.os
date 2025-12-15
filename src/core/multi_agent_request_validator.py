@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """
 Multi-Agent Request Validator - Blocks Messaging Until Response
+
+<!-- SSOT Domain: infrastructure -->
+
 ================================================================
 
 Validates that agents have responded to pending multi-agent requests

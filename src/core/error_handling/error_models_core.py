@@ -1,5 +1,8 @@
 """
 Error Models Core - V2 Compliance Error Handling Core Models
+
+<!-- SSOT Domain: infrastructure -->
+
 ============================================================
 
 Core data models for error handling system with V2 compliance standards.

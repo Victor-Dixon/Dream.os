@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """
 Agent Documentation Service - KISS Compliant
+
+<!-- SSOT Domain: infrastructure -->
+
 ===========================================
 
 Unified documentation service for AI agents.

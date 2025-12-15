@@ -1,5 +1,7 @@
 """
 End of Cycle Push Protocol - Prepare and push changes before overnight runs
+<!-- SSOT Domain: infrastructure -->
+
 
 Ensures all work is committed and pushed at end of each day cycle
 before autonomous overnight runs begin.

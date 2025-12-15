@@ -1,5 +1,8 @@
 """
 Base Engine - SSOT for all engine classes
+
+<!-- SSOT Domain: infrastructure -->
+
 =========================================
 
 Base class for all engine implementations.

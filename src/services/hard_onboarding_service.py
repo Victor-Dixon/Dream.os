@@ -20,6 +20,11 @@ import logging
 import time
 
 from src.core.base.base_service import BaseService
+from src.services.onboarding.onboarding_helpers import (
+    load_agent_coordinates,
+    validate_coordinates,
+    validate_onboarding_coordinates,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -54,23 +59,30 @@ class HardOnboardingService(BaseService):
         self.pyautogui = pyautogui
 
     def _load_agent_coordinates(self, agent_id: str) -> tuple[tuple[int, int], tuple[int, int]]:
-        """Load chat and onboarding coordinates for agent."""
-        from ..core.coordinate_loader import get_coordinate_loader
+        """Load chat and onboarding coordinates for agent.
 
-        coord_loader = get_coordinate_loader()
-
-        # Get both chat and onboarding coordinates
-        chat_coords = coord_loader.get_chat_coordinates(agent_id)
-        onboarding_coords = coord_loader.get_onboarding_coordinates(agent_id)
-
+        Thin wrapper that delegates to shared onboarding_helpers module.
+        """
+        chat_coords, onboarding_coords = load_agent_coordinates(agent_id)
         return chat_coords, onboarding_coords
 
     def _validate_coordinates(self, agent_id: str, coords: tuple[int, int]) -> bool:
-        """Validate coordinates before sending."""
-        from ..core.messaging_pyautogui import PyAutoGUIMessagingDelivery
+        """Validate coordinates before sending (delegates to onboarding_helpers)."""
+        return validate_coordinates(agent_id, coords)
 
-        delivery = PyAutoGUIMessagingDelivery()
-        return delivery.validate_coordinates(agent_id, coords)
+    def _get_agent_specific_instructions(self, agent_id: str) -> str:
+        """
+        Thin wrapper around the onboarding agent instructions helper.
+
+        Keeping this method preserves the original HardOnboardingService API
+        while allowing the large instruction mapping to live in a separate,
+        V2-compliant helper module.
+        """
+        from src.services.onboarding.agent_instructions import (
+            get_agent_specific_instructions,
+        )
+
+        return get_agent_specific_instructions(agent_id)
 
     def step_1_clear_chat(self, agent_id: str) -> bool:
         """
@@ -91,7 +103,8 @@ class HardOnboardingService(BaseService):
 
             # Validate coordinates
             if not self._validate_coordinates(agent_id, chat_coords):
-                self.logger.error(f"❌ Coordinate validation failed for {agent_id}")
+                self.logger.error(
+                    f"❌ Coordinate validation failed for {agent_id}")
                 return False
 
             x, y = chat_coords
@@ -170,14 +183,11 @@ class HardOnboardingService(BaseService):
                 return False
 
             # Validate bounds only (not comparing against chat coords)
-            x, y = onboarding_coords
-
-            # Simple bounds check
-            if x < -2000 or x > 2000 or y < 0 or y > 1500:
-                logger.error(
-                    f"❌ Onboarding coordinates out of bounds for {agent_id}: {onboarding_coords}"
-                )
+            if not validate_onboarding_coordinates(agent_id, onboarding_coords):
+                # validate_onboarding_coordinates already logs a detailed error
                 return False
+
+            x, y = onboarding_coords
 
             logger.info(
                 f"🎯 Step 4: Navigating to onboarding input for {agent_id} at {onboarding_coords}"

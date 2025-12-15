@@ -34,7 +34,11 @@ jobs:
       
       - name: Install Dependencies
         run: |
-          pip install -r requirements.txt
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          else
+            echo "requirements.txt not found, skipping dependency installation"
+          fi
       
       - name: Checkout Websites Repository
         uses: actions/checkout@v4

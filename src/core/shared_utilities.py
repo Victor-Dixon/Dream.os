@@ -1,5 +1,8 @@
 """
 Shared Utilities - Core Manager Utilities (Refactored)
+
+<!-- SSOT Domain: infrastructure -->
+
 =======================================================
 
 Shared utility classes for manager components implementing SSOT principles.

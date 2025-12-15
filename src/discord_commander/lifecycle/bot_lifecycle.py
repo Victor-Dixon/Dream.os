@@ -56,12 +56,25 @@ class BotLifecycleManager:
             self.logger.warning(f"⚠️ Could not load approval commands: {e}")
 
     async def _load_messaging_commands(self) -> None:
-        """Load messaging commands cog."""
-        from src.discord_commander.unified_discord_bot import MessagingCommands
-        await self.bot.add_cog(MessagingCommands(self.bot, self.bot.gui_controller))
-        self.logger.info("✅ Messaging commands loaded")
-        command_names = [cmd.name for cmd in self.bot.walk_commands()]
-        self.logger.info(f"📋 Registered commands: {', '.join(command_names)}")
+        """Load messaging commands cogs (V2 compliant modules)."""
+        from .commands import (
+            CoreMessagingCommands,
+            SystemControlCommands,
+            OnboardingCommands,
+            UtilityCommands,
+            AgentManagementCommands,
+            ProfileCommands,
+            PlaceholderCommands,
+        )
+        
+        await self.bot.add_cog(CoreMessagingCommands(self.bot, self.bot.gui_controller))
+        await self.bot.add_cog(SystemControlCommands(self.bot, self.bot.gui_controller))
+        await self.bot.add_cog(OnboardingCommands(self.bot, self.bot.gui_controller))
+        await self.bot.add_cog(UtilityCommands(self.bot, self.bot.gui_controller))
+        await self.bot.add_cog(AgentManagementCommands(self.bot, self.bot.gui_controller))
+        await self.bot.add_cog(ProfileCommands(self.bot, self.bot.gui_controller))
+        await self.bot.add_cog(PlaceholderCommands(self.bot, self.bot.gui_controller))
+        self.logger.info("✅ All messaging command cogs loaded (V2 compliant modules)")
 
     async def _load_swarm_showcase_commands(self) -> None:
         """Load swarm showcase commands cog."""
@@ -202,5 +215,5 @@ class BotLifecycleManager:
         self.logger.info("🛑 Unified Discord Bot shutting down...")
         # Mark as intentional shutdown to prevent reconnection loop
         self.bot._intentional_shutdown = True
-        await self.bot.close()
+        # Note: Actual bot.close() is called by the bot's close() method after this
 

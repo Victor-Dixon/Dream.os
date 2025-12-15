@@ -1,4 +1,7 @@
-"""Browser Configuration - Extracted from unified_config.py | Agent-5 C-056"""
+"""Browser Configuration - Extracted from unified_config.py | Agent-5 C-056
+
+SSOT Domain: infrastructure
+"""
 
 from dataclasses import dataclass, field
 
@@ -18,14 +21,16 @@ class BrowserConfig:
     )
 
     # Primary selectors
-    input_selector: str = get_config("INPUT_SELECTOR", "textarea[data-testid='prompt-textarea']")
+    input_selector: str = get_config(
+        "INPUT_SELECTOR", "textarea[data-testid='prompt-textarea']")
     send_button_selector: str = get_config(
         "SEND_BUTTON_SELECTOR", "button[data-testid='send-button']"
     )
     response_selector: str = get_config(
         "RESPONSE_SELECTOR", "[data-testid='conversation-turn']:last-child .markdown"
     )
-    thinking_indicator: str = get_config("THINKING_INDICATOR", "[data-testid='thinking-indicator']")
+    thinking_indicator: str = get_config(
+        "THINKING_INDICATOR", "[data-testid='thinking-indicator']")
 
     # Fallback selectors
     input_fallback_selectors: list[str] = field(

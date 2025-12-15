@@ -1,5 +1,8 @@
 """
 Error Reporting Core - Agent Cellphone V2
+
+<!-- SSOT Domain: infrastructure -->
+
 =========================================
 
 Core error reporting functionality for comprehensive error tracking.

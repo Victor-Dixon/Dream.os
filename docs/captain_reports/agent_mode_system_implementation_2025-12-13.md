@@ -180,3 +180,4 @@ python tools/switch_agent_mode.py 8-agent
 3. Create mode-specific documentation
 4. Add mode transition notifications to agents
 
+

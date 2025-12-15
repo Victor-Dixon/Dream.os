@@ -1,5 +1,8 @@
 """
 Performance Monitoring System - KISS Simplified
+
+<!-- SSOT Domain: infrastructure -->
+
 ===============================================
 
 Simplified performance monitoring system.

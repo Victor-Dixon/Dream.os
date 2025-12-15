@@ -1,4 +1,17 @@
 #!/usr/bin/env python3
+"""
+DEPRECATED:
+This script is deprecated. Prefer using the canonical messaging CLI instead.
+
+Equivalent CLI command (A2C to Agent-4):
+  python -m src.services.messaging_cli --agent Agent-4 -m "**✅ STATUS ACKNOWLEDGMENT - [your message]**" --type text --category a2c
+
+For A2A/A2C message formatting and reply instructions, see:
+  src/core/messaging_template_texts.py (MessageCategory.A2A / MessageCategory.A2C templates)
+
+This script is kept for backward compatibility only. New workflows should use messaging_cli.
+"""
+
 """Send status acknowledgment to Agent-4."""
 from src.core.messaging_core import (
     send_message,
