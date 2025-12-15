@@ -1,5 +1,8 @@
 """
 Engine State Management - V2 Compliance Module
+
+<!-- SSOT Domain: infrastructure -->
+
 =============================================
 
 Manages engine state transitions following SRP.

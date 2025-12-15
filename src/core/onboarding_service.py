@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """
 Onboarding Service - Core Implementation
+
+<!-- SSOT Domain: infrastructure -->
+
 ========================================
 
 Implements IOnboardingService protocol for messaging core.

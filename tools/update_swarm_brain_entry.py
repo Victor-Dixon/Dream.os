@@ -71,3 +71,4 @@ print(f"   Total entries: {kb['stats']['total_entries']}")
 print(f"   Agent-4 contributions: {kb['stats']['contributors']['Agent-4']}")
 
 
+

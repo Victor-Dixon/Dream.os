@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """
 Optimized Stall/Resume Prompt Generator
+
+<!-- SSOT Domain: infrastructure -->
+
 ========================================
 
 Generates context-aware recovery prompts based on:

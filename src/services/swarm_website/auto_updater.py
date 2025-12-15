@@ -186,3 +186,4 @@ def auto_update_agent_status(agent_id: str) -> bool:
     updater = SwarmWebsiteAutoUpdater()
     return updater.check_and_update_agent(agent_id)
 
+

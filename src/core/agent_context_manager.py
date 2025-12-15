@@ -1,5 +1,8 @@
 """
 Single Source of Truth (SSOT) for Agent Context Management
+
+<!-- SSOT Domain: infrastructure -->
+
 Domain: core
 Owner: Agent-2 (Architecture & Design)
 Last Updated: 2025-12-08

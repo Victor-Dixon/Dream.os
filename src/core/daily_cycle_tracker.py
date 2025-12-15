@@ -1,5 +1,7 @@
 """
 Daily Cycle Tracker - Track cycles by day for productivity metrics
+<!-- SSOT Domain: infrastructure -->
+
 
 Tracks daily cycles to measure productivity and prepare for end-of-day pushes
 before autonomous overnight runs.

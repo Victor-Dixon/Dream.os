@@ -11,19 +11,45 @@
 **Standard**: Files MUST be ≤300 lines (with approved exceptions)
 
 ### Current Status (CORRECTED - 2025-12-14):
-- **Total Files**: 1,015 Python files
-- **Compliant Files**: 172 files
-- **Files with Violations**: 843 files
-- **Compliance Rate**: **16.9%** (172/1,015) ⚠️
-- **Total Violations**: **1,941 violations**
+- **Total Files**: 889 Python files
+- **Compliant Files**: 779 files (≤300 lines)
+- **Files with Violations**: 110 files (>300 lines)
+- **File Size Compliance Rate**: **87.6%** (779/889) ⚠️
+- **File Size Violations**: **110 violations**
 
 ### 🚨 CRITICAL: Dashboard Previously Inaccurate
-**Previous Claim**: 1 violation (99.9% compliance) ❌  
-**Actual Status**: 1,941 violations (16.9% compliance) ✅  
-**Discrepancy**: 1,940 violations unaccounted for
+**Previous Claim**: 3 violations (99.7% compliance) ❌  
+**Actual Status**: **110 violations** (87.6% compliance) ✅  
+**Discrepancy**: 107 violations unaccounted for
 
-### Violation Breakdown:
-- **File Size Violations**: 113 files (>300 lines)
+### File Size Violation Breakdown:
+- **Critical (>1000 lines)**: 4 files
+  - messaging_template_texts.py (1,419)
+  - enhanced_agent_activity_detector.py (1,367)
+  - github_book_viewer.py (1,164)
+  - unified_discord_bot.py (1,164 - Batch 2 Phase 2D, 80% complete)
+- **Major (500-1000 lines)**: 16 files
+  - thea_browser_service.py (1,013)
+  - twitch_bridge.py (954)
+  - main_control_panel_view.py (877)
+  - hard_onboarding_service.py (870 - Batch 4, 20% complete)
+  - status_change_monitor.py (826)
+  - broadcast_templates.py (819)
+  - hardened_activity_detector.py (809)
+  - messaging_pyautogui.py (801)
+  - message_queue_processor.py (773)
+  - agent_self_healing_system.py (751)
+  - chat_presence_orchestrator.py (749)
+  - auto_gas_pipeline_system.py (687)
+  - swarm_showcase_commands.py (650)
+  - debate_to_gas_integration.py (619)
+  - message_queue.py (617)
+  - discord_gui_modals.py (600)
+  - soft_onboarding_service.py (533 - Batch 4, 20% complete)
+- **Moderate (400-500 lines)**: 19 files
+- **Minor (300-400 lines)**: 71 files
+
+### Other Violation Types (Separate Tracking):
 - **Function Size Violations**: 940 functions (>30 lines)
 - **Class Size Violations**: 151 classes (>200 lines)
 - **SSOT Tag Violations**: 737 files (missing tags)
@@ -41,7 +67,7 @@
 - Pattern: Service + Integration Modules (applied by Agent-1)
 - Note: Dashboard incorrectly listed as violation - now corrected
 
-**Achievement Unlocked**: 94% of all V2 violations eliminated!
+**Note**: Previous "94% reduction" claim was based on incomplete data. Accurate tracking now in place.
 
 ---
 
@@ -96,26 +122,40 @@
 
 ## 🚨 REMAINING V2 VIOLATIONS
 
-### ⚠️ ACTUAL STATUS: 1,941 Total Violations
+### ⚠️ ACTUAL STATUS: 110 File Size Violations (>300 lines)
 
-### File Size Violations (113 files):
+### Prioritized File Size Violation List:
 
 **Tier 1: Critical (>1000 lines)** - 4 files:
-1. `unified_discord_bot.py` - 2,636 lines (exceeds by 2,336)
-2. `messaging_template_texts.py` - 1,419 lines (exceeds by 1,119)
-3. `enhanced_agent_activity_detector.py` - 1,367 lines (exceeds by 1,067)
-4. `github_book_viewer.py` - 1,164 lines (exceeds by 864)
+1. `src/core/messaging_template_texts.py` - 1,419 lines (+1,119)
+2. `src/orchestrators/overnight/enhanced_agent_activity_detector.py` - 1,367 lines (+1,067)
+3. `src/discord_commander/github_book_viewer.py` - 1,164 lines (+864)
+4. `src/discord_commander/unified_discord_bot.py` - 1,164 lines (+864)
+   - **Status**: Batch 2 Phase 2D, 80% complete (Phase 5 in progress)
 
-**Tier 2: High Priority (700-1000 lines)** - 6 files:
-5. `thea_browser_service.py` - 1,013 lines
-6. `twitch_bridge.py` - 954 lines
-7. `main_control_panel_view.py` - 877 lines
-8. `hard_onboarding_service.py` - 870 lines
-9. `status_change_monitor.py` - 826 lines
-10. `broadcast_templates.py` - 819 lines
+**Tier 2: Major (500-1000 lines)** - 16 files:
+5. `src/infrastructure/browser/thea_browser_service.py` - 1,013 lines (+713)
+6. `src/services/chat_presence/twitch_bridge.py` - 954 lines (+654)
+7. `src/discord_commander/views/main_control_panel_view.py` - 877 lines (+577)
+8. `src/services/hard_onboarding_service.py` - 870 lines (+570)
+   - **Status**: Batch 4, 20% complete (helpers created)
+9. `src/discord_commander/status_change_monitor.py` - 826 lines (+526)
+10. `src/discord_commander/templates/broadcast_templates.py` - 819 lines (+519)
+11. `src/core/hardened_activity_detector.py` - 809 lines (+509)
+12. `src/core/messaging_pyautogui.py` - 801 lines (+501)
+13. `src/core/message_queue_processor.py` - 773 lines (+473)
+14. `src/core/agent_self_healing_system.py` - 751 lines (+451)
+15. `src/services/chat_presence/chat_presence_orchestrator.py` - 749 lines (+449)
+16. `src/core/auto_gas_pipeline_system.py` - 687 lines (+387)
+17. `src/discord_commander/swarm_showcase_commands.py` - 650 lines (+350)
+18. `src/core/debate_to_gas_integration.py` - 619 lines (+319)
+19. `src/core/message_queue.py` - 617 lines (+317)
+20. `src/discord_commander/discord_gui_modals.py` - 600 lines (+300)
+21. `src/services/soft_onboarding_service.py` - 533 lines (+233)
+   - **Status**: Batch 4, 20% complete (helpers created)
 
-**Tier 3: Medium Priority (500-700 lines)** - 10 files  
-**Tier 4: Lower Priority (300-500 lines)** - 93 files
+**Tier 3: Moderate (400-500 lines)** - 19 files  
+**Tier 4: Minor (300-400 lines)** - 71 files
 
 **See**: `docs/v2_compliance/V2_REFACTORING_PLAN_2025-12-14.md` for complete prioritized list
 
@@ -141,13 +181,21 @@
 
 ### Overall Project Progress:
 ```
-V2 Compliance Status: 98.8% compliant (889 files, 11 violations)
+File Size V2 Compliance Status: 87.6% compliant (779/889 files)
 
-████████████████████████████████████████████████░░ 98.8%
+████████████████████████████░░░░░░░░░░░░░░░░░░░░ 87.6%
 
-Violations Eliminated: 15+
-Remaining Violations: 11
-Approved Exceptions: 6
+Compliant Files: 779
+File Size Violations: 110
+Compliance Rate: 87.6%
+```
+
+### Violation Breakdown:
+```
+Critical (>1000 lines):  ████ (4 files)
+Major (500-1000 lines):  ████████████████ (16 files)
+Moderate (400-500 lines): ███████████████████ (19 files)
+Minor (300-400 lines):   ████████████████████████████████████████████████████████████████████████████████████ (71 files)
 ```
 
 ### Agent-5 Contribution:
@@ -166,12 +214,17 @@ Reduction: -51%
 
 ### Remaining Work:
 ```
-Remaining V2 Violations: 11 files
+Remaining File Size Violations: 110 files
 
-Refactorable:    ████████ (4 files Agent-5 + 5 other)
-Exception Review: ██ (2 files Agent-5)
+Critical (>1000):  ████ (4 files - Priority 1)
+Major (500-1000):  ████████████████ (16 files - Priority 2)
+Moderate (400-500): ███████████████████ (19 files - Priority 3)
+Minor (300-400):   ████████████████████████████████████████████████████████████████████████████████████ (71 files - Priority 4)
 
-Estimated Work: 4-6 cycles to eliminate all refactorable violations
+Active Refactoring:
+- unified_discord_bot.py: IN PROGRESS (Batch 2 Phase 2D, 80%)
+- hard_onboarding_service.py: IN PROGRESS (Batch 4, 20%)
+- soft_onboarding_service.py: IN PROGRESS (Batch 4, 20%)
 ```
 
 ---
@@ -219,56 +272,80 @@ Estimated Work: 4-6 cycles to eliminate all refactorable violations
 ## 📋 V2 COMPLIANCE TRACKING
 
 ### By Category:
+**Note**: Category-specific breakdowns are estimates. Comprehensive audit shows **110 total violations** across all categories (87.6% overall compliance).
 
 **Core Modules** (src/core/):
 - Total files: ~150
-- Violations: 3 remaining
-- Compliance: 98%
+- Known violations: Multiple files (messaging_template_texts.py 1,419, messaging_pyautogui.py 801, etc.)
+- **See comprehensive report for complete list**
 
 **Services** (src/services/):
 - Total files: ~80
-- Violations: 4 remaining
-- Compliance: 95%
+- Known violations: hard_onboarding_service.py (870), soft_onboarding_service.py (533), etc.
+- **See comprehensive report for complete list**
 
 **Utilities** (src/utils/):
 - Total files: ~30
-- Violations: 1 remaining
-- Compliance: 97%
+- Violations: See comprehensive report
+- **See comprehensive report for complete list**
 
 **Infrastructure** (src/infrastructure/):
 - Total files: ~50
-- Violations: 2 remaining
-- Compliance: 96%
+- Known violations: thea_browser_service.py (1,013), etc.
+- **See comprehensive report for complete list**
 
 **Web/GUI**:
 - Total files: ~100
-- Violations: 0 (all fixed by Agent-7)
-- Compliance: 100% ✅
+- Violations: See comprehensive report (main_control_panel_view.py 877, discord_gui_modals.py 600, etc.)
+- **See comprehensive report for complete list**
+
+**Discord Commander** (src/discord_commander/):
+- Total files: ~50
+- Known violations: unified_discord_bot.py (1,164), github_book_viewer.py (1,164), etc.
+- **See comprehensive report for complete list**
+
+**Reference**: `docs/v2_compliance/COMPREHENSIVE_V2_VIOLATION_REPORT_2025-12-14.md` for complete violation list (110 files)
 
 ---
 
 ## 🔄 NEXT ACTIONS
 
-### Immediate (CRITICAL):
-1. ✅ **Dashboard Updated**: Accurate violation counts (2025-12-14)
-2. ✅ **Refactoring Plan Created**: Prioritized by tier
-3. ⏳ **Begin Tier 1 Refactoring**: Start with `unified_discord_bot.py`
+### Immediate (CRITICAL - File Size Violations):
+1. ✅ **Dashboard Updated**: Accurate file size violation counts (2025-12-14)
+2. ✅ **Comprehensive Audit Complete**: 110 violations identified
+3. ⏳ **Priority 1**: Complete Batch 2 Phase 2D (unified_discord_bot.py)
+   - Current: 1,164 lines (80% complete, Phase 5 in progress)
+   - Target: ~100 line shim (96% reduction)
+   - Impact: Eliminates 1 Critical violation
+4. ⏳ **Priority 2**: Complete Batch 4 (hard_onboarding_service.py, soft_onboarding_service.py)
+   - Current: 870 lines, 533 lines (20% complete)
+   - Impact: Eliminates 2 Major violations
 
-### Short-Term (Month 1-2):
-1. Refactor Tier 1 files (4 critical files >1000 lines)
-2. Target: 0 files >1000 lines
-3. Compliance: 16.9% → 20%
+### Short-Term (Focus on Critical/Major):
+1. **Tier 1 (Critical >1000 lines)**: 4 files
+   - unified_discord_bot.py - IN PROGRESS (Batch 2 Phase 2D)
+   - messaging_template_texts.py - PENDING
+   - enhanced_agent_activity_detector.py - PENDING
+   - github_book_viewer.py - PENDING
+   - Target: 0 files >1000 lines
+   - Compliance improvement: 87.6% → 89.5% (4 violations eliminated)
 
-### Medium-Term (Month 3-6):
-1. Refactor Tier 2-3 files (16 files)
-2. Target: 0 files >500 lines
-3. Compliance: 20% → 35%
+2. **Tier 2 (Major 500-1000 lines)**: 16 files
+   - hard_onboarding_service.py - IN PROGRESS (Batch 4)
+   - soft_onboarding_service.py - IN PROGRESS (Batch 4)
+   - 14 other files - PENDING
+   - Target: Systematic refactoring
+   - Compliance improvement: 89.5% → 92.1% (16 violations eliminated)
 
-### Long-Term (Month 7-12):
-1. Refactor Tier 4 files (93 files)
-2. Add SSOT tags (737 files)
-3. Address function/class size violations
-4. Target: 90%+ compliance
+### Medium-Term:
+1. Refactor Tier 3 files (19 files, 400-500 lines)
+2. Refactor Tier 4 files (71 files, 300-400 lines)
+3. Target: 95%+ file size compliance
+
+### Long-Term:
+1. Address function/class size violations (separate initiative)
+2. Add SSOT tags (separate initiative)
+3. Target: 100% file size compliance
 
 ---
 

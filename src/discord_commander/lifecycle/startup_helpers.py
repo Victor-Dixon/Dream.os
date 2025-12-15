@@ -30,49 +30,79 @@ def get_priority_emoji(priority: str) -> str:
 def add_snapshot_fields(embed: "discord.Embed", snapshot: dict, logger: logging.Logger) -> None:
     """Add snapshot fields to embed."""
     if snapshot["active_agents"]:
-        active_list = []
-        for agent in snapshot["active_agents"][:5]:
-            priority_emoji = get_priority_emoji(agent["priority"])
-            active_list.append(
-                f"{priority_emoji} **{agent['id']}** ({agent['phase']}): {agent['mission']}"
-            )
-        if len(snapshot["active_agents"]) > 5:
-            active_list.append(f"... and {len(snapshot['active_agents']) - 5} more")
-        embed.add_field(
-            name=f"📊 Current Work Snapshot ({snapshot['engagement_rate']:.0f}% Engagement)",
-            value="\n".join(active_list) if active_list else "No active agents",
-            inline=False,
-        )
+        _add_active_agents_field(embed, snapshot)
 
     if snapshot["recent_activity"]:
-        activity_text = "\n".join(snapshot["recent_activity"][:3])
-        if len(snapshot["recent_activity"]) > 3:
-            activity_text += f"\n... and {len(snapshot['recent_activity']) - 3} more"
-        embed.add_field(
-            name="✅ Recent Activity",
-            value=activity_text[:1024],
-            inline=False,
-        )
+        _add_recent_activity_field(embed, snapshot)
 
     if snapshot["current_focus"]:
-        focus_text = "\n".join(snapshot["current_focus"][:3])
-        if len(snapshot["current_focus"]) > 3:
-            focus_text += f"\n... and {len(snapshot['current_focus']) - 3} more"
-        embed.add_field(
-            name="🎯 Current Focus",
-            value=focus_text[:1024],
-            inline=False,
+        _add_current_focus_field(embed, snapshot)
+
+
+def _add_active_agents_field(embed: "discord.Embed", snapshot: dict) -> None:
+    """Add active agents field to embed."""
+    active_list = []
+    for agent in snapshot["active_agents"][:5]:
+        priority_emoji = get_priority_emoji(agent["priority"])
+        active_list.append(
+            f"{priority_emoji} **{agent['id']}** ({agent['phase']}): {agent['mission']}"
         )
+    if len(snapshot["active_agents"]) > 5:
+        active_list.append(f"... and {len(snapshot['active_agents']) - 5} more")
+    embed.add_field(
+        name=f"📊 Current Work Snapshot ({snapshot['engagement_rate']:.0f}% Engagement)",
+        value="\n".join(active_list) if active_list else "No active agents",
+        inline=False,
+    )
+
+
+def _add_recent_activity_field(embed: "discord.Embed", snapshot: dict) -> None:
+    """Add recent activity field to embed."""
+    activity_text = "\n".join(snapshot["recent_activity"][:3])
+    if len(snapshot["recent_activity"]) > 3:
+        activity_text += f"\n... and {len(snapshot['recent_activity']) - 3} more"
+    embed.add_field(
+        name="✅ Recent Activity",
+        value=activity_text[:1024],
+        inline=False,
+    )
+
+
+def _add_current_focus_field(embed: "discord.Embed", snapshot: dict) -> None:
+    """Add current focus field to embed."""
+    focus_text = "\n".join(snapshot["current_focus"][:3])
+    if len(snapshot["current_focus"]) > 3:
+        focus_text += f"\n... and {len(snapshot['current_focus']) - 3} more"
+    embed.add_field(
+        name="🎯 Current Focus",
+        value=focus_text[:1024],
+        inline=False,
+    )
 
 
 def add_system_info_fields(embed: "discord.Embed", bot) -> None:
     """Add system info fields to embed."""
+    _add_system_status_field(embed)
+    _add_control_panel_field(embed)
+    _add_messaging_fields(embed)
+    _add_swarm_showcase_field(embed)
+    _add_github_book_field(embed)
+    _add_diagram_commands_field(embed)
+    _add_git_commands_field(embed)
+    _add_system_info_field(embed, bot)
+
+
+def _add_system_status_field(embed: "discord.Embed") -> None:
+    """Add system status field."""
     embed.add_field(
         name="✅ System Status",
         value="All systems operational • 3 command modules loaded • Enhanced activity monitoring active!",
         inline=False,
     )
 
+
+def _add_control_panel_field(embed: "discord.Embed") -> None:
+    """Add control panel field."""
     embed.add_field(
         name="🎛️ Interactive Control Panel (PREFERRED - NO COMMANDS NEEDED!)",
         value=(
@@ -84,6 +114,9 @@ def add_system_info_fields(embed: "discord.Embed", bot) -> None:
         inline=False,
     )
 
+
+def _add_messaging_fields(embed: "discord.Embed") -> None:
+    """Add messaging fields."""
     embed.add_field(
         name="📨 Messaging (GUI-Driven)",
         value=(
@@ -105,6 +138,9 @@ def add_system_info_fields(embed: "discord.Embed", bot) -> None:
         inline=False,
     )
 
+
+def _add_swarm_showcase_field(embed: "discord.Embed") -> None:
+    """Add swarm showcase field."""
     embed.add_field(
         name="🐝 Swarm Showcase (ALL ACCESSIBLE VIA BUTTONS!)",
         value=(
@@ -117,6 +153,9 @@ def add_system_info_fields(embed: "discord.Embed", bot) -> None:
         inline=False,
     )
 
+
+def _add_github_book_field(embed: "discord.Embed") -> None:
+    """Add GitHub book field."""
     embed.add_field(
         name="📚 GitHub Book Viewer (ACCESSIBLE VIA BUTTONS!)",
         value=(
@@ -127,6 +166,9 @@ def add_system_info_fields(embed: "discord.Embed", bot) -> None:
         inline=False,
     )
 
+
+def _add_diagram_commands_field(embed: "discord.Embed") -> None:
+    """Add diagram commands field."""
     embed.add_field(
         name="📊 Diagram Commands",
         value=(
@@ -136,6 +178,9 @@ def add_system_info_fields(embed: "discord.Embed", bot) -> None:
         inline=False,
     )
 
+
+def _add_git_commands_field(embed: "discord.Embed") -> None:
+    """Add git commands field."""
     embed.add_field(
         name="🔧 Git Commands",
         value=(
@@ -145,6 +190,9 @@ def add_system_info_fields(embed: "discord.Embed", bot) -> None:
         inline=False,
     )
 
+
+def _add_system_info_field(embed: "discord.Embed", bot) -> None:
+    """Add system info field."""
     embed.add_field(
         name="🤖 System Info",
         value=(

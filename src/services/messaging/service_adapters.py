@@ -14,9 +14,12 @@ V2 Compliance | Author: Agent-1 | Date: 2025-12-13
 from __future__ import annotations
 
 import logging
+import os
 import time
 from pathlib import Path
 from typing import Any
+
+import aiohttp
 
 from src.core.config.timeout_constants import TimeoutConstants
 from ...core.base.base_service import BaseService
@@ -85,28 +88,102 @@ class ConsolidatedMessagingService(BaseService):
         return execute_broadcast_operation(self.send_message, message, priority)
 
     def _resolve_discord_sender(self, discord_user_id: str | None) -> str:
-        """Resolve Discord user ID to sender name."""
+        """
+        Resolve Discord user ID to sender name.
+
+        Attempts to fetch actual Discord username via API.
+        Falls back to "DISCORD" if resolution fails.
+
+        Args:
+            discord_user_id: Discord user ID string
+
+        Returns:
+            Sender name string (username or "DISCORD" as fallback)
+        """
         if not discord_user_id:
             return "DISCORD"
-        # For now, return DISCORD
-        # In production, this could resolve to actual Discord username via API
+
+        # Try to get username from Discord API
+        username = self._get_discord_username(discord_user_id)
+        if username:
+            return f"Discord User ({username})"
+
+        # Fallback to generic "DISCORD"
         return "DISCORD"
 
     def _get_discord_username(self, discord_user_id: str | None) -> str | None:
         """
-        Get Discord username from user ID.
+        Get Discord username from user ID via Discord HTTP API.
+
+        Uses Discord Bot Token to fetch user information.
+        Handles errors gracefully and returns None on failure.
 
         Args:
-            discord_user_id: Discord user ID
+            discord_user_id: Discord user ID string
 
         Returns:
-            Username string or None
+            Username string or None if resolution fails
         """
         if not discord_user_id:
             return None
-        # For now, return None
-        # In production, this could resolve to actual Discord username via API
-        return None
+
+        # Get Discord bot token from environment
+        token = os.getenv("DISCORD_BOT_TOKEN") or os.getenv("DISCORD_TOKEN")
+        if not token:
+            self.logger.warning(
+                "Discord bot token not found in environment. "
+                "Cannot resolve Discord username. Set DISCORD_BOT_TOKEN or DISCORD_TOKEN."
+            )
+            return None
+
+        try:
+            # Use synchronous HTTP request for username resolution
+            # Note: This is a blocking call, but username resolution is typically fast
+            import requests
+
+            headers = {
+                "Authorization": f"Bot {token}",
+                "Content-Type": "application/json"
+            }
+
+            url = f"https://discord.com/api/v10/users/{discord_user_id}"
+
+            response = requests.get(url, headers=headers, timeout=5.0)
+
+            if response.status_code == 200:
+                user_data = response.json()
+                username = user_data.get("username")
+                discriminator = user_data.get("discriminator")
+
+                # Format username (Discord API v10 may not include discriminator)
+                if discriminator and discriminator != "0":
+                    return f"{username}#{discriminator}"
+                return username
+            elif response.status_code == 404:
+                self.logger.debug(f"Discord user {discord_user_id} not found")
+                return None
+            else:
+                self.logger.warning(
+                    f"Failed to fetch Discord user {discord_user_id}: "
+                    f"HTTP {response.status_code}"
+                )
+                return None
+
+        except requests.exceptions.Timeout:
+            self.logger.warning(
+                f"Timeout fetching Discord user {discord_user_id}")
+            return None
+        except requests.exceptions.RequestException as e:
+            self.logger.warning(
+                f"Error fetching Discord user {discord_user_id}: {e}"
+            )
+            return None
+        except Exception as e:
+            self.logger.error(
+                f"Unexpected error resolving Discord username for {discord_user_id}: {e}",
+                exc_info=True
+            )
+            return None
 
 
 # Discord integration adapter functions
@@ -122,4 +199,3 @@ def broadcast_discord_message(message: str, priority: str = "regular") -> dict[s
     """Broadcast message via Discord integration."""
     service = ConsolidatedMessagingService()
     return service.broadcast_message(message, priority)
-

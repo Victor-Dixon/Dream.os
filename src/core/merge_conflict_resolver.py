@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """
 Local Merge Conflict Resolver
+
+<!-- SSOT Domain: infrastructure -->
+
 ==============================
 
 Deterministic merge conflict resolution for multi-agent consolidation.

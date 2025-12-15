@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """
 Deferred Push Queue - GitHub Failure Handler
+
+<!-- SSOT Domain: infrastructure -->
+
 ============================================
 
 JSON-based queue for deferred GitHub pushes when rate-limited or unavailable.

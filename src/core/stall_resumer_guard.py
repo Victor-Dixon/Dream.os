@@ -1,5 +1,7 @@
 """
 Stall resumer guard utilities.
+<!-- SSOT Domain: infrastructure -->
+
 
 Provides:
 - is_resumer_prompt: detect stall/recovery prompts (no-reply).

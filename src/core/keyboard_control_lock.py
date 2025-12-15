@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """
 Global Keyboard Control Lock
+
+<!-- SSOT Domain: infrastructure -->
+
 ============================
 
 Prevents race conditions when multiple sources (Discord, agents, user) try to
