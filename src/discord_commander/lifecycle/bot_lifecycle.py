@@ -57,24 +57,36 @@ class BotLifecycleManager:
 
     async def _load_messaging_commands(self) -> None:
         """Load messaging commands cogs (V2 compliant modules)."""
-        from .commands import (
-            CoreMessagingCommands,
-            SystemControlCommands,
-            OnboardingCommands,
-            UtilityCommands,
-            AgentManagementCommands,
-            ProfileCommands,
-            PlaceholderCommands,
-        )
-        
-        await self.bot.add_cog(CoreMessagingCommands(self.bot, self.bot.gui_controller))
-        await self.bot.add_cog(SystemControlCommands(self.bot, self.bot.gui_controller))
-        await self.bot.add_cog(OnboardingCommands(self.bot, self.bot.gui_controller))
-        await self.bot.add_cog(UtilityCommands(self.bot, self.bot.gui_controller))
-        await self.bot.add_cog(AgentManagementCommands(self.bot, self.bot.gui_controller))
-        await self.bot.add_cog(ProfileCommands(self.bot, self.bot.gui_controller))
-        await self.bot.add_cog(PlaceholderCommands(self.bot, self.bot.gui_controller))
-        self.logger.info("✅ All messaging command cogs loaded (V2 compliant modules)")
+        try:
+            from src.discord_commander.commands import (
+                CoreMessagingCommands,
+                SystemControlCommands,
+                OnboardingCommands,
+                UtilityCommands,
+                AgentManagementCommands,
+                ProfileCommands,
+                PlaceholderCommands,
+            )
+            
+            await self.bot.add_cog(CoreMessagingCommands(self.bot, self.bot.gui_controller))
+            await self.bot.add_cog(SystemControlCommands(self.bot, self.bot.gui_controller))
+            await self.bot.add_cog(OnboardingCommands(self.bot, self.bot.gui_controller))
+            await self.bot.add_cog(UtilityCommands(self.bot, self.bot.gui_controller))
+            await self.bot.add_cog(AgentManagementCommands(self.bot, self.bot.gui_controller))
+            await self.bot.add_cog(ProfileCommands(self.bot, self.bot.gui_controller))
+            await self.bot.add_cog(PlaceholderCommands(self.bot, self.bot.gui_controller))
+            
+            # Verify gui command is registered
+            gui_command = self.bot.get_command("gui")
+            if gui_command:
+                self.logger.info(f"✅ GUI command registered: {gui_command.name}")
+            else:
+                self.logger.warning("⚠️ GUI command not found after loading CoreMessagingCommands")
+            
+            self.logger.info("✅ All messaging command cogs loaded (V2 compliant modules)")
+        except Exception as e:
+            self.logger.error(f"❌ Error loading messaging commands: {e}", exc_info=True)
+            raise
 
     async def _load_swarm_showcase_commands(self) -> None:
         """Load swarm showcase commands cog."""

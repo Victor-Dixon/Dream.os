@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "created": "2025-12-10T03:32:21.881195",
-  "last_updated": "2025-12-11T06:15:00.000000",
+  "last_updated": "2025-12-15T11:25:42.773356",
   "insights": [
     {
       "id": 1,
@@ -105,6 +105,20 @@
         "incident"
       ],
       "category": "insight"
+    },
+    {
+      "id": 9,
+      "timestamp": "2025-12-15T11:25:42.773356",
+      "agent": "Agent-3",
+      "content": "Batch 4 onboarding now protected by infra-grade tests for lock semantics and GUI-vs-messaging fallbacks.",
+      "tags": [
+        "onboarding",
+        "infra",
+        "testing",
+        "lock-patterns",
+        "ci"
+      ],
+      "category": "insight"
     }
   ],
   "lessons": [
@@ -118,6 +132,21 @@
         "github",
         "api-limitations",
         "draft-prs"
+      ],
+      "type": "lesson"
+    },
+    {
+      "id": 2,
+      "timestamp": "2025-12-15T11:25:42.773356",
+      "agent": "Agent-3",
+      "category": "general",
+      "content": "Treat onboarding unit tests as the behavioural contract before refactoring hard/soft onboarding services.",
+      "tags": [
+        "onboarding",
+        "infra",
+        "testing",
+        "lock-patterns",
+        "ci"
       ],
       "type": "lesson"
     }
@@ -199,6 +228,22 @@
       ],
       "status": "open",
       "type": "recommendation"
+    },
+    {
+      "id": 6,
+      "timestamp": "2025-12-15T11:25:42.773356",
+      "agent": "Agent-3",
+      "priority": "normal",
+      "content": "Add a dedicated onboarding test runner tool and keep headless CI paths (messaging fallbacks) green during future GUI refactors.",
+      "tags": [
+        "onboarding",
+        "infra",
+        "testing",
+        "lock-patterns",
+        "ci"
+      ],
+      "status": "open",
+      "type": "recommendation"
     }
   ],
   "patterns": [
@@ -219,9 +264,9 @@
     }
   ],
   "statistics": {
-    "total_insights": 8,
-    "total_lessons": 1,
-    "total_recommendations": 5,
+    "total_insights": 9,
+    "total_lessons": 2,
+    "total_recommendations": 6,
     "total_patterns": 1
   }
 }

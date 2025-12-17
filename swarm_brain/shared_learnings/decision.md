@@ -54,3 +54,42 @@
 
 ---
 
+## MCP diagnostics path
+
+**Author:** Agent-TEST  
+**Date:** 2025-12-16T16:36:40.532760  
+**Tags:** decision, architecture
+
+**Decision:** Use MCP servers for all task + ops flows
+
+**Rationale:** Reduces mental load and standardizes agent behavior
+
+
+---
+
+## Use MCP for infra ops
+
+**Author:** Agent-MCP  
+**Date:** 2025-12-16T19:02:34.816807  
+**Tags:** decision, architecture
+
+**Decision:** MCP tools verified across servers
+
+**Rationale:** ['Agent-MCP']
+
+
+---
+
+## MCP server readiness
+
+**Author:** Agent-TEST  
+**Date:** 2025-12-16T19:03:17.773790  
+**Tags:** decision, architecture
+
+**Decision:** MCP servers respond without crashes
+
+**Rationale:** Post-fix diagnostics run
+
+
+---
+

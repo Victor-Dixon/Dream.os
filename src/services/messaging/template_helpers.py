@@ -75,7 +75,8 @@ def prepare_d2a_template(
     d2a_payload = build_d2a_payload(meta)
     d2a_meta = format_d2a_payload(d2a_payload)
     try:
-        result = format_d2a_template(tmpl, sender, recipient, priority, message_id, message, now, d2a_meta)
+        result = format_d2a_template(
+            tmpl, sender, recipient, priority, message_id, message, now, d2a_meta)
         return validate_d2a_result(result, message, d2a_meta)
     except Exception:
         return message
@@ -87,7 +88,8 @@ def validate_d2a_result(result: str, message: str, d2a_meta: Dict[str, Any]) -> 
     if message_count > 1:
         user_message_section = "User Message:\n"
         if user_message_section in result:
-            section_start = result.find(user_message_section) + len(user_message_section)
+            section_start = result.find(
+                user_message_section) + len(user_message_section)
             section_end = result.find("\n\n", section_start)
             if section_end == -1:
                 section_end = len(result)
@@ -120,10 +122,16 @@ def prepare_a2a_template(
         priority=priority.value,
         message_id=message_id,
         timestamp=now,
+        agent_id=meta.get("agent_id", recipient),
         ask=meta.get("ask", message),
         context=meta.get("context", ""),
-        next_step=meta.get("next_step", ""),
-        fallback=meta.get("fallback", "If blocked: send blocker + proposed fix + owner."),
+        next_step=meta.get(
+            "next_step",
+            "Reply via messaging_cli with ACCEPT/DECLINE, ETA, and a 2–3 bullet plan, "
+            "then update status.json and MASTER_TASK_LOG.md.",
+        ),
+        fallback=meta.get(
+            "fallback", "If blocked: send blocker + proposed fix + owner."),
     )
 
 
@@ -145,4 +153,3 @@ def prepare_default_template(
         timestamp=now,
         content=message,
     )
-

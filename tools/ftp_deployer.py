@@ -31,6 +31,14 @@ try:
 except ImportError:
     pass
 
+try:
+    from src.core.config.timeout_constants import TimeoutConstants
+except ImportError:
+    class TimeoutConstants:
+        HTTP_SHORT = 10
+        HTTP_QUICK = 5
+        HTTP_DEFAULT = 30
+
 logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
 logger = logging.getLogger(__name__)
 
@@ -51,15 +59,19 @@ class FTPDeployer:
                 port = port or site_creds.get("port")
         
         # Fallback to .env shared credentials
-        self.host = host or os.getenv("HOSTINGER_HOST") or os.getenv("SSH_HOST")
-        self.username = username or os.getenv("HOSTINGER_USER") or os.getenv("SSH_USER")
-        self.password = password or os.getenv("HOSTINGER_PASS") or os.getenv("SSH_PASS")
+        self.host = host or os.getenv(
+            "HOSTINGER_HOST") or os.getenv("SSH_HOST")
+        self.username = username or os.getenv(
+            "HOSTINGER_USER") or os.getenv("SSH_USER")
+        self.password = password or os.getenv(
+            "HOSTINGER_PASS") or os.getenv("SSH_PASS")
         
         # Parse port
         if port:
             self.port = int(port)
         else:
-            port_str = os.getenv("HOSTINGER_PORT") or os.getenv("SSH_PORT", "21")
+            port_str = os.getenv(
+                "HOSTINGER_PORT") or os.getenv("SSH_PORT", "21")
             try:
                 self.port = int(port_str)
             except ValueError:
@@ -125,7 +137,8 @@ class FTPDeployer:
                 
                 # Create FTP connection
                 self.ftp = FTP()
-                self.ftp.connect(self.host, self.port, timeout=TimeoutConstants.HTTP_SHORT)
+                self.ftp.connect(self.host, self.port,
+                                 timeout=TimeoutConstants.HTTP_SHORT)
                 
                 # Login
                 self.ftp.login(self.username, self.password)
@@ -137,17 +150,22 @@ class FTPDeployer:
                 self.ftp.pwd()
                 
                 self.connected = True
-                logger.info(f"✅ Connected to {self.host}:{self.port} as {self.username}")
+                logger.info(
+                    f"✅ Connected to {self.host}:{self.port} as {self.username}")
                 return True
                 
             except error_perm as e:
                 error_msg = str(e)
                 if "530" in error_msg or "Login incorrect" in error_msg:
-                    logger.error(f"❌ Authentication failed for {self.username}@{self.host}")
+                    logger.error(
+                        f"❌ Authentication failed for {self.username}@{self.host}")
                     logger.error("Please verify:")
-                    logger.error("  1. Username is correct (format: u{id}.{domain})")
-                    logger.error("  2. Password is correct (reset in Hostinger if needed)")
-                    logger.error("  3. FTP is enabled on your Hostinger account")
+                    logger.error(
+                        "  1. Username is correct (format: u{id}.{domain})")
+                    logger.error(
+                        "  2. Password is correct (reset in Hostinger if needed)")
+                    logger.error(
+                        "  3. FTP is enabled on your Hostinger account")
                     return False
                 else:
                     logger.error(f"❌ Permission error: {e}")
@@ -157,9 +175,11 @@ class FTPDeployer:
                     continue
                     
             except (error_temp, OSError) as e:
-                logger.warning(f"⚠️  Connection error (attempt {attempt}/{max_retries}): {e}")
+                logger.warning(
+                    f"⚠️  Connection error (attempt {attempt}/{max_retries}): {e}")
                 if attempt == max_retries:
-                    logger.error(f"❌ Failed to connect after {max_retries} attempts")
+                    logger.error(
+                        f"❌ Failed to connect after {max_retries} attempts")
                     return False
                 time.sleep(base_delay * attempt)
                 continue
@@ -207,7 +227,8 @@ class FTPDeployer:
                         self.ftp.mkd(current_path.rstrip('/'))
                         self.ftp.cwd(current_path)
                     except error_perm as e:
-                        logger.error(f"Failed to create directory {current_path}: {e}")
+                        logger.error(
+                            f"Failed to create directory {current_path}: {e}")
                         return False
             
             return True
@@ -239,7 +260,8 @@ class FTPDeployer:
             remote_dir = '/'.join(remote_path.split('/')[:-1])
             if remote_dir:
                 if not self.ensure_directory(remote_dir):
-                    logger.error(f"❌ Failed to create remote directory: {remote_dir}")
+                    logger.error(
+                        f"❌ Failed to create remote directory: {remote_dir}")
                     return False
             
             # Change to remote directory
@@ -260,7 +282,8 @@ class FTPDeployer:
             logger.error(f"❌ Permission error uploading {remote_path}: {e}")
             return False
         except Exception as e:
-            logger.error(f"❌ Error uploading {remote_path}: {type(e).__name__}: {e}")
+            logger.error(
+                f"❌ Error uploading {remote_path}: {type(e).__name__}: {e}")
             return False
     
     def test_connection(self) -> Tuple[bool, str]:
@@ -337,7 +360,8 @@ def load_site_configs() -> Dict[str, Dict]:
             for site_key, site_data in sites_data.items():
                 if site_key in default_configs:
                     # Merge with defaults
-                    configs[site_key] = {**default_configs[site_key], **site_data}
+                    configs[site_key] = {
+                        **default_configs[site_key], **site_data}
                 else:
                     # New site from JSON
                     configs[site_key] = {
@@ -398,19 +422,22 @@ def deploy_wordpress_file(site: str, local_file: Path, remote_path: Optional[str
     
     if not config:
         logger.error(f"Unknown site: {site}")
-        logger.error(f"Available sites: {', '.join(sorted(site_configs.keys()))}")
+        logger.error(
+            f"Available sites: {', '.join(sorted(site_configs.keys()))}")
         return False
     
     if not remote_path:
         # Auto-detect remote path based on local file
         if local_file.name == "functions.php":
-            remote_path = config.get("functions_path", f"{config['remote_base']}/functions.php")
+            remote_path = config.get(
+                "functions_path", f"{config['remote_base']}/functions.php")
         else:
             # Calculate relative path from local_path
             local_path = Path(config.get("local_path", ""))
             try:
                 rel_path = local_file.relative_to(local_path)
-                remote_path = f"{config['remote_base']}/{rel_path}".replace("\\", "/")
+                remote_path = f"{config['remote_base']}/{rel_path}".replace(
+                    "\\", "/")
             except ValueError:
                 # File not in local_path, just use filename
                 remote_path = f"{config['remote_base']}/{local_file.name}"
@@ -425,7 +452,6 @@ def deploy_wordpress_file(site: str, local_file: Path, remote_path: Optional[str
 def main():
     """CLI interface."""
     import argparse
-from src.core.config.timeout_constants import TimeoutConstants
     
     parser = argparse.ArgumentParser(
         description="FTP Deployer for WordPress Files"
@@ -527,7 +553,8 @@ from src.core.config.timeout_constants import TimeoutConstants
                     print(f"🔍 Auto-detected site: {site}")
                 else:
                     print("❌ Could not auto-detect site from file path")
-                    print("   Please specify --site or ensure file is in a known site directory")
+                    print(
+                        "   Please specify --site or ensure file is in a known site directory")
                     print("\n   Available sites:")
                     site_configs = load_site_configs()
                     for site_key in sorted(site_configs.keys()):
@@ -556,4 +583,3 @@ from src.core.config.timeout_constants import TimeoutConstants
 
 if __name__ == '__main__':
     main()
-
