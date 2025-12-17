@@ -128,6 +128,15 @@ jobs:
             echo "⚠️  V2 compliance tools not found, skipping V2 check"
           fi
 
+      - name: 🔍 V2 Compliance (MCP + Core Orchestrators)
+        continue-on-error: true
+        run: |
+          if [ -f scripts/v2_compliance_mcp_ci_checks.py ]; then
+            python scripts/v2_compliance_mcp_ci_checks.py || echo "⚠️  MCP/orchestrator V2 check had issues"
+          else
+            echo "⚠️  scripts/v2_compliance_mcp_ci_checks.py not found, skipping MCP/orchestrator V2 check"
+          fi
+
   # 🧪 Testing & Coverage
   testing:
     name: 🧪 Testing & Coverage
@@ -449,6 +458,52 @@ jobs:
           path: |
             htmlcov/
             coverage.xml
+
+  # 🧹 Technical Debt Scan & Summary
+  tech-debt:
+    name: 🧹 Technical Debt CI Summary
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    needs: [code-quality]
+    if: always()
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: 📦 Install dependencies for tech-debt scan
+        continue-on-error: false
+        run: |
+          set +e
+          python -m pip install --upgrade pip setuptools wheel
+          if [ -f requirements.txt ]; then
+            grep -v "^pyautogui" requirements.txt | grep -v "^#" | grep -v "^$" | xargs pip install || true
+          fi
+          # Ensure analyzer + YAML dependencies are available
+          pip install pyyaml || true
+          set -e
+
+      - name: 🧹 Run Technical Debt CI summary
+        continue-on-error: true
+        run: |
+          python tools/tech_debt_ci_summary.py || echo "⚠️  Tech-debt CI summary had issues"
+
+      - name: 📤 Upload tech-debt artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: tech-debt-ci
+          path: |
+            docs/technical_debt/TECHNICAL_DEBT_ANALYSIS.json
+            docs/technical_debt/TECHNICAL_DEBT_ANALYSIS_REPORT.md
+            docs/technical_debt/TECHNICAL_DEBT_DASHBOARD.md
+            devlogs/*technical_debt_ci_summary*.md
+          if-no-files-found: ignore
 
   # 🚀 Deployment (Conditional)
   deployment:

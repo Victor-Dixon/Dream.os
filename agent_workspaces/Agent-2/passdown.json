@@ -1,98 +1,82 @@
 {
-  "session_date": "2025-12-11",
+  "session_date": "2025-12-15",
   "agent_id": "Agent-2",
   "agent_name": "Architecture & Design Specialist",
-  "session_summary": "Session cleanup complete: passdown updated, final devlog posted to Discord, Swarm Brain entry captured, and a session_cleanup_helper tool added. Core architecture/design validations remain green (584/584 tests across cycles). WordPress deploy for FreeRideInvestor + Prismblossom still pending timing window with Agent-1; Monitoring domain SSOT remains open.",
+  "session_summary": "4-agent mode sync complete: inbox cleaned, onboarding Batch 4 architecture review performed, and Agent-2 is ready for next-cycle assignments. Core architecture/design validations remain green (584/584 tests across cycles); deployment/Monitoring SSOT remain open items.",
   "status": "ACTIVE_AGENT_MODE",
   "current_phase": "SESSION_CLEANUP",
-  
   "completed_work": {
-    "session_cleanup": {
+    "inbox_cleanup": {
       "status": "COMPLETE",
-      "description": "Passdown refreshed, final devlog authored and posted to Discord, Swarm Brain entry added, and session_cleanup_helper utility created."
+      "description": "Agent-2 inbox reviewed and cleaned; historical CAPTAIN and A2A coordination messages summarized and archived into processed_2025-12-15. New status update file created to document readiness for 4-agent mode."
+    },
+    "onboarding_batch4_arch_review": {
+      "status": "COMPLETE",
+      "description": "Reviewed hard/soft onboarding services and onboarding helpers; validated thin-shim pattern over helper modules, confirmed public APIs locked in by tests, and identified duplication regression in HardOnboardingService instructions block for future cleanup. Created architecture documentation: docs/architecture/ONBOARDING_SERVICES.md documenting service shims, helper modules, public APIs, and design pattern."
     },
     "architecture_validation": {
       "status": "COMPLETE",
-      "description": "Architecture/design domain fully green across cycles (584/584 tests passing including ManagerContext, contract serialization, registry discovery, performance, config SSOT, file locking, and engines)."
-    },
-    "contract_system": {
-      "status": "COMPLETE",
-      "description": "Contract serialization/dict conversion fixes verified; collection/import errors resolved in prior cycles."
-    },
-    "stall_resumer_guard": {
-      "status": "COMPLETE",
-      "description": "Stall Resumer Guard implemented (is_resumer_prompt, is_meaningful_progress) and stall prompt template hardened."
-    },
-    "deployment_readiness": {
-      "status": "COMPLETE",
-      "description": "FreeRideInvestor + Prismblossom updates staged for manual WordPress/SFTP deploy (5 files, checklists ready; awaiting window)."
+      "description": "Architecture/design domain remains fully green across cycles (584/584 tests passing including ManagerContext, contract serialization, registry discovery, performance, config SSOT, file locking, and engines)."
     }
   },
-  
   "in_progress": {
     "phase6_consolidation": {
       "status": "ACTIVE",
-      "description": "Phase 6A manager/domain consolidation active. Execution/Resource/Lifecycle SSOTs created; Monitoring domain SSOT pending."
+      "description": "Phase 6A manager/domain consolidation continues. Execution/Resource/Lifecycle SSOTs created previously; Monitoring domain SSOT still pending design and implementation."
     },
     "deployment_timing": {
       "status": "PENDING",
-      "description": "Awaiting Agent-1 timing window to push FreeRideInvestor + Prismblossom via WordPress/SFTP."
+      "description": "Awaiting Agent-1 timing window to push FreeRideInvestor + Prismblossom via WordPress/SFTP (4 FRI + 1 PB files)."
     },
     "ssot_tagging": {
       "status": "ACTIVE",
-      "description": "Architecture SSOT tagging at 39% (358/919); continuing tagging of core + Discord infrastructure files."
+      "description": "Architecture SSOT tagging at ~39% (358/919); continuing tagging of core + Discord infrastructure files in short sprints using stall-guard mindset."
     }
   },
-  
   "progress_metrics": {
-    "phase5_completion": "100% pattern analysis complete; factory shims in place",
-    "deployment": "Manual WordPress deploy ready (5 files); timing pending Agent-1",
-    "ssot_coverage": "39% tagged (358/919 files); +0.6% this cycle",
+    "phase5_completion": "100% pattern analysis complete; factory shims in place (from prior session)",
+    "deployment": "Manual WordPress deploy ready (5 files); timing still pending Agent-1",
+    "ssot_coverage": "~39% tagged (358/919 files); architecture domain stable",
     "tests": "Architecture/design domain fully green across cycles: 584/584 passing"
   },
-  
   "key_documents": {
     "phase5_summary": "agent_workspaces/Agent-2/PHASE5_CLIENT_ADAPTER_FACTORY_COMPLETE.md",
     "factory_shim_changes": "src/core/vector_strategic_oversight/unified_strategic_oversight/factory_core.py (shim) and factory_extended.py (shim)",
     "deployment_checklist": "agent_workspaces/Agent-2/THEME_DEPLOYMENT_CHECKLIST.md",
     "deployment_status": "agent_workspaces/Agent-2/DEPLOYMENT_EXECUTION_STATUS.md",
-    "final_devlog": "devlogs/2025-12-11_agent-2_session_cleanup.md",
-    "swarm_brain_entry": "swarm_brain/entries/2025-12-11_agent2_session_cleanup.json",
-    "helper_tool": "tools/session_cleanup_helper.py"
+    "inbox_status_update": "agent_workspaces/Agent-2/inbox/AGENT2_INBOX_STATUS_UPDATE_2025-12-15.md",
+    "onboarding_arch_note": "docs/architecture/ONBOARDING_SERVICES.md (created)",
+    "previous_session_passdown": "agent_workspaces/Agent-2/passdown.json (2025-12-11 snapshot archived in git history)"
   },
-  
   "next_session_priorities": {
     "high": [
       "Deploy FreeRideInvestor + Prismblossom (manual WordPress/SFTP): confirm window with Agent-1, backup, upload 4 FRI + 1 PB file, flush cache, verify assets; if blocked, log blocker and propose times.",
       "Complete Monitoring Domain SSOT (Phase 6A) and increase BaseManager adoption (small, reversible changes).",
-      "Advance SSOT tagging beyond 39% coverage (focus core + infra); tag 5–10 files and log paths. Use stall guard mindset: short sprints, log outcomes/blockers."
+      "Advance SSOT tagging beyond ~39% coverage (focus core + infra); tag 5–10 files and log paths per session."
     ],
     "medium": [
-      "Verify factory shim removal plan after confirming zero usage",
-      "Continue consolidation recommendations execution (managers/services/repositories)",
-      "Monitor for deployment regressions post-WordPress push",
-      "Use session_cleanup_helper to pre-seed passdown/devlog/Swarm Brain drafts next cycle"
+      "Finalize and commit onboarding architecture note (ONBOARDING_SERVICES_DRAFT.md) once Batch 4 refactor lands.",
+      "Verify factory shim removal plan after confirming zero usage.",
+      "Continue consolidation recommendations execution (managers/services/repositories).",
+      "Monitor for deployment regressions post-WordPress push."
     ]
   },
-  
   "blockers": [
-    "Awaiting Agent-1 deployment window; manual WordPress access required to push 5 files",
-    "Monitoring domain SSOT pending design finalization"
+    "Awaiting Agent-1 deployment window; manual WordPress access required to push 5 files.",
+    "Monitoring domain SSOT pending design finalization."
   ],
   "notes": [
-    "Deployment ready: 4 FreeRideInvestor CSS/PHP updates + 1 Prismblossom CSS expansion; manual WordPress/SFTP required. Steps: backup → upload → cache flush → verify assets (status+size/hash) → rollback if needed.",
-    "Factory legacy files now shims with deprecation warnings to enforce SSOT usage."
+    "Inbox is clean: historical onboarding/messaging coordination is archived; new instructions should arrive as fresh inbox messages.",
+    "Onboarding services now follow a clearer shim-over-helpers pattern; remaining duplication in HardOnboardingService instructions block is noted for future cleanup but does not affect public APIs."
   ],
-  
   "tools_created": [
-    "Stall Resumer Guard (is_resumer_prompt, is_meaningful_progress) for autonomous stall recovery",
-    "session_cleanup_helper (template generator for passdown/devlog/Swarm Brain entries)"
+    "Stall Resumer Guard (is_resumer_prompt, is_meaningful_progress) for autonomous stall recovery (previous session)",
+    "session_cleanup_helper (template generator for passdown/devlog/Swarm Brain entries, created previously)",
+    "onboarding_architecture_reporter.py - Generates concise summary of onboarding module structure, validates V2 compliance, checks shim pattern delegations, and documents public APIs. Created 2025-12-15."
   ],
-  
   "lessons_learned": [
-    "Maintain backward-compatible shims while enforcing SSOT to de-risk deletion.",
-    "Manual WordPress deploys require confirmed window and cache checks; prep checklists ahead of time.",
-    "Stall guards with content checks reduce false positives and keep execution moving.",
-    "Automating session cleanup templates reduces stall risk and keeps evidence consistent."
+    "Keep onboarding services as thin orchestration layers over helper modules to stay V2-compliant.",
+    "Inbox cleanup before new work reduces coordination overhead and makes 4-agent mode smoother.",
+    "Session cleanup artifacts (passdown, devlog, Swarm Brain) should be treated as part of the work, not an afterthought."
   ]
 }

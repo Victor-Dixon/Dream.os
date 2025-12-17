@@ -59,7 +59,8 @@ def format_cycle_v2_template(
     return template.format(
         sender="Captain Agent-4",
         recipient=args.agent,
-        priority=priority.value if hasattr(priority, "value") else str(priority),
+        priority=priority.value if hasattr(
+            priority, "value") else str(priority),
         message_id=message_id,
         timestamp=timestamp,
         mission=args.mission,
@@ -76,13 +77,15 @@ def format_cycle_v2_template(
 
 def prepare_cycle_v2_message(args: Any) -> tuple[str, UnifiedMessagePriority]:
     """Prepare CYCLE_V2 message and return (rendered_message, priority)."""
-    cycle_v2_template = MESSAGE_TEMPLATES.get(MessageCategory.S2A, {}).get("CYCLE_V2")
+    cycle_v2_template = MESSAGE_TEMPLATES.get(
+        MessageCategory.S2A, {}).get("CYCLE_V2")
     if not cycle_v2_template:
         raise ValueError("CYCLE_V2 template not found")
     priority = normalize_priority(args.priority)
     message_id = f"msg_{int(time.time() * 1000)}"
     timestamp = datetime.now().isoformat()
-    rendered = format_cycle_v2_template(cycle_v2_template, args, priority, message_id, timestamp)
+    rendered = format_cycle_v2_template(
+        cycle_v2_template, args, priority, message_id, timestamp)
     return rendered, priority
 
 
@@ -93,7 +96,8 @@ def send_broadcast_message(
 ) -> int:
     """Send broadcast message and return exit code."""
     from .coordination_handlers import MessageCoordinator
-    success_count = MessageCoordinator.broadcast_to_all(message, priority, stalled=stalled)
+    success_count = MessageCoordinator.broadcast_to_all(
+        message, priority, stalled=stalled)
     if success_count > 0:
         print(f"✅ Broadcast to {success_count} agents successful")
         return 0
@@ -107,11 +111,33 @@ def send_single_agent_message(
     message: str,
     priority: UnifiedMessagePriority,
     stalled: bool,
+    sender: str | None = None,
+    category: str | None = None,
 ) -> int:
     """Send single agent message and return exit code."""
     from .coordination_handlers import MessageCoordinator
+
+    # Map CLI category string (if provided) to MessageCategory enum
+    message_category = None
+    if category:
+        try:
+            message_category = MessageCategory(category.lower())
+        except ValueError:
+            # Should not happen due to argparse choices, but guard just in case
+            print(
+                f"❌ ERROR: Invalid category '{category}'. "
+                "Valid options: s2a, d2a, c2a, a2a, a2c."
+            )
+            return 1
+
     result = MessageCoordinator.send_to_agent(
-        agent, message, priority, use_pyautogui=True, stalled=stalled
+        agent=agent,
+        message=message,
+        priority=priority,
+        use_pyautogui=True,
+        stalled=stalled,
+        sender=sender,
+        message_category=message_category,
     )
     success, msg = handle_message_result(result, agent)
     print(msg)
@@ -124,7 +150,8 @@ def handle_message_result(result: Any, agent: str) -> tuple[bool, str]:
         if result.get("success"):
             return True, f"✅ Message sent to {agent}"
         elif result.get("blocked"):
-            error_msg = result.get("error_message", "Pending request details unavailable")
+            error_msg = result.get(
+                "error_message", "Pending request details unavailable")
             return False, f"❌ MESSAGE BLOCKED - Pending Multi-Agent Request\n\n{error_msg}"
         else:
             return False, f"❌ Failed to send message to {agent}"
@@ -141,19 +168,28 @@ def route_message_delivery(
 ) -> int:
     """
     Route message delivery based on args (broadcast or single agent).
-    
+
     Args:
         args: Parsed CLI arguments
         priority: Message priority
         stalled: Whether this is a stalled agent recovery message
-    
+
     Returns:
         Exit code (0 for success, 1 for failure)
     """
     if args.broadcast:
         return send_broadcast_message(args.message, priority, stalled)
     elif args.agent:
-        return send_single_agent_message(args.agent, args.message, priority, stalled)
+        sender = getattr(args, "sender", None)
+        category = getattr(args, "category", None)
+        return send_single_agent_message(
+            args.agent,
+            args.message,
+            priority,
+            stalled,
+            sender=sender,
+            category=category,
+        )
     else:
         print("❌ ERROR: Either --agent or --broadcast must be specified")
         return 1

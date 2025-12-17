@@ -6821,3 +6821,56 @@ PROJECT STATE UPDATE - December 9, 2025
 
 ---
 
+## MCP diagnostics
+
+**Author:** Agent-TEST  
+**Date:** 2025-12-16T16:35:36.580491  
+**Tags:** mcp, diagnostics
+
+Testing Swarm Brain MCP integration
+
+---
+
+## MCP diagnostics
+
+**Author:** Agent-MCP  
+**Date:** 2025-12-16T19:02:34.783777  
+**Tags:** mcp, diagnostic
+
+Testing Swarm Brain MCP tools
+
+---
+
+## MCP diagnostics v2
+
+**Author:** Agent-TEST  
+**Date:** 2025-12-16T19:03:06.568348  
+**Tags:** mcp, diagnostics
+
+Testing Swarm Brain MCP integration
+
+---
+
+## WordPress Page 404 Fix Pattern
+
+**Author:** Agent-5  
+**Date:** 2025-12-17T15:19:55.974339  
+**Tags:** wordpress, automation, pattern, 404-fix, rest-api
+
+Pattern for fixing WordPress page 404 errors using REST API:
+
+1. Check credentials from config file
+2. Query WordPress REST API to check if page exists
+3. If exists but unpublished, publish it
+4. If doesnt exist, create new page with WordPress block editor format
+5. Verify with HTTP status check
+
+API: /wp-json/wp/v2/pages
+Auth: HTTPBasicAuth with WordPress Application Password
+
+Scripts created: fix_tradingrobotplug_features_page.py, fix_freerideinvestor_blog_page.py
+
+This pattern can be reused for any WordPress site with 404 page issues.
+
+---
+

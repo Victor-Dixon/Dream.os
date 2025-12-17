@@ -249,14 +249,14 @@ class WordPressManager:
         },
         "freerideinvestor": {
             "local_path": "D:/websites/FreeRideInvestor",
-            "theme_name": "freerideinvestor",
-            "remote_base": "domains/freerideinvestor.com/public_html/wp-content/themes/freerideinvestor",
+            "theme_name": "freerideinvestor-modern",
+            "remote_base": "domains/freerideinvestor.com/public_html/wp-content/themes/freerideinvestor-modern",
             "function_prefix": "freerideinvestor"
         },
         "FreeRideInvestor": {
             "local_path": "D:/websites/FreeRideInvestor",
-            "theme_name": "freerideinvestor",
-            "remote_base": "domains/freerideinvestor.com/public_html/wp-content/themes/freerideinvestor",
+            "theme_name": "freerideinvestor-modern",
+            "remote_base": "domains/freerideinvestor.com/public_html/wp-content/themes/freerideinvestor-modern",
             "function_prefix": "freerideinvestor"
         },
         "ariajet": {
@@ -294,6 +294,24 @@ class WordPressManager:
             "theme_name": "dadudekc",
             "remote_base": "domains/dadudekc.com/public_html/wp-content/themes/dadudekc",
             "function_prefix": "dadudekc"
+        },
+        "crosbyultimateevents.com": {
+            "local_path": "D:/Agent_Cellphone_V2_Repository/temp_repos/crosbyultimateevents.com",
+            "theme_name": "crosbyultimateevents",
+            "remote_base": "domains/crosbyultimateevents.com/public_html/wp-content/themes/crosbyultimateevents",
+            "function_prefix": "crosbyultimateevents"
+        },
+        "houstonsipqueen.com": {
+            "local_path": "D:/websites/houstonsipqueen.com",
+            "theme_name": "houstonsipqueen",
+            "remote_base": "domains/houstonsipqueen.com/public_html/wp-content/themes/houstonsipqueen",
+            "function_prefix": "houstonsipqueen"
+        },
+        "digitaldreamscape.site": {
+            "local_path": "D:/websites/digitaldreamscape.site",
+            "theme_name": "digitaldreamscape",
+            "remote_base": "domains/digitaldreamscape.site/public_html/wp-content/themes/digitaldreamscape",
+            "function_prefix": "digitaldreamscape"
         }
     }
 
@@ -313,7 +331,7 @@ class WordPressManager:
         self.override_username: Optional[str] = None
         self.override_remote_base: Optional[str] = None
         self.override_wp_cli_path: Optional[str] = None
-        
+
         if self.dry_run:
             logger.info("🔍 DRY-RUN MODE ENABLED - No changes will be made")
 
@@ -429,12 +447,13 @@ class WordPressManager:
 
     def get_theme_path(self) -> Path:
         """Get local theme directory path."""
+        theme_name = self.config["theme_name"]
         theme_paths = [
+            # Prioritize wp-content/themes path first
             Path(self.config["local_path"]) /
-            "wordpress-theme" / self.config["theme_name"],
-            Path(self.config["local_path"]) / "wp-content" /
-            "themes" / self.config["theme_name"],
-            # For FreeRideInvestor where theme is in root
+            "wp-content" / "themes" / theme_name,
+            Path(self.config["local_path"]) / "wordpress-theme" / theme_name,
+            # For FreeRideInvestor where theme is in root (fallback)
             Path(self.config["local_path"]),
         ]
         for path in theme_paths:
@@ -442,6 +461,21 @@ class WordPressManager:
                 return path
         raise FileNotFoundError(
             f"Theme directory not found for {self.site_key}")
+
+    def get_plugin_path(self, plugin_name: str) -> Path:
+        """Get local plugin directory path."""
+        plugin_paths = [
+            Path(self.config["local_path"]) /
+            "wordpress-plugins" / plugin_name,
+            Path(self.config["local_path"]) /
+            "wp-content" / "plugins" / plugin_name,
+            Path(self.config["local_path"]) / "plugins" / plugin_name,
+        ]
+        for path in plugin_paths:
+            if path.exists():
+                return path
+        raise FileNotFoundError(
+            f"Plugin directory not found: {plugin_name} for {self.site_key}")
 
     # ========== PAGE MANAGEMENT ==========
 
@@ -599,11 +633,13 @@ add_action('after_switch_theme', '{function_name}');"""
                     remote_path = f"{self.config['remote_base']}/{rel_path}"
                 else:
                     remote_path = f"{self.config['remote_base']}/{local_path.name}"
-            logger.info(f"🔍 DRY-RUN: Would deploy {local_path} → {remote_path}")
+            logger.info(
+                f"🔍 DRY-RUN: Would deploy {local_path} → {remote_path}")
             if auto_flush_cache:
-                logger.info("🔍 DRY-RUN: Would auto-flush cache after deployment")
+                logger.info(
+                    "🔍 DRY-RUN: Would auto-flush cache after deployment")
             return True
-            
+
         if not self.conn_manager:
             if not self.connect():
                 return False
@@ -653,6 +689,123 @@ add_action('after_switch_theme', '{function_name}');"""
         # Flush cache once after all files are deployed
         if files_deployed > 0 and auto_flush_cache:
             logger.info("🔄 Auto-flushing cache after theme deployment...")
+            self.purge_caches(use_comprehensive_flush=True)
+
+        return files_deployed
+
+    # ========== PLUGIN DEPLOYMENT ==========
+
+    def deploy_plugin_file(
+        self,
+        local_path: Path,
+        plugin_name: str,
+        remote_path: Optional[str] = None,
+        auto_flush_cache: bool = True
+    ) -> bool:
+        """
+        Deploy single plugin file to server.
+
+        Args:
+            local_path: Local file path to deploy
+            plugin_name: Plugin directory name
+            remote_path: Optional remote path (auto-detected if not provided)
+            auto_flush_cache: If True, automatically flush cache after deployment
+
+        Returns:
+            True if deployment succeeded
+        """
+        if self.dry_run:
+            if not remote_path:
+                plugin_path = self.get_plugin_path(plugin_name)
+                if plugin_path in local_path.parents:
+                    rel_path = local_path.relative_to(plugin_path)
+                    # Convert Windows path separators to Unix forward slashes
+                    rel_path_str = str(rel_path).replace('\\', '/')
+                    remote_path = f"domains/{self.site_key.replace('.com', '')}.com/public_html/wp-content/plugins/{plugin_name}/{rel_path_str}"
+                else:
+                    remote_path = f"domains/{self.site_key.replace('.com', '')}.com/public_html/wp-content/plugins/{plugin_name}/{local_path.name}"
+            logger.info(
+                f"🔍 DRY-RUN: Would deploy plugin file {local_path} → {remote_path}")
+            if auto_flush_cache:
+                logger.info(
+                    "🔍 DRY-RUN: Would auto-flush cache after deployment")
+            return True
+
+        if not self.conn_manager:
+            if not self.connect():
+                return False
+
+        if not remote_path:
+            plugin_path = self.get_plugin_path(plugin_name)
+            if plugin_path in local_path.parents:
+                rel_path = local_path.relative_to(plugin_path)
+                # Convert Windows path separators to Unix forward slashes
+                rel_path_str = str(rel_path).replace('\\', '/')
+                # Extract domain from remote_base or construct from site_key
+                if "/public_html" in self.config.get("remote_base", ""):
+                    domain_path = self.config["remote_base"].split(
+                        "/wp-content")[0]
+                else:
+                    domain = self.site_key.replace(".com", "").replace(
+                        ".online", "").replace(".site", "")
+                    domain_path = f"domains/{domain}.com/public_html"
+                remote_path = f"{domain_path}/wp-content/plugins/{plugin_name}/{rel_path_str}"
+            else:
+                domain = self.site_key.replace(".com", "").replace(
+                    ".online", "").replace(".site", "")
+                remote_path = f"domains/{domain}.com/public_html/wp-content/plugins/{plugin_name}/{local_path.name}"
+
+        success = self.conn_manager.upload_file(local_path, remote_path)
+
+        # Automatically flush cache after successful deployment
+        if success and auto_flush_cache:
+            logger.info("🔄 Auto-flushing cache after plugin deployment...")
+            self.purge_caches(use_comprehensive_flush=True)
+
+        return success
+
+    def deploy_plugin(
+        self,
+        plugin_name: str,
+        pattern: str = "**/*",
+        auto_flush_cache: bool = True
+    ) -> int:
+        """
+        Deploy all plugin files matching pattern.
+
+        Args:
+            plugin_name: Plugin directory name
+            pattern: File pattern to match (e.g., "**/*", "*.php", "*.css")
+            auto_flush_cache: If True, automatically flush cache after deployment
+
+        Returns:
+            Number of files successfully deployed
+        """
+        if not self.connect():
+            return 0
+
+        try:
+            plugin_path = self.get_plugin_path(plugin_name)
+        except FileNotFoundError as e:
+            logger.error(str(e))
+            return 0
+
+        files_deployed = 0
+
+        # Deploy files without auto-flush (we'll flush once at the end)
+        for file_path in plugin_path.rglob(pattern):
+            if file_path.is_file():
+                # Skip hidden files and common ignore patterns
+                if file_path.name.startswith('.') or file_path.name in ['Thumbs.db', '.DS_Store']:
+                    continue
+                if self.deploy_plugin_file(file_path, plugin_name, auto_flush_cache=False):
+                    files_deployed += 1
+                    rel_path = file_path.relative_to(plugin_path)
+                    print(f"✅ Deployed: {rel_path}")
+
+        # Flush cache once after all files are deployed
+        if files_deployed > 0 and auto_flush_cache:
+            logger.info("🔄 Auto-flushing cache after plugin deployment...")
             self.purge_caches(use_comprehensive_flush=True)
 
         return files_deployed
@@ -735,6 +888,31 @@ add_filter('wp_nav_menu_items', '{prefix}_add_{page_slug}_menu', 10, 2);"""
         # Use relative path (no leading slash)
         full_cmd = f"cd {wp_root} && {wp_path} {command}"
         return self.conn_manager.execute_command(full_cmd)
+
+    def update_post_status(self, post_id: int, status: str = "publish") -> bool:
+        """
+        Update WordPress post status using WP-CLI.
+
+        Args:
+            post_id: WordPress post ID
+            status: New status (publish, draft, private, etc.)
+
+        Returns:
+            True if successful
+        """
+        if self.dry_run:
+            logger.info(
+                f"🔍 DRY-RUN: Would update post {post_id} to status '{status}'")
+            return True
+
+        stdout, stderr, code = self.wp_cli(
+            f"post update {post_id} --post_status={status}")
+        if code == 0:
+            logger.info(f"✅ Post {post_id} updated to status '{status}'")
+            return True
+        else:
+            logger.error(f"❌ Failed to update post {post_id}: {stderr}")
+            return False
 
     # ========== THEME MANAGEMENT ==========
 
@@ -1144,6 +1322,19 @@ def main():
                         help='Disable automatic cache flush after deployment (default: auto-flush enabled)')
     parser.add_argument('--dry-run', action='store_true',
                         help='Dry-run mode: simulate operations without making changes')
+    parser.add_argument('--deploy-plugin', type=str,
+                        help='Deploy plugin (plugin directory name)')
+    parser.add_argument('--deploy-plugin-file', type=str,
+                        help='Deploy single plugin file (local path)')
+    parser.add_argument('--plugin-name', type=str,
+                        help='Plugin name (required with --deploy-plugin-file)')
+    parser.add_argument('--update-post-status', type=int,
+                        help='Update post status (requires --post-status)')
+    parser.add_argument('--post-status', type=str,
+                        choices=['publish', 'draft',
+                                 'private', 'pending', 'future'],
+                        default='publish',
+                        help='Post status (used with --update-post-status)')
 
     args = parser.parse_args()
 
@@ -1217,6 +1408,26 @@ def main():
         elif args.purge_cache:
             manager.purge_caches()
             print("✅ Cache purged")
+        elif args.deploy_plugin:
+            count = manager.deploy_plugin(
+                args.deploy_plugin, auto_flush_cache=auto_flush)
+            print(f"✅ Deployed {count} plugin files")
+        elif args.deploy_plugin_file:
+            if not args.plugin_name:
+                print("❌ Error: --plugin-name required with --deploy-plugin-file")
+                sys.exit(1)
+            local_path = Path(args.deploy_plugin_file)
+            ok = manager.deploy_plugin_file(
+                local_path, args.plugin_name, auto_flush_cache=auto_flush)
+            print(
+                f"✅ Deployed plugin file: {local_path}" if ok else f"❌ Deploy failed: {local_path}")
+        elif args.update_post_status:
+            if manager.update_post_status(args.update_post_status, args.post_status):
+                print(
+                    f"✅ Post {args.update_post_status} updated to '{args.post_status}'")
+            else:
+                print(f"❌ Failed to update post {args.update_post_status}")
+                sys.exit(1)
         else:
             parser.print_help()
 

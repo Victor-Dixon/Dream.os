@@ -14,7 +14,7 @@ import hashlib
 import hmac
 import json
 import logging
-from typing import Dict, Any, Optional, Callable
+from typing import Dict, Any, Optional, Callable, Tuple
 from datetime import datetime
 from flask import Flask, request, jsonify
 
@@ -75,7 +75,7 @@ class TwitchEventSubHandler:
         # Use constant-time comparison to prevent timing attacks
         return hmac.compare_digest(expected_hash, calculated_hash)
     
-    def handle_webhook(self, request_obj) -> tuple[Dict[str, Any], int]:
+    def handle_webhook(self, request_obj) -> Tuple[Dict[str, Any], int]:
         """
         Handle incoming EventSub webhook request.
         
@@ -130,7 +130,7 @@ class TwitchEventSubHandler:
         logger.warning(f"Unknown message type: {message_type}")
         return {"error": "Unknown message type"}, 400
     
-    def _handle_notification(self, payload: Dict[str, Any]) -> tuple[Dict[str, Any], int]:
+    def _handle_notification(self, payload: Dict[str, Any]) -> Tuple[Dict[str, Any], int]:
         """
         Handle notification event.
         
@@ -154,7 +154,7 @@ class TwitchEventSubHandler:
     def _handle_redemption(
         self,
         event_data: Dict[str, Any]
-    ) -> tuple[Dict[str, Any], int]:
+    ) -> Tuple[Dict[str, Any], int]:
         """
         Handle channel point redemption event.
         

@@ -55,14 +55,57 @@ def send_to_agent(
 ):
     """Send message to agent via message queue. Routes through queue for PyAutoGUI orchestration."""
     try:
-        message_type, sender_final = detect_and_determine_sender(sender, agent, detect_sender_func, determine_message_type_func)
+        message_type, sender_final = detect_and_determine_sender(
+            sender, agent, detect_sender_func, determine_message_type_func
+        )
         category = message_category or _map_category_from_type(message_type)
-        block_result, _ = validate_and_prepare_message(sender_final, agent, message, category)
+
+        # Hardened A2A detection: if the message text clearly indicates A2A intent
+        # but category was not set to A2A, either auto-promote or hard error.
+        if isinstance(message, str):
+            text = message.strip()
+            if text.lower().startswith("a2a:") and category != MessageCategory.A2A:
+                if sender_final and sender_final.upper().startswith("AGENT-"):
+                    logger.info(
+                        "🔄 Promoting message to A2A based on 'A2A:' prefix and Agent sender "
+                        "(sender=%s, recipient=%s)",
+                        sender_final,
+                        agent,
+                    )
+                    category = MessageCategory.A2A
+                else:
+                    error_msg = (
+                        "Message starts with 'A2A:' but sender is not an Agent-*. "
+                        "Set AGENT_CONTEXT=Agent-X or use --sender Agent-X / --category a2a "
+                        "with the messaging CLI."
+                    )
+                    block_result = {
+                        "success": False,
+                        "blocked": True,
+                        "reason": "invalid_a2a_sender",
+                        "error_message": error_msg,
+                        "agent": agent,
+                    }
+                    handle_blocked_message(block_result, agent)
+                    return block_result
+
+        block_result, _ = validate_and_prepare_message(
+            sender_final, agent, message, category)
         if block_result:
             handle_blocked_message(block_result, agent)
             return block_result
-        return send_validated_message(queue, sender_final, agent, message, category, stalled, use_pyautogui, send_mode, priority, message_type)
+        return send_validated_message(
+            queue,
+            sender_final,
+            agent,
+            message,
+            category,
+            stalled,
+            use_pyautogui,
+            send_mode,
+            priority,
+            message_type,
+        )
     except Exception as e:
         logger.error(f"Error sending message to {agent}: {e}")
         return False
-

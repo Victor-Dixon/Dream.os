@@ -20,6 +20,7 @@ from src.core.messaging_core import UnifiedMessageTag
 from src.core.messaging_models_core import MessageCategory
 
 from .message_formatters import (
+    _apply_template,
     _format_normal_message_with_instructions,
     _is_ack_text,
     _load_last_inbound_categories,
@@ -34,7 +35,8 @@ def check_ack_blocked(sender: str, message: str) -> Optional[Dict[str, Any]]:
     if sender.upper().startswith("AGENT-"):
         last_inbound = _load_last_inbound_categories()
         if last_inbound.get(sender) == MessageCategory.S2A.value and _is_ack_text(message):
-            logger.warning(f"❌ Message blocked: ack/noise reply after S2A inbound for {sender}")
+            logger.warning(
+                f"❌ Message blocked: ack/noise reply after S2A inbound for {sender}")
             return {
                 "success": False,
                 "blocked": True,
@@ -165,8 +167,10 @@ def send_via_queue(
     metadata: Dict[str, Any],
 ) -> Dict[str, Any]:
     """Send message via queue and return result."""
-    queue_id = enqueue_message(queue, sender, agent, formatted_message, priority, message_type, metadata)
-    logger.info(f"✅ Message queued for {agent} (ID: {queue_id}): {formatted_message[:50]}...")
+    queue_id = enqueue_message(
+        queue, sender, agent, formatted_message, priority, message_type, metadata)
+    logger.info(
+        f"✅ Message queued for {agent} (ID: {queue_id}): {formatted_message[:50]}...")
     return {"success": True, "queue_id": queue_id, "agent": agent}
 
 
@@ -196,7 +200,8 @@ def handle_blocked_message(block_result: Dict[str, Any], agent: str) -> None:
     import logging
     logger = logging.getLogger(__name__)
     if block_result.get("reason") == "pending_multi_agent_request":
-        logger.warning(f"❌ Message blocked - recipient {agent} has pending multi-agent request")
+        logger.warning(
+            f"❌ Message blocked - recipient {agent} has pending multi-agent request")
 
 
 def send_validated_message(
@@ -212,9 +217,42 @@ def send_validated_message(
     message_type: Any,
 ) -> Any:
     """Send validated message via queue with fallback."""
-    metadata = build_queue_metadata(stalled, use_pyautogui, send_mode, category)
-    formatted_message = format_message_for_queue(message, category)
-    result = send_message_with_fallback(queue, sender_final, agent, formatted_message, priority, message_type, metadata)
+    metadata = build_queue_metadata(
+        stalled, use_pyautogui, send_mode, category)
+
+    # Apply A2A coordination template for Agent-to-Agent messages sent via CLI/queue.
+    # Discord and other integrations that already apply templates pass fully-rendered
+    # content and/or their own metadata; here we only template when:
+    # - We have an explicit A2A category, and
+    # - The message is a plain string (raw coordination ask).
+    templated_message = message
+    try:
+        if category == MessageCategory.A2A and isinstance(message, str):
+            import uuid
+
+            templated_message = _apply_template(
+                category=MessageCategory.A2A,
+                message=message,
+                sender=sender_final,
+                recipient=agent,
+                priority=priority,
+                message_id=str(uuid.uuid4()),
+                extra={},
+            )
+    except Exception:
+        # Safety: never block delivery if template application fails
+        templated_message = message
+
+    formatted_message = format_message_for_queue(templated_message, category)
+    result = send_message_with_fallback(
+        queue,
+        sender_final,
+        agent,
+        formatted_message,
+        priority,
+        message_type,
+        metadata,
+    )
     update_last_inbound_category(agent, category)
     return result
 
@@ -226,11 +264,29 @@ def validate_and_prepare_message(
     category: Optional[MessageCategory],
 ) -> tuple[Optional[Dict[str, Any]], Optional[Dict[str, Any]]]:
     """Validate message and return blocking result if needed, or None if valid."""
+    # Heuristic safeguard: detect likely A2A misuse when template/category don't match.
+    # If a message looks like an A2A coordination ping but the category is not A2A,
+    # this usually means AGENT_CONTEXT/sender detection wasn't set correctly.
+    try:
+        if isinstance(message, str):
+            text = message.strip().lower()
+            if text.startswith("a2a:") and category != MessageCategory.A2A:
+                logger.warning(
+                    "⚠️ Message to %s starts with 'A2A:' but category=%s "
+                    "- check AGENT_CONTEXT / sender detection for proper A2A routing",
+                    agent,
+                    getattr(category, "value", str(category)),
+                )
+    except Exception:
+        # Never block on safeguard heuristics
+        pass
+
     ack_block = check_ack_blocked(sender_final, message)
     if ack_block:
         ack_block["agent"] = agent
         return ack_block, None
-    can_send, error_message, pending_info = validate_recipient_can_receive(agent, message)
+    can_send, error_message, pending_info = validate_recipient_can_receive(
+        agent, message)
     if not can_send:
         return {
             "success": False,
@@ -241,4 +297,3 @@ def validate_and_prepare_message(
             "pending_info": pending_info
         }, None
     return None, None
-

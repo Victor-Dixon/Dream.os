@@ -33,6 +33,7 @@ from .chat_scheduler import ChatScheduler
 from .message_interpreter import MessageInterpreter
 from .status_reader import AgentStatusReader
 from .twitch_bridge import TwitchChatBridge
+from .quote_generator import get_random_quote, format_quote_for_chat
 
 # Configure logging for chat_presence with file handler
 log_dir = Path(__file__).parent.parent.parent.parent / "logs"
@@ -252,6 +253,30 @@ class ChatPresenceOrchestrator(BaseService):
                         "error_message": str(e),
                         "component": "ChatPresenceOrchestrator",
                         "operation": "_handle_status_command",
+                        "message": message,
+                    },
+                    exc_info=True
+                )
+            return
+
+        # Handle quote commands (available to all users)
+        is_quote = self.message_interpreter.is_quote_command(message)
+        logger.debug(f"is_quote_command returned: {is_quote}")
+
+        if is_quote:
+            logger.info(f"Quote command detected: {message}")
+            try:
+                quote_response = self.message_interpreter.get_quote_response()
+                await self.twitch_bridge.send_message(quote_response)
+                logger.debug("Quote sent to chat")
+            except Exception as e:
+                logger.error(
+                    "Error handling quote command",
+                    extra={
+                        "error_type": type(e).__name__,
+                        "error_message": str(e),
+                        "component": "ChatPresenceOrchestrator",
+                        "operation": "_handle_quote_command",
                         "message": message,
                     },
                     exc_info=True
