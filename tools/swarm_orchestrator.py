@@ -34,8 +34,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from .gas_messaging import send_gas_message
-from .opportunity_scanners import (
+from tools.gas_messaging import send_gas_message
+from tools.opportunity_scanners import (
     scan_complexity,
     scan_duplication,
     scan_linter_errors,
@@ -44,7 +44,7 @@ from .opportunity_scanners import (
     scan_todo_comments,
     scan_v2_violations,
 )
-from .task_creator import create_inbox_task
+from tools.task_creator import create_inbox_task
 
 
 class SwarmOrchestrator:
