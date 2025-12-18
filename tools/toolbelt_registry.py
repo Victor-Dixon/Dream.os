@@ -399,9 +399,9 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     },
     "coverage-check": {
         "name": "Coverage Validator",
-        "module": "tools.coverage_validator",
+        "module": "tools.coverage_analyzer",
         "main_function": "main",
-        "description": "Validate test coverage meets thresholds",
+        "description": "Validate test coverage meets thresholds (uses coverage analyzer)",
         "flags": ["--coverage-check", "--cov"],
         "args_passthrough": True,
     },
@@ -515,11 +515,12 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     },
     "verify-cicd": {
         "name": "Verify Merged Repo CI/CD",
-        "module": "tools.verify_merged_repo_cicd_enhanced",
+        "module": "tools.unified_verifier",
         "main_function": "main",
-        "description": "Verify CI/CD pipelines for merged repositories (Agent-3's tool)",
+        "description": "Verify CI/CD pipelines for merged repositories via unified verifier (category=cicd, action=merged)",
         "flags": ["--verify-cicd", "--cicd-verify"],
-        "args_passthrough": True,
+        "args_passthrough": False,
+        "override_args": ["--category", "cicd", "--action", "merged"],
     },
     "real-violations": {
         "name": "Real Violation Scanner",
@@ -722,11 +723,12 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     },
     "test-health": {
         "name": "Test Health Monitor",
-        "module": "tools.test_health_monitor",
+        "module": "tools.unified_verifier",
         "main_function": "main",
-        "description": "Monitor test suite health and identify improvements",
+        "description": "Monitor test suite health via unified verifier (category=file, action=comprehensive)",
         "flags": ["--test-health", "--health"],
-        "args_passthrough": True,
+        "args_passthrough": False,
+        "override_args": ["--category", "file", "--action", "comprehensive"],
     },
     "infra-health": {
         "name": "Infrastructure Health Monitor",
