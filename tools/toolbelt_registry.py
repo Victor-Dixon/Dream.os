@@ -239,7 +239,7 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     },
     "devlog-post": {
         "name": "Devlog Auto-Poster",
-        "module": "tools.devlog_auto_poster",
+        "module": "tools.devlog_poster",
         "main_function": "main",
         "description": "Auto-post devlogs to Discord (10min → 30sec!)",
         "flags": ["--devlog-post", "--post-devlog"],
@@ -671,7 +671,7 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     },
     "discord-verify": {
         "name": "Verify Discord Running",
-        "module": "tools.verify_discord_running",
+        "module": "tools.check_service_status",
         "main_function": "main",
         "description": "Verify Discord bot is running",
         "flags": ["--discord-verify", "--verify-discord"],
@@ -680,7 +680,7 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     # Queue Tools (Agent-6 Organization)
     "queue-diagnose": {
         "name": "Diagnose Queue",
-        "module": "tools.diagnose_queue",
+        "module": "tools.diagnose_message_queue",
         "main_function": "main",
         "description": "Diagnose message queue issues",
         "flags": ["--queue-diagnose", "--diagnose-queue"],
