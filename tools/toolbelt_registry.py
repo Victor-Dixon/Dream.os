@@ -539,7 +539,7 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     },
     "integration-validate": {
         "name": "Integration Validator",
-        "module": "tests.integration.system_integration_validator",
+        "module": "tools.communication.integration_validator",
         "main_function": "main",
         "description": "Comprehensive system integration validation (C-048-5)",
         "flags": ["--integration-validate", "--int-val"],
