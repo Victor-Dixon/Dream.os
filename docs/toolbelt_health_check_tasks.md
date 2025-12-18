@@ -91,3 +91,4 @@ python tools/populate_tasks_from_health_check.py
 2. **Prioritize fixes** - Start with syntax errors (easiest), then missing main() functions, then missing modules
 3. **Registry cleanup** - Remove deprecated tools from registry if not fixable
 4. **Automate task generation** - Integrate into regular health check workflow
+

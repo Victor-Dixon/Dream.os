@@ -27,3 +27,4 @@ for p in pages:
     print(
         f"  - {p.get('slug')} (ID: {p.get('id')}): {p.get('title', {}).get('rendered', 'N/A')[:60]}")
 
+
