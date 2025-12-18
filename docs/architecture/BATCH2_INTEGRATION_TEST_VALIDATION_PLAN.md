@@ -277,14 +277,17 @@ python tools/validate_cross_repo_communication.py --repos temp_repos/
 
 ---
 
-### **Agent-3 (Infrastructure & DevOps)**
-- **Support**: CI/CD setup and test infrastructure
+### **Agent-3 (Infrastructure & DevOps)** ✅ COORDINATING
+- **Primary**: CI/CD setup and test infrastructure
 - **Tasks**:
   - Set up CI/CD test environment
   - Configure test execution pipeline
   - Validate deployment boundaries
   - Coordinate test infrastructure
   - **Component 4**: Dependency management verification (with Agent-1)
+  - **Architecture Review**: Integration test architecture review for 5 merged repos
+  - **API Contract Validation**: Architecture coordination with Agent-2
+  - **Integration Pattern Validation**: Pattern validation coordination
 
 ---
 
