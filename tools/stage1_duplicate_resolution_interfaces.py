@@ -42,17 +42,21 @@ INTERFACE_MAPPINGS = {
 
 # Files to add deprecation warnings to
 FILES_TO_DEPRECATE = [
-    ("src/core/messaging_core.py", "IMessageDelivery", "messaging_protocol_models.IMessageDelivery"),
-    ("src/core/messaging_core.py", "IOnboardingService", "messaging_protocol_models.IOnboardingService"),
-    ("src/core/onboarding_service.py", "IOnboardingService", "messaging_protocol_models.IOnboardingService"),
+    ("src/core/messaging_core.py", "IMessageDelivery",
+     "messaging_protocol_models.IMessageDelivery"),
+    ("src/core/messaging_core.py", "IOnboardingService",
+     "messaging_protocol_models.IOnboardingService"),
+    ("src/core/onboarding_service.py", "IOnboardingService",
+     "messaging_protocol_models.IOnboardingService"),
 ]
 
 
 def generate_deprecation_warning(interface_name: str, ssot_path: str, note: str = "") -> str:
     """Generate deprecation warning code."""
-    ssot_import = ssot_path.replace("src/", "").replace(".py", "").replace("/", ".")
+    ssot_import = ssot_path.replace(
+        "src/", "").replace(".py", "").replace("/", ".")
     ssot_module = ssot_path.split("/")[-1].replace(".py", "")
-    
+
     warning = f'''
 """
 ⚠️ DEPRECATED - {interface_name} protocol is deprecated.
@@ -81,7 +85,7 @@ warnings.warn(
 
 def create_consolidation_report() -> str:
     """Create a detailed consolidation report."""
-    
+
     report = """# Interface Definitions Consolidation Report
 **Date**: 2025-12-17  
 **Agent**: Agent-5  
@@ -183,7 +187,7 @@ class MyService:
 
 🐝 **WE. ARE. SWARM. ⚡🔥**
 """
-    
+
     return report
 
 
@@ -191,7 +195,7 @@ def main():
     """Main execution."""
     print("🔍 Stage 1 Integration: Interface Definitions Consolidation")
     print("=" * 60)
-    
+
     # Create consolidation report
     print("\n📋 Generating consolidation report...")
     report = create_consolidation_report()
@@ -199,63 +203,71 @@ def main():
     report_file.parent.mkdir(parents=True, exist_ok=True)
     report_file.write_text(report, encoding="utf-8")
     print(f"✅ Report saved: {report_file}")
-    
+
     # Add deprecation warnings to duplicate interface files
     print("\n⚠️ Adding deprecation warnings to duplicate interface files...")
     deprecated_count = 0
-    
+
     for file_path, interface_name, ssot_ref in FILES_TO_DEPRECATE:
         full_path = project_root / file_path
         if full_path.exists():
             content = full_path.read_text(encoding="utf-8")
-            
+
             # Check if deprecation already exists
             if "DEPRECATED" not in content or f"{interface_name} protocol is deprecated" not in content:
                 # Find the interface class definition
                 lines = content.split("\n")
-                
+
                 # Find where interface is defined
                 interface_idx = -1
                 for i, line in enumerate(lines):
                     if f"class {interface_name}" in line:
                         interface_idx = i
                         break
-                
+
                 if interface_idx >= 0:
                     # Find where to insert deprecation (before interface class)
                     insert_idx = interface_idx
-                    
+
                     # Go back to find appropriate insertion point
                     while insert_idx > 0 and (
                         lines[insert_idx - 1].strip() == "" or
                         lines[insert_idx - 1].startswith("@") or
                         lines[insert_idx - 1].startswith("#") or
-                        (lines[insert_idx - 1].strip() and not lines[insert_idx - 1].startswith("class") and not lines[insert_idx - 1].startswith("def"))
+                        (lines[insert_idx - 1].strip() and not lines[insert_idx - 1].startswith(
+                            "class") and not lines[insert_idx - 1].startswith("def"))
                     ):
                         insert_idx -= 1
-                    
+
                     # Generate deprecation warning
                     interface_info = INTERFACE_MAPPINGS.get(interface_name, {})
-                    ssot_path = interface_info.get("ssot", "src/core/messaging_protocol_models.py")
+                    ssot_path = interface_info.get(
+                        "ssot", "src/core/messaging_protocol_models.py")
                     note = interface_info.get("note", "")
-                    deprecation = generate_deprecation_warning(interface_name, ssot_path, note)
-                    
+                    deprecation = generate_deprecation_warning(
+                        interface_name, ssot_path, note)
+
                     # Insert deprecation
-                    new_lines = lines[:insert_idx] + [deprecation] + lines[insert_idx:]
+                    new_lines = lines[:insert_idx] + \
+                        [deprecation] + lines[insert_idx:]
                     new_content = "\n".join(new_lines)
-                    
+
                     full_path.write_text(new_content, encoding="utf-8")
-                    print(f"  ✅ Added deprecation to {file_path} ({interface_name})")
+                    print(
+                        f"  ✅ Added deprecation to {file_path} ({interface_name})")
                     deprecated_count += 1
                 else:
-                    print(f"  ⚠️  Could not find {interface_name} interface in {file_path}")
+                    print(
+                        f"  ⚠️  Could not find {interface_name} interface in {file_path}")
             else:
-                print(f"  ℹ️  {file_path} already has deprecation warning for {interface_name}")
+                print(
+                    f"  ℹ️  {file_path} already has deprecation warning for {interface_name}")
         else:
             print(f"  ⚠️  File not found: {file_path}")
-    
-    print(f"\n✅ Added deprecation warnings to {deprecated_count} interface definitions")
-    
+
+    print(
+        f"\n✅ Added deprecation warnings to {deprecated_count} interface definitions")
+
     print("\n" + "=" * 60)
     print("📋 Next Steps:")
     print("1. Review consolidation report: docs/STAGE1_INTERFACE_CONSOLIDATION_REPORT.md")
