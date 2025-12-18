@@ -1,3 +1,4 @@
+from __future__ import annotations
 
 """
 ⚠️ DEPRECATED - TaskStatus enum is deprecated.
@@ -29,8 +30,6 @@ Task CRUD operations extracted for V2 compliance <200 lines.
 Author: Agent-5 (extracted from base_execution_manager.py)
 License: MIT
 """
-
-from __future__ import annotations
 
 import uuid
 from datetime import datetime
