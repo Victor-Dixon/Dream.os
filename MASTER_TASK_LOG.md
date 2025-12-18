@@ -56,7 +56,7 @@
 - [ ] Fix 'Architecture Pattern Validator' (pattern-validator) - Module: `tools.arch_pattern_validator` - ImportError: No module named 'tools.arch_pattern_validator'
 - [ ] Fix 'Import Validator' (validate-imports) - Module: `tools.validate_imports` - ImportError: No module named 'tools.validate_imports'
 - [ ] Fix 'Task CLI' (task) - Module: `tools.task_cli` - ImportError: No module named 'tools.task_cli'
-- [ ] Fix 'Refactor Analyzer' (refactor-analyze) - Module: `tools.refactor_analyzer` - ImportError: No module named 'tools.refactor_analyzer'
+- [x] Fix 'Refactor Analyzer' (refactor-analyze) - Module: `tools.refactor_analyzer` - ImportError: No module named 'tools.refactor_analyzer' ✅ FIXED by Agent-2 (2025-12-18) - Updated registry to point to tools.refactoring_cli
 - [ ] Fix 'Devlog Auto-Poster' (devlog-post) - Module: `tools.devlog_auto_poster` - ImportError: No module named 'tools.devlog_auto_poster'
 - [ ] Fix 'Pattern Extractor' (pattern-extract) - Module: `tools.pattern_extractor` - ImportError: No module named 'tools.pattern_extractor'
 - [ ] Fix 'V2 Batch Checker' (v2-batch) - Module: `tools.v2_checker_cli` - ImportError: No module named 'tools.v2_checker_cli'

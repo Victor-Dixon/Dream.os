@@ -52,7 +52,7 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     },
     "refactor": {
         "name": "Refactoring Suggestions",
-        "module": "tools.refactoring_suggestions",
+        "module": "tools.refactoring_suggestion_engine",
         "main_function": "main",
         "description": "Get intelligent refactoring suggestions",
         "flags": ["--refactor", "-r"],
@@ -223,7 +223,7 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     },
     "refactor-analyze": {
         "name": "Refactor Analyzer",
-        "module": "tools.refactor_analyzer",
+        "module": "tools.refactoring_cli",
         "main_function": "main",
         "description": "Smart refactoring suggestions based on file analysis",
         "flags": ["--refactor-analyze", "--analyze-refactor"],
