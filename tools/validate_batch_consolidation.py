@@ -149,7 +149,11 @@ def validate_batch(batch_number: int) -> Dict[str, any]:
         duplicate_paths = group.get("duplicates", [])
         dup_result = check_duplicate_files(ssot_path, duplicate_paths)
         
+        # Group is ready if: duplicates found and match SSOT, OR all duplicates already deleted
         if dup_result["ready_for_deletion"]:
+            validation_results["groups_ready"] += 1
+        elif len(dup_result["missing"]) == len(duplicate_paths) and len(dup_result["duplicates"]) == 0:
+            # All duplicates already deleted - group is already consolidated
             validation_results["groups_ready"] += 1
         else:
             if dup_result["different"]:
