@@ -10,6 +10,7 @@ Author: Agent-2
 V2 Compliant: <300 lines
 """
 
+from tools.wordpress_manager import WordPressManager
 import json
 import sys
 from pathlib import Path
@@ -21,7 +22,6 @@ from requests.auth import HTTPBasicAuth
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
-from tools.wordpress_manager import WordPressManager
 
 # Load credentials
 creds_file = project_root / ".deploy_credentials" / "blogging_api.json"
@@ -42,7 +42,7 @@ def find_default_post():
     url = f"{API_BASE}/posts"
     params = {"per_page": 100, "search": "Hello world"}
     response = requests.get(url, params=params, auth=AUTH, timeout=30)
-    
+
     if response.status_code == 200:
         posts = response.json()
         for post in posts:
@@ -57,7 +57,7 @@ def find_uncategorized_category():
     url = f"{API_BASE}/categories"
     params = {"per_page": 100, "search": "Uncategorized"}
     response = requests.get(url, params=params, auth=AUTH, timeout=30)
-    
+
     if response.status_code == 200:
         categories = response.json()
         for cat in categories:
@@ -103,13 +103,14 @@ def remove_from_navigation(manager: WordPressManager):
     menus_json, _, _ = manager.wp_cli("menu list --format=json")
     if not menus_json.strip():
         return
-    
+
     menus = json.loads(menus_json)
-    
+
     for menu in menus:
         menu_id = menu.get("term_id")
         # Get menu items
-        items_json, _, _ = manager.wp_cli(f"menu item list {menu_id} --format=json")
+        items_json, _, _ = manager.wp_cli(
+            f"menu item list {menu_id} --format=json")
         if items_json.strip():
             items = json.loads(items_json)
             for item in items:
@@ -123,14 +124,14 @@ def remove_from_navigation(manager: WordPressManager):
 def main():
     """Main execution."""
     print("🔧 Cleaning WordPress defaults on dadudekc.com...\n")
-    
+
     # Find default post
     default_post = find_default_post()
     if default_post:
         post_id = default_post["id"]
         post_title = default_post.get("title", {}).get("rendered", "")
         print(f"✅ Found default post: '{post_title}' (ID: {post_id})")
-        
+
         # Unpublish (safer than delete)
         if unpublish_post(post_id):
             print(f"✅ Unpublished default post (ID: {post_id})")
@@ -138,14 +139,14 @@ def main():
             print(f"⚠️  Failed to unpublish post (ID: {post_id})")
     else:
         print("⏭️  No default 'Hello world!' post found")
-    
+
     # Find Uncategorized category
     uncategorized = find_uncategorized_category()
     if uncategorized:
         cat_id = uncategorized["id"]
         cat_name = uncategorized.get("name", "")
         print(f"✅ Found 'Uncategorized' category (ID: {cat_id})")
-        
+
         # Update name to "General" (safer than deleting)
         if update_category(cat_id, "General"):
             print(f"✅ Renamed 'Uncategorized' to 'General' (ID: {cat_id})")
@@ -153,7 +154,7 @@ def main():
             print(f"⚠️  Failed to update category (ID: {cat_id})")
     else:
         print("⏭️  No 'Uncategorized' category found")
-    
+
     # Remove from navigation
     manager = WordPressManager("dadudekc.com")
     if manager.connect():
@@ -164,7 +165,7 @@ def main():
         print("✅ Navigation menus updated")
     else:
         print("⚠️  Could not connect to update navigation")
-    
+
     print("\n✅ WordPress defaults cleanup complete!")
     print("💡 Note: Post set to draft (not deleted) and category renamed (not deleted) for safety")
 
