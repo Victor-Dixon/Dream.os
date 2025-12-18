@@ -54,17 +54,22 @@
 ## 🚧 Blockers
 
 1. **Missing Tool Files (3 tools):**
-   - `task_cli.py` - NOT FOUND
-   - `test_usage_analyzer.py` - NOT FOUND
-   - `validate_imports.py` - NOT FOUND
+   - `task_cli.py` - NOT FOUND (found: task_creator.py - different tool)
+   - `test_usage_analyzer.py` - NOT FOUND (found: test_pyramid_analyzer.py - different tool)
+   - `validate_imports.py` - NOT FOUND (found: validate_import_fixes.py, validate_analytics_imports.py - different tools)
    
    **Decision Needed:** Should these tools be:
    - Created (if they're needed)
    - Removed from registry (if deprecated/unused)
+   - Updated to point to similar existing tools
 
 2. **Dependency Check Needed:**
-   - `functionality_verification.py` exists but may have missing dependencies
-   - Need to verify imports and dependencies
+   - `functionality_verification.py` exists but imports from missing modules:
+     - `functionality_comparison` - NOT FOUND
+     - `functionality_reports` - NOT FOUND
+     - `functionality_signature` - NOT FOUND
+     - `functionality_tests` - NOT FOUND
+   - Need to create these modules or fix imports
 
 ---
 
