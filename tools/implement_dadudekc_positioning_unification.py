@@ -118,7 +118,7 @@ def update_homepage():
         page = find_page_by_slug(slug)
         if page:
             break
-    
+
     if not page:
         # Try front page (first page by menu order)
         url = f"{API_BASE}/pages"
@@ -157,7 +157,7 @@ def update_about_page():
     print("👤 Updating About page...")
 
     page = find_page_by_slug("about")
-    
+
     # Create page if it doesn't exist
     if not page:
         print("  📝 Creating About page...")
@@ -196,7 +196,7 @@ def update_services_page():
     print("🛠️  Updating Services page...")
 
     page = find_page_by_slug("services")
-    
+
     # Create page if it doesn't exist
     if not page:
         print("  📝 Creating Services page...")
