@@ -1,95 +1,87 @@
-# Toolbelt Health Check - Generated Tasks
+# Toolbelt Health Check - Execution Plan & Assignments
 
 **Date:** 2025-12-18  
-**Source:** `tools/check_toolbelt_health.py` + `tools/populate_tasks_from_health_check.py`  
-**Status:** 41 broken tools identified, tasks generated
+**Status:** 26 missing module errors remaining (4 fixed, 9 other fixes complete)  
+**Total Broken:** 41 tools  
+**Fixed:** 15 tools (syntax errors: 4, import errors: 1, main() functions: 6, missing modules: 4)  
+**Remaining:** 26 missing module errors
 
-## Summary
+## Progress Summary
 
-- **Total tools checked**: 87
-- **Healthy tools**: 46 (52.9%)
-- **Broken tools**: 41 (47.1%)
-- **HIGH priority fixes**: 35
-- **MEDIUM priority fixes**: 6
+### ✅ COMPLETE (15 fixes)
+- **Syntax Errors:** 4/4 fixed (Agent-2: 1, Agent-4: 3)
+- **Import Errors:** 1/1 fixed (Agent-2)
+- **Missing main() Functions:** 6/6 fixed (Agent-4)
+- **Missing Modules:** 4/30 fixed (Agent-2: 4)
 
-## HIGH PRIORITY TASKS (35)
+### 🔄 REMAINING (26 missing module errors)
 
-### Missing Modules (30 tools)
-- [ ] Fix 'Project Scanner' (scan) - Module: `tools.run_project_scan`
-- [ ] Fix 'V2 Compliance Checker' (v2-check) - Module: `tools.v2_checker_cli`
-- [ ] Fix 'Compliance Dashboard' (dashboard) - Module: `tools.dashboard_html_generator`
-- [ ] Fix 'Complexity Analyzer' (complexity) - Module: `tools.complexity_analyzer`
-- [ ] Fix 'Refactoring Suggestions' (refactor) - Module: `tools.refactoring_suggestions`
-- [ ] Fix 'Functionality Verification' (functionality) - Module: `tools.functionality_verification` (missing dependency: `functionality_comparison`)
-- [ ] Fix 'Compliance History' (history) - Module: `tools.compliance_history_tracker` (missing dependency: `compliance_history_database`)
-- [ ] Fix 'Test Usage Analyzer' (test-usage-analyzer) - Module: `tools.test_usage_analyzer`
-- [ ] Fix 'Architecture Pattern Validator' (pattern-validator) - Module: `tools.arch_pattern_validator`
-- [ ] Fix 'Import Validator' (validate-imports) - Module: `tools.validate_imports`
-- [ ] Fix 'Task CLI' (task) - Module: `tools.task_cli`
-- [ ] Fix 'Refactor Analyzer' (refactor-analyze) - Module: `tools.refactor_analyzer`
-- [ ] Fix 'Devlog Auto-Poster' (devlog-post) - Module: `tools.devlog_auto_poster`
-- [ ] Fix 'Pattern Extractor' (pattern-extract) - Module: `tools.pattern_extractor`
-- [ ] Fix 'V2 Batch Checker' (v2-batch) - Module: `tools.v2_checker_cli`
-- [ ] Fix 'Coverage Validator' (coverage-check) - Module: `tools.coverage_validator`
-- [ ] Fix 'Unified Agent Status Monitor' (agent-status) - Module: `tools.unified_agent_status_monitor`
-- [ ] Fix 'Analyze Repository Duplicates' (analyze-duplicates) - Module: `tools.analyze_repo_duplicates`
-- [ ] Fix 'Analyze DreamVault Duplicates' (analyze-dreamvault) - Module: `tools.analyze_dreamvault_duplicates`
-- [ ] Fix 'Verify Merged Repo CI/CD' (verify-cicd) - Module: `tools.verify_merged_repo_cicd_enhanced`
-- [ ] Fix 'Pattern Suggester' (pattern-suggest) - Module: `tools.pattern_suggester`
-- [ ] Fix 'Integration Validator' (integration-validate) - Module: `tests.integration.system_integration_validator`
-- [ ] Fix 'Swarm Autonomous Orchestrator' (orchestrate) - Module: `tools.swarm_orchestrator` (missing dependency: `tools.gas_messaging`)
-- [ ] Fix 'Repo Overlap Analyzer' (repo-overlap) - Module: `tools.repo_overlap_analyzer`
-- [ ] Fix 'Consolidation Status Tracker' (consolidation-status) - Module: `tools.consolidation_status_tracker`
-- [ ] Fix 'Verify Discord Running' (discord-verify) - Module: `tools.verify_discord_running`
-- [ ] Fix 'Diagnose Queue' (queue-diagnose) - Module: `tools.diagnose_queue`
-- [ ] Fix 'Fix Stuck Message' (fix-stuck) - Module: `tools.fix_stuck_message`
-- [ ] Fix 'Test Health Monitor' (test-health) - Module: `tools.test_health_monitor`
-- [ ] Fix 'Infrastructure Health Monitor' (infra-health) - Module: `tools.infrastructure_health_monitor`
+## Assignment Strategy
 
-### Syntax Errors (4 tools)
-- [ ] Fix 'Resolve DreamVault Duplicates' (resolve-duplicates) - Syntax error at line 273
-- [ ] Fix 'Execute DreamVault Cleanup' (execute-cleanup) - Syntax error at line 343
-- [ ] Fix 'Mission Control' (mission-control) - Syntax error at line 346
-- [ ] Fix 'Markov Task Optimizer' (markov-optimize) - Syntax error at line 677
+Remaining 26 missing module errors distributed across 5 agents for parallel execution:
 
-### Import Errors (1 tool)
-- [ ] Fix 'Workspace Auto-Cleaner' (workspace-clean) - Import error: `name 'Dict' is not defined`
+### Agent-2 (Architecture & Design) - 6 tools
+**Domain:** Architecture, patterns, refactoring, validation
+- Complexity Analyzer (complexity) - `tools.complexity_analyzer`
+- Refactoring Suggestions (refactor) - `tools.refactoring_suggestions`
+- Architecture Pattern Validator (pattern-validator) - `tools.arch_pattern_validator`
+- Refactor Analyzer (refactor-analyze) - `tools.refactor_analyzer`
+- Pattern Extractor (pattern-extract) - `tools.pattern_extractor`
+- Pattern Suggester (pattern-suggest) - `tools.pattern_suggester`
 
-## MEDIUM PRIORITY TASKS (6)
+### Agent-1 (Integration & Core Systems) - 6 tools
+**Domain:** Integration, core systems, task management
+- Functionality Verification (functionality) - `tools.functionality_verification` (missing dependency)
+- Task CLI (task) - `tools.task_cli`
+- Integration Validator (integration-validate) - `tests.integration.system_integration_validator`
+- Swarm Autonomous Orchestrator (orchestrate) - `tools.swarm_orchestrator` (missing dependency)
+- Test Usage Analyzer (test-usage-analyzer) - `tools.test_usage_analyzer`
+- Import Validator (validate-imports) - `tools.validate_imports`
 
-### Missing main() Functions
-- [ ] Fix 'Memory Leak Scanner' (memory-scan) - Add main() function
-- [ ] Fix 'Git Commit Verifier' (git-verify) - Add main() function
-- [ ] Fix 'Test Pyramid Analyzer' (test-pyramid) - Add main() function
-- [ ] Fix 'QA Validation Checklist' (qa-checklist) - Add main() function
-- [ ] Fix 'Find Idle Agents' (captain-find-idle) - Add main() function
-- [ ] Fix 'Captain Next Task Picker' (captain-next-task) - Add main() function
+### Agent-3 (Infrastructure & DevOps) - 5 tools
+**Domain:** Infrastructure, monitoring, CI/CD, health checks
+- Verify Merged Repo CI/CD (verify-cicd) - `tools.verify_merged_repo_cicd_enhanced`
+- Test Health Monitor (test-health) - `tools.test_health_monitor`
+- Infrastructure Health Monitor (infra-health) - `tools.infrastructure_health_monitor`
+- Coverage Validator (coverage-check) - `tools.coverage_validator`
+- Compliance History (history) - `tools.compliance_history_tracker` (missing dependency)
 
-## Task Generation System
+### Agent-8 (SSOT & System Integration) - 5 tools
+**Domain:** Duplicates, consolidation, SSOT, system integration
+- Analyze Repository Duplicates (analyze-duplicates) - `tools.analyze_repo_duplicates`
+- Analyze DreamVault Duplicates (analyze-dreamvault) - `tools.analyze_dreamvault_duplicates`
+- Repo Overlap Analyzer (repo-overlap) - `tools.repo_overlap_analyzer`
+- Consolidation Status Tracker (consolidation-status) - `tools.consolidation_status_tracker`
+- Unified Agent Status Monitor (agent-status) - `tools.unified_agent_status_monitor`
 
-**Tools Created**:
-1. `tools/check_toolbelt_health.py` - Checks all tools in registry
-2. `tools/populate_tasks_from_health_check.py` - Generates task entries from broken tools
+### Agent-7 (Web Development) - 4 tools
+**Domain:** Web, messaging, Discord, devlogs
+- Devlog Auto-Poster (devlog-post) - `tools.devlog_auto_poster`
+- Verify Discord Running (discord-verify) - `tools.verify_discord_running`
+- Diagnose Queue (queue-diagnose) - `tools.diagnose_queue`
+- Fix Stuck Message (fix-stuck) - `tools.fix_stuck_message`
 
-**Usage**:
-```bash
-# Run health check
-python tools/check_toolbelt_health.py
+## Execution Instructions
 
-# Generate task entries
-python tools/populate_tasks_from_health_check.py
-```
+Each agent should:
+1. **Locate the tool file** - Check if file exists in `tools/` directory
+2. **Check registry entry** - Verify tool registry points to correct module path
+3. **Fix options:**
+   - **If file exists:** Update registry to point to correct module path
+   - **If file missing:** Either create missing file or remove from registry if deprecated
+   - **If dependency missing:** Add missing dependency or update imports
+4. **Verify fix:** Run `python tools/check_toolbelt_health.py` to confirm tool is fixed
+5. **Report completion:** Update MASTER_TASK_LOG.md with fix status
 
-**Integration**:
-- Tasks can be automatically added to MASTER_TASK_LOG.md
-- System categorizes issues by priority (HIGH/MEDIUM)
-- Provides actionable task descriptions with module paths and error details
+## Expected Results
 
-## Next Steps
+- **Total fixes:** 26 missing module errors
+- **Execution time:** Parallel execution across 5 agents = ~5x faster than sequential
+- **Success metric:** All 26 tools should pass health check after fixes
 
-1. **Review generated tasks** - Determine which tools should be fixed vs deprecated
-2. **Prioritize fixes** - Start with syntax errors (easiest), then missing main() functions, then missing modules
-3. **Registry cleanup** - Remove deprecated tools from registry if not fixable
-4. **Automate task generation** - Integrate into regular health check workflow
+## Coordination
 
-
+- All agents execute in parallel
+- No dependencies between tool fixes
+- Report completion to Agent-4 (Captain) for tracking
+- Update MASTER_TASK_LOG.md when complete
