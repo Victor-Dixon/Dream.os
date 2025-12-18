@@ -112,9 +112,15 @@ def update_homepage():
     """Update homepage with positioning line."""
     print("🏠 Updating homepage...")
 
-    page = find_page_by_slug("home")
+    # Try multiple possible homepage slugs
+    page = None
+    for slug in ["home", "developer-tools"]:
+        page = find_page_by_slug(slug)
+        if page:
+            break
+    
     if not page:
-        # Try front page
+        # Try front page (first page by menu order)
         url = f"{API_BASE}/pages"
         params = {"per_page": 1, "orderby": "menu_order", "order": "asc"}
         response = requests.get(url, params=params, auth=AUTH, timeout=30)
@@ -151,9 +157,19 @@ def update_about_page():
     print("👤 Updating About page...")
 
     page = find_page_by_slug("about")
+    
+    # Create page if it doesn't exist
     if not page:
-        print("  ⚠️  About page not found")
-        return False
+        print("  📝 Creating About page...")
+        initial_content = f'<p class="positioning-line" style="font-size: 1.25rem; font-weight: 600; color: #2a5298; margin-bottom: 1.5rem;"><strong>{POSITIONING_LINE}</strong></p><h2>About</h2><p>I help teams automate their workflows to save hours every week.</p>'
+        page = create_page("about", "About", initial_content)
+        if page:
+            page_id = page.get("id")
+            print(f"  ✅ Created About page (ID: {page_id})")
+            return True
+        else:
+            print("  ⚠️  Failed to create About page")
+            return False
 
     page_id = page["id"]
     current_content = page.get("content", {}).get("raw", "")
@@ -180,9 +196,19 @@ def update_services_page():
     print("🛠️  Updating Services page...")
 
     page = find_page_by_slug("services")
+    
+    # Create page if it doesn't exist
     if not page:
-        print("  ⚠️  Services page not found")
-        return False
+        print("  📝 Creating Services page...")
+        initial_content = f'<p class="positioning-line" style="font-size: 1.25rem; font-weight: 600; color: #2a5298; margin-bottom: 1.5rem;"><strong>{POSITIONING_LINE}</strong></p><h2>Services</h2><p>I offer automation consulting and custom development services to help teams save time and reduce manual work.</p>'
+        page = create_page("services", "Services", initial_content)
+        if page:
+            page_id = page.get("id")
+            print(f"  ✅ Created Services page (ID: {page_id})")
+            return True
+        else:
+            print("  ⚠️  Failed to create Services page")
+            return False
 
     page_id = page["id"]
     current_content = page.get("content", {}).get("raw", "")
