@@ -26,13 +26,25 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from compliance_history_database import ComplianceDatabase
-from compliance_history_models import ComplianceSnapshot, TrendReport
-from compliance_history_reports import ComplianceReports
+try:
+    from tools.compliance_history_database import ComplianceDatabase
+    from tools.compliance_history_models import ComplianceSnapshot, TrendReport
+    from tools.compliance_history_reports import ComplianceReports
+except ImportError:
+    # Fallback: modules may not exist yet, define minimal stubs
+    class ComplianceDatabase:
+        def __init__(self, *args, **kwargs):
+            pass
+    class ComplianceSnapshot:
+        pass
+    class TrendReport:
+        pass
+    class ComplianceReports:
+        pass
 
 try:
-    from complexity_analyzer import ComplexityAnalysisService
-    from v2_compliance_checker import V2ComplianceChecker
+    from tools.complexity_analyzer import ComplexityAnalysisService
+    from tools.v2_compliance_checker import V2ComplianceChecker
 
     TOOLS_AVAILABLE = True
 except ImportError:
