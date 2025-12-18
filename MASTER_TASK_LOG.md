@@ -46,7 +46,8 @@
 ### HIGH PRIORITY - Missing Modules (30 tools)
 - [x] Fix 'Project Scanner' (scan) - Module: `tools.run_project_scan` - ImportError: No module named 'tools.run_project_scan' ✅ FIXED by Agent-2 (2025-12-18) - Updated registry to point to tools.project_scan
 - [x] Fix 'V2 Compliance Checker' (v2-check) - Module: `tools.v2_checker_cli` - ImportError: No module named 'tools.v2_checker_cli' ✅ FIXED by Agent-2 (2025-12-18) - Updated registry to point to tools.v2_compliance_checker
-- [ ] Fix 'Compliance Dashboard' (dashboard) - Module: `tools.dashboard_html_generator` - ImportError: No module named 'tools.dashboard_html_generator'
+- [x] Fix 'V2 Batch Checker' (v2-batch) - Module: `tools.v2_checker_cli` - ImportError: No module named 'tools.v2_checker_cli' ✅ FIXED by Agent-2 (2025-12-18) - Updated registry to point to tools.v2_compliance_checker
+- [x] Fix 'Compliance Dashboard' (dashboard) - Module: `tools.dashboard_html_generator` - ImportError: No module named 'tools.dashboard_html_generator' ✅ FIXED by Agent-2 (2025-12-18) - Registry already points to tools.compliance_dashboard (verified working)
 - [ ] Fix 'Complexity Analyzer' (complexity) - Module: `tools.complexity_analyzer` - ImportError: No module named 'tools.complexity_analyzer'
 - [ ] Fix 'Refactoring Suggestions' (refactor) - Module: `tools.refactoring_suggestions` - ImportError: No module named 'tools.refactoring_suggestions'
 - [ ] Fix 'Functionality Verification' (functionality) - Module: `tools.functionality_verification` - ImportError: No module named 'functionality_comparison'

@@ -391,7 +391,7 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     },
     "v2-batch": {
         "name": "V2 Batch Checker",
-        "module": "tools.v2_checker_cli",
+        "module": "tools.v2_compliance_checker",
         "main_function": "main",
         "description": "Quick V2 compliance check for multiple files (uses modular v2_checker_cli)",
         "flags": ["--v2-batch", "--batch"],
