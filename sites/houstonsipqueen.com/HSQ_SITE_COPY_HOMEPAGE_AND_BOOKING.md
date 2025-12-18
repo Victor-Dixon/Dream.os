@@ -134,3 +134,4 @@ The more details you share, the better we can tailor your proposal.
 
 **On‑page message or redirect page text**  
 Thank you! Your inquiry has been received. We’ll get back to you within 24 hours with availability and next steps. If your event is urgent, please reply to the confirmation email and mark it as high priority.
+

@@ -79,3 +79,4 @@ function dadudekc_font_rendering_fix()
 <?php
 }
 add_action('wp_head', 'dadudekc_font_rendering_fix', 999);
+

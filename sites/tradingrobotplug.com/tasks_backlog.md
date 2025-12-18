@@ -5,3 +5,4 @@
 - Design simple pricing/comparison table for current and future plugins.
 
 
+

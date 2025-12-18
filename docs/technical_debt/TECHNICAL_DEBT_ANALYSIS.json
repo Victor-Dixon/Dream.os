@@ -1,27 +1,27 @@
 {
   "summary": {
-    "total_markers": 987,
-    "files_analyzed": 3520,
+    "total_markers": 991,
+    "files_analyzed": 3528,
     "exact_duplicate_groups": 102,
     "same_name_groups": 203,
     "consolidation_opportunities": 102,
-    "analysis_date": "2025-12-18T03:22:49.352392"
+    "analysis_date": "2025-12-18T09:50:08.847082"
   },
   "markers": {
     "by_type": {
       "REFACTOR": 98,
       "BUG": 338,
-      "NOTE": 204,
+      "NOTE": 207,
       "TODO": 142,
-      "DEPRECATED": 185,
+      "DEPRECATED": 186,
       "FIXME": 17,
       "XXX": 3
     },
     "by_priority": {
-      "P3 - Low": 302,
+      "P3 - Low": 305,
       "P0 - Critical": 355,
       "P1 - High": 142,
-      "P2 - Medium": 188
+      "P2 - Medium": 189
     },
     "all": [
       {
@@ -5823,7 +5823,7 @@
       {
         "file_path": "tools\\autonomous_task_engine.py",
         "relative_path": "tools\\autonomous_task_engine.py",
-        "line_number": 83,
+        "line_number": 98,
         "marker_type": "FIXME",
         "priority": "P0 - Critical",
         "marker_text": "comments",
@@ -5832,7 +5832,7 @@
       {
         "file_path": "tools\\autonomous_task_engine.py",
         "relative_path": "tools\\autonomous_task_engine.py",
-        "line_number": 361,
+        "line_number": 376,
         "marker_type": "REFACTOR",
         "priority": "P3 - Low",
         "marker_text": "large file {py_file.name}\",",
@@ -5841,7 +5841,7 @@
       {
         "file_path": "tools\\autonomous_task_engine.py",
         "relative_path": "tools\\autonomous_task_engine.py",
-        "line_number": 389,
+        "line_number": 404,
         "marker_type": "FIXME",
         "priority": "P0 - Critical",
         "marker_text": "comments\"\"\"",
@@ -5850,7 +5850,7 @@
       {
         "file_path": "tools\\autonomous_task_engine.py",
         "relative_path": "tools\\autonomous_task_engine.py",
-        "line_number": 389,
+        "line_number": 404,
         "marker_type": "TODO",
         "priority": "P1 - High",
         "marker_text": "and FIXME comments\"\"\"",
@@ -5859,7 +5859,7 @@
       {
         "file_path": "tools\\autonomous_task_engine.py",
         "relative_path": "tools\\autonomous_task_engine.py",
-        "line_number": 414,
+        "line_number": 429,
         "marker_type": "TODO",
         "priority": "P1 - High",
         "marker_text": "in {Path(file_path).name}:{line_num}\",",
@@ -5868,7 +5868,7 @@
       {
         "file_path": "tools\\autonomous_task_engine.py",
         "relative_path": "tools\\autonomous_task_engine.py",
-        "line_number": 562,
+        "line_number": 577,
         "marker_type": "REFACTOR",
         "priority": "P3 - Low",
         "marker_text": "{task.file_path} into modular components, target {task.reduction_percent:.0f}% reduction\" if task.reduction_percent else f\"Address {task.task_type.lower()} in {task.file_path}\"",
@@ -6118,6 +6118,15 @@
         "full_line": "\"refactor is superior to the old monolith (v2_compliance_checker.py). Quality \""
       },
       {
+        "file_path": "tools\\check_and_apply_hsq_baby_blue_theme.py",
+        "relative_path": "tools\\check_and_apply_hsq_baby_blue_theme.py",
+        "line_number": 320,
+        "marker_type": "NOTE",
+        "priority": "P3 - Low",
+        "marker_text": "You may need to manually add: require_once get_template_directory() . '/hsq_baby_blue_theme.php';\")",
+        "full_line": "print(f\"   Note: You may need to manually add: require_once get_template_directory() . '/hsq_baby_blue_theme.php';\")"
+      },
+      {
         "file_path": "tools\\check_file_implementation_status.py",
         "relative_path": "tools\\check_file_implementation_status.py",
         "line_number": 8,
@@ -6161,6 +6170,24 @@
         "priority": "P1 - High",
         "marker_text": "in data[\"todos\"][:5]:  # Show first 5",
         "full_line": "for todo in data[\"todos\"][:5]:  # Show first 5"
+      },
+      {
+        "file_path": "tools\\check_service_status.py",
+        "relative_path": "tools\\check_service_status.py",
+        "line_number": 51,
+        "marker_type": "NOTE",
+        "priority": "P3 - Low",
+        "marker_text": "This is a simple check - full implementation would parse CSV",
+        "full_line": "# Note: This is a simple check - full implementation would parse CSV"
+      },
+      {
+        "file_path": "tools\\check_service_status.py",
+        "relative_path": "tools\\check_service_status.py",
+        "line_number": 135,
+        "marker_type": "NOTE",
+        "priority": "P3 - Low",
+        "marker_text": "Process detection may not be 100% accurate.\")",
+        "full_line": "print(\"\ud83d\udca1 Note: Process detection may not be 100% accurate.\")"
       },
       {
         "file_path": "tools\\check_twitch_bot_live_status.py",
@@ -7250,6 +7277,15 @@
         "priority": "P3 - Low",
         "marker_text": "{filename}\",",
         "full_line": "name=f\"Refactor {filename}\","
+      },
+      {
+        "file_path": "tools\\populate_tasks_from_health_check.py",
+        "relative_path": "tools\\populate_tasks_from_health_check.py",
+        "line_number": 74,
+        "marker_type": "DEPRECATED",
+        "priority": "P2 - Medium",
+        "marker_text": "or moved",
+        "full_line": "# Missing module - could be deprecated or moved"
       },
       {
         "file_path": "tools\\post_agent3_devlog_session_cleanup.py",
@@ -9888,6 +9924,7 @@
         "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\core\\discord\\main.py",
         "dream\\repos\\master\\dadudekc\\AI agent\\AI\\Digital dreamscape\\main.py",
         "dream\\repos\\master\\dadudekc\\AI agent\\main.py",
+        "main.py",
         "temp_repos\\Auto_Blogger\\autoblogger\\main.py",
         "temp_repos\\Thea\\main.py",
         "temp_repos\\Thea\\src\\dreamscape\\core\\discord\\main.py",
