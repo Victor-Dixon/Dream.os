@@ -1,6 +1,6 @@
 {
-  "analysis_date": "2025-12-18T09:47:00.648074",
-  "total_groups": 102,
+  "analysis_date": "2025-12-18T09:50:08.847082",
+  "total_groups": 83,
   "batches": [
     {
       "batch_number": 1,
@@ -81,52 +81,6 @@
           "duplicates": [
             "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\src\\dreamscape\\gui\\panels\\ai_studio\\conversational_ai_component.py",
             "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\ai_studio\\conversational_ai_component.py"
-          ],
-          "count": 3,
-          "risk": "LOW",
-          "action": "DELETE",
-          "score": 60,
-          "priority": "LOW",
-          "factors": {
-            "count_score": 30,
-            "risk_multiplier": 1,
-            "risk": "LOW",
-            "location_bonus": 10,
-            "ssot_location": "other",
-            "cross_domain_bonus": 0,
-            "domains": [],
-            "action_bonus": 20,
-            "action": "DELETE"
-          }
-        },
-        {
-          "ssot": "temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\conversational_ai_panel.py",
-          "duplicates": [
-            "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\src\\dreamscape\\gui\\panels\\conversational_ai_panel.py",
-            "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\conversational_ai_panel.py"
-          ],
-          "count": 3,
-          "risk": "LOW",
-          "action": "DELETE",
-          "score": 60,
-          "priority": "LOW",
-          "factors": {
-            "count_score": 30,
-            "risk_multiplier": 1,
-            "risk": "LOW",
-            "location_bonus": 10,
-            "ssot_location": "other",
-            "cross_domain_bonus": 0,
-            "domains": [],
-            "action_bonus": 20,
-            "action": "DELETE"
-          }
-        },
-        {
-          "ssot": "temp_repos\\Thea\\tests\\testing\\test_conversational_ai_gui.py",
-          "duplicates": [
-            "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\tests\\testing\\test_conversational_ai_gui.py",
-            "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\tests\\testing\\test_conversational_ai_gui.py"
           ],
           "count": 3,
           "risk": "LOW",
@@ -278,50 +232,6 @@
           }
         },
         {
-          "ssot": "temp_repos\\Auto_Blogger\\tests\\jest.teardown.js",
-          "duplicates": [
-            "agent_workspaces\\Agent-1\\extracted_patterns\\testing_patterns\\jest.teardown.js"
-          ],
-          "count": 2,
-          "risk": "LOW",
-          "action": "DELETE",
-          "score": 50,
-          "priority": "LOW",
-          "factors": {
-            "count_score": 20,
-            "risk_multiplier": 1,
-            "risk": "LOW",
-            "location_bonus": 10,
-            "ssot_location": "other",
-            "cross_domain_bonus": 0,
-            "domains": [],
-            "action_bonus": 20,
-            "action": "DELETE"
-          }
-        },
-        {
-          "ssot": "temp_repos\\Auto_Blogger\\project_scanner.py",
-          "duplicates": [
-            "agent_workspaces\\Agent-1\\extracted_patterns\\utilities\\project_scanner.py"
-          ],
-          "count": 2,
-          "risk": "LOW",
-          "action": "DELETE",
-          "score": 50,
-          "priority": "LOW",
-          "factors": {
-            "count_score": 20,
-            "risk_multiplier": 1,
-            "risk": "LOW",
-            "location_bonus": 10,
-            "ssot_location": "other",
-            "cross_domain_bonus": 0,
-            "domains": [],
-            "action_bonus": 20,
-            "action": "DELETE"
-          }
-        },
-        {
           "ssot": "temp_repos\\Thea\\src\\dreamscape\\core\\legacy\\conversation_system.py",
           "duplicates": [
             "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\src\\dreamscape\\core\\legacy\\conversation_system.py"
@@ -342,14 +252,7 @@
             "action_bonus": 20,
             "action": "DELETE"
           }
-        }
-      ]
-    },
-    {
-      "batch_number": 2,
-      "priority": "LOW",
-      "size": 15,
-      "groups": [
+        },
         {
           "ssot": "temp_repos\\Thea\\src\\dreamscape\\core\\legacy\\debug_conversation_content.py",
           "duplicates": [
@@ -437,7 +340,14 @@
             "action_bonus": 20,
             "action": "DELETE"
           }
-        },
+        }
+      ]
+    },
+    {
+      "batch_number": 2,
+      "priority": "LOW",
+      "size": 15,
+      "groups": [
         {
           "ssot": "temp_repos\\Thea\\src\\dreamscape\\core\\legacy\\unified_conversation_manager.py",
           "duplicates": [
@@ -679,14 +589,7 @@
             "action_bonus": 20,
             "action": "DELETE"
           }
-        }
-      ]
-    },
-    {
-      "batch_number": 3,
-      "priority": "LOW",
-      "size": 15,
-      "groups": [
+        },
         {
           "ssot": "temp_repos\\Thea\\src\\dreamscape\\scrapers\\conversation\\unified_conversation_scraper.py",
           "duplicates": [
@@ -774,7 +677,14 @@
             "action_bonus": 20,
             "action": "DELETE"
           }
-        },
+        }
+      ]
+    },
+    {
+      "batch_number": 3,
+      "priority": "LOW",
+      "size": 15,
+      "groups": [
         {
           "ssot": "temp_repos\\Thea\\src\\dreamscape\\scrapers\\conversation_list_manager.py",
           "duplicates": [
@@ -1016,14 +926,7 @@
             "action_bonus": 20,
             "action": "DELETE"
           }
-        }
-      ]
-    },
-    {
-      "batch_number": 4,
-      "priority": "LOW",
-      "size": 15,
-      "groups": [
+        },
         {
           "ssot": "temp_repos\\Thea\\tests\\unit\\test_chat_navigation.py",
           "duplicates": [
@@ -1111,7 +1014,14 @@
             "action_bonus": 20,
             "action": "DELETE"
           }
-        },
+        }
+      ]
+    },
+    {
+      "batch_number": 4,
+      "priority": "LOW",
+      "size": 15,
+      "groups": [
         {
           "ssot": "temp_repos\\Thea\\tests\\unit\\test_working_chat.py",
           "duplicates": [
@@ -1353,351 +1263,7 @@
             "action_bonus": 20,
             "action": "DELETE"
           }
-        }
-      ]
-    },
-    {
-      "batch_number": 5,
-      "priority": "LOW",
-      "size": 15,
-      "groups": [
-        {
-          "ssot": "temp_repos\\Thea\\src\\dreamscape\\core\\discord\\main.py",
-          "duplicates": [
-            "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\core\\discord\\main.py"
-          ],
-          "count": 2,
-          "risk": "LOW",
-          "action": "DELETE",
-          "score": 50,
-          "priority": "LOW",
-          "factors": {
-            "count_score": 20,
-            "risk_multiplier": 1,
-            "risk": "LOW",
-            "location_bonus": 10,
-            "ssot_location": "other",
-            "cross_domain_bonus": 0,
-            "domains": [],
-            "action_bonus": 20,
-            "action": "DELETE"
-          }
         },
-        {
-          "ssot": "temp_repos\\Thea\\src\\dreamscape\\core\\intelligence\\models\\breakthrough_models.py",
-          "duplicates": [
-            "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\core\\intelligence\\models\\breakthrough_models.py"
-          ],
-          "count": 2,
-          "risk": "LOW",
-          "action": "DELETE",
-          "score": 50,
-          "priority": "LOW",
-          "factors": {
-            "count_score": 20,
-            "risk_multiplier": 1,
-            "risk": "LOW",
-            "location_bonus": 10,
-            "ssot_location": "other",
-            "cross_domain_bonus": 0,
-            "domains": [],
-            "action_bonus": 20,
-            "action": "DELETE"
-          }
-        },
-        {
-          "ssot": "temp_repos\\Thea\\src\\dreamscape\\core\\intelligence\\models\\processing_models.py",
-          "duplicates": [
-            "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\core\\intelligence\\models\\processing_models.py"
-          ],
-          "count": 2,
-          "risk": "LOW",
-          "action": "DELETE",
-          "score": 50,
-          "priority": "LOW",
-          "factors": {
-            "count_score": 20,
-            "risk_multiplier": 1,
-            "risk": "LOW",
-            "location_bonus": 10,
-            "ssot_location": "other",
-            "cross_domain_bonus": 0,
-            "domains": [],
-            "action_bonus": 20,
-            "action": "DELETE"
-          }
-        },
-        {
-          "ssot": "temp_repos\\Thea\\src\\dreamscape\\core\\intelligence\\models\\quest_models.py",
-          "duplicates": [
-            "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\core\\intelligence\\models\\quest_models.py"
-          ],
-          "count": 2,
-          "risk": "LOW",
-          "action": "DELETE",
-          "score": 50,
-          "priority": "LOW",
-          "factors": {
-            "count_score": 20,
-            "risk_multiplier": 1,
-            "risk": "LOW",
-            "location_bonus": 10,
-            "ssot_location": "other",
-            "cross_domain_bonus": 0,
-            "domains": [],
-            "action_bonus": 20,
-            "action": "DELETE"
-          }
-        },
-        {
-          "ssot": "temp_repos\\Thea\\src\\dreamscape\\core\\intelligence\\models\\response_models.py",
-          "duplicates": [
-            "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\core\\intelligence\\models\\response_models.py"
-          ],
-          "count": 2,
-          "risk": "LOW",
-          "action": "DELETE",
-          "score": 50,
-          "priority": "LOW",
-          "factors": {
-            "count_score": 20,
-            "risk_multiplier": 1,
-            "risk": "LOW",
-            "location_bonus": 10,
-            "ssot_location": "other",
-            "cross_domain_bonus": 0,
-            "domains": [],
-            "action_bonus": 20,
-            "action": "DELETE"
-          }
-        },
-        {
-          "ssot": "temp_repos\\Thea\\src\\dreamscape\\core\\legacy\\consolidate_remaining_duplicates.py",
-          "duplicates": [
-            "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\core\\legacy\\consolidate_remaining_duplicates.py"
-          ],
-          "count": 2,
-          "risk": "LOW",
-          "action": "DELETE",
-          "score": 50,
-          "priority": "LOW",
-          "factors": {
-            "count_score": 20,
-            "risk_multiplier": 1,
-            "risk": "LOW",
-            "location_bonus": 10,
-            "ssot_location": "other",
-            "cross_domain_bonus": 0,
-            "domains": [],
-            "action_bonus": 20,
-            "action": "DELETE"
-          }
-        },
-        {
-          "ssot": "temp_repos\\Thea\\src\\dreamscape\\core\\legacy\\model_config_manager.py",
-          "duplicates": [
-            "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\core\\legacy\\model_config_manager.py"
-          ],
-          "count": 2,
-          "risk": "LOW",
-          "action": "DELETE",
-          "score": 50,
-          "priority": "LOW",
-          "factors": {
-            "count_score": 20,
-            "risk_multiplier": 1,
-            "risk": "LOW",
-            "location_bonus": 10,
-            "ssot_location": "other",
-            "cross_domain_bonus": 0,
-            "domains": [],
-            "action_bonus": 20,
-            "action": "DELETE"
-          }
-        },
-        {
-          "ssot": "temp_repos\\Thea\\src\\dreamscape\\core\\legacy\\move_outputs_to_main_archive.py",
-          "duplicates": [
-            "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\core\\legacy\\move_outputs_to_main_archive.py"
-          ],
-          "count": 2,
-          "risk": "LOW",
-          "action": "DELETE",
-          "score": 50,
-          "priority": "LOW",
-          "factors": {
-            "count_score": 20,
-            "risk_multiplier": 1,
-            "risk": "LOW",
-            "location_bonus": 10,
-            "ssot_location": "other",
-            "cross_domain_bonus": 0,
-            "domains": [],
-            "action_bonus": 20,
-            "action": "DELETE"
-          }
-        },
-        {
-          "ssot": "temp_repos\\Thea\\src\\dreamscape\\core\\mmorpg\\models\\mmorpg_models.py",
-          "duplicates": [
-            "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\core\\mmorpg\\models\\mmorpg_models.py"
-          ],
-          "count": 2,
-          "risk": "LOW",
-          "action": "DELETE",
-          "score": 50,
-          "priority": "LOW",
-          "factors": {
-            "count_score": 20,
-            "risk_multiplier": 1,
-            "risk": "LOW",
-            "location_bonus": 10,
-            "ssot_location": "other",
-            "cross_domain_bonus": 0,
-            "domains": [],
-            "action_bonus": 20,
-            "action": "DELETE"
-          }
-        },
-        {
-          "ssot": "temp_repos\\Thea\\src\\dreamscape\\core\\mmorpg\\models.py",
-          "duplicates": [
-            "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\core\\mmorpg\\models.py"
-          ],
-          "count": 2,
-          "risk": "LOW",
-          "action": "DELETE",
-          "score": 50,
-          "priority": "LOW",
-          "factors": {
-            "count_score": 20,
-            "risk_multiplier": 1,
-            "risk": "LOW",
-            "location_bonus": 10,
-            "ssot_location": "other",
-            "cross_domain_bonus": 0,
-            "domains": [],
-            "action_bonus": 20,
-            "action": "DELETE"
-          }
-        },
-        {
-          "ssot": "temp_repos\\Thea\\src\\dreamscape\\core\\mmorpg_models.py",
-          "duplicates": [
-            "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\core\\mmorpg_models.py"
-          ],
-          "count": 2,
-          "risk": "LOW",
-          "action": "DELETE",
-          "score": 50,
-          "priority": "LOW",
-          "factors": {
-            "count_score": 20,
-            "risk_multiplier": 1,
-            "risk": "LOW",
-            "location_bonus": 10,
-            "ssot_location": "other",
-            "cross_domain_bonus": 0,
-            "domains": [],
-            "action_bonus": 20,
-            "action": "DELETE"
-          }
-        },
-        {
-          "ssot": "temp_repos\\Thea\\src\\dreamscape\\core\\model_router.py",
-          "duplicates": [
-            "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\core\\model_router.py"
-          ],
-          "count": 2,
-          "risk": "LOW",
-          "action": "DELETE",
-          "score": 50,
-          "priority": "LOW",
-          "factors": {
-            "count_score": 20,
-            "risk_multiplier": 1,
-            "risk": "LOW",
-            "location_bonus": 10,
-            "ssot_location": "other",
-            "cross_domain_bonus": 0,
-            "domains": [],
-            "action_bonus": 20,
-            "action": "DELETE"
-          }
-        },
-        {
-          "ssot": "temp_repos\\Thea\\src\\dreamscape\\core\\models.py",
-          "duplicates": [
-            "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\core\\models.py"
-          ],
-          "count": 2,
-          "risk": "LOW",
-          "action": "DELETE",
-          "score": 50,
-          "priority": "LOW",
-          "factors": {
-            "count_score": 20,
-            "risk_multiplier": 1,
-            "risk": "LOW",
-            "location_bonus": 10,
-            "ssot_location": "other",
-            "cross_domain_bonus": 0,
-            "domains": [],
-            "action_bonus": 20,
-            "action": "DELETE"
-          }
-        },
-        {
-          "ssot": "temp_repos\\Thea\\src\\dreamscape\\core\\run_agent_training_tests.py",
-          "duplicates": [
-            "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\core\\run_agent_training_tests.py"
-          ],
-          "count": 2,
-          "risk": "LOW",
-          "action": "DELETE",
-          "score": 50,
-          "priority": "LOW",
-          "factors": {
-            "count_score": 20,
-            "risk_multiplier": 1,
-            "risk": "LOW",
-            "location_bonus": 10,
-            "ssot_location": "other",
-            "cross_domain_bonus": 0,
-            "domains": [],
-            "action_bonus": 20,
-            "action": "DELETE"
-          }
-        },
-        {
-          "ssot": "temp_repos\\Thea\\src\\dreamscape\\core\\templates\\template_models.py",
-          "duplicates": [
-            "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\core\\templates\\template_models.py"
-          ],
-          "count": 2,
-          "risk": "LOW",
-          "action": "DELETE",
-          "score": 50,
-          "priority": "LOW",
-          "factors": {
-            "count_score": 20,
-            "risk_multiplier": 1,
-            "risk": "LOW",
-            "location_bonus": 10,
-            "ssot_location": "other",
-            "cross_domain_bonus": 0,
-            "domains": [],
-            "action_bonus": 20,
-            "action": "DELETE"
-          }
-        }
-      ]
-    },
-    {
-      "batch_number": 6,
-      "priority": "LOW",
-      "size": 15,
-      "groups": [
         {
           "ssot": "temp_repos\\Thea\\src\\dreamscape\\core\\training_data_orchestrator.py",
           "duplicates": [
@@ -1785,7 +1351,14 @@
             "action_bonus": 20,
             "action": "DELETE"
           }
-        },
+        }
+      ]
+    },
+    {
+      "batch_number": 5,
+      "priority": "LOW",
+      "size": 15,
+      "groups": [
         {
           "ssot": "temp_repos\\Thea\\src\\dreamscape\\gui\\controllers\\main_controller.py",
           "duplicates": [
@@ -2027,14 +1600,7 @@
             "action_bonus": 20,
             "action": "DELETE"
           }
-        }
-      ]
-    },
-    {
-      "batch_number": 7,
-      "priority": "LOW",
-      "size": 12,
-      "groups": [
+        },
         {
           "ssot": "temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\modular\\consolidated_ai_studio_panel_refactored.py",
           "duplicates": [
@@ -2122,7 +1688,14 @@
             "action_bonus": 20,
             "action": "DELETE"
           }
-        },
+        }
+      ]
+    },
+    {
+      "batch_number": 6,
+      "priority": "LOW",
+      "size": 8,
+      "groups": [
         {
           "ssot": "temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\voice_modeling_panel.py",
           "duplicates": [
@@ -2332,20 +1905,6 @@
       "count": 3
     },
     {
-      "ssot": "temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\conversational_ai_panel.py",
-      "score": 60,
-      "priority": "LOW",
-      "risk": "LOW",
-      "count": 3
-    },
-    {
-      "ssot": "temp_repos\\Thea\\tests\\testing\\test_conversational_ai_gui.py",
-      "score": 60,
-      "priority": "LOW",
-      "risk": "LOW",
-      "count": 3
-    },
-    {
       "ssot": "agent_workspaces\\Agent-2\\FocusForge_RESOLUTION_SCRIPT.py",
       "score": 60,
       "priority": "LOW",
@@ -2388,21 +1947,35 @@
       "count": 2
     },
     {
-      "ssot": "temp_repos\\Auto_Blogger\\tests\\jest.teardown.js",
-      "score": 50,
-      "priority": "LOW",
-      "risk": "LOW",
-      "count": 2
-    },
-    {
-      "ssot": "temp_repos\\Auto_Blogger\\project_scanner.py",
-      "score": 50,
-      "priority": "LOW",
-      "risk": "LOW",
-      "count": 2
-    },
-    {
       "ssot": "temp_repos\\Thea\\src\\dreamscape\\core\\legacy\\conversation_system.py",
+      "score": 50,
+      "priority": "LOW",
+      "risk": "LOW",
+      "count": 2
+    },
+    {
+      "ssot": "temp_repos\\Thea\\src\\dreamscape\\core\\legacy\\debug_conversation_content.py",
+      "score": 50,
+      "priority": "LOW",
+      "risk": "LOW",
+      "count": 2
+    },
+    {
+      "ssot": "temp_repos\\Thea\\src\\dreamscape\\core\\legacy\\ingest_chatgpt_json.py",
+      "score": 50,
+      "priority": "LOW",
+      "risk": "LOW",
+      "count": 2
+    },
+    {
+      "ssot": "temp_repos\\Thea\\src\\dreamscape\\core\\legacy\\ingest_conversation_files.py",
+      "score": 50,
+      "priority": "LOW",
+      "risk": "LOW",
+      "count": 2
+    },
+    {
+      "ssot": "temp_repos\\Thea\\src\\dreamscape\\core\\legacy\\process_all_conversations_demo.py",
       "score": 50,
       "priority": "LOW",
       "risk": "LOW",
