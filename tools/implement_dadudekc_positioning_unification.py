@@ -44,7 +44,7 @@ def find_page_by_slug(slug: str):
     url = f"{API_BASE}/pages"
     params = {"slug": slug, "per_page": 1}
     response = requests.get(url, params=params, auth=AUTH, timeout=30)
-    
+
     if response.status_code == 200:
         pages = response.json()
         return pages[0] if pages else None
@@ -54,7 +54,7 @@ def find_page_by_slug(slug: str):
 def add_positioning_to_content(content: str, placement: str = "top") -> str:
     """Add positioning line to content."""
     positioning_html = f'<p class="positioning-line" style="font-size: 1.25rem; font-weight: 600; color: #2a5298; margin-bottom: 1.5rem;"><strong>{POSITIONING_LINE}</strong></p>'
-    
+
     if placement == "top":
         # Add at the beginning of content
         if positioning_html not in content:
@@ -78,7 +78,7 @@ def add_positioning_to_content(content: str, placement: str = "top") -> str:
                 pos = match.end()
                 if positioning_html not in content[:pos+100]:
                     return content[:pos] + positioning_html + content[pos:]
-    
+
     return content
 
 
@@ -88,7 +88,7 @@ def update_page(page_id: int, content: str, title: str = None):
     data = {"content": content}
     if title:
         data["title"] = title
-    
+
     response = requests.post(url, json=data, auth=AUTH, timeout=30)
     return response.status_code == 200
 
@@ -96,7 +96,7 @@ def update_page(page_id: int, content: str, title: str = None):
 def update_homepage():
     """Update homepage with positioning line."""
     print("🏠 Updating homepage...")
-    
+
     page = find_page_by_slug("home")
     if not page:
         # Try front page
@@ -106,22 +106,23 @@ def update_homepage():
         if response.status_code == 200:
             pages = response.json()
             page = pages[0] if pages else None
-    
+
     if not page:
         print("  ⚠️  Homepage not found")
         return False
-    
+
     page_id = page["id"]
     current_content = page.get("content", {}).get("raw", "")
-    
+
     # Check if positioning already exists
     if POSITIONING_LINE in current_content:
         print(f"  ⏭️  Positioning line already present (Page ID: {page_id})")
         return True
-    
+
     # Add positioning to hero section
-    updated_content = add_positioning_to_content(current_content, placement="hero")
-    
+    updated_content = add_positioning_to_content(
+        current_content, placement="hero")
+
     if update_page(page_id, updated_content):
         print(f"  ✅ Updated homepage (ID: {page_id})")
         return True
@@ -133,23 +134,24 @@ def update_homepage():
 def update_about_page():
     """Update About page with positioning line."""
     print("👤 Updating About page...")
-    
+
     page = find_page_by_slug("about")
     if not page:
         print("  ⚠️  About page not found")
         return False
-    
+
     page_id = page["id"]
     current_content = page.get("content", {}).get("raw", "")
-    
+
     # Check if positioning already exists
     if POSITIONING_LINE in current_content:
         print(f"  ⏭️  Positioning line already present (Page ID: {page_id})")
         return True
-    
+
     # Add positioning at top
-    updated_content = add_positioning_to_content(current_content, placement="top")
-    
+    updated_content = add_positioning_to_content(
+        current_content, placement="top")
+
     if update_page(page_id, updated_content):
         print(f"  ✅ Updated About page (ID: {page_id})")
         return True
@@ -161,23 +163,24 @@ def update_about_page():
 def update_services_page():
     """Update Services page with positioning line."""
     print("🛠️  Updating Services page...")
-    
+
     page = find_page_by_slug("services")
     if not page:
         print("  ⚠️  Services page not found")
         return False
-    
+
     page_id = page["id"]
     current_content = page.get("content", {}).get("raw", "")
-    
+
     # Check if positioning already exists
     if POSITIONING_LINE in current_content:
         print(f"  ⏭️  Positioning line already present (Page ID: {page_id})")
         return True
-    
+
     # Add positioning at top
-    updated_content = add_positioning_to_content(current_content, placement="top")
-    
+    updated_content = add_positioning_to_content(
+        current_content, placement="top")
+
     if update_page(page_id, updated_content):
         print(f"  ✅ Updated Services page (ID: {page_id})")
         return True
@@ -190,23 +193,24 @@ def main():
     """Main execution."""
     print("🔧 Implementing unified positioning line on dadudekc.com...\n")
     print(f"Positioning line: \"{POSITIONING_LINE}\"\n")
-    
+
     results = []
-    
+
     # Update key pages
     results.append(("Homepage", update_homepage()))
     results.append(("About", update_about_page()))
     results.append(("Services", update_services_page()))
-    
+
     # Summary
     print("\n📊 Summary:")
     updated_count = sum(1 for _, success in results if success)
     for name, success in results:
         status = "✅" if success else "⚠️"
         print(f"  {status} {name}")
-    
+
     if updated_count > 0:
-        print(f"\n✅ Positioning unification complete! ({updated_count} page(s) updated)")
+        print(
+            f"\n✅ Positioning unification complete! ({updated_count} page(s) updated)")
     else:
         print("\n⏭️  No pages needed updates (positioning may already be present)")
 

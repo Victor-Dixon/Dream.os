@@ -16,10 +16,13 @@ with open(creds_file) as f:
 
 config = creds_data["dadudekc.com"]
 api = f"{config['site_url']}/wp-json/wp/v2"
-auth = HTTPBasicAuth(config["username"], config["app_password"].replace(" ", ""))
+auth = HTTPBasicAuth(config["username"],
+                     config["app_password"].replace(" ", ""))
 
-pages = requests.get(f"{api}/pages", params={"per_page": 20}, auth=auth, timeout=30).json()
+pages = requests.get(
+    f"{api}/pages", params={"per_page": 20}, auth=auth, timeout=30).json()
 
 print("Pages on dadudekc.com:")
 for p in pages:
-    print(f"  - {p.get('slug')} (ID: {p.get('id')}): {p.get('title', {}).get('rendered', 'N/A')[:60]}")
+    print(
+        f"  - {p.get('slug')} (ID: {p.get('id')}): {p.get('title', {}).get('rendered', 'N/A')[:60]}")
