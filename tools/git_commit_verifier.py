@@ -36,7 +36,8 @@ def check_commits_today(file_pattern: str = None) -> list[dict[str, str]]:
     today = datetime.now().strftime("%Y-%m-%d")
 
     # Git log for today
-    args = ["log", "--since", today, "--pretty=format:%H|%an|%s|%ar", "--name-only"]
+    args = ["log", "--since", today,
+            "--pretty=format:%H|%an|%s|%ar", "--name-only"]
     if file_pattern:
         args.append("--")
         args.append(file_pattern)
@@ -128,9 +129,11 @@ def check_file_exists(file_path: str) -> bool:
     return exists
 
 
-if __name__ == "__main__":
+def main():
+    """Main entry point."""
     if len(sys.argv) < 2:
-        print("Usage: python git_commit_verifier.py <file_pattern> [agent_name]")
+        print(
+            "Usage: python git_commit_verifier.py <file_pattern> [agent_name]")
         print("\nExamples:")
         print("  python git_commit_verifier.py 'extensions/repository-navigator/*'")
         print("  python git_commit_verifier.py 'src/utils/*.py' Agent-1")
@@ -142,3 +145,7 @@ if __name__ == "__main__":
     verified = verify_work_exists([pattern], agent)
 
     sys.exit(0 if verified else 1)
+
+
+if __name__ == "__main__":
+    main()

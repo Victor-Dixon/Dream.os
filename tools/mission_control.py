@@ -32,6 +32,20 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
+# Add project root to path
+project_root = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(project_root))
+
+try:
+    from src.core.config.timeout_constants import TimeoutConstants
+except ImportError:
+    class TimeoutConstants:
+        HTTP_DEFAULT = 30
+        HTTP_MEDIUM = 60
+        HTTP_LONG = 120
+        HTTP_EXTENDED = 300
+        HTTP_SHORT = 10
+
 
 class MissionControl:
     """Autonomous mission generator for swarm agents."""
@@ -80,11 +94,13 @@ class MissionControl:
         analysis_file = self.project_root / "project_analysis.json"
 
         if analysis_file.exists():
-            modified_time = datetime.fromtimestamp(analysis_file.stat().st_mtime)
+            modified_time = datetime.fromtimestamp(
+                analysis_file.stat().st_mtime)
             age_minutes = (datetime.now() - modified_time).seconds // 60
 
             if age_minutes < 30:
-                print(f"   ✅ Using recent analysis ({age_minutes} minutes old)")
+                print(
+                    f"   ✅ Using recent analysis ({age_minutes} minutes old)")
                 with open(analysis_file) as f:
                     return json.load(f)
 
@@ -190,7 +206,8 @@ class MissionControl:
                         severity = parts[0].strip()
                         lines = int(parts[1].strip().split()[0])
                         file = parts[2].strip()
-                        violations.append({"file": file, "lines": lines, "severity": severity})
+                        violations.append(
+                            {"file": file, "lines": lines, "severity": severity})
 
             return violations
         except Exception as e:
@@ -246,7 +263,8 @@ class MissionControl:
                             others_working_on.add(violation["file"])
 
         # Find first violation not being worked on
-        available_violations = [v for v in violations if v["file"] not in others_working_on]
+        available_violations = [
+            v for v in violations if v["file"] not in others_working_on]
 
         if available_violations:
             target = available_violations[0]
@@ -278,7 +296,8 @@ class MissionControl:
         """Suggest pattern using pattern_suggester."""
         try:
             result = subprocess.run(
-                [sys.executable, "-m", "tools.toolbelt", "--pattern-suggest", file_path, "--json"],
+                [sys.executable, "-m", "tools.toolbelt",
+                    "--pattern-suggest", file_path, "--json"],
                 capture_output=True,
                 text=True,
                 timeout=TimeoutConstants.HTTP_SHORT,
@@ -306,10 +325,12 @@ class MissionControl:
             print("🎯 Goal: <400 lines (V2 compliant)")
 
             if mission["pattern_suggested"]:
-                print(f"\n🏗️ Recommended Pattern: {mission['pattern_suggested']}")
+                print(
+                    f"\n🏗️ Recommended Pattern: {mission['pattern_suggested']}")
 
             if mission["coordination_needed"]:
-                print(f"\n🤝 Coordinate With: {', '.join(mission['coordination_needed'])}")
+                print(
+                    f"\n🤝 Coordinate With: {', '.join(mission['coordination_needed'])}")
 
         print(f"\n💡 Rationale: {mission['rationale']}")
 
@@ -341,7 +362,6 @@ class MissionControl:
 def main():
     """CLI entry point."""
     import argparse
-from src.core.config.timeout_constants import TimeoutConstants
 
     parser = argparse.ArgumentParser(
         description="Mission Control - Autonomous Mission Generator",
@@ -353,9 +373,12 @@ Examples:
         """,
     )
 
-    parser.add_argument("--agent", type=str, required=True, help="Agent ID (e.g., Agent-2)")
-    parser.add_argument("--specialization", type=str, default="", help="Agent specialization")
-    parser.add_argument("--save", action="store_true", help="Save mission brief to file")
+    parser.add_argument("--agent", type=str, required=True,
+                        help="Agent ID (e.g., Agent-2)")
+    parser.add_argument("--specialization", type=str,
+                        default="", help="Agent specialization")
+    parser.add_argument("--save", action="store_true",
+                        help="Save mission brief to file")
 
     args = parser.parse_args()
 
@@ -370,7 +393,8 @@ Examples:
         "Agent-8": "SSOT & System Integration",
     }
 
-    specialization = args.specialization or specializations.get(args.agent, "General")
+    specialization = args.specialization or specializations.get(
+        args.agent, "General")
 
     print(f"\n🚀 MISSION CONTROL INITIALIZING FOR {args.agent}")
     print(f"🎯 Specialization: {specialization}\n")

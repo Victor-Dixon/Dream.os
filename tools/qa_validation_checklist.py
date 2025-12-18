@@ -25,7 +25,8 @@ class QAChecklist:
         """Add check result."""
         status = "✅ PASS" if condition else "❌ FAIL"
         self.results.append(
-            {"name": name, "passed": condition, "severity": severity, "status": status}
+            {"name": name, "passed": condition,
+                "severity": severity, "status": status}
         )
         return condition
 
@@ -98,7 +99,8 @@ class QAChecklist:
         self.print_summary()
 
         # Return overall pass/fail
-        critical_failed = any(not r["passed"] for r in self.results if r["severity"] == "CRITICAL")
+        critical_failed = any(not r["passed"]
+                              for r in self.results if r["severity"] == "CRITICAL")
 
         return not critical_failed
 
@@ -124,7 +126,8 @@ class QAChecklist:
         print(f"✅ Passed: {passed}/{total}")
         print(f"❌ Failed: {total - passed}/{total}")
 
-        critical_failed = any(r["severity"] == "CRITICAL" and not r["passed"] for r in self.results)
+        critical_failed = any(
+            r["severity"] == "CRITICAL" and not r["passed"] for r in self.results)
 
         if critical_failed:
             print("\n🚨 CRITICAL CHECKS FAILED - DO NOT APPROVE!")
@@ -136,10 +139,34 @@ class QAChecklist:
         print("=" * 80 + "\n")
 
 
+def main():
+    """Main entry point."""
+    import sys
+
+    if len(sys.argv) < 2:
+        print("QA Validation Checklist Tool")
+        print("Use this before validating any work to ensure it exists!")
+        print("\nUsage: python qa_validation_checklist.py <work_description_json>")
+        print("\nExample usage:")
+        print("  checklist = QAChecklist(Path.cwd())")
+        print(
+            "  work = {'task': 'Refactor X', 'agent': 'Agent-Y', 'files': ['file.py']}")
+        print("  passed = checklist.run_validation(work)")
+        sys.exit(0)
+
+    # If JSON file provided, load and validate
+    import json
+    work_file = Path(sys.argv[1])
+    if work_file.exists():
+        with open(work_file) as f:
+            work = json.load(f)
+        checklist = QAChecklist(Path.cwd())
+        passed = checklist.run_validation(work)
+        sys.exit(0 if passed else 1)
+    else:
+        print(f"❌ Work description file not found: {work_file}")
+        sys.exit(1)
+
+
 if __name__ == "__main__":
-    print("QA Validation Checklist Tool")
-    print("Use this before validating any work to ensure it exists!")
-    print("\nExample usage:")
-    print("  checklist = QAChecklist(Path.cwd())")
-    print("  work = {'task': 'Refactor X', 'agent': 'Agent-Y', 'files': ['file.py']}")
-    print("  passed = checklist.run_validation(work)")
+    main()
