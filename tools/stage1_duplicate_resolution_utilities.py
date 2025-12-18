@@ -38,7 +38,7 @@ SHARED_UTILITIES_DIR = project_root / "src" / "core" / "shared_utilities"
 def find_imports_using_utilities() -> Dict[str, List[str]]:
     """Find all files importing from utilities/ directory."""
     imports_map: Dict[str, List[str]] = {}
-    
+
     for py_file in (project_root / "src").rglob("*.py"):
         try:
             content = py_file.read_text(encoding="utf-8")
@@ -50,10 +50,11 @@ def find_imports_using_utilities() -> Dict[str, List[str]]:
                         rel_path = str(py_file.relative_to(project_root))
                         if rel_path not in imports_map:
                             imports_map[rel_path] = []
-                        imports_map[rel_path].append(f"Line {i}: {line.strip()}")
+                        imports_map[rel_path].append(
+                            f"Line {i}: {line.strip()}")
         except Exception as e:
             print(f"⚠️ Error reading {py_file}: {e}")
-    
+
     return imports_map
 
 
@@ -86,7 +87,7 @@ warnings.warn(
 def create_consolidation_report() -> str:
     """Create a detailed consolidation report."""
     imports_map = find_imports_using_utilities()
-    
+
     report = """# Utility Classes Consolidation Report
 **Date**: 2025-12-17  
 **Agent**: Agent-5  
@@ -119,7 +120,7 @@ def create_consolidation_report() -> str:
 ### Files Using utilities/ Imports
 
 """
-    
+
     if imports_map:
         for file_path, import_lines in sorted(imports_map.items()):
             report += f"\n**{file_path}**\n"
@@ -127,7 +128,7 @@ def create_consolidation_report() -> str:
                 report += f"- {line}\n"
     else:
         report += "\n*No imports from utilities/ found.*\n"
-    
+
     report += """
 ---
 
@@ -170,7 +171,7 @@ def create_consolidation_report() -> str:
 
 🐝 **WE. ARE. SWARM. ⚡🔥**
 """
-    
+
     return report
 
 
@@ -178,7 +179,7 @@ def main():
     """Main execution."""
     print("🔍 Stage 1 Integration: Utility Classes Consolidation")
     print("=" * 60)
-    
+
     # Create consolidation report
     print("\n📋 Generating consolidation report...")
     report = create_consolidation_report()
@@ -186,18 +187,18 @@ def main():
     report_file.parent.mkdir(parents=True, exist_ok=True)
     report_file.write_text(report, encoding="utf-8")
     print(f"✅ Report saved: {report_file}")
-    
+
     # Generate deprecation warnings for utilities/ files
     print("\n⚠️ Generating deprecation warnings...")
     deprecation_code = generate_deprecation_warnings()
-    
+
     deprecated_count = 0
     for old_file, new_file in UTILITY_MAPPING.items():
         old_path = UTILITIES_DIR / old_file
         if old_path.exists():
             # Read existing content
             content = old_path.read_text(encoding="utf-8")
-            
+
             # Add deprecation warning at the top (if not already present)
             if "DEPRECATED" not in content:
                 new_content = deprecation_code + "\n" + content
@@ -206,9 +207,9 @@ def main():
                 deprecated_count += 1
             else:
                 print(f"  ℹ️  {old_file} already has deprecation warning")
-    
+
     print(f"\n✅ Added deprecation warnings to {deprecated_count} files")
-    
+
     print("\n" + "=" * 60)
     print("📋 Next Steps:")
     print("1. Review consolidation report: docs/STAGE1_UTILITY_CONSOLIDATION_REPORT.md")
