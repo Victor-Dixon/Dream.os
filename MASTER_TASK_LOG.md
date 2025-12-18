@@ -74,7 +74,7 @@
 - [ ] Fix 'Diagnose Queue' (queue-diagnose) - Module: `tools.diagnose_queue` - ImportError: No module named 'tools.diagnose_queue'
 - [ ] Fix 'Fix Stuck Message' (fix-stuck) - Module: `tools.fix_stuck_message` - ImportError: No module named 'tools.fix_stuck_message'
 - [ ] Fix 'Test Health Monitor' (test-health) - Module: `tools.test_health_monitor` - ImportError: No module named 'tools.test_health_monitor'
-- [ ] Fix 'Infrastructure Health Monitor' (infra-health) - Module: `tools.infrastructure_health_monitor` - ImportError: No module named 'tools.infrastructure_health_monitor'
+- [ ] Fix 'Infrastructure Health Monitor' (infra-health) - Module: `tools.infrastructure_health_monitor` - ImportError: No module named 'tools.infrastructure_health_monitor' [Agent-3 CLAIMED]
 
 ### HIGH PRIORITY - Syntax Errors (4 tools)
 - [x] Fix 'Resolve DreamVault Duplicates' (resolve-duplicates) - Module: `tools.resolve_dreamvault_duplicates` - Syntax error: unexpected indent at line 273 ✅ FIXED by Agent-2 (2025-12-18) - Moved incorrectly indented import to top-level
