@@ -33,6 +33,29 @@ class WorkflowState(Enum):
 
 
 class ResponseType(Enum):
+
+"""
+⚠️ DEPRECATED - CoordinationStrategy enum is deprecated.
+
+This enum has been consolidated into src/core/coordination/swarm/coordination_models.py as SSOT.
+Please update imports to use the SSOT location instead.
+
+Migration:
+  OLD: from swarm.coordination_models import CoordinationStrategy
+  NEW: from core.coordination.swarm.coordination_models import CoordinationStrategy
+
+Note: SSOT has: COLLABORATIVE, INDEPENDENT, HIERARCHICAL - different from workflows version
+
+This enum will be removed in a future release.
+"""
+
+import warnings
+warnings.warn(
+    "CoordinationStrategy is deprecated. Use src/core/coordination/swarm/coordination_models.py instead.",
+    DeprecationWarning,
+    stacklevel=2
+)
+
     """Expected response types for workflow steps."""
 
     CONVERSATION_PROMPT = "conversation_prompt"
