@@ -1,3 +1,26 @@
+
+"""
+⚠️ DEPRECATED - TaskStatus enum is deprecated.
+
+This enum has been consolidated into src/core/coordination/swarm/coordination_models.py as SSOT.
+Please update imports to use the SSOT location instead.
+
+Migration:
+  OLD: from swarm.coordination_models import TaskStatus
+  NEW: from core.coordination.swarm.coordination_models import TaskStatus
+
+Note: SSOT has: PENDING, IN_PROGRESS, COMPLETED, FAILED
+
+This enum will be removed in a future release.
+"""
+
+import warnings
+warnings.warn(
+    "TaskStatus is deprecated. Use src/core/coordination/swarm/coordination_models.py instead.",
+    DeprecationWarning,
+    stacklevel=2
+)
+
 """
 Execution Operations - Execution Manager Operations
 ===================================================
