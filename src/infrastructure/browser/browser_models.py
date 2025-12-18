@@ -10,6 +10,27 @@ Author: Agent-6 (VSCode Forking & Quality Gates Specialist) - Refactored from Ag
 License: MIT
 """
 
+"""
+⚠️ DEPRECATED - BrowserConfig is deprecated.
+
+This class has been consolidated into src/core/config/config_dataclasses.py as SSOT.
+Please update imports to use the SSOT location instead.
+
+Migration:
+  OLD: from config.config_dataclasses import BrowserConfig
+  NEW: from core.config.config_dataclasses import BrowserConfig
+
+This module/class will be removed in a future release.
+"""
+
+import warnings
+warnings.warn(
+    "BrowserConfig is deprecated. Use src/core/config/config_dataclasses.py instead.",
+    DeprecationWarning,
+    stacklevel=2
+)
+
+
 import time
 from dataclasses import dataclass, field
 

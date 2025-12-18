@@ -3,6 +3,27 @@
 SSOT Domain: infrastructure
 """
 
+"""
+⚠️ DEPRECATED - ThresholdConfig is deprecated.
+
+This class has been consolidated into src/core/config/config_dataclasses.py as SSOT.
+Please update imports to use the SSOT location instead.
+
+Migration:
+  OLD: from config.config_dataclasses import ThresholdConfig
+  NEW: from core.config.config_dataclasses import ThresholdConfig
+
+This module/class will be removed in a future release.
+"""
+
+import warnings
+warnings.warn(
+    "ThresholdConfig is deprecated. Use src/core/config/config_dataclasses.py instead.",
+    DeprecationWarning,
+    stacklevel=2
+)
+
+
 from dataclasses import dataclass
 from typing import Any
 
