@@ -56,3 +56,4 @@ if all_good:
 else:
     print("⚠️  Some issues detected - may need cache clear or time for fix to propagate")
 print("=" * 50)
+

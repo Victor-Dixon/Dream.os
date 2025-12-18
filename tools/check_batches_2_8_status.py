@@ -22,3 +22,4 @@ if batches_2_8:
     print(f"  First SSOT: {batch2['groups'][0]['ssot']}")
     print(f"  First group duplicates: {len(batch2['groups'][0].get('duplicates', []))}")
 
+

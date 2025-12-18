@@ -98,11 +98,13 @@ def print_pyramid_report(analysis: dict[str, any]):
 
     # Actual distribution
     print("\n📊 ACTUAL DISTRIBUTION:")
-    print(f"  Unit Tests:        {analysis['unit']:3d} ({analysis['unit_pct']:5.1f}%)")
+    print(
+        f"  Unit Tests:        {analysis['unit']:3d} ({analysis['unit_pct']:5.1f}%)")
     print(
         f"  Integration Tests: {analysis['integration']:3d} ({analysis['integration_pct']:5.1f}%)"
     )
-    print(f"  E2E Tests:         {analysis['e2e']:3d} ({analysis['e2e_pct']:5.1f}%)")
+    print(
+        f"  E2E Tests:         {analysis['e2e']:3d} ({analysis['e2e_pct']:5.1f}%)")
     print(f"  {'─'*40}")
     print(f"  TOTAL:             {analysis['total']:3d} (100.0%)")
 
@@ -118,9 +120,12 @@ def print_pyramid_report(analysis: dict[str, any]):
     e2e_var = analysis["e2e_pct"] - 10
 
     print("\n📈 VARIANCE FROM TARGET:")
-    print(f"  Unit:        {unit_var:+6.1f}%  {'✅' if abs(unit_var) <= 10 else '⚠️'}")
-    print(f"  Integration: {int_var:+6.1f}%  {'✅' if abs(int_var) <= 10 else '⚠️'}")
-    print(f"  E2E:         {e2e_var:+6.1f}%  {'✅' if abs(e2e_var) <= 5 else '⚠️'}")
+    print(
+        f"  Unit:        {unit_var:+6.1f}%  {'✅' if abs(unit_var) <= 10 else '⚠️'}")
+    print(
+        f"  Integration: {int_var:+6.1f}%  {'✅' if abs(int_var) <= 10 else '⚠️'}")
+    print(
+        f"  E2E:         {e2e_var:+6.1f}%  {'✅' if abs(e2e_var) <= 5 else '⚠️'}")
 
     # Overall assessment
     print("\n🏆 ASSESSMENT:")
@@ -148,11 +153,13 @@ def print_pyramid_report(analysis: dict[str, any]):
     print("=" * 80 + "\n")
 
 
-if __name__ == "__main__":
+def main():
+    """Main entry point."""
     if len(sys.argv) < 2:
         print("Usage: python test_pyramid_analyzer.py <test_directory>")
         print("\nExample:")
-        print("  python test_pyramid_analyzer.py extensions/repository-navigator/test/suite")
+        print(
+            "  python test_pyramid_analyzer.py extensions/repository-navigator/test/suite")
         sys.exit(1)
 
     test_dir = Path(sys.argv[1])
@@ -163,3 +170,7 @@ if __name__ == "__main__":
 
     analysis = analyze_pyramid(test_dir)
     print_pyramid_report(analysis)
+
+
+if __name__ == "__main__":
+    main()

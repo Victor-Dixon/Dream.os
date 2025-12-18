@@ -9,6 +9,11 @@ for SSOT consolidation based on impact, risk, and consolidation value.
 Task: Technical Debt Duplicate Resolution Coordination (Agent-4 ↔ Agent-8)
 Author: Agent-8 (SSOT & System Integration Specialist)
 V2 Compliant: <300 lines
+
+FIXED: 2025-12-18 by Agent-3
+- Added file existence validation for SSOT and duplicate files
+- Added empty file filtering
+- Added validation before prioritization to prevent processing invalid groups
 """
 
 import json
@@ -29,6 +34,54 @@ def load_tech_debt_data() -> Dict:
     
     with open(tech_debt_path, 'r', encoding='utf-8') as f:
         return json.load(f)
+
+
+def validate_duplicate_groups(groups: List[Dict]) -> List[Dict]:
+    """Validate duplicate groups by checking file existence."""
+    validated_groups = []
+    invalid_count = 0
+    
+    for group in groups:
+        ssot_path = group.get('ssot', '')
+        duplicates = group.get('duplicates', [])
+        
+        # Check SSOT file exists and is not empty
+        ssot_file = project_root / ssot_path
+        if not ssot_file.exists():
+            invalid_count += 1
+            continue
+        try:
+            if ssot_file.stat().st_size == 0:
+                invalid_count += 1
+                continue  # Skip empty SSOT files
+        except Exception:
+            invalid_count += 1
+            continue
+        
+        # Check duplicate files exist
+        valid_duplicates = []
+        for dup_path in duplicates:
+            dup_file = project_root / dup_path
+            if dup_file.exists():
+                try:
+                    if dup_file.stat().st_size > 0:  # Only include non-empty files
+                        valid_duplicates.append(dup_path)
+                except Exception:
+                    pass  # Skip files that can't be checked
+        
+        # Only include groups with valid SSOT and at least one valid duplicate
+        if valid_duplicates:
+            validated_group = group.copy()
+            validated_group['duplicates'] = valid_duplicates
+            validated_group['count'] = len(valid_duplicates) + 1  # SSOT + duplicates
+            validated_groups.append(validated_group)
+        else:
+            invalid_count += 1
+    
+    if invalid_count > 0:
+        print(f"⚠️  Filtered out {invalid_count} invalid groups (non-existent or empty files)")
+    
+    return validated_groups
 
 
 def score_duplicate_group(group: Dict, all_groups: List[Dict]) -> Dict[str, Any]:
@@ -159,7 +212,13 @@ def main():
     duplicate_groups = data.get('consolidation_recommendations', [])
     
     print(f"📊 Analysis:")
-    print(f"   Total duplicate groups: {len(duplicate_groups)}")
+    print(f"   Total duplicate groups loaded: {len(duplicate_groups)}")
+    
+    # Validate file existence
+    print()
+    print("🔍 Validating file existence...")
+    duplicate_groups = validate_duplicate_groups(duplicate_groups)
+    print(f"   Valid duplicate groups: {len(duplicate_groups)}")
     
     # Prioritize
     print()
