@@ -35,10 +35,13 @@ except ImportError:
     class ComplianceDatabase:
         def __init__(self, *args, **kwargs):
             pass
+
     class ComplianceSnapshot:
         pass
+
     class TrendReport:
         pass
+
     class ComplianceReports:
         pass
 
@@ -72,12 +75,15 @@ class ComplianceHistoryTracker:
 
         # Run complexity analysis
         complexity_service = ComplexityAnalysisService()
-        complexity_reports = complexity_service.analyze_directory(directory, "**/*.py")
+        complexity_reports = complexity_service.analyze_directory(
+            directory, "**/*.py")
 
         # Calculate metrics
-        files_with_complexity = [r for r in complexity_reports if r.has_violations]
+        files_with_complexity = [
+            r for r in complexity_reports if r.has_violations]
         complexity_rate = (
-            (len(complexity_reports) - len(files_with_complexity)) / len(complexity_reports) * 100
+            (len(complexity_reports) - len(files_with_complexity)) /
+            len(complexity_reports) * 100
             if complexity_reports
             else 100
         )
@@ -152,9 +158,11 @@ def main():
         choices=["snapshot", "report", "list"],
         help="Command: snapshot (record), report (trend), list (history)",
     )
-    parser.add_argument("directory", nargs="?", default="src", help="Directory to analyze")
+    parser.add_argument("directory", nargs="?",
+                        default="src", help="Directory to analyze")
     parser.add_argument("--commit", help="Commit hash for snapshot")
-    parser.add_argument("--limit", type=int, default=10, help="Number of snapshots for report")
+    parser.add_argument("--limit", type=int, default=10,
+                        help="Number of snapshots for report")
 
     args = parser.parse_args()
 
@@ -181,7 +189,8 @@ def main():
         snapshots = tracker.get_recent_snapshots(args.limit)
         print(f"Recent {len(snapshots)} snapshots:")
         for s in snapshots:
-            date = datetime.fromisoformat(s.timestamp).strftime("%Y-%m-%d %H:%M")
+            date = datetime.fromisoformat(
+                s.timestamp).strftime("%Y-%m-%d %H:%M")
             print(
                 f"{date} - Score: {s.overall_score:.1f}, V2: {s.v2_compliance_rate:.1f}%, Complexity: {s.complexity_compliance_rate:.1f}%"
             )
