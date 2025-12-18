@@ -1,3 +1,4 @@
+from __future__ import annotations
 
 """
 ⚠️ DEPRECATED - IMessageDelivery protocol is deprecated.
@@ -13,8 +14,6 @@ Note: SSOT has full documentation and type hints
 
 This interface will be removed in a future release.
 """
-
-from __future__ import annotations
 import warnings
 from .messaging_models import (
     DeliveryMethod,
