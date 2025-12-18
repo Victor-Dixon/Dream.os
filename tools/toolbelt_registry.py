@@ -20,7 +20,7 @@ from typing import Any
 TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     "scan": {
         "name": "Project Scanner",
-        "module": "tools.run_project_scan",
+        "module": "tools.project_scan",
         "main_function": "main",
         "description": "Scan project structure and generate analysis",
         "flags": ["--scan", "-s"],
@@ -28,7 +28,7 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     },
     "v2-check": {
         "name": "V2 Compliance Checker",
-        "module": "tools.v2_checker_cli",
+        "module": "tools.v2_compliance_checker",
         "main_function": "main",
         "description": "Check V2 compliance violations",
         "flags": ["--v2-check", "--v2", "-v"],
@@ -36,7 +36,7 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     },
     "dashboard": {
         "name": "Compliance Dashboard",
-        "module": "tools.dashboard_html_generator",
+        "module": "tools.compliance_dashboard",
         "main_function": "main",
         "description": "Open compliance tracking dashboard",
         "flags": ["--dashboard", "-d"],
