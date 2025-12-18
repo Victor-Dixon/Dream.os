@@ -34,3 +34,58 @@
 
 - [ ] Unused function audit (1,695 functions) - Lower priority after duplicate consolidation
 - [ ] LOW priority duplicate groups (116 groups) - Process after Batch 1 re-analysis complete
+
+## TOOLBELT HEALTH CHECK TASKS
+
+**Generated:** 2025-12-18 from `tools/check_toolbelt_health.py`  
+**Status:** 41 broken tools identified (46 healthy, 41 broken)  
+**Reference:** `docs/toolbelt_health_check_tasks.md` for full details
+
+### HIGH PRIORITY - Missing Modules (30 tools)
+- [ ] Fix 'Project Scanner' (scan) - Module: `tools.run_project_scan` - ImportError: No module named 'tools.run_project_scan'
+- [ ] Fix 'V2 Compliance Checker' (v2-check) - Module: `tools.v2_checker_cli` - ImportError: No module named 'tools.v2_checker_cli'
+- [ ] Fix 'Compliance Dashboard' (dashboard) - Module: `tools.dashboard_html_generator` - ImportError: No module named 'tools.dashboard_html_generator'
+- [ ] Fix 'Complexity Analyzer' (complexity) - Module: `tools.complexity_analyzer` - ImportError: No module named 'tools.complexity_analyzer'
+- [ ] Fix 'Refactoring Suggestions' (refactor) - Module: `tools.refactoring_suggestions` - ImportError: No module named 'tools.refactoring_suggestions'
+- [ ] Fix 'Functionality Verification' (functionality) - Module: `tools.functionality_verification` - ImportError: No module named 'functionality_comparison'
+- [ ] Fix 'Compliance History' (history) - Module: `tools.compliance_history_tracker` - ImportError: No module named 'compliance_history_database'
+- [ ] Fix 'Test Usage Analyzer' (test-usage-analyzer) - Module: `tools.test_usage_analyzer` - ImportError: No module named 'tools.test_usage_analyzer'
+- [ ] Fix 'Architecture Pattern Validator' (pattern-validator) - Module: `tools.arch_pattern_validator` - ImportError: No module named 'tools.arch_pattern_validator'
+- [ ] Fix 'Import Validator' (validate-imports) - Module: `tools.validate_imports` - ImportError: No module named 'tools.validate_imports'
+- [ ] Fix 'Task CLI' (task) - Module: `tools.task_cli` - ImportError: No module named 'tools.task_cli'
+- [ ] Fix 'Refactor Analyzer' (refactor-analyze) - Module: `tools.refactor_analyzer` - ImportError: No module named 'tools.refactor_analyzer'
+- [ ] Fix 'Devlog Auto-Poster' (devlog-post) - Module: `tools.devlog_auto_poster` - ImportError: No module named 'tools.devlog_auto_poster'
+- [ ] Fix 'Pattern Extractor' (pattern-extract) - Module: `tools.pattern_extractor` - ImportError: No module named 'tools.pattern_extractor'
+- [ ] Fix 'V2 Batch Checker' (v2-batch) - Module: `tools.v2_checker_cli` - ImportError: No module named 'tools.v2_checker_cli'
+- [ ] Fix 'Coverage Validator' (coverage-check) - Module: `tools.coverage_validator` - ImportError: No module named 'tools.coverage_validator'
+- [ ] Fix 'Unified Agent Status Monitor' (agent-status) - Module: `tools.unified_agent_status_monitor` - ImportError: No module named 'tools.unified_agent_status_monitor'
+- [ ] Fix 'Analyze Repository Duplicates' (analyze-duplicates) - Module: `tools.analyze_repo_duplicates` - ImportError: No module named 'tools.analyze_repo_duplicates'
+- [ ] Fix 'Analyze DreamVault Duplicates' (analyze-dreamvault) - Module: `tools.analyze_dreamvault_duplicates` - ImportError: No module named 'tools.analyze_dreamvault_duplicates'
+- [ ] Fix 'Verify Merged Repo CI/CD' (verify-cicd) - Module: `tools.verify_merged_repo_cicd_enhanced` - ImportError: No module named 'tools.verify_merged_repo_cicd_enhanced'
+- [ ] Fix 'Pattern Suggester' (pattern-suggest) - Module: `tools.pattern_suggester` - ImportError: No module named 'tools.pattern_suggester'
+- [ ] Fix 'Integration Validator' (integration-validate) - Module: `tests.integration.system_integration_validator` - ImportError: No module named 'tests.integration.system_integration_validator'
+- [ ] Fix 'Swarm Autonomous Orchestrator' (orchestrate) - Module: `tools.swarm_orchestrator` - ImportError: No module named 'tools.gas_messaging'
+- [ ] Fix 'Repo Overlap Analyzer' (repo-overlap) - Module: `tools.repo_overlap_analyzer` - ImportError: No module named 'tools.repo_overlap_analyzer'
+- [ ] Fix 'Consolidation Status Tracker' (consolidation-status) - Module: `tools.consolidation_status_tracker` - ImportError: No module named 'tools.consolidation_status_tracker'
+- [ ] Fix 'Verify Discord Running' (discord-verify) - Module: `tools.verify_discord_running` - ImportError: No module named 'tools.verify_discord_running'
+- [ ] Fix 'Diagnose Queue' (queue-diagnose) - Module: `tools.diagnose_queue` - ImportError: No module named 'tools.diagnose_queue'
+- [ ] Fix 'Fix Stuck Message' (fix-stuck) - Module: `tools.fix_stuck_message` - ImportError: No module named 'tools.fix_stuck_message'
+- [ ] Fix 'Test Health Monitor' (test-health) - Module: `tools.test_health_monitor` - ImportError: No module named 'tools.test_health_monitor'
+- [ ] Fix 'Infrastructure Health Monitor' (infra-health) - Module: `tools.infrastructure_health_monitor` - ImportError: No module named 'tools.infrastructure_health_monitor'
+
+### HIGH PRIORITY - Syntax Errors (4 tools)
+- [ ] Fix 'Resolve DreamVault Duplicates' (resolve-duplicates) - Module: `tools.resolve_dreamvault_duplicates` - Syntax error: unexpected indent at line 273
+- [ ] Fix 'Execute DreamVault Cleanup' (execute-cleanup) - Module: `tools.execute_dreamvault_cleanup` - Syntax error: unexpected indent at line 343
+- [ ] Fix 'Mission Control' (mission-control) - Module: `tools.mission_control` - Syntax error: unexpected indent at line 346
+- [ ] Fix 'Markov Task Optimizer' (markov-optimize) - Module: `tools.markov_swarm_integration` - Syntax error: unexpected indent at line 677 (autonomous_task_engine.py)
+
+### HIGH PRIORITY - Import Errors (1 tool)
+- [ ] Fix 'Workspace Auto-Cleaner' (workspace-clean) - Module: `tools.workspace_auto_cleaner` - Import error: name 'Dict' is not defined
+
+### MEDIUM PRIORITY - Missing main() Functions (6 tools)
+- [ ] Fix 'Memory Leak Scanner' (memory-scan) - Module: `tools.memory_leak_scanner` - Add main() function
+- [ ] Fix 'Git Commit Verifier' (git-verify) - Module: `tools.git_commit_verifier` - Add main() function
+- [ ] Fix 'Test Pyramid Analyzer' (test-pyramid) - Module: `tools.test_pyramid_analyzer` - Add main() function
+- [ ] Fix 'QA Validation Checklist' (qa-checklist) - Module: `tools.qa_validation_checklist` - Add main() function
+- [ ] Fix 'Find Idle Agents' (captain-find-idle) - Module: `tools.captain_find_idle_agents` - Add main() function
+- [ ] Fix 'Captain Next Task Picker' (captain-next-task) - Module: `tools.captain_next_task_picker` - Add main() function

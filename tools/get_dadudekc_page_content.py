@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check dadudekc.com pages list."""
+"""Get dadudekc.com page content for review."""
 
 import json
 import sys
@@ -19,11 +19,16 @@ api = f"{config['site_url']}/wp-json/wp/v2"
 auth = HTTPBasicAuth(config["username"],
                      config["app_password"].replace(" ", ""))
 
-pages = requests.get(
-    f"{api}/pages", params={"per_page": 20}, auth=auth, timeout=30).json()
+page_id = 76  # About page
+response = requests.get(f"{api}/pages/{page_id}", auth=auth, timeout=30)
 
-print("Pages on dadudekc.com:")
-for p in pages:
+if response.status_code == 200:
+    page = response.json()
+    print(f"Title: {page.get('title', {}).get('rendered', 'N/A')}")
     print(
-        f"  - {p.get('slug')} (ID: {p.get('id')}): {p.get('title', {}).get('rendered', 'N/A')[:60]}")
+        f"\nContent (raw):\n{page.get('content', {}).get('raw', 'N/A')[:500]}")
+    print(
+        f"\nContent (rendered):\n{page.get('content', {}).get('rendered', 'N/A')[:500]}")
+else:
+    print(f"Error: {response.status_code}")
 

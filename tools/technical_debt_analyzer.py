@@ -16,6 +16,12 @@ Author: Agent-5 (Business Intelligence Specialist)
 Date: 2025-12-03
 V2 Compliant: Yes (<300 lines)
 SSOT Domain: analytics
+
+FIXED: 2025-12-18 by Agent-4
+- Added file existence verification before duplicate detection
+- Added empty file (0 bytes) filtering
+- Added SSOT validation (verify exists and contains content)
+- Added duplicate file existence verification in recommendations
 """
 
 import hashlib
@@ -93,6 +99,12 @@ class TechnicalDebtAnalyzer:
     def calculate_hash(self, file_path: Path) -> Optional[str]:
         """Calculate SHA256 hash of file."""
         try:
+            # Verify file exists and is not empty
+            if not file_path.exists():
+                return None
+            file_size = file_path.stat().st_size
+            if file_size == 0:
+                return None  # Skip empty files
             return hashlib.sha256(file_path.read_bytes()).hexdigest()
         except Exception:
             return None
@@ -104,6 +116,16 @@ class TechnicalDebtAnalyzer:
         
         source_files = self.find_source_files()
         for file_path in source_files:
+            # Verify file exists before processing
+            if not file_path.exists():
+                continue
+            # Skip empty files (0 bytes)
+            try:
+                if file_path.stat().st_size == 0:
+                    continue
+            except Exception:
+                continue
+            
             file_hash = self.calculate_hash(file_path)
             if file_hash:
                 files_by_hash[file_hash].append(file_path)
@@ -115,13 +137,29 @@ class TechnicalDebtAnalyzer:
         
         return exact_duplicates, name_duplicates
 
-    def determine_ssot(self, paths: List[Path]) -> Path:
+    def determine_ssot(self, paths: List[Path]) -> Optional[Path]:
         """Determine single source of truth file."""
+        # Filter to only existing, non-empty files
+        valid_paths = []
         for path in paths:
+            if not path.exists():
+                continue
+            try:
+                if path.stat().st_size == 0:
+                    continue  # Skip empty files
+            except Exception:
+                continue
+            valid_paths.append(path)
+        
+        if not valid_paths:
+            return None  # No valid SSOT found
+        
+        # Prefer src/core/ or src/services/ paths
+        for path in valid_paths:
             rel = path.relative_to(self.project_root)
             if str(rel).startswith('src/core/') or str(rel).startswith('src/services/'):
                 return path
-        return min(paths, key=lambda p: len(p.relative_to(self.project_root).parts))
+        return min(valid_paths, key=lambda p: len(p.relative_to(self.project_root).parts))
 
     def generate_consolidation_recommendations(
         self, exact_duplicates: Dict[str, List[Path]]
@@ -129,12 +167,35 @@ class TechnicalDebtAnalyzer:
         """Generate consolidation recommendations for duplicates."""
         recommendations = []
         for hash_val, paths in exact_duplicates.items():
-            ssot = self.determine_ssot(paths)
-            duplicates = [p for p in paths if p != ssot]
+            # Verify all paths exist before processing
+            existing_paths = [p for p in paths if p.exists()]
+            if len(existing_paths) < 2:
+                continue  # Skip groups with less than 2 existing files
+            
+            ssot = self.determine_ssot(existing_paths)
+            if ssot is None:
+                continue  # Skip if no valid SSOT found
+            
+            # Verify SSOT is not empty
+            try:
+                if ssot.stat().st_size == 0:
+                    continue  # Skip empty SSOT files
+            except Exception:
+                continue
+            
+            duplicates = [p for p in existing_paths if p != ssot]
+            if not duplicates:
+                continue  # Skip if no duplicates after filtering
+            
+            # Verify all duplicate files exist
+            valid_duplicates = [p for p in duplicates if p.exists()]
+            if not valid_duplicates:
+                continue
+            
             recommendations.append({
                 "ssot": str(ssot.relative_to(self.project_root)),
-                "duplicates": [str(p.relative_to(self.project_root)) for p in duplicates],
-                "count": len(paths),
+                "duplicates": [str(p.relative_to(self.project_root)) for p in valid_duplicates],
+                "count": len(existing_paths),
                 "action": "DELETE",
                 "risk": "LOW"
             })

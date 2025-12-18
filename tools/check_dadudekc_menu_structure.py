@@ -32,3 +32,4 @@ for m in menus:
                 f"    - {item.get('title')} (ID: {item.get('db_id')}, URL: {item.get('url', 'N/A')})")
 
 mgr.disconnect()
+
