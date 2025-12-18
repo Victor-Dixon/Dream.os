@@ -1,0 +1,50 @@
+{
+  "total_groups": 8,
+  "groups_processed": 8,
+  "groups_successful": 8,
+  "groups_failed": 0,
+  "files_deleted": 8,
+  "files_failed": 0,
+  "deletions": [
+    {
+      "ssot": "temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\voice_modeling_panel.py",
+      "deleted": "D:\\Agent_Cellphone_V2_Repository\\agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\voice_modeling_panel.py",
+      "status": "success"
+    },
+    {
+      "ssot": "temp_repos\\Thea\\src\\dreamscape\\gui\\viewmodels\\main_viewmodel.py",
+      "deleted": "D:\\Agent_Cellphone_V2_Repository\\agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\viewmodels\\main_viewmodel.py",
+      "status": "success"
+    },
+    {
+      "ssot": "temp_repos\\Thea\\src\\dreamscape\\gui\\viewmodels\\panel_viewmodels.py",
+      "deleted": "D:\\Agent_Cellphone_V2_Repository\\agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\viewmodels\\panel_viewmodels.py",
+      "status": "success"
+    },
+    {
+      "ssot": "temp_repos\\Thea\\src\\dreamscape\\tools_db\\models.py",
+      "deleted": "D:\\Agent_Cellphone_V2_Repository\\agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\tools_db\\models.py",
+      "status": "success"
+    },
+    {
+      "ssot": "temp_repos\\Thea\\tests\\integration\\test_agent_training_system.py",
+      "deleted": "D:\\Agent_Cellphone_V2_Repository\\agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\tests\\integration\\test_agent_training_system.py",
+      "status": "success"
+    },
+    {
+      "ssot": "temp_repos\\Thea\\tests\\integration\\test_training_data_extraction.py",
+      "deleted": "D:\\Agent_Cellphone_V2_Repository\\agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\tests\\integration\\test_training_data_extraction.py",
+      "status": "success"
+    },
+    {
+      "ssot": "temp_repos\\Thea\\tests\\test_training_data_integration.py",
+      "deleted": "D:\\Agent_Cellphone_V2_Repository\\agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\tests\\test_training_data_integration.py",
+      "status": "success"
+    },
+    {
+      "ssot": "temp_repos\\Thea\\tests\\unit\\test_mmorpg_models.py",
+      "deleted": "D:\\Agent_Cellphone_V2_Repository\\agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\tests\\unit\\test_mmorpg_models.py",
+      "status": "success"
+    }
+  ]
+}
