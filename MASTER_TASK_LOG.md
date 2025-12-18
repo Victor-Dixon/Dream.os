@@ -5,6 +5,7 @@
 - [x] **CRITICAL**: Process Agent-8 duplicate prioritization handoff - ✅ ROOT CAUSE IDENTIFIED: Technical debt analysis tool bug (file existence not verified), Batch 1 INVALID (98.6% non-existent files), tool fix required
 - [ ] **CRITICAL**: Coordinate technical debt analysis tool fix - File existence check, empty file filter, SSOT validation, improved matching logic, quality checks [Agent-3 CLAIMED]
 - [x] **HIGH**: Batch 1 re-analysis - After tool fix, re-analyze to generate correct duplicate groups, then re-prioritize ✅ COMPLETE by Agent-1 (2025-12-18) - 102 valid groups, 7 batches created, Batch 1 ready
+- [ ] **HIGH**: Batch 1 duplicate consolidation execution - 15 groups assigned to Agents 1, 2, 7, 8 for parallel deletion [Agent-4 COORDINATING]
 - [ ] **HIGH**: Monitor V2 compliance refactoring progress - Agent-1 (Batch 2 Phase 2D, Batch 4), Agent-2 (architecture support), correct dashboard compliance numbers (110 violations, 87.6% compliance) [Agent-6 CLAIMED]
 - [ ] **MEDIUM**: Review and process Agent-8 duplicate prioritization batches 2-8 (LOW priority groups, 7 batches, 15 groups each)
 - [ ] **MEDIUM**: Maintain perpetual motion protocol - Continuous coordination with Agents 1, 2, and 3 bilateral coordination
@@ -43,8 +44,8 @@
 **Reference:** `docs/toolbelt_health_check_tasks.md` for full details
 
 ### HIGH PRIORITY - Missing Modules (30 tools)
-- [ ] Fix 'Project Scanner' (scan) - Module: `tools.run_project_scan` - ImportError: No module named 'tools.run_project_scan' [Agent-2 CLAIMED]
-- [ ] Fix 'V2 Compliance Checker' (v2-check) - Module: `tools.v2_checker_cli` - ImportError: No module named 'tools.v2_checker_cli'
+- [x] Fix 'Project Scanner' (scan) - Module: `tools.run_project_scan` - ImportError: No module named 'tools.run_project_scan' ✅ FIXED by Agent-2 (2025-12-18) - Updated registry to point to tools.project_scan
+- [x] Fix 'V2 Compliance Checker' (v2-check) - Module: `tools.v2_checker_cli` - ImportError: No module named 'tools.v2_checker_cli' ✅ FIXED by Agent-2 (2025-12-18) - Updated registry to point to tools.v2_compliance_checker
 - [ ] Fix 'Compliance Dashboard' (dashboard) - Module: `tools.dashboard_html_generator` - ImportError: No module named 'tools.dashboard_html_generator'
 - [ ] Fix 'Complexity Analyzer' (complexity) - Module: `tools.complexity_analyzer` - ImportError: No module named 'tools.complexity_analyzer'
 - [ ] Fix 'Refactoring Suggestions' (refactor) - Module: `tools.refactoring_suggestions` - ImportError: No module named 'tools.refactoring_suggestions'
