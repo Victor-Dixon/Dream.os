@@ -361,7 +361,8 @@ class OptimizedStallResumePrompt:
         agent_state: Dict[str, Any] = None
     ) -> str:
         """Build a non-interactive stall recovery prompt (silent work order)."""
-        # Build task assignment section if task was claimed
+        # Build task assignment section if task was claimed or provide
+        # guidance to refill tasks when none are available
         task_section = ""
         if next_task:
             task_title = next_task.get("title", "Untitled Task")
@@ -391,6 +392,29 @@ class OptimizedStallResumePrompt:
 - **Title**: {task_title}
 - **Priority**: {task_priority}
 - **To Claim**: Run `python -m src.services.messaging_cli --agent {agent_id} --get-next-task`
+
+"""
+        else:
+            # No pending tasks in cycle planner – explicitly instruct the agent
+            # to refill work from MASTER_TASK_LOG.md using the bridge.
+            task_section = f"""
+
+**📋 NO TASKS FOUND IN CYCLE PLANNER FOR {agent_id}**
+
+When your cycle planner is empty, you MUST refill work from `MASTER_TASK_LOG.md`:
+
+1. Open `MASTER_TASK_LOG.md` and review the **INBOX** and **THIS_WEEK** sections.
+2. If there is no READY work for `{agent_id}`, add or upgrade at least one concrete task
+   that fits your current mission.
+3. Run the MASTER_TASK_LOG → Cycle Planner bridge for this agent, for example:
+
+   - `python tools/master_task_log_to_cycle_planner.py --agent {agent_id} --section THIS_WEEK --priority high`
+
+4. After the bridge runs, claim the next task and start execution:
+
+   - `python -m src.services.messaging_cli --agent {agent_id} --get-next-task`
+
+**Action Required**: Refill your task list from `MASTER_TASK_LOG.md`, then execute ONE concrete task slice and produce a real artifact (code, tests, or report).
 
 """
 

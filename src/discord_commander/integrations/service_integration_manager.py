@@ -19,7 +19,8 @@ if TYPE_CHECKING:
     from src.discord_commander.unified_discord_bot import UnifiedDiscordBot
 
 from src.infrastructure.browser.thea_browser_service import TheaBrowserService
-from src.core.config.config_dataclasses import BrowserConfig, TheaConfig
+from src.core.config.config_dataclasses import BrowserConfig
+from src.infrastructure.browser.browser_models import TheaConfig
 
 logger = logging.getLogger(__name__)
 
@@ -122,9 +123,9 @@ class ServiceIntegrationManager:
     def _write_last_thea_refresh(self, ts: float) -> None:
         """Write last Thea refresh timestamp."""
         try:
-            self.thea_last_refresh_path.parent.mkdir(parents=True, exist_ok=True)
+            self.thea_last_refresh_path.parent.mkdir(
+                parents=True, exist_ok=True)
             self.thea_last_refresh_path.write_text(
                 json.dumps({"ts": ts}, indent=2), encoding="utf-8")
         except Exception as e:
             self.logger.warning(f"Could not write Thea last refresh: {e}")
-
