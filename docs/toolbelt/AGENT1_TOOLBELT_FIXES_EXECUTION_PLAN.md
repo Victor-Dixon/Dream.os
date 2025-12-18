@@ -67,16 +67,24 @@
 - **Status:** ✅ VERIFIED - Already fixed
 
 ### **Phase 2: Fix functionality_verification** 🔄
-- [ ] Check if functionality_* modules exist in tools/
-- [ ] Update imports to use correct module paths
+- [x] Check if functionality_* modules exist in tools/ - **VERIFIED: Modules missing**
+- [ ] Create missing modules OR fix imports to use correct paths:
+  - `functionality_comparison.py` - MISSING
+  - `functionality_reports.py` - MISSING
+  - `functionality_signature.py` - MISSING
+  - `functionality_tests.py` - MISSING
 - [ ] Test functionality_verification tool
 - [ ] Verify fix with toolbelt health check
 
 ### **Phase 3: Resolve Missing Tools** 🔄
-- [ ] Search for task_cli alternatives (task_creator, task_manager, etc.)
-- [ ] Search for test_usage_analyzer alternatives (test_pyramid_analyzer, etc.)
-- [ ] Search for validate_imports alternatives (validate_import_fixes, etc.)
-- [ ] Update registry or mark as deprecated based on findings
+- [x] Search for task_cli alternatives - **FOUND: task_creator.py (different tool)**
+- [x] Search for test_usage_analyzer alternatives - **FOUND: test_pyramid_analyzer.py (different tool)**
+- [x] Search for validate_imports alternatives - **FOUND: validate_import_fixes.py, validate_analytics_imports.py (different tools)**
+- [ ] Determine if missing tools should be:
+  - Created (if needed functionality)
+  - Registry updated to point to alternatives
+  - Marked as deprecated
+- [ ] Update registry or create tools based on decision
 
 ### **Phase 4: Verification** ⏳
 - [ ] Run `python tools/check_toolbelt_health.py`
