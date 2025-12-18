@@ -43,7 +43,7 @@
 **Reference:** `docs/toolbelt_health_check_tasks.md` for full details
 
 ### HIGH PRIORITY - Missing Modules (30 tools)
-- [ ] Fix 'Project Scanner' (scan) - Module: `tools.run_project_scan` - ImportError: No module named 'tools.run_project_scan'
+- [ ] Fix 'Project Scanner' (scan) - Module: `tools.run_project_scan` - ImportError: No module named 'tools.run_project_scan' [Agent-2 CLAIMED]
 - [ ] Fix 'V2 Compliance Checker' (v2-check) - Module: `tools.v2_checker_cli` - ImportError: No module named 'tools.v2_checker_cli'
 - [ ] Fix 'Compliance Dashboard' (dashboard) - Module: `tools.dashboard_html_generator` - ImportError: No module named 'tools.dashboard_html_generator'
 - [ ] Fix 'Complexity Analyzer' (complexity) - Module: `tools.complexity_analyzer` - ImportError: No module named 'tools.complexity_analyzer'
