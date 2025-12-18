@@ -18,7 +18,7 @@
 ## Task List
 
 ### HIGH Priority
-- [ ] Clean up WordPress defaults (remove/redirect "Hello world!" and "Uncategorized" from navigation and sitemap) - **SA-DADUDEKC-SEO-DEFAULTS-04**
+- [x] Clean up WordPress defaults (remove/redirect "Hello world!" and "Uncategorized" from navigation and sitemap) - **SA-DADUDEKC-SEO-DEFAULTS-04** ✅ COMPLETE by Agent-2: Renamed 'Uncategorized' to 'General', removed from navigation, verified no default post exists
 - [ ] Adopt unified positioning line site-wide: "I build automation systems that save teams hours every week." - **COPY-DADUDEKC-HERO-UNIFIER-02**
 - [ ] Add a primary, ad-matched CTA for the consulting lane (e.g., "Book a call" / "Apply for smoke session") with a dedicated thank-you page - **SA-DADUDEKC-HOME-CTA-02** (in progress)
 - [ ] Simplify primary nav to Home / Services / Case Studies / About / Contact and remove "Developer Tools" from main menus - **IA-DADUDEKC-NAV-UNIFY-01**
