@@ -82,6 +82,21 @@ def add_positioning_to_content(content: str, placement: str = "top") -> str:
     return content
 
 
+def create_page(slug: str, title: str, content: str):
+    """Create a new page."""
+    url = f"{API_BASE}/pages"
+    data = {
+        "title": title,
+        "slug": slug,
+        "content": content,
+        "status": "publish"
+    }
+    response = requests.post(url, json=data, auth=AUTH, timeout=30)
+    if response.status_code == 201:
+        return response.json()
+    return None
+
+
 def update_page(page_id: int, content: str, title: str = None):
     """Update page content."""
     url = f"{API_BASE}/pages/{page_id}"
