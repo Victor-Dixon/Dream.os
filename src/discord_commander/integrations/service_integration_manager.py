@@ -19,7 +19,7 @@ if TYPE_CHECKING:
     from src.discord_commander.unified_discord_bot import UnifiedDiscordBot
 
 from src.infrastructure.browser.thea_browser_service import TheaBrowserService
-from src.infrastructure.browser.browser_models import BrowserConfig, TheaConfig
+from src.core.config.config_dataclasses import BrowserConfig, TheaConfig
 
 logger = logging.getLogger(__name__)
 
