@@ -165,3 +165,4 @@ def test_v2_compliance_check_v2_compliance_on_small_temp_file(tmp_path):
     result = vc.check_v2_compliance(str(small_file))
     assert result.get("success") is True
     assert result.get("violations_count") == 0
+
