@@ -696,7 +696,7 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     },
     "fix-stuck": {
         "name": "Fix Stuck Message",
-        "module": "tools.fix_stuck_message",
+        "module": "tools.reset_stuck_messages",
         "main_function": "main",
         "description": "Fix stuck messages in queue",
         "flags": ["--fix-stuck", "--unstuck"],
