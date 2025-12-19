@@ -85,19 +85,56 @@ python tools/wordpress_manager.py --site dadudekc.com --deploy-file path/to/file
 
 ## Credentials Configuration
 
-Credentials are loaded from:
-1. **`.deploy_credentials/sites.json`** (preferred, site-specific)
-2. **`.env` file** (fallback, global)
+### ✅ **Blogging API (REST API) - CONFIGURED**
 
-**Required credentials:**
-- `host` - SFTP hostname
-- `username` - SFTP username
-- `password` - SFTP password
-- `port` - SFTP port (default: 65002)
+**Location:** `.deploy_credentials/blogging_api.json`
 
-**For REST API operations:**
-- `WORDPRESS_USER` - WordPress admin username
-- `WORDPRESS_APP_PASSWORD` - WordPress application password
+**Format:**
+```json
+{
+  "site_id": {
+    "site_url": "https://example.com",
+    "username": "admin_username",
+    "app_password": "xxxx xxxx xxxx xxxx"
+  }
+}
+```
+
+**Enables:**
+- ✅ Post creation/management via REST API
+- ✅ Page creation/management via REST API
+- ✅ Content updates via REST API
+- ✅ Post status changes (publish, draft, etc.)
+- ✅ Pin/unpin posts
+
+### ⚠️ **SFTP Credentials (File Deployment) - OPTIONAL**
+
+**Location:** `.deploy_credentials/sites.json`
+
+**Format:**
+```json
+{
+  "site_id": {
+    "host": "sftp.hostinger.com",
+    "username": "sftp_username",
+    "password": "sftp_password",
+    "port": 65002
+  }
+}
+```
+
+**Enables:**
+- Theme file deployment
+- Plugin file deployment
+- Direct file uploads via SFTP
+- WP-CLI operations (if SSH available)
+
+**Note:** If you only have `blogging_api.json`, you can still:
+- ✅ Post content
+- ✅ Create/update pages
+- ✅ Manage posts
+- ❌ Deploy theme files (needs SFTP)
+- ❌ Deploy plugin files (needs SFTP)
 
 ## Usage Examples
 
@@ -148,18 +185,22 @@ python tools/wordpress_manager.py --site houstonsipqueen.com --list-themes
 
 ## Current Status
 
-✅ **Fully Operational:**
-- All 11 sites configured
-- SFTP deployment working
-- WP-CLI integration active
-- REST API posting functional
-- Theme activation working
-- Page creation working
+✅ **Fully Operational (with blogging_api.json):**
+- ✅ REST API posting functional
+- ✅ Post creation/management working
+- ✅ Page creation/management working
+- ✅ Content updates via REST API
+- ✅ All 11 sites configured in WordPressManager
 
-⚠️ **Requires:**
-- Credentials in `.deploy_credentials/sites.json` or `.env`
-- SFTP access to hosting provider
-- WordPress admin credentials for REST API
+⚠️ **Available with SFTP credentials (sites.json):**
+- Theme file deployment
+- Plugin file deployment
+- Direct file uploads
+- WP-CLI operations
+
+**Current Setup:**
+- ✅ **blogging_api.json** - CONFIGURED (REST API operations)
+- ⚠️ **sites.json** - Optional (for file deployment)
 
 ## Next Steps
 
