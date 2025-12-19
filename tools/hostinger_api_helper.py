@@ -369,7 +369,7 @@ class HostingerAPIHelper:
 def main():
     """CLI interface."""
     import argparse
-from src.core.config.timeout_constants import TimeoutConstants
+    from src.core.config.timeout_constants import TimeoutConstants
     
     parser = argparse.ArgumentParser(
         description="Discover SFTP credentials via Hostinger API"
