@@ -1,1 +1,0 @@
-⛽ EARLY GAS (75%)! Progress: 8/10. START NOW!
