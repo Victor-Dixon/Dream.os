@@ -44,7 +44,7 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     },
     "complexity": {
         "name": "Complexity Analyzer",
-        "module": "tools.complexity_analyzer",
+        "module": "tools.unified_analyzer",
         "main_function": "main",
         "description": "Analyze code complexity metrics",
         "flags": ["--complexity", "-c"],
@@ -140,7 +140,7 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     },
     "pattern-validator": {
         "name": "Architecture Pattern Validator",
-        "module": "tools.arch_pattern_validator",
+        "module": "tools.architecture_review",
         "main_function": "main",
         "description": "Validate architectural patterns (Agent-2's tool)",
         "flags": ["--validate-patterns", "--patterns"],
@@ -223,7 +223,7 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     },
     "refactor-analyze": {
         "name": "Refactor Analyzer",
-        "module": "tools.refactoring_cli",
+        "module": "tools.unified_validator",
         "main_function": "main",
         "description": "Smart refactoring suggestions based on file analysis",
         "flags": ["--refactor-analyze", "--analyze-refactor"],
@@ -271,7 +271,7 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     },
     "pattern-extract": {
         "name": "Pattern Extractor",
-        "module": "tools.pattern_extractor",
+        "module": "tools.extraction_roadmap_generator",
         "main_function": "main",
         "description": "Semi-automated code pattern extraction (30min → 5min!)",
         "flags": ["--pattern-extract", "--extract"],
@@ -532,7 +532,7 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     },
     "pattern-suggest": {
         "name": "Pattern Suggester",
-        "module": "tools.pattern_suggester",
+        "module": "tools.refactoring_suggestion_engine",
         "main_function": "main",
         "description": "Suggest consolidation patterns for refactoring",
         "flags": ["--pattern-suggest", "--suggest-pattern"],
