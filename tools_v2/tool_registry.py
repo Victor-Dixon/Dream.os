@@ -40,8 +40,8 @@ class ToolRegistry:
             logger.warning(f"Could not load registry data: {e}")
             return {}
 
-    def _resolve_tool(self, tool_name: str) -> IToolAdapter:
-        """Resolve tool by name, loading it if necessary."""
+    def _resolve_tool_class(self, tool_name: str) -> type[IToolAdapter]:
+        """Resolve tool class by name, loading it if necessary."""
         if tool_name in self._cache:
             return self._cache[tool_name]
 
@@ -53,17 +53,20 @@ class ToolRegistry:
         try:
             module = importlib.import_module(module_path)
             tool_class = getattr(module, class_name)
-            tool_instance = tool_class()
 
-            self._cache[tool_name] = tool_instance
-            return tool_instance
+            self._cache[tool_name] = tool_class
+            return tool_class
 
         except (ImportError, AttributeError) as e:
             raise ToolNotFoundError(f"Could not load tool '{tool_name}': {e}")
 
-    def get_tool(self, tool_name: str) -> IToolAdapter:
-        """Get tool instance by name."""
-        return self._resolve_tool(tool_name)
+    def get_tool_class(self, tool_name: str) -> type[IToolAdapter]:
+        """Get tool class by name."""
+        return self._resolve_tool_class(tool_name)
+
+    def resolve(self, tool_name: str) -> type[IToolAdapter]:
+        """Resolve tool class by name."""
+        return self.get_tool_class(tool_name)
 
     def list_tools(self) -> list[str]:
         """List all available tools."""
