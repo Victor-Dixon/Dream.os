@@ -46,7 +46,12 @@ def load_wp_credentials(site: str = "houstonsipqueen.com") -> Dict[str, Any]:
                 all_creds = json.load(f)
             site_creds = all_creds.get(site) or all_creds.get("houstonsipqueen")
             if site_creds:
-                return site_creds
+                # Map to expected field names
+                return {
+                    "site_url": site_creds.get("site_url"),
+                    "wp_user": site_creds.get("username"),
+                    "wp_app_password": site_creds.get("app_password")
+                }
         except Exception as e:
             print(f"⚠️  Could not load from blogging_api.json: {e}")
 
