@@ -17,6 +17,7 @@ class ModuleSuggestion:
     purpose: str
     estimated_lines: int
     entities: List[CodeEntity]
+    priority: int = 3  # Default priority
 
 @dataclass
 class RefactoringSuggestion:
