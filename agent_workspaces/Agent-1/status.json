@@ -97,24 +97,30 @@
       "file": "unified_discord_bot.py",
       "lines": 168,
       "v2_compliant": true,
-      "note": "Dashboard shows outdated info (1,164 lines, 80% complete) - actual file is 168 lines, V2 compliant"
+      "integration_complete": true,
+      "note": "Dashboard shows outdated info (1,164 lines, 80% complete) - actual file is 168 lines, V2 compliant, integration complete"
     },
     "batch_4": {
-      "status": "in_progress",
+      "status": "pending",
       "files": [
         {
           "file": "hard_onboarding_service.py",
           "lines": 880,
           "target": "<500",
-          "progress": "needs_refactoring"
+          "reduction_needed": 380,
+          "progress": "needs_refactoring",
+          "priority": "high"
         },
         {
           "file": "soft_onboarding_service.py",
           "lines": 533,
           "target": "<500",
-          "progress": "needs_refactoring"
+          "reduction_needed": 33,
+          "progress": "needs_refactoring",
+          "priority": "medium"
         }
-      ]
+      ],
+      "next": "Execute Batch 4 refactoring - Apply Service + Integration pattern (similar to Batch 3), extract functionality to modular files"
     }
   },
   "coordination_status": "ready",
