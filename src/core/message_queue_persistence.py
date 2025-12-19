@@ -37,6 +37,9 @@ class FileQueuePersistence(IQueuePersistence):
         - Encoding issues
         """
         if not self.queue_file.exists():
+            # Auto-create empty queue file if it doesn't exist
+            self.queue_file.parent.mkdir(parents=True, exist_ok=True)
+            self.queue_file.write_text("[]", encoding="utf-8")
             return []
 
         try:
