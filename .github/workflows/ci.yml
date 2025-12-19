@@ -59,16 +59,36 @@ jobs:
           ruff check . --exclude "agent_workspaces,temp_repos,archive,.git,__pycache__,*.pyc,venv,.venv" || echo "⚠️  Ruff check failed"
           black --check . --exclude "/(agent_workspaces|temp_repos|archive|.git|__pycache__|venv|.venv)/" || echo "⚠️  Black check failed"
           isort --check-only . --skip "agent_workspaces,temp_repos,archive" || echo "⚠️  isort check failed"
+      - name: 💾 Cache pytest cache
+        uses: actions/cache@v4
+        with:
+          path: .pytest_cache
+          key: pytest-cache-${{ matrix.python-version }}-${{ hashFiles('pytest.ini') }}
+          restore-keys: |
+            pytest-cache-${{ matrix.python-version }}-
+      
       - name: Tests
         continue-on-error: true
         run: |
           # Run tests if tests directory exists and has Python files
           if [ -d "tests" ] && [ "$(find tests -name 'test_*.py' -type f 2>/dev/null | wc -l)" -gt 0 ]; then
-            pytest -q --maxfail=5 --disable-warnings \
-              --ignore=agent_workspaces --ignore=temp_repos --ignore=archive \
-              --cov=scripts --cov=src \
-              --cov-report=xml --cov-report=term \
-              --cov-fail-under=0 || echo "⚠️ Some tests failed"
+            # Use parallel execution if pytest-xdist is available
+            WORKERS=$(python -c "import os; print(min(os.cpu_count() or 2, 4))" 2>/dev/null || echo "2")
+            if python -c "import xdist" 2>/dev/null; then
+              echo "🚀 Running tests with $WORKERS parallel workers"
+              pytest -q -n $WORKERS --dist=worksteal --maxfail=5 --disable-warnings \
+                --ignore=agent_workspaces --ignore=temp_repos --ignore=archive \
+                --cov=scripts --cov=src \
+                --cov-report=xml --cov-report=term \
+                --cov-fail-under=0 || echo "⚠️ Some tests failed"
+            else
+              echo "⚠️ pytest-xdist not available, running tests sequentially"
+              pytest -q --maxfail=5 --disable-warnings \
+                --ignore=agent_workspaces --ignore=temp_repos --ignore=archive \
+                --cov=scripts --cov=src \
+                --cov-report=xml --cov-report=term \
+                --cov-fail-under=0 || echo "⚠️ Some tests failed"
+            fi
           else
             echo "⚠️ No tests found, skipping test execution"
             # Create empty coverage file to prevent upload errors
