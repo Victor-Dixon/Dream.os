@@ -33,27 +33,27 @@ __all__ = [
 def main():
     """Run the auto-gas pipeline system."""
     import sys
-    
+
     monitor = PipelineMonitorIntegration()
-    
+
     if len(sys.argv) > 1:
         command = sys.argv[1]
-        
+
         if command == "start":
             # Start perpetual motion!
             interval = int(sys.argv[2]) if len(sys.argv) > 2 else 60
             monitor.start_perpetual_motion(interval=interval)
-        
+
         elif command == "status":
             # Show current pipeline status
             print(monitor.get_status_dashboard())
-        
+
         elif command == "force-gas":
             # Manually send gas
             agent_id = sys.argv[2] if len(sys.argv) > 2 else "Agent-1"
             monitor.pipeline.force_gas_send(agent_id, "MANUAL_OVERRIDE")
             print(f"⛽ Manual gas sent from {agent_id}")
-    
+
     else:
         print("""
 🚀 AUTO-GAS PIPELINE SYSTEM
