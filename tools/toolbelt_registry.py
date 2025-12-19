@@ -417,7 +417,7 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     # NOTE: agent_status_quick_check.py consolidated into unified_agent_status_monitor.py
     "agent-status": {
         "name": "Unified Agent Status Monitor",
-        "module": "tools.unified_agent_status_monitor",
+        "module": "tools.communication.agent_status_validator",
         "main_function": "main",
         "description": "Unified agent status monitoring (consolidates 15+ tools including quick check, snapshot, staleness)",
         "flags": ["--agent-status", "--status-check"],
@@ -632,9 +632,9 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     # Consolidation Tools (Agent-6 Organization)
     "repo-overlap": {
         "name": "Repo Overlap Analyzer",
-        "module": "tools.repo_overlap_analyzer",
+        "module": "tools.repository_analyzer",
         "main_function": "main",
-        "description": "Analyze repository overlaps for consolidation",
+        "description": "Analyze repository overlaps for consolidation (consolidated into repository_analyzer)",
         "flags": ["--repo-overlap", "--overlap"],
         "args_passthrough": True,
     },
@@ -647,7 +647,7 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     },
     "consolidation-status": {
         "name": "Consolidation Status Tracker",
-        "module": "tools.consolidation_status_tracker",
+        "module": "tools.consolidation_progress_tracker",
         "main_function": "main",
         "description": "Track GitHub consolidation progress and identify next opportunities",
         "flags": ["--consolidation-status", "--consolidation-track"],
