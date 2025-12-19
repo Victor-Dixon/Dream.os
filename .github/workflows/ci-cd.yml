@@ -367,7 +367,12 @@ jobs:
         run: |
           # Check if integration tests exist
           if [ -d "tests/integration" ]; then
+            # Use fewer workers for integration tests (they may have shared resources)
+            WORKERS=$(python -c "import os; print(min(os.cpu_count() or 2, 2))")
+            echo "🚀 Running integration tests with $WORKERS parallel workers"
             python -m pytest tests/integration/ \
+              -n $WORKERS \
+              --dist=worksteal \
               --cov=src \
               --cov-report=xml \
               --cov-report=html \
