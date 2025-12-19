@@ -71,8 +71,34 @@
   "next_priorities": [
     "Website grade card tasks (4 remaining business readiness, 17 SEO/UX tasks)",
     "Batch consolidation (Batches 5, 6, 8 ready for assignment)",
-    "V2 compliance refactoring (Batch 2 Phase 2D, Batch 4)"
+    "V2 compliance refactoring (Batch 2 Phase 2D: ✅ COMPLETE, Batch 4: 🟡 IN PROGRESS - 2 files need refactoring)"
   ],
+  "v2_compliance_refactoring": {
+    "batch_2_phase_2d": {
+      "status": "complete",
+      "file": "unified_discord_bot.py",
+      "lines": 168,
+      "v2_compliant": true,
+      "note": "Dashboard shows outdated info (1,164 lines, 80% complete) - actual file is 168 lines, V2 compliant"
+    },
+    "batch_4": {
+      "status": "in_progress",
+      "files": [
+        {
+          "file": "hard_onboarding_service.py",
+          "lines": 880,
+          "target": "<500",
+          "progress": "needs_refactoring"
+        },
+        {
+          "file": "soft_onboarding_service.py",
+          "lines": 533,
+          "target": "<500",
+          "progress": "needs_refactoring"
+        }
+      ]
+    }
+  },
   "coordination_status": "ready",
   "availability": "available"
 }
