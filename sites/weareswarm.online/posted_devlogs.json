@@ -178,5 +178,19 @@
   "devlogs\\2025-11-27_agent-3_session_transition_complete.md": true,
   "devlogs\\2025-11-27_agent-3_session_transition_final.md": true,
   "devlogs\\2025-11-27_agent-3_test_coverage_milestone_complete.md": true,
-  "devlogs\\2025-11-27_agent-4_acknowledgement_loop_analysis.md": true
+  "devlogs\\2025-11-27_agent-4_acknowledgement_loop_analysis.md": true,
+  "devlogs\\2025-11-27_agent-4_acknowledgement_loop_broadcast.md": true,
+  "devlogs\\2025-11-27_agent-4_agent_status_summary.md": true,
+  "devlogs\\2025-11-27_agent-4_autonomous_execution_status.md": true,
+  "devlogs\\2025-11-27_agent-4_captain_execution_pattern_active.md": true,
+  "devlogs\\2025-11-27_agent-4_captain_execution_start.md": true,
+  "devlogs\\2025-11-27_agent-4_captain_setup_complete.md": true,
+  "devlogs\\2025-11-27_agent-4_captain_status_update.md": true,
+  "devlogs\\2025-11-27_agent-4_case_variations_blocker.md": true,
+  "devlogs\\2025-11-27_agent-4_discord_bot_fixes_complete.md": true,
+  "devlogs\\2025-11-27_agent-4_hard_onboarding_complete.md": true,
+  "devlogs\\2025-11-27_agent-4_online_status.md": true,
+  "devlogs\\2025-11-27_agent-4_project_state_update.md": true,
+  "devlogs\\2025-11-27_agent-4_rate_limit_blocker.md": true,
+  "devlogs\\2025-11-27_agent-4_session_wrapup_comprehensive.md": true
 }
