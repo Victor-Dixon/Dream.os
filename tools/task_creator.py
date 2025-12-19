@@ -22,3 +22,4 @@ def create_inbox_task(agent: str, opportunity: dict[str, Any], roi: float, agent
     # Stub implementation - TODO: Implement actual inbox task creation
     print(
         f"[TASK] Would create inbox task for {agent}: {opportunity.get('type', 'unknown')} (ROI: {roi:.2f})")
+

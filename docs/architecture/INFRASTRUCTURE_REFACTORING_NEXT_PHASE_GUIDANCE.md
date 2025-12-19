@@ -420,3 +420,4 @@ class BrowserFactory:
 **Patterns**: Service Layer, Strategy, Pipeline patterns recommended
 
 🐝 **WE. ARE. SWARM. ⚡**
+

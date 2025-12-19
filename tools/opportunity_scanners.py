@@ -49,3 +49,4 @@ def scan_complexity() -> list[dict[str, Any]]:
     """Scan for code complexity issues."""
     # Stub implementation - TODO: Implement actual complexity scanning
     return []
+
