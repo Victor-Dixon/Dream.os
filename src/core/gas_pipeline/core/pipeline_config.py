@@ -13,7 +13,7 @@ from ..core.models import PipelineAgent
 def get_default_pipeline_config() -> list[tuple[str, Tuple[int, int], Optional[str]]]:
     """
     Get default pipeline configuration.
-    
+
     Returns:
         List of (agent_id, repos_assigned, next_agent) tuples
     """
@@ -34,20 +34,20 @@ def setup_pipeline_agents(
 ) -> Dict[str, PipelineAgent]:
     """
     Initialize pipeline with agent assignments.
-    
+
     Args:
         config: Pipeline configuration
-        
+
     Returns:
         Dictionary of agent_id -> PipelineAgent
     """
     agents: Dict[str, PipelineAgent] = {}
-    
+
     for agent_id, repos, next_agent in config:
         agents[agent_id] = PipelineAgent(
             agent_id=agent_id,
             repos_assigned=repos,
             next_agent=next_agent
         )
-    
+
     return agents

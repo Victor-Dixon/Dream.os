@@ -20,13 +20,13 @@ def build_gas_message(
 ) -> str:
     """
     Build gas message based on reason.
-    
+
     Args:
         agent: Current agent sending gas
         next_agent: Next agent receiving gas
         reason: Reason for sending gas
         progress: Current progress percentage
-        
+
     Returns:
         Formatted gas message
     """
@@ -82,19 +82,19 @@ def send_gas_message(
 ) -> bool:
     """
     Send gas message via messaging system.
-    
+
     Args:
         next_agent_id: Recipient agent ID
         message: Message content
         sender: Sender identifier
         priority: Message priority
-        
+
     Returns:
         True if sent successfully, False otherwise
     """
     try:
         from src.core.messaging_core import send_message, UnifiedMessage, UnifiedMessageType, UnifiedMessagePriority
-        
+
         msg = UnifiedMessage(
             sender=sender,
             recipient=next_agent_id,
@@ -108,6 +108,7 @@ def send_gas_message(
         try:
             from src.core.messaging_core import send_message
             # Alias for backward compatibility
+
             def send_message_to_agent(agent_id: str, message: str, **kwargs):
                 """Send message to agent - wrapper for send_message."""
                 from src.core.messaging_core import UnifiedMessage, UnifiedMessageType, UnifiedMessagePriority
@@ -119,7 +120,7 @@ def send_gas_message(
                     priority=UnifiedMessagePriority.NORMAL
                 )
                 return send_message(msg)
-            
+
             return send_message_to_agent(next_agent_id, message, sender=sender, priority=priority)
         except Exception:
             return False
@@ -136,5 +137,5 @@ def mark_gas_sent(agent: PipelineAgent, reason: str) -> None:
         agent.gas_sent_at_90 = True
     else:
         agent.gas_sent_at_100 = True
-    
+
     agent.last_gas_sent = datetime.now().isoformat()

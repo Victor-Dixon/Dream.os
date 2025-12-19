@@ -459,17 +459,17 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     # Stage 1 Integration Tools (Agent-2 & Agent-3)
     "analyze-duplicates": {
         "name": "Analyze Repository Duplicates",
-        "module": "tools.analyze_repo_duplicates",
+        "module": "tools.unified_analyzer",
         "main_function": "main",
-        "description": "General-purpose duplicate file analyzer for any repository (Stage 1 integration)",
+        "description": "General-purpose duplicate file analyzer for any repository (consolidated into unified_analyzer)",
         "flags": ["--analyze-duplicates", "--dup-analyze"],
         "args_passthrough": True,
     },
     "analyze-dreamvault": {
         "name": "Analyze DreamVault Duplicates",
-        "module": "tools.analyze_dreamvault_duplicates",
+        "module": "tools.unified_analyzer",
         "main_function": "main",
-        "description": "DreamVault-specific duplicate detection (Agent-2's tool)",
+        "description": "DreamVault-specific duplicate detection (consolidated into unified_analyzer)",
         "flags": ["--analyze-dreamvault", "--dreamvault-dup"],
         "args_passthrough": True,
     },
