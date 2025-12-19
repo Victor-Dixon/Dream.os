@@ -29,8 +29,8 @@
 - [x] Agent-2: Dashboard update with correct V2 compliance numbers (110 violations, 87.6% compliance) ✅ COMPLETE by Agent-2 (2025-12-18) - Dashboard verified accurate
 - [x] Agent-8: Duplicate group re-analysis results after Batch 1 SSOT verification issue - ✅ ROOT CAUSE IDENTIFIED, Batch 1 BLOCKED until tool fix
 - [ ] Technical debt analysis tool maintainer: Tool fix coordination (file existence check, empty file filter, SSOT validation)
-- [ ] Agent-1: Batch 2 Phase 2D Phase 5 completion and integration - ✅ COMPLETE (unified_discord_bot.py V2 compliant at 168 lines, dashboard shows outdated 1,164) - Verified file size, V2 compliant ✅
-- [ ] Agent-1: Batch 4 refactoring completion - 🔄 IN PROGRESS (hard_onboarding_service.py 880 lines, soft_onboarding_service.py 533 lines need refactoring to <500 lines) [Agent-2 COORDINATING - Architecture support]
+- [x] Agent-1: Batch 2 Phase 2D Phase 5 completion and integration - ✅ COMPLETE (unified_discord_bot.py V2 compliant at 168 lines, integration complete) - Verified file size, V2 compliant ✅
+- [ ] Agent-1: Batch 4 refactoring completion - 🔄 PENDING (hard_onboarding_service.py 880 lines→<500, soft_onboarding_service.py 533 lines→<500, ready for refactoring execution) [Agent-2 COORDINATING - Architecture support for execution]
 - [ ] Agent-3: Infrastructure refactoring Batch 2 completion (2/4 modules) - 🔄 IN PROGRESS
 - [ ] Agent-3: Batch 2 Integration Testing infrastructure handoff to Agent-1 (checkpoints: CI/CD ready, dependency analysis, deployment boundaries) - 🔄 IN PROGRESS (2/3 checkpoints: CI/CD ready ✅ commit 5f148ff28, dependency analyzer ✅ commit e4a69cb95, deployment boundaries validation ⚠️ IN PROGRESS - coordination sent to Agent-1)
 - [ ] Agent-3: Batch 7 consolidation infrastructure health checks - 🔄 BLOCKED ⚠️ - Batch 7 not found in JSON (only batches 1-6 exist), investigation coordination sent to Agent-8
