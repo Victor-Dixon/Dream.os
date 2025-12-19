@@ -655,3 +655,16 @@
   "devlogs\\2025-12-11_agent-2_comprehensive_validation_report.md": true,
   "devlogs\\2025-12-11_agent-2_config_managers_validation.md": true,
   "devlogs\\2025-12-11_agent-2_config_ssot_validation.md": true,
+  "devlogs\\2025-12-11_agent-2_config_validation_combined.md": true,
+  "devlogs\\2025-12-11_agent-2_core_architecture_validation.md": true,
+  "devlogs\\2025-12-11_agent-2_core_service_manager_validation.md": true,
+  "devlogs\\2025-12-11_agent-2_cycle_planner_populated.md": true,
+  "devlogs\\2025-12-11_agent-2_delta_report.md": true,
+  "devlogs\\2025-12-11_agent-2_dry_run_guard_validation.md": true,
+  "devlogs\\2025-12-11_agent-2_engines_performance_managers_validation.md": true,
+  "devlogs\\2025-12-11_agent-2_engines_performance_validation.md": true,
+  "devlogs\\2025-12-11_agent-2_file_locking_performance_engines_validation.md": true,
+  "devlogs\\2025-12-11_agent-2_final_core_validation.md": true,
+  "devlogs\\2025-12-11_agent-2_final_validation.md": true,
+  "devlogs\\2025-12-11_agent-2_final_validation_summary.md": true
+}
