@@ -318,7 +318,10 @@ class RefactoringSuggestionService:
 
 
 # CLI entry point moved to refactoring_cli.py for V2 compliance
-if __name__ == "__main__":
-    from .refactoring_cli import main
+def main():
+    """Main entry point for toolbelt registry compatibility."""
+    from .refactoring_cli import main as cli_main
+    cli_main()
 
+if __name__ == "__main__":
     main()
