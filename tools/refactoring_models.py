@@ -3,6 +3,7 @@
 from dataclasses import dataclass
 from typing import List
 
+
 @dataclass
 class CodeEntity:
     name: str
@@ -11,6 +12,7 @@ class CodeEntity:
     end_line: int
     line_count: int
 
+
 @dataclass
 class ModuleSuggestion:
     module_name: str
@@ -18,6 +20,7 @@ class ModuleSuggestion:
     estimated_lines: int
     entities: List[CodeEntity]
     priority: int = 3  # Default priority
+
 
 @dataclass
 class RefactoringSuggestion:

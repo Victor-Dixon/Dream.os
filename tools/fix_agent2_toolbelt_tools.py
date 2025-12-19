@@ -27,11 +27,11 @@ def fix_complexity_analyzer():
     # Check if we can use unified_analyzer
     registry_file = project_root / "tools" / "toolbelt_registry.py"
     content = registry_file.read_text(encoding='utf-8')
-    
+
     # Update to use unified_analyzer for now (has complexity analysis)
     old_entry = '"complexity": {\n        "name": "Complexity Analyzer",\n        "module": "tools.complexity_analyzer",'
     new_entry = '"complexity": {\n        "name": "Complexity Analyzer",\n        "module": "tools.unified_analyzer",'
-    
+
     if old_entry in content:
         content = content.replace(old_entry, new_entry)
         registry_file.write_text(content, encoding='utf-8')
@@ -47,7 +47,7 @@ def fix_refactoring_suggestions():
     # Check if these exist or need to be created
     ast_analyzer = project_root / "tools" / "refactoring_ast_analyzer.py"
     refactoring_models = project_root / "tools" / "refactoring_models.py"
-    
+
     if not ast_analyzer.exists() or not refactoring_models.exists():
         # Create minimal stubs
         if not ast_analyzer.exists():
@@ -66,7 +66,7 @@ class ASTAnalyzer:
             return []
 """, encoding='utf-8')
             print("  ✅ Created refactoring_ast_analyzer.py stub")
-        
+
         if not refactoring_models.exists():
             refactoring_models.write_text("""#!/usr/bin/env python3
 \"\"\"Refactoring models.\"\"\"
@@ -110,11 +110,11 @@ def fix_pattern_validator():
     """Fix Architecture Pattern Validator - point to architecture_review or create stub."""
     registry_file = project_root / "tools" / "toolbelt_registry.py"
     content = registry_file.read_text(encoding='utf-8')
-    
+
     # Update to use architecture_review which exists
     old_entry = '"pattern-validator": {\n        "name": "Architecture Pattern Validator",\n        "module": "tools.arch_pattern_validator",'
     new_entry = '"pattern-validator": {\n        "name": "Architecture Pattern Validator",\n        "module": "tools.architecture_review",'
-    
+
     if old_entry in content:
         content = content.replace(old_entry, new_entry)
         registry_file.write_text(content, encoding='utf-8')
@@ -127,11 +127,11 @@ def fix_pattern_extractor():
     """Fix Pattern Extractor - point to extraction_roadmap_generator or create stub."""
     registry_file = project_root / "tools" / "toolbelt_registry.py"
     content = registry_file.read_text(encoding='utf-8')
-    
+
     # Update to use extraction_roadmap_generator which exists
     old_entry = '"pattern-extract": {\n        "name": "Pattern Extractor",\n        "module": "tools.pattern_extractor",'
     new_entry = '"pattern-extract": {\n        "name": "Pattern Extractor",\n        "module": "tools.extraction_roadmap_generator",'
-    
+
     if old_entry in content:
         content = content.replace(old_entry, new_entry)
         registry_file.write_text(content, encoding='utf-8')
@@ -144,11 +144,11 @@ def fix_pattern_suggester():
     """Fix Pattern Suggester - point to refactoring_suggestion_engine or create stub."""
     registry_file = project_root / "tools" / "toolbelt_registry.py"
     content = registry_file.read_text(encoding='utf-8')
-    
+
     # Update to use refactoring_suggestion_engine which provides pattern suggestions
     old_entry = '"pattern-suggest": {\n        "name": "Pattern Suggester",\n        "module": "tools.pattern_suggester",'
     new_entry = '"pattern-suggest": {\n        "name": "Pattern Suggester",\n        "module": "tools.refactoring_suggestion_engine",'
-    
+
     if old_entry in content:
         content = content.replace(old_entry, new_entry)
         registry_file.write_text(content, encoding='utf-8')
@@ -160,33 +160,33 @@ def fix_pattern_suggester():
 def main():
     """Main fix routine."""
     print("🔧 Fixing Agent-2 Toolbelt Tools\n")
-    
+
     fixes = []
-    
+
     print("1. Fixing Complexity Analyzer...")
     if fix_complexity_analyzer():
         fixes.append("complexity")
-    
+
     print("\n2. Fixing Refactoring Suggestions...")
     if fix_refactoring_suggestions():
         fixes.append("refactor")
-    
+
     print("\n3. Fixing Architecture Pattern Validator...")
     if fix_pattern_validator():
         fixes.append("pattern-validator")
-    
+
     print("\n4. Fixing Pattern Extractor...")
     if fix_pattern_extractor():
         fixes.append("pattern-extract")
-    
+
     print("\n5. Fixing Pattern Suggester...")
     if fix_pattern_suggester():
         fixes.append("pattern-suggest")
-    
+
     print(f"\n✅ Fixed {len(fixes)} tools:")
     for fix in fixes:
         print(f"  - {fix}")
-    
+
     print(f"\n💡 Next: Run 'python tools/check_toolbelt_health.py' to verify fixes")
     return 0
 
