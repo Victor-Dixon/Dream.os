@@ -410,5 +410,15 @@
   "devlogs\\2025-12-02_agent4_discord_bot_operational.md": true,
   "devlogs\\2025-12-02_agent4_discord_bot_urgent_restart.md": true,
   "devlogs\\2025-12-02_agent4_file_locking_winerror32_fix.md": true,
-  "devlogs\\2025-12-02_agent4_output_flywheel_adoption_support.md": true
+  "devlogs\\2025-12-02_agent4_output_flywheel_adoption_support.md": true,
+  "devlogs\\2025-12-02_agent4_output_flywheel_production_ready.md": true,
+  "devlogs\\2025-12-02_agent4_output_flywheel_v1_deployed.md": true,
+  "devlogs\\2025-12-02_agent4_status_monitor_resume_fix.md": true,
+  "devlogs\\2025-12-02_agent4_technical_debt_swarm_assignment.md": true,
+  "devlogs\\2025-12-03_agent-1_64_files_implementation_progress.md": true,
+  "devlogs\\2025-12-03_agent-1_ssot_domain_declaration.md": true,
+  "devlogs\\2025-12-03_agent-1_swarm_coordination_64_files.md": true,
+  "devlogs\\2025-12-03_agent-2_64_files_implementation_complete.md": true,
+  "devlogs\\2025-12-03_agent-2_assignment_follow_up_complete.md": true,
+  "devlogs\\2025-12-03_agent-2_c024_swarm_coordination.md": true
 }
