@@ -36,19 +36,19 @@ logger = logging.getLogger(__name__)
 
 class BatchWordPressDeployer:
     """Batch deploy SEO/UX files to WordPress sites."""
-    
+
     def __init__(self, files_dir: Path = Path("docs/seo_ux_improvements")):
         self.files_dir = Path(files_dir)
         self.deployment_log: List[Dict] = []
         self.site_configs: Dict[str, Dict] = {}
-        
+
     def load_site_configs(self, config_file: Optional[Path] = None) -> Dict[str, Dict]:
         """Load site configurations from JSON or environment."""
         if config_file and Path(config_file).exists():
             with open(config_file, 'r', encoding='utf-8') as f:
                 self.site_configs = json.load(f)
             return self.site_configs
-        
+
         # Default site configurations (can be overridden via config file)
         default_sites = {
             "ariajet.site": {
@@ -115,30 +115,30 @@ class BatchWordPressDeployer:
                 "ux_method": "additional_css"
             }
         }
-        
+
         self.site_configs = default_sites
         return self.site_configs
-    
+
     def find_seo_ux_files(self) -> Dict[str, Dict[str, Path]]:
         """Find all SEO PHP and UX CSS files."""
         files = {}
-        
+
         # Look for SEO PHP files
         for seo_file in self.files_dir.rglob("*_seo.php"):
             site_name = seo_file.stem.replace("_seo", "").replace("_", ".")
             if site_name not in files:
                 files[site_name] = {}
             files[site_name]["seo"] = seo_file
-        
+
         # Look for UX CSS files
         for ux_file in self.files_dir.rglob("*_ux.css"):
             site_name = ux_file.stem.replace("_ux", "").replace("_", ".")
             if site_name not in files:
                 files[site_name] = {}
             files[site_name]["ux"] = ux_file
-        
+
         return files
-    
+
     def deploy_seo_file(
         self,
         site: str,
@@ -166,7 +166,7 @@ class BatchWordPressDeployer:
         except Exception as e:
             logger.error(f"Error deploying SEO for {site}: {e}")
             return (False, str(e))
-    
+
     def deploy_ux_file(
         self,
         site: str,
@@ -191,7 +191,7 @@ class BatchWordPressDeployer:
         except Exception as e:
             logger.error(f"Error deploying UX for {site}: {e}")
             return (False, str(e))
-    
+
     def deploy_site(
         self,
         site: str,
@@ -210,27 +210,27 @@ class BatchWordPressDeployer:
             "ux_message": "",
             "errors": []
         }
-        
+
         if not HAS_WP_MANAGER:
             result["errors"].append("WordPress Manager not available")
             return result
-        
+
         # Get connection details
         host = config.get("host") or config.get("SFTP_HOST")
         username = config.get("username") or config.get("SFTP_USER")
         password = config.get("password") or config.get("SFTP_PASS")
-        
+
         if not host or not username:
             result["errors"].append("Missing connection credentials")
             return result
-        
+
         if dry_run:
             result["seo_deployed"] = seo_file is not None
             result["ux_deployed"] = ux_file is not None
             result["seo_message"] = f"Would deploy: {seo_file.name if seo_file else 'N/A'}"
             result["ux_message"] = f"Would deploy: {ux_file.name if ux_file else 'N/A'}"
             return result
-        
+
         try:
             # Initialize WordPress Manager
             wp_manager = WordPressManager({
@@ -239,37 +239,40 @@ class BatchWordPressDeployer:
                 "password": password,
                 "remote_base": config.get("remote_base", "/public_html")
             })
-            
+
             if not wp_manager.connect():
                 result["errors"].append("Failed to connect to WordPress site")
                 return result
-            
+
             # Deploy SEO file
             if seo_file:
                 seo_method = config.get("seo_method", "functions.php")
-                success, message = self.deploy_seo_file(site, seo_file, wp_manager, seo_method)
+                success, message = self.deploy_seo_file(
+                    site, seo_file, wp_manager, seo_method)
                 result["seo_deployed"] = success
                 result["seo_message"] = message
                 if not success:
-                    result["errors"].append(f"SEO deployment failed: {message}")
-            
+                    result["errors"].append(
+                        f"SEO deployment failed: {message}")
+
             # Deploy UX file
             if ux_file:
                 ux_method = config.get("ux_method", "additional_css")
-                success, message = self.deploy_ux_file(site, ux_file, wp_manager, ux_method)
+                success, message = self.deploy_ux_file(
+                    site, ux_file, wp_manager, ux_method)
                 result["ux_deployed"] = success
                 result["ux_message"] = message
                 if not success:
                     result["errors"].append(f"UX deployment failed: {message}")
-            
+
             wp_manager.disconnect()
-            
+
         except Exception as e:
             logger.error(f"Error deploying to {site}: {e}")
             result["errors"].append(str(e))
-        
+
         return result
-    
+
     def deploy_all(
         self,
         config_file: Optional[Path] = None,
@@ -279,14 +282,14 @@ class BatchWordPressDeployer:
         """Deploy all SEO/UX files to all sites."""
         # Load configurations
         self.load_site_configs(config_file)
-        
+
         # Find files
         files = self.find_seo_ux_files()
-        
+
         # Filter sites if specified
         if sites:
             files = {site: files.get(site, {}) for site in sites}
-        
+
         results = {
             "timestamp": datetime.now().isoformat(),
             "total_sites": len(files),
@@ -297,17 +300,17 @@ class BatchWordPressDeployer:
                 "failed": 0
             }
         }
-        
+
         # Deploy each site
         for site, site_files in files.items():
             config = self.site_configs.get(site, {})
             seo_file = site_files.get("seo")
             ux_file = site_files.get("ux")
-            
+
             logger.info(f"Deploying to {site}...")
             result = self.deploy_site(site, seo_file, ux_file, config, dry_run)
             results["deployments"].append(result)
-            
+
             # Update summary
             if result["seo_deployed"] and result["ux_deployed"]:
                 results["summary"]["success"] += 1
@@ -315,9 +318,9 @@ class BatchWordPressDeployer:
                 results["summary"]["partial"] += 1
             else:
                 results["summary"]["failed"] += 1
-        
+
         return results
-    
+
     def verify_deployment(self, site: str) -> Dict:
         """Verify deployment by checking file existence or API response."""
         # Implementation for verification
@@ -327,7 +330,7 @@ class BatchWordPressDeployer:
             "ux_verified": False,
             "verification_method": "pending"
         }
-    
+
     def generate_report(self, results: Dict, output_file: Path) -> Path:
         """Generate deployment report."""
         report_content = f"""# WordPress SEO/UX Batch Deployment Report
@@ -344,23 +347,23 @@ class BatchWordPressDeployer:
 ## Deployment Details
 
 """
-        
+
         for deployment in results['deployments']:
             status = "✅" if deployment['seo_deployed'] and deployment['ux_deployed'] else \
                      "⚠️" if deployment['seo_deployed'] or deployment['ux_deployed'] else "❌"
-            
+
             report_content += f"""
 ### {status} {deployment['site']}
 
 - **SEO**: {deployment['seo_message']}
 - **UX**: {deployment['ux_message']}
 """
-            
+
             if deployment['errors']:
                 report_content += "\n**Errors:**\n"
                 for error in deployment['errors']:
                     report_content += f"- {error}\n"
-        
+
         output_file.write_text(report_content, encoding='utf-8')
         return output_file
 
@@ -368,7 +371,7 @@ class BatchWordPressDeployer:
 def main():
     """Main entry point."""
     import argparse
-    
+
     parser = argparse.ArgumentParser(
         description="Batch deploy SEO/UX files to WordPress sites"
     )
@@ -398,25 +401,25 @@ def main():
         type=str,
         help="Output report file path"
     )
-    
+
     args = parser.parse_args()
-    
+
     deployer = BatchWordPressDeployer(Path(args.files_dir))
-    
+
     # Deploy
     results = deployer.deploy_all(
         config_file=Path(args.config) if args.config else None,
         sites=args.sites,
         dry_run=args.dry_run
     )
-    
+
     # Generate report
     if args.output:
         report_path = deployer.generate_report(results, Path(args.output))
         print(f"Report written to: {report_path}")
     else:
         print(json.dumps(results, indent=2))
-    
+
     # Print summary
     print("\n" + "="*60)
     print("DEPLOYMENT SUMMARY")
@@ -424,7 +427,7 @@ def main():
     print(f"Successful: {results['summary']['success']}")
     print(f"Partial: {results['summary']['partial']}")
     print(f"Failed: {results['summary']['failed']}")
-    
+
     return 0 if results['summary']['failed'] == 0 else 1
 
 
