@@ -37,6 +37,22 @@
       "tools_v2.categories.analysis_tools",
       "DuplicationTool"
     ],
+    "bi.metrics": [
+      "tools_v2.categories.bi_tools",
+      "QuickMetricsTool"
+    ],
+    "bi.roi.repo": [
+      "tools_v2.categories.bi_tools",
+      "RepoROICalculatorTool"
+    ],
+    "bi.roi.task": [
+      "tools_v2.categories.bi_tools",
+      "TaskROICalculatorTool"
+    ],
+    "bi.roi.optimize": [
+      "tools_v2.categories.bi_tools",
+      "MarkovROIOptimizerTool"
+    ],
     "v2.check": [
       "tools_v2.categories.v2_tools",
       "V2CheckTool"
