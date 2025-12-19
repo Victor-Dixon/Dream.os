@@ -37,7 +37,8 @@ AUTH = HTTPBasicAuth(USERNAME, APP_PASSWORD.replace(" ", ""))
 TITLE = "Building Your Company Like a Football Team"
 
 # Read content from template file
-template_file = project_root / "docs" / "blog" / "dadudekc_company_football_team_template.md"
+template_file = project_root / "docs" / "blog" / \
+    "dadudekc_company_football_team_template.md"
 with open(template_file, 'r', encoding='utf-8') as f:
     template_content = f.read()
 
@@ -48,7 +49,8 @@ CONTENT = '\n'.join(lines[2:])  # Skip "# Building..." and empty line
 
 EXCERPT = "Every role matters. Every position has a purpose. Here's how to think about your team structure using a football team framework."
 
-TAGS = ["business", "leadership", "team-building", "startups", "management", "strategy"]
+TAGS = ["business", "leadership", "team-building",
+        "startups", "management", "strategy"]
 CATEGORY = "Development"
 
 

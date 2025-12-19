@@ -24,7 +24,7 @@ def deliver_via_core(
 ) -> bool:
     """
     Primary path: Unified messaging core (PyAutoGUI delivery or injected mock).
-    
+
     Args:
         recipient: Agent ID to deliver to
         content: Message content
@@ -34,7 +34,7 @@ def deliver_via_core(
         priority_str: Priority string
         tags_list: Tags list
         messaging_core: Optional injected messaging core (for testing)
-        
+
     Returns:
         True if delivery successful, False otherwise
     """
@@ -118,11 +118,12 @@ def deliver_via_core(
                 if category_str:
                     try:
                         from ...messaging_models_core import MessageCategory
-                        category_from_meta = MessageCategory(category_str.lower())
+                        category_from_meta = MessageCategory(
+                            category_str.lower())
                         delivery_metadata['message_category'] = category_from_meta.value
                     except (ValueError, AttributeError):
                         pass
-            
+
             with keyboard_control(f"queue_delivery::{recipient}"):
                 ok = send_message(
                     content=content,

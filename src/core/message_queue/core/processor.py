@@ -18,7 +18,6 @@ from ....core.message_queue_persistence import QueueEntry
 from ..processing.message_parser import parse_message_data
 from ..processing.message_validator import validate_message_data
 from ..processing.message_router import route_message_delivery
-from ..processing.delivery_inbox import deliver_fallback_inbox
 from ..handlers.error_handler import handle_delivery_error
 from ..handlers.retry_handler import (
     should_retry_delivery,
@@ -65,7 +64,7 @@ class MessageQueueProcessor:
 
         # Initialize performance metrics collector
         try:
-            from ...message_queue_performance_metrics import MessageQueuePerformanceMetrics
+            from src.core.message_queue_performance_metrics import MessageQueuePerformanceMetrics
             self.performance_metrics = MessageQueuePerformanceMetrics()
             self.performance_metrics.start_session()
         except Exception as e:
@@ -179,9 +178,8 @@ class MessageQueueProcessor:
             # Route delivery
             success = route_message_delivery(
                 recipient, content, metadata, message_type_str, sender, priority_str, tags_list,
-                lambda r, c, m, mt, s, p, t: deliver_via_core(
-                    r, c, m, mt, s, p, t, self.messaging_core),
-                deliver_fallback_inbox,
+                self._deliver_via_core,
+                self._deliver_fallback_inbox,
             )
 
             # Get use_pyautogui flag
@@ -244,4 +242,153 @@ class MessageQueueProcessor:
                 queue_id, e, self.queue, tracker, recipient,
                 self.performance_metrics, delivery_start_time, use_pyautogui, content
             )
+            return False
+
+    def _deliver_via_core(
+        self,
+        recipient: str,
+        content: str,
+        metadata: dict = None,
+        message_type_str: str = None,
+        sender: str = "SYSTEM",
+        priority_str: str = "regular",
+        tags_list: list = None,
+    ) -> bool:
+        """Primary path: Unified messaging core (PyAutoGUI delivery or injected mock)."""
+        try:
+            from src.core.messaging_models_core import (
+                UnifiedMessageType,
+                UnifiedMessagePriority,
+                UnifiedMessageTag,
+            )
+
+            # Parse message_type
+            if message_type_str:
+                try:
+                    message_type = UnifiedMessageType(message_type_str)
+                except (ValueError, TypeError):
+                    message_type_map = {
+                        "captain_to_agent": UnifiedMessageType.CAPTAIN_TO_AGENT,
+                        "agent_to_agent": UnifiedMessageType.AGENT_TO_AGENT,
+                        "agent_to_captain": UnifiedMessageType.AGENT_TO_AGENT,
+                        "system_to_agent": UnifiedMessageType.SYSTEM_TO_AGENT,
+                        "human_to_agent": UnifiedMessageType.HUMAN_TO_AGENT,
+                        "onboarding": UnifiedMessageType.ONBOARDING,
+                        "text": UnifiedMessageType.TEXT,
+                        "broadcast": UnifiedMessageType.BROADCAST,
+                    }
+                    message_type = message_type_map.get(
+                        message_type_str.lower(), UnifiedMessageType.SYSTEM_TO_AGENT
+                    )
+            else:
+                if sender and recipient:
+                    if sender.startswith("Agent-") and recipient.startswith("Agent-"):
+                        message_type = UnifiedMessageType.AGENT_TO_AGENT
+                    elif sender.startswith("Agent-") and recipient.upper() in ["CAPTAIN", "AGENT-4"]:
+                        message_type = UnifiedMessageType.AGENT_TO_AGENT
+                    elif sender.upper() in ["CAPTAIN", "AGENT-4"]:
+                        message_type = UnifiedMessageType.CAPTAIN_TO_AGENT
+                    else:
+                        message_type = UnifiedMessageType.SYSTEM_TO_AGENT
+                else:
+                    message_type = UnifiedMessageType.SYSTEM_TO_AGENT
+
+            # Parse priority
+            try:
+                priority = UnifiedMessagePriority(priority_str.lower())
+            except (ValueError, TypeError):
+                priority = UnifiedMessagePriority.REGULAR
+
+            # Parse tags
+            tags = []
+            if tags_list:
+                for tag_str in tags_list:
+                    try:
+                        if isinstance(tag_str, str):
+                            tags.append(UnifiedMessageTag(tag_str.lower()))
+                        else:
+                            tags.append(tag_str)
+                    except (ValueError, TypeError):
+                        pass
+            if not tags:
+                tags = [UnifiedMessageTag.SYSTEM]
+
+            # Use injected messaging core if provided
+            if self.messaging_core is not None:
+                ok = self.messaging_core.send_message(
+                    content=content,
+                    sender=sender,
+                    recipient=recipient,
+                    message_type=message_type,
+                    priority=priority,
+                    tags=tags,
+                    metadata=metadata or {},
+                )
+            else:
+                from ....core.messaging_core import send_message
+                from ....core.keyboard_control_lock import keyboard_control
+
+                # Preserve message category in metadata
+                delivery_metadata = dict(metadata) if metadata else {}
+                if isinstance(metadata, dict):
+                    category_str = metadata.get('message_category')
+                    if category_str:
+                        try:
+                            from src.core.messaging_models_core import MessageCategory
+                            category_from_meta = MessageCategory(
+                                category_str.lower())
+                            delivery_metadata['message_category'] = category_from_meta.value
+                        except (ValueError, AttributeError):
+                            pass
+
+                with keyboard_control(f"queue_delivery::{recipient}"):
+                    ok = send_message(
+                        content=content,
+                        sender=sender,
+                        recipient=recipient,
+                        message_type=message_type,
+                        priority=priority,
+                        tags=tags,
+                        metadata=delivery_metadata,
+                    )
+
+            return ok
+
+        except ImportError as e:
+            logger.error(f"Import error in _deliver_via_core: {e}")
+            return False
+        except Exception as e:
+            logger.error(f"Error in _deliver_via_core: {e}", exc_info=True)
+            return False
+
+    def _deliver_fallback_inbox(
+        self, recipient: str, content: str, metadata: dict,
+        sender: str = None, priority_str: str = None
+    ) -> bool:
+        """Backup path: Inbox file-based delivery."""
+        try:
+            from ....utils.inbox_utility import create_inbox_message
+
+            actual_sender = sender or metadata.get("sender", "SYSTEM")
+            actual_priority = priority_str or metadata.get(
+                "priority", "normal")
+
+            success = create_inbox_message(
+                recipient=recipient,
+                content=content,
+                sender=actual_sender,
+                priority=actual_priority,
+            )
+
+            if not success:
+                logger.error(f"❌ Inbox delivery failed for {recipient}")
+                return False
+
+            logger.info(f"✅ Inbox delivery verified for {recipient}")
+            return True
+        except ImportError:
+            logger.warning("Inbox utility not available")
+            return False
+        except Exception as e:
+            logger.error(f"Inbox delivery error: {e}", exc_info=True)
             return False

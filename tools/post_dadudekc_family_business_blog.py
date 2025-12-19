@@ -132,7 +132,8 @@ Execution costs.</p>
 
 EXCERPT = "Building a family business means learning who moves, who stalls, and who needs a different lane. Here's what I'm learning in real time about motivation, structure, and building a team that actually works."
 
-TAGS = ["business", "family-business", "leadership", "startups", "team-building", "motivation"]
+TAGS = ["business", "family-business", "leadership",
+        "startups", "team-building", "motivation"]
 CATEGORY = "Development"  # Using existing category from config
 
 
@@ -142,34 +143,34 @@ def get_or_create_category(category_name: str):
     url = f"{API_BASE}/categories"
     params = {"search": category_name, "per_page": 100}
     response = requests.get(url, params=params, auth=AUTH, timeout=30)
-    
+
     if response.status_code == 200:
         categories = response.json()
         for cat in categories:
             if cat["name"].lower() == category_name.lower():
                 return cat["id"]
-    
+
     # Create category if not found
     url = f"{API_BASE}/categories"
     data = {"name": category_name}
     response = requests.post(url, json=data, auth=AUTH, timeout=30)
-    
+
     if response.status_code == 201:
         return response.json()["id"]
-    
+
     return None
 
 
 def get_or_create_tags(tag_names: list):
     """Get or create tags, return list of tag IDs."""
     tag_ids = []
-    
+
     for tag_name in tag_names:
         # Try to get existing tag
         url = f"{API_BASE}/tags"
         params = {"search": tag_name, "per_page": 100}
         response = requests.get(url, params=params, auth=AUTH, timeout=30)
-        
+
         if response.status_code == 200:
             tags = response.json()
             for tag in tags:
@@ -183,7 +184,7 @@ def get_or_create_tags(tag_names: list):
                 response = requests.post(url, json=data, auth=AUTH, timeout=30)
                 if response.status_code == 201:
                     tag_ids.append(response.json()["id"])
-    
+
     return tag_ids
 
 
@@ -192,7 +193,7 @@ def check_existing_post(title: str):
     url = f"{API_BASE}/posts"
     params = {"search": title, "per_page": 10}
     response = requests.get(url, params=params, auth=AUTH, timeout=30)
-    
+
     if response.status_code == 200:
         posts = response.json()
         for post in posts:
@@ -204,23 +205,23 @@ def check_existing_post(title: str):
 def create_post():
     """Create the blog post."""
     print(f"📝 Posting blog to {SITE_URL}...")
-    
+
     # Check if post already exists
     existing = check_existing_post(TITLE)
     if existing:
         print(f"  ⚠️  Post already exists: {existing['link']}")
         return existing
-    
+
     # Get or create category
     print(f"  📂 Getting category: {CATEGORY}")
     category_id = get_or_create_category(CATEGORY)
     if not category_id:
         print(f"  ⚠️  Could not get/create category, continuing anyway...")
-    
+
     # Get or create tags
     print(f"  🏷️  Getting/creating tags: {', '.join(TAGS)}")
     tag_ids = get_or_create_tags(TAGS)
-    
+
     # Prepare post data
     post_data = {
         "title": TITLE,
@@ -229,18 +230,18 @@ def create_post():
         "status": "publish",
         "format": "standard",
     }
-    
+
     if category_id:
         post_data["categories"] = [category_id]
-    
+
     if tag_ids:
         post_data["tags"] = tag_ids
-    
+
     # Create post
     print(f"  ✍️  Creating post: {TITLE}")
     url = f"{API_BASE}/posts"
     response = requests.post(url, json=post_data, auth=AUTH, timeout=30)
-    
+
     if response.status_code == 201:
         post = response.json()
         print(f"  ✅ Post created successfully!")
@@ -257,16 +258,16 @@ def create_post():
 def main():
     """Main execution."""
     print("🚀 Posting family business blog to dadudekc.com\n")
-    
+
     post = create_post()
-    
+
     if post:
         print(f"\n✅ Blog post published successfully!")
         print(f"   View at: {post['link']}")
     else:
         print(f"\n❌ Failed to publish blog post")
         return 1
-    
+
     return 0
 
 
