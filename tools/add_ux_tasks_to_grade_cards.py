@@ -71,7 +71,8 @@ def add_ux_tasks(website: str, grade_card_path: Path):
             issues_section = issues_match.group(1)
             if "No UX tasks identified" in content:
                 # Replace the placeholder
-                new_issues = issues_section + "- " + "\n- ".join(ux_tasks[:5]) + "\n"
+                new_issues = issues_section + "- " + \
+                    "\n- ".join(ux_tasks[:5]) + "\n"
                 content = content.replace(
                     issues_section + "- No UX tasks identified\n",
                     new_issues
@@ -84,7 +85,8 @@ def add_ux_tasks(website: str, grade_card_path: Path):
         if rec_match:
             rec_section = rec_match.group(1)
             if "None" in content[content.find(rec_section):content.find(rec_section) + 200]:
-                new_recs = rec_section + "- " + "\n- ".join([task.replace("Improve ", "").replace("Enhance ", "").replace("Add ", "").replace("Implement ", "") for task in ux_tasks[:5]]) + "\n"
+                new_recs = rec_section + "- " + "\n- ".join([task.replace("Improve ", "").replace(
+                    "Enhance ", "").replace("Add ", "").replace("Implement ", "") for task in ux_tasks[:5]]) + "\n"
                 content = content.replace(
                     rec_section + "- None\n",
                     new_recs
