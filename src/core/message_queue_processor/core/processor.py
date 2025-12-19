@@ -171,8 +171,8 @@ class MessageQueueProcessor:
             # Route delivery
             success = route_message_delivery(
                 recipient, content, metadata, message_type_str, sender, priority_str, tags_list,
-                self._deliver_via_core,
-                self._deliver_fallback_inbox,
+                lambda r, c, m, mt, s, p, t: deliver_via_core(r, c, m, mt, s, p, t, self.messaging_core),
+                deliver_fallback_inbox,
             )
             
             # Get use_pyautogui flag
