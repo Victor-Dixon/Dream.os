@@ -844,5 +844,16 @@
   "devlogs\\2025-12-12_agent-1_phase1_analysis_validation.md": true,
   "devlogs\\2025-12-12_agent-1_phase1_refactoring_assignment.md": true,
   "devlogs\\2025-12-12_agent-1_phase2_module1_extracted.md": true,
-  "devlogs\\2025-12-12_agent-1_phase2_module2_extracted.md": true
+  "devlogs\\2025-12-12_agent-1_phase2_module2_extracted.md": true,
+  "devlogs\\2025-12-12_agent-1_refactoring_plan_complete.md": true,
+  "devlogs\\2025-12-12_agent-1_session_complete.md": true,
+  "devlogs\\2025-12-12_agent-1_session_summary.md": true,
+  "devlogs\\2025-12-12_agent-1_status_report_committed.md": true,
+  "devlogs\\2025-12-12_agent-1_validation_tool_fix.md": true,
+  "devlogs\\2025-12-12_agent-2_captain_broadcast_response.md": true,
+  "devlogs\\2025-12-12_agent-2_co_captain_coordination.md": true,
+  "devlogs\\2025-12-12_agent-2_coordination_acknowledgment.md": true,
+  "devlogs\\2025-12-12_agent-2_cp005_status_report_artifact.md": true,
+  "devlogs\\2025-12-12_agent-2_cycle_planner_complete.md": true,
+  "devlogs\\2025-12-12_agent-2_phase1_delegation_force_multiplier.md": true
 }
