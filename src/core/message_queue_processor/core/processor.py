@@ -19,6 +19,7 @@ from ..processing.message_parser import parse_message_data
 from ..processing.message_validator import validate_message_data
 from ..processing.message_router import route_message_delivery
 from ..processing.delivery_inbox import deliver_fallback_inbox
+from ..processing.delivery_core import deliver_via_core
 from ..handlers.error_handler import handle_delivery_error
 from ..handlers.retry_handler import (
     should_retry_delivery,
