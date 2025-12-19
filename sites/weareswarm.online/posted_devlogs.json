@@ -749,5 +749,13 @@
   "devlogs\\2025-12-11_agent-5_session_summary.md": true,
   "devlogs\\2025-12-11_agent-5_stall_detection_analysis.md": true,
   "devlogs\\2025-12-11_agent-5_stall_detection_quick_ref.md": true,
-  "devlogs\\2025-12-11_agent-5_template_coverage_analysis.md": true
+  "devlogs\\2025-12-11_agent-5_template_coverage_analysis.md": true,
+  "devlogs\\2025-12-11_agent-5_template_defaults_validation.md": true,
+  "devlogs\\2025-12-11_agent-5_template_validation_check.md": true,
+  "devlogs\\2025-12-11_agent-5_timeout_update.md": true,
+  "devlogs\\2025-12-11_agent-5_validation_run_complete.md": true,
+  "devlogs\\2025-12-11_agent-5_vector_models_validation.md": true,
+  "devlogs\\2025-12-11_agent-6_coordination_validation.md": true,
+  "devlogs\\2025-12-11_agent-6_coordination_work_complete.md": true,
+  "devlogs\\2025-12-11_agent-6_github_migration_readiness_assessment.md": true
 }
