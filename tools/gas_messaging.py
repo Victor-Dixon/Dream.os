@@ -22,3 +22,4 @@ def send_gas_message(agent: str, opportunity: dict[str, Any], roi: float, projec
     # Stub implementation - TODO: Implement actual gas message sending
     print(
         f"[GAS] Would send message to {agent}: {opportunity.get('type', 'unknown')} (ROI: {roi:.2f})")
+
