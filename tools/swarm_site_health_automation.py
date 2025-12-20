@@ -174,23 +174,58 @@ class SwarmSiteHealthAutomation:
 
         delegation_tasks = []
 
-        for site_result in self.automation_results.get("sites_processed", []):
-            site_name = site_result["site_name"]
-            broken_links_after = site_result.get("broken_links_after", 0)
-            api_accessible = site_result.get("health_check", {}).get("api_accessible", False)
+        # Process sites that have broken links (from audit data)
+        for site_name, site_data in self.broken_links_data.get("sites", {}).items():
+            broken_links = site_data.get("broken_links", [])
+            if not broken_links:
+                continue
 
-            if broken_links_after > 0 and not api_accessible:
-                # Create delegation task
-                task = {
-                    "site": site_name,
-                    "task_type": "manual_wordpress_fixes",
-                    "priority": "HIGH" if broken_links_after > 5 else "MEDIUM",
-                    "broken_links_count": broken_links_after,
-                    "description": f"Fix {broken_links_after} broken links on {site_name}",
-                    "assigned_agent": self._suggest_agent(site_name),
-                    "steps": self._generate_manual_steps(site_name, site_result)
-                }
+            # Check if this site was processed and API is not accessible
+            site_result = next((s for s in self.automation_results.get("sites_processed", [])
+                              if s["site_name"] == site_name), None)
+
+            if site_result:
+                api_accessible = site_result.get("health_check", {}).get("api_accessible", False)
+                if not api_accessible:
+                    # Create detailed delegation task
+                    task = self._create_detailed_delegation_task(site_name, broken_links)
+                    delegation_tasks.append(task)
+            else:
+                # Site wasn't processed but has broken links - still create task
+                task = self._create_detailed_delegation_task(site_name, broken_links)
                 delegation_tasks.append(task)
+
+        # Also check for SFTP connectivity issues
+        sftp_issues = []
+        for site_result in self.automation_results.get("sites_processed", []):
+            health_check = site_result.get("health_check", {})
+            if not health_check.get("success", False):
+                sftp_issues.append(site_result["site_name"])
+
+        if sftp_issues:
+            # Create SFTP fix task
+            sftp_task = {
+                "task_id": f"sftp_fix_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
+                "task_type": "infrastructure_sftp_fix",
+                "priority": "HIGH",
+                "title": f"Fix SFTP connectivity for {len(sftp_issues)} sites",
+                "description": f"Resolve SFTP connection issues for: {', '.join(sftp_issues)}",
+                "assigned_agent": "Agent-3",  # Infrastructure specialist
+                "sites_affected": sftp_issues,
+                "steps": [
+                    "1. Verify Hostinger SFTP credentials are current",
+                    "2. Check if server IP addresses changed",
+                    "3. Test manual SFTP connection:",
+                    "   sftp -P 65002 u996867598@157.173.214.121",
+                    "4. Update site_configs.json with correct SFTP details",
+                    "5. Test wordpress_manager.py connectivity",
+                    "6. Run comprehensive audit to verify fixes"
+                ],
+                "estimated_time": "30 minutes",
+                "blocking": True,  # This blocks automated deployments
+                "created_at": datetime.now().isoformat()
+            }
+            delegation_tasks.append(sftp_task)
 
         # Save delegation tasks
         if delegation_tasks:
@@ -198,10 +233,20 @@ class SwarmSiteHealthAutomation:
             with open(delegation_file, 'w') as f:
                 json.dump({
                     "generated_at": datetime.now().isoformat(),
+                    "total_tasks": len(delegation_tasks),
                     "tasks": delegation_tasks
                 }, f, indent=2)
 
             print(f"📄 Saved {len(delegation_tasks)} delegation tasks to {delegation_file}")
+
+            # Print summary
+            print("\n📋 DELEGATION SUMMARY:")
+            for i, task in enumerate(delegation_tasks, 1):
+                priority_icon = "🔴" if task["priority"] == "HIGH" else "🟡" if task["priority"] == "MEDIUM" else "🟢"
+                print(f"   {i}. {priority_icon} {task['title']}")
+                print(f"      → Assigned: {task['assigned_agent']}")
+                if 'broken_links_count' in task:
+                    print(f"      → Broken links: {task['broken_links_count']}")
 
         return {"delegation_tasks": delegation_tasks}
 
@@ -218,8 +263,91 @@ class SwarmSiteHealthAutomation:
         }
         return agent_mapping.get(site_name, "Agent-7")  # Default to web dev agent
 
+    def _create_detailed_delegation_task(self, site_name: str, broken_links: List[Dict]) -> Dict[str, Any]:
+        """Create a detailed delegation task for a specific site."""
+        task_id = f"site_fix_{site_name.replace('.', '_')}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+
+        # Analyze broken links to create specific tasks
+        missing_pages = []
+        broken_menu_links = []
+        other_issues = []
+
+        for link in broken_links:
+            url = link['url']
+            link_text = link['text']
+            source = link['source']
+
+            if source in ['nav', 'footer']:
+                # Check if it's a missing page
+                if site_name in url:
+                    path = url.replace(f'https://{site_name}/', '').replace(f'https://{site_name}', '').strip('/')
+                    if path and '/' not in path and path not in ['contact', 'blog', 'about']:
+                        missing_pages.append({"slug": path, "title": link_text, "url": url})
+                    else:
+                        broken_menu_links.append({"text": link_text, "url": url, "source": source})
+                elif 'github.com/Agent_Cellphone_V2_Repository' in url:
+                    # Special case: GitHub link
+                    broken_menu_links.append({"text": link_text, "url": url, "source": source, "type": "github_fix"})
+                else:
+                    other_issues.append({"text": link_text, "url": url, "source": source})
+
+        # Create detailed steps based on issues found
+        steps = [
+            f"1. Log into WordPress admin: https://{site_name}/wp-admin/"
+        ]
+
+        if missing_pages:
+            steps.append("2. Create missing pages (Pages → Add New):")
+            for page in missing_pages:
+                steps.append(f"   - Create '{page['title']}' page (slug: {page['slug']})")
+                steps.append("     Add placeholder content and publish")
+
+        if broken_menu_links:
+            steps.append("3. Fix broken menu links (Appearance → Menus):")
+            for link in broken_menu_links:
+                if link.get('type') == 'github_fix':
+                    steps.append("   - Remove broken GitHub link from footer menu")
+                else:
+                    steps.append(f"   - Fix '{link['text']}' link in {link['source']} menu")
+
+        steps.extend([
+            "4. Update navigation menus to include new pages",
+            "5. Test all navigation links after fixes",
+            f"6. Run verification: python tools/comprehensive_website_audit.py --site {site_name} --check-links",
+            "7. Update task status and report completion"
+        ])
+
+        # Determine priority and agent
+        priority = "HIGH" if len(broken_links) > 5 else "MEDIUM" if len(broken_links) > 1 else "LOW"
+        assigned_agent = self._suggest_agent(site_name)
+
+        task = {
+            "task_id": task_id,
+            "task_type": "manual_wordpress_site_fixes",
+            "priority": priority,
+            "title": f"Fix {len(broken_links)} broken links on {site_name}",
+            "description": f"Resolve {len(broken_links)} broken links and missing pages on {site_name}",
+            "site_name": site_name,
+            "assigned_agent": assigned_agent,
+            "broken_links_count": len(broken_links),
+            "missing_pages_count": len(missing_pages),
+            "broken_menu_links_count": len(broken_menu_links),
+            "issues_detected": {
+                "missing_pages": missing_pages,
+                "broken_menu_links": broken_menu_links,
+                "other_issues": other_issues
+            },
+            "steps": steps,
+            "estimated_time": f"{max(15, len(broken_links) * 5)} minutes",
+            "blocking": False,
+            "created_at": datetime.now().isoformat(),
+            "verification_command": f"python tools/comprehensive_website_audit.py --site {site_name} --check-links"
+        }
+
+        return task
+
     def _generate_manual_steps(self, site_name: str, site_result: Dict[str, Any]) -> List[str]:
-        """Generate manual fix steps for a site."""
+        """Generate manual fix steps for a site (legacy method)."""
         steps = [
             f"1. Log into WordPress admin: https://{site_name}/wp-admin/",
             "2. Check Appearance → Menus for broken navigation links",
