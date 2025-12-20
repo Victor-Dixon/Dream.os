@@ -571,7 +571,7 @@ class StatusChangeMonitor:
 
                 rendered = render_message(
                     msg,
-                    template_key="STALL_RECOVERY",
+                    template_key="SWARM_PULSE",
                     context=f"Inactivity Detected: {safe_minutes} minutes",
                     actions=actions_text,
                     fallback="If blocked, escalate to Captain with concrete blocker + ETA.",
