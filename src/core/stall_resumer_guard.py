@@ -16,7 +16,8 @@ logger = logging.getLogger(__name__)
 
 
 RESUMER_MARKERS = {
-    "STALL-RECOVERY",
+    "SWARM PULSE",
+    "SWARM-PULSE",
     "NO-ACKNOWLEDGMENTS",
     "RESUMER PROMPT",
     "Inactivity Detected",
@@ -24,6 +25,8 @@ RESUMER_MARKERS = {
     "#NO-REPLY",
     "#PROGRESS-ONLY",
     "#ARTIFACT-REQUIRED",
+    "#SWARM-PULSE",
+    "#SWARM-HEARTBEAT",
 }
 
 NOISE_PHRASES = {
