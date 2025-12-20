@@ -87,6 +87,70 @@
 - [ ] **CRITICAL**: Execute trading robot go-live - Final pre-launch checklist review, deploy to production environment, start trading robot in live mode, monitor initial trades closely, validate all systems operational, confirm risk management working, document go-live. Deliverables: Trading robot live, go-live documentation, initial monitoring report. [Agent-1 CLAIMED]
 - [ ] **HIGH**: Post-launch trading robot monitoring - Monitor trading robot 24/7 for first week, review all trades daily, monitor performance metrics, check for errors or issues, validate risk management, document any issues, create daily performance reports. Deliverables: Daily monitoring reports, issue log, performance tracking. [Agent-1 CLAIMED]
 
+## TRADING ROBOT PLUG SERVICE PLATFORM
+
+**Generated:** 2025-12-19 from service platform planning  
+**Status:** Planning complete, implementation ready to begin  
+**Reference:** `docs/trading_robot/TRADING_ROBOT_PLUG_SERVICE_PLATFORM_PLAN.md` for full details  
+**Timeline:** 8-10 weeks to full launch
+
+### Phase 1: Performance Tracking System (Week 1-2) - HIGH PRIORITY
+
+- [ ] **HIGH**: Create performance tracking plugin structure - Create `trading_robot/plugins/performance_tracker/` directory structure with `performance_tracker.py`, `metrics_collector.py`, `metrics_storage.py`, `metrics_aggregator.py`, `performance_dashboard.py`, and `metadata.json`. Deliverables: Plugin structure created, base classes implemented. [Agent-1 CLAIMED]
+- [ ] **HIGH**: Design and implement performance tracking database schema - Create database schema for `user_performance_metrics` table with fields for user_id, plugin_id, metric_date, metric_type (daily/weekly/monthly/all_time), trade_count, win_count, loss_count, total_pnl, win_rate, profit_factor, sharpe_ratio, max_drawdown, avg_trade_size, best_trade_pnl, worst_trade_pnl. Create indexes for performance. Deliverables: Database schema, migration scripts. [Agent-3 CLAIMED]
+- [ ] **HIGH**: Build metrics collector - Implement metrics collector that captures trades from `live_executor.py`, risk metrics from `risk_manager.py`, and integrates with `plugin_manager.py` for plugin-specific tracking. Deliverables: Metrics collector module, integration with trading engine. [Agent-1 CLAIMED]
+- [ ] **HIGH**: Build metrics aggregator - Implement metrics aggregator that automatically aggregates daily metrics at market close, weekly metrics on Sunday, monthly metrics on first of month, and maintains all-time metrics. Deliverables: Metrics aggregator module, scheduled aggregation jobs. [Agent-1 CLAIMED]
+- [ ] **MEDIUM**: Create performance dashboard API - Create FastAPI endpoints: `GET /api/performance/{user_id}/daily`, `/weekly`, `/monthly`, `/all-time`, and plugin-specific endpoints. Return JSON with metrics data. Deliverables: API endpoints, response format documentation. [Agent-3 CLAIMED]
+- [ ] **MEDIUM**: Integrate performance tracking with trading engine - Integrate performance tracking plugin with `trading_robot/execution/live_executor.py` to capture all trades, integrate with `trading_robot/core/risk_manager.py` for risk metrics, integrate with `trading_robot/plugins/plugin_manager.py` for plugin-specific tracking. Deliverables: Integration complete, all trades tracked. [Agent-1 CLAIMED]
+
+### Phase 2: User Management System (Week 2-3) - HIGH PRIORITY
+
+- [ ] **HIGH**: Design user account system database schema - Create database schema for `users` table (id, email, username, password_hash, subscription_tier, subscription_status, subscription_start_date, subscription_end_date), `user_plugin_access` table (user_id, plugin_id, access_level, purchased_at, expires_at), `user_trading_accounts` table (user_id, broker, api_key_encrypted, secret_key_encrypted, account_type, is_active). Deliverables: Database schema, migration scripts. [Agent-3 CLAIMED]
+- [ ] **HIGH**: Implement user registration and authentication - Build user registration system with email validation, secure password hashing (bcrypt), JWT token authentication, session management. Deliverables: Registration API, authentication system, JWT token management. [Agent-3 CLAIMED]
+- [ ] **HIGH**: Build subscription management system - Implement subscription management with tier assignment (free/low/mid/premium), subscription status tracking (active/cancelled/expired), subscription start/end date management, automatic tier downgrade on expiration. Deliverables: Subscription management API, tier assignment logic. [Agent-3 CLAIMED]
+- [ ] **HIGH**: Create plugin access control system - Implement plugin access control that checks user subscription tier, validates plugin access permissions, enforces tier restrictions (free: 1 demo robot, low: 3 robots, mid: all robots, premium: all + custom), manages plugin expiration. Deliverables: Access control system, tier restrictions enforced. [Agent-3 CLAIMED]
+- [ ] **HIGH**: Implement trading account management with encryption - Build trading account management system that stores Alpaca API keys encrypted (AES-256), supports multiple brokers (Alpaca, Robinhood), manages account types (paper/live), provides secure key retrieval. Deliverables: Encrypted storage system, secure key management. [Agent-3 CLAIMED]
+- [ ] **MEDIUM**: Build user dashboard backend API - Create user dashboard API endpoints that return user profile, active plugins, subscription status, trading accounts, performance summary. Deliverables: Dashboard API endpoints, data aggregation. [Agent-3 CLAIMED]
+
+### Phase 3: WordPress Plugin Development (Week 3-5) - HIGH PRIORITY
+
+- [ ] **HIGH**: Create WordPress plugin structure - Create `tradingrobotplug-wordpress-plugin/` directory structure with main plugin file, `includes/` (user-manager, performance-tracker, subscription-manager, api-client, dashboard), `admin/` (settings, dashboard), `public/` (shortcodes, assets, templates), `api/` (REST API). Deliverables: Plugin structure, main plugin file. [Agent-7 CLAIMED]
+- [ ] **HIGH**: Build user management WordPress integration - Integrate WordPress user system with backend API, create user registration/login forms, implement session management, handle user authentication. Deliverables: User management integration, login/registration forms. [Agent-7 CLAIMED]
+- [ ] **HIGH**: Create performance dashboard shortcode - Create `[trading_robot_performance]` shortcode that displays user performance dashboard with daily/weekly/monthly/all-time metrics, charts, and filters. Deliverables: Performance dashboard shortcode, frontend display. [Agent-7 CLAIMED]
+- [ ] **HIGH**: Create pricing page shortcode - Create `[trading_robot_pricing]` shortcode that displays tier comparison table (Free, Low Commitment $9.99, Mid-Tier $29.99, Premium $99.99), feature breakdown, "Most Popular" highlighting, FAQ section, "Start Free Trial" CTAs. Deliverables: Pricing shortcode, tier comparison table. [Agent-7 CLAIMED]
+- [ ] **HIGH**: Create plugin marketplace shortcode - Create `[trading_robot_marketplace]` shortcode that displays grid/list of available robots, filters by strategy type/performance/price, shows robot cards with name, description, performance metrics (avg win rate, profit factor), price/availability by tier, "Try Demo" or "Purchase" buttons. Deliverables: Marketplace shortcode, robot cards, filtering. [Agent-7 CLAIMED]
+- [ ] **MEDIUM**: Build user dashboard frontend - Create user dashboard page template that displays personal performance dashboard, active robots list, subscription status, trading account management, plugin management, settings. Deliverables: User dashboard template, all sections functional. [Agent-7 CLAIMED]
+- [ ] **MEDIUM**: Create admin settings interface - Build WordPress admin settings page for plugin configuration, API endpoint configuration, subscription tier management, plugin management. Deliverables: Admin settings page, configuration interface. [Agent-7 CLAIMED]
+
+### Phase 4: Website Updates (Week 4-6) - HIGH PRIORITY
+
+- [ ] **HIGH**: Update homepage with service focus - Update homepage with hero section ("Automated Trading Robots That Actually Work"), value proposition (performance tracking, multiple strategies, tiered pricing), social proof (performance metrics, user testimonials), clear CTAs ("Start Free", "View Pricing", "See Performance"). Deliverables: Updated homepage, all CTAs working. [Agent-7 CLAIMED]
+- [ ] **HIGH**: Create pricing page - Create pricing page using `[trading_robot_pricing]` shortcode, add additional content (FAQ, testimonials, comparison), ensure mobile responsiveness. Deliverables: Pricing page, all tiers displayed. [Agent-7 CLAIMED]
+- [ ] **HIGH**: Create performance dashboard page - Create performance dashboard page using `[trading_robot_performance]` shortcode, add public leaderboard (anonymized), average performance metrics, best performing robots, historical performance charts, "See Your Performance" CTA (login required). Deliverables: Performance dashboard page, public metrics displayed. [Agent-7 CLAIMED]
+- [ ] **HIGH**: Create plugin marketplace page - Create plugin marketplace page using `[trading_robot_marketplace]` shortcode, ensure filtering works, robot cards display correctly, purchase/demo buttons functional. Deliverables: Marketplace page, all robots listed. [Agent-7 CLAIMED]
+- [ ] **MEDIUM**: Create user dashboard page - Create user dashboard page (requires login) that displays personal performance, active robots, subscription status, trading accounts, plugin management, settings. Deliverables: User dashboard page, all sections functional. [Agent-7 CLAIMED]
+- [ ] **MEDIUM**: Create "How It Works" page - Create "How It Works" page explaining how trading robots work, performance tracking explanation, risk management, getting started guide. Deliverables: How It Works page, comprehensive guide. [Agent-7 CLAIMED]
+- [ ] **MEDIUM**: Update navigation and CTAs - Update website navigation to include new pages (Pricing, Performance, Marketplace, Dashboard), ensure all CTAs point to correct pages, add login/logout functionality. Deliverables: Updated navigation, all CTAs working. [Agent-7 CLAIMED]
+
+### Phase 5: Service Pipeline Implementation (Week 6-7) - HIGH PRIORITY
+
+- [ ] **HIGH**: Implement free tier restrictions - Implement free tier restrictions (1 demo robot only, paper trading only, daily metrics only, 7-day history limit), enforce restrictions in plugin access control, display upgrade prompts when limits reached. Deliverables: Free tier restrictions enforced, upgrade prompts working. [Agent-3 CLAIMED]
+- [ ] **HIGH**: Build upgrade flows - Create upgrade flow from free → low → mid → premium, implement payment processing integration (Stripe recommended), handle subscription upgrades/downgrades, send confirmation emails. Deliverables: Upgrade flows functional, payment processing integrated. [Agent-3 CLAIMED]
+- [ ] **MEDIUM**: Create conversion tracking - Implement conversion tracking for free → low → mid → premium, track conversion events, create conversion analytics dashboard, monitor conversion rates. Deliverables: Conversion tracking system, analytics dashboard. [Agent-3 CLAIMED]
+- [ ] **MEDIUM**: Build email campaigns - Create email campaigns for free → low conversion (highlighting limitations, upgrade prompts), low → mid conversion (live trading, all robots), mid → premium conversion (custom development, enterprise features). Deliverables: Email campaigns, automated sending. [Agent-4 CLAIMED]
+- [ ] **MEDIUM**: Implement in-app upgrade prompts - Create in-app upgrade prompts that trigger when free tier limits reached, show upgrade benefits, link to pricing page, track prompt interactions. Deliverables: In-app prompts, tracking system. [Agent-7 CLAIMED]
+- [ ] **MEDIUM**: Test conversion funnel - Test entire conversion funnel (free signup → low upgrade → mid upgrade → premium upgrade), validate payment processing, test email campaigns, optimize conversion paths. Deliverables: Tested conversion funnel, optimization recommendations. [Agent-4 CLAIMED]
+
+### Phase 6: Testing & Launch (Week 7-8) - HIGH PRIORITY
+
+- [ ] **HIGH**: End-to-end testing - Test complete user journey (registration → plugin selection → trading → performance tracking → upgrade), test all API endpoints, test WordPress plugin functionality, test payment processing. Deliverables: E2E test suite, test results report. [Agent-3 CLAIMED]
+- [ ] **HIGH**: Performance testing - Test API performance under load, test database query performance, test WordPress plugin performance, optimize slow queries/endpoints. Deliverables: Performance test results, optimization recommendations. [Agent-3 CLAIMED]
+- [ ] **HIGH**: Security audit - Audit security (encryption, authentication, API security, SQL injection prevention, XSS prevention, CSRF protection), fix security issues, document security measures. Deliverables: Security audit report, security fixes. [Agent-2 CLAIMED]
+- [ ] **MEDIUM**: User acceptance testing - Conduct user acceptance testing with beta users, gather feedback, fix issues, iterate on UX. Deliverables: UAT results, feedback report, fixes implemented. [Agent-4 CLAIMED]
+- [ ] **MEDIUM**: Launch preparation - Prepare launch checklist, set up monitoring, prepare support documentation, create launch announcement. Deliverables: Launch checklist, monitoring setup, documentation. [Agent-4 CLAIMED]
+- [ ] **MEDIUM**: Soft launch - Execute soft launch with limited users, monitor for issues, gather feedback, fix critical issues. Deliverables: Soft launch complete, issue log, fixes. [Agent-4 CLAIMED]
+- [ ] **MEDIUM**: Full launch - Execute full public launch, monitor system, handle support requests, track metrics. Deliverables: Full launch complete, monitoring active, metrics tracking. [Agent-4 CLAIMED]
+
 ## PARKED
 
 - [ ] Unused function audit (1,695 functions) - Lower priority after duplicate consolidation
@@ -117,6 +181,24 @@
 - [ ] **P1**: Claim social media accounts (@crosbyultimateevents) + complete profiles - crosbyultimateevents.com [Agent-7] ETA: 2025-12-23
 - [ ] **P1**: Install analytics (GA4, Facebook Pixel) + set up UTM tracking + metrics sheet - crosbyultimateevents.com [Agent-7] ETA: 2025-12-23
 - [ ] **P1**: Optimize mobile UX + page speed (images, caching, target 90+ mobile score) - crosbyultimateevents.com [Agent-7] ETA: 2025-12-23
+
+### SALES FUNNEL ECOSYSTEM GRADE CARD - dadudekc.com
+
+**Generated:** 2025-12-19 from Sales Funnel Ecosystem Grade Card (v1)  
+**Status:** Grade F (42.5/100) - Comprehensive audit complete  
+**Reference:** `temp_repos/dadudekc.com/GRADE_CARD_SALES_FUNNEL.yaml` for full details  
+**Top 10 Priority Fixes:**
+
+- [ ] **P0**: Optimize /audit, /scoreboard, /intake as lead magnets with landing pages + thank-you pages - dadudekc.com [Agent-7] ETA: 2025-12-21
+- [ ] **P0**: Set up email welcome sequence + nurture campaign (5 emails over 2 weeks) - dadudekc.com [Agent-7] ETA: 2025-12-24
+- [ ] **P0**: Implement booking calendar (Calendly) + payment processing (Stripe) for sprint deposits - dadudekc.com [Agent-7] ETA: 2025-12-25
+- [ ] **P0**: Define positioning statement + offer ladder + ICP with pain/outcome on homepage - dadudekc.com [Agent-7] ETA: 2025-12-22
+- [ ] **P0**: Reduce intake form friction (3-4 fields) + add phone + chat widget - dadudekc.com [Agent-7] ETA: 2025-12-21
+- [ ] **P0**: Add pricing transparency + testimonials + case studies + trust badges - dadudekc.com [Agent-7] ETA: 2025-12-22
+- [ ] **P0**: A/B test hero headline for better benefit focus + add urgency - dadudekc.com [Agent-7] ETA: 2025-12-20
+- [ ] **P1**: Claim social media accounts (@dadudekc) + complete profiles with automation focus - dadudekc.com [Agent-7] ETA: 2025-12-23
+- [ ] **P1**: Install analytics (GA4) + set up UTM tracking + weekly metrics dashboard - dadudekc.com [Agent-7] ETA: 2025-12-23
+- [ ] **P1**: Optimize mobile UX + page speed (images, caching, target 90+ mobile score) - dadudekc.com [Agent-7] ETA: 2025-12-23
 
 ### HIGH PRIORITY - Business Readiness (5 websites)
 - [x] Add business readiness tasks for crosbyultimateevents.com - Grade: F (47.5/100), Business: F (50/100) ✅ COMPLETE by Agent-1 (2025-12-19) - 10 business readiness tasks identified and added to grade card
