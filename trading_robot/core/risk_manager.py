@@ -96,6 +96,32 @@ class RiskManager:
         # Emergency stop check
         if config.emergency_stop_enabled:
             self._check_emergency_stop()
+        
+        # Capture risk metrics for performance tracking (if performance tracker available)
+        if hasattr(self, 'performance_tracker') and self.performance_tracker:
+            try:
+                # Get user_id and plugin_id from context (default to 'system' if not available)
+                user_id = getattr(self, 'user_id', 'system')
+                plugin_id = getattr(self, 'current_plugin_id', 'system')
+                
+                # Calculate risk metrics
+                portfolio_risk = abs(self.daily_pnl / self.daily_start_value * 100) if self.daily_start_value > 0 else 0.0
+                position_risk = sum(abs(pos['quantity'] * pos.get('avg_price', 0)) for pos in self.positions.values()) / self.portfolio_value * 100 if self.portfolio_value > 0 else 0.0
+                
+                self.performance_tracker.capture_risk_metrics(
+                    user_id=user_id,
+                    plugin_id=plugin_id,
+                    risk_data={
+                        "portfolio_risk": portfolio_risk,
+                        "position_risk": position_risk,
+                        "daily_loss": self.daily_pnl if self.daily_pnl < 0 else 0.0,
+                        "max_drawdown": abs(self.daily_pnl / self.daily_start_value * 100) if self.daily_pnl < 0 and self.daily_start_value > 0 else 0.0,
+                        "account_balance": self.portfolio_value,
+                        "timestamp": datetime.now().isoformat()
+                    }
+                )
+            except Exception as e:
+                logger.warning(f"⚠️ Failed to capture risk metrics for performance tracking: {e}")
 
         logger.debug(f"💰 Portfolio value: ${self.portfolio_value:.2f} (Daily P&L: ${self.daily_pnl:.2f})")
 

@@ -13,6 +13,8 @@ from .metrics_collector import MetricsCollector
 from .metrics_storage import MetricsStorage
 from .metrics_aggregator import MetricsAggregator
 from .performance_dashboard import PerformanceDashboard
+from .integration_hooks import PerformanceTrackingHooks
+from .scheduled_aggregation import ScheduledAggregation
 
 __all__ = [
     "PerformanceTracker",
@@ -20,5 +22,7 @@ __all__ = [
     "MetricsStorage",
     "MetricsAggregator",
     "PerformanceDashboard",
+    "PerformanceTrackingHooks",
+    "ScheduledAggregation",
 ]
 
