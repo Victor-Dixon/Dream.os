@@ -70,14 +70,104 @@ def discover_api_endpoints(repo_path: Path, repo_name: str) -> List[Dict[str, An
     return endpoints
 
 
+def discover_agentproject_endpoints(repo_path: Path) -> List[Dict[str, Any]]:
+    """Discover agentproject-specific endpoints (GUI, agents, tools, trading)."""
+    endpoints = []
+    
+    # GUI interface patterns
+    gui_patterns = [
+        (r'class\s+(\w+GUI)\s*\(', 'gui_interface'),
+        (r'def\s+(create_window|show_dialog|open_panel)\s*\(', 'gui_action'),
+    ]
+    
+    # Agent interface patterns
+    agent_patterns = [
+        (r'class\s+(\w+Agent)\s*\(', 'agent_interface'),
+        (r'def\s+(execute|run|process|analyze|refactor)\s*\(', 'agent_method'),
+    ]
+    
+    # Trading bot patterns
+    trading_patterns = [
+        (r'class\s+(\w+Bot|\w+Trading)\s*\(', 'trading_bot'),
+        (r'def\s+(trade|scan|execute_trade|analyze_trade)\s*\(', 'trading_method'),
+    ]
+    
+    # Tool/CLI patterns
+    tool_patterns = [
+        (r'def\s+(main|run|execute|process|handle|cleanup|refactor)\s*\(', 'tool_interface'),
+    ]
+    
+    # Search Python files
+    for py_file in repo_path.rglob('*.py'):
+        try:
+            content = py_file.read_text(encoding='utf-8', errors='ignore')
+            rel_path = str(py_file.relative_to(repo_path))
+            
+            # GUI interfaces
+            for pattern, endpoint_type in gui_patterns:
+                matches = re.finditer(pattern, content, re.IGNORECASE)
+                for match in matches:
+                    interface_name = match.group(1)
+                    endpoints.append({
+                        'type': endpoint_type,
+                        'name': interface_name,
+                        'file': rel_path,
+                        'repo': 'agentproject'
+                    })
+            
+            # Agent interfaces
+            for pattern, endpoint_type in agent_patterns:
+                matches = re.finditer(pattern, content, re.IGNORECASE)
+                for match in matches:
+                    agent_name = match.group(1)
+                    endpoints.append({
+                        'type': endpoint_type,
+                        'name': agent_name,
+                        'file': rel_path,
+                        'repo': 'agentproject'
+                    })
+            
+            # Trading bot interfaces
+            for pattern, endpoint_type in trading_patterns:
+                matches = re.finditer(pattern, content, re.IGNORECASE)
+                for match in matches:
+                    trading_name = match.group(1)
+                    endpoints.append({
+                        'type': endpoint_type,
+                        'name': trading_name,
+                        'file': rel_path,
+                        'repo': 'agentproject'
+                    })
+            
+            # Tool interfaces
+            for pattern, endpoint_type in tool_patterns:
+                matches = re.finditer(pattern, content, re.IGNORECASE)
+                for match in matches:
+                    tool_name = match.group(1)
+                    endpoints.append({
+                        'type': endpoint_type,
+                        'name': tool_name,
+                        'file': rel_path,
+                        'repo': 'agentproject'
+                    })
+        except Exception:
+            continue
+    
+    return endpoints
+
+
 def test_agentproject_api_endpoints() -> Dict[str, Any]:
-    """Test agentproject API endpoints."""
+    """Test agentproject API endpoints, GUI interfaces, agents, and tools."""
     results = {
         "repo": "agentproject",
         "endpoints_discovered": [],
         "endpoints_tested": [],
         "endpoints_passed": [],
         "endpoints_failed": [],
+        "gui_interfaces": [],
+        "agent_interfaces": [],
+        "trading_bots": [],
+        "tool_interfaces": [],
         "errors": []
     }
     
@@ -87,17 +177,52 @@ def test_agentproject_api_endpoints() -> Dict[str, Any]:
         results["errors"].append("Repository not found")
         return results
     
-    # Discover API endpoints
-    endpoints = discover_api_endpoints(repo_path, "agentproject")
-    results["endpoints_discovered"] = [f"{e['method']} {e['path']}" for e in endpoints]
+    # Discover traditional API endpoints
+    api_endpoints = discover_api_endpoints(repo_path, "agentproject")
+    
+    # Discover agentproject-specific endpoints
+    agentproject_endpoints = discover_agentproject_endpoints(repo_path)
+    
+    # Combine and categorize
+    all_endpoints = []
+    
+    # Add traditional API endpoints
+    for endpoint in api_endpoints:
+        endpoint_str = f"{endpoint['method']} {endpoint['path']}"
+        all_endpoints.append({
+            'endpoint': endpoint_str,
+            'type': 'api',
+            'file': endpoint['file']
+        })
+        results["endpoints_discovered"].append(endpoint_str)
+    
+    # Add agentproject-specific endpoints
+    for endpoint in agentproject_endpoints:
+        endpoint_str = f"{endpoint['type']}:{endpoint['name']}"
+        all_endpoints.append({
+            'endpoint': endpoint_str,
+            'type': endpoint['type'],
+            'file': endpoint['file']
+        })
+        results["endpoints_discovered"].append(endpoint_str)
+        
+        # Categorize
+        if endpoint['type'] == 'gui_interface' or endpoint['type'] == 'gui_action':
+            results["gui_interfaces"].append(endpoint['name'])
+        elif endpoint['type'] == 'agent_interface' or endpoint['type'] == 'agent_method':
+            results["agent_interfaces"].append(endpoint['name'])
+        elif endpoint['type'] == 'trading_bot' or endpoint['type'] == 'trading_method':
+            results["trading_bots"].append(endpoint['name'])
+        elif endpoint['type'] == 'tool_interface':
+            results["tool_interfaces"].append(endpoint['name'])
     
     # Test endpoint definitions
-    for endpoint in endpoints:
-        endpoint_str = f"{endpoint['method']} {endpoint['path']}"
+    for endpoint_info in all_endpoints:
+        endpoint_str = endpoint_info['endpoint']
         results["endpoints_tested"].append(endpoint_str)
         
-        # Basic validation: endpoint definition exists
-        file_path = repo_path / endpoint['file']
+        # Basic validation: file exists
+        file_path = repo_path / endpoint_info['file']
         if file_path.exists():
             results["endpoints_passed"].append(endpoint_str)
         else:
@@ -196,34 +321,183 @@ def test_crosby_api_endpoints() -> Dict[str, Any]:
     return results
 
 
+def discover_contract_leads_endpoints(repo_path: Path) -> List[Dict[str, Any]]:
+    """Discover contract-leads-specific endpoints (harvesters, scrapers, scorers, outreach)."""
+    endpoints = []
+    
+    # Harvester patterns
+    harvester_patterns = [
+        (r'class\s+(\w+Harvester)\s*\(', 'harvester'),
+        (r'def\s+(harvest|collect|gather)\s*\(', 'harvest_method'),
+    ]
+    
+    # Scraper patterns
+    scraper_patterns = [
+        (r'class\s+(\w+Scraper)\s*\(', 'scraper'),
+        (r'def\s+(scrape|extract|parse)\s*\(', 'scrape_method'),
+    ]
+    
+    # Scoring patterns
+    scoring_patterns = [
+        (r'def\s+(score|calculate_score|rank)\s*\(', 'scoring_method'),
+    ]
+    
+    # Outreach patterns
+    outreach_patterns = [
+        (r'def\s+(outreach|contact|send|message)\s*\(', 'outreach_method'),
+    ]
+    
+    # Tool/CLI patterns
+    tool_patterns = [
+        (r'def\s+(main|run|execute|process|handle)\s*\(', 'tool_interface'),
+    ]
+    
+    # Search Python files
+    for py_file in repo_path.rglob('*.py'):
+        try:
+            content = py_file.read_text(encoding='utf-8', errors='ignore')
+            rel_path = str(py_file.relative_to(repo_path))
+            
+            # Harvesters
+            for pattern, endpoint_type in harvester_patterns:
+                matches = re.finditer(pattern, content, re.IGNORECASE)
+                for match in matches:
+                    name = match.group(1)
+                    endpoints.append({
+                        'type': endpoint_type,
+                        'name': name,
+                        'file': rel_path,
+                        'repo': 'contract-leads'
+                    })
+            
+            # Scrapers
+            for pattern, endpoint_type in scraper_patterns:
+                matches = re.finditer(pattern, content, re.IGNORECASE)
+                for match in matches:
+                    name = match.group(1)
+                    endpoints.append({
+                        'type': endpoint_type,
+                        'name': name,
+                        'file': rel_path,
+                        'repo': 'contract-leads'
+                    })
+            
+            # Scoring methods
+            for pattern, endpoint_type in scoring_patterns:
+                matches = re.finditer(pattern, content, re.IGNORECASE)
+                for match in matches:
+                    name = match.group(1)
+                    endpoints.append({
+                        'type': endpoint_type,
+                        'name': name,
+                        'file': rel_path,
+                        'repo': 'contract-leads'
+                    })
+            
+            # Outreach methods
+            for pattern, endpoint_type in outreach_patterns:
+                matches = re.finditer(pattern, content, re.IGNORECASE)
+                for match in matches:
+                    name = match.group(1)
+                    endpoints.append({
+                        'type': endpoint_type,
+                        'name': name,
+                        'file': rel_path,
+                        'repo': 'contract-leads'
+                    })
+            
+            # Tool interfaces
+            for pattern, endpoint_type in tool_patterns:
+                matches = re.finditer(pattern, content, re.IGNORECASE)
+                for match in matches:
+                    tool_name = match.group(1)
+                    endpoints.append({
+                        'type': endpoint_type,
+                        'name': tool_name,
+                        'file': rel_path,
+                        'repo': 'contract-leads'
+                    })
+        except Exception:
+            continue
+    
+    return endpoints
+
+
 def test_contract_leads_api_endpoints() -> Dict[str, Any]:
-    """Test contract-leads API endpoints."""
+    """Test contract-leads API endpoints, harvesters, scrapers, and tools."""
     results = {
         "repo": "contract-leads",
         "endpoints_discovered": [],
         "endpoints_tested": [],
         "endpoints_passed": [],
         "endpoints_failed": [],
+        "harvesters": [],
+        "scrapers": [],
+        "scoring_methods": [],
+        "outreach_methods": [],
+        "tool_interfaces": [],
         "errors": []
     }
     
-    repo_path = project_root / "temp_repos" / "contract-leads"
+    # Try nested path first
+    repo_path = project_root / "temp_repos" / "temp_repos" / "contract-leads"
+    
+    # If not found, try direct path
+    if not repo_path.exists():
+        repo_path = project_root / "temp_repos" / "contract-leads"
     
     if not repo_path.exists():
         results["errors"].append("Repository not found")
         return results
     
-    # Discover API endpoints
-    endpoints = discover_api_endpoints(repo_path, "contract-leads")
-    results["endpoints_discovered"] = [f"{e['method']} {e['path']}" for e in endpoints]
+    # Discover traditional API endpoints
+    api_endpoints = discover_api_endpoints(repo_path, "contract-leads")
+    
+    # Discover contract-leads-specific endpoints
+    contract_leads_endpoints = discover_contract_leads_endpoints(repo_path)
+    
+    # Combine and categorize
+    all_endpoints = []
+    
+    # Add traditional API endpoints
+    for endpoint in api_endpoints:
+        endpoint_str = f"{endpoint['method']} {endpoint['path']}"
+        all_endpoints.append({
+            'endpoint': endpoint_str,
+            'type': 'api',
+            'file': endpoint['file']
+        })
+        results["endpoints_discovered"].append(endpoint_str)
+    
+    # Add contract-leads-specific endpoints
+    for endpoint in contract_leads_endpoints:
+        endpoint_str = f"{endpoint['type']}:{endpoint['name']}"
+        all_endpoints.append({
+            'endpoint': endpoint_str,
+            'type': endpoint['type'],
+            'file': endpoint['file']
+        })
+        results["endpoints_discovered"].append(endpoint_str)
+        
+        # Categorize
+        if endpoint['type'] == 'harvester' or endpoint['type'] == 'harvest_method':
+            results["harvesters"].append(endpoint['name'])
+        elif endpoint['type'] == 'scraper' or endpoint['type'] == 'scrape_method':
+            results["scrapers"].append(endpoint['name'])
+        elif endpoint['type'] == 'scoring_method':
+            results["scoring_methods"].append(endpoint['name'])
+        elif endpoint['type'] == 'outreach_method':
+            results["outreach_methods"].append(endpoint['name'])
+        elif endpoint['type'] == 'tool_interface':
+            results["tool_interfaces"].append(endpoint['name'])
     
     # Test endpoint definitions
-    for endpoint in endpoints:
-        endpoint_str = f"{endpoint['method']} {endpoint['path']}"
+    for endpoint_info in all_endpoints:
+        endpoint_str = endpoint_info['endpoint']
         results["endpoints_tested"].append(endpoint_str)
         
-        # Basic validation: endpoint definition exists
-        file_path = repo_path / endpoint['file']
+        # Basic validation: file exists
+        file_path = repo_path / endpoint_info['file']
         if file_path.exists():
             results["endpoints_passed"].append(endpoint_str)
         else:
