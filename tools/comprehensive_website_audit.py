@@ -44,13 +44,11 @@ class ComprehensiveWebsiteAuditor:
         logger.info("🔍 Starting comprehensive website audit...")
 
         sites_to_audit = [
+            "crosbyultimateevents.com",
+            "dadudekc.com",
             "freerideinvestor",
-            "prismblossom.online",
-            "southwestsecret.com",
-            "weareswarm.online",
-            "weareswarm.site",
-            "tradingrobotplug.com",
-            "ariajet.site"
+            "houstonsipqueen.com",
+            "tradingrobotplug.com"
         ]
 
         for site_key in sites_to_audit:
@@ -160,22 +158,22 @@ class ComprehensiveWebsiteAuditor:
     def _test_site_accessibility(self, site_key: str) -> Dict:
         """Test if the website is accessible."""
         # Construct URL
-        if site_key == "freerideinvestor":
+        if site_key == "crosbyultimateevents.com":
+            url = "https://crosbyultimateevents.com"
+        elif site_key == "dadudekc.com":
+            url = "https://dadudekc.com"
+        elif site_key == "freerideinvestor":
             url = "https://freerideinvestor.com"
-        elif site_key == "prismblossom.online":
-            url = "https://prismblossom.online"
-        elif site_key == "southwestsecret.com":
-            url = "https://southwestsecret.com"
-        elif site_key == "weareswarm.online":
-            url = "https://weareswarm.online"
-        elif site_key == "weareswarm.site":
-            url = "https://weareswarm.site"
+        elif site_key == "houstonsipqueen.com":
+            url = "https://houstonsipqueen.com"
         elif site_key == "tradingrobotplug.com":
             url = "https://tradingrobotplug.com"
-        elif site_key == "ariajet.site":
-            url = "https://ariajet.site"
         else:
-            return {"status": "UNKNOWN", "url": None, "error": "Unknown site"}
+            # Try to construct URL from site_key if it looks like a domain
+            if "." in site_key:
+                url = f"https://{site_key}"
+            else:
+                return {"status": "UNKNOWN", "url": None, "error": "Unknown site"}
 
         try:
             response = requests.get(url, timeout=10, verify=False)
