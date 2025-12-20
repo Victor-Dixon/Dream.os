@@ -39,6 +39,54 @@
 - [x] Agent-7: Batch 1 Groups 9, 10, 11, 12 duplicate deletion (4 groups, 4 files) - ✅ COMPLETE by Agent-7 (2025-12-18) - Deleted 1 duplicate file (Groups 9-11 already cleaned), SSOT preserved
 - [x] Agent-8: Batch 1 Groups 7, 9, 15 duplicate deletion (3 groups, ~7 files) - ✅ COMPLETE by Agent-6 (2025-12-19)
 
+## TRADING ROBOT ROADMAP TO LIVE
+
+**Generated:** 2025-12-19 from trading robot inventory and roadmap analysis  
+**Status:** ~85% complete - Core functionality ready, deployment and operations missing  
+**Reference:** `docs/trading_robot/TRADING_ROBOT_INVENTORY.md` and `docs/trading_robot/TRADING_ROBOT_ROADMAP_TO_LIVE.md` for full details  
+**Timeline:** 4-6 weeks to live trading
+
+### Phase 1: Configuration & Environment Setup (Week 1) - HIGH PRIORITY
+
+- [ ] **HIGH**: Create trading robot `.env` file - Create `.env` file from `env.example` template, populate Alpaca API credentials (paper trading first), configure trading mode (start with `paper`), set risk limits (conservative defaults), configure database connection (SQLite for dev, PostgreSQL for prod), set up logging configuration, validate configuration using `config.validate_config()`. Deliverables: `.env` file with all required variables, configuration validation passing, environment variable documentation. [Agent-3 CLAIMED]
+- [ ] **HIGH**: Set up trading robot database - Create database initialization script, set up SQLite database for development, create database schema migrations, test database connection, create database backup procedures, document database schema. Deliverables: Database initialization script, database schema documentation, backup/restore procedures. [Agent-3 CLAIMED]
+- [ ] **MEDIUM**: Validate trading robot dependencies - Verify all dependencies in `requirements.txt` are installable, create virtual environment setup script, test dependency installation on clean environment, document any dependency conflicts, create dependency lock file (optional but recommended). Deliverables: Verified `requirements.txt`, setup script for virtual environment, dependency installation documentation. [Agent-3 CLAIMED]
+
+### Phase 2: Testing & Validation (Week 2) - HIGH PRIORITY
+
+- [ ] **HIGH**: Paper trading validation - Run trading robot in paper trading mode, validate broker API connection (Alpaca paper trading), test market data retrieval, test order placement (paper trades), test order cancellation, test position management, validate risk management rules, test emergency stop procedures, run for extended period (24-48 hours) to validate stability, monitor for errors, crashes, or unexpected behavior. Deliverables: Paper trading validation report, list of issues found and resolved, performance metrics from paper trading. [Agent-1 CLAIMED]
+- [ ] **MEDIUM**: Strategy backtesting expansion - Backtest TSLA Improved Strategy plugin, backtest built-in strategies (Trend Following, Mean Reversion), validate backtesting results, compare backtesting vs paper trading results, document strategy performance metrics, identify best-performing strategies. Deliverables: Backtesting results report, strategy performance comparison, recommended strategies for live trading. [Agent-1 CLAIMED]
+- [ ] **MEDIUM**: Expand trading robot test coverage - Expand unit test coverage (target: 70%+), create integration tests, create E2E tests for critical workflows, add performance tests, set up automated test running (CI/CD), document test procedures. Deliverables: Expanded test suite, test coverage report (70%+ target), CI/CD test automation. [Agent-3 CLAIMED]
+
+### Phase 3: Deployment Infrastructure (Week 3) - HIGH PRIORITY
+
+- [ ] **HIGH**: Create Docker configuration for trading robot - Create `Dockerfile` for trading robot, create `docker-compose.yml` for full stack, configure database container (PostgreSQL), configure Redis container (for Celery), set up volume mounts for data persistence, configure environment variable injection, test Docker build and run, document Docker deployment procedures. Deliverables: `Dockerfile`, `docker-compose.yml`, Docker deployment documentation. [Agent-3 CLAIMED]
+- [ ] **HIGH**: Set up trading robot service management - Create systemd service file (Linux), create supervisor configuration (alternative), configure auto-restart on failure, set up log rotation, configure resource limits, test service management, document service management procedures. Deliverables: Systemd service file, Supervisor configuration (optional), service management documentation. [Agent-3 CLAIMED]
+- [ ] **MEDIUM**: Create trading robot deployment scripts - Create deployment script (deploy.sh or deploy.py), create rollback script, create health check script, create database migration script, create backup/restore scripts, test deployment procedures, document deployment process. Deliverables: Deployment scripts, rollback procedures, deployment documentation. [Agent-3 CLAIMED]
+
+### Phase 4: Monitoring & Alerting (Week 3-4) - HIGH PRIORITY
+
+- [ ] **HIGH**: Set up trading robot monitoring - Set up application monitoring (Prometheus/Grafana or similar), configure metrics collection, set up log aggregation, create monitoring dashboards, configure alert thresholds, test monitoring system, document monitoring procedures. Deliverables: Monitoring system configured, monitoring dashboards, monitoring documentation. [Agent-3 CLAIMED]
+- [ ] **HIGH**: Configure trading robot alerting system - Configure email alerts (if enabled), set up Discord/Slack notifications (optional), configure alert rules (risk limits, errors, etc.), test alert delivery, create alert escalation procedures, document alerting system. Deliverables: Alerting system configured, alert rules documented, alert testing results. [Agent-3 CLAIMED]
+- [ ] **MEDIUM**: Implement trading robot health checks - Create health check endpoint, implement broker connection health check, implement database health check, implement risk manager health check, create automated health check script, document health check procedures. Deliverables: Health check endpoint, health check script, health check documentation. [Agent-3 CLAIMED]
+
+### Phase 5: Operations & Documentation (Week 4) - HIGH PRIORITY
+
+- [ ] **HIGH**: Create trading robot operations runbook - Create operations runbook, document startup procedures, document shutdown procedures, document emergency stop procedures, document troubleshooting procedures, document common issues and solutions, create incident response procedures. Deliverables: Operations runbook, emergency procedures documentation, troubleshooting guide. [Agent-2 CLAIMED]
+- [ ] **MEDIUM**: Generate trading robot API documentation - Generate API documentation (OpenAPI/Swagger), document all REST endpoints, document WebSocket endpoints, create API usage examples, publish API documentation. Deliverables: API documentation, API usage examples, published API docs. [Agent-2 CLAIMED]
+- [ ] **MEDIUM**: Create trading robot deployment guide - Create deployment guide, document prerequisites, document step-by-step deployment, document post-deployment validation, create deployment checklist. Deliverables: Deployment guide, deployment checklist, post-deployment validation procedures. [Agent-2 CLAIMED]
+
+### Phase 6: Live Trading Preparation (Week 5) - CRITICAL PRIORITY
+
+- [ ] **CRITICAL**: Validate live trading safeguards - Review all risk management rules, validate emergency stop procedures, test live trading safeguards, verify `LIVE_TRADING_ENABLED` flag behavior, test configuration validation for live trading, create live trading checklist, document live trading procedures. Deliverables: Live trading safeguards validation report, live trading checklist, live trading procedures documentation. [Agent-1 CLAIMED]
+- [ ] **HIGH**: Extended paper trading validation - Run trading robot in paper trading for 1-2 weeks, monitor performance daily, track all trades and results, validate strategy performance, monitor for errors or issues, document daily performance, create performance report. Deliverables: Extended paper trading report, performance metrics, issue log. [Agent-1 CLAIMED]
+- [ ] **CRITICAL**: Configure trading robot for live trading - Switch to live Alpaca API (`https://api.alpaca.markets`), set `TRADING_MODE=live`, set `LIVE_TRADING_ENABLED=true`, review and confirm all risk limits, set conservative position sizes, configure final risk limits, validate configuration one final time, create live trading launch checklist. Deliverables: Live trading configuration, final configuration validation, live trading launch checklist. [Agent-1 CLAIMED]
+
+### Phase 7: Go-Live & Post-Launch (Week 6) - CRITICAL PRIORITY
+
+- [ ] **CRITICAL**: Execute trading robot go-live - Final pre-launch checklist review, deploy to production environment, start trading robot in live mode, monitor initial trades closely, validate all systems operational, confirm risk management working, document go-live. Deliverables: Trading robot live, go-live documentation, initial monitoring report. [Agent-1 CLAIMED]
+- [ ] **HIGH**: Post-launch trading robot monitoring - Monitor trading robot 24/7 for first week, review all trades daily, monitor performance metrics, check for errors or issues, validate risk management, document any issues, create daily performance reports. Deliverables: Daily monitoring reports, issue log, performance tracking. [Agent-1 CLAIMED]
+
 ## PARKED
 
 - [ ] Unused function audit (1,695 functions) - Lower priority after duplicate consolidation
@@ -51,6 +99,24 @@
 **Reference:** `docs/website_grade_cards/WEBSITE_AUDIT_MASTER_REPORT.md` for full details  
 **Overall Status:** 0 Grade A, 0 Grade B, 1 Grade C (dadudekc.com), 1 Grade D (houstonsipqueen.com), 9 Grade F  
 **Average Score:** 50.3/100
+
+### SALES FUNNEL ECOSYSTEM GRADE CARD - crosbyultimateevents.com
+
+**Generated:** 2025-12-19 from Sales Funnel Ecosystem Grade Card (v1)  
+**Status:** Grade F (35.5/100) - Comprehensive audit complete  
+**Reference:** `temp_repos/crosbyultimateevents.com/GRADE_CARD_SALES_FUNNEL.yaml` for full details  
+**Top 10 Priority Fixes:**
+
+- [ ] **P0**: Create lead magnet (Event Planning Checklist) + landing page + thank-you page - crosbyultimateevents.com [Agent-7] ETA: 2025-12-21
+- [ ] **P0**: Set up email welcome sequence + nurture campaign (3-5 emails) - crosbyultimateevents.com [Agent-7] ETA: 2025-12-24
+- [ ] **P0**: Implement booking calendar (Calendly) + payment processing (Stripe) for deposits - crosbyultimateevents.com [Agent-7] ETA: 2025-12-25
+- [ ] **P0**: Define positioning statement + offer ladder + ICP with pain/outcome - crosbyultimateevents.com [Agent-7] ETA: 2025-12-22
+- [ ] **P0**: Reduce contact form friction (3 fields) + add phone + chat widget - crosbyultimateevents.com [Agent-7] ETA: 2025-12-21
+- [ ] **P0**: Add real testimonials with photos + trust badges + case studies - crosbyultimateevents.com [Agent-7] ETA: 2025-12-22
+- [ ] **P0**: A/B test hero headline for better benefit focus + add urgency - crosbyultimateevents.com [Agent-7] ETA: 2025-12-20
+- [ ] **P1**: Claim social media accounts (@crosbyultimateevents) + complete profiles - crosbyultimateevents.com [Agent-7] ETA: 2025-12-23
+- [ ] **P1**: Install analytics (GA4, Facebook Pixel) + set up UTM tracking + metrics sheet - crosbyultimateevents.com [Agent-7] ETA: 2025-12-23
+- [ ] **P1**: Optimize mobile UX + page speed (images, caching, target 90+ mobile score) - crosbyultimateevents.com [Agent-7] ETA: 2025-12-23
 
 ### HIGH PRIORITY - Business Readiness (5 websites)
 - [x] Add business readiness tasks for crosbyultimateevents.com - Grade: F (47.5/100), Business: F (50/100) ✅ COMPLETE by Agent-1 (2025-12-19) - 10 business readiness tasks identified and added to grade card
