@@ -193,9 +193,12 @@ class ServiceManager:
             print("   ⚠️  Warning: Discord token not set")
 
         try:
+            # Pass current environment to subprocess so it inherits .env variables
+            env = os.environ.copy()
             process = subprocess.Popen(
                 [sys.executable, str(script)],
                 cwd=str(self.project_root),
+                env=env,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE
             )
