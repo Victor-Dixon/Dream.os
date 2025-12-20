@@ -7,29 +7,45 @@
     {
       "task": "Batches 2-8 Duplicate Consolidation",
       "status": "IN_PROGRESS",
-      "blockers": ["Batch 7/8 investigation", "SSOT verification pending"],
-      "agents": ["Agent-8", "Agent-3"]
+      "blockers": [
+        "Batch 7/8 investigation",
+        "SSOT verification pending"
+      ],
+      "agents": [
+        "Agent-8",
+        "Agent-3"
+      ]
     },
     {
       "task": "Website SEO/UX Improvements",
       "status": "PENDING_ARCHITECTURE_REVIEW",
-      "blockers": ["Agent-2 architecture review on 7 SEO files"],
-      "agents": ["Agent-2", "Agent-7"]
+      "blockers": [
+        "Agent-2 architecture review on 7 SEO files"
+      ],
+      "agents": [
+        "Agent-2",
+        "Agent-7"
+      ]
     },
     {
       "task": "Sales Funnel P0 Execution",
       "status": "ACTIVE",
       "progress": "1/5 positioning statements complete",
-      "agents": ["User", "Agent-4"]
+      "agents": [
+        "User",
+        "Agent-4"
+      ]
     },
     {
       "task": "Trading Robot Phase 1 Prioritization",
       "status": "COORDINATED",
-      "agents": ["Agent-3", "CAPTAIN"]
+      "agents": [
+        "Agent-3",
+        "CAPTAIN"
+      ]
     }
   ],
   "coordination_opportunities": 7,
   "blockers": 3,
   "last_updated": "2025-12-20T00:00:00Z"
 }
-
