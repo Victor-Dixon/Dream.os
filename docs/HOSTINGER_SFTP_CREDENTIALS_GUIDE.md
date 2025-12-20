@@ -163,3 +163,6 @@ The Hostinger API helper discovers:
 
 **TL;DR:** Use `hostinger_api_helper.py` with API key for automated discovery, or `discover_ftp_credentials.py` for manual guide. 🐝
 
+
+
+

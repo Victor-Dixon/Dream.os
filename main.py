@@ -32,6 +32,7 @@ import os
 import sys
 import subprocess
 import time
+import psutil
 from pathlib import Path
 from threading import Thread
 from typing import Optional
@@ -48,6 +49,8 @@ class ServiceManager:
     def __init__(self):
         self.project_root = project_root
         self.processes = {}
+        self.pid_dir = self.project_root / "pids"
+        self.pid_dir.mkdir(exist_ok=True)
         self.agent_mode_manager: Optional[object] = None
 
     def setup_agent_mode_manager(self):
@@ -133,6 +136,7 @@ class ServiceManager:
                 stderr=subprocess.PIPE
             )
             self.processes['message_queue'] = process
+            self._save_pid('message_queue', process)
             print("   ✅ Message Queue Processor started (PID: {})".format(process.pid))
             return True
         except Exception as e:
@@ -164,6 +168,7 @@ class ServiceManager:
                 stderr=subprocess.PIPE
             )
             self.processes['twitch'] = process
+            self._save_pid('twitch', process)
             print("   ✅ Twitch Bot started (PID: {})".format(process.pid))
             return True
         except Exception as e:
@@ -195,6 +200,7 @@ class ServiceManager:
                 stderr=subprocess.PIPE
             )
             self.processes['discord'] = process
+            self._save_pid('discord', process)
             print("   ✅ Discord Bot started (PID: {})".format(process.pid))
             return True
         except Exception as e:
@@ -243,11 +249,72 @@ class ServiceManager:
 
     def _check_process(self, service_name):
         """Check if a service process is running."""
+        # First check local processes (for services started in this session)
         if service_name in self.processes:
             process = self.processes[service_name]
             if process.poll() is None:
                 return True
+
+        # Check PID file for services started in other sessions
+        pid_file = self.pid_dir / f"{service_name}.pid"
+        if pid_file.exists():
+            try:
+                with open(pid_file, 'r') as f:
+                    pid = int(f.read().strip())
+
+                # Check if process is actually running
+                if psutil.pid_exists(pid):
+                    try:
+                        process = psutil.Process(pid)
+                        # Check if it's a Python process and cmdline contains the expected service script
+                        if process.name().lower() in ['python.exe', 'python3.exe', 'python']:
+                            cmdline = process.cmdline()
+
+                            # Define expected scripts for each service
+                            expected_scripts = {
+                                'message_queue': 'start_message_queue_processor.py',
+                                'twitch': 'START_CHAT_BOT_NOW.py',
+                                'discord': ['run_unified_discord_bot_with_restart.py', 'unified_discord_bot.py']
+                            }
+
+                            expected = expected_scripts.get(service_name, [])
+                            if isinstance(expected, str):
+                                expected = [expected]
+
+                            if any(script in ' '.join(cmdline) for script in expected):
+                                return True
+                    except (psutil.NoSuchProcess, psutil.AccessDenied):
+                        pass
+
+                # PID file exists but process is dead, clean up
+                pid_file.unlink()
+
+            except (ValueError, FileNotFoundError):
+                # Invalid PID file, remove it
+                try:
+                    pid_file.unlink()
+                except:
+                    pass
+
         return False
+
+    def _save_pid(self, service_name, process):
+        """Save process PID to file for cross-session tracking."""
+        pid_file = self.pid_dir / f"{service_name}.pid"
+        try:
+            with open(pid_file, 'w') as f:
+                f.write(str(process.pid))
+        except Exception as e:
+            print(f"   ⚠️  Failed to save PID file: {e}")
+
+    def _cleanup_pid(self, service_name):
+        """Remove PID file for service."""
+        pid_file = self.pid_dir / f"{service_name}.pid"
+        try:
+            if pid_file.exists():
+                pid_file.unlink()
+        except Exception as e:
+            print(f"   ⚠️  Failed to cleanup PID file: {e}")
 
     def stop_all(self):
         """Stop all running services."""
@@ -261,6 +328,12 @@ class ServiceManager:
                 except subprocess.TimeoutExpired:
                     process.kill()
                 print(f"   ✅ {name} stopped")
+                self._cleanup_pid(name)
+
+        # Also clean up PID files for services started in other sessions
+        for service_name in ['message_queue', 'twitch', 'discord']:
+            self._cleanup_pid(service_name)
+
         self.processes.clear()
 
 
