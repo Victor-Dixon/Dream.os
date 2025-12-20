@@ -65,10 +65,27 @@ class MessageCoordinator:
         """
         Send message to agent via message queue (prevents race conditions).
 
+        Includes coordination throttling for A2A messages to prevent spam.
+
         Delegates to agent_message_handler for V2 compliance.
         """
+        # Check coordination throttling for A2A messages
+        if message_category == MessageCategory.A2A and sender:
+            from src.services.coordination.coordination_throttler import get_coordination_throttler
+            throttler = get_coordination_throttler()
+
+            can_send, reason, wait_seconds = throttler.can_send_coordination(agent, sender)
+            if not can_send:
+                logger.warning(f"Coordination throttled: {sender} -> {agent}: {reason}")
+                return {
+                    "success": False,
+                    "throttled": True,
+                    "reason": reason,
+                    "wait_seconds": wait_seconds
+                }
+
         queue = MessageCoordinator._get_queue()
-        return _send_to_agent(
+        result = _send_to_agent(
             agent=agent,
             message=message,
             priority=priority,
@@ -82,6 +99,12 @@ class MessageCoordinator:
             detect_sender_func=MessageCoordinator._detect_sender,
             determine_message_type_func=MessageCoordinator._determine_message_type,
         )
+
+        # Record coordination for throttling if it was sent successfully
+        if (result and result.get("success") and message_category == MessageCategory.A2A and sender):
+            from src.services.coordination.coordination_throttler import get_coordination_throttler
+            throttler = get_coordination_throttler()
+            throttler.record_coordination(agent, sender)
 
     @staticmethod
     def send_multi_agent_request(
