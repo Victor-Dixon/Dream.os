@@ -49,6 +49,12 @@ async def main() -> int:
 
     # Get token from environment
     token = os.getenv("DISCORD_BOT_TOKEN")
+    print(f"🔍 DEBUG: Checking for DISCORD_BOT_TOKEN...")
+    print(f"🔍 DEBUG: Token found: {'YES' if token else 'NO'}")
+    if token:
+        print(f"🔍 DEBUG: Token length: {len(token)} characters")
+        print(f"🔍 DEBUG: Token starts with: {token[:20]}..." if len(token) > 20 else f"🔍 DEBUG: Token: {token}")
+
     if not token:
         print("❌ DISCORD_BOT_TOKEN not set in environment!")
         print("   Set it with: $env:DISCORD_BOT_TOKEN='your_token' (Windows)")
@@ -65,7 +71,9 @@ async def main() -> int:
             channel_id = None
 
     # Create bot instance
+    print(f"🔍 DEBUG: Creating UnifiedDiscordBot instance...")
     bot = UnifiedDiscordBot(token=token, channel_id=channel_id)
+    print(f"🔍 DEBUG: Bot instance created successfully")
 
     # Reconnection settings
     max_reconnect_attempts = 999999
@@ -87,6 +95,7 @@ async def main() -> int:
                 await asyncio.sleep(reconnect_delay)
 
             logger.info("🔌 Connecting to Discord...")
+            print(f"🔍 DEBUG: About to call bot.start(token)...")
             try:
                 await bot.start(token)
             except Exception as runtime_error:
