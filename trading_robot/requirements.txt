@@ -1,6 +1,7 @@
 # Alpaca Trading Robot Requirements
 alpaca-py>=2.0.0
-robin-stocks>=1.0.0  # Optional: For Robinhood integration (unofficial, use at own risk)
+# Optional: For Robinhood integration (unofficial, use at own risk)
+robin-stocks>=1.0.0
 pandas>=1.5.0
 numpy>=1.21.0
 matplotlib>=3.5.0
