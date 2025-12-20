@@ -199,9 +199,99 @@ class HostingerWordPressManager:
         except Exception as e:
             return {"success": False, "error": str(e)}
 
+    def create_missing_pages(self, pages_to_create: List[str]) -> Dict[str, Any]:
+        """Create missing pages on the site."""
+        results = []
+        for page_slug in pages_to_create:
+            page_title = page_slug.replace('-', ' ').replace('_', ' ').title()
+
+            # Default content based on page type
+            content_map = {
+                'products': '<h1>Our Products</h1><p>Coming soon - detailed product information.</p>',
+                'features': '<h1>Features</h1><p>Discover our key features and capabilities.</p>',
+                'pricing': '<h1>Pricing</h1><p>Contact us for pricing information.</p>',
+                'about': '<h1>About Us</h1><p>Learn more about our company and mission.</p>',
+                'contact': '<h1>Contact Us</h1><p>Get in touch with our team.</p>',
+                'blog': '<h1>Blog</h1><p>Latest news and updates.</p>',
+                'ai-swarm': '<h1>AI Swarm Technology</h1><p>Advanced AI swarm capabilities.</p>'
+            }
+
+            content = content_map.get(page_slug, f'<h1>{page_title}</h1><p>Content coming soon.</p>')
+
+            result = self.create_page(page_title, content, page_slug)
+            results.append({"page": page_slug, "result": result})
+
+        return {"operation": "create_pages", "results": results}
+
+    def create_page(self, title: str, content: str, slug: str = None) -> Dict[str, Any]:
+        """Create a new page."""
+        try:
+            data = {
+                "title": title,
+                "content": content,
+                "status": "publish",
+                "type": "page"
+            }
+            if slug:
+                data["slug"] = slug
+
+            response = self.session.post(
+                self._get_wp_api_url("pages"),
+                json=data,
+                timeout=self.timeout
+            )
+
+            if response.ok:
+                page = response.json()
+                return {
+                    "success": True,
+                    "message": f"Page '{title}' created",
+                    "page_id": page.get('id'),
+                    "url": page.get('link')
+                }
+            else:
+                return {"success": False, "error": f"HTTP {response.status_code}: {response.text}"}
+        except Exception as e:
+            return {"success": False, "error": str(e)}
+
+    def update_menu_item(self, menu_id: int, item_title: str, new_url: str) -> Dict[str, Any]:
+        """Update a menu item URL."""
+        # Find the menu item first
+        items_result = self.get_menu_items(menu_id)
+        if not items_result["success"]:
+            return items_result
+
+        target_item = None
+        for item in items_result["items"]:
+            if item_title.lower() in item.get('title', {}).get('rendered', '').lower():
+                target_item = item
+                break
+
+        if not target_item:
+            return {"success": False, "error": f"Menu item '{item_title}' not found"}
+
+        try:
+            item_id = target_item.get('id')
+            update_url = self._get_wp_api_url(f"menu-items/{item_id}")
+
+            update_data = {"url": new_url}
+
+            response = self.session.post(
+                update_url,
+                json=update_data,
+                timeout=self.timeout
+            )
+
+            if response.status_code in [200, 201]:
+                return {"success": True, "message": f"Menu item '{item_title}' updated to {new_url}"}
+            else:
+                return {"success": False, "error": f"HTTP {response.status_code}: {response.text}"}
+        except Exception as e:
+            return {"success": False, "error": str(e)}
+
     def fix_broken_github_link(self) -> Dict[str, Any]:
         """Fix the broken GitHub link in footer menu."""
-        print("🔧 Fixing broken GitHub link in weareswarm.online footer...")
+        print("🔧 Fixing broken GitHub link in footer...")
 
         # Find footer menu
         footer_result = self.find_footer_menu()
@@ -294,6 +384,84 @@ class HostingerWordPressManager:
         except Exception as e:
             return {"success": False, "error": str(e)}
 
+    def auto_fix_site_issues(self, broken_links_data: Dict[str, Any] = None) -> Dict[str, Any]:
+        """Automatically fix common site issues."""
+        print(f"🔧 Auto-fixing site issues for {self.site_url}")
+        results = {"fixes_attempted": [], "fixes_successful": [], "fixes_failed": []}
+
+        # If no broken links data provided, try to analyze site
+        if not broken_links_data:
+            # This would be enhanced to actually check for broken links
+            print("⚠️  No broken links data provided - manual analysis needed")
+            return results
+
+        # Process each broken link
+        site_broken_links = broken_links_data.get('broken_links', [])
+
+        for link_info in site_broken_links:
+            url = link_info['url']
+            link_text = link_info['text']
+            source = link_info['source']
+
+            print(f"🔗 Analyzing broken link: {link_text} → {url}")
+
+            # Handle different types of broken links
+            if 'github.com/Agent_Cellphone_V2_Repository' in url:
+                # GitHub link fix
+                fix_result = self.fix_broken_github_link()
+                results["fixes_attempted"].append("github_link_fix")
+                if fix_result.get("success"):
+                    results["fixes_successful"].append("github_link_fix")
+                else:
+                    results["fixes_failed"].append({"fix": "github_link_fix", "error": fix_result.get("error")})
+
+            elif source in ['nav', 'footer'] and self._is_internal_page_link(url):
+                # Missing page - try to create it
+                page_slug = self._extract_page_slug(url)
+                if page_slug:
+                    create_result = self.create_missing_pages([page_slug])
+                    fix_name = f"create_page_{page_slug}"
+                    results["fixes_attempted"].append(fix_name)
+                    if create_result.get("results", [{}])[0].get("result", {}).get("success"):
+                        results["fixes_successful"].append(fix_name)
+                        # Add to menu if it's a nav link
+                        if source == 'nav':
+                            self._add_page_to_menu(page_slug, link_text)
+                    else:
+                        results["fixes_failed"].append({
+                            "fix": fix_name,
+                            "error": create_result.get("results", [{}])[0].get("result", {}).get("error")
+                        })
+
+        return results
+
+    def _is_internal_page_link(self, url: str) -> bool:
+        """Check if URL is an internal page link."""
+        if not url.startswith(self.site_url):
+            return False
+
+        path = url.replace(self.site_url, '').strip('/')
+        # Simple check for page-like URLs (not files, not complex paths)
+        return '/' not in path and '.' not in path and len(path) > 0
+
+    def _extract_page_slug(self, url: str) -> Optional[str]:
+        """Extract page slug from internal URL."""
+        if not url.startswith(self.site_url):
+            return None
+
+        path = url.replace(self.site_url, '').strip('/')
+        return path if path else None
+
+    def _add_page_to_menu(self, page_slug: str, menu_text: str) -> bool:
+        """Add a page to the primary menu."""
+        try:
+            # This would need menu detection and item addition
+            # For now, just return success placeholder
+            print(f"📝 Would add '{menu_text}' to primary menu (page: {page_slug})")
+            return True
+        except Exception:
+            return False
+
     def get_site_health(self) -> Dict[str, Any]:
         """Get site health information."""
         try:
@@ -329,6 +497,8 @@ def main():
     parser = argparse.ArgumentParser(description="Hostinger WordPress Manager - API-based WordPress operations")
     parser.add_argument("--site", default="weareswarm.online", help="WordPress site URL")
     parser.add_argument("--fix-github", action="store_true", help="Fix broken GitHub link in footer")
+    parser.add_argument("--auto-fix", action="store_true", help="Automatically fix common site issues")
+    parser.add_argument("--create-pages", nargs="+", help="Create missing pages (space-separated slugs)")
     parser.add_argument("--list-menus", action="store_true", help="List all WordPress menus")
     parser.add_argument("--health", action="store_true", help="Check site health")
     parser.add_argument("--purge-cache", action="store_true", help="Purge WordPress cache")
@@ -393,6 +563,56 @@ def main():
             return 0
         else:
             print(f"❌ Health check failed: {result['error']}")
+            return 1
+
+    elif args.auto_fix:
+        # Load broken links data for this site
+        broken_links_data = None
+        audit_file = Path("docs/site_audit/broken_links.json")
+        if audit_file.exists():
+            with open(audit_file, 'r') as f:
+                audit_data = json.load(f)
+                broken_links_data = audit_data.get("sites", {}).get(args.site, {})
+
+        if broken_links_data:
+            result = manager.auto_fix_site_issues(broken_links_data)
+            successful = len(result.get("fixes_successful", []))
+            failed = len(result.get("fixes_failed", []))
+            attempted = len(result.get("fixes_attempted", []))
+
+            if successful > 0:
+                print(f"✅ Auto-fix completed: {successful}/{attempted} fixes successful")
+                for fix in result["fixes_successful"]:
+                    print(f"   ✅ {fix}")
+                if failed > 0:
+                    print(f"   ⚠️  {failed} fixes failed")
+                return 0
+            else:
+                print(f"❌ Auto-fix failed: {failed}/{attempted} fixes failed")
+                for fix_error in result.get("fixes_failed", []):
+                    print(f"   ❌ {fix_error['fix']}: {fix_error.get('error', 'Unknown error')}")
+                return 1
+        else:
+            print("❌ No broken links data found for auto-fix")
+            return 1
+
+    elif args.create_pages:
+        result = manager.create_missing_pages(args.create_pages)
+        successful = sum(1 for r in result.get("results", []) if r.get("result", {}).get("success"))
+        total = len(result.get("results", []))
+
+        if successful > 0:
+            print(f"✅ Created {successful}/{total} pages successfully")
+            for page_result in result.get("results", []):
+                page = page_result.get("page")
+                res = page_result.get("result", {})
+                if res.get("success"):
+                    print(f"   ✅ {page}: {res.get('url')}")
+                else:
+                    print(f"   ❌ {page}: {res.get('error')}")
+            return 0 if successful == total else 1
+        else:
+            print(f"❌ Failed to create any pages: {total} attempted")
             return 1
 
     elif args.purge_cache:

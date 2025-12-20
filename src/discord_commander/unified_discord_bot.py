@@ -97,6 +97,7 @@ class UnifiedDiscordBot(commands.Bot):
     # Event handler delegations
     async def on_ready(self):
         """Handle bot ready event."""
+        print(f"🔍 DEBUG: Bot on_ready event triggered! Connected as {self.user}")
         await self.event_handlers.handle_on_ready()
 
     async def on_message(self, message: discord.Message):
