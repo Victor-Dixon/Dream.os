@@ -125,6 +125,9 @@ def prepare_a2a_template(
         agent_id=meta.get("agent_id", recipient),
         ask=meta.get("ask", message),
         context=meta.get("context", ""),
+        coordination_rationale=meta.get("coordination_rationale", "To leverage parallel processing and accelerate completion"),
+        expected_contribution=meta.get("expected_contribution", "Domain expertise and parallel execution"),
+        coordination_timeline=meta.get("coordination_timeline", "ASAP - coordination needed to maintain momentum"),
         next_step=meta.get(
             "next_step",
             "Reply via messaging_cli with ACCEPT/DECLINE, ETA, and a 2–3 bullet plan, "
