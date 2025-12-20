@@ -24,6 +24,7 @@ class PluginManager:
         self.plugins: Dict[str, PluginBase] = {}
         self.metadata_cache: Dict[str, PluginMetadata] = {}
         self.plugins_directory.mkdir(parents=True, exist_ok=True)
+        self.performance_tracker = None  # Will be set if performance tracking is available
 
     def load_plugin(self, plugin_id: str, parameters: Dict[str, Any] = None) -> Optional[PluginBase]:
         """Load a plugin by ID."""
@@ -62,6 +63,27 @@ class PluginManager:
                 metadata, parameters or metadata.default_parameters)
             self.plugins[plugin_id] = plugin
             logger.info(f"✅ Loaded plugin: {plugin_id} ({metadata.name})")
+            
+            # Capture plugin load metrics for performance tracking (if available)
+            if self.performance_tracker:
+                try:
+                    # Get user_id from context (default to 'system' if not available)
+                    user_id = getattr(self, 'user_id', 'system')
+                    
+                    self.performance_tracker.collector.capture_plugin_metrics(
+                        user_id=user_id,
+                        plugin_id=plugin_id,
+                        plugin_metrics={
+                            "action": "plugin_loaded",
+                            "plugin_name": metadata.name,
+                            "plugin_version": metadata.version,
+                            "is_for_sale": metadata.is_for_sale,
+                            "price": metadata.price,
+                            "timestamp": __import__('datetime').datetime.now().isoformat()
+                        }
+                    )
+                except Exception as e:
+                    logger.warning(f"⚠️ Failed to capture plugin load metrics: {e}")
 
             return plugin
 
@@ -124,4 +146,68 @@ class PluginManager:
         """Get all plugins available for sale."""
         all_plugins = self.list_plugins()
         return [p for p in all_plugins if p.is_for_sale]
+    
+    def set_performance_tracker(self, performance_tracker):
+        """
+        Set performance tracker for plugin-specific metrics.
+        
+        Args:
+            performance_tracker: PerformanceTracker instance
+        """
+        self.performance_tracker = performance_tracker
+        logger.info("✅ Performance tracker set for plugin manager")
+    
+    def capture_plugin_performance(self, plugin_id: str, user_id: str = 'system', metrics: Dict[str, Any] = None):
+        """
+        Capture plugin-specific performance metrics.
+        
+        Args:
+            plugin_id: Plugin identifier
+            user_id: User identifier (default: 'system')
+            metrics: Plugin-specific metrics dictionary
+        """
+        if not self.performance_tracker:
+            return False
+        
+        try:
+            plugin_metrics = metrics or {}
+            plugin_metrics["timestamp"] = __import__('datetime').datetime.now().isoformat()
+            
+            return self.performance_tracker.collector.capture_plugin_metrics(
+                user_id=user_id,
+                plugin_id=plugin_id,
+                plugin_metrics=plugin_metrics
+            )
+        except Exception as e:
+            logger.warning(f"⚠️ Failed to capture plugin performance: {e}")
+            return False
+    
+    def get_plugin_performance_summary(self, plugin_id: str, user_id: str = 'system') -> Dict[str, Any]:
+        """
+        Get performance summary for a plugin.
+        
+        Args:
+            plugin_id: Plugin identifier
+            user_id: User identifier (default: 'system')
+            
+        Returns:
+            Performance summary dictionary
+        """
+        if not self.performance_tracker:
+            return {}
+        
+        try:
+            plugin = self.get_plugin(plugin_id)
+            if plugin and hasattr(plugin, 'get_performance_summary'):
+                return plugin.get_performance_summary()
+            
+            # Fallback: get from performance tracker
+            return self.performance_tracker.get_performance_metrics(
+                user_id=user_id,
+                plugin_id=plugin_id,
+                metric_type="all_time"
+            )
+        except Exception as e:
+            logger.warning(f"⚠️ Failed to get plugin performance summary: {e}")
+            return {}
 
