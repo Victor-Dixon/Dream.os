@@ -166,6 +166,28 @@ class LiveExecutor:
                     quantity=quantity,
                     price=current_price
                 )
+                
+                # Capture trade for performance tracking (if performance tracker available)
+                if hasattr(self, 'performance_tracker') and self.performance_tracker:
+                    try:
+                        # Get user_id and plugin_id from context (default to 'system' if not available)
+                        user_id = getattr(self, 'user_id', 'system')
+                        plugin_id = getattr(self, 'current_plugin_id', 'system')
+                        
+                        self.performance_tracker.capture_trade(
+                            user_id=user_id,
+                            plugin_id=plugin_id,
+                            trade_data={
+                                "symbol": symbol,
+                                "side": side,
+                                "quantity": quantity,
+                                "entry_price": current_price,
+                                "order_id": order.get('id') if isinstance(order, dict) else str(order),
+                                "timestamp": datetime.now().isoformat()
+                            }
+                        )
+                    except Exception as e:
+                        logger.warning(f"⚠️ Failed to capture trade for performance tracking: {e}")
 
                 # Update trade interval
                 self.trading_intervals[symbol] = datetime.now().timestamp()
