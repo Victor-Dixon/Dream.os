@@ -9,6 +9,7 @@ Tables:
 - positions: Current portfolio positions
 - orders: Order requests and status
 - trading_sessions: Trading session metadata
+- user_performance_metrics: User performance metrics by plugin and time period
 
 Author: Agent-3 (Infrastructure & DevOps Specialist)
 Created: 2025-12-20
@@ -208,3 +209,56 @@ class TradingSession(Base):
     broker = Column(String(50), nullable=True)
     trading_mode = Column(String(20), nullable=True)  # paper, live
     notes = Column(Text, nullable=True)
+
+
+class MetricType(str, enum.Enum):
+    """Metric type enumeration."""
+    DAILY = "daily"
+    WEEKLY = "weekly"
+    MONTHLY = "monthly"
+    ALL_TIME = "all_time"
+
+
+class UserPerformanceMetric(Base):
+    """User performance metrics for tracking trading performance by user and plugin."""
+    __tablename__ = "user_performance_metrics"
+    
+    # Primary key
+    id = Column(Integer, primary_key=True, index=True)
+    
+    # Foreign keys and identifiers
+    user_id = Column(String(100), nullable=False, index=True)
+    plugin_id = Column(String(100), nullable=False, index=True)
+    
+    # Date and type
+    metric_date = Column(DateTime, nullable=False, index=True)
+    metric_type = Column(SQLEnum(MetricType), nullable=False, index=True)
+    
+    # Trade statistics
+    trade_count = Column(Integer, default=0)
+    win_count = Column(Integer, default=0)
+    loss_count = Column(Integer, default=0)
+    
+    # Performance metrics
+    total_pnl = Column(Numeric(12, 2), default=0.0)
+    win_rate = Column(Numeric(5, 4), nullable=True)  # 0.0000 to 1.0000 (0% to 100%)
+    profit_factor = Column(Numeric(8, 4), nullable=True)
+    sharpe_ratio = Column(Numeric(8, 4), nullable=True)
+    max_drawdown = Column(Numeric(8, 4), nullable=True)  # Percentage (e.g., 0.1525 = 15.25%)
+    
+    # Trade size metrics
+    avg_trade_size = Column(Numeric(12, 4), nullable=True)
+    best_trade_pnl = Column(Numeric(12, 2), nullable=True)
+    worst_trade_pnl = Column(Numeric(12, 2), nullable=True)
+    
+    # Timestamps
+    created_at = Column(DateTime, default=datetime.utcnow, index=True)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    # Indexes for efficient querying
+    __table_args__ = (
+        Index("idx_user_perf_user_plugin_date", "user_id", "plugin_id", "metric_date"),
+        Index("idx_user_perf_user_type", "user_id", "metric_type"),
+        Index("idx_user_perf_plugin_date", "plugin_id", "metric_date"),
+        Index("idx_user_perf_type_date", "metric_type", "metric_date"),
+    )
