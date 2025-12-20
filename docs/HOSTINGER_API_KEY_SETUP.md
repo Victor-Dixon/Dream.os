@@ -77,3 +77,6 @@ Once API key is set:
 - Use Option B (manual method) instead
 - Check Hostinger documentation for API setup
 
+
+
+
