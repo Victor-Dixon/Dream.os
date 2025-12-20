@@ -168,7 +168,7 @@
 
 **Generated:** 2025-12-19 from Sales Funnel Ecosystem Grade Card (v1)  
 **Status:** Grade F (35.5/100) - Comprehensive audit complete  
-**Reference:** `temp_repos/crosbyultimateevents.com/GRADE_CARD_SALES_FUNNEL.yaml` for full details  
+**Reference:** `D:\websites\crosbyultimateevents.com\GRADE_CARD_SALES_FUNNEL.yaml` for full details  
 **Top 10 Priority Fixes:**
 
 - [ ] **P0**: Create lead magnet (Event Planning Checklist) + landing page + thank-you page - crosbyultimateevents.com [Agent-7] ETA: 2025-12-21
@@ -186,7 +186,7 @@
 
 **Generated:** 2025-12-19 from Sales Funnel Ecosystem Grade Card (v1)  
 **Status:** Grade F (42.5/100) - Comprehensive audit complete  
-**Reference:** `temp_repos/dadudekc.com/GRADE_CARD_SALES_FUNNEL.yaml` for full details  
+**Reference:** `D:\websites\dadudekc.com\GRADE_CARD_SALES_FUNNEL.yaml` for full details  
 **Top 10 Priority Fixes:**
 
 - [ ] **P0**: Optimize /audit, /scoreboard, /intake as lead magnets with landing pages + thank-you pages - dadudekc.com [Agent-7] ETA: 2025-12-21
@@ -199,6 +199,60 @@
 - [ ] **P1**: Claim social media accounts (@dadudekc) + complete profiles with automation focus - dadudekc.com [Agent-7] ETA: 2025-12-23
 - [ ] **P1**: Install analytics (GA4) + set up UTM tracking + weekly metrics dashboard - dadudekc.com [Agent-7] ETA: 2025-12-23
 - [ ] **P1**: Optimize mobile UX + page speed (images, caching, target 90+ mobile score) - dadudekc.com [Agent-7] ETA: 2025-12-23
+
+### SALES FUNNEL ECOSYSTEM GRADE CARD - freerideinvestor.com
+
+**Generated:** 2025-12-19 from Sales Funnel Ecosystem Grade Card (v1)  
+**Status:** Grade F (38.5/100) - Comprehensive audit complete  
+**Reference:** `D:\websites\FreeRideInvestor\GRADE_CARD_SALES_FUNNEL.yaml` for full details  
+**Top 10 Priority Fixes:**
+
+- [ ] **P0**: Optimize free resources (roadmap PDF, mindset journal) as lead magnets with landing pages + thank-you pages - freerideinvestor.com [Agent-7] ETA: 2025-12-21
+- [ ] **P0**: Set up email welcome sequence + nurture campaign (5 emails over 2 weeks) for trading leads - freerideinvestor.com [Agent-7] ETA: 2025-12-24
+- [ ] **P0**: Implement payment processing (Stripe) for premium membership + clear upgrade flow - freerideinvestor.com [Agent-7] ETA: 2025-12-25
+- [ ] **P0**: Define positioning statement + offer ladder + ICP with pain/outcome on homepage - freerideinvestor.com [Agent-7] ETA: 2025-12-22
+- [ ] **P0**: Reduce subscription friction + add premium membership CTA + chat widget - freerideinvestor.com [Agent-7] ETA: 2025-12-21
+- [ ] **P0**: Add pricing transparency + trader testimonials + case studies + trading results - freerideinvestor.com [Agent-7] ETA: 2025-12-22
+- [ ] **P0**: A/B test hero headline for better benefit focus + add urgency - freerideinvestor.com [Agent-7] ETA: 2025-12-20
+- [ ] **P1**: Claim social media accounts (@freerideinvestor) + complete profiles with trading focus - freerideinvestor.com [Agent-7] ETA: 2025-12-23
+- [ ] **P1**: Install analytics (GA4) + set up UTM tracking + weekly metrics dashboard - freerideinvestor.com [Agent-7] ETA: 2025-12-23
+- [ ] **P1**: Optimize mobile UX + page speed (images, caching, target 90+ mobile score) - freerideinvestor.com [Agent-7] ETA: 2025-12-23
+
+### SALES FUNNEL ECOSYSTEM GRADE CARD - houstonsipqueen.com
+
+**Generated:** 2025-12-19 from Sales Funnel Ecosystem Grade Card (v1)  
+**Status:** Grade F (40.0/100) - Comprehensive audit complete  
+**Reference:** `D:\websites\houstonsipqueen.com\GRADE_CARD_SALES_FUNNEL.yaml` for full details  
+**Top 10 Priority Fixes:**
+
+- [ ] **P0**: Create lead magnet (Event Planning Checklist) + landing page + thank-you page - houstonsipqueen.com [Agent-7] ETA: 2025-12-21
+- [ ] **P0**: Set up email welcome sequence + nurture campaign (5 emails over 2 weeks) for event leads - houstonsipqueen.com [Agent-7] ETA: 2025-12-24
+- [ ] **P0**: Implement booking calendar (Calendly) + payment processing (Stripe) for deposits - houstonsipqueen.com [Agent-7] ETA: 2025-12-25
+- [ ] **P0**: Define positioning statement + offer ladder + ICP with pain/outcome on homepage - houstonsipqueen.com [Agent-7] ETA: 2025-12-22
+- [ ] **P0**: Reduce quote form friction (3-4 fields) + add phone + chat widget - houstonsipqueen.com [Agent-7] ETA: 2025-12-21
+- [ ] **P0**: Add pricing transparency + client testimonials + case studies + event portfolio - houstonsipqueen.com [Agent-7] ETA: 2025-12-22
+- [ ] **P0**: A/B test hero headline for better benefit focus + add urgency - houstonsipqueen.com [Agent-7] ETA: 2025-12-20
+- [ ] **P1**: Claim social media accounts (@houstonsipqueen) + complete profiles with luxury bartending focus - houstonsipqueen.com [Agent-7] ETA: 2025-12-23
+- [ ] **P1**: Install analytics (GA4) + set up UTM tracking + weekly metrics dashboard - houstonsipqueen.com [Agent-7] ETA: 2025-12-23
+- [ ] **P1**: Optimize mobile UX + page speed (images, caching, target 90+ mobile score) - houstonsipqueen.com [Agent-7] ETA: 2025-12-23
+
+### SALES FUNNEL ECOSYSTEM GRADE CARD - tradingrobotplug.com
+
+**Generated:** 2025-12-19 from Sales Funnel Ecosystem Grade Card (v1)  
+**Status:** Grade F (33.0/100) - Comprehensive audit complete (Building Mode - Pre-Launch)  
+**Reference:** `D:\websites\TradingRobotPlugWeb\GRADE_CARD_SALES_FUNNEL.yaml` for full details  
+**Top 10 Priority Fixes:**
+
+- [ ] **P0**: Create lead magnet (Trading Robot Validation Checklist) or waitlist + landing page + thank-you page - tradingrobotplug.com [Agent-7] ETA: 2025-12-21
+- [ ] **P0**: Set up email welcome sequence + nurture campaign (5 emails over 2 weeks) for waitlist/leads - tradingrobotplug.com [Agent-7] ETA: 2025-12-24
+- [ ] **P0**: Add waitlist form (email only) + chat widget + clear contact method - tradingrobotplug.com [Agent-7] ETA: 2025-12-21
+- [ ] **P0**: Add paper trading results prominently + development metrics + trust badges - tradingrobotplug.com [Agent-7] ETA: 2025-12-22
+- [ ] **P0**: A/B test hero: Add 'Join Waitlist' CTA alongside current CTAs - tradingrobotplug.com [Agent-7] ETA: 2025-12-20
+- [ ] **P1**: Define positioning statement + offer ladder + ICP for future launch - tradingrobotplug.com [Agent-7] ETA: 2025-12-22
+- [ ] **P1**: Claim social media accounts (@tradingrobotplug) + complete profiles with development focus - tradingrobotplug.com [Agent-7] ETA: 2025-12-23
+- [ ] **P1**: Install analytics (GA4) + set up UTM tracking + weekly metrics dashboard - tradingrobotplug.com [Agent-7] ETA: 2025-12-23
+- [ ] **P1**: Optimize mobile UX + page speed (images, caching, target 90+ mobile score) - tradingrobotplug.com [Agent-7] ETA: 2025-12-23
+- [ ] **P1**: Prepare payment processing (Stripe) + waitlist system for future launch - tradingrobotplug.com [Agent-7] ETA: 2025-12-25
 
 ### HIGH PRIORITY - Business Readiness (5 websites)
 - [x] Add business readiness tasks for crosbyultimateevents.com - Grade: F (47.5/100), Business: F (50/100) ✅ COMPLETE by Agent-1 (2025-12-19) - 10 business readiness tasks identified and added to grade card
