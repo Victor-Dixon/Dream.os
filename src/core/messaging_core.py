@@ -367,11 +367,39 @@ class UnifiedMessagingCore:
                     except Exception as e:
                         self.logger.warning(
                             f"⚠️ Failed to log delivery status: {e}")
+                
+                # FALLBACK QUEUING: If direct delivery fails, queue message for later processing
+                # This ensures system messages flow through the queue when PyAutoGUI fails
+                if not success:
+                    try:
+                        from .message_queue import MessageQueue
+                        queue = MessageQueue()
+                        queue_id = queue.enqueue(message)
+                        self.logger.info(
+                            f"📬 Direct delivery failed, message queued for later processing: {queue_id} "
+                            f"({message.sender} → {message.recipient})")
+                        # Return True to indicate message was handled (queued), even though direct delivery failed
+                        return True
+                    except Exception as queue_error:
+                        self.logger.error(
+                            f"❌ Failed to queue message after delivery failure: {queue_error}")
+                        return False
+                
                 return success
             else:
-                self.logger.error(
-                    "No delivery service configured - PyAutoGUI required")
-                return False
+                # No delivery service - try to queue message instead of failing
+                try:
+                    from .message_queue import MessageQueue
+                    queue = MessageQueue()
+                    queue_id = queue.enqueue(message)
+                    self.logger.info(
+                        f"📬 No delivery service available, message queued: {queue_id} "
+                        f"({message.sender} → {message.recipient})")
+                    return True
+                except Exception as queue_error:
+                    self.logger.error(
+                        f"❌ No delivery service and queue unavailable: {queue_error}")
+                    return False
         except Exception as e:
             self.logger.error(f"Failed to send message: {e}")
             # Log failure to history
