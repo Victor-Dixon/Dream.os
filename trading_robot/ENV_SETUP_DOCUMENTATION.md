@@ -191,9 +191,86 @@ The configuration is automatically validated using `config.validate_config()`. V
 4. **Start with paper trading** to validate system
 5. **Upgrade to live trading** only after extensive validation
 
+## Email Campaign Configuration
+
+### SMTP_HOST
+- **Required**: Yes (for email campaigns)
+- **Default**: `smtp.gmail.com`
+- **Description**: SMTP server hostname
+- **Common Providers**:
+  - Gmail: `smtp.gmail.com`
+  - Outlook: `smtp-mail.outlook.com`
+  - SendGrid: `smtp.sendgrid.net`
+  - Mailgun: `smtp.mailgun.org`
+  - AWS SES: `email-smtp.us-east-1.amazonaws.com`
+
+### SMTP_PORT
+- **Required**: Yes (for email campaigns)
+- **Default**: `587` (TLS)
+- **Description**: SMTP server port
+- **Common Ports**: 587 (TLS), 465 (SSL), 25 (unencrypted, not recommended)
+
+### SMTP_USER
+- **Required**: Yes (for email campaigns)
+- **Description**: SMTP authentication username (usually your email address)
+- **Example**: `your-email@gmail.com`
+- **Gmail Note**: Use your full Gmail address, not just username
+
+### SMTP_PASSWORD
+- **Required**: Yes (for email campaigns)
+- **Description**: SMTP authentication password
+- **Gmail**: Use an [App Password](https://support.google.com/accounts/answer/185833) (not your regular password)
+- **Security**: Keep this secret, never commit to git
+- **How to get Gmail App Password**:
+  1. Enable 2-Step Verification
+  2. Go to Google Account → Security → App passwords
+  3. Generate app password for "Mail"
+  4. Use the 16-character password here
+
+### FROM_EMAIL
+- **Required**: Yes (for email campaigns)
+- **Default**: `noreply@tradingrobotplug.com`
+- **Description**: Email address to send from
+- **Note**: Should match your domain or SMTP account
+
+### FROM_NAME
+- **Required**: No
+- **Default**: `Trading Robot Team`
+- **Description**: Display name for email sender
+
+## Email Campaign Setup Instructions
+
+1. **Choose SMTP Provider**:
+   - **Gmail** (easiest for testing): Use Gmail with App Password
+   - **SendGrid** (recommended for production): Better deliverability
+   - **Mailgun** (production): Good for transactional emails
+   - **AWS SES** (production): Cost-effective at scale
+
+2. **Configure Gmail (Quick Start)**:
+   ```bash
+   # Enable 2-Step Verification first
+   # Generate App Password: https://support.google.com/accounts/answer/185833
+   SMTP_HOST=smtp.gmail.com
+   SMTP_PORT=587
+   SMTP_USER=your-email@gmail.com
+   SMTP_PASSWORD=your-16-char-app-password
+   FROM_EMAIL=noreply@tradingrobotplug.com
+   ```
+
+3. **Test Email Configuration**:
+   ```bash
+   python trading_robot/email_campaigns/run_campaigns.py
+   ```
+
+4. **Set Up Scheduled Execution**:
+   - Add to cron/scheduler to run daily at 9 AM
+   - Or use systemd timer / Windows Task Scheduler
+
 ## Security Notes
 
 - ⚠️ **Never commit `.env` file to git** (it's in .gitignore)
 - ⚠️ **Keep API keys secret** - treat them like passwords
 - ⚠️ **Use paper trading first** - validate system before live trading
 - ⚠️ **Review risk limits** - defaults are conservative but adjust based on your risk tolerance
+- ⚠️ **Use App Passwords for Gmail** - Never use your regular Gmail password
+- ⚠️ **Protect SMTP credentials** - These allow sending emails from your account
