@@ -22,3 +22,39 @@
 ## WAITING_ON
 
 - [ ] Agent-3: Batch 7 consolidation infrastructure health checks - 🔄 BLOCKED ⚠️ - Batch 7 not found in JSON (only batches 1-6 exist), investigation coordination sent to Agent-8
+
+## Toolbelt Health Fixes (18 tools to reach 100%)
+
+### Priority 1: Fix ToolNotFoundError Tools (3 tools)
+- [ ] **HIGH**: Fix agent.points tool - Add PointsCalculatorTool class to tools_v2.categories.session_tools or update registry entry
+- [ ] **HIGH**: Fix infra.roi_calc tool - Add ROICalculatorTool class to tools_v2.categories.infrastructure_tools or update registry entry
+- [ ] **HIGH**: Fix mem.imports tool - Add ImportValidatorTool class to tools_v2.categories.memory_safety_adapters or update registry entry
+
+### Priority 2: Fix Abstract Class Implementation Errors (15 tools)
+
+#### Brain Tools (5 tools)
+- [ ] **MEDIUM**: Fix brain.get tool - Implement abstract methods (get_spec, validate) for GetAgentNotesTool
+- [ ] **MEDIUM**: Fix brain.note tool - Implement abstract methods (get_spec, validate) for TakeNoteTool
+- [ ] **MEDIUM**: Fix brain.search tool - Implement abstract methods (get_spec, validate) for SearchKnowledgeTool
+- [ ] **MEDIUM**: Fix brain.session tool - Implement abstract methods (get_spec, validate) for LogSessionTool
+- [ ] **MEDIUM**: Fix brain.share tool - Implement abstract methods (get_spec, validate) for ShareLearningTool
+
+#### Discord Tools (3 tools)
+- [ ] **MEDIUM**: Fix discord.health tool - Implement abstract methods (get_spec, validate) for DiscordBotHealthTool
+- [ ] **MEDIUM**: Fix discord.start tool - Implement abstract methods (get_spec, validate) for DiscordBotStartTool
+- [ ] **MEDIUM**: Fix discord.test tool - Implement abstract methods (get_spec, validate) for DiscordTestMessageTool
+
+#### Message Task Tools (3 tools)
+- [ ] **MEDIUM**: Fix msgtask.fingerprint tool - Implement abstract methods (get_spec, validate) for TaskFingerprintTool
+- [ ] **MEDIUM**: Fix msgtask.ingest tool - Implement abstract methods (get_spec, validate) for MessageIngestTool
+- [ ] **MEDIUM**: Fix msgtask.parse tool - Implement abstract methods (get_spec, validate) for TaskParserTool
+
+#### Observability Tools (4 tools)
+- [ ] **MEDIUM**: Fix obs.get tool - Implement abstract methods (get_spec, validate) for MetricsTool
+- [ ] **MEDIUM**: Fix obs.health tool - Implement abstract methods (get_spec, validate) for SystemHealthTool
+- [ ] **MEDIUM**: Fix obs.metrics tool - Implement abstract methods (get_spec, validate) for MetricsSnapshotTool
+- [ ] **MEDIUM**: Fix obs.slo tool - Implement abstract methods (get_spec, validate) for SLOCheckTool
+
+### Priority 3: Verification
+- [ ] **MEDIUM**: Re-run toolbelt health audit after fixes - Verify all 18 tools are working
+- [ ] **MEDIUM**: Update toolbelt documentation - Document fixes and update health status
