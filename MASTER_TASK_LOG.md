@@ -58,3 +58,21 @@
 ### Priority 3: Verification
 - [ ] **MEDIUM**: Re-run toolbelt health audit after fixes - Verify all 18 tools are working
 - [ ] **MEDIUM**: Update toolbelt documentation - Document fixes and update health status
+
+## Documentation Cleanup Tasks
+
+### Priority 1: Documentation Analysis & Identification
+- [ ] **MEDIUM**: Analyze documentation sprawl - Run analyze_documentation_sprawl.py to identify safe deletion candidates (duplicates, old session files, unreferenced docs)
+- [ ] **MEDIUM**: Review documentation cleanup candidates - Review docs/DOCUMENTATION_CLEANUP_CANDIDATES_2025-12-14.md and validate deletion candidates
+- [ ] **LOW**: Scan for outdated documentation references - Identify docs marked as OUTDATED, DEPRECATED, or OBSOLETE in docs/ directory
+
+### Priority 2: Documentation Cleanup Execution
+- [ ] **MEDIUM**: Execute obsolete documentation cleanup - Run cleanup_obsolete_docs.py to remove obsolete files from deletion list (batch execution logs, phase logs, merge verification, resolved blockers)
+- [ ] **MEDIUM**: Execute archive-first documentation cleanup - Run cleanup_documentation_refactored.py --execute to archive ephemeral, legacy archive, and agent chatter docs
+- [ ] **LOW**: Cleanup root directory documentation - Run cleanup_root_documentation.py to move outdated root docs to archive (validation reports, session summaries, old status files)
+
+### Priority 3: Documentation Organization
+- [ ] **LOW**: Consolidate duplicate documentation - Identify and merge duplicate documentation files with same content
+- [ ] **LOW**: Archive old session reports - Move session-specific reports older than 30 days to docs/archive/
+- [ ] **LOW**: Update documentation index - Update docs/DOCUMENTATION_INDEX.md after cleanup to reflect current documentation structure
+- [ ] **LOW**: Remove outdated batch references - Update docs referencing Batch 7 (which doesn't exist) to reflect actual batch structure (batches 1-6)
