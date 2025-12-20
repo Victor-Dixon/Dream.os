@@ -233,14 +233,89 @@ def test_contract_leads_api_endpoints() -> Dict[str, Any]:
     return results
 
 
+def discover_thea_endpoints(repo_path: Path) -> List[Dict[str, Any]]:
+    """Discover Thea-specific endpoints (Discord commands, API clients, tools)."""
+    endpoints = []
+    
+    # Discord bot command patterns
+    discord_patterns = [
+        (r'@bot\.command\s*\([^)]*name\s*=\s*["\']([^"\']+)["\']', 'discord_command'),
+        (r'@commands\.command\s*\([^)]*name\s*=\s*["\']([^"\']+)["\']', 'discord_command'),
+        (r'@app\.command\s*\([^)]*name\s*=\s*["\']([^"\']+)["\']', 'discord_command'),
+    ]
+    
+    # API client method patterns
+    api_patterns = [
+        (r'async def (get_user|get_guild|get_channel|send_message|create_channel)\s*\(', 'api_client'),
+        (r'def (get_user|get_guild|get_channel|send_message|create_channel)\s*\(', 'api_client'),
+    ]
+    
+    # Tool/CLI interface patterns
+    tool_patterns = [
+        (r'def (main|run|execute|process|handle)\s*\(', 'tool_interface'),
+        (r'@click\.command|@click\.option', 'cli_tool'),
+    ]
+    
+    # Search Python files
+    for py_file in repo_path.rglob('*.py'):
+        try:
+            content = py_file.read_text(encoding='utf-8', errors='ignore')
+            rel_path = str(py_file.relative_to(repo_path))
+            
+            # Discord commands
+            for pattern, endpoint_type in discord_patterns:
+                matches = re.finditer(pattern, content, re.IGNORECASE)
+                for match in matches:
+                    command_name = match.group(1)
+                    endpoints.append({
+                        'type': endpoint_type,
+                        'name': command_name,
+                        'file': rel_path,
+                        'repo': 'Thea'
+                    })
+            
+            # API client methods
+            for pattern, endpoint_type in api_patterns:
+                matches = re.finditer(pattern, content, re.IGNORECASE)
+                for match in matches:
+                    method_name = match.group(1)
+                    endpoints.append({
+                        'type': endpoint_type,
+                        'name': method_name,
+                        'file': rel_path,
+                        'repo': 'Thea'
+                    })
+            
+            # Tool interfaces
+            for pattern, endpoint_type in tool_patterns:
+                if re.search(pattern, content, re.IGNORECASE):
+                    # Extract function name from context
+                    func_match = re.search(r'def\s+(\w+)\s*\(', content)
+                    if func_match:
+                        tool_name = func_match.group(1)
+                        endpoints.append({
+                            'type': endpoint_type,
+                            'name': tool_name,
+                            'file': rel_path,
+                            'repo': 'Thea'
+                        })
+        except Exception:
+            continue
+    
+    return endpoints
+
+
 def test_thea_api_endpoints() -> Dict[str, Any]:
-    """Test Thea API endpoints."""
+    """Test Thea API endpoints, Discord commands, and tool interfaces."""
     results = {
         "repo": "Thea",
         "endpoints_discovered": [],
         "endpoints_tested": [],
         "endpoints_passed": [],
         "endpoints_failed": [],
+        "discord_commands": [],
+        "api_clients": [],
+        "tool_interfaces": [],
         "errors": []
     }
     
@@ -250,17 +325,50 @@ def test_thea_api_endpoints() -> Dict[str, Any]:
         results["errors"].append("Repository not found")
         return results
     
-    # Discover API endpoints
-    endpoints = discover_api_endpoints(repo_path, "Thea")
-    results["endpoints_discovered"] = [f"{e['method']} {e['path']}" for e in endpoints]
+    # Discover traditional API endpoints
+    api_endpoints = discover_api_endpoints(repo_path, "Thea")
+    
+    # Discover Thea-specific endpoints
+    thea_endpoints = discover_thea_endpoints(repo_path)
+    
+    # Combine and categorize
+    all_endpoints = []
+    
+    # Add traditional API endpoints
+    for endpoint in api_endpoints:
+        endpoint_str = f"{endpoint['method']} {endpoint['path']}"
+        all_endpoints.append({
+            'endpoint': endpoint_str,
+            'type': 'api',
+            'file': endpoint['file']
+        })
+        results["endpoints_discovered"].append(endpoint_str)
+    
+    # Add Thea-specific endpoints
+    for endpoint in thea_endpoints:
+        endpoint_str = f"{endpoint['type']}:{endpoint['name']}"
+        all_endpoints.append({
+            'endpoint': endpoint_str,
+            'type': endpoint['type'],
+            'file': endpoint['file']
+        })
+        results["endpoints_discovered"].append(endpoint_str)
+        
+        # Categorize
+        if endpoint['type'] == 'discord_command':
+            results["discord_commands"].append(endpoint['name'])
+        elif endpoint['type'] == 'api_client':
+            results["api_clients"].append(endpoint['name'])
+        elif endpoint['type'] == 'tool_interface':
+            results["tool_interfaces"].append(endpoint['name'])
     
     # Test endpoint definitions
-    for endpoint in endpoints:
-        endpoint_str = f"{endpoint['method']} {endpoint['path']}"
+    for endpoint_info in all_endpoints:
+        endpoint_str = endpoint_info['endpoint']
         results["endpoints_tested"].append(endpoint_str)
         
-        # Basic validation: endpoint definition exists
-        file_path = repo_path / endpoint['file']
+        # Basic validation: file exists
+        file_path = repo_path / endpoint_info['file']
         if file_path.exists():
             results["endpoints_passed"].append(endpoint_str)
         else:
