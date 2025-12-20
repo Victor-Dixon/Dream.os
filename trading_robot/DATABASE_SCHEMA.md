@@ -147,6 +147,12 @@ Trading session metadata and statistics.
 - `rejected`
 - `expired`
 
+### MetricType
+- `daily`
+- `weekly`
+- `monthly`
+- `all_time`
+
 ## Database Initialization
 
 ### Development (SQLite)
