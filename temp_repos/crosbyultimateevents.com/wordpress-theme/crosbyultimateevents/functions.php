@@ -251,3 +251,8 @@ function crosbyultimateevents_create_blog_page() {
     wp_insert_post($blog_page);
 }
 add_action('after_switch_theme', 'crosbyultimateevents_create_blog_page');
+
+/**
+ * Include A/B Test Functionality
+ */
+require_once get_template_directory() . '/ab-test-hero-headline.php';
