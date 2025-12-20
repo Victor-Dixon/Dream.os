@@ -14,8 +14,12 @@ get_header(); ?>
 <!-- Hero Section -->
 <section class="hero-section">
     <div class="hero-content">
-        <h1>Extraordinary Culinary Experiences & Flawless Event Planning</h1>
-        <p class="hero-subtitle">Premier private chef services and comprehensive event coordination for memorable occasions</p>
+        <?php
+        // Get A/B test variant content
+        $hero_content = crosby_get_hero_content();
+        ?>
+        <h1><?php echo esc_html($hero_content['headline']); ?></h1>
+        <p class="hero-subtitle"><?php echo esc_html($hero_content['subtitle']); ?></p>
         <div class="hero-cta">
             <a href="<?php echo esc_url(home_url('/consultation')); ?>" class="btn-primary btn-large">Book Your Consultation</a>
             <a href="<?php echo esc_url(home_url('/services')); ?>" class="btn-secondary btn-large">Explore Our Services</a>
