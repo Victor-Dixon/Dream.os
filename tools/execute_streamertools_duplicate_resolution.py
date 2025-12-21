@@ -23,12 +23,16 @@ sys.path.insert(0, str(project_root))
 
 try:
     from dotenv import load_dotenv
-from src.core.config.timeout_constants import TimeoutConstants
     env_path = Path('.env')
     if env_path.exists():
         load_dotenv(env_path)
 except ImportError:
     pass
+
+try:
+    from src.core.config.timeout_constants import TimeoutConstants
+except ImportError:
+    TimeoutConstants = None  # Fallback if not available
 
 
 def get_github_token() -> Optional[str]:

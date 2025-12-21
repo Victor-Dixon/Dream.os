@@ -147,7 +147,8 @@ def test_credentials(site_name: str, host: str, username: str, password: str, po
         print(f"   Username: {username}")
         
         ftp = FTP()
-        ftp.connect(host, port, timeout=TimeoutConstants.HTTP_SHORT)
+        timeout_val = TimeoutConstants.HTTP_SHORT if TimeoutConstants else 30
+        ftp.connect(host, port, timeout=timeout_val)
         ftp.login(username, password)
         ftp.quit()
         
@@ -158,10 +159,15 @@ def test_credentials(site_name: str, host: str, username: str, password: str, po
         return False
 
 
+try:
+    from src.core.config.timeout_constants import TimeoutConstants
+except ImportError:
+    TimeoutConstants = None  # Fallback if not available
+
+
 def main():
     """Main CLI interface."""
     import argparse
-from src.core.config.timeout_constants import TimeoutConstants
     
     parser = argparse.ArgumentParser(description="Discover and verify FTP credentials")
     parser.add_argument("--guide", action="store_true", help="Show credential discovery guide")

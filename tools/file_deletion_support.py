@@ -265,7 +265,7 @@ class FileDeletionSupport:
                 cwd=self.project_root,
                 capture_output=True,
                 text=True,
-                timeout=TimeoutConstants.HTTP_EXTENDED,  # 5 minute timeout
+                timeout=TimeoutConstants.HTTP_EXTENDED if TimeoutConstants else 300,  # 5 minute timeout
             )
 
             result["success"] = process.returncode == 0
@@ -342,10 +342,15 @@ class FileDeletionSupport:
         return report_file
 
 
+try:
+    from src.core.config.timeout_constants import TimeoutConstants
+except ImportError:
+    TimeoutConstants = None  # Fallback if not available
+
+
 def main():
     """CLI entry point."""
     import argparse
-from src.core.config.timeout_constants import TimeoutConstants
 
     parser = argparse.ArgumentParser(description="File Deletion Support Tool")
     parser.add_argument(

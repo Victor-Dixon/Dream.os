@@ -18,6 +18,11 @@ from datetime import datetime
 from pathlib import Path
 from typing import List, Dict, Any, Optional
 
+try:
+    from src.core.config.timeout_constants import TimeoutConstants
+except ImportError:
+    TimeoutConstants = None  # Fallback if not available
+
 
 class GitCommitExtractor:
     """Extracts git commits from a repository."""
@@ -73,7 +78,7 @@ class GitCommitExtractor:
                 cmd,
                 capture_output=True,
                 text=True,
-                timeout=TimeoutConstants.HTTP_DEFAULT,
+                timeout=TimeoutConstants.HTTP_DEFAULT if TimeoutConstants else 60,
                 check=False
             )
             
@@ -124,7 +129,7 @@ class GitCommitExtractor:
                 ["git", "-C", str(self.repo_path), "show", "--name-only", "--pretty=format:", commit_hash],
                 capture_output=True,
                 text=True,
-                timeout=TimeoutConstants.HTTP_SHORT,
+                timeout=TimeoutConstants.HTTP_SHORT if TimeoutConstants else 30,
                 check=False
             )
             
@@ -142,7 +147,7 @@ class GitCommitExtractor:
                 ["git", "-C", str(self.repo_path), "show", "--stat", "--pretty=format:", commit_hash],
                 capture_output=True,
                 text=True,
-                timeout=TimeoutConstants.HTTP_SHORT,
+                timeout=TimeoutConstants.HTTP_SHORT if TimeoutConstants else 30,
                 check=False
             )
             
@@ -288,7 +293,6 @@ def main():
     except Exception as e:
         print(f"❌ Unexpected error: {e}", file=sys.stderr)
         import traceback
-from src.core.config.timeout_constants import TimeoutConstants
         traceback.print_exc()
         return 1
 
