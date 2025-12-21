@@ -32,7 +32,15 @@ def _load_coordinates() -> dict[str, dict[str, Any]]:
     logger = logging.getLogger(__name__)
     
     coord_file = Path("cursor_agent_coords.json")
-    data = json.loads(coord_file.read_text(encoding="utf-8"))
+    
+    # Handle missing file gracefully
+    if not coord_file.exists():
+        return {}
+    
+    try:
+        data = json.loads(coord_file.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, IOError):
+        return {}
     
     # Get active agents from mode manager (for logging only)
     try:

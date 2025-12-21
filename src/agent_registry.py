@@ -10,7 +10,16 @@ from typing import Dict, Any
 def _load_coordinates() -> Dict[str, Dict[str, Any]]:
     """Load agent coordinates from the cursor_agent_coords.json SSOT."""
     coord_file = Path("cursor_agent_coords.json")
-    data = json.loads(coord_file.read_text(encoding="utf-8"))
+    
+    # Handle missing file gracefully
+    if not coord_file.exists():
+        return {}
+    
+    try:
+        data = json.loads(coord_file.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, IOError):
+        return {}
+    
     agents: Dict[str, Dict[str, Any]] = {}
     for agent_id, info in data.get("agents", {}).items():
         chat = info.get("chat_input_coordinates", [0, 0])

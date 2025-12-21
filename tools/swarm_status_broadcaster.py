@@ -13,6 +13,7 @@ from pathlib import Path
 from typing import List, Dict, Optional
 from dataclasses import dataclass
 from datetime import datetime
+from src.core.config.timeout_constants import TimeoutConstants
 
 
 @dataclass
@@ -227,7 +228,6 @@ Keep the momentum!
 def main():
     """CLI for swarm broadcasting"""
     import argparse
-from src.core.config.timeout_constants import TimeoutConstants
     
     parser = argparse.ArgumentParser(
         description="Broadcast messages to swarm agents"
