@@ -441,12 +441,18 @@ jobs:
           python -c "import pytest; print('✅ pytest installed')" || (echo "❌ pytest check failed" && exit 1)
 
       - name: 📊 Download coverage artifacts
+        id: download_coverage_artifacts
+        continue-on-error: true
         uses: actions/download-artifact@v4
         with:
           pattern: coverage-*
           path: coverage-artifacts
           merge-multiple: false
-          if-no-artifact-found: warn
+
+      - name: ⚠️ Coverage artifacts missing (non-fatal)
+        if: steps.download_coverage_artifacts.outcome == 'failure'
+        run: |
+          echo "::warning::No artifacts matched pattern 'coverage-*'. Skipping combined coverage generation."
 
       - name: 📈 Generate combined coverage report
         continue-on-error: true
@@ -633,12 +639,18 @@ jobs:
         uses: actions/checkout@v4
 
       - name: 📊 Download test results
+        id: download_test_results
+        continue-on-error: true
         uses: actions/download-artifact@v4
         with:
           pattern: coverage-*
           path: coverage-artifacts
           merge-multiple: false
-          if-no-artifact-found: warn
+
+      - name: ⚠️ Test result artifacts missing (non-fatal)
+        if: steps.download_test_results.outcome == 'failure'
+        run: |
+          echo "::warning::No artifacts matched pattern 'coverage-*' for test summary job."
 
       - name: 📈 Generate test summary
         continue-on-error: true
