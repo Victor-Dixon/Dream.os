@@ -13,6 +13,7 @@ V2 Compliant: Yes (<300 lines)
 
 import ast
 import json
+import sys
 from pathlib import Path
 from typing import Dict, List, Tuple
 from collections import defaultdict
@@ -129,6 +130,14 @@ def generate_cli_framework_plan(categories: Dict[str, List[str]]) -> Dict:
 
 def main():
     """Analyze CLI entry points and generate consolidation plan."""
+    # Handle --help flag
+    if len(sys.argv) > 1 and sys.argv[1] in ('--help', '-h'):
+        print("Usage: python consolidate_cli_entry_points.py [--help]")
+        print("Identifies all CLI entry points (main() functions) and creates a unified CLI framework.")
+        print("\nThis addresses the 100+ duplicate main() functions found in project scan.")
+        print("Analysis saved to: docs/archive/consolidation/cli_consolidation_plan.json")
+        return 0
+    
     print("🔍 Finding CLI entry points...")
     print()
     

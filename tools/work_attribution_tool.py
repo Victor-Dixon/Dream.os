@@ -9,7 +9,7 @@ import subprocess
 import json
 from datetime import datetime, timedelta
 from pathlib import Path
-from typing import Dict, List, Set
+from typing import Dict, List, Set, Optional
 from dataclasses import dataclass, asdict
 from collections import defaultdict
 

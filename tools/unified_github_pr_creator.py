@@ -24,9 +24,27 @@ from datetime import datetime
 project_root = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(project_root))
 
-# SSOT imports
-from src.core.utils.github_utils import get_github_token
-from src.core.config.timeout_constants import TimeoutConstants
+# SSOT imports - use try/except to handle missing dependencies
+try:
+    from src.core.utils.github_utils import get_github_token
+except ImportError:
+    # Fallback: load token from environment
+    def get_github_token() -> Optional[str]:
+        return os.getenv("GITHUB_TOKEN") or os.getenv("GH_TOKEN")
+
+try:
+    from src.core.config.timeout_constants import TimeoutConstants
+except ImportError:
+    class TimeoutConstants:
+        HTTP_QUICK = 5
+        HTTP_SHORT = 10
+        HTTP_MEDIUM = 30
+
+try:
+    import requests
+    REQUESTS_AVAILABLE = True
+except ImportError:
+    REQUESTS_AVAILABLE = False
 
 # Rate limit checking (simplified - tools may be archived)
 def check_gh_cli_rate_limit() -> Dict[str, Any]:

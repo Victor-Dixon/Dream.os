@@ -9,7 +9,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 
-from src.services.thea import TheaService
+from src.services.thea.thea_service import TheaService
 
 print()
 print("=" * 70)

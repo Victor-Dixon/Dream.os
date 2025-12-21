@@ -13,12 +13,15 @@ from pathlib import Path
 # Add src to path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from src.infrastructure.browser.browser_models import BrowserConfig, TheaConfig
-from src.infrastructure.browser.thea_browser_service import TheaBrowserService
+# Imports handled inside functions to avoid import errors at module level
+# BrowserConfig and TheaBrowserService imported when needed
 
 
 def debug_chatgpt_elements():
     """Debug ChatGPT page elements."""
+    from src.infrastructure.browser.browser_models import BrowserConfig, TheaConfig
+    from src.infrastructure.browser.thea_browser_service import TheaBrowserService
+    
     print("🔍 Starting ChatGPT element debugging...")
 
     # Initialize browser

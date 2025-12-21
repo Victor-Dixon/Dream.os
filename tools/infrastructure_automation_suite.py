@@ -19,6 +19,8 @@ import subprocess
 from datetime import datetime
 from pathlib import Path
 
+from src.core.config.timeout_constants import TimeoutConstants
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -150,7 +152,6 @@ class InfrastructureAutomationSuite:
 def main():
     """CLI entry point."""
     import argparse
-from src.core.config.timeout_constants import TimeoutConstants
     
     parser = argparse.ArgumentParser(description="Infrastructure Automation Suite")
     parser.add_argument("--json", action="store_true", help="Output as JSON")

@@ -13,7 +13,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 
-from src.infrastructure.browser import BrowserConfig, TheaBrowserService
+from src.infrastructure.browser.browser_models import BrowserConfig, TheaConfig
+from src.infrastructure.browser.thea_browser_service import TheaBrowserService
 
 
 def interactive_demo():

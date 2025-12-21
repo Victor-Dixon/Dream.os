@@ -17,6 +17,10 @@ import sys
 from pathlib import Path
 from typing import Optional, Dict, Any
 
+# Add project root to path
+project_root = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(project_root))
+
 try:
     import requests
     HAS_REQUESTS = True

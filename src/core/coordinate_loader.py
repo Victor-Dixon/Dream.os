@@ -124,6 +124,10 @@ class CoordinateLoader:
         
         CRITICAL: Always returns chat_input_coordinates, NEVER onboarding coordinates.
         """
+        # Map CAPTAIN to Agent-4
+        if agent_id.upper() == "CAPTAIN":
+            agent_id = "Agent-4"
+        
         # Reload coordinates to ensure we have latest values
         self._reload_coordinates()
         if agent_id in self.coordinates:
@@ -148,6 +152,9 @@ class CoordinateLoader:
 
     def get_onboarding_coordinates(self, agent_id: str) -> tuple[int, int]:
         """Get onboarding coordinates for agent."""
+        # Map CAPTAIN to Agent-4
+        if agent_id.upper() == "CAPTAIN":
+            agent_id = "Agent-4"
         # Reload coordinates to ensure we have latest values
         self._reload_coordinates()
         if agent_id in self.coordinates:

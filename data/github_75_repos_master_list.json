@@ -378,9 +378,9 @@
   "stats": {
     "total_repos": 59,
     "analyzed": 56,
-    "pending": 3,
+    "pending": 19,
     "goldmines": 12,
-    "completion_percent": 94.9,
+    "completion_percent": 74.66666666666667,
     "agents": {
       "Agent-1": {
         "assigned": 10,

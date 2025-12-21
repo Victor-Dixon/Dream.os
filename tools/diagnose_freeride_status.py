@@ -8,12 +8,16 @@ Quick diagnostic for site status issues.
 Author: Agent-3 (Infrastructure & DevOps Specialist)
 """
 
-from src.control_plane.adapters.hostinger.freeride_adapter import get_freeride_adapter
 import re
 import requests
 import sys
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).parent.parent))
+
+# Add project root to path
+project_root = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(project_root))
+
+from src.control_plane.adapters.hostinger.freeride_adapter import get_freeride_adapter
 
 
 def diagnose_site():
@@ -102,5 +106,21 @@ def diagnose_site():
     print()
 
 
-if __name__ == "__main__":
+def main():
+    """Main entry point."""
+    # Handle --help flag
+    if len(sys.argv) > 1 and sys.argv[1] in ('--help', '-h'):
+        print("Usage: python diagnose_freeride_status.py")
+        print("Quick diagnostic for FreeRideInvestor site status issues.")
+        print("\nChecks:")
+        print("  - Main site HTTP status")
+        print("  - wp-admin redirect behavior")
+        print("  - Hostinger adapter status")
+        return 0
+    
     diagnose_site()
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -12,11 +12,12 @@ import subprocess
 import sys
 from pathlib import Path
 from typing import Optional
-from src.core.config.timeout_constants import TimeoutConstants
 
 # Add project root to path
 project_root = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(project_root))
+
+from src.core.config.timeout_constants import TimeoutConstants
 
 
 class IntegrationWorkflow:

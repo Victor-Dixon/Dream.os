@@ -287,7 +287,7 @@ class WordPressAdminDeployer:
 def main():
     """CLI entry point."""
     import argparse
-from src.core.config.timeout_constants import TimeoutConstants
+    from src.core.config.timeout_constants import TimeoutConstants
     
     parser = argparse.ArgumentParser(
         description="Deploy files via WordPress admin"

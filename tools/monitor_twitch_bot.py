@@ -17,6 +17,11 @@ import sys
 import time
 import subprocess
 from pathlib import Path
+
+# Add project root to path
+project_root = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(project_root))
+
 from src.core.config.timeout_constants import TimeoutConstants
 
 def monitor_bot_process():

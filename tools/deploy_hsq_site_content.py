@@ -11,16 +11,18 @@ Date: 2025-12-18
 V2 Compliant: Yes
 """
 
-from tools.wordpress_manager import WordPressManager
-from tools.houstonsipqueen_theme_and_post import get_hsq_theme_css, deploy_css_via_functions_php
 import sys
 import json
 import re
 from pathlib import Path
 from typing import Dict, Any, Optional
 
+# Add project root to path
 project_root = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(project_root))
+
+from tools.wordpress_manager import WordPressManager
+from tools.houstonsipqueen_theme_and_post import get_hsq_theme_css, deploy_css_via_functions_php
 
 try:
     import requests

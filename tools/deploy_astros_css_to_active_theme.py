@@ -35,6 +35,12 @@ def get_astros_css_content() -> str:
 
 def main():
     """Deploy CSS to active theme."""
+    # Handle --help flag
+    if len(sys.argv) > 1 and sys.argv[1] in ('--help', '-h'):
+        print("Usage: python deploy_astros_css_to_active_theme.py")
+        print("Deploys Astros theme CSS directly to the active theme on houstonsipqueen.com")
+        return 0
+
     print("=" * 60)
     print("⚾ Deploy Astros CSS to Active Theme")
     print("=" * 60)

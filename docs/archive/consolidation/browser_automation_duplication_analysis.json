@@ -1,0 +1,5599 @@
+{
+  "files": {
+    "src\\infrastructure\\__init__.py": {
+      "imports": [
+        "",
+        ".unified_browser_service",
+        "",
+        ".unified_logging_time",
+        "",
+        ".unified_persistence"
+      ],
+      "classes": [],
+      "functions": [],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "src\\infrastructure\\infrastructure_health_monitor.py": {
+      "imports": [
+        "logging",
+        "os",
+        "platform",
+        "psutil",
+        "shutil",
+        "dataclasses",
+        "dataclasses.dataclass",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Dict",
+        "typing.List",
+        "typing.Any",
+        "typing.Optional",
+        "src.infrastructure.alerting_system",
+        "src.infrastructure.alerting_system.AlertingSystem",
+        "src.infrastructure.alerting_system.AlertLevel",
+        "argparse",
+        "undetected_chromedriver",
+        "selenium"
+      ],
+      "classes": [
+        "HealthMetrics",
+        "HealthCheckResult",
+        "InfrastructureHealthMonitor"
+      ],
+      "functions": [
+        "main",
+        "__init__",
+        "check_disk_space",
+        "check_memory_usage",
+        "check_cpu_usage",
+        "check_system_load",
+        "check_browser_automation_readiness",
+        "perform_full_health_check",
+        "_get_status_from_percent",
+        "_generate_recommendations",
+        "print_health_report"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": true,
+      "pyautogui_usage": false,
+      "undetected_usage": true
+    },
+    "src\\infrastructure\\unified_browser_service.py": {
+      "imports": [
+        "typing",
+        "typing.Any",
+        "browser.browser_models",
+        "browser.browser_models.BrowserConfig",
+        "browser.browser_models.TheaConfig",
+        "browser.unified_cookie_manager",
+        "browser.unified_cookie_manager.UnifiedCookieManager"
+      ],
+      "classes": [
+        "ChromeBrowserAdapter",
+        "BrowserOperations",
+        "SessionManager",
+        "UnifiedBrowserService"
+      ],
+      "functions": [
+        "create_browser_service",
+        "start",
+        "stop",
+        "is_running",
+        "get_current_url",
+        "get_title",
+        "get_cookies",
+        "add_cookies",
+        "__init__",
+        "navigate_to_conversation",
+        "send_message",
+        "wait_for_response_ready",
+        "get_page_status",
+        "__init__",
+        "create_session",
+        "can_make_request",
+        "record_request",
+        "get_session_info",
+        "get_rate_limit_status",
+        "__init__",
+        "start_browser",
+        "stop_browser",
+        "create_session",
+        "navigate_to_conversation",
+        "send_message",
+        "wait_for_response",
+        "save_cookies",
+        "load_cookies",
+        "can_make_request",
+        "record_request",
+        "get_session_info",
+        "get_rate_limit_status",
+        "get_page_status",
+        "is_browser_running",
+        "has_valid_session",
+        "get_browser_info"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": true
+    },
+    "src\\infrastructure\\browser\\__init__.py": {
+      "imports": [
+        "",
+        ".browser_models",
+        "",
+        ".thea_browser_service",
+        "",
+        ".thea_content_operations",
+        "",
+        ".thea_session_management",
+        "",
+        ".unified",
+        "",
+        ".unified_cookie_manager"
+      ],
+      "classes": [],
+      "functions": [],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "src\\infrastructure\\browser\\browser_models.py": {
+      "imports": [
+        "warnings",
+        "time",
+        "dataclasses",
+        "dataclasses.dataclass",
+        "dataclasses.field",
+        "core.config.timeout_constants",
+        "core.config.timeout_constants.TimeoutConstants",
+        "core.config_ssot",
+        "core.config_ssot.get_unified_config"
+      ],
+      "classes": [
+        "BrowserConfig",
+        "TheaConfig",
+        "SessionInfo",
+        "RateLimitStatus"
+      ],
+      "functions": [
+        "__post_init__"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "src\\infrastructure\\browser\\thea_browser_core.py": {
+      "imports": [
+        "logging",
+        "os",
+        "typing",
+        "typing.Any",
+        "browser_models",
+        "browser_models.BrowserConfig",
+        "browser_models.TheaConfig",
+        "undetected_chromedriver"
+      ],
+      "classes": [
+        "TheaBrowserCore"
+      ],
+      "functions": [
+        "create_thea_browser_core",
+        "__init__",
+        "initialize",
+        "_create_chrome_options",
+        "_configure_driver_timeouts",
+        "close",
+        "is_initialized",
+        "get_driver",
+        "__enter__",
+        "__exit__"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": true
+    },
+    "src\\infrastructure\\browser\\thea_browser_operations.py": {
+      "imports": [
+        "logging",
+        "time",
+        "typing",
+        "typing.Any",
+        "thea_browser_utils",
+        "thea_browser_utils.TheaBrowserUtils",
+        "selenium.webdriver.support",
+        "selenium.webdriver.support.expected_conditions",
+        "selenium.webdriver.support.ui",
+        "selenium.webdriver.support.ui.WebDriverWait",
+        "selenium.webdriver.support",
+        "selenium.webdriver.support.expected_conditions",
+        "selenium.webdriver.support.ui",
+        "selenium.webdriver.support.ui.WebDriverWait",
+        "selenium.webdriver.common.keys",
+        "selenium.webdriver.common.keys.Keys"
+      ],
+      "classes": [
+        "TheaBrowserOperations"
+      ],
+      "functions": [
+        "__init__",
+        "navigate_to",
+        "refresh",
+        "back",
+        "forward",
+        "get_current_url",
+        "get_title",
+        "_safe_driver_call",
+        "ensure_thea_authenticated",
+        "_wait_for_page_ready",
+        "_is_thea_authenticated",
+        "send_prompt_and_get_response_text",
+        "_set_textarea_value",
+        "_get_latest_assistant_message_text",
+        "execute_script",
+        "find_element",
+        "find_elements",
+        "take_screenshot",
+        "get_page_source"
+      ],
+      "webdriver_usage": true,
+      "selenium_usage": true,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "src\\infrastructure\\browser\\thea_browser_service.py": {
+      "imports": [
+        "logging",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Any",
+        "browser_models",
+        "browser_models.BrowserConfig",
+        "browser_models.TheaConfig",
+        "thea_browser_core",
+        "thea_browser_core.TheaBrowserCore",
+        "thea_browser_operations",
+        "thea_browser_operations.TheaBrowserOperations",
+        "thea_browser_utils",
+        "thea_browser_utils.TheaBrowserUtils"
+      ],
+      "classes": [
+        "TheaBrowserService"
+      ],
+      "functions": [
+        "create_thea_browser_service",
+        "__init__",
+        "initialize",
+        "is_initialized",
+        "close",
+        "get_driver",
+        "navigate_to",
+        "ensure_thea_authenticated",
+        "send_prompt_and_get_response_text",
+        "refresh",
+        "back",
+        "forward",
+        "get_current_url",
+        "get_title",
+        "execute_script",
+        "find_element",
+        "find_elements",
+        "take_screenshot",
+        "get_page_source",
+        "_find_prompt_textarea",
+        "_get_prioritized_selectors",
+        "_record_successful_selector",
+        "_is_textarea_ready",
+        "_discover_textarea_dynamically",
+        "_find_send_button",
+        "_get_prioritized_send_selectors",
+        "_is_send_button_ready",
+        "_discover_send_button_near_textarea",
+        "__enter__",
+        "__exit__"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "src\\infrastructure\\browser\\thea_browser_utils.py": {
+      "imports": [
+        "json",
+        "logging",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Any",
+        "datetime",
+        "datetime.datetime"
+      ],
+      "classes": [
+        "TheaBrowserUtils"
+      ],
+      "functions": [
+        "__init__",
+        "cookie_file",
+        "load_cookies",
+        "save_cookies",
+        "get_selector_cache_file",
+        "load_selector_cache",
+        "save_selector_cache",
+        "record_successful_selector"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": true,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "src\\infrastructure\\browser\\thea_content_operations.py": {
+      "imports": [
+        "logging",
+        "re",
+        "time",
+        "dataclasses",
+        "dataclasses.dataclass",
+        "dataclasses.field",
+        "typing",
+        "typing.Any",
+        "selenium.webdriver.common.by",
+        "selenium.webdriver.common.by.By",
+        "selenium.webdriver.common.by",
+        "selenium.webdriver.common.by.By",
+        "selenium.webdriver.common.by",
+        "selenium.webdriver.common.by.By",
+        "pyautogui",
+        "pyperclip"
+      ],
+      "classes": [
+        "ScrapedContent",
+        "TheaContentOperations"
+      ],
+      "functions": [
+        "create_thea_content_operations",
+        "__init__",
+        "collect_response",
+        "_extract_response_text",
+        "_is_response_complete",
+        "scrape_content",
+        "_clean_content",
+        "_extract_metadata",
+        "_calculate_quality",
+        "send_message",
+        "_find_input_element",
+        "_find_send_button",
+        "navigate_to_conversation",
+        "verify_page_loaded",
+        "get_page_text",
+        "wait_with_exponential_backoff"
+      ],
+      "webdriver_usage": true,
+      "selenium_usage": true,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\infrastructure\\browser\\thea_session_management.py": {
+      "imports": [
+        "json",
+        "logging",
+        "os",
+        "time",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Any",
+        "browser_models",
+        "browser_models.RateLimitStatus",
+        "browser_models.SessionInfo"
+      ],
+      "classes": [
+        "TheaSessionManagement"
+      ],
+      "functions": [
+        "create_thea_session_management",
+        "__init__",
+        "save_cookies",
+        "load_cookies",
+        "has_valid_session",
+        "get_session_info_from_cookies",
+        "_persist_cookies",
+        "_load_persisted_cookies",
+        "create_session",
+        "get_session_info",
+        "end_session",
+        "can_make_request",
+        "record_request",
+        "wait_for_rate_limit_reset",
+        "handle_rate_limit_error",
+        "get_rate_limit_status",
+        "cleanup_old_sessions"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": true,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "src\\infrastructure\\browser\\unified_cookie_manager.py": {
+      "imports": [
+        "json",
+        "logging",
+        "os",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Any",
+        "cryptography.fernet",
+        "cryptography.fernet.Fernet",
+        "cryptography.fernet.InvalidToken"
+      ],
+      "classes": [
+        "UnifiedCookieManager"
+      ],
+      "functions": [
+        "__init__",
+        "save_cookies_for_service",
+        "load_cookies_for_service",
+        "has_valid_session",
+        "save_cookies",
+        "load_cookies",
+        "has_valid_cookies",
+        "clear_cookies",
+        "_persist_cookies",
+        "_load_persisted_cookies",
+        "_init_fernet",
+        "_encrypt_cookie_file",
+        "_load_encrypted_cookies",
+        "generate_encryption_key"
+      ],
+      "webdriver_usage": true,
+      "selenium_usage": true,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "src\\infrastructure\\browser\\unified\\driver_manager.py": {
+      "imports": [
+        "logging",
+        "threading",
+        "typing",
+        "typing.Any",
+        "typing.Optional",
+        "undetected_chromedriver",
+        "selenium.webdriver.chrome.service",
+        "selenium.webdriver.chrome.service.Service",
+        "webdriver_manager.chrome",
+        "webdriver_manager.chrome.ChromeDriverManager"
+      ],
+      "classes": [
+        "UnifiedDriverManager"
+      ],
+      "functions": [
+        "__new__",
+        "__init__",
+        "_download_driver_if_needed",
+        "_setup_chrome_options",
+        "get_driver",
+        "close_driver",
+        "__enter__",
+        "__exit__"
+      ],
+      "webdriver_usage": true,
+      "selenium_usage": true,
+      "pyautogui_usage": false,
+      "undetected_usage": true
+    },
+    "src\\core\\__init__.py": {
+      "imports": [
+        "messaging_core",
+        "messaging_core.send_message",
+        "messaging_core.send_message_object",
+        "messaging_core.broadcast_message",
+        "messaging_core.UnifiedMessage",
+        "messaging_core.UnifiedMessageType",
+        "messaging_core.UnifiedMessagePriority",
+        "messaging_core.UnifiedMessageTag",
+        "messaging_core.get_messaging_core",
+        "unified_logging_system",
+        "unified_logging_system.get_logger",
+        "unified_logging_system.get_logging_system",
+        "unified_logging_system.configure_logging",
+        "config_ssot",
+        "config_ssot.get_config",
+        "config_ssot.get_agent_config",
+        "config_ssot.get_timeout_config",
+        "config_ssot.get_browser_config",
+        "config_ssot.get_threshold_config",
+        "config_ssot.UnifiedConfigManager",
+        "coordinate_loader",
+        "coordinate_loader.get_coordinate_loader",
+        "coordinate_loader.CoordinateLoader",
+        "message_queue",
+        "message_queue.MessageQueue",
+        "message_queue.IMessageQueue",
+        "agent_activity_tracker",
+        "agent_activity_tracker.get_activity_tracker",
+        "agent_activity_tracker.AgentActivityTracker",
+        "keyboard_control_lock",
+        "keyboard_control_lock.keyboard_control",
+        "keyboard_control_lock.is_locked",
+        "agent_documentation_service",
+        "agent_documentation_service.AgentDocumentationService",
+        "agent_documentation_service.create_agent_docs"
+      ],
+      "classes": [],
+      "functions": [],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "src\\core\\agent_self_healing_system.py": {
+      "imports": [
+        "__future__",
+        "__future__.annotations",
+        "asyncio",
+        "json",
+        "logging",
+        "time",
+        "datetime",
+        "datetime.datetime",
+        "datetime.date",
+        "dataclasses",
+        "dataclasses.dataclass",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Dict",
+        "typing.List",
+        "typing.Optional",
+        "typing.Any",
+        "typing.Tuple",
+        "self_healing_operations",
+        "self_healing_operations.SelfHealingOperations",
+        "self_healing_integration",
+        "self_healing_integration.SelfHealingIntegration",
+        "self_healing_helpers",
+        "self_healing_helpers.load_agent_coordinates",
+        "self_healing_helpers.load_cancellation_tracking",
+        "self_healing_helpers.record_cancellation",
+        "self_healing_helpers.get_cancellation_count_today",
+        "self_healing_helpers.calculate_healing_stats",
+        "src.orchestrators.overnight.enhanced_agent_activity_detector",
+        "src.orchestrators.overnight.enhanced_agent_activity_detector.EnhancedAgentActivityDetector",
+        "pyautogui"
+      ],
+      "classes": [
+        "HealingAction",
+        "SelfHealingConfig",
+        "AgentSelfHealingSystem"
+      ],
+      "functions": [
+        "get_self_healing_system",
+        "__init__",
+        "get_cancellation_count_today",
+        "start",
+        "stop",
+        "_record_healing",
+        "get_healing_stats",
+        "record_cancel"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\core\\config_browser.py": {
+      "imports": [
+        "warnings",
+        "dataclasses",
+        "dataclasses.dataclass",
+        "dataclasses.field",
+        "config_ssot",
+        "config_ssot.get_config"
+      ],
+      "classes": [
+        "BrowserConfig"
+      ],
+      "functions": [],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "src\\core\\config_ssot.py": {
+      "imports": [
+        "config.config_accessors",
+        "config.config_accessors.get_agent_config",
+        "config.config_accessors.get_browser_config",
+        "config.config_accessors.get_config",
+        "config.config_accessors.get_file_pattern_config",
+        "config.config_accessors.get_report_config",
+        "config.config_accessors.get_test_config",
+        "config.config_accessors.get_threshold_config",
+        "config.config_accessors.get_timeout_config",
+        "config.config_accessors.get_unified_config",
+        "config.config_accessors.reload_config",
+        "config.config_accessors.validate_config",
+        "config.config_dataclasses",
+        "config.config_dataclasses.AgentConfig",
+        "config.config_dataclasses.BrowserConfig",
+        "config.config_dataclasses.FilePatternConfig",
+        "config.config_dataclasses.ReportConfig",
+        "config.config_dataclasses.TestConfiguration",
+        "config.config_dataclasses.ThresholdConfig",
+        "config.config_dataclasses.TimeoutConfig",
+        "config.config_enums",
+        "config.config_enums.ConfigEnvironment",
+        "config.config_enums.ConfigSource",
+        "config.config_enums.ReportFormat",
+        "config.config_manager",
+        "config.config_manager.UnifiedConfigManager"
+      ],
+      "classes": [],
+      "functions": [],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "src\\core\\debate_to_gas_integration.py": {
+      "imports": [
+        "__future__",
+        "__future__.annotations",
+        "datetime",
+        "datetime.datetime",
+        "typing",
+        "typing.Dict",
+        "typing.List",
+        "typing.Optional",
+        "json",
+        "logging",
+        "datetime",
+        "datetime.datetime",
+        "datetime.timezone",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Any",
+        "typing.Dict",
+        "typing.List",
+        "typing.Optional",
+        "src.services.messaging_infrastructure",
+        "src.services.messaging_infrastructure.MessageCoordinator",
+        "src.services.messaging.messaging_models",
+        "src.services.messaging.messaging_models.MessageCategory",
+        "src.services.messaging.messaging_models.UnifiedMessagePriority",
+        "src.services.messaging.messaging_models.UnifiedMessageType",
+        "src.services.messaging.messaging_models.UnifiedMessageTag",
+        "src.services.messaging.messaging_models.UnifiedMessage",
+        "src.services.messaging.messaging_template_dispatcher",
+        "src.services.messaging.messaging_template_dispatcher.render_message",
+        "src.services.messaging_infrastructure",
+        "src.services.messaging_infrastructure.MessageCoordinator",
+        "src.core.messaging_models_core",
+        "src.core.messaging_models_core.MessageCategory",
+        "src.core.messaging_models_core.UnifiedMessagePriority",
+        "src.core.messaging_models_core.UnifiedMessageType",
+        "src.core.messaging_models_core.UnifiedMessageTag",
+        "src.core.messaging_templates",
+        "src.core.messaging_templates.render_message",
+        "src.core.messaging_models_core",
+        "src.core.messaging_models_core.UnifiedMessage",
+        "src.services.messaging.message_coordinator",
+        "src.services.messaging.message_coordinator.MessageCoordinator",
+        "src.core.messaging_models_core",
+        "src.core.messaging_models_core.MessageCategory",
+        "src.core.messaging_models_core.UnifiedMessagePriority",
+        "src.core.messaging_models_core.UnifiedMessageType",
+        "src.core.messaging_models_core.UnifiedMessageTag",
+        "src.core.messaging_models_core.UnifiedMessage",
+        "src.core.messaging_templates",
+        "src.core.messaging_templates.render_message"
+      ],
+      "classes": [
+        "DebateToGasIntegration",
+        "DebateToGasIntegration"
+      ],
+      "functions": [
+        "_utc_now",
+        "_find_project_root",
+        "_safe_import_messaging",
+        "activate_debate_decision",
+        "activate_debate_decision",
+        "__init__",
+        "process_debate_decision",
+        "_store_in_swarm_brain",
+        "_generate_activation_payloads",
+        "_deliver_via_gasline",
+        "_create_execution_tracker",
+        "__init__",
+        "process_debate_decision",
+        "_store_in_swarm_brain",
+        "_generate_activation_messages",
+        "_deliver_via_gasline",
+        "_create_execution_tracker"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\core\\gasline_integrations.py": {
+      "imports": [
+        "json",
+        "logging",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Dict",
+        "typing.List",
+        "typing.Optional",
+        "datetime",
+        "datetime.datetime",
+        "src.core.debate_to_gas_integration",
+        "src.core.debate_to_gas_integration.activate_debate_decision",
+        "src.core.smart_assignment_optimizer",
+        "src.core.smart_assignment_optimizer.SmartAssignmentOptimizer",
+        "src.services.messaging_cli_handlers",
+        "src.services.messaging_cli_handlers.send_message_to_agent",
+        "src.swarm_brain.swarm_memory",
+        "src.swarm_brain.swarm_memory.SwarmMemory"
+      ],
+      "classes": [
+        "GaslineHub"
+      ],
+      "functions": [
+        "activate_on_violations",
+        "activate_on_debate_decision",
+        "__init__",
+        "hook_debate_decision",
+        "hook_violations_found",
+        "_prioritize_violations_with_brain",
+        "_assign_violations_to_agents",
+        "_assign_violations_round_robin",
+        "_send_violation_assignment",
+        "hook_knowledge_request",
+        "_send_knowledge_results",
+        "_send_no_results_guidance",
+        "hook_documentation_migration",
+        "_generate_execution_plan_from_brain"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\core\\keyboard_control_lock.py": {
+      "imports": [
+        "logging",
+        "threading",
+        "contextlib",
+        "contextlib.contextmanager",
+        "typing",
+        "typing.Optional"
+      ],
+      "classes": [],
+      "functions": [
+        "keyboard_control",
+        "is_locked",
+        "get_current_holder",
+        "acquire_lock",
+        "release_lock",
+        "force_release_lock",
+        "get_lock_status"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\core\\message_queue_performance_metrics.py": {
+      "imports": [
+        "json",
+        "logging",
+        "time",
+        "collections",
+        "collections.defaultdict",
+        "dataclasses",
+        "dataclasses.dataclass",
+        "dataclasses.asdict",
+        "datetime",
+        "datetime.datetime",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Any",
+        "typing.Dict",
+        "typing.List",
+        "typing.Optional"
+      ],
+      "classes": [
+        "DeliveryMetric",
+        "PerformanceBaseline",
+        "MessageQueuePerformanceMetrics"
+      ],
+      "functions": [
+        "__init__",
+        "start_delivery_tracking",
+        "end_delivery_tracking",
+        "start_session",
+        "end_session",
+        "calculate_baseline",
+        "save_baseline",
+        "load_baseline",
+        "compare_to_baseline",
+        "get_current_metrics_summary",
+        "_persist_metrics",
+        "_get_empty_baseline"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\core\\messaging_core.py": {
+      "imports": [
+        "__future__",
+        "__future__.annotations",
+        "warnings",
+        "messaging_models",
+        "messaging_models.DeliveryMethod",
+        "messaging_models.RecipientType",
+        "messaging_models.SenderType",
+        "messaging_models.UnifiedMessage",
+        "messaging_models.UnifiedMessagePriority",
+        "messaging_models.UnifiedMessageTag",
+        "messaging_models.UnifiedMessageType",
+        "utils.swarm_time",
+        "utils.swarm_time.format_swarm_timestamp",
+        "utils.swarm_time.get_swarm_time_display",
+        "typing",
+        "typing.Any",
+        "typing.Protocol",
+        "pathlib",
+        "pathlib.Path",
+        "datetime",
+        "datetime.datetime",
+        "logging",
+        "messaging_pyautogui",
+        "messaging_pyautogui.PyAutoGUIMessagingDelivery",
+        "onboarding_service",
+        "onboarding_service.OnboardingService",
+        "agent_mode_manager",
+        "agent_mode_manager.get_active_agents",
+        "agent_mode_manager",
+        "agent_mode_manager.get_active_agents",
+        "agent_mode_manager.get_mode_manager",
+        "repositories.message_repository",
+        "repositories.message_repository.MessageRepository",
+        "core.multi_agent_request_validator",
+        "core.multi_agent_request_validator.get_multi_agent_validator",
+        "services.messaging.policy_loader",
+        "services.messaging.policy_loader.load_template_policy",
+        "services.messaging.policy_loader.resolve_template_by_channel",
+        "services.messaging.policy_loader.resolve_template_by_roles",
+        "src.core.constants.agent_constants",
+        "src.core.constants.agent_constants.AGENT_LIST",
+        "src.core.constants.agent_constants",
+        "src.core.constants.agent_constants.AGENT_LIST",
+        "messaging_models",
+        "messaging_models.MessageCategory",
+        "message_queue",
+        "message_queue.MessageQueue",
+        "core.multi_agent_responder",
+        "core.multi_agent_responder.get_multi_agent_responder",
+        "message_queue",
+        "message_queue.MessageQueue"
+      ],
+      "classes": [
+        "IMessageDelivery",
+        "IOnboardingService",
+        "UnifiedMessagingCore"
+      ],
+      "functions": [
+        "get_messaging_core",
+        "send_message",
+        "send_message_object",
+        "broadcast_message",
+        "generate_onboarding_message",
+        "show_message_history",
+        "list_agents",
+        "get_messaging_logger",
+        "validate_messaging_system",
+        "initialize_messaging_system",
+        "send_message",
+        "generate_onboarding_message",
+        "__init__",
+        "_initialize_subsystems",
+        "send_message",
+        "send_message_object",
+        "show_message_history",
+        "generate_onboarding_message",
+        "broadcast_message",
+        "list_agents",
+        "serialize_value"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\core\\messaging_models.py": {
+      "imports": [
+        "__future__",
+        "__future__.annotations",
+        "uuid",
+        "dataclasses",
+        "dataclasses.dataclass",
+        "dataclasses.field",
+        "datetime",
+        "datetime.datetime",
+        "datetime.timezone",
+        "enum",
+        "enum.Enum",
+        "typing",
+        "typing.Any"
+      ],
+      "classes": [
+        "DeliveryMethod",
+        "UnifiedMessageType",
+        "UnifiedMessagePriority",
+        "MessageCategory",
+        "UnifiedMessageTag",
+        "RecipientType",
+        "SenderType",
+        "UnifiedMessage"
+      ],
+      "functions": [],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\core\\messaging_process_lock.py": {
+      "imports": [
+        "logging",
+        "os",
+        "threading",
+        "time",
+        "pathlib",
+        "pathlib.Path",
+        "msvcrt",
+        "fcntl"
+      ],
+      "classes": [
+        "CrossProcessMessagingLock"
+      ],
+      "functions": [
+        "get_messaging_lock",
+        "with_messaging_lock",
+        "__init__",
+        "acquire",
+        "release",
+        "__enter__",
+        "__exit__",
+        "wrapper"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\core\\messaging_pyautogui.py": {
+      "imports": [
+        "logging",
+        "time",
+        "threading",
+        "keyboard_control_lock",
+        "keyboard_control_lock.keyboard_control",
+        "typing",
+        "typing.Dict",
+        "typing.List",
+        "typing.Callable",
+        "typing.Any",
+        "typing.Optional",
+        "typing.Union",
+        "typing.Tuple",
+        "typing.Set",
+        "pyautogui",
+        "pyperclip",
+        "keyboard_control_lock",
+        "keyboard_control_lock.is_locked",
+        "messaging_core",
+        "messaging_core.UnifiedMessage",
+        "messaging_core.UnifiedMessagePriority",
+        "messaging_core.UnifiedMessageType",
+        "coordinate_loader",
+        "coordinate_loader.get_coordinate_loader",
+        "messaging_models_core",
+        "messaging_models_core.UnifiedMessage",
+        "messaging_models_core.UnifiedMessageType",
+        "messaging_models_core.UnifiedMessagePriority",
+        "messaging_models_core.UnifiedMessageTag",
+        "coordinate_loader",
+        "coordinate_loader.get_coordinate_loader",
+        "messaging_models_core",
+        "messaging_models_core.UnifiedMessageType",
+        "json",
+        "pathlib",
+        "pathlib.Path",
+        "datetime",
+        "datetime.datetime",
+        "messaging_models_core",
+        "messaging_models_core.MessageCategory"
+      ],
+      "classes": [
+        "PyAutoGUIMessagingDelivery"
+      ],
+      "functions": [
+        "get_message_tag",
+        "format_c2a_message",
+        "send_message_pyautogui",
+        "send_message_to_onboarding_coords",
+        "send_message_to_agent",
+        "__init__",
+        "validate_coordinates",
+        "send_message",
+        "_send_message_attempt",
+        "_execute_delivery_operations"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\core\\multi_agent_responder.py": {
+      "imports": [
+        "__future__",
+        "__future__.annotations",
+        "logging",
+        "threading",
+        "time",
+        "datetime",
+        "datetime.datetime",
+        "datetime.timedelta",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Any",
+        "typing.Optional",
+        "dataclasses",
+        "dataclasses.dataclass",
+        "dataclasses.field",
+        "enum",
+        "enum.Enum",
+        "services.messaging_infrastructure",
+        "services.messaging_infrastructure.MessageCoordinator",
+        "core.messaging_models_core",
+        "core.messaging_models_core.UnifiedMessageType",
+        "core.messaging_models_core.UnifiedMessagePriority",
+        "core.messaging_models_core.UnifiedMessageTag",
+        "json"
+      ],
+      "classes": [
+        "ResponseStatus",
+        "AgentResponse",
+        "ResponseCollector",
+        "MultiAgentResponder"
+      ],
+      "functions": [
+        "get_multi_agent_responder",
+        "add_response",
+        "_is_complete",
+        "is_timed_out",
+        "get_missing_agents",
+        "get_response_count",
+        "get_total_expected",
+        "__init__",
+        "_start_timeout_checker",
+        "_check_timeouts",
+        "create_request",
+        "submit_response",
+        "_finalize_collector",
+        "_combine_responses",
+        "get_combined_response",
+        "is_complete",
+        "get_collector_status",
+        "_save_collector",
+        "check_timeouts"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\core\\self_healing_operations.py": {
+      "imports": [
+        "asyncio",
+        "json",
+        "logging",
+        "time",
+        "datetime",
+        "datetime.datetime",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Dict",
+        "typing.Optional",
+        "typing.Tuple"
+      ],
+      "classes": [
+        "SelfHealingOperations"
+      ],
+      "functions": [
+        "__init__"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\core\\unified_config.py": {
+      "imports": [
+        "warnings",
+        "config_ssot",
+        "config_ssot.AgentConfig",
+        "config_ssot.BrowserConfig",
+        "config_ssot.ConfigEnvironment",
+        "config_ssot.ConfigSource",
+        "config_ssot.FilePatternConfig",
+        "config_ssot.ReportConfig",
+        "config_ssot.ReportFormat",
+        "config_ssot.TestConfig",
+        "config_ssot.ThresholdConfig",
+        "config_ssot.TimeoutConfig",
+        "config_ssot.UnifiedConfigManager",
+        "config_ssot.get_agent_config",
+        "config_ssot.get_browser_config",
+        "config_ssot.get_config",
+        "config_ssot.get_file_pattern_config",
+        "config_ssot.get_report_config",
+        "config_ssot.get_test_config",
+        "config_ssot.get_threshold_config",
+        "config_ssot.get_timeout_config",
+        "config_ssot.get_unified_config",
+        "config_ssot.reload_config",
+        "config_ssot.validate_config"
+      ],
+      "classes": [],
+      "functions": [],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "src\\core\\config\\config_accessors.py": {
+      "imports": [
+        "typing",
+        "typing.TYPE_CHECKING",
+        "typing.Any",
+        "config_dataclasses",
+        "config_dataclasses.AgentConfig",
+        "config_dataclasses.BrowserConfig",
+        "config_dataclasses.FilePatternConfig",
+        "config_dataclasses.ReportConfig",
+        "config_dataclasses.TestConfiguration",
+        "config_dataclasses.ThresholdConfig",
+        "config_dataclasses.TimeoutConfig",
+        "config_manager",
+        "config_manager.UnifiedConfigManager",
+        "config_manager",
+        "config_manager._config_manager",
+        "config_manager",
+        "config_manager._config_manager",
+        "config_manager",
+        "config_manager._config_manager",
+        "config_manager",
+        "config_manager._config_manager",
+        "config_manager",
+        "config_manager._config_manager",
+        "config_manager",
+        "config_manager._config_manager",
+        "config_manager",
+        "config_manager._config_manager",
+        "config_manager",
+        "config_manager._config_manager",
+        "config_manager",
+        "config_manager._config_manager",
+        "config_manager",
+        "config_manager._config_manager",
+        "",
+        ".config_manager"
+      ],
+      "classes": [],
+      "functions": [
+        "get_config",
+        "get_unified_config",
+        "get_timeout_config",
+        "get_agent_config",
+        "get_browser_config",
+        "get_threshold_config",
+        "get_file_pattern_config",
+        "get_test_config",
+        "get_report_config",
+        "validate_config",
+        "reload_config"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "src\\core\\config\\config_dataclasses.py": {
+      "imports": [
+        "__future__",
+        "__future__.annotations",
+        "logging",
+        "dataclasses",
+        "dataclasses.dataclass",
+        "dataclasses.field",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Any",
+        "config_enums",
+        "config_enums.ReportFormat",
+        "error_handling.error_models_enums",
+        "error_handling.error_models_enums.RetryStrategy",
+        "enum",
+        "enum.Enum",
+        "random",
+        "test_categories_config",
+        "test_categories_config.get_test_categories"
+      ],
+      "classes": [
+        "TimeoutConfig",
+        "AgentConfig",
+        "BrowserConfig",
+        "ThresholdConfig",
+        "FilePatternConfig",
+        "TestConfiguration",
+        "ReportConfig",
+        "RetryConfig",
+        "CircuitBreakerConfig",
+        "RetryStrategy"
+      ],
+      "functions": [
+        "agent_ids",
+        "alert_rules",
+        "benchmark_targets",
+        "project_patterns",
+        "test_categories",
+        "__post_init__",
+        "calculate_delay",
+        "should_retry",
+        "__post_init__",
+        "timeout_seconds"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": true
+    },
+    "src\\core\\config\\config_manager.py": {
+      "imports": [
+        "__future__",
+        "__future__.annotations",
+        "json",
+        "logging",
+        "os",
+        "datetime",
+        "datetime.datetime",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Any",
+        "dotenv",
+        "dotenv.load_dotenv",
+        "config_dataclasses",
+        "config_dataclasses.AgentConfig",
+        "config_dataclasses.BrowserConfig",
+        "config_dataclasses.FilePatternConfig",
+        "config_dataclasses.ReportConfig",
+        "config_dataclasses.TestConfiguration",
+        "config_dataclasses.ThresholdConfig",
+        "config_dataclasses.TimeoutConfig",
+        "config_enums",
+        "config_enums.ConfigEnvironment",
+        "config_enums.ConfigSource",
+        "src.architecture",
+        "src.architecture.Singleton",
+        "src.architecture.design_patterns",
+        "src.architecture.design_patterns.Singleton"
+      ],
+      "classes": [
+        "UnifiedConfigManager"
+      ],
+      "functions": [
+        "__init__",
+        "_load_environment",
+        "get",
+        "_convert_type",
+        "validate",
+        "set",
+        "get_all_configs",
+        "get_config_metadata",
+        "reload_configs",
+        "get_config_history",
+        "save_to_file",
+        "load_from_file",
+        "get_status",
+        "_record_event"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "src\\core\\constants\\agent_constants.py": {
+      "imports": [],
+      "classes": [],
+      "functions": [
+        "get_agent_role",
+        "get_agent_coordinates",
+        "is_valid_agent"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\core\\session\\rate_limited_session_manager.py": {
+      "imports": [
+        "time",
+        "dataclasses",
+        "dataclasses.dataclass",
+        "dataclasses.field",
+        "typing",
+        "typing.Any",
+        "base_session_manager",
+        "base_session_manager.BaseSessionInfo",
+        "base_session_manager.BaseSessionManager"
+      ],
+      "classes": [
+        "RateLimitStatus",
+        "RateLimitedSessionInfo",
+        "RateLimitedSessionManager"
+      ],
+      "functions": [
+        "__init__",
+        "create_session",
+        "validate_session",
+        "can_make_request",
+        "record_request",
+        "wait_for_rate_limit_reset",
+        "handle_rate_limit_error",
+        "get_rate_limit_status",
+        "reset_rate_limit"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "src\\core\\utilities\\validation_utilities.py": {
+      "imports": [
+        "re",
+        "collections.abc",
+        "collections.abc.Callable",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Any"
+      ],
+      "classes": [],
+      "functions": [
+        "validate_import_syntax",
+        "validate_import_pattern",
+        "validate_file_path",
+        "validate_config",
+        "validate_session",
+        "validate_coordinates",
+        "validate_forecast_accuracy",
+        "validate_hasattr",
+        "validate_type",
+        "validate_not_none",
+        "validate_not_empty",
+        "validate_range",
+        "validate_regex",
+        "validate_custom"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\core\\message_queue_processor\\core\\processor.py": {
+      "imports": [
+        "logging",
+        "time",
+        "typing",
+        "typing.Any",
+        "typing.Optional",
+        "core.message_queue",
+        "core.message_queue.MessageQueue",
+        "core.message_queue.QueueConfig",
+        "core.message_queue_persistence",
+        "core.message_queue_persistence.QueueEntry",
+        "processing.message_parser",
+        "processing.message_parser.parse_message_data",
+        "processing.message_validator",
+        "processing.message_validator.validate_message_data",
+        "processing.message_router",
+        "processing.message_router.route_message_delivery",
+        "processing.delivery_inbox",
+        "processing.delivery_inbox.deliver_fallback_inbox",
+        "processing.delivery_core",
+        "processing.delivery_core.deliver_via_core",
+        "handlers.error_handler",
+        "handlers.error_handler.handle_delivery_error",
+        "handlers.retry_handler",
+        "handlers.retry_handler.should_retry_delivery",
+        "handlers.retry_handler.handle_retry_failure",
+        "handlers.retry_handler.handle_retry_scheduled",
+        "utils.queue_utilities",
+        "utils.queue_utilities.safe_dequeue",
+        "utils.queue_utilities.get_activity_tracker",
+        "utils.queue_utilities.mark_agent_delivering",
+        "utils.queue_utilities.mark_agent_inactive",
+        "message_queue_performance_metrics",
+        "message_queue_performance_metrics.MessageQueuePerformanceMetrics"
+      ],
+      "classes": [
+        "MessageQueueProcessor"
+      ],
+      "functions": [
+        "__init__",
+        "process_queue",
+        "_deliver_entry"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\core\\message_queue_processor\\processing\\message_router.py": {
+      "imports": [
+        "logging",
+        "typing",
+        "typing.Any",
+        "typing.Callable",
+        "typing.Optional",
+        "utils.agent_queue_status",
+        "utils.agent_queue_status.AgentQueueStatus"
+      ],
+      "classes": [],
+      "functions": [
+        "route_message_delivery"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\core\\message_queue_processor\\processing\\delivery_core.py": {
+      "imports": [
+        "logging",
+        "typing",
+        "typing.Any",
+        "typing.Optional",
+        "messaging_models_core",
+        "messaging_models_core.UnifiedMessageType",
+        "messaging_models_core.UnifiedMessagePriority",
+        "messaging_models_core.UnifiedMessageTag",
+        "messaging_core",
+        "messaging_core.send_message",
+        "keyboard_control_lock",
+        "keyboard_control_lock.keyboard_control",
+        "messaging_models_core",
+        "messaging_models_core.MessageCategory"
+      ],
+      "classes": [],
+      "functions": [
+        "deliver_via_core"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\core\\message_queue_processor\\processing\\delivery_inbox.py": {
+      "imports": [
+        "logging",
+        "typing",
+        "typing.Optional",
+        "utils.inbox_utility",
+        "utils.inbox_utility.create_inbox_message"
+      ],
+      "classes": [],
+      "functions": [
+        "deliver_fallback_inbox"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\core\\message_queue_processor\\handlers\\error_handler.py": {
+      "imports": [
+        "logging",
+        "typing",
+        "typing.Any",
+        "typing.Optional"
+      ],
+      "classes": [],
+      "functions": [
+        "handle_delivery_error"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\core\\message_queue\\core\\processor.py": {
+      "imports": [
+        "logging",
+        "time",
+        "typing",
+        "typing.Any",
+        "typing.Optional",
+        "core.message_queue",
+        "core.message_queue.MessageQueue",
+        "core.message_queue.QueueConfig",
+        "core.message_queue_persistence",
+        "core.message_queue_persistence.QueueEntry",
+        "processing.message_parser",
+        "processing.message_parser.parse_message_data",
+        "processing.message_validator",
+        "processing.message_validator.validate_message_data",
+        "processing.message_router",
+        "processing.message_router.route_message_delivery",
+        "handlers.error_handler",
+        "handlers.error_handler.handle_delivery_error",
+        "handlers.retry_handler",
+        "handlers.retry_handler.should_retry_delivery",
+        "handlers.retry_handler.handle_retry_failure",
+        "handlers.retry_handler.handle_retry_scheduled",
+        "utils.queue_utilities",
+        "utils.queue_utilities.safe_dequeue",
+        "utils.queue_utilities.get_activity_tracker",
+        "utils.queue_utilities.mark_agent_delivering",
+        "utils.queue_utilities.mark_agent_inactive",
+        "src.core.message_queue_performance_metrics",
+        "src.core.message_queue_performance_metrics.MessageQueuePerformanceMetrics",
+        "src.core.messaging_models_core",
+        "src.core.messaging_models_core.UnifiedMessageType",
+        "src.core.messaging_models_core.UnifiedMessagePriority",
+        "src.core.messaging_models_core.UnifiedMessageTag",
+        "utils.inbox_utility",
+        "utils.inbox_utility.create_inbox_message",
+        "core.messaging_core",
+        "core.messaging_core.send_message",
+        "core.keyboard_control_lock",
+        "core.keyboard_control_lock.keyboard_control",
+        "src.core.messaging_models_core",
+        "src.core.messaging_models_core.MessageCategory"
+      ],
+      "classes": [
+        "MessageQueueProcessor"
+      ],
+      "functions": [
+        "__init__",
+        "process_queue",
+        "_deliver_entry",
+        "_deliver_via_core",
+        "_deliver_fallback_inbox"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\core\\message_queue\\processing\\message_router.py": {
+      "imports": [
+        "logging",
+        "typing",
+        "typing.Any",
+        "typing.Callable",
+        "typing.Optional",
+        "utils.agent_queue_status",
+        "utils.agent_queue_status.AgentQueueStatus"
+      ],
+      "classes": [],
+      "functions": [
+        "route_message_delivery"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\core\\message_queue\\handlers\\error_handler.py": {
+      "imports": [
+        "logging",
+        "typing",
+        "typing.Any",
+        "typing.Optional"
+      ],
+      "classes": [],
+      "functions": [
+        "handle_delivery_error"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\services\\messaging_cli_formatters.py": {
+      "imports": [],
+      "classes": [],
+      "functions": [],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\services\\messaging_cli_handlers.py": {
+      "imports": [
+        "logging",
+        "time",
+        "pyautogui",
+        "src.core.coordinate_loader",
+        "src.core.coordinate_loader.get_coordinate_loader",
+        "src.core.gamification.autonomous_competition_system",
+        "src.core.gamification.autonomous_competition_system.get_competition_system",
+        "src.core.messaging_core",
+        "src.core.messaging_core.UnifiedMessagePriority",
+        "src.core.messaging_core.UnifiedMessageTag",
+        "src.core.messaging_core.UnifiedMessageType",
+        "src.core.messaging_core.send_message",
+        "src.core.config.timeout_constants",
+        "src.core.config.timeout_constants.TimeoutConstants",
+        "messaging_cli_formatters",
+        "messaging_cli_formatters.AGENT_ASSIGNMENTS",
+        "messaging_cli_formatters.ASSIGNMENT_MESSAGE_TEMPLATE",
+        "messaging_cli_formatters.CONSOLIDATION_MESSAGE_TEMPLATE",
+        "messaging_cli_formatters.SURVEY_MESSAGE_TEMPLATE",
+        "src.core.constants.agent_constants",
+        "src.core.constants.agent_constants.AGENT_LIST",
+        "src.core.agent_mode_manager",
+        "src.core.agent_mode_manager.get_active_agents",
+        "src.core.agent_mode_manager.is_agent_active",
+        "messaging_infrastructure",
+        "messaging_infrastructure.MessageCoordinator",
+        "src.core.agent_mode_manager",
+        "src.core.agent_mode_manager.get_active_agents"
+      ],
+      "classes": [
+        "MessageCoordinator"
+      ],
+      "functions": [
+        "send_message_pyautogui",
+        "send_message_to_onboarding_coords",
+        "handle_message",
+        "handle_survey",
+        "handle_consolidation",
+        "handle_coordinates",
+        "handle_start_agents",
+        "handle_save",
+        "handle_leaderboard",
+        "send_to_agent",
+        "broadcast_to_all",
+        "coordinate_survey",
+        "coordinate_consolidation"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\services\\messaging_cli_parser.py": {
+      "imports": [
+        "argparse"
+      ],
+      "classes": [],
+      "functions": [
+        "create_messaging_parser"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\services\\messaging_handlers.py": {
+      "imports": [
+        "src.core.messaging_core",
+        "src.core.messaging_core.UnifiedMessageType",
+        "src.core.messaging_core.broadcast_message",
+        "src.core.messaging_core.send_message",
+        "src.services.messaging_infrastructure",
+        "src.services.messaging_infrastructure.MessageCoordinator"
+      ],
+      "classes": [],
+      "functions": [
+        "handle_message",
+        "handle_broadcast"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\services\\messaging_infrastructure.py": {
+      "imports": [
+        "__future__",
+        "__future__.annotations",
+        "messaging",
+        "messaging.create_messaging_parser",
+        "messaging._apply_template",
+        "messaging._format_multi_agent_request_message",
+        "messaging._format_normal_message_with_instructions",
+        "messaging._is_ack_text",
+        "messaging._load_last_inbound_categories",
+        "messaging._map_category_from_type",
+        "messaging._save_last_inbound_categories",
+        "messaging.send_message_pyautogui",
+        "messaging.send_message_to_onboarding_coords",
+        "messaging.MessageCoordinator",
+        "messaging.ConsolidatedMessagingService",
+        "messaging.send_discord_message",
+        "messaging.broadcast_discord_message",
+        "messaging.handle_cycle_v2_message",
+        "messaging.handle_message",
+        "messaging.handle_survey",
+        "messaging.handle_consolidation",
+        "messaging.handle_coordinates",
+        "messaging.handle_start_agents",
+        "messaging.handle_save",
+        "messaging.handle_leaderboard",
+        "src.core.constants.agent_constants",
+        "src.core.constants.agent_constants.AGENT_LIST",
+        "src.utils.swarm_time",
+        "src.utils.swarm_time.get_swarm_time_display"
+      ],
+      "classes": [
+        "SendMode"
+      ],
+      "functions": [],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\services\\unified_messaging_service.py": {
+      "imports": [
+        "typing",
+        "typing.Any",
+        "src.core.base.base_service",
+        "src.core.base.base_service.BaseService",
+        "messaging_infrastructure",
+        "messaging_infrastructure.ConsolidatedMessagingService"
+      ],
+      "classes": [
+        "UnifiedMessagingService"
+      ],
+      "functions": [
+        "__init__",
+        "send_message",
+        "broadcast_message"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\services\\chatgpt\\cli.py": {
+      "imports": [
+        "argparse",
+        "asyncio",
+        "json",
+        "sys",
+        "extractor",
+        "extractor.ConversationExtractor",
+        "navigator",
+        "navigator.ChatGPTNavigator",
+        "session",
+        "session.BrowserSessionManager"
+      ],
+      "classes": [],
+      "functions": [
+        "create_chatgpt_parser",
+        "list_conversations",
+        "show_conversation",
+        "show_info",
+        "main"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "src\\services\\chatgpt\\extractor_message_parser.py": {
+      "imports": [
+        "logging",
+        "time",
+        "typing",
+        "typing.Any",
+        "playwright.async_api",
+        "playwright.async_api.Page"
+      ],
+      "classes": [
+        "MessageParser"
+      ],
+      "functions": [
+        "__init__"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "src\\services\\chatgpt\\extractor_storage.py": {
+      "imports": [
+        "json",
+        "logging",
+        "time",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Any"
+      ],
+      "classes": [
+        "ConversationStorage"
+      ],
+      "functions": [
+        "__init__",
+        "save_conversation",
+        "load_conversation",
+        "list_conversations",
+        "cleanup_old_conversations",
+        "get_storage_info"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "src\\services\\chatgpt\\extractor.py": {
+      "imports": [
+        "logging",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Any",
+        "core.base.base_service",
+        "core.base.base_service.BaseService",
+        "extractor_message_parser",
+        "extractor_message_parser.MessageParser",
+        "extractor_storage",
+        "extractor_storage.ConversationStorage",
+        "playwright.async_api",
+        "playwright.async_api.Page",
+        "core.config_ssot",
+        "core.config_ssot.get_unified_config",
+        "core.unified_logging_system",
+        "core.unified_logging_system.get_logger"
+      ],
+      "classes": [
+        "ConversationExtractor"
+      ],
+      "functions": [
+        "__init__",
+        "save_conversation",
+        "load_conversation",
+        "list_conversations",
+        "cleanup_old_conversations",
+        "get_extraction_info",
+        "get_unified_config",
+        "get_logger"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "src\\services\\chatgpt\\navigator.py": {
+      "imports": [
+        "asyncio",
+        "time",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Optional",
+        "typing.Dict",
+        "typing.Any",
+        "logging",
+        "core.base.base_service",
+        "core.base.base_service.BaseService",
+        "playwright.async_api",
+        "playwright.async_api.BrowserContext",
+        "playwright.async_api.Page",
+        "infrastructure.browser",
+        "infrastructure.browser.UnifiedBrowserService",
+        "core.config_ssot",
+        "core.config_ssot.get_unified_config",
+        "core.unified_logging_system",
+        "core.unified_logging_system.get_logger",
+        "playwright.async_api",
+        "playwright.async_api.async_playwright"
+      ],
+      "classes": [
+        "ChatGPTNavigator",
+        "UnifiedBrowserService"
+      ],
+      "functions": [
+        "__init__",
+        "get_active_page",
+        "get_navigation_info",
+        "get_unified_config",
+        "get_logger"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "src\\services\\chatgpt\\session.py": {
+      "imports": [
+        "json",
+        "logging",
+        "time",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Any",
+        "playwright.async_api",
+        "playwright.async_api.BrowserContext",
+        "playwright.async_api.Cookie",
+        "core.session.base_session_manager",
+        "core.session.base_session_manager.BaseSessionInfo",
+        "core.session.base_session_manager.BaseSessionManager",
+        "core.config_ssot",
+        "core.config_ssot.get_unified_config",
+        "core.unified_logging_system",
+        "core.unified_logging_system.get_logger",
+        "src.core.config.timeout_constants",
+        "src.core.config.timeout_constants.TimeoutConstants"
+      ],
+      "classes": [
+        "BrowserSessionManager",
+        "BaseSessionManager"
+      ],
+      "functions": [
+        "__init__",
+        "clear_session",
+        "get_session_info",
+        "is_session_valid",
+        "create_session",
+        "validate_session",
+        "get_unified_config",
+        "get_logger",
+        "__init__",
+        "session_exists",
+        "update_session_activity",
+        "_generate_session_id"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "src\\services\\handlers\\command_handler.py": {
+      "imports": [
+        "logging",
+        "time",
+        "typing",
+        "typing.Any",
+        "core.base.base_service",
+        "core.base.base_service.BaseService",
+        "agent_registry",
+        "agent_registry.format_agent_list",
+        "utils.agent_registry",
+        "utils.agent_registry.list_agents",
+        "infrastructure.infrastructure_health_monitor",
+        "infrastructure.infrastructure_health_monitor.InfrastructureHealthMonitor"
+      ],
+      "classes": [
+        "CommandHandler"
+      ],
+      "functions": [
+        "can_handle",
+        "__init__",
+        "get_command_statistics",
+        "format_agent_list",
+        "registry_list_agents"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "src\\services\\helpers\\task_repo_loader.py": {
+      "imports": [
+        "sqlite3",
+        "collections.abc",
+        "collections.abc.Iterable",
+        "contextlib",
+        "contextlib.contextmanager",
+        "datetime",
+        "datetime.datetime"
+      ],
+      "classes": [
+        "SimpleTask",
+        "SimpleTaskRepository"
+      ],
+      "functions": [
+        "__init__",
+        "is_assigned",
+        "is_completed",
+        "is_pending",
+        "assign_to",
+        "complete",
+        "__init__",
+        "_init_db",
+        "_get_connection",
+        "get",
+        "get_pending",
+        "save",
+        "list_all",
+        "_row_to_task",
+        "_task_to_row"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "src\\services\\messaging\\__init__.py": {
+      "imports": [
+        "__future__",
+        "__future__.annotations",
+        "cli_parser",
+        "cli_parser.create_messaging_parser",
+        "message_formatters",
+        "message_formatters._apply_template",
+        "message_formatters._format_multi_agent_request_message",
+        "message_formatters._format_normal_message_with_instructions",
+        "message_formatters._is_ack_text",
+        "message_formatters._load_last_inbound_categories",
+        "message_formatters._map_category_from_type",
+        "message_formatters._save_last_inbound_categories",
+        "delivery_handlers",
+        "delivery_handlers.send_message_pyautogui",
+        "delivery_handlers.send_message_to_onboarding_coords",
+        "coordination_handlers",
+        "coordination_handlers.MessageCoordinator",
+        "service_adapters",
+        "service_adapters.ConsolidatedMessagingService",
+        "service_adapters.send_discord_message",
+        "service_adapters.broadcast_discord_message",
+        "cli_handlers",
+        "cli_handlers.handle_cycle_v2_message",
+        "cli_handlers.handle_message",
+        "cli_handlers.handle_survey",
+        "cli_handlers.handle_consolidation",
+        "cli_handlers.handle_coordinates",
+        "cli_handlers.handle_start_agents",
+        "cli_handlers.handle_save",
+        "cli_handlers.handle_leaderboard"
+      ],
+      "classes": [],
+      "functions": [],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\services\\messaging\\agent_message_handler.py": {
+      "imports": [
+        "__future__",
+        "__future__.annotations",
+        "logging",
+        "typing",
+        "typing.Any",
+        "typing.Dict",
+        "typing.Optional",
+        "src.core.messaging_core",
+        "src.core.messaging_core.UnifiedMessagePriority",
+        "src.core.messaging_core.UnifiedMessageTag",
+        "src.core.messaging_core.UnifiedMessageType",
+        "src.core.messaging_core.send_message",
+        "src.core.messaging_models_core",
+        "src.core.messaging_models_core.MessageCategory",
+        "agent_message_helpers",
+        "agent_message_helpers.build_queue_metadata",
+        "agent_message_helpers.detect_and_determine_sender",
+        "agent_message_helpers.format_message_for_queue",
+        "agent_message_helpers.handle_blocked_message",
+        "agent_message_helpers.send_message_with_fallback",
+        "agent_message_helpers.send_validated_message",
+        "agent_message_helpers.update_last_inbound_category",
+        "agent_message_helpers.validate_and_prepare_message",
+        "message_formatters",
+        "message_formatters._map_category_from_type"
+      ],
+      "classes": [],
+      "functions": [
+        "send_to_agent"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\services\\messaging\\agent_message_helpers.py": {
+      "imports": [
+        "__future__",
+        "__future__.annotations",
+        "logging",
+        "typing",
+        "typing.Any",
+        "typing.Dict",
+        "typing.Optional",
+        "src.core.messaging_core",
+        "src.core.messaging_core.UnifiedMessageTag",
+        "src.core.messaging_models_core",
+        "src.core.messaging_models_core.MessageCategory",
+        "message_formatters",
+        "message_formatters._apply_template",
+        "message_formatters._format_normal_message_with_instructions",
+        "message_formatters._is_ack_text",
+        "message_formatters._load_last_inbound_categories",
+        "message_formatters._save_last_inbound_categories",
+        "core.multi_agent_request_validator",
+        "core.multi_agent_request_validator.get_multi_agent_validator",
+        "src.core.messaging_core",
+        "src.core.messaging_core.send_message",
+        "src.core.messaging_core.UnifiedMessageTag",
+        "logging",
+        "src.core.messaging_core",
+        "src.core.messaging_core.UnifiedMessageType",
+        "uuid"
+      ],
+      "classes": [],
+      "functions": [
+        "check_ack_blocked",
+        "validate_recipient_can_receive",
+        "build_queue_metadata",
+        "format_message_for_queue",
+        "enqueue_message",
+        "update_last_inbound_category",
+        "send_message_with_fallback",
+        "detect_and_determine_sender",
+        "send_via_queue",
+        "send_via_fallback",
+        "handle_blocked_message",
+        "send_validated_message",
+        "validate_and_prepare_message"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\services\\messaging\\broadcast_handler.py": {
+      "imports": [
+        "__future__",
+        "__future__.annotations",
+        "logging",
+        "time",
+        "typing",
+        "typing.Optional",
+        "src.core.constants.agent_constants",
+        "src.core.constants.agent_constants.AGENT_LIST",
+        "src.core.messaging_core",
+        "src.core.messaging_core.UnifiedMessagePriority",
+        "src.core.messaging_core.UnifiedMessageTag",
+        "src.core.messaging_core.UnifiedMessageType",
+        "src.core.messaging_core.send_message",
+        "broadcast_helpers",
+        "broadcast_helpers.build_broadcast_metadata",
+        "broadcast_helpers.process_broadcast_agents",
+        "broadcast_helpers.send_broadcast_fallback",
+        "message_formatters",
+        "message_formatters._format_normal_message_with_instructions",
+        "core.multi_agent_request_validator",
+        "core.multi_agent_request_validator.get_multi_agent_validator",
+        "broadcast_helpers",
+        "broadcast_helpers.execute_broadcast_delivery"
+      ],
+      "classes": [],
+      "functions": [
+        "broadcast_to_all"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\services\\messaging\\broadcast_helpers.py": {
+      "imports": [
+        "__future__",
+        "__future__.annotations",
+        "logging",
+        "time",
+        "typing",
+        "typing.Any",
+        "typing.Dict",
+        "typing.List",
+        "src.core.messaging_core",
+        "src.core.messaging_core.UnifiedMessagePriority",
+        "src.core.messaging_core.UnifiedMessageTag",
+        "src.core.messaging_core.UnifiedMessageType",
+        "src.core.messaging_core.send_message",
+        "src.core.agent_mode_manager",
+        "src.core.agent_mode_manager.get_active_agents",
+        "core.keyboard_control_lock",
+        "core.keyboard_control_lock.keyboard_control",
+        "src.core.constants.agent_constants",
+        "src.core.constants.agent_constants.AGENT_LIST",
+        "message_formatters",
+        "message_formatters._format_normal_message_with_instructions"
+      ],
+      "classes": [],
+      "functions": [
+        "validate_agent_for_broadcast",
+        "build_broadcast_metadata",
+        "enqueue_broadcast_message",
+        "process_broadcast_agents",
+        "execute_broadcast_delivery",
+        "send_broadcast_fallback",
+        "get_swarm_agents",
+        "get_swarm_agents"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\services\\messaging\\cli_handler_helpers.py": {
+      "imports": [
+        "__future__",
+        "__future__.annotations",
+        "time",
+        "datetime",
+        "datetime.datetime",
+        "typing",
+        "typing.Any",
+        "src.core.messaging_core",
+        "src.core.messaging_core.UnifiedMessagePriority",
+        "message_formatters",
+        "message_formatters.MessageCategory",
+        "message_formatters.MESSAGE_TEMPLATES",
+        "coordination_handlers",
+        "coordination_handlers.MessageCoordinator",
+        "coordination_handlers",
+        "coordination_handlers.MessageCoordinator"
+      ],
+      "classes": [],
+      "functions": [
+        "normalize_priority",
+        "validate_cycle_v2_fields",
+        "format_cycle_v2_template",
+        "prepare_cycle_v2_message",
+        "send_broadcast_message",
+        "send_single_agent_message",
+        "handle_message_result",
+        "route_message_delivery"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\services\\messaging\\cli_handlers.py": {
+      "imports": [
+        "__future__",
+        "__future__.annotations",
+        "logging",
+        "time",
+        "datetime",
+        "datetime.datetime",
+        "typing",
+        "typing.Any",
+        "src.core.constants.agent_constants",
+        "src.core.constants.agent_constants.AGENT_LIST",
+        "src.core.coordinate_loader",
+        "src.core.coordinate_loader.get_coordinate_loader",
+        "src.core.gamification.autonomous_competition_system",
+        "src.core.gamification.autonomous_competition_system.get_competition_system",
+        "src.core.messaging_core",
+        "src.core.messaging_core.UnifiedMessagePriority",
+        "src.core.messaging_models_core",
+        "src.core.messaging_models_core.MessageCategory",
+        "src.core.messaging_models_core.MESSAGE_TEMPLATES",
+        "pyautogui",
+        "coordination_handlers",
+        "coordination_handlers.MessageCoordinator",
+        "delivery_handlers",
+        "delivery_handlers.send_message_to_onboarding_coords",
+        "cli_handler_helpers",
+        "cli_handler_helpers.send_cycle_v2_message",
+        "cli_handler_helpers.validate_cycle_v2_fields",
+        "cli_handler_helpers",
+        "cli_handler_helpers.normalize_priority",
+        "cli_handler_helpers.route_message_delivery",
+        "src.core.agent_mode_manager",
+        "src.core.agent_mode_manager.get_active_agents",
+        "src.core.agent_mode_manager.is_agent_active",
+        "traceback"
+      ],
+      "classes": [],
+      "functions": [
+        "handle_cycle_v2_message",
+        "handle_message",
+        "handle_survey",
+        "handle_consolidation",
+        "handle_coordinates",
+        "handle_start_agents",
+        "handle_save",
+        "handle_leaderboard"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\services\\messaging\\cli_parser.py": {
+      "imports": [
+        "__future__",
+        "__future__.annotations",
+        "argparse",
+        "typing",
+        "typing.Any",
+        "cli_parser_helpers",
+        "cli_parser_helpers.add_core_messaging_args",
+        "cli_parser_helpers.add_coordination_flags",
+        "cli_parser_helpers.add_cycle_v2_flags",
+        "cli_parser_helpers.add_infrastructure_flags",
+        "cli_parser_helpers.add_message_options",
+        "cli_parser_helpers.add_onboarding_flags",
+        "cli_parser_helpers.add_task_system_flags",
+        "cli_parser_helpers.add_utility_flags"
+      ],
+      "classes": [],
+      "functions": [
+        "create_messaging_parser"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\services\\messaging\\cli_parser_helpers.py": {
+      "imports": [
+        "__future__",
+        "__future__.annotations",
+        "argparse",
+        "typing",
+        "typing.Any"
+      ],
+      "classes": [],
+      "functions": [
+        "add_core_messaging_args",
+        "add_message_options",
+        "add_coordination_flags",
+        "add_utility_flags",
+        "add_task_system_flags",
+        "add_onboarding_flags",
+        "add_cycle_v2_flags",
+        "add_infrastructure_flags"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\services\\messaging\\coordination_handlers.py": {
+      "imports": [
+        "__future__",
+        "__future__.annotations",
+        "logging",
+        "typing",
+        "typing.Any",
+        "typing.Dict",
+        "typing.Optional",
+        "src.core.messaging_core",
+        "src.core.messaging_core.UnifiedMessagePriority",
+        "src.core.messaging_models_core",
+        "src.core.messaging_models_core.MessageCategory",
+        "src.utils.swarm_time",
+        "src.utils.swarm_time.get_swarm_time_display",
+        "broadcast_handler",
+        "broadcast_handler.broadcast_to_all",
+        "message_formatters",
+        "message_formatters.CONSOLIDATION_MESSAGE_TEMPLATE",
+        "message_formatters.SURVEY_MESSAGE_TEMPLATE",
+        "agent_message_handler",
+        "agent_message_handler.send_to_agent",
+        "multi_agent_request_handler",
+        "multi_agent_request_handler.send_multi_agent_request",
+        "coordination_helpers",
+        "coordination_helpers.detect_sender",
+        "coordination_helpers",
+        "coordination_helpers.determine_message_type",
+        "src.services.coordination.coordination_throttler",
+        "src.services.coordination.coordination_throttler.get_coordination_throttler",
+        "src.services.coordination.coordination_throttler",
+        "src.services.coordination.coordination_throttler.get_coordination_throttler",
+        "src.core.message_queue",
+        "src.core.message_queue.MessageQueue"
+      ],
+      "classes": [
+        "MessageCoordinator"
+      ],
+      "functions": [
+        "_get_queue",
+        "send_to_agent",
+        "send_multi_agent_request",
+        "broadcast_to_all",
+        "coordinate_survey",
+        "coordinate_consolidation",
+        "_detect_sender",
+        "_determine_message_type"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\services\\messaging\\delivery_handlers.py": {
+      "imports": [
+        "__future__",
+        "__future__.annotations",
+        "typing",
+        "typing.Optional",
+        "src.core.messaging_core",
+        "src.core.messaging_core.UnifiedMessagePriority",
+        "src.core.messaging_core.UnifiedMessageTag",
+        "src.core.messaging_core.UnifiedMessageType",
+        "src.core.messaging_core.send_message"
+      ],
+      "classes": [
+        "SendMode"
+      ],
+      "functions": [
+        "send_message_pyautogui",
+        "send_message_to_onboarding_coords"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\services\\messaging\\discord_message_handler.py": {
+      "imports": [
+        "__future__",
+        "__future__.annotations",
+        "logging",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Any",
+        "src.core.messaging_models_core",
+        "src.core.messaging_models_core.MessageCategory",
+        "discord_message_helpers",
+        "discord_message_helpers.prepare_discord_message",
+        "discord_message_helpers",
+        "discord_message_helpers.route_discord_delivery"
+      ],
+      "classes": [],
+      "functions": [
+        "send_discord_message_to_agent"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\services\\messaging\\discord_message_helpers.py": {
+      "imports": [
+        "__future__",
+        "__future__.annotations",
+        "logging",
+        "re",
+        "subprocess",
+        "uuid",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Any",
+        "src.core.config.timeout_constants",
+        "src.core.config.timeout_constants.TimeoutConstants",
+        "src.core.messaging_core",
+        "src.core.messaging_core.UnifiedMessagePriority",
+        "src.core.messaging_core.UnifiedMessageType",
+        "src.core.messaging_models_core",
+        "src.core.messaging_models_core.MessageCategory",
+        "message_formatters",
+        "message_formatters._apply_template",
+        "core.multi_agent_request_validator",
+        "core.multi_agent_request_validator.get_multi_agent_validator"
+      ],
+      "classes": [],
+      "functions": [
+        "resolve_priority_and_sender",
+        "apply_message_template",
+        "validate_agent_can_receive",
+        "determine_discord_message_type",
+        "build_queue_metadata",
+        "build_queue_message",
+        "wait_for_message_delivery",
+        "build_subprocess_command",
+        "execute_subprocess_delivery",
+        "fallback_subprocess_delivery",
+        "prepare_discord_message",
+        "build_and_enqueue_discord_message",
+        "route_discord_delivery",
+        "send_discord_via_queue"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\services\\messaging\\message_formatters.py": {
+      "imports": [
+        "__future__",
+        "__future__.annotations",
+        "re",
+        "datetime",
+        "datetime.datetime",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Any",
+        "typing.Dict",
+        "typing.Optional",
+        "src.core.messaging_core",
+        "src.core.messaging_core.UnifiedMessagePriority",
+        "src.core.messaging_core.UnifiedMessageType",
+        "src.core.messaging_models_core",
+        "src.core.messaging_models_core.MessageCategory",
+        "src.core.messaging_models_core.MESSAGE_TEMPLATES",
+        "src.core.messaging_models_core.format_d2a_payload",
+        "template_helpers",
+        "template_helpers.prepare_a2a_template",
+        "template_helpers.prepare_d2a_template",
+        "template_helpers.prepare_default_template",
+        "message_formatting_helpers",
+        "message_formatting_helpers.format_multi_agent_request_body",
+        "pathlib",
+        "pathlib.Path",
+        "json",
+        "pathlib",
+        "pathlib.Path",
+        "json",
+        "message_formatting_helpers",
+        "message_formatting_helpers.format_broadcast_instructions",
+        "message_formatting_helpers.format_discord_instructions",
+        "message_formatting_helpers.format_normal_instructions",
+        "message_formatting_helpers.is_discord_message",
+        "logging",
+        "logging"
+      ],
+      "classes": [],
+      "functions": [
+        "_apply_template",
+        "_format_multi_agent_request_message",
+        "_load_last_inbound_categories",
+        "_save_last_inbound_categories",
+        "_map_category_from_type",
+        "_is_ack_text",
+        "_format_normal_message_with_instructions"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\services\\messaging\\multi_agent_request_helpers.py": {
+      "imports": [
+        "__future__",
+        "__future__.annotations",
+        "logging",
+        "typing",
+        "typing.Any",
+        "typing.Dict",
+        "typing.List",
+        "src.core.messaging_core",
+        "src.core.messaging_core.UnifiedMessagePriority",
+        "src.core.messaging_core.UnifiedMessageTag",
+        "src.core.messaging_core.UnifiedMessageType",
+        "logging",
+        "message_formatters",
+        "message_formatters._format_multi_agent_request_message"
+      ],
+      "classes": [],
+      "functions": [
+        "create_request_collector",
+        "build_multi_agent_metadata",
+        "enqueue_multi_agent_message",
+        "send_multi_agent_messages",
+        "process_multi_agent_request"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\services\\messaging\\service_adapter_helpers.py": {
+      "imports": [
+        "__future__",
+        "__future__.annotations",
+        "logging",
+        "time",
+        "typing",
+        "typing.Any",
+        "src.core.config.timeout_constants",
+        "src.core.config.timeout_constants.TimeoutConstants",
+        "src.core.constants.agent_constants",
+        "src.core.constants.agent_constants.AGENT_LIST",
+        "core.keyboard_control_lock",
+        "core.keyboard_control_lock.keyboard_control"
+      ],
+      "classes": [],
+      "functions": [
+        "execute_broadcast_operation"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\services\\messaging\\service_adapters.py": {
+      "imports": [
+        "__future__",
+        "__future__.annotations",
+        "logging",
+        "os",
+        "time",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Any",
+        "aiohttp",
+        "src.core.config.timeout_constants",
+        "src.core.config.timeout_constants.TimeoutConstants",
+        "core.base.base_service",
+        "core.base.base_service.BaseService",
+        "discord_message_handler",
+        "discord_message_handler.send_discord_message_to_agent",
+        "service_adapter_helpers",
+        "service_adapter_helpers.execute_broadcast_operation",
+        "src.core.message_queue",
+        "src.core.message_queue.MessageQueue",
+        "requests"
+      ],
+      "classes": [
+        "ConsolidatedMessagingService"
+      ],
+      "functions": [
+        "send_discord_message",
+        "broadcast_discord_message",
+        "__init__",
+        "send_message",
+        "broadcast_message",
+        "_resolve_discord_sender",
+        "_get_discord_username"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\services\\thea\\thea_service.py": {
+      "imports": [
+        "json",
+        "time",
+        "datetime",
+        "datetime.datetime",
+        "datetime.timedelta",
+        "pathlib",
+        "pathlib.Path",
+        "src.core.base.base_service",
+        "src.core.base.base_service.BaseService",
+        "selenium",
+        "selenium.webdriver",
+        "selenium.webdriver.chrome.options",
+        "selenium.webdriver.chrome.options.Options",
+        "selenium.webdriver.common.by",
+        "selenium.webdriver.common.by.By",
+        "undetected_chromedriver",
+        "pyautogui",
+        "pyperclip",
+        "response_detector",
+        "response_detector.ResponseDetector",
+        "response_detector.ResponseWaitResult",
+        "sys",
+        "pathlib",
+        "pathlib.Path",
+        "thea_login_handler",
+        "thea_login_handler.TheaCookieManager"
+      ],
+      "classes": [
+        "TheaService"
+      ],
+      "functions": [
+        "create_thea_service",
+        "__init__",
+        "start_browser",
+        "are_cookies_fresh",
+        "validate_cookies",
+        "refresh_cookies",
+        "ensure_login",
+        "_is_logged_in",
+        "send_message",
+        "wait_for_response",
+        "_extract_basic_response",
+        "communicate",
+        "_save_conversation",
+        "cleanup",
+        "__enter__",
+        "__exit__"
+      ],
+      "webdriver_usage": true,
+      "selenium_usage": true,
+      "pyautogui_usage": true,
+      "undetected_usage": true
+    },
+    "src\\services\\utils\\onboarding_constants.py": {
+      "imports": [],
+      "classes": [],
+      "functions": [
+        "get_phase_2_status",
+        "get_agent_assignments",
+        "get_targets",
+        "is_phase_2_active"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\services\\utils\\messaging_templates.py": {
+      "imports": [
+        "typing",
+        "typing.Dict",
+        "typing.Any",
+        "typing.Optional",
+        "datetime",
+        "datetime.datetime",
+        "re"
+      ],
+      "classes": [],
+      "functions": [
+        "validate_template_vars",
+        "format_template",
+        "get_broadcast_template",
+        "get_task_assignment_template",
+        "get_status_update_template",
+        "get_urgent_alert_template"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\services\\chat_presence\\agent_personality.py": {
+      "imports": [
+        "dataclasses",
+        "dataclasses.dataclass",
+        "enum",
+        "enum.Enum",
+        "typing",
+        "typing.Callable",
+        "random",
+        "re"
+      ],
+      "classes": [
+        "PersonalityTone",
+        "AgentPersonality"
+      ],
+      "functions": [
+        "get_personality",
+        "format_chat_message",
+        "should_agent_respond"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "src\\services\\chat_presence\\message_interpreter.py": {
+      "imports": [
+        "logging",
+        "typing",
+        "typing.Optional",
+        "agent_personality",
+        "agent_personality.get_personality",
+        "agent_personality.should_agent_respond",
+        "quote_generator",
+        "quote_generator.get_random_quote",
+        "quote_generator.format_quote_for_chat"
+      ],
+      "classes": [
+        "MessageInterpreter"
+      ],
+      "functions": [
+        "__init__",
+        "determine_responder",
+        "_check_explicit_command",
+        "is_status_command",
+        "is_quote_command",
+        "get_quote_response",
+        "parse_status_command",
+        "_is_broadcast_command",
+        "_find_best_agent_match",
+        "_calculate_match_score",
+        "_apply_activity_rotation",
+        "should_respond",
+        "get_response_count"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "src\\services\\trader_replay\\trader_replay_orchestrator.py": {
+      "imports": [
+        "logging",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Optional",
+        "typing.Dict",
+        "typing.Any",
+        "typing.List",
+        "datetime",
+        "datetime.datetime",
+        "src.core.base.base_service",
+        "src.core.base.base_service.BaseService",
+        "src.core.unified_logging_system",
+        "src.core.unified_logging_system.get_logger",
+        "src.core.unified_logging_system.configure_logging",
+        "src.services.unified_messaging_service",
+        "src.services.unified_messaging_service.UnifiedMessagingService",
+        "models",
+        "models.ReplaySession",
+        "models.ReplaySessionStatus",
+        "models.PaperTrade",
+        "models.JournalEntry",
+        "models.BehavioralScore",
+        "models.Candle",
+        "replay_engine",
+        "replay_engine.ReplayEngine",
+        "replay_engine.ReplayState"
+      ],
+      "classes": [
+        "TraderReplayOrchestrator"
+      ],
+      "functions": [
+        "__init__",
+        "create_session",
+        "start_replay",
+        "step_replay",
+        "pause_replay",
+        "complete_session",
+        "_notify_agent",
+        "get_session_status"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\services\\onboarding\\agent_instructions.py": {
+      "imports": [
+        "__future__",
+        "__future__.annotations",
+        "typing",
+        "typing.Dict"
+      ],
+      "classes": [],
+      "functions": [
+        "get_agent_specific_instructions"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "src\\services\\onboarding\\onboarding_helpers.py": {
+      "imports": [
+        "__future__",
+        "__future__.annotations",
+        "logging",
+        "typing",
+        "typing.Optional",
+        "typing.Tuple",
+        "core.coordinate_loader",
+        "core.coordinate_loader.get_coordinate_loader",
+        "core.messaging_pyautogui",
+        "core.messaging_pyautogui.PyAutoGUIMessagingDelivery"
+      ],
+      "classes": [],
+      "functions": [
+        "load_agent_coordinates",
+        "validate_coordinates",
+        "validate_onboarding_coordinates"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\services\\onboarding\\shared\\__init__.py": {
+      "imports": [
+        "operations",
+        "operations.PyAutoGUIOperations",
+        "coordinates",
+        "coordinates.OnboardingCoordinates"
+      ],
+      "classes": [],
+      "functions": [],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\services\\onboarding\\shared\\operations.py": {
+      "imports": [
+        "logging",
+        "time",
+        "typing",
+        "typing.Optional",
+        "pyautogui",
+        "pyperclip"
+      ],
+      "classes": [
+        "PyAutoGUIOperations"
+      ],
+      "functions": [
+        "__init__",
+        "click_at_coords",
+        "send_hotkey",
+        "paste_text",
+        "clear_input",
+        "press_key",
+        "move_to"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\services\\onboarding\\hard\\steps.py": {
+      "imports": [
+        "logging",
+        "time",
+        "typing",
+        "typing.Optional",
+        "typing.Tuple",
+        "shared.coordinates",
+        "shared.coordinates.OnboardingCoordinates",
+        "shared.operations",
+        "shared.operations.PyAutoGUIOperations",
+        "onboarding_helpers",
+        "onboarding_helpers.validate_onboarding_coordinates",
+        "onboarding_template_loader",
+        "onboarding_template_loader.load_onboarding_template",
+        "agent_instructions",
+        "agent_instructions.get_agent_specific_instructions"
+      ],
+      "classes": [
+        "HardOnboardingSteps"
+      ],
+      "functions": [
+        "__init__",
+        "step_1_clear_chat",
+        "step_2_send_execute",
+        "step_3_new_window",
+        "step_4_navigate_to_onboarding",
+        "step_5_send_onboarding_message"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\services\\onboarding\\hard\\service.py": {
+      "imports": [
+        "logging",
+        "time",
+        "typing",
+        "typing.Optional",
+        "src.core.base.base_service",
+        "src.core.base.base_service.BaseService",
+        "shared.coordinates",
+        "shared.coordinates.OnboardingCoordinates",
+        "shared.operations",
+        "shared.operations.PyAutoGUIOperations",
+        "steps",
+        "steps.HardOnboardingSteps"
+      ],
+      "classes": [
+        "HardOnboardingService"
+      ],
+      "functions": [
+        "hard_onboard_agent",
+        "hard_onboard_multiple_agents",
+        "execute_hard_onboarding",
+        "__init__",
+        "execute_hard_onboarding"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\services\\onboarding\\soft\\messaging_fallback.py": {
+      "imports": [
+        "logging",
+        "typing",
+        "typing.Optional",
+        "services.messaging_infrastructure",
+        "services.messaging_infrastructure.MessageCoordinator",
+        "core.messaging_models_core",
+        "core.messaging_models_core.MessageCategory",
+        "core.messaging_models_core.UnifiedMessageTag",
+        "core.messaging_core",
+        "core.messaging_core.UnifiedMessagePriority",
+        "core.messaging_core.UnifiedMessage",
+        "core.messaging_core.UnifiedMessageType",
+        "core.messaging_templates",
+        "core.messaging_templates.render_message",
+        "services.messaging_infrastructure",
+        "services.messaging_infrastructure.MessageCoordinator",
+        "core.messaging_models_core",
+        "core.messaging_models_core.MessageCategory",
+        "core.messaging_models_core.UnifiedMessageTag",
+        "core.messaging_core",
+        "core.messaging_core.UnifiedMessagePriority",
+        "core.messaging_core.UnifiedMessage",
+        "core.messaging_core.UnifiedMessageType",
+        "core.messaging_templates",
+        "core.messaging_templates.render_message"
+      ],
+      "classes": [
+        "OnboardingMessagingFallback"
+      ],
+      "functions": [
+        "_get_default_cleanup_message",
+        "send_cleanup_via_messaging",
+        "send_onboarding_via_messaging"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\services\\onboarding\\soft\\steps.py": {
+      "imports": [
+        "logging",
+        "time",
+        "typing",
+        "typing.Optional",
+        "shared.coordinates",
+        "shared.coordinates.OnboardingCoordinates",
+        "shared.operations",
+        "shared.operations.PyAutoGUIOperations",
+        "messaging_fallback",
+        "messaging_fallback.OnboardingMessagingFallback"
+      ],
+      "classes": [
+        "SoftOnboardingSteps"
+      ],
+      "functions": [
+        "__init__",
+        "step_1_click_chat_input",
+        "step_2_save_session",
+        "step_3_send_cleanup_prompt",
+        "step_4_open_new_tab",
+        "step_5_navigate_to_onboarding",
+        "step_6_paste_onboarding_message"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "src\\services\\onboarding\\soft\\service.py": {
+      "imports": [
+        "logging",
+        "time",
+        "typing",
+        "typing.Optional",
+        "src.core.base.base_service",
+        "src.core.base.base_service.BaseService",
+        "shared.coordinates",
+        "shared.coordinates.OnboardingCoordinates",
+        "shared.operations",
+        "shared.operations.PyAutoGUIOperations",
+        "steps",
+        "steps.SoftOnboardingSteps",
+        "messaging_fallback",
+        "messaging_fallback.OnboardingMessagingFallback",
+        "core.keyboard_control_lock",
+        "core.keyboard_control_lock.keyboard_control",
+        "core.keyboard_control_lock.is_locked",
+        "core.keyboard_control_lock",
+        "core.keyboard_control_lock.keyboard_control",
+        "src.core.config.timeout_constants",
+        "src.core.config.timeout_constants.TimeoutConstants",
+        "pathlib",
+        "pathlib.Path",
+        "subprocess",
+        "sys"
+      ],
+      "classes": [
+        "SoftOnboardingService"
+      ],
+      "functions": [
+        "soft_onboard_agent",
+        "soft_onboard_multiple_agents",
+        "execute_soft_onboarding",
+        "__init__",
+        "execute_soft_onboarding"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "tools\\agent_mission_controller.py": {
+      "imports": [
+        "ast",
+        "json",
+        "sys",
+        "dataclasses",
+        "dataclasses.dataclass",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Any"
+      ],
+      "classes": [
+        "AgentProfile",
+        "Mission",
+        "MissionRecommendation",
+        "MissionIntelligence"
+      ],
+      "functions": [
+        "main",
+        "load",
+        "matches_specialty",
+        "__init__",
+        "_load_patterns_db",
+        "analyze_file_for_mission",
+        "_determine_pattern_and_plan",
+        "_estimate_points",
+        "_assess_difficulty",
+        "_calculate_priority",
+        "_estimate_time",
+        "scan_for_missions",
+        "recommend_mission"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "tools\\browser_pool_manager.py": {
+      "imports": [
+        "logging",
+        "time",
+        "collections",
+        "collections.deque",
+        "dataclasses",
+        "dataclasses.dataclass",
+        "datetime",
+        "datetime.datetime",
+        "datetime.timedelta",
+        "threading",
+        "threading.Lock",
+        "typing",
+        "typing.Any",
+        "typing.Optional",
+        "selenium",
+        "selenium.webdriver",
+        "selenium.webdriver.chrome.options",
+        "selenium.webdriver.chrome.options.Options"
+      ],
+      "classes": [
+        "BrowserInstance",
+        "BrowserPoolManager"
+      ],
+      "functions": [
+        "is_expired",
+        "mark_used",
+        "__init__",
+        "_create_browser",
+        "acquire",
+        "release",
+        "_close_driver",
+        "cleanup",
+        "_get_reuse_rate",
+        "get_stats",
+        "__enter__",
+        "__exit__"
+      ],
+      "webdriver_usage": true,
+      "selenium_usage": true,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "tools\\captain_architectural_checker.py": {
+      "imports": [
+        "sys",
+        "ast",
+        "re",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.List",
+        "typing.Dict",
+        "typing.Set"
+      ],
+      "classes": [],
+      "functions": [
+        "extract_method_calls",
+        "extract_class_methods",
+        "find_missing_methods",
+        "find_circular_imports",
+        "main"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "tools\\compliance_dashboard.py": {
+      "imports": [
+        "datetime",
+        "datetime.datetime",
+        "pathlib",
+        "pathlib.Path",
+        "complexity_analyzer",
+        "complexity_analyzer.ComplexityAnalysisService",
+        "compliance_history_tracker",
+        "compliance_history_tracker.ComplianceHistoryTracker",
+        "dashboard_data_aggregator",
+        "dashboard_data_aggregator.DashboardDataAggregator",
+        "dashboard_html_generator_refactored",
+        "dashboard_html_generator_refactored.DashboardHTMLGenerator",
+        "refactoring_suggestion_engine",
+        "refactoring_suggestion_engine.RefactoringSuggestionService",
+        "v2_compliance_checker",
+        "v2_compliance_checker.V2ComplianceChecker",
+        "argparse"
+      ],
+      "classes": [
+        "ComplianceDashboard"
+      ],
+      "functions": [
+        "main",
+        "__init__",
+        "generate_dashboard"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "tools\\swarm_orchestrator.py": {
+      "imports": [
+        "json",
+        "time",
+        "datetime",
+        "datetime.datetime",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Any",
+        "tools.gas_messaging",
+        "tools.gas_messaging.send_gas_message",
+        "tools.opportunity_scanners",
+        "tools.opportunity_scanners.scan_complexity",
+        "tools.opportunity_scanners.scan_duplication",
+        "tools.opportunity_scanners.scan_linter_errors",
+        "tools.opportunity_scanners.scan_memory_leaks",
+        "tools.opportunity_scanners.scan_test_coverage",
+        "tools.opportunity_scanners.scan_todo_comments",
+        "tools.opportunity_scanners.scan_v2_violations",
+        "tools.task_creator",
+        "tools.task_creator.create_inbox_task",
+        "argparse"
+      ],
+      "classes": [
+        "SwarmOrchestrator"
+      ],
+      "functions": [
+        "run_orchestrator",
+        "__init__",
+        "_discover_agents",
+        "get_agent_status",
+        "scan_all_opportunities",
+        "calculate_roi",
+        "match_to_agent",
+        "run_cycle"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "tools\\test_consolidation_comprehensive.py": {
+      "imports": [
+        "sys",
+        "pathlib",
+        "pathlib.Path",
+        "src.discord_commander",
+        "src.discord_commander.DiscordService",
+        "src.discord_commander",
+        "src.discord_commander.AgentCommunicationEngine",
+        "src.discord_commander",
+        "src.discord_commander.AgentCommunicationEngine",
+        "src.discord_commander.DiscordService",
+        "src.infrastructure.browser",
+        "src.infrastructure.browser.TheaBrowserService",
+        "src.infrastructure.browser",
+        "src.infrastructure.browser.TheaSessionManagement",
+        "src.infrastructure.browser",
+        "src.infrastructure.browser.TheaContentOperations",
+        "src.infrastructure.browser",
+        "src.infrastructure.browser.TheaBrowserService",
+        "src.infrastructure.browser.TheaContentOperations",
+        "src.infrastructure.browser.TheaSessionManagement"
+      ],
+      "classes": [],
+      "functions": [
+        "test_discord_consolidation",
+        "test_browser_consolidation",
+        "test_v2_compliance",
+        "test_gui_imports",
+        "main"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "tools\\cycle_1_dependency_progress.py": {
+      "imports": [
+        "json",
+        "time",
+        "os",
+        "pathlib",
+        "pathlib.Path",
+        "pyautogui",
+        "pyperclip"
+      ],
+      "classes": [],
+      "functions": [
+        "load_coordinates",
+        "load_dependency_summary",
+        "send_dependency_progress_update"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "tools\\agent_bump_script.py": {
+      "imports": [
+        "time",
+        "logging",
+        "pathlib",
+        "pathlib.Path",
+        "sys",
+        "pyautogui",
+        "argparse",
+        "src.core.coordinate_loader",
+        "src.core.coordinate_loader.get_coordinate_loader"
+      ],
+      "classes": [],
+      "functions": [
+        "get_agent_coordinates",
+        "bump_agent",
+        "bump_agents",
+        "bump_agents_by_number",
+        "main"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "tools\\captain_import_validator.py": {
+      "imports": [
+        "warnings",
+        "sys",
+        "ast",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.List",
+        "typing.Tuple",
+        "tools_v2.categories.import_fix_tools",
+        "tools_v2.categories.import_fix_tools.ImportValidatorTool"
+      ],
+      "classes": [],
+      "functions": [
+        "extract_imports",
+        "validate_import",
+        "validate_file_imports",
+        "main"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "tools\\captain_send_jet_fuel.py": {
+      "imports": [
+        "sys",
+        "pathlib",
+        "pathlib.Path",
+        "src.core.messaging_core",
+        "src.core.messaging_core.send_message",
+        "src.core.messaging_core.UnifiedMessageType",
+        "src.core.messaging_core.UnifiedMessagePriority",
+        "src.core.messaging_core.UnifiedMessageTag"
+      ],
+      "classes": [],
+      "functions": [
+        "main"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "tools\\thea_code_review.py": {
+      "imports": [
+        "json",
+        "sys",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Dict",
+        "typing.List",
+        "typing.Optional",
+        "datetime",
+        "datetime.datetime",
+        "src.services.thea.thea_service",
+        "src.services.thea.thea_service.TheaService",
+        "argparse",
+        "traceback",
+        "yaml"
+      ],
+      "classes": [],
+      "functions": [
+        "generate_code_review_prompt",
+        "parse_thea_response",
+        "review_code_with_thea",
+        "main"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": true,
+      "pyautogui_usage": true,
+      "undetected_usage": true
+    },
+    "tools\\unstick_agent3_assignment.py": {
+      "error": "unterminated string literal (detected at line 140) (unstick_agent3_assignment.py, line 140)"
+    },
+    "tools\\validate_stress_test_integration.py": {
+      "imports": [
+        "ast",
+        "importlib.util",
+        "inspect",
+        "sys",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Any",
+        "typing.Dict",
+        "typing.List",
+        "typing.Tuple"
+      ],
+      "classes": [
+        "StressTestValidator"
+      ],
+      "functions": [
+        "main",
+        "__init__",
+        "validate_all",
+        "_check_no_real_imports",
+        "_check_no_pyautogui",
+        "_check_no_inbox_writes",
+        "_check_protocol_compliance",
+        "_check_injection_point",
+        "_check_mock_isolation",
+        "_add_violation",
+        "_get_results"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "tools\\add_css_to_wordpress_theme.py": {
+      "imports": [
+        "sys",
+        "json",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Dict",
+        "typing.Any",
+        "typing.Optional",
+        "requests",
+        "requests.auth",
+        "requests.auth.HTTPBasicAuth",
+        "src.core.config.timeout_constants",
+        "src.core.config.timeout_constants.TimeoutConstants",
+        "argparse"
+      ],
+      "classes": [
+        "TimeoutConstants"
+      ],
+      "functions": [
+        "load_blogging_config",
+        "load_css_fix",
+        "get_custom_css",
+        "add_css_via_post_meta",
+        "add_css_via_theme_mod",
+        "inject_css_via_wp_head_hook",
+        "main"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "tools\\agent2_session_cleanup_2025-12-15.py": {
+      "imports": [
+        "tools.session_cleanup_automation",
+        "tools.session_cleanup_automation.SessionCleanupAutomation",
+        "json",
+        "sys",
+        "pathlib",
+        "pathlib.Path",
+        "datetime",
+        "datetime.datetime",
+        "stat"
+      ],
+      "classes": [],
+      "functions": [
+        "main"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "tools\\agent_fuel_monitor.py": {
+      "error": "unexpected indent (agent_fuel_monitor.py, line 343)"
+    },
+    "tools\\analyze_browser_automation_duplication.py": {
+      "imports": [
+        "ast",
+        "json",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Dict",
+        "typing.List",
+        "typing.Set",
+        "collections",
+        "collections.defaultdict"
+      ],
+      "classes": [],
+      "functions": [
+        "find_browser_automation_files",
+        "analyze_file_patterns",
+        "identify_duplication_patterns",
+        "main"
+      ],
+      "webdriver_usage": true,
+      "selenium_usage": true,
+      "pyautogui_usage": true,
+      "undetected_usage": true
+    },
+    "tools\\analyze_dadudekc_blog_readability.py": {
+      "imports": [
+        "argparse",
+        "re",
+        "sys",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Dict",
+        "typing.List",
+        "typing.Optional",
+        "requests",
+        "bs4",
+        "bs4.BeautifulSoup"
+      ],
+      "classes": [
+        "BlogPostAnalyzer"
+      ],
+      "functions": [
+        "main",
+        "__init__",
+        "find_blog_posts",
+        "analyze_post",
+        "_extract_font_sizes",
+        "_extract_line_heights",
+        "_extract_text_colors",
+        "_extract_background_colors",
+        "_extract_max_width",
+        "_extract_text_align",
+        "_extract_styles",
+        "generate_css_recommendations"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "tools\\auto_assign_next_round.py": {
+      "imports": [
+        "json",
+        "sys",
+        "time",
+        "pathlib",
+        "pathlib.Path",
+        "datetime",
+        "datetime.datetime",
+        "src.services.messaging_infrastructure",
+        "src.services.messaging_infrastructure.ConsolidatedMessagingService",
+        "src.core.agent_mode_manager",
+        "src.core.agent_mode_manager.get_active_agents"
+      ],
+      "classes": [],
+      "functions": [
+        "get_agent_status",
+        "should_assign_next_round",
+        "get_task_for_agent",
+        "main"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "tools\\capture_performance_baseline.py": {
+      "imports": [
+        "sys",
+        "pathlib",
+        "pathlib.Path",
+        "src.core.message_queue_performance_metrics",
+        "src.core.message_queue_performance_metrics.MessageQueuePerformanceMetrics",
+        "logging"
+      ],
+      "classes": [],
+      "functions": [
+        "main"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "tools\\cleanup_root_comprehensive.py": {
+      "imports": [
+        "shutil",
+        "pathlib",
+        "pathlib.Path",
+        "datetime",
+        "datetime.datetime"
+      ],
+      "classes": [],
+      "functions": [
+        "main"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "tools\\consolidate_activate_wordpress_theme_duplicates.py": {
+      "imports": [
+        "sys",
+        "hashlib",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.List",
+        "typing.Dict",
+        "typing.Set"
+      ],
+      "classes": [],
+      "functions": [
+        "get_file_hash",
+        "verify_ssot",
+        "find_duplicates",
+        "check_references",
+        "delete_duplicates",
+        "main"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "tools\\create_pytest_assignments.py": {
+      "imports": [
+        "src.core.messaging_core",
+        "src.core.messaging_core.UnifiedMessagingCore",
+        "src.core.messaging_core.UnifiedMessageType",
+        "src.core.messaging_core.UnifiedMessagePriority",
+        "src.core.messaging_core.UnifiedMessageTag",
+        "sys",
+        "pathlib",
+        "pathlib.Path",
+        "datetime",
+        "datetime.datetime",
+        "src.core.messaging_core",
+        "src.core.messaging_core.UnifiedMessagingCore"
+      ],
+      "classes": [],
+      "functions": [
+        "create_assignment_message",
+        "send_assignments"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "tools\\debug_a2a_messaging.py": {
+      "imports": [
+        "sys",
+        "pathlib",
+        "pathlib.Path",
+        "json"
+      ],
+      "classes": [],
+      "functions": [
+        "check_queue_pyautogui_status"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "tools\\deploy_css_to_wordpress_customizer.py": {
+      "imports": [
+        "sys",
+        "time",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Optional",
+        "selenium",
+        "selenium.webdriver",
+        "selenium.webdriver.common.by",
+        "selenium.webdriver.common.by.By",
+        "selenium.webdriver.support.ui",
+        "selenium.webdriver.support.ui.WebDriverWait",
+        "selenium.webdriver.support",
+        "selenium.webdriver.support.expected_conditions",
+        "selenium.webdriver.chrome.options",
+        "selenium.webdriver.chrome.options.Options",
+        "selenium.webdriver.common.keys",
+        "selenium.webdriver.common.keys.Keys",
+        "selenium.common.exceptions",
+        "selenium.common.exceptions.TimeoutException",
+        "selenium.common.exceptions.NoSuchElementException",
+        "json",
+        "argparse",
+        "traceback"
+      ],
+      "classes": [],
+      "functions": [
+        "load_blogging_config",
+        "load_css_fix",
+        "deploy_css_to_customizer",
+        "main"
+      ],
+      "webdriver_usage": true,
+      "selenium_usage": true,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "tools\\deploy_css_via_wordpress_rest_api.py": {
+      "imports": [
+        "sys",
+        "json",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Dict",
+        "typing.Any",
+        "typing.Optional",
+        "requests",
+        "requests.auth",
+        "requests.auth.HTTPBasicAuth",
+        "src.core.config.timeout_constants",
+        "src.core.config.timeout_constants.TimeoutConstants",
+        "argparse"
+      ],
+      "classes": [
+        "TimeoutConstants"
+      ],
+      "functions": [
+        "load_blogging_config",
+        "load_css_fix",
+        "update_custom_css_via_rest_api",
+        "main"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "tools\\deploy_via_wordpress_admin.py": {
+      "error": "unexpected indent (deploy_via_wordpress_admin.py, line 239)"
+    },
+    "tools\\deploy_via_wordpress_rest_api.py": {
+      "imports": [
+        "base64",
+        "json",
+        "os",
+        "sys",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Optional",
+        "typing.Dict",
+        "typing.Any",
+        "requests",
+        "argparse",
+        "src.core.config.timeout_constants",
+        "src.core.config.timeout_constants.TimeoutConstants"
+      ],
+      "classes": [
+        "WordPressRESTAPI"
+      ],
+      "functions": [
+        "deploy_via_rest_api",
+        "main",
+        "__init__",
+        "check_api_availability",
+        "update_theme_file",
+        "get_theme_file",
+        "check_plugin_installed"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "tools\\diagnose_github_cli_auth.py": {
+      "imports": [
+        "os",
+        "subprocess",
+        "sys",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Dict",
+        "typing.List",
+        "typing.Optional",
+        "typing.Tuple",
+        "json"
+      ],
+      "classes": [],
+      "functions": [
+        "check_gh_installed",
+        "check_gh_auth_status",
+        "check_environment_tokens",
+        "check_git_remote_auth",
+        "test_github_api_access",
+        "generate_solutions",
+        "main"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "tools\\disk_space_optimization.py": {
+      "error": "unexpected indent (disk_space_optimization.py, line 165)"
+    },
+    "tools\\fix_dadudekc_copy_glitches.py": {
+      "imports": [
+        "json",
+        "sys",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Dict",
+        "typing.Any",
+        "typing.Optional",
+        "typing.List",
+        "requests",
+        "requests.auth",
+        "requests.auth.HTTPBasicAuth",
+        "src.core.config.timeout_constants",
+        "src.core.config.timeout_constants.TimeoutConstants"
+      ],
+      "classes": [
+        "TimeoutConstants"
+      ],
+      "functions": [
+        "get_credentials",
+        "get_homepage_content",
+        "check_content_encoding",
+        "generate_fix_recommendations",
+        "main"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "tools\\fix_dadudekc_font_rendering.py": {
+      "imports": [
+        "sys",
+        "json",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Dict",
+        "typing.Any",
+        "typing.Optional",
+        "requests",
+        "requests.auth",
+        "requests.auth.HTTPBasicAuth",
+        "src.core.config.timeout_constants",
+        "src.core.config.timeout_constants.TimeoutConstants",
+        "argparse",
+        "tools.wordpress_manager",
+        "tools.wordpress_manager.WordPressManager",
+        "traceback"
+      ],
+      "classes": [
+        "TimeoutConstants"
+      ],
+      "functions": [
+        "get_font_fix_css",
+        "deploy_php_fix_via_wp_manager",
+        "add_css_via_wp_cli",
+        "add_css_via_rest_api",
+        "create_child_theme_css",
+        "main"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "tools\\flush_wordpress_cache_rest_api.py": {
+      "imports": [
+        "sys",
+        "json",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Dict",
+        "typing.Any",
+        "typing.List",
+        "requests",
+        "requests.auth",
+        "requests.auth.HTTPBasicAuth",
+        "src.core.config.timeout_constants",
+        "src.core.config.timeout_constants.TimeoutConstants",
+        "argparse"
+      ],
+      "classes": [
+        "TimeoutConstants"
+      ],
+      "functions": [
+        "load_blogging_config",
+        "flush_cache_via_rest_api",
+        "main"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "tools\\pytest_quick_report.py": {
+      "imports": [
+        "__future__",
+        "__future__.annotations",
+        "argparse",
+        "json",
+        "re",
+        "subprocess",
+        "sys",
+        "datetime",
+        "datetime.datetime",
+        "datetime.timezone",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Dict",
+        "typing.List",
+        "typing.Optional"
+      ],
+      "classes": [],
+      "functions": [
+        "parse_summary",
+        "build_report",
+        "write_json",
+        "write_markdown",
+        "run_pytest",
+        "parse_args",
+        "main"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "tools\\reduce_delegation_overhead.py": {
+      "imports": [
+        "json",
+        "pathlib",
+        "pathlib.Path",
+        "datetime",
+        "datetime.datetime",
+        "typing",
+        "typing.Dict",
+        "typing.List",
+        "typing.Optional"
+      ],
+      "classes": [
+        "DelegationTracker"
+      ],
+      "functions": [
+        "create_batch_delegation_template",
+        "create_async_coordination_status",
+        "__init__",
+        "_load_tracker",
+        "_save_tracker",
+        "add_delegation",
+        "mark_complete",
+        "get_pending_delegations",
+        "get_overdue_delegations"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "tools\\service_migration_helper.py": {
+      "imports": [
+        "ast",
+        "logging",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Any",
+        "typing.Dict",
+        "typing.List",
+        "typing.Optional",
+        "argparse"
+      ],
+      "classes": [
+        "ServiceMigrationHelper"
+      ],
+      "functions": [
+        "main",
+        "__init__",
+        "discover_services",
+        "_is_service_class",
+        "_uses_baseservice",
+        "_has_init",
+        "_has_lifecycle",
+        "_detect_patterns",
+        "generate_migration_template",
+        "generate_migration_report",
+        "verify_migration"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": true,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "tools\\ssot_batch2_tagger.py": {
+      "imports": [
+        "re",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.List",
+        "typing.Tuple"
+      ],
+      "classes": [],
+      "functions": [
+        "has_ssot_tag",
+        "add_ssot_tag",
+        "process_file",
+        "main"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "tools\\ssot_config_validator.py": {
+      "imports": [
+        "argparse",
+        "ast",
+        "sys",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.List",
+        "typing.Dict",
+        "typing.Tuple",
+        "typing.Set",
+        "collections",
+        "collections.defaultdict"
+      ],
+      "classes": [
+        "SSOTConfigValidator"
+      ],
+      "functions": [
+        "main",
+        "__init__",
+        "validate_file",
+        "_get_import_string",
+        "check_facade_mapping",
+        "validate_directory",
+        "generate_report"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "tools\\stage1_duplicate_resolution_config.py": {
+      "imports": [
+        "os",
+        "sys",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Dict",
+        "typing.List"
+      ],
+      "classes": [],
+      "functions": [
+        "generate_deprecation_warning",
+        "find_imports_using_configs",
+        "create_consolidation_report",
+        "main"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "tools\\stage1_phase2_import_migration.py": {
+      "imports": [
+        "os",
+        "re",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.List",
+        "typing.Tuple",
+        "typing.Dict"
+      ],
+      "classes": [],
+      "functions": [
+        "find_python_files",
+        "find_deprecated_imports",
+        "migrate_imports",
+        "main"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "tools\\start_message_queue_processor.py": {
+      "imports": [
+        "logging",
+        "sys",
+        "time",
+        "pathlib",
+        "pathlib.Path",
+        "src.core.message_queue_processor",
+        "src.core.message_queue_processor.MessageQueueProcessor",
+        "traceback"
+      ],
+      "classes": [],
+      "functions": [
+        "main"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "tools\\swarm_status_broadcaster.py": {
+      "error": "unexpected indent (swarm_status_broadcaster.py, line 232)"
+    },
+    "tools\\test_discord_agent_routing.py": {
+      "imports": [
+        "src.core.messaging_models_core",
+        "src.core.messaging_models_core.MessageCategory",
+        "src.services.messaging_infrastructure",
+        "src.services.messaging_infrastructure.MessageCoordinator",
+        "src.discord_commander.discord_agent_communication",
+        "src.discord_commander.discord_agent_communication.AgentCommunicationEngine",
+        "sys",
+        "pathlib",
+        "pathlib.Path"
+      ],
+      "classes": [],
+      "functions": [
+        "test_agent_validation",
+        "test_message_coordinator",
+        "test_workspace_directories",
+        "main"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "tools\\test_discord_commands.py": {
+      "error": "unexpected indent (test_discord_commands.py, line 311)"
+    },
+    "tools\\unified_monitor.py": {
+      "imports": [
+        "argparse",
+        "asyncio",
+        "json",
+        "logging",
+        "sys",
+        "time",
+        "datetime",
+        "datetime.datetime",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Dict",
+        "typing.List",
+        "typing.Optional",
+        "typing.Any",
+        "subprocess",
+        "shutil",
+        "datetime",
+        "datetime.timedelta",
+        "dataclasses",
+        "dataclasses.dataclass",
+        "src.core.deferred_push_queue",
+        "src.core.deferred_push_queue.get_deferred_push_queue",
+        "psutil",
+        "tools.agent_activity_detector",
+        "tools.agent_activity_detector.AgentActivityDetector",
+        "src.core.optimized_stall_resume_prompt",
+        "src.core.optimized_stall_resume_prompt.generate_optimized_resume_prompt",
+        "src.services.messaging_infrastructure",
+        "src.services.messaging_infrastructure.MessageCoordinator",
+        "src.services.messaging_infrastructure.UnifiedMessagePriority"
+      ],
+      "classes": [
+        "UnifiedMonitor",
+        "WorkspaceHealth"
+      ],
+      "functions": [
+        "main",
+        "__init__",
+        "monitor_queue_health",
+        "check_message_queue_file",
+        "monitor_service_health",
+        "monitor_disk_usage",
+        "monitor_agent_status",
+        "monitor_workspace_health",
+        "monitor_test_coverage",
+        "run_full_monitoring",
+        "print_monitoring_report",
+        "check_agent_workspace"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "tools\\update_swarm_brain_entry.py": {
+      "imports": [
+        "json",
+        "sys",
+        "datetime",
+        "datetime.datetime",
+        "pathlib",
+        "pathlib.Path"
+      ],
+      "classes": [],
+      "functions": [],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "tools\\web_domain_security_audit.py": {
+      "imports": [
+        "re",
+        "json",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Dict",
+        "typing.List",
+        "typing.Tuple",
+        "datetime",
+        "datetime.datetime",
+        "sys"
+      ],
+      "classes": [
+        "WebDomainSecurityAudit"
+      ],
+      "functions": [
+        "main",
+        "__init__",
+        "audit_file",
+        "audit_directory",
+        "run_audit",
+        "generate_report"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "tools\\wordpress_admin_deployer.py": {
+      "error": "unexpected indent (wordpress_admin_deployer.py, line 292)"
+    },
+    "tools\\wordpress_manager.py": {
+      "imports": [
+        "json",
+        "logging",
+        "os",
+        "re",
+        "socket",
+        "sys",
+        "time",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Dict",
+        "typing.List",
+        "typing.Optional",
+        "typing.Tuple",
+        "dotenv",
+        "dotenv.load_dotenv",
+        "dotenv.dotenv_values",
+        "paramiko",
+        "argparse",
+        "tools.activate_wordpress_theme",
+        "tools.activate_wordpress_theme.activate_theme",
+        "dotenv",
+        "dotenv.load_dotenv",
+        "requests"
+      ],
+      "classes": [
+        "ConnectionManager",
+        "WordPressManager"
+      ],
+      "functions": [
+        "main",
+        "__init__",
+        "connect",
+        "disconnect",
+        "upload_file",
+        "_ensure_remote_dir",
+        "execute_command",
+        "__init__",
+        "_load_credentials",
+        "_validate_credentials",
+        "get_theme_path",
+        "get_plugin_path",
+        "create_page",
+        "_generate_page_function",
+        "_add_to_functions_php",
+        "connect",
+        "disconnect",
+        "deploy_file",
+        "deploy_theme",
+        "deploy_plugin_file",
+        "deploy_plugin",
+        "create_table",
+        "add_to_menu",
+        "wp_cli",
+        "update_post_status",
+        "replace_theme",
+        "activate_theme",
+        "_activate_theme_via_browser",
+        "list_themes",
+        "list_pages",
+        "verify",
+        "assign_primary_menu",
+        "purge_caches",
+        "_get_site_url"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": true,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "tools\\verify_hsq_astros_css.py": {
+      "imports": [
+        "sys",
+        "pathlib",
+        "pathlib.Path",
+        "tools.wordpress_manager",
+        "tools.wordpress_manager.WordPressManager",
+        "tempfile",
+        "tempfile"
+      ],
+      "classes": [],
+      "functions": [
+        "verify_css_deployment",
+        "main"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "tools\\fix_hsq_astros_css.py": {
+      "imports": [
+        "sys",
+        "tempfile",
+        "pathlib",
+        "pathlib.Path",
+        "tools.wordpress_manager",
+        "tools.wordpress_manager.WordPressManager",
+        "traceback"
+      ],
+      "classes": [],
+      "functions": [
+        "get_fixed_astros_css",
+        "main"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "tools\\check_css_in_html_output.py": {
+      "imports": [
+        "sys",
+        "requests",
+        "pathlib",
+        "pathlib.Path",
+        "src.core.config.timeout_constants",
+        "src.core.config.timeout_constants.TimeoutConstants"
+      ],
+      "classes": [
+        "TimeoutConstants"
+      ],
+      "functions": [
+        "check_css_in_html"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "tools\\diagnose_message_queue_flow.py": {
+      "imports": [
+        "sys",
+        "json",
+        "pathlib",
+        "pathlib.Path",
+        "datetime",
+        "datetime.datetime",
+        "src.core.message_queue",
+        "src.core.message_queue.MessageQueue",
+        "src.services.messaging.coordination_handlers",
+        "src.services.messaging.coordination_handlers.MessageCoordinator"
+      ],
+      "classes": [],
+      "functions": [
+        "check_queue_processor_running",
+        "check_queue_status",
+        "check_recent_messages",
+        "main"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "tools\\thea\\demo_thea_interactive.py": {
+      "imports": [
+        "sys",
+        "time",
+        "pathlib",
+        "pathlib.Path",
+        "src.infrastructure.browser",
+        "src.infrastructure.browser.BrowserConfig",
+        "src.infrastructure.browser.TheaBrowserService",
+        "pyautogui",
+        "pyperclip"
+      ],
+      "classes": [],
+      "functions": [
+        "interactive_demo"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "tools\\thea\\demo_thea_live.py": {
+      "imports": [
+        "sys",
+        "pathlib",
+        "pathlib.Path",
+        "src.services.thea",
+        "src.services.thea.TheaService",
+        "time",
+        "traceback"
+      ],
+      "classes": [],
+      "functions": [
+        "demo_thea_automation"
+      ],
+      "webdriver_usage": true,
+      "selenium_usage": true,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "tools\\thea\\demo_thea_simple.py": {
+      "imports": [
+        "sys",
+        "pathlib",
+        "pathlib.Path",
+        "src.services.thea",
+        "src.services.thea.TheaService",
+        "time"
+      ],
+      "classes": [],
+      "functions": [],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "tools\\thea\\demo_working_thea.py": {
+      "imports": [
+        "sys",
+        "pathlib",
+        "pathlib.Path",
+        "thea_automation",
+        "thea_automation.TheaAutomation",
+        "time"
+      ],
+      "classes": [],
+      "functions": [
+        "demo_working"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "tools\\thea\\setup_thea_cookies.py": {
+      "imports": [
+        "argparse",
+        "json",
+        "time",
+        "pathlib",
+        "pathlib.Path",
+        "thea_login_handler",
+        "thea_login_handler.TheaCookieManager",
+        "thea_login_handler.TheaLoginHandler",
+        "selenium",
+        "selenium.webdriver",
+        "selenium.webdriver.chrome.options",
+        "selenium.webdriver.chrome.options.Options",
+        "selenium.webdriver.common.by",
+        "selenium.webdriver.common.by.By",
+        "undetected_chromedriver"
+      ],
+      "classes": [
+        "TheaCookieSetup"
+      ],
+      "functions": [
+        "main",
+        "__init__",
+        "initialize_driver",
+        "wait_for_manual_login",
+        "_debug_page_state",
+        "save_cookies_after_login",
+        "verify_setup",
+        "run_setup",
+        "cleanup"
+      ],
+      "webdriver_usage": true,
+      "selenium_usage": true,
+      "pyautogui_usage": false,
+      "undetected_usage": true
+    },
+    "tools\\thea\\simple_thea_communication.py": {
+      "imports": [
+        "argparse",
+        "json",
+        "time",
+        "datetime",
+        "datetime.datetime",
+        "pathlib",
+        "pathlib.Path",
+        "pyautogui",
+        "pyperclip",
+        "response_detector",
+        "response_detector.ResponseDetector",
+        "response_detector.ResponseWaitResult",
+        "sys",
+        "os",
+        "thea_cookie_manager",
+        "thea_cookie_manager.TheaCookieManager",
+        "thea_login_handler",
+        "thea_login_handler.create_thea_login_handler",
+        "selenium",
+        "selenium.webdriver",
+        "selenium.webdriver.chrome.options",
+        "selenium.webdriver.chrome.options.Options",
+        "selenium",
+        "selenium.webdriver",
+        "selenium.webdriver.chrome.options",
+        "selenium.webdriver.chrome.options.Options"
+      ],
+      "classes": [
+        "SimpleTheaCommunication"
+      ],
+      "functions": [
+        "main",
+        "__init__",
+        "initialize_driver",
+        "ensure_login",
+        "send_message",
+        "wait_for_response",
+        "save_response",
+        "communicate",
+        "cleanup"
+      ],
+      "webdriver_usage": true,
+      "selenium_usage": true,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "tools\\thea\\tell_thea_session_summary.py": {
+      "imports": [
+        "sys",
+        "pathlib",
+        "pathlib.Path",
+        "thea_automation",
+        "thea_automation.TheaAutomation",
+        "time"
+      ],
+      "classes": [],
+      "functions": [
+        "tell_thea"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "tools\\thea\\thea_authentication_handler.py": {
+      "imports": [
+        "logging",
+        "time",
+        "thea_cookie_manager",
+        "thea_cookie_manager.TheaCookieManager",
+        "thea_login_detector",
+        "thea_login_detector.TheaLoginDetector",
+        "selenium.common.exceptions",
+        "selenium.common.exceptions.TimeoutException",
+        "selenium.webdriver.common.by",
+        "selenium.webdriver.common.by.By",
+        "selenium.webdriver.support",
+        "selenium.webdriver.support.expected_conditions",
+        "selenium.webdriver.support.ui",
+        "selenium.webdriver.support.ui.WebDriverWait",
+        "pyotp"
+      ],
+      "classes": [
+        "TheaAuthenticationHandler"
+      ],
+      "functions": [
+        "__init__",
+        "ensure_login",
+        "_automated_login",
+        "_handle_2fa",
+        "_manual_login",
+        "force_logout"
+      ],
+      "webdriver_usage": true,
+      "selenium_usage": true,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "tools\\thea\\thea_automation.py": {
+      "imports": [
+        "json",
+        "logging",
+        "time",
+        "dataclasses",
+        "dataclasses.dataclass",
+        "datetime",
+        "datetime.datetime",
+        "pathlib",
+        "pathlib.Path",
+        "selenium",
+        "selenium.webdriver",
+        "selenium.webdriver.chrome.options",
+        "selenium.webdriver.chrome.options.Options",
+        "selenium.webdriver.common.by",
+        "selenium.webdriver.common.by.By",
+        "pyautogui",
+        "pyperclip",
+        "response_detector",
+        "response_detector.ResponseDetector",
+        "response_detector.ResponseWaitResult",
+        "argparse"
+      ],
+      "classes": [
+        "TheaConfig",
+        "TheaAutomation"
+      ],
+      "functions": [
+        "main",
+        "__init__",
+        "save_cookies",
+        "load_cookies",
+        "has_valid_cookies",
+        "start_browser",
+        "is_logged_in",
+        "ensure_login",
+        "send_message",
+        "wait_for_response",
+        "save_conversation",
+        "communicate",
+        "cleanup",
+        "__enter__",
+        "__exit__"
+      ],
+      "webdriver_usage": true,
+      "selenium_usage": true,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "tools\\thea\\thea_automation_browser.py": {
+      "imports": [
+        "logging",
+        "time",
+        "selenium",
+        "selenium.webdriver",
+        "selenium.webdriver.chrome.options",
+        "selenium.webdriver.chrome.options.Options",
+        "selenium.webdriver.common.by",
+        "selenium.webdriver.common.by.By"
+      ],
+      "classes": [
+        "TheaBrowserManager"
+      ],
+      "functions": [
+        "__init__",
+        "start_browser",
+        "is_logged_in",
+        "ensure_login",
+        "_handle_manual_login",
+        "cleanup",
+        "get_driver"
+      ],
+      "webdriver_usage": true,
+      "selenium_usage": true,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "tools\\thea\\thea_automation_cookie_manager.py": {
+      "imports": [
+        "json",
+        "logging",
+        "time",
+        "pathlib",
+        "pathlib.Path"
+      ],
+      "classes": [
+        "TheaCookieManager"
+      ],
+      "functions": [
+        "__init__",
+        "save_cookies",
+        "load_cookies",
+        "has_valid_cookies",
+        "_filter_auth_cookies",
+        "_load_cookies_into_driver",
+        "_filter_valid_cookies"
+      ],
+      "webdriver_usage": true,
+      "selenium_usage": true,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "tools\\thea\\thea_automation_messaging.py": {
+      "imports": [
+        "json",
+        "logging",
+        "time",
+        "datetime",
+        "datetime.datetime",
+        "pathlib",
+        "pathlib.Path",
+        "pyautogui",
+        "pyperclip",
+        "response_detector",
+        "response_detector.ResponseDetector",
+        "response_detector.ResponseWaitResult"
+      ],
+      "classes": [
+        "TheaMessagingManager"
+      ],
+      "functions": [
+        "__init__",
+        "send_message",
+        "wait_for_response",
+        "_process_response_result",
+        "save_conversation"
+      ],
+      "webdriver_usage": true,
+      "selenium_usage": true,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "tools\\thea\\thea_cookie_manager.py": {
+      "imports": [
+        "json",
+        "logging",
+        "pathlib",
+        "pathlib.Path",
+        "selenium",
+        "selenium.webdriver"
+      ],
+      "classes": [
+        "TheaCookieManager"
+      ],
+      "functions": [
+        "__init__",
+        "save_cookies",
+        "load_cookies",
+        "has_valid_cookies",
+        "clear_cookies"
+      ],
+      "webdriver_usage": true,
+      "selenium_usage": true,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "tools\\thea\\thea_login_detector.py": {
+      "imports": [
+        "logging",
+        "selenium.common.exceptions",
+        "selenium.common.exceptions.NoSuchElementException",
+        "selenium.common.exceptions.TimeoutException",
+        "selenium.webdriver.common.by",
+        "selenium.webdriver.common.by.By",
+        "selenium.webdriver.support",
+        "selenium.webdriver.support.expected_conditions",
+        "selenium.webdriver.support.ui",
+        "selenium.webdriver.support.ui.WebDriverWait"
+      ],
+      "classes": [
+        "TheaLoginDetector"
+      ],
+      "functions": [
+        "__init__",
+        "is_logged_in",
+        "_check_url_patterns",
+        "_check_logout_button",
+        "_check_user_menu",
+        "_check_new_chat_button",
+        "_check_login_buttons"
+      ],
+      "webdriver_usage": true,
+      "selenium_usage": true,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "tools\\thea\\thea_login_handler.py": {
+      "imports": [
+        "json",
+        "logging",
+        "time",
+        "pathlib",
+        "pathlib.Path",
+        "selenium",
+        "selenium.webdriver",
+        "selenium.common.exceptions",
+        "selenium.common.exceptions.NoSuchElementException",
+        "selenium.common.exceptions.TimeoutException",
+        "selenium.webdriver.common.by",
+        "selenium.webdriver.common.by.By",
+        "selenium.webdriver.support",
+        "selenium.webdriver.support.expected_conditions",
+        "selenium.webdriver.support.ui",
+        "selenium.webdriver.support.ui.WebDriverWait",
+        "time"
+      ],
+      "classes": [
+        "TheaCookieManager",
+        "TheaLoginHandler"
+      ],
+      "functions": [
+        "create_thea_login_handler",
+        "check_thea_login_status",
+        "__init__",
+        "save_cookies",
+        "load_cookies",
+        "has_valid_cookies",
+        "clear_cookies",
+        "__init__",
+        "ensure_login",
+        "_is_logged_in",
+        "_automated_login",
+        "_manual_login",
+        "_is_on_thea_page",
+        "_navigate_to_thea",
+        "force_logout"
+      ],
+      "webdriver_usage": true,
+      "selenium_usage": true,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "tools\\thea\\thea_undetected_helper.py": {
+      "imports": [
+        "logging",
+        "typing",
+        "typing.Optional",
+        "undetected_chromedriver",
+        "selenium",
+        "selenium.webdriver",
+        "selenium.webdriver.chrome.options",
+        "selenium.webdriver.chrome.options.Options"
+      ],
+      "classes": [],
+      "functions": [
+        "create_undetected_driver",
+        "create_standard_driver",
+        "check_undetected_available",
+        "get_installation_instructions"
+      ],
+      "webdriver_usage": true,
+      "selenium_usage": true,
+      "pyautogui_usage": false,
+      "undetected_usage": true
+    },
+    "tools\\thea\\__init__.py": {
+      "imports": [
+        "",
+        ".demo_thea_interactive",
+        "",
+        ".demo_thea_live",
+        "",
+        ".demo_thea_simple",
+        "",
+        ".demo_working_thea",
+        "",
+        ".setup_thea_cookies",
+        "",
+        ".simple_thea_communication",
+        "",
+        ".tell_thea_session_summary",
+        "",
+        ".thea_authentication_handler",
+        "",
+        ".thea_automation",
+        "",
+        ".thea_automation_browser",
+        "",
+        ".thea_automation_cookie_manager",
+        "",
+        ".thea_automation_messaging",
+        "",
+        ".thea_cookie_manager",
+        "",
+        ".thea_login_detector",
+        "",
+        ".thea_login_handler",
+        "",
+        ".thea_login_handler_refactored",
+        "",
+        ".thea_undetected_helper"
+      ],
+      "classes": [],
+      "functions": [],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": true
+    },
+    "tools\\thea\\analyze_chatgpt_selectors.py": {
+      "imports": [
+        "argparse",
+        "json",
+        "logging",
+        "os",
+        "sys",
+        "pathlib",
+        "pathlib.Path",
+        "typing",
+        "typing.Dict",
+        "typing.List",
+        "typing.Any",
+        "selenium",
+        "selenium.webdriver",
+        "selenium.webdriver.chrome.options",
+        "selenium.webdriver.chrome.options.Options",
+        "selenium.webdriver.common.by",
+        "selenium.webdriver.common.by.By",
+        "selenium.webdriver.support.ui",
+        "selenium.webdriver.support.ui.WebDriverWait",
+        "selenium.webdriver.support",
+        "selenium.webdriver.support.expected_conditions",
+        "selenium.common.exceptions",
+        "selenium.common.exceptions.TimeoutException",
+        "selenium.common.exceptions.NoSuchElementException",
+        "undetected_chromedriver",
+        "src.infrastructure.browser.browser_models",
+        "src.infrastructure.browser.browser_models.BrowserConfig",
+        "src.infrastructure.browser.thea_browser_service",
+        "src.infrastructure.browser.thea_browser_service.TheaBrowserService",
+        "datetime",
+        "src.infrastructure.browser.thea_browser_service",
+        "src.infrastructure.browser.thea_browser_service.TheaBrowserService",
+        "urllib.parse",
+        "urllib.parse.urlparse"
+      ],
+      "classes": [
+        "ChatGPTAnalyzer"
+      ],
+      "functions": [
+        "main",
+        "__init__",
+        "setup_driver",
+        "load_page",
+        "analyze_input_elements",
+        "analyze_button_elements",
+        "_analyze_element",
+        "_score_element_relevance",
+        "suggest_selectors",
+        "generate_selector_report",
+        "_generate_recommendations",
+        "save_report"
+      ],
+      "webdriver_usage": true,
+      "selenium_usage": true,
+      "pyautogui_usage": false,
+      "undetected_usage": true
+    },
+    "tools\\thea\\debug_chatgpt_elements.py": {
+      "imports": [
+        "time",
+        "sys",
+        "pathlib",
+        "pathlib.Path",
+        "src.infrastructure.browser.browser_models",
+        "src.infrastructure.browser.browser_models.BrowserConfig",
+        "src.infrastructure.browser.browser_models.TheaConfig",
+        "src.infrastructure.browser.thea_browser_service",
+        "src.infrastructure.browser.thea_browser_service.TheaBrowserService"
+      ],
+      "classes": [],
+      "functions": [
+        "debug_chatgpt_elements"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "tools\\thea\\run_headless_refresh.py": {
+      "imports": [
+        "os",
+        "traceback",
+        "datetime",
+        "datetime.datetime",
+        "src.infrastructure.browser.thea_browser_service",
+        "src.infrastructure.browser.thea_browser_service.TheaBrowserService",
+        "src.infrastructure.browser.browser_models",
+        "src.infrastructure.browser.browser_models.BrowserConfig",
+        "src.infrastructure.browser.browser_models.TheaConfig"
+      ],
+      "classes": [],
+      "functions": [
+        "main"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": true
+    },
+    "tools\\thea\\send_prompt_file.py": {
+      "imports": [
+        "argparse",
+        "json",
+        "logging",
+        "pathlib",
+        "pathlib.Path",
+        "src.infrastructure.browser.browser_models",
+        "src.infrastructure.browser.browser_models.BrowserConfig",
+        "src.infrastructure.browser.browser_models.TheaConfig",
+        "src.infrastructure.browser.thea_browser_service",
+        "src.infrastructure.browser.thea_browser_service.TheaBrowserService"
+      ],
+      "classes": [],
+      "functions": [
+        "send_prompt_from_file",
+        "main"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "tools\\thea\\thea_headless_send.py": {
+      "imports": [
+        "argparse",
+        "json",
+        "sys",
+        "pathlib",
+        "pathlib.Path",
+        "src.infrastructure.browser.browser_models",
+        "src.infrastructure.browser.browser_models.BrowserConfig",
+        "src.infrastructure.browser.browser_models.TheaConfig",
+        "src.infrastructure.browser.thea_browser_service",
+        "src.infrastructure.browser.thea_browser_service.TheaBrowserService"
+      ],
+      "classes": [],
+      "functions": [
+        "run_headless_prompt",
+        "main"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": true
+    },
+    "tools\\thea\\thea_keepalive.py": {
+      "imports": [
+        "argparse",
+        "json",
+        "os",
+        "time",
+        "datetime",
+        "datetime.datetime",
+        "pathlib",
+        "pathlib.Path",
+        "src.infrastructure.browser.thea_browser_service",
+        "src.infrastructure.browser.thea_browser_service.TheaBrowserService",
+        "src.infrastructure.browser.browser_models",
+        "src.infrastructure.browser.browser_models.BrowserConfig",
+        "src.infrastructure.browser.browser_models.TheaConfig"
+      ],
+      "classes": [],
+      "functions": [
+        "read_last_refresh",
+        "write_last_refresh",
+        "ensure_keepalive",
+        "main"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": false,
+      "undetected_usage": false
+    },
+    "tools\\coordination\\discord_commands_tester.py": {
+      "imports": [
+        "asyncio",
+        "argparse",
+        "json",
+        "sys",
+        "time",
+        "pathlib",
+        "pathlib.Path",
+        "datetime",
+        "datetime.datetime",
+        "typing",
+        "typing.Dict",
+        "typing.List",
+        "typing.Any",
+        "typing.Optional",
+        "discord",
+        "discord.ext",
+        "discord.ext.commands",
+        "pyautogui",
+        "re"
+      ],
+      "classes": [],
+      "functions": [
+        "find_discord_command_files",
+        "analyze_command_file",
+        "generate_test_report",
+        "print_report",
+        "test_commands_in_discord",
+        "main"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "tools\\coordination\\discord_simple_test.py": {
+      "imports": [
+        "time",
+        "sys",
+        "pathlib",
+        "pathlib.Path",
+        "pyautogui"
+      ],
+      "classes": [],
+      "functions": [
+        "send_discord_command",
+        "test_commands_interactive"
+      ],
+      "webdriver_usage": false,
+      "selenium_usage": false,
+      "pyautogui_usage": true,
+      "undetected_usage": false
+    },
+    "tools\\coordination\\discord_web_test_automation.py": {
+      "error": "unexpected indent (discord_web_test_automation.py, line 362)"
+    }
+  },
+  "patterns": {
+    "webdriver": [
+      "src\\infrastructure\\browser\\thea_browser_operations.py",
+      "src\\infrastructure\\browser\\thea_content_operations.py",
+      "src\\infrastructure\\browser\\unified_cookie_manager.py",
+      "src\\infrastructure\\browser\\unified\\driver_manager.py",
+      "src\\services\\thea\\thea_service.py",
+      "tools\\browser_pool_manager.py",
+      "tools\\analyze_browser_automation_duplication.py",
+      "tools\\deploy_css_to_wordpress_customizer.py",
+      "tools\\thea\\demo_thea_live.py",
+      "tools\\thea\\setup_thea_cookies.py",
+      "tools\\thea\\simple_thea_communication.py",
+      "tools\\thea\\thea_authentication_handler.py",
+      "tools\\thea\\thea_automation.py",
+      "tools\\thea\\thea_automation_browser.py",
+      "tools\\thea\\thea_automation_cookie_manager.py",
+      "tools\\thea\\thea_automation_messaging.py",
+      "tools\\thea\\thea_cookie_manager.py",
+      "tools\\thea\\thea_login_detector.py",
+      "tools\\thea\\thea_login_handler.py",
+      "tools\\thea\\thea_undetected_helper.py",
+      "tools\\thea\\analyze_chatgpt_selectors.py"
+    ],
+    "selenium": [
+      "src\\infrastructure\\infrastructure_health_monitor.py",
+      "src\\infrastructure\\browser\\thea_browser_operations.py",
+      "src\\infrastructure\\browser\\thea_browser_utils.py",
+      "src\\infrastructure\\browser\\thea_content_operations.py",
+      "src\\infrastructure\\browser\\thea_session_management.py",
+      "src\\infrastructure\\browser\\unified_cookie_manager.py",
+      "src\\infrastructure\\browser\\unified\\driver_manager.py",
+      "src\\services\\thea\\thea_service.py",
+      "tools\\browser_pool_manager.py",
+      "tools\\thea_code_review.py",
+      "tools\\analyze_browser_automation_duplication.py",
+      "tools\\deploy_css_to_wordpress_customizer.py",
+      "tools\\service_migration_helper.py",
+      "tools\\wordpress_manager.py",
+      "tools\\thea\\demo_thea_live.py",
+      "tools\\thea\\setup_thea_cookies.py",
+      "tools\\thea\\simple_thea_communication.py",
+      "tools\\thea\\thea_authentication_handler.py",
+      "tools\\thea\\thea_automation.py",
+      "tools\\thea\\thea_automation_browser.py",
+      "tools\\thea\\thea_automation_cookie_manager.py",
+      "tools\\thea\\thea_automation_messaging.py",
+      "tools\\thea\\thea_cookie_manager.py",
+      "tools\\thea\\thea_login_detector.py",
+      "tools\\thea\\thea_login_handler.py",
+      "tools\\thea\\thea_undetected_helper.py",
+      "tools\\thea\\analyze_chatgpt_selectors.py"
+    ],
+    "pyautogui": [
+      "src\\infrastructure\\browser\\thea_content_operations.py",
+      "src\\core\\agent_self_healing_system.py",
+      "src\\core\\debate_to_gas_integration.py",
+      "src\\core\\gasline_integrations.py",
+      "src\\core\\keyboard_control_lock.py",
+      "src\\core\\message_queue_performance_metrics.py",
+      "src\\core\\messaging_core.py",
+      "src\\core\\messaging_models.py",
+      "src\\core\\messaging_process_lock.py",
+      "src\\core\\messaging_pyautogui.py",
+      "src\\core\\multi_agent_responder.py",
+      "src\\core\\self_healing_operations.py",
+      "src\\core\\config\\config_dataclasses.py",
+      "src\\core\\constants\\agent_constants.py",
+      "src\\core\\utilities\\validation_utilities.py",
+      "src\\core\\message_queue_processor\\core\\processor.py",
+      "src\\core\\message_queue_processor\\processing\\message_router.py",
+      "src\\core\\message_queue_processor\\processing\\delivery_core.py",
+      "src\\core\\message_queue_processor\\processing\\delivery_inbox.py",
+      "src\\core\\message_queue_processor\\handlers\\error_handler.py",
+      "src\\core\\message_queue\\core\\processor.py",
+      "src\\core\\message_queue\\processing\\message_router.py",
+      "src\\core\\message_queue\\handlers\\error_handler.py",
+      "src\\services\\messaging_cli_formatters.py",
+      "src\\services\\messaging_cli_handlers.py",
+      "src\\services\\messaging_cli_parser.py",
+      "src\\services\\messaging_handlers.py",
+      "src\\services\\messaging_infrastructure.py",
+      "src\\services\\unified_messaging_service.py",
+      "src\\services\\messaging\\__init__.py",
+      "src\\services\\messaging\\agent_message_handler.py",
+      "src\\services\\messaging\\agent_message_helpers.py",
+      "src\\services\\messaging\\broadcast_handler.py",
+      "src\\services\\messaging\\broadcast_helpers.py",
+      "src\\services\\messaging\\cli_handler_helpers.py",
+      "src\\services\\messaging\\cli_handlers.py",
+      "src\\services\\messaging\\cli_parser.py",
+      "src\\services\\messaging\\cli_parser_helpers.py",
+      "src\\services\\messaging\\coordination_handlers.py",
+      "src\\services\\messaging\\delivery_handlers.py",
+      "src\\services\\messaging\\discord_message_handler.py",
+      "src\\services\\messaging\\discord_message_helpers.py",
+      "src\\services\\messaging\\message_formatters.py",
+      "src\\services\\messaging\\multi_agent_request_helpers.py",
+      "src\\services\\messaging\\service_adapter_helpers.py",
+      "src\\services\\messaging\\service_adapters.py",
+      "src\\services\\thea\\thea_service.py",
+      "src\\services\\utils\\onboarding_constants.py",
+      "src\\services\\utils\\messaging_templates.py",
+      "src\\services\\trader_replay\\trader_replay_orchestrator.py",
+      "src\\services\\onboarding\\onboarding_helpers.py",
+      "src\\services\\onboarding\\shared\\__init__.py",
+      "src\\services\\onboarding\\shared\\operations.py",
+      "src\\services\\onboarding\\hard\\steps.py",
+      "src\\services\\onboarding\\hard\\service.py",
+      "src\\services\\onboarding\\soft\\messaging_fallback.py",
+      "src\\services\\onboarding\\soft\\steps.py",
+      "src\\services\\onboarding\\soft\\service.py",
+      "tools\\captain_architectural_checker.py",
+      "tools\\swarm_orchestrator.py",
+      "tools\\cycle_1_dependency_progress.py",
+      "tools\\agent_bump_script.py",
+      "tools\\captain_import_validator.py",
+      "tools\\captain_send_jet_fuel.py",
+      "tools\\thea_code_review.py",
+      "tools\\validate_stress_test_integration.py",
+      "tools\\analyze_browser_automation_duplication.py",
+      "tools\\auto_assign_next_round.py",
+      "tools\\capture_performance_baseline.py",
+      "tools\\cleanup_root_comprehensive.py",
+      "tools\\debug_a2a_messaging.py",
+      "tools\\reduce_delegation_overhead.py",
+      "tools\\service_migration_helper.py",
+      "tools\\ssot_batch2_tagger.py",
+      "tools\\start_message_queue_processor.py",
+      "tools\\test_discord_agent_routing.py",
+      "tools\\unified_monitor.py",
+      "tools\\update_swarm_brain_entry.py",
+      "tools\\diagnose_message_queue_flow.py",
+      "tools\\thea\\demo_thea_interactive.py",
+      "tools\\thea\\demo_thea_live.py",
+      "tools\\thea\\simple_thea_communication.py",
+      "tools\\thea\\thea_automation.py",
+      "tools\\thea\\thea_automation_messaging.py",
+      "tools\\thea\\thea_headless_send.py",
+      "tools\\coordination\\discord_commands_tester.py",
+      "tools\\coordination\\discord_simple_test.py"
+    ],
+    "undetected": [
+      "src\\infrastructure\\infrastructure_health_monitor.py",
+      "src\\infrastructure\\unified_browser_service.py",
+      "src\\infrastructure\\browser\\thea_browser_core.py",
+      "src\\infrastructure\\browser\\unified\\driver_manager.py",
+      "src\\core\\config\\config_dataclasses.py",
+      "src\\services\\thea\\thea_service.py",
+      "tools\\thea_code_review.py",
+      "tools\\analyze_browser_automation_duplication.py",
+      "tools\\thea\\setup_thea_cookies.py",
+      "tools\\thea\\thea_undetected_helper.py",
+      "tools\\thea\\__init__.py",
+      "tools\\thea\\analyze_chatgpt_selectors.py",
+      "tools\\thea\\run_headless_refresh.py",
+      "tools\\thea\\thea_headless_send.py"
+    ]
+  },
+  "duplicates": [
+    {
+      "type": "class",
+      "name": "UnifiedBrowserService",
+      "files": [
+        "src\\infrastructure\\unified_browser_service.py",
+        "src\\services\\chatgpt\\navigator.py"
+      ],
+      "count": 2
+    },
+    {
+      "type": "class",
+      "name": "BrowserConfig",
+      "files": [
+        "src\\infrastructure\\browser\\browser_models.py",
+        "src\\core\\config_browser.py",
+        "src\\core\\config\\config_dataclasses.py"
+      ],
+      "count": 3
+    },
+    {
+      "type": "function",
+      "name": "start_browser",
+      "files": [
+        "src\\infrastructure\\unified_browser_service.py",
+        "src\\services\\thea\\thea_service.py",
+        "tools\\thea\\thea_automation.py",
+        "tools\\thea\\thea_automation_browser.py"
+      ],
+      "count": 4
+    },
+    {
+      "type": "function",
+      "name": "get_driver",
+      "files": [
+        "src\\infrastructure\\browser\\thea_browser_core.py",
+        "src\\infrastructure\\browser\\thea_browser_service.py",
+        "src\\infrastructure\\browser\\unified\\driver_manager.py",
+        "tools\\thea\\thea_automation_browser.py"
+      ],
+      "count": 4
+    },
+    {
+      "type": "function",
+      "name": "initialize_driver",
+      "files": [
+        "tools\\thea\\setup_thea_cookies.py",
+        "tools\\thea\\simple_thea_communication.py"
+      ],
+      "count": 2
+    }
+  ],
+  "recommendations": [
+    {
+      "issue": "Multiple WebDriver implementations (21 files)",
+      "files": [
+        "src\\infrastructure\\browser\\thea_browser_operations.py",
+        "src\\infrastructure\\browser\\thea_content_operations.py",
+        "src\\infrastructure\\browser\\unified_cookie_manager.py",
+        "src\\infrastructure\\browser\\unified\\driver_manager.py",
+        "src\\services\\thea\\thea_service.py",
+        "tools\\browser_pool_manager.py",
+        "tools\\analyze_browser_automation_duplication.py",
+        "tools\\deploy_css_to_wordpress_customizer.py",
+        "tools\\thea\\demo_thea_live.py",
+        "tools\\thea\\setup_thea_cookies.py",
+        "tools\\thea\\simple_thea_communication.py",
+        "tools\\thea\\thea_authentication_handler.py",
+        "tools\\thea\\thea_automation.py",
+        "tools\\thea\\thea_automation_browser.py",
+        "tools\\thea\\thea_automation_cookie_manager.py",
+        "tools\\thea\\thea_automation_messaging.py",
+        "tools\\thea\\thea_cookie_manager.py",
+        "tools\\thea\\thea_login_detector.py",
+        "tools\\thea\\thea_login_handler.py",
+        "tools\\thea\\thea_undetected_helper.py",
+        "tools\\thea\\analyze_chatgpt_selectors.py"
+      ],
+      "action": "Consolidate into unified WebDriver service"
+    },
+    {
+      "issue": "Multiple PyAutoGUI implementations (87 files)",
+      "files": [
+        "src\\infrastructure\\browser\\thea_content_operations.py",
+        "src\\core\\agent_self_healing_system.py",
+        "src\\core\\debate_to_gas_integration.py",
+        "src\\core\\gasline_integrations.py",
+        "src\\core\\keyboard_control_lock.py",
+        "src\\core\\message_queue_performance_metrics.py",
+        "src\\core\\messaging_core.py",
+        "src\\core\\messaging_models.py",
+        "src\\core\\messaging_process_lock.py",
+        "src\\core\\messaging_pyautogui.py",
+        "src\\core\\multi_agent_responder.py",
+        "src\\core\\self_healing_operations.py",
+        "src\\core\\config\\config_dataclasses.py",
+        "src\\core\\constants\\agent_constants.py",
+        "src\\core\\utilities\\validation_utilities.py",
+        "src\\core\\message_queue_processor\\core\\processor.py",
+        "src\\core\\message_queue_processor\\processing\\message_router.py",
+        "src\\core\\message_queue_processor\\processing\\delivery_core.py",
+        "src\\core\\message_queue_processor\\processing\\delivery_inbox.py",
+        "src\\core\\message_queue_processor\\handlers\\error_handler.py",
+        "src\\core\\message_queue\\core\\processor.py",
+        "src\\core\\message_queue\\processing\\message_router.py",
+        "src\\core\\message_queue\\handlers\\error_handler.py",
+        "src\\services\\messaging_cli_formatters.py",
+        "src\\services\\messaging_cli_handlers.py",
+        "src\\services\\messaging_cli_parser.py",
+        "src\\services\\messaging_handlers.py",
+        "src\\services\\messaging_infrastructure.py",
+        "src\\services\\unified_messaging_service.py",
+        "src\\services\\messaging\\__init__.py",
+        "src\\services\\messaging\\agent_message_handler.py",
+        "src\\services\\messaging\\agent_message_helpers.py",
+        "src\\services\\messaging\\broadcast_handler.py",
+        "src\\services\\messaging\\broadcast_helpers.py",
+        "src\\services\\messaging\\cli_handler_helpers.py",
+        "src\\services\\messaging\\cli_handlers.py",
+        "src\\services\\messaging\\cli_parser.py",
+        "src\\services\\messaging\\cli_parser_helpers.py",
+        "src\\services\\messaging\\coordination_handlers.py",
+        "src\\services\\messaging\\delivery_handlers.py",
+        "src\\services\\messaging\\discord_message_handler.py",
+        "src\\services\\messaging\\discord_message_helpers.py",
+        "src\\services\\messaging\\message_formatters.py",
+        "src\\services\\messaging\\multi_agent_request_helpers.py",
+        "src\\services\\messaging\\service_adapter_helpers.py",
+        "src\\services\\messaging\\service_adapters.py",
+        "src\\services\\thea\\thea_service.py",
+        "src\\services\\utils\\onboarding_constants.py",
+        "src\\services\\utils\\messaging_templates.py",
+        "src\\services\\trader_replay\\trader_replay_orchestrator.py",
+        "src\\services\\onboarding\\onboarding_helpers.py",
+        "src\\services\\onboarding\\shared\\__init__.py",
+        "src\\services\\onboarding\\shared\\operations.py",
+        "src\\services\\onboarding\\hard\\steps.py",
+        "src\\services\\onboarding\\hard\\service.py",
+        "src\\services\\onboarding\\soft\\messaging_fallback.py",
+        "src\\services\\onboarding\\soft\\steps.py",
+        "src\\services\\onboarding\\soft\\service.py",
+        "tools\\captain_architectural_checker.py",
+        "tools\\swarm_orchestrator.py",
+        "tools\\cycle_1_dependency_progress.py",
+        "tools\\agent_bump_script.py",
+        "tools\\captain_import_validator.py",
+        "tools\\captain_send_jet_fuel.py",
+        "tools\\thea_code_review.py",
+        "tools\\validate_stress_test_integration.py",
+        "tools\\analyze_browser_automation_duplication.py",
+        "tools\\auto_assign_next_round.py",
+        "tools\\capture_performance_baseline.py",
+        "tools\\cleanup_root_comprehensive.py",
+        "tools\\debug_a2a_messaging.py",
+        "tools\\reduce_delegation_overhead.py",
+        "tools\\service_migration_helper.py",
+        "tools\\ssot_batch2_tagger.py",
+        "tools\\start_message_queue_processor.py",
+        "tools\\test_discord_agent_routing.py",
+        "tools\\unified_monitor.py",
+        "tools\\update_swarm_brain_entry.py",
+        "tools\\diagnose_message_queue_flow.py",
+        "tools\\thea\\demo_thea_interactive.py",
+        "tools\\thea\\demo_thea_live.py",
+        "tools\\thea\\simple_thea_communication.py",
+        "tools\\thea\\thea_automation.py",
+        "tools\\thea\\thea_automation_messaging.py",
+        "tools\\thea\\thea_headless_send.py",
+        "tools\\coordination\\discord_commands_tester.py",
+        "tools\\coordination\\discord_simple_test.py"
+      ],
+      "action": "Consolidate GUI automation into unified service"
+    }
+  ]
+}

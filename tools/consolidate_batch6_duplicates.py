@@ -170,6 +170,16 @@ def consolidate_batch6() -> Dict[str, Any]:
 
 def main():
     """Main entry point."""
+    import sys
+    # Handle --help flag
+    if len(sys.argv) > 1 and sys.argv[1] in ('--help', '-h'):
+        print("Usage: python consolidate_batch6_duplicates.py [--help]")
+        print("Executes duplicate deletion for Batch 6 (8 groups, LOW risk, DELETE action).")
+        print("All SSOT files verified. Deletes duplicate files, keeps SSOT.")
+        print("\nOptions:")
+        print("  --help, -h   Show this help message")
+        return 0
+    
     print("🚀 Starting Batch 6 Consolidation...")
     print()
 

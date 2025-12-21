@@ -321,7 +321,7 @@ def main():
 
 if __name__ == "__main__":
     import time
-from src.core.config.timeout_constants import TimeoutConstants
+    from src.core.config.timeout_constants import TimeoutConstants
     sys.exit(main())
 
 

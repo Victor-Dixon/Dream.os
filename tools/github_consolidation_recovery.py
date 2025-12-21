@@ -26,11 +26,12 @@ try:
 except ImportError:
     GITHUB_BYPASS_AVAILABLE = False
 
+from src.core.config.timeout_constants import TimeoutConstants
+
 # Fallback token loading
 def get_github_token() -> Optional[str]:
     """Get GitHub token from environment."""
     import os
-from src.core.config.timeout_constants import TimeoutConstants
     return os.getenv("GITHUB_TOKEN") or os.getenv("GH_TOKEN")
 
 

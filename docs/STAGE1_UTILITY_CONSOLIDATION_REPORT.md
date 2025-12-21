@@ -36,9 +36,27 @@
 **src\core\import_system\import_utilities.py**
 - Line 21: """Initialize import utilities."""
 
+**src\core\utilities\cleanup_utilities.py**
+- Line 9: OLD: from src.core.utilities.{old_module} import ...
+
+**src\core\utilities\config_utilities.py**
+- Line 9: OLD: from src.core.utilities.{old_module} import ...
+
+**src\core\utilities\error_utilities.py**
+- Line 9: OLD: from src.core.utilities.{old_module} import ...
+
+**src\core\utilities\init_utilities.py**
+- Line 9: OLD: from src.core.utilities.{old_module} import ...
+
+**src\core\utilities\result_utilities.py**
+- Line 9: OLD: from src.core.utilities.{old_module} import ...
+
 **src\core\utilities\standardized_logging.py**
 - Line 10: from src.core.utilities.standardized_logging import get_logger
 - Line 18: from src.core.utilities.standardized_logging import LoggerFactory, LogLevel
+
+**src\core\utilities\status_utilities.py**
+- Line 9: OLD: from src.core.utilities.{old_module} import ...
 
 **src\services\messaging_cli_coordinate_management\__init__.py**
 - Line 4: from . import utilities

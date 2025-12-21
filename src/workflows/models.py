@@ -44,6 +44,24 @@ class ResponseType(Enum):
     BRANCH_EXECUTION = "branch_execution"
 
 
+# NOTE: CoordinationStrategy enum below is deprecated - use coordination_models.py instead
+import warnings
+warnings.warn(
+    "CoordinationStrategy is deprecated. Use src/core/coordination/swarm/coordination_models.py instead.",
+    DeprecationWarning,
+    stacklevel=2
+)
+
+
+# NOTE: CoordinationStrategy enum below is deprecated - use coordination_models.py instead
+import warnings
+warnings.warn(
+    "CoordinationStrategy is deprecated. Use src/core/coordination/swarm/coordination_models.py instead.",
+    DeprecationWarning,
+    stacklevel=2
+)
+
+
 class CoordinationStrategy(Enum):
     """Coordination strategies for multi-agent workflows."""
 

@@ -388,7 +388,6 @@ def main():
     except Exception as e:
         print(f"❌ Error: {e}")
         import traceback
-from src.core.config.timeout_constants import TimeoutConstants
         traceback.print_exc()
         return 1
 

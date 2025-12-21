@@ -124,7 +124,7 @@ async def main():
 
     # Import after fixes applied
     try:
-        from src.services.chat_presence import ChatPresenceOrchestrator
+        from src.services.chat_presence.chat_presence_orchestrator import ChatPresenceOrchestrator
         import logging
 
         # Set up logging

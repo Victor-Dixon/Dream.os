@@ -7,6 +7,12 @@ def main():
     """Extract integration files list."""
     json_path = Path("agent_workspaces/Agent-7/category1_verification.json")
     
+    if not json_path.exists():
+        print(f"❌ File not found: {json_path}")
+        print("   This tool requires category1_verification.json to exist.")
+        print("   Run the verification tool first to generate this file.")
+        return 1
+    
     with open(json_path, 'r', encoding='utf-8') as f:
         data = json.load(f)
     
@@ -27,9 +33,11 @@ def main():
         }, f, indent=2)
     
     print(f"\n✅ List saved to: {output_path}")
+    return 0
 
 if __name__ == "__main__":
-    main()
+    import sys
+    sys.exit(main())
 
 
 

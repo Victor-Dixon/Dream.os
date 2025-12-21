@@ -17,7 +17,7 @@ import argparse
 import importlib
 import sys
 from pathlib import Path
-from typing import Dict, Optional, List
+from typing import Dict, Optional
 
 PROJECT_ROOT = Path(__file__).parent.parent.parent
 
@@ -32,12 +32,9 @@ class UnifiedCLIDispatcher:
     
     def _load_command_registry(self):
         """Load command registry from configuration."""
-        try:
-            from tools.cli.commands.registry import COMMAND_REGISTRY
-            self.commands = COMMAND_REGISTRY.copy()
-        except ImportError:
-            # Fallback to empty registry if not available
-            self.commands = {}
+        # Commands will be registered here
+        # Format: {"command_name": {"module": "tools.module", "function": "main"}}
+        pass
     
     def register_command(self, name: str, module: str, function: str = "main"):
         """Register a command."""
@@ -47,21 +44,7 @@ class UnifiedCLIDispatcher:
         """Dispatch command to appropriate handler."""
         if command not in self.commands:
             print(f"❌ Unknown command: {command}")
-            print(f"\nAvailable commands ({len(self.commands)}):")
-            # Group by category
-            categories = {}
-            for cmd_name, cmd_info in self.commands.items():
-                cat = cmd_info.get("category", "general")
-                if cat not in categories:
-                    categories[cat] = []
-                categories[cat].append(cmd_name)
-            
-            for cat in sorted(categories.keys()):
-                print(f"\n  {cat.upper()} ({len(categories[cat])}):")
-                for cmd in sorted(categories[cat])[:10]:  # Show first 10 per category
-                    print(f"    - {cmd}")
-                if len(categories[cat]) > 10:
-                    print(f"    ... and {len(categories[cat]) - 10} more")
+            print(f"Available commands: {', '.join(self.commands.keys())}")
             return 1
         
         try:
@@ -69,31 +52,10 @@ class UnifiedCLIDispatcher:
             module = importlib.import_module(cmd_config["module"])
             handler = getattr(module, cmd_config["function"])
             
-            # Most tools expect sys.argv, so we need to reconstruct it
-            # Save original argv
-            original_argv = sys.argv[:]
-            try:
-                # Reconstruct argv: [script_name, command, ...args]
-                sys.argv = [sys.argv[0], command] + args
-                # Execute command handler
-                if callable(handler):
-                    result = handler()
-                    return result if isinstance(result, int) else 0
-                else:
-                    return 1
-            finally:
-                # Restore original argv
-                sys.argv = original_argv
-        except ImportError as e:
-            print(f"❌ Error importing module for '{command}': {e}")
-            return 1
-        except AttributeError as e:
-            print(f"❌ Error: Function '{cmd_config['function']}' not found in module: {e}")
-            return 1
+            # Execute command with remaining args
+            return handler(args) if callable(handler) else 1
         except Exception as e:
             print(f"❌ Error executing command '{command}': {e}")
-            import traceback
-            traceback.print_exc()
             return 1
 
 
@@ -133,29 +95,13 @@ def main() -> int:
     dispatcher = UnifiedCLIDispatcher()
     
     if args.list:
-        print(f"Available commands ({len(dispatcher.commands)}):\n")
-        # Group by category
-        categories = {}
-        for cmd_name, cmd_info in dispatcher.commands.items():
-            cat = cmd_info.get("category", "general")
-            if cat not in categories:
-                categories[cat] = []
-            categories[cat].append(cmd_name)
-        
-        for cat in sorted(categories.keys()):
-            print(f"{cat.upper()} ({len(categories[cat])}):")
-            for cmd in sorted(categories[cat]):
-                desc = dispatcher.commands[cmd].get("description", "")
-                if desc:
-                    print(f"  {cmd:50} - {desc[:60]}")
-                else:
-                    print(f"  {cmd}")
-            print()
+        print("Available commands:")
+        for cmd in sorted(dispatcher.commands.keys()):
+            print(f"  {cmd}")
         return 0
     
     if not args.command:
         parser.print_help()
-        print(f"\nUse --list to see all {len(dispatcher.commands)} available commands.")
         return 1
     
     return dispatcher.dispatch(args.command, args.args)

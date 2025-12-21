@@ -58,7 +58,12 @@ class UnifiedMonitor:
     def monitor_queue_health(self) -> Dict[str, Any]:
         """Monitor deferred push queue health."""
         try:
-            from src.core.deferred_push_queue import get_deferred_push_queue
+            # Try to import, but handle if it triggers agent_registry import error
+            try:
+                from src.core.deferred_push_queue import get_deferred_push_queue
+            except (ImportError, FileNotFoundError) as e:
+                logger.warning(f"Could not import deferred_push_queue: {e}")
+                raise ImportError("deferred_push_queue not available")
             queue = get_deferred_push_queue()
             stats = queue.get_stats()
             

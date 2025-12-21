@@ -248,6 +248,12 @@ def create_merge_branch(
 
 def main():
     """Create merge branch for UltimateOptionsTradingRobot consolidation."""
+    # Handle --help flag
+    if len(sys.argv) > 1 and sys.argv[1] in ('--help', '-h'):
+        print("Usage: python create_trading_repo_branch.py")
+        print("Creates a merge branch for UltimateOptionsTradingRobot -> trading-leads-bot consolidation.")
+        return 0
+
     owner = "Dadudekc"
     target_repo = "trading-leads-bot"
     source_repo = "UltimateOptionsTradingRobot"

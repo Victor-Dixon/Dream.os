@@ -226,6 +226,16 @@ class ConsolidationValidator:
         return len(self.issues) == 0
 
 if __name__ == "__main__":
+    # Handle --help flag
+    if len(sys.argv) > 1 and sys.argv[1] in ('--help', '-h'):
+        print("Usage: python validate_consolidation.py [--help]")
+        print("Validates that consolidation maintains functionality and improves maintainability.")
+        print("\nRuns validation checks:")
+        print("  - File count reduction")
+        print("  - Functionality preservation")
+        print("  - Import correctness")
+        sys.exit(0)
+    
     validator = ConsolidationValidator()
     success = validator.run_validation()
     sys.exit(0 if success else 1)

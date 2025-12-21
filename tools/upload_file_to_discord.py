@@ -58,6 +58,7 @@ def upload_file_to_discord(
                 "username": username
             }
             
+            from src.core.config.timeout_constants import TimeoutConstants
             response = requests.post(
                 webhook_url,
                 files=files,
@@ -81,7 +82,7 @@ def upload_file_to_discord(
 def main():
     """CLI interface."""
     import argparse
-from src.core.config.timeout_constants import TimeoutConstants
+    from src.core.config.timeout_constants import TimeoutConstants
     
     parser = argparse.ArgumentParser(description="Upload file to Discord via webhook")
     parser.add_argument("file", type=Path, help="File to upload")

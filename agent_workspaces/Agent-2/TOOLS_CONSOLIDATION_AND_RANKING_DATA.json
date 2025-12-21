@@ -700,6 +700,19 @@
       "score": 30
     },
     {
+      "name": "analyze_runtime_errors",
+      "path": "tools\\analyze_runtime_errors.py",
+      "lines": 131,
+      "description": "Analyze Runtime Errors from Tool Audit",
+      "functions": [
+        "test_tool_help",
+        "analyze_runtime_errors"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 29
+    },
+    {
       "name": "analyze_swarm_coordination_patterns",
       "path": "tools\\analyze_swarm_coordination_patterns.py",
       "lines": 495,
@@ -875,6 +888,22 @@
       ],
       "category": "analysis",
       "score": 26
+    },
+    {
+      "name": "audit_broken_tools_split",
+      "path": "tools\\audit_broken_tools_split.py",
+      "lines": 310,
+      "description": "Broken Tools Audit - Split for 8 Agents",
+      "functions": [
+        "get_all_tools",
+        "_should_skip",
+        "split_into_chunks",
+        "create_agent_assignments",
+        "run_agent_audit"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 30
     },
     {
       "name": "audit_cleanup",
@@ -1675,24 +1704,6 @@
       "score": 37
     },
     {
-      "name": "captain_workspace_cleanup",
-      "path": "tools\\captain_workspace_cleanup.py",
-      "lines": 188,
-      "description": "\ud83d\udc1d CAPTAIN WORKSPACE CLEANUP TOOL",
-      "functions": [
-        "__init__",
-        "should_archive",
-        "archive_file",
-        "cleanup_workspace",
-        "generate_cleanup_report"
-      ],
-      "classes": [
-        "CaptainWorkspaceCleanup"
-      ],
-      "category": "captain",
-      "score": 45
-    },
-    {
       "name": "capture_performance_baseline",
       "path": "tools\\capture_performance_baseline.py",
       "lines": 76,
@@ -1767,7 +1778,7 @@
     {
       "name": "check_all_repos_needing_archive",
       "path": "tools\\check_all_repos_needing_archive.py",
-      "lines": 113,
+      "lines": 114,
       "description": "Check all repos that need to be archived (not yet archived).",
       "functions": [
         "get_github_token",
@@ -1885,6 +1896,32 @@
       "classes": [],
       "category": "monitoring",
       "score": 40
+    },
+    {
+      "name": "check_freerideinvestor_htaccess",
+      "path": "tools\\check_freerideinvestor_htaccess.py",
+      "lines": 176,
+      "description": "Check .htaccess File for freerideinvestor.com",
+      "functions": [
+        "check_htaccess",
+        "main"
+      ],
+      "classes": [],
+      "category": "monitoring",
+      "score": 34
+    },
+    {
+      "name": "check_freerideinvestor_php_errors",
+      "path": "tools\\check_freerideinvestor_php_errors.py",
+      "lines": 126,
+      "description": "Check PHP Error Logs for freerideinvestor.com",
+      "functions": [
+        "check_php_error_logs",
+        "main"
+      ],
+      "classes": [],
+      "category": "monitoring",
+      "score": 34
     },
     {
       "name": "check_functionality_existence",
@@ -2128,7 +2165,7 @@
     {
       "name": "claim_and_fix_master_task",
       "path": "tools\\claim_and_fix_master_task.py",
-      "lines": 390,
+      "lines": 404,
       "description": "Claim and Fix Master Task Log Task",
       "functions": [
         "parse_master_task_log",
@@ -2141,7 +2178,7 @@
         "TimeoutConstants"
       ],
       "category": "task",
-      "score": 28
+      "score": 24
     },
     {
       "name": "clarify_dadudekc_homepage_offer",
@@ -2393,7 +2430,7 @@
     {
       "name": "cleanup_superpowered_venv",
       "path": "tools\\cleanup_superpowered_venv.py",
-      "lines": 317,
+      "lines": 318,
       "description": "Cleanup Superpowered-TTRPG Venv Files - Agent-7",
       "functions": [
         "get_github_token",
@@ -3871,7 +3908,7 @@
     {
       "name": "discover_ftp_credentials",
       "path": "tools\\discover_ftp_credentials.py",
-      "lines": 210,
+      "lines": 216,
       "description": "Discover FTP/SFTP Credentials for All Sites",
       "functions": [
         "get_sites_from_json",
@@ -3905,7 +3942,7 @@
     {
       "name": "disk_space_optimization",
       "path": "tools\\disk_space_optimization.py",
-      "lines": 225,
+      "lines": 230,
       "description": "Disk Space Optimization Tool - Agent-1",
       "functions": [
         "cleanup_temp_repos",
@@ -3971,24 +4008,6 @@
       "score": 25
     },
     {
-      "name": "duplication_analyzer",
-      "path": "tools\\duplication_analyzer.py",
-      "lines": 314,
-      "description": "Duplication Analyzer - Consolidated Duplicate Detection Tool",
-      "functions": [
-        "__init__",
-        "find_source_files",
-        "calculate_hash",
-        "detect_duplicates_by_hash",
-        "detect_duplicates_by_name"
-      ],
-      "classes": [
-        "DuplicationAnalyzer"
-      ],
-      "category": "analysis",
-      "score": 30
-    },
-    {
       "name": "duplication_checker",
       "path": "tools\\duplication_checker.py",
       "lines": 238,
@@ -4005,6 +4024,19 @@
       ],
       "category": "monitoring",
       "score": 35
+    },
+    {
+      "name": "enable_freerideinvestor_debug",
+      "path": "tools\\enable_freerideinvestor_debug.py",
+      "lines": 177,
+      "description": "Enable WordPress Debug Mode for freerideinvestor.com",
+      "functions": [
+        "enable_debug_mode",
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 24
     },
     {
       "name": "enhance_repo_merge_v2",
@@ -4026,7 +4058,7 @@
     {
       "name": "enhanced_duplicate_detector",
       "path": "tools\\enhanced_duplicate_detector.py",
-      "lines": 305,
+      "lines": 309,
       "description": "Enhanced Duplicate Detector - Agent-2",
       "functions": [
         "get_github_username",
@@ -4104,6 +4136,22 @@
       "score": 26
     },
     {
+      "name": "execute_batch2_dedupe_from_json",
+      "path": "tools\\execute_batch2_dedupe_from_json.py",
+      "lines": 204,
+      "description": "Execute Batch 2 Deduplication from JSON",
+      "functions": [
+        "get_file_hash",
+        "load_batch2_groups",
+        "verify_ssot",
+        "process_group",
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 25
+    },
+    {
       "name": "execute_captain_pattern",
       "path": "tools\\execute_captain_pattern.py",
       "lines": 347,
@@ -4132,6 +4180,20 @@
       "classes": [],
       "category": "consolidation",
       "score": 24
+    },
+    {
+      "name": "execute_consolidation_deprecations",
+      "path": "tools\\execute_consolidation_deprecations.py",
+      "lines": 157,
+      "description": "Execute Consolidation Deprecations",
+      "functions": [
+        "load_consolidation_plan",
+        "move_to_deprecated",
+        "main"
+      ],
+      "classes": [],
+      "category": "consolidation",
+      "score": 29
     },
     {
       "name": "execute_dreamvault_cleanup",
@@ -4197,7 +4259,7 @@
     {
       "name": "execute_streamertools_duplicate_resolution",
       "path": "tools\\execute_streamertools_duplicate_resolution.py",
-      "lines": 237,
+      "lines": 241,
       "description": "Execute Streamertools Duplicate Resolution - Agent-3",
       "functions": [
         "get_github_token",
@@ -4246,7 +4308,7 @@
     {
       "name": "extract_ai_framework_logic",
       "path": "tools\\extract_ai_framework_logic.py",
-      "lines": 237,
+      "lines": 241,
       "description": "Extract AI Framework Logic - Agent-2",
       "functions": [
         "get_github_token",
@@ -4302,7 +4364,7 @@
     {
       "name": "extract_git_commits",
       "path": "tools\\extract_git_commits.py",
-      "lines": 301,
+      "lines": 305,
       "description": "Automated Git Commit Extraction Tool",
       "functions": [
         "__init__",
@@ -4332,7 +4394,7 @@
     {
       "name": "extract_portfolio_logic",
       "path": "tools\\extract_portfolio_logic.py",
-      "lines": 217,
+      "lines": 221,
       "description": "Extract Portfolio Management Logic - Agent-2",
       "functions": [
         "get_github_token",
@@ -4380,7 +4442,7 @@
     {
       "name": "fetch_repo_names",
       "path": "tools\\fetch_repo_names.py",
-      "lines": 320,
+      "lines": 326,
       "description": "Fetch Repo Names via GitHub API - Repo Analysis Improvement Tool",
       "functions": [
         "get_github_token",
@@ -4396,7 +4458,7 @@
     {
       "name": "file_deletion_support",
       "path": "tools\\file_deletion_support.py",
-      "lines": 415,
+      "lines": 420,
       "description": "File Deletion Support Tool - V2 Compliant",
       "functions": [
         "__init__",
@@ -5420,7 +5482,7 @@
     {
       "name": "get_repo_chronology",
       "path": "tools\\get_repo_chronology.py",
-      "lines": 399,
+      "lines": 398,
       "description": "Repository Chronology Tool - Chronological Blog Journey",
       "functions": [
         "get_github_token",
@@ -5498,7 +5560,7 @@
     {
       "name": "github_consolidation_recovery",
       "path": "tools\\github_consolidation_recovery.py",
-      "lines": 394,
+      "lines": 395,
       "description": "GitHub Consolidation Recovery Script",
       "functions": [
         "get_github_token",
@@ -5817,7 +5879,7 @@
     {
       "name": "infrastructure_automation_suite",
       "path": "tools\\infrastructure_automation_suite.py",
-      "lines": 174,
+      "lines": 175,
       "description": "Infrastructure Automation Suite",
       "functions": [
         "__init__",
@@ -5882,6 +5944,38 @@
       ],
       "category": "automation",
       "score": 37
+    },
+    {
+      "name": "investigate_freerideinvestor_500_error",
+      "path": "tools\\investigate_freerideinvestor_500_error.py",
+      "lines": 409,
+      "description": "Investigate freerideinvestor.com HTTP 500 Error",
+      "functions": [
+        "__init__",
+        "_load_site_config",
+        "connect_sftp",
+        "disconnect_sftp",
+        "check_http_status"
+      ],
+      "classes": [
+        "WordPress500Investigator"
+      ],
+      "category": "other",
+      "score": 21
+    },
+    {
+      "name": "investigate_runtime_errors",
+      "path": "tools\\investigate_runtime_errors.py",
+      "lines": 246,
+      "description": "Investigate Runtime Errors in Broken Tools",
+      "functions": [
+        "test_tool_runtime",
+        "categorize_errors",
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 21
     },
     {
       "name": "irc_connection_diagnostics",
@@ -6290,7 +6384,7 @@
     {
       "name": "nightly_site_audit",
       "path": "tools\\nightly_site_audit.py",
-      "lines": 420,
+      "lines": 433,
       "description": "Nightly Site Audit Tool",
       "functions": [
         "load_sites_config",
@@ -6817,18 +6911,6 @@
       "score": 25
     },
     {
-      "name": "projectscanner",
-      "path": "tools\\projectscanner.py",
-      "lines": 85,
-      "description": "Project Scanner - REFACTORED FOR V2 COMPLIANCE",
-      "functions": [
-        "main"
-      ],
-      "classes": [],
-      "category": "analysis",
-      "score": 47
-    },
-    {
       "name": "projectscanner_modular_reports",
       "path": "tools\\projectscanner_modular_reports.py",
       "lines": 438,
@@ -7138,7 +7220,7 @@
     {
       "name": "repo_safe_merge_v2",
       "path": "tools\\repo_safe_merge_v2.py",
-      "lines": 786,
+      "lines": 488,
       "description": "Safe Repository Merge Script V2 - Local-First Architecture",
       "functions": [
         "get_github_token",
@@ -9496,7 +9578,7 @@
     {
       "name": "unified_blogging_automation",
       "path": "tools\\unified_blogging_automation.py",
-      "lines": 487,
+      "lines": 494,
       "description": "Unified Blogging Automation Tool",
       "functions": [
         "__init__",
@@ -9507,8 +9589,8 @@
       ],
       "classes": [
         "TimeoutConstants",
-        "WordPressBlogClient",
-        "ContentAdapter"
+        "TimeoutConstants",
+        "WordPressBlogClient"
       ],
       "category": "automation",
       "score": 28
@@ -9588,16 +9670,17 @@
     {
       "name": "unified_github_pr_creator",
       "path": "tools\\unified_github_pr_creator.py",
-      "lines": 426,
+      "lines": 444,
       "description": "Unified GitHub PR Creator",
       "functions": [
+        "get_github_token",
         "check_gh_cli_rate_limit",
         "check_rest_api_rate_limit",
         "check_graphql_api_rate_limit",
-        "__init__",
-        "check_available_methods"
+        "__init__"
       ],
       "classes": [
+        "TimeoutConstants",
         "UnifiedGitHubPRCreator"
       ],
       "category": "other",
@@ -9606,7 +9689,7 @@
     {
       "name": "unified_monitor",
       "path": "tools\\unified_monitor.py",
-      "lines": 855,
+      "lines": 860,
       "description": "Unified Monitor - Consolidated Monitoring Tool",
       "functions": [
         "__init__",
@@ -9662,24 +9745,6 @@
       "score": 25
     },
     {
-      "name": "unified_validator",
-      "path": "tools\\unified_validator.py",
-      "lines": 585,
-      "description": "Unified Validator - Consolidated Validation Tool",
-      "functions": [
-        "track_tool_usage",
-        "__init__",
-        "validate_ssot_config",
-        "validate_imports",
-        "validate_code_docs_alignment"
-      ],
-      "classes": [
-        "UnifiedValidator"
-      ],
-      "category": "quality",
-      "score": 26
-    },
-    {
       "name": "unified_verifier",
       "path": "tools\\unified_verifier.py",
       "lines": 390,
@@ -9718,20 +9783,19 @@
     {
       "name": "unstick_agent3_assignment",
       "path": "tools\\unstick_agent3_assignment.py",
-      "lines": 264,
+      "lines": 132,
       "description": "Unstick Agent-3 Assignment Script",
       "functions": [
-        "unstick_agent3",
         "unstick_agent3"
       ],
       "classes": [],
       "category": "agent",
-      "score": 29
+      "score": 32
     },
     {
       "name": "update_all_sites_branding",
       "path": "tools\\update_all_sites_branding.py",
-      "lines": 283,
+      "lines": 288,
       "description": "Update All Sites with Swarm Branding",
       "functions": [
         "create_swarm_menu",
@@ -9764,7 +9828,7 @@
     {
       "name": "update_blog_posts_with_fixed_links",
       "path": "tools\\update_blog_posts_with_fixed_links.py",
-      "lines": 158,
+      "lines": 159,
       "description": "Update Blog Posts with Fixed Links",
       "functions": [
         "get_post_by_slug",
@@ -9922,7 +9986,7 @@
     {
       "name": "upload_file_to_discord",
       "path": "tools\\upload_file_to_discord.py",
-      "lines": 117,
+      "lines": 118,
       "description": "Upload File to Discord via Webhook",
       "functions": [
         "upload_file_to_discord",
@@ -10265,7 +10329,7 @@
     {
       "name": "verify_batch1_main_branches",
       "path": "tools\\verify_batch1_main_branches.py",
-      "lines": 158,
+      "lines": 162,
       "description": "Verify Batch 1 Main Branches",
       "functions": [
         "get_github_token",
@@ -10273,7 +10337,9 @@
         "get_merge_branch_sha",
         "main"
       ],
-      "classes": [],
+      "classes": [
+        "TimeoutConstants"
+      ],
       "category": "other",
       "score": 28
     },
@@ -10312,14 +10378,16 @@
     {
       "name": "verify_batch2_prs",
       "path": "tools\\verify_batch2_prs.py",
-      "lines": 105,
+      "lines": 109,
       "description": "Verify Batch 2 PRs",
       "functions": [
         "get_github_token",
         "verify_pr",
         "main"
       ],
-      "classes": [],
+      "classes": [
+        "TimeoutConstants"
+      ],
       "category": "other",
       "score": 26
     },
@@ -10426,13 +10494,15 @@
     {
       "name": "verify_contract_leads_merge",
       "path": "tools\\verify_contract_leads_merge.py",
-      "lines": 126,
+      "lines": 130,
       "description": "Verify contract-leads merge status and close PR if needed.",
       "functions": [
         "get_github_token",
         "main"
       ],
-      "classes": [],
+      "classes": [
+        "TimeoutConstants"
+      ],
       "category": "consolidation",
       "score": 27
     },
@@ -10595,6 +10665,19 @@
       "description": "Verify Houston Sip Queen Astros CSS is Loading",
       "functions": [
         "verify_css_deployment",
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 24
+    },
+    {
+      "name": "verify_import_errors",
+      "path": "tools\\verify_import_errors.py",
+      "lines": 127,
+      "description": "Verify Import Errors in Broken Tools",
+      "functions": [
+        "check_imports",
         "main"
       ],
       "classes": [],
@@ -11066,18 +11149,6 @@
       "score": 48
     },
     {
-      "name": "projectscanner",
-      "path": "tools\\projectscanner.py",
-      "lines": 85,
-      "description": "Project Scanner - REFACTORED FOR V2 COMPLIANCE",
-      "functions": [
-        "main"
-      ],
-      "classes": [],
-      "category": "analysis",
-      "score": 47
-    },
-    {
       "name": "projectscanner_modular_reports",
       "path": "tools\\projectscanner_modular_reports.py",
       "lines": 438,
@@ -11124,24 +11195,6 @@
         "main"
       ],
       "classes": [],
-      "category": "captain",
-      "score": 45
-    },
-    {
-      "name": "captain_workspace_cleanup",
-      "path": "tools\\captain_workspace_cleanup.py",
-      "lines": 188,
-      "description": "\ud83d\udc1d CAPTAIN WORKSPACE CLEANUP TOOL",
-      "functions": [
-        "__init__",
-        "should_archive",
-        "archive_file",
-        "cleanup_workspace",
-        "generate_cleanup_report"
-      ],
-      "classes": [
-        "CaptainWorkspaceCleanup"
-      ],
       "category": "captain",
       "score": 45
     },
@@ -11831,7 +11884,7 @@
     {
       "name": "infrastructure_automation_suite",
       "path": "tools\\infrastructure_automation_suite.py",
-      "lines": 174,
+      "lines": 175,
       "description": "Infrastructure Automation Suite",
       "functions": [
         "__init__",
@@ -12429,10 +12482,36 @@
     {
       "name": "check_all_repos_needing_archive",
       "path": "tools\\check_all_repos_needing_archive.py",
-      "lines": 113,
+      "lines": 114,
       "description": "Check all repos that need to be archived (not yet archived).",
       "functions": [
         "get_github_token",
+        "main"
+      ],
+      "classes": [],
+      "category": "monitoring",
+      "score": 34
+    },
+    {
+      "name": "check_freerideinvestor_htaccess",
+      "path": "tools\\check_freerideinvestor_htaccess.py",
+      "lines": 176,
+      "description": "Check .htaccess File for freerideinvestor.com",
+      "functions": [
+        "check_htaccess",
+        "main"
+      ],
+      "classes": [],
+      "category": "monitoring",
+      "score": 34
+    },
+    {
+      "name": "check_freerideinvestor_php_errors",
+      "path": "tools\\check_freerideinvestor_php_errors.py",
+      "lines": 126,
+      "description": "Check PHP Error Logs for freerideinvestor.com",
+      "functions": [
+        "check_php_error_logs",
         "main"
       ],
       "classes": [],
@@ -13157,6 +13236,18 @@
       "score": 32
     },
     {
+      "name": "unstick_agent3_assignment",
+      "path": "tools\\unstick_agent3_assignment.py",
+      "lines": 132,
+      "description": "Unstick Agent-3 Assignment Script",
+      "functions": [
+        "unstick_agent3"
+      ],
+      "classes": [],
+      "category": "agent",
+      "score": 32
+    },
+    {
       "name": "workspace_auto_cleaner",
       "path": "tools\\workspace_auto_cleaner.py",
       "lines": 234,
@@ -13429,7 +13520,7 @@
     {
       "name": "unified_monitor",
       "path": "tools\\unified_monitor.py",
-      "lines": 855,
+      "lines": 860,
       "description": "Unified Monitor - Consolidated Monitoring Tool",
       "functions": [
         "__init__",
@@ -13594,6 +13685,22 @@
       ],
       "classes": [],
       "category": "other",
+      "score": 30
+    },
+    {
+      "name": "audit_broken_tools_split",
+      "path": "tools\\audit_broken_tools_split.py",
+      "lines": 310,
+      "description": "Broken Tools Audit - Split for 8 Agents",
+      "functions": [
+        "get_all_tools",
+        "_should_skip",
+        "split_into_chunks",
+        "create_agent_assignments",
+        "run_agent_audit"
+      ],
+      "classes": [],
+      "category": "analysis",
       "score": 30
     },
     {
@@ -13917,24 +14024,6 @@
       ],
       "classes": [],
       "category": "other",
-      "score": 30
-    },
-    {
-      "name": "duplication_analyzer",
-      "path": "tools\\duplication_analyzer.py",
-      "lines": 314,
-      "description": "Duplication Analyzer - Consolidated Duplicate Detection Tool",
-      "functions": [
-        "__init__",
-        "find_source_files",
-        "calculate_hash",
-        "detect_duplicates_by_hash",
-        "detect_duplicates_by_name"
-      ],
-      "classes": [
-        "DuplicationAnalyzer"
-      ],
-      "category": "analysis",
       "score": 30
     },
     {
@@ -14496,6 +14585,19 @@
       "score": 29
     },
     {
+      "name": "analyze_runtime_errors",
+      "path": "tools\\analyze_runtime_errors.py",
+      "lines": 131,
+      "description": "Analyze Runtime Errors from Tool Audit",
+      "functions": [
+        "test_tool_help",
+        "analyze_runtime_errors"
+      ],
+      "classes": [],
+      "category": "analysis",
+      "score": 29
+    },
+    {
       "name": "archive_consolidation_candidates",
       "path": "tools\\archive_consolidation_candidates.py",
       "lines": 176,
@@ -14548,6 +14650,20 @@
       ],
       "classes": [],
       "category": "coordination",
+      "score": 29
+    },
+    {
+      "name": "execute_consolidation_deprecations",
+      "path": "tools\\execute_consolidation_deprecations.py",
+      "lines": 157,
+      "description": "Execute Consolidation Deprecations",
+      "functions": [
+        "load_consolidation_plan",
+        "move_to_deprecated",
+        "main"
+      ],
+      "classes": [],
+      "category": "consolidation",
       "score": 29
     },
     {
@@ -14629,19 +14745,6 @@
       ],
       "classes": [],
       "category": "consolidation",
-      "score": 29
-    },
-    {
-      "name": "unstick_agent3_assignment",
-      "path": "tools\\unstick_agent3_assignment.py",
-      "lines": 264,
-      "description": "Unstick Agent-3 Assignment Script",
-      "functions": [
-        "unstick_agent3",
-        "unstick_agent3"
-      ],
-      "classes": [],
-      "category": "agent",
       "score": 29
     },
     {
@@ -14747,24 +14850,6 @@
       ],
       "classes": [],
       "category": "analysis",
-      "score": 28
-    },
-    {
-      "name": "claim_and_fix_master_task",
-      "path": "tools\\claim_and_fix_master_task.py",
-      "lines": 390,
-      "description": "Claim and Fix Master Task Log Task",
-      "functions": [
-        "parse_master_task_log",
-        "identify_task_type",
-        "claim_task",
-        "generate_fix_template",
-        "get_credentials"
-      ],
-      "classes": [
-        "TimeoutConstants"
-      ],
-      "category": "task",
       "score": 28
     },
     {
@@ -15153,7 +15238,7 @@
     {
       "name": "github_consolidation_recovery",
       "path": "tools\\github_consolidation_recovery.py",
-      "lines": 394,
+      "lines": 395,
       "description": "GitHub Consolidation Recovery Script",
       "functions": [
         "get_github_token",
@@ -15419,7 +15504,7 @@
     {
       "name": "unified_blogging_automation",
       "path": "tools\\unified_blogging_automation.py",
-      "lines": 487,
+      "lines": 494,
       "description": "Unified Blogging Automation Tool",
       "functions": [
         "__init__",
@@ -15430,8 +15515,8 @@
       ],
       "classes": [
         "TimeoutConstants",
-        "WordPressBlogClient",
-        "ContentAdapter"
+        "TimeoutConstants",
+        "WordPressBlogClient"
       ],
       "category": "automation",
       "score": 28
@@ -15489,7 +15574,7 @@
     {
       "name": "verify_batch1_main_branches",
       "path": "tools\\verify_batch1_main_branches.py",
-      "lines": 158,
+      "lines": 162,
       "description": "Verify Batch 1 Main Branches",
       "functions": [
         "get_github_token",
@@ -15497,7 +15582,9 @@
         "get_merge_branch_sha",
         "main"
       ],
-      "classes": [],
+      "classes": [
+        "TimeoutConstants"
+      ],
       "category": "other",
       "score": 28
     },
@@ -15805,7 +15892,7 @@
     {
       "name": "upload_file_to_discord",
       "path": "tools\\upload_file_to_discord.py",
-      "lines": 117,
+      "lines": 118,
       "description": "Upload File to Discord via Webhook",
       "functions": [
         "upload_file_to_discord",
@@ -15818,13 +15905,15 @@
     {
       "name": "verify_contract_leads_merge",
       "path": "tools\\verify_contract_leads_merge.py",
-      "lines": 126,
+      "lines": 130,
       "description": "Verify contract-leads merge status and close PR if needed.",
       "functions": [
         "get_github_token",
         "main"
       ],
-      "classes": [],
+      "classes": [
+        "TimeoutConstants"
+      ],
       "category": "consolidation",
       "score": 27
     },
@@ -16323,7 +16412,7 @@
     {
       "name": "nightly_site_audit",
       "path": "tools\\nightly_site_audit.py",
-      "lines": 420,
+      "lines": 433,
       "description": "Nightly Site Audit Tool",
       "functions": [
         "load_sites_config",
@@ -16516,27 +16605,9 @@
       "score": 26
     },
     {
-      "name": "unified_validator",
-      "path": "tools\\unified_validator.py",
-      "lines": 585,
-      "description": "Unified Validator - Consolidated Validation Tool",
-      "functions": [
-        "track_tool_usage",
-        "__init__",
-        "validate_ssot_config",
-        "validate_imports",
-        "validate_code_docs_alignment"
-      ],
-      "classes": [
-        "UnifiedValidator"
-      ],
-      "category": "quality",
-      "score": 26
-    },
-    {
       "name": "update_blog_posts_with_fixed_links",
       "path": "tools\\update_blog_posts_with_fixed_links.py",
-      "lines": 158,
+      "lines": 159,
       "description": "Update Blog Posts with Fixed Links",
       "functions": [
         "get_post_by_slug",
@@ -16606,14 +16677,16 @@
     {
       "name": "verify_batch2_prs",
       "path": "tools\\verify_batch2_prs.py",
-      "lines": 105,
+      "lines": 109,
       "description": "Verify Batch 2 PRs",
       "functions": [
         "get_github_token",
         "verify_pr",
         "main"
       ],
-      "classes": [],
+      "classes": [
+        "TimeoutConstants"
+      ],
       "category": "other",
       "score": 26
     },
@@ -16893,7 +16966,7 @@
     {
       "name": "cleanup_superpowered_venv",
       "path": "tools\\cleanup_superpowered_venv.py",
-      "lines": 317,
+      "lines": 318,
       "description": "Cleanup Superpowered-TTRPG Venv Files - Agent-7",
       "functions": [
         "get_github_token",
@@ -17096,7 +17169,7 @@
     {
       "name": "discover_ftp_credentials",
       "path": "tools\\discover_ftp_credentials.py",
-      "lines": 210,
+      "lines": 216,
       "description": "Discover FTP/SFTP Credentials for All Sites",
       "functions": [
         "get_sites_from_json",
@@ -17130,7 +17203,7 @@
     {
       "name": "disk_space_optimization",
       "path": "tools\\disk_space_optimization.py",
-      "lines": 225,
+      "lines": 230,
       "description": "Disk Space Optimization Tool - Agent-1",
       "functions": [
         "cleanup_temp_repos",
@@ -17183,7 +17256,7 @@
     {
       "name": "enhanced_duplicate_detector",
       "path": "tools\\enhanced_duplicate_detector.py",
-      "lines": 305,
+      "lines": 309,
       "description": "Enhanced Duplicate Detector - Agent-2",
       "functions": [
         "get_github_username",
@@ -17191,6 +17264,22 @@
         "remove_readonly",
         "calculate_file_hash",
         "identify_exact_duplicates"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 25
+    },
+    {
+      "name": "execute_batch2_dedupe_from_json",
+      "path": "tools\\execute_batch2_dedupe_from_json.py",
+      "lines": 204,
+      "description": "Execute Batch 2 Deduplication from JSON",
+      "functions": [
+        "get_file_hash",
+        "load_batch2_groups",
+        "verify_ssot",
+        "process_group",
+        "main"
       ],
       "classes": [],
       "category": "other",
@@ -17233,7 +17322,7 @@
     {
       "name": "execute_streamertools_duplicate_resolution",
       "path": "tools\\execute_streamertools_duplicate_resolution.py",
-      "lines": 237,
+      "lines": 241,
       "description": "Execute Streamertools Duplicate Resolution - Agent-3",
       "functions": [
         "get_github_token",
@@ -17267,7 +17356,7 @@
     {
       "name": "extract_ai_framework_logic",
       "path": "tools\\extract_ai_framework_logic.py",
-      "lines": 237,
+      "lines": 241,
       "description": "Extract AI Framework Logic - Agent-2",
       "functions": [
         "get_github_token",
@@ -17283,7 +17372,7 @@
     {
       "name": "extract_git_commits",
       "path": "tools\\extract_git_commits.py",
-      "lines": 301,
+      "lines": 305,
       "description": "Automated Git Commit Extraction Tool",
       "functions": [
         "__init__",
@@ -17301,7 +17390,7 @@
     {
       "name": "extract_portfolio_logic",
       "path": "tools\\extract_portfolio_logic.py",
-      "lines": 217,
+      "lines": 221,
       "description": "Extract Portfolio Management Logic - Agent-2",
       "functions": [
         "get_github_token",
@@ -17335,7 +17424,7 @@
     {
       "name": "fetch_repo_names",
       "path": "tools\\fetch_repo_names.py",
-      "lines": 320,
+      "lines": 326,
       "description": "Fetch Repo Names via GitHub API - Repo Analysis Improvement Tool",
       "functions": [
         "get_github_token",
@@ -17589,7 +17678,7 @@
     {
       "name": "get_repo_chronology",
       "path": "tools\\get_repo_chronology.py",
-      "lines": 399,
+      "lines": 398,
       "description": "Repository Chronology Tool - Chronological Blog Journey",
       "functions": [
         "get_github_token",
@@ -18948,6 +19037,24 @@
       "score": 24
     },
     {
+      "name": "claim_and_fix_master_task",
+      "path": "tools\\claim_and_fix_master_task.py",
+      "lines": 404,
+      "description": "Claim and Fix Master Task Log Task",
+      "functions": [
+        "parse_master_task_log",
+        "identify_task_type",
+        "claim_task",
+        "generate_fix_template",
+        "get_credentials"
+      ],
+      "classes": [
+        "TimeoutConstants"
+      ],
+      "category": "task",
+      "score": 24
+    },
+    {
       "name": "compare_performance_metrics",
       "path": "tools\\compare_performance_metrics.py",
       "lines": 106,
@@ -19095,6 +19202,19 @@
       ],
       "classes": [],
       "category": "coordination",
+      "score": 24
+    },
+    {
+      "name": "enable_freerideinvestor_debug",
+      "path": "tools\\enable_freerideinvestor_debug.py",
+      "lines": 177,
+      "description": "Enable WordPress Debug Mode for freerideinvestor.com",
+      "functions": [
+        "enable_debug_mode",
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
       "score": 24
     },
     {
@@ -19414,7 +19534,7 @@
     {
       "name": "repo_safe_merge_v2",
       "path": "tools\\repo_safe_merge_v2.py",
-      "lines": 786,
+      "lines": 488,
       "description": "Safe Repository Merge Script V2 - Local-First Architecture",
       "functions": [
         "get_github_token",
@@ -19691,6 +19811,19 @@
       "description": "Verify Houston Sip Queen Astros CSS is Loading",
       "functions": [
         "verify_css_deployment",
+        "main"
+      ],
+      "classes": [],
+      "category": "other",
+      "score": 24
+    },
+    {
+      "name": "verify_import_errors",
+      "path": "tools\\verify_import_errors.py",
+      "lines": 127,
+      "description": "Verify Import Errors in Broken Tools",
+      "functions": [
+        "check_imports",
         "main"
       ],
       "classes": [],
@@ -20217,7 +20350,7 @@
     {
       "name": "update_all_sites_branding",
       "path": "tools\\update_all_sites_branding.py",
-      "lines": 283,
+      "lines": 288,
       "description": "Update All Sites with Swarm Branding",
       "functions": [
         "create_swarm_menu",
@@ -20963,7 +21096,7 @@
     {
       "name": "file_deletion_support",
       "path": "tools\\file_deletion_support.py",
-      "lines": 415,
+      "lines": 420,
       "description": "File Deletion Support Tool - V2 Compliant",
       "functions": [
         "__init__",
@@ -21137,6 +21270,38 @@
       "classes": [
         "TimeoutConstants"
       ],
+      "category": "other",
+      "score": 21
+    },
+    {
+      "name": "investigate_freerideinvestor_500_error",
+      "path": "tools\\investigate_freerideinvestor_500_error.py",
+      "lines": 409,
+      "description": "Investigate freerideinvestor.com HTTP 500 Error",
+      "functions": [
+        "__init__",
+        "_load_site_config",
+        "connect_sftp",
+        "disconnect_sftp",
+        "check_http_status"
+      ],
+      "classes": [
+        "WordPress500Investigator"
+      ],
+      "category": "other",
+      "score": 21
+    },
+    {
+      "name": "investigate_runtime_errors",
+      "path": "tools\\investigate_runtime_errors.py",
+      "lines": 246,
+      "description": "Investigate Runtime Errors in Broken Tools",
+      "functions": [
+        "test_tool_runtime",
+        "categorize_errors",
+        "main"
+      ],
+      "classes": [],
       "category": "other",
       "score": 21
     },
@@ -21411,16 +21576,17 @@
     {
       "name": "unified_github_pr_creator",
       "path": "tools\\unified_github_pr_creator.py",
-      "lines": 426,
+      "lines": 444,
       "description": "Unified GitHub PR Creator",
       "functions": [
+        "get_github_token",
         "check_gh_cli_rate_limit",
         "check_rest_api_rate_limit",
         "check_graphql_api_rate_limit",
-        "__init__",
-        "check_available_methods"
+        "__init__"
       ],
       "classes": [
+        "TimeoutConstants",
         "UnifiedGitHubPRCreator"
       ],
       "category": "other",
@@ -21981,88 +22147,10 @@
       "score": 15
     }
   ],
-  "duplicates": [
-    [
-      "projectscanner",
-      [
-        "projectscanner",
-        "projectscanner_modular_reports"
-      ]
-    ],
-    [
-      "workspace_cleanup",
-      [
-        "auto_workspace_cleanup",
-        "captain_workspace_cleanup"
-      ]
-    ],
-    [
-      "duplication",
-      [
-        "duplication_analyzer",
-        "duplication_checker"
-      ]
-    ],
-    [
-      "unified",
-      [
-        "unified_analyzer",
-        "unified_validator"
-      ]
-    ]
-  ],
+  "duplicates": [],
   "plan": {
-    "duplicates": [
-      {
-        "base_name": "projectscanner",
-        "tools": [
-          "projectscanner",
-          "projectscanner_modular_reports"
-        ],
-        "keep": "projectscanner_modular_reports",
-        "deprecate": [
-          "projectscanner"
-        ],
-        "reason": "Keep projectscanner_modular_reports (better description, smaller size, or V2 compliant)"
-      },
-      {
-        "base_name": "workspace_cleanup",
-        "tools": [
-          "auto_workspace_cleanup",
-          "captain_workspace_cleanup"
-        ],
-        "keep": "auto_workspace_cleanup",
-        "deprecate": [
-          "captain_workspace_cleanup"
-        ],
-        "reason": "Keep auto_workspace_cleanup (better description, smaller size, or V2 compliant)"
-      },
-      {
-        "base_name": "duplication",
-        "tools": [
-          "duplication_analyzer",
-          "duplication_checker"
-        ],
-        "keep": "duplication_checker",
-        "deprecate": [
-          "duplication_analyzer"
-        ],
-        "reason": "Keep duplication_checker (better description, smaller size, or V2 compliant)"
-      },
-      {
-        "base_name": "unified",
-        "tools": [
-          "unified_analyzer",
-          "unified_validator"
-        ],
-        "keep": "unified_analyzer",
-        "deprecate": [
-          "unified_validator"
-        ],
-        "reason": "Keep unified_analyzer (better description, smaller size, or V2 compliant)"
-      }
-    ],
+    "duplicates": [],
     "recommendations": []
   },
-  "timestamp": "2025-12-20T16:45:10.874123"
+  "timestamp": "2025-12-20T19:32:48.738649"
 }

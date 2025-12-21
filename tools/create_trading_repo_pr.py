@@ -83,6 +83,12 @@ def create_pr(
 
 def main():
     """Create PR for UltimateOptionsTradingRobot consolidation."""
+    # Handle --help flag
+    if len(sys.argv) > 1 and sys.argv[1] in ('--help', '-h'):
+        print("Usage: python create_trading_repo_pr.py")
+        print("Creates a Pull Request for UltimateOptionsTradingRobot -> trading-leads-bot consolidation.")
+        return 0
+
     token = get_github_token(project_root)
     if not token:
         print("❌ GITHUB_TOKEN not found.")

@@ -161,6 +161,13 @@ def show_config():
 
 async def main():
     """Main debug entry point."""
+    # Handle --help flag (before async operations)
+    if len(sys.argv) > 1 and sys.argv[1] in ('--help', '-h'):
+        print("Usage: python debug_twitch_bot.py")
+        print("Shows Twitch bot configuration and attempts to start the bot with debugging.")
+        print("\nShows configuration values and detailed error messages for troubleshooting.")
+        return
+    
     print()
     
     # Show configuration

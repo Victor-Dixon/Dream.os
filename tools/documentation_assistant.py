@@ -37,15 +37,89 @@ from typing import Any
 # Add project root to path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-# Import template generators
-from doc_templates_mission import (
-    create_mission_tracking_template,
-    create_completion_report_template,
-)
-from doc_templates_achievements import (
-    create_milestone_template,
-    create_enhancement_request_template,
-)
+# Import template generators (optional - with fallbacks)
+try:
+    from doc_templates_mission import (
+        create_mission_tracking_template,
+        create_completion_report_template,
+    )
+    from doc_templates_achievements import (
+        create_milestone_template,
+        create_enhancement_request_template,
+    )
+except ImportError:
+    # Fallback implementations if modules don't exist
+    def create_mission_tracking_template(mission_name: str) -> str:
+        return f"""# Mission Tracking: {mission_name}
+
+**Status:** IN PROGRESS  
+**Started:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}  
+**Agent:** TBD
+
+## Objectives
+- [ ] Objective 1
+- [ ] Objective 2
+
+## Progress
+- [ ] Phase 1
+- [ ] Phase 2
+
+## Notes
+- Add notes here
+"""
+
+    def create_completion_report_template(mission_name: str) -> str:
+        return f"""# Mission Completion Report: {mission_name}
+
+**Status:** COMPLETE  
+**Completed:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+
+## Summary
+Mission completed successfully.
+
+## Achievements
+- Achievement 1
+- Achievement 2
+
+## Lessons Learned
+- Lesson 1
+- Lesson 2
+"""
+
+    def create_milestone_template(agent_id: str, achievement: str) -> str:
+        return f"""# Milestone: {agent_id} - {achievement}
+
+**Date:** {datetime.now().strftime('%Y-%m-%d')}  
+**Agent:** {agent_id}
+
+## Achievement
+{achievement}
+
+## Impact
+- Impact 1
+- Impact 2
+
+## Next Steps
+- Next step 1
+"""
+
+    def create_enhancement_request_template(name: str, priority: str) -> str:
+        return f"""# Enhancement Request: {name}
+
+**Priority:** {priority}  
+**Date:** {datetime.now().strftime('%Y-%m-%d')}
+
+## Description
+{name}
+
+## Rationale
+- Reason 1
+- Reason 2
+
+## Implementation Notes
+- Note 1
+- Note 2
+"""
 
 
 class DocumentationAssistant:

@@ -62,13 +62,20 @@ def merge_pr(
 ) -> bool:
     """Merge a PR using GitHub REST API."""
     url = f"https://api.github.com/repos/{owner}/{repo}/pulls/{pr_number}/merge"
-    headers = create_github_pr_headers(token)
+    if create_github_pr_headers is None:
+        headers = {
+            "Authorization": f"token {token}",
+            "Accept": "application/vnd.github.v3+json"
+        }
+    else:
+        headers = create_github_pr_headers(token)
     data = {
         "merge_method": merge_method  # merge, squash, or rebase
     }
     
     try:
-        response = requests.put(url, headers=headers, json=data, timeout=TimeoutConstants.HTTP_DEFAULT)
+        timeout_val = TimeoutConstants.HTTP_DEFAULT if TimeoutConstants else 30
+        response = requests.put(url, headers=headers, json=data, timeout=timeout_val)
         if response.status_code == 200:
             result = response.json()
             print(f"✅ PR #{pr_number} merged successfully!")
@@ -105,7 +112,13 @@ def create_pr(
 ) -> Optional[Dict[str, Any]]:
     """Create a PR using GitHub REST API."""
     url = f"https://api.github.com/repos/{owner}/{repo}/pulls"
-    headers = create_github_pr_headers(token)
+    if create_github_pr_headers is None:
+        headers = {
+            "Authorization": f"token {token}",
+            "Accept": "application/vnd.github.v3+json"
+        }
+    else:
+        headers = create_github_pr_headers(token)
     data = {
         "title": title,
         "body": body,

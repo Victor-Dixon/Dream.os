@@ -9,8 +9,8 @@
 ## 📊 Summary
 
 - **Total Groups**: 15
-- **Total Files to Eliminate**: 19
-- **Average Business Value Score**: 91.33
+- **Total Files to Eliminate**: 16
+- **Average Business Value Score**: 84.67
 
 ---
 
@@ -18,48 +18,9 @@
 
 These groups provide the highest business value for consolidation prioritization:
 
-### 1. analyze_conversations_ai.py
+### 1. conversational_ai_component.py
 
-- **Business Value Score**: 130 (Rank #1)
-- **Files to Eliminate**: 2
-- **Total Files**: 3
-- **Risk Level**: LOW
-- **Location**: `temp_repos\Thea\src\dreamscape\core\analytics\analyze_conversations_ai.py`
-- **Location Value**: 50/50
-- **Domain Value**: 30/30
-- **Maintenance Value**: 20/100
-
-**Impact**: Eliminating 2 duplicate file(s) with LOW risk.
-
-### 2. conversational_ai_workflow.py
-
-- **Business Value Score**: 130 (Rank #2)
-- **Files to Eliminate**: 2
-- **Total Files**: 3
-- **Risk Level**: LOW
-- **Location**: `temp_repos\Thea\src\dreamscape\core\conversational_ai_workflow.py`
-- **Location Value**: 50/50
-- **Domain Value**: 30/30
-- **Maintenance Value**: 20/100
-
-**Impact**: Eliminating 2 duplicate file(s) with LOW risk.
-
-### 3. demo_conversational_ai.py
-
-- **Business Value Score**: 130 (Rank #3)
-- **Files to Eliminate**: 2
-- **Total Files**: 3
-- **Risk Level**: LOW
-- **Location**: `temp_repos\Thea\src\dreamscape\core\demo_conversational_ai.py`
-- **Location Value**: 50/50
-- **Domain Value**: 30/30
-- **Maintenance Value**: 20/100
-
-**Impact**: Eliminating 2 duplicate file(s) with LOW risk.
-
-### 4. conversational_ai_component.py
-
-- **Business Value Score**: 115 (Rank #4)
+- **Business Value Score**: 115 (Rank #1)
 - **Files to Eliminate**: 2
 - **Total Files**: 3
 - **Risk Level**: LOW
@@ -70,48 +31,9 @@ These groups provide the highest business value for consolidation prioritization
 
 **Impact**: Eliminating 2 duplicate file(s) with LOW risk.
 
-### 5. file_locking_orchestrator.py
+### 2. ingest_chatgpt_json.py
 
-- **Business Value Score**: 105 (Rank #5)
-- **Files to Eliminate**: 1
-- **Total Files**: 2
-- **Risk Level**: LOW
-- **Location**: `src\core\file_locking\file_locking_orchestrator.py`
-- **Location Value**: 50/50
-- **Domain Value**: 30/30
-- **Maintenance Value**: 10/100
-
-**Impact**: Eliminating 1 duplicate file(s) with LOW risk.
-
-### 6. conversation_system.py
-
-- **Business Value Score**: 105 (Rank #6)
-- **Files to Eliminate**: 1
-- **Total Files**: 2
-- **Risk Level**: LOW
-- **Location**: `temp_repos\Thea\src\dreamscape\core\legacy\conversation_system.py`
-- **Location Value**: 50/50
-- **Domain Value**: 30/30
-- **Maintenance Value**: 10/100
-
-**Impact**: Eliminating 1 duplicate file(s) with LOW risk.
-
-### 7. debug_conversation_content.py
-
-- **Business Value Score**: 105 (Rank #7)
-- **Files to Eliminate**: 1
-- **Total Files**: 2
-- **Risk Level**: LOW
-- **Location**: `temp_repos\Thea\src\dreamscape\core\legacy\debug_conversation_content.py`
-- **Location Value**: 50/50
-- **Domain Value**: 30/30
-- **Maintenance Value**: 10/100
-
-**Impact**: Eliminating 1 duplicate file(s) with LOW risk.
-
-### 8. ingest_chatgpt_json.py
-
-- **Business Value Score**: 105 (Rank #8)
+- **Business Value Score**: 105 (Rank #2)
 - **Files to Eliminate**: 1
 - **Total Files**: 2
 - **Risk Level**: LOW
@@ -122,9 +44,9 @@ These groups provide the highest business value for consolidation prioritization
 
 **Impact**: Eliminating 1 duplicate file(s) with LOW risk.
 
-### 9. ingest_conversation_files.py
+### 3. ingest_conversation_files.py
 
-- **Business Value Score**: 105 (Rank #9)
+- **Business Value Score**: 105 (Rank #3)
 - **Files to Eliminate**: 1
 - **Total Files**: 2
 - **Risk Level**: LOW
@@ -135,13 +57,91 @@ These groups provide the highest business value for consolidation prioritization
 
 **Impact**: Eliminating 1 duplicate file(s) with LOW risk.
 
-### 10. process_all_conversations_demo.py
+### 4. process_all_conversations_demo.py
+
+- **Business Value Score**: 105 (Rank #4)
+- **Files to Eliminate**: 1
+- **Total Files**: 2
+- **Risk Level**: LOW
+- **Location**: `temp_repos\Thea\src\dreamscape\core\legacy\process_all_conversations_demo.py`
+- **Location Value**: 50/50
+- **Domain Value**: 30/30
+- **Maintenance Value**: 10/100
+
+**Impact**: Eliminating 1 duplicate file(s) with LOW risk.
+
+### 5. unified_conversation_manager.py
+
+- **Business Value Score**: 105 (Rank #5)
+- **Files to Eliminate**: 1
+- **Total Files**: 2
+- **Risk Level**: LOW
+- **Location**: `temp_repos\Thea\src\dreamscape\core\legacy\unified_conversation_manager.py`
+- **Location Value**: 50/50
+- **Domain Value**: 30/30
+- **Maintenance Value**: 10/100
+
+**Impact**: Eliminating 1 duplicate file(s) with LOW risk.
+
+### 6. update_conversation_stats.py
+
+- **Business Value Score**: 105 (Rank #6)
+- **Files to Eliminate**: 1
+- **Total Files**: 2
+- **Risk Level**: LOW
+- **Location**: `temp_repos\Thea\src\dreamscape\core\legacy\update_conversation_stats.py`
+- **Location Value**: 50/50
+- **Domain Value**: 30/30
+- **Maintenance Value**: 10/100
+
+**Impact**: Eliminating 1 duplicate file(s) with LOW risk.
+
+### 7. conversation_api.py
+
+- **Business Value Score**: 105 (Rank #7)
+- **Files to Eliminate**: 1
+- **Total Files**: 2
+- **Risk Level**: LOW
+- **Location**: `temp_repos\Thea\src\dreamscape\core\memory\api\conversation_api.py`
+- **Location Value**: 50/50
+- **Domain Value**: 30/30
+- **Maintenance Value**: 10/100
+
+**Impact**: Eliminating 1 duplicate file(s) with LOW risk.
+
+### 8. conversation_operations.py
+
+- **Business Value Score**: 105 (Rank #8)
+- **Files to Eliminate**: 1
+- **Total Files**: 2
+- **Risk Level**: LOW
+- **Location**: `temp_repos\Thea\src\dreamscape\core\memory\storage\conversation_operations.py`
+- **Location Value**: 50/50
+- **Domain Value**: 30/30
+- **Maintenance Value**: 10/100
+
+**Impact**: Eliminating 1 duplicate file(s) with LOW risk.
+
+### 9. refresh_chatgpt_cookies.py
+
+- **Business Value Score**: 105 (Rank #9)
+- **Files to Eliminate**: 1
+- **Total Files**: 2
+- **Risk Level**: LOW
+- **Location**: `temp_repos\Thea\src\dreamscape\core\refresh_chatgpt_cookies.py`
+- **Location Value**: 50/50
+- **Domain Value**: 30/30
+- **Maintenance Value**: 10/100
+
+**Impact**: Eliminating 1 duplicate file(s) with LOW risk.
+
+### 10. chat_navigation.py
 
 - **Business Value Score**: 105 (Rank #10)
 - **Files to Eliminate**: 1
 - **Total Files**: 2
 - **Risk Level**: LOW
-- **Location**: `temp_repos\Thea\src\dreamscape\core\legacy\process_all_conversations_demo.py`
+- **Location**: `temp_repos\Thea\src\dreamscape\core\utils\chat_navigation.py`
 - **Location Value**: 50/50
 - **Domain Value**: 30/30
 - **Maintenance Value**: 10/100
@@ -169,21 +169,21 @@ These groups provide the highest business value for consolidation prioritization
 
 | Rank | Business Value | Files Eliminated | Risk | SSOT File |
 |------|---------------|------------------|------|-----------|
-| 1 | 130 | 2 | LOW | `analyze_conversations_ai.py` |
-| 2 | 130 | 2 | LOW | `conversational_ai_workflow.py` |
-| 3 | 130 | 2 | LOW | `demo_conversational_ai.py` |
-| 4 | 115 | 2 | LOW | `conversational_ai_component.py` |
-| 5 | 105 | 1 | LOW | `file_locking_orchestrator.py` |
-| 6 | 105 | 1 | LOW | `conversation_system.py` |
-| 7 | 105 | 1 | LOW | `debug_conversation_content.py` |
-| 8 | 105 | 1 | LOW | `ingest_chatgpt_json.py` |
-| 9 | 105 | 1 | LOW | `ingest_conversation_files.py` |
-| 10 | 105 | 1 | LOW | `process_all_conversations_demo.py` |
-| 11 | 70 | 1 | LOW | `extract_freeride_error.py` |
-| 12 | 45 | 1 | LOW | `FocusForge_RESOLUTION_SCRIPT.py` |
-| 13 | 40 | 1 | LOW | `auth.e2e.test.js` |
-| 14 | 40 | 1 | LOW | `email.e2e.test.js` |
-| 15 | 40 | 1 | LOW | `jest.setup.js` |
+| 1 | 115 | 2 | LOW | `conversational_ai_component.py` |
+| 2 | 105 | 1 | LOW | `ingest_chatgpt_json.py` |
+| 3 | 105 | 1 | LOW | `ingest_conversation_files.py` |
+| 4 | 105 | 1 | LOW | `process_all_conversations_demo.py` |
+| 5 | 105 | 1 | LOW | `unified_conversation_manager.py` |
+| 6 | 105 | 1 | LOW | `update_conversation_stats.py` |
+| 7 | 105 | 1 | LOW | `conversation_api.py` |
+| 8 | 105 | 1 | LOW | `conversation_operations.py` |
+| 9 | 105 | 1 | LOW | `refresh_chatgpt_cookies.py` |
+| 10 | 105 | 1 | LOW | `chat_navigation.py` |
+| 11 | 50 | 1 | LOW | `project_scanner.py` |
+| 12 | 40 | 1 | LOW | `auth.e2e.test.js` |
+| 13 | 40 | 1 | LOW | `email.e2e.test.js` |
+| 14 | 40 | 1 | LOW | `jest.setup.js` |
+| 15 | 40 | 1 | LOW | `jest.teardown.js` |
 
 ---
 

@@ -134,6 +134,19 @@ def print_report(results: dict):
 
 def main():
     """CLI entry point."""
+    # Handle --help flag
+    if len(sys.argv) > 1 and sys.argv[1] in ('--help', '-h'):
+        print("Usage: python comprehensive_v2_check.py [--help]")
+        print("Runs comprehensive V2 compliance check across entire codebase.")
+        print("Checks for:")
+        print("  - File size violations (max 400 lines)")
+        print("  - Function size violations (max 50 lines)")
+        print("  - Class size violations (max 300 lines)")
+        print("  - SSOT tag violations")
+        print("  - Syntax errors")
+        print("\nExits with code 1 if violations found, 0 if compliant.")
+        return 0
+    
     results = comprehensive_check()
     print_report(results)
     

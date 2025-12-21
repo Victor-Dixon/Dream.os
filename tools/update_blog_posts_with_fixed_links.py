@@ -20,8 +20,9 @@ sys.path.insert(0, str(project_root))
 
 try:
     from tools.unified_blogging_automation import UnifiedBloggingAutomation
-except ImportError:
-    print("❌ Could not import UnifiedBloggingAutomation")
+except ImportError as e:
+    print(f"❌ Could not import UnifiedBloggingAutomation: {e}")
+    print("   Note: This tool requires unified_blogging_automation.py")
     sys.exit(1)
 
 

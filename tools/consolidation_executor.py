@@ -347,6 +347,15 @@ class ConsolidationExecutor:
 
 def main():
     """Main entry point."""
+    # Handle --help flag
+    if len(sys.argv) > 1 and sys.argv[1] in ('--help', '-h'):
+        print("Usage: python consolidation_executor.py [--execute] [--help]")
+        print("Executes Phase 1 consolidations with safety checks and progress tracking.")
+        print("\nOptions:")
+        print("  --execute    Actually execute consolidations (default: dry-run)")
+        print("  --help, -h   Show this help message")
+        return 0
+    
     dry_run = "--execute" not in sys.argv
     
     executor = ConsolidationExecutor()

@@ -13,8 +13,13 @@ Date: 2025-01-27
 import os
 import re
 import base64
+import sys
 from pathlib import Path
 from typing import List, Tuple, Optional
+
+# Add project root to path
+project_root = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(project_root))
 
 import requests
 from dotenv import load_dotenv
