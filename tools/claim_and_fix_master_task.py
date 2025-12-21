@@ -72,21 +72,35 @@ def identify_task_type(task: Dict[str, str]) -> str:
 def claim_task(task: Dict[str, str], agent_id: str) -> bool:
     """Claim a task by updating MASTER_TASK_LOG.md."""
     log_path = project_root / "MASTER_TASK_LOG.md"
-    
+
     with open(log_path, 'r', encoding='utf-8') as f:
         lines = f.readlines()
-    
+
     # Update the specific line to add [CLAIMED BY Agent-X]
     line_idx = task["line_num"] - 1
     if line_idx < len(lines):
         line = lines[line_idx]
         if "[CLAIMED BY" not in line:
             lines[line_idx] = line.rstrip() + f" [CLAIMED BY {agent_id}]\n"
-            
-            with open(log_path, 'w', encoding='utf-8') as f:
-                f.writelines(lines)
-            return True
-    
+
+            # Use atomic file operations to prevent corruption
+            try:
+                from src.utils.atomic_file_ops import atomic_write_text
+                content = ''.join(lines)
+                success = atomic_write_text(log_path, content, backup=True)
+                if success:
+                    print(f"✅ Atomically claimed task for {agent_id}")
+                    return True
+                else:
+                    print(f"❌ Failed to claim task atomically")
+                    return False
+            except ImportError:
+                # Fallback to direct write if atomic ops not available
+                print("⚠️  Atomic ops not available, using direct write")
+                with open(log_path, 'w', encoding='utf-8') as f:
+                    f.writelines(lines)
+                return True
+
     return False
 
 
