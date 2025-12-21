@@ -35,22 +35,50 @@ PRIORITY_TASKS = {
             "title": "Update README to reflect accurate V2 compliance status",
             "description": "README currently claims '100% V2 Compliant' but actual status is ~90% (57 unapproved violations). Update README to reflect accurate status with note about approved exceptions.",
             "priority": "high",
-            "status": "pending",
+            "status": "completed",
             "assigned_to": "Agent-4",
             "category": "documentation",
             "estimated_points": 75,
+            "due_date": date.today().isoformat(),
+            "completed_at": datetime.now().isoformat()
+        }
+    ],
+    "Agent-2": [
+        {
+            "task_id": "CP-005",
+            "title": "Review and document V2 compliance exceptions",
+            "description": "Document rationale for 57 unapproved violations. Review against exception criteria and either approve exceptions or create refactoring plan.",
+            "priority": "medium",
+            "status": "pending",
+            "assigned_to": "Agent-2",
+            "category": "code_quality",
+            "estimated_points": 150,
             "due_date": date.today().isoformat()
         },
+        {
+            "task_id": "CP-006",
+            "title": "Refactor top 10 largest V2 violations (>1000 lines)",
+            "description": "Refactor largest violations: registry.py (2,380), unified_discord_bot.py (2,321), agent_activity_detector.py (1,666), messaging_infrastructure.py (1,655), repo_safe_merge.py (1,259), enhanced_agent_activity_detector.py (1,215). Break into smaller modules.",
+            "priority": "high",
+            "status": "pending",
+            "assigned_to": "Agent-2",
+            "category": "code_quality",
+            "estimated_points": 500,
+            "due_date": date.today().isoformat()
+        }
+    ],
+    "Agent-3": [
         {
             "task_id": "CP-003",
             "title": "Resolve freerideinvestor.com WordPress admin login issue",
             "description": "WordPress admin login not accessible. Diagnostic tool created. Need to investigate security plugins, .htaccess rules, or access restrictions blocking wp-admin.",
             "priority": "medium",
-            "status": "pending",
+            "status": "completed",
             "assigned_to": "Agent-3",
             "category": "infrastructure",
             "estimated_points": 100,
-            "due_date": date.today().isoformat()
+            "due_date": date.today().isoformat(),
+            "completed_at": datetime.now().isoformat()
         },
         {
             "task_id": "CP-004",
@@ -64,14 +92,51 @@ PRIORITY_TASKS = {
             "due_date": date.today().isoformat()
         },
         {
-            "task_id": "CP-005",
-            "title": "Review and document V2 compliance exceptions",
-            "description": "Document rationale for 57 unapproved violations. Review against exception criteria and either approve exceptions or create refactoring plan.",
+            "task_id": "CP-009",
+            "title": "Fix Dream.os CI/CD pipeline failures",
+            "description": "CI/CD pipeline failing due to linting errors (ruff), timeout issues (black/isort/pytest), and pyproject.toml deprecation warnings. Fix ruff configuration, exclude archive/temp directories, update pyproject.toml lint section, optimize CI workflow.",
+            "priority": "high",
+            "status": "in_progress",
+            "assigned_to": "Agent-3",
+            "category": "infrastructure",
+            "estimated_points": 150,
+            "due_date": date.today().isoformat()
+        },
+        {
+            "task_id": "CP-010",
+            "title": "Optimize CI workflow performance",
+            "description": "CI steps timing out (black, isort, pytest). Exclude unnecessary directories (archive, temp_repos, temp), add proper exclusions to pyproject.toml, optimize test execution.",
+            "priority": "high",
+            "status": "pending",
+            "assigned_to": "Agent-3",
+            "category": "infrastructure",
+            "estimated_points": 100,
+            "due_date": date.today().isoformat()
+        }
+    ],
+    "Agent-7": [
+        {
+            "task_id": "CP-007",
+            "title": "Review and refactor medium-sized V2 violations (400-1000 lines)",
+            "description": "Review 47 files in 400-1000 line range. Determine which can be refactored vs approved as exceptions. Create refactoring plan for actionable items.",
             "priority": "medium",
             "status": "pending",
-            "assigned_to": "Agent-2",
+            "assigned_to": "Agent-7",
             "category": "code_quality",
-            "estimated_points": 150,
+            "estimated_points": 300,
+            "due_date": date.today().isoformat()
+        }
+    ],
+    "Agent-1": [
+        {
+            "task_id": "CP-008",
+            "title": "Verify all CI workflows are passing consistently",
+            "description": "After CI fixes, verify all 8 workflows pass. Monitor for any intermittent failures and ensure stability.",
+            "priority": "high",
+            "status": "pending",
+            "assigned_to": "Agent-1",
+            "category": "infrastructure",
+            "estimated_points": 50,
             "due_date": date.today().isoformat()
         }
     ]

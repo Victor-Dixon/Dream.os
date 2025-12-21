@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """
 DEPRECATED: This file has been replaced by src/core/config/config_manager.py
+
+<!-- SSOT Domain: infrastructure -->
+
 =============================================================================
 
 This file is DEPRECATED as part of DUP-001 ConfigManager SSOT consolidation.

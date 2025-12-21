@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """
 Coordination & Communication Performance Monitor - Agent Cellphone V2
+
+<!-- SSOT Domain: infrastructure -->
+
 ==================================================================
 
 Main performance monitoring system for coordination and communication.

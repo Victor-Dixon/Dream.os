@@ -1,5 +1,8 @@
 """
 Activity Emitter
+
+<!-- SSOT Domain: infrastructure -->
+
 ================
 
 Single-source activity event emitter for agent telemetry.

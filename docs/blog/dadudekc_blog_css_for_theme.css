@@ -1,0 +1,283 @@
+/* DaDudeKC Blog Post Readability Fix - Enhanced
+ * ==============================================
+ * 
+ * This CSS file addresses readability issues identified in blog posts.
+ * Includes dark theme support and improved typography.
+ * Generated: 2025-12-13
+ * Agent: Agent-2 (Architecture & Design Specialist)
+ * 
+ * To apply: Add this CSS to WordPress via:
+ * - Appearance > Customize > Additional CSS, OR
+ * - Child theme's style.css file
+ */
+
+/* CSS Variables for Theme Management */
+:root {
+    --blog-text-primary: #e8e8e8;
+    --blog-text-secondary: #b8b8b8;
+    --blog-text-muted: #888888;
+    --blog-bg-primary: #121212;
+    --blog-bg-secondary: #1e1e1e;
+    --blog-accent-blue: #4a9eff;
+    --blog-link-color: #4a9eff;
+    --blog-link-hover: #6bb3ff;
+    --blog-border-color: #333333;
+    --blog-code-bg: #2a2a2a;
+    --blog-blockquote-border: #4a9eff;
+}
+
+/* Main content area - Optimal reading width */
+article,
+.post-content,
+.entry-content,
+.content,
+.single-post article,
+.blog article {
+    max-width: 700px !important;
+    margin: 0 auto !important;
+    padding: 2rem 1rem !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography improvements - Readable base size with dark theme */
+article p,
+.post-content p,
+.entry-content p,
+.single-post p,
+.blog p {
+    font-size: 17px !important;
+    /* 1.0625em - improved from 18px */
+    line-height: 1.8 !important;
+    /* Better line spacing */
+    margin-bottom: 1.5em !important;
+    color: var(--blog-text-primary) !important;
+    font-weight: 400 !important;
+}
+
+/* Headings - Proper hierarchy with dark theme */
+article h1,
+.post-content h1,
+.single-post h1 {
+    font-size: 2.5em !important;
+    line-height: 1.2 !important;
+    margin-top: 1.5em !important;
+    margin-bottom: 0.5em !important;
+    color: var(--blog-text-primary) !important;
+    font-weight: 700 !important;
+}
+
+article h2,
+.post-content h2,
+.single-post h2 {
+    font-size: 2em !important;
+    line-height: 1.3 !important;
+    margin-top: 1.5em !important;
+    margin-bottom: 0.5em !important;
+    color: var(--blog-accent-blue) !important;
+    /* Blue accent for visibility */
+    font-weight: 600 !important;
+}
+
+article h3,
+.post-content h3,
+.single-post h3 {
+    font-size: 1.5em !important;
+    line-height: 1.4 !important;
+    margin-top: 1.25em !important;
+    margin-bottom: 0.5em !important;
+    color: var(--blog-text-primary) !important;
+    /* White for hierarchy */
+    font-weight: 600 !important;
+}
+
+article h4,
+.post-content h4,
+.single-post h4 {
+    font-size: 1.25em !important;
+    line-height: 1.4 !important;
+    margin-top: 1em !important;
+    margin-bottom: 0.5em !important;
+    color: var(--blog-text-primary) !important;
+    font-weight: 500 !important;
+}
+
+/* Links - Clear and accessible with hover effects */
+article a,
+.post-content a,
+.single-post a {
+    color: var(--blog-link-color) !important;
+    text-decoration: underline !important;
+    transition: color 0.2s ease !important;
+}
+
+article a:hover,
+.post-content a:hover,
+.single-post a:hover {
+    color: var(--blog-link-hover) !important;
+    text-decoration: underline !important;
+}
+
+/* Lists - Proper spacing */
+article ul,
+article ol,
+.post-content ul,
+.post-content ol,
+.single-post ul,
+.single-post ol {
+    margin-left: 2em !important;
+    margin-bottom: 1.5em !important;
+    line-height: 1.8 !important;
+    color: var(--blog-text-primary) !important;
+}
+
+article li,
+.post-content li,
+.single-post li {
+    margin-bottom: 0.5em !important;
+    color: var(--blog-text-primary) !important;
+}
+
+/* Code blocks - Dark theme with syntax highlighting colors */
+article pre,
+.post-content pre,
+.single-post pre {
+    background: var(--blog-code-bg) !important;
+    padding: 1em !important;
+    border-radius: 4px !important;
+    overflow-x: auto !important;
+    margin-bottom: 1.5em !important;
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+    border: 1px solid var(--blog-border-color) !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+}
+
+article code,
+.post-content code,
+.single-post code {
+    background: var(--blog-code-bg) !important;
+    padding: 0.2em 0.4em !important;
+    border-radius: 3px !important;
+    font-size: 0.9em !important;
+    color: var(--blog-text-primary) !important;
+    border: 1px solid var(--blog-border-color) !important;
+}
+
+/* Images - Responsive and properly spaced */
+article img,
+.post-content img,
+.single-post img {
+    max-width: 100% !important;
+    height: auto !important;
+    margin: 1.5em 0 !important;
+    display: block !important;
+    border-radius: 4px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Blockquotes - Clear distinction with left border accent */
+article blockquote,
+.post-content blockquote,
+.single-post blockquote {
+    border-left: 4px solid var(--blog-blockquote-border) !important;
+    padding-left: 1.5em !important;
+    margin: 1.5em 0 !important;
+    font-style: italic !important;
+    color: var(--blog-text-secondary) !important;
+    background: rgba(74, 158, 255, 0.05) !important;
+    padding: 1em 1.5em !important;
+    border-radius: 0 4px 4px 0 !important;
+}
+
+/* Tables - Readable formatting with dark theme */
+article table,
+.post-content table,
+.single-post table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    margin: 1.5em 0 !important;
+    background: var(--blog-bg-secondary) !important;
+    border: 1px solid var(--blog-border-color) !important;
+    border-radius: 4px !important;
+    overflow: hidden !important;
+}
+
+article table th,
+.post-content table th,
+.single-post table th {
+    background: var(--blog-code-bg) !important;
+    padding: 0.75em !important;
+    text-align: left !important;
+    font-weight: bold !important;
+    color: var(--blog-text-primary) !important;
+    border-bottom: 2px solid var(--blog-border-color) !important;
+}
+
+article table td,
+.post-content table td,
+.single-post table td {
+    padding: 0.75em !important;
+    border-bottom: 1px solid var(--blog-border-color) !important;
+    color: var(--blog-text-primary) !important;
+}
+
+/* Gradient header/footer support */
+.header,
+.footer {
+    background: linear-gradient(135deg, var(--blog-bg-secondary) 0%, var(--blog-code-bg) 100%) !important;
+}
+
+/* Improved shadows and borders */
+article,
+.post-content,
+.entry-content {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+
+    article,
+    .post-content,
+    .entry-content,
+    .content {
+        padding: 1rem !important;
+    }
+
+    article p,
+    .post-content p,
+    .entry-content p {
+        font-size: 16px !important;
+        /* Slightly smaller on mobile */
+        line-height: 1.7 !important;
+    }
+
+    article h1,
+    .post-content h1 {
+        font-size: 2em !important;
+    }
+
+    article h2,
+    .post-content h2 {
+        font-size: 1.75em !important;
+    }
+
+    article ul,
+    article ol {
+        margin-left: 1.5em !important;
+    }
+}
+
+/* Light theme fallback (if theme supports it) */
+@media (prefers-color-scheme: light) {
+    :root {
+        --blog-text-primary: #333333;
+        --blog-text-secondary: #555555;
+        --blog-text-muted: #777777;
+        --blog-bg-primary: #ffffff;
+        --blog-bg-secondary: #f9f9f9;
+        --blog-code-bg: #f5f5f5;
+        --blog-border-color: #dddddd;
+    }
+}

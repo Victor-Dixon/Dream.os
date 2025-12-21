@@ -313,7 +313,7 @@ def deploy_via_rest_api(
 def main():
     """Main CLI entry point."""
     import argparse
-from src.core.config.timeout_constants import TimeoutConstants
+    from src.core.config.timeout_constants import TimeoutConstants
     
     parser = argparse.ArgumentParser(description="Deploy file via WordPress REST API")
     parser.add_argument("--site", required=True, help="WordPress site URL")

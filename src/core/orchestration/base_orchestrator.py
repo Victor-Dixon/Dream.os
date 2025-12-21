@@ -41,6 +41,7 @@ class BaseOrchestrator(ABC):
     Example:
         class MyOrchestrator(BaseOrchestrator):
             def __init__(self, config=None):
+                # super() is Python built-in for calling parent class
                 super().__init__("my_orchestrator", config)
                 self.engine = MyEngine(self.config)
                 self.analyzer = MyAnalyzer(self.config)

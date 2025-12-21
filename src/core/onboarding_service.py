@@ -1,6 +1,32 @@
+
+"""
+⚠️ DEPRECATED - IOnboardingService protocol is deprecated.
+
+This interface has been consolidated into src/core/messaging_protocol_models.py as SSOT.
+Please update imports to use the SSOT location instead.
+
+Migration:
+  OLD: from core.messaging_protocol_models import IOnboardingService
+  NEW: from core.messaging_protocol_models import IOnboardingService
+
+Note: SSOT has full documentation and type hints
+
+This interface will be removed in a future release.
+"""
+
+import warnings
+warnings.warn(
+    "IOnboardingService is deprecated. Use src/core/messaging_protocol_models.py instead.",
+    DeprecationWarning,
+    stacklevel=2
+)
+
 #!/usr/bin/env python3
 """
 Onboarding Service - Core Implementation
+
+<!-- SSOT Domain: infrastructure -->
+
 ========================================
 
 Implements IOnboardingService protocol for messaging core.

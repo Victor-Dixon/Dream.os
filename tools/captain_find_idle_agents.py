@@ -19,6 +19,8 @@ Date: 2025-10-13
 Deprecated: 2025-01-27 (Agent-6 - V2 Tools Flattening)
 """
 
+from pathlib import Path
+import json
 import warnings
 
 warnings.warn(
@@ -32,9 +34,6 @@ warnings.warn(
 # Legacy compatibility - delegate to tools_v2
 # For migration path, use: python -m tools_v2.toolbelt captain.status_check
 
-import json
-from pathlib import Path
-
 
 def find_idle_agents(hours_threshold: int = 1):
     """
@@ -45,28 +44,29 @@ def find_idle_agents(hours_threshold: int = 1):
     # Delegate to tools_v2 adapter
     try:
         from tools_v2.categories.captain_tools import StatusCheckTool
-        
+
         tool = StatusCheckTool()
         result = tool.execute({}, None)
-        
+
         if result.success:
             idle = result.output.get("idle_agents", [])
             active = result.output.get("active_agents", [])
-            
+
             print("\n" + "=" * 80)
             print("🔍 FINDING IDLE AGENTS (Agents without GAS!)")
             print("=" * 80 + "\n")
-            
+
             for agent_info in idle:
-                print(f"⚠️  {agent_info['agent']}: IDLE (needs task assignment!)")
-            
+                print(
+                    f"⚠️  {agent_info['agent']}: IDLE (needs task assignment!)")
+
             for agent in active:
                 print(f"🟢 {agent}: ACTIVE")
-            
+
             print("\n" + "=" * 80)
             print(f"SUMMARY: {len(active)} active, {len(idle)} need tasks")
             print("=" * 80 + "\n")
-            
+
             if idle:
                 print("⛽ AGENTS NEED GAS (Prompts!):")
                 for item in idle:
@@ -74,7 +74,7 @@ def find_idle_agents(hours_threshold: int = 1):
                 print("\n💡 ACTION: Send prompts + assign tasks to activate!")
             else:
                 print("✅ ALL AGENTS ACTIVE - Full utilization!")
-            
+
             return {"idle": idle, "active": active}
         else:
             print(f"❌ Error: {result.error_message}")
@@ -103,7 +103,8 @@ def find_idle_agents(hours_threshold: int = 1):
             status_file = Path(f"agent_workspaces/{agent}/status.json")
 
             if not status_file.exists():
-                idle_agents.append({"agent": agent, "reason": "No status.json", "urgency": "HIGH"})
+                idle_agents.append(
+                    {"agent": agent, "reason": "No status.json", "urgency": "HIGH"})
                 print(f"⚠️  {agent}: NO STATUS FILE (likely idle!)")
                 continue
 
@@ -129,11 +130,13 @@ def find_idle_agents(hours_threshold: int = 1):
                     print(f"🟢 {agent}: ACTIVE - {current_task}")
 
             except Exception as e:
-                idle_agents.append({"agent": agent, "reason": f"Error: {e}", "urgency": "MEDIUM"})
+                idle_agents.append(
+                    {"agent": agent, "reason": f"Error: {e}", "urgency": "MEDIUM"})
                 print(f"⚠️  {agent}: ERROR reading status")
 
         print("\n" + "=" * 80)
-        print(f"SUMMARY: {len(active_agents)} active, {len(idle_agents)} need tasks")
+        print(
+            f"SUMMARY: {len(active_agents)} active, {len(idle_agents)} need tasks")
         print("=" * 80 + "\n")
 
         if idle_agents:
@@ -147,10 +150,12 @@ def find_idle_agents(hours_threshold: int = 1):
         return {"idle": idle_agents, "active": active_agents}
 
 
-if __name__ == "__main__":
+def main():
+    """Main entry point."""
     import argparse
 
-    parser = argparse.ArgumentParser(description="Find idle agents needing tasks")
+    parser = argparse.ArgumentParser(
+        description="Find idle agents needing tasks")
     parser.add_argument(
         "--hours", type=int, default=1, help="Hours threshold for considering agent idle"
     )
@@ -158,3 +163,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     find_idle_agents(args.hours)
+
+
+if __name__ == "__main__":
+    main()

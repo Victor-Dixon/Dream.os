@@ -27,7 +27,7 @@ class ContractStatus(Enum):
 
 class ContractPriority(Enum):
     """Contract priority enumeration."""
-
+    
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"

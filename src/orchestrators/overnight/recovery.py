@@ -78,8 +78,14 @@ class RecoverySystem:
     async def initialize(self) -> None:
         """Initialize recovery system components."""
         try:
-            # Initialize recovery tracking
-            self.recovery_attempts = {f"Agent-{i}": 0 for i in range(1, 9)}
+            # Initialize recovery tracking (mode-aware)
+            try:
+                from src.core.agent_mode_manager import get_active_agents
+                active_agents = get_active_agents()
+            except Exception:
+                # Fallback to 4-agent mode
+                active_agents = ["Agent-1", "Agent-2", "Agent-3", "Agent-4"]
+            self.recovery_attempts = {agent_id: 0 for agent_id in active_agents}
 
             self.logger.info("Recovery system initialized")
 

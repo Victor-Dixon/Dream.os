@@ -1,0 +1,15 @@
+{
+  "timestamp": "2025-12-17T18:28:34.055788",
+  "target_repo": "Dadudekc/Superpowered-TTRPG",
+  "target_repo_num": null,
+  "source_repo": "Dadudekc/superpowered_ttrpg",
+  "source_repo_num": null,
+  "status": "FAILED",
+  "conflicts": {
+    "has_conflicts": false,
+    "conflict_details": [],
+    "warnings": []
+  },
+  "error": "PR creation failed",
+  "architecture": "legacy"
+}

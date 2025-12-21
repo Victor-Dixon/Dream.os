@@ -1,5 +1,8 @@
 """
 Engine Monitoring - V2 Compliance Module
+
+<!-- SSOT Domain: infrastructure -->
+
 =======================================
 
 Monitors engine performance and health following SRP.

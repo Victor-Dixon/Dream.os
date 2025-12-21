@@ -161,3 +161,7 @@
 3. Document the template for future use
 4. Consider creating a WordPress theme or custom CSS
 
+
+
+
+

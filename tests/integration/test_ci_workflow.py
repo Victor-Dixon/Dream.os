@@ -44,7 +44,7 @@ def test_ci_workflow_files_exist():
     assert workflow_dir.exists(), ".github/workflows directory should exist"
     
     required_workflows = [
-        "ci.yml",
+        "ci-cd.yml",  # Consolidated from ci.yml - ci-cd.yml covers all functionality
     ]
     
     for workflow in required_workflows:
@@ -110,4 +110,8 @@ def test_workflow_syntax_valid():
 if __name__ == "__main__":
     import pytest
     pytest.main([__file__, "-v"])
+
+
+
+
 

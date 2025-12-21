@@ -46,6 +46,14 @@ from .scheduler import TaskScheduler
 from .monitor import ProgressMonitor
 from .recovery import RecoverySystem
 
+# Website auto-update integration
+try:
+    from ...services.swarm_website.auto_updater import SwarmWebsiteAutoUpdater
+    WEBSITE_UPDATER_AVAILABLE = True
+except ImportError:
+    WEBSITE_UPDATER_AVAILABLE = False
+    SwarmWebsiteAutoUpdater = None
+
 # Self-healing system integration (Agent-3 - 2025-01-27)
 try:
     from ...core.agent_self_healing_system import get_self_healing_system, SelfHealingConfig
@@ -107,6 +115,21 @@ class OvernightOrchestrator(CoreOrchestrator):
         self.scheduler = TaskScheduler(self.config)
         self.monitor = ProgressMonitor(self.config)
         self.recovery = RecoverySystem(self.config)
+        
+        # Initialize website auto-updater if available
+        self.website_updater = None
+        website_update_enabled = overnight_config.get('website_updates', {}).get('enabled', True)
+        if WEBSITE_UPDATER_AVAILABLE and website_update_enabled:
+            try:
+                self.website_updater = SwarmWebsiteAutoUpdater()
+                if self.website_updater.updater.enabled:
+                    self.logger.info("✅ Website auto-updater initialized and enabled")
+                else:
+                    self.logger.info("⚠️ Website auto-updater initialized but not configured (missing env vars)")
+                    self.website_updater = None
+            except Exception as e:
+                self.logger.warning(f"Failed to initialize website updater: {e}")
+                self.website_updater = None
         
         # Initialize self-healing system (Agent-3 - 2025-01-27)
         self.self_healing_enabled = overnight_config.get('self_healing', {}).get('enabled', True)
@@ -324,6 +347,15 @@ class OvernightOrchestrator(CoreOrchestrator):
             # Update progress
             self.monitor.update_tasks(tasks)
             
+            # Auto-update website with agent status changes
+            if self.website_updater:
+                try:
+                    updated_count = self.website_updater.check_all_agents()
+                    if updated_count > 0:
+                        self.logger.info(f"📤 Website updated with {updated_count} agent status change(s)")
+                except Exception as e:
+                    self.logger.warning(f"Website update check failed: {e}")
+            
         except Exception as e:
             self.logger.error(f"Cycle execution failed: {e}")
             raise
@@ -419,9 +451,17 @@ Execute this task autonomously. Report completion or issues.
         self.logger.info(f"Creating workflow for cycle {self.current_cycle}")
 
     async def _get_active_agents(self) -> List[str]:
-        """Get list of active agents."""
-        # Default agent list - would integrate with agent registry
-        return [f"Agent-{i}" for i in range(1, 9)]
+        """Get list of active agents (mode-aware)."""
+        # Use agent mode manager to get active agents for current mode
+        try:
+            from src.core.agent_mode_manager import get_active_agents
+            active = get_active_agents()
+            self.logger.info(f"Mode-aware: Active agents ({len(active)}): {', '.join(active)}")
+            return active
+        except Exception as e:
+            self.logger.warning(f"Failed to load mode-aware agents, using fallback: {e}")
+            # Fallback to 4-agent mode
+            return ["Agent-1", "Agent-2", "Agent-3", "Agent-4"]
 
     async def _check_recovery(self) -> None:
         """Check if recovery actions are needed."""

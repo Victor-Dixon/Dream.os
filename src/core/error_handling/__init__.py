@@ -1,37 +1,38 @@
+from . import specialized_handlers
+from . import retry_safety_engine
+from . import retry_mechanisms
+from . import recovery_strategies
+from . import error_response_models
+from . import error_reporting_utilities
+from . import error_reporting_reporter
+from . import error_reporting_core
+from . import error_models_enums
+from . import error_models_core
+from . import error_intelligence
+from . import error_handling_system
+from . import error_handling_models
+from . import error_handling_core
+from . import error_execution
+from . import error_exceptions
+from . import error_decision_models
+from . import error_context_models
+from . import error_config
+from . import error_classification
+from . import coordination_strategies
+from . import coordination_decorator
+from . import component_management
+from .circuit_breaker.implementation import CircuitBreaker
+from .circuit_breaker.protocol import ICircuitBreaker
+from .circuit_breaker.provider import CircuitBreakerProvider
+# SSOT Domain: core
 # AUTO-GENERATED __init__.py
 # DO NOT EDIT MANUALLY - changes may be overwritten
 
 # Use provider pattern to avoid circular imports
-from .circuit_breaker.provider import CircuitBreakerProvider
-from .circuit_breaker.protocol import ICircuitBreaker
 
 # Export CircuitBreaker from directory (file/directory conflict resolved)
 # Import from directory, not file
-from .circuit_breaker.implementation import CircuitBreaker
-from . import component_management
-from . import coordination_decorator
 # coordination_error_handler merged into component_management
-from . import coordination_strategies
-from . import error_classification
-from . import error_config
-from . import error_context_models
-from . import error_decision_models
-from . import error_exceptions
-from . import error_execution
-from . import error_handling_core
-from . import error_handling_models
-from . import error_handling_system
-from . import error_intelligence
-from . import error_models_core
-from . import error_models_enums
-from . import error_reporting_core
-from . import error_reporting_reporter
-from . import error_reporting_utilities
-from . import error_response_models
-from . import recovery_strategies
-from . import retry_mechanisms
-from . import retry_safety_engine
-from . import specialized_handlers
 
 __all__ = [
     'CircuitBreakerProvider',

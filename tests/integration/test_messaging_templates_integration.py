@@ -118,7 +118,7 @@ class TestS2ATemplateIntegration:
             category=MessageCategory.S2A,
             tags=[UnifiedMessageTag.ONBOARDING],  # Would normally route to HARD_ONBOARDING
         )
-        rendered = render_message(msg, template_key="STALL_RECOVERY")
+        rendered = render_message(msg, template_key="SWARM_PULSE")
         
         assert "[HEADER] S2A STALL RECOVERY" in rendered
 
@@ -302,9 +302,9 @@ class TestTemplateKeyDispatch:
     def test_dispatch_template_key_s2a_with_explicit_key(self):
         """Test explicit key is used when provided."""
         msg = _create_message(category=MessageCategory.S2A)
-        key = dispatch_template_key(msg, explicit_key="STALL_RECOVERY")
-        
-        assert key == "STALL_RECOVERY"
+        key = dispatch_template_key(msg, explicit_key="SWARM_PULSE")
+
+        assert key == "SWARM_PULSE"
 
     def test_dispatch_template_key_s2a_infers_from_tags(self):
         """Test key inferred from tags when no explicit key."""

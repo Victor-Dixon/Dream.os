@@ -1,4 +1,28 @@
-"""Browser Configuration - Extracted from unified_config.py | Agent-5 C-056"""
+"""Browser Configuration - Extracted from unified_config.py | Agent-5 C-056
+
+SSOT Domain: infrastructure
+"""
+
+"""
+⚠️ DEPRECATED - BrowserConfig is deprecated.
+
+This class has been consolidated into src/core/config/config_dataclasses.py as SSOT.
+Please update imports to use the SSOT location instead.
+
+Migration:
+  OLD: from config.config_dataclasses import BrowserConfig
+  NEW: from core.config.config_dataclasses import BrowserConfig
+
+This module/class will be removed in a future release.
+"""
+
+import warnings
+warnings.warn(
+    "BrowserConfig is deprecated. Use src/core/config/config_dataclasses.py instead.",
+    DeprecationWarning,
+    stacklevel=2
+)
+
 
 from dataclasses import dataclass, field
 
@@ -18,14 +42,16 @@ class BrowserConfig:
     )
 
     # Primary selectors
-    input_selector: str = get_config("INPUT_SELECTOR", "textarea[data-testid='prompt-textarea']")
+    input_selector: str = get_config(
+        "INPUT_SELECTOR", "textarea[data-testid='prompt-textarea']")
     send_button_selector: str = get_config(
         "SEND_BUTTON_SELECTOR", "button[data-testid='send-button']"
     )
     response_selector: str = get_config(
         "RESPONSE_SELECTOR", "[data-testid='conversation-turn']:last-child .markdown"
     )
-    thinking_indicator: str = get_config("THINKING_INDICATOR", "[data-testid='thinking-indicator']")
+    thinking_indicator: str = get_config(
+        "THINKING_INDICATOR", "[data-testid='thinking-indicator']")
 
     # Fallback selectors
     input_fallback_selectors: list[str] = field(

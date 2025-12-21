@@ -56,6 +56,7 @@ class TestProofLedger:
         with tempfile.TemporaryDirectory() as tmpdir:
             original_join = os.path.join
             original_makedirs = os.makedirs
+            original_dirname = os.path.dirname
             
             def mock_join(*args):
                 # Convert runtime paths to tmpdir paths
@@ -75,6 +76,16 @@ class TestProofLedger:
                     return original_join(*new_args)
                 return original_join(*args)
             
+            def mock_dirname(path):
+                # If path contains tmpdir, return dirname of transformed path
+                if tmpdir in path:
+                    return original_dirname(path)
+                # If path contains runtime, transform it
+                if "runtime" in path:
+                    transformed = path.replace("runtime", tmpdir)
+                    return original_dirname(transformed)
+                return original_dirname(path)
+            
             def mock_makedirs_wrapper(path, *args, **kwargs):
                 # Convert runtime paths to tmpdir paths
                 if "runtime" in path:
@@ -84,12 +95,19 @@ class TestProofLedger:
                 return None
             
             with patch('src.quality.proof_ledger.os.path.join', side_effect=mock_join), \
-                 patch('src.quality.proof_ledger.os.makedirs', side_effect=mock_makedirs_wrapper):
+                 patch('src.quality.proof_ledger.os.path.dirname', side_effect=mock_dirname), \
+                 patch('src.quality.proof_ledger.os.makedirs', side_effect=mock_makedirs_wrapper), \
+                 patch('builtins.open', create=True) as mock_open:
+                # Mock file writing
+                mock_file = Mock()
+                mock_open.return_value.__enter__.return_value = mock_file
                 proof_path = run_tdd_proof("test_mode", {"Agent-1": "role1"})
                 
                 assert proof_path is not None
                 assert "proof-" in proof_path
                 assert tmpdir in proof_path or "runtime" not in proof_path
+                # Verify file was opened for writing
+                mock_open.assert_called_once()
 
     @patch('subprocess.run')
     @patch('src.quality.proof_ledger.os.makedirs')
@@ -105,11 +123,22 @@ class TestProofLedger:
         with tempfile.TemporaryDirectory() as tmpdir:
             original_join = os.path.join
             original_makedirs = os.makedirs
+            original_dirname = os.path.dirname
             
             def mock_join(*args):
                 if len(args) > 0 and args[0] == "runtime":
                     return original_join(tmpdir, *args[1:])
                 return original_join(*args)
+            
+            def mock_dirname(path):
+                # If path contains tmpdir, return dirname of transformed path
+                if tmpdir in path:
+                    return original_dirname(path)
+                # If path contains runtime, transform it
+                if "runtime" in path:
+                    transformed = path.replace("runtime", tmpdir)
+                    return original_dirname(transformed)
+                return original_dirname(path)
             
             def mock_makedirs_wrapper(path, *args, **kwargs):
                 # Always create directories in temp dir
@@ -129,11 +158,18 @@ class TestProofLedger:
                 return None
             
             with patch('src.quality.proof_ledger.os.path.join', side_effect=mock_join), \
-                 patch('src.quality.proof_ledger.os.makedirs', side_effect=mock_makedirs_wrapper):
+                 patch('src.quality.proof_ledger.os.path.dirname', side_effect=mock_dirname), \
+                 patch('src.quality.proof_ledger.os.makedirs', side_effect=mock_makedirs_wrapper), \
+                 patch('builtins.open', create=True) as mock_open:
+                # Mock file writing
+                mock_file = Mock()
+                mock_open.return_value.__enter__.return_value = mock_file
                 proof_path = run_tdd_proof("test_mode", {"Agent-1": "role1"})
                 
                 assert proof_path is not None
                 assert "proof-" in proof_path
+                # Verify file was opened for writing
+                mock_open.assert_called_once()
 
     @patch('subprocess.run')
     @patch('src.quality.proof_ledger.os.makedirs')
@@ -149,11 +185,22 @@ class TestProofLedger:
         with tempfile.TemporaryDirectory() as tmpdir:
             original_join = os.path.join
             original_makedirs = os.makedirs
+            original_dirname = os.path.dirname
             
             def mock_join(*args):
                 if len(args) > 0 and args[0] == "runtime":
                     return original_join(tmpdir, *args[1:])
                 return original_join(*args)
+            
+            def mock_dirname(path):
+                # If path contains tmpdir, return dirname of transformed path
+                if tmpdir in path:
+                    return original_dirname(path)
+                # If path contains runtime, transform it
+                if "runtime" in path:
+                    transformed = path.replace("runtime", tmpdir)
+                    return original_dirname(transformed)
+                return original_dirname(path)
             
             def mock_makedirs_wrapper(path, *args, **kwargs):
                 # Always create directories in temp dir
@@ -173,11 +220,18 @@ class TestProofLedger:
                 return None
             
             with patch('src.quality.proof_ledger.os.path.join', side_effect=mock_join), \
-                 patch('src.quality.proof_ledger.os.makedirs', side_effect=mock_makedirs_wrapper):
+                 patch('src.quality.proof_ledger.os.path.dirname', side_effect=mock_dirname), \
+                 patch('src.quality.proof_ledger.os.makedirs', side_effect=mock_makedirs_wrapper), \
+                 patch('builtins.open', create=True) as mock_open:
+                # Mock file writing
+                mock_file = Mock()
+                mock_open.return_value.__enter__.return_value = mock_file
                 proof_path = run_tdd_proof("test_mode", {"Agent-1": "role1"})
                 
                 assert proof_path is not None
                 assert "proof-" in proof_path
+                # Verify file was opened for writing
+                mock_open.assert_called_once()
 
     @patch('subprocess.run')
     @patch('src.quality.proof_ledger.os.makedirs')
@@ -195,12 +249,23 @@ class TestProofLedger:
         with tempfile.TemporaryDirectory() as tmpdir:
             original_join = os.path.join
             original_makedirs = os.makedirs
+            original_dirname = os.path.dirname
             makedirs_called = []
             
             def mock_join(*args):
                 if len(args) > 0 and args[0] == "runtime":
                     return original_join(tmpdir, *args[1:])
                 return original_join(*args)
+            
+            def mock_dirname(path):
+                # If path contains tmpdir, return dirname of transformed path
+                if tmpdir in path:
+                    return original_dirname(path)
+                # If path contains runtime, transform it
+                if "runtime" in path:
+                    transformed = path.replace("runtime", tmpdir)
+                    return original_dirname(transformed)
+                return original_dirname(path)
             
             def mock_makedirs_wrapper(path, *args, **kwargs):
                 makedirs_called.append(path)
@@ -212,7 +277,14 @@ class TestProofLedger:
                 return None
             
             with patch('src.quality.proof_ledger.os.path.join', side_effect=mock_join), \
-                 patch('src.quality.proof_ledger.os.makedirs', side_effect=mock_makedirs_wrapper):
+                 patch('src.quality.proof_ledger.os.path.dirname', side_effect=mock_dirname), \
+                 patch('src.quality.proof_ledger.os.makedirs', side_effect=mock_makedirs_wrapper), \
+                 patch('builtins.open', create=True) as mock_open:
+                # Mock file writing
+                mock_file = Mock()
+                mock_open.return_value.__enter__.return_value = mock_file
                 run_tdd_proof("test_mode", {})
                 # Verify makedirs was called
                 assert len(makedirs_called) > 0
+                # Verify file was opened for writing
+                mock_open.assert_called_once()

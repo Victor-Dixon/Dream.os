@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """
 Error Exceptions - V2 Compliant
+
+<!-- SSOT Domain: infrastructure -->
+
 ================================
 
 Error exception classes extracted from error_handling_core.py.

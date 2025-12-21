@@ -34,7 +34,7 @@ class RecoveryMessaging:
         self.logger = logger
 
     async def send_cycle_recovery_message(self, cycle_number: int, error_message: str) -> None:
-        """Send recovery message for cycle failure to all agents."""
+        """Send recovery message for cycle failure to all active agents (mode-aware)."""
         try:
             self.logger.info(f"Sending cycle {cycle_number} recovery message")
 
@@ -107,7 +107,7 @@ Timestamp: {time.time()}
             self.logger.error(f"Failed to send rescue message to {agent_id}: {e}")
 
     async def send_health_alert(self, issue: str, issue_id: str) -> None:
-        """Send health alert to all agents."""
+        """Send health alert to all active agents (mode-aware)."""
         try:
             self.logger.info(f"Sending health alert: {issue}")
 
@@ -128,7 +128,7 @@ Timestamp: {time.time()}
     async def send_escalation_alert(
         self, escalation_id: str, failure_count: int, failure_summary: str
     ) -> None:
-        """Send escalation alert to all agents."""
+        """Send escalation alert to all active agents (mode-aware)."""
         try:
             self.logger.info(f"Sending escalation alert: {escalation_id}")
 
@@ -148,9 +148,17 @@ Timestamp: {time.time()}
             self.logger.error(f"Failed to send escalation alerts: {e}")
 
     async def _broadcast_to_all_agents(self, message: str) -> None:
-        """Broadcast message to all 8 agents."""
-        for i in range(1, 9):
-            agent_id = f"Agent-{i}"
+        """Broadcast message to all active agents (mode-aware)."""
+        try:
+            from src.core.agent_mode_manager import get_active_agents
+            active_agents = get_active_agents()
+            self.logger.info(f"Mode-aware broadcast: Sending to {len(active_agents)} active agents: {', '.join(active_agents)}")
+        except Exception as e:
+            self.logger.warning(f"Failed to load mode-aware agents, using 4-agent fallback: {e}")
+            # Fallback to 4-agent mode
+            active_agents = ["Agent-1", "Agent-2", "Agent-3", "Agent-4"]
+        
+        for agent_id in active_agents:
             try:
                 await asyncio.get_event_loop().run_in_executor(
                     None, send_message_to_agent, agent_id, message

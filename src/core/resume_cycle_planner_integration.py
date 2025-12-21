@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """
 Resume Cycle Planner Integration
+
+<!-- SSOT Domain: infrastructure -->
+
 =================================
 
 Connects agent resume prompts with cycle planner to automatically assign

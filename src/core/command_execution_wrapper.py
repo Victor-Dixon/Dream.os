@@ -1,5 +1,8 @@
 """
 Command Execution Wrapper - SSOT for Command Execution with Completion Detection
+
+<!-- SSOT Domain: infrastructure -->
+
 ===============================================================================
 
 Wraps command execution with automatic completion detection.

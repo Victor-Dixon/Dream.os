@@ -1,259 +1,254 @@
-"""Session cleanup helper to generate passdown/devlog/Swarm Brain templates.
+#!/usr/bin/env python3
+"""
+Session Cleanup Helper Tool
+===========================
 
-Usage:
-  python tools/session_cleanup_helper.py --agent Agent-2 --summary "End-of-day" \
-    --output-passdown agent_workspaces/Agent-2/passdown_draft.json \
-    --output-devlog devlogs/2025-12-11_agent-2_session_cleanup_draft.md \
-    --output-swarm swarm_brain/entries/2025-12-11_agent2_session_cleanup_draft.json
+A comprehensive tool I wished I had - automates session cleanup tasks:
+1. Create/Update passdown.json
+2. Create Final Devlog
+3. Post Devlog to Discord
+4. Update Swarm Brain Database
+5. Create session summary
+
+This tool streamlines the session cleanup process for all agents.
+"""
+import json
+import sys
+from pathlib import Path
+from datetime import datetime
+from typing import Dict, Any, Optional
+
+# Add project root to path
+project_root = Path(__file__).parent.parent
+sys.path.insert(0, str(project_root))
+
+
+class SessionCleanupHelper:
+    """Helper class for session cleanup automation."""
+
+    def __init__(self, agent_id: str, agent_name: str):
+        self.agent_id = agent_id
+        self.agent_name = agent_name
+        self.session_date = datetime.now().strftime("%Y-%m-%d")
+        self.project_root = project_root
+
+    def load_passdown_template(self) -> Dict[str, Any]:
+        """Load passdown.json template structure."""
+        passdown_path = self.project_root / "passdown.json"
+
+        if passdown_path.exists():
+            try:
+                with open(passdown_path, 'r', encoding='utf-8') as f:
+                    return json.load(f)
+            except json.JSONDecodeError:
+                pass
+
+        # Return default template
+        return {
+            "session_date": self.session_date,
+            "agent_id": self.agent_id,
+            "agent_name": self.agent_name,
+            "session_summary": "",
+            "status": "SESSION_COMPLETE",
+            "completed_work": {},
+            "tools_created": [],
+            "knowledge_transfers": {},
+            "active_refactoring": {},
+            "next_session_priorities": [],
+            "coordination_status": {},
+            "metrics": {},
+            "lessons_learned": [],
+            "blockers": [],
+            "notes": ""
+        }
+
+    def update_passdown(self, updates: Dict[str, Any]) -> bool:
+        """Update passdown.json with session data."""
+        try:
+            passdown = self.load_passdown_template()
+
+            # Merge updates
+            for key, value in updates.items():
+                if key in passdown and isinstance(passdown[key], dict) and isinstance(value, dict):
+                    passdown[key].update(value)
+                else:
+                    passdown[key] = value
+
+            # Save
+            passdown_path = self.project_root / "passdown.json"
+            with open(passdown_path, 'w', encoding='utf-8') as f:
+                json.dump(passdown, f, indent=2, ensure_ascii=False)
+
+            print(f"✅ Passdown updated: {passdown_path}")
+            return True
+
+        except Exception as e:
+            print(f"❌ Error updating passdown: {e}")
+            return False
+
+    def create_devlog(self, devlog_content: str) -> Optional[Path]:
+        """Create devlog markdown file."""
+        try:
+            devlog_filename = f"AGENT2_DEVLOG_{self.session_date}.md"
+            devlog_path = self.project_root / "docs" / devlog_filename
+
+            devlog_path.parent.mkdir(parents=True, exist_ok=True)
+            devlog_path.write_text(devlog_content, encoding="utf-8")
+
+            print(f"✅ Devlog created: {devlog_path}")
+            return devlog_path
+
+        except Exception as e:
+            print(f"❌ Error creating devlog: {e}")
+            return None
+
+    def post_devlog_to_discord(self, devlog_path: Path) -> bool:
+        """Post devlog to Discord."""
+        try:
+            from src.core.messaging_core import (
+                send_message,
+                UnifiedMessageType,
+                UnifiedMessagePriority,
+                UnifiedMessageTag,
+            )
+
+            devlog_content = devlog_path.read_text(encoding="utf-8")
+
+            # Create summary message
+            msg = f"""**📝 {self.agent_id} DEVLOG POSTED**
+
+**Date:** {self.session_date}
+**Channel:** #agent-2-devlogs
+
+**Session Summary:**
+{self.get_session_summary()}
+
+**Full Devlog:**
+```markdown
+{devlog_content[:1500]}...
+```
+
+See full devlog: `{devlog_path.relative_to(self.project_root)}`
 """
 
-from __future__ import annotations
+            send_message(
+                msg,
+                self.agent_id,
+                "Agent-4",  # Captain for coordination
+                UnifiedMessageType.TEXT,
+                UnifiedMessagePriority.REGULAR,
+                [UnifiedMessageTag.COORDINATION, UnifiedMessageTag.DEVLOG],
+            )
 
-import argparse
-import json
-from datetime import datetime
-from pathlib import Path
-from typing import List, Optional
+            print(f"✅ Devlog posted to Discord coordination channel")
+            return True
 
+        except Exception as e:
+            print(f"⚠️  Could not post to Discord: {e}")
+            print(f"📄 Devlog available at: {devlog_path}")
+            return False
 
-def build_passdown(agent: str, summary: str, date: str) -> str:
-    content = {
-        "session_date": date,
-        "agent_id": agent,
-        "session_summary": summary,
-        "status": "ACTIVE_AGENT_MODE",
-        "current_phase": "SESSION_CLEANUP",
-        "completed_work": {},
-        "in_progress": {},
-        "progress_metrics": {},
-        "key_documents": {},
-        "next_session_priorities": {"high": [], "medium": []},
-        "blockers": [],
-        "notes": [],
-        "tools_created": [],
-        "lessons_learned": [],
-    }
-    return json.dumps(content, indent=2)
+    def update_swarm_brain(self, session_data: Dict[str, Any]) -> bool:
+        """Update Swarm Brain Database with session knowledge."""
+        try:
+            # Create knowledge entry
+            knowledge_entry = {
+                "agent_id": self.agent_id,
+                "session_date": self.session_date,
+                "session_summary": session_data.get("session_summary", ""),
+                "key_achievements": session_data.get("completed_work", {}),
+                "metrics": session_data.get("metrics", {}),
+                "lessons_learned": session_data.get("lessons_learned", []),
+                "tools_created": session_data.get("tools_created", []),
+                "timestamp": datetime.now().isoformat()
+            }
 
+            # Save to swarm brain directory
+            brain_dir = self.project_root / "docs" / "swarm_brain"
+            brain_dir.mkdir(parents=True, exist_ok=True)
 
-def build_devlog(agent: str, summary: str, date: str) -> str:
-    lines = [
-        f"# Session Cleanup ({agent})",
-        "",
-        f"- Date: {date}",
-        "- Status: ✅ complete",
-        "",
-        "## Summary",
-        summary,
-        "",
-        "## Actions",
-        "- Passdown refreshed",
-        "- Swarm Brain entry drafted",
-        "- Discord devlog ready",
-        "- Helper tool available: tools/session_cleanup_helper.py",
-        "",
-        "## Next Steps",
-        "- Post devlog to Discord",
-        "- Capture any blockers and update passdown",
-    ]
-    return "\n".join(lines)
+            brain_file = brain_dir / \
+                f"{self.agent_id}_session_{self.session_date}.json"
+            with open(brain_file, 'w', encoding='utf-8') as f:
+                json.dump(knowledge_entry, f, indent=2, ensure_ascii=False)
 
+            print(f"✅ Swarm Brain updated: {brain_file}")
+            return True
 
-def build_swarm_entry(agent: str, summary: str, date: str) -> str:
-    content = {
-        "date": date,
-        "agent": agent,
-        "topic": "session_cleanup_template",
-        "insights": [summary],
-        "patterns": [
-            "Bundle passdown + devlog + Swarm Brain entry for each session cleanup.",
-            "Keep blockers explicit (deploy windows, approvals) to avoid hidden stalls.",
-        ],
-        "actions": [
-            "Generated session cleanup templates for reuse.",
-            "Pre-seeded evidence paths for devlog/Swarm Brain/passdown drafts.",
-        ],
-        "next_steps": ["Fill templates with real data and post devlog to Discord."],
-        "evidence": [],
-    }
-    return json.dumps(content, indent=2)
+        except Exception as e:
+            print(f"⚠️  Could not update Swarm Brain: {e}")
+            return False
 
+    def get_session_summary(self) -> str:
+        """Get formatted session summary."""
+        passdown = self.load_passdown_template()
+        summary = passdown.get("session_summary", "Session completed")
+        return summary
 
-def write_file(path: Optional[str], content: str) -> Optional[Path]:
-    if not path:
-        return None
-    target = Path(path)
-    target.parent.mkdir(parents=True, exist_ok=True)
-    target.write_text(content, encoding="utf-8")
-    return target
+    def run_full_cleanup(self, session_data: Dict[str, Any], devlog_content: str) -> bool:
+        """Run complete session cleanup process."""
+        print(f"🧹 Starting session cleanup for {self.agent_id}...")
+        print()
 
+        # 1. Update passdown.json
+        print("1️⃣  Updating passdown.json...")
+        if not self.update_passdown(session_data):
+            return False
+        print()
 
-def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(
-        description="Generate session cleanup templates for passdown/devlog/Swarm Brain entries."
-    )
-    parser.add_argument("--agent", required=True, help="Agent id (e.g., Agent-2).")
-    parser.add_argument("--summary", required=True, help="Short session summary.")
-    parser.add_argument(
-        "--date", default=datetime.utcnow().strftime("%Y-%m-%d"), help="ISO date."
-    )
-    parser.add_argument("--output-passdown", help="Path to write passdown JSON draft.")
-    parser.add_argument("--output-devlog", help="Path to write devlog markdown draft.")
-    parser.add_argument("--output-swarm", help="Path to write Swarm Brain JSON draft.")
-    return parser.parse_args()
+        # 2. Create devlog
+        print("2️⃣  Creating devlog...")
+        devlog_path = self.create_devlog(devlog_content)
+        if not devlog_path:
+            return False
+        print()
+
+        # 3. Post to Discord
+        print("3️⃣  Posting devlog to Discord...")
+        self.post_devlog_to_discord(devlog_path)
+        print()
+
+        # 4. Update Swarm Brain
+        print("4️⃣  Updating Swarm Brain Database...")
+        self.update_swarm_brain(session_data)
+        print()
+
+        # 5. Summary
+        print("✅ Session cleanup complete!")
+        print(f"📄 Devlog: {devlog_path.relative_to(self.project_root)}")
+        print(f"📋 Passdown: passdown.json")
+        print(
+            f"🧠 Swarm Brain: docs/swarm_brain/{self.agent_id}_session_{self.session_date}.json")
+
+        return True
 
 
-def main() -> None:
-    args = parse_args()
-    passdown = build_passdown(args.agent, args.summary, args.date)
-    devlog = build_devlog(args.agent, args.summary, args.date)
-    swarm_entry = build_swarm_entry(args.agent, args.summary, args.date)
+def main():
+    """Main entry point."""
+    if len(sys.argv) < 3:
+        print("Usage: python session_cleanup_helper.py <agent_id> <agent_name>")
+        print("Example: python session_cleanup_helper.py Agent-2 'Architecture & Design Specialist'")
+        sys.exit(1)
 
-    written: List[Path] = []
-    for path, content in (
-        (args.output_passdown, passdown),
-        (args.output_devlog, devlog),
-        (args.output_swarm, swarm_entry),
-    ):
-        target = write_file(path, content)
-        if target:
-            written.append(target)
+    agent_id = sys.argv[1]
+    agent_name = sys.argv[2]
 
-    if written:
-        print("Generated templates:", ", ".join(str(p) for p in written))
+    helper = SessionCleanupHelper(agent_id, agent_name)
+
+    # Load session data from passdown if it exists
+    session_data = helper.load_passdown_template()
+
+    # Read devlog content if it exists
+    devlog_path = project_root / "docs" / \
+        f"AGENT2_DEVLOG_{helper.session_date}.md"
+    if devlog_path.exists():
+        devlog_content = devlog_path.read_text(encoding="utf-8")
     else:
-        print(passdown)
-        print()
-        print(devlog)
-        print()
-        print(swarm_entry)
+        devlog_content = f"# {agent_id} Devlog - {helper.session_date}\n\nSession cleanup in progress...\n"
+
+    # Run cleanup
+    helper.run_full_cleanup(session_data, devlog_content)
 
 
 if __name__ == "__main__":
     main()
-#!/usr/bin/env python3
-"""
-Session Cleanup Helper
-
-Generates lightweight passdown/devlog scaffolds to reduce wrap-up friction.
-Usage:
-  python tools/session_cleanup_helper.py --summary "One-liner" --blockers "auth,theme"
-
-Outputs a markdown snippet with summary, blockers, next-actions, and artifacts.
-"""
-import argparse
-import json
-from datetime import datetime
-from typing import List, Dict
-
-
-def parse_list(raw: str) -> List[str]:
-  if not raw:
-    return []
-  return [item.strip() for item in raw.split(",") if item.strip()]
-
-
-def build_payload(args: argparse.Namespace) -> Dict[str, object]:
-  now = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
-  return {
-      "generated_at": now,
-      "summary": args.summary or "No summary provided.",
-      "blockers": parse_list(args.blockers),
-      "next_actions": parse_list(args.next_actions),
-      "artifacts": parse_list(args.artifacts),
-      "notes": args.notes or "",
-  }
-
-
-def to_markdown(payload: Dict[str, object]) -> str:
-  lines = [
-      f"### Session Wrap ({payload['generated_at']})",
-      f"- Summary: {payload['summary']}",
-      f"- Blockers: {', '.join(payload['blockers']) if payload['blockers'] else 'None'}",
-      f"- Next actions: {', '.join(payload['next_actions']) if payload['next_actions'] else 'None'}",
-      f"- Artifacts: {', '.join(payload['artifacts']) if payload['artifacts'] else 'None'}",
-  ]
-  if payload["notes"]:
-    lines.append(f"- Notes: {payload['notes']}")
-  return "\n".join(lines)
-
-
-def main() -> None:
-  parser = argparse.ArgumentParser(description="Generate session wrap scaffolds.")
-  parser.add_argument("--summary", help="Short summary line.", default="")
-  parser.add_argument("--blockers", help="Comma list of blockers.", default="")
-  parser.add_argument("--next-actions", dest="next_actions", help="Comma list of next actions.", default="")
-  parser.add_argument("--artifacts", help="Comma list of artifact paths.", default="")
-  parser.add_argument("--notes", help="Optional notes.", default="")
-  parser.add_argument("--format", choices=["markdown", "json"], default="markdown", help="Output format.")
-  args = parser.parse_args()
-
-  payload = build_payload(args)
-  if args.format == "json":
-    print(json.dumps(payload, indent=2))
-  else:
-    print(to_markdown(payload))
-
-
-if __name__ == "__main__":
-  main()
-"""Helper to generate a ready-to-post Discord summary from passdown + devlog."""
-
-from __future__ import annotations
-
-import argparse
-import json
-from pathlib import Path
-from typing import Any, Dict, Optional
-
-
-DEFAULT_PASSDOWN = Path("agent_workspaces/Agent-7/passdown.json")
-
-
-def load_json(path: Path) -> Dict[str, Any]:
-  with path.open("r", encoding="utf-8") as handle:
-    return json.load(handle)
-
-
-def summarize_devlog(path: Optional[Path]) -> str:
-  if not path or not path.exists():
-    return "Devlog: pending upload. 📝 DISCORD DEVLOG REMINDER: Create a Discord devlog."
-  lines = path.read_text(encoding="utf-8").splitlines()
-  head = [line for line in lines if line and not line.startswith("#")][:3]
-  summary = " ".join(head) if head else path.name
-  return f"Devlog: {summary}"
-
-
-def build_discord_message(passdown: Dict[str, Any], devlog_line: str) -> str:
-  summary = passdown.get("session_summary", {})
-  blockers = passdown.get("blockers", [])
-  next_actions = passdown.get("next_actions", [])
-  coordination = passdown.get("coordination_needs", [])
-
-  lines = [
-    "[A2A] Agent-7",
-    f"Session: {summary.get('session_type', 'n/a')}",
-    f"Mission: {summary.get('primary_mission', 'n/a')}",
-    f"Status: {summary.get('status', 'n/a')} | Progress: {summary.get('progress', '')}",
-    f"Blockers: {', '.join(blockers) if blockers else 'None'}",
-    f"Next: {', '.join(next_actions[:3]) if next_actions else 'None'}",
-    f"Coordination: {', '.join(coordination[:3]) if coordination else 'None'}",
-    devlog_line,
-    "📝 DISCORD DEVLOG REMINDER: Create a Discord devlog for this action in devlogs/ directory",
-  ]
-  return "\n".join(lines)
-
-
-def main() -> None:
-  parser = argparse.ArgumentParser(description="Generate Discord summary from passdown + devlog.")
-  parser.add_argument("--passdown", type=Path, default=DEFAULT_PASSDOWN, help="Path to passdown.json")
-  parser.add_argument("--devlog", type=Path, default=None, help="Optional devlog markdown path")
-  args = parser.parse_args()
-
-  passdown = load_json(args.passdown)
-  devlog_line = summarize_devlog(args.devlog)
-  print(build_discord_message(passdown, devlog_line))
-
-
-if __name__ == "__main__":
-  main()

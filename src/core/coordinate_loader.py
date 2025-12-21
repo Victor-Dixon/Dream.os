@@ -5,11 +5,17 @@ Mock Coordinate Loader for Testing
 <!-- SSOT Domain: integration -->
 
 Provides mock coordinate loading functionality for smoke testing.
+FIXED: Always loads coordinates for ALL agents, regardless of mode.
+This allows Discord messages to be delivered to inactive agents.
+Mode filtering only affects processing order, not message delivery capability.
 """
 
 import json
+import logging
 from pathlib import Path
 from typing import Any
+
+logger = logging.getLogger(__name__)
 
 
 def _load_coordinates() -> dict[str, dict[str, Any]]:
@@ -17,11 +23,33 @@ def _load_coordinates() -> dict[str, dict[str, Any]]:
     
     CRITICAL: chat_input_coordinates goes to "coords", onboarding_input_coords goes to "onboarding_coords".
     These must NEVER be swapped.
+    
+    FIXED: Always loads coordinates for ALL agents, regardless of mode.
+    This allows Discord messages to be delivered to inactive agents (e.g., agents 5-8 in 4-agent mode).
+    Mode filtering only affects processing order, not message delivery capability.
     """
+    import logging
+    logger = logging.getLogger(__name__)
+    
     coord_file = Path("cursor_agent_coords.json")
     data = json.loads(coord_file.read_text(encoding="utf-8"))
+    
+    # Get active agents from mode manager (for logging only)
+    try:
+        from .agent_mode_manager import get_mode_manager
+        mode_manager = get_mode_manager()
+        active_agents = set(mode_manager.get_active_agents())
+        current_mode = mode_manager.get_current_mode()
+        logger.debug(f"📍 Loading coordinates for all agents (mode: {current_mode}, {len(active_agents)} active)")
+    except Exception as e:
+        logger.warning(f"⚠️ Could not load mode manager: {e}")
+        active_agents = None
+    
     agents: dict[str, dict[str, Any]] = {}
     for agent_id, info in data.get("agents", {}).items():
+        # FIXED: Always load coordinates for all agents, even if inactive
+        # This allows Discord messages to inactive agents (e.g., agents 5-8 in 4-agent mode)
+        # Mode filtering only affects processing order, not message delivery
         # CRITICAL: chat_input_coordinates is the PRIMARY chat input field
         chat = info.get("chat_input_coordinates", [0, 0])
         # onboarding_input_coords is ONLY for onboarding messages

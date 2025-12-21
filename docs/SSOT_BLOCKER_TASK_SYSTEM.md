@@ -37,7 +37,7 @@ python -m src.services.messaging_cli --get-next-task
 - **Content:** Multiple instructions to use `--get-next-task`
 - **Context:** New agent onboarding procedures
 
-### **4. docs/AGENT_ONBOARDING_GUIDE.md**
+### **4. docs/AGENT_ONBOARDING_GUIDE_ENHANCED.md** (superseded AGENT_ONBOARDING_GUIDE.md)
 - **Lines:** 18, 74
 - **Content:** Instructions to use `--get-next-task`
 - **Context:** Agent onboarding checklist

@@ -141,7 +141,8 @@ def print_report(issues: dict[str, list], show_low: bool = False):
     print("\n" + "=" * 80 + "\n")
 
 
-if __name__ == "__main__":
+def main():
+    """Main entry point."""
     # Scan src/ directory
     src_dir = Path(__file__).parent.parent / "src"
 
@@ -159,3 +160,7 @@ if __name__ == "__main__":
     if issues["CRITICAL"]:
         sys.exit(1)
     sys.exit(0)
+
+
+if __name__ == "__main__":
+    main()

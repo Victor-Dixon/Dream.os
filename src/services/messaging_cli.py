@@ -15,7 +15,7 @@ import logging
 import sys
 from pathlib import Path
 
-from src.services.messaging_infrastructure import (
+from src.services.messaging import (
     create_messaging_parser,
     handle_consolidation,
     handle_coordinates,
@@ -114,6 +114,13 @@ class MessagingCLI:
                 return handle_save(parsed_args, self.parser)
             elif parsed_args.leaderboard:
                 return handle_leaderboard()
+            elif parsed_args.resend_failed:
+                # Handle resend failed messages
+                from src.core.message_queue import MessageQueue
+                queue = MessageQueue()
+                count = queue.resend_failed_messages()
+                print(f"✅ Reset {count} failed messages to PENDING for retry")
+                return 0 if count > 0 else 1
             elif parsed_args.infra_health:
                 # Import here to avoid circular imports
                 from src.infrastructure.infrastructure_health_monitor import InfrastructureHealthMonitor

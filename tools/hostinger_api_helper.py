@@ -16,6 +16,17 @@ import sys
 from pathlib import Path
 from typing import Dict, Optional, Tuple
 
+# Add project root to path
+project_root = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(project_root))
+
+try:
+    from src.core.config.timeout_constants import TimeoutConstants
+except ImportError:
+    class TimeoutConstants:
+        HTTP_SHORT = 10
+        HTTP_DEFAULT = 30
+
 # Load .env file
 try:
     from dotenv import load_dotenv
@@ -369,7 +380,6 @@ class HostingerAPIHelper:
 def main():
     """CLI interface."""
     import argparse
-from src.core.config.timeout_constants import TimeoutConstants
     
     parser = argparse.ArgumentParser(
         description="Discover SFTP credentials via Hostinger API"

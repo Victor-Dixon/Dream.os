@@ -10,13 +10,13 @@
   "agents": {
     "Agent-1": {
       "chat_input_coordinates": [-1269, 496],
-      "onboarding_input_coords": [-1265, 171],
+      "onboarding_input_coords": [-1265, 156],
       "description": "Integration & Core Systems Specialist",
       "active": true
     },
     "Agent-2": {
       "chat_input_coordinates": [-308, 500],
-      "onboarding_input_coords": [-296, 180],
+      "onboarding_input_coords": [-296, 190],
       "description": "Architecture & Design Specialist",
       "active": true
     },

@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """
 Messaging Models Core - Backward Compatibility Re-export Hub
+
+<!-- SSOT Domain: infrastructure -->
+
 ==============================================================
 
 This module re-exports models from messaging_models.py for backward compatibility.

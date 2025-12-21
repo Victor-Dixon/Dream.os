@@ -22,6 +22,10 @@ import pytest
 import sys
 from pathlib import Path
 from datetime import datetime
+from src.trading_robot.repositories.models.position import Position
+from src.trading_robot.repositories.interfaces.position_repository_interface import (
+    PositionRepositoryInterface
+)
 from unittest.mock import AsyncMock, MagicMock
 
 # Add project root to path
@@ -29,10 +33,6 @@ project_root = Path(__file__).parent.parent.parent.parent
 sys.path.insert(0, str(project_root))
 
 # Direct imports to avoid circular dependencies
-from src.trading_robot.repositories.interfaces.position_repository_interface import (
-    PositionRepositoryInterface
-)
-from src.trading_robot.repositories.models.position import Position
 
 
 class MockPositionRepository(PositionRepositoryInterface):
@@ -281,4 +281,3 @@ class TestPositionRepositoryInterface:
         assert result is True
         assert await mock_repo.get_position_count() == 0
         assert len(await mock_repo.get_all_positions()) == 0
-

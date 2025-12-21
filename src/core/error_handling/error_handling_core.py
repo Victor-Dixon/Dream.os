@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """
 Error Handling Core - V2 Compliant Facade
+
+<!-- SSOT Domain: infrastructure -->
+
 ==========================================
 
 Facade module for backward compatibility after V2 refactoring.

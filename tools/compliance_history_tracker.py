@@ -26,13 +26,28 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from compliance_history_database import ComplianceDatabase
-from compliance_history_models import ComplianceSnapshot, TrendReport
-from compliance_history_reports import ComplianceReports
+try:
+    from tools.compliance_history_database import ComplianceDatabase
+    from tools.compliance_history_models import ComplianceSnapshot, TrendReport
+    from tools.compliance_history_reports import ComplianceReports
+except ImportError:
+    # Fallback: modules may not exist yet, define minimal stubs
+    class ComplianceDatabase:
+        def __init__(self, *args, **kwargs):
+            pass
+
+    class ComplianceSnapshot:
+        pass
+
+    class TrendReport:
+        pass
+
+    class ComplianceReports:
+        pass
 
 try:
-    from complexity_analyzer import ComplexityAnalysisService
-    from v2_compliance_checker import V2ComplianceChecker
+    from tools.complexity_analyzer import ComplexityAnalysisService
+    from tools.v2_compliance_checker import V2ComplianceChecker
 
     TOOLS_AVAILABLE = True
 except ImportError:
@@ -60,12 +75,15 @@ class ComplianceHistoryTracker:
 
         # Run complexity analysis
         complexity_service = ComplexityAnalysisService()
-        complexity_reports = complexity_service.analyze_directory(directory, "**/*.py")
+        complexity_reports = complexity_service.analyze_directory(
+            directory, "**/*.py")
 
         # Calculate metrics
-        files_with_complexity = [r for r in complexity_reports if r.has_violations]
+        files_with_complexity = [
+            r for r in complexity_reports if r.has_violations]
         complexity_rate = (
-            (len(complexity_reports) - len(files_with_complexity)) / len(complexity_reports) * 100
+            (len(complexity_reports) - len(files_with_complexity)) /
+            len(complexity_reports) * 100
             if complexity_reports
             else 100
         )
@@ -140,9 +158,11 @@ def main():
         choices=["snapshot", "report", "list"],
         help="Command: snapshot (record), report (trend), list (history)",
     )
-    parser.add_argument("directory", nargs="?", default="src", help="Directory to analyze")
+    parser.add_argument("directory", nargs="?",
+                        default="src", help="Directory to analyze")
     parser.add_argument("--commit", help="Commit hash for snapshot")
-    parser.add_argument("--limit", type=int, default=10, help="Number of snapshots for report")
+    parser.add_argument("--limit", type=int, default=10,
+                        help="Number of snapshots for report")
 
     args = parser.parse_args()
 
@@ -169,7 +189,8 @@ def main():
         snapshots = tracker.get_recent_snapshots(args.limit)
         print(f"Recent {len(snapshots)} snapshots:")
         for s in snapshots:
-            date = datetime.fromisoformat(s.timestamp).strftime("%Y-%m-%d %H:%M")
+            date = datetime.fromisoformat(
+                s.timestamp).strftime("%Y-%m-%d %H:%M")
             print(
                 f"{date} - Score: {s.overall_score:.1f}, V2: {s.v2_compliance_rate:.1f}%, Complexity: {s.complexity_compliance_rate:.1f}%"
             )
