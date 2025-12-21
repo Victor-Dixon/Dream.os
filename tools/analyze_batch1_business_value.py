@@ -2,6 +2,9 @@
 """
 Batch 1 Business Value Analysis
 ================================
+
+<!-- SSOT Domain: tools -->
+
 Analyzes duplicate groups from Batch 1 re-analysis to determine business value
 for consolidation prioritization.
 

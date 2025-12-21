@@ -1,9 +1,0 @@
-{
-  "timestamp": "2025-11-26T02:28:25.479229",
-  "target_repo": "bible-application",
-  "target_repo_num": 13,
-  "source_repo": "bible-application",
-  "source_repo_num": 13,
-  "operation": "merge",
-  "status": "backup_created"
-}

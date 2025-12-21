@@ -1,9 +1,0 @@
-{
-  "timestamp": "2025-11-24T12:20:51.968642",
-  "target_repo": "Streamertools",
-  "target_repo_num": 25,
-  "source_repo": "streamertools",
-  "source_repo_num": 31,
-  "operation": "merge",
-  "status": "backup_created"
-}

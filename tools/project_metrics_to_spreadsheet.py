@@ -3,6 +3,8 @@
 Project Metrics to Spreadsheet - At-a-Glance Dashboard
 ======================================================
 
+<!-- SSOT Domain: tools -->
+
 Converts project state and scanner results into spreadsheet format for:
 - Visual project overview
 - Actionable task generation

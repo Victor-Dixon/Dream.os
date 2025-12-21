@@ -154,14 +154,15 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
         "flags": ["--linecount", "--lines"],
         "args_passthrough": True,
     },
-    "validate-imports": {
-        "name": "Import Validator",
-        "module": "tools.validate_imports",
-        "main_function": "main",
-        "description": "Validate import statements and dependencies",
-        "flags": ["--validate-imports", "--imports"],
-        "args_passthrough": True,
-    },
+    # NOTE: validate-imports moved to scripts/ - use unified_validator instead
+    # "validate-imports": {
+    #     "name": "Import Validator",
+    #     "module": "scripts.validate_imports",
+    #     "main_function": "main",
+    #     "description": "Validate import statements and dependencies (moved to scripts - use unified_validator)",
+    #     "flags": ["--validate-imports", "--imports"],
+    #     "args_passthrough": True,
+    # },
     "get-task": {
         "name": "Get Next Task",
         "module": "src.services.messaging_cli",
@@ -213,14 +214,15 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
         "flags": ["--check-imports", "--import-check"],
         "args_passthrough": True,
     },
-    "task": {
-        "name": "Task CLI",
-        "module": "tools.task_cli",
-        "main_function": "main",
-        "description": "Quick task management (get/list/status/complete)",
-        "flags": ["--task", "-t"],
-        "args_passthrough": True,
-    },
+    # NOTE: task CLI moved to scripts/ - use messaging_cli directly instead
+    # "task": {
+    #     "name": "Task CLI",
+    #     "module": "scripts.task_cli",
+    #     "main_function": "main",
+    #     "description": "Quick task management (moved to scripts - use messaging_cli --get-next-task)",
+    #     "flags": ["--task", "-t"],
+    #     "args_passthrough": True,
+    # },
     "refactor-analyze": {
         "name": "Refactor Analyzer",
         "module": "tools.unified_validator",
