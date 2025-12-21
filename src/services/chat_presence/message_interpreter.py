@@ -15,6 +15,7 @@ import logging
 from typing import Optional
 
 from .agent_personality import get_personality, should_agent_respond
+from .quote_generator import get_random_quote, format_quote_for_chat
 
 logger = logging.getLogger(__name__)
 
@@ -130,8 +131,38 @@ class MessageInterpreter:
             True if status command
         """
         message_lower = message.lower().strip()
+        # Core status commands
         status_commands = ["!status", "!swarm", "!agents"]
-        return any(message_lower.startswith(cmd) for cmd in status_commands)
+        if any(message_lower.startswith(cmd) for cmd in status_commands):
+            return True
+        # Aliases like "!team status" / "!swarm status"
+        if message_lower.startswith("!team status") or message_lower.startswith("!swarm status"):
+            return True
+        return False
+
+    def is_quote_command(self, message: str) -> bool:
+        """
+        Check if message is a quote command.
+
+        Args:
+            message: Message content
+
+        Returns:
+            True if quote command
+        """
+        message_lower = message.lower().strip()
+        quote_commands = ["!quote", "!quotes", "!wisdom"]
+        return any(message_lower.startswith(cmd) for cmd in quote_commands)
+
+    def get_quote_response(self) -> str:
+        """
+        Get a random quote response.
+
+        Returns:
+            Formatted quote string for chat
+        """
+        quote = get_random_quote()
+        return format_quote_for_chat(quote)
 
     def parse_status_command(self, message: str) -> tuple[str, Optional[str]]:
         """
@@ -147,6 +178,10 @@ class MessageInterpreter:
         """
         message_lower = message.lower().strip()
         parts = message_lower.split()
+
+        # Aliases that should show full team status
+        if message_lower.startswith("!team status") or message_lower.startswith("!swarm status"):
+            return ("all", None)
 
         if len(parts) == 1:
             # !status - show all
@@ -200,9 +235,14 @@ class MessageInterpreter:
         Returns:
             True if broadcast command
         """
-        message_lower = message.lower()
-        broadcast_commands = ["!team", "!swarm", "!all", "!everyone", "!broadcast"]
+        message_lower = message.lower().strip()
 
+        # Treat status aliases as pure status, not broadcast
+        if message_lower.startswith("!team status") or message_lower.startswith("!swarm status"):
+            return False
+
+        broadcast_commands = ["!team", "!swarm",
+                              "!all", "!everyone", "!broadcast"]
         return any(message_lower.startswith(cmd) for cmd in broadcast_commands)
 
     def _find_best_agent_match(self, message: str) -> Optional[str]:
@@ -346,7 +386,3 @@ class MessageInterpreter:
 
 
 __all__ = ["MessageInterpreter"]
-
-
-
-

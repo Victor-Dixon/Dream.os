@@ -1,0 +1,31 @@
+{
+  "total_workflows": 3,
+  "workflows": {
+    "ci-cd.yml": {
+      "path": ".github\\workflows\\ci-cd.yml",
+      "size": 27990,
+      "has_testing": true,
+      "has_linting": true,
+      "has_deployment": true,
+      "has_v2": true
+    },
+    "ci.yml": {
+      "path": ".github\\workflows\\ci.yml",
+      "size": 5008,
+      "has_testing": true,
+      "has_linting": true,
+      "has_deployment": false,
+      "has_v2": true
+    },
+    "sync-websites.yml": {
+      "path": ".github\\workflows\\sync-websites.yml",
+      "size": 1879,
+      "has_testing": true,
+      "has_linting": false,
+      "has_deployment": true,
+      "has_v2": false
+    }
+  },
+  "duplicates": [],
+  "recommendations": []
+}

@@ -19,10 +19,11 @@ from src.core.messaging_models_core import (
 )
 from src.core.messaging_core import send_message
 from src.core.base.base_service import BaseService
+from src.core.agent_mode_manager import get_mode_manager, get_active_agents
 import asyncio
 import logging
 from pathlib import Path
-from typing import Optional
+from typing import Optional, List
 
 # Use unified logging system
 from src.core.unified_logging_system import get_logger, configure_logging
@@ -32,6 +33,7 @@ from .chat_scheduler import ChatScheduler
 from .message_interpreter import MessageInterpreter
 from .status_reader import AgentStatusReader
 from .twitch_bridge import TwitchChatBridge
+from .quote_generator import get_random_quote, format_quote_for_chat
 
 # Configure logging for chat_presence with file handler
 log_dir = Path(__file__).parent.parent.parent.parent / "logs"
@@ -257,6 +259,30 @@ class ChatPresenceOrchestrator(BaseService):
                 )
             return
 
+        # Handle quote commands (available to all users)
+        is_quote = self.message_interpreter.is_quote_command(message)
+        logger.debug(f"is_quote_command returned: {is_quote}")
+
+        if is_quote:
+            logger.info(f"Quote command detected: {message}")
+            try:
+                quote_response = self.message_interpreter.get_quote_response()
+                await self.twitch_bridge.send_message(quote_response)
+                logger.debug("Quote sent to chat")
+            except Exception as e:
+                logger.error(
+                    "Error handling quote command",
+                    extra={
+                        "error_type": type(e).__name__,
+                        "error_message": str(e),
+                        "component": "ChatPresenceOrchestrator",
+                        "operation": "_handle_quote_command",
+                        "message": message,
+                    },
+                    exc_info=True
+                )
+            return
+
         # Check if user is admin for agent messaging commands
         is_admin = self._is_admin_user(username, message_data.get("tags", {}))
 
@@ -442,40 +468,46 @@ class ChatPresenceOrchestrator(BaseService):
                 return
 
             logger.debug("status_reader available, proceeding...")
+
+            # Single-agent status (e.g., "!status agent3")
             if command_type == "agent" and agent_id:
-                # Single agent status
                 status_text = self.status_reader.format_agent_status_compact(
                     agent_id)
                 await self.twitch_bridge.send_message(status_text)
-            else:
-                # All agents summary
-                summary = self.status_reader.format_all_agents_summary()
-                # Twitch has message length limits, so split if needed
-                if len(summary) > 500:
-                    # Send compact version for each agent
-                    all_status = self.status_reader.get_all_agents_status()
-                    lines = ["📊 Swarm Status:"]
-                    for agent_id in sorted(all_status.keys()):
-                        compact = self.status_reader.format_agent_status_compact(
-                            agent_id)
-                        lines.append(compact)
+                return
 
-                    # Send in chunks to avoid message limits
-                    chunk = []
-                    current_length = 0
-                    for line in lines:
-                        if current_length + len(line) > 400:
-                            await self.twitch_bridge.send_message(" | ".join(chunk))
-                            chunk = [line]
-                            current_length = len(line)
-                        else:
-                            chunk.append(line)
-                            current_length += len(line) + 3  # " | " separator
+            # Mode-aware multi-agent summary for Twitch
+            mode_manager = get_mode_manager()
+            current_mode = mode_manager.get_current_mode()
+            active_agents: List[str] = mode_manager.get_active_agents()
 
-                    if chunk:
-                        await self.twitch_bridge.send_message(" | ".join(chunk))
+            if not active_agents:
+                await self.twitch_bridge.send_message(
+                    f"📊 Swarm Status — {current_mode}: no active agents configured."
+                )
+                return
+
+            header = f"📊 Swarm Status — {current_mode} ({len(active_agents)} active agents)"
+            lines: List[str] = [header]
+            for agent in active_agents:
+                lines.append(
+                    self.status_reader.format_agent_status_compact(agent))
+            lines.append("Use !status agent3 for a single-agent view.")
+
+            # Twitch has message length limits, so send in chunks (~450 chars max)
+            chunk: List[str] = []
+            current_length = 0
+            for line in lines:
+                if current_length + len(line) + 3 > 450 and chunk:
+                    await self.twitch_bridge.send_message(" | ".join(chunk))
+                    chunk = [line]
+                    current_length = len(line)
                 else:
-                    await self.twitch_bridge.send_message(summary)
+                    chunk.append(line)
+                    current_length += len(line) + 3
+
+            if chunk:
+                await self.twitch_bridge.send_message(" | ".join(chunk))
 
         except Exception as e:
             logger.error(
@@ -645,17 +677,17 @@ class ChatPresenceOrchestrator(BaseService):
         """
         username_lower = username.lower()
 
-        # Check configured admin list
+        # Channel owner is always admin
+        channel_owner = self.twitch_config.get(
+            "channel", "").lstrip("#").lower()
+        if channel_owner and username_lower == channel_owner:
+            return True
+
+        # Check configured admin list from config/env (explicit allow-list)
         if username_lower in self.admin_users:
             return True
 
-        # Check Twitch badges (broadcaster, moderator)
-        # Twitch IRC tags format: badges=broadcaster/1,moderator/1
-        badges = tags.get("badges", "")
-        if isinstance(badges, str):
-            if "broadcaster" in badges or "moderator" in badges:
-                return True
-
+        # Do NOT implicitly trust badges; only explicit owner/admin list
         return False
 
     async def _periodic_status_updates(self) -> None:
@@ -684,35 +716,37 @@ class ChatPresenceOrchestrator(BaseService):
                 if not self.running or not self.twitch_bridge or not self.twitch_bridge.connected:
                     break
 
-                # Get and post status summary
-                summary = self.status_reader.format_all_agents_summary()
+                # Mode-aware periodic status update
+                mode_manager = get_mode_manager()
+                current_mode = mode_manager.get_current_mode()
+                active_agents: List[str] = mode_manager.get_active_agents()
 
-                # Split if too long
-                if len(summary) > 500:
-                    # Send compact version
-                    all_status = self.status_reader.get_all_agents_status()
-                    lines = ["📊 **Swarm Status Update:**"]
-                    for agent_id in sorted(all_status.keys()):
-                        compact = self.status_reader.format_agent_status_compact(
-                            agent_id)
-                        lines.append(compact)
+                if not active_agents:
+                    await self.twitch_bridge.send_message(
+                        f"📊 Swarm Status — {current_mode}: no active agents configured."
+                    )
+                    continue
 
-                    # Send in chunks
-                    chunk = []
-                    current_length = 0
-                    for line in lines:
-                        if current_length + len(line) > 400:
-                            await self.twitch_bridge.send_message(" | ".join(chunk))
-                            chunk = [line]
-                            current_length = len(line)
-                        else:
-                            chunk.append(line)
-                            current_length += len(line) + 3
+                header = f"📊 Swarm Status Update — {current_mode} ({len(active_agents)} active agents)"
+                lines: List[str] = [header]
+                for agent in active_agents:
+                    lines.append(
+                        self.status_reader.format_agent_status_compact(agent))
 
-                    if chunk:
+                # Send in chunks under Twitch length limits
+                chunk: List[str] = []
+                current_length = 0
+                for line in lines:
+                    if current_length + len(line) + 3 > 450 and chunk:
                         await self.twitch_bridge.send_message(" | ".join(chunk))
-                else:
-                    await self.twitch_bridge.send_message(summary)
+                        chunk = [line]
+                        current_length = len(line)
+                    else:
+                        chunk.append(line)
+                        current_length += len(line) + 3
+
+                if chunk:
+                    await self.twitch_bridge.send_message(" | ".join(chunk))
 
                 logger.info("📊 Periodic status update posted to Twitch")
 

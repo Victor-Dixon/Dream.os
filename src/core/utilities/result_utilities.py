@@ -1,3 +1,24 @@
+
+"""
+⚠️ DEPRECATED - This module is deprecated.
+
+This utility has been consolidated into shared_utilities/ as SSOT.
+Please update imports to use shared_utilities instead.
+
+Migration:
+  OLD: from src.core.utilities.{old_module} import ...
+  NEW: from src.core.shared_utilities.{new_module} import ...
+
+This module will be removed in a future release.
+"""
+
+import warnings
+warnings.warn(
+    "utilities/ modules are deprecated. Use shared_utilities/ instead.",
+    DeprecationWarning,
+    stacklevel=2
+)
+
 """
 Result Utilities - Result Manager
 ==================================

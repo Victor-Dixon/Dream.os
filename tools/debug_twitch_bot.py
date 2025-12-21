@@ -40,6 +40,33 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
+def extract_channel_name(channel_value: str) -> str:
+    """Extract channel name from URL or channel name."""
+    import re
+    if not channel_value:
+        return ""
+    channel_value = channel_value.strip()
+    # Extract from URL if present
+    url_pattern = r'(?:https?://)?(?:www\.)?twitch\.tv/([^/?]+)'
+    match = re.search(url_pattern, channel_value, re.IGNORECASE)
+    if match:
+        return match.group(1).lower()
+    # Remove # prefix if present
+    if channel_value.startswith('#'):
+        channel_value = channel_value[1:]
+    return channel_value.lower().strip()
+
+
+def normalize_oauth_token(token: str) -> str:
+    """Normalize OAuth token format."""
+    if not token:
+        return ""
+    token = token.strip()
+    if not token.startswith('oauth:'):
+        return f"oauth:{token}"
+    return token
+
+
 def show_config():
     """Show current Twitch configuration (masked for security)."""
     print("=" * 60)
@@ -49,23 +76,23 @@ def show_config():
     
     # Check all possible config sources
     access_token = os.getenv("TWITCH_ACCESS_TOKEN")
-    channel = os.getenv("TWITCH_CHANNEL")
-    username = os.getenv("TWITCH_BOT_USERNAME")
+    channel_raw = os.getenv("TWITCH_CHANNEL")
+    username_raw = os.getenv("TWITCH_BOT_USERNAME")
     swarm_voice = os.getenv("TWITCH_SWARM_VOICE")
     
-    print("Environment Variables:")
+    print("Environment Variables (Raw):")
     print(f"  TWITCH_ACCESS_TOKEN: {'✅ Set' if access_token else '❌ Not set'}")
     if access_token:
         masked = access_token[:10] + "..." if len(access_token) > 10 else "***"
         print(f"    Value: {masked}")
     
-    print(f"  TWITCH_CHANNEL: {'✅ Set' if channel else '❌ Not set'}")
-    if channel:
-        print(f"    Value: {channel}")
+    print(f"  TWITCH_CHANNEL: {'✅ Set' if channel_raw else '❌ Not set'}")
+    if channel_raw:
+        print(f"    Value: {channel_raw}")
     
-    print(f"  TWITCH_BOT_USERNAME: {'✅ Set' if username else '❌ Not set'}")
-    if username:
-        print(f"    Value: {username}")
+    print(f"  TWITCH_BOT_USERNAME: {'✅ Set' if username_raw else '❌ Not set'}")
+    if username_raw:
+        print(f"    Value: {username_raw}")
     
     print(f"  TWITCH_SWARM_VOICE: {'✅ Set' if swarm_voice else '❌ Not set'}")
     if swarm_voice:
@@ -83,17 +110,25 @@ def show_config():
     
     print()
     
+    # Normalize values
+    channel = extract_channel_name(channel_raw) if channel_raw else None
+    oauth_token = normalize_oauth_token(access_token) if access_token else None
+    username = username_raw.lower().strip() if username_raw else (channel if channel else None)
+    
     # Determine what config we can build
     twitch_config = None
     
-    if access_token and channel:
-        username = username or channel
+    if oauth_token and channel:
         twitch_config = {
             "username": username,
-            "oauth_token": access_token,
+            "oauth_token": oauth_token,
             "channel": channel,
         }
         print("✅ Configuration Method: TWITCH_ACCESS_TOKEN + TWITCH_CHANNEL")
+        if channel_raw != channel:
+            print(f"   📝 Channel normalized: '{channel_raw}' → '{channel}'")
+        if access_token != oauth_token:
+            print(f"   📝 OAuth token normalized: Added 'oauth:' prefix")
     elif swarm_voice:
         parts = swarm_voice.split("|")
         if len(parts) == 3:

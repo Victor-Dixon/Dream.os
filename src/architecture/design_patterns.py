@@ -76,9 +76,11 @@ class Factory(Generic[T]):
     Generic Factory base class.
     
     Consolidates existing factory patterns (TradingDependencyContainer, ManagerRegistry).
+    
     Usage:
-        factory = Factory[str, MyClass]()
-        factory.register('type1', lambda: Type1Class())
+        # Example: Create factory and register creators
+        factory = Factory[MyClass]()
+        factory.register('type1', lambda: MyType1Class())  # Example class name
         obj = factory.create('type1')
     """
     def __init__(self):
@@ -124,9 +126,11 @@ class Subject:
     Subject base class for Observer pattern.
     
     Consolidates OrchestratorEvents pattern.
+    
     Usage:
+        # Example: Create subject and attach observer
         subject = Subject()
-        observer = MyObserver()
+        observer = MyObserver()  # Example: class MyObserver(Observer)
         subject.attach(observer)
         subject.notify("data")
     """

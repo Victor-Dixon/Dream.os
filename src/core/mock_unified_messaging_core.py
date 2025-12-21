@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """
 Mock Unified Messaging Core - Stress Testing Module
+
+<!-- SSOT Domain: infrastructure -->
+
 ===================================================
 
 Simulates message delivery for stress testing with configurable latency,

@@ -32,6 +32,128 @@ from src.services.messaging_infrastructure import ConsolidatedMessagingService
 logger = logging.getLogger(__name__)
 
 
+class MonitorControlView(discord.ui.View):
+    """Simple view with monitor start/stop buttons."""
+
+    def __init__(self):
+        from src.core.config.timeout_constants import TimeoutConstants
+        super().__init__(timeout=TimeoutConstants.HTTP_EXTENDED)
+
+        # Start Monitor button
+        self.start_btn = discord.ui.Button(
+            label="Start Monitor",
+            style=discord.ButtonStyle.success,
+            emoji="▶️",
+            row=0,
+        )
+        self.start_btn.callback = self.on_start
+        self.add_item(self.start_btn)
+
+        # Stop Monitor button
+        self.stop_btn = discord.ui.Button(
+            label="Stop Monitor",
+            style=discord.ButtonStyle.danger,
+            emoji="⏸️",
+            row=0,
+        )
+        self.stop_btn.callback = self.on_stop
+        self.add_item(self.stop_btn)
+
+        # Refresh button
+        self.refresh_btn = discord.ui.Button(
+            label="Refresh Status",
+            style=discord.ButtonStyle.secondary,
+            emoji="🔄",
+            row=0,
+        )
+        self.refresh_btn.callback = self.on_refresh
+        self.add_item(self.refresh_btn)
+
+    async def on_start(self, interaction: discord.Interaction):
+        """Start the status monitor."""
+        try:
+            bot = interaction.client
+            if hasattr(bot, "status_monitor"):
+                bot.status_monitor.start_monitoring()
+                embed = discord.Embed(
+                    title="📊 Monitor Started",
+                    description="✅ Status monitor started! Checking every 15 seconds.",
+                    color=discord.Color.green(),
+                )
+                await interaction.response.send_message(embed=embed, ephemeral=True)
+            else:
+                embed = discord.Embed(
+                    title="📊 Monitor Error",
+                    description="⚠️ Status monitor not initialized yet.",
+                    color=discord.Color.red(),
+                )
+                await interaction.response.send_message(embed=embed, ephemeral=True)
+        except Exception as e:
+            logger.error(f"Error starting monitor: {e}", exc_info=True)
+            await interaction.response.send_message(f"❌ Error: {e}", ephemeral=True)
+
+    async def on_stop(self, interaction: discord.Interaction):
+        """Stop the status monitor."""
+        try:
+            bot = interaction.client
+            if hasattr(bot, "status_monitor"):
+                bot.status_monitor.stop_monitoring()
+                embed = discord.Embed(
+                    title="📊 Monitor Stopped",
+                    description="🛑 Status monitor stopped.",
+                    color=discord.Color.orange(),
+                )
+                await interaction.response.send_message(embed=embed, ephemeral=True)
+            else:
+                embed = discord.Embed(
+                    title="📊 Monitor Error",
+                    description="⚠️ Status monitor not initialized.",
+                    color=discord.Color.red(),
+                )
+                await interaction.response.send_message(embed=embed, ephemeral=True)
+        except Exception as e:
+            logger.error(f"Error stopping monitor: {e}", exc_info=True)
+            await interaction.response.send_message(f"❌ Error: {e}", ephemeral=True)
+
+    async def on_refresh(self, interaction: discord.Interaction):
+        """Refresh monitor status display."""
+        try:
+            bot = interaction.client
+
+            if not hasattr(bot, 'status_monitor'):
+                embed = discord.Embed(
+                    title="📊 Monitor Error",
+                    description="❌ Status monitor not initialized.",
+                    color=discord.Color.red(),
+                )
+                await interaction.response.send_message(embed=embed, ephemeral=True)
+                return
+
+            status_monitor = bot.status_monitor
+            is_running = False
+            interval = 15
+
+            if hasattr(status_monitor, 'monitor_status_changes'):
+                is_running = status_monitor.monitor_status_changes.is_running()
+                if hasattr(status_monitor, 'check_interval'):
+                    interval = status_monitor.check_interval
+
+            status_text = "🟢 RUNNING" if is_running else "🔴 STOPPED"
+            status_color = discord.Color.green() if is_running else discord.Color.red()
+
+            embed = discord.Embed(
+                title="📊 Status Change Monitor",
+                description=f"**Status:** {status_text}\n**Check Interval:** {interval} seconds\n\nUse buttons below to start/stop the monitor.",
+                color=status_color,
+            )
+
+            await interaction.response.edit_message(embed=embed, view=self)
+        except Exception as e:
+            logger.error(
+                f"Error refreshing monitor status: {e}", exc_info=True)
+            await interaction.response.send_message(f"❌ Error: {e}", ephemeral=True)
+
+
 class MainControlPanelView(discord.ui.View):
     """Main interactive control panel - GUI-driven interface."""
 
@@ -312,11 +434,12 @@ class MainControlPanelView(discord.ui.View):
         try:
             # Import the controller view to open interactive menu directly
             from ..controllers.swarm_tasks_controller_view import SwarmTasksControllerView
-            
+
             # Create the interactive controller view
-            view = SwarmTasksControllerView(messaging_service=self.messaging_service)
+            view = SwarmTasksControllerView(
+                messaging_service=self.messaging_service)
             embed = view.create_initial_embed()
-            
+
             # Send the interactive dashboard directly (not ephemeral so it's interactive)
             await interaction.response.send_message(embed=embed, view=view)
         except Exception as e:
@@ -330,7 +453,8 @@ class MainControlPanelView(discord.ui.View):
                 )
                 await interaction.response.send_message(embed=embed, ephemeral=True)
             except Exception as fallback_error:
-                logger.error(f"Fallback also failed: {fallback_error}", exc_info=True)
+                logger.error(
+                    f"Fallback also failed: {fallback_error}", exc_info=True)
                 await self._handle_error(interaction, e, "loading swarm tasks")
 
     async def show_github_book(self, interaction: discord.Interaction):
@@ -413,7 +537,7 @@ class MainControlPanelView(discord.ui.View):
     async def show_restart_confirm(self, interaction: discord.Interaction):
         """Show restart confirmation."""
         try:
-            from ..unified_discord_bot import ConfirmRestartView
+            from .confirm_restart_view import ConfirmRestartView
 
             embed = discord.Embed(
                 title="🔄 Restart Requested",
@@ -447,7 +571,7 @@ class MainControlPanelView(discord.ui.View):
     async def show_shutdown_confirm(self, interaction: discord.Interaction):
         """Show shutdown confirmation."""
         try:
-            from ..unified_discord_bot import ConfirmShutdownView
+            from .confirm_shutdown_view import ConfirmShutdownView
 
             embed = discord.Embed(
                 title="🛑 Shutdown Requested",
@@ -479,7 +603,7 @@ class MainControlPanelView(discord.ui.View):
         """Show agent selector for unstall."""
         try:
             from .unstall_agent_view import UnstallAgentView
-            
+
             view = UnstallAgentView(self.messaging_service)
             embed = discord.Embed(
                 title="🚨 Unstall Agent",
@@ -496,7 +620,7 @@ class MainControlPanelView(discord.ui.View):
         """Show agent selector for bumping."""
         try:
             from .bump_agent_view import BumpAgentView
-            
+
             view = BumpAgentView()
             embed = view._create_embed()
 
@@ -513,7 +637,8 @@ class MainControlPanelView(discord.ui.View):
             modal = SoftOnboardModal(self.messaging_service)
             await interaction.response.send_modal(modal)
         except Exception as e:
-            logger.error(f"Error showing soft onboard modal: {e}", exc_info=True)
+            logger.error(
+                f"Error showing soft onboard modal: {e}", exc_info=True)
             await self._handle_error(interaction, e, "opening soft onboard modal")
 
     async def show_hard_onboard_modal(self, interaction: discord.Interaction):
@@ -524,7 +649,8 @@ class MainControlPanelView(discord.ui.View):
             modal = HardOnboardModal(self.messaging_service)
             await interaction.response.send_modal(modal)
         except Exception as e:
-            logger.error(f"Error showing hard onboard modal: {e}", exc_info=True)
+            logger.error(
+                f"Error showing hard onboard modal: {e}", exc_info=True)
             await self._handle_error(interaction, e, "opening hard onboard modal")
 
     async def show_templates(self, interaction: discord.Interaction):
@@ -563,11 +689,11 @@ class MainControlPanelView(discord.ui.View):
             await interaction.response.send_message(embed=embed, ephemeral=True)
 
     async def show_monitor_control(self, interaction: discord.Interaction):
-        """Show status monitor control."""
+        """Show status monitor control with start/stop buttons."""
         try:
             # Get bot instance to access status monitor
             bot = interaction.client
-            
+
             if not hasattr(bot, 'status_monitor'):
                 embed = discord.Embed(
                     title="📊 Status Monitor",
@@ -576,32 +702,30 @@ class MainControlPanelView(discord.ui.View):
                 )
                 await interaction.response.send_message(embed=embed, ephemeral=True)
                 return
-            
+
+            # Create a simple view with start/stop buttons
+            view = MonitorControlView()
+
+            # Get monitor status
             status_monitor = bot.status_monitor
             is_running = False
             interval = 15
-            
+
             if hasattr(status_monitor, 'monitor_status_changes'):
                 is_running = status_monitor.monitor_status_changes.is_running()
                 if hasattr(status_monitor, 'check_interval'):
                     interval = status_monitor.check_interval
-            
+
             status_text = "🟢 RUNNING" if is_running else "🔴 STOPPED"
             status_color = discord.Color.green() if is_running else discord.Color.red()
-            
+
             embed = discord.Embed(
                 title="📊 Status Change Monitor",
-                description=f"**Status:** {status_text}\n**Check Interval:** {interval} seconds",
+                description=f"**Status:** {status_text}\n**Check Interval:** {interval} seconds\n\nUse buttons below to start/stop the monitor.",
                 color=status_color,
             )
-            
-            embed.add_field(
-                name="Control",
-                value="Use command: `!monitor [start|stop|status]`",
-                inline=False,
-            )
-            
-            await interaction.response.send_message(embed=embed, ephemeral=True)
+
+            await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
         except Exception as e:
             logger.error(f"Error showing monitor control: {e}", exc_info=True)
             await self._handle_error(interaction, e, "loading monitor status")
@@ -646,7 +770,7 @@ class MainControlPanelView(discord.ui.View):
         """Show all available commands organized by category with button access."""
         try:
             bot = interaction.client
-            
+
             # Organize commands by category
             commands_by_category = {
                 "🎛️ Control Panel": [
@@ -689,7 +813,7 @@ class MainControlPanelView(discord.ui.View):
                     "!help - Interactive help menu (OR use 'Help' button)",
                 ],
             }
-            
+
             embed = discord.Embed(
                 title="📋 All Available Commands",
                 description=(
@@ -699,14 +823,14 @@ class MainControlPanelView(discord.ui.View):
                 ),
                 color=discord.Color.blue(),
             )
-            
+
             for category, commands in commands_by_category.items():
                 embed.add_field(
                     name=category,
                     value="\n".join(commands),
                     inline=False,
                 )
-            
+
             embed.add_field(
                 name="✅ Button Access",
                 value=(
@@ -730,11 +854,11 @@ class MainControlPanelView(discord.ui.View):
                 ),
                 inline=False,
             )
-            
+
             embed.set_footer(
                 text="🐝 WE. ARE. SWARM. ⚡ Use buttons instead of commands when possible!"
             )
-            
+
             await interaction.response.send_message(embed=embed, ephemeral=True)
         except Exception as e:
             logger.error(f"Error showing all commands: {e}", exc_info=True)
@@ -749,5 +873,5 @@ class MainControlPanelView(discord.ui.View):
             else:
                 await interaction.followup.send(error_msg, ephemeral=True)
         except Exception as followup_error:
-            logger.error(f"Error sending error message: {followup_error}", exc_info=True)
-
+            logger.error(
+                f"Error sending error message: {followup_error}", exc_info=True)

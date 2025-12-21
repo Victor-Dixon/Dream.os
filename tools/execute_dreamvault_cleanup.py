@@ -10,6 +10,7 @@ Executes cleanup of DreamVault repository:
 4. Commits changes
 """
 
+from src.core.utils.file_utils import ensure_directory_removed as ensure_dir_removed
 import os
 import sys
 import subprocess
@@ -26,6 +27,16 @@ project_root = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(project_root))
 
 try:
+    from src.core.config.timeout_constants import TimeoutConstants
+except ImportError:
+    class TimeoutConstants:
+        HTTP_DEFAULT = 30
+        HTTP_MEDIUM = 60
+        HTTP_LONG = 120
+        HTTP_EXTENDED = 300
+        HTTP_SHORT = 10
+
+try:
     from dotenv import load_dotenv
     env_path = Path('.env')
     if env_path.exists():
@@ -39,7 +50,7 @@ def get_github_token() -> Optional[str]:
     token = os.getenv("GITHUB_TOKEN") or os.getenv("GH_TOKEN")
     if token:
         return token
-    
+
     env_path = Path(".env")
     if env_path.exists():
         try:
@@ -57,7 +68,7 @@ def get_github_username() -> Optional[str]:
     username = os.getenv("GITHUB_USERNAME")
     if username:
         return username
-    
+
     env_path = Path(".env")
     if env_path.exists():
         try:
@@ -71,7 +82,6 @@ def get_github_username() -> Optional[str]:
 
 
 # Use SSOT utility for directory removal
-from src.core.utils.file_utils import ensure_directory_removed as ensure_dir_removed
 
 
 def clone_dreamvault(temp_base: Path, token: str, username: str) -> Optional[Path]:
@@ -79,7 +89,7 @@ def clone_dreamvault(temp_base: Path, token: str, username: str) -> Optional[Pat
     owner = "Dadudekc"
     repo = "DreamVault"
     repo_dir = temp_base / repo
-    
+
     try:
         repo_url = f"https://{username}:{token}@github.com/{owner}/{repo}.git"
         print(f"📥 Cloning {repo}...")
@@ -100,7 +110,7 @@ def clone_dreamvault(temp_base: Path, token: str, username: str) -> Optional[Pat
 def remove_virtual_env_files(repo_dir: Path) -> int:
     """Remove virtual environment files and directories."""
     removed_count = 0
-    
+
     # Patterns to remove
     patterns = [
         "**/lib/python*/site-packages/**",
@@ -110,9 +120,9 @@ def remove_virtual_env_files(repo_dir: Path) -> int:
         "**/.venv/**",
         "**/virtualenv/**",
     ]
-    
+
     print("🧹 Removing virtual environment files...")
-    
+
     # Remove directories first
     for pattern in patterns:
         matches = list(repo_dir.glob(pattern))
@@ -125,7 +135,7 @@ def remove_virtual_env_files(repo_dir: Path) -> int:
                         print(f"   Removed {removed_count} items...")
                 except Exception as e:
                     print(f"⚠️ Could not remove {match}: {e}")
-    
+
     # Remove __pycache__ directories
     for pycache in repo_dir.rglob("__pycache__"):
         if pycache.is_dir() and ".git" not in pycache.parts:
@@ -134,7 +144,7 @@ def remove_virtual_env_files(repo_dir: Path) -> int:
                 removed_count += 1
             except Exception:
                 pass
-    
+
     # Remove .pyc, .pyo, .pyd files
     for ext in ["*.pyc", "*.pyo", "*.pyd"]:
         for file_path in repo_dir.rglob(ext):
@@ -144,7 +154,7 @@ def remove_virtual_env_files(repo_dir: Path) -> int:
                     removed_count += 1
                 except Exception:
                     pass
-    
+
     print(f"✅ Removed {removed_count} virtual environment items")
     return removed_count
 
@@ -152,14 +162,14 @@ def remove_virtual_env_files(repo_dir: Path) -> int:
 def identify_code_duplicates(repo_dir: Path, exclude_patterns: List[str]) -> Dict[str, List[Path]]:
     """Identify code duplicates."""
     duplicates = defaultdict(list)
-    
+
     for file_path in repo_dir.rglob("*.py"):
         if any(pattern in str(file_path) for pattern in exclude_patterns):
             continue
         if ".git" in file_path.parts or "__pycache__" in file_path.parts:
             continue
         duplicates[file_path.name].append(file_path)
-    
+
     return {name: paths for name, paths in duplicates.items() if len(paths) > 1}
 
 
@@ -176,18 +186,19 @@ def determine_ssot_version(file_paths: List[Path], repo_dir: Path) -> Optional[P
 
 def resolve_code_duplicates(repo_dir: Path) -> int:
     """Resolve code duplicates by removing non-SSOT versions."""
-    exclude_patterns = ["lib/python", "site-packages", "venv", "env", "__pycache__"]
+    exclude_patterns = ["lib/python",
+                        "site-packages", "venv", "env", "__pycache__"]
     code_duplicates = identify_code_duplicates(repo_dir, exclude_patterns)
-    
+
     removed_count = 0
-    
+
     print(f"🔧 Resolving {len(code_duplicates)} code duplicate groups...")
-    
+
     for name, paths in code_duplicates.items():
         ssot = determine_ssot_version(paths, repo_dir)
         if not ssot:
             continue
-        
+
         for path in paths:
             if path != ssot and path.exists():
                 try:
@@ -197,7 +208,7 @@ def resolve_code_duplicates(repo_dir: Path) -> int:
                         print(f"   Removed {removed_count} duplicate files...")
                 except Exception as e:
                     print(f"⚠️ Could not remove {path}: {e}")
-    
+
     print(f"✅ Removed {removed_count} duplicate files")
     return removed_count
 
@@ -205,7 +216,7 @@ def resolve_code_duplicates(repo_dir: Path) -> int:
 def update_gitignore(repo_dir: Path) -> bool:
     """Update .gitignore with virtual environment patterns."""
     gitignore_path = repo_dir / ".gitignore"
-    
+
     patterns_to_add = [
         "# Virtual environment files",
         "lib/python*/site-packages/",
@@ -219,22 +230,22 @@ def update_gitignore(repo_dir: Path) -> bool:
         "*.pyd",
         ".pytest_cache/",
     ]
-    
+
     existing_content = ""
     if gitignore_path.exists():
         existing_content = gitignore_path.read_text(encoding="utf-8")
-    
+
     # Check if patterns already exist
     if any(pattern in existing_content for pattern in patterns_to_add[1:]):
         print("✅ .gitignore already contains virtual environment patterns")
         return True
-    
+
     # Add patterns
     new_content = existing_content
     if not new_content.endswith("\n"):
         new_content += "\n"
     new_content += "\n" + "\n".join(patterns_to_add) + "\n"
-    
+
     gitignore_path.write_text(new_content, encoding="utf-8")
     print("✅ Updated .gitignore")
     return True
@@ -249,26 +260,27 @@ def commit_changes(repo_dir: Path, token: str, username: str) -> bool:
             cwd=repo_dir, check=True, timeout=TimeoutConstants.HTTP_DEFAULT
         )
         subprocess.run(
-            ["git", "config", "user.email", f"{username}@users.noreply.github.com"],
+            ["git", "config", "user.email",
+                f"{username}@users.noreply.github.com"],
             cwd=repo_dir, check=True, timeout=TimeoutConstants.HTTP_DEFAULT
         )
-        
+
         # Add all changes
         subprocess.run(
             ["git", "add", "-A"],
             cwd=repo_dir, check=True, timeout=TimeoutConstants.HTTP_MEDIUM
         )
-        
+
         # Check if there are changes
         status = subprocess.run(
             ["git", "status", "--porcelain"],
             cwd=repo_dir, capture_output=True, text=True, timeout=TimeoutConstants.HTTP_DEFAULT
         )
-        
+
         if not status.stdout.strip():
             print("ℹ️ No changes to commit")
             return True
-        
+
         # Commit
         commit_message = "Cleanup: Remove virtual environment files and resolve code duplicates"
         subprocess.run(
@@ -276,7 +288,7 @@ def commit_changes(repo_dir: Path, token: str, username: str) -> bool:
             cwd=repo_dir, check=True, timeout=TimeoutConstants.HTTP_MEDIUM
         )
         print("✅ Changes committed")
-        
+
         # Push
         repo_url = f"https://{username}:{token}@github.com/Dadudekc/DreamVault.git"
         subprocess.run(
@@ -284,9 +296,9 @@ def commit_changes(repo_dir: Path, token: str, username: str) -> bool:
             cwd=repo_dir, check=True, timeout=TimeoutConstants.HTTP_LONG
         )
         print("✅ Changes pushed to repository")
-        
+
         return True
-        
+
     except subprocess.CalledProcessError as e:
         print(f"❌ Git operation failed: {e.stderr}")
         return False
@@ -299,33 +311,34 @@ def main():
     """Main entry point."""
     token = get_github_token()
     username = get_github_username()
-    
+
     if not token or not username:
         print("❌ GITHUB_TOKEN or GITHUB_USERNAME not found.")
         return 1
-    
+
     timestamp = int(time.time() * 1000000)
-    temp_base = Path(tempfile.mkdtemp(prefix=f"dreamvault_cleanup_{timestamp}_"))
-    
+    temp_base = Path(tempfile.mkdtemp(
+        prefix=f"dreamvault_cleanup_{timestamp}_"))
+
     try:
         # Clone repository
         repo_dir = clone_dreamvault(temp_base, token, username)
         if not repo_dir:
             return 1
-        
+
         # Remove virtual environment files
         venv_removed = remove_virtual_env_files(repo_dir)
-        
+
         # Resolve code duplicates
         duplicates_removed = resolve_code_duplicates(repo_dir)
-        
+
         # Update .gitignore
         update_gitignore(repo_dir)
-        
+
         # Commit and push changes
         if venv_removed > 0 or duplicates_removed > 0:
             commit_changes(repo_dir, token, username)
-        
+
         print("\n" + "="*60)
         print("✅ DREAMVAULT CLEANUP COMPLETE")
         print("="*60)
@@ -333,13 +346,12 @@ def main():
         print(f"   Code duplicates removed: {duplicates_removed}")
         print(f"   .gitignore updated")
         print(f"   Changes committed and pushed")
-        
+
         return 0
-        
+
     except Exception as e:
         print(f"❌ Error during cleanup: {e}")
         import traceback
-from src.core.config.timeout_constants import TimeoutConstants
         traceback.print_exc()
         return 1
     finally:
@@ -348,4 +360,3 @@ from src.core.config.timeout_constants import TimeoutConstants
 
 if __name__ == "__main__":
     sys.exit(main())
-

@@ -1,0 +1,245 @@
+{
+  "generated_at": "2025-12-20T00:40:31.582741",
+  "total_tasks": 4,
+  "tasks": [
+    {
+      "task_id": "site_fix_tradingrobotplug_com_20251220_004031",
+      "task_type": "manual_wordpress_site_fixes",
+      "priority": "HIGH",
+      "title": "Fix 13 broken links on tradingrobotplug.com",
+      "description": "Resolve 13 broken links and missing pages on tradingrobotplug.com",
+      "site_name": "tradingrobotplug.com",
+      "assigned_agent": "Agent-3",
+      "broken_links_count": 13,
+      "missing_pages_count": 8,
+      "broken_menu_links_count": 4,
+      "issues_detected": {
+        "missing_pages": [
+          {
+            "slug": "products",
+            "title": "Products",
+            "url": "https://tradingrobotplug.com/products"
+          },
+          {
+            "slug": "features",
+            "title": "Features",
+            "url": "https://tradingrobotplug.com/features"
+          },
+          {
+            "slug": "pricing",
+            "title": "Pricing",
+            "url": "https://tradingrobotplug.com/pricing"
+          },
+          {
+            "slug": "ai-swarm",
+            "title": "\ud83d\udc1d AI Swarm",
+            "url": "https://tradingrobotplug.com/ai-swarm"
+          },
+          {
+            "slug": "products",
+            "title": "Products",
+            "url": "https://tradingrobotplug.com/products"
+          },
+          {
+            "slug": "features",
+            "title": "Features",
+            "url": "https://tradingrobotplug.com/features"
+          },
+          {
+            "slug": "pricing",
+            "title": "Pricing",
+            "url": "https://tradingrobotplug.com/pricing"
+          },
+          {
+            "slug": "ai-swarm",
+            "title": "AI Swarm",
+            "url": "https://tradingrobotplug.com/ai-swarm"
+          }
+        ],
+        "broken_menu_links": [
+          {
+            "text": "Blog",
+            "url": "https://tradingrobotplug.com/blog",
+            "source": "nav"
+          },
+          {
+            "text": "Contact",
+            "url": "https://tradingrobotplug.com/contact",
+            "source": "nav"
+          },
+          {
+            "text": "Blog",
+            "url": "https://tradingrobotplug.com/blog",
+            "source": "footer"
+          },
+          {
+            "text": "Contact",
+            "url": "https://tradingrobotplug.com/contact",
+            "source": "footer"
+          }
+        ],
+        "other_issues": []
+      },
+      "steps": [
+        "1. Log into WordPress admin: https://tradingrobotplug.com/wp-admin/",
+        "2. Create missing pages (Pages \u2192 Add New):",
+        "   - Create 'Products' page (slug: products)",
+        "     Add placeholder content and publish",
+        "   - Create 'Features' page (slug: features)",
+        "     Add placeholder content and publish",
+        "   - Create 'Pricing' page (slug: pricing)",
+        "     Add placeholder content and publish",
+        "   - Create '\ud83d\udc1d AI Swarm' page (slug: ai-swarm)",
+        "     Add placeholder content and publish",
+        "   - Create 'Products' page (slug: products)",
+        "     Add placeholder content and publish",
+        "   - Create 'Features' page (slug: features)",
+        "     Add placeholder content and publish",
+        "   - Create 'Pricing' page (slug: pricing)",
+        "     Add placeholder content and publish",
+        "   - Create 'AI Swarm' page (slug: ai-swarm)",
+        "     Add placeholder content and publish",
+        "3. Fix broken menu links (Appearance \u2192 Menus):",
+        "   - Fix 'Blog' link in nav menu",
+        "   - Fix 'Contact' link in nav menu",
+        "   - Fix 'Blog' link in footer menu",
+        "   - Fix 'Contact' link in footer menu",
+        "4. Update navigation menus to include new pages",
+        "5. Test all navigation links after fixes",
+        "6. Run verification: python tools/comprehensive_website_audit.py --site tradingrobotplug.com --check-links",
+        "7. Update task status and report completion"
+      ],
+      "estimated_time": "65 minutes",
+      "blocking": false,
+      "created_at": "2025-12-20T00:40:31.578739",
+      "verification_command": "python tools/comprehensive_website_audit.py --site tradingrobotplug.com --check-links"
+    },
+    {
+      "task_id": "site_fix_freerideinvestor_20251220_004031",
+      "task_type": "manual_wordpress_site_fixes",
+      "priority": "HIGH",
+      "title": "Fix 6 broken links on freerideinvestor",
+      "description": "Resolve 6 broken links and missing pages on freerideinvestor",
+      "site_name": "freerideinvestor",
+      "assigned_agent": "Agent-7",
+      "broken_links_count": 6,
+      "missing_pages_count": 0,
+      "broken_menu_links_count": 4,
+      "issues_detected": {
+        "missing_pages": [],
+        "broken_menu_links": [
+          {
+            "text": "About",
+            "url": "https://freerideinvestor.com/about",
+            "source": "nav"
+          },
+          {
+            "text": "Blog",
+            "url": "https://freerideinvestor.com/blog",
+            "source": "footer"
+          },
+          {
+            "text": "About",
+            "url": "https://freerideinvestor.com/about",
+            "source": "footer"
+          },
+          {
+            "text": "Contact",
+            "url": "https://freerideinvestor.com/contact",
+            "source": "footer"
+          }
+        ],
+        "other_issues": []
+      },
+      "steps": [
+        "1. Log into WordPress admin: https://freerideinvestor/wp-admin/",
+        "3. Fix broken menu links (Appearance \u2192 Menus):",
+        "   - Fix 'About' link in nav menu",
+        "   - Fix 'Blog' link in footer menu",
+        "   - Fix 'About' link in footer menu",
+        "   - Fix 'Contact' link in footer menu",
+        "4. Update navigation menus to include new pages",
+        "5. Test all navigation links after fixes",
+        "6. Run verification: python tools/comprehensive_website_audit.py --site freerideinvestor --check-links",
+        "7. Update task status and report completion"
+      ],
+      "estimated_time": "30 minutes",
+      "blocking": false,
+      "created_at": "2025-12-20T00:40:31.579741",
+      "verification_command": "python tools/comprehensive_website_audit.py --site freerideinvestor --check-links"
+    },
+    {
+      "task_id": "site_fix_weareswarm_online_20251220_004031",
+      "task_type": "manual_wordpress_site_fixes",
+      "priority": "LOW",
+      "title": "Fix 1 broken links on weareswarm.online",
+      "description": "Resolve 1 broken links and missing pages on weareswarm.online",
+      "site_name": "weareswarm.online",
+      "assigned_agent": "Agent-5",
+      "broken_links_count": 1,
+      "missing_pages_count": 0,
+      "broken_menu_links_count": 1,
+      "issues_detected": {
+        "missing_pages": [],
+        "broken_menu_links": [
+          {
+            "text": "GitHub",
+            "url": "https://github.com/Agent_Cellphone_V2_Repository",
+            "source": "footer",
+            "type": "github_fix"
+          }
+        ],
+        "other_issues": []
+      },
+      "steps": [
+        "1. Log into WordPress admin: https://weareswarm.online/wp-admin/",
+        "3. Fix broken menu links (Appearance \u2192 Menus):",
+        "   - Remove broken GitHub link from footer menu",
+        "4. Update navigation menus to include new pages",
+        "5. Test all navigation links after fixes",
+        "6. Run verification: python tools/comprehensive_website_audit.py --site weareswarm.online --check-links",
+        "7. Update task status and report completion"
+      ],
+      "estimated_time": "15 minutes",
+      "blocking": false,
+      "created_at": "2025-12-20T00:40:31.579741",
+      "verification_command": "python tools/comprehensive_website_audit.py --site weareswarm.online --check-links"
+    },
+    {
+      "task_id": "site_fix_crosbyultimateevents_com_20251220_004031",
+      "task_type": "manual_wordpress_site_fixes",
+      "priority": "LOW",
+      "title": "Fix 1 broken links on crosbyultimateevents.com",
+      "description": "Resolve 1 broken links and missing pages on crosbyultimateevents.com",
+      "site_name": "crosbyultimateevents.com",
+      "assigned_agent": "Agent-7",
+      "broken_links_count": 1,
+      "missing_pages_count": 0,
+      "broken_menu_links_count": 1,
+      "issues_detected": {
+        "missing_pages": [],
+        "broken_menu_links": [
+          {
+            "text": "Blog",
+            "url": "https://crosbyultimateevents.com/blog",
+            "source": "nav"
+          }
+        ],
+        "other_issues": []
+      },
+      "steps": [
+        "1. Log into WordPress admin: https://crosbyultimateevents.com/wp-admin/",
+        "3. Fix broken menu links (Appearance \u2192 Menus):",
+        "   - Fix 'Blog' link in nav menu",
+        "4. Update navigation menus to include new pages",
+        "5. Test all navigation links after fixes",
+        "6. Run verification: python tools/comprehensive_website_audit.py --site crosbyultimateevents.com --check-links",
+        "7. Update task status and report completion"
+      ],
+      "estimated_time": "15 minutes",
+      "blocking": false,
+      "created_at": "2025-12-20T00:40:31.579741",
+      "verification_command": "python tools/comprehensive_website_audit.py --site crosbyultimateevents.com --check-links"
+    }
+  ]
+}

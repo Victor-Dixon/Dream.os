@@ -11,7 +11,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from tools_v2 import get_toolbelt_core
+from tools_v2.toolbelt_core import get_toolbelt_core
 
 
 def demo_swarm_pulse():

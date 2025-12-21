@@ -16,6 +16,8 @@ from .help_view import HelpGUIView
 from .main_control_panel_view import MainControlPanelView
 from .unstall_agent_view import UnstallAgentView
 from .bump_agent_view import BumpAgentView
+from .confirm_shutdown_view import ConfirmShutdownView
+from .confirm_restart_view import ConfirmRestartView
 
 __all__ = [
     "AgentMessagingGUIView",
@@ -24,6 +26,8 @@ __all__ = [
     "MainControlPanelView",
     "UnstallAgentView",
     "BumpAgentView",
+    "ConfirmShutdownView",
+    "ConfirmRestartView",
 ]
 
 

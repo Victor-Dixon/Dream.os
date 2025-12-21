@@ -98,7 +98,31 @@ def create_inbox_message(
         with _inbox_write_lock:
             filepath.write_text(message_content, encoding="utf-8")
         
-        logger.info(f"✅ Inbox message created: {filepath} (recipient: {recipient})")
+        # VERIFICATION: Verify file was actually written
+        if not filepath.exists():
+            logger.error(
+                f"❌ Inbox file write failed - file does not exist after write: {filepath}"
+            )
+            return False
+        
+        # Verify file has content
+        try:
+            file_size = filepath.stat().st_size
+            if file_size == 0:
+                logger.error(
+                    f"❌ Inbox file write failed - file is empty: {filepath}"
+                )
+                return False
+        except Exception as e:
+            logger.error(
+                f"❌ Inbox file verification failed - cannot read file stats: {filepath}, error: {e}"
+            )
+            return False
+        
+        logger.info(
+            f"✅ Inbox message created and verified: {filepath} "
+            f"(recipient: {recipient}, size: {file_size} bytes)"
+        )
         return True
         
     except Exception as e:

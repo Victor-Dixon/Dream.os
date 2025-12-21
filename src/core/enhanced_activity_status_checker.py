@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """
 Enhanced Activity-Aware Status Checker
+
+<!-- SSOT Domain: infrastructure -->
+
 ======================================
 
 Provides unified interface for checking agent status with multi-source activity

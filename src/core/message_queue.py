@@ -281,13 +281,49 @@ class MessageQueue(IMessageQueue):
         return self.persistence.atomic_operation(_dequeue_operation)
 
     def _get_pending_entries(self, entries: List[IQueueEntry]) -> List[tuple]:
-        """Get pending entries with priority scores for heap."""
+        """Get pending entries with priority scores for heap.
+        
+        Respects retry delays - entries with next_retry_delay won't be
+        processed until delay has passed.
+        """
         import heapq
-        return [
-            (-getattr(e, 'priority_score', 0), i, e)
-            for i, e in enumerate(entries)
-            if getattr(e, 'status', '') == 'PENDING'
-        ]
+        now = datetime.now()
+        
+        pending = []
+        
+        for i, e in enumerate(entries):
+            if getattr(e, 'status', '') != 'PENDING':
+                continue
+            
+            # Check if retry delay has passed
+            metadata = getattr(e, 'metadata', {})
+            next_retry_delay = metadata.get('next_retry_delay')
+            last_retry_time = metadata.get('last_retry_time')
+            
+            if next_retry_delay and last_retry_time:
+                try:
+                    # Parse last_retry_time (handle both ISO format and datetime)
+                    if isinstance(last_retry_time, str):
+                        last_retry = datetime.fromisoformat(last_retry_time.replace('Z', '+00:00'))
+                    else:
+                        last_retry = last_retry_time
+                    
+                    # Handle timezone-aware vs naive
+                    if hasattr(last_retry, 'tzinfo') and last_retry.tzinfo is not None:
+                        # Timezone-aware - convert to naive for comparison
+                        last_retry = last_retry.replace(tzinfo=None)
+                    
+                    elapsed = (now - last_retry).total_seconds()
+                    if elapsed < next_retry_delay:
+                        # Delay hasn't passed yet, skip this entry
+                        continue
+                except Exception:
+                    # If parsing fails, allow entry (don't block on retry logic errors)
+                    pass
+            
+            pending.append((-getattr(e, 'priority_score', 0), i, e))
+        
+        return pending
 
     def _select_top_priority_entries(
         self, pending_entries: List[tuple], batch_size: int
@@ -345,6 +381,101 @@ class MessageQueue(IMessageQueue):
             return False
 
         return self.persistence.atomic_operation(_mark_failed_operation)
+    
+    def _reset_entry_for_retry(self, queue_id: str, attempts: int, delay: float) -> bool:
+        """Reset entry to PENDING status for retry with backoff delay.
+        
+        Args:
+            queue_id: Queue entry ID
+            attempts: Current attempt count
+            delay: Delay in seconds before next retry
+            
+        Returns:
+            True if reset successful, False otherwise
+        """
+        from datetime import datetime, timedelta
+        
+        def _reset_operation():
+            entries = self.persistence.load_entries()
+            entry = self._find_entry_by_id(entries, queue_id)
+            
+            if entry:
+                entry.status = "PENDING"
+                entry.updated_at = datetime.now()
+                
+                # Store retry metadata
+                if not hasattr(entry, 'metadata'):
+                    entry.metadata = {}
+                entry.metadata['delivery_attempts'] = attempts
+                entry.metadata['last_retry_time'] = datetime.now().isoformat()
+                entry.metadata['next_retry_delay'] = delay
+                
+                # Update priority score to schedule retry after delay
+                # Higher priority for urgent retries, but still respect delay
+                entry.priority_score = getattr(entry, 'priority_score', 0.5)
+                
+                self.persistence.save_entries(entries)
+                self._log_info(
+                    f"Entry {queue_id} reset to PENDING for retry "
+                    f"(attempt {attempts}, delay {delay}s)")
+                return True
+            
+            self._log_warning(f"Queue entry not found for retry: {queue_id}")
+            return False
+        
+        return self.persistence.atomic_operation(_reset_operation)
+    
+    def resend_failed_messages(self, max_messages: Optional[int] = None) -> int:
+        """Resend failed messages that haven't exceeded max retries.
+        
+        Args:
+            max_messages: Maximum number of messages to resend (None = all)
+            
+        Returns:
+            Number of messages reset for retry
+        """
+        from datetime import datetime, timedelta
+        
+        def _resend_operation():
+            entries = self.persistence.load_entries()
+            failed_entries = [
+                e for e in entries 
+                if getattr(e, 'status', '') == 'FAILED'
+            ]
+            
+            if not failed_entries:
+                return 0
+            
+            # Filter entries that can be retried (haven't exceeded max retries)
+            max_retries = 3
+            resettable = []
+            
+            for entry in failed_entries:
+                attempts = getattr(entry, 'delivery_attempts', 0)
+                if attempts < max_retries:
+                    resettable.append(entry)
+            
+            if max_messages:
+                resettable = resettable[:max_messages]
+            
+            # Reset entries to PENDING
+            for entry in resettable:
+                entry.status = "PENDING"
+                entry.updated_at = datetime.now()
+                attempts = getattr(entry, 'delivery_attempts', 0)
+                
+                if not hasattr(entry, 'metadata'):
+                    entry.metadata = {}
+                entry.metadata['delivery_attempts'] = attempts
+                entry.metadata['resend_time'] = datetime.now().isoformat()
+            
+            if resettable:
+                self.persistence.save_entries(entries)
+                self._log_info(f"Reset {len(resettable)} failed messages for retry")
+            
+            return len(resettable)
+        
+        return self.persistence.atomic_operation(_resend_operation)
 
     def get_statistics(self) -> Dict[str, Any]:
         """Get comprehensive queue statistics."""

@@ -32,10 +32,10 @@ from typing import Any
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
-from functionality_comparison import FunctionalityComparison
-from functionality_reports import FunctionalityReports
-from functionality_signature import SignatureGenerator
-from functionality_tests import FunctionalityTests
+from tools.functionality_comparison import FunctionalityComparison
+from tools.functionality_reports import FunctionalityReports
+from tools.functionality_signature import SignatureGenerator
+from tools.functionality_tests import FunctionalityTests
 
 
 class FunctionalityVerifier:

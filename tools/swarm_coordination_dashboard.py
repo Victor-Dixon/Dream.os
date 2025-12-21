@@ -1,317 +1,307 @@
 #!/usr/bin/env python3
 """
-🐝 Swarm Coordination Dashboard
-A tool I wished I had - monitors parallel task execution across multiple agents
+Swarm Coordination Dashboard - Tool I Wished I Had
+==================================================
 
-This tool provides real-time visibility into swarm coordination efforts by:
-- Tracking delegated tasks across multiple agents
-- Monitoring completion status via inbox messages
-- Providing coordination status reports
-- Alerting on blockers and dependencies
+A comprehensive dashboard tool for Agent-4 (Captain) to monitor swarm coordination,
+active work streams, task progress, and coordination metrics in real-time.
+
+Features:
+- Real-time swarm status overview
+- Active work stream monitoring
+- Coordination message tracking
+- Task progress visualization
+- Blocker identification
+- Force multiplier metrics
+- Bilateral coordination status
 
 Usage:
-    python tools/swarm_coordination_dashboard.py --init-session "WordPress Deployment"
-    python tools/swarm_coordination_dashboard.py --status
-    python tools/swarm_coordination_dashboard.py --agent Agent-3 --update "SFTP validation complete"
-    python tools/swarm_coordination_dashboard.py --report
+    python tools/swarm_coordination_dashboard.py
+    python tools/swarm_coordination_dashboard.py --agent Agent-1
+    python tools/swarm_coordination_dashboard.py --refresh 30
+
+Author: Agent-4 (Captain - Strategic Oversight)
+V2 Compliant: <400 lines
 """
 
-import json
 import os
-from datetime import datetime
-from pathlib import Path
-from typing import Dict, List, Optional
-
-# Standalone file operations for tool compatibility
 import sys
+import json
+import argparse
 from pathlib import Path
+from datetime import datetime, timedelta
+from typing import Dict, List, Optional, Tuple
+from collections import defaultdict
+
+# Add project root to path
+project_root = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(project_root))
+
 
 class SwarmCoordinationDashboard:
-    """Dashboard for tracking swarm coordination across multiple agents"""
-
+    """Comprehensive swarm coordination dashboard for Captain."""
+    
     def __init__(self):
-        self.dashboard_file = Path("agent_workspaces/Agent-8/swarm_coordination_dashboard.json")
-        self._ensure_dashboard_exists()
-
-    def _ensure_dashboard_exists(self):
-        """Ensure dashboard file exists with proper structure"""
-        if not self.dashboard_file.exists():
-            initial_structure = {
-                "active_sessions": {},
-                "completed_sessions": {},
-                "metadata": {
-                    "created": datetime.now().isoformat(),
-                    "version": "1.0.0"
-                }
-            }
-            self._save_dashboard(initial_structure)
-
-    def init_session(self, session_name: str, description: str = "") -> Dict:
-        """Initialize a new coordination session"""
-        dashboard = self._load_dashboard()
-
-        if session_name in dashboard["active_sessions"]:
-            raise ValueError(f"Session '{session_name}' already exists")
-
-        session = {
-            "name": session_name,
-            "description": description,
-            "created": datetime.now().isoformat(),
-            "agents": {},
-            "status": "active",
-            "summary": {
-                "total_tasks": 0,
-                "completed_tasks": 0,
-                "blocked_tasks": 0,
-                "progress_percentage": 0
-            }
-        }
-
-        dashboard["active_sessions"][session_name] = session
-        self._save_dashboard(dashboard)
-
-        return session
-
-    def add_agent_task(self, session_name: str, agent_id: str, task: str, priority: str = "normal") -> bool:
-        """Add a task assignment for a specific agent"""
-        dashboard = self._load_dashboard()
-
-        if session_name not in dashboard["active_sessions"]:
-            raise ValueError(f"Session '{session_name}' not found")
-
-        session = dashboard["active_sessions"][session_name]
-
-        if agent_id not in session["agents"]:
-            session["agents"][agent_id] = {
-                "tasks": [],
-                "status": "active"
-            }
-
-        agent_task = {
-            "task": task,
-            "priority": priority,
-            "assigned": datetime.now().isoformat(),
-            "status": "assigned",
-            "updates": []
-        }
-
-        session["agents"][agent_id]["tasks"].append(agent_task)
-        session["summary"]["total_tasks"] += 1
-
-        self._update_progress(session)
-        self._save_dashboard(dashboard)
-
-        return True
-
-    def update_task_status(self, session_name: str, agent_id: str, task_index: int, status: str, note: str = "") -> bool:
-        """Update the status of a specific task"""
-        dashboard = self._load_dashboard()
-
-        if session_name not in dashboard["active_sessions"]:
-            raise ValueError(f"Session '{session_name}' not found")
-
-        session = dashboard["active_sessions"][session_name]
-
-        if agent_id not in session["agents"]:
-            raise ValueError(f"Agent '{agent_id}' not found in session")
-
-        tasks = session["agents"][agent_id]["tasks"]
-        if task_index >= len(tasks):
-            raise ValueError(f"Task index {task_index} out of range")
-
-        task = tasks[task_index]
-
-        # Record status change
-        update = {
-            "timestamp": datetime.now().isoformat(),
-            "old_status": task["status"],
-            "new_status": status,
-            "note": note
-        }
-        task["updates"].append(update)
-        task["status"] = status
-
-        # Update summary counters
-        if status == "completed":
-            session["summary"]["completed_tasks"] += 1
-        elif status == "blocked":
-            session["summary"]["blocked_tasks"] += 1
-
-        self._update_progress(session)
-        self._save_dashboard(dashboard)
-
-        return True
-
-    def get_session_status(self, session_name: str) -> Optional[Dict]:
-        """Get detailed status of a coordination session"""
-        dashboard = self._load_dashboard()
-
-        if session_name not in dashboard["active_sessions"]:
+        self.agent_workspaces = project_root / "agent_workspaces"
+        self.master_task_log = project_root / "MASTER_TASK_LOG.md"
+        self.swarm_brain = project_root / "swarm_brain"
+        
+    def load_agent_status(self, agent_id: str) -> Optional[Dict]:
+        """Load agent status.json."""
+        status_file = self.agent_workspaces / agent_id / "status.json"
+        if not status_file.exists():
             return None
-
-        return dashboard["active_sessions"][session_name]
-
-    def get_all_active_sessions(self) -> Dict:
-        """Get overview of all active coordination sessions"""
-        dashboard = self._load_dashboard()
-        return dashboard["active_sessions"]
-
-    def complete_session(self, session_name: str) -> bool:
-        """Mark a session as completed and archive it"""
-        dashboard = self._load_dashboard()
-
-        if session_name not in dashboard["active_sessions"]:
-            raise ValueError(f"Session '{session_name}' not found")
-
-        session = dashboard["active_sessions"][session_name]
-        session["completed"] = datetime.now().isoformat()
-        session["status"] = "completed"
-
-        # Move to completed sessions
-        dashboard["completed_sessions"][session_name] = session
-        del dashboard["active_sessions"][session_name]
-
-        self._save_dashboard(dashboard)
-        return True
-
-    def generate_report(self, session_name: Optional[str] = None) -> str:
-        """Generate a formatted status report"""
-        if session_name:
-            session = self.get_session_status(session_name)
-            if not session:
-                return f"Session '{session_name}' not found"
-
-            return self._format_session_report(session_name, session)
-        else:
-            sessions = self.get_all_active_sessions()
-            if not sessions:
-                return "No active coordination sessions"
-
-            report = "# 🐝 Swarm Coordination Dashboard Report\n\n"
-            report += f"**Active Sessions:** {len(sessions)}\n\n"
-
-            for name, session in sessions.items():
-                report += self._format_session_report(name, session)
-                report += "\n---\n\n"
-
-            return report
-
-    def _format_session_report(self, name: str, session: Dict) -> str:
-        """Format a single session report"""
-        report = f"## Session: {name}\n"
-        report += f"**Description:** {session.get('description', 'N/A')}\n"
-        report += f"**Created:** {session['created'][:19]}\n"
-        report += f"**Progress:** {session['summary']['progress_percentage']}%\n"
-        report += f"**Tasks:** {session['summary']['completed_tasks']}/{session['summary']['total_tasks']} completed"
-
-        if session['summary']['blocked_tasks'] > 0:
-            report += f" ({session['summary']['blocked_tasks']} blocked)"
-
-        report += "\n\n### Agent Assignments:\n"
-
-        for agent_id, agent_data in session["agents"].items():
-            report += f"**{agent_id}:**\n"
-            for i, task in enumerate(agent_data["tasks"]):
-                status_icon = {"assigned": "⏳", "in_progress": "🔄", "completed": "✅", "blocked": "❌"}.get(task["status"], "❓")
-                report += f"  {status_icon} Task {i+1}: {task['task'][:60]}{'...' if len(task['task']) > 60 else ''}\n"
-                if task["status"] == "blocked" and task["updates"]:
-                    latest_update = task["updates"][-1]
-                    report += f"    *Blocked: {latest_update.get('note', 'No details')}*\n"
-            report += "\n"
-
-        return report
-
-    def _load_dashboard(self) -> Dict:
-        """Load dashboard data from file"""
+        
         try:
-            with open(self.dashboard_file, 'r') as f:
-                return json.load(f)
-        except FileNotFoundError:
-            return {
-                "active_sessions": {},
-                "completed_sessions": {},
-                "metadata": {
-                    "created": datetime.now().isoformat(),
-                    "version": "1.0.0"
-                }
-            }
-
-    def _save_dashboard(self, dashboard: Dict):
-        """Save dashboard data to file"""
-        self.dashboard_file.parent.mkdir(parents=True, exist_ok=True)
-        with open(self.dashboard_file, 'w') as f:
-            json.dump(dashboard, f, indent=2)
-
-    def _update_progress(self, session: Dict):
-        """Update progress percentage for a session"""
-        total = session["summary"]["total_tasks"]
-        completed = session["summary"]["completed_tasks"]
-
-        if total > 0:
-            session["summary"]["progress_percentage"] = round((completed / total) * 100, 1)
+            return json.loads(status_file.read_text(encoding='utf-8'))
+        except Exception:
+            return None
+    
+    def get_all_agents(self) -> List[str]:
+        """Get list of all agents."""
+        agents = []
+        for i in range(1, 9):
+            agent_id = f"Agent-{i}"
+            status_file = self.agent_workspaces / agent_id / "status.json"
+            if status_file.exists():
+                agents.append(agent_id)
+        return agents
+    
+    def parse_master_task_log(self) -> Dict:
+        """Parse MASTER_TASK_LOG.md for task information."""
+        if not self.master_task_log.exists():
+            return {"inbox": [], "this_week": [], "waiting_on": [], "parked": []}
+        
+        content = self.master_task_log.read_text(encoding='utf-8')
+        
+        tasks = {
+            "inbox": [],
+            "this_week": [],
+            "waiting_on": [],
+            "parked": []
+        }
+        
+        current_section = None
+        for line in content.split('\n'):
+            if line.startswith('## INBOX'):
+                current_section = "inbox"
+            elif line.startswith('## THIS_WEEK'):
+                current_section = "this_week"
+            elif line.startswith('## WAITING_ON'):
+                current_section = "waiting_on"
+            elif line.startswith('## PARKED'):
+                current_section = "parked"
+            elif line.strip().startswith('- [') and current_section:
+                tasks[current_section].append(line.strip())
+        
+        return tasks
+    
+    def get_coordination_metrics(self, agent_id: str) -> Dict:
+        """Get coordination metrics for an agent."""
+        status = self.load_agent_status(agent_id)
+        if not status:
+            return {}
+        
+        metrics = {
+            "bilateral_coordinations": len(status.get("bilateral_coordination", {})),
+            "completed_tasks": len(status.get("completed_tasks", [])),
+            "current_tasks": len(status.get("current_tasks", [])),
+            "next_actions": len(status.get("next_actions", [])),
+            "status": status.get("status", "UNKNOWN"),
+            "last_updated": status.get("last_updated", "UNKNOWN")
+        }
+        
+        return metrics
+    
+    def get_work_stream_summary(self) -> Dict:
+        """Get summary of active work streams."""
+        work_streams = defaultdict(list)
+        
+        for agent_id in self.get_all_agents():
+            status = self.load_agent_status(agent_id)
+            if not status:
+                continue
+            
+            current_tasks = status.get("current_tasks", [])
+            for task in current_tasks:
+                # Extract work stream category from task
+                if "V2 compliance" in task or "refactoring" in task:
+                    work_streams["V2 Compliance"].append({
+                        "agent": agent_id,
+                        "task": task
+                    })
+                elif "duplicate" in task.lower() or "consolidation" in task.lower():
+                    work_streams["Duplicate Consolidation"].append({
+                        "agent": agent_id,
+                        "task": task
+                    })
+                elif "toolbelt" in task.lower() or "health check" in task.lower():
+                    work_streams["Toolbelt Health"].append({
+                        "agent": agent_id,
+                        "task": task
+                    })
+                elif "file splitting" in task.lower():
+                    work_streams["File Splitting"].append({
+                        "agent": agent_id,
+                        "task": task
+                    })
+                else:
+                    work_streams["Other"].append({
+                        "agent": agent_id,
+                        "task": task
+                    })
+        
+        return dict(work_streams)
+    
+    def get_blockers(self) -> List[Dict]:
+        """Identify current blockers."""
+        blockers = []
+        
+        for agent_id in self.get_all_agents():
+            status = self.load_agent_status(agent_id)
+            if not status:
+                continue
+            
+            current_blockers = status.get("blockers", {}).get("current", [])
+            for blocker in current_blockers:
+                blockers.append({
+                    "agent": agent_id,
+                    "blocker": blocker
+                })
+        
+        return blockers
+    
+    def generate_dashboard(self, agent_filter: Optional[str] = None) -> str:
+        """Generate comprehensive dashboard."""
+        lines = []
+        lines.append("=" * 80)
+        lines.append("SWARM COORDINATION DASHBOARD")
+        lines.append("=" * 80)
+        lines.append(f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        lines.append("")
+        
+        # Agent Status Overview
+        lines.append("## AGENT STATUS OVERVIEW")
+        lines.append("-" * 80)
+        
+        agents = self.get_all_agents()
+        if agent_filter:
+            agents = [a for a in agents if agent_filter.lower() in a.lower()]
+        
+        for agent_id in agents:
+            metrics = self.get_coordination_metrics(agent_id)
+            status_icon = "✅" if metrics.get("status") == "ACTIVE_AGENT_MODE" else "⏳"
+            lines.append(f"{status_icon} {agent_id}:")
+            lines.append(f"   Status: {metrics.get('status', 'UNKNOWN')}")
+            lines.append(f"   Completed Tasks: {metrics.get('completed_tasks', 0)}")
+            lines.append(f"   Current Tasks: {metrics.get('current_tasks', 0)}")
+            lines.append(f"   Bilateral Coordinations: {metrics.get('bilateral_coordinations', 0)}")
+            lines.append(f"   Last Updated: {metrics.get('last_updated', 'UNKNOWN')}")
+            lines.append("")
+        
+        # Active Work Streams
+        lines.append("## ACTIVE WORK STREAMS")
+        lines.append("-" * 80)
+        
+        work_streams = self.get_work_stream_summary()
+        for stream_name, tasks in work_streams.items():
+            lines.append(f"\n### {stream_name} ({len(tasks)} tasks)")
+            for task_info in tasks[:5]:  # Show top 5
+                lines.append(f"  - {task_info['agent']}: {task_info['task'][:60]}...")
+            if len(tasks) > 5:
+                lines.append(f"  ... and {len(tasks) - 5} more")
+        
+        # Blockers
+        lines.append("\n## CURRENT BLOCKERS")
+        lines.append("-" * 80)
+        
+        blockers = self.get_blockers()
+        if blockers:
+            for blocker_info in blockers:
+                lines.append(f"⚠️ {blocker_info['agent']}: {blocker_info['blocker']}")
         else:
-            session["summary"]["progress_percentage"] = 0
+            lines.append("✅ No blockers detected")
+        
+        # Task Summary
+        lines.append("\n## TASK SUMMARY")
+        lines.append("-" * 80)
+        
+        tasks = self.parse_master_task_log()
+        lines.append(f"Inbox: {len(tasks['inbox'])} tasks")
+        lines.append(f"This Week: {len(tasks['this_week'])} tasks")
+        lines.append(f"Waiting On: {len(tasks['waiting_on'])} tasks")
+        lines.append(f"Parked: {len(tasks['parked'])} tasks")
+        
+        # Coordination Metrics
+        lines.append("\n## COORDINATION METRICS")
+        lines.append("-" * 80)
+        
+        total_bilateral = sum(
+            self.get_coordination_metrics(agent_id).get("bilateral_coordinations", 0)
+            for agent_id in self.get_all_agents()
+        )
+        total_completed = sum(
+            self.get_coordination_metrics(agent_id).get("completed_tasks", 0)
+            for agent_id in self.get_all_agents()
+        )
+        total_current = sum(
+            self.get_coordination_metrics(agent_id).get("current_tasks", 0)
+            for agent_id in self.get_all_agents()
+        )
+        
+        lines.append(f"Total Bilateral Coordinations: {total_bilateral}")
+        lines.append(f"Total Completed Tasks: {total_completed}")
+        lines.append(f"Total Current Tasks: {total_current}")
+        lines.append(f"Active Agents: {len([a for a in agents if self.get_coordination_metrics(a).get('status') == 'ACTIVE_AGENT_MODE'])}")
+        
+        lines.append("")
+        lines.append("=" * 80)
+        
+        return "\n".join(lines)
+    
+    def print_dashboard(self, agent_filter: Optional[str] = None):
+        """Print dashboard to console."""
+        dashboard = self.generate_dashboard(agent_filter)
+        print(dashboard)
+    
+    def save_dashboard(self, output_file: Path, agent_filter: Optional[str] = None):
+        """Save dashboard to file."""
+        dashboard = self.generate_dashboard(agent_filter)
+        output_file.write_text(dashboard, encoding='utf-8')
+        print(f"✅ Dashboard saved to: {output_file}")
 
 
 def main():
-    """CLI interface for the Swarm Coordination Dashboard"""
-    import argparse
-
-    parser = argparse.ArgumentParser(description="🐝 Swarm Coordination Dashboard")
-    parser.add_argument("--init-session", help="Initialize new coordination session")
-    parser.add_argument("--description", help="Session description")
-    parser.add_argument("--add-task", help="Add task for agent (format: agent_id:task)")
-    parser.add_argument("--priority", default="normal", choices=["normal", "urgent", "critical"])
-    parser.add_argument("--update", help="Update task status (format: agent_id:task_index:status:note)")
-    parser.add_argument("--session", default="default", help="Session name")
-    parser.add_argument("--status", action="store_true", help="Show session status")
-    parser.add_argument("--report", action="store_true", help="Generate full report")
-    parser.add_argument("--complete", action="store_true", help="Mark session as complete")
-
+    """CLI entry point."""
+    parser = argparse.ArgumentParser(
+        description="Swarm Coordination Dashboard - Real-time swarm status monitoring"
+    )
+    
+    parser.add_argument('--agent', '-a',
+                       help='Filter by agent ID (e.g., Agent-1)')
+    parser.add_argument('--output', '-o',
+                       help='Save dashboard to file')
+    parser.add_argument('--refresh', '-r', type=int,
+                       help='Auto-refresh interval in seconds')
+    
     args = parser.parse_args()
-
+    
     dashboard = SwarmCoordinationDashboard()
-
-    try:
-        if args.init_session:
-            session = dashboard.init_session(args.init_session, args.description or "")
-            print(f"✅ Initialized session '{args.init_session}'")
-            print(f"Description: {session.get('description', 'N/A')}")
-
-        elif args.add_task:
-            agent_id, task = args.add_task.split(":", 1)
-            dashboard.add_agent_task(args.session, agent_id, task, args.priority)
-            print(f"✅ Added task for {agent_id}: {task}")
-
-        elif args.update:
-            parts = args.update.split(":", 3)
-            if len(parts) < 3:
-                print("❌ Format: agent_id:task_index:status:note")
-                return
-            agent_id, task_index, status, note = parts[0], int(parts[1]), parts[2], parts[3] if len(parts) > 3 else ""
-            dashboard.update_task_status(args.session, agent_id, task_index, status, note)
-            print(f"✅ Updated {agent_id} task {task_index} to {status}")
-
-        elif args.status:
-            session = dashboard.get_session_status(args.session)
-            if session:
-                print(dashboard._format_session_report(args.session, session))
-            else:
-                print(f"❌ Session '{args.session}' not found")
-
-        elif args.report:
-            print(dashboard.generate_report())
-
-        elif args.complete:
-            dashboard.complete_session(args.session)
-            print(f"✅ Completed session '{args.session}'")
-
-        else:
-            parser.print_help()
-
-    except Exception as e:
-        print(f"❌ Error: {e}")
+    
+    if args.refresh:
+        import time
+        while True:
+            os.system('clear' if os.name != 'nt' else 'cls')
+            dashboard.print_dashboard(args.agent)
+            print(f"\n🔄 Auto-refreshing every {args.refresh} seconds... (Ctrl+C to stop)")
+            time.sleep(args.refresh)
+    else:
+        dashboard.print_dashboard(args.agent)
+        
+        if args.output:
+            output_file = Path(args.output)
+            dashboard.save_dashboard(output_file, args.agent)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """
 Performance Collector - Agent Cellphone V2
+
+<!-- SSOT Domain: infrastructure -->
+
 =========================================
 
 Collects and stores performance metrics.

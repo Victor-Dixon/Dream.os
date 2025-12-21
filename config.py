@@ -36,8 +36,12 @@ class SystemPaths:
         # Map paths from config_ssot
         # These keys may need adjustment based on actual config_ssot structure
         self.repos_root = Path(config.get('repos_root', Path.cwd()))
-        self.communications_root = Path(config.get('communications_root', Path.cwd() / 'communications'))
-        self.agent_workspaces_root = Path(config.get('agent_workspaces_root', Path.cwd() / 'agent_workspaces'))
+        self.communications_root = Path(
+            config.get('communications_root', Path.cwd() / 'communications')
+        )
+        self.agent_workspaces_root = Path(
+            config.get('agent_workspaces_root', Path.cwd() / 'agent_workspaces')
+        )
         self.owner_path = Path(config.get('owner_path', Path.cwd()))
         
         # Additional paths as needed

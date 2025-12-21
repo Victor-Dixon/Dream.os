@@ -1,5 +1,8 @@
 """
 Engine Lifecycle Management - V2 Compliance Module
+
+<!-- SSOT Domain: infrastructure -->
+
 =================================================
 
 Manages engine lifecycle following SRP.

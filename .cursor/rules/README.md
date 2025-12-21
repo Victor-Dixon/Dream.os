@@ -16,6 +16,7 @@ This directory contains Cursor IDE rules that enforce V2 compliance standards an
 - **`messaging/pyautogui-operations.mdc`** - PyAutoGUI delivery operations
 - **`messaging/cli-flags.mdc`** - CLI flag validation and combinations
 - **`agent-workspaces.mdc`** - Agent workspace management
+- **`developer-profile.mdc`** - Developer preferences (Victor) - Visual work preferences and ChatGPT collaboration
 
 ### **Conditional Rules** (Applied When Relevant)
 - **`testing.mdc`** - Testing standards and requirements

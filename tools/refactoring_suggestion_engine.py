@@ -57,14 +57,18 @@ class RefactoringSuggestionEngine:
         )
 
         # Calculate estimates
-        estimated_main = self._estimate_main_file_size(entities, suggested_modules)
-        estimated_total = estimated_main + sum(m.estimated_lines for m in suggested_modules)
+        estimated_main = self._estimate_main_file_size(
+            entities, suggested_modules)
+        estimated_total = estimated_main + \
+            sum(m.estimated_lines for m in suggested_modules)
 
         # Generate import changes
-        import_changes = self._generate_import_changes(file_path, suggested_modules)
+        import_changes = self._generate_import_changes(
+            file_path, suggested_modules)
 
         # Calculate confidence
-        confidence = self._calculate_confidence(current_lines, estimated_main, target_lines)
+        confidence = self._calculate_confidence(
+            current_lines, estimated_main, target_lines)
 
         # Generate reasoning
         reasoning = self._generate_reasoning(
@@ -119,9 +123,12 @@ class RefactoringSuggestionEngine:
             ("factory", "factories", "Factory functions", 3),
             ("validation", "validators", "Validation logic", 2),
             ("formatting", "formatters", "Formatting functions", 3),
-            ("validation_helper", "validation_helpers", "Validation helper methods", 2),
-            ("formatting_helper", "formatting_helpers", "Formatting helper methods", 2),
-            ("processing_helper", "processing_helpers", "Processing helper methods", 2),
+            ("validation_helper", "validation_helpers",
+             "Validation helper methods", 2),
+            ("formatting_helper", "formatting_helpers",
+             "Formatting helper methods", 2),
+            ("processing_helper", "processing_helpers",
+             "Processing helper methods", 2),
             ("factory_helper", "factory_helpers", "Factory helper methods", 3),
             ("helper", "helpers", "Helper methods", 3),
         ]
@@ -164,7 +171,8 @@ class RefactoringSuggestionEngine:
 
         # Get total current lines (including non-entity lines like comments, docstrings)
         # Estimate non-entity lines as ~20% of file
-        entity_lines = sum(e.line_count for e in all_entities if e.entity_type != "import")
+        entity_lines = sum(
+            e.line_count for e in all_entities if e.entity_type != "import")
 
         # Calculate total file lines from largest entity end line
         max_line = max((e.end_line for e in all_entities), default=0)
@@ -186,7 +194,8 @@ class RefactoringSuggestionEngine:
         for module in modules:
             # Generate relative import
             module_base = module.module_name.replace(".py", "")
-            entity_names = [e.name for e in module.entities[:5]]  # First 5 entities
+            # First 5 entities
+            entity_names = [e.name for e in module.entities[:5]]
 
             if len(entity_names) <= 3:
                 import_stmt = f"from .{module_base} import {', '.join(entity_names)}"
@@ -226,7 +235,8 @@ class RefactoringSuggestionEngine:
         reduction = current - estimated_main
         reduction_pct = (reduction / current * 100) if current > 0 else 0
 
-        lines.append(f"Current file: {current} lines (target: ≤{target} lines)")
+        lines.append(
+            f"Current file: {current} lines (target: ≤{target} lines)")
         lines.append(
             f"Suggested extraction: {len(modules)} modules ({reduction} lines, {reduction_pct:.0f}% reduction)"
         )
@@ -318,7 +328,11 @@ class RefactoringSuggestionService:
 
 
 # CLI entry point moved to refactoring_cli.py for V2 compliance
-if __name__ == "__main__":
-    from .refactoring_cli import main
+def main():
+    """Main entry point for toolbelt registry compatibility."""
+    from .refactoring_cli import main as cli_main
+    cli_main()
 
+
+if __name__ == "__main__":
     main()

@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """
 Multi-Agent Responder - Response Collection & Combination
+
+<!-- SSOT Domain: infrastructure -->
+
 ==========================================================
 
 Collects responses from multiple agents and combines them into a single message.

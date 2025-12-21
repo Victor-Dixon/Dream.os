@@ -1,0 +1,102 @@
+{
+  "description": "Agent Mode Configuration - Single Source of Truth for agent operating modes",
+  "version": "1.0.0",
+  "last_updated": "2025-12-13T23:00:00Z",
+  "current_mode": "4-agent",
+  "modes": {
+    "4-agent": {
+      "name": "4-Agent Mode",
+      "description": "Single monitor setup - Core agents only",
+      "monitor_setup": "single",
+      "active_agents": [
+        "Agent-1",
+        "Agent-2",
+        "Agent-3",
+        "Agent-4"
+      ],
+      "processing_order": [
+        "Agent-1",
+        "Agent-2",
+        "Agent-3",
+        "Agent-4"
+      ],
+      "coordinate_file": "cursor_agent_coords.json"
+    },
+    "5-agent": {
+      "name": "5-Agent Mode",
+      "description": "Single monitor setup - Core + Business Intelligence",
+      "monitor_setup": "single",
+      "active_agents": [
+        "Agent-1",
+        "Agent-2",
+        "Agent-3",
+        "Agent-4",
+        "Agent-5"
+      ],
+      "processing_order": [
+        "Agent-1",
+        "Agent-2",
+        "Agent-3",
+        "Agent-5",
+        "Agent-4"
+      ],
+      "coordinate_file": "cursor_agent_coords.json"
+    },
+    "6-agent": {
+      "name": "6-Agent Mode",
+      "description": "Dual monitor setup - Core + Business Intelligence + Coordination",
+      "monitor_setup": "dual",
+      "active_agents": [
+        "Agent-1",
+        "Agent-2",
+        "Agent-3",
+        "Agent-4",
+        "Agent-5",
+        "Agent-6"
+      ],
+      "processing_order": [
+        "Agent-1",
+        "Agent-2",
+        "Agent-3",
+        "Agent-5",
+        "Agent-6",
+        "Agent-4"
+      ],
+      "coordinate_file": "cursor_agent_coords.json"
+    },
+    "8-agent": {
+      "name": "8-Agent Mode",
+      "description": "Dual monitor setup - Full swarm",
+      "monitor_setup": "dual",
+      "active_agents": [
+        "Agent-1",
+        "Agent-2",
+        "Agent-3",
+        "Agent-4",
+        "Agent-5",
+        "Agent-6",
+        "Agent-7",
+        "Agent-8"
+      ],
+      "processing_order": [
+        "Agent-1",
+        "Agent-2",
+        "Agent-3",
+        "Agent-5",
+        "Agent-6",
+        "Agent-7",
+        "Agent-8",
+        "Agent-4"
+      ],
+      "coordinate_file": "cursor_agent_coords.json"
+    }
+  },
+  "default_mode": "4-agent",
+  "mode_switching": {
+    "require_validation": true,
+    "validate_coordinates": true,
+    "notify_agents": true
+  }
+}
+
+

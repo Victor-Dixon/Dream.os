@@ -211,8 +211,15 @@ async def send_parallel(messages, concurrency_limit=3):
 - ✅ Timing must be configurable/adaptive, not hardcoded
 - ✅ Flag validation must prevent invalid combinations
 - ✅ Parallel delivery options must be available
-<<<<<<< HEAD
 - ✅ Comprehensive logging for debugging and monitoring
-=======
-- ✅ Comprehensive logging for debugging and monitoring
->>>>>>> origin/cursor/refactor-dashboard-js-to-under-300-lines-dc65
+
+## **🧭 MESSAGING SSOT & AGENT COMMUNICATION CONDUCT**
+
+The **unified messaging system** is the single source of truth (SSOT) for how agents and tools communicate.
+
+- ✅ All A2A and A2C messages MUST use the unified messaging system:
+  - Use `python -m src.services.messaging_cli ...` **or**
+  - Call `src.core.messaging_core.send_message` together with the helpers in `src/core/messaging_templates.py` and `src/core/messaging_template_texts.py`.
+- ✅ Treat the **message templates** in `src/core/messaging_template_texts.py` (especially the `MessageCategory.A2A` and `MessageCategory.A2C` blocks) as the **authoritative definition** of how messages are structured and how recipients should respond.
+- ✅ When a message includes a “How to respond using the Unified Messaging CLI” snippet, agents SHOULD copy, fill in, and run that command instead of inventing a new pattern.
+- ❌ New tooling MUST NOT introduce ad-hoc `send_*` messaging scripts that manually construct headers or `[A2A]`/`[CAPTAIN]` prefixes. New automation MUST be built on top of the unified messaging CLI or `send_message` + standard templates.

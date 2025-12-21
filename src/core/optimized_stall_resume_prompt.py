@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """
 Optimized Stall/Resume Prompt Generator
+
+<!-- SSOT Domain: infrastructure -->
+
 ========================================
 
 Generates context-aware recovery prompts based on:
@@ -133,8 +136,9 @@ class OptimizedStallResumePrompt:
         agent_id: str,
         fsm_state: Optional[str] = None,
         last_mission: Optional[str] = None,
-        stall_duration_minutes: float = 0.0
-    ) -> str:
+        stall_duration_minutes: float = 0.0,
+        validate_activity: bool = True
+    ) -> Optional[str]:
         """
         Generate optimized resume prompt based on FSM state and Cycle Planner.
 
@@ -143,10 +147,27 @@ class OptimizedStallResumePrompt:
             fsm_state: Current FSM state (from status.json)
             last_mission: Last known mission (from status.json)
             stall_duration_minutes: How long agent has been stalled
+            validate_activity: If True, validate agent is inactive before generating
 
         Returns:
-            Optimized resume prompt
+            Optimized resume prompt, or None if agent is active (when validate_activity=True)
         """
+        # Validate agent activity before generating resume prompt
+        if validate_activity:
+            try:
+                from src.core.stall_resumer_guard import should_send_resume
+                should_send, reason = should_send_resume(agent_id, lookback_minutes=60)
+                
+                if not should_send:
+                    logger.info(
+                        f"⏸️ Skipping resume prompt for {agent_id}: {reason}"
+                    )
+                    return None
+            except Exception as e:
+                logger.warning(
+                    f"Activity validation failed for {agent_id}, proceeding anyway: {e}"
+                )
+        
         # Load agent's current state
         agent_state = self._load_agent_state(agent_id)
 
@@ -340,7 +361,8 @@ class OptimizedStallResumePrompt:
         agent_state: Dict[str, Any] = None
     ) -> str:
         """Build a non-interactive stall recovery prompt (silent work order)."""
-        # Build task assignment section if task was claimed
+        # Build task assignment section if task was claimed or provide
+        # guidance to refill tasks when none are available
         task_section = ""
         if next_task:
             task_title = next_task.get("title", "Untitled Task")
@@ -370,6 +392,29 @@ class OptimizedStallResumePrompt:
 - **Title**: {task_title}
 - **Priority**: {task_priority}
 - **To Claim**: Run `python -m src.services.messaging_cli --agent {agent_id} --get-next-task`
+
+"""
+        else:
+            # No pending tasks in cycle planner – explicitly instruct the agent
+            # to refill work from MASTER_TASK_LOG.md using the bridge.
+            task_section = f"""
+
+**📋 NO TASKS FOUND IN CYCLE PLANNER FOR {agent_id}**
+
+When your cycle planner is empty, you MUST refill work from `MASTER_TASK_LOG.md`:
+
+1. Open `MASTER_TASK_LOG.md` and review the **INBOX** and **THIS_WEEK** sections.
+2. If there is no READY work for `{agent_id}`, add or upgrade at least one concrete task
+   that fits your current mission.
+3. Run the MASTER_TASK_LOG → Cycle Planner bridge for this agent, for example:
+
+   - `python tools/master_task_log_to_cycle_planner.py --agent {agent_id} --section THIS_WEEK --priority high`
+
+4. After the bridge runs, claim the next task and start execution:
+
+   - `python -m src.services.messaging_cli --agent {agent_id} --get-next-task`
+
+**Action Required**: Refill your task list from `MASTER_TASK_LOG.md`, then execute ONE concrete task slice and produce a real artifact (code, tests, or report).
 
 """
 

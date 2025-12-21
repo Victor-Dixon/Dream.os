@@ -18,6 +18,8 @@ Date: 2025-10-13
 Deprecated: 2025-01-27 (Agent-6 - V2 Tools Flattening)
 """
 
+import json
+import argparse
 import warnings
 
 warnings.warn(
@@ -31,9 +33,6 @@ warnings.warn(
 # Legacy compatibility - delegate to tools_v2
 # For migration path, use: python -m tools_v2.toolbelt captain.pick_next_task
 
-import argparse
-import json
-
 
 def calculate_roi(points: int, complexity: int, v2: int, autonomy: int):
     """Calculate ROI."""
@@ -46,13 +45,13 @@ def get_next_task_for_agent(agent_id: str, specialty_match_only: bool = False):
     # Delegate to tools_v2 adapter
     try:
         from tools_v2.categories.captain_coordination_tools import NextTaskPickerTool
-        
+
         tool = NextTaskPickerTool()
         result = tool.execute({
             "agent_id": agent_id,
             "specialty_match_only": specialty_match_only
         }, None)
-        
+
         if result.success:
             task = result.output.get("recommended_task", {})
             print(f"\n🎯 RECOMMENDED TASK FOR {agent_id}")
@@ -71,11 +70,17 @@ def get_next_task_for_agent(agent_id: str, specialty_match_only: bool = False):
         return None
 
 
-if __name__ == "__main__":
+def main():
+    """Main entry point."""
     parser = argparse.ArgumentParser(description="Pick next task for agent")
     parser.add_argument("--agent", "-a", required=True, help="Agent ID")
-    parser.add_argument("--specialty-only", action="store_true", help="Only match specialty")
+    parser.add_argument("--specialty-only",
+                        action="store_true", help="Only match specialty")
 
     args = parser.parse_args()
 
     get_next_task_for_agent(args.agent, args.specialty_only)
+
+
+if __name__ == "__main__":
+    main()

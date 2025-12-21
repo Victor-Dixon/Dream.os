@@ -57,12 +57,14 @@ class MessageCategory(Enum):
     D2A = Discord-to-Agent human/command intake
     C2A = Captain-to-Agent directives
     A2A = Agent-to-Agent coordination
+    A2C = Agent-to-Captain coordination and reporting
     """
 
     S2A = "s2a"
     D2A = "d2a"
     C2A = "c2a"
     A2A = "a2a"
+    A2C = "a2c"
 
 
 class UnifiedMessageTag(Enum):

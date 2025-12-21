@@ -1,10 +1,33 @@
-"""Threshold Configuration - Extracted from unified_config.py | Agent-5 C-056"""
+"""Threshold Configuration - Extracted from unified_config.py | Agent-5 C-056
+
+SSOT Domain: infrastructure
+"""
+
+"""
+⚠️ DEPRECATED - ThresholdConfig is deprecated.
+
+This class has been consolidated into src/core/config/config_dataclasses.py as SSOT.
+Please update imports to use the SSOT location instead.
+
+Migration:
+  OLD: from config.config_dataclasses import ThresholdConfig
+  NEW: from core.config.config_dataclasses import ThresholdConfig
+
+This module/class will be removed in a future release.
+"""
+
+import warnings
+warnings.warn(
+    "ThresholdConfig is deprecated. Use src/core/config/config_dataclasses.py instead.",
+    DeprecationWarning,
+    stacklevel=2
+)
+
 
 from dataclasses import dataclass
 from typing import Any
 
 from .config_ssot import get_config
-
 
 
 @dataclass
@@ -19,16 +42,20 @@ class ThresholdConfig:
     coverage_threshold: float = get_config("COVERAGE_THRESHOLD", 80.0)
 
     # Performance benchmark targets
-    response_time_target: float = get_config("RESPONSE_TIME_TARGET", 100.0)  # ms
-    throughput_target: float = get_config("THROUGHPUT_TARGET", 1000.0)  # ops/sec
-    scalability_target: int = get_config("SCALABILITY_TARGET", 100)  # concurrent users
+    response_time_target: float = get_config(
+        "RESPONSE_TIME_TARGET", 100.0)  # ms
+    throughput_target: float = get_config(
+        "THROUGHPUT_TARGET", 1000.0)  # ops/sec
+    scalability_target: int = get_config(
+        "SCALABILITY_TARGET", 100)  # concurrent users
     reliability_target: float = get_config("RELIABILITY_TARGET", 99.9)  # %
     latency_target: float = get_config("LATENCY_TARGET", 50.0)  # ms
 
     # Messaging performance thresholds
     single_message_timeout: float = get_config("SINGLE_MESSAGE_TIMEOUT", 1.0)
     bulk_message_timeout: float = get_config("BULK_MESSAGE_TIMEOUT", 10.0)
-    concurrent_message_timeout: float = get_config("CONCURRENT_MESSAGE_TIMEOUT", 5.0)
+    concurrent_message_timeout: float = get_config(
+        "CONCURRENT_MESSAGE_TIMEOUT", 5.0)
     min_throughput: float = get_config("MIN_THROUGHPUT", 10.0)
     max_memory_per_message: int = get_config("MAX_MEMORY_PER_MESSAGE", 1024)
 

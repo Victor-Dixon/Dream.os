@@ -738,18 +738,28 @@ class PyAutoGUIMessagingDelivery:
                 self.pyautogui.press("enter")
             time.sleep(1.0)  # Wait for message to be sent
             
-            # CRITICAL: Verify message was sent by checking if input field is cleared
-            # This ensures the full sequence completed successfully
+            # CRITICAL: Verify message was sent and UI has settled
+            # This ensures the full sequence completed before returning
             try:
-                # Small delay to allow UI to update
-                time.sleep(0.3)
-                # Check if we can still interact with the input (indicates message was sent)
-                # This is a best-effort verification
-                logger.debug("✅ Message send sequence completed")
+                # Additional delay to allow UI to fully process and coordinate validation to complete
+                time.sleep(2.0)  # Increased from 0.3s to 2.0s for full UI settlement
+                
+                # Verify mouse is still at correct coordinates (confirms UI is stable)
+                final_verify_pos = self.pyautogui.position()
+                verify_distance = ((final_verify_pos[0] - x) ** 2 + (final_verify_pos[1] - y) ** 2) ** 0.5
+                if verify_distance > 20:  # Allow some movement tolerance
+                    logger.warning(
+                        f"⚠️ Mouse moved significantly after send for {message.recipient}: "
+                        f"distance={verify_distance:.1f}px (may indicate UI interaction)"
+                    )
+                else:
+                    logger.debug(f"✅ Mouse position stable after send (distance={verify_distance:.1f}px)")
+                
+                logger.debug("✅ Message send sequence completed and UI settled")
             except Exception as e:
                 logger.warning(f"⚠️ Could not verify message send completion: {e}")
 
-            logger.info(f"✅ Message sent to {message.recipient} at {coords} (attempt {attempt_num})")
+            logger.info(f"✅ Message sent to {message.recipient} at {coords} (attempt {attempt_num}) - UI settled")
             return True
 
         except Exception as e:

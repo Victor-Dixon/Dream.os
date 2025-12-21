@@ -37,7 +37,7 @@ from .messaging_template_texts import (
 # -----------------------------------------
 S2A_KEYS = {
     "CONTROL",
-    "STALL_RECOVERY",
+    "SWARM_PULSE",
     "HARD_ONBOARDING",
     "SOFT_ONBOARDING",
     "PASSDOWN",

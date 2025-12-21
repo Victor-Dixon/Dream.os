@@ -20,7 +20,7 @@ from typing import Any
 TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     "scan": {
         "name": "Project Scanner",
-        "module": "tools.run_project_scan",
+        "module": "tools.project_scan",
         "main_function": "main",
         "description": "Scan project structure and generate analysis",
         "flags": ["--scan", "-s"],
@@ -28,7 +28,7 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     },
     "v2-check": {
         "name": "V2 Compliance Checker",
-        "module": "tools.v2_checker_cli",
+        "module": "tools.v2_compliance_checker",
         "main_function": "main",
         "description": "Check V2 compliance violations",
         "flags": ["--v2-check", "--v2", "-v"],
@@ -36,7 +36,7 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     },
     "dashboard": {
         "name": "Compliance Dashboard",
-        "module": "tools.dashboard_html_generator",
+        "module": "tools.compliance_dashboard",
         "main_function": "main",
         "description": "Open compliance tracking dashboard",
         "flags": ["--dashboard", "-d"],
@@ -44,7 +44,7 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     },
     "complexity": {
         "name": "Complexity Analyzer",
-        "module": "tools.complexity_analyzer",
+        "module": "tools.unified_analyzer",
         "main_function": "main",
         "description": "Analyze code complexity metrics",
         "flags": ["--complexity", "-c"],
@@ -52,7 +52,7 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     },
     "refactor": {
         "name": "Refactoring Suggestions",
-        "module": "tools.refactoring_suggestions",
+        "module": "tools.refactoring_suggestion_engine",
         "main_function": "main",
         "description": "Get intelligent refactoring suggestions",
         "flags": ["--refactor", "-r"],
@@ -140,7 +140,7 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     },
     "pattern-validator": {
         "name": "Architecture Pattern Validator",
-        "module": "tools.arch_pattern_validator",
+        "module": "tools.architecture_review",
         "main_function": "main",
         "description": "Validate architectural patterns (Agent-2's tool)",
         "flags": ["--validate-patterns", "--patterns"],
@@ -223,7 +223,7 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     },
     "refactor-analyze": {
         "name": "Refactor Analyzer",
-        "module": "tools.refactor_analyzer",
+        "module": "tools.unified_validator",
         "main_function": "main",
         "description": "Smart refactoring suggestions based on file analysis",
         "flags": ["--refactor-analyze", "--analyze-refactor"],
@@ -239,7 +239,7 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     },
     "devlog-post": {
         "name": "Devlog Auto-Poster",
-        "module": "tools.devlog_auto_poster",
+        "module": "tools.devlog_poster",
         "main_function": "main",
         "description": "Auto-post devlogs to Discord (10min → 30sec!)",
         "flags": ["--devlog-post", "--post-devlog"],
@@ -271,7 +271,7 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     },
     "pattern-extract": {
         "name": "Pattern Extractor",
-        "module": "tools.pattern_extractor",
+        "module": "tools.extraction_roadmap_generator",
         "main_function": "main",
         "description": "Semi-automated code pattern extraction (30min → 5min!)",
         "flags": ["--pattern-extract", "--extract"],
@@ -391,7 +391,7 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     },
     "v2-batch": {
         "name": "V2 Batch Checker",
-        "module": "tools.v2_checker_cli",
+        "module": "tools.v2_compliance_checker",
         "main_function": "main",
         "description": "Quick V2 compliance check for multiple files (uses modular v2_checker_cli)",
         "flags": ["--v2-batch", "--batch"],
@@ -399,9 +399,9 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     },
     "coverage-check": {
         "name": "Coverage Validator",
-        "module": "tools.coverage_validator",
+        "module": "tools.coverage_analyzer",
         "main_function": "main",
-        "description": "Validate test coverage meets thresholds",
+        "description": "Validate test coverage meets thresholds (uses coverage analyzer)",
         "flags": ["--coverage-check", "--cov"],
         "args_passthrough": True,
     },
@@ -417,7 +417,7 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     # NOTE: agent_status_quick_check.py consolidated into unified_agent_status_monitor.py
     "agent-status": {
         "name": "Unified Agent Status Monitor",
-        "module": "tools.unified_agent_status_monitor",
+        "module": "tools.communication.agent_status_validator",
         "main_function": "main",
         "description": "Unified agent status monitoring (consolidates 15+ tools including quick check, snapshot, staleness)",
         "flags": ["--agent-status", "--status-check"],
@@ -459,17 +459,17 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     # Stage 1 Integration Tools (Agent-2 & Agent-3)
     "analyze-duplicates": {
         "name": "Analyze Repository Duplicates",
-        "module": "tools.analyze_repo_duplicates",
+        "module": "tools.unified_analyzer",
         "main_function": "main",
-        "description": "General-purpose duplicate file analyzer for any repository (Stage 1 integration)",
+        "description": "General-purpose duplicate file analyzer for any repository (consolidated into unified_analyzer)",
         "flags": ["--analyze-duplicates", "--dup-analyze"],
         "args_passthrough": True,
     },
     "analyze-dreamvault": {
         "name": "Analyze DreamVault Duplicates",
-        "module": "tools.analyze_dreamvault_duplicates",
+        "module": "tools.unified_analyzer",
         "main_function": "main",
-        "description": "DreamVault-specific duplicate detection (Agent-2's tool)",
+        "description": "DreamVault-specific duplicate detection (consolidated into unified_analyzer)",
         "flags": ["--analyze-dreamvault", "--dreamvault-dup"],
         "args_passthrough": True,
     },
@@ -515,11 +515,12 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     },
     "verify-cicd": {
         "name": "Verify Merged Repo CI/CD",
-        "module": "tools.verify_merged_repo_cicd_enhanced",
+        "module": "tools.unified_verifier",
         "main_function": "main",
-        "description": "Verify CI/CD pipelines for merged repositories (Agent-3's tool)",
+        "description": "Verify CI/CD pipelines for merged repositories via unified verifier (category=cicd, action=merged)",
         "flags": ["--verify-cicd", "--cicd-verify"],
-        "args_passthrough": True,
+        "args_passthrough": False,
+        "override_args": ["--category", "cicd", "--action", "merged"],
     },
     "real-violations": {
         "name": "Real Violation Scanner",
@@ -531,7 +532,7 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     },
     "pattern-suggest": {
         "name": "Pattern Suggester",
-        "module": "tools.pattern_suggester",
+        "module": "tools.refactoring_suggestion_engine",
         "main_function": "main",
         "description": "Suggest consolidation patterns for refactoring",
         "flags": ["--pattern-suggest", "--suggest-pattern"],
@@ -539,7 +540,7 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     },
     "integration-validate": {
         "name": "Integration Validator",
-        "module": "tests.integration.system_integration_validator",
+        "module": "tools.communication.integration_validator",
         "main_function": "main",
         "description": "Comprehensive system integration validation (C-048-5)",
         "flags": ["--integration-validate", "--int-val"],
@@ -631,9 +632,9 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     # Consolidation Tools (Agent-6 Organization)
     "repo-overlap": {
         "name": "Repo Overlap Analyzer",
-        "module": "tools.repo_overlap_analyzer",
+        "module": "tools.repository_analyzer",
         "main_function": "main",
-        "description": "Analyze repository overlaps for consolidation",
+        "description": "Analyze repository overlaps for consolidation (consolidated into repository_analyzer)",
         "flags": ["--repo-overlap", "--overlap"],
         "args_passthrough": True,
     },
@@ -646,7 +647,7 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     },
     "consolidation-status": {
         "name": "Consolidation Status Tracker",
-        "module": "tools.consolidation_status_tracker",
+        "module": "tools.consolidation_progress_tracker",
         "main_function": "main",
         "description": "Track GitHub consolidation progress and identify next opportunities",
         "flags": ["--consolidation-status", "--consolidation-track"],
@@ -671,7 +672,7 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     },
     "discord-verify": {
         "name": "Verify Discord Running",
-        "module": "tools.verify_discord_running",
+        "module": "tools.check_service_status",
         "main_function": "main",
         "description": "Verify Discord bot is running",
         "flags": ["--discord-verify", "--verify-discord"],
@@ -680,7 +681,7 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     # Queue Tools (Agent-6 Organization)
     "queue-diagnose": {
         "name": "Diagnose Queue",
-        "module": "tools.diagnose_queue",
+        "module": "tools.diagnose_message_queue",
         "main_function": "main",
         "description": "Diagnose message queue issues",
         "flags": ["--queue-diagnose", "--diagnose-queue"],
@@ -696,7 +697,7 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     },
     "fix-stuck": {
         "name": "Fix Stuck Message",
-        "module": "tools.fix_stuck_message",
+        "module": "tools.reset_stuck_messages",
         "main_function": "main",
         "description": "Fix stuck messages in queue",
         "flags": ["--fix-stuck", "--unstuck"],
@@ -722,15 +723,16 @@ TOOLS_REGISTRY: dict[str, dict[str, Any]] = {
     },
     "test-health": {
         "name": "Test Health Monitor",
-        "module": "tools.test_health_monitor",
+        "module": "tools.unified_verifier",
         "main_function": "main",
-        "description": "Monitor test suite health and identify improvements",
+        "description": "Monitor test suite health via unified verifier (category=file, action=comprehensive)",
         "flags": ["--test-health", "--health"],
-        "args_passthrough": True,
+        "args_passthrough": False,
+        "override_args": ["--category", "file", "--action", "comprehensive"],
     },
     "infra-health": {
         "name": "Infrastructure Health Monitor",
-        "module": "tools.infrastructure_health_monitor",
+        "module": "src.infrastructure.infrastructure_health_monitor",
         "main_function": "main",
         "description": "Monitor infrastructure health for automation reliability",
         "flags": ["--infra-health", "--infra"],

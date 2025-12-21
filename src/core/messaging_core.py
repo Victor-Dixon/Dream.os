@@ -1,3 +1,40 @@
+from __future__ import annotations
+
+"""
+⚠️ DEPRECATED - IMessageDelivery protocol is deprecated.
+
+This interface has been consolidated into src/core/messaging_protocol_models.py as SSOT.
+Please update imports to use the SSOT location instead.
+
+Migration:
+  OLD: from core.messaging_protocol_models import IMessageDelivery
+  NEW: from core.messaging_protocol_models import IMessageDelivery
+
+Note: SSOT has full documentation and type hints
+
+This interface will be removed in a future release.
+"""
+import warnings
+from .messaging_models import (
+    DeliveryMethod,
+    RecipientType,
+    SenderType,
+    UnifiedMessage,
+    UnifiedMessagePriority,
+    UnifiedMessageTag,
+    UnifiedMessageType,
+)
+from ..utils.swarm_time import format_swarm_timestamp, get_swarm_time_display
+from typing import Any, Protocol
+from pathlib import Path
+from datetime import datetime
+import logging
+warnings.warn(
+    "IMessageDelivery is deprecated. Use src/core/messaging_protocol_models.py instead.",
+    DeprecationWarning,
+    stacklevel=2
+)
+
 #!/usr/bin/env python3
 """
 UNIFIED MESSAGING CORE SYSTEM - SINGLE SOURCE OF TRUTH
@@ -19,28 +56,20 @@ Refactored: 2025-10-11 - Agent-1 (LAST CRITICAL V2 VIOLATION FIX)
 License: MIT
 """
 
-from __future__ import annotations
-
-import logging
-from datetime import datetime
-from pathlib import Path
-from typing import Any, Protocol
-
-from ..utils.swarm_time import format_swarm_timestamp, get_swarm_time_display
 
 # Import models from extracted module
-from .messaging_models import (
-    DeliveryMethod,
-    RecipientType,
-    SenderType,
-    UnifiedMessage,
-    UnifiedMessagePriority,
-    UnifiedMessageTag,
-    UnifiedMessageType,
-)
 
 # Configure logging
 logger = logging.getLogger(__name__)
+
+# ⚠️ DEPRECATED - IMessageDelivery protocol is deprecated.
+# This interface has been consolidated into src/core/messaging_protocol_models.py as SSOT.
+# Migration: from src.core.messaging_protocol_models import IMessageDelivery
+warnings.warn(
+    "IMessageDelivery is deprecated. Use src/core/messaging_protocol_models.py instead.",
+    DeprecationWarning,
+    stacklevel=2
+)
 
 
 class IMessageDelivery(Protocol):
@@ -49,6 +78,28 @@ class IMessageDelivery(Protocol):
     def send_message(self, message: UnifiedMessage) -> bool:
         """Send a message."""
         ...
+
+
+"""
+⚠️ DEPRECATED - IOnboardingService protocol is deprecated.
+
+This interface has been consolidated into src/core/messaging_protocol_models.py as SSOT.
+Please update imports to use the SSOT location instead.
+
+Migration:
+  OLD: from src.core.messaging_core import IOnboardingService
+  NEW: from src.core.messaging_protocol_models import IOnboardingService
+
+Note: SSOT has full documentation and type hints
+
+This interface will be removed in a future release.
+"""
+
+warnings.warn(
+    "IOnboardingService is deprecated. Use src/core/messaging_protocol_models.py instead.",
+    DeprecationWarning,
+    stacklevel=2
+)
 
 
 class IOnboardingService(Protocol):
@@ -79,7 +130,8 @@ class UnifiedMessagingCore:
                 from ..repositories.message_repository import MessageRepository
                 self.message_repository = MessageRepository()
             except ImportError:
-                self.logger.warning("MessageRepository not available - history logging disabled")
+                self.logger.warning(
+                    "MessageRepository not available - history logging disabled")
                 self.message_repository = None
         else:
             self.message_repository = message_repository
@@ -123,7 +175,7 @@ class UnifiedMessagingCore:
     ) -> bool:
         """
         Send a message using the unified messaging system.
-        
+
         VALIDATION: Checks if recipient has pending multi-agent request.
         If pending, blocks message and shows pending request in error.
         """
@@ -132,14 +184,14 @@ class UnifiedMessagingCore:
         if recipient.startswith("Agent-") and sender.startswith("Agent-"):
             try:
                 from ..core.multi_agent_request_validator import get_multi_agent_validator
-                
+
                 validator = get_multi_agent_validator()
                 can_send, error_message, pending_info = validator.validate_agent_can_send_message(
                     agent_id=recipient,
                     target_recipient=sender,  # Allow if responding to request sender
                     message_content=content
                 )
-                
+
                 if not can_send:
                     # Recipient has pending request - block and show error
                     self.logger.warning(
@@ -152,17 +204,18 @@ class UnifiedMessagingCore:
                     metadata["blocked_reason"] = "pending_multi_agent_request"
                     metadata["blocked_error_message"] = error_message
                     return False
-                
+
                 # If responding to request sender, auto-route to collector
                 if pending_info and sender == pending_info["sender"]:
                     try:
                         from ..core.multi_agent_responder import get_multi_agent_responder
                         responder = get_multi_agent_responder()
-                        
+
                         # Auto-submit response to collector
                         collector_id = pending_info["collector_id"]
-                        responder.submit_response(collector_id, recipient, content)
-                        
+                        responder.submit_response(
+                            collector_id, recipient, content)
+
                         self.logger.info(
                             f"✅ Auto-routed response from {recipient} to collector {collector_id}"
                         )
@@ -176,7 +229,7 @@ class UnifiedMessagingCore:
             except Exception as e:
                 self.logger.debug(f"Error validating recipient: {e}")
                 # Continue with normal flow
-        
+
         # Extract category from metadata if present (for template detection)
         category = None
         metadata_dict = metadata or {}
@@ -188,7 +241,7 @@ class UnifiedMessagingCore:
                     category = MessageCategory(category_str.lower())
                 except (ValueError, AttributeError):
                     pass
-        
+
         message = UnifiedMessage(
             content=content,
             sender=sender,
@@ -219,7 +272,8 @@ class UnifiedMessagingCore:
                 resolve_template_by_roles = None  # type: ignore
 
             template = (
-                message.metadata.get("template") if isinstance(message.metadata, dict) else None
+                message.metadata.get("template") if isinstance(
+                    message.metadata, dict) else None
             )
             channel = (
                 (message.metadata or {}).get("channel", "standard")
@@ -271,9 +325,10 @@ class UnifiedMessagingCore:
                             return str(value)
                         else:
                             return value
-                    
-                    metadata_serialized = serialize_value(message.metadata) if message.metadata else {}
-                    
+
+                    metadata_serialized = serialize_value(
+                        message.metadata) if message.metadata else {}
+
                     message_dict = {
                         "from": message.sender,
                         "to": message.recipient,
@@ -286,9 +341,11 @@ class UnifiedMessagingCore:
                         "timestamp": format_swarm_timestamp(),
                     }
                     self.message_repository.save_message(message_dict)
-                    self.logger.debug(f"✅ Message logged to history: {message.sender} → {message.recipient}")
+                    self.logger.debug(
+                        f"✅ Message logged to history: {message.sender} → {message.recipient}")
                 except Exception as e:
-                    self.logger.warning(f"⚠️ Failed to log message to history: {e}")
+                    self.logger.warning(
+                        f"⚠️ Failed to log message to history: {e}")
             else:
                 # SSOT: Repository should be initialized in __init__ (Agent-8 - 2025-01-27)
                 # If not available, log warning but don't create duplicate instance
@@ -296,7 +353,6 @@ class UnifiedMessagingCore:
                     "MessageRepository not initialized - message history logging skipped. "
                     "Repository should be initialized in __init__."
                 )
-
 
             if self.delivery_service:
                 success = self.delivery_service.send_message(message)
@@ -306,13 +362,44 @@ class UnifiedMessagingCore:
                         # Update message with delivery status
                         message_dict["status"] = "delivered"
                         self.message_repository.save_message(message_dict)
-                        self.logger.debug(f"✅ Delivery status logged: {message.sender} → {message.recipient}")
+                        self.logger.debug(
+                            f"✅ Delivery status logged: {message.sender} → {message.recipient}")
                     except Exception as e:
-                        self.logger.warning(f"⚠️ Failed to log delivery status: {e}")
+                        self.logger.warning(
+                            f"⚠️ Failed to log delivery status: {e}")
+                
+                # FALLBACK QUEUING: If direct delivery fails, queue message for later processing
+                # This ensures system messages flow through the queue when PyAutoGUI fails
+                if not success:
+                    try:
+                        from .message_queue import MessageQueue
+                        queue = MessageQueue()
+                        queue_id = queue.enqueue(message)
+                        self.logger.info(
+                            f"📬 Direct delivery failed, message queued for later processing: {queue_id} "
+                            f"({message.sender} → {message.recipient})")
+                        # Return True to indicate message was handled (queued), even though direct delivery failed
+                        return True
+                    except Exception as queue_error:
+                        self.logger.error(
+                            f"❌ Failed to queue message after delivery failure: {queue_error}")
+                        return False
+                
                 return success
             else:
-                self.logger.error("No delivery service configured - PyAutoGUI required")
-                return False
+                # No delivery service - try to queue message instead of failing
+                try:
+                    from .message_queue import MessageQueue
+                    queue = MessageQueue()
+                    queue_id = queue.enqueue(message)
+                    self.logger.info(
+                        f"📬 No delivery service available, message queued: {queue_id} "
+                        f"({message.sender} → {message.recipient})")
+                    return True
+                except Exception as queue_error:
+                    self.logger.error(
+                        f"❌ No delivery service and queue unavailable: {queue_error}")
+                    return False
         except Exception as e:
             self.logger.error(f"Failed to send message: {e}")
             # Log failure to history
@@ -330,7 +417,6 @@ class UnifiedMessagingCore:
                 except Exception:
                     pass  # Non-critical
             return False
-
 
     def show_message_history(self):
         """Display message history."""
@@ -357,14 +443,19 @@ class UnifiedMessagingCore:
         priority: UnifiedMessagePriority = UnifiedMessagePriority.REGULAR,
     ) -> bool:
         """Broadcast message to all agents.
-        
+
         CRITICAL FIX: Expands "ALL_AGENTS" into individual messages for each agent.
         This ensures broadcast messages are properly queued and delivered to all agents.
         """
-        # Get list of all agents (SSOT)
-        from src.core.constants.agent_constants import AGENT_LIST
-        agents = AGENT_LIST
-        
+        # Get list of active agents (mode-aware)
+        try:
+            from .agent_mode_manager import get_active_agents
+            agents = get_active_agents()
+        except Exception:
+            # Fallback to all agents if mode manager unavailable
+            from src.core.constants.agent_constants import AGENT_LIST
+            agents = AGENT_LIST
+
         # Send individual message to each agent (ensures proper queue processing)
         success_count = 0
         for agent in agents:
@@ -376,26 +467,26 @@ class UnifiedMessagingCore:
                 priority=priority,
                 tags=[UnifiedMessageTag.SYSTEM],
             )
-            
+
             if self.send_message_object(message):
                 success_count += 1
-        
+
         return success_count > 0
 
     def list_agents(self):
-        """List all available agents."""
-        # This would integrate with agent registry
-        agents = [
-            "Agent-1",
-            "Agent-2",
-            "Agent-3",
-            "Agent-4",
-            "Agent-5",
-            "Agent-6",
-            "Agent-7",
-            "Agent-8",
-        ]
-        self.logger.info("🤖 Available Agents:")
+        """List all available agents (mode-aware)."""
+        try:
+            from .agent_mode_manager import get_active_agents, get_mode_manager
+            mode_manager = get_mode_manager()
+            current_mode = mode_manager.get_current_mode()
+            agents = get_active_agents()
+            self.logger.info(
+                f"🤖 Available Agents (Mode: {current_mode}, {len(agents)} active):")
+        except Exception:
+            # Fallback to all agents if mode manager unavailable
+            from src.core.constants.agent_constants import AGENT_LIST
+            agents = AGENT_LIST
+            self.logger.info("🤖 Available Agents:")
         for agent in agents:
             self.logger.info(f"  • {agent}")
 

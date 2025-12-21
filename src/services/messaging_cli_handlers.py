@@ -119,9 +119,11 @@ def handle_message(args, parser):
         else UnifiedMessagePriority.REGULAR
     )
     if args.broadcast:
+        from src.core.agent_mode_manager import get_active_agents
+        active_count = len(get_active_agents())
         success = MessageCoordinator.broadcast_to_all(args.message, priority)
         logger.info(
-            f"📢 Broadcast successful to {success}/8 agents"
+            f"📢 Broadcast successful to {success}/{active_count} agents"
             if success > 0
             else "❌ Broadcast failed"
         )
@@ -177,22 +179,29 @@ def handle_coordinates():
 
 
 def handle_start_agents(args):
-    """Send start message to specified agents via onboarding coordinates."""
+    """Send start message to specified agents via onboarding coordinates (mode-aware)."""
+    from src.core.agent_mode_manager import get_active_agents, is_agent_active
+    
+    # Get active agents for current mode
+    active_agents_list = get_active_agents()
+    
     valid_agents = []
     for num in args.start:
-        if 1 <= num <= 8:
-            valid_agents.append(f"Agent-{num}")
-        else:
-            logger.warning(f"⚠️ Invalid agent number: {num} (must be 1-8)")
+        agent_id = f"Agent-{num}"
+        if not is_agent_active(agent_id):
+            logger.warning(f"⚠️ Agent {agent_id} is not active in current mode (skipping)")
+            continue
+        valid_agents.append(agent_id)
 
     if not valid_agents:
-        logger.error("❌ No valid agents specified")
+        logger.error(f"❌ No valid active agents specified. Active agents: {', '.join(active_agents_list)}")
         return 1
 
     start_msg = "🚀 START: Begin your assigned work cycle. Review your workspace and inbox."
     success_count = 0
 
-    logger.info(f"🚀 Starting {len(valid_agents)} agent(s) via onboarding coordinates...")
+    logger.info(f"🚀 Starting {len(valid_agents)} active agent(s) via onboarding coordinates...")
+    logger.info(f"📋 Mode-aware: Active agents: {', '.join(active_agents_list)}")
     for agent_id in valid_agents:
         try:
             if send_message_to_onboarding_coords(agent_id, start_msg, timeout=TimeoutConstants.HTTP_DEFAULT):
