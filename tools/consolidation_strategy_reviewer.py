@@ -15,8 +15,13 @@ Date: 2025-12-04
 """
 
 import json
+import sys
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple, Any
+
+# Add project root to path
+project_root = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(project_root))
 
 # Import status tracker
 try:
@@ -24,12 +29,13 @@ try:
     STATUS_TRACKER_AVAILABLE = True
 except ImportError:
     STATUS_TRACKER_AVAILABLE = False
+    RepoStatusTracker = Any  # type: ignore
 
 
 class ConsolidationStrategyReviewer:
     """Review and validate consolidation strategies."""
 
-    def __init__(self, status_tracker: Optional[RepoStatusTracker] = None):
+    def __init__(self, status_tracker: Optional[Any] = None):
         """
         Initialize strategy reviewer.
         

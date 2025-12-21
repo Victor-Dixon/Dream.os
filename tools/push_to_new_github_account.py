@@ -10,8 +10,15 @@ import subprocess
 import sys
 from pathlib import Path
 
-from dotenv import load_dotenv
-load_dotenv()
+# Add project root to path for imports
+project_root = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(project_root))
+
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # dotenv is optional
 
 try:
     from src.core.utils.github_utils import get_github_token as get_github_token_ssot

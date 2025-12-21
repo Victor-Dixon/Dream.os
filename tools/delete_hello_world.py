@@ -42,6 +42,12 @@ def delete_post(site_url, username, app_password, post_id):
 
 
 def main():
+    # Handle --help flag
+    if len(sys.argv) > 1 and sys.argv[1] in ('--help', '-h'):
+        print("Usage: python delete_hello_world.py")
+        print("Deletes the default 'Hello World' WordPress post (ID: 1) from dadudekc.com")
+        return 0
+    
     config = load_config()
     site_config = config["dadudekc.com"]
     

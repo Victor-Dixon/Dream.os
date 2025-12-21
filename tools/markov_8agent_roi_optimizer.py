@@ -42,7 +42,12 @@ def calculate_roi(points: int, complexity: int, v2_impact: int, autonomy_impact:
 
 def load_top_violations():
     """Load top violations from project scanner."""
-    with open("project_analysis.json") as f:
+    project_analysis_file = Path("project_analysis.json")
+    if not project_analysis_file.exists():
+        # Fallback: return empty violations list
+        print("⚠️  project_analysis.json not found, using empty violations list")
+        return []
+    with open(project_analysis_file) as f:
         data = json.load(f)
 
     violations = []

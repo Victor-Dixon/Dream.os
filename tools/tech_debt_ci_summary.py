@@ -11,8 +11,6 @@ This is designed for use in GitHub Actions but can also be run locally.
 """
 
 from __future__ import annotations
-from technical_debt_analyzer import TechnicalDebtAnalyzer
-from mcp_servers import v2_compliance_server as vc
 
 import argparse
 import json
@@ -21,12 +19,19 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict
 
-
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 # Ensure project root is importable so `mcp_servers` and related modules resolve
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
+
+# Import after path setup
+from tools.technical_debt_analyzer import TechnicalDebtAnalyzer
+try:
+    from mcp_servers import v2_compliance_server as vc
+except ImportError:
+    # Fallback if mcp_servers not available
+    vc = None
 
 
 def run_technical_debt_analysis() -> Dict[str, Any]:

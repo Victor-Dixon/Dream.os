@@ -20,7 +20,7 @@ from pathlib import Path
 
 try:
     from dotenv import load_dotenv
-from src.core.config.timeout_constants import TimeoutConstants
+    from src.core.config.timeout_constants import TimeoutConstants
     env_path = Path('.env')
     if env_path.exists():
         load_dotenv(env_path)

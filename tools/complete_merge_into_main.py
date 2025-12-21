@@ -183,6 +183,12 @@ def complete_merge_into_main(repo: str, merge_branch: str, base_branch: str = "m
 
 def main():
     """Complete Merge #1 by merging merge branch into main."""
+    # Handle --help flag
+    if len(sys.argv) > 1 and sys.argv[1] in ('--help', '-h'):
+        print("Usage: python complete_merge_into_main.py <repo> <merge_branch> [base_branch]")
+        print("Example: python complete_merge_into_main.py DreamVault merge-DreamBank-20251124 master")
+        return 0
+    
     if len(sys.argv) < 3:
         print("Usage: python complete_merge_into_main.py <repo> <merge_branch> [base_branch]")
         print("Example: python complete_merge_into_main.py DreamVault merge-DreamBank-20251124 master")

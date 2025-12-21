@@ -27,13 +27,30 @@ sys.path.insert(0, str(project_root))
 
 # Load credentials
 creds_file = project_root / ".deploy_credentials" / "blogging_api.json"
-with open(creds_file) as f:
-    creds_data = json.load(f)
+if not creds_file.exists():
+    print(f"❌ Error: Credentials file not found: {creds_file}")
+    print("   Please ensure .deploy_credentials/blogging_api.json exists")
+    sys.exit(1)
 
-SITE_CONFIG = creds_data["freerideinvestor"]
-SITE_URL = SITE_CONFIG["site_url"]
-USERNAME = SITE_CONFIG["username"]
-APP_PASSWORD = SITE_CONFIG["app_password"]
+try:
+    with open(creds_file, encoding="utf-8") as f:
+        creds_data = json.load(f)
+    
+    if "freerideinvestor" not in creds_data:
+        print("❌ Error: 'freerideinvestor' config not found in credentials file")
+        sys.exit(1)
+    
+    SITE_CONFIG = creds_data["freerideinvestor"]
+    SITE_URL = SITE_CONFIG.get("site_url")
+    USERNAME = SITE_CONFIG.get("username")
+    APP_PASSWORD = SITE_CONFIG.get("app_password")
+    
+    if not all([SITE_URL, USERNAME, APP_PASSWORD]):
+        print("❌ Error: Missing required credentials (site_url, username, app_password)")
+        sys.exit(1)
+except (json.JSONDecodeError, KeyError) as e:
+    print(f"❌ Error reading credentials: {e}")
+    sys.exit(1)
 
 API_BASE = f"{SITE_URL}/wp-json/wp/v2"
 AUTH = HTTPBasicAuth(USERNAME, APP_PASSWORD.replace(" ", ""))

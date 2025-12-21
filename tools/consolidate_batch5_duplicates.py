@@ -132,6 +132,17 @@ def load_batch5_groups() -> List[Dict]:
 
 def main():
     """Main execution."""
+    # Handle --help flag
+    if len(sys.argv) > 1 and sys.argv[1] in ('--help', '-h'):
+        print("Usage: python consolidate_batch5_duplicates.py [--execute] [--help]")
+        print("Consolidates Batch 5 duplicate files (15 groups, temp_repos/Thea/ directory).")
+        print("\nOptions:")
+        print("  --execute    Actually delete duplicate files (default: dry-run)")
+        print("  --help, -h   Show this help message")
+        print("\nTask: Batch 5 Consolidation (LOW priority)")
+        print("SSOT Verification: ✅ PASSED (Agent-8)")
+        return 0
+    
     print("🔧 Consolidate Batch 5 Duplicates")
     print("   Task: Batch 5 Consolidation (15 groups, temp_repos/Thea/)")
     print("   SSOT Verification: ✅ PASSED (Agent-8)")

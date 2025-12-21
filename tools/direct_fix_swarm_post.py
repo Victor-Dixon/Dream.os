@@ -134,6 +134,12 @@ def force_fix_content(content: str) -> str:
 
 def main():
     """Force fix The Swarm post."""
+    # Handle --help flag
+    if len(sys.argv) > 1 and sys.argv[1] in ('--help', '-h'):
+        print("Usage: python direct_fix_swarm_post.py")
+        print("Force fix the 'The Swarm' post on dadudekc.com to fix color issues.")
+        return 0
+
     print("=" * 60)
     print("FORCE FIXING THE SWARM POST - WHITE ON WHITE SECTIONS")
     print("=" * 60)

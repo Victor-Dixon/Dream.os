@@ -49,8 +49,8 @@ except ImportError:
 
 try:
     from src.core.config.timeout_constants import TimeoutConstants
-except ImportError:
-    # Fallback if timeout constants not available
+except (ImportError, FileNotFoundError):
+    # Fallback if import fails (e.g., due to missing cursor_agent_coords.json)
     class TimeoutConstants:
         HTTP_QUICK = 5
         HTTP_DEFAULT = 30

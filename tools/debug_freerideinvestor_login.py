@@ -134,6 +134,12 @@ def enable_debug_mode() -> bool:
 
 def main():
     """Main diagnostic function."""
+    # Handle --help flag
+    if len(sys.argv) > 1 and sys.argv[1] in ('--help', '-h'):
+        print("Usage: python debug_freerideinvestor_login.py")
+        print("Helps diagnose and fix HTTP 500 error preventing WordPress login on freerideinvestor.com")
+        return 0
+
     site_url = "https://freerideinvestor.com"
     
     print("=" * 60)

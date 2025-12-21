@@ -1,10 +1,10 @@
 {
-  "timestamp": "2025-12-20T17:24:29.027713",
+  "timestamp": "2025-12-20T18:50:26.562914",
   "total_issues": 134,
   "high_severity": 16,
   "medium_severity": 0,
   "low_severity": 118,
-  "files_checked": 410,
+  "files_checked": 411,
   "issues": [
     {
       "type": "hardcoded_credential",

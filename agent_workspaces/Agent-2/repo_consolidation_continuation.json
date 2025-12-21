@@ -7,43 +7,17 @@
     "Agent-6",
     "Agent-7"
   ],
-  "total_repos": 75,
-  "analyzed_repos": 48,
-  "unanalyzed_repos": 27,
+  "total_repos": 59,
+  "analyzed_repos": 56,
+  "unanalyzed_repos": 3,
   "existing_consolidation_groups": 0,
   "existing_reduction": 0,
-  "additional_groups_found": 11,
-  "additional_reduction": 21,
-  "unanalyzed_opportunities": [
-    {
-      "type": "unanalyzed_duplicate",
-      "priority": "HIGH",
-      "target": "projectscanner",
-      "merge_from": [
-        "projectscanner"
-      ],
-      "repos": [
-        {
-          "num": 49,
-          "name": "projectscanner",
-          "analyzed": false,
-          "agent": "Agent-6",
-          "goldmine": true
-        },
-        {
-          "num": 8,
-          "name": "projectscanner",
-          "analyzed": true,
-          "agent": "Agent-1"
-        }
-      ],
-      "reduction": 1,
-      "reason": "Unanalyzed repo projectscanner matches analyzed repo"
-    }
-  ],
-  "opportunities_reduction": 1,
-  "total_potential_reduction": 22,
-  "target_repo_count": 53,
+  "additional_groups_found": 8,
+  "additional_reduction": 20,
+  "unanalyzed_opportunities": [],
+  "opportunities_reduction": 0,
+  "total_potential_reduction": 20,
+  "target_repo_count": 39,
   "additional_groups": [
     {
       "type": "case_variation",
@@ -72,80 +46,6 @@
     {
       "type": "case_variation",
       "priority": "HIGH",
-      "target": "focusforge",
-      "merge_from": [
-        "FocusForge"
-      ],
-      "repos": [
-        {
-          "num": 24,
-          "name": "FocusForge",
-          "analyzed": true,
-          "agent": "Agent-3",
-          "goldmine": true
-        },
-        {
-          "num": 32,
-          "name": "focusforge",
-          "analyzed": true,
-          "agent": "Agent-5"
-        }
-      ],
-      "reduction": 1,
-      "reason": "Case variation not in existing plan"
-    },
-    {
-      "type": "case_variation",
-      "priority": "HIGH",
-      "target": "streamertools",
-      "merge_from": [
-        "Streamertools"
-      ],
-      "repos": [
-        {
-          "num": 25,
-          "name": "Streamertools",
-          "analyzed": true,
-          "agent": "Agent-3"
-        },
-        {
-          "num": 31,
-          "name": "streamertools",
-          "analyzed": true,
-          "agent": "Agent-5"
-        }
-      ],
-      "reduction": 1,
-      "reason": "Case variation not in existing plan"
-    },
-    {
-      "type": "case_variation",
-      "priority": "HIGH",
-      "target": "tbowtactics",
-      "merge_from": [
-        "TBOWTactics"
-      ],
-      "repos": [
-        {
-          "num": 26,
-          "name": "TBOWTactics",
-          "analyzed": true,
-          "agent": "Agent-3",
-          "goldmine": true
-        },
-        {
-          "num": 33,
-          "name": "tbowtactics",
-          "analyzed": true,
-          "agent": "Agent-5"
-        }
-      ],
-      "reduction": 1,
-      "reason": "Case variation not in existing plan"
-    },
-    {
-      "type": "case_variation",
-      "priority": "HIGH",
       "target": "dadudekcwebsite",
       "merge_from": [
         "DaDudeKC-Website"
@@ -160,30 +60,6 @@
         {
           "num": 35,
           "name": "dadudekcwebsite",
-          "analyzed": true,
-          "agent": "Agent-5"
-        }
-      ],
-      "reduction": 1,
-      "reason": "Case variation not in existing plan"
-    },
-    {
-      "type": "case_variation",
-      "priority": "HIGH",
-      "target": "dadudekc",
-      "merge_from": [
-        "DaDudekC"
-      ],
-      "repos": [
-        {
-          "num": 29,
-          "name": "DaDudekC",
-          "analyzed": true,
-          "agent": "Agent-3"
-        },
-        {
-          "num": 36,
-          "name": "dadudekc",
           "analyzed": true,
           "agent": "Agent-5"
         }
@@ -219,6 +95,31 @@
     {
       "type": "similar_purpose",
       "priority": "MEDIUM",
+      "target": "machine-learning-pipeline",
+      "merge_from": [
+        "MachineLearningModelMaker"
+      ],
+      "repos": [
+        {
+          "num": 2,
+          "name": "MachineLearningModelMaker",
+          "analyzed": true,
+          "agent": "Agent-1"
+        },
+        {
+          "num": 67,
+          "name": "machine-learning-pipeline",
+          "analyzed": true,
+          "agent": "Agent-8"
+        }
+      ],
+      "reduction": 1,
+      "purpose_category": "ml",
+      "reason": "Similar purpose: ml"
+    },
+    {
+      "type": "similar_purpose",
+      "priority": "MEDIUM",
       "target": "selfevolving_ai",
       "merge_from": [
         "DreamBank",
@@ -227,15 +128,18 @@
         "DreamVault",
         "LSTMmodel_trainer",
         "langchain-google",
-        "LSTMmodel_trainer",
-        "DigitalDreamscape"
+        "osrsAIagent",
+        "DigitalDreamscape",
+        "Dream.os"
       ],
       "repos": [
         {
           "num": 3,
           "name": "DreamBank",
           "analyzed": true,
-          "agent": "Agent-1"
+          "agent": "Agent-1",
+          "merged": true,
+          "merged_into": "DreamVault"
         },
         {
           "num": 6,
@@ -255,7 +159,11 @@
           "name": "DreamVault",
           "analyzed": true,
           "agent": "Agent-2",
-          "goldmine": true
+          "goldmine": true,
+          "merged_repos": [
+            "DreamBank",
+            "DigitalDreamscape"
+          ]
         },
         {
           "num": 18,
@@ -277,19 +185,27 @@
           "goldmine": true
         },
         {
-          "num": 55,
-          "name": "LSTMmodel_trainer",
+          "num": 47,
+          "name": "osrsAIagent",
           "analyzed": true,
-          "agent": "Agent-7"
+          "agent": "Agent-6"
         },
         {
           "num": 59,
           "name": "DigitalDreamscape",
           "analyzed": true,
-          "agent": "Agent-7"
+          "agent": "Agent-7",
+          "merged": true,
+          "merged_into": "DreamVault"
+        },
+        {
+          "num": 69,
+          "name": "Dream.os",
+          "analyzed": true,
+          "agent": "Agent-8"
         }
       ],
-      "reduction": 8,
+      "reduction": 9,
       "purpose_category": "ai_assistant",
       "reason": "Similar purpose: ai_assistant"
     },
@@ -300,7 +216,8 @@
       "merge_from": [
         "trade-analyzer",
         "UltimateOptionsTradingRobot",
-        "thetradingrobo tplug"
+        "TradingRobotPlug",
+        "stocktwits-analyzer"
       ],
       "repos": [
         {
@@ -324,22 +241,27 @@
         },
         {
           "num": 38,
-          "name": "thetradingrobo tplug",
+          "name": "TradingRobotPlug",
           "analyzed": true,
           "agent": "Agent-5"
+        },
+        {
+          "num": 63,
+          "name": "stocktwits-analyzer",
+          "analyzed": true,
+          "agent": "Agent-8"
         }
       ],
-      "reduction": 3,
+      "reduction": 4,
       "purpose_category": "trading",
       "reason": "Similar purpose: trading"
     },
     {
       "type": "similar_purpose",
       "priority": "MEDIUM",
-      "target": "streamertools",
+      "target": "MeTuber",
       "merge_from": [
-        "Streamertools",
-        "MeTuber"
+        "Streamertools"
       ],
       "repos": [
         {
@@ -353,24 +275,19 @@
           "name": "MeTuber",
           "analyzed": true,
           "agent": "Agent-3"
-        },
-        {
-          "num": 31,
-          "name": "streamertools",
-          "analyzed": true,
-          "agent": "Agent-5"
         }
       ],
-      "reduction": 2,
+      "reduction": 1,
       "purpose_category": "streaming",
       "reason": "Similar purpose: streaming"
     },
     {
       "type": "similar_purpose",
       "priority": "MEDIUM",
-      "target": "dadudekcwebsite",
+      "target": "FreerideinvestorWebsite",
       "merge_from": [
-        "DaDudeKC-Website"
+        "DaDudeKC-Website",
+        "dadudekcwebsite"
       ],
       "repos": [
         {
@@ -384,16 +301,22 @@
           "name": "dadudekcwebsite",
           "analyzed": true,
           "agent": "Agent-5"
+        },
+        {
+          "num": 62,
+          "name": "FreerideinvestorWebsite",
+          "analyzed": true,
+          "agent": "Agent-8"
         }
       ],
-      "reduction": 1,
+      "reduction": 2,
       "purpose_category": "web",
       "reason": "Similar purpose: web"
     }
   ],
   "refinements": {
     "thea_added_to_dream_projects": true,
-    "case_variations_identified": 7,
-    "purpose_groups_identified": 4
+    "case_variations_identified": 3,
+    "purpose_groups_identified": 5
   }
 }

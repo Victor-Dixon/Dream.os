@@ -1,7 +1,33 @@
 {
   "total_repos_checked": 46,
-  "found_repos": 46,
-  "missing_repos": [],
+  "found_repos": 36,
+  "missing_repos": [
+    {
+      "name": "focusforge",
+      "expected_num": 32,
+      "type": "source"
+    },
+    {
+      "name": "streamertools",
+      "expected_num": 31,
+      "type": "source"
+    },
+    {
+      "name": "tbowtactics",
+      "expected_num": 33,
+      "type": "source"
+    },
+    {
+      "name": "dadudekc",
+      "expected_num": 36,
+      "type": "source"
+    },
+    {
+      "name": "thetradingrobo tplug",
+      "expected_num": 38,
+      "type": "source"
+    }
+  ],
   "incorrect_numbers": [],
   "groups": {
     "Duplicate Names - Case Variations": {
@@ -12,11 +38,11 @@
           "target_expected_num": 24,
           "source_expected_num": 32,
           "target_found": true,
-          "source_found": true,
+          "source_found": false,
           "target_actual_num": 24,
-          "source_actual_num": 32,
+          "source_actual_num": null,
           "target_correct": true,
-          "source_correct": true
+          "source_correct": false
         },
         {
           "target": "Streamertools",
@@ -24,11 +50,11 @@
           "target_expected_num": 25,
           "source_expected_num": 31,
           "target_found": true,
-          "source_found": true,
+          "source_found": false,
           "target_actual_num": 25,
-          "source_actual_num": 31,
+          "source_actual_num": null,
           "target_correct": true,
-          "source_correct": true
+          "source_correct": false
         },
         {
           "target": "TBOWTactics",
@@ -36,11 +62,11 @@
           "target_expected_num": 26,
           "source_expected_num": 33,
           "target_found": true,
-          "source_found": true,
+          "source_found": false,
           "target_actual_num": 26,
-          "source_actual_num": 33,
+          "source_actual_num": null,
           "target_correct": true,
-          "source_correct": true
+          "source_correct": false
         },
         {
           "target": "Superpowered-TTRPG",
@@ -72,11 +98,11 @@
           "target_expected_num": 29,
           "source_expected_num": 36,
           "target_found": true,
-          "source_found": true,
+          "source_found": false,
           "target_actual_num": 29,
-          "source_actual_num": 36,
+          "source_actual_num": null,
           "target_correct": true,
-          "source_correct": true
+          "source_correct": false
         },
         {
           "target": "fastapi",
@@ -151,8 +177,8 @@
           "source_correct": false
         }
       ],
-      "found": 24,
-      "missing": 0,
+      "found": 16,
+      "missing": 4,
       "incorrect": 0
     },
     "Dream Projects": {
@@ -218,15 +244,15 @@
           "target_expected_num": 17,
           "source_expected_num": 38,
           "target_found": true,
-          "source_found": true,
+          "source_found": false,
           "target_actual_num": 17,
-          "source_actual_num": 38,
+          "source_actual_num": null,
           "target_correct": true,
-          "source_correct": true
+          "source_correct": false
         }
       ],
-      "found": 6,
-      "missing": 0,
+      "found": 4,
+      "missing": 1,
       "incorrect": 0
     },
     "Agent Systems": {

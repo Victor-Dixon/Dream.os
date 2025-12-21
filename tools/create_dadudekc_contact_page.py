@@ -125,6 +125,12 @@ def create_contact_page():
 
 def main():
     """Main execution."""
+    # Handle --help flag
+    if len(sys.argv) > 1 and sys.argv[1] in ('--help', '-h'):
+        print("Usage: python create_dadudekc_contact_page.py")
+        print("Creates a contact page with lead capture form for dadudekc.com")
+        return 0
+
     print("🔧 Creating contact page with lead capture form for dadudekc.com...\n")
 
     page = create_contact_page()

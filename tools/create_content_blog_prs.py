@@ -109,6 +109,14 @@ This merge is part of repository consolidation.
 
 def main():
     """Create both PRs."""
+    # Handle --help flag
+    if len(sys.argv) > 1 and sys.argv[1] in ('--help', '-h'):
+        print("Usage: python create_content_blog_prs.py")
+        print("Creates PRs for Content/Blog Systems Consolidation:")
+        print("  - content → Auto_Blogger (branch: merge-content-20251128)")
+        print("  - FreeWork → Auto_Blogger (branch: merge-FreeWork-20251128)")
+        return 0
+    
     print("=" * 60)
     print("📦 CREATING CONTENT/BLOG SYSTEMS CONSOLIDATION PRs")
     print("=" * 60)

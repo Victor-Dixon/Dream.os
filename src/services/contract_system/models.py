@@ -27,11 +27,13 @@ class ContractStatus(Enum):
 
 class ContractPriority(Enum):
     """Contract priority enumeration."""
-    
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     URGENT = "urgent"
+
+
+# NOTE: TaskStatus enum below is deprecated - use coordination_models.py instead
 
 
 class TaskStatus(Enum):

@@ -10,7 +10,12 @@ from typing import Dict, List, Tuple
 
 def get_repo_list() -> List[str]:
     """Extract just repo names (not Agent-6's scores)"""
-    with open('COMPLETE_GITHUB_ROI_RESULTS.json') as f:
+    roi_file = Path('COMPLETE_GITHUB_ROI_RESULTS.json')
+    if not roi_file.exists():
+        # Fallback: return empty list or use alternative data source
+        print("⚠️  COMPLETE_GITHUB_ROI_RESULTS.json not found, using empty list")
+        return []
+    with open(roi_file) as f:
         data = json.load(f)
     return [r['repo'] for r in data['results']]
 

@@ -23,6 +23,7 @@ from typing import Any, Dict, List, Optional
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
+from src.core.config.timeout_constants import TimeoutConstants
 from src.utils.unified_config_utils import (
     UnifiedConfigurationConsolidator,
     FileScanner,
@@ -71,7 +72,6 @@ def clone_repo(repo_name: str, temp_dir: Path) -> Optional[Path]:
     # Remove if exists
     if repo_dir.exists():
         import shutil
-from src.core.config.timeout_constants import TimeoutConstants
         shutil.rmtree(repo_dir)
     
     try:

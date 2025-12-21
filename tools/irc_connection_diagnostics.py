@@ -10,13 +10,18 @@ Usage:
     python tools/irc_connection_diagnostics.py
 """
 
-from src.services.chat_presence.twitch_bridge import TwitchChatBridge
 import re
 import logging
 import asyncio
 import os
 import sys
 from pathlib import Path
+
+# Add project root to path
+project_root = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(project_root))
+
+from src.services.chat_presence.twitch_bridge import TwitchChatBridge
 
 # Add project root to path
 sys.path.insert(0, str(Path(__file__).parent.parent))

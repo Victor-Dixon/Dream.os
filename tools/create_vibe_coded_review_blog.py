@@ -20,7 +20,12 @@ from tools.unified_blogging_automation import UnifiedBloggingAutomation
 
 def main():
     """Create and publish the vibe-coded work review blog post."""
-    
+    # Handle --help flag
+    if len(sys.argv) > 1 and sys.argv[1] in ('--help', '-h'):
+        print("Usage: python create_vibe_coded_review_blog.py")
+        print("Creates and publishes a professional blog post reviewing the vibe-coded work.")
+        return 0
+
     # Read the blog post content
     blog_content_path = project_root / "docs" / "blog" / "vibe_coded_work_review.md"
     

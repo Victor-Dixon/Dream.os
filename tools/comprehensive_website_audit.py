@@ -290,6 +290,18 @@ class ComprehensiveWebsiteAuditor:
 
 def main():
     """Main audit execution."""
+    import sys
+    # Handle --help flag
+    if len(sys.argv) > 1 and sys.argv[1] in ('--help', '-h'):
+        print("Usage: python comprehensive_website_audit.py [--help]")
+        print("Audits all configured WordPress websites for:")
+        print("  - SFTP connectivity and credentials")
+        print("  - Theme status and activation")
+        print("  - Site accessibility and responsiveness")
+        print("  - Content and functionality verification")
+        print("\nSites audited: crosbyultimateevents.com, dadudekc.com, freerideinvestor, houstonsipqueen.com, tradingrobotplug.com")
+        return 0
+    
     auditor = ComprehensiveWebsiteAuditor()
 
     # Run comprehensive audit

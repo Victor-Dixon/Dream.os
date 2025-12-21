@@ -11,12 +11,17 @@ Author: Agent-4 (Captain)
 Date: 2025-11-28
 """
 
+import sys
+from pathlib import Path
+
+# Add project root to path
+project_root = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(project_root))
+
 from src.core.config.timeout_constants import TimeoutConstants
 import os
 from tools.merge_prs_via_api import get_github_token, create_pr
-import sys
 import requests
-from pathlib import Path
 
 # Add project root to path
 project_root = Path(__file__).resolve().parent.parent

@@ -337,6 +337,18 @@ class ToolAnalyzer:
 
 def main():
     """Main function."""
+    # Handle --help flag
+    if len(sys.argv) > 1 and sys.argv[1] in ('--help', '-h'):
+        print("Usage: python comprehensive_tool_analyzer.py [--help]")
+        print("Analyzes all tools in the tools/ directory to:")
+        print("  1. Create complete inventory")
+        print("  2. Categorize all tools")
+        print("  3. Identify consolidation opportunities")
+        print("  4. Identify deletion candidates")
+        print("  5. Identify integration opportunities")
+        print("\nReport saved to: agent_workspaces/Agent-5/COMPREHENSIVE_TOOLS_ANALYSIS_*.json")
+        return 0
+    
     analyzer = ToolAnalyzer()
     report = analyzer.analyze()
     

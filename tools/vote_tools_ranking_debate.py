@@ -104,17 +104,22 @@ def vote_on_tools_ranking_debate():
             print(f"   Tool: {vote_data['tool']}")
             print(f"   Reasoning: {vote_data['reasoning'][:100]}...")
             
-            result = vote_tool.execute({
-                "debate_id": debate_id,
-                "agent_id": agent_id,
-                "option": vote_data["option"],
-                "argument": vote_data["reasoning"]
-            })
-            
-            if result.success:
-                print(f"   ✅ Vote cast successfully")
-            else:
-                print(f"   ❌ Vote failed: {result.error_message}")
+            try:
+                result = vote_tool.execute({
+                    "debate_id": debate_id,
+                    "agent_id": agent_id,
+                    "option": vote_data["option"],
+                    "argument": vote_data["reasoning"]
+                })
+                
+                if result and hasattr(result, 'success') and result.success:
+                    print(f"   ✅ Vote cast successfully")
+                elif result and hasattr(result, 'error_message'):
+                    print(f"   ❌ Vote failed: {result.error_message}")
+                else:
+                    print(f"   ⚠️  Vote result unclear")
+            except Exception as e:
+                print(f"   ❌ Vote execution error: {e}")
         
         print("\n" + "=" * 60)
         print("✅ All votes cast!")

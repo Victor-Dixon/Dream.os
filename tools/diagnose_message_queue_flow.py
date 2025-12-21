@@ -61,6 +61,17 @@ def check_recent_messages():
 
 def main():
     """Run diagnostic checks."""
+    # Handle --help flag
+    if len(sys.argv) > 1 and sys.argv[1] in ('--help', '-h'):
+        print("Usage: python diagnose_message_queue_flow.py [--help]")
+        print("Diagnoses why system messages aren't flowing through the queue.")
+        print("\nChecks:")
+        print("  - Queue processor status")
+        print("  - Queue statistics")
+        print("  - Recent message activity")
+        print("  - Queue file integrity")
+        return 0
+    
     print("=" * 70)
     print("MESSAGE QUEUE FLOW DIAGNOSTIC")
     print("=" * 70)

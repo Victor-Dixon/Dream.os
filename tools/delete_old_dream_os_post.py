@@ -69,6 +69,13 @@ def delete_post(site_url: str, username: str, app_password: str, post_id: int) -
 
 def main():
     """Delete old duplicate post."""
+    # Handle --help flag
+    if len(sys.argv) > 1 and sys.argv[1] in ('--help', '-h'):
+        print("Usage: python delete_old_dream_os_post.py")
+        print("Deletes the old unstyled Dream.os review post (ID: 43) from dadudekc.com")
+        print("Keeps the new styled version (ID: 45)")
+        return 0
+    
     print("=" * 60)
     print("DELETE OLD DREAM.OS POST")
     print("=" * 60)

@@ -254,27 +254,6 @@
 },
 ```
 
-### Start Message Queue Processor
-
-**ID**: `queue-start`
-
-**Module**: `tools.start_message_queue_processor`
-
-**Flags**: --queue-start, --start-queue
-
-**Description**: Start message queue processor
-
-```python
-"queue-start": {
-    "name": "Start Message Queue Processor",
-    "module": "tools.start_message_queue_processor",
-    "main_function": "main",
-    "description": "Start message queue processor",
-    "flags": ['--queue-start', '--start-queue'],
-    "args_passthrough": True,
-},
-```
-
 ### Diagnose Queue
 
 **ID**: `queue-diagnose`

@@ -13,7 +13,26 @@ License: MIT
 try:
     from .v2_checker_models import ComplianceReport, ComplianceViolation
 except ImportError:
-    from v2_checker_models import ComplianceReport, ComplianceViolation
+    try:
+        from v2_checker_models import ComplianceReport, ComplianceViolation
+    except ImportError:
+        # Fallback: Define minimal classes if module not found
+        from dataclasses import dataclass
+        from typing import List, Optional
+        
+        @dataclass
+        class ComplianceViolation:
+            file_path: str
+            violation_type: str
+            current: int
+            limit: int
+            severity: str = "MEDIUM"
+        
+        @dataclass
+        class ComplianceReport:
+            file_path: str
+            violations: List[ComplianceViolation]
+            total_violations: int = 0
 
 # Import optional tools
 try:

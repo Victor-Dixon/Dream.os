@@ -289,6 +289,18 @@ def generate_solutions(diagnostics: Dict) -> List[str]:
 
 def main():
     """Main diagnostic function."""
+    # Handle --help flag
+    if len(sys.argv) > 1 and sys.argv[1] in ('--help', '-h'):
+        print("Usage: python diagnose_github_cli_auth.py [--help]")
+        print("Identifies GitHub CLI authentication problems and provides solutions.")
+        print("\nTask: CP-004 - Address GitHub CLI authentication blockers")
+        print("\nChecks:")
+        print("  - GitHub CLI installation")
+        print("  - Authentication status")
+        print("  - Environment tokens")
+        print("  - Account configuration")
+        return 0
+    
     print("\n" + "=" * 60)
     print("🔍 GitHub CLI Authentication Diagnostic Tool")
     print("=" * 60)

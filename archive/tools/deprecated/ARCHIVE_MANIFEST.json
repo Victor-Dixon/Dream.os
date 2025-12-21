@@ -1,0 +1,69 @@
+{
+  "archive_info": {
+    "archived": [
+      {
+        "original_path": "tools\\deprecated\\aria_active_response.py",
+        "archive_path": "archive\\tools\\deprecated\\aria_active_response.py",
+        "size_bytes": 2736,
+        "archived_at": "2025-12-20T18:01:38.588977"
+      },
+      {
+        "original_path": "tools\\deprecated\\projectscanner.py",
+        "archive_path": "archive\\tools\\deprecated\\projectscanner.py",
+        "size_bytes": 3354,
+        "archived_at": "2025-12-20T18:01:38.626995"
+      },
+      {
+        "original_path": "tools\\deprecated\\captain_workspace_cleanup.py",
+        "archive_path": "archive\\tools\\deprecated\\captain_workspace_cleanup.py",
+        "size_bytes": 7068,
+        "archived_at": "2025-12-20T18:01:38.654019"
+      },
+      {
+        "original_path": "tools\\deprecated\\duplication_analyzer.py",
+        "archive_path": "archive\\tools\\deprecated\\duplication_analyzer.py",
+        "size_bytes": 12998,
+        "archived_at": "2025-12-20T18:01:38.672034"
+      },
+      {
+        "original_path": "tools\\deprecated\\unified_validator.py",
+        "archive_path": "archive\\tools\\deprecated\\unified_validator.py",
+        "size_bytes": 22356,
+        "archived_at": "2025-12-20T18:01:38.678040"
+      },
+      {
+        "original_path": "tools\\deprecated\\consolidated_2025-12-05\\archive_communication_validation_tools.py",
+        "archive_path": "archive\\tools\\deprecated\\consolidated_2025-12-05\\archive_communication_validation_tools.py",
+        "size_bytes": 1837,
+        "archived_at": "2025-12-20T18:01:38.721078"
+      },
+      {
+        "original_path": "tools\\deprecated\\consolidated_2025-12-05\\captain_check_agent_status.py",
+        "archive_path": "archive\\tools\\deprecated\\consolidated_2025-12-05\\captain_check_agent_status.py",
+        "size_bytes": 4087,
+        "archived_at": "2025-12-20T18:01:38.743100"
+      },
+      {
+        "original_path": "tools\\deprecated\\consolidated_2025-12-05\\start_message_queue_processor.py",
+        "archive_path": "archive\\tools\\deprecated\\consolidated_2025-12-05\\start_message_queue_processor.py",
+        "size_bytes": 2488,
+        "archived_at": "2025-12-20T18:01:38.779131"
+      },
+      {
+        "original_path": "tools\\deprecated\\consolidated_2025-12-05\\test_scheduler_integration.py",
+        "archive_path": "archive\\tools\\deprecated\\consolidated_2025-12-05\\test_scheduler_integration.py",
+        "size_bytes": 3418,
+        "archived_at": "2025-12-20T18:01:38.809157"
+      }
+    ],
+    "failed": [],
+    "total_files": 9,
+    "total_size_bytes": 60342,
+    "total_size_mb": 0.06,
+    "archived_at": "2025-12-20T18:01:38.809157"
+  },
+  "source_directory": "tools\\deprecated",
+  "archive_directory": "archive\\tools\\deprecated",
+  "created_at": "2025-12-20T18:01:38.809157",
+  "note": "Deprecated tools archived as part of consolidation execution plan"
+}

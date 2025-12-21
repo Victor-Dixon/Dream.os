@@ -12,14 +12,19 @@ import sys
 from pathlib import Path
 from typing import List, Dict
 
-# Add tools directory to path
-sys.path.insert(0, str(Path(__file__).parent))
+# Add project root to path
+project_root = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(project_root))
 
 try:
-    from wordpress_manager import WordPressManager
+    from tools.wordpress_manager import WordPressManager
 except ImportError:
-    print("❌ wordpress_manager not available")
-    sys.exit(1)
+    try:
+        # Fallback: try relative import
+        from wordpress_manager import WordPressManager
+    except ImportError:
+        print("❌ wordpress_manager not available")
+        sys.exit(1)
 
 
 SITES_TO_UPDATE = [

@@ -14,6 +14,10 @@ import sys
 from pathlib import Path
 from typing import Optional, Dict, Any
 
+# Add project root to path
+project_root = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(project_root))
+
 try:
     import requests
     REQUESTS_AVAILABLE = True
@@ -25,7 +29,6 @@ except ImportError:
 def get_github_token() -> Optional[str]:
     """Get GitHub token from environment or .env file (uses SSOT utility)."""
     from src.core.utils.github_utils import get_github_token as get_token_ssot
-    project_root = Path(__file__).resolve().parent.parent
     return get_token_ssot(project_root)
 
 

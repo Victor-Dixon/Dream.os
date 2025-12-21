@@ -9,16 +9,24 @@ Comprehensive catalog of utilities across the project.
 
 ## 📊 Summary Statistics
 
-- **Total Files:** 43
-- **Total Functions:** 43
-- **Total Classes:** 37
-- **Total Lines:** 4,329
-- **V2 Compliant (≤400 lines):** 43 (100.0%)
-- **V2 Violations (>400 lines):** 0
+- **Total Files:** 150
+- **Total Functions:** 175
+- **Total Classes:** 141
+- **Total Lines:** 20,315
+- **V2 Compliant (≤400 lines):** 144 (96.0%)
+- **V2 Violations (>400 lines):** 6
 
 ---
 
 ## 📁 File Catalog
+
+### ✅ `agent_workspaces\Agent-2\extracted_logic\ai_framework\conversation\src\dreamscape\core\utils\chat_navigation.py` (281 lines)
+
+**Description:** Robust chat navigation utilities for Dream.OS agents.
+
+**Functions:** `requires_chat_ready`, `robust_navigate_to_convo`, `send_prompt_to_chat`, `wait_for_chat_ready`, `wait_for_chatgpt_response`
+
+---
 
 ### ✅ `src\ai_automation\utils\__init__.py` (8 lines)
 
@@ -34,13 +42,41 @@ Comprehensive catalog of utilities across the project.
 
 ---
 
+### ✅ `src\core\message_queue\utils\__init__.py` (1 lines)
+
+**Description:** Message Queue Utilities.
+
+---
+
+### ✅ `src\core\message_queue\utils\queue_utilities.py` (82 lines)
+
+**Description:** Queue Utilities - Helper Functions for Message Queue Processing
+
+**Functions:** `get_activity_tracker`, `mark_agent_delivering`, `mark_agent_inactive`, `safe_dequeue`
+
+---
+
+### ✅ `src\core\message_queue_processor\utils\__init__.py` (1 lines)
+
+**Description:** Message Queue Utilities.
+
+---
+
+### ✅ `src\core\message_queue_processor\utils\queue_utilities.py` (82 lines)
+
+**Description:** Queue Utilities - Helper Functions for Message Queue Processing
+
+**Functions:** `get_activity_tracker`, `mark_agent_delivering`, `mark_agent_inactive`, `safe_dequeue`
+
+---
+
 ### ✅ `src\core\utils\__init__.py` (14 lines)
 
 **Exports:** `agent_matching`, `coordination_utils`, `message_queue_utils`, `simple_utils`
 
 ---
 
-### ✅ `src\core\utils\agent_matching.py` (155 lines)
+### ✅ `src\core\utils\agent_matching.py` (170 lines)
 
 **Description:** Agent Matching Utilities - V2 Compliant Agent Matching Logic
 
@@ -50,43 +86,117 @@ Comprehensive catalog of utilities across the project.
 
 ---
 
-### ✅ `src\core\utils\coordination_utils.py` (100 lines)
+### ✅ `src\core\utils\coordination_utils.py` (270 lines)
 
 **Description:** Coordination Utilities - Shared V2 Compliant Utilities
 
-**Classes:** `CoordinationUtils`
+**Classes:** `CoordinationUtils`, `PerformanceMetricsUtils`, `VectorDatabaseOperations`, `VectorInsightsUtils`
 
 **Exports:** `AgentCapability`, `AgentMatchingUtils`, `CoordinationMetrics`, `CoordinationUtils`, `PerformanceMetricsUtils`, `VectorDatabaseOperations`, `VectorInsightsUtils`
 
 ---
 
-### ✅ `src\core\utils\message_queue_utils.py` (214 lines)
+### ✅ `src\core\utils\file_utils.py` (82 lines)
 
-**Description:** Message Queue Utilities - Agent Cellphone V2
+**Description:** File and Directory Utilities - SSOT for File Operations
 
-**Classes:** `MessageQueueUtils`
+**Functions:** `ensure_directory_removed`
+
+**Exports:** `ensure_directory_removed`
 
 ---
 
-### ✅ `src\core\utils\simple_utils.py` (107 lines)
+### ✅ `src\core\utils\github_utils.py` (261 lines)
 
-**Description:** Simple Utils - KISS Compliant
+**Description:** GitHub Utilities - SSOT for GitHub Operations
+
+**Functions:** `_find_project_root`, `_parse_env_line`, `_print_token_info`, `check_existing_pr`, `create_github_pr_headers`, `create_github_pr_url`, `create_pr_data`, `get_github_token`
+
+**Exports:** `REQUESTS_AVAILABLE`, `check_existing_pr`, `create_github_pr_headers`, `create_github_pr_url`, `create_pr_data`, `get_github_token`
+
+---
+
+### ✅ `src\core\utils\message_queue_utils.py` (238 lines)
+
+**Description:** Message Queue Utilities - Agent Cellphone V2
+
+**Classes:** `MessageQueueUtils`, `QueueStatus`
+
+---
+
+### ✅ `src\core\utils\serialization_utils.py` (118 lines)
+
+**Description:** Serialization Utilities - SSOT for to_dict() Patterns
+
+**Functions:** `to_dict`
+
+**Classes:** `DictSerializable`
+
+**Exports:** `DictSerializable`, `to_dict`
+
+---
+
+### ✅ `src\core\utils\simple_utils.py` (140 lines)
+
+**Description:** Simple Utils - V2 Compliance Redirect Shim
 
 **Functions:** `copy_file`, `create_directory`, `delete_file`, `format_string`, `get_file_size`, `get_timestamp`, `is_valid_path`, `list_files`, `read_file`, `write_file`
+
+**Exports:** `copy_file`, `create_directory`, `delete_file`, `format_string`, `get_file_size`, `get_timestamp`, `is_valid_path`, `list_files`, `read_file`, `write_file`
+
+---
+
+### ✅ `src\core\utils\v2_integration_utils.py` (55 lines)
+
+**Description:** V2 Integration Utilities - SSOT
+
+**Functions:** `get_coordinate_loader_fallback`, `get_logger_fallback`, `get_unified_config_fallback`
+
+**Exports:** `get_coordinate_loader`, `get_logger`, `get_unified_config`
+
+---
+
+### ✅ `src\core\utils\validation_utils.py` (160 lines)
+
+**Description:** Validation Utilities - SSOT for Validation Output Formatting
+
+**Functions:** `print_validation_report`, `validate_config_list`, `validate_positive`, `validate_range`
+
+**Classes:** `ValidationReporter`
+
+**Exports:** `ValidationReporter`, `print_validation_report`, `validate_config_list`, `validate_positive`, `validate_range`
+
+---
+
+### ✅ `src\discord_commander\utils\__init__.py` (31 lines)
+
+**Description:** Discord Commander Utilities
+
+**Exports:** `MAX_EMBED_DESCRIPTION`, `MAX_FIELD_VALUE`, `MAX_MESSAGE_LENGTH`, `SAFE_FIELD_CHUNK`, `SAFE_MESSAGE_CHUNK`, `chunk_embed_description`, `chunk_field_value`, `chunk_message`, `format_chunk_header`
+
+---
+
+### ✅ `src\discord_commander\utils\carmyn_preferences.py` (182 lines)
+
+**Description:** Carmyn Preferences Manager - Self-Improving Template System
+
+**Functions:** `format_preferences_message`, `load_preferences`, `save_preferences`, `update_interaction_history`, `update_preference`
+
+---
+
+### ✅ `src\discord_commander\utils\message_chunking.py` (132 lines)
+
+**Description:** Discord Message Chunking Utility
+
+**Functions:** `chunk_embed_description`, `chunk_field_value`, `chunk_message`, `format_chunk_header`
+
+**Exports:** `MAX_EMBED_DESCRIPTION`, `MAX_FIELD_VALUE`, `MAX_MESSAGE_LENGTH`, `SAFE_FIELD_CHUNK`, `SAFE_MESSAGE_CHUNK`, `chunk_embed_description`, `chunk_field_value`, `chunk_message`, `format_chunk_header`
 
 ---
 
 ### ✅ `src\gaming\utils\__init__.py` (12 lines)
 
 **Exports:** `gaming_alert_utils`, `gaming_handlers`, `gaming_monitors`
-
----
-
-### ✅ `src\gaming\utils\gaming_alert_utils.py` (97 lines)
-
-**Description:** Gaming Alert Utilities.
-
-**Functions:** `calculate_alert_priority`, `create_alert_id`, `format_alert_message`, `validate_alert_metadata`
 
 ---
 
@@ -106,9 +216,9 @@ Comprehensive catalog of utilities across the project.
 
 ---
 
-### ✅ `src\services\utils\__init__.py` (12 lines)
+### ✅ `src\services\utils\__init__.py` (16 lines)
 
-**Exports:** `messaging_templates`, `onboarding_constants`, `vector_integration_helpers`
+**Exports:** `agent_utils_registry`, `messaging_templates`, `onboarding_constants`, `vector_config_utils`, `vector_integration_helpers`
 
 ---
 
@@ -118,9 +228,11 @@ Comprehensive catalog of utilities across the project.
 
 ---
 
-### ✅ `src\services\utils\messaging_templates.py` (76 lines)
+### ✅ `src\services\utils\messaging_templates.py` (238 lines)
 
 **Description:** Messaging CLI Templates
+
+**Functions:** `format_template`, `get_broadcast_template`, `get_status_update_template`, `get_task_assignment_template`, `get_urgent_alert_template`, `validate_template_vars`
 
 ---
 
@@ -148,13 +260,21 @@ Comprehensive catalog of utilities across the project.
 
 ---
 
-### ✅ `src\utils\__init__.py` (8 lines)
+### ✅ `src\utils\__init__.py` (40 lines)
 
-**Exports:** `unified_file_utils`
+**Exports:** `autonomous_config_orchestrator`, `backup`, `config_auto_migrator`, `config_consolidator`, `config_file_scanner`, `config_models`, `config_remediator`, `config_scanners`, `file_scanner`, `file_utils`, `logger`, `logger_utils`, `scanner_registry`, `unified_config_utils`, `unified_file_utils`, `unified_utilities`
 
 ---
 
-### ✅ `src\utils\autonomous_config_orchestrator.py` (190 lines)
+### ✅ `src\utils\agent_queue_status.py` (258 lines)
+
+**Description:** Agent Queue Status Manager - Cursor Queue Buildup Prevention
+
+**Classes:** `AgentQueueStatus`
+
+---
+
+### ✅ `src\utils\autonomous_config_orchestrator.py` (186 lines)
 
 **Description:** Autonomous Config Orchestrator - Self-Configuring System
 
@@ -172,7 +292,7 @@ Comprehensive catalog of utilities across the project.
 
 ---
 
-### ✅ `src\utils\config_auto_migrator.py` (272 lines)
+### ✅ `src\utils\config_auto_migrator.py` (275 lines)
 
 **Description:** Configuration Auto-Migrator - Autonomous Config System
 
@@ -182,21 +302,17 @@ Comprehensive catalog of utilities across the project.
 
 ---
 
-### ✅ `src\utils\config_consolidator.py` (172 lines)
-
-**Description:** Configuration Consolidator - V2 Compliance Module
+### ✅ `src\utils\config_consolidator.py` (158 lines)
 
 **Functions:** `run_configuration_consolidation`
 
-**Classes:** `UnifiedConfigurationConsolidator`
+**Classes:** `ConfigurationConsolidator`
 
 ---
 
-### ✅ `src\utils\config_core\__init__.py` (73 lines)
+### ✅ `src\utils\config_core\__init__.py` (8 lines)
 
-**Functions:** `get_config`
-
-**Exports:** `fsm_config`, `get_config`
+**Exports:** `fsm_config`
 
 ---
 
@@ -210,7 +326,7 @@ Comprehensive catalog of utilities across the project.
 
 ---
 
-### ✅ `src\utils\config_file_scanner.py` (100 lines)
+### ✅ `src\utils\config_file_scanner.py` (105 lines)
 
 **Description:** Configuration File Scanner - V2 Compliance Module
 
@@ -226,7 +342,7 @@ Comprehensive catalog of utilities across the project.
 
 ---
 
-### ✅ `src\utils\config_remediator.py` (224 lines)
+### ✅ `src\utils\config_remediator.py` (221 lines)
 
 **Description:** Configuration Remediator - Autonomous Self-Healing
 
@@ -234,29 +350,31 @@ Comprehensive catalog of utilities across the project.
 
 ---
 
-### ✅ `src\utils\config_scanners.py` (205 lines)
+### ✅ `src\utils\config_scanners.py` (192 lines)
 
 **Description:** Configuration Scanners - V2 Compliance Module
 
-**Functions:** `create_default_scanners`, `is_config_constant`, `is_likely_config_value`
+**Functions:** `create_default_scanners`
 
 **Classes:** `ConfigConstantScanner`, `ConfigurationScanner`, `EnvironmentVariableScanner`, `HardcodedValueScanner`, `SettingsPatternScanner`
 
 ---
 
-### ✅ `src\utils\confirm.py` (13 lines)
+### ✅ `src\utils\confirm.py` (37 lines)
+
+**Description:** Minimal confirmation utility for handlers.
 
 **Functions:** `confirm`
 
 ---
 
-### ✅ `src\utils\file_operations\__init__.py` (12 lines)
+### ✅ `src\utils\file_operations\__init__.py` (18 lines)
 
-**Exports:** `backup_operations`, `scanner_operations`, `validation_operations`
+**Exports:** `backup_operations`, `directory_operations`, `file_metadata`, `file_serialization`, `scanner_operations`, `validation_operations`
 
 ---
 
-### ✅ `src\utils\file_operations\backup_operations.py` (254 lines)
+### ✅ `src\utils\file_operations\backup_operations.py` (251 lines)
 
 **Description:** Backup Operations Module
 
@@ -292,7 +410,7 @@ Comprehensive catalog of utilities across the project.
 
 ---
 
-### ✅ `src\utils\file_operations\scanner_operations.py` (127 lines)
+### ✅ `src\utils\file_operations\scanner_operations.py` (126 lines)
 
 **Description:** File Scanner Operations Module
 
@@ -302,7 +420,7 @@ Comprehensive catalog of utilities across the project.
 
 ---
 
-### ✅ `src\utils\file_operations\validation_operations.py` (127 lines)
+### ✅ `src\utils\file_operations\validation_operations.py` (118 lines)
 
 **Description:** File Validation Operations Module
 
@@ -320,25 +438,45 @@ Comprehensive catalog of utilities across the project.
 
 ---
 
-### ✅ `src\utils\file_utils.py` (260 lines)
+### ✅ `src\utils\file_utils.py` (169 lines)
 
-**Description:** Centralized file utility helpers.
+**Description:** File Utils - V2 Compliance Redirect Shim
 
 **Classes:** `FileUtils`
 
+**Exports:** `FileUtils`
+
 ---
 
-### ✅ `src\utils\logger.py` (163 lines)
+### ✅ `src\utils\inbox_utility.py` (164 lines)
+
+**Description:** Inbox Utility - Direct File Creation for Agents
+
+**Functions:** `_format_inbox_message`, `create_inbox_message`
+
+---
+
+### ✅ `src\utils\logger.py` (143 lines)
 
 **Description:** Enhanced Logging System - Agent Cellphone V2
 
 **Functions:** `get_contract_logger`, `get_core_logger`, `get_logger`, `get_messaging_logger`
 
-**Classes:** `StructuredFormatter`, `V2Logger`
+**Classes:** `V2Logger`
 
 ---
 
-### ✅ `src\utils\scanner_registry.py` (101 lines)
+### ✅ `src\utils\logger_utils.py` (84 lines)
+
+**Description:** Logger Utilities - Wrapper for Unified Logging System
+
+**Functions:** `create_logger`, `get_logger`, `setup_logger`
+
+**Exports:** `create_logger`, `get_logger`, `setup_logger`
+
+---
+
+### ✅ `src\utils\scanner_registry.py` (98 lines)
 
 **Description:** Scanner Registry - Autonomous Plugin System
 
@@ -348,19 +486,33 @@ Comprehensive catalog of utilities across the project.
 
 ---
 
-### ✅ `src\utils\unified_config_utils.py` (68 lines)
+### ✅ `src\utils\swarm_time.py` (95 lines)
 
-**Description:** Unified Configuration Utilities - V2 Compliance Module
+**Description:** Swarm Time Utility - Centralized Local Time Management
 
-**Exports:** `ConfigConstantScanner`, `ConfigPattern`, `ConfigurationScanner`, `EnvironmentVariableScanner`, `FileScanner`, `HardcodedValueScanner`, `SettingsPatternScanner`, `UnifiedConfigurationConsolidator`, `create_default_scanners`, `run_configuration_consolidation`
+**Functions:** `format_swarm_timestamp`, `format_swarm_timestamp_filename`, `format_swarm_timestamp_readable`, `get_swarm_time`, `get_swarm_time_display`
+
+**Exports:** `format_swarm_timestamp`, `format_swarm_timestamp_filename`, `format_swarm_timestamp_readable`, `get_swarm_time`, `get_swarm_time_display`
 
 ---
 
-### ✅ `src\utils\unified_file_utils.py` (233 lines)
+### ✅ `src\utils\unified_config_utils.py` (342 lines)
+
+**Description:** Unified Configuration Utilities - V2 Compliance Module
+
+**Functions:** `run_configuration_consolidation`
+
+**Classes:** `ConfigConstantScanner`, `ConfigPattern`, `ConfigurationScanner`, `EnvironmentVariableScanner`, `HardcodedValueScanner`, `SettingsPatternScanner`, `UnifiedConfigurationConsolidator`
+
+---
+
+### ✅ `src\utils\unified_file_utils.py` (320 lines)
 
 **Description:** Unified File Utilities - V2 Compliance Module
 
-**Classes:** `UnifiedFileUtils`
+**Functions:** `create_backup_manager`
+
+**Classes:** `BackupManager`, `BackupOperations`, `FileValidationResult`, `FileValidator`, `UnifiedFileScanner`, `UnifiedFileUtils`
 
 **Exports:** `BackupManager`, `BackupOperations`, `DataSerializationOperations`, `DirectoryOperations`, `FileMetadataOperations`, `FileOperation`, `FileValidationResult`, `FileValidator`, `UnifiedFileScanner`, `UnifiedFileUtils`, `create_backup_manager`
 
@@ -375,3 +527,658 @@ Comprehensive catalog of utilities across the project.
 **Classes:** `UnifiedUtility`
 
 ---
+
+### ✅ `temp_repos\Auto_Blogger\autoblogger\utils\error_handler.py` (90 lines)
+
+**Description:** Error Handler - Centralized Error Handling
+
+**Functions:** `get_error_handler`
+
+**Classes:** `ErrorHandler`
+
+---
+
+### ✅ `temp_repos\Auto_Blogger\autoblogger\utils\logging_setup.py` (17 lines)
+
+**Functions:** `setup_logging`
+
+---
+
+### ✅ `temp_repos\Auto_Blogger\autoblogger\utils\project_scanner.py` (29 lines)
+
+**Description:** Project Scanner Utility
+
+---
+
+### ✅ `temp_repos\Thea\src\dreamscape\core\utils\__init__.py` (24 lines)
+
+**Exports:** `chat_navigation`, `common_utils`, `config_mixin`, `context_mixin`, `context_utils`, `database_mixin`, `development_utils`, `migration_utils`, `print_utils`
+
+---
+
+### ✅ `temp_repos\Thea\src\dreamscape\core\utils\chat_navigation.py` (281 lines)
+
+**Description:** Robust chat navigation utilities for Dream.OS agents.
+
+**Functions:** `requires_chat_ready`, `robust_navigate_to_convo`, `send_prompt_to_chat`, `wait_for_chat_ready`, `wait_for_chatgpt_response`
+
+---
+
+### ⚠️ `temp_repos\Thea\src\dreamscape\core\utils\common_utils.py` (419 lines)
+
+**Description:** Common Utilities for Dreamscape Core
+
+**Functions:** `add_project_root_to_path`, `backup_original_structure`, `cleanup_empty_directories`, `create_directories`, `files_identical`, `format_file_size`, `get_directory_size_mb`, `get_file_hash`, `get_file_size_mb`, `get_project_root`, `load_json`, `parse_date_safe`, `safe_filename`, `save_json`, `setup_logging`
+
+---
+
+### ✅ `temp_repos\Thea\src\dreamscape\core\utils\config_mixin.py` (14 lines)
+
+**Description:** Config Manager Mixin
+
+**Classes:** `ConfigManagerMixin`
+
+---
+
+### ✅ `temp_repos\Thea\src\dreamscape\core\utils\context_mixin.py` (21 lines)
+
+**Description:** Context Manager Mixin
+
+**Classes:** `ContextManagerMixin`
+
+---
+
+### ⚠️ `temp_repos\Thea\src\dreamscape\core\utils\context_utils.py` (448 lines)
+
+**Description:** Shared Context Utilities
+
+**Functions:** `extract_last_yaml_block`, `get_comprehensive_context`, `get_current_skills`, `get_mmorpg_state`, `get_relevant_conversation_history`, `get_session_context`, `get_work_patterns`, `split_json_txt_blocks`
+
+**Classes:** `ContextUtils`
+
+**Exports:** `ContextUtils`, `get_comprehensive_context`, `get_current_skills`, `get_mmorpg_state`, `get_relevant_conversation_history`, `get_session_context`, `get_work_patterns`
+
+---
+
+### ✅ `temp_repos\Thea\src\dreamscape\core\utils\core_utils.py` (34 lines)
+
+**⚠️ Error:** Syntax Error
+
+---
+
+### ✅ `temp_repos\Thea\src\dreamscape\core\utils\database_mixin.py` (84 lines)
+
+**Description:** Database Cleanup Mixin
+
+**Functions:** `ensure_prompt_templates_table`, `force_create_prompt_templates_table`
+
+**Classes:** `DatabaseCleanupMixin`
+
+---
+
+### ✅ `temp_repos\Thea\src\dreamscape\core\utils\development_utils.py` (107 lines)
+
+**Description:** Shared Development Utilities
+
+**Functions:** `extract_themes_from_conversations`, `format_number`, `generate_contextual_dreamscape_template`, `load_conversation_history`
+
+---
+
+### ✅ `temp_repos\Thea\src\dreamscape\core\utils\migration_utils.py` (22 lines)
+
+**Description:** Shared Migration Utilities
+
+**Functions:** `find_import_section`
+
+---
+
+### ✅ `temp_repos\Thea\src\dreamscape\core\utils\print_utils.py` (252 lines)
+
+**Description:** Shared Print Utilities
+
+**Functions:** `print_banner`, `print_completion`, `print_error`, `print_header`, `print_info`, `print_list`, `print_progress`, `print_section`, `print_separator`, `print_startup`, `print_step`, `print_success`, `print_summary`, `print_table`, `print_timestamp`, `print_warning`
+
+**Exports:** `print_banner`, `print_completion`, `print_error`, `print_header`, `print_info`, `print_list`, `print_progress`, `print_section`, `print_separator`, `print_startup`, `print_step`, `print_success`, `print_summary`, `print_table`, `print_timestamp`, `print_warning`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\AlertManager.py` (126 lines)
+
+**Description:** AlertManager.py
+
+**Classes:** `AlertManager`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\AnalyticsManager.py` (130 lines)
+
+**Classes:** `AnalyticsManager`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\Debuggers\DebuggerBase.py` (128 lines)
+
+**Classes:** `DebuggerBase`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\Debuggers\DebuggerCLI.py` (170 lines)
+
+**Description:** DebuggerCLI.py
+
+**Functions:** `main`
+
+**Classes:** `DebuggerCLI`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\Debuggers\DebuggerDashboard.py` (122 lines)
+
+**⚠️ Error:** Syntax Error
+
+---
+
+### ✅ `temp_repos\agentproject\utils\Debuggers\DebuggerLogger.py` (97 lines)
+
+**Classes:** `DebuggerLogger`
+
+---
+
+### ❌ `temp_repos\agentproject\utils\Debuggers\DebuggerManager.py` (960 lines)
+
+**Functions:** `find_class_in_file`, `main`, `main`
+
+**Classes:** `DebuggerBase`, `DebuggerCLI`, `DebuggerDashboard`, `DebuggerLogger`, `DebuggerReporter`, `DebuggingStrategy`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\Debuggers\DebuggerReporter.py` (148 lines)
+
+**Description:** DebuggerReporter.py
+
+**Classes:** `DebuggerReporter`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\Debuggers\DebuggerRunner.py` (158 lines)
+
+**Description:** DebuggerRunner.py
+
+**Classes:** `DebuggerRunner`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\Debuggers\DebuggingOrchestrator.py` (173 lines)
+
+**Description:** DebuggingOrchestrator.py
+
+**Classes:** `DebuggingOrchestrator`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\Debuggers\DebuggingStrategy.py` (242 lines)
+
+**Description:** debugging_strategy.py
+
+**Functions:** `find_class_in_file`
+
+**Classes:** `DebuggingStrategy`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\Debuggers\FileManager.py` (157 lines)
+
+**Functions:** `register`
+
+**Classes:** `FileSorterPlugin`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\Debuggers\ProjectContextAnalyzer.py` (166 lines)
+
+**Functions:** `register`
+
+**Classes:** `ProjectContextAnalyzer`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\Debuggers\SandboxedPythonAgent.py` (105 lines)
+
+**Classes:** `SandboxedPythonAgent`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\Debuggers\StructuredMemorySegment.py` (100 lines)
+
+**Classes:** `StructuredMemorySegment`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\Debuggers\VectorMemoryManager.py` (129 lines)
+
+**Functions:** `cosine_similarity`
+
+**Classes:** `VectorMemoryManager`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\Debuggers\__init__.py` (34 lines)
+
+**Exports:** `DebuggerBase`, `DebuggerCLI`, `DebuggerLogger`, `DebuggerManager`, `DebuggerReporter`, `DebuggerRunner`, `DebuggingOrchestrator`, `DebuggingStrategy`, `FileManager`, `ProjectContextAnalyzer`, `SandboxedPythonAgent`, `StructuredMemorySegment`, `VectorMemoryManager`, `sort_and_analyze`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\Debuggers\plugins\__init__.py` (8 lines)
+
+**Exports:** `run_dispatcher`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\Debuggers\plugins\run_dispatcher.py` (34 lines)
+
+---
+
+### ✅ `temp_repos\agentproject\utils\Debuggers\sort_and_analyze.py` (107 lines)
+
+**Functions:** `categorize_files`, `get_file_hash`, `move_file`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\ErrorHandler.py` (47 lines)
+
+**Classes:** `ErrorHandler`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\PerformanceTracker.py` (40 lines)
+
+**Classes:** `PerformanceTracker`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\PythonNotebook.py` (69 lines)
+
+**Classes:** `PythonNotebook`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\ShellExecutor.py` (84 lines)
+
+**Classes:** `ShellExecutor`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\__init__.py` (18 lines)
+
+**Exports:** `AlertManager`, `AnalyticsManager`, `ErrorHandler`, `PerformanceTracker`, `PythonNotebook`, `ShellExecutor`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\AIConfidenceManager.py` (158 lines)
+
+**Classes:** `AIConfidenceManager`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\AIDebugAgent.py` (50 lines)
+
+**Classes:** `AIDebugAgent`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\AIDebuggingAnalytics.py` (32 lines)
+
+**Classes:** `AIDebuggingAnalytics`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\AIModelManager.py` (176 lines)
+
+**Classes:** `AIModelManager`
+
+---
+
+### ⚠️ `temp_repos\agentproject\utils\plugins\AIPatchManager.py` (429 lines)
+
+**Description:** Merged AI Patch Management Module
+
+**Classes:** `AIPatchManager`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\AIPatchOptimizer.py` (123 lines)
+
+**Classes:** `AIPatchOptimizer`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\AIPatchReviewManager.py` (205 lines)
+
+**Description:** AIPatchReviewManager.py
+
+**Classes:** `AIPatchReviewManager`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\AIPatchUtils.py` (138 lines)
+
+**Description:** A Python class that utilizes various AI models to generate a patch for given code and error.
+
+**Classes:** `AIPatchUtils`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\AIRefactorAgent.py` (195 lines)
+
+**Classes:** `AIRefactorAgent`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\AgentDispatcher.py` (236 lines)
+
+**Description:** AgentDispatcher.py
+
+**Classes:** `ExecutionSandbox`, `PerformanceMonitor`, `TaskManager`
+
+**Exports:** `ExecutionSandbox`, `PerformanceMonitor`, `TaskManager`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\AgentMemory.py` (142 lines)
+
+**Classes:** `AgentMemory`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\AgentPlugin.py` (79 lines)
+
+**Classes:** `AgentPlugin`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\AutoFixManager.py` (242 lines)
+
+**Classes:** `AutoFixManager`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\AutoFixer.py` (223 lines)
+
+**Classes:** `AutoFixer`
+
+---
+
+### ⚠️ `temp_repos\agentproject\utils\plugins\ChainOfThoughtReasoner.py` (426 lines)
+
+**Description:** chain_of_thought_reasoner.py
+
+**Classes:** `AdvancedChainOfThoughtReasoner`, `BasicChainOfThoughtReasoner`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\CodeIntegrationAnalyzerPlugin.py` (187 lines)
+
+**Functions:** `register`
+
+**Classes:** `CodeIntegrationAnalyzerPlugin`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\DatabaseManager.py` (136 lines)
+
+**Classes:** `DatabaseManager`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\DebugAgentAutoFixer.py` (213 lines)
+
+**Description:** DebugAgentAutoFixer.py
+
+**Classes:** `DebugAgentAutoFixer`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\DebugAgentUtils.py` (274 lines)
+
+**Classes:** `DebugAgentUtils`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\DebuggerReporter.py` (149 lines)
+
+**Description:** DebuggerReporter.py
+
+**Classes:** `DebuggerReporter`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\DebuggingStrategy.py` (56 lines)
+
+**Classes:** `DebuggingStrategy`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\DependencyAnalyzer.py` (70 lines)
+
+**Classes:** `ImportFixTracker`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\DuplicateAnalyzerPlugin.py` (156 lines)
+
+**Functions:** `register`
+
+**Classes:** `DuplicateAnalyzerPlugin`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\EmailReporter.py` (125 lines)
+
+**Description:** EmailReporter.py
+
+**Classes:** `EmailReporter`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\ExampleAgent.py` (52 lines)
+
+**Functions:** `run_task`
+
+**Classes:** `ExampleAgent`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\ExecutionSandbox.py` (86 lines)
+
+**Classes:** `ExecutionSandbox`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\FileManager.py` (327 lines)
+
+**Functions:** `register`, `register`
+
+**Classes:** `FileSorterPlugin`, `FileSorterPlugin`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\FileSorterPlugin.py` (153 lines)
+
+**Functions:** `register`
+
+**Classes:** `FileSorterPlugin`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\FixForge.py` (242 lines)
+
+**Functions:** `main`
+
+**Classes:** `ApplyFixTab`, `DebuggingOrchestratorTab`, `DummyDebuggingStrategy`, `MainWindow`, `ProjectSetupTab`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\ImportFixTracker.py` (66 lines)
+
+**Classes:** `ImportFixTracker`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\LoggerManager.py` (109 lines)
+
+**Classes:** `LoggerManager`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\PatchDataManager.py` (170 lines)
+
+**Description:** PatchDataManager Plugin
+
+**Classes:** `PatchDataManager`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\PatchHistoryManager.py` (65 lines)
+
+**Classes:** `PatchHistoryManager`
+
+---
+
+### ⚠️ `temp_repos\agentproject\utils\plugins\PatchManager.py` (468 lines)
+
+**Classes:** `PatchDataManager`, `PatchHistoryManager`, `PatchStorageManager`, `PatchTrackingManager`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\PatchStorageManager.py` (131 lines)
+
+**Classes:** `PatchStorageManager`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\PatchTrackingManager.py` (77 lines)
+
+**Classes:** `PatchTrackingManager`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\PerformanceMonitor.py` (68 lines)
+
+**Classes:** `PerformanceMonitor`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\ProjectContextAnalyzer.py` (131 lines)
+
+**Functions:** `analyze_project`
+
+**Classes:** `ProjectContextAnalyzer`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\QuickFixManager.py` (238 lines)
+
+**Description:** QuickFixManager.py
+
+**Classes:** `QuickFixManager`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\RateLimiter.py` (140 lines)
+
+**Description:** D:\AgentProject\utils\plugins\RateLimiter.py
+
+**Classes:** `RateLimiter`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\ReasonerController.py` (46 lines)
+
+**Classes:** `ReasonerController`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\RollbackManager.py` (107 lines)
+
+**Classes:** `RollbackManager`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\RuleBasedReasoning.py` (115 lines)
+
+**Classes:** `RuleBasedReasoning`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\TaskManager.py` (54 lines)
+
+**Classes:** `TaskManager`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\VersionControlManager.py` (100 lines)
+
+**Description:** VersionControlManager.py
+
+**Classes:** `VersionControlManager`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\__init__.py` (98 lines)
+
+**Exports:** `AIConfidenceManager`, `AIDebugAgent`, `AIDebuggingAnalytics`, `AIModelManager`, `AIPatchManager`, `AIPatchOptimizer`, `AIPatchReviewManager`, `AIPatchUtils`, `AIRefactorAgent`, `AgentDispatcher`, `AgentMemory`, `AgentPlugin`, `AutoFixManager`, `AutoFixer`, `ChainOfThoughtReasoner`, `CodeIntegrationAnalyzerPlugin`, `DatabaseManager`, `DebugAgentAutoFixer`, `DebugAgentUtils`, `DebuggerReporter`, `DebuggingStrategy`, `DependencyAnalyzer`, `DuplicateAnalyzerPlugin`, `EmailReporter`, `ExampleAgent`, `ExecutionSandbox`, `FileManager`, `FileSorterPlugin`, `FixForge`, `ImportFixTracker`, `LoggerManager`, `PatchDataManager`, `PatchHistoryManager`, `PatchManager`, `PatchStorageManager`, `PatchTrackingManager`, `PerformanceMonitor`, `ProjectContextAnalyzer`, `QuickFixManager`, `RateLimiter`, `ReasonerController`, `RollbackManager`, `RuleBasedReasoning`, `TaskManager`, `VersionControlManager`, `run_dispatcher`
+
+---
+
+### ✅ `temp_repos\agentproject\utils\plugins\run_dispatcher.py` (49 lines)
+
+**Description:** run_dispatcher.py
+
+**Functions:** `main`
+
+---
+
+### ✅ `tests\utils\__init__.py` (4 lines)
+
+**Description:** Test utilities package.
+
+---
+
+### ✅ `tests\utils\async_test_utils.py` (49 lines)
+
+**Description:** Utilities for async testing.
+
+---
+
+### ✅ `tests\utils\discord_test_utils.py` (364 lines)
+
+**Description:** Unified Discord Test Utilities
+
+**Functions:** `create_mock_discord_bot`, `create_mock_discord_context`, `create_mock_discord_embed`, `create_mock_discord_interaction`, `create_mock_discord_modal`, `create_mock_discord_view`, `create_mock_messaging_controller`, `create_mock_messaging_service`, `setup_discord_mocks`
+
+---
+
+### ✅ `tools_v2\utils\__init__.py` (8 lines)
+
+**Exports:** `discord_mermaid_renderer`
+
+---
+
+### ✅ `tools_v2\utils\discord_mermaid_renderer.py` (270 lines)
+
+**Description:** Discord Mermaid Renderer
+
+**Classes:** `DiscordMermaidRenderer`
+
+---
+
+## ⚠️ V2 Compliance Violations
+
+Files exceeding 400-line limit:
+
+- **temp_repos\agentproject\utils\Debuggers\DebuggerManager.py:** 960 lines (560 over limit)
+- **temp_repos\agentproject\utils\plugins\PatchManager.py:** 468 lines (68 over limit)
+- **temp_repos\Thea\src\dreamscape\core\utils\context_utils.py:** 448 lines (48 over limit)
+- **temp_repos\agentproject\utils\plugins\AIPatchManager.py:** 429 lines (29 over limit)
+- **temp_repos\agentproject\utils\plugins\ChainOfThoughtReasoner.py:** 426 lines (26 over limit)
+- **temp_repos\Thea\src\dreamscape\core\utils\common_utils.py:** 419 lines (19 over limit)
