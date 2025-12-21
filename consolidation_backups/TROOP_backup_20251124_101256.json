@@ -1,9 +1,0 @@
-{
-  "timestamp": "2025-11-24T10:12:56.318828",
-  "target_repo": "TROOP",
-  "target_repo_num": 60,
-  "source_repo": "TROOP",
-  "source_repo_num": 60,
-  "operation": "merge",
-  "status": "backup_created"
-}

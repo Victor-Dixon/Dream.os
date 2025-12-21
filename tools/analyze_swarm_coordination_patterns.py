@@ -2,6 +2,9 @@
 """
 Swarm Coordination Patterns Analysis
 ====================================
+
+<!-- SSOT Domain: tools -->
+
 Analyzes coordination patterns, force multiplier delegations, loop closures,
 and communication bottlenecks to identify optimization opportunities.
 

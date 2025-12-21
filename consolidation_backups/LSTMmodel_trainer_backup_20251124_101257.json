@@ -1,9 +1,0 @@
-{
-  "timestamp": "2025-11-24T10:12:57.428838",
-  "target_repo": "LSTMmodel_trainer",
-  "target_repo_num": 55,
-  "source_repo": "LSTMmodel_trainer",
-  "source_repo_num": 55,
-  "operation": "merge",
-  "status": "backup_created"
-}

@@ -1,9 +1,0 @@
-{
-  "timestamp": "2025-11-24T16:57:07.136215",
-  "target_repo": "trading-leads-bot",
-  "target_repo_num": 17,
-  "source_repo": "TheTradingRobotPlug",
-  "source_repo_num": null,
-  "operation": "merge",
-  "status": "backup_created"
-}

@@ -1,9 +1,0 @@
-{
-  "timestamp": "2025-11-24T16:13:25.023180",
-  "target_repo": "my-resume",
-  "target_repo_num": 12,
-  "source_repo": "my_resume",
-  "source_repo_num": 53,
-  "operation": "merge",
-  "status": "backup_created"
-}

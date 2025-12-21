@@ -1,0 +1,111 @@
+{
+  "timestamp": "2025-12-21T02:24:12.860575",
+  "phase": "-1",
+  "status": "COMPLETE",
+  "statistics": {
+    "total_tools": 795,
+    "signal_tools": 719,
+    "noise_tools": 26,
+    "needs_review": 0,
+    "signal_percentage": 90.44,
+    "noise_percentage": 3.27,
+    "needs_review_percentage": 0.0
+  },
+  "refactoring_scope": {
+    "tools_to_refactor": 719,
+    "tools_to_deprecate": 26,
+    "tools_to_review": 0
+  },
+  "compliance_baseline": {
+    "before_phase_minus1": {
+      "total_files": 791,
+      "non_compliant": 782,
+      "compliance_percentage": 1.8
+    },
+    "after_phase_minus1": {
+      "total_files": 719,
+      "non_compliant": "TBD",
+      "compliance_percentage": "TBD"
+    }
+  },
+  "by_directory": {
+    "tools": {
+      "signal": 654,
+      "noise": 24,
+      "needs_review": 0,
+      "unknown": 49
+    },
+    "tools/analysis": {
+      "signal": 5,
+      "noise": 0,
+      "needs_review": 0,
+      "unknown": 0
+    },
+    "tools/autonomous": {
+      "signal": 1,
+      "noise": 0,
+      "needs_review": 0,
+      "unknown": 0
+    },
+    "tools/cleanup": {
+      "signal": 2,
+      "noise": 0,
+      "needs_review": 0,
+      "unknown": 0
+    },
+    "tools/cli": {
+      "signal": 3,
+      "noise": 1,
+      "needs_review": 0,
+      "unknown": 0
+    },
+    "tools/codemods": {
+      "signal": 3,
+      "noise": 0,
+      "needs_review": 0,
+      "unknown": 0
+    },
+    "tools/communication": {
+      "signal": 9,
+      "noise": 0,
+      "needs_review": 0,
+      "unknown": 0
+    },
+    "tools/consolidation": {
+      "signal": 2,
+      "noise": 0,
+      "needs_review": 0,
+      "unknown": 0
+    },
+    "tools/coordination": {
+      "signal": 4,
+      "noise": 1,
+      "needs_review": 0,
+      "unknown": 0
+    },
+    "tools/coverage": {
+      "signal": 2,
+      "noise": 0,
+      "needs_review": 0,
+      "unknown": 0
+    },
+    "tools/fixes": {
+      "signal": 1,
+      "noise": 0,
+      "needs_review": 0,
+      "unknown": 0
+    },
+    "tools/thea": {
+      "signal": 22,
+      "noise": 0,
+      "needs_review": 0,
+      "unknown": 1
+    },
+    "tools/toolbelt": {
+      "signal": 11,
+      "noise": 0,
+      "needs_review": 0,
+      "unknown": 0
+    }
+  }
+}

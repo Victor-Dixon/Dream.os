@@ -1,9 +1,0 @@
-{
-  "timestamp": "2025-11-26T02:30:23.905210",
-  "target_repo": "trading-leads-bot",
-  "target_repo_num": 17,
-  "source_repo": "trade-analyzer",
-  "source_repo_num": 4,
-  "operation": "merge",
-  "status": "backup_created"
-}

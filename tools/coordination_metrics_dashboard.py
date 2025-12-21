@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Generate coordination metrics dashboard with real-time data."""
+"""
+Generate coordination metrics dashboard with real-time data.
+
+<!-- SSOT Domain: tools -->
+"""
 import json
 from pathlib import Path
 from datetime import datetime, timedelta

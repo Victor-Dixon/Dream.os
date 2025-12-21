@@ -2,6 +2,9 @@
 """
 Queue Processor Metrics Analysis
 =================================
+
+<!-- SSOT Domain: tools -->
+
 Analyzes queue processor metrics to determine if background processor is needed
 or if synchronous delivery is optimal.
 

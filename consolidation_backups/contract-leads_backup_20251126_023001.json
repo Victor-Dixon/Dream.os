@@ -1,9 +1,0 @@
-{
-  "timestamp": "2025-11-26T02:30:01.906954",
-  "target_repo": "trading-leads-bot",
-  "target_repo_num": 17,
-  "source_repo": "contract-leads",
-  "source_repo_num": 20,
-  "operation": "merge",
-  "status": "backup_created"
-}

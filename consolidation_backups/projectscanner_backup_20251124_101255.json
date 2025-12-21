@@ -1,9 +1,0 @@
-{
-  "timestamp": "2025-11-24T10:12:55.128747",
-  "target_repo": "projectscanner",
-  "target_repo_num": 49,
-  "source_repo": "projectscanner",
-  "source_repo_num": 49,
-  "operation": "merge",
-  "status": "backup_created"
-}
