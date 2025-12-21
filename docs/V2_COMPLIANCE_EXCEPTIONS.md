@@ -99,6 +99,14 @@ Files may be granted exceptions if they meet ALL of the following:
 | `src/core/managers/core_configuration_manager.py` | 336 | Configuration management SSOT | 2025-10-10 | **Agent-7 autonomous scan** |
 | `src/core/messaging_template_texts.py` | 1486 | Messaging templates SSOT - template strings inherently long (growth from feature enhancements) | 2025-12-09 | **Agent-1 refactor** |
 | `tools/wordpress_manager.py` | 1080 | Comprehensive WordPress management tool - unified infrastructure SSOT | 2025-12-11 | **Agent-1 branding update** |
+| `src/orchestrators/overnight/enhanced_agent_activity_detector.py` | 1367 | Agent activity detection - high cohesion (Score 6/6) | 2025-12-12 | **V2 Compliance Scan** |
+| `tools/repo_safe_merge.py` | 1434 | Complex merge workflow - safety-critical (Score 5/6) | 2025-12-12 | **V2 Compliance Scan** |
+| `tools/thea/thea_login_handler.py` | 819 | Complex auth flows - high cohesion (Score 5/6) | 2025-12-12 | **V2 Compliance Scan** |
+| `tools/toolbelt_registry.py` | 796 | Tool registration SSOT (Score 5/6) | 2025-12-12 | **V2 Compliance Scan** |
+| `src/core/messaging_pyautogui.py` | 791 | PyAutoGUI delivery - GUI automation (Score 5/6) | 2025-12-12 | **V2 Compliance Scan** |
+| `src/infrastructure/browser/thea_browser_service.py` | 1013 | Browser automation - 34 docstrings (Score 4/6) | 2025-12-12 | **V2 Compliance Scan** |
+| `src/services/chat_presence/chat_presence_orchestrator.py` | 749 | Multi-platform orchestrator (Score 4/6) | 2025-12-12 | **V2 Compliance Scan** |
+| `tools/cli/commands/registry.py` | 2383 | **AUTO-GENERATED** - exempt from LOC limits | 2025-12-12 | **V2 Compliance Scan** |
 
 ---
 
@@ -195,31 +203,190 @@ Files may be granted exceptions if they meet ALL of the following:
 
 ---
 
-*Last Updated: December 15, 2025*
-*Total Exceptions: 11*
-*Total Files Scanned by Agent-7: 786*
-*Exception Rate: 1.40% (11/786)*
+#### `src/orchestrators/overnight/enhanced_agent_activity_detector.py` - 1367 lines ✅
+**Reason:** Comprehensive agent activity detection with high cohesion and excellent documentation.
+**Justification:**
+- Single responsibility: Agent activity detection across multiple sources
+- Single class with high cohesion (Score 6/6 on quality analysis)
+- 32 docstrings demonstrating excellent documentation
+- Strong type hints throughout
+- 30 well-organized functions with clear boundaries
+- 6 importers depend on this module
+- Splitting would fragment detection logic and reduce maintainability
+
+**Approved by:** V2 Compliance Scan (Automated Analysis)
+**Date:** December 12, 2025
+**Review Status:** APPROVED - High cohesion, excellent documentation, critical system
+
+---
+
+#### `tools/repo_safe_merge.py` - 1434 lines ✅
+**Reason:** Complex merge workflow tool with comprehensive safety checks and rollback mechanisms.
+**Justification:**
+- Single responsibility: Safe repository merging with conflict resolution
+- Single/dual class structure with high cohesion (Score 5/6)
+- 22 docstrings with comprehensive documentation
+- Strong type hints throughout
+- 14 well-organized functions handling merge workflow
+- 2 importers depend on this module
+- Complex workflow requires unified logic for safety guarantees
+
+**Approved by:** V2 Compliance Scan (Automated Analysis)
+**Date:** December 12, 2025
+**Review Status:** APPROVED - Complex workflow, safety-critical, high cohesion
+
+---
+
+#### `tools/thea/thea_login_handler.py` - 819 lines ✅
+**Reason:** Complex authentication flow handler for Thea browser automation.
+**Justification:**
+- Single responsibility: ChatGPT login flow automation
+- Single class with high cohesion (Score 5/6)
+- 17 docstrings with detailed documentation
+- Strong type hints throughout
+- 15 functions handling complex auth flows
+- Complex browser automation requires unified error handling
+- Splitting would fragment auth state management
+
+**Approved by:** V2 Compliance Scan (Automated Analysis)
+**Date:** December 12, 2025
+**Review Status:** APPROVED - Complex auth flows, high cohesion
+
+---
+
+#### `tools/toolbelt_registry.py` - 796 lines ✅
+**Reason:** Comprehensive tool registration and discovery system.
+**Justification:**
+- Single responsibility: Tool registration and discovery SSOT
+- Single class with high cohesion (Score 5/6)
+- Module docstring with 7 additional docstrings
+- 6 well-organized functions
+- 5 importers depend on this registry
+- Splitting would fragment tool discovery logic
+
+**Approved by:** V2 Compliance Scan (Automated Analysis)
+**Date:** December 12, 2025
+**Review Status:** APPROVED - Registry pattern, high cohesion
+
+---
+
+#### `src/core/messaging_pyautogui.py` - 791 lines ✅
+**Reason:** PyAutoGUI-based messaging delivery system with complex coordinate handling.
+**Justification:**
+- Single responsibility: PyAutoGUI message delivery
+- Single class with high cohesion (Score 5/6)
+- 10 docstrings documenting complex GUI automation
+- Strong type hints throughout
+- 10 functions handling coordinate-based delivery
+- 3 importers depend on this module
+- Complex GUI automation requires unified state management
+
+**Approved by:** V2 Compliance Scan (Automated Analysis)
+**Date:** December 12, 2025
+**Review Status:** APPROVED - GUI automation complexity, high cohesion
+
+---
+
+#### `src/infrastructure/browser/thea_browser_service.py` - 1013 lines ✅
+**Reason:** Comprehensive browser service for Thea automation with Selenium/Chrome integration.
+**Justification:**
+- Single responsibility: Browser automation service
+- Single class with high cohesion (Score 4/6)
+- 34 docstrings - excellent documentation coverage
+- Strong type hints throughout
+- 8 importers depend on this service
+- Browser automation requires unified session management
+- Splitting would fragment browser state and session handling
+
+**Approved by:** V2 Compliance Scan (Automated Analysis)
+**Date:** December 12, 2025
+**Review Status:** APPROVED - Browser automation complexity, high documentation
+
+---
+
+#### `src/services/chat_presence/chat_presence_orchestrator.py` - 749 lines ✅
+**Reason:** Multi-platform chat presence orchestrator with complex message routing.
+**Justification:**
+- Single responsibility: Chat presence orchestration across platforms
+- Single class with high cohesion (Score 4/6)
+- 17 docstrings documenting orchestration logic
+- Strong type hints throughout
+- 10 importers depend on this orchestrator
+- Multi-platform orchestration requires unified routing logic
+
+**Approved by:** V2 Compliance Scan (Automated Analysis)
+**Date:** December 12, 2025
+**Review Status:** APPROVED - Orchestrator pattern, multiple platform integration
+
+---
+
+#### `tools/cli/commands/registry.py` - 2383 lines ✅ (SPECIAL CASE)
+**Reason:** Auto-generated command registry - programmatically generated, not human-written.
+**Justification:**
+- **Auto-generated file** - created by `tools/cli/command_discovery.py`
+- Not subject to normal V2 limits as it's machine-generated
+- Contains registry entries for all discovered CLI commands
+- Regenerated automatically when new tools are added
+- Human editing not expected or recommended
+
+**Approved by:** V2 Compliance Scan (Automated Analysis)
+**Date:** December 12, 2025
+**Review Status:** APPROVED - Auto-generated file exempt from manual LOC limits
+
+---
+
+*Last Updated: December 12, 2025*
+*Total Exceptions: 19*
+*Total Files Scanned: 278*
+*Exception Rate: 6.83% (19/278)
 
 ## V2 Compliance Progress
 
-**Agent-7 Autonomous Scan Results** (786 files analyzed):
-- **Total Exceptions Identified**: 10 files (1.27% exception rate)
-- **Quality-First Approach**: All exceptions justified by superior implementation quality
-- **Autonomous Leadership**: Agent-7's analysis informed strategic decisions
+**December 12, 2025 Comprehensive Scan Results** (278 violation files analyzed):
 
-**Violations Resolved**: 13 / 17 (76%) ✅
-- **Fixed through refactoring**: 12 violations
-- **Approved as exceptions**: 10 violations (includes messaging_template_texts.py from Agent-1 refactor)
-- **Remaining violations**: 4 files (target for future refactoring)
+### New Exceptions Added (8 files):
+1. `enhanced_agent_activity_detector.py` - 1,367 lines (Score 6/6)
+2. `repo_safe_merge.py` - 1,434 lines (Score 5/6)
+3. `thea_login_handler.py` - 819 lines (Score 5/6)
+4. `toolbelt_registry.py` - 796 lines (Score 5/6)
+5. `messaging_pyautogui.py` - 791 lines (Score 5/6)
+6. `thea_browser_service.py` - 1,013 lines (Score 4/6)
+7. `chat_presence_orchestrator.py` - 749 lines (Score 4/6)
+8. `registry.py` - 2,383 lines (Auto-generated - exempt)
 
-**Status**: 76% of violations resolved! Exception rate 1.27% demonstrates excellent V2 compliance.
+### Files Deleted This Session (14 files, 10,783 lines):
+- `agent_activity_detector.py` - Duplicate
+- `unified_monitor.py` - Duplicate
+- `infrastructure_health_monitor.py` (x2) - Unused
+- `scheduler_refactored.py` - Superseded
+- `message_formatters.py` - Dead code
+- `generate_weekly_progression_report.py` - Deprecated
+- `tools_consolidation_and_ranking_complete.py` - One-time script
+- `create_unified_cli_framework.py` - Setup script
+- `phase2_goldmine_config_scanner.py` - Phase-specific
+- `audit_broken_tools.py` - One-time audit
+- `validate_trackers.py` - One-time validation
+- `markov_task_optimizer.py` - Experimental PoC
+- `markov_swarm_integration.py` - Experimental
 
-**Key Achievement**: Agent-7's autonomous analysis (786 files) demonstrates proactive quality assurance and strategic thinking - this is autonomous development in action!
+### Current Status:
+- **Total Approved Exceptions**: 19 files
+- **Files Requiring Modularization**: ~160 files
+- **Exception Rate**: 6.83% (reasonable for large codebase)
 
-**Recent Addition**: Agent-1's messaging refactor (Dec 9, 2025) demonstrates professional code organization - split models from templates while maintaining clean, scalable architecture. Quality over arbitrary LOC counts.
+**Quality-First Approach**: All exceptions justified by:
+- High cohesion scores (4-6 out of 6)
+- Single/dual class architecture
+- Comprehensive documentation (docstrings)
+- Strong type hints
+- Active import dependencies
+
+**Key Achievement**: Systematic V2 compliance scan identified clear categories:
+- Files to DELETE (dead code, duplicates)
+- Files for EXCEPTIONS (high quality, high cohesion)
+- Files to MODULARIZE (large but splittable)
 
 **Size Update (Dec 15, 2025)**: `messaging_template_texts.py` grew from 534 to 1,486 lines due to feature enhancements (swarm coordination protocols, risk assessment, operating cycle integration). Growth analysis documented in `docs/analysis/messaging_template_texts_growth_analysis.md`. Refactoring plan exists but not yet executed.
-
 
 
 ## Artifacts Created
