@@ -255,7 +255,20 @@ def append_issues_to_master_log(tasks: List[str]) -> None:
     if insert_idx is None:
         insert_idx = len(lines)
     new_lines = lines[:insert_idx] + tasks + lines[insert_idx:]
-    MASTER_TASK_LOG_PATH.write_text("\n".join(new_lines) + "\n", encoding="utf-8")
+    new_content = "\n".join(new_lines) + "\n"
+
+    # Use atomic file operations to prevent corruption
+    try:
+        from src.utils.atomic_file_ops import atomic_write_text
+        success = atomic_write_text(MASTER_TASK_LOG_PATH, new_content, backup=True)
+        if success:
+            print(f"✅ Filed {len(tasks)} tasks atomically to MASTER_TASK_LOG.md")
+        else:
+            print(f"❌ Failed to file tasks atomically")
+    except ImportError:
+        # Fallback to direct write if atomic ops not available
+        print("⚠️  Atomic ops not available, using direct write")
+        MASTER_TASK_LOG_PATH.write_text(new_content, encoding="utf-8")
 
 
 def run_audit() -> int:
