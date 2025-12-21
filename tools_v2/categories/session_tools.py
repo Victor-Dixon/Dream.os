@@ -262,3 +262,7 @@ class SessionPointsCalculatorTool(IToolAdapter):
         except Exception as e:
             logger.error(f"Error calculating points: {e}")
             raise ToolExecutionError(str(e), tool_name="agent.points")
+
+
+# Alias for registry compatibility
+PointsCalculatorTool = SessionPointsCalculatorTool
