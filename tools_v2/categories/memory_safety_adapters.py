@@ -189,10 +189,14 @@ class FileHandleCheckTool(IToolAdapter):
             raise ToolExecutionError(str(e), tool_name="mem.handles")
 
 
+# Alias for registry compatibility
+ImportValidatorTool = MemorySafetyImportValidatorTool
+
 __all__ = [
     "MemoryLeakDetectorTool",
     "FileVerificationTool",
     "UnboundedScanTool",
-    "MemorySafetyImportValidatorTool",  # Fixed: Use actual class name, not "ImportValidatorTool"
+    "MemorySafetyImportValidatorTool",
+    "ImportValidatorTool",  # Alias for registry compatibility
     "FileHandleCheckTool",
 ]

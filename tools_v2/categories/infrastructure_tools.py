@@ -38,6 +38,9 @@ from .infrastructure_utility_tools import (
     BrowserPoolManagerTool,
 )
 
+# Alias for registry compatibility
+ROICalculatorTool = InfrastructureROICalculatorTool
+
 
 # All tool classes are now imported from split files above
 
@@ -48,6 +51,7 @@ __all__ = [
     "FileLineCounterTool",
     "ModuleExtractorPlannerTool",
     "InfrastructureROICalculatorTool",
+    "ROICalculatorTool",  # Alias for registry compatibility
     "WorkspaceHealthMonitorTool",
     "WorkspaceAutoCleanerTool",
     "BrowserPoolManagerTool",
