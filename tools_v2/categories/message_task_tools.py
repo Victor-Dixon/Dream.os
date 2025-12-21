@@ -12,7 +12,7 @@ Created: 2025-10-13
 import logging
 from typing import Any
 
-from ..adapters.base_adapter import IToolAdapter
+from ..adapters.base_adapter import IToolAdapter, ToolResult, ToolSpec
 
 logger = logging.getLogger(__name__)
 
@@ -20,7 +20,23 @@ logger = logging.getLogger(__name__)
 class MessageIngestTool(IToolAdapter):
     """Ingest message and create task."""
 
-    def execute(self, params: dict[str, Any]) -> dict[str, Any]:
+    def get_spec(self) -> ToolSpec:
+        """Get tool specification."""
+        return ToolSpec(
+            name="msgtask.ingest",
+            version="1.0.0",
+            category="message_task",
+            summary="Ingest message and create task",
+            required_params=["content"],
+            optional_params={"message_id": None, "author": "Agent", "channel": "cli"},
+        )
+
+    def validate(self, params: dict[str, Any]) -> tuple[bool, list[str]]:
+        """Validate parameters."""
+        spec = self.get_spec()
+        return spec.validate_params(params)
+
+    def execute(self, params: dict[str, Any], context: dict[str, Any] | None = None) -> ToolResult:
         """Execute message ingestion."""
         try:
             from src.message_task.messaging_integration import process_message_for_task
@@ -31,27 +47,43 @@ class MessageIngestTool(IToolAdapter):
             channel = params.get("channel", "cli")
 
             if not content:
-                return {"success": False, "error": "Content required"}
+                return ToolResult(success=False, output=None, error_message="Content required", exit_code=1)
 
             task_id = process_message_for_task(message_id, content, author, channel)
 
             if task_id:
-                return {
-                    "success": True,
-                    "task_id": task_id,
-                    "message": f"Task created: {task_id}",
-                }
+                return ToolResult(
+                    success=True,
+                    output={"task_id": task_id, "message": f"Task created: {task_id}"},
+                    exit_code=0,
+                )
             else:
-                return {"success": False, "error": "Failed to create task"}
+                return ToolResult(success=False, output=None, error_message="Failed to create task", exit_code=1)
 
         except Exception as e:
-            return {"success": False, "error": str(e)}
+            return ToolResult(success=False, output=None, error_message=str(e), exit_code=1)
 
 
 class TaskParserTool(IToolAdapter):
     """Parse message to extract task info."""
 
-    def execute(self, params: dict[str, Any]) -> dict[str, Any]:
+    def get_spec(self) -> ToolSpec:
+        """Get tool specification."""
+        return ToolSpec(
+            name="msgtask.parse",
+            version="1.0.0",
+            category="message_task",
+            summary="Parse message to extract task info",
+            required_params=["content"],
+            optional_params={},
+        )
+
+    def validate(self, params: dict[str, Any]) -> tuple[bool, list[str]]:
+        """Validate parameters."""
+        spec = self.get_spec()
+        return spec.validate_params(params)
+
+    def execute(self, params: dict[str, Any], context: dict[str, Any] | None = None) -> ToolResult:
         """Execute task parsing."""
         try:
             from src.message_task.parsers.ai_parser import AIParser
@@ -60,7 +92,7 @@ class TaskParserTool(IToolAdapter):
 
             content = params.get("content")
             if not content:
-                return {"success": False, "error": "Content required"}
+                return ToolResult(success=False, output=None, error_message="Content required", exit_code=1)
 
             # Try parsers
             for parser_name, parser in [
@@ -70,25 +102,44 @@ class TaskParserTool(IToolAdapter):
             ]:
                 result = parser.parse(content)
                 if result:
-                    return {
-                        "success": True,
-                        "parser_used": parser_name,
-                        "title": result.title,
-                        "description": result.description,
-                        "priority": result.priority,
-                        "assignee": result.assignee,
-                    }
+                    return ToolResult(
+                        success=True,
+                        output={
+                            "parser_used": parser_name,
+                            "title": result.title,
+                            "description": result.description,
+                            "priority": result.priority,
+                            "assignee": result.assignee,
+                        },
+                        exit_code=0,
+                    )
 
-            return {"success": False, "error": "No parser succeeded"}
+            return ToolResult(success=False, output=None, error_message="No parser succeeded", exit_code=1)
 
         except Exception as e:
-            return {"success": False, "error": str(e)}
+            return ToolResult(success=False, output=None, error_message=str(e), exit_code=1)
 
 
 class TaskFingerprintTool(IToolAdapter):
     """Generate task fingerprint for deduplication."""
 
-    def execute(self, params: dict[str, Any]) -> dict[str, Any]:
+    def get_spec(self) -> ToolSpec:
+        """Get tool specification."""
+        return ToolSpec(
+            name="msgtask.fingerprint",
+            version="1.0.0",
+            category="message_task",
+            summary="Generate task fingerprint for deduplication",
+            required_params=[],
+            optional_params={"title": "", "description": "", "priority": "P3", "assignee": None},
+        )
+
+    def validate(self, params: dict[str, Any]) -> tuple[bool, list[str]]:
+        """Validate parameters."""
+        spec = self.get_spec()
+        return spec.validate_params(params)
+
+    def execute(self, params: dict[str, Any], context: dict[str, Any] | None = None) -> ToolResult:
         """Execute fingerprint generation."""
         try:
             from src.message_task.dedupe import task_fingerprint
@@ -102,7 +153,11 @@ class TaskFingerprintTool(IToolAdapter):
 
             fingerprint = task_fingerprint(task_dict)
 
-            return {"success": True, "fingerprint": fingerprint, "length": len(fingerprint)}
+            return ToolResult(
+                success=True,
+                output={"fingerprint": fingerprint, "length": len(fingerprint)},
+                exit_code=0,
+            )
 
         except Exception as e:
-            return {"success": False, "error": str(e)}
+            return ToolResult(success=False, output=None, error_message=str(e), exit_code=1)
