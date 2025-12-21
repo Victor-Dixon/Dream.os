@@ -34,6 +34,11 @@ except ImportError:
 # SSOT: Use github_utils.get_github_token() instead
 from src.core.utils.github_utils import get_github_token
 
+try:
+    from src.core.config.timeout_constants import TimeoutConstants
+except ImportError:
+    TimeoutConstants = None  # Fallback if not available
+
 
 def get_github_username() -> Optional[str]:
     username = os.getenv("GITHUB_USERNAME")
@@ -293,7 +298,6 @@ def main():
     except Exception as e:
         print(f"❌ Error: {e}")
         import traceback
-from src.core.config.timeout_constants import TimeoutConstants
         traceback.print_exc()
         return 1
     finally:

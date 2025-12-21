@@ -28,6 +28,11 @@ try:
 except ImportError:
     pass
 
+try:
+    from src.core.config.timeout_constants import TimeoutConstants
+except ImportError:
+    TimeoutConstants = None  # Fallback if not available
+
 
 def get_github_token() -> Optional[str]:
     token = os.getenv("GITHUB_TOKEN") or os.getenv("GH_TOKEN")
@@ -85,7 +90,7 @@ def clone_dreamvault(temp_base: Path, token: str, username: str) -> Optional[Pat
         repo_url = f"https://{username}:{token}@github.com/{owner}/{repo}.git"
         subprocess.run(
             ["git", "clone", repo_url, str(repo_dir)],
-            check=True, timeout=TimeoutConstants.HTTP_EXTENDED, capture_output=True, text=True
+            check=True, timeout=TimeoutConstants.HTTP_EXTENDED if TimeoutConstants else 300, capture_output=True, text=True
         )
         return repo_dir
     except Exception:
@@ -225,7 +230,6 @@ def main():
     except Exception as e:
         print(f"❌ Error: {e}")
         import traceback
-from src.core.config.timeout_constants import TimeoutConstants
         traceback.print_exc()
         return 1
     finally:

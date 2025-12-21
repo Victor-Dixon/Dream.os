@@ -22,6 +22,11 @@ except ImportError:
     print("   Install with: pip install requests")
     sys.exit(1)
 
+try:
+    from src.core.config.timeout_constants import TimeoutConstants
+except ImportError:
+    TimeoutConstants = None  # Fallback if not available
+
 
 def get_github_token() -> Optional[str]:
     """Get GitHub token from environment or config."""
@@ -51,7 +56,8 @@ def fetch_repo_info(owner: str, repo_name: str, token: Optional[str] = None) -> 
         headers["Authorization"] = f"token {token}"
     
     try:
-        response = requests.get(url, headers=headers, timeout=TimeoutConstants.HTTP_SHORT)
+        timeout_val = TimeoutConstants.HTTP_SHORT if TimeoutConstants else 30
+        response = requests.get(url, headers=headers, timeout=timeout_val)
         
         if response.status_code == 200:
             return response.json()
@@ -91,12 +97,11 @@ def get_github_owner() -> str:
     # Try to infer from git remote
     try:
         import subprocess
-from src.core.config.timeout_constants import TimeoutConstants
         result = subprocess.run(
             ["git", "config", "--get", "remote.origin.url"],
             capture_output=True,
             text=True,
-            timeout=TimeoutConstants.HTTP_QUICK,
+            timeout=TimeoutConstants.HTTP_QUICK if TimeoutConstants else 10,
         )
         if result.returncode == 0:
             url = result.stdout.strip()
@@ -130,7 +135,8 @@ def list_all_repos(owner: str, token: Optional[str] = None) -> list[dict[str, An
     try:
         while True:
             params = {"page": page, "per_page": per_page, "sort": "created", "direction": "asc"}
-            response = requests.get(url, headers=headers, params=params, timeout=TimeoutConstants.HTTP_SHORT)
+            timeout_val = TimeoutConstants.HTTP_SHORT if TimeoutConstants else 30
+            response = requests.get(url, headers=headers, params=params, timeout=timeout_val)
             
             if response.status_code == 200:
                 repos = response.json()
