@@ -22,7 +22,7 @@ def consolidate_tools_v2():
     print()
     
     repo_root = Path(__file__).parent.parent
-    tools_v2_dir = repo_root / "tools_v2"
+    tools_v2_dir = repo_root / "tools"
     tools_dir = repo_root / "tools"
     
     if not tools_v2_dir.exists():

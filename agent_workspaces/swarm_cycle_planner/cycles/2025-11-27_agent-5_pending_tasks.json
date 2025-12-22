@@ -54,14 +54,14 @@
     {
       "contract_id": "A5-DISCORD-ROUTER-FIX-001",
       "title": "Fix post_to_discord_router.py Import Error",
-      "description": "Resolve ImportError in post_to_discord_router.py (tools_v2.tool_registry issue). Currently using notify_discord.py as workaround, but router should be fixed for future use.",
+      "description": "Resolve ImportError in post_to_discord_router.py (tools.tool_registry issue). Currently using notify_discord.py as workaround, but router should be fixed for future use.",
       "priority": "LOW",
       "points": 100,
       "status": "PENDING",
       "dependencies": [],
       "estimated_time": "1 hour",
       "agent_assigned": "Agent-5",
-      "issue": "ImportError: cannot import name 'get_tool_registry' from 'tools_v2.tool_registry'",
+      "issue": "ImportError: cannot import name 'get_tool_registry' from 'tools.tool_registry'",
       "workaround": "notify_discord.py working as alternative"
     }
   ],

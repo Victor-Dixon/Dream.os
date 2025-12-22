@@ -128,7 +128,7 @@
           "files_affected": [
             "src/discord_commander/trading_data_service.py (5 fixes)",
             "agent_workspaces/Agent-1/mission_continuation.py",
-            "tools_v2/categories/vector_tools.py",
+            "tools/categories/vector_tools.py",
             "mcp_servers/website_manager_server.py",
             "scripts/activate_vector_database_integration.py",
             "tests/integration/trading_robot/test_conversion_funnel.py (3 fixes)"

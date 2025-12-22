@@ -22,7 +22,7 @@ def merge_subdirectories():
     print()
     
     repo_root = Path(__file__).parent.parent
-    tools_v2_dir = repo_root / "tools_v2"
+    tools_v2_dir = repo_root / "tools"
     tools_dir = repo_root / "tools"
     
     subdirs = ["categories", "adapters", "core"]
@@ -73,9 +73,9 @@ def merge_subdirectories():
     
     import_patterns = [
         (r'from tools_v2\.', 'from tools.'),
-        (r'import tools_v2\.', 'import tools.'),
-        (r'from tools_v2 import', 'from tools import'),
-        (r'import tools_v2', 'import tools'),
+        (r'import tools\.', 'import tools.'),
+        (r'from tools import', 'from tools import'),
+        (r'import tools', 'import tools'),
     ]
     
     updated_count = 0
