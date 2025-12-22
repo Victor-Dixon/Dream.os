@@ -194,33 +194,36 @@ export class PatternCoordinationMethods {
      * Get current V2 compliance violations
      */
     getCurrentViolations() {
-        return [
-            { file: 'dashboard-refactored-main.js', lines: 441, overLimit: 141 },
-            { file: 'system-integration-test-refactored.js', lines: 385, overLimit: 85 },
-            { file: 'phase3-integration-test-refactored.js', lines: 388, overLimit: 88 },
-            { file: 'dashboard-core.js', lines: 367, overLimit: 67 },
-            { file: 'dashboard-communication.js', lines: 358, overLimit: 58 },
-            { file: 'dashboard-navigation.js', lines: 348, overLimit: 48 },
-            { file: 'dashboard-ui-helpers.js', lines: 320, overLimit: 20 },
-            { file: 'phase3-test-suites.js', lines: 319, overLimit: 19 }
-        ];
+        // Updated 2025-12-22 by Agent-6: Corrected dashboard compliance numbers
+        // Actual count: 204 violations, 87.7% compliance (excluding temp_repos, dream, quarantine, backup)
+        // Previous: 8 violations (web layer only) - incorrect scope
+        // Note: Full violation list available in agent_workspaces/Agent-6/v2_violations_count.json
+        return {
+            violationCount: 204,  // Actual violations across codebase
+            compliancePercent: 87.7,  // Actual compliance percentage
+            totalFiles: 1663,  // Total files scanned
+            compliantFiles: 1459,  // Compliant files
+            lastUpdated: '2025-12-22',
+            source: 'tools/count_v2_violations.py',
+            note: 'Excludes temp_repos, dream, quarantine, backup directories'
+        };
     }
 
     /**
      * Calculate V2 compliance progress
+     * Updated 2025-12-22 by Agent-6: Now uses actual codebase-wide numbers
      */
     calculateProgress() {
-        const violations = this.getCurrentViolations();
-        const totalFiles = 32; // Total web layer files
-        const compliantFiles = totalFiles - violations.length;
-        const progress = (compliantFiles / totalFiles) * 100;
-
+        const data = this.getCurrentViolations();
+        
         return {
-            totalFiles,
-            compliantFiles,
-            violatingFiles: violations.length,
-            progress: Math.round(progress),
-            status: progress >= 90 ? 'EXCELLENT' : progress >= 75 ? 'GOOD' : 'NEEDS_IMPROVEMENT'
+            totalFiles: data.totalFiles,
+            compliantFiles: data.compliantFiles,
+            violatingFiles: data.violationCount,
+            progress: Math.round(data.compliancePercent),
+            status: data.compliancePercent >= 90 ? 'EXCELLENT' : data.compliancePercent >= 75 ? 'GOOD' : 'NEEDS_IMPROVEMENT',
+            lastUpdated: data.lastUpdated,
+            source: data.source
         };
     }
 
