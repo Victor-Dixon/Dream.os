@@ -1,0 +1,1629 @@
+{
+  "report_date": "2025-12-12T14:24:12.123913",
+  "summary": {
+    "total_violations": 269,
+    "unapproved_violations": 264,
+    "approved_exceptions": 5,
+    "critical_unapproved": 29,
+    "major_unapproved": 71,
+    "threshold_unapproved": 164
+  },
+  "approved_exceptions": [
+    {
+      "file": "tools/wordpress_manager.py",
+      "lines": 1229,
+      "exception": true,
+      "severity": "critical"
+    },
+    {
+      "file": "src/core/messaging_template_texts.py",
+      "lines": 753,
+      "exception": true,
+      "severity": "critical"
+    },
+    {
+      "file": "src/core/message_queue_processor.py",
+      "lines": 542,
+      "exception": true,
+      "severity": "major"
+    },
+    {
+      "file": "src/core/messaging_core.py",
+      "lines": 526,
+      "exception": true,
+      "severity": "major"
+    },
+    {
+      "file": "src/orchestrators/overnight/recovery.py",
+      "lines": 347,
+      "exception": true,
+      "severity": "threshold"
+    }
+  ],
+  "unapproved_violations": [
+    {
+      "file": "src/discord_commander/unified_discord_bot.py",
+      "lines": 2692,
+      "exception": false,
+      "severity": "critical"
+    },
+    {
+      "file": "tools/cli/commands/registry.py",
+      "lines": 2383,
+      "exception": false,
+      "severity": "critical"
+    },
+    {
+      "file": "src/services/messaging_infrastructure.py",
+      "lines": 1922,
+      "exception": false,
+      "severity": "critical"
+    },
+    {
+      "file": "tools/agent_activity_detector.py",
+      "lines": 1724,
+      "exception": false,
+      "severity": "critical"
+    },
+    {
+      "file": "tools/repo_safe_merge.py",
+      "lines": 1434,
+      "exception": false,
+      "severity": "critical"
+    },
+    {
+      "file": "src/orchestrators/overnight/enhanced_agent_activity_detector.py",
+      "lines": 1367,
+      "exception": false,
+      "severity": "critical"
+    },
+    {
+      "file": "src/discord_commander/github_book_viewer.py",
+      "lines": 1164,
+      "exception": false,
+      "severity": "critical"
+    },
+    {
+      "file": "src/core/synthetic_github.py",
+      "lines": 1043,
+      "exception": false,
+      "severity": "critical"
+    },
+    {
+      "file": "src/infrastructure/browser/thea_browser_service.py",
+      "lines": 1013,
+      "exception": false,
+      "severity": "critical"
+    },
+    {
+      "file": "src/services/chat_presence/twitch_bridge.py",
+      "lines": 954,
+      "exception": false,
+      "severity": "critical"
+    },
+    {
+      "file": "src/services/hard_onboarding_service.py",
+      "lines": 870,
+      "exception": false,
+      "severity": "critical"
+    },
+    {
+      "file": "tools/unified_monitor.py",
+      "lines": 855,
+      "exception": false,
+      "severity": "critical"
+    },
+    {
+      "file": "src/discord_commander/templates/broadcast_templates.py",
+      "lines": 819,
+      "exception": false,
+      "severity": "critical"
+    },
+    {
+      "file": "tools/thea/thea_login_handler.py",
+      "lines": 819,
+      "exception": false,
+      "severity": "critical"
+    },
+    {
+      "file": "src/discord_commander/status_change_monitor.py",
+      "lines": 811,
+      "exception": false,
+      "severity": "critical"
+    },
+    {
+      "file": "tools/toolbelt_registry.py",
+      "lines": 796,
+      "exception": false,
+      "severity": "critical"
+    },
+    {
+      "file": "src/core/messaging_pyautogui.py",
+      "lines": 791,
+      "exception": false,
+      "severity": "critical"
+    },
+    {
+      "file": "tools_v2/categories/intelligent_mission_advisor.py",
+      "lines": 787,
+      "exception": false,
+      "severity": "critical"
+    },
+    {
+      "file": "tools/repo_safe_merge_v2.py",
+      "lines": 786,
+      "exception": false,
+      "severity": "critical"
+    },
+    {
+      "file": "tools/autonomous_task_engine.py",
+      "lines": 772,
+      "exception": false,
+      "severity": "critical"
+    },
+    {
+      "file": "src/discord_commander/views/main_control_panel_view.py",
+      "lines": 753,
+      "exception": false,
+      "severity": "critical"
+    },
+    {
+      "file": "src/core/agent_self_healing_system.py",
+      "lines": 751,
+      "exception": false,
+      "severity": "critical"
+    },
+    {
+      "file": "src/services/chat_presence/chat_presence_orchestrator.py",
+      "lines": 749,
+      "exception": false,
+      "severity": "critical"
+    },
+    {
+      "file": "tools/enhanced_unified_github.py",
+      "lines": 720,
+      "exception": false,
+      "severity": "critical"
+    },
+    {
+      "file": "src/core/auto_gas_pipeline_system.py",
+      "lines": 687,
+      "exception": false,
+      "severity": "critical"
+    },
+    {
+      "file": "src/discord_commander/swarm_showcase_commands.py",
+      "lines": 650,
+      "exception": false,
+      "severity": "critical"
+    },
+    {
+      "file": "tools/project_metrics_to_spreadsheet.py",
+      "lines": 628,
+      "exception": false,
+      "severity": "critical"
+    },
+    {
+      "file": "src/core/debate_to_gas_integration.py",
+      "lines": 619,
+      "exception": false,
+      "severity": "critical"
+    },
+    {
+      "file": "tools/github_pr_debugger.py",
+      "lines": 613,
+      "exception": false,
+      "severity": "critical"
+    },
+    {
+      "file": "src/discord_commander/discord_gui_modals.py",
+      "lines": 600,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "src/services/vector_database_service_unified.py",
+      "lines": 598,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools/agent_mission_controller.py",
+      "lines": 593,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools/generate_weekly_progression_report.py",
+      "lines": 586,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools/unified_validator.py",
+      "lines": 585,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools_v2/categories/github_consolidation_tools.py",
+      "lines": 584,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools_v2/categories/autonomous_workflow_tools.py",
+      "lines": 576,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools/devlog_manager.py",
+      "lines": 571,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools/website_manager.py",
+      "lines": 563,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools/robinhood_trading_report.py",
+      "lines": 561,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools/ftp_deployer.py",
+      "lines": 559,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "src/services/soft_onboarding_service.py",
+      "lines": 533,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools/github_pusher_agent.py",
+      "lines": 531,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "src/orchestrators/overnight/orchestrator.py",
+      "lines": 523,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "src/core/stress_test_metrics.py",
+      "lines": 523,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools/start_discord_system.py",
+      "lines": 521,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools/generate_chronological_blog.py",
+      "lines": 518,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools/swarm_system_inventory.py",
+      "lines": 511,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools/test_health_monitor.py",
+      "lines": 500,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "src/services/thea/thea_service.py",
+      "lines": 499,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "src/core/optimized_stall_resume_prompt.py",
+      "lines": 498,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "src/core/utilities/handler_utilities.py",
+      "lines": 497,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools/session_transition_automator.py",
+      "lines": 495,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools/tools_consolidation_and_ranking_complete.py",
+      "lines": 493,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools/stress_test_messaging_queue.py",
+      "lines": 491,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "src/core/local_repo_layer.py",
+      "lines": 488,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools/unified_blogging_automation.py",
+      "lines": 487,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "src/core/message_queue.py",
+      "lines": 486,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "src/core/vector_strategic_oversight/unified_strategic_oversight/analyzers/swarm_analyzer.py",
+      "lines": 486,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools/thea/thea_automation.py",
+      "lines": 483,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools/markov_swarm_integration.py",
+      "lines": 478,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "src/gaming/dreamos/ui_integration.py",
+      "lines": 477,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "src/services/trader_replay/repositories.py",
+      "lines": 476,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools_v2/categories/coordination_tools.py",
+      "lines": 475,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools/create_unified_cli_framework.py",
+      "lines": 474,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "src/orchestrators/overnight/listener.py",
+      "lines": 464,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools/verify_file_usage_enhanced.py",
+      "lines": 461,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "src/discord_commander/controllers/swarm_tasks_controller_view.py",
+      "lines": 457,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "src/core/repository_merge_improvements.py",
+      "lines": 455,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools/markov_task_optimizer.py",
+      "lines": 454,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools/hostinger_api_helper.py",
+      "lines": 450,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "src/workflows/engine.py",
+      "lines": 448,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools/thea/analyze_chatgpt_selectors.py",
+      "lines": 444,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "src/orchestrators/overnight/monitor.py",
+      "lines": 441,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools/projectscanner_modular_reports.py",
+      "lines": 438,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools/wordpress_page_setup.py",
+      "lines": 433,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "src/core/multi_agent_responder.py",
+      "lines": 430,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools_v2/categories/import_fix_tools.py",
+      "lines": 430,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "src/core/error_handling/component_management.py",
+      "lines": 426,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "src/core/config/config_dataclasses.py",
+      "lines": 426,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools/unified_github_pr_creator.py",
+      "lines": 426,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "src/discord_commander/messaging_commands.py",
+      "lines": 425,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "src/repositories/message_repository.py",
+      "lines": 418,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "src/core/stress_test_metrics_analyzer.py",
+      "lines": 416,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools/file_deletion_support.py",
+      "lines": 415,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools_v2/categories/discord_webhook_tools.py",
+      "lines": 414,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools_v2/categories/ssot_validation_tools.py",
+      "lines": 414,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "src/core/message_queue_persistence.py",
+      "lines": 412,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "src/services/chatgpt/session.py",
+      "lines": 412,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools_v2/categories/memory_safety_tools.py",
+      "lines": 410,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "src/discord_commander/webhook_commands.py",
+      "lines": 409,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "src/core/error_handling/error_intelligence.py",
+      "lines": 409,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools/phase2_goldmine_config_scanner.py",
+      "lines": 409,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools/devlog_poster.py",
+      "lines": 408,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "src/infrastructure/browser/unified_cookie_manager.py",
+      "lines": 404,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "src/integrations/jarvis/memory_system.py",
+      "lines": 404,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools/audit_broken_tools.py",
+      "lines": 403,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools/unified_analyzer.py",
+      "lines": 403,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "src/infrastructure/infrastructure_health_monitor.py",
+      "lines": 402,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools/test_repo_status_tracker.py",
+      "lines": 402,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "tools/spreadsheet_github_adapter.py",
+      "lines": 402,
+      "exception": false,
+      "severity": "major"
+    },
+    {
+      "file": "src/services/trader_replay/replay_engine.py",
+      "lines": 400,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/validate_trackers.py",
+      "lines": 400,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/get_repo_chronology.py",
+      "lines": 399,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/workspace_health_monitor.py",
+      "lines": 398,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/verify_file_usage_enhanced_v2.py",
+      "lines": 397,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/mission_control.py",
+      "lines": 395,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/integrations/jarvis/conversation_engine.py",
+      "lines": 394,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/github_consolidation_recovery.py",
+      "lines": 394,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/cycle_v2_to_spreadsheet_integration.py",
+      "lines": 391,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/unified_verifier.py",
+      "lines": 390,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/wordpress_admin_deployer.py",
+      "lines": 389,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/captain_inbox_assistant.py",
+      "lines": 389,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/coordination/discord_commands_tester.py",
+      "lines": 388,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools_v2/categories/swarm_mission_control.py",
+      "lines": 388,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/discord_commander/discord_service.py",
+      "lines": 386,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/validate_stress_test_integration.py",
+      "lines": 386,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/transfer_repos_to_new_github.py",
+      "lines": 385,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/core/gasline_integrations.py",
+      "lines": 383,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/core/utilities/validation_utilities.py",
+      "lines": 383,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/coordinate_implementation_tasks.py",
+      "lines": 383,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/auto_learn_preferences.py",
+      "lines": 382,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/unified_captain.py",
+      "lines": 380,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/enhanced_integration_analyzer.py",
+      "lines": 379,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools_v2/categories/swarm_consciousness.py",
+      "lines": 378,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "scripts/add_ci_cd_to_github_repos.py",
+      "lines": 378,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/web/repository_merge_routes.py",
+      "lines": 376,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/orchestrators/overnight/fsm_bridge.py",
+      "lines": 374,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/discord_commander/controllers/broadcast_templates_view.py",
+      "lines": 372,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/add_signal_tools_to_toolbelt.py",
+      "lines": 372,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/devlog_compressor.py",
+      "lines": 370,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/infrastructure/browser/thea_content_operations.py",
+      "lines": 369,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools_v2/categories/integration_tools.py",
+      "lines": 368,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/markov_cycle_simulator.py",
+      "lines": 367,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/comprehensive_tool_analyzer.py",
+      "lines": 366,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/consolidation_executor.py",
+      "lines": 366,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/coordination/discord_web_test_automation.py",
+      "lines": 366,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/gaming/dreamos/fsm_orchestrator.py",
+      "lines": 365,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "scripts/index_v2_refactoring.py",
+      "lines": 365,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/discord_commander/views/help_view.py",
+      "lines": 364,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/core/agent_lifecycle.py",
+      "lines": 364,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/test_discord_commands.py",
+      "lines": 364,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/markov_8agent_roi_optimizer.py",
+      "lines": 364,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/thea/simple_thea_communication.py",
+      "lines": 363,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/analysis/github_architecture_audit.py",
+      "lines": 361,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/core/utilities/processing_utilities.py",
+      "lines": 360,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/agent_fuel_monitor.py",
+      "lines": 360,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/unified_agent.py",
+      "lines": 360,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools_v2/categories/validation_tools.py",
+      "lines": 360,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/core/stress_test_runner.py",
+      "lines": 358,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/resolve_pr_conflicts.py",
+      "lines": 358,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools_v2/categories/proposal_tools.py",
+      "lines": 358,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/captain_message_processor.py",
+      "lines": 357,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/cleanup_repository_for_migration.py",
+      "lines": 357,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/workflows/strategies.py",
+      "lines": 354,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/obs/caption_listener.py",
+      "lines": 354,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/review_dreamvault_integration.py",
+      "lines": 354,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/discord_commander/systems_inventory_commands.py",
+      "lines": 353,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/services/chat_presence/message_interpreter.py",
+      "lines": 352,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/generate_blog_post.py",
+      "lines": 352,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "scripts/test_enhanced_discord.py",
+      "lines": 352,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/discord_commander/music_commands.py",
+      "lines": 351,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/execute_dreamvault_cleanup.py",
+      "lines": 351,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/debate_execution_tracker_hook.py",
+      "lines": 350,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/services/agent_management.py",
+      "lines": 349,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/discord_commander/controllers/status_controller_view.py",
+      "lines": 347,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/workflows/steps.py",
+      "lines": 347,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/execute_captain_pattern.py",
+      "lines": 347,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/deploy_via_wordpress_rest_api.py",
+      "lines": 347,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/architecture/system_integration.py",
+      "lines": 346,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools_v2/categories/captain_tools_coordination.py",
+      "lines": 345,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools_v2/categories/captain_tools_utilities.py",
+      "lines": 345,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/integrations/osrs/swarm_coordinator.py",
+      "lines": 344,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/fix_real_import_errors.py",
+      "lines": 344,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/repo_consolidation_continuation.py",
+      "lines": 344,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/utils/unified_config_utils.py",
+      "lines": 342,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/discord_commander/discord_embeds.py",
+      "lines": 340,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/github_create_and_push_repo.py",
+      "lines": 340,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/communication/agent_status_validator.py",
+      "lines": 340,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/swarm_pulse/intelligence.py",
+      "lines": 339,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/core/managers/domains/resource_domain_manager.py",
+      "lines": 337,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/analyze_file_implementation_status.py",
+      "lines": 337,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/cleanup_documentation_refactored.py",
+      "lines": 337,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/integrations/osrs/gaming_integration_core.py",
+      "lines": 336,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/unified_cleanup.py",
+      "lines": 335,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/unified_wordpress.py",
+      "lines": 334,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/captain_swarm_coordinator.py",
+      "lines": 333,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools_v2/categories/debate_tools.py",
+      "lines": 333,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/gaming/gaming_integration_core.py",
+      "lines": 332,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/deploy_via_wordpress_admin.py",
+      "lines": 331,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/verify_merges.py",
+      "lines": 331,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/web/messaging_handlers.py",
+      "lines": 330,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/services/handlers/task_handler.py",
+      "lines": 329,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools_v2/categories/refactoring_tools.py",
+      "lines": 329,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/core/task_completion_detector.py",
+      "lines": 328,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/validate_twitch_bot_status.py",
+      "lines": 328,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/git_based_merge_primary.py",
+      "lines": 328,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/github_queue_processor.py",
+      "lines": 328,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/auto_inbox_processor.py",
+      "lines": 328,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/verify_archived_repos.py",
+      "lines": 328,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "scripts/test_queue_processing_delivery_logging.py",
+      "lines": 328,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/resolve_merge_conflicts.py",
+      "lines": 327,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools_v2/categories/captain_coordination_tools.py",
+      "lines": 327,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/tools/github_scanner.py",
+      "lines": 326,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/services/portfolio_service.py",
+      "lines": 326,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/web/engines_routes.py",
+      "lines": 325,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/discord_commander/views/aria_profile_view.py",
+      "lines": 325,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/discord_commander/controllers/messaging_controller_view.py",
+      "lines": 324,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/agent_cycle_v2_report_validator.py",
+      "lines": 324,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/refactoring_suggestion_engine.py",
+      "lines": 324,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/ai_training/dreamvault/runner.py",
+      "lines": 323,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "scripts/setup_enhanced_discord.py",
+      "lines": 323,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/test_twitch_bot_connection.py",
+      "lines": 322,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/services/trader_replay/trader_replay_orchestrator.py",
+      "lines": 321,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/analyze_project_scan.py",
+      "lines": 321,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/utils/unified_file_utils.py",
+      "lines": 320,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/fetch_repo_names.py",
+      "lines": 320,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools_v2/categories/infrastructure_audit_tools.py",
+      "lines": 320,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/work_completion_verifier.py",
+      "lines": 319,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/core/error_handling/error_execution.py",
+      "lines": 318,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/comprehensive_website_audit.py",
+      "lines": 318,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/cross_reference_analysis.py",
+      "lines": 318,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/unified_github.py",
+      "lines": 318,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/git_work_verifier.py",
+      "lines": 318,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/repository_cleanup_for_migration.py",
+      "lines": 318,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/core/message_formatters.py",
+      "lines": 317,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/swarm_coordination_dashboard.py",
+      "lines": 317,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/cleanup_superpowered_venv.py",
+      "lines": 317,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/violation_domain_analyzer.py",
+      "lines": 317,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/orchestrators/overnight/message_plans.py",
+      "lines": 316,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/core/mock_unified_messaging_core.py",
+      "lines": 316,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/work_attribution_tool.py",
+      "lines": 316,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/swarm_orchestrator.py",
+      "lines": 316,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/ssot_config_validator.py",
+      "lines": 316,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools_v2/categories/dashboard_tools.py",
+      "lines": 315,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/check_wp_admin_blockers.py",
+      "lines": 314,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools_v2/categories/captain_tools_monitoring.py",
+      "lines": 314,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/core/validation/coordination_validator.py",
+      "lines": 313,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/repo_status_tracker.py",
+      "lines": 313,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/twitch_bot_health_monitor.py",
+      "lines": 313,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/violation_consolidation_analyzer.py",
+      "lines": 313,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/verify_merged_repo_cicd_enhanced.py",
+      "lines": 311,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/review_64_files_duplicates.py",
+      "lines": 311,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/verify_file_usage_batch.py",
+      "lines": 311,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools_v2/categories/message_history_tools.py",
+      "lines": 311,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools_v2/categories/message_analytics_tools.py",
+      "lines": 311,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/master_import_fixer.py",
+      "lines": 310,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/services/architectural_principles_data.py",
+      "lines": 308,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/theme_deployment_manager.py",
+      "lines": 308,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/discord_commander/views/carmyn_profile_view.py",
+      "lines": 307,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/services/message_batching_service.py",
+      "lines": 307,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/audit_dadudekc_site.py",
+      "lines": 307,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/consolidation_strategy_reviewer.py",
+      "lines": 307,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/thea_code_review.py",
+      "lines": 307,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/core/agent_documentation_service.py",
+      "lines": 306,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/enhanced_duplicate_detector.py",
+      "lines": 305,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/discord_startup_listener.py",
+      "lines": 305,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/services/ai_service.py",
+      "lines": 304,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/auto_status_updater.py",
+      "lines": 304,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/core/error_handling/retry_safety_engine.py",
+      "lines": 303,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/check_functionality_existence.py",
+      "lines": 303,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/swarm_status_broadcaster.py",
+      "lines": 303,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/core/managers/monitoring/metrics_manager.py",
+      "lines": 302,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "src/core/config/config_manager.py",
+      "lines": 301,
+      "exception": false,
+      "severity": "threshold"
+    },
+    {
+      "file": "tools/extract_git_commits.py",
+      "lines": 301,
+      "exception": false,
+      "severity": "threshold"
+    }
+  ]
+}
