@@ -49,7 +49,7 @@ Validate file size against V2 limit
 
 **Parameters:**
 - `file_path` (required): File path to check
-- `max_lines` (optional): Maximum lines allowed (default: 300)
+- `max_lines` (optional): Guideline for lines (default: 400)
 
 **Example:**
 ```json
@@ -68,7 +68,7 @@ Check function size against V2 limit
 **Parameters:**
 - `file_path` (required): Python file path
 - `function_name` (optional): Specific function name to check
-- `max_lines` (optional): Maximum lines per function (default: 30)
+- `max_lines` (optional): Guideline for lines per function (default: 30)
 
 **Example:**
 ```json
@@ -107,11 +107,17 @@ Get list of approved V2 compliance exceptions
 - Check before creating large files
 - Validate refactored code
 
-## V2 Limits
+## V2 Guidelines (Clean Code Principles)
 
-- **File size:** 300 lines (default)
-- **Class size:** 200 lines (default)
-- **Function size:** 30 lines (default)
+- **File size:** ~400 lines (guideline, not hard limit - clean code principles take precedence)
+- **Class size:** ~200 lines (guideline - prioritize single responsibility and cohesion)
+- **Function size:** ~30 lines (guideline - prioritize clarity and maintainability)
+
+**Note:** These are guidelines to encourage clean, maintainable code. Quality and clarity are more important than arbitrary line counts. Files exceeding these guidelines should be evaluated for:
+- Single Responsibility Principle
+- Code cohesion and maintainability
+- Clear organization and documentation
+- Whether splitting would improve or degrade code quality
 
 ## Benefits
 

@@ -105,6 +105,8 @@ class MessageCoordinator:
             from src.services.coordination.coordination_throttler import get_coordination_throttler
             throttler = get_coordination_throttler()
             throttler.record_coordination(agent, sender)
+        
+        return result
 
     @staticmethod
     def send_multi_agent_request(
