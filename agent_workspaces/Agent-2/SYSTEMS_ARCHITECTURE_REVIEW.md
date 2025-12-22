@@ -158,7 +158,7 @@
 
 1. **Messaging Service**: Verify `unified_messaging_service.py` is SSOT
 2. **Onboarding Service**: Verify which is SSOT (`services/` vs `core/`)
-3. **Tools System**: Verify `tools_v2/` is SSOT (migration in progress)
+3. **Tools System**: Verify `tools/` is SSOT (migration in progress)
 
 ---
 

@@ -139,7 +139,7 @@ def validate(self, params: dict) -> tuple[bool, list[str]]:
     return (len(missing) == 0, missing)
 ```
 
-**Reference Implementation:** See `tools_v2/categories/coordination_tools.py` (Agent-1's tools)
+**Reference Implementation:** See `tools/categories/coordination_tools.py` (Agent-1's tools)
 
 ---
 

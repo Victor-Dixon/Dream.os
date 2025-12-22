@@ -30,7 +30,7 @@ Built Agent Toolbelt V2 with:
 
 ### **Modular V2-Compliant Structure**
 ```
-tools_v2/ (17 files, ~1,900 lines total)
+tools/ (17 files, ~1,900 lines total)
 ├── Core Infrastructure (4 files, 537 lines)
 │   ├── __init__.py (53 lines) - Public API
 │   ├── toolbelt_core.py (209 lines) - Orchestrator
@@ -175,8 +175,8 @@ class IToolAdapter(ABC):
 ### **Dynamic Registry**
 ```python
 TOOL_REGISTRY = {
-    "vector.context": ("tools_v2.categories.vector_tools", "TaskContextTool"),
-    "msg.send": ("tools_v2.categories.messaging_tools", "SendMessageTool"),
+    "vector.context": ("tools.categories.vector_tools", "TaskContextTool"),
+    "msg.send": ("tools.categories.messaging_tools", "SendMessageTool"),
     # ... 21 more tools
 }
 ```
@@ -204,7 +204,7 @@ toolbelt.run(tool_name, params, context)
 
 ### **Basic Smoke Test** (Standalone)
 ```bash
-python tools_v2/test_toolbelt_basic.py
+python tools/test_toolbelt_basic.py
 ```
 
 **Results**:
@@ -321,36 +321,36 @@ Single toolbelt core and registry instances.
 ## 📁 FILES CREATED
 
 ### **Core Infrastructure** (4 files)
-1. `tools_v2/__init__.py` (53 lines)
-2. `tools_v2/toolbelt_core.py` (209 lines)
-3. `tools_v2/tool_registry.py` (186 lines)
-4. `tools_v2/adapters/base_adapter.py` (128 lines)
-5. `tools_v2/adapters/error_types.py` (112 lines)
-6. `tools_v2/adapters/__init__.py` (32 lines)
+1. `tools/__init__.py` (53 lines)
+2. `tools/toolbelt_core.py` (209 lines)
+3. `tools/tool_registry.py` (186 lines)
+4. `tools/adapters/base_adapter.py` (128 lines)
+5. `tools/adapters/error_types.py` (112 lines)
+6. `tools/adapters/__init__.py` (32 lines)
 
 ### **Category Files** (10 files)
-7. `tools_v2/categories/vector_tools.py` (162 lines) - 3 tools
-8. `tools_v2/categories/messaging_tools.py` (162 lines) - 3 tools
-9. `tools_v2/categories/analysis_tools.py` (138 lines) - 3 tools
-10. `tools_v2/categories/v2_tools.py` (98 lines) - 2 tools
-11. `tools_v2/categories/agent_ops_tools.py` (107 lines) - 2 tools
-12. `tools_v2/categories/testing_tools.py` (94 lines) - 2 tools
-13. `tools_v2/categories/compliance_tools.py` (98 lines) - 2 tools
-14. `tools_v2/categories/onboarding_tools.py` (111 lines) - 2 tools
-15. `tools_v2/categories/docs_tools.py` (109 lines) - 2 tools
-16. `tools_v2/categories/health_tools.py` (112 lines) - 2 tools
-17. `tools_v2/categories/__init__.py` (26 lines)
+7. `tools/categories/vector_tools.py` (162 lines) - 3 tools
+8. `tools/categories/messaging_tools.py` (162 lines) - 3 tools
+9. `tools/categories/analysis_tools.py` (138 lines) - 3 tools
+10. `tools/categories/v2_tools.py` (98 lines) - 2 tools
+11. `tools/categories/agent_ops_tools.py` (107 lines) - 2 tools
+12. `tools/categories/testing_tools.py` (94 lines) - 2 tools
+13. `tools/categories/compliance_tools.py` (98 lines) - 2 tools
+14. `tools/categories/onboarding_tools.py` (111 lines) - 2 tools
+15. `tools/categories/docs_tools.py` (109 lines) - 2 tools
+16. `tools/categories/health_tools.py` (112 lines) - 2 tools
+17. `tools/categories/__init__.py` (26 lines)
 
 ### **Tests** (5 files)
-18. `tools_v2/tests/__init__.py`
-19. `tools_v2/tests/test_core.py`
-20. `tools_v2/tests/test_registry.py`
-21. `tools_v2/tests/test_adapters.py`
-22. `tools_v2/tests/test_smoke_categories.py`
-23. `tools_v2/test_toolbelt_basic.py` (standalone)
+18. `tools/tests/__init__.py`
+19. `tools/tests/test_core.py`
+20. `tools/tests/test_registry.py`
+21. `tools/tests/test_adapters.py`
+22. `tools/tests/test_smoke_categories.py`
+23. `tools/test_toolbelt_basic.py` (standalone)
 
 ### **Documentation** (2 files)
-24. `tools_v2/README.md` (Comprehensive architecture guide)
+24. `tools/README.md` (Comprehensive architecture guide)
 25. `devlogs/2025-10-11_agent-7_toolbelt_v2_modular_complete.md` (THIS DEVLOG)
 
 ### **Updated Files** (2 files)

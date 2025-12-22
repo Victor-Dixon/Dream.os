@@ -44,22 +44,22 @@
 **A. Project Scanner (3 files → 1 system):**
 - KEEP: `tools/projectscanner_*.py` (modular, battle-tested)
 - DEPRECATE: `comprehensive_project_analyzer.py` (redundant)
-- ACTION: Create `tools_v2/categories/analysis_tools.py` adapter
+- ACTION: Create `tools/categories/analysis_tools.py` adapter
 
 **B. V2 Compliance (4+ files → 1 system):**
 - KEEP: `tools/v2_checker_*.py` (modular refactor)
 - DEPRECATE: `tools/v2_compliance_checker.py` (old monolith)
 - DEPRECATE: `tools/v2_compliance_batch_checker.py` (redundant)
-- ACTION: Already has `tools_v2/v2_tools.py` adapter ✅
+- ACTION: Already has `tools/v2_tools.py` adapter ✅
 
 **C. Quick Line Counter (2 files → 1):**
 - KEEP: `tools/quick_linecount.py` (choose one)
 - DEPRECATE: `tools/quick_line_counter.py` (duplicate)
-- ACTION: Create `tools_v2/categories/analysis_tools.py` adapter
+- ACTION: Create `tools/categories/analysis_tools.py` adapter
 
 **D. Compliance Dashboard (2 files → 1):**
 - KEEP: `tools/compliance_dashboard.py` (original)
-- VERIFY: `tools_v2/` version (check if duplicate or adapter)
+- VERIFY: `tools/` version (check if duplicate or adapter)
 - ACTION: Ensure single source
 
 ### **Phase 2: Captain Tools Consolidation**
@@ -68,7 +68,7 @@
 
 **Target Architecture:**
 ```
-tools_v2/categories/
+tools/categories/
 ├── captain_tools.py (core captain operations)
 ├── captain_tools_advanced.py (complex operations) ✅ EXISTS
 ├── captain_tools_extension.py (specialized) ✅ EXISTS

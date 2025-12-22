@@ -5,11 +5,11 @@ Captain's Tool: Find Idle Agents
 Finds agents that need new tasks (no GAS = idle!).
 Prevents agents from sitting idle without prompts.
 
-⚠️ DEPRECATED: This tool has been migrated to tools_v2.
-Use 'python -m tools_v2.toolbelt captain.find_idle' instead.
+⚠️ DEPRECATED: This tool has been migrated to tools.
+Use 'python -m tools.toolbelt captain.find_idle' instead.
 This file will be removed in future version.
 
-Migrated to: tools_v2/categories/captain_tools_extension.py → FindIdleAgentsTool
+Migrated to: tools/categories/captain_tools_extension.py → FindIdleAgentsTool
 Registry: captain.find_idle
 
 Usage: python tools/captain_find_idle_agents.py
@@ -24,15 +24,15 @@ import json
 import warnings
 
 warnings.warn(
-    "⚠️ DEPRECATED: This tool has been migrated to tools_v2. "
-    "Use 'python -m tools_v2.toolbelt captain.status_check' instead. "
+    "⚠️ DEPRECATED: This tool has been migrated to tools. "
+    "Use 'python -m tools.toolbelt captain.status_check' instead. "
     "This file will be removed in future version.",
     DeprecationWarning,
     stacklevel=2
 )
 
-# Legacy compatibility - delegate to tools_v2
-# For migration path, use: python -m tools_v2.toolbelt captain.status_check
+# Legacy compatibility - delegate to tools
+# For migration path, use: python -m tools.toolbelt captain.status_check
 
 
 def find_idle_agents(hours_threshold: int = 1):
@@ -41,9 +41,9 @@ def find_idle_agents(hours_threshold: int = 1):
 
     Idle = No GAS = Need prompts!
     """
-    # Delegate to tools_v2 adapter
+    # Delegate to tools adapter
     try:
-        from tools_v2.categories.captain_tools import StatusCheckTool
+        from tools.categories.captain_tools import StatusCheckTool
 
         tool = StatusCheckTool()
         result = tool.execute({}, None)

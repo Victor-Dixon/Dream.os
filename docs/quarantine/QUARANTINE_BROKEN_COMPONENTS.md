@@ -107,26 +107,26 @@
 
 ### **CATEGORY 4: TOOLS V2 CORE** (Priority: LOW)
 
-#### **7-8. tools_v2/core/* (2 modules)** ❌
+#### **7-8. tools/core/* (2 modules)** ❌
 **Status**: DIRECTORY STRUCTURE MISMATCH  
 **Impact**: Tools V2 core modules not accessible  
-**Evidence**: `ImportError: No module named 'tools_v2.core'`
+**Evidence**: `ImportError: No module named 'tools.core'`
 
 **What Exists**:
-- ✅ `tools_v2/toolbelt_core.py` (different structure)
-- ✅ `tools_v2/tool_registry.py` (different structure)
-- ✅ `tools_v2/categories/` with 40+ tool files
+- ✅ `tools/toolbelt_core.py` (different structure)
+- ✅ `tools/tool_registry.py` (different structure)
+- ✅ `tools/categories/` with 40+ tool files
 
 **Missing**:
-- `tools_v2/core/tool_facade.py`
-- `tools_v2/core/tool_spec.py`
+- `tools/core/tool_facade.py`
+- `tools/core/tool_spec.py`
 
 **Fix Required**:
-- Create `tools_v2/core/` directory
+- Create `tools/core/` directory
 - Move/create facade and spec modules
 - OR update imports to use existing structure
 
-**Priority**: LOW (tools_v2 functional, just different structure)  
+**Priority**: LOW (tools functional, just different structure)  
 **Difficulty**: LOW (structural reorganization)  
 **ROI**: LOW (mostly organizational)
 
@@ -174,7 +174,7 @@
 4. **logger_utils** - Utility functions
 
 ### **Low Priority**:
-5. **tools_v2/core structure** - Organizational only
+5. **tools/core structure** - Organizational only
 
 ### **Test Fixes** (Quick wins):
 6. **5 test files** - Just import path corrections
@@ -216,7 +216,7 @@
 ### **Phase 4: Utilities & Structure** (1-2 hours)
 **Create missing utilities**:
 - `logger_utils.py` - Create or redirect
-- `tools_v2/core/` - Reorganize structure
+- `tools/core/` - Reorganize structure
 
 **Expected Result**: 13/13 broken items fixed (100%)
 

@@ -103,7 +103,7 @@ def list_tools():
         print(f"  • {tool:20} → {desc}")
     
     print("\n📚 Full list: cat AGENT_TOOLS_DOCUMENTATION.md")
-    print("💡 Try: python -m tools_v2.toolbelt_core (interactive)")
+    print("💡 Try: python -m tools.toolbelt_core (interactive)")
 
 
 def search(query: str):

@@ -66,7 +66,7 @@ if task and task.agent_id == "Agent-7":
 
 ### **AFTER (swarm.pulse)**
 ```python
-from tools_v2 import get_toolbelt_core
+from tools.toolbelt_core import get_toolbelt_core
 
 # Check if agent is RUNNING
 core = get_toolbelt_core()

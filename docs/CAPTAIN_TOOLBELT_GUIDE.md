@@ -48,7 +48,7 @@ These tools automate Captain's duties and enable efficient swarm management.
 
 **Use Case:** 
 ```python
-from tools_v2.toolbelt_core import ToolbeltCore
+from tools.toolbelt_core import ToolbeltCore
 
 toolbelt = ToolbeltCore()
 result = toolbelt.run("captain.status_check", {
@@ -536,7 +536,7 @@ Total: 54 tools across 11 categories
 ### **Example 1: Complete Cycle Automation**
 
 ```python
-from tools_v2.toolbelt_core import ToolbeltCore
+from tools.toolbelt_core import ToolbeltCore
 
 toolbelt = ToolbeltCore()
 

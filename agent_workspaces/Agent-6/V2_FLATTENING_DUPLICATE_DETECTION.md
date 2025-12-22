@@ -9,9 +9,9 @@
 
 ## 📋 EXECUTIVE SUMMARY
 
-**Objective**: Identify duplicate tools in `tools/` directory that already exist in `tools_v2/`
+**Objective**: Identify duplicate tools in `tools/` directory that already exist in `tools/`
 
-**Result**: **12 out of 17 captain tools are duplicates or have equivalents in tools_v2**
+**Result**: **12 out of 17 captain tools are duplicates or have equivalents in tools**
 
 **Action Required**: Deprecate duplicates, migrate unique tools
 
@@ -23,51 +23,51 @@
 
 1. **`captain_check_agent_status.py`** → `captain.status_check` ✅
    - **Status**: DUPLICATE
-   - **tools_v2 Equivalent**: `captain_tools.py` → `StatusCheckTool`
+   - **tools Equivalent**: `captain_tools.py` → `StatusCheckTool`
    - **Registry**: `captain.status_check`
    - **Action**: ✅ DEPRECATE - Already migrated
 
 2. **`captain_find_idle_agents.py`** → `captain.status_check` ✅
    - **Status**: DUPLICATE (similar functionality)
-   - **tools_v2 Equivalent**: `captain_tools.py` → `StatusCheckTool`
+   - **tools Equivalent**: `captain_tools.py` → `StatusCheckTool`
    - **Functionality**: Both find idle agents
    - **Action**: ✅ DEPRECATE - Functionality already covered
 
 3. **`captain_completion_processor.py`** → `captain.process_completion` ✅
    - **Status**: DUPLICATE
-   - **tools_v2 Equivalent**: `captain_coordination_tools.py` → `CompletionProcessorTool`
+   - **tools Equivalent**: `captain_coordination_tools.py` → `CompletionProcessorTool`
    - **Registry**: `captain.process_completion`
    - **Action**: ✅ DEPRECATE - Already migrated
 
 4. **`captain_leaderboard_update.py`** → `captain.update_leaderboard` ✅
    - **Status**: DUPLICATE
-   - **tools_v2 Equivalent**: `captain_coordination_tools.py` → `LeaderboardUpdateTool`
+   - **tools Equivalent**: `captain_coordination_tools.py` → `LeaderboardUpdateTool`
    - **Registry**: `captain.update_leaderboard_coord`
    - **Also in**: `captain_tools.py` → `LeaderboardUpdateTool`
    - **Action**: ✅ DEPRECATE - Already migrated (2 versions exist!)
 
 5. **`captain_next_task_picker.py`** → `captain.pick_next_task` ✅
    - **Status**: DUPLICATE
-   - **tools_v2 Equivalent**: `captain_coordination_tools.py` → `NextTaskPickerTool`
+   - **tools Equivalent**: `captain_coordination_tools.py` → `NextTaskPickerTool`
    - **Registry**: `captain.pick_next_task`
    - **Action**: ✅ DEPRECATE - Already migrated
 
 6. **`captain_roi_quick_calc.py`** → `captain.calculate_roi` ✅
    - **Status**: DUPLICATE
-   - **tools_v2 Equivalent**: `captain_coordination_tools.py` → `ROICalculatorTool`
+   - **tools Equivalent**: `captain_coordination_tools.py` → `ROICalculatorTool`
    - **Registry**: `captain.calculate_roi`
    - **Action**: ✅ DEPRECATE - Already migrated
 
 7. **`captain_message_all_agents.py`** → `msg.broadcast` ✅
    - **Status**: DUPLICATE (similar functionality)
-   - **tools_v2 Equivalent**: `messaging_tools.py` → `BroadcastTool`
+   - **tools Equivalent**: `messaging_tools.py` → `BroadcastTool`
    - **Registry**: `msg.broadcast`
    - **Functionality**: Both broadcast to all agents
    - **Action**: ✅ DEPRECATE - Functionality already covered
 
 8. **`captain_self_message.py`** → `msg.send` (to Agent-4) ✅
    - **Status**: DUPLICATE (can use msg.send)
-   - **tools_v2 Equivalent**: `messaging_tools.py` → `SendMessageTool`
+   - **tools Equivalent**: `messaging_tools.py` → `SendMessageTool`
    - **Registry**: `msg.send`
    - **Functionality**: Sends message to Agent-4 (Captain)
    - **Action**: ✅ DEPRECATE - Use `msg.send` instead
@@ -78,32 +78,32 @@
 
 9. **`captain_hard_onboard_agent.py`**
    - **Status**: ⚠️ NEED REVIEW
-   - **tools_v2 Check**: Check if `onboard.hard` covers this
+   - **tools Check**: Check if `onboard.hard` covers this
    - **Action**: ⏳ REVIEW - Verify functionality
 
 10. **`captain_gas_check.py`**
     - **Status**: ⚠️ NEED REVIEW
-    - **tools_v2 Check**: Check if `captain.deliver_gas` covers this
+    - **tools Check**: Check if `captain.deliver_gas` covers this
     - **Action**: ⏳ REVIEW - Verify functionality
 
 11. **`captain_import_validator.py`**
     - **Status**: ⚠️ NEED REVIEW
-    - **tools_v2 Check**: Check import validation tools
+    - **tools Check**: Check import validation tools
     - **Action**: ⏳ REVIEW - May have unique functionality
 
 12. **`captain_architectural_checker.py`**
     - **Status**: ⚠️ NEED REVIEW
-    - **tools_v2 Check**: Check architecture validation tools
+    - **tools Check**: Check architecture validation tools
     - **Action**: ⏳ REVIEW - May have unique functionality
 
 13. **`captain_update_log.py`**
     - **Status**: ⚠️ NEED REVIEW
-    - **tools_v2 Check**: Check logging/update tools
+    - **tools Check**: Check logging/update tools
     - **Action**: ⏳ REVIEW - May have unique functionality
 
 14. **`captain_toolbelt_help.py`**
     - **Status**: ⚠️ NEED REVIEW
-    - **tools_v2 Check**: Check if help/coordination tools cover this
+    - **tools Check**: Check if help/coordination tools cover this
     - **Action**: ⏳ REVIEW - May need migration to coordination_tools.py
 
 ---
@@ -124,12 +124,12 @@
 
 ### **Duplicates to Deprecate** ✅
 - **8 confirmed duplicates** ready for deprecation
-- All have equivalents in tools_v2
+- All have equivalents in tools
 - Can add deprecation warnings
 
 ### **Tools Needing Review** ⚠️
 - **6 potential unique tools** need functionality review
-- Need to compare with tools_v2 equivalents
+- Need to compare with tools equivalents
 - Decision: Migrate or Deprecate
 
 ### **Documentation Files** 📄
@@ -161,15 +161,15 @@ For each duplicate tool, add at top of file:
 import warnings
 
 warnings.warn(
-    "⚠️ DEPRECATED: This tool has been migrated to tools_v2. "
-    "Use 'python -m tools_v2.toolbelt <tool_name>' instead. "
+    "⚠️ DEPRECATED: This tool has been migrated to tools. "
+    "Use 'python -m tools.toolbelt <tool_name>' instead. "
     "This file will be removed in future version.",
     DeprecationWarning,
     stacklevel=2
 )
 
-# Legacy compatibility - delegate to tools_v2
-# For migration path, use: python -m tools_v2.toolbelt <tool_name>
+# Legacy compatibility - delegate to tools
+# For migration path, use: python -m tools.toolbelt <tool_name>
 ```
 
 ---

@@ -16,9 +16,9 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 import pytest
 
-from tools_v2 import ToolRegistry, get_tool_registry
-from tools_v2.adapters import IToolAdapter
-from tools_v2.adapters.error_types import ToolNotFoundError
+from tools.tool_registry import ToolRegistry, get_tool_registry
+from tools.adapters import IToolAdapter
+from tools.adapters.error_types import ToolNotFoundError
 
 
 class TestToolRegistry:

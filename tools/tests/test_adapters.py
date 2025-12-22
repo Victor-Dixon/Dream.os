@@ -14,9 +14,9 @@ from pathlib import Path
 # Add project root to path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from tools_v2.adapters import ToolResult, ToolSpec
-from tools_v2.categories.messaging_tools import SendMessageTool
-from tools_v2.categories.vector_tools import TaskContextTool
+from tools.adapters import ToolResult, ToolSpec
+from tools.categories.messaging_tools import SendMessageTool
+from tools.categories.vector_tools import TaskContextTool
 
 
 class TestToolSpec:

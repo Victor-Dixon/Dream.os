@@ -777,71 +777,71 @@
           "needs_tagging": true
         },
         {
-          "path": "tools_v2\\categories\\intelligent_mission_advisor_adapter.py",
-          "full_path": "tools_v2\\categories\\intelligent_mission_advisor_adapter.py",
+          "path": "tools\\categories\\intelligent_mission_advisor_adapter.py",
+          "full_path": "tools\\categories\\intelligent_mission_advisor_adapter.py",
           "line_count": 220,
           "has_ssot_tag": false,
           "needs_tagging": true
         },
         {
-          "path": "tools_v2\\categories\\infrastructure_audit_tools.py",
-          "full_path": "tools_v2\\categories\\infrastructure_audit_tools.py",
+          "path": "tools\\categories\\infrastructure_audit_tools.py",
+          "full_path": "tools\\categories\\infrastructure_audit_tools.py",
           "line_count": 320,
           "has_ssot_tag": false,
           "needs_tagging": true
         },
         {
-          "path": "tools_v2\\categories\\infrastructure_tools.py",
-          "full_path": "tools_v2\\categories\\infrastructure_tools.py",
+          "path": "tools\\categories\\infrastructure_tools.py",
+          "full_path": "tools\\categories\\infrastructure_tools.py",
           "line_count": 61,
           "has_ssot_tag": false,
           "needs_tagging": true
         },
         {
-          "path": "tools_v2\\categories\\infrastructure_utility_tools.py",
-          "full_path": "tools_v2\\categories\\infrastructure_utility_tools.py",
+          "path": "tools\\categories\\infrastructure_utility_tools.py",
+          "full_path": "tools\\categories\\infrastructure_utility_tools.py",
           "line_count": 253,
           "has_ssot_tag": false,
           "needs_tagging": true
         },
         {
-          "path": "tools_v2\\categories\\infrastructure_workspace_tools.py",
-          "full_path": "tools_v2\\categories\\infrastructure_workspace_tools.py",
+          "path": "tools\\categories\\infrastructure_workspace_tools.py",
+          "full_path": "tools\\categories\\infrastructure_workspace_tools.py",
           "line_count": 248,
           "has_ssot_tag": false,
           "needs_tagging": true
         },
         {
-          "path": "tools_v2\\categories\\memory_safety_adapters.py",
-          "full_path": "tools_v2\\categories\\memory_safety_adapters.py",
+          "path": "tools\\categories\\memory_safety_adapters.py",
+          "full_path": "tools\\categories\\memory_safety_adapters.py",
           "line_count": 198,
           "has_ssot_tag": false,
           "needs_tagging": true
         },
         {
-          "path": "tools_v2\\adapters\\base_adapter.py",
-          "full_path": "tools_v2\\adapters\\base_adapter.py",
+          "path": "tools\\adapters\\base_adapter.py",
+          "full_path": "tools\\adapters\\base_adapter.py",
           "line_count": 127,
           "has_ssot_tag": false,
           "needs_tagging": true
         },
         {
-          "path": "tools_v2\\adapters\\error_types.py",
-          "full_path": "tools_v2\\adapters\\error_types.py",
+          "path": "tools\\adapters\\error_types.py",
+          "full_path": "tools\\adapters\\error_types.py",
           "line_count": 118,
           "has_ssot_tag": false,
           "needs_tagging": true
         },
         {
-          "path": "tools_v2\\adapters\\__init__.py",
-          "full_path": "tools_v2\\adapters\\__init__.py",
+          "path": "tools\\adapters\\__init__.py",
+          "full_path": "tools\\adapters\\__init__.py",
           "line_count": 10,
           "has_ssot_tag": false,
           "needs_tagging": true
         },
         {
-          "path": "tools_v2\\tests\\test_adapters.py",
-          "full_path": "tools_v2\\tests\\test_adapters.py",
+          "path": "tools\\tests\\test_adapters.py",
+          "full_path": "tools\\tests\\test_adapters.py",
           "line_count": 134,
           "has_ssot_tag": false,
           "needs_tagging": true
@@ -1530,71 +1530,71 @@
       "needs_tagging": true
     },
     {
-      "path": "tools_v2\\categories\\intelligent_mission_advisor_adapter.py",
-      "full_path": "tools_v2\\categories\\intelligent_mission_advisor_adapter.py",
+      "path": "tools\\categories\\intelligent_mission_advisor_adapter.py",
+      "full_path": "tools\\categories\\intelligent_mission_advisor_adapter.py",
       "line_count": 220,
       "has_ssot_tag": false,
       "needs_tagging": true
     },
     {
-      "path": "tools_v2\\categories\\infrastructure_audit_tools.py",
-      "full_path": "tools_v2\\categories\\infrastructure_audit_tools.py",
+      "path": "tools\\categories\\infrastructure_audit_tools.py",
+      "full_path": "tools\\categories\\infrastructure_audit_tools.py",
       "line_count": 320,
       "has_ssot_tag": false,
       "needs_tagging": true
     },
     {
-      "path": "tools_v2\\categories\\infrastructure_tools.py",
-      "full_path": "tools_v2\\categories\\infrastructure_tools.py",
+      "path": "tools\\categories\\infrastructure_tools.py",
+      "full_path": "tools\\categories\\infrastructure_tools.py",
       "line_count": 61,
       "has_ssot_tag": false,
       "needs_tagging": true
     },
     {
-      "path": "tools_v2\\categories\\infrastructure_utility_tools.py",
-      "full_path": "tools_v2\\categories\\infrastructure_utility_tools.py",
+      "path": "tools\\categories\\infrastructure_utility_tools.py",
+      "full_path": "tools\\categories\\infrastructure_utility_tools.py",
       "line_count": 253,
       "has_ssot_tag": false,
       "needs_tagging": true
     },
     {
-      "path": "tools_v2\\categories\\infrastructure_workspace_tools.py",
-      "full_path": "tools_v2\\categories\\infrastructure_workspace_tools.py",
+      "path": "tools\\categories\\infrastructure_workspace_tools.py",
+      "full_path": "tools\\categories\\infrastructure_workspace_tools.py",
       "line_count": 248,
       "has_ssot_tag": false,
       "needs_tagging": true
     },
     {
-      "path": "tools_v2\\categories\\memory_safety_adapters.py",
-      "full_path": "tools_v2\\categories\\memory_safety_adapters.py",
+      "path": "tools\\categories\\memory_safety_adapters.py",
+      "full_path": "tools\\categories\\memory_safety_adapters.py",
       "line_count": 198,
       "has_ssot_tag": false,
       "needs_tagging": true
     },
     {
-      "path": "tools_v2\\adapters\\base_adapter.py",
-      "full_path": "tools_v2\\adapters\\base_adapter.py",
+      "path": "tools\\adapters\\base_adapter.py",
+      "full_path": "tools\\adapters\\base_adapter.py",
       "line_count": 127,
       "has_ssot_tag": false,
       "needs_tagging": true
     },
     {
-      "path": "tools_v2\\adapters\\error_types.py",
-      "full_path": "tools_v2\\adapters\\error_types.py",
+      "path": "tools\\adapters\\error_types.py",
+      "full_path": "tools\\adapters\\error_types.py",
       "line_count": 118,
       "has_ssot_tag": false,
       "needs_tagging": true
     },
     {
-      "path": "tools_v2\\adapters\\__init__.py",
-      "full_path": "tools_v2\\adapters\\__init__.py",
+      "path": "tools\\adapters\\__init__.py",
+      "full_path": "tools\\adapters\\__init__.py",
       "line_count": 10,
       "has_ssot_tag": false,
       "needs_tagging": true
     },
     {
-      "path": "tools_v2\\tests\\test_adapters.py",
-      "full_path": "tools_v2\\tests\\test_adapters.py",
+      "path": "tools\\tests\\test_adapters.py",
+      "full_path": "tools\\tests\\test_adapters.py",
       "line_count": 134,
       "has_ssot_tag": false,
       "needs_tagging": true

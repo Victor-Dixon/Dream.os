@@ -6965,250 +6965,250 @@
     "tools\\coordination\\__init__.py": {
         "hash": "b64d92b5e946e2d87c8507d525d0ac70"
     },
-    "tools_v2\\advisor_cli.py": {
+    "tools\\advisor_cli.py": {
         "hash": "76831f23f48c2c98f148c25d5b816447"
     },
-    "tools_v2\\__init__.py": {
+    "tools\\__init__.py": {
         "hash": "85e7b33594db1bf015a70354174da80a"
     },
-    "tools_v2\\test_toolbelt_basic.py": {
+    "tools\\test_toolbelt_basic.py": {
         "hash": "faf97efd7e9feeb2c625e5d057216c38"
     },
-    "tools_v2\\demo_swarm_pulse.py": {
+    "tools\\demo_swarm_pulse.py": {
         "hash": "c468b08339fcd50ece9500f12374390e"
     },
-    "tools_v2\\toolbelt_core.py": {
+    "tools\\toolbelt_core.py": {
         "hash": "1224ac13c0d8c896fa9bca27f7266995"
     },
-    "tools_v2\\tool_registry.py": {
+    "tools\\tool_registry.py": {
         "hash": "02289307662a158f34085d6311287a05"
     },
-    "tools_v2\\test_bi_tools.py": {
+    "tools\\test_bi_tools.py": {
         "hash": "4e005ecc92e094d67c934e1646f2fff8"
     },
-    "tools_v2\\categories\\analysis_tools.py": {
+    "tools\\categories\\analysis_tools.py": {
         "hash": "53e2e3677b7e2aa3cc7542b7453b5627"
     },
-    "tools_v2\\categories\\captain_tools_extension.py": {
+    "tools\\categories\\captain_tools_extension.py": {
         "hash": "7adddeeb804cdbbd457247d069e84e87"
     },
-    "tools_v2\\categories\\agent_ops_tools.py": {
+    "tools\\categories\\agent_ops_tools.py": {
         "hash": "d1854dd2de814efb9c7b63623775e766"
     },
-    "tools_v2\\categories\\captain_tools.py": {
+    "tools\\categories\\captain_tools.py": {
         "hash": "114ee2baccef3e37a637455e97c73a50"
     },
-    "tools_v2\\categories\\debate_tools.py": {
+    "tools\\categories\\debate_tools.py": {
         "hash": "d37b6ccb8f0757f47dc2376515a1dd94"
     },
-    "tools_v2\\categories\\captain_tools_advanced.py": {
+    "tools\\categories\\captain_tools_advanced.py": {
         "hash": "a68b63b7999036a784bfb2e0e391017d"
     },
-    "tools_v2\\categories\\compliance_tools.py": {
+    "tools\\categories\\compliance_tools.py": {
         "hash": "f6390417c406a7f96c065cc93830defa"
     },
-    "tools_v2\\categories\\captain_coordination_tools.py": {
+    "tools\\categories\\captain_coordination_tools.py": {
         "hash": "2db9b962e2ca89eeb699864983367a63"
     },
-    "tools_v2\\categories\\autonomous_workflow_tools.py": {
+    "tools\\categories\\autonomous_workflow_tools.py": {
         "hash": "565bc53a2637fbb8d48dcd8e16c60fd8"
     },
-    "tools_v2\\categories\\config_tools.py": {
+    "tools\\categories\\config_tools.py": {
         "hash": "4ed7f26cdd1b32fe4cafbcd5ff4c2f7d"
     },
-    "tools_v2\\categories\\coordination_tools.py": {
+    "tools\\categories\\coordination_tools.py": {
         "hash": "53081f43ace43259c3404720732df801"
     },
-    "tools_v2\\categories\\discord_tools.py": {
+    "tools\\categories\\discord_tools.py": {
         "hash": "1839e818c7e325deb889bca833ef92af"
     },
-    "tools_v2\\categories\\__init__.py": {
+    "tools\\categories\\__init__.py": {
         "hash": "6acbbe735cce141274d0bc5994e4d4fd"
     },
-    "tools_v2\\categories\\discord_webhook_tools.py": {
+    "tools\\categories\\discord_webhook_tools.py": {
         "hash": "9f5051972ef1b6c5727cab656292306e"
     },
-    "tools_v2\\categories\\docs_tools.py": {
+    "tools\\categories\\docs_tools.py": {
         "hash": "56f59b1f3134912d8845bb4edbc26b57"
     },
-    "tools_v2\\categories\\import_fix_tools.py": {
+    "tools\\categories\\import_fix_tools.py": {
         "hash": "47de4fdb87df901c0c20720dfbacbb09"
     },
-    "tools_v2\\categories\\health_tools.py": {
+    "tools\\categories\\health_tools.py": {
         "hash": "0ed1972e589038f30cbc4bfd54442278"
     },
-    "tools_v2\\categories\\infrastructure_tools.py": {
+    "tools\\categories\\infrastructure_tools.py": {
         "hash": "df39d279560f95fa96cceff4b742ca46"
     },
-    "tools_v2\\categories\\integration_tools.py": {
+    "tools\\categories\\integration_tools.py": {
         "hash": "9e67d8095a3a43888c6a303160a23bb5"
     },
-    "tools_v2\\categories\\intelligent_mission_advisor.py": {
+    "tools\\categories\\intelligent_mission_advisor.py": {
         "hash": "66e0307286b295ac19d1941c4c54509c"
     },
-    "tools_v2\\categories\\intelligent_mission_advisor_adapter.py": {
+    "tools\\categories\\intelligent_mission_advisor_adapter.py": {
         "hash": "eac36fd7899d8b2dd70abef39e33fc18"
     },
-    "tools_v2\\categories\\intelligent_mission_advisor_analysis.py": {
+    "tools\\categories\\intelligent_mission_advisor_analysis.py": {
         "hash": "092854a7c075df4164039ff156e3f51a"
     },
-    "tools_v2\\categories\\intelligent_mission_advisor_guidance.py": {
+    "tools\\categories\\intelligent_mission_advisor_guidance.py": {
         "hash": "4e1e49385369f071cb33186b3e4e048b"
     },
-    "tools_v2\\categories\\memory_safety_adapters.py": {
+    "tools\\categories\\memory_safety_adapters.py": {
         "hash": "90f0cb9d2ea5a878fe154c58515a1c21"
     },
-    "tools_v2\\categories\\memory_safety_tools.py": {
+    "tools\\categories\\memory_safety_tools.py": {
         "hash": "c1856979d85a09c9ad5bd4bf0ee42168"
     },
-    "tools_v2\\categories\\message_task_tools.py": {
+    "tools\\categories\\message_task_tools.py": {
         "hash": "0c0507bf3630612f887908d82faf7818"
     },
-    "tools_v2\\categories\\messaging_tools.py": {
+    "tools\\categories\\messaging_tools.py": {
         "hash": "70b1958fb51ac350ff5d88a75dcb3619"
     },
-    "tools_v2\\categories\\mission_calculator.py": {
+    "tools\\categories\\mission_calculator.py": {
         "hash": "6539777049348a5529a095f7756a0690"
     },
-    "tools_v2\\categories\\observability_tools.py": {
+    "tools\\categories\\observability_tools.py": {
         "hash": "937bba164e1cb435b8eddcc4be5d94ad"
     },
-    "tools_v2\\categories\\onboarding_tools.py": {
+    "tools\\categories\\onboarding_tools.py": {
         "hash": "2058da7635cf9a0e2ffe87145047a218"
     },
-    "tools_v2\\categories\\proposal_tools.py": {
+    "tools\\categories\\proposal_tools.py": {
         "hash": "e80f961d7ea8f285ed7fcb4aefcdf5ae"
     },
-    "tools_v2\\categories\\oss_tools.py": {
+    "tools\\categories\\oss_tools.py": {
         "hash": "7a3add6b945536757f05534dc7627ef5"
     },
-    "tools_v2\\categories\\session_tools.py": {
+    "tools\\categories\\session_tools.py": {
         "hash": "635671f7358081357cbb1be0ff46403d"
     },
-    "tools_v2\\categories\\refactoring_tools.py": {
+    "tools\\categories\\refactoring_tools.py": {
         "hash": "f221d957c9b32c3de0dcd6b7f548c181"
     },
-    "tools_v2\\categories\\swarm_brain_tools.py": {
+    "tools\\categories\\swarm_brain_tools.py": {
         "hash": "c224b0b919a56b3ed925c6fcc5568f9f"
     },
-    "tools_v2\\categories\\swarm_consciousness.py": {
+    "tools\\categories\\swarm_consciousness.py": {
         "hash": "76b119f65e6864eb8927629ac2e3b496"
     },
-    "tools_v2\\categories\\swarm_state_reader.py": {
+    "tools\\categories\\swarm_state_reader.py": {
         "hash": "a4147750b200885ba01fa067eb4a1559"
     },
-    "tools_v2\\categories\\swarm_mission_control.py": {
+    "tools\\categories\\swarm_mission_control.py": {
         "hash": "4981cc455167b306dbd3871a46908e40"
     },
-    "tools_v2\\categories\\vector_tools.py": {
+    "tools\\categories\\vector_tools.py": {
         "hash": "39b7bbcf02fdf9825628cd86943cab85"
     },
-    "tools_v2\\categories\\queue_monitor_tools.py": {
+    "tools\\categories\\queue_monitor_tools.py": {
         "hash": "d3920f8368e59815955897b41bf23167"
     },
-    "tools_v2\\categories\\test_generation_tools.py": {
+    "tools\\categories\\test_generation_tools.py": {
         "hash": "93bd99ef86a3777fcbc912a4c9889682"
     },
-    "tools_v2\\categories\\testing_tools.py": {
+    "tools\\categories\\testing_tools.py": {
         "hash": "edab61f296d140b848758eb9c872f588"
     },
-    "tools_v2\\categories\\dashboard_tools.py": {
+    "tools\\categories\\dashboard_tools.py": {
         "hash": "18bc1ad43cf7150ce48451edd136b5a2"
     },
-    "tools_v2\\categories\\message_history_tools.py": {
+    "tools\\categories\\message_history_tools.py": {
         "hash": "145dd9fbe5fc7349ad9c83c878e83c6d"
     },
-    "tools_v2\\categories\\validation_tools.py": {
+    "tools\\categories\\validation_tools.py": {
         "hash": "b969968e5c59eb526e20ca6164fbdc84"
     },
-    "tools_v2\\categories\\agent_activity_tools.py": {
+    "tools\\categories\\agent_activity_tools.py": {
         "hash": "dd03eb14ff7a50be33b7ee17bde91b05"
     },
-    "tools_v2\\categories\\v2_tools.py": {
+    "tools\\categories\\v2_tools.py": {
         "hash": "d20ae81599266766f149a3ec63a8367a"
     },
-    "tools_v2\\categories\\system_tools.py": {
+    "tools\\categories\\system_tools.py": {
         "hash": "dded2df6869fc73ab4d083dc71542779"
     },
-    "tools_v2\\categories\\bi_tools.py": {
+    "tools\\categories\\bi_tools.py": {
         "hash": "eed5a17b8d075379d0713a3cb17aaa3e"
     },
-    "tools_v2\\categories\\workflow_tools.py": {
+    "tools\\categories\\workflow_tools.py": {
         "hash": "fdb9bc16a7fab4033827b55979c40e06"
     },
-    "tools_v2\\categories\\message_analytics_tools.py": {
+    "tools\\categories\\message_analytics_tools.py": {
         "hash": "36670726d4d69737575d8d197071d72c"
     },
-    "tools_v2\\categories\\github_consolidation_tools.py": {
+    "tools\\categories\\github_consolidation_tools.py": {
         "hash": "422f359aa8c33038c83d667fea425efa"
     },
-    "tools_v2\\categories\\captain_tools_core.py": {
+    "tools\\categories\\captain_tools_core.py": {
         "hash": "9ed63038744b7ec052040e159192bcd8"
     },
-    "tools_v2\\categories\\discord_profile_tools.py": {
+    "tools\\categories\\discord_profile_tools.py": {
         "hash": "c29226b7ad3104b49afb2d823c98954c"
     },
-    "tools_v2\\categories\\ssot_validation_tools.py": {
+    "tools\\categories\\ssot_validation_tools.py": {
         "hash": "ff1601dc3518e991908b0b8dad63642e"
     },
-    "tools_v2\\categories\\captain_tools_messaging.py": {
+    "tools\\categories\\captain_tools_messaging.py": {
         "hash": "d89239eb3ad778ad566cfdc367f2e0ba"
     },
-    "tools_v2\\categories\\captain_tools_architecture.py": {
+    "tools\\categories\\captain_tools_architecture.py": {
         "hash": "83af3b80f07117884a6e89b5d7c5f337"
     },
-    "tools_v2\\categories\\captain_tools_utilities.py": {
+    "tools\\categories\\captain_tools_utilities.py": {
         "hash": "7b21ed91d7f1b1a32a62e29282a78cf9"
     },
-    "tools_v2\\categories\\infrastructure_workspace_tools.py": {
+    "tools\\categories\\infrastructure_workspace_tools.py": {
         "hash": "1a7b25e919ed0704b7ec289dab4d1d24"
     },
-    "tools_v2\\categories\\infrastructure_audit_tools.py": {
+    "tools\\categories\\infrastructure_audit_tools.py": {
         "hash": "172dec6fc6f69a5268e0d9be36b1fd7f"
     },
-    "tools_v2\\categories\\infrastructure_utility_tools.py": {
+    "tools\\categories\\infrastructure_utility_tools.py": {
         "hash": "9eb52d339b7a7925aa886f8325d64125"
     },
-    "tools_v2\\categories\\web_tools.py": {
+    "tools\\categories\\web_tools.py": {
         "hash": "880945cc34d4908431a278faa252a213"
     },
-    "tools_v2\\categories\\captain_tools_validation.py": {
+    "tools\\categories\\captain_tools_validation.py": {
         "hash": "524984fc48836b514ff0cf92b3c9b156"
     },
-    "tools_v2\\categories\\captain_tools_coordination.py": {
+    "tools\\categories\\captain_tools_coordination.py": {
         "hash": "5ece1b5f65f79e6448062dfa32d28ab4"
     },
-    "tools_v2\\adapters\\__init__.py": {
+    "tools\\adapters\\__init__.py": {
         "hash": "c04f9bdd799239ca85fa6d8312b82fa4"
     },
-    "tools_v2\\adapters\\base_adapter.py": {
+    "tools\\adapters\\base_adapter.py": {
         "hash": "a8c01000f8737e32111993a09885ce42"
     },
-    "tools_v2\\adapters\\error_types.py": {
+    "tools\\adapters\\error_types.py": {
         "hash": "6f24e5a9717729a3bc55107d0dc96197"
     },
-    "tools_v2\\core\\tool_facade.py": {
+    "tools\\core\\tool_facade.py": {
         "hash": "d3b14f549ca506c6b234da203bf86491"
     },
-    "tools_v2\\core\\__init__.py": {
+    "tools\\core\\__init__.py": {
         "hash": "c2af1a75194741845b1fc04a60fc8d47"
     },
-    "tools_v2\\tests\\test_adapters.py": {
+    "tools\\tests\\test_adapters.py": {
         "hash": "2567e9f22b5da5851501c64d22ae8d71"
     },
-    "tools_v2\\tests\\__init__.py": {
+    "tools\\tests\\__init__.py": {
         "hash": "4253112d6d9af8de06d33a85f0c0313e"
     },
-    "tools_v2\\core\\tool_spec.py": {
+    "tools\\core\\tool_spec.py": {
         "hash": "bb387be808c6eb47aac1cfe275c02d44"
     },
-    "tools_v2\\tests\\test_registry.py": {
+    "tools\\tests\\test_registry.py": {
         "hash": "e0f8ad9376f1a7a4cd53ab19227f51e8"
     },
-    "tools_v2\\tests\\test_core.py": {
+    "tools\\tests\\test_core.py": {
         "hash": "f1b590c17214855922a4b93291454fb0"
     },
-    "tools_v2\\tests\\test_smoke_categories.py": {
+    "tools\\tests\\test_smoke_categories.py": {
         "hash": "244a028598c79dfd70db1d9f0b09c023"
     },
     "Agent_Cellphone_V2_Repository_restore\\add_license_automation.py": {
@@ -11456,193 +11456,193 @@
     "Agent_Cellphone_V2_Repository_restore\\tools\\toolbelt\\executors\\v2_executor.py": {
         "hash": "f695d7e6f8f26166d09002421017bc36"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\demo_swarm_pulse.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\demo_swarm_pulse.py": {
         "hash": "c468b08339fcd50ece9500f12374390e"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\advisor_cli.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\advisor_cli.py": {
         "hash": "76831f23f48c2c98f148c25d5b816447"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\test_toolbelt_basic.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\test_toolbelt_basic.py": {
         "hash": "faf97efd7e9feeb2c625e5d057216c38"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\adapters\\base_adapter.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\adapters\\base_adapter.py": {
         "hash": "a8c01000f8737e32111993a09885ce42"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\__init__.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\__init__.py": {
         "hash": "e4be5f77427b1eb3f9ab2e8cc9badc44"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\tool_registry.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\tool_registry.py": {
         "hash": "f80d7e18b5115b68e30354c4752ff894"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\toolbelt_core.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\toolbelt_core.py": {
         "hash": "1224ac13c0d8c896fa9bca27f7266995"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\__init__.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\__init__.py": {
         "hash": "37b00d1098ef3dee20bd24e955fe80c7"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\adapters\\error_types.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\adapters\\error_types.py": {
         "hash": "6f24e5a9717729a3bc55107d0dc96197"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\adapters\\__init__.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\adapters\\__init__.py": {
         "hash": "c04f9bdd799239ca85fa6d8312b82fa4"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\agent_ops_tools.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\agent_ops_tools.py": {
         "hash": "d1854dd2de814efb9c7b63623775e766"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\analysis_tools.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\analysis_tools.py": {
         "hash": "53e2e3677b7e2aa3cc7542b7453b5627"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\autonomous_workflow_tools.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\autonomous_workflow_tools.py": {
         "hash": "565bc53a2637fbb8d48dcd8e16c60fd8"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\captain_tools_extension.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\captain_tools_extension.py": {
         "hash": "162fd63de9c1b4025f5c85bcc846411f"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\captain_tools.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\captain_tools.py": {
         "hash": "a29ccbdd5f58fe7d39619fff422e5f3b"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\captain_coordination_tools.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\captain_coordination_tools.py": {
         "hash": "2a5dc2cda337dc58a45d3b7a613995e3"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\captain_tools_advanced.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\captain_tools_advanced.py": {
         "hash": "85e35493b88db8334e5f8df3412f0d24"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\compliance_tools.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\compliance_tools.py": {
         "hash": "f6390417c406a7f96c065cc93830defa"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\config_tools.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\config_tools.py": {
         "hash": "4ed7f26cdd1b32fe4cafbcd5ff4c2f7d"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\coordination_tools.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\coordination_tools.py": {
         "hash": "bd1da99268564da1861da57f50ffd828"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\debate_tools.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\debate_tools.py": {
         "hash": "d37b6ccb8f0757f47dc2376515a1dd94"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\discord_tools.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\discord_tools.py": {
         "hash": "1839e818c7e325deb889bca833ef92af"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\discord_webhook_tools.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\discord_webhook_tools.py": {
         "hash": "9f5051972ef1b6c5727cab656292306e"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\docs_tools.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\docs_tools.py": {
         "hash": "56f59b1f3134912d8845bb4edbc26b57"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\health_tools.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\health_tools.py": {
         "hash": "0ed1972e589038f30cbc4bfd54442278"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\import_fix_tools.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\import_fix_tools.py": {
         "hash": "a45c935e56ff02a64269e2f2d90d2f71"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\integration_tools.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\integration_tools.py": {
         "hash": "43b6c0a1c1cb0ceb82d71a9ac78ddf8a"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\infrastructure_tools.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\infrastructure_tools.py": {
         "hash": "df44518e6a0b1519bbaef9511516460b"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\intelligent_mission_advisor_adapter.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\intelligent_mission_advisor_adapter.py": {
         "hash": "eac36fd7899d8b2dd70abef39e33fc18"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\intelligent_mission_advisor.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\intelligent_mission_advisor.py": {
         "hash": "66e0307286b295ac19d1941c4c54509c"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\intelligent_mission_advisor_guidance.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\intelligent_mission_advisor_guidance.py": {
         "hash": "4e1e49385369f071cb33186b3e4e048b"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\memory_safety_adapters.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\memory_safety_adapters.py": {
         "hash": "824e08837c28f55d41a2b0769a091034"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\memory_safety_tools.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\memory_safety_tools.py": {
         "hash": "c1856979d85a09c9ad5bd4bf0ee42168"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\intelligent_mission_advisor_analysis.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\intelligent_mission_advisor_analysis.py": {
         "hash": "092854a7c075df4164039ff156e3f51a"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\messaging_tools.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\messaging_tools.py": {
         "hash": "70b1958fb51ac350ff5d88a75dcb3619"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\observability_tools.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\observability_tools.py": {
         "hash": "937bba164e1cb435b8eddcc4be5d94ad"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\mission_calculator.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\mission_calculator.py": {
         "hash": "6539777049348a5529a095f7756a0690"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\onboarding_tools.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\onboarding_tools.py": {
         "hash": "2058da7635cf9a0e2ffe87145047a218"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\message_task_tools.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\message_task_tools.py": {
         "hash": "0c0507bf3630612f887908d82faf7818"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\oss_tools.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\oss_tools.py": {
         "hash": "7a3add6b945536757f05534dc7627ef5"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\proposal_tools.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\proposal_tools.py": {
         "hash": "e80f961d7ea8f285ed7fcb4aefcdf5ae"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\swarm_brain_tools.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\swarm_brain_tools.py": {
         "hash": "c224b0b919a56b3ed925c6fcc5568f9f"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\swarm_state_reader.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\swarm_state_reader.py": {
         "hash": "a4147750b200885ba01fa067eb4a1559"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\refactoring_tools.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\refactoring_tools.py": {
         "hash": "f221d957c9b32c3de0dcd6b7f548c181"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\session_tools.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\session_tools.py": {
         "hash": "d1e8b473820fd0017d72e8f48f053225"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\swarm_mission_control.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\swarm_mission_control.py": {
         "hash": "4981cc455167b306dbd3871a46908e40"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\test_generation_tools.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\test_generation_tools.py": {
         "hash": "93bd99ef86a3777fcbc912a4c9889682"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\swarm_consciousness.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\swarm_consciousness.py": {
         "hash": "76b119f65e6864eb8927629ac2e3b496"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\testing_tools.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\testing_tools.py": {
         "hash": "edab61f296d140b848758eb9c872f588"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\v2_tools.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\v2_tools.py": {
         "hash": "d20ae81599266766f149a3ec63a8367a"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\workflow_tools.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\workflow_tools.py": {
         "hash": "fdb9bc16a7fab4033827b55979c40e06"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\validation_tools.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\validation_tools.py": {
         "hash": "4dd6061330cbd12ffe984f2b8b6fdafc"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\vector_tools.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\categories\\vector_tools.py": {
         "hash": "39b7bbcf02fdf9825628cd86943cab85"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\core\\tool_facade.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\core\\tool_facade.py": {
         "hash": "d3b14f549ca506c6b234da203bf86491"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\core\\__init__.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\core\\__init__.py": {
         "hash": "c2af1a75194741845b1fc04a60fc8d47"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\tests\\test_core.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\tests\\test_core.py": {
         "hash": "f1b590c17214855922a4b93291454fb0"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\tests\\test_smoke_categories.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\tests\\test_smoke_categories.py": {
         "hash": "244a028598c79dfd70db1d9f0b09c023"
     },
     "Agent_Cellphone_V2_Repository_restore\\trading_robot\\main.py": {
         "hash": "87564fce1a44153d0d3e0ed65f9b7e00"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\core\\tool_spec.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\core\\tool_spec.py": {
         "hash": "bb387be808c6eb47aac1cfe275c02d44"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\tests\\test_adapters.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\tests\\test_adapters.py": {
         "hash": "2567e9f22b5da5851501c64d22ae8d71"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\tests\\test_registry.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\tests\\test_registry.py": {
         "hash": "e0f8ad9376f1a7a4cd53ab19227f51e8"
     },
     "Agent_Cellphone_V2_Repository_restore\\trading_robot\\config\\settings.py": {
         "hash": "6b8c70abd1cfe5b5b77bf45be372d652"
     },
-    "Agent_Cellphone_V2_Repository_restore\\tools_v2\\tests\\__init__.py": {
+    "Agent_Cellphone_V2_Repository_restore\\tools\\tests\\__init__.py": {
         "hash": "4253112d6d9af8de06d33a85f0c0313e"
     },
     "Agent_Cellphone_V2_Repository_restore\\trading_robot\\backtesting\\backtester.py": {

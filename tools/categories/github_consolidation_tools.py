@@ -242,7 +242,7 @@ class GitHubRepoSimilarityAnalyzerTool(IToolAdapter):
         """Recommend which repo should be primary using ROI calculator."""
         try:
             # Use ROI calculator to pick best repo
-            from tools_v2.toolbelt_core import ToolbeltCore
+            from tools.toolbelt_core import ToolbeltCore
             toolbelt = ToolbeltCore()
             
             best_repo = repos[0]

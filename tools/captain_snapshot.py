@@ -5,11 +5,11 @@ Captain Snapshot Tool - Multi-Agent Status Overview
 Provides aggregated view of all agent statuses with staleness detection.
 Reads from runtime/agents_index.json and presents a concise table.
 
-⚠️ DEPRECATED: This tool has been migrated to tools_v2.
-Use 'python -m tools_v2.toolbelt health.snapshot' instead.
+⚠️ DEPRECATED: This tool has been migrated to tools.
+Use 'python -m tools.toolbelt health.snapshot' instead.
 This file will be removed in future version.
 
-Migrated to: tools_v2/categories/health_tools.py → SnapshotTool
+Migrated to: tools/categories/health_tools.py → SnapshotTool
 Registry: health.snapshot
 
 Author: Agent-4 - Strategic Oversight & Emergency Intervention Manager
@@ -20,8 +20,8 @@ import warnings
 import logging
 
 warnings.warn(
-    "⚠️ DEPRECATED: This tool has been migrated to tools_v2. "
-    "Use 'python -m tools_v2.toolbelt health.snapshot' instead. "
+    "⚠️ DEPRECATED: This tool has been migrated to tools. "
+    "Use 'python -m tools.toolbelt health.snapshot' instead. "
     "This file will be removed in future version.",
     DeprecationWarning,
     stacklevel=2

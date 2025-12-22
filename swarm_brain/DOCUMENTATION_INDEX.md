@@ -97,7 +97,7 @@ This index organizes ALL swarm documentation for quick agent access.
 ### **Swarm Intelligence**:
 - `docs/SWARM_BRAIN_GUIDE.md` - Swarm brain system
 - `docs/AUTONOMOUS_COMPETITION_GUIDE.md` - Autonomous competition
-- `tools_v2/INTELLIGENT_MISSION_ADVISOR_GUIDE.md` ⭐ - Mission advisor tool
+- `tools/INTELLIGENT_MISSION_ADVISOR_GUIDE.md` ⭐ - Mission advisor tool
 - `tools/AGENT_MISSION_CONTROLLER_GUIDE.md` - Mission controller
 
 ### **Communication**:
@@ -161,7 +161,7 @@ ls docs/
 |----------|----------|---------|
 | **Protocols** | `swarm_brain/protocols/` | Core operational protocols |
 | **Technical Guides** | `docs/` | Technical how-to guides |
-| **Tool Documentation** | `tools_v2/`, `tools/` | Tool-specific guides |
+| **Tool Documentation** | `tools/`, `tools/` | Tool-specific guides |
 | **Architecture** | `docs/architecture/` | Architecture patterns & best practices |
 | **Integration** | `docs/integration/` | Integration guides |
 | **Captain Resources** | `agent_workspaces/Agent-4/` | Captain-specific materials |
@@ -187,7 +187,7 @@ ls docs/
 3. [Refactoring Suggestions](../docs/REFACTORING_SUGGESTIONS_GUIDE.md)
 
 ### **For Tool Creators**:
-1. [Intelligent Mission Advisor Guide](../tools_v2/INTELLIGENT_MISSION_ADVISOR_GUIDE.md)
+1. [Intelligent Mission Advisor Guide](../tools/INTELLIGENT_MISSION_ADVISOR_GUIDE.md)
 2. [Agent Mission Controller](../tools/AGENT_MISSION_CONTROLLER_GUIDE.md)
 3. [Captain Toolbelt Guide](../docs/CAPTAIN_TOOLBELT_GUIDE.md)
 

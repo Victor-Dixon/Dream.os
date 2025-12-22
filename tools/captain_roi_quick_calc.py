@@ -2,11 +2,11 @@
 Captain's Tool: Quick ROI Calculator
 =====================================
 
-⚠️ DEPRECATED: This tool has been migrated to tools_v2.
-Use 'python -m tools_v2.toolbelt captain.calculate_roi' instead.
+⚠️ DEPRECATED: This tool has been migrated to tools.
+Use 'python -m tools.toolbelt captain.calculate_roi' instead.
 This file will be removed in future version.
 
-Migrated to: tools_v2/categories/captain_coordination_tools.py → ROICalculatorTool
+Migrated to: tools/categories/captain_coordination_tools.py → ROICalculatorTool
 Registry: captain.calculate_roi
 
 Quickly calculate ROI for a task to decide priority.
@@ -21,15 +21,15 @@ Deprecated: 2025-01-27 (Agent-6 - V2 Tools Flattening)
 import warnings
 
 warnings.warn(
-    "⚠️ DEPRECATED: This tool has been migrated to tools_v2. "
-    "Use 'python -m tools_v2.toolbelt captain.calculate_roi' instead. "
+    "⚠️ DEPRECATED: This tool has been migrated to tools. "
+    "Use 'python -m tools.toolbelt captain.calculate_roi' instead. "
     "This file will be removed in future version.",
     DeprecationWarning,
     stacklevel=2
 )
 
-# Legacy compatibility - delegate to tools_v2
-# For migration path, use: python -m tools_v2.toolbelt captain.calculate_roi
+# Legacy compatibility - delegate to tools
+# For migration path, use: python -m tools.toolbelt captain.calculate_roi
 
 import argparse
 
@@ -45,9 +45,9 @@ def calculate_task_roi(points: int, complexity: int, v2_impact: int = 0, autonom
 
     Autonomy weighted 2x because long-term goal!
     """
-    # Delegate to tools_v2 adapter
+    # Delegate to tools adapter
     try:
-        from tools_v2.categories.captain_coordination_tools import ROICalculatorTool
+        from tools.categories.captain_coordination_tools import ROICalculatorTool
         
         tool = ROICalculatorTool()
         result = tool.execute({

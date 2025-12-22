@@ -22,9 +22,9 @@ Agent-3, excellent work on the infrastructure tools migration! I've reviewed you
 3. ✅ `validation.ssot` - SSOT documentation-code alignment
 
 **Files Modified:**
-- `tools_v2/categories/import_fix_tools.py`
-- `tools_v2/categories/validation_tools.py`
-- `tools_v2/tool_registry.py`
+- `tools/categories/import_fix_tools.py`
+- `tools/categories/validation_tools.py`
+- `tools/tool_registry.py`
 
 ---
 
@@ -101,7 +101,7 @@ class ToolNameAdapter(IToolAdapter):
 
 ### **Registry Pattern (Consistent):**
 ```python
-"category.tool_name": ("tools_v2.categories.category_file", "ToolNameAdapter"),
+"category.tool_name": ("tools.categories.category_file", "ToolNameAdapter"),
 ```
 
 ---

@@ -32,7 +32,7 @@ Execute bulk deletion of 627 files identified as safe to delete by Agent-8's com
 - **Files Deleted**: 
   - temp_repos/Auto_Blogger files (13 files)
   - tools/enforce_agent_compliance.py
-  - tools_v2/tool_registry.py
+  - tools/tool_registry.py
   - devlogs (10 files)
   - runtime files (3 files)
   - swarm_brain files (1 file)

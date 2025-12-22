@@ -2,12 +2,12 @@
 Captain's Tool: Quick Leaderboard Update
 =========================================
 
-⚠️ DEPRECATED: This tool has been migrated to tools_v2.
-Use 'python -m tools_v2.toolbelt captain.update_leaderboard_coord' instead.
+⚠️ DEPRECATED: This tool has been migrated to tools.
+Use 'python -m tools.toolbelt captain.update_leaderboard_coord' instead.
 This file will be removed in future version.
 
-Migrated to: tools_v2/categories/captain_coordination_tools.py → LeaderboardUpdateTool
-Also available in: tools_v2/categories/captain_tools.py → LeaderboardUpdateTool
+Migrated to: tools/categories/captain_coordination_tools.py → LeaderboardUpdateTool
+Also available in: tools/categories/captain_tools.py → LeaderboardUpdateTool
 Registry: captain.update_leaderboard_coord OR captain.update_leaderboard
 
 Updates leaderboard with new points.
@@ -22,15 +22,15 @@ Deprecated: 2025-01-27 (Agent-6 - V2 Tools Flattening)
 import warnings
 
 warnings.warn(
-    "⚠️ DEPRECATED: This tool has been migrated to tools_v2. "
-    "Use 'python -m tools_v2.toolbelt captain.update_leaderboard_coord' instead. "
+    "⚠️ DEPRECATED: This tool has been migrated to tools. "
+    "Use 'python -m tools.toolbelt captain.update_leaderboard_coord' instead. "
     "This file will be removed in future version.",
     DeprecationWarning,
     stacklevel=2
 )
 
-# Legacy compatibility - delegate to tools_v2
-# For migration path, use: python -m tools_v2.toolbelt captain.update_leaderboard_coord
+# Legacy compatibility - delegate to tools
+# For migration path, use: python -m tools.toolbelt captain.update_leaderboard_coord
 
 import json
 from datetime import datetime
@@ -39,9 +39,9 @@ from pathlib import Path
 
 def update_leaderboard(agent_id: str, points: int, task: str = ""):
     """Update leaderboard with new completion."""
-    # Delegate to tools_v2 adapter
+    # Delegate to tools adapter
     try:
-        from tools_v2.categories.captain_coordination_tools import LeaderboardUpdateTool
+        from tools.categories.captain_coordination_tools import LeaderboardUpdateTool
         
         tool = LeaderboardUpdateTool()
         result = tool.execute({

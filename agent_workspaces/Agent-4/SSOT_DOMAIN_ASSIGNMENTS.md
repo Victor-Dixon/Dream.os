@@ -84,7 +84,7 @@ Each agent must update their `status.json` with SSOT domain declaration.
 **Domain**: `qa`  
 **Scope**: Test infrastructure, quality standards, test coverage enforcement  
 **SSOT Files**:
-- `tools_v2/categories/ssot_validation_tools.py`
+- `tools/categories/ssot_validation_tools.py`
 - `tests/`
 
 **Action**: 

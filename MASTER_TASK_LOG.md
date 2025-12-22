@@ -26,9 +26,9 @@
 ## Toolbelt Health Fixes (18 tools to reach 100%)
 
 ### Priority 1: Fix ToolNotFoundError Tools (3 tools)
-- [ ] **HIGH**: Fix agent.points tool - Add PointsCalculatorTool class to tools_v2.categories.session_tools or update registry entry
-- [ ] **HIGH**: Fix infra.roi_calc tool - Add ROICalculatorTool class to tools_v2.categories.infrastructure_tools or update registry entry
-- [ ] **HIGH**: Fix mem.imports tool - Add ImportValidatorTool class to tools_v2.categories.memory_safety_adapters or update registry entry
+- [ ] **HIGH**: Fix agent.points tool - Add PointsCalculatorTool class to tools.categories.session_tools or update registry entry
+- [ ] **HIGH**: Fix infra.roi_calc tool - Add ROICalculatorTool class to tools.categories.infrastructure_tools or update registry entry
+- [ ] **HIGH**: Fix mem.imports tool - Add ImportValidatorTool class to tools.categories.memory_safety_adapters or update registry entry
 
 ### Priority 2: Fix Abstract Class Implementation Errors (15 tools)
 

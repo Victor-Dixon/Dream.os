@@ -12,8 +12,8 @@
 **OBJECTIVE**: Flatten and consolidate V2 tools structure for better organization
 
 **SCOPE**: 
-- Review `tools_v2/` structure
-- Identify tools needing migration from `tools/` to `tools_v2/`
+- Review `tools/` structure
+- Identify tools needing migration from `tools/` to `tools/`
 - Follow adapter pattern
 - Coordinate team effort
 - Communicate progress
@@ -22,12 +22,12 @@
 
 ## 🎯 CURRENT STATE ANALYSIS
 
-### **tools_v2/ Structure**
+### **tools/ Structure**
 - ✅ **69 files** (63 Python files, 5 markdown, 1 JSON)
 - ✅ Well-organized with categories
 - ⚠️ **Nested subdirectories** detected:
-  - `tools_v2/categories/advice_context/` (needs flattening)
-  - `tools_v2/categories/advice_outputs/` (needs flattening)
+  - `tools/categories/advice_context/` (needs flattening)
+  - `tools/categories/advice_outputs/` (needs flattening)
 
 ### **tools/ Directory - Migration Candidates**
 - ⚠️ **17 captain_*.py files** need migration:
@@ -68,7 +68,7 @@
 ### **Agent-2** (Architecture & Design)
 **Role**: Review structure  
 **Tasks**:
-- [ ] Review `tools_v2/` architecture
+- [ ] Review `tools/` architecture
 - [ ] Validate adapter pattern implementation
 - [ ] Review consolidation strategy alignment
 - [ ] Approve structural changes
@@ -76,7 +76,7 @@
 ### **Agent-6** (Coordination & Communication)
 **Role**: **COORDINATOR**  
 **Tasks**:
-- [x] Review tools_v2/ structure
+- [x] Review tools/ structure
 - [x] Identify tools needing migration
 - [ ] Create migration coordination plan
 - [ ] Communicate progress to swarm
@@ -86,7 +86,7 @@
 ### **Agent-7** (Web Development)
 **Role**: Tool registry updates  
 **Tasks**:
-- [ ] Update `tools_v2/tool_registry.py` with new tools
+- [ ] Update `tools/tool_registry.py` with new tools
 - [ ] Register migrated tools
 - [ ] Update tool registry documentation
 - [ ] Test registry functionality
@@ -104,7 +104,7 @@
 ## 📊 FLATTENING PRIORITIES
 
 ### **Priority 1: Flatten Nested Subdirectories** (IMMEDIATE)
-**Target**: `tools_v2/categories/advice_context/` and `advice_outputs/`
+**Target**: `tools/categories/advice_context/` and `advice_outputs/`
 
 **Action Items**:
 1. [ ] Review modules in `advice_context/`:
@@ -120,7 +120,7 @@
 5. [ ] Test functionality
 
 ### **Priority 2: Migrate Captain Tools** (HIGH)
-**Target**: 17 captain_*.py files from `tools/` to `tools_v2/categories/`
+**Target**: 17 captain_*.py files from `tools/` to `tools/categories/`
 
 **Migration Strategy** (per TOOLBELT_CONSOLIDATION_STRATEGY.md):
 
@@ -174,7 +174,7 @@
 ### **PHASE 1: Analysis & Planning** (Agent-6)
 **Duration**: 1-2 hours  
 **Tasks**:
-- [x] Review tools_v2/ structure
+- [x] Review tools/ structure
 - [x] Identify nested subdirectories
 - [x] List migration candidates
 - [x] Create coordination plan
@@ -249,7 +249,7 @@
 **Coverage**:
 - [ ] 100% nested subdirectories flattened
 - [ ] 100% captain tools migrated
-- [ ] All tools accessible through `tools_v2/`
+- [ ] All tools accessible through `tools/`
 - [ ] No duplicate tool implementations
 
 **Quality**:

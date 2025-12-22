@@ -191,13 +191,13 @@ memory.record_decision(
 ### **Available via Toolbelt**:
 ```bash
 # Search swarm knowledge (coming soon)
-python -m tools_v2.toolbelt swarm.search --query "memory leaks"
+python -m tools.toolbelt swarm.search --query "memory leaks"
 
 # Add knowledge entry (coming soon)
-python -m tools_v2.toolbelt swarm.add --title "..." --content "..."
+python -m tools.toolbelt swarm.add --title "..." --content "..."
 
 # View swarm stats (coming soon)
-python -m tools_v2.toolbelt swarm.stats
+python -m tools.toolbelt swarm.stats
 ```
 
 ---

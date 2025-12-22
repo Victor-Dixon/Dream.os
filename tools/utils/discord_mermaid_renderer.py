@@ -6,7 +6,7 @@ Discord Mermaid Renderer
 Converts Mermaid diagrams to images for Discord posting.
 Discord doesn't support Mermaid natively, so we convert to PNG images.
 
-V2 Compliance: Migrated to tools_v2/utils/ for proper organization.
+V2 Compliance: Migrated to tools/utils/ for proper organization.
 Author: Agent-4 (Captain)
 Date: 2025-01-27
 Migrated: 2025-01-27 (Agent-8 - SSOT & System Integration)

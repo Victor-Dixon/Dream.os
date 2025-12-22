@@ -63,7 +63,7 @@
 
 ### **Current Status:**
 - ⏳ **Status**: PENDING (17 files in `tools/`)
-- ⏳ **Migration to tools_v2/**: Pending
+- ⏳ **Migration to tools/**: Pending
 - ⏳ **This is a separate consolidation task**
 
 ### **Blocking Phase 1:**

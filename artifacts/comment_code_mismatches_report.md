@@ -15453,7 +15453,7 @@
 - Code: `def check_workspace_structure(workspace_root)`
 - Issue: Docstring params don't match: missing={'Returns'}, extra={'workspace_root'}
 
-### tools_v2\adapters\base_adapter.py
+### tools\adapters\base_adapter.py
 
 **Line 27** (high): docstring_param_mismatch
 - Comment: `
@@ -15538,7 +15538,7 @@
 - Code: `def get_help(self)`
 - Issue: Docstring params don't match: missing={'Returns'}, extra={'self'}
 
-### tools_v2\adapters\error_types.py
+### tools\adapters\error_types.py
 
 **Line 15** (high): docstring_param_mismatch
 - Comment: `
@@ -15591,7 +15591,7 @@
 - Code: `def format_toolbelt_error(error)`
 - Issue: Docstring params don't match: missing={'Returns', 'Args'}, extra={'error'}
 
-### tools_v2\categories\autonomous_workflow_tools.py
+### tools\categories\autonomous_workflow_tools.py
 
 **Line 101** (high): docstring_param_mismatch
 - Comment: `
@@ -15611,7 +15611,7 @@
 - Code: `def get_dashboard_view(self)`
 - Issue: Docstring params don't match: missing={'Returns'}, extra={'self'}
 
-### tools_v2\categories\communication_tools.py
+### tools\categories\communication_tools.py
 
 **Line 42** (high): docstring_param_mismatch
 - Comment: `
@@ -15632,7 +15632,7 @@
 - Code: `def execute(self, params, context)`
 - Issue: Docstring params don't match: missing={'Returns', 'Args'}, extra={'self', 'context', 'params'}
 
-### tools_v2\categories\discord_webhook_tools.py
+### tools\categories\discord_webhook_tools.py
 
 **Line 42** (high): docstring_param_mismatch
 - Comment: `
@@ -15679,7 +15679,7 @@
 - Code: `def execute(self)`
 - Issue: Docstring params don't match: missing={'Returns', 'kwargs', 'Args'}, extra={'self'}
 
-### tools_v2\categories\github_consolidation_tools.py
+### tools\categories\github_consolidation_tools.py
 
 **Line 513** (high): docstring_param_mismatch
 - Comment: `
@@ -15689,7 +15689,7 @@
 - Code: `def execute(self, params, context)`
 - Issue: Docstring params don't match: missing={'SSOT'}, extra={'self', 'context', 'params'}
 
-### tools_v2\categories\intelligent_mission_advisor.py
+### tools\categories\intelligent_mission_advisor.py
 
 **Line 45** (high): docstring_param_mismatch
 - Comment: `
@@ -15744,7 +15744,7 @@
 - Code: `def get_mission_advisor(agent_id)`
 - Issue: Docstring params don't match: missing={'Returns', 'Args'}, extra={'agent_id'}
 
-### tools_v2\categories\intelligent_mission_advisor_analysis.py
+### tools\categories\intelligent_mission_advisor_analysis.py
 
 **Line 30** (high): docstring_param_mismatch
 - Comment: `
@@ -15756,7 +15756,7 @@
 - Code: `def __init__(self, agent_id, agent_specialty, project_root, other_agents_work)`
 - Issue: Docstring params don't match: missing={'Args'}, extra={'self', 'agent_id'}
 
-### tools_v2\categories\intelligent_mission_advisor_guidance.py
+### tools\categories\intelligent_mission_advisor_guidance.py
 
 **Line 31** (high): docstring_param_mismatch
 - Comment: `
@@ -15785,7 +15785,7 @@
 - Code: `def analyze_swarm_state(self)`
 - Issue: Docstring params don't match: missing={'Returns'}, extra={'self'}
 
-### tools_v2\categories\memory_safety_tools.py
+### tools\categories\memory_safety_tools.py
 
 **Line 21** (high): docstring_param_mismatch
 - Comment: `
@@ -15830,7 +15830,7 @@
 - Code: `def check_file_handles(target_path)`
 - Issue: Docstring params don't match: missing={'Warning', 'Returns', 'Args'}, extra={'target_path'}
 
-### tools_v2\tests\test_adapters.py
+### tools\tests\test_adapters.py
 
 **Line 105** (medium): docstring_return_mismatch
 - Comment: `Test adapter returns valid spec.`
@@ -15842,14 +15842,14 @@
 - Code: `def test_adapter_get_help(...)`
 - Issue: Docstring mentions return but function has no return statement
 
-### tools_v2\tests\test_registry.py
+### tools\tests\test_registry.py
 
 **Line 33** (medium): docstring_return_mismatch
 - Comment: `Test registry singleton returns same instance.`
 - Code: `def test_singleton_pattern(...)`
 - Issue: Docstring mentions return but function has no return statement
 
-### tools_v2\toolbelt_core.py
+### tools\toolbelt_core.py
 
 **Line 36** (high): docstring_param_mismatch
 - Comment: `
@@ -15918,7 +15918,7 @@
 - Code: `def get_toolbelt_core()`
 - Issue: Docstring params don't match: missing={'Returns'}, extra=set()
 
-### tools_v2\utils\discord_mermaid_renderer.py
+### tools\utils\discord_mermaid_renderer.py
 
 **Line 36** (high): docstring_param_mismatch
 - Comment: `

@@ -57,7 +57,7 @@ python tools/captain_import_validator.py <file.py>
 
 ---
 
-### **4. SSOT Validation Tools** (`tools_v2/categories/ssot_validation_tools.py`)
+### **4. SSOT Validation Tools** (`tools/categories/ssot_validation_tools.py`)
 **Purpose**: SSOT violation detection and enforcement  
 **Use Case**: Detect duplicates, scattered configs, multiple repositories
 
@@ -70,7 +70,7 @@ python tools/captain_import_validator.py <file.py>
 
 **Usage** (via toolbelt):
 ```python
-from tools_v2.categories.ssot_validation_tools import SSOTViolationDetector
+from tools.categories.ssot_validation_tools import SSOTViolationDetector
 
 detector = SSOTViolationDetector()
 result = detector.execute({"directory": "src"})
@@ -205,7 +205,7 @@ Escalate to Captain (Agent-4) if:
 
 - **SSOT Protocol**: `runtime/agent_comms/SSOT_PROTOCOL.md`
 - **SSOT Domain Assignments**: `agent_workspaces/Agent-4/SSOT_DOMAIN_ASSIGNMENTS.md`
-- **QA SSOT Tools**: `tools_v2/categories/ssot_validation_tools.py`
+- **QA SSOT Tools**: `tools/categories/ssot_validation_tools.py`
 
 ---
 

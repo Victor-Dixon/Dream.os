@@ -151,7 +151,7 @@ python tools/agent_toolbelt.py discord test \
 - Infrastructure: 4 tools
 - Discord: 3 tools
 
-**Integration**: Registered in `tools_v2/tool_registry.py`
+**Integration**: Registered in `tools/tool_registry.py`
 
 **V2 Compliance**: All tools follow adapter pattern, <200 lines
 

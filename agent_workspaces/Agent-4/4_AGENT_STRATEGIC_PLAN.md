@@ -115,10 +115,10 @@ python -m src.services.messaging_cli --agent Agent-4 \
 **Tools:**
 ```bash
 # Find violations
-python -m tools_v2.toolbelt_runner v2.check --fail-on-major
+python -m tools.toolbelt_runner v2.check --fail-on-major
 
 # Plan refactors
-python -m tools_v2.toolbelt_runner infra.extract_planner --file <target>
+python -m tools.toolbelt_runner infra.extract_planner --file <target>
 
 # Execute refactor
 # Agent implements based on plan
@@ -144,13 +144,13 @@ python -m tools_v2.toolbelt_runner infra.extract_planner --file <target>
 **Tools:**
 ```bash
 # Check current coverage
-python -m tools_v2.toolbelt_runner test.coverage
+python -m tools.toolbelt_runner test.coverage
 
 # Run mutation tests
-python -m tools_v2.toolbelt_runner test.mutation
+python -m tools.toolbelt_runner test.mutation
 
 # Validate quality
-python -m tools_v2.toolbelt_runner val.smoke
+python -m tools.toolbelt_runner val.smoke
 ```
 
 ---
@@ -174,13 +174,13 @@ python -m tools_v2.toolbelt_runner val.smoke
 **Tools:**
 ```bash
 # Check Discord health
-python -m tools_v2.toolbelt_runner discord.health
+python -m tools.toolbelt_runner discord.health
 
 # System health monitoring
-python -m tools_v2.toolbelt_runner obs.health
+python -m tools.toolbelt_runner obs.health
 
 # Find infrastructure issues
-python -m tools_v2.toolbelt_runner infra.orchestrator_scan
+python -m tools.toolbelt_runner infra.orchestrator_scan
 ```
 
 ---
@@ -206,22 +206,22 @@ python -m tools_v2.toolbelt_runner infra.orchestrator_scan
 **Tools:**
 ```bash
 # Morning routine
-python -m tools_v2.toolbelt_runner captain.status_check
+python -m tools.toolbelt_runner captain.status_check
 
 # Assign missions
-python -m tools_v2.toolbelt_runner captain.assign_mission \
+python -m tools.toolbelt_runner captain.assign_mission \
   --agent-id Agent-1 \
   --mission-title "V2 Compliance Sprint" \
   --points 2000
 
 # Activate agents
-python -m tools_v2.toolbelt_runner captain.deliver_gas \
+python -m tools.toolbelt_runner captain.deliver_gas \
   --agent-id Agent-1 \
   --message "CHECK INBOX + START NOW!"
 
 # End of day
-python -m tools_v2.toolbelt_runner captain.update_leaderboard
-python -m tools_v2.toolbelt_runner captain.cycle_report
+python -m tools.toolbelt_runner captain.update_leaderboard
+python -m tools.toolbelt_runner captain.cycle_report
 ```
 
 ---
@@ -343,10 +343,10 @@ python -m tools_v2.toolbelt_runner captain.cycle_report
 **Before Each Task:**
 ```bash
 # Agent checks what tools are available
-python -m tools_v2.toolbelt_runner --list
+python -m tools.toolbelt_runner --list
 
 # Agent uses appropriate tool
-python -m tools_v2.toolbelt_runner <tool-name> <params>
+python -m tools.toolbelt_runner <tool-name> <params>
 ```
 
 **Tool Usage Tracking:**

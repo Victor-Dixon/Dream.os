@@ -2,7 +2,7 @@
 
 ## ✅ **NEW TOOLS CREATED**
 
-**File**: `tools_v2/categories/captain_tools_advanced.py`  
+**File**: `tools/categories/captain_tools_advanced.py`  
 **Purpose**: Critical tools discovered from today's coordination session  
 **Status**: ✅ IMPLEMENTED  
 

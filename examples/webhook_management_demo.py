@@ -24,7 +24,7 @@ def demo_list_webhooks():
     print("="*60)
     
     try:
-        from tools_v2.categories.discord_webhook_tools import ListWebhooksTool
+        from tools.categories.discord_webhook_tools import ListWebhooksTool
         
         tool = ListWebhooksTool()
         result = tool.execute()
@@ -52,7 +52,7 @@ def demo_save_webhook():
     print(f"📝 Saving webhook URL: {webhook_url[:50]}...")
     
     try:
-        from tools_v2.categories.discord_webhook_tools import SaveWebhookTool
+        from tools.categories.discord_webhook_tools import SaveWebhookTool
         
         tool = SaveWebhookTool()
         result = tool.execute(
@@ -81,7 +81,7 @@ def demo_test_webhook():
     print("⚠️  This will test DISCORD_WEBHOOK_URL from your .env file")
     
     try:
-        from tools_v2.categories.discord_webhook_tools import TestWebhookTool
+        from tools.categories.discord_webhook_tools import TestWebhookTool
         
         tool = TestWebhookTool()
         result = tool.execute(
@@ -107,7 +107,7 @@ def demo_webhook_manager():
     print("="*60)
     
     try:
-        from tools_v2.categories.discord_webhook_tools import WebhookManagerTool
+        from tools.categories.discord_webhook_tools import WebhookManagerTool
         
         tool = WebhookManagerTool()
         
@@ -147,12 +147,12 @@ def demo_agent_workflow():
     print("   !create_webhook #devlogs Agent-7-Devlog-Webhook")
     
     print("\n2️⃣ Agent lists available webhooks:")
-    print("   from tools_v2.categories.discord_webhook_tools import ListWebhooksTool")
+    print("   from tools.categories.discord_webhook_tools import ListWebhooksTool")
     print("   tool = ListWebhooksTool()")
     print("   result = tool.execute()")
     
     print("\n3️⃣ Agent tests webhook:")
-    print("   from tools_v2.categories.discord_webhook_tools import TestWebhookTool")
+    print("   from tools.categories.discord_webhook_tools import TestWebhookTool")
     print("   tool = TestWebhookTool()")
     print("   result = tool.execute(config_key='devlogs_webhook')")
     

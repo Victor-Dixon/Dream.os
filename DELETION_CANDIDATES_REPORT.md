@@ -161,8 +161,8 @@ rm tools/get_repo_chronology.py
 
 These files are registered in `__init__.py` or actively imported but exceed V2 limits:
 
-### tools_v2/categories (Registered in __init__.py)
-- All `tools_v2/categories/*.py` files are auto-imported
+### tools/categories (Registered in __init__.py)
+- All `tools/categories/*.py` files are auto-imported
 - Should be **refactored**, not deleted
 
 ### src/ Core Files (Actively Imported)

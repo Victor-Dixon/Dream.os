@@ -627,7 +627,7 @@
       }
     },
     {
-      "file": "Agent_Cellphone_V2_Repository\\tools_v2\\categories\\__init__.py",
+      "file": "Agent_Cellphone_V2_Repository\\tools\\categories\\__init__.py",
       "imports": [
         {
           "line": 22,
@@ -643,7 +643,7 @@
       }
     },
     {
-      "file": "Agent_Cellphone_V2_Repository\\tools_v2\\categories\\config_tools.py",
+      "file": "Agent_Cellphone_V2_Repository\\tools\\categories\\config_tools.py",
       "imports": [
         {
           "line": 176,
@@ -2612,7 +2612,7 @@
       }
     },
     {
-      "file": "Agent_Cellphone_V2_Repository\\tools_v2\\categories\\__init__.py",
+      "file": "Agent_Cellphone_V2_Repository\\tools\\categories\\__init__.py",
       "imports": [
         {
           "line": 22,
@@ -2628,7 +2628,7 @@
       }
     },
     {
-      "file": "Agent_Cellphone_V2_Repository\\tools_v2\\categories\\config_tools.py",
+      "file": "Agent_Cellphone_V2_Repository\\tools\\categories\\config_tools.py",
       "imports": [
         {
           "line": 176,

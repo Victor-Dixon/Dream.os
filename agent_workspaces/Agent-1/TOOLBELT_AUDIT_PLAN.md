@@ -38,7 +38,7 @@
    - Core orchestration tools
 
 3. **Duplicate Identification**
-   - Compare tools/ vs tools_v2/
+   - Compare tools/ vs tools/
    - Identify functional duplicates
    - Map migration paths
 
@@ -50,16 +50,16 @@
 1. Scan tools/ for integration-related files
 2. Identify core system tools
 3. Categorize by function
-4. Map to tools_v2/ categories
+4. Map to tools/ categories
 
 ### **Phase 2: Duplicate Detection**
-1. Compare functionality between tools/ and tools_v2/
+1. Compare functionality between tools/ and tools/
 2. Identify exact duplicates
 3. Identify functional duplicates (same purpose, different implementation)
 4. Document differences
 
 ### **Phase 3: Migration Planning**
-1. Determine migration targets (tools_v2/ categories)
+1. Determine migration targets (tools/ categories)
 2. Create adapter requirements
 3. Prioritize migrations
 4. Document migration steps
@@ -96,10 +96,10 @@
 
 #### **1. Toolbelt Systems (3 files → 1 system):**
 ```
-KEEP: tools_v2/toolbelt_core.py (official)
+KEEP: tools/toolbelt_core.py (official)
 DEPRECATE: tools/toolbelt.py (legacy)
 DEPRECATE: tools/agent_toolbelt.py (redundant)
-ACTION: Migrate to tools_v2/ (already exists)
+ACTION: Migrate to tools/ (already exists)
 ```
 
 #### **2. Import Validators (4 files → 1 system):**
@@ -108,7 +108,7 @@ KEEP: tools/import_chain_validator.py (most comprehensive)
 DEPRECATE: tools/validate_imports.py (basic)
 DEPRECATE: tools/audit_imports.py (overlapping)
 DEPRECATE: tools/captain_import_validator.py (captain-specific wrapper)
-ACTION: Create tools_v2/categories/import_fix_tools.py adapter
+ACTION: Create tools/categories/import_fix_tools.py adapter
 ```
 
 #### **3. Integrity Validators (2 files → 1 system):**
@@ -127,14 +127,14 @@ ACTION: Verify overlap, create unified adapter
 **Target:** Consolidate toolbelt entry points
 
 **Files:**
-- `tools/toolbelt.py` → Deprecate, delegate to tools_v2
+- `tools/toolbelt.py` → Deprecate, delegate to tools
 - `tools/agent_toolbelt.py` → Deprecate, migrate functionality
 - `tools/toolbelt_registry.py` → Review, migrate if needed
 - `tools/toolbelt_runner.py` → Review, migrate if needed
 
 **Migration Steps:**
 1. Add deprecation warnings to legacy files
-2. Delegate to tools_v2/toolbelt_core.py
+2. Delegate to tools/toolbelt_core.py
 3. Update all references
 4. Test compatibility
 5. Remove after verification period
@@ -146,14 +146,14 @@ ACTION: Verify overlap, create unified adapter
 **Target:** Single import validation system
 
 **Files:**
-- `tools/import_chain_validator.py` → Migrate to tools_v2
+- `tools/import_chain_validator.py` → Migrate to tools
 - `tools/validate_imports.py` → Deprecate or merge
 - `tools/audit_imports.py` → Deprecate or merge
 - `tools/captain_import_validator.py` → Migrate to captain_tools
 
 **Migration Steps:**
 1. Analyze functionality differences
-2. Create unified adapter in tools_v2/categories/import_fix_tools.py
+2. Create unified adapter in tools/categories/import_fix_tools.py
 3. Register in tool_registry.py
 4. Test all validation scenarios
 5. Deprecate old files
@@ -165,7 +165,7 @@ ACTION: Verify overlap, create unified adapter
 **Target:** Unified integrity checking
 
 **Files:**
-- `tools/integrity_validator.py` → Migrate to tools_v2
+- `tools/integrity_validator.py` → Migrate to tools
 - `tools/ssot_validator.py` → Verify overlap, merge if needed
 
 **Migration Steps:**
@@ -179,7 +179,7 @@ ACTION: Verify overlap, create unified adapter
 
 ## 📊 **MIGRATION MATRIX**
 
-| Tool (tools/) | Target (tools_v2/) | Priority | Status |
+| Tool (tools/) | Target (tools/) | Priority | Status |
 |---------------|-------------------|----------|--------|
 | toolbelt.py | toolbelt_core.py | HIGH | Plan |
 | agent_toolbelt.py | toolbelt_core.py | HIGH | Plan |

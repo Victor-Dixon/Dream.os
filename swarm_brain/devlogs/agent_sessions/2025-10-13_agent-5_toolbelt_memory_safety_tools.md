@@ -107,13 +107,13 @@ python toolbelt.py mem.handles --target_path "src"
 ## 📋 **IMPLEMENTATION COMPLETE**
 
 ### **Files Created**:
-1. **`tools_v2/categories/memory_safety_tools.py`** (235 lines)
+1. **`tools/categories/memory_safety_tools.py`** (235 lines)
    - 5 core functions with comprehensive logic
    - Full docstrings + type hints
    - Usage examples
    - V2 compliant ✅
 
-2. **`tools_v2/categories/memory_safety_adapters.py`** (180 lines)
+2. **`tools/categories/memory_safety_adapters.py`** (180 lines)
    - 5 IToolAdapter implementations
    - ToolSpec definitions
    - Validation logic
@@ -121,7 +121,7 @@ python toolbelt.py mem.handles --target_path "src"
    - V2 compliant ✅
 
 ### **Files Modified**:
-1. **`tools_v2/tool_registry.py`**
+1. **`tools/tool_registry.py`**
    - Added 5 new tool entries to TOOL_REGISTRY
    - Category: memory_safety
    - All tools registered and resolvable

@@ -167,7 +167,7 @@ class AgentActivityMonitorTool(IToolAdapter):
     ) -> ToolResult:
         """Monitor all agent activity."""
         try:
-            from tools_v2.categories.agent_activity_tools import (
+            from tools.categories.agent_activity_tools import (
                 AgentActivityTrackerTool,
             )
 

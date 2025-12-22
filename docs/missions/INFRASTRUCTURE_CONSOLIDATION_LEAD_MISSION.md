@@ -199,7 +199,7 @@
 ### **Objective 2: Toolbelt**
 - [ ] ALL tools connected to toolbelt
 - [ ] NO orphaned tools
-- [ ] Single access point: `python -m tools_v2.toolbelt <tool>`
+- [ ] Single access point: `python -m tools.toolbelt <tool>`
 - [ ] Complete tool registry
 
 ### **Objective 3: Messaging**

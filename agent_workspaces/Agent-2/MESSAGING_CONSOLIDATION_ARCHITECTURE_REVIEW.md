@@ -83,7 +83,7 @@
 - `src/services/messaging_cli.py` - CLI interface
 - `src/services/messaging_cli_handlers.py` - CLI handlers
 - `tools/messaging/` - Messaging tools
-- `tools_v2/categories/messaging_tools.py` - V2 messaging tools
+- `tools/categories/messaging_tools.py` - V2 messaging tools
 
 **Status**: ⚠️ Review for duplicates
 
@@ -176,7 +176,7 @@
 - `src/services/messaging_cli.py`
 - `src/services/messaging_cli_handlers.py`
 - `tools/messaging/` (all files)
-- `tools_v2/categories/messaging_tools.py`
+- `tools/categories/messaging_tools.py`
 
 **Action**:
 1. Identify duplicate CLI handlers

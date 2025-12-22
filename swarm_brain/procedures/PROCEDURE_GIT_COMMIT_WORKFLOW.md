@@ -29,7 +29,7 @@
 
 ```bash
 # Check compliance BEFORE staging
-python -m tools_v2.toolbelt v2.check --file path/to/changed/file.py
+python -m tools.toolbelt v2.check --file path/to/changed/file.py
 
 # Must show: ✅ COMPLIANT
 ```
@@ -142,7 +142,7 @@ git push
 **Example 1: Successful Commit**
 
 ```bash
-$ python -m tools_v2.toolbelt v2.check --file src/core/new_feature.py
+$ python -m tools.toolbelt v2.check --file src/core/new_feature.py
 ✅ COMPLIANT
 
 $ git add src/core/new_feature.py

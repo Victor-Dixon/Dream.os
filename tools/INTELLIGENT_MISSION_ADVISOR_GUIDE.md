@@ -55,7 +55,7 @@ this tool revolutionizes agent decision-making!**
 
 **Usage**:
 ```bash
-python tools_v2/advisor_cli.py --agent Agent-5 --recommend
+python tools/advisor_cli.py --agent Agent-5 --recommend
 ```
 
 ### **2. Order Validation** (`advisor.validate`)
@@ -69,7 +69,7 @@ python tools_v2/advisor_cli.py --agent Agent-5 --recommend
 
 **Usage**:
 ```bash
-python tools_v2/advisor_cli.py --agent Agent-5 --validate inbox/EXECUTION_ORDER.md
+python tools/advisor_cli.py --agent Agent-5 --validate inbox/EXECUTION_ORDER.md
 ```
 
 **Output**:
@@ -90,7 +90,7 @@ or
 
 **Usage**:
 ```bash
-python tools_v2/advisor_cli.py --agent Agent-5 --swarm
+python tools/advisor_cli.py --agent Agent-5 --swarm
 ```
 
 ### **4. Real-time Guidance** (`advisor.guide`)
@@ -105,7 +105,7 @@ python tools_v2/advisor_cli.py --agent Agent-5 --swarm
 
 **Usage**:
 ```bash
-python tools_v2/advisor_cli.py --agent Agent-5 --guide refactoring
+python tools/advisor_cli.py --agent Agent-5 --guide refactoring
 ```
 
 ---
@@ -145,7 +145,7 @@ The messaging system enabled agents to communicate.
 
 **With Advisor**:
 ```bash
-python tools_v2/advisor_cli.py --agent Agent-5 --validate inbox/ORDER.md
+python tools/advisor_cli.py --agent Agent-5 --validate inbox/ORDER.md
 # ⚠️ PHANTOM TASK: ml_optimizer_models.py does not exist!
 # → REPORT_TO_CAPTAIN
 # 3 cycles saved!
@@ -165,7 +165,7 @@ python tools_v2/advisor_cli.py --agent Agent-5 --validate inbox/ORDER.md
 
 **With Advisor**:
 ```bash
-python tools_v2/advisor_cli.py --agent Agent-5 --recommend
+python tools/advisor_cli.py --agent Agent-5 --recommend
 # 🎯 RECOMMENDED: message_queue_analytics.py
 # ROI: 18.50 | Points: 650 | Specialty: 95% match
 # Verified: File exists, not being worked on
@@ -185,7 +185,7 @@ python tools_v2/advisor_cli.py --agent Agent-5 --recommend
 
 **With Advisor**:
 ```bash
-python tools_v2/advisor_cli.py --agent Agent-5 --guide refactoring
+python tools/advisor_cli.py --agent Agent-5 --guide refactoring
 # 💡 GUIDANCE: Extract by responsibility. Keep <400 lines per module.
 #    Consider adding analytics interfaces! (BI specialty tip)
 ```
@@ -273,16 +273,16 @@ python tools_v2/advisor_cli.py --agent Agent-5 --guide refactoring
 ### **Combined Power**:
 ```bash
 # Morning: What should I work on?
-python tools_v2/advisor_cli.py --agent Agent-5 --recommend
+python tools/advisor_cli.py --agent Agent-5 --recommend
 
 # Captain sends order: Is it real?
-python tools_v2/advisor_cli.py --agent Agent-5 --validate inbox/ORDER.md
+python tools/advisor_cli.py --agent Agent-5 --validate inbox/ORDER.md
 
 # During work: Am I on track?
-python tools_v2/advisor_cli.py --agent Agent-5 --guide refactoring
+python tools/advisor_cli.py --agent Agent-5 --guide refactoring
 
 # Strategic: What's the swarm doing?
-python tools_v2/advisor_cli.py --agent Agent-5 --swarm
+python tools/advisor_cli.py --agent Agent-5 --swarm
 ```
 
 ---
@@ -356,19 +356,19 @@ Learns from swarm patterns and history
 
 ```bash
 # 1. Morning: Check swarm state
-python tools_v2/advisor_cli.py --agent Agent-5 --swarm
+python tools/advisor_cli.py --agent Agent-5 --swarm
 
 # 2. Get recommended mission
-python tools_v2/advisor_cli.py --agent Agent-5 --recommend
+python tools/advisor_cli.py --agent Agent-5 --recommend
 
 # 3. If Captain sends order, validate it
-python tools_v2/advisor_cli.py --agent Agent-5 --validate inbox/ORDER.md
+python tools/advisor_cli.py --agent Agent-5 --validate inbox/ORDER.md
 
 # 4. During execution: Get guidance
-python tools_v2/advisor_cli.py --agent Agent-5 --guide verification
-python tools_v2/advisor_cli.py --agent Agent-5 --guide analysis  
-python tools_v2/advisor_cli.py --agent Agent-5 --guide refactoring
-python tools_v2/advisor_cli.py --agent Agent-5 --guide testing
+python tools/advisor_cli.py --agent Agent-5 --guide verification
+python tools/advisor_cli.py --agent Agent-5 --guide analysis  
+python tools/advisor_cli.py --agent Agent-5 --guide refactoring
+python tools/advisor_cli.py --agent Agent-5 --guide testing
 
 # 5. Complete mission with confidence!
 ```
@@ -423,9 +423,9 @@ python tools_v2/advisor_cli.py --agent Agent-5 --guide testing
 **🧠 THE MASTERPIECE TOOL EVERY AGENT NEEDS!**
 
 **Files**:
-- `tools_v2/categories/intelligent_mission_advisor.py` (398 lines)
-- `tools_v2/categories/intelligent_mission_advisor_adapter.py` (196 lines)
-- `tools_v2/advisor_cli.py` (227 lines)
+- `tools/categories/intelligent_mission_advisor.py` (398 lines)
+- `tools/categories/intelligent_mission_advisor_adapter.py` (196 lines)
+- `tools/advisor_cli.py` (227 lines)
 
 **Registry**: 4 tools added (advisor.*)  
 **Status**: ✅ **OPERATIONAL & TESTED**  

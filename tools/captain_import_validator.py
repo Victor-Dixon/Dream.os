@@ -3,11 +3,11 @@
 Import Validator - Detect Missing Imports Before Runtime
 Validates all imports in a file or directory to prevent runtime errors.
 
-⚠️ DEPRECATED: This tool has been migrated to tools_v2.
-Use 'python -m tools_v2.toolbelt refactor.validate_imports' instead.
+⚠️ DEPRECATED: This tool has been migrated to tools.
+Use 'python -m tools.toolbelt refactor.validate_imports' instead.
 This file will be removed in future version.
 
-Migrated to: tools_v2/categories/import_fix_tools.py → ImportValidatorTool
+Migrated to: tools/categories/import_fix_tools.py → ImportValidatorTool
 Registry: refactor.validate_imports
 
 Author: Agent-4 (Captain)
@@ -17,15 +17,15 @@ Deprecated: 2025-01-27 (Agent-6 - V2 Tools Flattening)
 import warnings
 
 warnings.warn(
-    "⚠️ DEPRECATED: This tool has been migrated to tools_v2. "
-    "Use 'python -m tools_v2.toolbelt refactor.validate_imports' instead. "
+    "⚠️ DEPRECATED: This tool has been migrated to tools. "
+    "Use 'python -m tools.toolbelt refactor.validate_imports' instead. "
     "This file will be removed in future version.",
     DeprecationWarning,
     stacklevel=2
 )
 
-# Legacy compatibility - delegate to tools_v2
-# For migration path, use: python -m tools_v2.toolbelt refactor.validate_imports
+# Legacy compatibility - delegate to tools
+# For migration path, use: python -m tools.toolbelt refactor.validate_imports
 
 import sys
 import ast
@@ -74,9 +74,9 @@ def validate_import(import_name: str) -> Tuple[bool, str]:
 
 def validate_file_imports(file_path: Path) -> dict:
     """Validate all imports in a file."""
-    # Delegate to tools_v2 adapter if available
+    # Delegate to tools adapter if available
     try:
-        from tools_v2.categories.import_fix_tools import ImportValidatorTool
+        from tools.categories.import_fix_tools import ImportValidatorTool
         
         tool = ImportValidatorTool()
         result = tool.execute({"path": str(file_path)}, None)
@@ -130,7 +130,7 @@ def main():
         print("\nExamples:")
         print("  python captain_import_validator.py src/core/messaging_pyautogui.py")
         print("  python captain_import_validator.py src/services/")
-        print("\n⚠️  DEPRECATED: Use 'python -m tools_v2.toolbelt refactor.validate_imports' instead")
+        print("\n⚠️  DEPRECATED: Use 'python -m tools.toolbelt refactor.validate_imports' instead")
         return 1
     
     target = Path(sys.argv[1])

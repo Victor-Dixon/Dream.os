@@ -19,7 +19,7 @@
 
 ### Utilities (300 pts):
 - ✅ `logger_utils` - Unified logging
-- ✅ `tools_v2/core` - Core utilities
+- ✅ `tools/core` - Core utilities
 - **Foundation components complete!**
 
 **Total:** 1,200 points in 2.5 hours!

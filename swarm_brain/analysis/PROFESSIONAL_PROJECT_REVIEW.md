@@ -204,7 +204,7 @@ Code Duplication:     Moderate (Being addressed)
 **Module Distribution**:
 - `src/` - Core services and infrastructure
 - `tools/` - Captain and agent tooling (~100+ tools)
-- `tools_v2/` - Organized toolbelt system
+- `tools/` - Organized toolbelt system
 - `tests/` - Comprehensive test suite
 - `agent_workspaces/` - Agent-specific data
 - `swarm_brain/` - Knowledge repository

@@ -29,7 +29,7 @@
 
 ```bash
 # Run memory leak detector
-python -m tools_v2.toolbelt mem.leaks
+python -m tools.toolbelt mem.leaks
 
 # Scans for common patterns:
 # - Unbounded collections (lists, dicts that grow forever)
@@ -42,7 +42,7 @@ python -m tools_v2.toolbelt mem.leaks
 
 ```bash
 # Identify unbounded data structures
-python -m tools_v2.toolbelt mem.scan
+python -m tools.toolbelt mem.scan
 
 # Looks for:
 # - append() without limit
@@ -54,7 +54,7 @@ python -m tools_v2.toolbelt mem.scan
 
 ```bash
 # Verify file handles closed properly
-python -m tools_v2.toolbelt mem.handles
+python -m tools.toolbelt mem.handles
 
 # Finds:
 # - open() without close()
@@ -117,7 +117,7 @@ with open('file.txt') as f:  # Auto-closes!
 
 ```bash
 # Re-run leak detector
-python -m tools_v2.toolbelt mem.leaks
+python -m tools.toolbelt mem.leaks
 
 # Should show: ✅ No leaks detected
 ```
@@ -155,7 +155,7 @@ If fix causes other issues:
 git checkout HEAD -- path/to/file.py
 
 # Re-analyze
-python -m tools_v2.toolbelt mem.leaks
+python -m tools.toolbelt mem.leaks
 
 # Try different fix approach
 ```
@@ -167,7 +167,7 @@ python -m tools_v2.toolbelt mem.leaks
 **Example 1: Detecting Unbounded List**
 
 ```bash
-$ python -m tools_v2.toolbelt mem.leaks
+$ python -m tools.toolbelt mem.leaks
 
 🔍 SCANNING FOR MEMORY LEAKS...
 
@@ -194,7 +194,7 @@ def add_message(self, msg):
     self.messages.append(msg)  # Auto-evicts oldest
 
 # Verify:
-$ python -m tools_v2.toolbelt mem.leaks
+$ python -m tools.toolbelt mem.leaks
 ✅ No leaks detected
 ```
 

@@ -38,27 +38,27 @@
 - **Line 318:** `python tools/agent_status_quick_check.py --agent Agent-3 --detail`
 - **Line 453:** `python tools/agent_status_quick_check.py --all`
 - **Line 463:** `- **Quick Check Tool**: `tools/agent_status_quick_check.py``
-- **Line 464:** `- **Captain Tool**: `tools/captain_check_agent_status.py` (deprecated, use tools_v2)`
+- **Line 464:** `- **Captain Tool**: `tools/captain_check_agent_status.py` (deprecated, use tools)`
 
 **Action Required:**
-- ✅ Update references to use `tools_v2/` where applicable
-- ✅ Verify if `agent_status_quick_check.py` has been migrated to `tools_v2/`
+- ✅ Update references to use `tools/` where applicable
+- ✅ Verify if `agent_status_quick_check.py` has been migrated to `tools/`
 - ✅ Update deprecated tool reference
 
 #### **docs/captain/RECONFIGURE_MONITOR_FOR_CONTINUOUS_OPERATION.md**
 - **Line 138:** `python tools/agent_status_quick_check.py --all`
 
 **Action Required:**
-- ✅ Update to use `tools_v2/` equivalent
+- ✅ Update to use `tools/` equivalent
 
 #### **docs/captain/MONITORING_SYSTEM_SUMMARY.md**
 - **Line 55:** `python tools/agent_status_quick_check.py --all`
 
 **Action Required:**
-- ✅ Update to use `tools_v2/` equivalent
+- ✅ Update to use `tools/` equivalent
 
 #### **docs/captain/JET_FUEL_MESSAGING_PRINCIPLE.md**
-- **Line 152-153:** References to `tools_v2/` and `tools/` (already correct)
+- **Line 152-153:** References to `tools/` and `tools/` (already correct)
 
 **Status:** ✅ Already using correct references
 
@@ -115,7 +115,7 @@ All task assignment files are properly organized in `docs/task_assignments/`:
 **Files to Update:**
 1. `docs/captain/AGENT_STATUS_MONITORING_EXPLAINED.md`
    - Update 6 references to `tools/agent_status_quick_check.py`
-   - Verify migration status to `tools_v2/`
+   - Verify migration status to `tools/`
    - Update deprecated tool reference
 
 2. `docs/captain/RECONFIGURE_MONITOR_FOR_CONTINUOUS_OPERATION.md`
@@ -131,16 +131,16 @@ All task assignment files are properly organized in `docs/task_assignments/`:
 ### **Priority 2: Verify Tool Migration Status (HIGH)** ✅
 
 **Status:** VERIFIED
-- ✅ `agent_status_quick_check.py` HAS been migrated to `tools_v2/`
-- ✅ Tool adapter: `AgentStatusQuickCheckTool` in `tools_v2/categories/infrastructure_tools.py`
+- ✅ `agent_status_quick_check.py` HAS been migrated to `tools/`
+- ✅ Tool adapter: `AgentStatusQuickCheckTool` in `tools/categories/infrastructure_tools.py`
 - ✅ Registered as: `infra.agent_status_check` in tool registry
 - ⚠️ Original script still exists in `tools/agent_status_quick_check.py` (legacy)
 
 **Action Required:**
-- Update all documentation references to use `tools_v2` command:
+- Update all documentation references to use `tools` command:
   - Old: `python tools/agent_status_quick_check.py --all`
-  - New: `python -m tools_v2.toolbelt infra.agent_status_check --check_all=true`
-  - Or: `python -m tools_v2.toolbelt infra.agent_status_check --agent_id=Agent-3`
+  - New: `python -m tools.toolbelt infra.agent_status_check --check_all=true`
+  - Or: `python -m tools.toolbelt infra.agent_status_check --agent_id=Agent-3`
 
 **Estimated Effort:** 15 minutes (now that migration status is confirmed)
 
@@ -160,7 +160,7 @@ All task assignment files are properly organized in `docs/task_assignments/`:
 ## ✅ SUMMARY
 
 ### **Issues Found:**
-- ⚠️ **8 outdated references** to `tools/` (needs update to `tools_v2/`)
+- ⚠️ **8 outdated references** to `tools/` (needs update to `tools/`)
 - ✅ **0 duplicate documentation** files
 - ✅ **0 scattered documentation** issues
 - ⚠️ **1 file with placeholder content** (may be intentional)
@@ -174,7 +174,7 @@ All task assignment files are properly organized in `docs/task_assignments/`:
 
 ### **Next Steps:**
 1. ✅ Verify `agent_status_quick_check.py` migration status
-2. ⏳ Update all `tools/` references to `tools_v2/`
+2. ⏳ Update all `tools/` references to `tools/`
 3. ⏳ Review placeholder content in strategic docs
 4. ⏳ Cross-reference monitoring documentation
 

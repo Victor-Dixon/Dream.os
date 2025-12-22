@@ -71,7 +71,7 @@ def generate_consolidation_report():
             "Consolidate 33 monitoring tools → unified_monitor.py",
             "Consolidate 45 analysis tools → unified_analyzer.py",
             "Consolidate 19 validation tools → unified_validator.py",
-            "Migrate 20 captain tools → tools_v2/categories/captain_tools.py",
+            "Migrate 20 captain tools → tools/categories/captain_tools.py",
         ],
         "expected_reduction": "35% (234 → ~150 tools)",
     }

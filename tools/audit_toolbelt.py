@@ -15,8 +15,8 @@ import sys
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from tools_v2.tool_registry import get_tool_registry
-from tools_v2.toolbelt_core import get_toolbelt_core
+from tools.tool_registry import get_tool_registry
+from tools.toolbelt_core import get_toolbelt_core
 
 logging.basicConfig(level=logging.ERROR)  # Suppress info logs during testing
 

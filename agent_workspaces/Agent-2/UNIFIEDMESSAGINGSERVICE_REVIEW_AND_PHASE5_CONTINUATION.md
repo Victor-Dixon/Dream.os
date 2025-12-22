@@ -87,7 +87,7 @@
 ### **5. Adapter Patterns** ✅ **ANALYSIS COMPLETE**
 - **Status**: 3 files analyzed
 - **Finding**: All domain-specific, no consolidation needed
-  - Base adapter exists in `tools_v2/adapters/base_adapter.py`
+  - Base adapter exists in `tools/adapters/base_adapter.py`
   - Stress testing adapter is domain-specific
   - Mission advisor adapter uses base adapter pattern
 - **Action**: Review if stress testing adapter should inherit from base adapter (optional)

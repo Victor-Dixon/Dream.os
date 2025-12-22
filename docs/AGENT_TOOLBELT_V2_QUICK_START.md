@@ -213,7 +213,7 @@ Discover testing, compliance, onboarding, docs, health tools
 
 ## 📖 MORE INFORMATION
 
-- **Full Documentation**: `tools_v2/README.md`
+- **Full Documentation**: `tools/README.md`
 - **Architecture Details**: `docs/AGENT_TOOLBELT.md`
 - **Tool Documentation**: `AGENT_TOOLS_DOCUMENTATION.md`
 

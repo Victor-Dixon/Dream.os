@@ -52,7 +52,7 @@ python tools/run_project_scan.py
 cat project_analysis.json | python -m json.tool | grep -A 5 "violations"
 
 # Or use BI tools
-python -m tools_v2.toolbelt analysis.scan
+python -m tools.toolbelt analysis.scan
 ```
 
 **Look for**:
@@ -65,7 +65,7 @@ python -m tools_v2.toolbelt analysis.scan
 
 ```bash
 # Calculate ROI for tasks
-python -m tools_v2.toolbelt captain.calc_points \
+python -m tools.toolbelt captain.calc_points \
   --file path/to/file.py \
   --current-lines 500 \
   --target-lines 300

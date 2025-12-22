@@ -73,7 +73,7 @@ class DiscordMermaidRendererTool(IToolAdapter):
 
 **Recommendation:**
 **Option A (Preferred):** Create dedicated `web_tools.py` category
-- Create `tools_v2/categories/web_tools.py`
+- Create `tools/categories/web_tools.py`
 - Move `DiscordMermaidRendererTool` and `DiscordWebTestTool` to this file
 - Set `category="web"` in their `ToolSpec`
 - Update `tool_registry.py` to reference `web_tools.py`
@@ -145,10 +145,10 @@ All three tools import from legacy `tools/` directory:
 - Add comments noting these are temporary legacy imports
 - Add TODO comments for migration
 
-**Phase 2 (Future):** Migrate to `tools_v2/utils/`
-- Move `discord_mermaid_renderer.py` → `tools_v2/utils/discord_mermaid_renderer.py`
-- Move `discord_web_test_automation.py` → `tools_v2/utils/discord_web_test_automation.py`
-- Move `comprehensive_tool_runtime_audit.py` → `tools_v2/utils/tool_runtime_audit.py`
+**Phase 2 (Future):** Migrate to `tools/utils/`
+- Move `discord_mermaid_renderer.py` → `tools/utils/discord_mermaid_renderer.py`
+- Move `discord_web_test_automation.py` → `tools/utils/discord_web_test_automation.py`
+- Move `comprehensive_tool_runtime_audit.py` → `tools/utils/tool_runtime_audit.py`
 - Update imports in adapters
 
 **Decision:** **Phase 1** - Document now, migrate later (not blocking)
@@ -209,7 +209,7 @@ All tools have:
 ### **Immediate Actions (High Priority):**
 
 1. **✅ Create `web_tools.py` category file**
-   - Move `DiscordMermaidRendererTool` and `DiscordWebTestTool` to `tools_v2/categories/web_tools.py`
+   - Move `DiscordMermaidRendererTool` and `DiscordWebTestTool` to `tools/categories/web_tools.py`
    - Set `category="web"` in their `ToolSpec`
    - Update `tool_registry.py` references
 
@@ -223,7 +223,7 @@ All tools have:
    - Document in architecture docs
 
 4. **🔄 Migrate Legacy Dependencies**
-   - Move to `tools_v2/utils/` when ready
+   - Move to `tools/utils/` when ready
    - Update imports
 
 ---

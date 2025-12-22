@@ -622,7 +622,7 @@ def send_message(agent_id, message, **kwargs):
 ---
 
 #### **3. Tool Usage Wrapper**
-**File:** `tools_v2/core/tool_wrapper.py`
+**File:** `tools/core/tool_wrapper.py`
 
 **Functionality:**
 ```python

@@ -47,9 +47,9 @@
 
 ### **Files Identified**:
 
-1. `tools_v2/adapters/base_adapter.py` - **SSOT CANDIDATE** (Base adapter)
+1. `tools/adapters/base_adapter.py` - **SSOT CANDIDATE** (Base adapter)
 2. `src/core/stress_testing/real_messaging_core_adapter.py` - Messaging adapter
-3. `tools_v2/categories/intelligent_mission_advisor_adapter.py` - Mission advisor adapter
+3. `tools/categories/intelligent_mission_advisor_adapter.py` - Mission advisor adapter
 
 ### **Analysis Status**: ⏳ **ASSIGNED TO AGENT-5**
 
@@ -88,7 +88,7 @@
 - **Strategy**: Wait for Agent-1 analysis
 
 ### **Adapter Patterns**:
-- **SSOT Candidate**: `tools_v2/adapters/base_adapter.py`
+- **SSOT Candidate**: `tools/adapters/base_adapter.py`
 - **Consolidation Target**: Adapter implementations
 - **Strategy**: Wait for Agent-5 analysis
 

@@ -78,7 +78,7 @@ def format_discord_message(analysis):
 def post_to_discord(message):
     """Post message to Discord via router."""
     try:
-        from tools_v2.categories.communication_tools import DiscordRouterPoster
+        from tools.categories.communication_tools import DiscordRouterPoster
         
         poster = DiscordRouterPoster()
         result = poster.post_message(

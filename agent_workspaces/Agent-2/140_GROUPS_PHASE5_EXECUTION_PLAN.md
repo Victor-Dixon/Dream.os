@@ -61,9 +61,9 @@
 4. Plan adapter consolidation execution
 
 **Files Identified**: 3 adapter files
-- `tools_v2/adapters/base_adapter.py` - SSOT candidate
+- `tools/adapters/base_adapter.py` - SSOT candidate
 - `src/core/stress_testing/real_messaging_core_adapter.py`
-- `tools_v2/categories/intelligent_mission_advisor_adapter.py`
+- `tools/categories/intelligent_mission_advisor_adapter.py`
 
 ---
 
@@ -93,7 +93,7 @@
 - **Action**: Wait for Agent-1 analysis, then create consolidation plan
 
 ### **Adapter Patterns**:
-- **SSOT Candidate**: `tools_v2/adapters/base_adapter.py`
+- **SSOT Candidate**: `tools/adapters/base_adapter.py`
 - **Strategy**: Consolidate adapter implementations using base adapter
 - **Action**: Wait for Agent-5 analysis, then create consolidation plan
 

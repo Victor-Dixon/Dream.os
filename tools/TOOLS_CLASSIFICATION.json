@@ -524,8 +524,8 @@
         "logging",
         "pathlib",
         "sys",
-        "tools_v2.tool_registry",
-        "tools_v2.toolbelt_core"
+        "tools.tool_registry",
+        "tools.toolbelt_core"
       ],
       "functions": [
         "audit_all_tools"
@@ -812,7 +812,7 @@
         "re",
         "pathlib",
         "datetime",
-        "tools_v2.categories.captain_coordination_tools",
+        "tools.categories.captain_coordination_tools",
         "json"
       ],
       "functions": [
@@ -857,7 +857,7 @@
         "json",
         "pathlib",
         "argparse",
-        "tools_v2.categories.captain_tools"
+        "tools.categories.captain_tools"
       ],
       "functions": [
         "find_idle_agents"
@@ -899,7 +899,7 @@
         "ast",
         "pathlib",
         "typing",
-        "tools_v2.categories.import_fix_tools"
+        "tools.categories.import_fix_tools"
       ],
       "functions": [
         "extract_imports",
@@ -924,7 +924,7 @@
         "datetime",
         "pathlib",
         "argparse",
-        "tools_v2.categories.captain_coordination_tools"
+        "tools.categories.captain_coordination_tools"
       ],
       "functions": [
         "update_leaderboard"
@@ -945,7 +945,7 @@
         "subprocess",
         "sys",
         "argparse",
-        "tools_v2.categories.messaging_tools"
+        "tools.categories.messaging_tools"
       ],
       "functions": [
         "message_all_agents"
@@ -989,7 +989,7 @@
         "warnings",
         "argparse",
         "json",
-        "tools_v2.categories.captain_coordination_tools"
+        "tools.categories.captain_coordination_tools"
       ],
       "functions": [
         "calculate_roi",
@@ -1009,7 +1009,7 @@
       "imports": [
         "warnings",
         "argparse",
-        "tools_v2.categories.captain_coordination_tools"
+        "tools.categories.captain_coordination_tools"
       ],
       "functions": [
         "calculate_task_roi"
@@ -1030,7 +1030,7 @@
         "subprocess",
         "sys",
         "argparse",
-        "tools_v2.categories.messaging_tools"
+        "tools.categories.messaging_tools"
       ],
       "functions": [
         "send_self_message"
@@ -4974,7 +4974,7 @@
         "warnings",
         "json",
         "pathlib",
-        "tools_v2.categories.captain_tools"
+        "tools.categories.captain_tools"
       ],
       "functions": [
         "check_all_agent_status"
@@ -4994,7 +4994,7 @@
         "warnings",
         "datetime",
         "pathlib",
-        "tools_v2.categories.captain_tools_extension"
+        "tools.categories.captain_tools_extension"
       ],
       "functions": [
         "check_agent_gas_levels"
@@ -5461,7 +5461,7 @@
       "imports": [
         "sys",
         "pathlib",
-        "tools_v2.toolbelt_core"
+        "tools.toolbelt_core"
       ],
       "functions": [
         "test_system_datetime",

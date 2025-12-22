@@ -39,7 +39,7 @@
 ### **1. Independent Repo Scan (2 hours)**
 
 ```python
-from tools_v2.toolbelt_core import ToolbeltCore
+from tools.toolbelt_core import ToolbeltCore
 tb = ToolbeltCore()
 
 # Get all repos (don't look at Agent-6's data yet!)

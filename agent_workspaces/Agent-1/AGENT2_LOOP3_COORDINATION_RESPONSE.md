@@ -28,7 +28,7 @@
    - Values: INITIALIZING, ACTIVE, PAUSED, ERROR, MAINTENANCE, SHUTDOWN
    - Properly separated from core AgentStatus
 
-4. ✅ **Dashboard Dataclass Renamed**: `tools_v2/categories/autonomous_workflow_tools.py`
+4. ✅ **Dashboard Dataclass Renamed**: `tools/categories/autonomous_workflow_tools.py`
    - Renamed to `AgentStatusData` (dataclass for dashboard display)
    - Maintains different purpose (display model vs enum)
 
@@ -47,7 +47,7 @@
 - `src/core/intelligent_context/intelligent_context_models.py` - Updated imports
 - `src/core/intelligent_context/__init__.py` - Removed context_enums import
 - `src/integrations/osrs/osrs_agent_core.py` - Renamed enum
-- `tools_v2/categories/autonomous_workflow_tools.py` - Renamed dataclass
+- `tools/categories/autonomous_workflow_tools.py` - Renamed dataclass
 - `examples/quickstart_demo/dashboard_demo.py` - Renamed enum
 
 ### **Result**: ✅ **100% COMPLETE**

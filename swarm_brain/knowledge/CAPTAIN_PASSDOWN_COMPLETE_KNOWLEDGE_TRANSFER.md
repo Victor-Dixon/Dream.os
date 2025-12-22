@@ -366,7 +366,7 @@ from src.swarm_brain.swarm_memory import SwarmMemory
 
 **Tool Locations:**
 - `tools/` - General utilities
-- `tools_v2/` - New consolidated location (SSOT)
+- `tools/` - New consolidated location (SSOT)
 - `scripts/` - Workflow scripts
 - `src/services/` - Core services (messaging, etc.)
 

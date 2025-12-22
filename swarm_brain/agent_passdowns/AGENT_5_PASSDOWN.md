@@ -19,7 +19,7 @@
 ## 🏆 MAJOR ACHIEVEMENTS & LEARNINGS
 
 ### **1. Intelligent Mission Advisor (MY MASTERPIECE!)**
-**Location:** `tools_v2/categories/intelligent_mission_advisor.py`  
+**Location:** `tools/categories/intelligent_mission_advisor.py`  
 **Purpose:** AI copilot that helps agents find optimal next tasks  
 **Status:** 787 lines (needs Lean Excellence refactoring to 3 modules)  
 **Learning:** Revolutionary tool that transformed agent autonomy
@@ -88,7 +88,7 @@
 ## 🛠️ TOOLS I CREATED/MAINTAIN
 
 ### **1. Intelligent Mission Advisor**
-**File:** `tools_v2/categories/intelligent_mission_advisor.py`  
+**File:** `tools/categories/intelligent_mission_advisor.py`  
 **Usage:** Helps agents find optimal next tasks  
 **Status:** Needs Lean refactoring (787→3 modules)
 

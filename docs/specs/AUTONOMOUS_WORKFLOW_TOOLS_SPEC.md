@@ -35,7 +35,7 @@
 
 **Implementation:**
 ```python
-# tools_v2/categories/autonomous_workflow_tools.py
+# tools/categories/autonomous_workflow_tools.py
 
 class AutoSpecGenerator:
     """
@@ -93,7 +93,7 @@ class AutoSpecGenerator:
 **Use Case:**
 ```bash
 # Instead of manually writing specs:
-python -m tools_v2.toolbelt autonomous.generate_spec \
+python -m tools.toolbelt autonomous.generate_spec \
     --from-thread "conversation.txt" \
     --output "docs/specs/AUTO_GENERATED_SPEC.md"
 
@@ -190,7 +190,7 @@ class TeamCoordinationDashboard:
 **Use Case:**
 ```bash
 # View dashboard
-python -m tools_v2.toolbelt autonomous.dashboard
+python -m tools.toolbelt autonomous.dashboard
 
 # Output:
 # TEAM COORDINATION DASHBOARD
@@ -297,7 +297,7 @@ class AutoAssignmentEngine:
 **Use Case:**
 ```bash
 # Auto-assign task from spec
-python -m tools_v2.toolbelt autonomous.assign \
+python -m tools.toolbelt autonomous.assign \
     --task "docs/specs/DISCORD_RESTART_SHUTDOWN_COMMANDS_SPEC.md" \
     --priority high
 

@@ -62,7 +62,7 @@
 
 - Tools:
   - `mcp_servers/v2_compliance_server.py`
-  - `tools_v2/` (V2 utilities, if present)
+  - `tools/` (V2 utilities, if present)
 
 ---
 

@@ -37,7 +37,7 @@
 
 - ❌ **Captain Tools Not Migrated:**
   - 17 `captain_*.py` files still in `tools/` directory
-  - Should be migrated to `tools_v2/categories/`
+  - Should be migrated to `tools/categories/`
   - Examples: `captain_morning_briefing.py`, `captain_snapshot.py`, etc.
 
 ---
@@ -67,7 +67,7 @@
   - `v2_compliance_checker.py` → Archive
   - `quick_line_counter.py` → Archive
 - Migrate captain tools:
-  - Move 17 `captain_*.py` files to `tools_v2/categories/`
+  - Move 17 `captain_*.py` files to `tools/categories/`
   - Update references
   - Clean up `tools/` directory
 - Update toolbelt registry

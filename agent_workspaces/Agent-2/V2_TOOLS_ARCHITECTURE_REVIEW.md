@@ -26,10 +26,10 @@
 ### **Structural Changes Review**
 
 **Changes Made:**
-- ✅ Removed `tools_v2/categories/advice_context/` subdirectory (empty, unused)
-- ✅ Removed `tools_v2/categories/advice_outputs/` subdirectory (empty, unused)
+- ✅ Removed `tools/categories/advice_context/` subdirectory (empty, unused)
+- ✅ Removed `tools/categories/advice_outputs/` subdirectory (empty, unused)
 - ✅ Verified no references exist in codebase
-- ✅ Structure is now flat (all categories at `tools_v2/categories/` level)
+- ✅ Structure is now flat (all categories at `tools/categories/` level)
 
 **Architecture Assessment:**
 - ✅ **APPROVED** - Flattening maintains clean structure
@@ -48,51 +48,51 @@
 
 1. ✅ **`captain_check_agent_status.py`** → `captain.status_check`
    - **Status:** CONFIRMED DUPLICATE
-   - **tools_v2:** `captain_tools.py` → `StatusCheckTool`
+   - **tools:** `captain_tools.py` → `StatusCheckTool`
    - **Registry:** `captain.status_check`
    - **Action:** ✅ **APPROVE DEPRECATION**
 
 2. ✅ **`captain_find_idle_agents.py`** → `captain.find_idle`
    - **Status:** CONFIRMED DUPLICATE
-   - **tools_v2:** `captain_tools_extension.py` → `FindIdleAgentsTool`
+   - **tools:** `captain_tools_extension.py` → `FindIdleAgentsTool`
    - **Registry:** `captain.find_idle`
    - **Action:** ✅ **APPROVE DEPRECATION**
 
 3. ✅ **`captain_completion_processor.py`** → `captain.process_completion`
    - **Status:** CONFIRMED DUPLICATE
-   - **tools_v2:** `captain_coordination_tools.py` → `CompletionProcessorTool`
+   - **tools:** `captain_coordination_tools.py` → `CompletionProcessorTool`
    - **Registry:** `captain.process_completion`
    - **Action:** ✅ **APPROVE DEPRECATION**
 
 4. ✅ **`captain_leaderboard_update.py`** → `captain.update_leaderboard`
-   - **Status:** CONFIRMED DUPLICATE (2 versions exist in tools_v2!)
-   - **tools_v2:** 
+   - **Status:** CONFIRMED DUPLICATE (2 versions exist in tools!)
+   - **tools:** 
      - `captain_coordination_tools.py` → `LeaderboardUpdaterTool`
      - `captain_tools.py` → `LeaderboardUpdateTool`
    - **Registry:** `captain.update_leaderboard_coord`, `captain.update_leaderboard`
-   - **Action:** ✅ **APPROVE DEPRECATION** (Note: Consider consolidating 2 tools_v2 versions)
+   - **Action:** ✅ **APPROVE DEPRECATION** (Note: Consider consolidating 2 tools versions)
 
 5. ✅ **`captain_next_task_picker.py`** → `captain.pick_next_task`
    - **Status:** CONFIRMED DUPLICATE
-   - **tools_v2:** `captain_coordination_tools.py` → `NextTaskPickerTool`
+   - **tools:** `captain_coordination_tools.py` → `NextTaskPickerTool`
    - **Registry:** `captain.pick_next_task`
    - **Action:** ✅ **APPROVE DEPRECATION**
 
 6. ✅ **`captain_roi_quick_calc.py`** → `captain.calculate_roi`
    - **Status:** CONFIRMED DUPLICATE
-   - **tools_v2:** `captain_coordination_tools.py` → `ROIQuickCalculatorTool`
+   - **tools:** `captain_coordination_tools.py` → `ROIQuickCalculatorTool`
    - **Registry:** `captain.calculate_roi`
    - **Action:** ✅ **APPROVE DEPRECATION**
 
 7. ✅ **`captain_message_all_agents.py`** → `captain.message_all`
    - **Status:** CONFIRMED DUPLICATE
-   - **tools_v2:** `captain_tools_extension.py` → `MessageAllAgentsTool`
+   - **tools:** `captain_tools_extension.py` → `MessageAllAgentsTool`
    - **Registry:** `captain.message_all`
    - **Action:** ✅ **APPROVE DEPRECATION**
 
 8. ✅ **`captain_self_message.py`** → `captain.self_message`
    - **Status:** CONFIRMED DUPLICATE
-   - **tools_v2:** `captain_tools_extension.py` → `SelfMessageTool`
+   - **tools:** `captain_tools_extension.py` → `SelfMessageTool`
    - **Registry:** `captain.self_message`
    - **Action:** ✅ **APPROVE DEPRECATION**
 
@@ -115,9 +115,9 @@
 
 1. ✅ **`captain_gas_check.py`** → `captain.gas_check`
    - **Status:** ALREADY MIGRATED
-   - **tools_v2:** `captain_tools_extension.py` → `GasCheckTool`
+   - **tools:** `captain_tools_extension.py` → `GasCheckTool`
    - **Registry:** `captain.gas_check`
-   - **Action:** ✅ **APPROVE DEPRECATION** (Already in tools_v2)
+   - **Action:** ✅ **APPROVE DEPRECATION** (Already in tools)
 
 2. ✅ **`captain_find_idle_agents.py`** → `captain.find_idle`
    - **Status:** ALREADY MIGRATED (duplicate of #2 above)
@@ -132,14 +132,14 @@
 4. ⚠️ **`captain_architectural_checker.py`**
    - **Status:** UNIQUE - Needs migration
    - **Functionality:** AST-based architectural validation (missing methods, circular imports)
-   - **tools_v2 Check:** No equivalent found
+   - **tools Check:** No equivalent found
    - **Recommendation:** ⚡ **MIGRATE** to `captain_tools_advanced.py` or `validation_tools.py`
    - **Action:** Create adapter `ArchitecturalCheckerTool`
 
 5. ⚠️ **`captain_import_validator.py`**
    - **Status:** PARTIAL - Needs review
    - **Functionality:** AST-based import validation
-   - **tools_v2 Check:** 
+   - **tools Check:** 
      - `import_fix_tools.py` has `ImportValidatorTool` (different functionality)
      - `memory_safety_adapters.py` has `ImportValidatorTool` (different functionality)
    - **Recommendation:** ⚡ **REVIEW** - May have unique AST-based validation
@@ -148,7 +148,7 @@
 6. ⚠️ **`captain_hard_onboard_agent.py`**
    - **Status:** NEEDS REVIEW
    - **Functionality:** Hard onboarding (force activation)
-   - **tools_v2 Check:** Check `onboarding_tools.py` for equivalent
+   - **tools Check:** Check `onboarding_tools.py` for equivalent
    - **Recommendation:** ⚡ **REVIEW** - May need migration
    - **Action:** Compare with existing onboarding tools
 
@@ -186,7 +186,7 @@
 - ✅ Error handling - All tools use `ToolExecutionError`
 
 **Validation Results:**
-- ✅ **ALL TOOLS COMPLIANT** - All tools in `tools_v2/` follow IToolAdapter pattern
+- ✅ **ALL TOOLS COMPLIANT** - All tools in `tools/` follow IToolAdapter pattern
 - ✅ **Registry Integration** - All tools registered in `tool_registry.py`
 - ✅ **Category Organization** - Tools properly categorized
 
@@ -221,7 +221,7 @@
 
 ### **1. Consolidate Duplicate Leaderboard Tools** ⚠️
 
-**Issue:** Two leaderboard tools exist in tools_v2:
+**Issue:** Two leaderboard tools exist in tools:
 - `captain_coordination_tools.py` → `LeaderboardUpdaterTool` (`captain.update_leaderboard_coord`)
 - `captain_tools.py` → `LeaderboardUpdateTool` (`captain.update_leaderboard`)
 
@@ -270,7 +270,7 @@
 
 **Phase 3 (Duplicate Detection):** ✅ **APPROVED**
 - 8 duplicates correctly identified
-- All have equivalents in tools_v2
+- All have equivalents in tools
 - Deprecation plan approved
 
 **Adapter Pattern:** ✅ **VALIDATED**

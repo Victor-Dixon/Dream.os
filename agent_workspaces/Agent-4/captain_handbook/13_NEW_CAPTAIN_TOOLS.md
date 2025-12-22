@@ -32,7 +32,7 @@ Enable swarm-wide democratic decision-making through structured proposals.
 
 **Usage:**
 ```python
-from tools_v2.toolbelt_core import ToolbeltCore
+from tools.toolbelt_core import ToolbeltCore
 tb = ToolbeltCore()
 
 result = tb.run('proposal.create', {

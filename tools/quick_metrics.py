@@ -3,9 +3,9 @@
 Quick File Metrics Tool
 ========================
 
-⚠️ DEPRECATED: This tool has been migrated to tools_v2.
-Use: python -m tools_v2.toolbelt bi.metrics <files>
-See: tools_v2/categories/bi_tools.py for the adapter.
+⚠️ DEPRECATED: This tool has been migrated to tools.
+Use: python -m tools.toolbelt bi.metrics <files>
+See: tools/categories/bi_tools.py for the adapter.
 
 Fast analysis of Python file metrics without full project scan.
 Perfect for verifying file state before starting work.

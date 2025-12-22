@@ -70,7 +70,7 @@
 
 ### **Action Required:**
 - Merge/archive duplicate tools
-- Migrate captain tools to `tools_v2/categories/`
+- Migrate captain tools to `tools/categories/`
 - Organize directory structure
 - Update references
 - Test all tools

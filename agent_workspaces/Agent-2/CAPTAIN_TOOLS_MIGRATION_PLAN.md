@@ -12,11 +12,11 @@
 
 **Current State:**
 - 15+ `captain_*.py` files scattered in `tools/` directory
-- `tools_v2/categories/captain_coordination_tools.py` exists but uses wrong pattern (not IToolAdapter)
-- Need to migrate all captain tools to proper adapters in `tools_v2/`
+- `tools/categories/captain_coordination_tools.py` exists but uses wrong pattern (not IToolAdapter)
+- Need to migrate all captain tools to proper adapters in `tools/`
 
 **Objective:**
-- Migrate all captain tools to `tools_v2/` using IToolAdapter pattern
+- Migrate all captain tools to `tools/` using IToolAdapter pattern
 - Consolidate into appropriate category files
 - Register all tools in tool_registry.py
 - Deprecate old files
@@ -84,7 +84,7 @@
 ### **Standard IToolAdapter Pattern:**
 
 ```python
-from tools_v2.adapters.base_adapter import IToolAdapter, ToolSpec, ToolResult
+from tools.adapters.base_adapter import IToolAdapter, ToolSpec, ToolResult
 
 class CaptainMessageAllTool(IToolAdapter):
     """Send message to all agents including Captain."""
@@ -175,7 +175,7 @@ class CaptainMessageAllTool(IToolAdapter):
 ### **Phase 6: Deprecation (Final)**
 
 - [ ] Add deprecation warnings to all old `captain_*.py` files
-- [ ] Point to tools_v2 adapters
+- [ ] Point to tools adapters
 - [ ] Update documentation
 
 ---

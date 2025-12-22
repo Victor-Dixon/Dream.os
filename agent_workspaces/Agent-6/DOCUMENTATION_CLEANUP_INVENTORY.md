@@ -130,11 +130,11 @@
 **1. Outdated Reference to `tools/captain_check_agent_status.py`**
 
 **Location**: `docs/captain/AGENT_STATUS_MONITORING_EXPLAINED.md` line 464
-- **Current**: `- **Captain Tool**: tools/captain_check_agent_status.py (deprecated, use tools_v2)`
+- **Current**: `- **Captain Tool**: tools/captain_check_agent_status.py (deprecated, use tools)`
 - **Status**: ⚠️ Needs update to specific tool
 
 **Action**:
-- ✅ **UPDATE**: Change to `- **Captain Tool**: tools_v2.toolbelt captain.status_check`
+- ✅ **UPDATE**: Change to `- **Captain Tool**: tools.toolbelt captain.status_check`
 - 📝 **VERIFY**: Ensure tool path is correct
 
 ---
@@ -150,7 +150,7 @@
 - **Status**: ⚠️ Needs update to specific tool
 
 **Action**:
-- ✅ **UPDATE**: Change to `# Legacy: tools/captain_message_all_agents.py → tools_v2.toolbelt captain.message_all`
+- ✅ **UPDATE**: Change to `# Legacy: tools/captain_message_all_agents.py → tools.toolbelt captain.message_all`
 - 📝 **VERIFY**: Ensure tool path is correct
 
 ---
@@ -162,7 +162,7 @@
 - **Status**: ⚠️ Needs update to specific tool
 
 **Action**:
-- ✅ **UPDATE**: Change to `# Legacy: tools/captain_import_validator.py → tools_v2.toolbelt refactor.validate_imports`
+- ✅ **UPDATE**: Change to `# Legacy: tools/captain_import_validator.py → tools.toolbelt refactor.validate_imports`
 - 📝 **VERIFY**: Ensure tool path is correct
 
 ---
@@ -242,7 +242,7 @@
 
 1. ✅ **AUDIT COMPLETE** - Documentation reviewed
 2. ⏳ **CREATE INVENTORY** - This document created
-3. ⏳ **UPDATE OUTDATED REFERENCES** - Update 3 references to tools_v2/
+3. ⏳ **UPDATE OUTDATED REFERENCES** - Update 3 references to tools/
 4. ⏳ **CONSOLIDATE DUPLICATES** - Merge/archive 5 duplicate sets
 5. ⏳ **ORGANIZE SCATTERED DOCS** - Move messaging, Discord, coordination docs to dedicated directories
 
@@ -279,7 +279,7 @@
 ### **Documentation References Review**
 
 **Tools References**:
-- ✅ **GOOD**: Most references already updated to `tools_v2/`
+- ✅ **GOOD**: Most references already updated to `tools/`
 - ⚠️ **NEEDS UPDATE**: 3 references still point to deprecated `tools/`
 - ✅ **ACTION**: Update remaining 3 references
 

@@ -11,13 +11,13 @@
 ## 📊 EXECUTIVE SUMMARY
 
 **Current State:**
-- ✅ `tools_v2/`: 53 files, 125+ tool adapters registered, WELL-ORGANIZED
+- ✅ `tools/`: 53 files, 125+ tool adapters registered, WELL-ORGANIZED
 - ⚠️ `tools/`: 167+ files, many duplicates, needs consolidation
 - 🎯 **Objective:** Flatten and consolidate tools structure using adapter pattern
 
 **Key Findings:**
-1. **tools_v2/ structure is solid** - Adapter pattern well-implemented
-2. **Major duplication** - Many tools in `tools/` already have adapters in `tools_v2/`
+1. **tools/ structure is solid** - Adapter pattern well-implemented
+2. **Major duplication** - Many tools in `tools/` already have adapters in `tools/`
 3. **Captain tools scattered** - 15+ captain_*.py files need consolidation
 4. **Orphan tools** - 100+ standalone scripts not integrated
 
@@ -25,7 +25,7 @@
 
 ## 🏗️ ARCHITECTURE REVIEW
 
-### **Current tools_v2/ Structure Analysis**
+### **Current tools/ Structure Analysis**
 
 **✅ STRENGTHS:**
 - **Adapter Pattern:** Clean IToolAdapter interface with ToolSpec/ToolResult
@@ -239,13 +239,13 @@ class ToolName(IToolAdapter):
    - Use naming pattern: `{category}.{action}`
 
 4. **Test:**
-   - Test via `python -m tools_v2.toolbelt <tool_name>`
+   - Test via `python -m tools.toolbelt <tool_name>`
    - Verify functionality preserved
    - Check error handling
 
 5. **Deprecate Original:**
    - Add deprecation warning to original file
-   - Point to tools_v2 adapter
+   - Point to tools adapter
    - Mark for future removal
 
 ---
@@ -255,7 +255,7 @@ class ToolName(IToolAdapter):
 ### **Phase 1: Critical Duplicates (This Cycle)**
 
 **Agent-2 Tasks:**
-1. ✅ Review tools_v2/ structure (THIS DOCUMENT)
+1. ✅ Review tools/ structure (THIS DOCUMENT)
 2. ⏳ Identify all captain tools needing migration
 3. ⏳ Design adapters for captain tools
 4. ⏳ Coordinate with Agent-1, Agent-7, Agent-8

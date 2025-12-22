@@ -2,11 +2,11 @@
 Captain's Tool: Next Task Picker (Markov + ROI)
 ================================================
 
-⚠️ DEPRECATED: This tool has been migrated to tools_v2.
-Use 'python -m tools_v2.toolbelt captain.pick_next_task' instead.
+⚠️ DEPRECATED: This tool has been migrated to tools.
+Use 'python -m tools.toolbelt captain.pick_next_task' instead.
 This file will be removed in future version.
 
-Migrated to: tools_v2/categories/captain_coordination_tools.py → NextTaskPickerTool
+Migrated to: tools/categories/captain_coordination_tools.py → NextTaskPickerTool
 Registry: captain.pick_next_task
 
 Uses Markov optimizer to pick the next optimal task for an agent.
@@ -23,15 +23,15 @@ import argparse
 import warnings
 
 warnings.warn(
-    "⚠️ DEPRECATED: This tool has been migrated to tools_v2. "
-    "Use 'python -m tools_v2.toolbelt captain.pick_next_task' instead. "
+    "⚠️ DEPRECATED: This tool has been migrated to tools. "
+    "Use 'python -m tools.toolbelt captain.pick_next_task' instead. "
     "This file will be removed in future version.",
     DeprecationWarning,
     stacklevel=2
 )
 
-# Legacy compatibility - delegate to tools_v2
-# For migration path, use: python -m tools_v2.toolbelt captain.pick_next_task
+# Legacy compatibility - delegate to tools
+# For migration path, use: python -m tools.toolbelt captain.pick_next_task
 
 
 def calculate_roi(points: int, complexity: int, v2: int, autonomy: int):
@@ -42,9 +42,9 @@ def calculate_roi(points: int, complexity: int, v2: int, autonomy: int):
 
 def get_next_task_for_agent(agent_id: str, specialty_match_only: bool = False):
     """Get next optimal task for specific agent using ROI."""
-    # Delegate to tools_v2 adapter
+    # Delegate to tools adapter
     try:
-        from tools_v2.categories.captain_coordination_tools import NextTaskPickerTool
+        from tools.categories.captain_coordination_tools import NextTaskPickerTool
 
         tool = NextTaskPickerTool()
         result = tool.execute({
@@ -66,7 +66,7 @@ def get_next_task_for_agent(agent_id: str, specialty_match_only: bool = False):
             return None
     except ImportError:
         # Fallback to original implementation (abbreviated for deprecation)
-        print("⚠️  Tools_v2 adapter not available. Please migrate to tools_v2.")
+        print("⚠️  Tools_v2 adapter not available. Please migrate to tools.")
         return None
 
 

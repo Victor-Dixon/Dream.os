@@ -33,7 +33,7 @@ class ToolRegistry:
     def _load_registry_data(self) -> dict[str, list[str]]:
         """Load tool registry data from JSON file."""
         try:
-            with open("tools_v2/tool_registry.lock.json", "r") as f:
+            with open("tools/tool_registry.lock.json", "r") as f:
                 data = json.load(f)
                 return data.get("tools", {})
         except (FileNotFoundError, json.JSONDecodeError) as e:

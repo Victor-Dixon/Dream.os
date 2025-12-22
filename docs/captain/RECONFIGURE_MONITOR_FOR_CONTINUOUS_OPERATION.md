@@ -138,7 +138,7 @@ print(f"Auto restart: {orchestrator.auto_restart}")  # Should be True
 python tools/agent_status_quick_check.py --all
 
 # Or use V2 tool
-python -m tools_v2.toolbelt captain.status_check
+python -m tools.toolbelt captain.status_check
 ```
 
 ---

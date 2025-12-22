@@ -53,7 +53,7 @@
 ### **How:**
 
 ```python
-from tools_v2.toolbelt_core import ToolbeltCore
+from tools.toolbelt_core import ToolbeltCore
 tb = ToolbeltCore()
 
 # Get ALL 67 repos

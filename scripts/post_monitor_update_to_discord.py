@@ -15,8 +15,8 @@ import requests
 from pathlib import Path
 from dotenv import load_dotenv
 
-# V2 Compliance: Import from tools_v2/utils/ (migrated 2025-01-27)
-from tools_v2.utils.discord_mermaid_renderer import DiscordMermaidRenderer
+# V2 Compliance: Import from tools/utils/ (migrated 2025-01-27)
+from tools.utils.discord_mermaid_renderer import DiscordMermaidRenderer
 
 load_dotenv()
 

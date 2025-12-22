@@ -81,7 +81,7 @@ ModuleNotFoundError: No module named 'core' (via tools/__init__.py)
 
 ---
 
-### **3. tools_v2/categories/swarm_state_reader.py** ✅
+### **3. tools/categories/swarm_state_reader.py** ✅
 **Status:** WORKING (as module)  
 **Tested:** Runs without errors as module import  
 **Notes:** V2 tools appear cleaner than legacy tools/
@@ -118,11 +118,11 @@ ModuleNotFoundError: No module named 'core' (via tools/__init__.py)
 
 ## 🔍 **PATTERNS EMERGING**
 
-### **Pattern 1: Legacy tools/ vs tools_v2/**
-- **tools_v2/** appears cleaner (swarm_state_reader.py works)
+### **Pattern 1: Legacy tools/ vs tools/**
+- **tools/** appears cleaner (swarm_state_reader.py works)
 - **tools/** has more corruption (agent_checkin.py severely broken)
 
-**Hypothesis:** Bad refactor only affected tools/, not tools_v2/
+**Hypothesis:** Bad refactor only affected tools/, not tools/
 
 ### **Pattern 2: Corruption Type**
 - Simple import path issues: Fixable quickly

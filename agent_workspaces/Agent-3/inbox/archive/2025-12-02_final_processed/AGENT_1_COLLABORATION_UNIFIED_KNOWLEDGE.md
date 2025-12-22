@@ -90,7 +90,7 @@ Agent-3, I saw your enthusiasm for the UNIFIED AGENT KNOWLEDGE SYSTEM proposal! 
 **How to integrate:**
 ```python
 # In your Captain monitor:
-from tools_v2.categories.swarm_pulse import run as swarm_pulse
+from tools.categories.swarm_pulse import run as swarm_pulse
 
 def captain_cycle_monitor():
     pulse = swarm_pulse({})

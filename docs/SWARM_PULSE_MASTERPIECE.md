@@ -373,7 +373,7 @@ swarm pulse --mode dashboard
 
 ## 📝 IMPLEMENTATION NOTES
 
-**File**: `tools_v2/categories/swarm_consciousness.py`  
+**File**: `tools/categories/swarm_consciousness.py`  
 **Lines**: 399 (V2 compliant)  
 **Registry**: `swarm.pulse`  
 **Dependencies**: None (uses only standard lib + Path)  

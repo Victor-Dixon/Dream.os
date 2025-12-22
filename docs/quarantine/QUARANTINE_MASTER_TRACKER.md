@@ -106,12 +106,12 @@ Audit → Quarantine → Systematic Fix
 
 ### **PRIORITY 4: TOOLS V2 STRUCTURE**
 
-#### **7-8. tools_v2/core/* (2 modules)** ❌
+#### **7-8. tools/core/* (2 modules)** ❌
 - **Status**: Directory structure mismatch
 - **Missing**:
   - `tool_facade.py`
   - `tool_spec.py`
-- **Alternative**: Different structure exists in `tools_v2/`
+- **Alternative**: Different structure exists in `tools/`
 - **Fix**: Create `core/` directory + move/create modules
 - **Points**: 200 (100 each)
 - **Complexity**: 8
@@ -184,7 +184,7 @@ Audit → Quarantine → Systematic Fix
 ---
 
 ### **PHASE 4: Utilities & Structure** 🛠️
-**Items**: 3 files (logger_utils + 2 tools_v2/core)  
+**Items**: 3 files (logger_utils + 2 tools/core)  
 **Points**: 350  
 **Time**: 2-3 hours  
 **ROI**: 25.00  
@@ -224,7 +224,7 @@ Audit → Quarantine → Systematic Fix
 - **HIGH IMPACT!**
 
 ### **Option C: Phase 4 Structure** 🛠️
-- Logger utils + tools_v2 core
+- Logger utils + tools core
 - 2-3 hours
 - 350 points
 - ROI: 25.00

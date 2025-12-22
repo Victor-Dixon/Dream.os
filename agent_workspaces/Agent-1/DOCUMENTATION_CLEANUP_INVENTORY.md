@@ -27,7 +27,7 @@
 5. Other files in docs/ with tools/ references
 
 **Action Required:**
-- Update references: `tools/` → `tools_v2/`
+- Update references: `tools/` → `tools/`
 - Update code examples
 - Fix broken links
 
@@ -69,7 +69,7 @@
 ## 📋 **CLEANUP ACTIONS**
 
 ### **Priority 1: Update References** (IMMEDIATE)
-- [ ] Update all `tools/` → `tools_v2/` references
+- [ ] Update all `tools/` → `tools/` references
 - [ ] Update code examples
 - [ ] Fix broken links
 

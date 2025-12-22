@@ -335,7 +335,7 @@ While consolidating, agents must:
 3. **Verify No New Duplicates**:
    ```bash
    # After consolidation, verify no new duplicates created
-   # Note: Use tools_v2/ analysis tools if available, otherwise use tools/ssot_validator.py
+   # Note: Use tools/ analysis tools if available, otherwise use tools/ssot_validator.py
    python tools/ssot_validator.py --target src/core/
    ```
 
@@ -397,7 +397,7 @@ After consolidation is complete, agents must:
 **Duplicate Code Detection**:
 ```bash
 # Detect duplicate code blocks (>10 lines)
-# Note: Use tools_v2/ analysis tools if available, otherwise use tools/ssot_validator.py
+# Note: Use tools/ analysis tools if available, otherwise use tools/ssot_validator.py
 python tools/ssot_validator.py --check-duplicates --min-lines 10
 ```
 
@@ -410,7 +410,7 @@ python tools/ssot_validator.py --check-config --strict
 **Duplicate Documentation Detection**:
 ```bash
 # Detect duplicate documentation sections
-# Note: Use tools_v2/ analysis tools if available
+# Note: Use tools/ analysis tools if available
 python tools/ssot_validator.py --check-docs --threshold 80
 ```
 
@@ -802,7 +802,7 @@ python tools/ssot_validator.py --component messaging
 ```bash
 # Detect duplicate code
 # Note: Use tools/ssot_validator.py for SSOT validation
-# For comprehensive analysis, use tools_v2/ analysis tools
+# For comprehensive analysis, use tools/ analysis tools
 python tools/ssot_validator.py --check-duplicates --min-lines 10
 
 # Detect duplicate configs
@@ -818,7 +818,7 @@ python tools/ssot_validator.py --check-docs
 ```bash
 # Note: SSOT registry is maintained in this documentation file
 # Update SSOT registry section in docs/ssot/SSOT_ENFORCEMENT_GUIDE.md
-# For automated tools, check tools_v2/ for registry management tools
+# For automated tools, check tools/ for registry management tools
 ```
 
 ---

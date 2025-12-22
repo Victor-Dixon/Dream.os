@@ -5,7 +5,7 @@ Basic Toolbelt V2 Test
 
 Standalone test for toolbelt V2 functionality (avoids dependency issues).
 
-Usage: python tools_v2/test_toolbelt_basic.py
+Usage: python tools/test_toolbelt_basic.py
 """
 
 import sys
@@ -20,7 +20,8 @@ def test_basic_functionality():
 
     # Test 1: Import core
     print("Test 1: Importing core...")
-    from tools_v2 import get_tool_registry, get_toolbelt_core
+    from tools.tool_registry import get_tool_registry
+    from tools.toolbelt_core import get_toolbelt_core
 
     print("✅ Core imports successful\n")
 
@@ -62,7 +63,7 @@ def test_basic_functionality():
 
     # Test 6: Test tool spec retrieval
     print("Test 6: Getting tool specifications...")
-    from tools_v2.categories.vector_tools import TaskContextTool
+    from tools.categories.vector_tools import TaskContextTool
 
     tool = TaskContextTool()
     spec = tool.get_spec()
@@ -82,8 +83,8 @@ def test_basic_functionality():
 
     # Test 8: Validate file sizes
     print("Test 8: Validating V2 compliance (file sizes)...")
-    tools_v2_root = Path(__file__).parent
-    all_files = list(tools_v2_root.rglob("*.py"))
+    tools_root = Path(__file__).parent
+    all_files = list(tools_root.rglob("*.py"))
     violations = []
 
     for file in all_files:
@@ -91,7 +92,7 @@ def test_basic_functionality():
             continue  # Skip test files
         line_count = len(file.read_text().splitlines())
         if line_count > 400:
-            violations.append((file.relative_to(tools_v2_root), line_count))
+            violations.append((file.relative_to(tools_root), line_count))
 
     if violations:
         print("❌ V2 violations found:")

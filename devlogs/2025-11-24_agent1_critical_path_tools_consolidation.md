@@ -93,7 +93,7 @@
 **Captain Tools:**
 - 15+ `captain_*.py` files to consolidate
 - Create `captain_coordination_tools.py` category
-- Migrate to tools_v2 categories
+- Migrate to tools categories
 
 **Orphan Integration:**
 - 100+ standalone scripts

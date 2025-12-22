@@ -25,7 +25,7 @@ Agent Toolbelt V2 is a modular, V2-compliant architecture providing unified acce
 
 ### **Directory Structure**
 ```
-tools_v2/
+tools/
 ├── __init__.py                      # Public API (53 lines)
 ├── toolbelt_core.py                 # Core orchestrator (209 lines)
 ├── tool_registry.py                 # Tool registry (186 lines)
@@ -114,7 +114,7 @@ File Size Analysis:
 
 ### **Programmatic Usage**
 ```python
-from tools_v2 import get_toolbelt_core
+from tools.toolbelt_core import get_toolbelt_core
 
 # Get toolbelt instance
 toolbelt = get_toolbelt_core()
@@ -178,7 +178,7 @@ class IToolAdapter(ABC):
 
 ### **Run Basic Test**
 ```bash
-python tools_v2/test_toolbelt_basic.py
+python tools/test_toolbelt_basic.py
 ```
 
 **Output**:
@@ -190,7 +190,7 @@ python tools_v2/test_toolbelt_basic.py
 
 ### **Run Full Test Suite**
 ```bash
-pytest tools_v2/tests/ -v
+pytest tools/tests/ -v
 ```
 
 ---

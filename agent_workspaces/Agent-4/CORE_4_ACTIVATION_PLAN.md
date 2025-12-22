@@ -166,7 +166,7 @@ python -m src.services.messaging_cli \
 **Step 2: Create Mission File**
 ```python
 # Using captain.assign_mission tool
-from tools_v2.toolbelt_core import ToolbeltCore
+from tools.toolbelt_core import ToolbeltCore
 toolbelt = ToolbeltCore()
 
 toolbelt.run("captain.assign_mission", {

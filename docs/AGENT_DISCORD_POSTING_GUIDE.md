@@ -52,7 +52,7 @@ python tools/post_to_discord_router.py --agent Agent-2 --message "Critical!" --p
 Use the Discord post tool via toolbelt:
 
 ```bash
-python -m tools_v2.toolbelt discord.post --agent Agent-8 --message "Update"
+python -m tools.toolbelt discord.post --agent Agent-8 --message "Update"
 ```
 
 ### **Method 3: Agent-Specific Scripts (LEGACY)**
@@ -163,7 +163,7 @@ The Discord router automatically routes messages to agent-specific channels:
 ## 📚 RELATED DOCUMENTATION
 
 - `tools/post_to_discord_router.py` - Unified posting script
-- `tools_v2/categories/communication_tools.py` - Tool implementation
+- `tools/categories/communication_tools.py` - Tool implementation
 - `scripts/post_agent*_update_to_discord.py` - Legacy scripts (deprecated)
 
 

@@ -33,10 +33,10 @@
 
 2. Test via toolbelt (30min)
    ```bash
-   python -m tools_v2.toolbelt captain.completion_processor
-   python -m tools_v2.toolbelt captain.leaderboard_update
-   python -m tools_v2.toolbelt captain.next_task_picker
-   python -m tools_v2.toolbelt captain.roi_calc
+   python -m tools.toolbelt captain.completion_processor
+   python -m tools.toolbelt captain.leaderboard_update
+   python -m tools.toolbelt captain.next_task_picker
+   python -m tools.toolbelt captain.roi_calc
    ```
 
 3. Migrate 2-3 more captain tools (40min)

@@ -1,5 +1,5 @@
 <!-- SSOT Domain: architecture -->
-# 🔍 Adapter Pattern Audit - tools_v2/
+# 🔍 Adapter Pattern Audit - tools/
 
 > **📚 SSOT Reference**: For Adapter pattern implementation details, see [ARCHITECTURE_PATTERNS_DOCUMENTATION.md](./ARCHITECTURE_PATTERNS_DOCUMENTATION.md) (Adapter Pattern section)
 
@@ -12,7 +12,7 @@
 
 ## 📊 EXECUTIVE SUMMARY
 
-**Audit Scope:** All tools in `tools_v2/categories/`  
+**Audit Scope:** All tools in `tools/categories/`  
 **Total Tools Audited:** 143+ tool classes  
 **Pattern Compliance:** ✅ **EXCELLENT** (99%+ compliance)
 
@@ -220,11 +220,11 @@ class ToolName(IToolAdapter):
 **Target:** New adapter in appropriate category
 
 ```python
-# Legacy: tools/captain_message_all_agents.py → tools_v2.toolbelt captain.message_all
+# Legacy: tools/captain_message_all_agents.py → tools.toolbelt captain.message_all
 def message_all_agents(message: str, priority: str = "regular"):
     # Implementation
 
-# Migrated: tools_v2/categories/captain_tools_extension.py
+# Migrated: tools/categories/captain_tools_extension.py
 class MessageAllAgentsTool(IToolAdapter):
     def get_spec(self) -> ToolSpec:
         return ToolSpec(name="captain.message_all", ...)
@@ -235,13 +235,13 @@ class MessageAllAgentsTool(IToolAdapter):
 
 ### **Pattern 2: Wrapper Migration**
 
-**Source:** Legacy tool that delegates to tools_v2  
+**Source:** Legacy tool that delegates to tools  
 **Target:** Keep as wrapper, mark deprecated
 
 ```python
-# Legacy: tools/captain_import_validator.py → tools_v2.toolbelt refactor.validate_imports
+# Legacy: tools/captain_import_validator.py → tools.toolbelt refactor.validate_imports
 def validate_file_imports(file_path):
-    from tools_v2.categories.import_fix_tools import ImportValidatorTool
+    from tools.categories.import_fix_tools import ImportValidatorTool
     tool = ImportValidatorTool()
     return tool.execute({"path": str(file_path)})
 ```

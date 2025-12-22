@@ -29,11 +29,11 @@
 **In src/**:
 - `src/core/stress_testing/real_messaging_core_adapter.py` - Stress testing adapter
 
-**In tools_v2/**:
-- `tools_v2/adapters/base_adapter.py` - Base adapter (SSOT candidate)
-- `tools_v2/categories/intelligent_mission_advisor_adapter.py` - Mission advisor adapter
+**In tools/**:
+- `tools/adapters/base_adapter.py` - Base adapter (SSOT candidate)
+- `tools/categories/intelligent_mission_advisor_adapter.py` - Mission advisor adapter
 
-**Analysis**: Base adapter exists in tools_v2. Stress testing adapter is domain-specific.
+**Analysis**: Base adapter exists in tools. Stress testing adapter is domain-specific.
 
 ---
 
@@ -65,7 +65,7 @@
 
 ### **Adapter Patterns** ⚠️ **REVIEW BASE ADAPTER**
 
-**Finding**: Base adapter exists in `tools_v2/adapters/base_adapter.py`
+**Finding**: Base adapter exists in `tools/adapters/base_adapter.py`
 - Stress testing adapter may benefit from base adapter
 - Mission advisor adapter already uses base adapter pattern
 

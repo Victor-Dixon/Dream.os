@@ -199,8 +199,8 @@ agent_workspaces/{Agent-X}/inbox/
 
 ## 📚 **RELATED TOOLS**
 
-- **Captain Tools**: `tools_v2/categories/captain_tools*.py`
-- **Agent Toolbelt**: `python -m tools_v2.toolbelt`
+- **Captain Tools**: `tools/categories/captain_tools*.py`
+- **Agent Toolbelt**: `python -m tools.toolbelt`
 - **Discord Commander**: Discord bot for agent commands
 - **Agent Check-in**: `tools/agent_checkin.py`
 

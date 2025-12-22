@@ -129,21 +129,21 @@
 **ROI**: 10.00 (ACCEPTABLE)  
 **Time**: 1 hour
 
-**Problem**: `tools_v2/core/` directory doesn't exist
+**Problem**: `tools/core/` directory doesn't exist
 
 **What Exists**:
-- ✅ `tools_v2/toolbelt_core.py` (different location!)
-- ✅ `tools_v2/tool_registry.py` (different location!)
+- ✅ `tools/toolbelt_core.py` (different location!)
+- ✅ `tools/tool_registry.py` (different location!)
 
 **Files Expected**:
-- `tools_v2/core/tool_facade.py`
-- `tools_v2/core/tool_spec.py`
+- `tools/core/tool_facade.py`
+- `tools/core/tool_spec.py`
 
 **Fix**: Create `core/` subdirectory and move/organize modules
 
 **Agent Recommended**: Agent-8 (SSOT & structure)
 
-**Priority**: LOW (tools_v2 functional, just structural)
+**Priority**: LOW (tools functional, just structural)
 
 ---
 
