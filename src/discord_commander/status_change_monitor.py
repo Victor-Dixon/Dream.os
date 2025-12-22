@@ -703,28 +703,28 @@ class StatusChangeMonitor:
             fsm_state = status.get("status", "active")
             last_mission = status.get("current_mission", "Unknown")
 
-            # Generate base prompt
-            resumer_prompt = generate_optimized_resume_prompt(
-                agent_id=agent_id,
-                fsm_state=fsm_state,
-                last_mission=last_mission,
-                stall_duration_minutes=summary.inactivity_duration_minutes,
-                scheduler=self.scheduler
-            )
-
-            # NEW: Add scheduled tasks to prompt if available
+            # Format scheduled tasks section if available
+            scheduled_tasks_section = ""
             if pending_tasks and len(pending_tasks) > 0:
                 try:
                     from ...orchestrators.overnight.scheduler_integration import SchedulerStatusMonitorIntegration
                     integration = SchedulerStatusMonitorIntegration(
                         scheduler=self.scheduler, status_monitor=self)
                     scheduled_tasks_section = integration.format_scheduled_tasks_for_prompt(
-                        agent_id)
-                    if scheduled_tasks_section:
-                        resumer_prompt += "\n" + scheduled_tasks_section
+                        agent_id) or ""
                 except Exception as e:
                     logger.warning(
                         f"Failed to format scheduled tasks for {agent_id}: {e}")
+
+            # Generate comprehensive SWARM_PULSE prompt with scheduled tasks integrated
+            resumer_prompt = generate_optimized_resume_prompt(
+                agent_id=agent_id,
+                fsm_state=fsm_state,
+                last_mission=last_mission,
+                stall_duration_minutes=summary.inactivity_duration_minutes,
+                scheduler=self.scheduler,
+                scheduled_tasks_section=scheduled_tasks_section
+            )
 
             return resumer_prompt
 

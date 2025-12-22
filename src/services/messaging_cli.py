@@ -136,6 +136,31 @@ class MessagingCLI:
                     return 1  # Health warnings
                 else:
                     return 0  # Healthy
+            elif parsed_args.generate_work_resume:
+                # Generate work resume for agent
+                if not parsed_args.agent:
+                    print("❌ ERROR: --agent required for --generate-work-resume")
+                    self.parser.print_help()
+                    return 1
+                
+                from src.services.messaging.work_resume_generator import WorkResumeGenerator
+                generator = WorkResumeGenerator()
+                
+                resume = generator.generate_work_resume(
+                    parsed_args.agent,
+                    include_recent_commits=True,
+                    include_coordination=True,
+                    include_devlogs=True,
+                )
+                
+                print(resume)
+                
+                # Save to file if requested
+                if parsed_args.save_resume:
+                    output_file = generator.save_resume_to_file(parsed_args.agent)
+                    print(f"\n✅ Work resume saved to: {output_file}")
+                
+                return 0
             else:
                 self.parser.print_help()
                 return 0

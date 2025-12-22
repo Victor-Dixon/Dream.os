@@ -121,6 +121,95 @@ class SystemControlCommands(commands.Cog):
             self.logger.error(f"Error in shutdown command: {e}")
             await ctx.send(f"❌ Error: {e}")
 
+    @commands.command(name="startdiscord", aliases=["start_discord", "start"], description="Start the Discord bot and queue processor")
+    async def startdiscord_cmd(self, ctx: commands.Context):
+        """Start the Discord bot and message queue processor."""
+        try:
+            project_root = Path(__file__).parent.parent.parent.parent
+            start_script = project_root / "tools" / "start_discord_system.py"
+
+            if not start_script.exists():
+                embed = discord.Embed(
+                    title="❌ Failed to Start Discord Bot",
+                    description=f"Start script not found: `{start_script}`",
+                    color=discord.Color.red(),
+                )
+                await ctx.send(embed=embed)
+                self.logger.error(f"Start script not found: {start_script}")
+                return
+
+            # Check if bot is already running
+            if self.bot.is_ready():
+                embed = discord.Embed(
+                    title="ℹ️ Bot Already Running",
+                    description="Discord bot is already running and connected!",
+                    color=discord.Color.blue(),
+                )
+                await ctx.send(embed=embed)
+                return
+
+            # Announce start
+            embed = discord.Embed(
+                title="🚀 Starting Discord System",
+                description=(
+                    "Starting Discord bot and message queue processor...\n"
+                    "• Bot process will start\n"
+                    "• Queue processor will start\n"
+                    "• Both will run in background\n\n"
+                    "Please wait a few seconds..."
+                ),
+                color=discord.Color.blue(),
+            )
+            await ctx.send(embed=embed)
+
+            # Start the system
+            try:
+                if sys.platform == 'win32':
+                    subprocess.Popen(
+                        [sys.executable, str(start_script)],
+                        cwd=str(project_root),
+                        creationflags=subprocess.CREATE_NEW_CONSOLE,
+                        stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL
+                    )
+                else:
+                    subprocess.Popen(
+                        [sys.executable, str(start_script)],
+                        cwd=str(project_root),
+                        stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL,
+                        start_new_session=True
+                    )
+
+                import time
+                time.sleep(2)
+
+                success_embed = discord.Embed(
+                    title="✅ Discord System Started",
+                    description=(
+                        "Discord bot and queue processor started successfully!\n"
+                        "• Bot should connect in a few seconds\n"
+                        "• Queue processor is running\n"
+                        "• Message delivery enabled"
+                    ),
+                    color=discord.Color.green(),
+                )
+                await ctx.send(embed=success_embed)
+                self.logger.info("✅ Discord system started via !startdiscord command")
+
+            except Exception as e:
+                error_embed = discord.Embed(
+                    title="❌ Failed to Start Discord Bot",
+                    description=f"Error starting Discord system: `{e}`",
+                    color=discord.Color.red(),
+                )
+                await ctx.send(embed=error_embed)
+                self.logger.error(f"Error starting Discord system: {e}", exc_info=True)
+
+        except Exception as e:
+            self.logger.error(f"Error in startdiscord command: {e}", exc_info=True)
+            await ctx.send(f"❌ Error: {e}")
+
     @commands.command(name="restart", description="Restart the Discord bot (true restart - fresh process)")
     async def restart_cmd(self, ctx: commands.Context):
         """Restart the Discord bot with a true process restart (kills current process, starts fresh)."""

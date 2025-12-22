@@ -1,62 +1,40 @@
 #!/usr/bin/env python3
 """
-Services CLI - Unified Entry Point
-===================================
+Services CLI - DEPRECATED
+=========================
 
-Unified CLI for service operations.
+⚠️ DEPRECATED: This CLI entry point has been consolidated.
+Use the unified CLI instead: python -m src.cli services <command>
+
+This file is kept for backward compatibility and redirects to the unified CLI.
 
 <!-- SSOT Domain: infrastructure -->
 
-Author: Agent-7 (Web Development Specialist)
-Date: 2025-12-04
-V2 Compliant: Yes (<300 lines)
+Author: Agent-6 (Coordination & Communication Specialist)
+Date: 2025-12-21
+Status: DEPRECATED - Redirects to src.cli
 """
 
-import argparse
 import sys
-from typing import List
+import warnings
 
+# Show deprecation warning
+warnings.warn(
+    "src.services.cli is deprecated. Use 'python -m src.cli services' instead.",
+    DeprecationWarning,
+    stacklevel=2,
+)
 
-def create_parser() -> argparse.ArgumentParser:
-    """Create argument parser for services CLI."""
-    parser = argparse.ArgumentParser(
-        description="Services CLI - Unified Entry Point"
-    )
-    
-    # Add subcommands here
-    subparsers = parser.add_subparsers(dest="command", help="Service commands")
-    
-    # Example: messaging subcommand
-    msg_parser = subparsers.add_parser("messaging", help="Messaging operations")
-    msg_parser.add_argument("--send", help="Send message")
-    
-    # Example: contract subcommand
-    contract_parser = subparsers.add_parser("contract", help="Contract operations")
-    contract_parser.add_argument("--list", action="store_true", help="List contracts")
-    
-    return parser
-
-
-def main() -> int:
-    """Main CLI entry point."""
-    parser = create_parser()
-    args = parser.parse_args()
-    
-    if not args.command:
-        parser.print_help()
-        return 1
-    
-    # Dispatch to appropriate handler
-    if args.command == "messaging":
-        try:
-            from src.services.messaging_cli import main as msg_main
-            return msg_main()
-        except ImportError:
-            print("❌ Messaging CLI not available")
-            return 1
-    
-    return 0
-
-
+# Redirect to unified CLI
 if __name__ == "__main__":
-    sys.exit(main())
+    # Reconstruct command with 'services' domain prefix
+    original_argv = sys.argv[:]
+    try:
+        # Remove 'services/cli' and add 'cli services'
+        sys.argv = ["src.cli", "services"] + original_argv[1:]
+        from src.cli import main
+
+        sys.exit(main())
+    except ImportError:
+        print("❌ Unified CLI not available. Please use: python -m src.cli services")
+        sys.exit(1)
