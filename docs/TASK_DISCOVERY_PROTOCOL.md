@@ -317,11 +317,21 @@ When you find a work opportunity:
 
 - [ ] **Format the Task:**
   ```markdown
-  - [ ] **{PRIORITY}**: {Task Title} - {Task Description}. 
+  - [ ] **{PRIORITY}** ({points} pts): {Task Title} - {Task Description}. 
     **Source:** {Discovery method: Project scan, Status review, etc.}
     **Justification:** {Why this task is needed}
     [Agent-X CLAIMED] or [UNCLAIMED]
   ```
+
+- [ ] **Estimate Point Value:**
+  - **HIGH Priority:** 100-200 points (default: 150)
+  - **MEDIUM Priority:** 50-100 points (default: 75)
+  - **LOW Priority:** 25-50 points (default: 30)
+  - **Captain-Level Tasks:** Apply 1.5x multiplier
+  - **Coordination Tasks:** Apply 1.2x multiplier
+  - **Multi-day tasks:** +25% bonus
+  - **Cross-domain tasks:** +50% bonus
+  - See [POINT_SYSTEM_INTEGRATION.md](POINT_SYSTEM_INTEGRATION.md) for detailed point calculation rules
 
 - [ ] **Add to Appropriate Section in [MASTER_TASK_LOG.md](../MASTER_TASK_LOG.md):**
   - INBOX: New tasks

@@ -59,6 +59,16 @@ This document provides an overview of how all task management components integra
 - Claims tasks from cycle planner
 - Updates MASTER_TASK_LOG with claimed status
 - Tracks task assignments
+- Tracks points: `total_points`, `completed_points`
+
+### 6. Point System
+**Location:** `src/core/gamification/`, `src/core/agent_lifecycle.py`  
+**Purpose:** Gamification and achievement tracking  
+**Integration:**
+- Tracks `points_earned` in agent status.json
+- Awards points on task completion
+- Leaderboard rankings
+- See [POINT_SYSTEM_INTEGRATION.md](POINT_SYSTEM_INTEGRATION.md) for full integration guide
 
 ---
 
@@ -171,6 +181,11 @@ This document provides an overview of how all task management components integra
 - **No tasks?** → [TASK_DISCOVERY_PROTOCOL.md](TASK_DISCOVERY_PROTOCOL.md)
 - **All tasks claimed?** → [TASK_DISCOVERY_PROTOCOL.md](TASK_DISCOVERY_PROTOCOL.md)
 - **Need work?** → [TASK_DISCOVERY_PROTOCOL.md](TASK_DISCOVERY_PROTOCOL.md)
+
+### Point System
+- **How points work?** → [POINT_SYSTEM_INTEGRATION.md](POINT_SYSTEM_INTEGRATION.md)
+- **Point values?** → HIGH: 100-200, MEDIUM: 50-100, LOW: 25-50
+- **Captain-Level multiplier?** → 1.5x (see [POINT_SYSTEM_INTEGRATION.md](POINT_SYSTEM_INTEGRATION.md))
 
 ### Creating Tasks
 - **Regular task?** → Add to [MASTER_TASK_LOG.md](../MASTER_TASK_LOG.md) INBOX

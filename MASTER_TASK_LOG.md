@@ -5,6 +5,7 @@
 > - **Creating Captain-Level Task?** → Follow [CAPTAIN_LEVEL_TASK_PROTOCOL.md](docs/CAPTAIN_LEVEL_TASK_PROTOCOL.md) - Complete Pre-Creation Checklist first
 > - **Cycle Planner Integration:** Tasks may be added to cycle planner (`src/core/resume_cycle_planner_integration.py`) for automatic agent assignment
 > - **Contract System:** Use `python -m src.services.messaging_cli --get-next-task --agent Agent-X` to claim tasks from cycle planner
+> - **Point System:** See [POINT_SYSTEM_INTEGRATION.md](docs/POINT_SYSTEM_INTEGRATION.md) - Tasks should include point values (e.g., `**HIGH** (150 pts): Task description`)
 
 ## INBOX
 
