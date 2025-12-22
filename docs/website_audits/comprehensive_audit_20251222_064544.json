@@ -1,0 +1,440 @@
+[
+  {
+    "url": "https://crosbyultimateevents.com",
+    "timestamp": "2025-12-22T06:44:36.065435",
+    "status": "online",
+    "http_status": 200,
+    "response_time": 1.9,
+    "errors": [],
+    "warnings": [
+      "Missing meta description"
+    ],
+    "seo": {
+      "has_title": true,
+      "has_meta_description": false,
+      "has_meta_keywords": false,
+      "has_og_tags": false,
+      "has_twitter_card": false,
+      "has_canonical": false,
+      "has_h1": true,
+      "has_h2": true
+    },
+    "performance": {
+      "response_time_seconds": 1.9,
+      "content_length": 26172,
+      "has_css": true,
+      "has_js": true,
+      "image_count": 0,
+      "link_count": 14
+    },
+    "accessibility": {
+      "has_alt_text": false,
+      "has_aria_labels": true,
+      "has_skip_link": false,
+      "has_lang_attribute": true
+    },
+    "content": {
+      "has_navigation": true,
+      "has_footer": true,
+      "has_main": true,
+      "paragraph_count": 11,
+      "heading_count": 0
+    }
+  },
+  {
+    "url": "https://dadudekc.com",
+    "timestamp": "2025-12-22T06:44:38.968951",
+    "status": "online",
+    "http_status": 200,
+    "response_time": 23.05,
+    "errors": [],
+    "warnings": [
+      "Slow response time: 23.05s",
+      "Missing meta description",
+      "Missing H1 heading"
+    ],
+    "seo": {
+      "has_title": true,
+      "has_meta_description": false,
+      "has_meta_keywords": false,
+      "has_og_tags": false,
+      "has_twitter_card": false,
+      "has_canonical": false,
+      "has_h1": false,
+      "has_h2": false
+    },
+    "performance": {
+      "response_time_seconds": 23.05,
+      "content_length": 100216,
+      "has_css": true,
+      "has_js": true,
+      "image_count": 3,
+      "link_count": 9
+    },
+    "accessibility": {
+      "has_alt_text": true,
+      "has_aria_labels": true,
+      "has_skip_link": true,
+      "has_lang_attribute": true
+    },
+    "content": {
+      "has_navigation": true,
+      "has_footer": true,
+      "has_main": true,
+      "paragraph_count": 39,
+      "heading_count": 0
+    }
+  },
+  {
+    "url": "https://freerideinvestor.com",
+    "timestamp": "2025-12-22T06:45:03.028407",
+    "status": "error",
+    "http_status": 500,
+    "response_time": 1.64,
+    "errors": [
+      "HTTP 500: Internal Server Error"
+    ],
+    "warnings": [],
+    "seo": {},
+    "performance": {},
+    "accessibility": {},
+    "content": {}
+  },
+  {
+    "url": "https://houstonsipqueen.com",
+    "timestamp": "2025-12-22T06:45:05.676349",
+    "status": "online",
+    "http_status": 200,
+    "response_time": 1.22,
+    "errors": [],
+    "warnings": [
+      "Missing meta description"
+    ],
+    "seo": {
+      "has_title": true,
+      "has_meta_description": false,
+      "has_meta_keywords": false,
+      "has_og_tags": false,
+      "has_twitter_card": false,
+      "has_canonical": false,
+      "has_h1": true,
+      "has_h2": false
+    },
+    "performance": {
+      "response_time_seconds": 1.22,
+      "content_length": 79473,
+      "has_css": true,
+      "has_js": true,
+      "image_count": 0,
+      "link_count": 7
+    },
+    "accessibility": {
+      "has_alt_text": false,
+      "has_aria_labels": true,
+      "has_skip_link": true,
+      "has_lang_attribute": true
+    },
+    "content": {
+      "has_navigation": true,
+      "has_footer": true,
+      "has_main": true,
+      "paragraph_count": 7,
+      "heading_count": 0
+    }
+  },
+  {
+    "url": "https://tradingrobotplug.com",
+    "timestamp": "2025-12-22T06:45:07.908336",
+    "status": "online",
+    "http_status": 200,
+    "response_time": 1.09,
+    "errors": [],
+    "warnings": [
+      "Missing meta description"
+    ],
+    "seo": {
+      "has_title": true,
+      "has_meta_description": false,
+      "has_meta_keywords": false,
+      "has_og_tags": false,
+      "has_twitter_card": false,
+      "has_canonical": true,
+      "has_h1": true,
+      "has_h2": false
+    },
+    "performance": {
+      "response_time_seconds": 1.09,
+      "content_length": 20716,
+      "has_css": true,
+      "has_js": true,
+      "image_count": 0,
+      "link_count": 6
+    },
+    "accessibility": {
+      "has_alt_text": false,
+      "has_aria_labels": true,
+      "has_skip_link": false,
+      "has_lang_attribute": true
+    },
+    "content": {
+      "has_navigation": true,
+      "has_footer": true,
+      "has_main": true,
+      "paragraph_count": 2,
+      "heading_count": 0
+    }
+  },
+  {
+    "url": "https://ariajet.site",
+    "timestamp": "2025-12-22T06:45:10.001307",
+    "status": "online",
+    "http_status": 200,
+    "response_time": 1.21,
+    "errors": [],
+    "warnings": [
+      "Missing meta description",
+      "Missing H1 heading"
+    ],
+    "seo": {
+      "has_title": true,
+      "has_meta_description": false,
+      "has_meta_keywords": false,
+      "has_og_tags": true,
+      "has_twitter_card": true,
+      "has_canonical": true,
+      "has_h1": false,
+      "has_h2": false
+    },
+    "performance": {
+      "response_time_seconds": 1.21,
+      "content_length": 32463,
+      "has_css": true,
+      "has_js": true,
+      "image_count": 1,
+      "link_count": 13
+    },
+    "accessibility": {
+      "has_alt_text": true,
+      "has_aria_labels": true,
+      "has_skip_link": false,
+      "has_lang_attribute": true
+    },
+    "content": {
+      "has_navigation": true,
+      "has_footer": true,
+      "has_main": true,
+      "paragraph_count": 3,
+      "heading_count": 0
+    }
+  },
+  {
+    "url": "https://digitaldreamscape.site",
+    "timestamp": "2025-12-22T06:45:12.217919",
+    "status": "online",
+    "http_status": 200,
+    "response_time": 1.2,
+    "errors": [],
+    "warnings": [
+      "Missing meta description",
+      "Missing H1 heading"
+    ],
+    "seo": {
+      "has_title": true,
+      "has_meta_description": false,
+      "has_meta_keywords": false,
+      "has_og_tags": false,
+      "has_twitter_card": false,
+      "has_canonical": false,
+      "has_h1": false,
+      "has_h2": false
+    },
+    "performance": {
+      "response_time_seconds": 1.2,
+      "content_length": 22177,
+      "has_css": true,
+      "has_js": true,
+      "image_count": 0,
+      "link_count": 16
+    },
+    "accessibility": {
+      "has_alt_text": false,
+      "has_aria_labels": true,
+      "has_skip_link": false,
+      "has_lang_attribute": true
+    },
+    "content": {
+      "has_navigation": true,
+      "has_footer": true,
+      "has_main": true,
+      "paragraph_count": 2,
+      "heading_count": 0
+    }
+  },
+  {
+    "url": "https://prismblossom.online",
+    "timestamp": "2025-12-22T06:45:14.428563",
+    "status": "online",
+    "http_status": 200,
+    "response_time": 1.42,
+    "errors": [],
+    "warnings": [
+      "Missing H1 heading"
+    ],
+    "seo": {
+      "has_title": true,
+      "has_meta_description": true,
+      "has_meta_keywords": false,
+      "has_og_tags": true,
+      "has_twitter_card": true,
+      "has_canonical": true,
+      "has_h1": false,
+      "has_h2": true
+    },
+    "performance": {
+      "response_time_seconds": 1.42,
+      "content_length": 42918,
+      "has_css": true,
+      "has_js": true,
+      "image_count": 0,
+      "link_count": 15
+    },
+    "accessibility": {
+      "has_alt_text": false,
+      "has_aria_labels": false,
+      "has_skip_link": false,
+      "has_lang_attribute": true
+    },
+    "content": {
+      "has_navigation": true,
+      "has_footer": true,
+      "has_main": true,
+      "paragraph_count": 14,
+      "heading_count": 0
+    }
+  },
+  {
+    "url": "https://southwestsecret.com",
+    "timestamp": "2025-12-22T06:45:16.854940",
+    "status": "online",
+    "http_status": 200,
+    "response_time": 22.56,
+    "errors": [],
+    "warnings": [
+      "Slow response time: 22.56s",
+      "Missing meta description"
+    ],
+    "seo": {
+      "has_title": true,
+      "has_meta_description": false,
+      "has_meta_keywords": false,
+      "has_og_tags": false,
+      "has_twitter_card": false,
+      "has_canonical": false,
+      "has_h1": true,
+      "has_h2": true
+    },
+    "performance": {
+      "response_time_seconds": 22.56,
+      "content_length": 26526,
+      "has_css": true,
+      "has_js": true,
+      "image_count": 0,
+      "link_count": 12
+    },
+    "accessibility": {
+      "has_alt_text": false,
+      "has_aria_labels": false,
+      "has_skip_link": false,
+      "has_lang_attribute": true
+    },
+    "content": {
+      "has_navigation": true,
+      "has_footer": true,
+      "has_main": true,
+      "paragraph_count": 25,
+      "heading_count": 0
+    }
+  },
+  {
+    "url": "https://weareswarm.online",
+    "timestamp": "2025-12-22T06:45:40.417228",
+    "status": "online",
+    "http_status": 200,
+    "response_time": 1.14,
+    "errors": [],
+    "warnings": [
+      "Missing H1 heading"
+    ],
+    "seo": {
+      "has_title": true,
+      "has_meta_description": true,
+      "has_meta_keywords": false,
+      "has_og_tags": true,
+      "has_twitter_card": true,
+      "has_canonical": true,
+      "has_h1": false,
+      "has_h2": true
+    },
+    "performance": {
+      "response_time_seconds": 1.14,
+      "content_length": 54586,
+      "has_css": true,
+      "has_js": true,
+      "image_count": 1,
+      "link_count": 11
+    },
+    "accessibility": {
+      "has_alt_text": true,
+      "has_aria_labels": true,
+      "has_skip_link": false,
+      "has_lang_attribute": true
+    },
+    "content": {
+      "has_navigation": true,
+      "has_footer": true,
+      "has_main": false,
+      "paragraph_count": 0,
+      "heading_count": 0
+    }
+  },
+  {
+    "url": "https://weareswarm.site",
+    "timestamp": "2025-12-22T06:45:42.562504",
+    "status": "online",
+    "http_status": 200,
+    "response_time": 1.39,
+    "errors": [],
+    "warnings": [],
+    "seo": {
+      "has_title": true,
+      "has_meta_description": true,
+      "has_meta_keywords": false,
+      "has_og_tags": false,
+      "has_twitter_card": false,
+      "has_canonical": false,
+      "has_h1": true,
+      "has_h2": true
+    },
+    "performance": {
+      "response_time_seconds": 1.39,
+      "content_length": 19305,
+      "has_css": true,
+      "has_js": true,
+      "image_count": 0,
+      "link_count": 6
+    },
+    "accessibility": {
+      "has_alt_text": false,
+      "has_aria_labels": false,
+      "has_skip_link": true,
+      "has_lang_attribute": true
+    },
+    "content": {
+      "has_navigation": true,
+      "has_footer": true,
+      "has_main": false,
+      "paragraph_count": 17,
+      "heading_count": 0
+    }
+  }
+]
