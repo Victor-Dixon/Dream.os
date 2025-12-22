@@ -2,27 +2,20 @@
 CLI ENTRY POINTS CONSOLIDATION ANALYSIS
 ======================================================================
 
-Total CLI Files Found: 10
+Total CLI Files Found: 9
 
 CLI Files by Domain:
-  core: 1 files
-    - src\core\cli\__main__.py
   orchestrators: 1 files
     - src\orchestrators\overnight\cli.py
-  other: 3 files
+  other: 4 files
     - scripts\task_cli.py
+    - src\cli\__main__.py
     - src\opensource\oss_cli.py
     - tools_v2\advisor_cli.py
-  services: 3 files
+  services: 2 files
     - src\services\chatgpt\cli.py
-    - src\services\cli\__main__.py
     - src\services\trader_replay\trader_replay_cli.py
   vision: 1 files
     - src\vision\cli.py
   workflows: 1 files
     - src\workflows\cli.py
-
-Duplicate CLI Entry Points Found:
-  - src\core\cli\__main__.py
-    src\services\cli\__main__.py
-    Reason: Similar structure and purpose

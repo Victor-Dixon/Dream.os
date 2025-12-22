@@ -38,7 +38,7 @@ from src.core.messaging_core import (
 logger = logging.getLogger(__name__)
 
 # Inter-agent delay for broadcast fallback to prevent routing race conditions
-INTER_AGENT_DELAY_BROADCAST = 3.0  # Delay between agents in broadcast fallback (increased from 1.0s)
+INTER_AGENT_DELAY_BROADCAST = 2.5  # Delay between agents in broadcast fallback (increased from 1.0s)
 
 
 def validate_agent_for_broadcast(

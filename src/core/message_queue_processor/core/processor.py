@@ -37,8 +37,8 @@ logger = logging.getLogger(__name__)
 
 # Inter-agent delay constants to prevent race conditions in routing
 # Increased delays to ensure PyAutoGUI routing stabilizes between agents
-INTER_AGENT_DELAY_SUCCESS = 5.0  # Delay after successful delivery (increased from 3.0s)
-INTER_AGENT_DELAY_FAILURE = 7.0  # Delay after failed delivery (increased from 5.0s)
+INTER_AGENT_DELAY_SUCCESS = 4.5  # Delay after successful delivery (increased from 3.0s)
+INTER_AGENT_DELAY_FAILURE = 6.5  # Delay after failed delivery (increased from 5.0s)
 
 
 class MessageQueueProcessor:
