@@ -1,149 +1,279 @@
 #!/usr/bin/env python3
 """
-Project Import Audit Tool
-==========================
+Import Dependency Auditor
+=========================
 
-Systematically test all Python imports to identify broken components.
+<!-- SSOT Domain: validation -->
 
-Author: Agent-7 - Repository Cloning Specialist
-Purpose: Quarantine broken components for systematic swarm fixing
+Comprehensive import dependency analysis tool that:
+- Detects circular dependencies
+- Validates importlinter contracts
+- Checks SSOT boundary compliance
+- Generates detailed reports
+
+V2 Compliance: < 300 lines, single responsibility
+Author: Agent-8 (SSOT & System Integration Specialist)
 """
 
-import importlib
+import ast
+import json
+import logging
+import subprocess
 import sys
+from collections import defaultdict
+from datetime import datetime
 from pathlib import Path
-from typing import Dict, List
+from typing import Dict, List, Set, Tuple
 
-# Add project root
-sys.path.insert(0, str(Path(__file__).parent.parent))
-
-
-def test_import(module_path: str) -> tuple[bool, str]:
-    """
-    Test if a module can be imported.
-    
-    Returns:
-        (success: bool, error_message: str)
-    """
-    try:
-        importlib.import_module(module_path)
-        return (True, "")
-    except Exception as e:
-        return (False, str(e))
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
+logger = logging.getLogger(__name__)
 
 
-def file_to_module_path(file_path: Path, project_root: Path) -> str:
-    """Convert file path to module import path."""
-    relative = file_path.relative_to(project_root)
-    module_path = str(relative.with_suffix('')).replace('\\', '.').replace('/', '.')
-    return module_path
+class ImportAuditor:
+    """Audits import dependencies across the codebase."""
 
+    def __init__(self, root_dir: Path):
+        """Initialize auditor with root directory."""
+        self.root_dir = Path(root_dir)
+        self.imports_map: Dict[str, Set[str]] = defaultdict(set)
+        self.circular_deps: List[List[str]] = []
+        self.importlinter_violations: List[Dict] = []
+        self.ssot_violations: List[Dict] = []
 
-def audit_imports(base_path: str = 'src') -> Dict[str, List]:
-    """
-    Audit all imports in a directory.
-    
-    Returns:
-        {
-            'working': [(file, module_path), ...],
-            'broken': [(file, module_path, error), ...]
-        }
-    """
-    project_root = Path(__file__).parent.parent
-    base = project_root / base_path
-    
-    working = []
-    broken = []
-    skipped = []
-    
-    # Find all Python files
-    py_files = [
-        f for f in base.rglob('*.py')
-        if '__pycache__' not in str(f)
-        and f.name != '__init__.py'
-        and 'test_' not in f.name
-        and f.stat().st_size > 0  # Skip empty files
-    ]
-    
-    print(f"🔍 Auditing {len(py_files)} Python files in {base_path}/\n")
-    
-    for i, file in enumerate(py_files, 1):
+    def find_python_files(self) -> List[Path]:
+        """Find all Python files in the codebase."""
+        python_files = []
+        for path in self.root_dir.rglob("*.py"):
+            # Skip common exclusions
+            if any(
+                exclude in str(path)
+                for exclude in [
+                    "__pycache__",
+                    ".venv",
+                    "venv",
+                    "node_modules",
+                    ".git",
+                    "migrations",
+                ]
+            ):
+                continue
+            python_files.append(path)
+        return python_files
+
+    def extract_imports(self, file_path: Path) -> Set[str]:
+        """Extract import statements from a Python file."""
+        imports = set()
         try:
-            module_path = file_to_module_path(file, project_root)
-            
-            # Progress indicator
-            if i % 10 == 0:
-                print(f"  Progress: {i}/{len(py_files)} files tested...")
-            
-            success, error = test_import(module_path)
-            
-            if success:
-                working.append((str(file.relative_to(project_root)), module_path))
-            else:
-                broken.append((str(file.relative_to(project_root)), module_path, error))
-                
+            with open(file_path, "r", encoding="utf-8") as f:
+                content = f.read()
+            tree = ast.parse(content, filename=str(file_path))
+            for node in ast.walk(tree):
+                if isinstance(node, ast.Import):
+                    for alias in node.names:
+                        imports.add(alias.name.split(".")[0])
+                elif isinstance(node, ast.ImportFrom):
+                    if node.module:
+                        imports.add(node.module.split(".")[0])
         except Exception as e:
-            skipped.append((str(file.relative_to(project_root)), str(e)))
-    
-    return {
-        'working': working,
-        'broken': broken,
-        'skipped': skipped,
-        'total': len(py_files)
-    }
+            logger.warning(f"Failed to parse {file_path}: {e}")
+        return imports
+
+    def build_import_graph(self) -> None:
+        """Build import dependency graph."""
+        logger.info("Building import dependency graph...")
+        python_files = self.find_python_files()
+        logger.info(f"Found {len(python_files)} Python files")
+
+        for file_path in python_files:
+            rel_path = str(file_path.relative_to(self.root_dir))
+            module_name = rel_path.replace("/", ".").replace("\\", ".").replace(
+                ".py", ""
+            )
+            imports = self.extract_imports(file_path)
+            self.imports_map[module_name] = imports
+
+    def detect_circular_dependencies(self) -> None:
+        """Detect circular dependencies using DFS."""
+        logger.info("Detecting circular dependencies...")
+
+        def dfs(
+            node: str,
+            path: List[str],
+            visited: Set[str],
+            rec_stack: Set[str],
+        ) -> None:
+            visited.add(node)
+            rec_stack.add(node)
+            path.append(node)
+
+            for neighbor in self.imports_map.get(node, set()):
+                # Check if neighbor is in current path (circular)
+                if neighbor in rec_stack and neighbor in self.imports_map:
+                    cycle_start = path.index(neighbor)
+                    cycle = path[cycle_start:] + [neighbor]
+                    if cycle not in self.circular_deps:
+                        self.circular_deps.append(cycle)
+                elif neighbor not in visited and neighbor in self.imports_map:
+                    dfs(neighbor, path.copy(), visited, rec_stack)
+
+            rec_stack.remove(node)
+
+        visited = set()
+        for module in self.imports_map:
+            if module not in visited:
+                dfs(module, [], visited, set())
+
+    def check_importlinter(self) -> None:
+        """Check importlinter contracts if available."""
+        logger.info("Checking importlinter contracts...")
+        importlinter_config = self.root_dir / "importlinter.ini"
+
+        if not importlinter_config.exists():
+            logger.warning("importlinter.ini not found, skipping contract checks")
+            return
+
+        try:
+            result = subprocess.run(
+                ["importlinter", "--config", str(importlinter_config)],
+                capture_output=True,
+                text=True,
+                cwd=self.root_dir,
+            )
+            if result.returncode != 0:
+                # Parse violations from output
+                for line in result.stdout.split("\n"):
+                    if "violates" in line.lower() or "broken" in line.lower():
+                        self.importlinter_violations.append({"message": line})
+        except FileNotFoundError:
+            logger.warning("importlinter not installed, skipping contract checks")
+        except Exception as e:
+            logger.error(f"Error running importlinter: {e}")
+
+    def check_ssot_boundaries(self) -> None:
+        """Check SSOT boundary violations in import patterns."""
+        logger.info("Checking SSOT boundary compliance...")
+
+        # SSOT boundary rules from architecture
+        forbidden_patterns = [
+            ("src.utils", "src.services"),  # Utils cannot import services
+            ("src.utils", "src.core"),  # Utils cannot import core
+        ]
+
+        for module, imports in self.imports_map.items():
+            for import_name in imports:
+                for forbidden_source, forbidden_target in forbidden_patterns:
+                    if (
+                        module.startswith(forbidden_source)
+                        and import_name.startswith(forbidden_target)
+                    ):
+                        self.ssot_violations.append(
+                            {
+                                "module": module,
+                                "import": import_name,
+                                "violation": f"{forbidden_source} cannot import from {forbidden_target}",
+                            }
+                        )
+
+    def generate_report(self, output_file: Path) -> None:
+        """Generate comprehensive audit report."""
+        logger.info(f"Generating report: {output_file}")
+
+        report = {
+            "timestamp": datetime.now().isoformat(),
+            "summary": {
+                "total_modules": len(self.imports_map),
+                "circular_dependencies": len(self.circular_deps),
+                "importlinter_violations": len(self.importlinter_violations),
+                "ssot_violations": len(self.ssot_violations),
+            },
+            "circular_dependencies": [
+                " -> ".join(cycle) for cycle in self.circular_deps
+            ],
+            "importlinter_violations": self.importlinter_violations,
+            "ssot_violations": self.ssot_violations,
+        }
+
+        with open(output_file, "w", encoding="utf-8") as f:
+            json.dump(report, f, indent=2)
+
+        # Also generate markdown report
+        md_report = output_file.with_suffix(".md")
+        self._generate_markdown_report(md_report, report)
+
+        logger.info(f"✅ Report generated: {output_file}")
+        logger.info(f"✅ Markdown report: {md_report}")
+
+    def _generate_markdown_report(self, output_file: Path, report: Dict) -> None:
+        """Generate markdown format report."""
+        with open(output_file, "w", encoding="utf-8") as f:
+            f.write("# Import Dependency Audit Report\n\n")
+            f.write(f"**Generated**: {report['timestamp']}\n\n")
+            f.write("## Summary\n\n")
+            f.write(f"- **Total Modules Analyzed**: {report['summary']['total_modules']}\n")
+            f.write(
+                f"- **Circular Dependencies**: {report['summary']['circular_dependencies']}\n"
+            )
+            f.write(
+                f"- **Importlinter Violations**: {report['summary']['importlinter_violations']}\n"
+            )
+            f.write(
+                f"- **SSOT Violations**: {report['summary']['ssot_violations']}\n\n"
+            )
+
+            if report["circular_dependencies"]:
+                f.write("## Circular Dependencies\n\n")
+                for cycle in report["circular_dependencies"]:
+                    f.write(f"- `{cycle}`\n")
+                f.write("\n")
+
+            if report["ssot_violations"]:
+                f.write("## SSOT Boundary Violations\n\n")
+                for violation in report["ssot_violations"]:
+                    f.write(
+                        f"- **{violation['module']}** imports **{violation['import']}**\n"
+                    )
+                    f.write(f"  - Violation: {violation['violation']}\n\n")
+
+    def run_audit(self) -> int:
+        """Run complete audit process."""
+        logger.info("Starting import dependency audit...")
+        try:
+            self.build_import_graph()
+            self.detect_circular_dependencies()
+            self.check_importlinter()
+            self.check_ssot_boundaries()
+
+            report_file = self.root_dir / "reports" / "import_audit_report.json"
+            report_file.parent.mkdir(parents=True, exist_ok=True)
+            self.generate_report(report_file)
+
+            # Return exit code based on findings
+            if (
+                self.circular_deps
+                or self.importlinter_violations
+                or self.ssot_violations
+            ):
+                logger.warning("⚠️ Import issues found - see report for details")
+                return 1
+            else:
+                logger.info("✅ No import issues found")
+                return 0
+        except Exception as e:
+            logger.error(f"❌ Audit failed: {e}")
+            return 1
 
 
-def main():
-    """Run import audit and generate report."""
-    print("🔍 PROJECT IMPORT AUDIT\n")
-    print("=" * 60)
-    
-    results = audit_imports('src')
-    
-    print(f"\n\n📊 AUDIT RESULTS:")
-    print(f"  Total files tested: {results['total']}")
-    print(f"  ✅ Working: {len(results['working'])}")
-    print(f"  ❌ Broken: {len(results['broken'])}")
-    print(f"  ⚠️ Skipped: {len(results['skipped'])}")
-    
-    # Show broken imports
-    if results['broken']:
-        print(f"\n\n❌ BROKEN IMPORTS ({len(results['broken'])}):")
-        print("=" * 60)
-        for file, module, error in results['broken']:
-            print(f"\n  File: {file}")
-            print(f"  Module: {module}")
-            print(f"  Error: {error[:100]}...")
-    
-    # Save to quarantine
-    quarantine_dir = Path('quarantine')
-    quarantine_dir.mkdir(exist_ok=True)
-    
-    report_file = quarantine_dir / 'BROKEN_IMPORTS.md'
-    with open(report_file, 'w') as f:
-        f.write("# 🔴 BROKEN IMPORTS REPORT\n\n")
-        f.write(f"**Date:** 2025-10-13\n")
-        f.write(f"**Total Tested:** {results['total']}\n")
-        f.write(f"**Working:** {len(results['working'])}\n")
-        f.write(f"**Broken:** {len(results['broken'])}\n\n")
-        f.write("---\n\n")
-        
-        if results['broken']:
-            f.write("## ❌ BROKEN IMPORTS\n\n")
-            for i, (file, module, error) in enumerate(results['broken'], 1):
-                f.write(f"### {i}. `{file}`\n\n")
-                f.write(f"**Module:** `{module}`\n\n")
-                f.write(f"**Error:**\n```\n{error}\n```\n\n")
-                f.write("**Priority:** TBD\n\n")
-                f.write("**Assigned To:** TBD\n\n")
-                f.write("---\n\n")
-    
-    print(f"\n\n✅ Report saved to: {report_file}")
-    print(f"\n🐝 WE ARE SWARM - Audit complete! ⚡")
-    
-    return 0 if len(results['broken']) == 0 else 1
+def main() -> int:
+    """Main entry point."""
+    root_dir = Path(__file__).parent.parent
+    auditor = ImportAuditor(root_dir)
+    return auditor.run_audit()
 
 
 if __name__ == "__main__":
     sys.exit(main())
+
 

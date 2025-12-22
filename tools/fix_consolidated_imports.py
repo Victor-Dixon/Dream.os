@@ -1,242 +1,303 @@
 #!/usr/bin/env python3
 """
-Fix Consolidated Tool Imports - Agent-8
-=======================================
+Fix Consolidated Imports
+=========================
 
-Scans the codebase for imports of archived/consolidated tools and updates them
-to use the new unified tools.
+<!-- SSOT Domain: fixes -->
 
-<!-- SSOT Domain: qa -->
+Resolves import conflicts from tool consolidation activities.
+Scans for broken imports, identifies correct paths, and fixes them.
 
-Author: Agent-8 (Testing & Quality Assurance Specialist)
-Date: 2025-12-03
-V2 Compliant: Yes (<300 lines)
+V2 Compliance: < 300 lines, single responsibility
+Author: Agent-8 (SSOT & System Integration Specialist)
 """
 
 import ast
+import json
+import logging
 import re
+import subprocess
 import sys
+from collections import defaultdict
+from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import Dict, List, Optional, Set, Tuple
 
-# Import mapping: old tool → new unified tool
-IMPORT_MAP = {
-    # Test coverage tools → unified_test_coverage.py
-    "test_coverage_tracker": "unified_test_coverage",
-    "test_coverage_prioritizer": "unified_test_coverage",
-    "analyze_test_coverage_gaps_clean": "unified_test_coverage",
-    
-    # Test analysis tools → unified_test_analysis.py
-    "test_all_discord_commands": "unified_test_analysis",
-    
-    # Monitoring tools → unified_monitor.py
-    "monitor_github_pusher": "unified_monitor",
-    "monitor_disk_and_ci": "unified_monitor",
-    "monitor_digitaldreamscape_queue": "unified_monitor",
-    "agent_progress_tracker": "unified_monitor",
-    "automated_test_coverage_tracker": "unified_monitor",
-    "infrastructure_automation_monitor": "unified_monitor",
-    "infrastructure_health_dashboard": "unified_monitor",
-    
-    # Analysis tools → unified_analyzer.py
-    "analyze_autoblogger_merge": "unified_analyzer",
-    "analyze_development_journey": "unified_analyzer",
-    "analyze_disk_usage": "unified_analyzer",
-    "analyze_dreamvault_duplicates": "unified_analyzer",
-    "analyze_duplicate_groups": "unified_analyzer",
-    "analyze_init_files": "unified_analyzer",
-    "analyze_local_duplicates": "unified_analyzer",
-    "analyze_merged_repo_patterns": "unified_analyzer",
-    "analyze_repo_duplicates": "unified_analyzer",
-    "analyze_stress_test_metrics": "unified_analyzer",
-    "analyze_test_coverage_gaps": "unified_analyzer",
-    "analyze_unneeded_functionality": "unified_analyzer",
-    "comprehensive_project_analyzer_BACKUP_PRE_REFACTOR": "unified_analyzer",
-    "comprehensive_repo_analysis": "unified_analyzer",
-    
-    # Validation tools → unified_validator.py
-    "validate_imports": "unified_validator",
-    "validate_queue_behavior_under_load": "unified_validator",
-    "arch_pattern_validator": "unified_validator",
-    "coverage_validator": "unified_validator",
-    "integrity_validator": "unified_validator",
-    "passdown_validator": "unified_validator",
-    "refactor_validator": "unified_validator",
-}
-
-# Path patterns to exclude
-EXCLUDE_PATTERNS = [
-    "__pycache__",
-    ".git",
-    "venv",
-    "env",
-    ".venv",
-    "node_modules",
-    "temp_repos",
-    "deprecated",
-    "tools/deprecated",
-]
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
+logger = logging.getLogger(__name__)
 
 
-def find_python_files(root: Path) -> List[Path]:
-    """Find all Python files to scan."""
-    files = []
-    for py_file in root.rglob("*.py"):
-        if not any(pattern in str(py_file) for pattern in EXCLUDE_PATTERNS):
-            files.append(py_file)
-    return files
+class ImportFixer:
+    """Fixes import conflicts from tool consolidation."""
 
+    def __init__(self, root_dir: Path, dry_run: bool = False):
+        """Initialize fixer with root directory."""
+        self.root_dir = Path(root_dir)
+        self.dry_run = dry_run
+        self.broken_imports: List[Dict] = []
+        self.fixed_imports: List[Dict] = []
+        self.module_map: Dict[str, Path] = {}
 
-def find_imports(content: str) -> List[Tuple[int, str, str]]:
-    """
-    Find all import statements that need updating.
-    Returns: [(line_number, old_import, new_import), ...]
-    """
-    updates = []
-    lines = content.split('\n')
-    
-    for i, line in enumerate(lines, 1):
-        stripped = line.strip()
-        
-        # Check for 'from tools.OLD import' or 'from tools import OLD'
-        for old_tool, new_tool in IMPORT_MAP.items():
-            # Pattern: from tools.old_tool import ...
-            pattern1 = rf"from\s+tools\.{re.escape(old_tool)}\s+import"
-            if re.search(pattern1, stripped):
-                new_line = re.sub(
-                    rf"from\s+tools\.{re.escape(old_tool)}\s+import",
-                    f"from tools.{new_tool} import",
-                    stripped
+    def build_module_map(self) -> None:
+        """Build map of module names to file paths."""
+        logger.info("Building module path map...")
+        for py_file in self.root_dir.rglob("*.py"):
+            if any(
+                exclude in str(py_file)
+                for exclude in ["__pycache__", ".venv", "venv", ".git"]
+            ):
+                continue
+            try:
+                rel_path = py_file.relative_to(self.root_dir)
+                module_parts = str(rel_path).replace("\\", "/").replace(".py", "").split("/")
+                # Create multiple possible import paths
+                for i in range(len(module_parts)):
+                    module_name = ".".join(module_parts[i:])
+                    if module_name and module_name not in self.module_map:
+                        self.module_map[module_name] = py_file
+            except Exception as e:
+                logger.debug(f"Error mapping {py_file}: {e}")
+
+    def find_broken_imports(self) -> None:
+        """Find broken imports by attempting to parse files."""
+        logger.info("Scanning for broken imports...")
+        python_files = list(self.root_dir.rglob("*.py"))
+        logger.info(f"Scanning {len(python_files)} Python files")
+
+        for file_path in python_files:
+            if any(
+                exclude in str(file_path)
+                for exclude in [
+                    "__pycache__",
+                    ".venv",
+                    "venv",
+                    ".git",
+                    "migrations",
+                    "temp_repos",
+                ]
+            ):
+                continue
+
+            try:
+                with open(file_path, "r", encoding="utf-8") as f:
+                    content = f.read()
+                tree = ast.parse(content, filename=str(file_path))
+                self._check_imports_in_tree(file_path, tree, content)
+            except SyntaxError as e:
+                # Syntax errors might indicate import issues
+                logger.debug(f"Syntax error in {file_path}: {e}")
+            except Exception as e:
+                logger.debug(f"Error parsing {file_path}: {e}")
+
+    def _check_imports_in_tree(
+        self, file_path: Path, tree: ast.AST, content: str
+    ) -> None:
+        """Check imports in AST tree."""
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Import):
+                for alias in node.names:
+                    self._check_import(file_path, alias.name, None, content)
+            elif isinstance(node, ast.ImportFrom):
+                if node.module:
+                    self._check_import(file_path, node.module, node.level, content)
+
+    def _check_import(
+        self, file_path: Path, import_name: str, level: Optional[int], content: str
+    ) -> None:
+        """Check if import is broken and find fix."""
+        # Skip standard library and known good imports
+        if import_name.split(".")[0] in [
+            "sys",
+            "os",
+            "json",
+            "logging",
+            "pathlib",
+            "typing",
+            "datetime",
+            "collections",
+            "re",
+            "subprocess",
+            "ast",
+        ]:
+            return
+
+        # Check if module exists in our map
+        if import_name not in self.module_map:
+            # Try to find alternative path
+            alternative = self._find_alternative_import(import_name)
+            if alternative:
+                self.broken_imports.append(
+                    {
+                        "file": str(file_path.relative_to(self.root_dir)),
+                        "import": import_name,
+                        "level": level,
+                        "suggested_fix": alternative,
+                    }
                 )
-                updates.append((i, stripped, new_line))
-            
-            # Pattern: from tools import old_tool
-            pattern2 = rf"from\s+tools\s+import\s+{re.escape(old_tool)}\b"
-            if re.search(pattern2, stripped):
-                new_line = re.sub(
-                    rf"from\s+tools\s+import\s+{re.escape(old_tool)}\b",
-                    f"from tools import {new_tool}",
-                    stripped
-                )
-                updates.append((i, stripped, new_line))
-            
-            # Pattern: import old_tool (standalone)
-            pattern3 = rf"^import\s+{re.escape(old_tool)}\b"
-            if re.search(pattern3, stripped):
-                new_line = re.sub(
-                    rf"^import\s+{re.escape(old_tool)}\b",
-                    f"import {new_tool}",
-                    stripped
-                )
-                updates.append((i, stripped, new_line))
-    
-    return updates
 
+    def _find_alternative_import(self, import_name: str) -> Optional[str]:
+        """Find alternative import path for broken import."""
+        # Try partial matches
+        parts = import_name.split(".")
+        for i in range(len(parts), 0, -1):
+            partial = ".".join(parts[:i])
+            if partial in self.module_map:
+                remaining = ".".join(parts[i:])
+                if remaining:
+                    return f"{partial}.{remaining}"
+                return partial
+        return None
 
-def fix_file(file_path: Path, dry_run: bool = True) -> Dict[str, any]:
-    """Fix imports in a single file."""
-    try:
-        content = file_path.read_text(encoding='utf-8')
-        updates = find_imports(content)
-        
-        if not updates:
-            return {"file": str(file_path), "updated": False, "changes": []}
-        
-        if not dry_run:
-            lines = content.split('\n')
-            for line_num, old_line, new_line in updates:
-                lines[line_num - 1] = new_line
-            file_path.write_text('\n'.join(lines), encoding='utf-8')
-        
-        return {
-            "file": str(file_path),
-            "updated": not dry_run,
-            "changes": [
-                {"line": line_num, "old": old_line, "new": new_line}
-                for line_num, old_line, new_line in updates
-            ]
+    def fix_imports(self) -> None:
+        """Fix broken imports in files."""
+        logger.info(f"Fixing {len(self.broken_imports)} broken imports...")
+
+        for issue in self.broken_imports:
+            file_path = self.root_dir / issue["file"]
+            if not file_path.exists():
+                continue
+
+            try:
+                with open(file_path, "r", encoding="utf-8") as f:
+                    content = f.read()
+
+                old_import = issue["import"]
+                new_import = issue["suggested_fix"]
+
+                # Replace import statements
+                patterns = [
+                    (rf"from\s+{re.escape(old_import)}\s+import", f"from {new_import} import"),
+                    (rf"import\s+{re.escape(old_import)}\b", f"import {new_import}"),
+                ]
+
+                modified = False
+                for pattern, replacement in patterns:
+                    if re.search(pattern, content):
+                        content = re.sub(pattern, replacement, content)
+                        modified = True
+
+                if modified and not self.dry_run:
+                    with open(file_path, "w", encoding="utf-8") as f:
+                        f.write(content)
+                    self.fixed_imports.append(
+                        {
+                            "file": issue["file"],
+                            "old_import": old_import,
+                            "new_import": new_import,
+                        }
+                    )
+                    logger.info(f"✅ Fixed import in {issue['file']}")
+                elif modified:
+                    logger.info(f"🔍 Would fix import in {issue['file']} (dry-run)")
+
+            except Exception as e:
+                logger.error(f"❌ Failed to fix {issue['file']}: {e}")
+
+    def validate_fixes(self) -> bool:
+        """Validate that fixes work by checking syntax."""
+        logger.info("Validating fixes...")
+        all_valid = True
+
+        for fix in self.fixed_imports:
+            file_path = self.root_dir / fix["file"]
+            try:
+                with open(file_path, "r", encoding="utf-8") as f:
+                    content = f.read()
+                ast.parse(content, filename=str(file_path))
+            except SyntaxError as e:
+                logger.warning(f"⚠️ Syntax error in {fix['file']}: {e}")
+                all_valid = False
+            except Exception as e:
+                logger.warning(f"⚠️ Error validating {fix['file']}: {e}")
+                all_valid = False
+
+        return all_valid
+
+    def generate_report(self, output_file: Path) -> None:
+        """Generate fix report."""
+        logger.info(f"Generating report: {output_file}")
+
+        report = {
+            "timestamp": datetime.now().isoformat(),
+            "dry_run": self.dry_run,
+            "summary": {
+                "broken_imports_found": len(self.broken_imports),
+                "imports_fixed": len(self.fixed_imports),
+            },
+            "broken_imports": self.broken_imports,
+            "fixed_imports": self.fixed_imports,
         }
-    except Exception as e:
-        return {
-            "file": str(file_path),
-            "error": str(e),
-            "updated": False
-        }
+
+        with open(output_file, "w", encoding="utf-8") as f:
+            json.dump(report, f, indent=2)
+
+        # Generate markdown report
+        md_report = output_file.with_suffix(".md")
+        with open(md_report, "w", encoding="utf-8") as f:
+            f.write("# Consolidated Imports Fix Report\n\n")
+            f.write(f"**Generated**: {report['timestamp']}\n")
+            f.write(f"**Dry Run**: {report['dry_run']}\n\n")
+            f.write("## Summary\n\n")
+            f.write(f"- **Broken Imports Found**: {report['summary']['broken_imports_found']}\n")
+            f.write(f"- **Imports Fixed**: {report['summary']['imports_fixed']}\n\n")
+
+            if self.fixed_imports:
+                f.write("## Fixed Imports\n\n")
+                for fix in self.fixed_imports:
+                    f.write(f"- **{fix['file']}**\n")
+                    f.write(f"  - Old: `{fix['old_import']}`\n")
+                    f.write(f"  - New: `{fix['new_import']}`\n\n")
+
+        logger.info(f"✅ Report generated: {output_file}")
+
+    def run_fix(self) -> int:
+        """Run complete fix process."""
+        logger.info("Starting consolidated imports fix...")
+        try:
+            self.build_module_map()
+            self.find_broken_imports()
+            self.fix_imports()
+
+            if self.fixed_imports:
+                is_valid = self.validate_fixes()
+                if not is_valid:
+                    logger.warning("⚠️ Some fixes may have introduced errors")
+
+            report_file = self.root_dir / "reports" / "consolidated_imports_fix_report.json"
+            report_file.parent.mkdir(parents=True, exist_ok=True)
+            self.generate_report(report_file)
+
+            if self.fixed_imports:
+                logger.info(f"✅ Fixed {len(self.fixed_imports)} imports")
+                return 0
+            else:
+                logger.info("✅ No import fixes needed")
+                return 0
+
+        except Exception as e:
+            logger.error(f"❌ Fix process failed: {e}")
+            return 1
 
 
-def main():
+def main() -> int:
     """Main entry point."""
     import argparse
-    
-    parser = argparse.ArgumentParser(
-        description="Fix consolidated tool imports"
-    )
+
+    parser = argparse.ArgumentParser(description="Fix consolidated imports")
     parser.add_argument(
-        "--root",
-        type=Path,
-        default=Path(__file__).parent.parent,
-        help="Root directory to scan"
+        "--dry-run", action="store_true", help="Show what would be fixed without making changes"
     )
-    parser.add_argument(
-        "--execute",
-        action="store_true",
-        help="Actually fix files (default is dry-run)"
-    )
-    parser.add_argument(
-        "--file",
-        type=Path,
-        help="Fix a specific file"
-    )
-    
     args = parser.parse_args()
-    
-    print("🔍 FIXING CONSOLIDATED TOOL IMPORTS")
-    print("=" * 80)
-    print(f"Mode: {'DRY RUN' if not args.execute else 'EXECUTING'}")
-    print(f"Root: {args.root}")
-    print()
-    
-    if args.file:
-        files = [args.file] if args.file.exists() else []
-    else:
-        files = find_python_files(args.root)
-    
-    print(f"📁 Scanning {len(files)} files...\n")
-    
-    results = []
-    for file_path in files:
-        result = fix_file(file_path, dry_run=not args.execute)
-        if result.get("changes"):
-            results.append(result)
-    
-    if not results:
-        print("✅ No imports need fixing!")
-        return 0
-    
-    print(f"📊 Found {len(results)} files with imports to fix:\n")
-    
-    total_changes = 0
-    for result in results:
-        print(f"📝 {result['file']}")
-        for change in result['changes']:
-            print(f"   Line {change['line']}:")
-            print(f"     OLD: {change['old']}")
-            print(f"     NEW: {change['new']}")
-            total_changes += 1
-        print()
-    
-    print(f"📊 Summary:")
-    print(f"   Files: {len(results)}")
-    print(f"   Changes: {total_changes}")
-    
-    if not args.execute:
-        print(f"\n💡 Run with --execute to apply changes")
-    else:
-        print(f"\n✅ All imports fixed!")
-    
-    return 0
+
+    root_dir = Path(__file__).parent.parent
+    fixer = ImportFixer(root_dir, dry_run=args.dry_run)
+    return fixer.run_fix()
 
 
 if __name__ == "__main__":
     sys.exit(main())
+
 

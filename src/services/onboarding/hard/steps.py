@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 
 # Import template loader
 try:
-    from ..onboarding_template_loader import load_onboarding_template
+    from ...onboarding_template_loader import load_onboarding_template
     TEMPLATE_LOADER_AVAILABLE = True
 except ImportError:
     TEMPLATE_LOADER_AVAILABLE = False

@@ -68,7 +68,8 @@ class ServiceManager:
         """Interactive agent mode selection."""
         if not self.agent_mode_manager:
             if not self.setup_agent_mode_manager():
-                print("   ⚠️  Agent mode manager not available, using default 4-agent mode")
+                print(
+                    "   ⚠️  Agent mode manager not available, using default 4-agent mode")
                 return
 
         print("\n🔧 AGENT MODE SELECTION")
@@ -94,7 +95,8 @@ class ServiceManager:
 
         while True:
             try:
-                choice = input("Select agent mode (or press Enter to keep current): ").strip()
+                choice = input(
+                    "Select agent mode (or press Enter to keep current): ").strip()
 
                 if not choice:  # Keep current
                     print(f"✅ Keeping current mode: {current_mode}")
@@ -106,12 +108,14 @@ class ServiceManager:
                         active_agents = self.agent_mode_manager.get_active_agents()
                         print(f"✅ Agent mode set to: {new_mode}")
                         print(f"   Active agents: {', '.join(active_agents)}")
-                        print(f"   Monitor setup: {self.agent_mode_manager.get_monitor_setup()}")
+                        print(
+                            f"   Monitor setup: {self.agent_mode_manager.get_monitor_setup()}")
                         return
                     else:
                         print(f"❌ Failed to set mode: {choice}")
                 else:
-                    print(f"❌ Invalid mode. Available: {', '.join(available_modes)}")
+                    print(
+                        f"❌ Invalid mode. Available: {', '.join(available_modes)}")
 
             except KeyboardInterrupt:
                 print("\n⚠️  Mode selection canceled, keeping current mode")
@@ -123,35 +127,47 @@ class ServiceManager:
     def start_message_queue(self):
         """Start message queue processor."""
         print("📬 Starting Message Queue Processor...")
+        # Try script first (for backward compatibility)
         script = self.project_root / "tools" / "start_message_queue_processor.py"
-        if not script.exists():
-            print(f"   ❌ Script not found: {script}")
-            return False
-
-        try:
-            process = subprocess.Popen(
-                [sys.executable, str(script)],
-                cwd=str(self.project_root),
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE
-            )
-            self.processes['message_queue'] = process
-            self._save_pid('message_queue', process)
-            print("   ✅ Message Queue Processor started (PID: {})".format(process.pid))
-            return True
-        except Exception as e:
-            print(f"   ❌ Failed to start Message Queue: {e}")
-            return False
+        
+        if script.exists():
+            # Use script if it exists
+            try:
+                process = subprocess.Popen(
+                    [sys.executable, str(script)],
+                    cwd=str(self.project_root),
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE
+                )
+                self.processes['message_queue'] = process
+                self._save_pid('message_queue', process)
+                print("   ✅ Message Queue Processor started (PID: {})".format(process.pid))
+                return True
+            except Exception as e:
+                print(f"   ❌ Failed to start Message Queue: {e}")
+                return False
+        else:
+            # Fallback to module import (as used by start_discord_system.py)
+            try:
+                process = subprocess.Popen(
+                    [sys.executable, "-m", "src.core.message_queue_processor"],
+                    cwd=str(self.project_root),
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE
+                )
+                self.processes['message_queue'] = process
+                self._save_pid('message_queue', process)
+                print("   ✅ Message Queue Processor started (PID: {})".format(process.pid))
+                return True
+            except Exception as e:
+                print(f"   ❌ Failed to start Message Queue: {e}")
+                return False
 
     def start_twitch_bot(self):
         """Start Twitch bot."""
         print("📺 Starting Twitch Bot...")
-        script = self.project_root / "tools" / "START_CHAT_BOT_NOW.py"
-        if not script.exists():
-            print(f"   ❌ Script not found: {script}")
-            return False
-
-        # Check configuration
+        
+        # Check configuration first
         channel = os.getenv("TWITCH_CHANNEL", "").strip()
         token = os.getenv("TWITCH_ACCESS_TOKEN", "").strip()
 
@@ -159,28 +175,64 @@ class ServiceManager:
             print("   ⚠️  Warning: Twitch configuration incomplete")
             print(f"      Channel: {'SET' if channel else 'NOT SET'}")
             print(f"      Token: {'SET' if token else 'NOT SET'}")
+            if not channel or not token:
+                print("   ❌ Cannot start Twitch Bot without configuration")
+                return False
 
-        try:
-            process = subprocess.Popen(
-                [sys.executable, str(script)],
-                cwd=str(self.project_root),
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE
-            )
-            self.processes['twitch'] = process
-            self._save_pid('twitch', process)
-            print("   ✅ Twitch Bot started (PID: {})".format(process.pid))
-            return True
-        except Exception as e:
-            print(f"   ❌ Failed to start Twitch Bot: {e}")
-            return False
+        # Try script first (for backward compatibility)
+        script = self.project_root / "tools" / "START_CHAT_BOT_NOW.py"
+        
+        if script.exists():
+            # Use script if it exists
+            try:
+                process = subprocess.Popen(
+                    [sys.executable, str(script)],
+                    cwd=str(self.project_root),
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE
+                )
+                self.processes['twitch'] = process
+                self._save_pid('twitch', process)
+                print("   ✅ Twitch Bot started (PID: {})".format(process.pid))
+                return True
+            except Exception as e:
+                print(f"   ❌ Failed to start Twitch Bot: {e}")
+                return False
+        else:
+            # Fallback: Try to start via EventSub server (if available)
+            eventsub_script = self.project_root / "src" / "services" / "chat_presence" / "twitch_eventsub_server.py"
+            if eventsub_script.exists():
+                try:
+                    process = subprocess.Popen(
+                        [sys.executable, str(eventsub_script)],
+                        cwd=str(self.project_root),
+                        stdout=subprocess.PIPE,
+                        stderr=subprocess.PIPE
+                    )
+                    self.processes['twitch'] = process
+                    self._save_pid('twitch', process)
+                    print("   ✅ Twitch Bot started via EventSub server (PID: {})".format(process.pid))
+                    return True
+                except Exception as e:
+                    print(f"   ❌ Failed to start Twitch Bot via EventSub: {e}")
+                    print(f"   ⚠️  Note: START_CHAT_BOT_NOW.py not found. Twitch bot may need manual setup.")
+                    return False
+            else:
+                print(f"   ❌ Twitch bot script not found: {script}")
+                print(f"   ⚠️  EventSub server also not found: {eventsub_script}")
+                print(f"   ℹ️  Twitch bot may need to be started manually or script created")
+                return False
 
     def start_discord_bot(self):
-        """Start Discord bot."""
+        """Start Discord bot using start_discord_system.py.
+
+        Note: This script starts both Discord bot and message queue processor.
+        If message queue is already running, it will still start (separate processes).
+        """
         print("💬 Starting Discord Bot...")
-        script = self.project_root / "tools" / "run_unified_discord_bot_with_restart.py"
+        script = self.project_root / "tools" / "start_discord_system.py"
         if not script.exists():
-            # Try alternative location
+            # Fallback to direct bot script
             script = self.project_root / "src" / \
                 "discord_commander" / "unified_discord_bot.py"
             if not script.exists():
@@ -205,6 +257,8 @@ class ServiceManager:
             self.processes['discord'] = process
             self._save_pid('discord', process)
             print("   ✅ Discord Bot started (PID: {})".format(process.pid))
+            print(
+                "   ℹ️  Note: start_discord_system.py also starts message queue processor")
             return True
         except Exception as e:
             print(f"   ❌ Failed to start Discord Bot: {e}")
@@ -273,11 +327,12 @@ class ServiceManager:
                         if process.name().lower() in ['python.exe', 'python3.exe', 'python']:
                             cmdline = process.cmdline()
 
-                            # Define expected scripts for each service
+                            # Define expected scripts/modules for each service
+                            # Include both script names and module import patterns
                             expected_scripts = {
-                                'message_queue': 'start_message_queue_processor.py',
-                                'twitch': 'START_CHAT_BOT_NOW.py',
-                                'discord': ['run_unified_discord_bot_with_restart.py', 'unified_discord_bot.py']
+                                'message_queue': ['start_message_queue_processor.py', 'message_queue_processor'],
+                                'twitch': ['START_CHAT_BOT_NOW.py', 'twitch_eventsub_server.py'],
+                                'discord': ['start_discord_system.py', 'unified_discord_bot.py']
                             }
 
                             expected = expected_scripts.get(service_name, [])
@@ -423,7 +478,8 @@ def main():
             current_mode = manager.agent_mode_manager.get_current_mode()
             active_agents = manager.agent_mode_manager.get_active_agents()
             monitor_setup = manager.agent_mode_manager.get_monitor_setup()
-            print(f"Agent Mode: {current_mode} ({len(active_agents)} agents, {monitor_setup} monitor)")
+            print(
+                f"Agent Mode: {current_mode} ({len(active_agents)} agents, {monitor_setup} monitor)")
             print(f"Active Agents: {', '.join(active_agents)}")
         print()
 
@@ -465,7 +521,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
-

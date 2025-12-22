@@ -46,6 +46,19 @@
       "next": "Refactor helpers to use QueueRepository, update handlers to inject repository"
     },
     {
+      "task": "freerideinvestor.com HTTP 500 error investigation",
+      "status": "in_progress",
+      "started": "2025-12-22",
+      "progress": "Diagnostics complete - PHP fatal error confirmed (blank 500 response). Diagnostic tools created, fix tool ready. SFTP credentials needed for automated fix.",
+      "findings": "HTTP 500 with blank response (0 bytes), all WordPress endpoints affected, indicates PHP fatal error preventing WordPress from loading",
+      "tools_created": [
+        "tools/diagnose_freerideinvestor_500.py",
+        "tools/diagnose_freerideinvestor_500_http.py",
+        "tools/fix_freerideinvestor_500.py"
+      ],
+      "next": "Enable debug mode via hosting panel or SFTP, check error logs, identify specific PHP fatal error, apply fix"
+    },
+    {
       "task": "Website grade card improvements",
       "status": "in_progress",
       "started": "2025-12-19",

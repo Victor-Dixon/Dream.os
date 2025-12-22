@@ -1,0 +1,204 @@
+{
+  "timestamp": "2025-12-21T15:39:48.275453",
+  "dry_run": false,
+  "summary": {
+    "broken_imports_found": 22,
+    "imports_fixed": 12
+  },
+  "broken_imports": [
+    {
+      "file": "src\\discord_commander\\trading_data_service.py",
+      "import": "trading_robot.core.broker_factory",
+      "level": 0,
+      "suggested_fix": "trading_robot.core.broker_factory"
+    },
+    {
+      "file": "src\\discord_commander\\trading_data_service.py",
+      "import": "trading_robot.core.broker_interface",
+      "level": 0,
+      "suggested_fix": "trading_robot.core.broker_interface"
+    },
+    {
+      "file": "src\\discord_commander\\trading_data_service.py",
+      "import": "trading_robot.strategies.base_strategy",
+      "level": 0,
+      "suggested_fix": "trading_robot.strategies.base_strategy"
+    },
+    {
+      "file": "src\\discord_commander\\trading_data_service.py",
+      "import": "trading_robot.strategies.strategy_implementations",
+      "level": 0,
+      "suggested_fix": "trading_robot.strategies.strategy_implementations"
+    },
+    {
+      "file": "src\\discord_commander\\trading_data_service.py",
+      "import": "trading_robot.config.settings",
+      "level": 0,
+      "suggested_fix": "trading_robot.config.settings"
+    },
+    {
+      "file": "src\\core\\coordination\\swarm\\orchestrators\\swarm_coordination_orchestrator.py",
+      "import": "utils.performance_metrics",
+      "level": 3,
+      "suggested_fix": "utils.performance_metrics"
+    },
+    {
+      "file": "src\\core\\coordination\\swarm\\orchestrators\\swarm_coordination_orchestrator.py",
+      "import": "utils.vector_insights",
+      "level": 3,
+      "suggested_fix": "utils.vector_insights"
+    },
+    {
+      "file": "src\\gaming\\performance_validation.py",
+      "import": "core.unified_entry_point_system",
+      "level": 2,
+      "suggested_fix": "core.unified_entry_point_system"
+    },
+    {
+      "file": "src\\integrations\\jarvis\\ollama_integration.py",
+      "import": "core.unified_entry_point_system",
+      "level": 2,
+      "suggested_fix": "core.unified_entry_point_system"
+    },
+    {
+      "file": "src\\services\\work_indexer.py",
+      "import": "vector_database.vector_database_models",
+      "level": 1,
+      "suggested_fix": "vector_database.vector_database_models"
+    },
+    {
+      "file": "src\\services\\handlers\\command_handler.py",
+      "import": "utils.agent_registry",
+      "level": 2,
+      "suggested_fix": "utils.agent_registry"
+    },
+    {
+      "file": "agent_workspaces\\Agent-1\\mission_continuation.py",
+      "import": "core.vector_database_ml_optimizer",
+      "level": 0,
+      "suggested_fix": "core.vector_database_ml_optimizer"
+    },
+    {
+      "file": "tools_v2\\categories\\vector_tools.py",
+      "import": "src.services.vector_database.vector_database_models",
+      "level": 0,
+      "suggested_fix": "src.services.vector_database.vector_database_models"
+    },
+    {
+      "file": "mcp_servers\\website_manager_server.py",
+      "import": "trading_robot.website_design.thea_image_generation_script",
+      "level": 0,
+      "suggested_fix": "trading_robot.website_design.thea_image_generation_script"
+    },
+    {
+      "file": "scripts\\activate_vector_database_integration.py",
+      "import": "core.vector_database_strategic_oversight",
+      "level": 0,
+      "suggested_fix": "core.vector_database_strategic_oversight"
+    },
+    {
+      "file": "scripts\\agent_documentation_cli.py",
+      "import": "core.unified_entry_point_system",
+      "level": 2,
+      "suggested_fix": "core.unified_entry_point_system"
+    },
+    {
+      "file": "scripts\\fix_and_ingest_vector_database.py",
+      "import": "core.unified_entry_point_system",
+      "level": 2,
+      "suggested_fix": "core.unified_entry_point_system"
+    },
+    {
+      "file": "scripts\\index_v2_refactoring.py",
+      "import": "core.unified_entry_point_system",
+      "level": 2,
+      "suggested_fix": "core.unified_entry_point_system"
+    },
+    {
+      "file": "scripts\\execution\\execute_ssot_integration.py",
+      "import": "core.unified_entry_point_system",
+      "level": 2,
+      "suggested_fix": "core.unified_entry_point_system"
+    },
+    {
+      "file": "tests\\integration\\trading_robot\\test_conversion_funnel.py",
+      "import": "trading_robot.email_campaigns.campaign_manager",
+      "level": 0,
+      "suggested_fix": "trading_robot.email_campaigns.campaign_manager"
+    },
+    {
+      "file": "tests\\integration\\trading_robot\\test_conversion_funnel.py",
+      "import": "trading_robot.email_campaigns.campaign_manager",
+      "level": 0,
+      "suggested_fix": "trading_robot.email_campaigns.campaign_manager"
+    },
+    {
+      "file": "tests\\integration\\trading_robot\\test_conversion_funnel.py",
+      "import": "trading_robot.email_campaigns.campaign_manager",
+      "level": 0,
+      "suggested_fix": "trading_robot.email_campaigns.campaign_manager"
+    }
+  ],
+  "fixed_imports": [
+    {
+      "file": "src\\discord_commander\\trading_data_service.py",
+      "old_import": "trading_robot.core.broker_factory",
+      "new_import": "trading_robot.core.broker_factory"
+    },
+    {
+      "file": "src\\discord_commander\\trading_data_service.py",
+      "old_import": "trading_robot.core.broker_interface",
+      "new_import": "trading_robot.core.broker_interface"
+    },
+    {
+      "file": "src\\discord_commander\\trading_data_service.py",
+      "old_import": "trading_robot.strategies.base_strategy",
+      "new_import": "trading_robot.strategies.base_strategy"
+    },
+    {
+      "file": "src\\discord_commander\\trading_data_service.py",
+      "old_import": "trading_robot.strategies.strategy_implementations",
+      "new_import": "trading_robot.strategies.strategy_implementations"
+    },
+    {
+      "file": "src\\discord_commander\\trading_data_service.py",
+      "old_import": "trading_robot.config.settings",
+      "new_import": "trading_robot.config.settings"
+    },
+    {
+      "file": "agent_workspaces\\Agent-1\\mission_continuation.py",
+      "old_import": "core.vector_database_ml_optimizer",
+      "new_import": "core.vector_database_ml_optimizer"
+    },
+    {
+      "file": "tools_v2\\categories\\vector_tools.py",
+      "old_import": "src.services.vector_database.vector_database_models",
+      "new_import": "src.services.vector_database.vector_database_models"
+    },
+    {
+      "file": "mcp_servers\\website_manager_server.py",
+      "old_import": "trading_robot.website_design.thea_image_generation_script",
+      "new_import": "trading_robot.website_design.thea_image_generation_script"
+    },
+    {
+      "file": "scripts\\activate_vector_database_integration.py",
+      "old_import": "core.vector_database_strategic_oversight",
+      "new_import": "core.vector_database_strategic_oversight"
+    },
+    {
+      "file": "tests\\integration\\trading_robot\\test_conversion_funnel.py",
+      "old_import": "trading_robot.email_campaigns.campaign_manager",
+      "new_import": "trading_robot.email_campaigns.campaign_manager"
+    },
+    {
+      "file": "tests\\integration\\trading_robot\\test_conversion_funnel.py",
+      "old_import": "trading_robot.email_campaigns.campaign_manager",
+      "new_import": "trading_robot.email_campaigns.campaign_manager"
+    },
+    {
+      "file": "tests\\integration\\trading_robot\\test_conversion_funnel.py",
+      "old_import": "trading_robot.email_campaigns.campaign_manager",
+      "new_import": "trading_robot.email_campaigns.campaign_manager"
+    }
+  ]
+}

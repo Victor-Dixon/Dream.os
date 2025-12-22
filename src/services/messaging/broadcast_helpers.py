@@ -37,6 +37,9 @@ from src.core.messaging_core import (
 
 logger = logging.getLogger(__name__)
 
+# Inter-agent delay for broadcast fallback to prevent routing race conditions
+INTER_AGENT_DELAY_BROADCAST = 3.0  # Delay between agents in broadcast fallback (increased from 1.0s)
+
 
 def validate_agent_for_broadcast(
     validator,
@@ -161,7 +164,25 @@ def send_broadcast_fallback(
             )
             if ok:
                 success_count += 1
-            time.sleep(1.0)
+            # #region agent log
+            import json
+            from pathlib import Path
+            log_path = Path("d:\\Agent_Cellphone_V2_Repository\\.cursor\\debug.log")
+            delay_start = time.time()
+            try:
+                with open(log_path, 'a', encoding='utf-8') as f:
+                    f.write(json.dumps({"sessionId": "debug-session", "runId": "run1", "hypothesisId": "C", "location": "broadcast_helpers.py:164", "message": "Before broadcast inter-agent delay", "data": {"agent": agent, "success": ok, "delay_seconds": INTER_AGENT_DELAY_BROADCAST}, "timestamp": int(time.time() * 1000)}) + "\n")
+            except: pass
+            # #endregion
+            time.sleep(INTER_AGENT_DELAY_BROADCAST)
+            # #region agent log
+            delay_end = time.time()
+            actual_delay = delay_end - delay_start
+            try:
+                with open(log_path, 'a', encoding='utf-8') as f:
+                    f.write(json.dumps({"sessionId": "debug-session", "runId": "run1", "hypothesisId": "C", "location": "broadcast_helpers.py:170", "message": "After broadcast inter-agent delay", "data": {"agent": agent, "expected_delay": INTER_AGENT_DELAY_BROADCAST, "actual_delay": round(actual_delay, 2)}, "timestamp": int(time.time() * 1000)}) + "\n")
+            except: pass
+            # #endregion
         return success_count
 
 

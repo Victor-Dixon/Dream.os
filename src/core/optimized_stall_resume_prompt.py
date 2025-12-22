@@ -26,6 +26,8 @@ from pathlib import Path
 from typing import Optional, Dict, Any, List
 from datetime import datetime, date
 
+from src.core.messaging_models_core import MessageCategory, MESSAGE_TEMPLATES
+
 logger = logging.getLogger(__name__)
 
 
@@ -360,46 +362,166 @@ class OptimizedStallResumePrompt:
         agent_assignments: Dict[str, Any] = None,
         agent_state: Dict[str, Any] = None
     ) -> str:
-        """Build a non-interactive stall recovery prompt (silent work order)."""
-        # Build task assignment section if task was claimed or provide
-        # guidance to refill tasks when none are available
-        task_section = ""
+        """Build comprehensive SWARM_PULSE-style resume prompt."""
+        return self._format_swarm_pulse_prompt(
+            agent_id=agent_id,
+            fsm_state=fsm_state,
+            last_mission=last_mission,
+            next_task=next_task,
+            stall_duration_minutes=stall_duration_minutes,
+            scheduled_tasks_section=scheduled_tasks_section,
+            agent_assignments=agent_assignments or {},
+            agent_state=agent_state or {}
+        )
+    
+    def _format_swarm_pulse_prompt(
+        self,
+        agent_id: str,
+        fsm_state: str,
+        last_mission: str,
+        next_task: Optional[Dict[str, Any]],
+        stall_duration_minutes: float,
+        scheduled_tasks_section: str = "",
+        agent_assignments: Dict[str, Any] = None,
+        agent_state: Dict[str, Any] = None
+    ) -> str:
+        """Format SWARM_PULSE template with dynamic values and integrated sections."""
+        # Get SWARM_PULSE template
+        templates = MESSAGE_TEMPLATES.get(MessageCategory.S2A, {})
+        swarm_pulse_template = templates.get("SWARM_PULSE", "")
+        
+        if not swarm_pulse_template:
+            logger.warning("SWARM_PULSE template not found, falling back to minimal prompt")
+            return self._build_minimal_fallback_prompt(agent_id, fsm_state, last_mission, next_task, stall_duration_minutes)
+        
+        # Format time since update
+        time_since_update = self._format_time_since_update(stall_duration_minutes)
+        
+        # Get FSM context
+        fsm_context = self._get_fsm_context(fsm_state)
+        fsm_state_with_context = f"{fsm_state.upper()} - {fsm_context}"
+        
+        # Build task information
+        task_title, task_priority, task_points, task_status = self._extract_task_info(next_task)
+        
+        # Format base template
+        prompt = swarm_pulse_template.format(
+            recipient=agent_id,
+            fsm_state=fsm_state_with_context,
+            current_mission=last_mission or "Unknown",
+            time_since_update=time_since_update,
+            next_task=task_title,
+            task_priority=task_priority,
+            task_points=task_points,
+            task_status=task_status,
+        )
+        
+        # Insert project priorities section after "YOUR CURRENT STATE"
+        project_priorities = self._build_project_priorities_section(agent_id, agent_assignments or {})
+        if project_priorities:
+            # Insert after "YOUR CURRENT STATE" section
+            state_section_end = prompt.find("**📋 NEXT TASK FROM CYCLE PLANNER:**")
+            if state_section_end > 0:
+                prompt = prompt[:state_section_end] + "\n" + project_priorities + prompt[state_section_end:]
+        
+        # Insert agent assignments section after project priorities
+        agent_assignments_section = self._build_agent_assignments_section(agent_assignments or {})
+        if agent_assignments_section:
+            # Insert after project priorities or after current state if no priorities
+            insert_point = prompt.find("**📋 NEXT TASK FROM CYCLE PLANNER:**")
+            if insert_point > 0:
+                prompt = prompt[:insert_point] + "\n" + agent_assignments_section + prompt[insert_point:]
+        
+        # Insert scheduled tasks section if available (before "SWARM SYNC CHECKLIST")
+        if scheduled_tasks_section:
+            checklist_start = prompt.find("**SWARM SYNC CHECKLIST (DO THESE NOW):**")
+            if checklist_start > 0:
+                prompt = prompt[:checklist_start] + "\n" + scheduled_tasks_section + "\n" + prompt[checklist_start:]
+        
+        # Enhance task section with detailed task information
         if next_task:
-            task_title = next_task.get("title", "Untitled Task")
-            task_id = next_task.get("task_id", "")
-            task_status = next_task.get("status", "pending")
-            task_desc = next_task.get("description", "")
-            task_priority = next_task.get("priority", "MEDIUM")
-
-            if task_status == "assigned":
-                task_section = f"""
-
-**✅ TASK ASSIGNED FROM CYCLE PLANNER:**
-- **Task ID**: {task_id}
-- **Title**: {task_title}
-- **Priority**: {task_priority}
-- **Status**: ASSIGNED (already claimed for you)
-{f'- **Description**: {task_desc[:200]}...' if task_desc and len(task_desc) > 200 else f'- **Description**: {task_desc}' if task_desc else ''}
-
-**Action Required**: Begin work on this assigned task immediately.
-
-"""
-            else:
-                task_section = f"""
-
-**📋 AVAILABLE TASK IN CYCLE PLANNER:**
-- **Task ID**: {task_id}
-- **Title**: {task_title}
-- **Priority**: {task_priority}
-- **To Claim**: Run `python -m src.services.messaging_cli --agent {agent_id} --get-next-task`
-
-"""
+            task_details = self._build_detailed_task_section(agent_id, next_task)
+            # Replace the basic task section with detailed one
+            task_section_start = prompt.find("**📋 NEXT TASK FROM CYCLE PLANNER:**")
+            task_section_end = prompt.find("**SWARM SYNC CHECKLIST", task_section_start)
+            if task_section_start > 0 and task_section_end > 0:
+                # Replace from start of task section to start of checklist
+                prompt = prompt[:task_section_start] + task_details + "\n\n" + prompt[task_section_end:]
         else:
-            # No pending tasks in cycle planner – explicitly instruct the agent
-            # to refill work from MASTER_TASK_LOG.md using the bridge.
-            task_section = f"""
+            # No task available - add MASTER_TASK_LOG bridge instructions
+            no_task_section = self._build_no_task_section(agent_id)
+            task_section_start = prompt.find("**📋 NEXT TASK FROM CYCLE PLANNER:**")
+            task_section_end = prompt.find("**SWARM SYNC CHECKLIST", task_section_start)
+            if task_section_start > 0 and task_section_end > 0:
+                # Replace from start of task section to start of checklist
+                prompt = prompt[:task_section_start] + no_task_section + "\n\n" + prompt[task_section_end:]
+        
+        return prompt
+    
+    def _format_time_since_update(self, stall_duration_minutes: float) -> str:
+        """Format stall duration as human-readable time string."""
+        if stall_duration_minutes < 1:
+            return "Less than 1 minute"
+        elif stall_duration_minutes < 60:
+            return f"{int(stall_duration_minutes)} minute{'s' if int(stall_duration_minutes) != 1 else ''}"
+        else:
+            hours = int(stall_duration_minutes // 60)
+            minutes = int(stall_duration_minutes % 60)
+            if minutes == 0:
+                return f"{hours} hour{'s' if hours != 1 else ''}"
+            else:
+                return f"{hours} hour{'s' if hours != 1 else ''} {minutes} minute{'s' if minutes != 1 else ''}"
+    
+    def _extract_task_info(self, next_task: Optional[Dict[str, Any]]) -> tuple[str, str, str, str]:
+        """Extract task information for template formatting."""
+        if not next_task:
+            return "No tasks available", "N/A", "N/A", "N/A"
+        
+        task_title = next_task.get("title", "Untitled Task")
+        task_priority = next_task.get("priority", "MEDIUM")
+        task_points = str(next_task.get("points", "N/A"))
+        task_status = next_task.get("status", "pending").upper()
+        
+        return task_title, task_priority, task_points, task_status
+    
+    def _build_detailed_task_section(self, agent_id: str, next_task: Dict[str, Any]) -> str:
+        """Build detailed task section with claim instructions or assignment confirmation."""
+        task_title = next_task.get("title", "Untitled Task")
+        task_id = next_task.get("task_id", "")
+        task_status = next_task.get("status", "pending")
+        task_desc = next_task.get("description", "")
+        task_priority = next_task.get("priority", "MEDIUM")
+        task_points = next_task.get("points", "N/A")
+        
+        if task_status == "assigned":
+            section = f"""**✅ TASK ASSIGNED FROM CYCLE PLANNER:**
+- **Task**: {task_title}
+- **Task ID**: {task_id}
+- **Priority**: {task_priority}
+- **Points**: {task_points}
+- **Status**: ASSIGNED (already claimed for you)
+"""
+            if task_desc:
+                desc_preview = task_desc[:200] + "..." if len(task_desc) > 200 else task_desc
+                section += f"- **Description**: {desc_preview}\n"
+            section += "\n- **Action**: Begin work on this assigned task immediately.\n"
+        else:
+            section = f"""**📋 AVAILABLE TASK IN CYCLE PLANNER:**
+- **Task**: {task_title}
+- **Task ID**: {task_id}
+- **Priority**: {task_priority}
+- **Points**: {task_points}
+- **Status**: {task_status.upper()}
+- **Action**: Claim and execute this task immediately
 
-**📋 NO TASKS FOUND IN CYCLE PLANNER FOR {agent_id}**
+**To Claim**: Run `python -m src.services.messaging_cli --agent {agent_id} --get-next-task`
+"""
+        
+        return section
+    
+    def _build_no_task_section(self, agent_id: str) -> str:
+        """Build section for when no tasks are available."""
+        return f"""**📋 NO TASKS FOUND IN CYCLE PLANNER FOR {agent_id}**
 
 When your cycle planner is empty, you MUST refill work from `MASTER_TASK_LOG.md`:
 
@@ -415,49 +537,27 @@ When your cycle planner is empty, you MUST refill work from `MASTER_TASK_LOG.md`
    - `python -m src.services.messaging_cli --agent {agent_id} --get-next-task`
 
 **Action Required**: Refill your task list from `MASTER_TASK_LOG.md`, then execute ONE concrete task slice and produce a real artifact (code, tests, or report).
-
 """
+    
+    def _build_minimal_fallback_prompt(
+        self,
+        agent_id: str,
+        fsm_state: str,
+        last_mission: str,
+        next_task: Optional[Dict[str, Any]],
+        stall_duration_minutes: float
+    ) -> str:
+        """Build minimal fallback prompt if template is unavailable."""
+        return f"""🚨 STALL RECOVERY — DO NOT REPLY
 
-        return f"""Title: 🚨 STALL RECOVERY — DO NOT REPLY
+Agent: {agent_id}
+FSM State: {fsm_state}
+Last Mission: {last_mission}
+Time Since Update: {self._format_time_since_update(stall_duration_minutes)}
 
-Body:
-- This is a control message. Do not send any response.
-- Do not update status.json just to acknowledge receipt.
-- Resume work immediately and produce a tangible artifact (code, tests, or report).
-- The inactivity timer resets only on meaningful progress.{task_section}
+Resume work immediately and produce a tangible artifact (code, tests, or report).
 
-Progress definition:
-- Progress counts as:
-  - A git commit that reflects real work
-  - A test pass or validation run tied to the active task
-  - A report/doc update with non-trivial content changes
-  - A code/file change with real delta
-- Progress does not include:
-  - Chat replies of any kind
-  - “Acknowledged / resuming / got it” messages
-  - status.json updates with no substantive work
-
-Execution rules:
-- Do not respond to this message.
-- Do not count chat replies as progress.
-- If a task is assigned above, begin work on it immediately.
-- If the task is too large:
-  - Break it into smaller executable slices
-  - Execute a slice immediately or delegate via the task system
-- If you are blocked:
-  - Produce a short blocker artifact (e.g., a brief report or reproducible log)
-  - Then request help through the proper channel
-
-Escalation:
-- If no progress artifact is produced within the escalation window:
-  - A higher-priority recovery action will trigger
-  - The system may reassign or subdivide the task automatically
-
-Marker flags:
 #STALL-RECOVERY #NO-REPLY #PROGRESS-ONLY #ARTIFACT-REQUIRED
-
-Optional footer (if you want it):
-- “This prompt is intentionally non-interactive. Silence is expected. Output is the response.”
 """
 
     def _build_goal_aligned_actions(self, agent_id: str, agent_assignments: Dict[str, Any], base_actions: List[str]) -> List[str]:
@@ -519,7 +619,8 @@ def generate_optimized_resume_prompt(
     fsm_state: Optional[str] = None,
     last_mission: Optional[str] = None,
     stall_duration_minutes: float = 0.0,
-    scheduler=None
+    scheduler=None,
+    scheduled_tasks_section: str = ""
 ) -> str:
     """
     Convenience function to generate optimized resume prompt.
@@ -530,14 +631,24 @@ def generate_optimized_resume_prompt(
         last_mission: Last known mission
         stall_duration_minutes: Stall duration in minutes
         scheduler: Optional TaskScheduler instance for scheduled tasks
+        scheduled_tasks_section: Optional formatted scheduled tasks section to insert
 
     Returns:
         Optimized resume prompt
     """
     generator = OptimizedStallResumePrompt(scheduler=scheduler)
-    return generator.generate_resume_prompt(
+    prompt = generator.generate_resume_prompt(
         agent_id=agent_id,
         fsm_state=fsm_state,
         last_mission=last_mission,
         stall_duration_minutes=stall_duration_minutes
     )
+    
+    # If scheduled tasks provided, insert them into the prompt
+    if scheduled_tasks_section and prompt:
+        # Insert before "SWARM SYNC CHECKLIST" section
+        checklist_start = prompt.find("**SWARM SYNC CHECKLIST (DO THESE NOW):**")
+        if checklist_start > 0:
+            prompt = prompt[:checklist_start] + "\n" + scheduled_tasks_section + "\n" + prompt[checklist_start:]
+    
+    return prompt

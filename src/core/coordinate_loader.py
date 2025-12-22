@@ -63,8 +63,12 @@ def _load_coordinates() -> dict[str, dict[str, Any]]:
         # onboarding_input_coords is ONLY for onboarding messages
         onboarding = info.get("onboarding_input_coords", chat)  # Fallback to chat if not present
         
-        # DEFENSIVE CHECK: Verify coordinates are different (except for fallback case)
-        if chat == onboarding and agent_id != "Agent-4":  # Agent-4 might have same coords
+        # DEFENSIVE CHECK: Verify coordinates are different (except for fallback cases)
+        # - Agent-4 might have same coords (legacy/edge case)
+        # - Discord intentionally uses [0,0] as sentinel value: indicates API-based delivery
+        #   (Discord is primarily a sender via bot API, not a PyAutoGUI coordinate recipient)
+        #   When coordinates are [0,0], system falls back to inbox file-based delivery
+        if chat == onboarding and agent_id not in ("Agent-4", "Discord"):
             import logging
             logger = logging.getLogger(__name__)
             logger.warning(f"⚠️ {agent_id}: chat and onboarding coords are the same: {chat}")

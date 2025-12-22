@@ -741,8 +741,28 @@ class PyAutoGUIMessagingDelivery:
             # CRITICAL: Verify message was sent and UI has settled
             # This ensures the full sequence completed before returning
             try:
+                # #region agent log
+                import json
+                from pathlib import Path
+                log_path = Path("d:\\Agent_Cellphone_V2_Repository\\.cursor\\debug.log")
+                settlement_start = time.time()
+                recipient = message.get('recipient') if isinstance(message, dict) else getattr(message, 'recipient', 'unknown')
+                try:
+                    with open(log_path, 'a', encoding='utf-8') as f:
+                        f.write(json.dumps({"sessionId": "debug-session", "runId": "run1", "hypothesisId": "D", "location": "messaging_pyautogui.py:744", "message": "Before UI settlement delay", "data": {"recipient": recipient, "delay_seconds": 3.0}, "timestamp": int(time.time() * 1000)}) + "\n")
+                except: pass
+                # #endregion
                 # Additional delay to allow UI to fully process and coordinate validation to complete
-                time.sleep(2.0)  # Increased from 0.3s to 2.0s for full UI settlement
+                # Increased to 3.0s to prevent routing race conditions between agents
+                time.sleep(3.0)  # Increased from 2.0s to 3.0s for routing stability
+                # #region agent log
+                settlement_end = time.time()
+                actual_delay = settlement_end - settlement_start
+                try:
+                    with open(log_path, 'a', encoding='utf-8') as f:
+                        f.write(json.dumps({"sessionId": "debug-session", "runId": "run1", "hypothesisId": "D", "location": "messaging_pyautogui.py:751", "message": "After UI settlement delay", "data": {"recipient": recipient, "expected_delay": 3.0, "actual_delay": round(actual_delay, 2)}, "timestamp": int(time.time() * 1000)}) + "\n")
+                except: pass
+                # #endregion
                 
                 # Verify mouse is still at correct coordinates (confirms UI is stable)
                 final_verify_pos = self.pyautogui.position()

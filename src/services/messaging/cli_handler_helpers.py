@@ -116,6 +116,7 @@ def send_single_agent_message(
 ) -> int:
     """Send single agent message and return exit code."""
     from .coordination_handlers import MessageCoordinator
+    from .sender_validation import validate_a2a_sender_identification, log_agent_activity
 
     # Map CLI category string (if provided) to MessageCategory enum
     message_category = None
@@ -130,6 +131,27 @@ def send_single_agent_message(
             )
             return 1
 
+    # Validate sender identification for A2A messages (enforce proper routing)
+    detected_sender = None
+    if message_category == MessageCategory.A2A:
+        # Detect sender for comparison
+        from .coordination_helpers import detect_sender
+        detected_sender = detect_sender()
+        
+        is_valid, validated_sender, error_msg = validate_a2a_sender_identification(
+            sender=sender,
+            category=message_category,
+            detected_sender=detected_sender,
+        )
+        
+        if not is_valid:
+            print(error_msg)
+            print(f"\n💡 Tip: Use --sender Agent-X to identify yourself (e.g., --sender Agent-2)")
+            return 1
+        
+        # Use validated sender
+        sender = validated_sender
+
     result = MessageCoordinator.send_to_agent(
         agent=agent,
         message=message,
@@ -139,6 +161,18 @@ def send_single_agent_message(
         sender=sender,
         message_category=message_category,
     )
+    
+    # Log agent activity for tracking (tied to status monitoring)
+    if result and isinstance(result, dict) and result.get("success"):
+        final_sender = sender or detected_sender or "SYSTEM"
+        if message_category:
+            log_agent_activity(
+                sender=final_sender,
+                recipient=agent,
+                category=message_category,
+                message_id=result.get("queue_id"),
+            )
+    
     success, msg = handle_message_result(result, agent)
     print(msg)
     return 0 if success else 1

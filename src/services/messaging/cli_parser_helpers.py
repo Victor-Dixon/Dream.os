@@ -141,3 +141,11 @@ def add_infrastructure_flags(parser: argparse.ArgumentParser) -> None:
         "--infra-health", action="store_true",
         help="Check infrastructure health metrics (disk, memory, CPU, browser automation)",
     )
+    parser.add_argument(
+        "--generate-work-resume", action="store_true",
+        help="Generate comprehensive work resume for an agent (requires --agent)",
+    )
+    parser.add_argument(
+        "--save-resume", action="store_true",
+        help="Save generated work resume to file (use with --generate-work-resume)",
+    )

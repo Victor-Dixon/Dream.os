@@ -1,193 +1,283 @@
 #!/usr/bin/env python3
 """
-Consolidate CLI Entry Points - Unified CLI Framework
-====================================================
+Consolidate CLI Entry Points
+============================
 
-Identifies all CLI entry points (main() functions) and creates a unified CLI framework.
-This addresses the 100+ duplicate main() functions found in project scan.
+Analyzes and consolidates duplicate CLI entry points across the codebase.
+Merges duplicate command-line interfaces and standardizes tool access patterns.
 
-Author: Agent-7 (Web Development Specialist)
-Date: 2025-12-04
-V2 Compliant: Yes (<300 lines)
+V2 Compliance: <300 lines, single responsibility
+Author: Agent-6 (Coordination & Communication Specialist)
+Date: 2025-12-21
 """
 
+import argparse
 import ast
 import json
-import sys
-from pathlib import Path
-from typing import Dict, List, Tuple
+import os
+import re
+import shutil
 from collections import defaultdict
+from pathlib import Path
+from typing import Dict, List, Set, Tuple
 
-PROJECT_ROOT = Path(__file__).parent.parent
 
+class CLIAnalyzer:
+    """Analyzes CLI entry points in the codebase."""
 
-def find_cli_entry_points(directory: Path) -> Dict[str, List[str]]:
-    """Find all CLI entry points (main() functions and if __name__ == '__main__')."""
-    cli_files = defaultdict(list)
-    
-    for py_file in directory.rglob("*.py"):
-        # Skip certain directories
-        if any(skip in str(py_file) for skip in ['__pycache__', '.git', 'node_modules', 'venv', 'htmlcov']):
-            continue
-        
+    def __init__(self, root_dir: str = "."):
+        self.root_dir = Path(root_dir)
+        self.cli_files: List[Path] = []
+        self.cli_patterns: Dict[str, List[Path]] = defaultdict(list)
+
+    def find_cli_files(self) -> List[Path]:
+        """Find all CLI entry point files."""
+        cli_files = []
+
+        # Find files with CLI patterns
+        patterns = [
+            "**/cli.py",
+            "**/cli_*.py",
+            "**/*_cli.py",
+            "**/__main__.py",  # Python module entry points
+        ]
+
+        for pattern in patterns:
+            for file_path in self.root_dir.rglob(pattern):
+                # Skip test files and temp directories
+                if any(
+                    skip in str(file_path)
+                    for skip in ["test_", "__pycache__", "temp_", ".git"]
+                ):
+                    continue
+
+                # Check if it's actually a CLI file
+                if self._is_cli_file(file_path):
+                    cli_files.append(file_path)
+
+        self.cli_files = sorted(set(cli_files))
+        return self.cli_files
+
+    def _is_cli_file(self, file_path: Path) -> bool:
+        """Check if a file is a CLI entry point."""
         try:
-            content = py_file.read_text(encoding='utf-8')
-            tree = ast.parse(content, filename=str(py_file))
-            
-            has_main = False
-            has_main_guard = False
-            
-            # Check for main() function
-            for node in ast.walk(tree):
-                if isinstance(node, ast.FunctionDef) and node.name == 'main':
-                    has_main = True
-                    break
-            
-            # Check for if __name__ == '__main__'
-            for node in ast.walk(tree):
-                if isinstance(node, ast.If):
-                    if isinstance(node.test, ast.Compare):
-                        if (isinstance(node.test.left, ast.Name) and 
-                            node.test.left.id == '__name__' and
-                            len(node.test.comparators) == 1 and
-                            isinstance(node.test.comparators[0], ast.Constant) and
-                            node.test.comparators[0].value == '__main__'):
-                            has_main_guard = True
-                            break
-            
-            if has_main or has_main_guard:
-                relative_path = str(py_file.relative_to(PROJECT_ROOT))
-                cli_files[relative_path] = {
-                    'has_main_function': has_main,
-                    'has_main_guard': has_main_guard,
-                    'file_path': relative_path
-                }
-        
-        except Exception as e:
-            # Skip files that can't be parsed
-            continue
-    
-    return cli_files
+            content = file_path.read_text(encoding="utf-8")
+            # Check for CLI indicators
+            has_main = 'if __name__ == "__main__"' in content
+            has_argparse = "argparse" in content or "ArgumentParser" in content
+            has_click = "click" in content or "@click" in content
+            has_typer = "typer" in content
 
+            # Must have main block and some CLI framework
+            return has_main and (has_argparse or has_click or has_typer)
+        except Exception:
+            return False
 
-def categorize_cli_files(cli_files: Dict) -> Dict[str, List[str]]:
-    """Categorize CLI files by domain/functionality."""
-    categories = defaultdict(list)
-    
-    for file_path, info in cli_files.items():
-        path_parts = Path(file_path).parts
-        
-        # Categorize by directory structure
-        if 'tools' in path_parts:
-            if 'deprecated' in path_parts:
-                categories['deprecated_tools'].append(file_path)
-            else:
-                categories['tools'].append(file_path)
-        elif 'src' in path_parts:
-            if 'cli' in file_path.lower():
-                categories['src_cli'].append(file_path)
-            elif 'services' in path_parts:
-                categories['services_cli'].append(file_path)
-            elif 'core' in path_parts:
-                categories['core_cli'].append(file_path)
-            else:
-                categories['src_other'].append(file_path)
-        elif 'agent_workspaces' in path_parts:
-            categories['agent_scripts'].append(file_path)
-        elif 'temp_repos' in path_parts:
-            categories['temp_repos'].append(file_path)
-        else:
-            categories['root_scripts'].append(file_path)
-    
-    return categories
-
-
-def generate_cli_framework_plan(categories: Dict[str, List[str]]) -> Dict:
-    """Generate plan for unified CLI framework."""
-    plan = {
-        'total_cli_files': sum(len(files) for files in categories.values()),
-        'categories': {cat: len(files) for cat, files in categories.items()},
-        'consolidation_strategy': {
-            'tools': 'Create tools/cli/ subdirectory with unified CLI dispatcher',
-            'src_cli': 'Consolidate into src/core/cli/ with domain-specific commands',
-            'services_cli': 'Migrate to src/services/cli/ with service-specific commands',
-            'deprecated_tools': 'Archive or remove (already in deprecated/)',
-            'temp_repos': 'Review and potentially remove (temporary)',
-            'agent_scripts': 'Keep as-is (agent-specific)',
-            'root_scripts': 'Review and consolidate into appropriate domain'
-        },
-        'recommended_structure': {
-            'tools/cli/': 'Unified CLI dispatcher for all tool commands',
-            'src/core/cli/': 'Core system CLI commands',
-            'src/services/cli/': 'Service-specific CLI commands',
-            'src/workflows/cli.py': 'Workflow CLI (already exists)',
-            'src/vision/cli.py': 'Vision CLI (already exists)'
+    def analyze_cli_structure(self) -> Dict:
+        """Analyze CLI structure and identify duplicates."""
+        analysis = {
+            "total_clis": len(self.cli_files),
+            "by_location": defaultdict(list),
+            "by_domain": defaultdict(list),
+            "duplicates": [],
+            "consolidation_opportunities": [],
         }
-    }
-    
-    return plan
+
+        for cli_file in self.cli_files:
+            rel_path = str(cli_file.relative_to(self.root_dir))
+            domain = self._extract_domain(cli_file)
+            analysis["by_location"][str(cli_file.parent)].append(rel_path)
+            analysis["by_domain"][domain].append(rel_path)
+
+        # Find duplicate patterns
+        analysis["duplicates"] = self._find_duplicates()
+        analysis["consolidation_opportunities"] = self._find_consolidation_opportunities()
+
+        return analysis
+
+    def _extract_domain(self, file_path: Path) -> str:
+        """Extract domain from file path."""
+        parts = file_path.parts
+        if "services" in parts:
+            return "services"
+        elif "core" in parts:
+            return "core"
+        elif "workflows" in parts:
+            return "workflows"
+        elif "orchestrators" in parts:
+            return "orchestrators"
+        elif "vision" in parts:
+            return "vision"
+        else:
+            return "other"
+
+    def _find_duplicates(self) -> List[Dict]:
+        """Find duplicate CLI entry points."""
+        duplicates = []
+
+        # Check for similar __main__.py files in cli directories
+        cli_main_files = [
+            f for f in self.cli_files if f.name == "__main__.py" and "cli" in str(f)
+        ]
+
+        if len(cli_main_files) > 1:
+            # Compare structure
+            structures = {}
+            for file_path in cli_main_files:
+                try:
+                    content = file_path.read_text(encoding="utf-8")
+                    # Extract key patterns
+                    structure = {
+                        "has_argparse": "argparse" in content,
+                        "has_subparsers": "add_subparsers" in content,
+                        "line_count": len(content.splitlines()),
+                    }
+                    structures[str(file_path)] = structure
+                except Exception:
+                    continue
+
+            # Find similar structures
+            for file1, struct1 in structures.items():
+                for file2, struct2 in structures.items():
+                    if file1 < file2 and self._structures_similar(struct1, struct2):
+                        duplicates.append(
+                            {
+                                "file1": file1,
+                                "file2": file2,
+                                "similarity": "high",
+                                "reason": "Similar structure and purpose",
+                            }
+                        )
+
+        return duplicates
+
+    def _structures_similar(self, struct1: Dict, struct2: Dict) -> bool:
+        """Check if two CLI structures are similar."""
+        if struct1["has_argparse"] != struct2["has_argparse"]:
+            return False
+        if struct1["has_subparsers"] != struct2["has_subparsers"]:
+            return False
+        # Similar line count (within 20%)
+        line_diff = abs(struct1["line_count"] - struct2["line_count"])
+        avg_lines = (struct1["line_count"] + struct2["line_count"]) / 2
+        return line_diff < (avg_lines * 0.2)
+
+    def _find_consolidation_opportunities(self) -> List[Dict]:
+        """Find opportunities to consolidate CLIs."""
+        opportunities = []
+
+        # Check for services/cli and core/cli
+        services_cli = self.root_dir / "src" / "services" / "cli" / "__main__.py"
+        core_cli = self.root_dir / "core" / "cli" / "__main__.py"
+
+        if services_cli.exists() and core_cli.exists():
+            opportunities.append(
+                {
+                    "type": "merge_similar_entry_points",
+                    "files": [str(services_cli), str(core_cli)],
+                    "recommendation": "Merge into unified src/cli/__main__.py",
+                    "priority": "high",
+                }
+            )
+
+        return opportunities
+
+    def generate_report(self, analysis: Dict) -> str:
+        """Generate analysis report."""
+        report = []
+        report.append("=" * 70)
+        report.append("CLI ENTRY POINTS CONSOLIDATION ANALYSIS")
+        report.append("=" * 70)
+        report.append("")
+
+        report.append(f"Total CLI Files Found: {analysis['total_clis']}")
+        report.append("")
+
+        # Group by domain
+        report.append("CLI Files by Domain:")
+        for domain, files in sorted(analysis["by_domain"].items()):
+            report.append(f"  {domain}: {len(files)} files")
+            for file_path in files[:5]:  # Show first 5
+                report.append(f"    - {file_path}")
+            if len(files) > 5:
+                report.append(f"    ... and {len(files) - 5} more")
+        report.append("")
+
+        # Duplicates
+        if analysis["duplicates"]:
+            report.append("Duplicate CLI Entry Points Found:")
+            for dup in analysis["duplicates"]:
+                report.append(f"  - {dup['file1']}")
+                report.append(f"    {dup['file2']}")
+                report.append(f"    Reason: {dup['reason']}")
+            report.append("")
+
+        # Consolidation opportunities
+        if analysis["consolidation_opportunities"]:
+            report.append("Consolidation Opportunities:")
+            for opp in analysis["consolidation_opportunities"]:
+                report.append(f"  Type: {opp['type']}")
+                report.append(f"  Files: {', '.join(opp['files'])}")
+                report.append(f"  Recommendation: {opp['recommendation']}")
+                report.append(f"  Priority: {opp['priority']}")
+                report.append("")
+
+        return "\n".join(report)
 
 
 def main():
-    """Analyze CLI entry points and generate consolidation plan."""
-    # Handle --help flag
-    if len(sys.argv) > 1 and sys.argv[1] in ('--help', '-h'):
-        print("Usage: python consolidate_cli_entry_points.py [--help]")
-        print("Identifies all CLI entry points (main() functions) and creates a unified CLI framework.")
-        print("\nThis addresses the 100+ duplicate main() functions found in project scan.")
-        print("Analysis saved to: docs/archive/consolidation/cli_consolidation_plan.json")
-        return 0
-    
+    """Main entry point."""
+    parser = argparse.ArgumentParser(
+        description="Consolidate CLI entry points and standardize access patterns"
+    )
+    parser.add_argument(
+        "--analyze", action="store_true", help="Analyze CLI structure (dry run)"
+    )
+    parser.add_argument(
+        "--execute",
+        action="store_true",
+        help="Execute consolidation (requires --analyze first)",
+    )
+    parser.add_argument(
+        "--output",
+        type=str,
+        default="cli_consolidation_report.txt",
+        help="Output file for analysis report",
+    )
+
+    args = parser.parse_args()
+
+    if not args.analyze and not args.execute:
+        parser.print_help()
+        return 1
+
+    analyzer = CLIAnalyzer()
     print("🔍 Finding CLI entry points...")
-    print()
-    
-    # Find CLI files in src/ and tools/
-    src_cli = find_cli_entry_points(PROJECT_ROOT / "src")
-    tools_cli = find_cli_entry_points(PROJECT_ROOT / "tools")
-    root_cli = find_cli_entry_points(PROJECT_ROOT)
-    
-    # Combine and deduplicate
-    all_cli = {**src_cli, **tools_cli}
-    # Remove tools from root_cli (already counted)
-    for key in list(root_cli.keys()):
-        if key.startswith('tools/') or key.startswith('src/'):
-            del root_cli[key]
-    all_cli.update(root_cli)
-    
-    print(f"📊 Found {len(all_cli)} CLI entry points")
-    print()
-    
-    # Categorize
-    categories = categorize_cli_files(all_cli)
-    
-    print("📋 Categories:")
-    for cat, files in sorted(categories.items()):
-        print(f"   {cat}: {len(files)} files")
-    print()
-    
-    # Generate plan
-    plan = generate_cli_framework_plan(categories)
-    
-    # Save results
-    output_file = PROJECT_ROOT / "docs" / "archive" / "consolidation" / "cli_consolidation_plan.json"
-    output_file.parent.mkdir(parents=True, exist_ok=True)
-    
-    with open(output_file, 'w', encoding='utf-8') as f:
-        json.dump({
-            'cli_files': all_cli,
-            'categories': {cat: files for cat, files in categories.items()},
-            'plan': plan
-        }, f, indent=2)
-    
-    print(f"✅ CLI analysis saved to: {output_file}")
-    print()
-    print("🎯 Consolidation Strategy:")
-    print(f"   • Total CLI files: {plan['total_cli_files']}")
-    print(f"   • Tools CLI: {plan['categories'].get('tools', 0)} files → Consolidate into tools/cli/")
-    print(f"   • Source CLI: {plan['categories'].get('src_cli', 0)} files → Consolidate into src/core/cli/")
-    print(f"   • Deprecated: {plan['categories'].get('deprecated_tools', 0)} files → Archive/remove")
+    cli_files = analyzer.find_cli_files()
+    print(f"✅ Found {len(cli_files)} CLI files")
+
+    print("📊 Analyzing CLI structure...")
+    analysis = analyzer.analyze_cli_structure()
+
+    # Generate report
+    report = analyzer.generate_report(analysis)
+    print("\n" + report)
+
+    # Save report
+    output_path = Path(args.output)
+    output_path.write_text(report, encoding="utf-8")
+    print(f"\n✅ Report saved to {output_path}")
+
+    if args.execute:
+        print("\n🚀 Executing consolidation...")
+        # TODO: Implement actual consolidation logic
+        print("⚠️  Consolidation execution not yet implemented")
+        print("   Review the analysis report and implement consolidation manually")
+
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    exit(main())
+
 
