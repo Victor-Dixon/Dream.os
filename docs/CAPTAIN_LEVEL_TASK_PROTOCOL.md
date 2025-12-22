@@ -146,9 +146,16 @@ Place Captain-Level Tasks in a dedicated section:
 ```markdown
 ### Captain-Level Strategic Oversight Tasks
 
-- [ ] **HIGH**: {Task} - [Agent-4 CAPTAIN]
-- [ ] **MEDIUM**: {Task} - [Agent-4 CAPTAIN]
+- [ ] **HIGH** (225 pts - Captain-Level 1.5x): {Task} - [Agent-4 CAPTAIN]
+- [ ] **MEDIUM** (113 pts - Captain-Level 1.5x): {Task} - [Agent-4 CAPTAIN]
 ```
+
+**Point System Integration:**
+- **Captain-Level Tasks get 1.5x point multiplier**
+- **HIGH Priority:** 150 pts baseline × 1.5 = 225 pts
+- **MEDIUM Priority:** 75 pts baseline × 1.5 = 112.5 pts (round to 113)
+- **LOW Priority:** 30 pts baseline × 1.5 = 45 pts
+- See [POINT_SYSTEM_INTEGRATION.md](POINT_SYSTEM_INTEGRATION.md) for detailed point calculation rules
 
 ### Step 3: Denote as Captain-Level
 
@@ -275,6 +282,21 @@ Is this task domain-specific?
 - **Captain (Agent-4)** reviews all Captain-Level Task proposals
 - **Violations** result in task reassignment to appropriate agent
 - **Protocol updates** require Captain approval
+
+---
+
+## 🎮 Point System Integration
+
+**Captain-Level Tasks receive 1.5x point multiplier:**
+- **HIGH Priority:** 150 pts × 1.5 = **225 pts**
+- **MEDIUM Priority:** 75 pts × 1.5 = **113 pts**
+- **LOW Priority:** 30 pts × 1.5 = **45 pts**
+
+**See [POINT_SYSTEM_INTEGRATION.md](POINT_SYSTEM_INTEGRATION.md) for:**
+- Complete point calculation rules
+- Point award workflow
+- Integration with MASTER_TASK_LOG
+- Point tracking in agent status.json
 
 ---
 
