@@ -1,0 +1,240 @@
+{
+  "timestamp": "2025-12-22T08:32:46.390767",
+  "domains_audited": 10,
+  "domains": {
+    "crosbyultimateevents.com": {
+      "domain": "crosbyultimateevents.com",
+      "timestamp": "2025-12-22T08:32:46.391769",
+      "ssl": {
+        "domain": "crosbyultimateevents.com",
+        "ssl_valid": true,
+        "ssl_issues": [],
+        "cert_expiry": "2026-03-15T21:54:39"
+      },
+      "headers": {
+        "domain": "crosbyultimateevents.com",
+        "headers_checked": false,
+        "missing_headers": [],
+        "recommendations": [
+          "Ensure Strict-Transport-Security is set",
+          "Ensure X-Content-Type-Options is set",
+          "Ensure X-Frame-Options is set",
+          "Ensure Content-Security-Policy is set"
+        ]
+      },
+      "vulnerabilities": [],
+      "recommendations": []
+    },
+    "dadudekc.com": {
+      "domain": "dadudekc.com",
+      "timestamp": "2025-12-22T08:32:46.986351",
+      "ssl": {
+        "domain": "dadudekc.com",
+        "ssl_valid": true,
+        "ssl_issues": [],
+        "cert_expiry": "2026-03-15T20:38:29"
+      },
+      "headers": {
+        "domain": "dadudekc.com",
+        "headers_checked": false,
+        "missing_headers": [],
+        "recommendations": [
+          "Ensure Strict-Transport-Security is set",
+          "Ensure X-Content-Type-Options is set",
+          "Ensure X-Frame-Options is set",
+          "Ensure Content-Security-Policy is set"
+        ]
+      },
+      "vulnerabilities": [],
+      "recommendations": []
+    },
+    "freerideinvestor.com": {
+      "domain": "freerideinvestor.com",
+      "timestamp": "2025-12-22T08:32:47.321654",
+      "ssl": {
+        "domain": "freerideinvestor.com",
+        "ssl_valid": true,
+        "ssl_issues": [],
+        "cert_expiry": "2026-03-15T20:58:16"
+      },
+      "headers": {
+        "domain": "freerideinvestor.com",
+        "headers_checked": false,
+        "missing_headers": [],
+        "recommendations": [
+          "Ensure Strict-Transport-Security is set",
+          "Ensure X-Content-Type-Options is set",
+          "Ensure X-Frame-Options is set",
+          "Ensure Content-Security-Policy is set"
+        ]
+      },
+      "vulnerabilities": [],
+      "recommendations": []
+    },
+    "houstonsipqueen.com": {
+      "domain": "houstonsipqueen.com",
+      "timestamp": "2025-12-22T08:32:47.674491",
+      "ssl": {
+        "domain": "houstonsipqueen.com",
+        "ssl_valid": true,
+        "ssl_issues": [],
+        "cert_expiry": "2026-03-15T17:49:12"
+      },
+      "headers": {
+        "domain": "houstonsipqueen.com",
+        "headers_checked": false,
+        "missing_headers": [],
+        "recommendations": [
+          "Ensure Strict-Transport-Security is set",
+          "Ensure X-Content-Type-Options is set",
+          "Ensure X-Frame-Options is set",
+          "Ensure Content-Security-Policy is set"
+        ]
+      },
+      "vulnerabilities": [],
+      "recommendations": []
+    },
+    "tradingrobotplug.com": {
+      "domain": "tradingrobotplug.com",
+      "timestamp": "2025-12-22T08:32:47.987288",
+      "ssl": {
+        "domain": "tradingrobotplug.com",
+        "ssl_valid": true,
+        "ssl_issues": [],
+        "cert_expiry": "2026-03-15T23:06:59"
+      },
+      "headers": {
+        "domain": "tradingrobotplug.com",
+        "headers_checked": false,
+        "missing_headers": [],
+        "recommendations": [
+          "Ensure Strict-Transport-Security is set",
+          "Ensure X-Content-Type-Options is set",
+          "Ensure X-Frame-Options is set",
+          "Ensure Content-Security-Policy is set"
+        ]
+      },
+      "vulnerabilities": [],
+      "recommendations": []
+    },
+    "ariajet.site": {
+      "domain": "ariajet.site",
+      "timestamp": "2025-12-22T08:32:48.303090",
+      "ssl": {
+        "domain": "ariajet.site",
+        "ssl_valid": true,
+        "ssl_issues": [],
+        "cert_expiry": "2026-02-20T23:08:05"
+      },
+      "headers": {
+        "domain": "ariajet.site",
+        "headers_checked": false,
+        "missing_headers": [],
+        "recommendations": [
+          "Ensure Strict-Transport-Security is set",
+          "Ensure X-Content-Type-Options is set",
+          "Ensure X-Frame-Options is set",
+          "Ensure Content-Security-Policy is set"
+        ]
+      },
+      "vulnerabilities": [],
+      "recommendations": []
+    },
+    "digitaldreamscape.site": {
+      "domain": "digitaldreamscape.site",
+      "timestamp": "2025-12-22T08:32:53.604294",
+      "ssl": {
+        "domain": "digitaldreamscape.site",
+        "ssl_valid": true,
+        "ssl_issues": [],
+        "cert_expiry": "2026-03-16T08:57:04"
+      },
+      "headers": {
+        "domain": "digitaldreamscape.site",
+        "headers_checked": false,
+        "missing_headers": [],
+        "recommendations": [
+          "Ensure Strict-Transport-Security is set",
+          "Ensure X-Content-Type-Options is set",
+          "Ensure X-Frame-Options is set",
+          "Ensure Content-Security-Policy is set"
+        ]
+      },
+      "vulnerabilities": [],
+      "recommendations": []
+    },
+    "prismblossom.online": {
+      "domain": "prismblossom.online",
+      "timestamp": "2025-12-22T08:32:53.911573",
+      "ssl": {
+        "domain": "prismblossom.online",
+        "ssl_valid": true,
+        "ssl_issues": [],
+        "cert_expiry": "2026-02-20T22:49:09"
+      },
+      "headers": {
+        "domain": "prismblossom.online",
+        "headers_checked": false,
+        "missing_headers": [],
+        "recommendations": [
+          "Ensure Strict-Transport-Security is set",
+          "Ensure X-Content-Type-Options is set",
+          "Ensure X-Frame-Options is set",
+          "Ensure Content-Security-Policy is set"
+        ]
+      },
+      "vulnerabilities": [],
+      "recommendations": []
+    },
+    "southwestsecret.com": {
+      "domain": "southwestsecret.com",
+      "timestamp": "2025-12-22T08:32:54.321192",
+      "ssl": {
+        "domain": "southwestsecret.com",
+        "ssl_valid": true,
+        "ssl_issues": [],
+        "cert_expiry": "2026-03-14T21:38:25"
+      },
+      "headers": {
+        "domain": "southwestsecret.com",
+        "headers_checked": false,
+        "missing_headers": [],
+        "recommendations": [
+          "Ensure Strict-Transport-Security is set",
+          "Ensure X-Content-Type-Options is set",
+          "Ensure X-Frame-Options is set",
+          "Ensure Content-Security-Policy is set"
+        ]
+      },
+      "vulnerabilities": [],
+      "recommendations": []
+    },
+    "weareswarm.site": {
+      "domain": "weareswarm.site",
+      "timestamp": "2025-12-22T08:32:54.619984",
+      "ssl": {
+        "domain": "weareswarm.site",
+        "ssl_valid": true,
+        "ssl_issues": [],
+        "cert_expiry": "2026-02-04T02:59:18"
+      },
+      "headers": {
+        "domain": "weareswarm.site",
+        "headers_checked": false,
+        "missing_headers": [],
+        "recommendations": [
+          "Ensure Strict-Transport-Security is set",
+          "Ensure X-Content-Type-Options is set",
+          "Ensure X-Frame-Options is set",
+          "Ensure Content-Security-Policy is set"
+        ]
+      },
+      "vulnerabilities": [],
+      "recommendations": []
+    }
+  },
+  "summary": {
+    "total_vulnerabilities": 0,
+    "domains_with_issues": 0
+  }
+}
