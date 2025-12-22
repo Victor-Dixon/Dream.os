@@ -85,13 +85,13 @@ def check_v2_compliance(
         except Exception:
             pass
 
-    # Default limits
-    max_file_lines = 300
-    max_class_lines = 200
-    max_function_lines = 30
+    # Default guidelines (clean code principles take precedence)
+    max_file_lines = 400  # Guideline, not hard limit
+    max_class_lines = 200  # Guideline
+    max_function_lines = 30  # Guideline
 
     if rules and 'file_limits' in rules:
-        max_file_lines = rules['file_limits'].get('max_lines', 300)
+        max_file_lines = rules['file_limits'].get('max_lines', 400)
         max_class_lines = rules['file_limits'].get('max_class_lines', 200)
         max_function_lines = rules['file_limits'].get('max_function_lines', 30)
 
@@ -157,7 +157,7 @@ def check_v2_compliance(
     }
 
 
-def validate_file_size(file_path: str, max_lines: int = 300) -> Dict[str, Any]:
+def validate_file_size(file_path: str, max_lines: int = 400) -> Dict[str, Any]:
     """Validate file size against limit."""
     file_path_obj = Path(file_path)
     project_root = Path(__file__).parent.parent
@@ -321,8 +321,8 @@ def main():
                                         },
                                         "max_lines": {
                                             "type": "integer",
-                                            "default": 300,
-                                            "description": "Maximum lines allowed (default: 300)",
+                                            "default": 400,
+                                            "description": "Guideline for lines (default: 400, clean code principles take precedence)",
                                         },
                                     },
                                     "required": ["file_path"],

@@ -1,9 +1,11 @@
 <!-- SSOT Domain: architecture -->
-# V2 Compliance Exceptions
+# V2 Compliance Guidelines
 
 ## Overview
 
-While V2 standards mandate ≤400 lines per file, certain files are granted exceptions when:
+V2 standards recommend ~400 lines per file as a guideline to encourage clean, maintainable code. **Clean code principles take precedence over arbitrary line counts.**
+
+Files exceeding ~400 lines should be evaluated for quality and maintainability rather than automatically flagged. Certain files may exceed this guideline when:
 1. The code cannot be cleanly split without artificial boundaries
 2. The file maintains high cohesion and single responsibility
 3. The implementation quality is superior to forced splitting
@@ -77,12 +79,14 @@ Files may be granted exceptions if they meet ALL of the following:
 
 ## Notes
 
-- Exceptions are rare and granted only for quality improvements
-- Default remains ≤400 lines for all new code
-- Existing exceptions should be reviewed periodically
+- **Clean code principles take precedence over line counts**
+- Guideline is ~400 lines to encourage maintainable, cohesive code
+- Quality, clarity, and single responsibility are more important than arbitrary limits
+- Files exceeding ~400 lines should be evaluated, not automatically rejected
 - KISS principle still applies - simplicity over complexity
+- If code is clean, well-organized, and maintainable, line count is secondary
 
-**Remember: These are exceptions, not the rule. V2 compliance (≤400 lines) remains the standard.**
+**Remember: These are quality guidelines, not hard limits. Clean, maintainable code is the goal.**
 
 ## Exception Log
 

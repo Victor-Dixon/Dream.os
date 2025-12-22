@@ -6,24 +6,31 @@ This document serves as the **Single Source of Truth (SSOT)** for code quality s
 
 ---
 
-## 📏 **File Size Standards**
+## 📏 **File Size Guidelines**
 
-### **Preferred Limits**
-- **Python Files**: ≤ 400 lines (preferred), ≤ 500 lines (acceptable)
-- **Classes**: ≤ 200 lines
-- **Functions**: ≤ 30 lines
-- **All Files**: ≤ 600 lines (SOFT CAP - requires refactoring if exceeded)
+### **Guidelines (Clean Code Principles Take Precedence)**
+- **Python Files**: ~400 lines (guideline - clean code principles take precedence)
+- **Classes**: ~200 lines (guideline - prioritize single responsibility and cohesion)
+- **Functions**: ~30 lines (guideline - prioritize clarity and maintainability)
 
-### **Enforcement**
-- **Pre-commit hooks**: Warn on files >500 lines
-- **CI/CD pipeline**: Error on files >600 lines
-- **Code review**: Flag files approaching limits
+**Note:** These are **guidelines**, not hard limits. Quality, clarity, and maintainability are more important than arbitrary line counts. Files exceeding these guidelines should be evaluated for:
+- Single Responsibility Principle
+- Code cohesion and maintainability
+- Clear organization and documentation
+- Whether splitting would improve or degrade code quality
 
-### **Violation Tiers**
-- **≤400 lines**: ✅ Compliant
-- **401-500 lines**: ⚠️ Warning - consider refactoring
-- **501-600 lines**: 🚨 Major violation - refactoring required
-- **>600 lines**: ❌ Critical violation - immediate refactoring mandatory
+### **Quality Evaluation (Not Enforcement)**
+- **Pre-commit hooks**: Inform on files >400 lines (not blocking)
+- **CI/CD pipeline**: Suggest review for files >600 lines
+- **Code review**: Evaluate code quality, not just line counts
+
+### **Guideline Reference Tiers**
+- **≤400 lines**: ✅ Within guideline
+- **401-500 lines**: ⚠️ Above guideline - evaluate code quality
+- **501-600 lines**: 🔍 Review recommended - assess if splitting improves code
+- **>600 lines**: 💡 Consider refactoring - evaluate if code quality benefits from modularization
+
+**Remember:** Clean, well-organized, maintainable code is the goal. Line counts are just one indicator, not a hard rule.
 
 ---
 

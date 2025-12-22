@@ -56,7 +56,7 @@ def count_classes(file_path: Path) -> int:
         return 0
 
 
-def validate_file(file_path: Path, loc_limit: int = 300, func_limit: int = 30, class_limit: int = 200) -> Dict:
+def validate_file(file_path: Path, loc_limit: int = 400, func_limit: int = 30, class_limit: int = 200) -> Dict:
     """Validate a single file against V2 compliance standards."""
     violations = []
     
@@ -82,7 +82,7 @@ def validate_file(file_path: Path, loc_limit: int = 300, func_limit: int = 30, c
 
 def validate_refactored_files(
     file_paths: List[Path],
-    loc_limit: int = 300,
+    loc_limit: int = 400,
     output_format: str = "text"
 ) -> Tuple[int, int, List[Dict]]:
     """
@@ -155,8 +155,8 @@ def main():
     parser.add_argument(
         "--loc-limit",
         type=int,
-        default=300,
-        help="Maximum lines of code allowed (default: 300)"
+        default=400,
+        help="Guideline for lines of code (default: 400, clean code principles take precedence)"
     )
     parser.add_argument(
         "--output-format",

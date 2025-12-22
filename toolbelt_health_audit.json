@@ -4,7 +4,7 @@
   "working_tools": [
     {
       "tool_name": "advisor.guide",
-      "module_path": "tools_v2.categories.intelligent_mission_advisor_adapter",
+      "module_path": "tools.categories.intelligent_mission_advisor_adapter",
       "class_name": "RealtimeGuidanceTool",
       "category": "advisor",
       "status": "working",
@@ -13,7 +13,7 @@
     },
     {
       "tool_name": "advisor.recommend",
-      "module_path": "tools_v2.categories.intelligent_mission_advisor_adapter",
+      "module_path": "tools.categories.intelligent_mission_advisor_adapter",
       "class_name": "MissionAdvisorTool",
       "category": "advisor",
       "status": "working",
@@ -22,7 +22,7 @@
     },
     {
       "tool_name": "advisor.swarm",
-      "module_path": "tools_v2.categories.intelligent_mission_advisor_adapter",
+      "module_path": "tools.categories.intelligent_mission_advisor_adapter",
       "class_name": "SwarmAnalyzerTool",
       "category": "advisor",
       "status": "working",
@@ -31,7 +31,7 @@
     },
     {
       "tool_name": "advisor.validate",
-      "module_path": "tools_v2.categories.intelligent_mission_advisor_adapter",
+      "module_path": "tools.categories.intelligent_mission_advisor_adapter",
       "class_name": "OrderValidatorTool",
       "category": "advisor",
       "status": "working",
@@ -40,7 +40,7 @@
     },
     {
       "tool_name": "agent.claim",
-      "module_path": "tools_v2.categories.agent_ops_tools",
+      "module_path": "tools.categories.agent_ops_tools",
       "class_name": "ClaimTaskTool",
       "category": "agent",
       "status": "working",
@@ -49,7 +49,7 @@
     },
     {
       "tool_name": "agent.points",
-      "module_path": "tools_v2.categories.session_tools",
+      "module_path": "tools.categories.session_tools",
       "class_name": "PointsCalculatorTool",
       "category": "agent",
       "status": "working",
@@ -58,7 +58,7 @@
     },
     {
       "tool_name": "agent.status",
-      "module_path": "tools_v2.categories.agent_ops_tools",
+      "module_path": "tools.categories.agent_ops_tools",
       "class_name": "AgentStatusTool",
       "category": "agent",
       "status": "working",
@@ -67,7 +67,7 @@
     },
     {
       "tool_name": "analysis.complexity",
-      "module_path": "tools_v2.categories.analysis_tools",
+      "module_path": "tools.categories.analysis_tools",
       "class_name": "ComplexityTool",
       "category": "analysis",
       "status": "working",
@@ -76,7 +76,7 @@
     },
     {
       "tool_name": "analysis.duplicates",
-      "module_path": "tools_v2.categories.analysis_tools",
+      "module_path": "tools.categories.analysis_tools",
       "class_name": "DuplicationTool",
       "category": "analysis",
       "status": "working",
@@ -85,7 +85,7 @@
     },
     {
       "tool_name": "analysis.scan",
-      "module_path": "tools_v2.categories.analysis_tools",
+      "module_path": "tools.categories.analysis_tools",
       "class_name": "ProjectScanTool",
       "category": "analysis",
       "status": "working",
@@ -94,7 +94,7 @@
     },
     {
       "tool_name": "bi.metrics",
-      "module_path": "tools_v2.categories.bi_tools",
+      "module_path": "tools.categories.bi_tools",
       "class_name": "QuickMetricsTool",
       "category": "bi",
       "status": "working",
@@ -103,7 +103,7 @@
     },
     {
       "tool_name": "bi.roi.optimize",
-      "module_path": "tools_v2.categories.bi_tools",
+      "module_path": "tools.categories.bi_tools",
       "class_name": "MarkovROIOptimizerTool",
       "category": "bi",
       "status": "working",
@@ -112,7 +112,7 @@
     },
     {
       "tool_name": "bi.roi.repo",
-      "module_path": "tools_v2.categories.bi_tools",
+      "module_path": "tools.categories.bi_tools",
       "class_name": "RepoROICalculatorTool",
       "category": "bi",
       "status": "working",
@@ -121,7 +121,7 @@
     },
     {
       "tool_name": "bi.roi.task",
-      "module_path": "tools_v2.categories.bi_tools",
+      "module_path": "tools.categories.bi_tools",
       "class_name": "TaskROICalculatorTool",
       "category": "bi",
       "status": "working",
@@ -130,7 +130,7 @@
     },
     {
       "tool_name": "brain.get",
-      "module_path": "tools_v2.categories.swarm_brain_tools",
+      "module_path": "tools.categories.swarm_brain_tools",
       "class_name": "GetAgentNotesTool",
       "category": "brain",
       "status": "working",
@@ -139,7 +139,7 @@
     },
     {
       "tool_name": "brain.note",
-      "module_path": "tools_v2.categories.swarm_brain_tools",
+      "module_path": "tools.categories.swarm_brain_tools",
       "class_name": "TakeNoteTool",
       "category": "brain",
       "status": "working",
@@ -148,7 +148,7 @@
     },
     {
       "tool_name": "brain.search",
-      "module_path": "tools_v2.categories.swarm_brain_tools",
+      "module_path": "tools.categories.swarm_brain_tools",
       "class_name": "SearchKnowledgeTool",
       "category": "brain",
       "status": "working",
@@ -157,7 +157,7 @@
     },
     {
       "tool_name": "brain.session",
-      "module_path": "tools_v2.categories.swarm_brain_tools",
+      "module_path": "tools.categories.swarm_brain_tools",
       "class_name": "LogSessionTool",
       "category": "brain",
       "status": "working",
@@ -166,7 +166,7 @@
     },
     {
       "tool_name": "brain.share",
-      "module_path": "tools_v2.categories.swarm_brain_tools",
+      "module_path": "tools.categories.swarm_brain_tools",
       "class_name": "ShareLearningTool",
       "category": "brain",
       "status": "working",
@@ -175,7 +175,7 @@
     },
     {
       "tool_name": "captain.assign_mission",
-      "module_path": "tools_v2.categories.captain_tools",
+      "module_path": "tools.categories.captain_tools",
       "class_name": "MissionAssignTool",
       "category": "captain",
       "status": "working",
@@ -184,7 +184,7 @@
     },
     {
       "tool_name": "captain.calc_points",
-      "module_path": "tools_v2.categories.captain_tools",
+      "module_path": "tools.categories.captain_tools",
       "class_name": "PointsCalculatorTool",
       "category": "captain",
       "status": "working",
@@ -193,7 +193,7 @@
     },
     {
       "tool_name": "captain.cycle_report",
-      "module_path": "tools_v2.categories.captain_tools",
+      "module_path": "tools.categories.captain_tools",
       "class_name": "CycleReportTool",
       "category": "captain",
       "status": "working",
@@ -202,7 +202,7 @@
     },
     {
       "tool_name": "captain.deliver_gas",
-      "module_path": "tools_v2.categories.captain_tools",
+      "module_path": "tools.categories.captain_tools",
       "class_name": "GasDeliveryTool",
       "category": "captain",
       "status": "working",
@@ -211,7 +211,7 @@
     },
     {
       "tool_name": "captain.git_verify",
-      "module_path": "tools_v2.categories.captain_tools",
+      "module_path": "tools.categories.captain_tools",
       "class_name": "GitVerifyTool",
       "category": "captain",
       "status": "working",
@@ -220,7 +220,7 @@
     },
     {
       "tool_name": "captain.integrity_check",
-      "module_path": "tools_v2.categories.captain_tools",
+      "module_path": "tools.categories.captain_tools",
       "class_name": "IntegrityCheckTool",
       "category": "captain",
       "status": "working",
@@ -229,7 +229,7 @@
     },
     {
       "tool_name": "captain.markov_optimize",
-      "module_path": "tools_v2.categories.captain_tools",
+      "module_path": "tools.categories.captain_tools",
       "class_name": "MarkovOptimizerTool",
       "category": "captain",
       "status": "working",
@@ -238,7 +238,7 @@
     },
     {
       "tool_name": "captain.status_check",
-      "module_path": "tools_v2.categories.captain_tools",
+      "module_path": "tools.categories.captain_tools",
       "class_name": "StatusCheckTool",
       "category": "captain",
       "status": "working",
@@ -247,7 +247,7 @@
     },
     {
       "tool_name": "captain.update_leaderboard",
-      "module_path": "tools_v2.categories.captain_tools",
+      "module_path": "tools.categories.captain_tools",
       "class_name": "LeaderboardUpdateTool",
       "category": "captain",
       "status": "working",
@@ -256,7 +256,7 @@
     },
     {
       "tool_name": "captain.verify_work",
-      "module_path": "tools_v2.categories.captain_tools",
+      "module_path": "tools.categories.captain_tools",
       "class_name": "WorkVerifyTool",
       "category": "captain",
       "status": "working",
@@ -265,7 +265,7 @@
     },
     {
       "tool_name": "comp.check",
-      "module_path": "tools_v2.categories.compliance_tools",
+      "module_path": "tools.categories.compliance_tools",
       "class_name": "PolicyCheckTool",
       "category": "comp",
       "status": "working",
@@ -274,7 +274,7 @@
     },
     {
       "tool_name": "comp.history",
-      "module_path": "tools_v2.categories.compliance_tools",
+      "module_path": "tools.categories.compliance_tools",
       "class_name": "ComplianceHistoryTool",
       "category": "comp",
       "status": "working",
@@ -283,7 +283,7 @@
     },
     {
       "tool_name": "config.check-imports",
-      "module_path": "tools_v2.categories.config_tools",
+      "module_path": "tools.categories.config_tools",
       "class_name": "CheckConfigImportsAdapter",
       "category": "config",
       "status": "working",
@@ -292,7 +292,7 @@
     },
     {
       "tool_name": "config.list-sources",
-      "module_path": "tools_v2.categories.config_tools",
+      "module_path": "tools.categories.config_tools",
       "class_name": "ListConfigSourcesAdapter",
       "category": "config",
       "status": "working",
@@ -301,7 +301,7 @@
     },
     {
       "tool_name": "config.validate-ssot",
-      "module_path": "tools_v2.categories.config_tools",
+      "module_path": "tools.categories.config_tools",
       "class_name": "ValidateConfigSSOTAdapter",
       "category": "config",
       "status": "working",
@@ -310,7 +310,7 @@
     },
     {
       "tool_name": "coord.check-patterns",
-      "module_path": "tools_v2.categories.coordination_tools",
+      "module_path": "tools.categories.coordination_tools",
       "class_name": "CheckCoordinationPatternsAdapter",
       "category": "coord",
       "status": "working",
@@ -319,7 +319,7 @@
     },
     {
       "tool_name": "coord.find-expert",
-      "module_path": "tools_v2.categories.coordination_tools",
+      "module_path": "tools.categories.coordination_tools",
       "class_name": "FindDomainExpertAdapter",
       "category": "coord",
       "status": "working",
@@ -328,7 +328,7 @@
     },
     {
       "tool_name": "coord.request-review",
-      "module_path": "tools_v2.categories.coordination_tools",
+      "module_path": "tools.categories.coordination_tools",
       "class_name": "RequestExpertReviewAdapter",
       "category": "coord",
       "status": "working",
@@ -337,7 +337,7 @@
     },
     {
       "tool_name": "discord.health",
-      "module_path": "tools_v2.categories.discord_tools",
+      "module_path": "tools.categories.discord_tools",
       "class_name": "DiscordBotHealthTool",
       "category": "discord",
       "status": "working",
@@ -346,7 +346,7 @@
     },
     {
       "tool_name": "discord.start",
-      "module_path": "tools_v2.categories.discord_tools",
+      "module_path": "tools.categories.discord_tools",
       "class_name": "DiscordBotStartTool",
       "category": "discord",
       "status": "working",
@@ -355,7 +355,7 @@
     },
     {
       "tool_name": "discord.test",
-      "module_path": "tools_v2.categories.discord_tools",
+      "module_path": "tools.categories.discord_tools",
       "class_name": "DiscordTestMessageTool",
       "category": "discord",
       "status": "working",
@@ -364,7 +364,7 @@
     },
     {
       "tool_name": "docs.export",
-      "module_path": "tools_v2.categories.docs_tools",
+      "module_path": "tools.categories.docs_tools",
       "class_name": "DocsExportTool",
       "category": "docs",
       "status": "working",
@@ -373,7 +373,7 @@
     },
     {
       "tool_name": "docs.search",
-      "module_path": "tools_v2.categories.docs_tools",
+      "module_path": "tools.categories.docs_tools",
       "class_name": "DocsSearchTool",
       "category": "docs",
       "status": "working",
@@ -382,7 +382,7 @@
     },
     {
       "tool_name": "health.ping",
-      "module_path": "tools_v2.categories.health_tools",
+      "module_path": "tools.categories.health_tools",
       "class_name": "HealthPingTool",
       "category": "health",
       "status": "working",
@@ -391,7 +391,7 @@
     },
     {
       "tool_name": "health.snapshot",
-      "module_path": "tools_v2.categories.health_tools",
+      "module_path": "tools.categories.health_tools",
       "class_name": "SnapshotTool",
       "category": "health",
       "status": "working",
@@ -400,7 +400,7 @@
     },
     {
       "tool_name": "infra.extract_planner",
-      "module_path": "tools_v2.categories.infrastructure_tools",
+      "module_path": "tools.categories.infrastructure_tools",
       "class_name": "ModuleExtractorPlannerTool",
       "category": "infra",
       "status": "working",
@@ -409,7 +409,7 @@
     },
     {
       "tool_name": "infra.file_lines",
-      "module_path": "tools_v2.categories.infrastructure_tools",
+      "module_path": "tools.categories.infrastructure_tools",
       "class_name": "FileLineCounterTool",
       "category": "infra",
       "status": "working",
@@ -418,7 +418,7 @@
     },
     {
       "tool_name": "infra.orchestrator_scan",
-      "module_path": "tools_v2.categories.infrastructure_tools",
+      "module_path": "tools.categories.infrastructure_tools",
       "class_name": "OrchestratorScanTool",
       "category": "infra",
       "status": "working",
@@ -427,7 +427,7 @@
     },
     {
       "tool_name": "infra.roi_calc",
-      "module_path": "tools_v2.categories.infrastructure_tools",
+      "module_path": "tools.categories.infrastructure_tools",
       "class_name": "ROICalculatorTool",
       "category": "infra",
       "status": "working",
@@ -436,7 +436,7 @@
     },
     {
       "tool_name": "integration.check-imports",
-      "module_path": "tools_v2.categories.integration_tools",
+      "module_path": "tools.categories.integration_tools",
       "class_name": "CheckImportDependenciesAdapter",
       "category": "integration",
       "status": "working",
@@ -445,7 +445,7 @@
     },
     {
       "tool_name": "integration.find-duplicates",
-      "module_path": "tools_v2.categories.integration_tools",
+      "module_path": "tools.categories.integration_tools",
       "class_name": "FindDuplicateFunctionalityAdapter",
       "category": "integration",
       "status": "working",
@@ -454,7 +454,7 @@
     },
     {
       "tool_name": "integration.find-opportunities",
-      "module_path": "tools_v2.categories.integration_tools",
+      "module_path": "tools.categories.integration_tools",
       "class_name": "FindIntegrationOpportunitiesAdapter",
       "category": "integration",
       "status": "working",
@@ -463,7 +463,7 @@
     },
     {
       "tool_name": "integration.find-ssot-violations",
-      "module_path": "tools_v2.categories.integration_tools",
+      "module_path": "tools.categories.integration_tools",
       "class_name": "FindSSOTViolationsAdapter",
       "category": "integration",
       "status": "working",
@@ -472,7 +472,7 @@
     },
     {
       "tool_name": "mem.handles",
-      "module_path": "tools_v2.categories.memory_safety_adapters",
+      "module_path": "tools.categories.memory_safety_adapters",
       "class_name": "FileHandleCheckTool",
       "category": "mem",
       "status": "working",
@@ -481,7 +481,7 @@
     },
     {
       "tool_name": "mem.imports",
-      "module_path": "tools_v2.categories.memory_safety_adapters",
+      "module_path": "tools.categories.memory_safety_adapters",
       "class_name": "ImportValidatorTool",
       "category": "mem",
       "status": "working",
@@ -490,7 +490,7 @@
     },
     {
       "tool_name": "mem.leaks",
-      "module_path": "tools_v2.categories.memory_safety_adapters",
+      "module_path": "tools.categories.memory_safety_adapters",
       "class_name": "MemoryLeakDetectorTool",
       "category": "mem",
       "status": "working",
@@ -499,7 +499,7 @@
     },
     {
       "tool_name": "mem.scan",
-      "module_path": "tools_v2.categories.memory_safety_adapters",
+      "module_path": "tools.categories.memory_safety_adapters",
       "class_name": "UnboundedScanTool",
       "category": "mem",
       "status": "working",
@@ -508,7 +508,7 @@
     },
     {
       "tool_name": "mem.verify",
-      "module_path": "tools_v2.categories.memory_safety_adapters",
+      "module_path": "tools.categories.memory_safety_adapters",
       "class_name": "FileVerificationTool",
       "category": "mem",
       "status": "working",
@@ -517,7 +517,7 @@
     },
     {
       "tool_name": "mission.claim",
-      "module_path": "tools_v2.categories.workflow_tools",
+      "module_path": "tools.categories.workflow_tools",
       "class_name": "MissionClaimTool",
       "category": "mission",
       "status": "working",
@@ -526,7 +526,7 @@
     },
     {
       "tool_name": "msg.broadcast",
-      "module_path": "tools_v2.categories.messaging_tools",
+      "module_path": "tools.categories.messaging_tools",
       "class_name": "BroadcastTool",
       "category": "msg",
       "status": "working",
@@ -535,7 +535,7 @@
     },
     {
       "tool_name": "msg.cleanup",
-      "module_path": "tools_v2.categories.workflow_tools",
+      "module_path": "tools.categories.workflow_tools",
       "class_name": "InboxCleanupTool",
       "category": "msg",
       "status": "working",
@@ -544,7 +544,7 @@
     },
     {
       "tool_name": "msg.inbox",
-      "module_path": "tools_v2.categories.messaging_tools",
+      "module_path": "tools.categories.messaging_tools",
       "class_name": "InboxCheckTool",
       "category": "msg",
       "status": "working",
@@ -553,7 +553,7 @@
     },
     {
       "tool_name": "msg.send",
-      "module_path": "tools_v2.categories.messaging_tools",
+      "module_path": "tools.categories.messaging_tools",
       "class_name": "SendMessageTool",
       "category": "msg",
       "status": "working",
@@ -562,7 +562,7 @@
     },
     {
       "tool_name": "msgtask.fingerprint",
-      "module_path": "tools_v2.categories.message_task_tools",
+      "module_path": "tools.categories.message_task_tools",
       "class_name": "TaskFingerprintTool",
       "category": "msgtask",
       "status": "working",
@@ -571,7 +571,7 @@
     },
     {
       "tool_name": "msgtask.ingest",
-      "module_path": "tools_v2.categories.message_task_tools",
+      "module_path": "tools.categories.message_task_tools",
       "class_name": "MessageIngestTool",
       "category": "msgtask",
       "status": "working",
@@ -580,7 +580,7 @@
     },
     {
       "tool_name": "msgtask.parse",
-      "module_path": "tools_v2.categories.message_task_tools",
+      "module_path": "tools.categories.message_task_tools",
       "class_name": "TaskParserTool",
       "category": "msgtask",
       "status": "working",
@@ -589,7 +589,7 @@
     },
     {
       "tool_name": "obs.get",
-      "module_path": "tools_v2.categories.observability_tools",
+      "module_path": "tools.categories.observability_tools",
       "class_name": "MetricsTool",
       "category": "obs",
       "status": "working",
@@ -598,7 +598,7 @@
     },
     {
       "tool_name": "obs.health",
-      "module_path": "tools_v2.categories.observability_tools",
+      "module_path": "tools.categories.observability_tools",
       "class_name": "SystemHealthTool",
       "category": "obs",
       "status": "working",
@@ -607,7 +607,7 @@
     },
     {
       "tool_name": "obs.metrics",
-      "module_path": "tools_v2.categories.observability_tools",
+      "module_path": "tools.categories.observability_tools",
       "class_name": "MetricsSnapshotTool",
       "category": "obs",
       "status": "working",
@@ -616,7 +616,7 @@
     },
     {
       "tool_name": "obs.slo",
-      "module_path": "tools_v2.categories.observability_tools",
+      "module_path": "tools.categories.observability_tools",
       "class_name": "SLOCheckTool",
       "category": "obs",
       "status": "working",
@@ -625,7 +625,7 @@
     },
     {
       "tool_name": "onboard.hard",
-      "module_path": "tools_v2.categories.onboarding_tools",
+      "module_path": "tools.categories.onboarding_tools",
       "class_name": "HardOnboardTool",
       "category": "onboard",
       "status": "working",
@@ -634,7 +634,7 @@
     },
     {
       "tool_name": "onboard.soft",
-      "module_path": "tools_v2.categories.onboarding_tools",
+      "module_path": "tools.categories.onboarding_tools",
       "class_name": "SoftOnboardTool",
       "category": "onboard",
       "status": "working",
@@ -643,7 +643,7 @@
     },
     {
       "tool_name": "oss.clone",
-      "module_path": "tools_v2.categories.oss_tools",
+      "module_path": "tools.categories.oss_tools",
       "class_name": "OSSCloneTool",
       "category": "oss",
       "status": "working",
@@ -652,7 +652,7 @@
     },
     {
       "tool_name": "oss.import",
-      "module_path": "tools_v2.categories.oss_tools",
+      "module_path": "tools.categories.oss_tools",
       "class_name": "OSSImportIssuesTool",
       "category": "oss",
       "status": "working",
@@ -661,7 +661,7 @@
     },
     {
       "tool_name": "oss.issues",
-      "module_path": "tools_v2.categories.oss_tools",
+      "module_path": "tools.categories.oss_tools",
       "class_name": "OSSFetchIssuesTool",
       "category": "oss",
       "status": "working",
@@ -670,7 +670,7 @@
     },
     {
       "tool_name": "oss.portfolio",
-      "module_path": "tools_v2.categories.oss_tools",
+      "module_path": "tools.categories.oss_tools",
       "class_name": "OSSPortfolioTool",
       "category": "oss",
       "status": "working",
@@ -679,7 +679,7 @@
     },
     {
       "tool_name": "oss.status",
-      "module_path": "tools_v2.categories.oss_tools",
+      "module_path": "tools.categories.oss_tools",
       "class_name": "OSSStatusTool",
       "category": "oss",
       "status": "working",
@@ -688,7 +688,7 @@
     },
     {
       "tool_name": "session.cleanup",
-      "module_path": "tools_v2.categories.session_tools",
+      "module_path": "tools.categories.session_tools",
       "class_name": "SessionCleanupTool",
       "category": "session",
       "status": "working",
@@ -697,7 +697,7 @@
     },
     {
       "tool_name": "session.passdown",
-      "module_path": "tools_v2.categories.session_tools",
+      "module_path": "tools.categories.session_tools",
       "class_name": "PassdownTool",
       "category": "session",
       "status": "working",
@@ -706,7 +706,7 @@
     },
     {
       "tool_name": "swarm.pulse",
-      "module_path": "tools_v2.categories.swarm_consciousness",
+      "module_path": "tools.categories.swarm_consciousness",
       "class_name": "SwarmPulseTool",
       "category": "swarm",
       "status": "working",
@@ -715,7 +715,7 @@
     },
     {
       "tool_name": "test.coverage",
-      "module_path": "tools_v2.categories.testing_tools",
+      "module_path": "tools.categories.testing_tools",
       "class_name": "CoverageReportTool",
       "category": "test",
       "status": "working",
@@ -724,7 +724,7 @@
     },
     {
       "tool_name": "test.mutation",
-      "module_path": "tools_v2.categories.testing_tools",
+      "module_path": "tools.categories.testing_tools",
       "class_name": "MutationGateTool",
       "category": "test",
       "status": "working",
@@ -733,7 +733,7 @@
     },
     {
       "tool_name": "v2.check",
-      "module_path": "tools_v2.categories.v2_tools",
+      "module_path": "tools.categories.v2_tools",
       "class_name": "V2CheckTool",
       "category": "v2",
       "status": "working",
@@ -742,7 +742,7 @@
     },
     {
       "tool_name": "v2.report",
-      "module_path": "tools_v2.categories.v2_tools",
+      "module_path": "tools.categories.v2_tools",
       "class_name": "V2ReportTool",
       "category": "v2",
       "status": "working",
@@ -751,7 +751,7 @@
     },
     {
       "tool_name": "val.flags",
-      "module_path": "tools_v2.categories.validation_tools",
+      "module_path": "tools.categories.validation_tools",
       "class_name": "FeatureFlagTool",
       "category": "val",
       "status": "working",
@@ -760,7 +760,7 @@
     },
     {
       "tool_name": "val.report",
-      "module_path": "tools_v2.categories.validation_tools",
+      "module_path": "tools.categories.validation_tools",
       "class_name": "ValidationReportTool",
       "category": "val",
       "status": "working",
@@ -769,7 +769,7 @@
     },
     {
       "tool_name": "val.rollback",
-      "module_path": "tools_v2.categories.validation_tools",
+      "module_path": "tools.categories.validation_tools",
       "class_name": "RollbackTool",
       "category": "val",
       "status": "working",
@@ -778,7 +778,7 @@
     },
     {
       "tool_name": "val.smoke",
-      "module_path": "tools_v2.categories.validation_tools",
+      "module_path": "tools.categories.validation_tools",
       "class_name": "SmokeTestTool",
       "category": "val",
       "status": "working",
@@ -787,7 +787,7 @@
     },
     {
       "tool_name": "vector.context",
-      "module_path": "tools_v2.categories.vector_tools",
+      "module_path": "tools.categories.vector_tools",
       "class_name": "TaskContextTool",
       "category": "vector",
       "status": "working",
@@ -796,7 +796,7 @@
     },
     {
       "tool_name": "vector.index",
-      "module_path": "tools_v2.categories.vector_tools",
+      "module_path": "tools.categories.vector_tools",
       "class_name": "IndexWorkTool",
       "category": "vector",
       "status": "working",
@@ -805,7 +805,7 @@
     },
     {
       "tool_name": "vector.search",
-      "module_path": "tools_v2.categories.vector_tools",
+      "module_path": "tools.categories.vector_tools",
       "class_name": "VectorSearchTool",
       "category": "vector",
       "status": "working",
@@ -814,7 +814,7 @@
     },
     {
       "tool_name": "workflow.roi",
-      "module_path": "tools_v2.categories.workflow_tools",
+      "module_path": "tools.categories.workflow_tools",
       "class_name": "ROICalculatorTool",
       "category": "workflow",
       "status": "working",
@@ -831,7 +831,7 @@
       "tools": [
         {
           "tool_name": "advisor.guide",
-          "module_path": "tools_v2.categories.intelligent_mission_advisor_adapter",
+          "module_path": "tools.categories.intelligent_mission_advisor_adapter",
           "class_name": "RealtimeGuidanceTool",
           "category": "advisor",
           "status": "working",
@@ -840,7 +840,7 @@
         },
         {
           "tool_name": "advisor.recommend",
-          "module_path": "tools_v2.categories.intelligent_mission_advisor_adapter",
+          "module_path": "tools.categories.intelligent_mission_advisor_adapter",
           "class_name": "MissionAdvisorTool",
           "category": "advisor",
           "status": "working",
@@ -849,7 +849,7 @@
         },
         {
           "tool_name": "advisor.swarm",
-          "module_path": "tools_v2.categories.intelligent_mission_advisor_adapter",
+          "module_path": "tools.categories.intelligent_mission_advisor_adapter",
           "class_name": "SwarmAnalyzerTool",
           "category": "advisor",
           "status": "working",
@@ -858,7 +858,7 @@
         },
         {
           "tool_name": "advisor.validate",
-          "module_path": "tools_v2.categories.intelligent_mission_advisor_adapter",
+          "module_path": "tools.categories.intelligent_mission_advisor_adapter",
           "class_name": "OrderValidatorTool",
           "category": "advisor",
           "status": "working",
@@ -874,7 +874,7 @@
       "tools": [
         {
           "tool_name": "agent.claim",
-          "module_path": "tools_v2.categories.agent_ops_tools",
+          "module_path": "tools.categories.agent_ops_tools",
           "class_name": "ClaimTaskTool",
           "category": "agent",
           "status": "working",
@@ -883,7 +883,7 @@
         },
         {
           "tool_name": "agent.points",
-          "module_path": "tools_v2.categories.session_tools",
+          "module_path": "tools.categories.session_tools",
           "class_name": "PointsCalculatorTool",
           "category": "agent",
           "status": "working",
@@ -892,7 +892,7 @@
         },
         {
           "tool_name": "agent.status",
-          "module_path": "tools_v2.categories.agent_ops_tools",
+          "module_path": "tools.categories.agent_ops_tools",
           "class_name": "AgentStatusTool",
           "category": "agent",
           "status": "working",
@@ -908,7 +908,7 @@
       "tools": [
         {
           "tool_name": "analysis.complexity",
-          "module_path": "tools_v2.categories.analysis_tools",
+          "module_path": "tools.categories.analysis_tools",
           "class_name": "ComplexityTool",
           "category": "analysis",
           "status": "working",
@@ -917,7 +917,7 @@
         },
         {
           "tool_name": "analysis.duplicates",
-          "module_path": "tools_v2.categories.analysis_tools",
+          "module_path": "tools.categories.analysis_tools",
           "class_name": "DuplicationTool",
           "category": "analysis",
           "status": "working",
@@ -926,7 +926,7 @@
         },
         {
           "tool_name": "analysis.scan",
-          "module_path": "tools_v2.categories.analysis_tools",
+          "module_path": "tools.categories.analysis_tools",
           "class_name": "ProjectScanTool",
           "category": "analysis",
           "status": "working",
@@ -942,7 +942,7 @@
       "tools": [
         {
           "tool_name": "bi.metrics",
-          "module_path": "tools_v2.categories.bi_tools",
+          "module_path": "tools.categories.bi_tools",
           "class_name": "QuickMetricsTool",
           "category": "bi",
           "status": "working",
@@ -951,7 +951,7 @@
         },
         {
           "tool_name": "bi.roi.optimize",
-          "module_path": "tools_v2.categories.bi_tools",
+          "module_path": "tools.categories.bi_tools",
           "class_name": "MarkovROIOptimizerTool",
           "category": "bi",
           "status": "working",
@@ -960,7 +960,7 @@
         },
         {
           "tool_name": "bi.roi.repo",
-          "module_path": "tools_v2.categories.bi_tools",
+          "module_path": "tools.categories.bi_tools",
           "class_name": "RepoROICalculatorTool",
           "category": "bi",
           "status": "working",
@@ -969,7 +969,7 @@
         },
         {
           "tool_name": "bi.roi.task",
-          "module_path": "tools_v2.categories.bi_tools",
+          "module_path": "tools.categories.bi_tools",
           "class_name": "TaskROICalculatorTool",
           "category": "bi",
           "status": "working",
@@ -985,7 +985,7 @@
       "tools": [
         {
           "tool_name": "brain.get",
-          "module_path": "tools_v2.categories.swarm_brain_tools",
+          "module_path": "tools.categories.swarm_brain_tools",
           "class_name": "GetAgentNotesTool",
           "category": "brain",
           "status": "working",
@@ -994,7 +994,7 @@
         },
         {
           "tool_name": "brain.note",
-          "module_path": "tools_v2.categories.swarm_brain_tools",
+          "module_path": "tools.categories.swarm_brain_tools",
           "class_name": "TakeNoteTool",
           "category": "brain",
           "status": "working",
@@ -1003,7 +1003,7 @@
         },
         {
           "tool_name": "brain.search",
-          "module_path": "tools_v2.categories.swarm_brain_tools",
+          "module_path": "tools.categories.swarm_brain_tools",
           "class_name": "SearchKnowledgeTool",
           "category": "brain",
           "status": "working",
@@ -1012,7 +1012,7 @@
         },
         {
           "tool_name": "brain.session",
-          "module_path": "tools_v2.categories.swarm_brain_tools",
+          "module_path": "tools.categories.swarm_brain_tools",
           "class_name": "LogSessionTool",
           "category": "brain",
           "status": "working",
@@ -1021,7 +1021,7 @@
         },
         {
           "tool_name": "brain.share",
-          "module_path": "tools_v2.categories.swarm_brain_tools",
+          "module_path": "tools.categories.swarm_brain_tools",
           "class_name": "ShareLearningTool",
           "category": "brain",
           "status": "working",
@@ -1037,7 +1037,7 @@
       "tools": [
         {
           "tool_name": "captain.assign_mission",
-          "module_path": "tools_v2.categories.captain_tools",
+          "module_path": "tools.categories.captain_tools",
           "class_name": "MissionAssignTool",
           "category": "captain",
           "status": "working",
@@ -1046,7 +1046,7 @@
         },
         {
           "tool_name": "captain.calc_points",
-          "module_path": "tools_v2.categories.captain_tools",
+          "module_path": "tools.categories.captain_tools",
           "class_name": "PointsCalculatorTool",
           "category": "captain",
           "status": "working",
@@ -1055,7 +1055,7 @@
         },
         {
           "tool_name": "captain.cycle_report",
-          "module_path": "tools_v2.categories.captain_tools",
+          "module_path": "tools.categories.captain_tools",
           "class_name": "CycleReportTool",
           "category": "captain",
           "status": "working",
@@ -1064,7 +1064,7 @@
         },
         {
           "tool_name": "captain.deliver_gas",
-          "module_path": "tools_v2.categories.captain_tools",
+          "module_path": "tools.categories.captain_tools",
           "class_name": "GasDeliveryTool",
           "category": "captain",
           "status": "working",
@@ -1073,7 +1073,7 @@
         },
         {
           "tool_name": "captain.git_verify",
-          "module_path": "tools_v2.categories.captain_tools",
+          "module_path": "tools.categories.captain_tools",
           "class_name": "GitVerifyTool",
           "category": "captain",
           "status": "working",
@@ -1082,7 +1082,7 @@
         },
         {
           "tool_name": "captain.integrity_check",
-          "module_path": "tools_v2.categories.captain_tools",
+          "module_path": "tools.categories.captain_tools",
           "class_name": "IntegrityCheckTool",
           "category": "captain",
           "status": "working",
@@ -1091,7 +1091,7 @@
         },
         {
           "tool_name": "captain.markov_optimize",
-          "module_path": "tools_v2.categories.captain_tools",
+          "module_path": "tools.categories.captain_tools",
           "class_name": "MarkovOptimizerTool",
           "category": "captain",
           "status": "working",
@@ -1100,7 +1100,7 @@
         },
         {
           "tool_name": "captain.status_check",
-          "module_path": "tools_v2.categories.captain_tools",
+          "module_path": "tools.categories.captain_tools",
           "class_name": "StatusCheckTool",
           "category": "captain",
           "status": "working",
@@ -1109,7 +1109,7 @@
         },
         {
           "tool_name": "captain.update_leaderboard",
-          "module_path": "tools_v2.categories.captain_tools",
+          "module_path": "tools.categories.captain_tools",
           "class_name": "LeaderboardUpdateTool",
           "category": "captain",
           "status": "working",
@@ -1118,7 +1118,7 @@
         },
         {
           "tool_name": "captain.verify_work",
-          "module_path": "tools_v2.categories.captain_tools",
+          "module_path": "tools.categories.captain_tools",
           "class_name": "WorkVerifyTool",
           "category": "captain",
           "status": "working",
@@ -1134,7 +1134,7 @@
       "tools": [
         {
           "tool_name": "comp.check",
-          "module_path": "tools_v2.categories.compliance_tools",
+          "module_path": "tools.categories.compliance_tools",
           "class_name": "PolicyCheckTool",
           "category": "comp",
           "status": "working",
@@ -1143,7 +1143,7 @@
         },
         {
           "tool_name": "comp.history",
-          "module_path": "tools_v2.categories.compliance_tools",
+          "module_path": "tools.categories.compliance_tools",
           "class_name": "ComplianceHistoryTool",
           "category": "comp",
           "status": "working",
@@ -1159,7 +1159,7 @@
       "tools": [
         {
           "tool_name": "config.check-imports",
-          "module_path": "tools_v2.categories.config_tools",
+          "module_path": "tools.categories.config_tools",
           "class_name": "CheckConfigImportsAdapter",
           "category": "config",
           "status": "working",
@@ -1168,7 +1168,7 @@
         },
         {
           "tool_name": "config.list-sources",
-          "module_path": "tools_v2.categories.config_tools",
+          "module_path": "tools.categories.config_tools",
           "class_name": "ListConfigSourcesAdapter",
           "category": "config",
           "status": "working",
@@ -1177,7 +1177,7 @@
         },
         {
           "tool_name": "config.validate-ssot",
-          "module_path": "tools_v2.categories.config_tools",
+          "module_path": "tools.categories.config_tools",
           "class_name": "ValidateConfigSSOTAdapter",
           "category": "config",
           "status": "working",
@@ -1193,7 +1193,7 @@
       "tools": [
         {
           "tool_name": "coord.check-patterns",
-          "module_path": "tools_v2.categories.coordination_tools",
+          "module_path": "tools.categories.coordination_tools",
           "class_name": "CheckCoordinationPatternsAdapter",
           "category": "coord",
           "status": "working",
@@ -1202,7 +1202,7 @@
         },
         {
           "tool_name": "coord.find-expert",
-          "module_path": "tools_v2.categories.coordination_tools",
+          "module_path": "tools.categories.coordination_tools",
           "class_name": "FindDomainExpertAdapter",
           "category": "coord",
           "status": "working",
@@ -1211,7 +1211,7 @@
         },
         {
           "tool_name": "coord.request-review",
-          "module_path": "tools_v2.categories.coordination_tools",
+          "module_path": "tools.categories.coordination_tools",
           "class_name": "RequestExpertReviewAdapter",
           "category": "coord",
           "status": "working",
@@ -1227,7 +1227,7 @@
       "tools": [
         {
           "tool_name": "discord.health",
-          "module_path": "tools_v2.categories.discord_tools",
+          "module_path": "tools.categories.discord_tools",
           "class_name": "DiscordBotHealthTool",
           "category": "discord",
           "status": "working",
@@ -1236,7 +1236,7 @@
         },
         {
           "tool_name": "discord.start",
-          "module_path": "tools_v2.categories.discord_tools",
+          "module_path": "tools.categories.discord_tools",
           "class_name": "DiscordBotStartTool",
           "category": "discord",
           "status": "working",
@@ -1245,7 +1245,7 @@
         },
         {
           "tool_name": "discord.test",
-          "module_path": "tools_v2.categories.discord_tools",
+          "module_path": "tools.categories.discord_tools",
           "class_name": "DiscordTestMessageTool",
           "category": "discord",
           "status": "working",
@@ -1261,7 +1261,7 @@
       "tools": [
         {
           "tool_name": "docs.export",
-          "module_path": "tools_v2.categories.docs_tools",
+          "module_path": "tools.categories.docs_tools",
           "class_name": "DocsExportTool",
           "category": "docs",
           "status": "working",
@@ -1270,7 +1270,7 @@
         },
         {
           "tool_name": "docs.search",
-          "module_path": "tools_v2.categories.docs_tools",
+          "module_path": "tools.categories.docs_tools",
           "class_name": "DocsSearchTool",
           "category": "docs",
           "status": "working",
@@ -1286,7 +1286,7 @@
       "tools": [
         {
           "tool_name": "health.ping",
-          "module_path": "tools_v2.categories.health_tools",
+          "module_path": "tools.categories.health_tools",
           "class_name": "HealthPingTool",
           "category": "health",
           "status": "working",
@@ -1295,7 +1295,7 @@
         },
         {
           "tool_name": "health.snapshot",
-          "module_path": "tools_v2.categories.health_tools",
+          "module_path": "tools.categories.health_tools",
           "class_name": "SnapshotTool",
           "category": "health",
           "status": "working",
@@ -1311,7 +1311,7 @@
       "tools": [
         {
           "tool_name": "infra.extract_planner",
-          "module_path": "tools_v2.categories.infrastructure_tools",
+          "module_path": "tools.categories.infrastructure_tools",
           "class_name": "ModuleExtractorPlannerTool",
           "category": "infra",
           "status": "working",
@@ -1320,7 +1320,7 @@
         },
         {
           "tool_name": "infra.file_lines",
-          "module_path": "tools_v2.categories.infrastructure_tools",
+          "module_path": "tools.categories.infrastructure_tools",
           "class_name": "FileLineCounterTool",
           "category": "infra",
           "status": "working",
@@ -1329,7 +1329,7 @@
         },
         {
           "tool_name": "infra.orchestrator_scan",
-          "module_path": "tools_v2.categories.infrastructure_tools",
+          "module_path": "tools.categories.infrastructure_tools",
           "class_name": "OrchestratorScanTool",
           "category": "infra",
           "status": "working",
@@ -1338,7 +1338,7 @@
         },
         {
           "tool_name": "infra.roi_calc",
-          "module_path": "tools_v2.categories.infrastructure_tools",
+          "module_path": "tools.categories.infrastructure_tools",
           "class_name": "ROICalculatorTool",
           "category": "infra",
           "status": "working",
@@ -1354,7 +1354,7 @@
       "tools": [
         {
           "tool_name": "integration.check-imports",
-          "module_path": "tools_v2.categories.integration_tools",
+          "module_path": "tools.categories.integration_tools",
           "class_name": "CheckImportDependenciesAdapter",
           "category": "integration",
           "status": "working",
@@ -1363,7 +1363,7 @@
         },
         {
           "tool_name": "integration.find-duplicates",
-          "module_path": "tools_v2.categories.integration_tools",
+          "module_path": "tools.categories.integration_tools",
           "class_name": "FindDuplicateFunctionalityAdapter",
           "category": "integration",
           "status": "working",
@@ -1372,7 +1372,7 @@
         },
         {
           "tool_name": "integration.find-opportunities",
-          "module_path": "tools_v2.categories.integration_tools",
+          "module_path": "tools.categories.integration_tools",
           "class_name": "FindIntegrationOpportunitiesAdapter",
           "category": "integration",
           "status": "working",
@@ -1381,7 +1381,7 @@
         },
         {
           "tool_name": "integration.find-ssot-violations",
-          "module_path": "tools_v2.categories.integration_tools",
+          "module_path": "tools.categories.integration_tools",
           "class_name": "FindSSOTViolationsAdapter",
           "category": "integration",
           "status": "working",
@@ -1397,7 +1397,7 @@
       "tools": [
         {
           "tool_name": "mem.handles",
-          "module_path": "tools_v2.categories.memory_safety_adapters",
+          "module_path": "tools.categories.memory_safety_adapters",
           "class_name": "FileHandleCheckTool",
           "category": "mem",
           "status": "working",
@@ -1406,7 +1406,7 @@
         },
         {
           "tool_name": "mem.imports",
-          "module_path": "tools_v2.categories.memory_safety_adapters",
+          "module_path": "tools.categories.memory_safety_adapters",
           "class_name": "ImportValidatorTool",
           "category": "mem",
           "status": "working",
@@ -1415,7 +1415,7 @@
         },
         {
           "tool_name": "mem.leaks",
-          "module_path": "tools_v2.categories.memory_safety_adapters",
+          "module_path": "tools.categories.memory_safety_adapters",
           "class_name": "MemoryLeakDetectorTool",
           "category": "mem",
           "status": "working",
@@ -1424,7 +1424,7 @@
         },
         {
           "tool_name": "mem.scan",
-          "module_path": "tools_v2.categories.memory_safety_adapters",
+          "module_path": "tools.categories.memory_safety_adapters",
           "class_name": "UnboundedScanTool",
           "category": "mem",
           "status": "working",
@@ -1433,7 +1433,7 @@
         },
         {
           "tool_name": "mem.verify",
-          "module_path": "tools_v2.categories.memory_safety_adapters",
+          "module_path": "tools.categories.memory_safety_adapters",
           "class_name": "FileVerificationTool",
           "category": "mem",
           "status": "working",
@@ -1449,7 +1449,7 @@
       "tools": [
         {
           "tool_name": "mission.claim",
-          "module_path": "tools_v2.categories.workflow_tools",
+          "module_path": "tools.categories.workflow_tools",
           "class_name": "MissionClaimTool",
           "category": "mission",
           "status": "working",
@@ -1465,7 +1465,7 @@
       "tools": [
         {
           "tool_name": "msg.broadcast",
-          "module_path": "tools_v2.categories.messaging_tools",
+          "module_path": "tools.categories.messaging_tools",
           "class_name": "BroadcastTool",
           "category": "msg",
           "status": "working",
@@ -1474,7 +1474,7 @@
         },
         {
           "tool_name": "msg.cleanup",
-          "module_path": "tools_v2.categories.workflow_tools",
+          "module_path": "tools.categories.workflow_tools",
           "class_name": "InboxCleanupTool",
           "category": "msg",
           "status": "working",
@@ -1483,7 +1483,7 @@
         },
         {
           "tool_name": "msg.inbox",
-          "module_path": "tools_v2.categories.messaging_tools",
+          "module_path": "tools.categories.messaging_tools",
           "class_name": "InboxCheckTool",
           "category": "msg",
           "status": "working",
@@ -1492,7 +1492,7 @@
         },
         {
           "tool_name": "msg.send",
-          "module_path": "tools_v2.categories.messaging_tools",
+          "module_path": "tools.categories.messaging_tools",
           "class_name": "SendMessageTool",
           "category": "msg",
           "status": "working",
@@ -1508,7 +1508,7 @@
       "tools": [
         {
           "tool_name": "msgtask.fingerprint",
-          "module_path": "tools_v2.categories.message_task_tools",
+          "module_path": "tools.categories.message_task_tools",
           "class_name": "TaskFingerprintTool",
           "category": "msgtask",
           "status": "working",
@@ -1517,7 +1517,7 @@
         },
         {
           "tool_name": "msgtask.ingest",
-          "module_path": "tools_v2.categories.message_task_tools",
+          "module_path": "tools.categories.message_task_tools",
           "class_name": "MessageIngestTool",
           "category": "msgtask",
           "status": "working",
@@ -1526,7 +1526,7 @@
         },
         {
           "tool_name": "msgtask.parse",
-          "module_path": "tools_v2.categories.message_task_tools",
+          "module_path": "tools.categories.message_task_tools",
           "class_name": "TaskParserTool",
           "category": "msgtask",
           "status": "working",
@@ -1542,7 +1542,7 @@
       "tools": [
         {
           "tool_name": "obs.get",
-          "module_path": "tools_v2.categories.observability_tools",
+          "module_path": "tools.categories.observability_tools",
           "class_name": "MetricsTool",
           "category": "obs",
           "status": "working",
@@ -1551,7 +1551,7 @@
         },
         {
           "tool_name": "obs.health",
-          "module_path": "tools_v2.categories.observability_tools",
+          "module_path": "tools.categories.observability_tools",
           "class_name": "SystemHealthTool",
           "category": "obs",
           "status": "working",
@@ -1560,7 +1560,7 @@
         },
         {
           "tool_name": "obs.metrics",
-          "module_path": "tools_v2.categories.observability_tools",
+          "module_path": "tools.categories.observability_tools",
           "class_name": "MetricsSnapshotTool",
           "category": "obs",
           "status": "working",
@@ -1569,7 +1569,7 @@
         },
         {
           "tool_name": "obs.slo",
-          "module_path": "tools_v2.categories.observability_tools",
+          "module_path": "tools.categories.observability_tools",
           "class_name": "SLOCheckTool",
           "category": "obs",
           "status": "working",
@@ -1585,7 +1585,7 @@
       "tools": [
         {
           "tool_name": "onboard.hard",
-          "module_path": "tools_v2.categories.onboarding_tools",
+          "module_path": "tools.categories.onboarding_tools",
           "class_name": "HardOnboardTool",
           "category": "onboard",
           "status": "working",
@@ -1594,7 +1594,7 @@
         },
         {
           "tool_name": "onboard.soft",
-          "module_path": "tools_v2.categories.onboarding_tools",
+          "module_path": "tools.categories.onboarding_tools",
           "class_name": "SoftOnboardTool",
           "category": "onboard",
           "status": "working",
@@ -1610,7 +1610,7 @@
       "tools": [
         {
           "tool_name": "oss.clone",
-          "module_path": "tools_v2.categories.oss_tools",
+          "module_path": "tools.categories.oss_tools",
           "class_name": "OSSCloneTool",
           "category": "oss",
           "status": "working",
@@ -1619,7 +1619,7 @@
         },
         {
           "tool_name": "oss.import",
-          "module_path": "tools_v2.categories.oss_tools",
+          "module_path": "tools.categories.oss_tools",
           "class_name": "OSSImportIssuesTool",
           "category": "oss",
           "status": "working",
@@ -1628,7 +1628,7 @@
         },
         {
           "tool_name": "oss.issues",
-          "module_path": "tools_v2.categories.oss_tools",
+          "module_path": "tools.categories.oss_tools",
           "class_name": "OSSFetchIssuesTool",
           "category": "oss",
           "status": "working",
@@ -1637,7 +1637,7 @@
         },
         {
           "tool_name": "oss.portfolio",
-          "module_path": "tools_v2.categories.oss_tools",
+          "module_path": "tools.categories.oss_tools",
           "class_name": "OSSPortfolioTool",
           "category": "oss",
           "status": "working",
@@ -1646,7 +1646,7 @@
         },
         {
           "tool_name": "oss.status",
-          "module_path": "tools_v2.categories.oss_tools",
+          "module_path": "tools.categories.oss_tools",
           "class_name": "OSSStatusTool",
           "category": "oss",
           "status": "working",
@@ -1662,7 +1662,7 @@
       "tools": [
         {
           "tool_name": "session.cleanup",
-          "module_path": "tools_v2.categories.session_tools",
+          "module_path": "tools.categories.session_tools",
           "class_name": "SessionCleanupTool",
           "category": "session",
           "status": "working",
@@ -1671,7 +1671,7 @@
         },
         {
           "tool_name": "session.passdown",
-          "module_path": "tools_v2.categories.session_tools",
+          "module_path": "tools.categories.session_tools",
           "class_name": "PassdownTool",
           "category": "session",
           "status": "working",
@@ -1687,7 +1687,7 @@
       "tools": [
         {
           "tool_name": "swarm.pulse",
-          "module_path": "tools_v2.categories.swarm_consciousness",
+          "module_path": "tools.categories.swarm_consciousness",
           "class_name": "SwarmPulseTool",
           "category": "swarm",
           "status": "working",
@@ -1703,7 +1703,7 @@
       "tools": [
         {
           "tool_name": "test.coverage",
-          "module_path": "tools_v2.categories.testing_tools",
+          "module_path": "tools.categories.testing_tools",
           "class_name": "CoverageReportTool",
           "category": "test",
           "status": "working",
@@ -1712,7 +1712,7 @@
         },
         {
           "tool_name": "test.mutation",
-          "module_path": "tools_v2.categories.testing_tools",
+          "module_path": "tools.categories.testing_tools",
           "class_name": "MutationGateTool",
           "category": "test",
           "status": "working",
@@ -1728,7 +1728,7 @@
       "tools": [
         {
           "tool_name": "v2.check",
-          "module_path": "tools_v2.categories.v2_tools",
+          "module_path": "tools.categories.v2_tools",
           "class_name": "V2CheckTool",
           "category": "v2",
           "status": "working",
@@ -1737,7 +1737,7 @@
         },
         {
           "tool_name": "v2.report",
-          "module_path": "tools_v2.categories.v2_tools",
+          "module_path": "tools.categories.v2_tools",
           "class_name": "V2ReportTool",
           "category": "v2",
           "status": "working",
@@ -1753,7 +1753,7 @@
       "tools": [
         {
           "tool_name": "val.flags",
-          "module_path": "tools_v2.categories.validation_tools",
+          "module_path": "tools.categories.validation_tools",
           "class_name": "FeatureFlagTool",
           "category": "val",
           "status": "working",
@@ -1762,7 +1762,7 @@
         },
         {
           "tool_name": "val.report",
-          "module_path": "tools_v2.categories.validation_tools",
+          "module_path": "tools.categories.validation_tools",
           "class_name": "ValidationReportTool",
           "category": "val",
           "status": "working",
@@ -1771,7 +1771,7 @@
         },
         {
           "tool_name": "val.rollback",
-          "module_path": "tools_v2.categories.validation_tools",
+          "module_path": "tools.categories.validation_tools",
           "class_name": "RollbackTool",
           "category": "val",
           "status": "working",
@@ -1780,7 +1780,7 @@
         },
         {
           "tool_name": "val.smoke",
-          "module_path": "tools_v2.categories.validation_tools",
+          "module_path": "tools.categories.validation_tools",
           "class_name": "SmokeTestTool",
           "category": "val",
           "status": "working",
@@ -1796,7 +1796,7 @@
       "tools": [
         {
           "tool_name": "vector.context",
-          "module_path": "tools_v2.categories.vector_tools",
+          "module_path": "tools.categories.vector_tools",
           "class_name": "TaskContextTool",
           "category": "vector",
           "status": "working",
@@ -1805,7 +1805,7 @@
         },
         {
           "tool_name": "vector.index",
-          "module_path": "tools_v2.categories.vector_tools",
+          "module_path": "tools.categories.vector_tools",
           "class_name": "IndexWorkTool",
           "category": "vector",
           "status": "working",
@@ -1814,7 +1814,7 @@
         },
         {
           "tool_name": "vector.search",
-          "module_path": "tools_v2.categories.vector_tools",
+          "module_path": "tools.categories.vector_tools",
           "class_name": "VectorSearchTool",
           "category": "vector",
           "status": "working",
@@ -1830,7 +1830,7 @@
       "tools": [
         {
           "tool_name": "workflow.roi",
-          "module_path": "tools_v2.categories.workflow_tools",
+          "module_path": "tools.categories.workflow_tools",
           "class_name": "ROICalculatorTool",
           "category": "workflow",
           "status": "working",

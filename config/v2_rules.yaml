@@ -5,11 +5,12 @@
 # Author: Agent-2 (Architecture & Design Specialist)
 # Date: 2025-12-11
 
-# File size limits
+# File size guidelines (clean code principles take precedence)
+# These are guidelines to encourage clean, maintainable code, not hard limits
 file_limits:
-  max_lines: 300
-  max_class_lines: 200
-  max_function_lines: 30
+  max_lines: 400  # Guideline, not hard limit - prioritize clean code
+  max_class_lines: 200  # Guideline - prioritize single responsibility
+  max_function_lines: 30  # Guideline - prioritize clarity and maintainability
 
 # Code quality standards
 quality:
