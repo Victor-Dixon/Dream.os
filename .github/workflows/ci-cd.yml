@@ -191,7 +191,7 @@ jobs:
             pip install pyautogui || echo "⚠️  pyautogui skipped (headless CI - expected)"
           fi
           # Install minimal testing dependencies as fallback
-          pip install pytest pytest-cov || echo "⚠️  Some dependencies may have failed"
+          pip install pytest pytest-cov coverage || echo "⚠️  Some dependencies may have failed"
           set -e  # Re-enable strict error handling
           # Verify pytest is available (critical - must succeed)
           python -c "import pytest; print('✅ pytest installed')" || (echo "❌ pytest check failed" && exit 1)
@@ -199,24 +199,18 @@ jobs:
       - name: 🧪 Run ${{ matrix.test-category }} tests
         continue-on-error: true
         run: |
+          mkdir -p test-results
           # Check if test directory exists or if tests can be collected
           TEST_DIR="tests/${{ matrix.test-category }}"
           if [ -d "$TEST_DIR" ]; then
             echo "✅ Found test directory: $TEST_DIR"
-            # Determine optimal number of parallel workers (use CPU count, max 4 for CI)
-            WORKERS=$(python -c "import os; print(min(os.cpu_count() or 2, 4))")
-            echo "🚀 Running tests with $WORKERS parallel workers"
             python -m pytest "$TEST_DIR/" \
-              -n $WORKERS \
-              --dist=worksteal \
               --cov=src \
-              --cov-report=xml \
-              --cov-report=html \
+              --cov-report=xml:coverage.xml \
+              --cov-report=html:htmlcov \
               --cov-report=term-missing \
               --cov-fail-under=50 \
               --junitxml=test-results/${{ matrix.test-category }}-${{ matrix.os }}-${{ matrix.python-version }}.xml \
-              --html=test-results/${{ matrix.test-category }}-${{ matrix.os }}-${{ matrix.python-version }}.html \
-              --self-contained-html \
               -v \
               --tb=short \
               --maxfail=5 \
@@ -226,6 +220,7 @@ jobs:
             mkdir -p test-results
             python -m pytest tests/test_basic.py -v --tb=short || echo "⚠️  Basic smoke test failed"
             echo '<?xml version="1.0"?><testsuites></testsuites>' > test-results/${{ matrix.test-category }}-${{ matrix.os }}-${{ matrix.python-version }}.xml
+            echo '<?xml version="1.0" ?><coverage></coverage>' > coverage.xml
           elif [ "${{ matrix.test-category }}" = "v2-standards" ]; then
             echo "⚠️  tests/v2-standards/ not found, running V2 standards checker instead"
             mkdir -p test-results
@@ -235,11 +230,13 @@ jobs:
               echo "⚠️  tests/v2_standards_checker.py not found, skipping V2 standards test"
             fi
             echo '<?xml version="1.0"?><testsuites></testsuites>' > test-results/${{ matrix.test-category }}-${{ matrix.os }}-${{ matrix.python-version }}.xml
+            echo '<?xml version="1.0" ?><coverage></coverage>' > coverage.xml
           else
             echo "⚠️  $TEST_DIR not found, skipping"
             # Create empty test results
             mkdir -p test-results
             echo '<?xml version="1.0"?><testsuites></testsuites>' > test-results/${{ matrix.test-category }}-${{ matrix.os }}-${{ matrix.python-version }}.xml
+            echo '<?xml version="1.0" ?><coverage></coverage>' > coverage.xml
           fi
 
       - name: 📊 Upload coverage reports
@@ -249,7 +246,9 @@ jobs:
           path: |
             htmlcov/
             coverage.xml
+            .coverage*
             test-results/
+          if-no-files-found: warn
 
   # 🚀 Performance & Security Testing
   performance-security:
@@ -365,21 +364,15 @@ jobs:
       - name: 🧪 Run integration tests
         continue-on-error: true
         run: |
+          mkdir -p test-results
           # Check if integration tests exist
           if [ -d "tests/integration" ]; then
-            # Use fewer workers for integration tests (they may have shared resources)
-            WORKERS=$(python -c "import os; print(min(os.cpu_count() or 2, 2))")
-            echo "🚀 Running integration tests with $WORKERS parallel workers"
             python -m pytest tests/integration/ \
-              -n $WORKERS \
-              --dist=worksteal \
               --cov=src \
-              --cov-report=xml \
-              --cov-report=html \
+              --cov-report=xml:coverage.xml \
+              --cov-report=html:htmlcov \
               --cov-fail-under=0 \
               --junitxml=test-results/integration.xml \
-              --html=test-results/integration.html \
-              --self-contained-html \
               -v \
               --tb=short \
               --maxfail=5 \
@@ -398,7 +391,9 @@ jobs:
           path: |
             htmlcov/
             coverage.xml
+            .coverage*
             test-results/
+          if-no-files-found: warn
 
   # 📈 Coverage & Quality Metrics
   coverage-quality:
@@ -446,17 +441,34 @@ jobs:
           python -c "import pytest; print('✅ pytest installed')" || (echo "❌ pytest check failed" && exit 1)
 
       - name: 📊 Download coverage artifacts
+        id: download_coverage_artifacts
+        continue-on-error: true
         uses: actions/download-artifact@v4
         with:
-          name: coverage-*
+          pattern: coverage-*
+          path: coverage-artifacts
+          merge-multiple: false
+
+      - name: ⚠️ Coverage artifacts missing (non-fatal)
+        if: steps.download_coverage_artifacts.outcome == 'failure'
+        run: |
+          echo "::warning::No artifacts matched pattern 'coverage-*'. Skipping combined coverage generation."
 
       - name: 📈 Generate combined coverage report
         continue-on-error: true
         run: |
-          # Download all coverage artifacts
-          coverage combine coverage-*/coverage.xml 2>/dev/null || echo "No coverage files to combine"
-          coverage report --show-missing || echo "Coverage report generation failed"
-          coverage html --title="Agent_Cellphone_V2 Coverage Report" || echo "Coverage HTML generation failed"
+          # Combine coverage data files (preferred) and regenerate reports
+          python -m pip install --upgrade coverage || true
+          shopt -s globstar nullglob
+          cp coverage-artifacts/**/.coverage* . 2>/dev/null || true
+          if compgen -G ".coverage*" > /dev/null; then
+            coverage combine || echo "Coverage combine failed"
+            coverage xml -o coverage.xml || echo "Coverage XML generation failed"
+            coverage report --show-missing || echo "Coverage report generation failed"
+            coverage html -d htmlcov --title="Agent_Cellphone_V2 Coverage Report" || echo "Coverage HTML generation failed"
+          else
+            echo "No coverage data files found to combine"
+          fi
 
       # Coverage badge disabled - requires GIST_SECRET configuration
       # - name: 🎯 Coverage Badge
@@ -627,9 +639,18 @@ jobs:
         uses: actions/checkout@v4
 
       - name: 📊 Download test results
+        id: download_test_results
+        continue-on-error: true
         uses: actions/download-artifact@v4
         with:
-          name: coverage-*
+          pattern: coverage-*
+          path: coverage-artifacts
+          merge-multiple: false
+
+      - name: ⚠️ Test result artifacts missing (non-fatal)
+        if: steps.download_test_results.outcome == 'failure'
+        run: |
+          echo "::warning::No artifacts matched pattern 'coverage-*' for test summary job."
 
       - name: 📈 Generate test summary
         continue-on-error: true
