@@ -293,8 +293,8 @@
         "logging",
         "pathlib",
         "sys",
-        "tools_v2.tool_registry",
-        "tools_v2.toolbelt_core"
+        "tools.tool_registry",
+        "tools.toolbelt_core"
       ],
       "has_cli": true,
       "classes": []
@@ -482,7 +482,7 @@
       "file": "tools\\captain_check_agent_status.py",
       "source": "tools_directory",
       "description": "Captain's Tool: Check All Agent Status",
-      "full_docstring": "Captain's Tool: Check All Agent Status\n=======================================\n\nQuickly check status.json for all 8 agents to see who needs tasks.\n\n⚠️ DEPRECATED: This tool has been migrated to tools_v2.\nUse 'python -m tools_v2.toolbelt captain.status_check' instead.\nThis file will be removed in future version.\n\nMigrated to: tools_v2/categories/captain_tools.py → StatusCheckTool\nRegistry: captain.status_check\n\nAuthor: Agent-4 (Captain)\nDate: 2025-10-13\nDeprecated: 2025-01-27 (Agent-6 - V2 Tools Flattening)",
+      "full_docstring": "Captain's Tool: Check All Agent Status\n=======================================\n\nQuickly check status.json for all 8 agents to see who needs tasks.\n\n⚠️ DEPRECATED: This tool has been migrated to tools.\nUse 'python -m tools.toolbelt captain.status_check' instead.\nThis file will be removed in future version.\n\nMigrated to: tools/categories/captain_tools.py → StatusCheckTool\nRegistry: captain.status_check\n\nAuthor: Agent-4 (Captain)\nDate: 2025-10-13\nDeprecated: 2025-01-27 (Agent-6 - V2 Tools Flattening)",
       "imports": [
         "warnings",
         "json",
@@ -500,7 +500,7 @@
       "file": "tools\\captain_find_idle_agents.py",
       "source": "tools_directory",
       "description": "Captain's Tool: Find Idle Agents",
-      "full_docstring": "Captain's Tool: Find Idle Agents\n=================================\n\nFinds agents that need new tasks (no GAS = idle!).\nPrevents agents from sitting idle without prompts.\n\n⚠️ DEPRECATED: This tool has been migrated to tools_v2.\nUse 'python -m tools_v2.toolbelt captain.find_idle' instead.\nThis file will be removed in future version.\n\nMigrated to: tools_v2/categories/captain_tools_extension.py → FindIdleAgentsTool\nRegistry: captain.find_idle\n\nUsage: python tools/captain_find_idle_agents.py\n\nAuthor: Agent-4 (Captain)\nDate: 2025-10-13\nDeprecated: 2025-01-27 (Agent-6 - V2 Tools Flattening)",
+      "full_docstring": "Captain's Tool: Find Idle Agents\n=================================\n\nFinds agents that need new tasks (no GAS = idle!).\nPrevents agents from sitting idle without prompts.\n\n⚠️ DEPRECATED: This tool has been migrated to tools.\nUse 'python -m tools.toolbelt captain.find_idle' instead.\nThis file will be removed in future version.\n\nMigrated to: tools/categories/captain_tools_extension.py → FindIdleAgentsTool\nRegistry: captain.find_idle\n\nUsage: python tools/captain_find_idle_agents.py\n\nAuthor: Agent-4 (Captain)\nDate: 2025-10-13\nDeprecated: 2025-01-27 (Agent-6 - V2 Tools Flattening)",
       "imports": [
         "warnings",
         "json",
@@ -518,7 +518,7 @@
       "file": "tools\\captain_gas_check.py",
       "source": "tools_directory",
       "description": "Captain's Tool: Gas Check (Message Status)",
-      "full_docstring": "Captain's Tool: Gas Check (Message Status)\n===========================================\n\n⚠️ DEPRECATED: This tool has been migrated to tools_v2.\nUse 'python -m tools_v2.toolbelt captain.gas_check' instead.\nThis file will be removed in future version.\n\nMigrated to: tools_v2/categories/captain_tools_extension.py → GasCheckTool\nRegistry: captain.gas_check\n\nChecks when agents last received messages (GAS!).\nIdentifies agents running low on fuel.\n\nUsage: python tools/captain_gas_check.py\n\nAuthor: Agent-4 (Captain)\nDate: 2025-10-13\nDeprecated: 2025-01-27 (Agent-6 - V2 Tools Flattening)",
+      "full_docstring": "Captain's Tool: Gas Check (Message Status)\n===========================================\n\n⚠️ DEPRECATED: This tool has been migrated to tools.\nUse 'python -m tools.toolbelt captain.gas_check' instead.\nThis file will be removed in future version.\n\nMigrated to: tools/categories/captain_tools_extension.py → GasCheckTool\nRegistry: captain.gas_check\n\nChecks when agents last received messages (GAS!).\nIdentifies agents running low on fuel.\n\nUsage: python tools/captain_gas_check.py\n\nAuthor: Agent-4 (Captain)\nDate: 2025-10-13\nDeprecated: 2025-01-27 (Agent-6 - V2 Tools Flattening)",
       "imports": [
         "warnings",
         "datetime",
@@ -536,7 +536,7 @@
       "file": "tools\\captain_import_validator.py",
       "source": "tools_directory",
       "description": "Import Validator - Detect Missing Imports Before Runtime",
-      "full_docstring": "Import Validator - Detect Missing Imports Before Runtime\nValidates all imports in a file or directory to prevent runtime errors.\n\n⚠️ DEPRECATED: This tool has been migrated to tools_v2.\nUse 'python -m tools_v2.toolbelt refactor.validate_imports' instead.\nThis file will be removed in future version.\n\nMigrated to: tools_v2/categories/import_fix_tools.py → ImportValidatorTool\nRegistry: refactor.validate_imports\n\nAuthor: Agent-4 (Captain)\nDeprecated: 2025-01-27 (Agent-6 - V2 Tools Flattening)",
+      "full_docstring": "Import Validator - Detect Missing Imports Before Runtime\nValidates all imports in a file or directory to prevent runtime errors.\n\n⚠️ DEPRECATED: This tool has been migrated to tools.\nUse 'python -m tools.toolbelt refactor.validate_imports' instead.\nThis file will be removed in future version.\n\nMigrated to: tools/categories/import_fix_tools.py → ImportValidatorTool\nRegistry: refactor.validate_imports\n\nAuthor: Agent-4 (Captain)\nDeprecated: 2025-01-27 (Agent-6 - V2 Tools Flattening)",
       "imports": [
         "warnings",
         "sys",
@@ -553,7 +553,7 @@
       "file": "tools\\captain_leaderboard_update.py",
       "source": "tools_directory",
       "description": "Captain's Tool: Quick Leaderboard Update",
-      "full_docstring": "Captain's Tool: Quick Leaderboard Update\n=========================================\n\n⚠️ DEPRECATED: This tool has been migrated to tools_v2.\nUse 'python -m tools_v2.toolbelt captain.update_leaderboard_coord' instead.\nThis file will be removed in future version.\n\nMigrated to: tools_v2/categories/captain_coordination_tools.py → LeaderboardUpdateTool\nAlso available in: tools_v2/categories/captain_tools.py → LeaderboardUpdateTool\nRegistry: captain.update_leaderboard_coord OR captain.update_leaderboard\n\nUpdates leaderboard with new points.\n\nUsage: python tools/captain_leaderboard_update.py --agent Agent-1 --points 2000 --task \"shared_utilities\"\n\nAuthor: Agent-4 (Captain)\nDate: 2025-10-13\nDeprecated: 2025-01-27 (Agent-6 - V2 Tools Flattening)",
+      "full_docstring": "Captain's Tool: Quick Leaderboard Update\n=========================================\n\n⚠️ DEPRECATED: This tool has been migrated to tools.\nUse 'python -m tools.toolbelt captain.update_leaderboard_coord' instead.\nThis file will be removed in future version.\n\nMigrated to: tools/categories/captain_coordination_tools.py → LeaderboardUpdateTool\nAlso available in: tools/categories/captain_tools.py → LeaderboardUpdateTool\nRegistry: captain.update_leaderboard_coord OR captain.update_leaderboard\n\nUpdates leaderboard with new points.\n\nUsage: python tools/captain_leaderboard_update.py --agent Agent-1 --points 2000 --task \"shared_utilities\"\n\nAuthor: Agent-4 (Captain)\nDate: 2025-10-13\nDeprecated: 2025-01-27 (Agent-6 - V2 Tools Flattening)",
       "imports": [
         "warnings",
         "json",
@@ -569,7 +569,7 @@
       "file": "tools\\captain_morning_briefing.py",
       "source": "tools_directory",
       "description": "Captain Morning Briefing - Daily Status Summary",
-      "full_docstring": "Captain Morning Briefing - Daily Status Summary\nQuick overview of swarm status, recent activity, and priorities.\n\n⚠️ DEPRECATED: This tool has been migrated to tools_v2.\nUse 'python -m tools_v2.toolbelt captain.morning_briefing' instead.\nThis file will be removed in future version.\n\nMigrated to: tools_v2/categories/captain_tools_advanced.py → MorningBriefingTool\nRegistry: captain.morning_briefing\n\nAuthor: Agent-4 (Captain)\nDeprecated: 2025-01-27 (Agent-8 - V2 Tools Flattening)",
+      "full_docstring": "Captain Morning Briefing - Daily Status Summary\nQuick overview of swarm status, recent activity, and priorities.\n\n⚠️ DEPRECATED: This tool has been migrated to tools.\nUse 'python -m tools.toolbelt captain.morning_briefing' instead.\nThis file will be removed in future version.\n\nMigrated to: tools/categories/captain_tools_advanced.py → MorningBriefingTool\nRegistry: captain.morning_briefing\n\nAuthor: Agent-4 (Captain)\nDeprecated: 2025-01-27 (Agent-8 - V2 Tools Flattening)",
       "imports": [
         "warnings",
         "sys",
@@ -589,7 +589,7 @@
       "file": "tools\\captain_next_task_picker.py",
       "source": "tools_directory",
       "description": "Captain's Tool: Next Task Picker (Markov + ROI)",
-      "full_docstring": "Captain's Tool: Next Task Picker (Markov + ROI)\n================================================\n\n⚠️ DEPRECATED: This tool has been migrated to tools_v2.\nUse 'python -m tools_v2.toolbelt captain.pick_next_task' instead.\nThis file will be removed in future version.\n\nMigrated to: tools_v2/categories/captain_coordination_tools.py → NextTaskPickerTool\nRegistry: captain.pick_next_task\n\nUses Markov optimizer to pick the next optimal task for an agent.\n\nUsage: python tools/captain_next_task_picker.py --agent Agent-1\n\nAuthor: Agent-4 (Captain)\nDate: 2025-10-13\nDeprecated: 2025-01-27 (Agent-6 - V2 Tools Flattening)",
+      "full_docstring": "Captain's Tool: Next Task Picker (Markov + ROI)\n================================================\n\n⚠️ DEPRECATED: This tool has been migrated to tools.\nUse 'python -m tools.toolbelt captain.pick_next_task' instead.\nThis file will be removed in future version.\n\nMigrated to: tools/categories/captain_coordination_tools.py → NextTaskPickerTool\nRegistry: captain.pick_next_task\n\nUses Markov optimizer to pick the next optimal task for an agent.\n\nUsage: python tools/captain_next_task_picker.py --agent Agent-1\n\nAuthor: Agent-4 (Captain)\nDate: 2025-10-13\nDeprecated: 2025-01-27 (Agent-6 - V2 Tools Flattening)",
       "imports": [
         "warnings",
         "argparse",
@@ -604,7 +604,7 @@
       "file": "tools\\captain_roi_quick_calc.py",
       "source": "tools_directory",
       "description": "Captain's Tool: Quick ROI Calculator",
-      "full_docstring": "Captain's Tool: Quick ROI Calculator\n=====================================\n\n⚠️ DEPRECATED: This tool has been migrated to tools_v2.\nUse 'python -m tools_v2.toolbelt captain.calculate_roi' instead.\nThis file will be removed in future version.\n\nMigrated to: tools_v2/categories/captain_coordination_tools.py → ROICalculatorTool\nRegistry: captain.calculate_roi\n\nQuickly calculate ROI for a task to decide priority.\n\nUsage: python tools/captain_roi_quick_calc.py --points 1000 --complexity 50 --autonomy 2\n\nAuthor: Agent-4 (Captain)\nDate: 2025-10-13\nDeprecated: 2025-01-27 (Agent-6 - V2 Tools Flattening)",
+      "full_docstring": "Captain's Tool: Quick ROI Calculator\n=====================================\n\n⚠️ DEPRECATED: This tool has been migrated to tools.\nUse 'python -m tools.toolbelt captain.calculate_roi' instead.\nThis file will be removed in future version.\n\nMigrated to: tools/categories/captain_coordination_tools.py → ROICalculatorTool\nRegistry: captain.calculate_roi\n\nQuickly calculate ROI for a task to decide priority.\n\nUsage: python tools/captain_roi_quick_calc.py --points 1000 --complexity 50 --autonomy 2\n\nAuthor: Agent-4 (Captain)\nDate: 2025-10-13\nDeprecated: 2025-01-27 (Agent-6 - V2 Tools Flattening)",
       "imports": [
         "warnings",
         "argparse"
@@ -618,7 +618,7 @@
       "file": "tools\\captain_snapshot.py",
       "source": "tools_directory",
       "description": "Captain Snapshot Tool - Multi-Agent Status Overview",
-      "full_docstring": "Captain Snapshot Tool - Multi-Agent Status Overview\n==================================================\n\nProvides aggregated view of all agent statuses with staleness detection.\nReads from runtime/agents_index.json and presents a concise table.\n\n⚠️ DEPRECATED: This tool has been migrated to tools_v2.\nUse 'python -m tools_v2.toolbelt health.snapshot' instead.\nThis file will be removed in future version.\n\nMigrated to: tools_v2/categories/health_tools.py → SnapshotTool\nRegistry: health.snapshot\n\nAuthor: Agent-4 - Strategic Oversight & Emergency Intervention Manager\nDeprecated: 2025-01-27 (Agent-8 - V2 Tools Flattening)",
+      "full_docstring": "Captain Snapshot Tool - Multi-Agent Status Overview\n==================================================\n\nProvides aggregated view of all agent statuses with staleness detection.\nReads from runtime/agents_index.json and presents a concise table.\n\n⚠️ DEPRECATED: This tool has been migrated to tools.\nUse 'python -m tools.toolbelt health.snapshot' instead.\nThis file will be removed in future version.\n\nMigrated to: tools/categories/health_tools.py → SnapshotTool\nRegistry: health.snapshot\n\nAuthor: Agent-4 - Strategic Oversight & Emergency Intervention Manager\nDeprecated: 2025-01-27 (Agent-8 - V2 Tools Flattening)",
       "imports": [
         "warnings",
         "logging",
@@ -1139,7 +1139,7 @@
       "file": "tools\\github_repo_roi_calculator.py",
       "source": "tools_directory",
       "description": "GitHub Repository ROI Calculator",
-      "full_docstring": "GitHub Repository ROI Calculator\n=================================\n\n⚠️ DEPRECATED: This tool has been migrated to tools_v2.\nUse: python -m tools_v2.toolbelt bi.roi.repo <repo_path>\nSee: tools_v2/categories/bi_tools.py for the adapter.\n\nCalculate ROI for keeping vs archiving GitHub repositories.\nPart of GitHub Consolidation Strategy mission.\n\nROI = Value / Maintenance Effort\n\nValue Factors:\n- Community engagement (stars, forks, watchers)\n- Development investment (commits, contributors)\n- Code quality (tests, CI/CD, documentation)\n- Uniqueness (not duplicate)\n\nMaintenance Effort Factors:\n- Codebase size (files, lines)\n- Quality gaps (missing LICENSE, CI/CD, tests)\n- Complexity (languages, dependencies)\n\nAuthor: Agent-6 (Mission Planning & Optimization Specialist)\nCreated: 2025-10-14\nMission: GitHub Consolidation Strategy",
+      "full_docstring": "GitHub Repository ROI Calculator\n=================================\n\n⚠️ DEPRECATED: This tool has been migrated to tools.\nUse: python -m tools.toolbelt bi.roi.repo <repo_path>\nSee: tools/categories/bi_tools.py for the adapter.\n\nCalculate ROI for keeping vs archiving GitHub repositories.\nPart of GitHub Consolidation Strategy mission.\n\nROI = Value / Maintenance Effort\n\nValue Factors:\n- Community engagement (stars, forks, watchers)\n- Development investment (commits, contributors)\n- Code quality (tests, CI/CD, documentation)\n- Uniqueness (not duplicate)\n\nMaintenance Effort Factors:\n- Codebase size (files, lines)\n- Quality gaps (missing LICENSE, CI/CD, tests)\n- Complexity (languages, dependencies)\n\nAuthor: Agent-6 (Mission Planning & Optimization Specialist)\nCreated: 2025-10-14\nMission: GitHub Consolidation Strategy",
       "imports": [
         "dataclasses",
         "datetime",
@@ -1173,7 +1173,7 @@
       "file": "tools\\markov_8agent_roi_optimizer.py",
       "source": "tools_directory",
       "description": "8-Agent ROI-Based Task Assignment using Markov Optimization",
-      "full_docstring": "8-Agent ROI-Based Task Assignment using Markov Optimization\n===========================================================\n\n⚠️ DEPRECATED: This tool has been migrated to tools_v2.\nUse: python -m tools_v2.toolbelt bi.roi.optimize\nSee: tools_v2/categories/bi_tools.py for the adapter.\n\nAssigns optimal tasks to ALL 8 agents based on:\n1. ROI (Return on Investment) = Reward / Difficulty\n2. Long-term goal alignment (efficient autonomous development)\n3. Agent specialization matching\n4. Dependency unblocking\n5. Strategic value\n\nAxiom: Maximize ROI while advancing autonomous development capability\n\nAuthor: Agent-4 (Captain)\nDate: 2025-10-12",
+      "full_docstring": "8-Agent ROI-Based Task Assignment using Markov Optimization\n===========================================================\n\n⚠️ DEPRECATED: This tool has been migrated to tools.\nUse: python -m tools.toolbelt bi.roi.optimize\nSee: tools/categories/bi_tools.py for the adapter.\n\nAssigns optimal tasks to ALL 8 agents based on:\n1. ROI (Return on Investment) = Reward / Difficulty\n2. Long-term goal alignment (efficient autonomous development)\n3. Agent specialization matching\n4. Dependency unblocking\n5. Strategic value\n\nAxiom: Maximize ROI while advancing autonomous development capability\n\nAuthor: Agent-4 (Captain)\nDate: 2025-10-12",
       "imports": [
         "json",
         "markov_task_optimizer"
@@ -1499,7 +1499,7 @@
       "file": "tools\\quick_metrics.py",
       "source": "tools_directory",
       "description": "Quick File Metrics Tool",
-      "full_docstring": "Quick File Metrics Tool\n========================\n\n⚠️ DEPRECATED: This tool has been migrated to tools_v2.\nUse: python -m tools_v2.toolbelt bi.metrics <files>\nSee: tools_v2/categories/bi_tools.py for the adapter.\n\nFast analysis of Python file metrics without full project scan.\nPerfect for verifying file state before starting work.\n\nUsage:\n    python tools/quick_metrics.py src/core/shared_utilities.py\n    python tools/quick_metrics.py src/services/*.py\n    python tools/quick_metrics.py --pattern \"vector*.py\"\n\nAuthor: Agent-1 (Integration & Core Systems Specialist)\nDate: 2025-10-13\nLicense: MIT",
+      "full_docstring": "Quick File Metrics Tool\n========================\n\n⚠️ DEPRECATED: This tool has been migrated to tools.\nUse: python -m tools.toolbelt bi.metrics <files>\nSee: tools/categories/bi_tools.py for the adapter.\n\nFast analysis of Python file metrics without full project scan.\nPerfect for verifying file state before starting work.\n\nUsage:\n    python tools/quick_metrics.py src/core/shared_utilities.py\n    python tools/quick_metrics.py src/services/*.py\n    python tools/quick_metrics.py --pattern \"vector*.py\"\n\nAuthor: Agent-1 (Integration & Core Systems Specialist)\nDate: 2025-10-13\nLicense: MIT",
       "imports": [
         "argparse",
         "ast",
@@ -2089,7 +2089,7 @@
       "imports": [
         "sys",
         "pathlib",
-        "tools_v2.toolbelt_core"
+        "tools.toolbelt_core"
       ],
       "has_cli": true,
       "classes": []
