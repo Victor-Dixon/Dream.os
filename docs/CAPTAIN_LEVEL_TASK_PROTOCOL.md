@@ -150,12 +150,12 @@ Place Captain-Level Tasks in a dedicated section:
 - [ ] **MEDIUM** (113 pts - Captain-Level 1.5x): {Task} - [Agent-4 CAPTAIN]
 ```
 
-**Point System Integration:**
-- **Captain-Level Tasks get 1.5x point multiplier**
-- **HIGH Priority:** 150 pts baseline × 1.5 = 225 pts
-- **MEDIUM Priority:** 75 pts baseline × 1.5 = 112.5 pts (round to 113)
-- **LOW Priority:** 30 pts baseline × 1.5 = 45 pts
-- See [POINT_SYSTEM_INTEGRATION.md](POINT_SYSTEM_INTEGRATION.md) for detailed point calculation rules
+**Reinforcement Learning Integration:**
+- **Captain-Level Tasks get 1.5x reinforcement signal multiplier** (reinforces strategic/system-wide thinking)
+- **HIGH Priority:** 150 pts baseline × 1.5 = 225 pts (strong reinforcement for strategic work)
+- **MEDIUM Priority:** 75 pts baseline × 1.5 = 113 pts (moderate reinforcement)
+- **LOW Priority:** 30 pts baseline × 1.5 = 45 pts (baseline reinforcement)
+- See [POINT_SYSTEM_INTEGRATION.md](POINT_SYSTEM_INTEGRATION.md) for detailed reinforcement learning rules
 
 ### Step 3: Denote as Captain-Level
 
@@ -285,18 +285,19 @@ Is this task domain-specific?
 
 ---
 
-## 🎮 Point System Integration
+## 🧠 Reinforcement Learning Integration
 
-**Captain-Level Tasks receive 1.5x point multiplier:**
-- **HIGH Priority:** 150 pts × 1.5 = **225 pts**
-- **MEDIUM Priority:** 75 pts × 1.5 = **113 pts**
-- **LOW Priority:** 30 pts × 1.5 = **45 pts**
+**Captain-Level Tasks receive 1.5x reinforcement signal multiplier** (reinforces strategic/system-wide thinking):
+- **HIGH Priority:** 150 pts × 1.5 = **225 pts** (strong positive reinforcement)
+- **MEDIUM Priority:** 75 pts × 1.5 = **113 pts** (moderate reinforcement)
+- **LOW Priority:** 30 pts × 1.5 = **45 pts** (baseline reinforcement)
 
 **See [POINT_SYSTEM_INTEGRATION.md](POINT_SYSTEM_INTEGRATION.md) for:**
-- Complete point calculation rules
-- Point award workflow
+- Complete reinforcement learning rules
+- Reinforcement signal award workflow
 - Integration with MASTER_TASK_LOG
-- Point tracking in agent status.json
+- Reinforcement history tracking in agent status.json
+- How agents learn from reinforcement signals (Pavlovian conditioning)
 
 ---
 
