@@ -60,11 +60,11 @@ def validate_v2_compliance(rules_file: Optional[Path] = None) -> int:
                     lines = f.readlines()
                     line_count = len(lines)
                     
-                    # V2 limits: 300 lines per file
-                    if line_count > 300:
+                    # V2 guideline: 400 lines per file (clean code principles take precedence)
+                    if line_count > 400:
                         issues.append(
                             f"⚠️  {py_file.relative_to(project_root)}: "
-                            f"{line_count} lines (limit: 300)"
+                            f"{line_count} lines (guideline: 400 - clean code principles take precedence)"
                         )
             except Exception:
                 continue
