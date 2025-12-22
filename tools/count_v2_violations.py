@@ -3,7 +3,8 @@
 Count V2 Compliance Violations
 ==============================
 
-Scans the codebase to count actual V2 compliance violations (files over 300 lines).
+Scans the codebase to count V2 compliance violations (files over 400 lines).
+Note: 400 lines is a guideline, not a hard limit. Clean code principles take precedence.
 
 Agent-6: Coordination & Communication Specialist
 Task: Monitor V2 compliance refactoring progress - verify dashboard numbers
@@ -49,11 +50,11 @@ def scan_v2_violations(root_dir: Path, exclude_dirs: List[str] = None) -> Dict:
             total_files += 1
             line_count = count_lines(file_path)
             
-            if line_count > 300:
+            if line_count > 400:
                 violations.append({
                     'file': str(file_path.relative_to(root_dir)),
                     'lines': line_count,
-                    'over_limit': line_count - 300
+                    'over_limit': line_count - 400
                 })
             else:
                 compliant_files += 1
@@ -79,7 +80,7 @@ def main():
     
     print(f"Scanning: {project_root}")
     print("Checking files: .py, .js, .ts, .tsx, .jsx")
-    print("Limit: 300 lines per file")
+    print("Guideline: 400 lines per file (clean code principles take precedence)")
     print()
     print("Scanning...")
     

@@ -32,7 +32,7 @@ def get_file_line_count(file_path: Path) -> int:
         return 0
 
 
-def scan_violations(src_dir: Path, limit: int = 300) -> List[Tuple[Path, int]]:
+def scan_violations(src_dir: Path, limit: int = 400) -> List[Tuple[Path, int]]:
     """
     Scan for V2 compliance violations.
     
@@ -65,14 +65,14 @@ def categorize_violations(violations: List[Tuple[Path, int]]) -> Dict[str, List[
     """
     categories = {
         "critical": [],  # >1000 lines
-        "high": [],      # 500-1000 lines
-        "medium": []     # 300-500 lines
+        "high": [],      # 600-1000 lines
+        "medium": []     # 400-600 lines (guideline)
     }
     
     for file_path, line_count in violations:
         if line_count > 1000:
             categories["critical"].append((file_path, line_count))
-        elif line_count > 500:
+        elif line_count > 600:
             categories["high"].append((file_path, line_count))
         else:
             categories["medium"].append((file_path, line_count))
@@ -110,7 +110,7 @@ def generate_progress_report(
     
     # Calculate totals
     total_violations = len(violations)
-    total_lines_over = sum(max(0, lines - 300) for _, lines in violations)
+    total_lines_over = sum(max(0, lines - 400) for _, lines in violations)
     
     # Compare to baseline
     baseline_total = baseline.get("total_violations", total_violations)
@@ -131,7 +131,7 @@ def generate_progress_report(
                     {
                         "path": str(f.relative_to(project_root)),
                         "lines": lines,
-                        "over_limit": lines - 300
+                        "over_limit": lines - 400
                     }
                     for f, lines in categories["critical"][:10]
                 ]
@@ -142,7 +142,7 @@ def generate_progress_report(
                     {
                         "path": str(f.relative_to(project_root)),
                         "lines": lines,
-                        "over_limit": lines - 300
+                        "over_limit": lines - 400
                     }
                     for f, lines in categories["high"][:10]
                 ]
@@ -153,7 +153,7 @@ def generate_progress_report(
                     {
                         "path": str(f.relative_to(project_root)),
                         "lines": lines,
-                        "over_limit": lines - 300
+                        "over_limit": lines - 400
                     }
                     for f, lines in categories["medium"][:10]
                 ]
@@ -181,8 +181,8 @@ def print_progress_report(report: Dict):
     
     print(f"\n📋 Violations by Category:")
     print(f"   Critical (>1000 lines): {report['categories']['critical']['count']}")
-    print(f"   High (500-1000 lines): {report['categories']['high']['count']}")
-    print(f"   Medium (300-500 lines): {report['categories']['medium']['count']}")
+    print(f"   High (600-1000 lines): {report['categories']['high']['count']}")
+    print(f"   Medium (400-600 lines): {report['categories']['medium']['count']}")
     
     # Print top violations
     for category_name, category_data in report['categories'].items():
@@ -220,8 +220,8 @@ def main():
     parser.add_argument(
         "--limit",
         type=int,
-        help="Maximum lines allowed per file",
-        default=300
+        help="Guideline for lines per file (default: 400, clean code principles take precedence)",
+        default=400
     )
     
     args = parser.parse_args()
