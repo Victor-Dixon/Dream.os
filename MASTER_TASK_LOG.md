@@ -17,6 +17,15 @@
 - [ ] **LOW**: Audit WordPress blogs - Execute audit_wordpress_blogs.py to validate blog functionality and content integrity [Agent-7 CLAIMED]
 - [x] **LOW**: Audit import dependencies - ✅ COMPLETE by Agent-8 (2025-12-22) - Executed audit_imports.py. Analyzed 2,596 Python files. Found 0 circular dependencies, 0 SSOT violations. Note: importlinter not installed (contract checks skipped). Some parse warnings in temp_repos and legacy files (separate syntax issues, not import problems). Report: reports/import_audit_report.json, reports/import_audit_report.md
 
+### Coordination & Blocker Resolution Tasks
+
+- [ ] **HIGH**: Fix broken tools Phase 3 (32 runtime errors) - Agent-4 has completed Phase 1 & 2 (15/47 tools fixed). Phase 3 pending: 32 runtime errors need resolution. Priority: HIGH - blocking tool functionality. Reference: agent_workspaces/Agent-4/status.json [Agent-4]
+- [ ] **MEDIUM**: SSOT verification for Batches 2-8 duplicate consolidation - SSOT verification pending for duplicate consolidation batches. Blocking: Batches 2-8 consolidation progress. Agents: Agent-8 (SSOT validation), Agent-3 (infrastructure). Reference: agent_workspaces/Agent-4/status.json [Agent-8 + Agent-3]
+- [ ] **MEDIUM**: Architecture review for Website SEO/UX Improvements - Agent-2 architecture review pending on 7 SEO files. Blocking: Website SEO/UX deployment. Agents: Agent-2 (architecture review), Agent-7 (implementation). Reference: agent_workspaces/Agent-4/status.json [Agent-2]
+- [ ] **MEDIUM**: Add SSOT tags to 646 tools - Agent-8 Phase 1 identified 646 tools missing SSOT tags (79 have tags, 5 valid, 74 need domain fixes, 646 missing). Priority: MEDIUM - SSOT compliance improvement. Reference: agent_workspaces/Agent-8/status.json [Agent-8]
+- [ ] **LOW**: Complete github_book_viewer.py V2 refactoring analysis - Agent-7 has analysis pending for github_book_viewer.py (1164 lines, 864 remaining). Part of V2 compliance refactoring Batch 1. Reference: agent_workspaces/Agent-7/status.json [Agent-7]
+- [ ] **LOW**: Complete Pre-Public Audit Phase 2 web-side validation - Pre-Public Audit Phase 2 pending web-side completion. Analytics-side validation complete. Joint validation coordination with Agent-5 pending. Reference: agent_workspaces/Agent-7/status.json [Agent-7 + Agent-5]
+
 ### Website Audit Findings (2025-12-22) - From Comprehensive Website Audit
 
 #### Critical Issues (HIGH PRIORITY)
