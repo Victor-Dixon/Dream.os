@@ -15,7 +15,7 @@
 - `docs/` directory (core docs)
 - Integration documentation
 - System documentation
-- References to tools/ vs tools_v2/
+- References to tools/ vs tools/
 
 ---
 
@@ -30,7 +30,7 @@
 
 ### **Issues to Identify:**
 - ⚠️ Duplicate documentation
-- ⚠️ Outdated references (tools/ → tools_v2/)
+- ⚠️ Outdated references (tools/ → tools/)
 - ⚠️ Scattered documentation
 - ⚠️ Inconsistent formatting
 
@@ -76,7 +76,7 @@
 ### **3. Tools Documentation**
 - Tool usage guides
 - Tool migration docs
-- References to tools/ (need update to tools_v2/)
+- References to tools/ (need update to tools/)
 - Tool registry documentation
 
 ---

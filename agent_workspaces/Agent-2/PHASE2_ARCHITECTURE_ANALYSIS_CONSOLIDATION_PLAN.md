@@ -36,7 +36,7 @@
 - `src/core/refactoring/analysis_tools.py` - Unified analysis tools (285 lines)
 
 #### **4. Analysis Tool Adapters** (1 tool):
-- `tools_v2/categories/analysis_tools.py` - Analysis tools adapter (138 lines)
+- `tools/categories/analysis_tools.py` - Analysis tools adapter (138 lines)
 
 #### **5. Other Analysis Tools** (3+ tools):
 - `tools/duplication_analyzer.py` - Duplication analysis
@@ -110,10 +110,10 @@
 
 #### **Group 5: Analysis Tool Adapter** (1 tool → keep)
 **Tools**:
-- `tools_v2/categories/analysis_tools.py` - Analysis tools adapter
+- `tools/categories/analysis_tools.py` - Analysis tools adapter
 
-**Core Tool**: `tools_v2/categories/analysis_tools.py`
-- **Keep**: Already in tools_v2, update to use consolidated core tools
+**Core Tool**: `tools/categories/analysis_tools.py`
+- **Keep**: Already in tools, update to use consolidated core tools
 - **Action**: Update to reference consolidated tools
 
 ---
@@ -144,7 +144,7 @@
    - Core pattern detection logic
    - Architecture pattern detection
 
-5. **`tools_v2/categories/analysis_tools.py`** (update)
+5. **`tools/categories/analysis_tools.py`** (update)
    - Analysis tools adapter
    - Project scan tool
    - Complexity tool
@@ -184,7 +184,7 @@
 - **Target**: Complete refactoring analysis SSOT
 
 ### **Action 4: Update Analysis Tools Adapter**
-- Update `tools_v2/categories/analysis_tools.py` to use consolidated tools
+- Update `tools/categories/analysis_tools.py` to use consolidated tools
 - Ensure all tool adapters reference core tools
 - **Target**: Updated adapter using consolidated tools
 
@@ -224,7 +224,7 @@
 ## 🔄 **NEXT STEPS**
 
 1. ⏳ **Enhance Core Tools**: Enhance architecture_repo_analyzer, pattern_analysis_orchestrator (future work)
-2. ⏳ **Update Adapters**: Update tools_v2/categories/analysis_tools.py (future work)
+2. ⏳ **Update Adapters**: Update tools/categories/analysis_tools.py (future work)
 3. ✅ **Archive Redundant**: Archive 4 redundant tools (COMPLETE)
 4. ⏳ **Update Imports**: Update all imports to use consolidated tools (verify needed)
 5. ⏳ **Verify**: Test consolidated tools, verify functionality (future work)

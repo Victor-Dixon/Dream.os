@@ -9,7 +9,7 @@
 
 ## 📊 EXECUTIVE SUMMARY
 
-**Objective**: Execute tools consolidation (monitoring → unified_monitor, analysis → unified_analyzer), migrate 20 captain tools to tools_v2, complete ranking debate analysis, continue Batch 2 SSOT validation. Target: 35% reduction (234 → ~150 tools).
+**Objective**: Execute tools consolidation (monitoring → unified_monitor, analysis → unified_analyzer), migrate 20 captain tools to tools, complete ranking debate analysis, continue Batch 2 SSOT validation. Target: 35% reduction (234 → ~150 tools).
 
 **Progress**: ✅ **FOUNDATION COMPLETE + VALIDATION ACTIVE**
 
@@ -89,7 +89,7 @@
 
 **Archived Tools**: 5 tools
 - 2 monitoring tools → unified_monitor.py
-- 3 deprecated captain tools → tools_v2
+- 3 deprecated captain tools → tools
 
 **Archive Location**: `tools/deprecated/consolidated_2025-11-29/`
 

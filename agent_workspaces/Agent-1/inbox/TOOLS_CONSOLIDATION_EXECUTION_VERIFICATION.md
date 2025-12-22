@@ -43,7 +43,7 @@
 
 #### **4. Captain Tools:**
 - ⚠️ **17 `captain_*.py` files** - **STILL IN `tools/` directory**
-- ✅ `tools_v2/categories/captain_coordination_tools.py` - Category exists
+- ✅ `tools/categories/captain_coordination_tools.py` - Category exists
 - ❌ **NOT CONSOLIDATED** - Captain tools not migrated
 
 ---

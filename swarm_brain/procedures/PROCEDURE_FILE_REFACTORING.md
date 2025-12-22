@@ -29,7 +29,7 @@
 
 ```bash
 # Get refactoring suggestions
-python -m tools_v2.toolbelt infra.extract_planner --file path/to/large_file.py
+python -m tools.toolbelt infra.extract_planner --file path/to/large_file.py
 
 # Shows:
 # - Suggested module splits
@@ -79,10 +79,10 @@ from .file_reporting import generate_report
 
 ```bash
 # Check all files now compliant
-python -m tools_v2.toolbelt v2.check --file file_core.py
-python -m tools_v2.toolbelt v2.check --file file_utils.py  
-python -m tools_v2.toolbelt v2.check --file file_reporting.py
-python -m tools_v2.toolbelt v2.check --file original_file.py
+python -m tools.toolbelt v2.check --file file_core.py
+python -m tools.toolbelt v2.check --file file_utils.py  
+python -m tools.toolbelt v2.check --file file_reporting.py
+python -m tools.toolbelt v2.check --file original_file.py
 
 # All should show: ✅ COMPLIANT
 ```
@@ -141,7 +141,7 @@ mkdir -p tools/autonomous
 # [Extract code to modules]
 
 # VERIFY:
-$ python -m tools_v2.toolbelt v2.check --file tools/autonomous/task_discovery.py
+$ python -m tools.toolbelt v2.check --file tools/autonomous/task_discovery.py
 ✅ COMPLIANT (248 lines)
 
 # RESULT: 797 → 750 lines (3 compliant modules)

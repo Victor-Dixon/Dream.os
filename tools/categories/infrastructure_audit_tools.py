@@ -289,7 +289,7 @@ class ProjectComponentsAuditTool(IToolAdapter):
             components = {
                 "Core Systems": ["src.core.messaging_core", "src.core.unified_config"],
                 "Services": ["src.services.messaging_cli", "src.services.unified_messaging_service"],
-                "Tools V2": ["tools_v2.core.tool_facade", "tools_v2.core.tool_spec"]
+                "Tools V2": ["tools.core.tool_facade", "tools.core.tool_spec"]
             }
             results = {}
             for category, modules in components.items():

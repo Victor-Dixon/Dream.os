@@ -60,7 +60,7 @@ Per `.cursor/rules/v2-compliance.mdc`:
 | 811 | `src/discord_commander/status_change_monitor.py` | Discord |
 | 796 | `tools/toolbelt_registry.py` | Tools |
 | 791 | `src/core/messaging_pyautogui.py` | Core |
-| 787 | `tools_v2/categories/intelligent_mission_advisor.py` | Tools V2 |
+| 787 | `tools/categories/intelligent_mission_advisor.py` | Tools V2 |
 | 786 | `tools/repo_safe_merge_v2.py` | Tools |
 | 772 | `tools/autonomous_task_engine.py` | Tools |
 | 753 | `src/discord_commander/views/main_control_panel_view.py` | Discord |
@@ -86,8 +86,8 @@ Per `.cursor/rules/v2-compliance.mdc`:
 | 593 | `tools/agent_mission_controller.py` |
 | 586 | `tools/generate_weekly_progression_report.py` |
 | 585 | `tools/unified_validator.py` |
-| 584 | `tools_v2/categories/github_consolidation_tools.py` |
-| 576 | `tools_v2/categories/autonomous_workflow_tools.py` |
+| 584 | `tools/categories/github_consolidation_tools.py` |
+| 576 | `tools/categories/autonomous_workflow_tools.py` |
 | 571 | `tools/devlog_manager.py` |
 | 563 | `tools/website_manager.py` |
 | 561 | `tools/robinhood_trading_report.py` |
@@ -118,7 +118,7 @@ Per `.cursor/rules/v2-compliance.mdc`:
 | 478 | `tools/markov_swarm_integration.py` |
 | 477 | `src/gaming/dreamos/ui_integration.py` |
 | 476 | `src/services/trader_replay/repositories.py` |
-| 475 | `tools_v2/categories/coordination_tools.py` |
+| 475 | `tools/categories/coordination_tools.py` |
 | 474 | `tools/create_unified_cli_framework.py` |
 | 464 | `src/orchestrators/overnight/listener.py` |
 | 461 | `tools/verify_file_usage_enhanced.py` |
@@ -133,7 +133,7 @@ Per `.cursor/rules/v2-compliance.mdc`:
 | 438 | `tools/projectscanner_modular_reports.py` |
 | 433 | `tools/wordpress_page_setup.py` |
 | 430 | `src/core/multi_agent_responder.py` |
-| 430 | `tools_v2/categories/import_fix_tools.py` |
+| 430 | `tools/categories/import_fix_tools.py` |
 | 426 | `src/core/error_handling/component_management.py` |
 | 426 | `src/core/config/config_dataclasses.py` |
 | 426 | `tools/unified_github_pr_creator.py` |
@@ -141,11 +141,11 @@ Per `.cursor/rules/v2-compliance.mdc`:
 | 418 | `src/repositories/message_repository.py` |
 | 416 | `src/core/stress_test_metrics_analyzer.py` |
 | 415 | `tools/file_deletion_support.py` |
-| 414 | `tools_v2/categories/discord_webhook_tools.py` |
-| 414 | `tools_v2/categories/ssot_validation_tools.py` |
+| 414 | `tools/categories/discord_webhook_tools.py` |
+| 414 | `tools/categories/ssot_validation_tools.py` |
 | 412 | `src/core/message_queue_persistence.py` |
 | 412 | `src/services/chatgpt/session.py` |
-| 410 | `tools_v2/categories/memory_safety_tools.py` |
+| 410 | `tools/categories/memory_safety_tools.py` |
 | 409 | `src/discord_commander/webhook_commands.py` |
 | 409 | `src/core/error_handling/error_intelligence.py` |
 | 409 | `tools/phase2_goldmine_config_scanner.py` |
@@ -283,5 +283,5 @@ Per `.cursor/rules/v2-compliance.mdc`:
 ---
 
 *Report generated: December 12, 2025*  
-*Scanned directories: src/, tools/, tools_v2/, scripts/, tests/*  
+*Scanned directories: src/, tools/, tools/, scripts/, tests/*  
 *Excluded: archive/, agent_workspaces/, deprecated directories*

@@ -144,11 +144,11 @@ class UnifiedMessagingCore:
 
 **Problem:**
 ```python
-# File 1: tools_v2/categories/captain_tools.py
+# File 1: tools/categories/captain_tools.py
 class LeaderboardUpdateTool(IToolAdapter):
     ...
 
-# File 2: tools_v2/categories/captain_coordination_tools.py
+# File 2: tools/categories/captain_coordination_tools.py
 class LeaderboardUpdaterTool(IToolAdapter):  # ❌ DUPLICATE
     ...
 ```
@@ -248,7 +248,7 @@ class MessagingService:
 
 ### **Tool 1: Detect Violations**
 ```bash
-python -m tools_v2.toolbelt ssot.detect_violations --directory src
+python -m tools.toolbelt ssot.detect_violations --directory src
 ```
 
 **Detects:**
@@ -260,7 +260,7 @@ python -m tools_v2.toolbelt ssot.detect_violations --directory src
 
 ### **Tool 2: Validate Patterns**
 ```bash
-python -m tools_v2.toolbelt ssot.validate_patterns --file_path src/repositories/message_repository.py --pattern_type repository
+python -m tools.toolbelt ssot.validate_patterns --file_path src/repositories/message_repository.py --pattern_type repository
 ```
 
 **Validates:**

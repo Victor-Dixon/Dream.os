@@ -37,10 +37,10 @@ Onboarding service not available
 
 ≡ƒôª Tools V2
 ----------------------------------------------------------------------
-  Γ¥î tools_v2.core.tool_facade
-     ImportError: No module named 'tools_v2.core'
-  Γ¥î tools_v2.core.tool_spec
-     ImportError: No module named 'tools_v2.core'
+  Γ¥î tools.core.tool_facade
+     ImportError: No module named 'tools.core'
+  Γ¥î tools.core.tool_spec
+     ImportError: No module named 'tools.core'
 
 ≡ƒôª Discord
 ----------------------------------------------------------------------
@@ -76,8 +76,8 @@ Utilities:
      ΓåÆ ImportError: No module named 'src.utils.logger_utils'
 
 Tools V2:
-  Γ¥î tools_v2.core.tool_facade
-     ΓåÆ ImportError: No module named 'tools_v2.core'
-  Γ¥î tools_v2.core.tool_spec
-     ΓåÆ ImportError: No module named 'tools_v2.core'
+  Γ¥î tools.core.tool_facade
+     ΓåÆ ImportError: No module named 'tools.core'
+  Γ¥î tools.core.tool_spec
+     ΓåÆ ImportError: No module named 'tools.core'
 

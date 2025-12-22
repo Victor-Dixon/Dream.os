@@ -39,7 +39,7 @@ Identify, fix, and prevent memory safety issues including unbounded collections,
 
 **Usage:**
 ```python
-from tools_v2.toolbelt_core import ToolbeltCore
+from tools.toolbelt_core import ToolbeltCore
 
 core = ToolbeltCore()
 result = core.run('mem.leaks', {})
@@ -351,8 +351,8 @@ self.items.append(x)  # BAD if no size limit!
 
 ```bash
 # Add to pre-commit hook
-python -m tools_v2.toolbelt_core mem.leaks
-python -m tools_v2.toolbelt_core mem.scan
+python -m tools.toolbelt_core mem.leaks
+python -m tools.toolbelt_core mem.scan
 
 # Fail if HIGH severity found
 if [ $HIGH_ISSUES -gt 0 ]; then

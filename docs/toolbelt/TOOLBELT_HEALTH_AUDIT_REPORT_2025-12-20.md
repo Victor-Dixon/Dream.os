@@ -52,15 +52,15 @@
 **Issue:** Tools cannot be loaded due to missing modules or incorrect registry entries.
 
 1. **agent.points**
-   - Error: Could not load tool 'agent.points': module 'tools_v2.categories.session_tools' has no attribute 'AgentPointsTool'
+   - Error: Could not load tool 'agent.points': module 'tools.categories.session_tools' has no attribute 'AgentPointsTool'
    - **Fix Required:** Add AgentPointsTool to session_tools module or update registry
 
 2. **infra.roi_calc**
-   - Error: Could not load tool 'infra.roi_calc': module 'tools_v2.categories.infrastructure' has no attribute 'InfrastructureROICalcTool'
+   - Error: Could not load tool 'infra.roi_calc': module 'tools.categories.infrastructure' has no attribute 'InfrastructureROICalcTool'
    - **Fix Required:** Add InfrastructureROICalcTool to infrastructure module or update registry
 
 3. **mem.imports**
-   - Error: Could not load tool 'mem.imports': module 'tools_v2.categories.memory_safety_adapter' has no attribute 'MemoryImportsTool'
+   - Error: Could not load tool 'mem.imports': module 'tools.categories.memory_safety_adapter' has no attribute 'MemoryImportsTool'
    - **Fix Required:** Add MemoryImportsTool to memory_safety_adapter module or update registry
 
 ### **TypeError (15 tools)**

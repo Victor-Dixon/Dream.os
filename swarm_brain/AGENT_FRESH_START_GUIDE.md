@@ -267,7 +267,7 @@ python tools/extraction_roadmap_generator.py --agent Agent-X --interactive
 
 **Full Toolbelt:**
 ```bash
-python -m tools_v2.toolbelt --help
+python -m tools.toolbelt --help
 # OR
 python tools/toolbelt_cli.py --help
 ```
@@ -469,7 +469,7 @@ python -m src.services.messaging_cli \
 
 **Full Toolbelt:**
 ```bash
-python -m tools_v2.toolbelt --help
+python -m tools.toolbelt --help
 ```
 
 ---

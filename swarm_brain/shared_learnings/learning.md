@@ -633,7 +633,7 @@ Error: 403 Forbidden
 
 ```bash
 # Check specific file
-python -m tools_v2.toolbelt v2.check --file path/to/file.py
+python -m tools.toolbelt v2.check --file path/to/file.py
 ```
 
 ### **Step 2: Review Violations**
@@ -648,7 +648,7 @@ Output shows:
 **For file size violations**:
 ```bash
 # Get refactoring suggestions
-python -m tools_v2.toolbelt infra.extract_planner --file path/to/file.py
+python -m tools.toolbelt infra.extract_planner --file path/to/file.py
 
 # Shows recommended module splits
 ```
@@ -662,7 +662,7 @@ python -m tools_v2.toolbelt infra.extract_planner --file path/to/file.py
 
 ```bash
 # Verify compliance
-python -m tools_v2.toolbelt v2.check --file path/to/file.py
+python -m tools.toolbelt v2.check --file path/to/file.py
 
 # Should show: ✅ Compliant
 ```
@@ -698,7 +698,7 @@ If committed non-compliant code:
 git reset HEAD~1
 
 # Fix violations
-python -m tools_v2.toolbelt v2.check --file file.py
+python -m tools.toolbelt v2.check --file file.py
 
 # Re-commit after fixing
 ```
@@ -710,7 +710,7 @@ python -m tools_v2.toolbelt v2.check --file file.py
 **Example 1: Compliant File**
 
 ```bash
-$ python -m tools_v2.toolbelt v2.check --file src/core/messaging_protocol_models.py
+$ python -m tools.toolbelt v2.check --file src/core/messaging_protocol_models.py
 
 Checking: src/core/messaging_protocol_models.py
 ✅ File size: 116 lines (≤400)
@@ -724,7 +724,7 @@ Checking: src/core/messaging_protocol_models.py
 **Example 2: Violation Found**
 
 ```bash
-$ python -m tools_v2.toolbelt v2.check --file tools/autonomous_task_engine.py
+$ python -m tools.toolbelt v2.check --file tools/autonomous_task_engine.py
 
 Checking: tools/autonomous_task_engine.py
 🔴 CRITICAL: File size: 797 lines (>600 - requires immediate refactor)
@@ -810,7 +810,7 @@ python tools/run_project_scan.py
 cat project_analysis.json | python -m json.tool | grep -A 5 "violations"
 
 # Or use BI tools
-python -m tools_v2.toolbelt analysis.scan
+python -m tools.toolbelt analysis.scan
 ```
 
 **Look for**:
@@ -823,7 +823,7 @@ python -m tools_v2.toolbelt analysis.scan
 
 ```bash
 # Calculate ROI for tasks
-python -m tools_v2.toolbelt captain.calc_points \
+python -m tools.toolbelt captain.calc_points \
   --file path/to/file.py \
   --current-lines 500 \
   --target-lines 300
@@ -972,7 +972,7 @@ $ cat project_analysis.json | grep -C 3 "CRITICAL"
 
 ```bash
 # Check compliance BEFORE staging
-python -m tools_v2.toolbelt v2.check --file path/to/changed/file.py
+python -m tools.toolbelt v2.check --file path/to/changed/file.py
 
 # Must show: ✅ COMPLIANT
 ```
@@ -1085,7 +1085,7 @@ git push
 **Example 1: Successful Commit**
 
 ```bash
-$ python -m tools_v2.toolbelt v2.check --file src/core/new_feature.py
+$ python -m tools.toolbelt v2.check --file src/core/new_feature.py
 ✅ COMPLIANT
 
 $ git add src/core/new_feature.py
@@ -1708,7 +1708,7 @@ $ python -m src.services.messaging_cli \
 
 ```bash
 # Run memory leak detector
-python -m tools_v2.toolbelt mem.leaks
+python -m tools.toolbelt mem.leaks
 
 # Scans for common patterns:
 # - Unbounded collections (lists, dicts that grow forever)
@@ -1721,7 +1721,7 @@ python -m tools_v2.toolbelt mem.leaks
 
 ```bash
 # Identify unbounded data structures
-python -m tools_v2.toolbelt mem.scan
+python -m tools.toolbelt mem.scan
 
 # Looks for:
 # - append() without limit
@@ -1733,7 +1733,7 @@ python -m tools_v2.toolbelt mem.scan
 
 ```bash
 # Verify file handles closed properly
-python -m tools_v2.toolbelt mem.handles
+python -m tools.toolbelt mem.handles
 
 # Finds:
 # - open() without close()
@@ -1796,7 +1796,7 @@ with open('file.txt') as f:  # Auto-closes!
 
 ```bash
 # Re-run leak detector
-python -m tools_v2.toolbelt mem.leaks
+python -m tools.toolbelt mem.leaks
 
 # Should show: ✅ No leaks detected
 ```
@@ -1834,7 +1834,7 @@ If fix causes other issues:
 git checkout HEAD -- path/to/file.py
 
 # Re-analyze
-python -m tools_v2.toolbelt mem.leaks
+python -m tools.toolbelt mem.leaks
 
 # Try different fix approach
 ```
@@ -1846,7 +1846,7 @@ python -m tools_v2.toolbelt mem.leaks
 **Example 1: Detecting Unbounded List**
 
 ```bash
-$ python -m tools_v2.toolbelt mem.leaks
+$ python -m tools.toolbelt mem.leaks
 
 🔍 SCANNING FOR MEMORY LEAKS...
 
@@ -1873,7 +1873,7 @@ def add_message(self, msg):
     self.messages.append(msg)  # Auto-evicts oldest
 
 # Verify:
-$ python -m tools_v2.toolbelt mem.leaks
+$ python -m tools.toolbelt mem.leaks
 ✅ No leaks detected
 ```
 
@@ -1941,7 +1941,7 @@ $ python -m tools_v2.toolbelt mem.leaks
 
 ```bash
 # Get refactoring suggestions
-python -m tools_v2.toolbelt infra.extract_planner --file path/to/large_file.py
+python -m tools.toolbelt infra.extract_planner --file path/to/large_file.py
 
 # Shows:
 # - Suggested module splits
@@ -1991,10 +1991,10 @@ from .file_reporting import generate_report
 
 ```bash
 # Check all files now compliant
-python -m tools_v2.toolbelt v2.check --file file_core.py
-python -m tools_v2.toolbelt v2.check --file file_utils.py  
-python -m tools_v2.toolbelt v2.check --file file_reporting.py
-python -m tools_v2.toolbelt v2.check --file original_file.py
+python -m tools.toolbelt v2.check --file file_core.py
+python -m tools.toolbelt v2.check --file file_utils.py  
+python -m tools.toolbelt v2.check --file file_reporting.py
+python -m tools.toolbelt v2.check --file original_file.py
 
 # All should show: ✅ COMPLIANT
 ```
@@ -2053,7 +2053,7 @@ mkdir -p tools/autonomous
 # [Extract code to modules]
 
 # VERIFY:
-$ python -m tools_v2.toolbelt v2.check --file tools/autonomous/task_discovery.py
+$ python -m tools.toolbelt v2.check --file tools/autonomous/task_discovery.py
 ✅ COMPLIANT (248 lines)
 
 # RESULT: 797 → 750 lines (3 compliant modules)
@@ -2285,7 +2285,7 @@ E       AssertionError: assert False == True
 pytest --cov=src
 
 # Check V2 compliance
-python -m tools_v2.toolbelt v2.report
+python -m tools.toolbelt v2.report
 
 # Validate config SSOT
 python scripts/validate_config_ssot.py
@@ -2496,7 +2496,7 @@ $ git push origin v2.3.0
 
 ```bash
 # V2 compliance
-python -m tools_v2.toolbelt v2.check --file changed_file.py
+python -m tools.toolbelt v2.check --file changed_file.py
 
 # Architecture validation
 python tools/arch_pattern_validator.py changed_file.py
@@ -2544,7 +2544,7 @@ python -m src.services.messaging_cli \
 
 ```bash
 # Run checks
-$ python -m tools_v2.toolbelt v2.check --file src/new_feature.py
+$ python -m tools.toolbelt v2.check --file src/new_feature.py
 ✅ COMPLIANT
 
 $ pytest tests/test_new_feature.py
@@ -5142,7 +5142,7 @@ from src.swarm_brain.swarm_memory import SwarmMemory
 
 **Tool Locations:**
 - `tools/` - General utilities
-- `tools_v2/` - New consolidated location (SSOT)
+- `tools/` - New consolidated location (SSOT)
 - `scripts/` - Workflow scripts
 - `src/services/` - Core services (messaging, etc.)
 

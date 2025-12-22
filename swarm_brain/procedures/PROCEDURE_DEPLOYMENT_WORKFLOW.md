@@ -34,7 +34,7 @@
 pytest --cov=src
 
 # Check V2 compliance
-python -m tools_v2.toolbelt v2.report
+python -m tools.toolbelt v2.report
 
 # Validate config SSOT
 python scripts/validate_config_ssot.py

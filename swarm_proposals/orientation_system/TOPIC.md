@@ -62,7 +62,7 @@ Use `proposal.contribute` tool to add your solution!
 
 ### **1. Review Existing Proposals**
 ```python
-from tools_v2.toolbelt_core import ToolbeltCore
+from tools.toolbelt_core import ToolbeltCore
 tb = ToolbeltCore()
 
 # List all proposals for this topic

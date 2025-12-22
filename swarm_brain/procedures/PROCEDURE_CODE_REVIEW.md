@@ -57,7 +57,7 @@
 
 ```bash
 # V2 compliance
-python -m tools_v2.toolbelt v2.check --file changed_file.py
+python -m tools.toolbelt v2.check --file changed_file.py
 
 # Architecture validation
 python tools/arch_pattern_validator.py changed_file.py
@@ -105,7 +105,7 @@ python -m src.services.messaging_cli \
 
 ```bash
 # Run checks
-$ python -m tools_v2.toolbelt v2.check --file src/new_feature.py
+$ python -m tools.toolbelt v2.check --file src/new_feature.py
 ✅ COMPLIANT
 
 $ pytest tests/test_new_feature.py

@@ -82,7 +82,7 @@
    - Generate ranking results
 
 2. **Captain Tools Migration** (Priority: MEDIUM)
-   - Migrate 17 captain tools to `tools_v2/categories/`
+   - Migrate 17 captain tools to `tools/categories/`
    - Update references
 
 ---

@@ -3,11 +3,11 @@
 Captain Morning Briefing - Daily Status Summary
 Quick overview of swarm status, recent activity, and priorities.
 
-⚠️ DEPRECATED: This tool has been migrated to tools_v2.
-Use 'python -m tools_v2.toolbelt captain.morning_briefing' instead.
+⚠️ DEPRECATED: This tool has been migrated to tools.
+Use 'python -m tools.toolbelt captain.morning_briefing' instead.
 This file will be removed in future version.
 
-Migrated to: tools_v2/categories/captain_tools_advanced.py → MorningBriefingTool
+Migrated to: tools/categories/captain_tools_advanced.py → MorningBriefingTool
 Registry: captain.morning_briefing
 
 Author: Agent-4 (Captain)
@@ -17,8 +17,8 @@ Deprecated: 2025-01-27 (Agent-8 - V2 Tools Flattening)
 import warnings
 
 warnings.warn(
-    "⚠️ DEPRECATED: This tool has been migrated to tools_v2. "
-    "Use 'python -m tools_v2.toolbelt captain.morning_briefing' instead. "
+    "⚠️ DEPRECATED: This tool has been migrated to tools. "
+    "Use 'python -m tools.toolbelt captain.morning_briefing' instead. "
     "This file will be removed in future version.",
     DeprecationWarning,
     stacklevel=2

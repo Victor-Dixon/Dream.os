@@ -40,7 +40,7 @@
 2. `pattern_analysis_models.py` - Pattern analysis models
 3. `__init__.py` - Package init
 
-### **Tools V2** (`tools_v2/categories/`) - 1 tool:
+### **Tools V2** (`tools/categories/`) - 1 tool:
 
 1. `analysis_tools.py` - Analysis tools adapter (138 lines)
 
@@ -91,7 +91,7 @@
 - `extract_autoblogger_patterns.py` → Evaluate uniqueness (specialized)
 
 ### **Group 7: Analysis Tools Adapter** (1 tool → keep)
-- `tools_v2/categories/analysis_tools.py` ✅ **KEEP** (update to use consolidated tools)
+- `tools/categories/analysis_tools.py` ✅ **KEEP** (update to use consolidated tools)
 
 ---
 
@@ -103,7 +103,7 @@
 4. ✅ `src/core/refactoring/pattern_detection.py` (core)
 5. ✅ `src/core/refactoring/file_analysis.py` (core)
 6. ✅ `src/core/refactoring/duplicate_analysis.py` (core)
-7. ✅ `tools_v2/categories/analysis_tools.py` (adapter)
+7. ✅ `tools/categories/analysis_tools.py` (adapter)
 8. ⏳ `tools/architecture_review.py` (consolidated with independent_architecture_review.py)
 
 **Total**: 8 core tools

@@ -26,7 +26,7 @@ With 1,700+ files, 15+ subsystems, and 101 tools, agents need a comprehensive wa
 Use the toolbelt to add your solution:
 
 ```python
-from tools_v2.toolbelt_core import ToolbeltCore
+from tools.toolbelt_core import ToolbeltCore
 tb = ToolbeltCore()
 
 result = tb.run('proposal.contribute', {

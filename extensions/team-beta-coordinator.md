@@ -26,7 +26,7 @@
 
 **Usage**:
 ```bash
-python tools_v2/team_beta_status_check.py
+python tools/team_beta_status_check.py
 ```
 
 **Output**:
@@ -231,7 +231,7 @@ python -m src.services.messaging_cli --agent [NextAgent] --message \
 
 ```bash
 # Check Team Beta status
-python tools_v2/team_beta_status_check.py
+python tools/team_beta_status_check.py
 
 # Message Team Beta leader
 python -m src.services.messaging_cli --agent Agent-5 --message "[Your message]"

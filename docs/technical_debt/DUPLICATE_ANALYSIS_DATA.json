@@ -26,7 +26,7 @@
           "tools\\send_agent3_assignment_direct.py",
           "tools\\enforce_agent_compliance.py",
           "tools\\setup_compliance_monitoring.py",
-          "tools_v2\\tool_registry.py",
+          "tools\\tool_registry.py",
           "devlogs\\2025-01-27_agent-2_message_queue_processor_architectural_review.md",
           "devlogs\\2025-01-27_agent-2_agent7_cleanup_architectural_review.md",
           "devlogs\\2025-11-29_agent4_captain_test_coverage_debate_integration.md",
@@ -4223,7 +4223,7 @@
           "temp_repos\\agentproject\\README.md",
           "temp_repos\\Auto_Blogger\\README.md",
           "tools\\deprecated\\README.md",
-          "tools_v2\\README.md",
+          "tools\\README.md",
           "repo_consolidation_groups\\dream_projects\\README.md",
           "repo_consolidation_groups\\trading_bots\\README.md",
           "repo_consolidation_groups\\gpt_automation\\README.md",
@@ -4476,7 +4476,7 @@
         "filename": "analysis_tools.py",
         "paths": [
           "src\\core\\refactoring\\analysis_tools.py",
-          "tools_v2\\categories\\analysis_tools.py"
+          "tools\\categories\\analysis_tools.py"
         ],
         "count": 2
       },
@@ -5195,7 +5195,7 @@
         "filename": "discord_mermaid_renderer.py",
         "paths": [
           "tools\\discord_mermaid_renderer.py",
-          "tools_v2\\utils\\discord_mermaid_renderer.py"
+          "tools\\utils\\discord_mermaid_renderer.py"
         ],
         "count": 2
       },

@@ -69,7 +69,7 @@ python tools/toolbelt.py --help
 
 ### Toolbelt V2 Architecture Discovery
 
-**From `tools_v2/README.md`**:
+**From `tools/README.md`**:
 
 **Total Tools**: **23 tools** across 10 categories!
 
@@ -104,7 +104,7 @@ python tools/toolbelt.py --help
 
 **Analysis**: 
 - **CLI Toolbelt** (legacy `tools/toolbelt.py`): 15-16 tools visible
-- **Toolbelt V2** (`tools_v2/`): 23 tools via adapter architecture
+- **Toolbelt V2** (`tools/`): 23 tools via adapter architecture
 - **New Tools Confirmed**: soft-onboard ✅, swarm-brain ✅, messaging ✅
 
 **Hypothesis**: Captain may be referring to specific new additions (12 total tools in a subset), or there's a migration in progress from legacy toolbelt → V2.
@@ -132,11 +132,11 @@ agent.claim - Claim next available task
 
 **Attempt**:
 ```bash
-python -m tools_v2 agent.claim --agent-id Agent-6
+python -m tools agent.claim --agent-id Agent-6
 ```
 **Result**: ❌ **Not exposed in __main__**
 ```
-No module named tools_v2.__main__
+No module named tools.__main__
 ```
 
 **Attempt (Legacy Interface)**:
@@ -260,7 +260,7 @@ python tools/toolbelt.py agent.claim --agent-id Agent-6
 ### 1. Toolbelt Evolution In Progress
 **Observation**: Two toolbelt systems coexist:
 - **Legacy Toolbelt** (`tools/toolbelt.py`): 15-16 CLI tools
-- **Toolbelt V2** (`tools_v2/`): 23 tools, modular architecture
+- **Toolbelt V2** (`tools/`): 23 tools, modular architecture
 
 **Impact**: 
 - V2 is superior architecture (100% V2 compliant, extensible)

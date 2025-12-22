@@ -144,7 +144,7 @@
       "severity": "critical"
     },
     {
-      "file": "tools_v2/categories/intelligent_mission_advisor.py",
+      "file": "tools/categories/intelligent_mission_advisor.py",
       "lines": 787,
       "exception": false,
       "severity": "critical"
@@ -246,13 +246,13 @@
       "severity": "major"
     },
     {
-      "file": "tools_v2/categories/github_consolidation_tools.py",
+      "file": "tools/categories/github_consolidation_tools.py",
       "lines": 584,
       "exception": false,
       "severity": "major"
     },
     {
-      "file": "tools_v2/categories/autonomous_workflow_tools.py",
+      "file": "tools/categories/autonomous_workflow_tools.py",
       "lines": 576,
       "exception": false,
       "severity": "major"
@@ -414,7 +414,7 @@
       "severity": "major"
     },
     {
-      "file": "tools_v2/categories/coordination_tools.py",
+      "file": "tools/categories/coordination_tools.py",
       "lines": 475,
       "exception": false,
       "severity": "major"
@@ -498,7 +498,7 @@
       "severity": "major"
     },
     {
-      "file": "tools_v2/categories/import_fix_tools.py",
+      "file": "tools/categories/import_fix_tools.py",
       "lines": 430,
       "exception": false,
       "severity": "major"
@@ -546,13 +546,13 @@
       "severity": "major"
     },
     {
-      "file": "tools_v2/categories/discord_webhook_tools.py",
+      "file": "tools/categories/discord_webhook_tools.py",
       "lines": 414,
       "exception": false,
       "severity": "major"
     },
     {
-      "file": "tools_v2/categories/ssot_validation_tools.py",
+      "file": "tools/categories/ssot_validation_tools.py",
       "lines": 414,
       "exception": false,
       "severity": "major"
@@ -570,7 +570,7 @@
       "severity": "major"
     },
     {
-      "file": "tools_v2/categories/memory_safety_tools.py",
+      "file": "tools/categories/memory_safety_tools.py",
       "lines": 410,
       "exception": false,
       "severity": "major"
@@ -720,7 +720,7 @@
       "severity": "threshold"
     },
     {
-      "file": "tools_v2/categories/swarm_mission_control.py",
+      "file": "tools/categories/swarm_mission_control.py",
       "lines": 388,
       "exception": false,
       "severity": "threshold"
@@ -780,7 +780,7 @@
       "severity": "threshold"
     },
     {
-      "file": "tools_v2/categories/swarm_consciousness.py",
+      "file": "tools/categories/swarm_consciousness.py",
       "lines": 378,
       "exception": false,
       "severity": "threshold"
@@ -828,7 +828,7 @@
       "severity": "threshold"
     },
     {
-      "file": "tools_v2/categories/integration_tools.py",
+      "file": "tools/categories/integration_tools.py",
       "lines": 368,
       "exception": false,
       "severity": "threshold"
@@ -924,7 +924,7 @@
       "severity": "threshold"
     },
     {
-      "file": "tools_v2/categories/validation_tools.py",
+      "file": "tools/categories/validation_tools.py",
       "lines": 360,
       "exception": false,
       "severity": "threshold"
@@ -942,7 +942,7 @@
       "severity": "threshold"
     },
     {
-      "file": "tools_v2/categories/proposal_tools.py",
+      "file": "tools/categories/proposal_tools.py",
       "lines": 358,
       "exception": false,
       "severity": "threshold"
@@ -1056,13 +1056,13 @@
       "severity": "threshold"
     },
     {
-      "file": "tools_v2/categories/captain_tools_coordination.py",
+      "file": "tools/categories/captain_tools_coordination.py",
       "lines": 345,
       "exception": false,
       "severity": "threshold"
     },
     {
-      "file": "tools_v2/categories/captain_tools_utilities.py",
+      "file": "tools/categories/captain_tools_utilities.py",
       "lines": 345,
       "exception": false,
       "severity": "threshold"
@@ -1158,7 +1158,7 @@
       "severity": "threshold"
     },
     {
-      "file": "tools_v2/categories/debate_tools.py",
+      "file": "tools/categories/debate_tools.py",
       "lines": 333,
       "exception": false,
       "severity": "threshold"
@@ -1194,7 +1194,7 @@
       "severity": "threshold"
     },
     {
-      "file": "tools_v2/categories/refactoring_tools.py",
+      "file": "tools/categories/refactoring_tools.py",
       "lines": 329,
       "exception": false,
       "severity": "threshold"
@@ -1248,7 +1248,7 @@
       "severity": "threshold"
     },
     {
-      "file": "tools_v2/categories/captain_coordination_tools.py",
+      "file": "tools/categories/captain_coordination_tools.py",
       "lines": 327,
       "exception": false,
       "severity": "threshold"
@@ -1338,7 +1338,7 @@
       "severity": "threshold"
     },
     {
-      "file": "tools_v2/categories/infrastructure_audit_tools.py",
+      "file": "tools/categories/infrastructure_audit_tools.py",
       "lines": 320,
       "exception": false,
       "severity": "threshold"
@@ -1440,7 +1440,7 @@
       "severity": "threshold"
     },
     {
-      "file": "tools_v2/categories/dashboard_tools.py",
+      "file": "tools/categories/dashboard_tools.py",
       "lines": 315,
       "exception": false,
       "severity": "threshold"
@@ -1452,7 +1452,7 @@
       "severity": "threshold"
     },
     {
-      "file": "tools_v2/categories/captain_tools_monitoring.py",
+      "file": "tools/categories/captain_tools_monitoring.py",
       "lines": 314,
       "exception": false,
       "severity": "threshold"
@@ -1500,13 +1500,13 @@
       "severity": "threshold"
     },
     {
-      "file": "tools_v2/categories/message_history_tools.py",
+      "file": "tools/categories/message_history_tools.py",
       "lines": 311,
       "exception": false,
       "severity": "threshold"
     },
     {
-      "file": "tools_v2/categories/message_analytics_tools.py",
+      "file": "tools/categories/message_analytics_tools.py",
       "lines": 311,
       "exception": false,
       "severity": "threshold"

@@ -165,7 +165,7 @@ assistant.get_emergency_guide(situation='memory_leak_detected')
 # 🚨 MEMORY LEAK EMERGENCY PROCEDURE:
 # 
 # IMMEDIATE ACTIONS:
-#   1. Run: python -m tools_v2.toolbelt mem.leaks
+#   1. Run: python -m tools.toolbelt mem.leaks
 #   2. Check: File handles with mem.handles
 #   3. Scan: Unbounded growth with mem.scan
 # 

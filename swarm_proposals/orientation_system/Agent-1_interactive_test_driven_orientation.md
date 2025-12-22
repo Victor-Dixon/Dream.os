@@ -78,7 +78,7 @@ class TestToolDiscovery:
     
     def test_01_list_all_tools(self):
         """LEARN: Discover all 100+ available tools."""
-        from tools_v2.tool_registry import get_tool_registry
+        from tools.tool_registry import get_tool_registry
         tools = get_tool_registry().list_tools()
         assert len(tools) >= 100, f"Found {len(tools)} tools"
         print(f"✅ Discovered {len(tools)} tools!")
@@ -144,7 +144,7 @@ class OrientationExplorer:
     
     def explore_tools(self, category=None):
         """Explore tools interactively."""
-        from tools_v2.tool_registry import get_tool_registry
+        from tools.tool_registry import get_tool_registry
         
         tools = get_tool_registry().list_tools()
         
@@ -434,7 +434,7 @@ ls agent_workspaces/Agent-1/inbox/  # Check inbox
 cat agent_workspaces/Agent-1/inbox/*.md  # Read messages
 
 ### Tools (Tests 11-25)
-python -c "from tools_v2.tool_registry import get_tool_registry; ..."  # List tools
+python -c "from tools.tool_registry import get_tool_registry; ..."  # List tools
 # See full list in orientation test results
 
 ### Systems (Tests 26-40)

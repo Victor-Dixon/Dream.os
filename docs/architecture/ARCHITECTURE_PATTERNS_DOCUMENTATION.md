@@ -575,7 +575,7 @@ This document serves as the **SSOT (Single Source of Truth)** for design pattern
 - [PATTERN_IMPLEMENTATION_EXAMPLES.md](./PATTERN_IMPLEMENTATION_EXAMPLES.md) - Implementation examples and code samples
 
 ### **Pattern-Specific Documentation**:
-- [ADAPTER_PATTERN_AUDIT.md](./ADAPTER_PATTERN_AUDIT.md) - Adapter pattern audit for tools_v2/
+- [ADAPTER_PATTERN_AUDIT.md](./ADAPTER_PATTERN_AUDIT.md) - Adapter pattern audit for tools/
 - [ADAPTER_MIGRATION_GUIDE.md](./ADAPTER_MIGRATION_GUIDE.md) - Adapter migration guide
 - [orchestrator-pattern.md](./orchestrator-pattern.md) - Comprehensive Orchestrator pattern documentation
 - [ORCHESTRATOR_IMPLEMENTATION_REVIEW.md](./ORCHESTRATOR_IMPLEMENTATION_REVIEW.md) - Orchestrator implementation review

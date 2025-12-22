@@ -29,7 +29,7 @@
 
 ```bash
 # Check specific file
-python -m tools_v2.toolbelt v2.check --file path/to/file.py
+python -m tools.toolbelt v2.check --file path/to/file.py
 ```
 
 ### **Step 2: Review Violations**
@@ -44,7 +44,7 @@ Output shows:
 **For file size violations**:
 ```bash
 # Get refactoring suggestions
-python -m tools_v2.toolbelt infra.extract_planner --file path/to/file.py
+python -m tools.toolbelt infra.extract_planner --file path/to/file.py
 
 # Shows recommended module splits
 ```
@@ -58,7 +58,7 @@ python -m tools_v2.toolbelt infra.extract_planner --file path/to/file.py
 
 ```bash
 # Verify compliance
-python -m tools_v2.toolbelt v2.check --file path/to/file.py
+python -m tools.toolbelt v2.check --file path/to/file.py
 
 # Should show: ✅ Compliant
 ```
@@ -94,7 +94,7 @@ If committed non-compliant code:
 git reset HEAD~1
 
 # Fix violations
-python -m tools_v2.toolbelt v2.check --file file.py
+python -m tools.toolbelt v2.check --file file.py
 
 # Re-commit after fixing
 ```
@@ -106,7 +106,7 @@ python -m tools_v2.toolbelt v2.check --file file.py
 **Example 1: Compliant File**
 
 ```bash
-$ python -m tools_v2.toolbelt v2.check --file src/core/messaging_protocol_models.py
+$ python -m tools.toolbelt v2.check --file src/core/messaging_protocol_models.py
 
 Checking: src/core/messaging_protocol_models.py
 ✅ File size: 116 lines (≤400)
@@ -120,7 +120,7 @@ Checking: src/core/messaging_protocol_models.py
 **Example 2: Violation Found**
 
 ```bash
-$ python -m tools_v2.toolbelt v2.check --file tools/autonomous_task_engine.py
+$ python -m tools.toolbelt v2.check --file tools/autonomous_task_engine.py
 
 Checking: tools/autonomous_task_engine.py
 🔴 CRITICAL: File size: 797 lines (>600 - requires immediate refactor)

@@ -37,7 +37,7 @@
 
 ### **1. CORE MONITORING & STATE MANAGEMENT**
 
-#### **`tools_v2/categories/swarm_state_reader.py`** ⭐
+#### **`tools/categories/swarm_state_reader.py`** ⭐
 **Purpose:** Primary swarm state reader  
 **Lines:** 36, 40-42, 84  
 **Functions:**
@@ -96,7 +96,7 @@ if not status_path.exists():
 
 ### **2. CAPTAIN TOOLS (Agent-4)**
 
-#### **`tools_v2/categories/captain_tools.py`** ⭐
+#### **`tools/categories/captain_tools.py`** ⭐
 **Purpose:** Captain's agent monitoring  
 **Lines:** 38, 65  
 **Functions:**
@@ -114,7 +114,7 @@ if status_file.exists():
 
 ---
 
-#### **`tools_v2/categories/captain_tools_extension.py`**
+#### **`tools/categories/captain_tools_extension.py`**
 **Purpose:** Extended captain functionality  
 **Lines:** 62, 285  
 **Functions:**
@@ -124,7 +124,7 @@ if status_file.exists():
 
 ---
 
-#### **`tools_v2/categories/captain_tools_advanced.py`**
+#### **`tools/categories/captain_tools_advanced.py`**
 **Purpose:** Advanced captain analytics  
 **Lines:** 353  
 **Functions:**
@@ -187,7 +187,7 @@ status_file = self.agent_workspaces / agent / "status.json"
 
 ---
 
-#### **`tools_v2/categories/swarm_mission_control.py`**
+#### **`tools/categories/swarm_mission_control.py`**
 **Purpose:** Mission control center  
 **Lines:** 155  
 **Functions:**

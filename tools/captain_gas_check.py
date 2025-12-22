@@ -2,11 +2,11 @@
 Captain's Tool: Gas Check (Message Status)
 ===========================================
 
-⚠️ DEPRECATED: This tool has been migrated to tools_v2.
-Use 'python -m tools_v2.toolbelt captain.gas_check' instead.
+⚠️ DEPRECATED: This tool has been migrated to tools.
+Use 'python -m tools.toolbelt captain.gas_check' instead.
 This file will be removed in future version.
 
-Migrated to: tools_v2/categories/captain_tools_extension.py → GasCheckTool
+Migrated to: tools/categories/captain_tools_extension.py → GasCheckTool
 Registry: captain.gas_check
 
 Checks when agents last received messages (GAS!).
@@ -22,15 +22,15 @@ Deprecated: 2025-01-27 (Agent-6 - V2 Tools Flattening)
 import warnings
 
 warnings.warn(
-    "⚠️ DEPRECATED: This tool has been migrated to tools_v2. "
-    "Use 'python -m tools_v2.toolbelt captain.gas_check' instead. "
+    "⚠️ DEPRECATED: This tool has been migrated to tools. "
+    "Use 'python -m tools.toolbelt captain.gas_check' instead. "
     "This file will be removed in future version.",
     DeprecationWarning,
     stacklevel=2
 )
 
-# Legacy compatibility - delegate to tools_v2
-# For migration path, use: python -m tools_v2.toolbelt captain.gas_check
+# Legacy compatibility - delegate to tools
+# For migration path, use: python -m tools.toolbelt captain.gas_check
 
 from datetime import datetime
 from pathlib import Path
@@ -42,9 +42,9 @@ def check_agent_gas_levels():
 
     Low gas = No recent messages = May need activation!
     """
-    # Delegate to tools_v2 adapter
+    # Delegate to tools adapter
     try:
-        from tools_v2.categories.captain_tools_extension import GasCheckTool
+        from tools.categories.captain_tools_extension import GasCheckTool
         
         tool = GasCheckTool()
         result = tool.execute({}, None)

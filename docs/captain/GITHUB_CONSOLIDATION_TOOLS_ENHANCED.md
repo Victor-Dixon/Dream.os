@@ -48,7 +48,7 @@
 
 ### **Analyze All Your Repos:**
 ```python
-from tools_v2.toolbelt_core import ToolbeltCore
+from tools.toolbelt_core import ToolbeltCore
 
 toolbelt = ToolbeltCore()
 

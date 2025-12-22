@@ -48,9 +48,9 @@ The enhanced V2 Compliance Dashboard now includes **historical trend tracking** 
 
 Before viewing historical trends, you need at least one snapshot:
 
-**Recommended Method (tools_v2)**:
+**Recommended Method (tools)**:
 ```bash
-python -m tools_v2.toolbelt dashboard.generate --directory src --include_history
+python -m tools.toolbelt dashboard.generate --directory src --include_history
 ```
 
 **Legacy Method** (still supported):
@@ -65,16 +65,16 @@ python tools/compliance_history_tracker.py snapshot src --commit abc123
 
 ### **Step 2: Generate Dashboard with History**
 
-**Recommended Method (tools_v2)**:
+**Recommended Method (tools)**:
 ```bash
 # Generate dashboard with historical trends (default)
-python -m tools_v2.toolbelt dashboard.generate --directory src --include_history
+python -m tools.toolbelt dashboard.generate --directory src --include_history
 
 # Specific output directory
-python -m tools_v2.toolbelt dashboard.generate --directory src --output_dir reports/dashboards
+python -m tools.toolbelt dashboard.generate --directory src --output_dir reports/dashboards
 
 # Without historical data
-python -m tools_v2.toolbelt dashboard.generate --directory src
+python -m tools.toolbelt dashboard.generate --directory src
 ```
 
 **Legacy Method** (still supported):

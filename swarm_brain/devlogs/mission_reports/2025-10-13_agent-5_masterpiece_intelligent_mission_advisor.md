@@ -127,19 +127,19 @@ Cycle 1: ml_optimizer_models.py phantom task detected → 3 cycles saved!
 
 ### **Files Created**:
 
-1. **`tools_v2/categories/intelligent_mission_advisor.py`** (398 lines)
+1. **`tools/categories/intelligent_mission_advisor.py`** (398 lines)
    - Core IntelligentMissionAdvisor class
    - Comprehensive intelligence engine
    - All analysis methods
    - V2 compliant ✅
 
-2. **`tools_v2/categories/intelligent_mission_advisor_adapter.py`** (196 lines)
+2. **`tools/categories/intelligent_mission_advisor_adapter.py`** (196 lines)
    - 4 IToolAdapter wrappers
    - ToolSpec definitions
    - Error handling
    - V2 compliant ✅
 
-3. **`tools_v2/advisor_cli.py`** (227 lines)
+3. **`tools/advisor_cli.py`** (227 lines)
    - Command-line interface
    - Human-readable output
    - JSON mode support
@@ -159,7 +159,7 @@ Cycle 1: ml_optimizer_models.py phantom task detected → 3 cycles saved!
 
 **Swarm Analysis Test**: ✅ **PASSED**
 ```bash
-python tools_v2/advisor_cli.py --agent Agent-5 --swarm
+python tools/advisor_cli.py --agent Agent-5 --swarm
 
 Result:
   Total agents: 14

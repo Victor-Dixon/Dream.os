@@ -122,7 +122,7 @@
 
 ### **Phase 4: Captain Tools Migration** 🔄
 
-**Target**: 20 tools → `tools_v2/categories/captain_tools.py`
+**Target**: 20 tools → `tools/categories/captain_tools.py`
 
 **Status**: 🔄 Analysis phase
 

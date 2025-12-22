@@ -172,7 +172,7 @@
           "\u2705 ARCHITECTURE SUPPORT: Role ACTIVE & CONFIRMED by Captain - Architecture support active, execution teams executing, all guidance documents ready",
           "\u2705 ARCHITECTURE SUPPORT: Coordination confirmed by Agent-6 (Co-Captain) - Architecture support role active, monitoring execution teams (Agent-1, Agent-3, Agent-5, Agent-7, Agent-8)",
           "\u2705 ARCHITECTURE SUPPORT: Fully coordinated and active - All guidance documents ready, execution teams supported, architecture support operational",
-          "\u2705 AGENT-5 CHECK-IN: Acknowledged - Status: ACTIVE, test coverage work complete, ready for next assignment. Noted: post_to_discord_router.py import error (tools_v2.tool_registry issue), workaround: notify_discord.py working. Role clarification: Agent-5 is Business Intelligence Specialist (not Architecture - that's Agent-2's domain)",
+          "\u2705 AGENT-5 CHECK-IN: Acknowledged - Status: ACTIVE, test coverage work complete, ready for next assignment. Noted: post_to_discord_router.py import error (tools.tool_registry issue), workaround: notify_discord.py working. Role clarification: Agent-5 is Business Intelligence Specialist (not Architecture - that's Agent-2's domain)",
           "\u2705 AGENT-5 COLLABORATION: Role alignment confirmed - Agent-5 handles BI/analysis/test coverage, Agent-2 handles architecture guidance. Perfect division of labor. Ready for coordinated assignments",
           "\u2705 AGENT-5 COLLABORATION: Collaboration confirmed - BI analysis + Architecture guidance = powerful combination. Standing by for coordinated assignments",
           "\u2705 AGENT-5 COLLABORATION: Collaboration active confirmed - Ready for actual work assignments. Standing by",
@@ -1305,7 +1305,7 @@
         "completed_tasks": [
           "V2 Tools Flattening: 7 tools migrated (6 dashboard + 1 browser), all registered and tested",
           "\u2705 CREATED: dashboard-view-messages.js - Message history dashboard component (ACTION, not just planning!)",
-          "Updated COMPLIANCE_DASHBOARD_GUIDE.md with tools_v2 references",
+          "Updated COMPLIANCE_DASHBOARD_GUIDE.md with tools references",
           "Started updating DASHBOARD_HISTORICAL_TRACKING_GUIDE.md",
           "\u2705 PROJECT SCANNER: Cleared and regenerated all project analysis reports",
           "\u2705 SWARM BRAIN: Shared learning about project scanner regeneration protocol",
@@ -1324,7 +1324,7 @@
           "\u2705 REFACTORING HELPERS: Implemented AST-based class structure optimization"
         ],
         "achievements": [
-          "Migrated all web-related dashboard tools to tools_v2 following adapter pattern",
+          "Migrated all web-related dashboard tools to tools following adapter pattern",
           "\u2705 CREATED: Message history dashboard component (dashboard-view-messages.js) - ACTION, not planning!",
           "\u2705 CREATED: Agent activity dashboard (dashboard-view-activity.js) - Real-time activity tracking",
           "\u2705 CREATED: Queue status dashboard (dashboard-view-queue.js) - Queue monitoring UI",
@@ -1567,7 +1567,7 @@
           "\u2705 Swarm Brain: Added SSOT_CONFIG_VALIDATION_PATTERN_2025-01-27.md",
           "\u2705 Cycle Planner: Added 6 pending tasks (1,400 points total)",
           "\u2705 State Report: Updated STATE_OF_THE_PROJECT_REPORT.md with Agent-8 contributions",
-          "Completed comprehensive audit of tools_v2/ structure",
+          "Completed comprehensive audit of tools/ structure",
           "Identified 17 captain tools in tools/ needing migration",
           "Analyzed adapter pattern compliance (124+ tools verified)",
           "Created detailed audit report with migration roadmap",

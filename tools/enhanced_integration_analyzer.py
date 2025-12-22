@@ -5,7 +5,7 @@ Enhanced Integration Analyzer
 
 Enhanced analysis for identifying tools that should be converted to:
 - Services (src/services/)
-- CLI commands (tools_v2/cli/)
+- CLI commands (tools/cli/)
 - Library utilities (src/core/utils/ or src/utils/)
 
 Author: Agent-5 (Business Intelligence Specialist)

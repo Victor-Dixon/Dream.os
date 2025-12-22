@@ -75,13 +75,13 @@ from workspace_auto_cleaner import archive_old_messages, clean_temp_files, organ
 
 **Problem:**
 - Creates dependency on legacy `tools/` directory
-- Violates V2 Tools Flattening objective (consolidate to tools_v2/)
-- Makes tools_v2 dependent on old code structure
+- Violates V2 Tools Flattening objective (consolidate to tools/)
+- Makes tools dependent on old code structure
 
 **Recommendation:** ⚡ **MIGRATE DEPENDENCIES**
-1. **Option A:** Migrate `workspace_health_monitor.py` and `workspace_auto_cleaner.py` to `tools_v2/` utilities
+1. **Option A:** Migrate `workspace_health_monitor.py` and `workspace_auto_cleaner.py` to `tools/` utilities
 2. **Option B:** Refactor adapters to implement functionality directly (no external dependencies)
-3. **Option C:** Create `tools_v2/utils/workspace_utils.py` for shared workspace functionality
+3. **Option C:** Create `tools/utils/workspace_utils.py` for shared workspace functionality
 
 **Priority:** HIGH - This creates technical debt and violates consolidation goals
 
@@ -127,7 +127,7 @@ from workspace_auto_cleaner import archive_old_messages, clean_temp_files, organ
 
 **Proposed Structure:**
 ```
-tools_v2/categories/
+tools/categories/
 ├── infrastructure_tools.py (core tools, ~200 lines)
 ├── workspace_tools.py (workspace management, ~150 lines)
 └── browser_tools.py (browser pool, ~100 lines)
@@ -143,11 +143,11 @@ tools_v2/categories/
 **Action:** Remove dependency on `tools/` directory
 
 **Options:**
-1. **Migrate utilities to tools_v2/utils/**
+1. **Migrate utilities to tools/utils/**
 2. **Refactor adapters to be self-contained**
 3. **Create shared workspace utilities module**
 
-**Recommendation:** Option 1 - Migrate to `tools_v2/utils/workspace_utils.py`
+**Recommendation:** Option 1 - Migrate to `tools/utils/workspace_utils.py`
 
 ### **Priority 3: Code Improvements** ⚡ **MEDIUM**
 
@@ -180,7 +180,7 @@ tools_v2/categories/
    - **Fix:** Split into multiple category files
 
 2. **Legacy Dependencies:** Both tools import from `tools/` directory
-   - **Fix:** Migrate dependencies to `tools_v2/` or refactor to be self-contained
+   - **Fix:** Migrate dependencies to `tools/` or refactor to be self-contained
 
 ### **3. Should infrastructure_tools.py be split if it grows?**
 
@@ -205,7 +205,7 @@ tools_v2/categories/
 
 ### **Immediate (This Cycle):**
 1. ⚡ Split `infrastructure_tools.py` to fix V2 compliance
-2. ⚡ Migrate legacy dependencies from `tools/` to `tools_v2/`
+2. ⚡ Migrate legacy dependencies from `tools/` to `tools/`
 3. ⚡ Update tool registry imports after split
 
 ### **Next Cycle:**

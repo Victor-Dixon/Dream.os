@@ -1386,14 +1386,14 @@
         "priority": "P0 - Critical"
       },
       {
-        "file": "tools_v2\\categories\\intelligent_mission_advisor_guidance.py",
-        "marker": "tools_v2\\categories\\intelligent_mission_advisor_guidance.py:181:REFACTOR",
+        "file": "tools\\categories\\intelligent_mission_advisor_guidance.py",
+        "marker": "tools\\categories\\intelligent_mission_advisor_guidance.py:181:REFACTOR",
         "type": "REFACTOR",
         "priority": "P3 - Low"
       },
       {
-        "file": "tools_v2\\categories\\web_tools.py",
-        "marker": "tools_v2\\categories\\web_tools.py:102:TODO",
+        "file": "tools\\categories\\web_tools.py",
+        "marker": "tools\\categories\\web_tools.py:102:TODO",
         "type": "TODO",
         "priority": "P1 - High"
       }
@@ -2018,32 +2018,32 @@
         "priority": "P3 - Low"
       },
       {
-        "file": "tools_v2\\categories\\infrastructure_tools.py",
-        "marker": "tools_v2\\categories\\infrastructure_tools.py:6:DEPRECATED",
+        "file": "tools\\categories\\infrastructure_tools.py",
+        "marker": "tools\\categories\\infrastructure_tools.py:6:DEPRECATED",
         "type": "DEPRECATED",
         "priority": "P2 - Medium"
       },
       {
-        "file": "tools_v2\\categories\\test_generation_tools.py",
-        "marker": "tools_v2\\categories\\test_generation_tools.py:143:TODO",
+        "file": "tools\\categories\\test_generation_tools.py",
+        "marker": "tools\\categories\\test_generation_tools.py:143:TODO",
         "type": "TODO",
         "priority": "P1 - High"
       },
       {
-        "file": "tools_v2\\categories\\test_generation_tools.py",
-        "marker": "tools_v2\\categories\\test_generation_tools.py:147:TODO",
+        "file": "tools\\categories\\test_generation_tools.py",
+        "marker": "tools\\categories\\test_generation_tools.py:147:TODO",
         "type": "TODO",
         "priority": "P1 - High"
       },
       {
-        "file": "tools_v2\\categories\\test_generation_tools.py",
-        "marker": "tools_v2\\categories\\test_generation_tools.py:155:TODO",
+        "file": "tools\\categories\\test_generation_tools.py",
+        "marker": "tools\\categories\\test_generation_tools.py:155:TODO",
         "type": "TODO",
         "priority": "P1 - High"
       },
       {
-        "file": "tools_v2\\categories\\test_generation_tools.py",
-        "marker": "tools_v2\\categories\\test_generation_tools.py:170:TODO",
+        "file": "tools\\categories\\test_generation_tools.py",
+        "marker": "tools\\categories\\test_generation_tools.py:170:TODO",
         "type": "TODO",
         "priority": "P1 - High"
       }
@@ -2206,26 +2206,26 @@
         "priority": "P3 - Low"
       },
       {
-        "file": "tools_v2\\categories\\captain_coordination_tools.py",
-        "marker": "tools_v2\\categories\\captain_coordination_tools.py:124:DEPRECATED",
+        "file": "tools\\categories\\captain_coordination_tools.py",
+        "marker": "tools\\categories\\captain_coordination_tools.py:124:DEPRECATED",
         "type": "DEPRECATED",
         "priority": "P2 - Medium"
       },
       {
-        "file": "tools_v2\\categories\\captain_coordination_tools.py",
-        "marker": "tools_v2\\categories\\captain_coordination_tools.py:132:DEPRECATED",
+        "file": "tools\\categories\\captain_coordination_tools.py",
+        "marker": "tools\\categories\\captain_coordination_tools.py:132:DEPRECATED",
         "type": "DEPRECATED",
         "priority": "P2 - Medium"
       },
       {
-        "file": "tools_v2\\categories\\captain_coordination_tools.py",
-        "marker": "tools_v2\\categories\\captain_coordination_tools.py:144:DEPRECATED",
+        "file": "tools\\categories\\captain_coordination_tools.py",
+        "marker": "tools\\categories\\captain_coordination_tools.py:144:DEPRECATED",
         "type": "DEPRECATED",
         "priority": "P2 - Medium"
       },
       {
-        "file": "tools_v2\\categories\\messaging_tools.py",
-        "marker": "tools_v2\\categories\\messaging_tools.py:155:TODO",
+        "file": "tools\\categories\\messaging_tools.py",
+        "marker": "tools\\categories\\messaging_tools.py:155:TODO",
         "type": "TODO",
         "priority": "P1 - High"
       }
@@ -2837,15 +2837,15 @@
     "tools\\vote_tools_ranking_debate.py",
     "tools\\wordpress_admin_deployer.py",
     "tools\\workspace_health_checker.py",
-    "tools_v2\\categories\\captain_tools_extension.py",
-    "tools_v2\\categories\\intelligent_mission_advisor.py",
-    "tools_v2\\categories\\intelligent_mission_advisor.py",
-    "tools_v2\\categories\\intelligent_mission_advisor_analysis.py",
-    "tools_v2\\categories\\message_history_tools.py",
-    "tools_v2\\categories\\session_tools.py",
-    "tools_v2\\categories\\swarm_brain_tools.py",
-    "tools_v2\\categories\\swarm_brain_tools.py",
-    "tools_v2\\categories\\swarm_brain_tools.py",
-    "tools_v2\\categories\\system_tools.py"
+    "tools\\categories\\captain_tools_extension.py",
+    "tools\\categories\\intelligent_mission_advisor.py",
+    "tools\\categories\\intelligent_mission_advisor.py",
+    "tools\\categories\\intelligent_mission_advisor_analysis.py",
+    "tools\\categories\\message_history_tools.py",
+    "tools\\categories\\session_tools.py",
+    "tools\\categories\\swarm_brain_tools.py",
+    "tools\\categories\\swarm_brain_tools.py",
+    "tools\\categories\\swarm_brain_tools.py",
+    "tools\\categories\\system_tools.py"
   ]
 }

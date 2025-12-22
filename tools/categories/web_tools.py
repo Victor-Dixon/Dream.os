@@ -44,7 +44,7 @@ class DiscordMermaidRendererTool(IToolAdapter):
     ) -> ToolResult:
         """Execute Mermaid rendering."""
         try:
-            # V2 Compliance: Import from tools_v2/utils/ (migrated 2025-01-27)
+            # V2 Compliance: Import from tools/utils/ (migrated 2025-01-27)
             from ..utils.discord_mermaid_renderer import DiscordMermaidRenderer
 
             renderer = DiscordMermaidRenderer()
@@ -99,7 +99,7 @@ class DiscordWebTestTool(IToolAdapter):
     ) -> ToolResult:
         """Execute Discord web testing."""
         try:
-            # TODO: Migrate to tools_v2/utils/ when ready
+            # TODO: Migrate to tools/utils/ when ready
             # Legacy dependency: tools/coordination/discord_web_test_automation.py
             import sys
             from pathlib import Path

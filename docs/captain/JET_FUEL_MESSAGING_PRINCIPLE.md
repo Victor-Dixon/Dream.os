@@ -149,7 +149,7 @@ Status: AUTONOMOUS EXECUTION ENABLED
 AGENTS - YOU ARE NOW AUTONOMOUS FOR V2 TOOLS FLATTENING!
 
 YOUR AUTONOMOUS MISSION:
-- Review tools_v2/ structure and identify gaps
+- Review tools/ structure and identify gaps
 - Find tools in tools/ that need migration
 - Create adapters following the pattern
 - Work independently, coordinate when needed

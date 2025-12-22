@@ -852,7 +852,7 @@ python tools/status_json_health_monitor.py --agent Agent-X
 ### **3. Swarm State Reader** (Captain's Tool)
 ```bash
 # Captain checks all 8 agents
-python -m tools_v2.categories.swarm_state_reader
+python -m tools.categories.swarm_state_reader
 
 # Shows who updated recently, who's stale
 ```
@@ -973,7 +973,7 @@ git commit -m "Agent-X: Status updated"
 ### **Related Tools:**
 - `tools/agent_lifecycle_automator.py` (Agent-1)
 - `tools/agent_fuel_monitor.py` (GAS delivery)
-- `tools_v2/categories/swarm_state_reader.py` (Captain's monitor)
+- `tools/categories/swarm_state_reader.py` (Captain's monitor)
 - `tools/integrity_validator.py` (validation)
 
 ---

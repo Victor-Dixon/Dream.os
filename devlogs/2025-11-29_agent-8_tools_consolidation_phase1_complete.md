@@ -9,7 +9,7 @@
 
 ## 📊 EXECUTIVE SUMMARY
 
-**Objective**: Execute tools consolidation (monitoring → unified_monitor, analysis → unified_analyzer), migrate 20 captain tools to tools_v2, complete ranking debate analysis. Target: 35% reduction (234 → ~150 tools).
+**Objective**: Execute tools consolidation (monitoring → unified_monitor, analysis → unified_analyzer), migrate 20 captain tools to tools, complete ranking debate analysis. Target: 35% reduction (234 → ~150 tools).
 
 **Progress**: ✅ **FOUNDATION COMPLETE + CONSOLIDATION EXECUTING**
 
@@ -110,12 +110,12 @@
 
 **Results**:
 - **Total Captain Tools in tools/**: 18 tools
-- **Already Migrated to tools_v2**: 8 tools (with deprecation warnings)
-  - `captain_check_agent_status.py` → tools_v2
-  - `captain_morning_briefing.py` → tools_v2
-  - `captain_snapshot.py` → tools_v2
-  - `captain_find_idle_agents.py` → tools_v2
-  - `captain_next_task_picker.py` → tools_v2
+- **Already Migrated to tools**: 8 tools (with deprecation warnings)
+  - `captain_check_agent_status.py` → tools
+  - `captain_morning_briefing.py` → tools
+  - `captain_snapshot.py` → tools
+  - `captain_find_idle_agents.py` → tools
+  - `captain_next_task_picker.py` → tools
   - + 3 more
 - **Pending Migration**: 10 tools
 - **Migration Progress**: ~44% complete
@@ -135,9 +135,9 @@
 **Archived Tools**:
 1. `monitor_github_pusher.py` → unified_monitor.py ✅
 2. `monitor_disk_and_ci.py` → unified_monitor.py ✅
-3. `captain_check_agent_status.py` → tools_v2 ✅
-4. `captain_morning_briefing.py` → tools_v2 ✅
-5. `captain_snapshot.py` → tools_v2 ✅
+3. `captain_check_agent_status.py` → tools ✅
+4. `captain_morning_briefing.py` → tools ✅
+5. `captain_snapshot.py` → tools ✅
 
 **Archive Location**: `tools/deprecated/consolidated_2025-11-29/`
 

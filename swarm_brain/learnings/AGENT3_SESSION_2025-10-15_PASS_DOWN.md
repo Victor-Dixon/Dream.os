@@ -490,14 +490,14 @@ python tools/auto_status_updater.py --agent Agent-X --auto-detect
 **Infrastructure Monitoring:**
 ```bash
 # Real-time swarm monitoring
-python tools_v2/toolbelt.py swarm.pulse
+python tools/toolbelt.py swarm.pulse
 
 # Team coordination dashboard
-python tools_v2/categories/autonomous_workflow_tools.py dashboard
+python tools/categories/autonomous_workflow_tools.py dashboard
 
 # Health checks
-python tools_v2/toolbelt.py obs.health
-python tools_v2/toolbelt.py mem.leaks
+python tools/toolbelt.py obs.health
+python tools/toolbelt.py mem.leaks
 ```
 
 **Repository Analysis:**

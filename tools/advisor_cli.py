@@ -8,16 +8,16 @@ Every agent's personal AI copilot for mission intelligence.
 
 Usage:
     # Get mission recommendation
-    python tools_v2/advisor_cli.py --agent Agent-5 --recommend
+    python tools/advisor_cli.py --agent Agent-5 --recommend
 
     # Validate Captain's order
-    python tools_v2/advisor_cli.py --agent Agent-5 --validate inbox/ORDER.md
+    python tools/advisor_cli.py --agent Agent-5 --validate inbox/ORDER.md
 
     # Analyze swarm state
-    python tools_v2/advisor_cli.py --agent Agent-5 --swarm
+    python tools/advisor_cli.py --agent Agent-5 --swarm
 
     # Get real-time guidance
-    python tools_v2/advisor_cli.py --agent Agent-5 --guide refactoring
+    python tools/advisor_cli.py --agent Agent-5 --guide refactoring
 
 Author: Agent-5 (Business Intelligence & Team Beta Leader)
 License: MIT
@@ -31,7 +31,7 @@ from pathlib import Path
 # Add parent to path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from tools_v2.categories.intelligent_mission_advisor import get_mission_advisor
+from tools.categories.intelligent_mission_advisor import get_mission_advisor
 
 
 def main():
@@ -47,19 +47,19 @@ Your personal AI copilot providing intelligent mission guidance.
 EXAMPLES:
 --------
 # Get mission recommendation (what should I work on?)
-python tools_v2/advisor_cli.py --agent Agent-5 --recommend
+python tools/advisor_cli.py --agent Agent-5 --recommend
 
 # Validate Captain's order (Pattern #1: verify before claiming!)
-python tools_v2/advisor_cli.py --agent Agent-5 --validate inbox/EXECUTION_ORDER.md
+python tools/advisor_cli.py --agent Agent-5 --validate inbox/EXECUTION_ORDER.md
 
 # Analyze swarm state (what's everyone doing?)
-python tools_v2/advisor_cli.py --agent Agent-5 --swarm
+python tools/advisor_cli.py --agent Agent-5 --swarm
 
 # Get real-time guidance during execution
-python tools_v2/advisor_cli.py --agent Agent-5 --guide refactoring
+python tools/advisor_cli.py --agent Agent-5 --guide refactoring
 
 # Get recommendation with specific context
-python tools_v2/advisor_cli.py --agent Agent-5 --recommend --context analytics
+python tools/advisor_cli.py --agent Agent-5 --recommend --context analytics
 
 LIKE THE MESSAGING SYSTEM REVOLUTIONIZED COMMUNICATION,
 THIS TOOL REVOLUTIONIZES DECISION-MAKING! 🚀

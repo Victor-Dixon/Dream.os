@@ -209,7 +209,7 @@ class DevlogManager:
 
         # Check for Mermaid diagrams and convert if needed
         try:
-            # Try V2 Compliance import first (tools_v2/utils/)
+            # Try V2 Compliance import first (tools/utils/)
             # Add parent directory to path if needed
             import sys
             parent_dir = Path(__file__).parent.parent
@@ -217,9 +217,9 @@ class DevlogManager:
                 sys.path.insert(0, str(parent_dir))
 
             try:
-                from tools_v2.utils.discord_mermaid_renderer import DiscordMermaidRenderer
+                from tools.utils.discord_mermaid_renderer import DiscordMermaidRenderer
             except ImportError:
-                # Fallback to tools/ if tools_v2 not available
+                # Fallback to tools/ if tools not available
                 from tools.discord_mermaid_renderer import DiscordMermaidRenderer
 
             renderer = DiscordMermaidRenderer()

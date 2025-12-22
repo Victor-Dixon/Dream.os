@@ -4566,8 +4566,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2.",
-      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+      "marker_text": "This tool has been migrated to tools.",
+      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
     },
     {
       "file_path": "tools\\captain_check_agent_status.py",
@@ -4586,8 +4586,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2. \"",
-      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+      "marker_text": "This tool has been migrated to tools. \"",
+      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
     },
     {
       "file_path": "tools\\captain_completion_processor.py",
@@ -4596,8 +4596,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2.",
-      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+      "marker_text": "This tool has been migrated to tools.",
+      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
     },
     {
       "file_path": "tools\\captain_completion_processor.py",
@@ -4616,8 +4616,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2. \"",
-      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+      "marker_text": "This tool has been migrated to tools. \"",
+      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
     },
     {
       "file_path": "tools\\captain_coordinate_validator.py",
@@ -4626,8 +4626,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2.",
-      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+      "marker_text": "This tool has been migrated to tools.",
+      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
     },
     {
       "file_path": "tools\\captain_coordinate_validator.py",
@@ -4646,8 +4646,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2. \"",
-      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+      "marker_text": "This tool has been migrated to tools. \"",
+      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
     },
     {
       "file_path": "tools\\captain_find_idle_agents.py",
@@ -4656,8 +4656,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2.",
-      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+      "marker_text": "This tool has been migrated to tools.",
+      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
     },
     {
       "file_path": "tools\\captain_find_idle_agents.py",
@@ -4676,8 +4676,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2. \"",
-      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+      "marker_text": "This tool has been migrated to tools. \"",
+      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
     },
     {
       "file_path": "tools\\captain_gas_check.py",
@@ -4686,8 +4686,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2.",
-      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+      "marker_text": "This tool has been migrated to tools.",
+      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
     },
     {
       "file_path": "tools\\captain_gas_check.py",
@@ -4706,8 +4706,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2. \"",
-      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+      "marker_text": "This tool has been migrated to tools. \"",
+      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
     },
     {
       "file_path": "tools\\captain_hard_onboard_agent.py",
@@ -4716,8 +4716,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2.",
-      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+      "marker_text": "This tool has been migrated to tools.",
+      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
     },
     {
       "file_path": "tools\\captain_hard_onboard_agent.py",
@@ -4736,8 +4736,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2. \"",
-      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+      "marker_text": "This tool has been migrated to tools. \"",
+      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
     },
     {
       "file_path": "tools\\captain_hard_onboard_agent.py",
@@ -4746,8 +4746,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "Use 'python -m tools_v2.toolbelt onboard.hard' instead\")",
-      "full_line": "print(\"\\n\u26a0\ufe0f  DEPRECATED: Use 'python -m tools_v2.toolbelt onboard.hard' instead\")"
+      "marker_text": "Use 'python -m tools.toolbelt onboard.hard' instead\")",
+      "full_line": "print(\"\\n\u26a0\ufe0f  DEPRECATED: Use 'python -m tools.toolbelt onboard.hard' instead\")"
     },
     {
       "file_path": "tools\\captain_import_validator.py",
@@ -4756,8 +4756,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2.",
-      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+      "marker_text": "This tool has been migrated to tools.",
+      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
     },
     {
       "file_path": "tools\\captain_import_validator.py",
@@ -4776,8 +4776,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2. \"",
-      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+      "marker_text": "This tool has been migrated to tools. \"",
+      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
     },
     {
       "file_path": "tools\\captain_import_validator.py",
@@ -4786,8 +4786,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "Use 'python -m tools_v2.toolbelt refactor.validate_imports' instead\")",
-      "full_line": "print(\"\\n\u26a0\ufe0f  DEPRECATED: Use 'python -m tools_v2.toolbelt refactor.validate_imports' instead\")"
+      "marker_text": "Use 'python -m tools.toolbelt refactor.validate_imports' instead\")",
+      "full_line": "print(\"\\n\u26a0\ufe0f  DEPRECATED: Use 'python -m tools.toolbelt refactor.validate_imports' instead\")"
     },
     {
       "file_path": "tools\\captain_leaderboard_update.py",
@@ -4796,8 +4796,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2.",
-      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+      "marker_text": "This tool has been migrated to tools.",
+      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
     },
     {
       "file_path": "tools\\captain_leaderboard_update.py",
@@ -4816,8 +4816,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2. \"",
-      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+      "marker_text": "This tool has been migrated to tools. \"",
+      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
     },
     {
       "file_path": "tools\\captain_message_all_agents.py",
@@ -4826,8 +4826,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2.",
-      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+      "marker_text": "This tool has been migrated to tools.",
+      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
     },
     {
       "file_path": "tools\\captain_message_all_agents.py",
@@ -4846,8 +4846,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2. \"",
-      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+      "marker_text": "This tool has been migrated to tools. \"",
+      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
     },
     {
       "file_path": "tools\\captain_morning_briefing.py",
@@ -4856,8 +4856,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2.",
-      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+      "marker_text": "This tool has been migrated to tools.",
+      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
     },
     {
       "file_path": "tools\\captain_morning_briefing.py",
@@ -4876,8 +4876,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2. \"",
-      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+      "marker_text": "This tool has been migrated to tools. \"",
+      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
     },
     {
       "file_path": "tools\\captain_next_task_picker.py",
@@ -4886,8 +4886,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2.",
-      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+      "marker_text": "This tool has been migrated to tools.",
+      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
     },
     {
       "file_path": "tools\\captain_next_task_picker.py",
@@ -4906,8 +4906,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2. \"",
-      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+      "marker_text": "This tool has been migrated to tools. \"",
+      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
     },
     {
       "file_path": "tools\\captain_roi_quick_calc.py",
@@ -4916,8 +4916,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2.",
-      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+      "marker_text": "This tool has been migrated to tools.",
+      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
     },
     {
       "file_path": "tools\\captain_roi_quick_calc.py",
@@ -4936,8 +4936,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2. \"",
-      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+      "marker_text": "This tool has been migrated to tools. \"",
+      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
     },
     {
       "file_path": "tools\\captain_self_message.py",
@@ -4946,8 +4946,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2.",
-      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+      "marker_text": "This tool has been migrated to tools.",
+      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
     },
     {
       "file_path": "tools\\captain_self_message.py",
@@ -4966,8 +4966,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2. \"",
-      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+      "marker_text": "This tool has been migrated to tools. \"",
+      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
     },
     {
       "file_path": "tools\\captain_snapshot.py",
@@ -4976,8 +4976,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2.",
-      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+      "marker_text": "This tool has been migrated to tools.",
+      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
     },
     {
       "file_path": "tools\\captain_snapshot.py",
@@ -4996,8 +4996,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2. \"",
-      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+      "marker_text": "This tool has been migrated to tools. \"",
+      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
     },
     {
       "file_path": "tools\\cast_all_tools_ranking_votes.py",
@@ -5426,8 +5426,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2.",
-      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+      "marker_text": "This tool has been migrated to tools.",
+      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
     },
     {
       "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_check_agent_status.py",
@@ -5446,8 +5446,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2. \"",
-      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+      "marker_text": "This tool has been migrated to tools. \"",
+      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
     },
     {
       "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_coordinate_validator.py",
@@ -5456,8 +5456,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2.",
-      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+      "marker_text": "This tool has been migrated to tools.",
+      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
     },
     {
       "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_coordinate_validator.py",
@@ -5476,8 +5476,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2. \"",
-      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+      "marker_text": "This tool has been migrated to tools. \"",
+      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
     },
     {
       "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_find_idle_agents.py",
@@ -5486,8 +5486,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2.",
-      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+      "marker_text": "This tool has been migrated to tools.",
+      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
     },
     {
       "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_find_idle_agents.py",
@@ -5506,8 +5506,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2. \"",
-      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+      "marker_text": "This tool has been migrated to tools. \"",
+      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
     },
     {
       "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_gas_check.py",
@@ -5516,8 +5516,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2.",
-      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+      "marker_text": "This tool has been migrated to tools.",
+      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
     },
     {
       "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_gas_check.py",
@@ -5536,8 +5536,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2. \"",
-      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+      "marker_text": "This tool has been migrated to tools. \"",
+      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
     },
     {
       "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_import_validator.py",
@@ -5546,8 +5546,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2.",
-      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+      "marker_text": "This tool has been migrated to tools.",
+      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
     },
     {
       "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_import_validator.py",
@@ -5566,8 +5566,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2. \"",
-      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+      "marker_text": "This tool has been migrated to tools. \"",
+      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
     },
     {
       "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_import_validator.py",
@@ -5576,8 +5576,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "Use 'python -m tools_v2.toolbelt refactor.validate_imports' instead\")",
-      "full_line": "print(\"\\n\u26a0\ufe0f  DEPRECATED: Use 'python -m tools_v2.toolbelt refactor.validate_imports' instead\")"
+      "marker_text": "Use 'python -m tools.toolbelt refactor.validate_imports' instead\")",
+      "full_line": "print(\"\\n\u26a0\ufe0f  DEPRECATED: Use 'python -m tools.toolbelt refactor.validate_imports' instead\")"
     },
     {
       "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_leaderboard_update.py",
@@ -5586,8 +5586,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2.",
-      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+      "marker_text": "This tool has been migrated to tools.",
+      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
     },
     {
       "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_leaderboard_update.py",
@@ -5606,8 +5606,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2. \"",
-      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+      "marker_text": "This tool has been migrated to tools. \"",
+      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
     },
     {
       "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_message_all_agents.py",
@@ -5616,8 +5616,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2.",
-      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+      "marker_text": "This tool has been migrated to tools.",
+      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
     },
     {
       "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_message_all_agents.py",
@@ -5636,8 +5636,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2. \"",
-      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+      "marker_text": "This tool has been migrated to tools. \"",
+      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
     },
     {
       "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_morning_briefing.py",
@@ -5646,8 +5646,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2.",
-      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+      "marker_text": "This tool has been migrated to tools.",
+      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
     },
     {
       "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_morning_briefing.py",
@@ -5666,8 +5666,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2. \"",
-      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+      "marker_text": "This tool has been migrated to tools. \"",
+      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
     },
     {
       "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_next_task_picker.py",
@@ -5676,8 +5676,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2.",
-      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+      "marker_text": "This tool has been migrated to tools.",
+      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
     },
     {
       "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_next_task_picker.py",
@@ -5696,8 +5696,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2. \"",
-      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+      "marker_text": "This tool has been migrated to tools. \"",
+      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
     },
     {
       "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_snapshot.py",
@@ -5706,8 +5706,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2.",
-      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+      "marker_text": "This tool has been migrated to tools.",
+      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
     },
     {
       "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_snapshot.py",
@@ -5726,8 +5726,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2. \"",
-      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+      "marker_text": "This tool has been migrated to tools. \"",
+      "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
     },
     {
       "file_path": "tools\\deprecated\\consolidated_2025-11-30\\arch_pattern_validator.py",
@@ -6146,8 +6146,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2.",
-      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+      "marker_text": "This tool has been migrated to tools.",
+      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
     },
     {
       "file_path": "tools\\hostinger_api_helper.py",
@@ -6196,8 +6196,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2.",
-      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+      "marker_text": "This tool has been migrated to tools.",
+      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
     },
     {
       "file_path": "tools\\markov_8agent_roi_optimizer.py",
@@ -6336,8 +6336,8 @@
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
       "color": "\ud83d\udfe1",
-      "marker_text": "This tool has been migrated to tools_v2.",
-      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+      "marker_text": "This tool has been migrated to tools.",
+      "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
     },
     {
       "file_path": "tools\\refactor_analyzer.py",
@@ -7000,8 +7000,8 @@
       "full_line": "\"message\": \"Contains ERROR/FIXME/TODO markers\""
     },
     {
-      "file_path": "tools_v2\\categories\\captain_coordination_tools.py",
-      "relative_path": "tools_v2\\categories\\captain_coordination_tools.py",
+      "file_path": "tools\\categories\\captain_coordination_tools.py",
+      "relative_path": "tools\\categories\\captain_coordination_tools.py",
       "line_number": 124,
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
@@ -7010,8 +7010,8 @@
       "full_line": "# DEPRECATED: LeaderboardUpdaterTool consolidated into captain_tools.py"
     },
     {
-      "file_path": "tools_v2\\categories\\captain_coordination_tools.py",
-      "relative_path": "tools_v2\\categories\\captain_coordination_tools.py",
+      "file_path": "tools\\categories\\captain_coordination_tools.py",
+      "relative_path": "tools\\categories\\captain_coordination_tools.py",
       "line_number": 132,
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
@@ -7020,8 +7020,8 @@
       "full_line": "DEPRECATED: Use captain.update_leaderboard instead."
     },
     {
-      "file_path": "tools_v2\\categories\\captain_coordination_tools.py",
-      "relative_path": "tools_v2\\categories\\captain_coordination_tools.py",
+      "file_path": "tools\\categories\\captain_coordination_tools.py",
+      "relative_path": "tools\\categories\\captain_coordination_tools.py",
       "line_number": 144,
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
@@ -7030,8 +7030,8 @@
       "full_line": "summary=\"DEPRECATED: Use captain.update_leaderboard instead\","
     },
     {
-      "file_path": "tools_v2\\categories\\captain_tools_extension.py",
-      "relative_path": "tools_v2\\categories\\captain_tools_extension.py",
+      "file_path": "tools\\categories\\captain_tools_extension.py",
+      "relative_path": "tools\\categories\\captain_tools_extension.py",
       "line_number": 5,
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
@@ -7040,8 +7040,8 @@
       "full_line": "\u26a0\ufe0f DEPRECATED: This file has been split for V2 compliance (986 lines \u2192 3 files)."
     },
     {
-      "file_path": "tools_v2\\categories\\infrastructure_tools.py",
-      "relative_path": "tools_v2\\categories\\infrastructure_tools.py",
+      "file_path": "tools\\categories\\infrastructure_tools.py",
+      "relative_path": "tools\\categories\\infrastructure_tools.py",
       "line_number": 6,
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
@@ -7050,8 +7050,8 @@
       "full_line": "\u26a0\ufe0f DEPRECATED: This file has been split for V2 compliance (748 lines \u2192 3 files)."
     },
     {
-      "file_path": "tools_v2\\categories\\intelligent_mission_advisor.py",
-      "relative_path": "tools_v2\\categories\\intelligent_mission_advisor.py",
+      "file_path": "tools\\categories\\intelligent_mission_advisor.py",
+      "relative_path": "tools\\categories\\intelligent_mission_advisor.py",
       "line_number": 495,
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
@@ -7060,8 +7060,8 @@
       "full_line": "risks.append(\"Deprecated file - verify if still in use\")"
     },
     {
-      "file_path": "tools_v2\\categories\\intelligent_mission_advisor.py",
-      "relative_path": "tools_v2\\categories\\intelligent_mission_advisor.py",
+      "file_path": "tools\\categories\\intelligent_mission_advisor.py",
+      "relative_path": "tools\\categories\\intelligent_mission_advisor.py",
       "line_number": 681,
       "marker_type": "REFACTOR",
       "priority": "P3 - Low",
@@ -7070,8 +7070,8 @@
       "full_line": "\"4. REFACTOR: Extract modules incrementally\","
     },
     {
-      "file_path": "tools_v2\\categories\\intelligent_mission_advisor_analysis.py",
-      "relative_path": "tools_v2\\categories\\intelligent_mission_advisor_analysis.py",
+      "file_path": "tools\\categories\\intelligent_mission_advisor_analysis.py",
+      "relative_path": "tools\\categories\\intelligent_mission_advisor_analysis.py",
       "line_number": 206,
       "marker_type": "DEPRECATED",
       "priority": "P2 - Medium",
@@ -7080,8 +7080,8 @@
       "full_line": "risks.append(\"Deprecated file - verify if still in use\")"
     },
     {
-      "file_path": "tools_v2\\categories\\intelligent_mission_advisor_guidance.py",
-      "relative_path": "tools_v2\\categories\\intelligent_mission_advisor_guidance.py",
+      "file_path": "tools\\categories\\intelligent_mission_advisor_guidance.py",
+      "relative_path": "tools\\categories\\intelligent_mission_advisor_guidance.py",
       "line_number": 181,
       "marker_type": "REFACTOR",
       "priority": "P3 - Low",
@@ -7090,8 +7090,8 @@
       "full_line": "\"4. REFACTOR: Extract modules incrementally\","
     },
     {
-      "file_path": "tools_v2\\categories\\message_history_tools.py",
-      "relative_path": "tools_v2\\categories\\message_history_tools.py",
+      "file_path": "tools\\categories\\message_history_tools.py",
+      "relative_path": "tools\\categories\\message_history_tools.py",
       "line_number": 292,
       "marker_type": "TODO",
       "priority": "P1 - High",
@@ -7100,8 +7100,8 @@
       "full_line": "# TODO: Implement actual compression save"
     },
     {
-      "file_path": "tools_v2\\categories\\messaging_tools.py",
-      "relative_path": "tools_v2\\categories\\messaging_tools.py",
+      "file_path": "tools\\categories\\messaging_tools.py",
+      "relative_path": "tools\\categories\\messaging_tools.py",
       "line_number": 155,
       "marker_type": "TODO",
       "priority": "P1 - High",
@@ -7110,8 +7110,8 @@
       "full_line": "# TODO: Implement semantic search"
     },
     {
-      "file_path": "tools_v2\\categories\\session_tools.py",
-      "relative_path": "tools_v2\\categories\\session_tools.py",
+      "file_path": "tools\\categories\\session_tools.py",
+      "relative_path": "tools\\categories\\session_tools.py",
       "line_number": 122,
       "marker_type": "TODO",
       "priority": "P1 - High",
@@ -7120,8 +7120,8 @@
       "full_line": "# TODO: Integrate with actual swarm brain tool"
     },
     {
-      "file_path": "tools_v2\\categories\\swarm_brain_tools.py",
-      "relative_path": "tools_v2\\categories\\swarm_brain_tools.py",
+      "file_path": "tools\\categories\\swarm_brain_tools.py",
+      "relative_path": "tools\\categories\\swarm_brain_tools.py",
       "line_number": 24,
       "marker_type": "NOTE",
       "priority": "P3 - Low",
@@ -7130,8 +7130,8 @@
       "full_line": "\"\"\"Execute note taking.\"\"\""
     },
     {
-      "file_path": "tools_v2\\categories\\swarm_brain_tools.py",
-      "relative_path": "tools_v2\\categories\\swarm_brain_tools.py",
+      "file_path": "tools\\categories\\swarm_brain_tools.py",
+      "relative_path": "tools\\categories\\swarm_brain_tools.py",
       "line_number": 49,
       "marker_type": "NOTE",
       "priority": "P3 - Low",
@@ -7140,8 +7140,8 @@
       "full_line": "return {\"success\": True, \"message\": f\"Note added: {note_type}\"}"
     },
     {
-      "file_path": "tools_v2\\categories\\swarm_brain_tools.py",
-      "relative_path": "tools_v2\\categories\\swarm_brain_tools.py",
+      "file_path": "tools\\categories\\swarm_brain_tools.py",
+      "relative_path": "tools\\categories\\swarm_brain_tools.py",
       "line_number": 140,
       "marker_type": "NOTE",
       "priority": "P3 - Low",
@@ -7150,8 +7150,8 @@
       "full_line": "\"\"\"Execute note retrieval.\"\"\""
     },
     {
-      "file_path": "tools_v2\\categories\\system_tools.py",
-      "relative_path": "tools_v2\\categories\\system_tools.py",
+      "file_path": "tools\\categories\\system_tools.py",
+      "relative_path": "tools\\categories\\system_tools.py",
       "line_number": 112,
       "marker_type": "NOTE",
       "priority": "P3 - Low",
@@ -7160,8 +7160,8 @@
       "full_line": "note = params.get(\"note\")"
     },
     {
-      "file_path": "tools_v2\\categories\\test_generation_tools.py",
-      "relative_path": "tools_v2\\categories\\test_generation_tools.py",
+      "file_path": "tools\\categories\\test_generation_tools.py",
+      "relative_path": "tools\\categories\\test_generation_tools.py",
       "line_number": 143,
       "marker_type": "TODO",
       "priority": "P1 - High",
@@ -7170,8 +7170,8 @@
       "full_line": "# TODO: Initialize test fixtures"
     },
     {
-      "file_path": "tools_v2\\categories\\test_generation_tools.py",
-      "relative_path": "tools_v2\\categories\\test_generation_tools.py",
+      "file_path": "tools\\categories\\test_generation_tools.py",
+      "relative_path": "tools\\categories\\test_generation_tools.py",
       "line_number": 147,
       "marker_type": "TODO",
       "priority": "P1 - High",
@@ -7180,8 +7180,8 @@
       "full_line": "# TODO: Implement initialization test"
     },
     {
-      "file_path": "tools_v2\\categories\\test_generation_tools.py",
-      "relative_path": "tools_v2\\categories\\test_generation_tools.py",
+      "file_path": "tools\\categories\\test_generation_tools.py",
+      "relative_path": "tools\\categories\\test_generation_tools.py",
       "line_number": 155,
       "marker_type": "TODO",
       "priority": "P1 - High",
@@ -7190,8 +7190,8 @@
       "full_line": "# TODO: Implement {method} test"
     },
     {
-      "file_path": "tools_v2\\categories\\test_generation_tools.py",
-      "relative_path": "tools_v2\\categories\\test_generation_tools.py",
+      "file_path": "tools\\categories\\test_generation_tools.py",
+      "relative_path": "tools\\categories\\test_generation_tools.py",
       "line_number": 170,
       "marker_type": "TODO",
       "priority": "P1 - High",
@@ -7200,14 +7200,14 @@
       "full_line": "# TODO: Implement {func} test"
     },
     {
-      "file_path": "tools_v2\\categories\\web_tools.py",
-      "relative_path": "tools_v2\\categories\\web_tools.py",
+      "file_path": "tools\\categories\\web_tools.py",
+      "relative_path": "tools\\categories\\web_tools.py",
       "line_number": 102,
       "marker_type": "TODO",
       "priority": "P1 - High",
       "color": "\ud83d\udfe0",
-      "marker_text": "Migrate to tools_v2/utils/ when ready",
-      "full_line": "# TODO: Migrate to tools_v2/utils/ when ready"
+      "marker_text": "Migrate to tools/utils/ when ready",
+      "full_line": "# TODO: Migrate to tools/utils/ when ready"
     },
     {
       "file_path": "trading_robot\\core\\robinhood_client.py",
@@ -8194,8 +8194,8 @@
           "full_line": "\"refactor is superior to the old monolith (v2_compliance_checker.py). Quality \""
         },
         {
-          "file_path": "tools_v2\\categories\\intelligent_mission_advisor.py",
-          "relative_path": "tools_v2\\categories\\intelligent_mission_advisor.py",
+          "file_path": "tools\\categories\\intelligent_mission_advisor.py",
+          "relative_path": "tools\\categories\\intelligent_mission_advisor.py",
           "line_number": 681,
           "marker_type": "REFACTOR",
           "priority": "P3 - Low",
@@ -8204,8 +8204,8 @@
           "full_line": "\"4. REFACTOR: Extract modules incrementally\","
         },
         {
-          "file_path": "tools_v2\\categories\\intelligent_mission_advisor_guidance.py",
-          "relative_path": "tools_v2\\categories\\intelligent_mission_advisor_guidance.py",
+          "file_path": "tools\\categories\\intelligent_mission_advisor_guidance.py",
+          "relative_path": "tools\\categories\\intelligent_mission_advisor_guidance.py",
           "line_number": 181,
           "marker_type": "REFACTOR",
           "priority": "P3 - Low",
@@ -11518,8 +11518,8 @@
           "full_line": "print(\"   Note: File upload via REST API requires authentication\")"
         },
         {
-          "file_path": "tools_v2\\categories\\swarm_brain_tools.py",
-          "relative_path": "tools_v2\\categories\\swarm_brain_tools.py",
+          "file_path": "tools\\categories\\swarm_brain_tools.py",
+          "relative_path": "tools\\categories\\swarm_brain_tools.py",
           "line_number": 24,
           "marker_type": "NOTE",
           "priority": "P3 - Low",
@@ -11528,8 +11528,8 @@
           "full_line": "\"\"\"Execute note taking.\"\"\""
         },
         {
-          "file_path": "tools_v2\\categories\\swarm_brain_tools.py",
-          "relative_path": "tools_v2\\categories\\swarm_brain_tools.py",
+          "file_path": "tools\\categories\\swarm_brain_tools.py",
+          "relative_path": "tools\\categories\\swarm_brain_tools.py",
           "line_number": 49,
           "marker_type": "NOTE",
           "priority": "P3 - Low",
@@ -11538,8 +11538,8 @@
           "full_line": "return {\"success\": True, \"message\": f\"Note added: {note_type}\"}"
         },
         {
-          "file_path": "tools_v2\\categories\\swarm_brain_tools.py",
-          "relative_path": "tools_v2\\categories\\swarm_brain_tools.py",
+          "file_path": "tools\\categories\\swarm_brain_tools.py",
+          "relative_path": "tools\\categories\\swarm_brain_tools.py",
           "line_number": 140,
           "marker_type": "NOTE",
           "priority": "P3 - Low",
@@ -11548,8 +11548,8 @@
           "full_line": "\"\"\"Execute note retrieval.\"\"\""
         },
         {
-          "file_path": "tools_v2\\categories\\system_tools.py",
-          "relative_path": "tools_v2\\categories\\system_tools.py",
+          "file_path": "tools\\categories\\system_tools.py",
+          "relative_path": "tools\\categories\\system_tools.py",
           "line_number": 112,
           "marker_type": "NOTE",
           "priority": "P3 - Low",
@@ -12790,8 +12790,8 @@
           "full_line": "\"message\": \"Contains ERROR/FIXME/TODO markers\""
         },
         {
-          "file_path": "tools_v2\\categories\\message_history_tools.py",
-          "relative_path": "tools_v2\\categories\\message_history_tools.py",
+          "file_path": "tools\\categories\\message_history_tools.py",
+          "relative_path": "tools\\categories\\message_history_tools.py",
           "line_number": 292,
           "marker_type": "TODO",
           "priority": "P1 - High",
@@ -12800,8 +12800,8 @@
           "full_line": "# TODO: Implement actual compression save"
         },
         {
-          "file_path": "tools_v2\\categories\\messaging_tools.py",
-          "relative_path": "tools_v2\\categories\\messaging_tools.py",
+          "file_path": "tools\\categories\\messaging_tools.py",
+          "relative_path": "tools\\categories\\messaging_tools.py",
           "line_number": 155,
           "marker_type": "TODO",
           "priority": "P1 - High",
@@ -12810,8 +12810,8 @@
           "full_line": "# TODO: Implement semantic search"
         },
         {
-          "file_path": "tools_v2\\categories\\session_tools.py",
-          "relative_path": "tools_v2\\categories\\session_tools.py",
+          "file_path": "tools\\categories\\session_tools.py",
+          "relative_path": "tools\\categories\\session_tools.py",
           "line_number": 122,
           "marker_type": "TODO",
           "priority": "P1 - High",
@@ -12820,8 +12820,8 @@
           "full_line": "# TODO: Integrate with actual swarm brain tool"
         },
         {
-          "file_path": "tools_v2\\categories\\test_generation_tools.py",
-          "relative_path": "tools_v2\\categories\\test_generation_tools.py",
+          "file_path": "tools\\categories\\test_generation_tools.py",
+          "relative_path": "tools\\categories\\test_generation_tools.py",
           "line_number": 143,
           "marker_type": "TODO",
           "priority": "P1 - High",
@@ -12830,8 +12830,8 @@
           "full_line": "# TODO: Initialize test fixtures"
         },
         {
-          "file_path": "tools_v2\\categories\\test_generation_tools.py",
-          "relative_path": "tools_v2\\categories\\test_generation_tools.py",
+          "file_path": "tools\\categories\\test_generation_tools.py",
+          "relative_path": "tools\\categories\\test_generation_tools.py",
           "line_number": 147,
           "marker_type": "TODO",
           "priority": "P1 - High",
@@ -12840,8 +12840,8 @@
           "full_line": "# TODO: Implement initialization test"
         },
         {
-          "file_path": "tools_v2\\categories\\test_generation_tools.py",
-          "relative_path": "tools_v2\\categories\\test_generation_tools.py",
+          "file_path": "tools\\categories\\test_generation_tools.py",
+          "relative_path": "tools\\categories\\test_generation_tools.py",
           "line_number": 155,
           "marker_type": "TODO",
           "priority": "P1 - High",
@@ -12850,8 +12850,8 @@
           "full_line": "# TODO: Implement {method} test"
         },
         {
-          "file_path": "tools_v2\\categories\\test_generation_tools.py",
-          "relative_path": "tools_v2\\categories\\test_generation_tools.py",
+          "file_path": "tools\\categories\\test_generation_tools.py",
+          "relative_path": "tools\\categories\\test_generation_tools.py",
           "line_number": 170,
           "marker_type": "TODO",
           "priority": "P1 - High",
@@ -12860,14 +12860,14 @@
           "full_line": "# TODO: Implement {func} test"
         },
         {
-          "file_path": "tools_v2\\categories\\web_tools.py",
-          "relative_path": "tools_v2\\categories\\web_tools.py",
+          "file_path": "tools\\categories\\web_tools.py",
+          "relative_path": "tools\\categories\\web_tools.py",
           "line_number": 102,
           "marker_type": "TODO",
           "priority": "P1 - High",
           "color": "\ud83d\udfe0",
-          "marker_text": "Migrate to tools_v2/utils/ when ready",
-          "full_line": "# TODO: Migrate to tools_v2/utils/ when ready"
+          "marker_text": "Migrate to tools/utils/ when ready",
+          "full_line": "# TODO: Migrate to tools/utils/ when ready"
         }
       ],
       "DEPRECATED": [
@@ -13148,8 +13148,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_check_agent_status.py",
@@ -13168,8 +13168,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\captain_completion_processor.py",
@@ -13178,8 +13178,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_completion_processor.py",
@@ -13198,8 +13198,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\captain_coordinate_validator.py",
@@ -13208,8 +13208,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_coordinate_validator.py",
@@ -13228,8 +13228,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\captain_find_idle_agents.py",
@@ -13238,8 +13238,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_find_idle_agents.py",
@@ -13258,8 +13258,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\captain_gas_check.py",
@@ -13268,8 +13268,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_gas_check.py",
@@ -13288,8 +13288,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\captain_hard_onboard_agent.py",
@@ -13298,8 +13298,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_hard_onboard_agent.py",
@@ -13318,8 +13318,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\captain_hard_onboard_agent.py",
@@ -13328,8 +13328,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "Use 'python -m tools_v2.toolbelt onboard.hard' instead\")",
-          "full_line": "print(\"\\n\u26a0\ufe0f  DEPRECATED: Use 'python -m tools_v2.toolbelt onboard.hard' instead\")"
+          "marker_text": "Use 'python -m tools.toolbelt onboard.hard' instead\")",
+          "full_line": "print(\"\\n\u26a0\ufe0f  DEPRECATED: Use 'python -m tools.toolbelt onboard.hard' instead\")"
         },
         {
           "file_path": "tools\\captain_import_validator.py",
@@ -13338,8 +13338,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_import_validator.py",
@@ -13358,8 +13358,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\captain_import_validator.py",
@@ -13368,8 +13368,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "Use 'python -m tools_v2.toolbelt refactor.validate_imports' instead\")",
-          "full_line": "print(\"\\n\u26a0\ufe0f  DEPRECATED: Use 'python -m tools_v2.toolbelt refactor.validate_imports' instead\")"
+          "marker_text": "Use 'python -m tools.toolbelt refactor.validate_imports' instead\")",
+          "full_line": "print(\"\\n\u26a0\ufe0f  DEPRECATED: Use 'python -m tools.toolbelt refactor.validate_imports' instead\")"
         },
         {
           "file_path": "tools\\captain_leaderboard_update.py",
@@ -13378,8 +13378,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_leaderboard_update.py",
@@ -13398,8 +13398,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\captain_message_all_agents.py",
@@ -13408,8 +13408,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_message_all_agents.py",
@@ -13428,8 +13428,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\captain_morning_briefing.py",
@@ -13438,8 +13438,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_morning_briefing.py",
@@ -13458,8 +13458,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\captain_next_task_picker.py",
@@ -13468,8 +13468,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_next_task_picker.py",
@@ -13488,8 +13488,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\captain_roi_quick_calc.py",
@@ -13498,8 +13498,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_roi_quick_calc.py",
@@ -13518,8 +13518,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\captain_self_message.py",
@@ -13528,8 +13528,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_self_message.py",
@@ -13548,8 +13548,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\captain_snapshot.py",
@@ -13558,8 +13558,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_snapshot.py",
@@ -13578,8 +13578,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\classify_tools.py",
@@ -13638,8 +13638,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_check_agent_status.py",
@@ -13658,8 +13658,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_coordinate_validator.py",
@@ -13668,8 +13668,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_coordinate_validator.py",
@@ -13688,8 +13688,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_find_idle_agents.py",
@@ -13698,8 +13698,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_find_idle_agents.py",
@@ -13718,8 +13718,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_gas_check.py",
@@ -13728,8 +13728,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_gas_check.py",
@@ -13748,8 +13748,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_import_validator.py",
@@ -13758,8 +13758,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_import_validator.py",
@@ -13778,8 +13778,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_import_validator.py",
@@ -13788,8 +13788,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "Use 'python -m tools_v2.toolbelt refactor.validate_imports' instead\")",
-          "full_line": "print(\"\\n\u26a0\ufe0f  DEPRECATED: Use 'python -m tools_v2.toolbelt refactor.validate_imports' instead\")"
+          "marker_text": "Use 'python -m tools.toolbelt refactor.validate_imports' instead\")",
+          "full_line": "print(\"\\n\u26a0\ufe0f  DEPRECATED: Use 'python -m tools.toolbelt refactor.validate_imports' instead\")"
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_leaderboard_update.py",
@@ -13798,8 +13798,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_leaderboard_update.py",
@@ -13818,8 +13818,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_message_all_agents.py",
@@ -13828,8 +13828,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_message_all_agents.py",
@@ -13848,8 +13848,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_morning_briefing.py",
@@ -13858,8 +13858,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_morning_briefing.py",
@@ -13878,8 +13878,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_next_task_picker.py",
@@ -13888,8 +13888,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_next_task_picker.py",
@@ -13908,8 +13908,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_snapshot.py",
@@ -13918,8 +13918,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_snapshot.py",
@@ -13938,8 +13938,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\deprecated\\duplication_reporter.py",
@@ -14068,8 +14068,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\identify_unnecessary_files.py",
@@ -14098,8 +14098,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\post_devlog_to_discord.py",
@@ -14128,8 +14128,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\ssot_config_validator.py",
@@ -14232,8 +14232,8 @@
           "full_line": "\u26a0\ufe0f  DEPRECATED: This module is maintained for backward compatibility."
         },
         {
-          "file_path": "tools_v2\\categories\\captain_coordination_tools.py",
-          "relative_path": "tools_v2\\categories\\captain_coordination_tools.py",
+          "file_path": "tools\\categories\\captain_coordination_tools.py",
+          "relative_path": "tools\\categories\\captain_coordination_tools.py",
           "line_number": 124,
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
@@ -14242,8 +14242,8 @@
           "full_line": "# DEPRECATED: LeaderboardUpdaterTool consolidated into captain_tools.py"
         },
         {
-          "file_path": "tools_v2\\categories\\captain_coordination_tools.py",
-          "relative_path": "tools_v2\\categories\\captain_coordination_tools.py",
+          "file_path": "tools\\categories\\captain_coordination_tools.py",
+          "relative_path": "tools\\categories\\captain_coordination_tools.py",
           "line_number": 132,
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
@@ -14252,8 +14252,8 @@
           "full_line": "DEPRECATED: Use captain.update_leaderboard instead."
         },
         {
-          "file_path": "tools_v2\\categories\\captain_coordination_tools.py",
-          "relative_path": "tools_v2\\categories\\captain_coordination_tools.py",
+          "file_path": "tools\\categories\\captain_coordination_tools.py",
+          "relative_path": "tools\\categories\\captain_coordination_tools.py",
           "line_number": 144,
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
@@ -14262,8 +14262,8 @@
           "full_line": "summary=\"DEPRECATED: Use captain.update_leaderboard instead\","
         },
         {
-          "file_path": "tools_v2\\categories\\captain_tools_extension.py",
-          "relative_path": "tools_v2\\categories\\captain_tools_extension.py",
+          "file_path": "tools\\categories\\captain_tools_extension.py",
+          "relative_path": "tools\\categories\\captain_tools_extension.py",
           "line_number": 5,
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
@@ -14272,8 +14272,8 @@
           "full_line": "\u26a0\ufe0f DEPRECATED: This file has been split for V2 compliance (986 lines \u2192 3 files)."
         },
         {
-          "file_path": "tools_v2\\categories\\infrastructure_tools.py",
-          "relative_path": "tools_v2\\categories\\infrastructure_tools.py",
+          "file_path": "tools\\categories\\infrastructure_tools.py",
+          "relative_path": "tools\\categories\\infrastructure_tools.py",
           "line_number": 6,
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
@@ -14282,8 +14282,8 @@
           "full_line": "\u26a0\ufe0f DEPRECATED: This file has been split for V2 compliance (748 lines \u2192 3 files)."
         },
         {
-          "file_path": "tools_v2\\categories\\intelligent_mission_advisor.py",
-          "relative_path": "tools_v2\\categories\\intelligent_mission_advisor.py",
+          "file_path": "tools\\categories\\intelligent_mission_advisor.py",
+          "relative_path": "tools\\categories\\intelligent_mission_advisor.py",
           "line_number": 495,
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
@@ -14292,8 +14292,8 @@
           "full_line": "risks.append(\"Deprecated file - verify if still in use\")"
         },
         {
-          "file_path": "tools_v2\\categories\\intelligent_mission_advisor_analysis.py",
-          "relative_path": "tools_v2\\categories\\intelligent_mission_advisor_analysis.py",
+          "file_path": "tools\\categories\\intelligent_mission_advisor_analysis.py",
+          "relative_path": "tools\\categories\\intelligent_mission_advisor_analysis.py",
           "line_number": 206,
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
@@ -16490,8 +16490,8 @@
           "full_line": "print(\"   Note: File upload via REST API requires authentication\")"
         },
         {
-          "file_path": "tools_v2\\categories\\intelligent_mission_advisor.py",
-          "relative_path": "tools_v2\\categories\\intelligent_mission_advisor.py",
+          "file_path": "tools\\categories\\intelligent_mission_advisor.py",
+          "relative_path": "tools\\categories\\intelligent_mission_advisor.py",
           "line_number": 681,
           "marker_type": "REFACTOR",
           "priority": "P3 - Low",
@@ -16500,8 +16500,8 @@
           "full_line": "\"4. REFACTOR: Extract modules incrementally\","
         },
         {
-          "file_path": "tools_v2\\categories\\intelligent_mission_advisor_guidance.py",
-          "relative_path": "tools_v2\\categories\\intelligent_mission_advisor_guidance.py",
+          "file_path": "tools\\categories\\intelligent_mission_advisor_guidance.py",
+          "relative_path": "tools\\categories\\intelligent_mission_advisor_guidance.py",
           "line_number": 181,
           "marker_type": "REFACTOR",
           "priority": "P3 - Low",
@@ -16510,8 +16510,8 @@
           "full_line": "\"4. REFACTOR: Extract modules incrementally\","
         },
         {
-          "file_path": "tools_v2\\categories\\swarm_brain_tools.py",
-          "relative_path": "tools_v2\\categories\\swarm_brain_tools.py",
+          "file_path": "tools\\categories\\swarm_brain_tools.py",
+          "relative_path": "tools\\categories\\swarm_brain_tools.py",
           "line_number": 24,
           "marker_type": "NOTE",
           "priority": "P3 - Low",
@@ -16520,8 +16520,8 @@
           "full_line": "\"\"\"Execute note taking.\"\"\""
         },
         {
-          "file_path": "tools_v2\\categories\\swarm_brain_tools.py",
-          "relative_path": "tools_v2\\categories\\swarm_brain_tools.py",
+          "file_path": "tools\\categories\\swarm_brain_tools.py",
+          "relative_path": "tools\\categories\\swarm_brain_tools.py",
           "line_number": 49,
           "marker_type": "NOTE",
           "priority": "P3 - Low",
@@ -16530,8 +16530,8 @@
           "full_line": "return {\"success\": True, \"message\": f\"Note added: {note_type}\"}"
         },
         {
-          "file_path": "tools_v2\\categories\\swarm_brain_tools.py",
-          "relative_path": "tools_v2\\categories\\swarm_brain_tools.py",
+          "file_path": "tools\\categories\\swarm_brain_tools.py",
+          "relative_path": "tools\\categories\\swarm_brain_tools.py",
           "line_number": 140,
           "marker_type": "NOTE",
           "priority": "P3 - Low",
@@ -16540,8 +16540,8 @@
           "full_line": "\"\"\"Execute note retrieval.\"\"\""
         },
         {
-          "file_path": "tools_v2\\categories\\system_tools.py",
-          "relative_path": "tools_v2\\categories\\system_tools.py",
+          "file_path": "tools\\categories\\system_tools.py",
+          "relative_path": "tools\\categories\\system_tools.py",
           "line_number": 112,
           "marker_type": "NOTE",
           "priority": "P3 - Low",
@@ -20084,8 +20084,8 @@
           "full_line": "\"message\": \"Contains ERROR/FIXME/TODO markers\""
         },
         {
-          "file_path": "tools_v2\\categories\\message_history_tools.py",
-          "relative_path": "tools_v2\\categories\\message_history_tools.py",
+          "file_path": "tools\\categories\\message_history_tools.py",
+          "relative_path": "tools\\categories\\message_history_tools.py",
           "line_number": 292,
           "marker_type": "TODO",
           "priority": "P1 - High",
@@ -20094,8 +20094,8 @@
           "full_line": "# TODO: Implement actual compression save"
         },
         {
-          "file_path": "tools_v2\\categories\\messaging_tools.py",
-          "relative_path": "tools_v2\\categories\\messaging_tools.py",
+          "file_path": "tools\\categories\\messaging_tools.py",
+          "relative_path": "tools\\categories\\messaging_tools.py",
           "line_number": 155,
           "marker_type": "TODO",
           "priority": "P1 - High",
@@ -20104,8 +20104,8 @@
           "full_line": "# TODO: Implement semantic search"
         },
         {
-          "file_path": "tools_v2\\categories\\session_tools.py",
-          "relative_path": "tools_v2\\categories\\session_tools.py",
+          "file_path": "tools\\categories\\session_tools.py",
+          "relative_path": "tools\\categories\\session_tools.py",
           "line_number": 122,
           "marker_type": "TODO",
           "priority": "P1 - High",
@@ -20114,8 +20114,8 @@
           "full_line": "# TODO: Integrate with actual swarm brain tool"
         },
         {
-          "file_path": "tools_v2\\categories\\test_generation_tools.py",
-          "relative_path": "tools_v2\\categories\\test_generation_tools.py",
+          "file_path": "tools\\categories\\test_generation_tools.py",
+          "relative_path": "tools\\categories\\test_generation_tools.py",
           "line_number": 143,
           "marker_type": "TODO",
           "priority": "P1 - High",
@@ -20124,8 +20124,8 @@
           "full_line": "# TODO: Initialize test fixtures"
         },
         {
-          "file_path": "tools_v2\\categories\\test_generation_tools.py",
-          "relative_path": "tools_v2\\categories\\test_generation_tools.py",
+          "file_path": "tools\\categories\\test_generation_tools.py",
+          "relative_path": "tools\\categories\\test_generation_tools.py",
           "line_number": 147,
           "marker_type": "TODO",
           "priority": "P1 - High",
@@ -20134,8 +20134,8 @@
           "full_line": "# TODO: Implement initialization test"
         },
         {
-          "file_path": "tools_v2\\categories\\test_generation_tools.py",
-          "relative_path": "tools_v2\\categories\\test_generation_tools.py",
+          "file_path": "tools\\categories\\test_generation_tools.py",
+          "relative_path": "tools\\categories\\test_generation_tools.py",
           "line_number": 155,
           "marker_type": "TODO",
           "priority": "P1 - High",
@@ -20144,8 +20144,8 @@
           "full_line": "# TODO: Implement {method} test"
         },
         {
-          "file_path": "tools_v2\\categories\\test_generation_tools.py",
-          "relative_path": "tools_v2\\categories\\test_generation_tools.py",
+          "file_path": "tools\\categories\\test_generation_tools.py",
+          "relative_path": "tools\\categories\\test_generation_tools.py",
           "line_number": 170,
           "marker_type": "TODO",
           "priority": "P1 - High",
@@ -20154,14 +20154,14 @@
           "full_line": "# TODO: Implement {func} test"
         },
         {
-          "file_path": "tools_v2\\categories\\web_tools.py",
-          "relative_path": "tools_v2\\categories\\web_tools.py",
+          "file_path": "tools\\categories\\web_tools.py",
+          "relative_path": "tools\\categories\\web_tools.py",
           "line_number": 102,
           "marker_type": "TODO",
           "priority": "P1 - High",
           "color": "\ud83d\udfe0",
-          "marker_text": "Migrate to tools_v2/utils/ when ready",
-          "full_line": "# TODO: Migrate to tools_v2/utils/ when ready"
+          "marker_text": "Migrate to tools/utils/ when ready",
+          "full_line": "# TODO: Migrate to tools/utils/ when ready"
         }
       ],
       "P2 - Medium": [
@@ -20452,8 +20452,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_check_agent_status.py",
@@ -20472,8 +20472,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\captain_completion_processor.py",
@@ -20482,8 +20482,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_completion_processor.py",
@@ -20502,8 +20502,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\captain_coordinate_validator.py",
@@ -20512,8 +20512,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_coordinate_validator.py",
@@ -20532,8 +20532,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\captain_find_idle_agents.py",
@@ -20542,8 +20542,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_find_idle_agents.py",
@@ -20562,8 +20562,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\captain_gas_check.py",
@@ -20572,8 +20572,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_gas_check.py",
@@ -20592,8 +20592,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\captain_hard_onboard_agent.py",
@@ -20602,8 +20602,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_hard_onboard_agent.py",
@@ -20622,8 +20622,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\captain_hard_onboard_agent.py",
@@ -20632,8 +20632,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "Use 'python -m tools_v2.toolbelt onboard.hard' instead\")",
-          "full_line": "print(\"\\n\u26a0\ufe0f  DEPRECATED: Use 'python -m tools_v2.toolbelt onboard.hard' instead\")"
+          "marker_text": "Use 'python -m tools.toolbelt onboard.hard' instead\")",
+          "full_line": "print(\"\\n\u26a0\ufe0f  DEPRECATED: Use 'python -m tools.toolbelt onboard.hard' instead\")"
         },
         {
           "file_path": "tools\\captain_import_validator.py",
@@ -20642,8 +20642,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_import_validator.py",
@@ -20662,8 +20662,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\captain_import_validator.py",
@@ -20672,8 +20672,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "Use 'python -m tools_v2.toolbelt refactor.validate_imports' instead\")",
-          "full_line": "print(\"\\n\u26a0\ufe0f  DEPRECATED: Use 'python -m tools_v2.toolbelt refactor.validate_imports' instead\")"
+          "marker_text": "Use 'python -m tools.toolbelt refactor.validate_imports' instead\")",
+          "full_line": "print(\"\\n\u26a0\ufe0f  DEPRECATED: Use 'python -m tools.toolbelt refactor.validate_imports' instead\")"
         },
         {
           "file_path": "tools\\captain_leaderboard_update.py",
@@ -20682,8 +20682,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_leaderboard_update.py",
@@ -20702,8 +20702,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\captain_message_all_agents.py",
@@ -20712,8 +20712,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_message_all_agents.py",
@@ -20732,8 +20732,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\captain_morning_briefing.py",
@@ -20742,8 +20742,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_morning_briefing.py",
@@ -20762,8 +20762,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\captain_next_task_picker.py",
@@ -20772,8 +20772,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_next_task_picker.py",
@@ -20792,8 +20792,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\captain_roi_quick_calc.py",
@@ -20802,8 +20802,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_roi_quick_calc.py",
@@ -20822,8 +20822,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\captain_self_message.py",
@@ -20832,8 +20832,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_self_message.py",
@@ -20852,8 +20852,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\captain_snapshot.py",
@@ -20862,8 +20862,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_snapshot.py",
@@ -20882,8 +20882,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\classify_tools.py",
@@ -20942,8 +20942,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_check_agent_status.py",
@@ -20962,8 +20962,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_coordinate_validator.py",
@@ -20972,8 +20972,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_coordinate_validator.py",
@@ -20992,8 +20992,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_find_idle_agents.py",
@@ -21002,8 +21002,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_find_idle_agents.py",
@@ -21022,8 +21022,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_gas_check.py",
@@ -21032,8 +21032,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_gas_check.py",
@@ -21052,8 +21052,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_import_validator.py",
@@ -21062,8 +21062,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_import_validator.py",
@@ -21082,8 +21082,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_import_validator.py",
@@ -21092,8 +21092,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "Use 'python -m tools_v2.toolbelt refactor.validate_imports' instead\")",
-          "full_line": "print(\"\\n\u26a0\ufe0f  DEPRECATED: Use 'python -m tools_v2.toolbelt refactor.validate_imports' instead\")"
+          "marker_text": "Use 'python -m tools.toolbelt refactor.validate_imports' instead\")",
+          "full_line": "print(\"\\n\u26a0\ufe0f  DEPRECATED: Use 'python -m tools.toolbelt refactor.validate_imports' instead\")"
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_leaderboard_update.py",
@@ -21102,8 +21102,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_leaderboard_update.py",
@@ -21122,8 +21122,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_message_all_agents.py",
@@ -21132,8 +21132,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_message_all_agents.py",
@@ -21152,8 +21152,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_morning_briefing.py",
@@ -21162,8 +21162,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_morning_briefing.py",
@@ -21182,8 +21182,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_next_task_picker.py",
@@ -21192,8 +21192,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_next_task_picker.py",
@@ -21212,8 +21212,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_snapshot.py",
@@ -21222,8 +21222,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_snapshot.py",
@@ -21242,8 +21242,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\deprecated\\duplication_reporter.py",
@@ -21382,8 +21382,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\identify_unnecessary_files.py",
@@ -21412,8 +21412,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\post_devlog_to_discord.py",
@@ -21442,8 +21442,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\ssot_config_validator.py",
@@ -21546,8 +21546,8 @@
           "full_line": "\u26a0\ufe0f  DEPRECATED: This module is maintained for backward compatibility."
         },
         {
-          "file_path": "tools_v2\\categories\\captain_coordination_tools.py",
-          "relative_path": "tools_v2\\categories\\captain_coordination_tools.py",
+          "file_path": "tools\\categories\\captain_coordination_tools.py",
+          "relative_path": "tools\\categories\\captain_coordination_tools.py",
           "line_number": 124,
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
@@ -21556,8 +21556,8 @@
           "full_line": "# DEPRECATED: LeaderboardUpdaterTool consolidated into captain_tools.py"
         },
         {
-          "file_path": "tools_v2\\categories\\captain_coordination_tools.py",
-          "relative_path": "tools_v2\\categories\\captain_coordination_tools.py",
+          "file_path": "tools\\categories\\captain_coordination_tools.py",
+          "relative_path": "tools\\categories\\captain_coordination_tools.py",
           "line_number": 132,
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
@@ -21566,8 +21566,8 @@
           "full_line": "DEPRECATED: Use captain.update_leaderboard instead."
         },
         {
-          "file_path": "tools_v2\\categories\\captain_coordination_tools.py",
-          "relative_path": "tools_v2\\categories\\captain_coordination_tools.py",
+          "file_path": "tools\\categories\\captain_coordination_tools.py",
+          "relative_path": "tools\\categories\\captain_coordination_tools.py",
           "line_number": 144,
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
@@ -21576,8 +21576,8 @@
           "full_line": "summary=\"DEPRECATED: Use captain.update_leaderboard instead\","
         },
         {
-          "file_path": "tools_v2\\categories\\captain_tools_extension.py",
-          "relative_path": "tools_v2\\categories\\captain_tools_extension.py",
+          "file_path": "tools\\categories\\captain_tools_extension.py",
+          "relative_path": "tools\\categories\\captain_tools_extension.py",
           "line_number": 5,
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
@@ -21586,8 +21586,8 @@
           "full_line": "\u26a0\ufe0f DEPRECATED: This file has been split for V2 compliance (986 lines \u2192 3 files)."
         },
         {
-          "file_path": "tools_v2\\categories\\infrastructure_tools.py",
-          "relative_path": "tools_v2\\categories\\infrastructure_tools.py",
+          "file_path": "tools\\categories\\infrastructure_tools.py",
+          "relative_path": "tools\\categories\\infrastructure_tools.py",
           "line_number": 6,
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
@@ -21596,8 +21596,8 @@
           "full_line": "\u26a0\ufe0f DEPRECATED: This file has been split for V2 compliance (748 lines \u2192 3 files)."
         },
         {
-          "file_path": "tools_v2\\categories\\intelligent_mission_advisor.py",
-          "relative_path": "tools_v2\\categories\\intelligent_mission_advisor.py",
+          "file_path": "tools\\categories\\intelligent_mission_advisor.py",
+          "relative_path": "tools\\categories\\intelligent_mission_advisor.py",
           "line_number": 495,
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
@@ -21606,8 +21606,8 @@
           "full_line": "risks.append(\"Deprecated file - verify if still in use\")"
         },
         {
-          "file_path": "tools_v2\\categories\\intelligent_mission_advisor_analysis.py",
-          "relative_path": "tools_v2\\categories\\intelligent_mission_advisor_analysis.py",
+          "file_path": "tools\\categories\\intelligent_mission_advisor_analysis.py",
+          "relative_path": "tools\\categories\\intelligent_mission_advisor_analysis.py",
           "line_number": 206,
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
@@ -25806,8 +25806,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_check_agent_status.py",
@@ -25826,8 +25826,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\captain_completion_processor.py",
@@ -25836,8 +25836,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_completion_processor.py",
@@ -25856,8 +25856,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\captain_coordinate_validator.py",
@@ -25866,8 +25866,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_coordinate_validator.py",
@@ -25886,8 +25886,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\captain_find_idle_agents.py",
@@ -25896,8 +25896,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_find_idle_agents.py",
@@ -25916,8 +25916,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\captain_gas_check.py",
@@ -25926,8 +25926,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_gas_check.py",
@@ -25946,8 +25946,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\captain_hard_onboard_agent.py",
@@ -25956,8 +25956,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_hard_onboard_agent.py",
@@ -25976,8 +25976,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\captain_hard_onboard_agent.py",
@@ -25986,8 +25986,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "Use 'python -m tools_v2.toolbelt onboard.hard' instead\")",
-          "full_line": "print(\"\\n\u26a0\ufe0f  DEPRECATED: Use 'python -m tools_v2.toolbelt onboard.hard' instead\")"
+          "marker_text": "Use 'python -m tools.toolbelt onboard.hard' instead\")",
+          "full_line": "print(\"\\n\u26a0\ufe0f  DEPRECATED: Use 'python -m tools.toolbelt onboard.hard' instead\")"
         },
         {
           "file_path": "tools\\captain_import_validator.py",
@@ -25996,8 +25996,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_import_validator.py",
@@ -26016,8 +26016,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\captain_import_validator.py",
@@ -26026,8 +26026,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "Use 'python -m tools_v2.toolbelt refactor.validate_imports' instead\")",
-          "full_line": "print(\"\\n\u26a0\ufe0f  DEPRECATED: Use 'python -m tools_v2.toolbelt refactor.validate_imports' instead\")"
+          "marker_text": "Use 'python -m tools.toolbelt refactor.validate_imports' instead\")",
+          "full_line": "print(\"\\n\u26a0\ufe0f  DEPRECATED: Use 'python -m tools.toolbelt refactor.validate_imports' instead\")"
         },
         {
           "file_path": "tools\\captain_leaderboard_update.py",
@@ -26036,8 +26036,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_leaderboard_update.py",
@@ -26056,8 +26056,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\captain_message_all_agents.py",
@@ -26066,8 +26066,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_message_all_agents.py",
@@ -26086,8 +26086,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\captain_morning_briefing.py",
@@ -26096,8 +26096,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_morning_briefing.py",
@@ -26116,8 +26116,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\captain_next_task_picker.py",
@@ -26126,8 +26126,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_next_task_picker.py",
@@ -26146,8 +26146,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\captain_roi_quick_calc.py",
@@ -26156,8 +26156,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_roi_quick_calc.py",
@@ -26176,8 +26176,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\captain_self_message.py",
@@ -26186,8 +26186,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_self_message.py",
@@ -26206,8 +26206,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\captain_snapshot.py",
@@ -26216,8 +26216,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\captain_snapshot.py",
@@ -26236,8 +26236,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\cast_all_tools_ranking_votes.py",
@@ -26666,8 +26666,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_check_agent_status.py",
@@ -26686,8 +26686,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_coordinate_validator.py",
@@ -26696,8 +26696,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_coordinate_validator.py",
@@ -26716,8 +26716,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_find_idle_agents.py",
@@ -26726,8 +26726,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_find_idle_agents.py",
@@ -26746,8 +26746,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_gas_check.py",
@@ -26756,8 +26756,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_gas_check.py",
@@ -26776,8 +26776,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_import_validator.py",
@@ -26786,8 +26786,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_import_validator.py",
@@ -26806,8 +26806,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_import_validator.py",
@@ -26816,8 +26816,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "Use 'python -m tools_v2.toolbelt refactor.validate_imports' instead\")",
-          "full_line": "print(\"\\n\u26a0\ufe0f  DEPRECATED: Use 'python -m tools_v2.toolbelt refactor.validate_imports' instead\")"
+          "marker_text": "Use 'python -m tools.toolbelt refactor.validate_imports' instead\")",
+          "full_line": "print(\"\\n\u26a0\ufe0f  DEPRECATED: Use 'python -m tools.toolbelt refactor.validate_imports' instead\")"
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_leaderboard_update.py",
@@ -26826,8 +26826,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_leaderboard_update.py",
@@ -26846,8 +26846,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_message_all_agents.py",
@@ -26856,8 +26856,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_message_all_agents.py",
@@ -26876,8 +26876,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_morning_briefing.py",
@@ -26886,8 +26886,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_morning_briefing.py",
@@ -26906,8 +26906,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_next_task_picker.py",
@@ -26916,8 +26916,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_next_task_picker.py",
@@ -26936,8 +26936,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_snapshot.py",
@@ -26946,8 +26946,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-29\\captain_snapshot.py",
@@ -26966,8 +26966,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2. \"",
-          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2. \""
+          "marker_text": "This tool has been migrated to tools. \"",
+          "full_line": "\"\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools. \""
         },
         {
           "file_path": "tools\\deprecated\\consolidated_2025-11-30\\arch_pattern_validator.py",
@@ -27386,8 +27386,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\hostinger_api_helper.py",
@@ -27436,8 +27436,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\markov_8agent_roi_optimizer.py",
@@ -27576,8 +27576,8 @@
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
           "color": "\ud83d\udfe1",
-          "marker_text": "This tool has been migrated to tools_v2.",
-          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools_v2."
+          "marker_text": "This tool has been migrated to tools.",
+          "full_line": "\u26a0\ufe0f DEPRECATED: This tool has been migrated to tools."
         },
         {
           "file_path": "tools\\refactor_analyzer.py",
@@ -28240,8 +28240,8 @@
           "full_line": "\"message\": \"Contains ERROR/FIXME/TODO markers\""
         },
         {
-          "file_path": "tools_v2\\categories\\captain_coordination_tools.py",
-          "relative_path": "tools_v2\\categories\\captain_coordination_tools.py",
+          "file_path": "tools\\categories\\captain_coordination_tools.py",
+          "relative_path": "tools\\categories\\captain_coordination_tools.py",
           "line_number": 124,
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
@@ -28250,8 +28250,8 @@
           "full_line": "# DEPRECATED: LeaderboardUpdaterTool consolidated into captain_tools.py"
         },
         {
-          "file_path": "tools_v2\\categories\\captain_coordination_tools.py",
-          "relative_path": "tools_v2\\categories\\captain_coordination_tools.py",
+          "file_path": "tools\\categories\\captain_coordination_tools.py",
+          "relative_path": "tools\\categories\\captain_coordination_tools.py",
           "line_number": 132,
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
@@ -28260,8 +28260,8 @@
           "full_line": "DEPRECATED: Use captain.update_leaderboard instead."
         },
         {
-          "file_path": "tools_v2\\categories\\captain_coordination_tools.py",
-          "relative_path": "tools_v2\\categories\\captain_coordination_tools.py",
+          "file_path": "tools\\categories\\captain_coordination_tools.py",
+          "relative_path": "tools\\categories\\captain_coordination_tools.py",
           "line_number": 144,
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
@@ -28270,8 +28270,8 @@
           "full_line": "summary=\"DEPRECATED: Use captain.update_leaderboard instead\","
         },
         {
-          "file_path": "tools_v2\\categories\\captain_tools_extension.py",
-          "relative_path": "tools_v2\\categories\\captain_tools_extension.py",
+          "file_path": "tools\\categories\\captain_tools_extension.py",
+          "relative_path": "tools\\categories\\captain_tools_extension.py",
           "line_number": 5,
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
@@ -28280,8 +28280,8 @@
           "full_line": "\u26a0\ufe0f DEPRECATED: This file has been split for V2 compliance (986 lines \u2192 3 files)."
         },
         {
-          "file_path": "tools_v2\\categories\\infrastructure_tools.py",
-          "relative_path": "tools_v2\\categories\\infrastructure_tools.py",
+          "file_path": "tools\\categories\\infrastructure_tools.py",
+          "relative_path": "tools\\categories\\infrastructure_tools.py",
           "line_number": 6,
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
@@ -28290,8 +28290,8 @@
           "full_line": "\u26a0\ufe0f DEPRECATED: This file has been split for V2 compliance (748 lines \u2192 3 files)."
         },
         {
-          "file_path": "tools_v2\\categories\\intelligent_mission_advisor.py",
-          "relative_path": "tools_v2\\categories\\intelligent_mission_advisor.py",
+          "file_path": "tools\\categories\\intelligent_mission_advisor.py",
+          "relative_path": "tools\\categories\\intelligent_mission_advisor.py",
           "line_number": 495,
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
@@ -28300,8 +28300,8 @@
           "full_line": "risks.append(\"Deprecated file - verify if still in use\")"
         },
         {
-          "file_path": "tools_v2\\categories\\intelligent_mission_advisor.py",
-          "relative_path": "tools_v2\\categories\\intelligent_mission_advisor.py",
+          "file_path": "tools\\categories\\intelligent_mission_advisor.py",
+          "relative_path": "tools\\categories\\intelligent_mission_advisor.py",
           "line_number": 681,
           "marker_type": "REFACTOR",
           "priority": "P3 - Low",
@@ -28310,8 +28310,8 @@
           "full_line": "\"4. REFACTOR: Extract modules incrementally\","
         },
         {
-          "file_path": "tools_v2\\categories\\intelligent_mission_advisor_analysis.py",
-          "relative_path": "tools_v2\\categories\\intelligent_mission_advisor_analysis.py",
+          "file_path": "tools\\categories\\intelligent_mission_advisor_analysis.py",
+          "relative_path": "tools\\categories\\intelligent_mission_advisor_analysis.py",
           "line_number": 206,
           "marker_type": "DEPRECATED",
           "priority": "P2 - Medium",
@@ -28320,8 +28320,8 @@
           "full_line": "risks.append(\"Deprecated file - verify if still in use\")"
         },
         {
-          "file_path": "tools_v2\\categories\\intelligent_mission_advisor_guidance.py",
-          "relative_path": "tools_v2\\categories\\intelligent_mission_advisor_guidance.py",
+          "file_path": "tools\\categories\\intelligent_mission_advisor_guidance.py",
+          "relative_path": "tools\\categories\\intelligent_mission_advisor_guidance.py",
           "line_number": 181,
           "marker_type": "REFACTOR",
           "priority": "P3 - Low",
@@ -28330,8 +28330,8 @@
           "full_line": "\"4. REFACTOR: Extract modules incrementally\","
         },
         {
-          "file_path": "tools_v2\\categories\\message_history_tools.py",
-          "relative_path": "tools_v2\\categories\\message_history_tools.py",
+          "file_path": "tools\\categories\\message_history_tools.py",
+          "relative_path": "tools\\categories\\message_history_tools.py",
           "line_number": 292,
           "marker_type": "TODO",
           "priority": "P1 - High",
@@ -28340,8 +28340,8 @@
           "full_line": "# TODO: Implement actual compression save"
         },
         {
-          "file_path": "tools_v2\\categories\\messaging_tools.py",
-          "relative_path": "tools_v2\\categories\\messaging_tools.py",
+          "file_path": "tools\\categories\\messaging_tools.py",
+          "relative_path": "tools\\categories\\messaging_tools.py",
           "line_number": 155,
           "marker_type": "TODO",
           "priority": "P1 - High",
@@ -28350,8 +28350,8 @@
           "full_line": "# TODO: Implement semantic search"
         },
         {
-          "file_path": "tools_v2\\categories\\session_tools.py",
-          "relative_path": "tools_v2\\categories\\session_tools.py",
+          "file_path": "tools\\categories\\session_tools.py",
+          "relative_path": "tools\\categories\\session_tools.py",
           "line_number": 122,
           "marker_type": "TODO",
           "priority": "P1 - High",
@@ -28360,8 +28360,8 @@
           "full_line": "# TODO: Integrate with actual swarm brain tool"
         },
         {
-          "file_path": "tools_v2\\categories\\swarm_brain_tools.py",
-          "relative_path": "tools_v2\\categories\\swarm_brain_tools.py",
+          "file_path": "tools\\categories\\swarm_brain_tools.py",
+          "relative_path": "tools\\categories\\swarm_brain_tools.py",
           "line_number": 24,
           "marker_type": "NOTE",
           "priority": "P3 - Low",
@@ -28370,8 +28370,8 @@
           "full_line": "\"\"\"Execute note taking.\"\"\""
         },
         {
-          "file_path": "tools_v2\\categories\\swarm_brain_tools.py",
-          "relative_path": "tools_v2\\categories\\swarm_brain_tools.py",
+          "file_path": "tools\\categories\\swarm_brain_tools.py",
+          "relative_path": "tools\\categories\\swarm_brain_tools.py",
           "line_number": 49,
           "marker_type": "NOTE",
           "priority": "P3 - Low",
@@ -28380,8 +28380,8 @@
           "full_line": "return {\"success\": True, \"message\": f\"Note added: {note_type}\"}"
         },
         {
-          "file_path": "tools_v2\\categories\\swarm_brain_tools.py",
-          "relative_path": "tools_v2\\categories\\swarm_brain_tools.py",
+          "file_path": "tools\\categories\\swarm_brain_tools.py",
+          "relative_path": "tools\\categories\\swarm_brain_tools.py",
           "line_number": 140,
           "marker_type": "NOTE",
           "priority": "P3 - Low",
@@ -28390,8 +28390,8 @@
           "full_line": "\"\"\"Execute note retrieval.\"\"\""
         },
         {
-          "file_path": "tools_v2\\categories\\system_tools.py",
-          "relative_path": "tools_v2\\categories\\system_tools.py",
+          "file_path": "tools\\categories\\system_tools.py",
+          "relative_path": "tools\\categories\\system_tools.py",
           "line_number": 112,
           "marker_type": "NOTE",
           "priority": "P3 - Low",
@@ -28400,8 +28400,8 @@
           "full_line": "note = params.get(\"note\")"
         },
         {
-          "file_path": "tools_v2\\categories\\test_generation_tools.py",
-          "relative_path": "tools_v2\\categories\\test_generation_tools.py",
+          "file_path": "tools\\categories\\test_generation_tools.py",
+          "relative_path": "tools\\categories\\test_generation_tools.py",
           "line_number": 143,
           "marker_type": "TODO",
           "priority": "P1 - High",
@@ -28410,8 +28410,8 @@
           "full_line": "# TODO: Initialize test fixtures"
         },
         {
-          "file_path": "tools_v2\\categories\\test_generation_tools.py",
-          "relative_path": "tools_v2\\categories\\test_generation_tools.py",
+          "file_path": "tools\\categories\\test_generation_tools.py",
+          "relative_path": "tools\\categories\\test_generation_tools.py",
           "line_number": 147,
           "marker_type": "TODO",
           "priority": "P1 - High",
@@ -28420,8 +28420,8 @@
           "full_line": "# TODO: Implement initialization test"
         },
         {
-          "file_path": "tools_v2\\categories\\test_generation_tools.py",
-          "relative_path": "tools_v2\\categories\\test_generation_tools.py",
+          "file_path": "tools\\categories\\test_generation_tools.py",
+          "relative_path": "tools\\categories\\test_generation_tools.py",
           "line_number": 155,
           "marker_type": "TODO",
           "priority": "P1 - High",
@@ -28430,8 +28430,8 @@
           "full_line": "# TODO: Implement {method} test"
         },
         {
-          "file_path": "tools_v2\\categories\\test_generation_tools.py",
-          "relative_path": "tools_v2\\categories\\test_generation_tools.py",
+          "file_path": "tools\\categories\\test_generation_tools.py",
+          "relative_path": "tools\\categories\\test_generation_tools.py",
           "line_number": 170,
           "marker_type": "TODO",
           "priority": "P1 - High",
@@ -28440,14 +28440,14 @@
           "full_line": "# TODO: Implement {func} test"
         },
         {
-          "file_path": "tools_v2\\categories\\web_tools.py",
-          "relative_path": "tools_v2\\categories\\web_tools.py",
+          "file_path": "tools\\categories\\web_tools.py",
+          "relative_path": "tools\\categories\\web_tools.py",
           "line_number": 102,
           "marker_type": "TODO",
           "priority": "P1 - High",
           "color": "\ud83d\udfe0",
-          "marker_text": "Migrate to tools_v2/utils/ when ready",
-          "full_line": "# TODO: Migrate to tools_v2/utils/ when ready"
+          "marker_text": "Migrate to tools/utils/ when ready",
+          "full_line": "# TODO: Migrate to tools/utils/ when ready"
         },
         {
           "file_path": "trading_robot\\core\\robinhood_client.py",

@@ -59,7 +59,7 @@ python tools/agent_orient.py search "testing"
 
 ### **Agent Tools:**
 - `tools/` - Utility scripts
-- `tools_v2/` - Toolbelt system
+- `tools/` - Toolbelt system
 - `swarm_brain/` - Knowledge base
 
 ### **Your Workspace:**

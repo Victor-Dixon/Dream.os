@@ -91,7 +91,7 @@ def vote_on_tools_ranking_debate():
     
     # Try to vote using debate tools
     try:
-        from tools_v2.categories.debate_tools import DebateVoteTool
+        from tools.categories.debate_tools import DebateVoteTool
         
         vote_tool = DebateVoteTool()
         

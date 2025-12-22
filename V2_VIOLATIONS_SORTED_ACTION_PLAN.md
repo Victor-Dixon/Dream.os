@@ -41,7 +41,7 @@ These files are **actively imported** or **registered in `__init__.py`** - they 
 | 811 | 2 | `src/discord_commander/status_change_monitor.py` | Extract monitors |
 | 796 | 5 | `tools/toolbelt_registry.py` | Split by tool category |
 | 791 | 3 | `src/core/messaging_pyautogui.py` | Extract delivery methods |
-| 787 | 2 | `tools_v2/categories/intelligent_mission_advisor.py` | Split advisor components |
+| 787 | 2 | `tools/categories/intelligent_mission_advisor.py` | Split advisor components |
 | 753 | 2 | `src/discord_commander/views/main_control_panel_view.py` | Extract view components |
 | 753 | 3 | `src/core/messaging_template_texts.py` | ✅ Approved exception |
 | 751 | 2 | `src/core/agent_self_healing_system.py` | Extract healing strategies |
@@ -62,8 +62,8 @@ These files are **actively imported** or **registered in `__init__.py`** - they 
 | 600 | `src/discord_commander/discord_gui_modals.py` |
 | 598 | `src/services/vector_database_service_unified.py` |
 | 585 | `tools/unified_validator.py` |
-| 584 | `tools_v2/categories/github_consolidation_tools.py` |
-| 576 | `tools_v2/categories/autonomous_workflow_tools.py` |
+| 584 | `tools/categories/github_consolidation_tools.py` |
+| 576 | `tools/categories/autonomous_workflow_tools.py` |
 | 542 | `src/core/message_queue_processor.py` |
 | 533 | `src/services/soft_onboarding_service.py` |
 | 531 | `tools/github_pusher_agent.py` |
@@ -80,7 +80,7 @@ These files are **actively imported** or **registered in `__init__.py`** - they 
 | 486 | `src/core/message_queue.py` |
 | 477 | `src/gaming/dreamos/ui_integration.py` |
 | 476 | `src/services/trader_replay/repositories.py` |
-| 475 | `tools_v2/categories/coordination_tools.py` |
+| 475 | `tools/categories/coordination_tools.py` |
 | 464 | `src/orchestrators/overnight/listener.py` |
 | 457 | `src/discord_commander/controllers/swarm_tasks_controller_view.py` |
 | 455 | `src/core/repository_merge_improvements.py` |
@@ -88,16 +88,16 @@ These files are **actively imported** or **registered in `__init__.py`** - they 
 | 441 | `src/orchestrators/overnight/monitor.py` |
 | 438 | `tools/projectscanner_modular_reports.py` |
 | 430 | `src/core/multi_agent_responder.py` |
-| 430 | `tools_v2/categories/import_fix_tools.py` |
+| 430 | `tools/categories/import_fix_tools.py` |
 | 426 | `src/core/error_handling/component_management.py` |
 | 426 | `src/core/config/config_dataclasses.py` |
 | 425 | `src/discord_commander/messaging_commands.py` |
 | 418 | `src/repositories/message_repository.py` |
 | 416 | `src/core/stress_test_metrics_analyzer.py` |
-| 414 | `tools_v2/categories/ssot_validation_tools.py` |
+| 414 | `tools/categories/ssot_validation_tools.py` |
 | 412 | `src/core/message_queue_persistence.py` |
 | 412 | `src/services/chatgpt/session.py` |
-| 410 | `tools_v2/categories/memory_safety_tools.py` |
+| 410 | `tools/categories/memory_safety_tools.py` |
 | 409 | `src/discord_commander/webhook_commands.py` |
 | 409 | `src/core/error_handling/error_intelligence.py` |
 | 404 | `src/infrastructure/browser/unified_cookie_manager.py` |

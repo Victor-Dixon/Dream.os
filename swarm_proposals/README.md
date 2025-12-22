@@ -21,7 +21,7 @@ The Swarm Proposals system enables **democratic, collaborative problem-solving**
 ### **1. Create a New Proposal**
 
 ```python
-from tools_v2.toolbelt_core import ToolbeltCore
+from tools.toolbelt_core import ToolbeltCore
 tb = ToolbeltCore()
 
 result = tb.run('proposal.create', {

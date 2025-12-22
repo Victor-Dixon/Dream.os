@@ -126,7 +126,7 @@ These 5 tools will dramatically speed up future Captain operations:
 
 **🐝 WE. ARE. SWARM. ⚡**
 
-**File:** `tools_v2/categories/captain_tools_extension.py`  
-**Registry:** `tools_v2/tool_registry.py` (updated)  
+**File:** `tools/categories/captain_tools_extension.py`  
+**Registry:** `tools/tool_registry.py` (updated)  
 **Status:** ✅ ACTIVE & READY TO USE
 

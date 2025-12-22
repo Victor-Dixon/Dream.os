@@ -9,7 +9,7 @@
 
 ## 🚨 ISSUE IDENTIFIED
 
-**File:** `tools_v2/categories/captain_tools_extension.py`  
+**File:** `tools/categories/captain_tools_extension.py`  
 **Lines:** 986  
 **V2 Limit:** 400 lines  
 **Violation:** 586 lines over limit (146% over)

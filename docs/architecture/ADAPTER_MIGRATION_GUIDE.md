@@ -1,5 +1,5 @@
 <!-- SSOT Domain: architecture -->
-# 📘 Adapter Migration Guide - tools_v2/
+# 📘 Adapter Migration Guide - tools/
 
 > **📚 SSOT Reference**: For Adapter pattern implementation details, see [ARCHITECTURE_PATTERNS_DOCUMENTATION.md](./ARCHITECTURE_PATTERNS_DOCUMENTATION.md) (Adapter Pattern section)
 
@@ -12,7 +12,7 @@
 
 ## 🎯 PURPOSE
 
-This guide provides step-by-step instructions for migrating legacy tools from `tools/` to `tools_v2/` using the IToolAdapter pattern.
+This guide provides step-by-step instructions for migrating legacy tools from `tools/` to `tools/` using the IToolAdapter pattern.
 
 ---
 
@@ -24,12 +24,12 @@ This guide provides step-by-step instructions for migrating legacy tools from `t
 1. What does the tool do?
 2. What are its inputs/outputs?
 3. Does it have dependencies on other tools?
-4. Is there already an adapter in tools_v2/?
+4. Is there already an adapter in tools/?
 5. What category should it belong to?
 
 **Example:**
 ```python
-# Legacy: tools/captain_message_all_agents.py → tools_v2.toolbelt captain.message_all
+# Legacy: tools/captain_message_all_agents.py → tools.toolbelt captain.message_all
 def message_all_agents(message: str, priority: str = "regular", include_captain: bool = True):
     """Send message to all agents including Captain."""
     # Implementation
@@ -48,13 +48,13 @@ def message_all_agents(message: str, priority: str = "regular", include_captain:
 
 **Strategy A: Direct Migration** (Most Common)
 - Tool has unique functionality
-- No equivalent in tools_v2/
+- No equivalent in tools/
 - Create new adapter
 
 **Strategy B: Wrapper Migration**
-- Tool already has equivalent in tools_v2/
+- Tool already has equivalent in tools/
 - Keep as wrapper, mark deprecated
-- Delegate to tools_v2 adapter
+- Delegate to tools adapter
 
 **Strategy C: Consolidation Migration**
 - Multiple similar tools exist
@@ -133,12 +133,12 @@ class ToolNameTool(IToolAdapter):
 
 ### **Step 4: Register Tool**
 
-**Add to `tools_v2/tool_registry.py`:**
+**Add to `tools/tool_registry.py`:**
 
 ```python
 TOOL_REGISTRY = {
     # ... existing tools ...
-    "category.tool_name": ("tools_v2.categories.category_file", "ToolNameTool"),
+    "category.tool_name": ("tools.categories.category_file", "ToolNameTool"),
 }
 ```
 
@@ -169,19 +169,19 @@ TOOL_REGISTRY = {
 
 ```python
 """
-⚠️ DEPRECATED: This tool has been migrated to tools_v2.
-Use 'python -m tools_v2.toolbelt category.tool_name' instead.
+⚠️ DEPRECATED: This tool has been migrated to tools.
+Use 'python -m tools.toolbelt category.tool_name' instead.
 This file will be removed in future version.
 
-Migrated to: tools_v2/categories/category_file.py → ToolNameTool
+Migrated to: tools/categories/category_file.py → ToolNameTool
 Registry: category.tool_name
 """
 
 import warnings
 
 warnings.warn(
-    "⚠️ DEPRECATED: This tool has been migrated to tools_v2. "
-    "Use 'python -m tools_v2.toolbelt category.tool_name' instead. "
+    "⚠️ DEPRECATED: This tool has been migrated to tools. "
+    "Use 'python -m tools.toolbelt category.tool_name' instead. "
     "This file will be removed in future version.",
     DeprecationWarning,
     stacklevel=2
@@ -246,7 +246,7 @@ warnings.warn(
 **Problem:** Importing from `tools/` directory
 
 **Solution:**
-- Migrate dependencies to `tools_v2/`
+- Migrate dependencies to `tools/`
 - Or refactor to be self-contained
 - Never create circular dependencies
 

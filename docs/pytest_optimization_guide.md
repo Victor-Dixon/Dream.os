@@ -104,7 +104,7 @@ Comprehensive exclusion list to avoid collecting tests from:
 - Build artifacts (`.pytest_cache`, `build`, `dist`)
 - Dependencies (`.venv`, `venv`, `env`)
 - Archive/temporary directories
-- External projects (tools_v2, trading_robot, etc.)
+- External projects (tools, trading_robot, etc.)
 
 ### Default Options
 - `-v`: Verbose output

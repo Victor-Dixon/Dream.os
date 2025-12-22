@@ -34,7 +34,7 @@
 6. `tools/autonomous_task_engine.py:23`
 7. `tools/markov_task_optimizer.py:19`
 8. `tools/autonomous/task_models.py:18`
-9. `tools_v2/categories/autonomous_workflow_tools.py:32`
+9. `tools/categories/autonomous_workflow_tools.py:32`
 
 **Status**: ⚠️ **DUPLICATES** - Need consolidation
 

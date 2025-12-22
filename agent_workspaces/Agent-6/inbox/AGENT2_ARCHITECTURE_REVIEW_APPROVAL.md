@@ -88,7 +88,7 @@
 
 ### **1. Consolidate Duplicate Leaderboard Tools** ⚠️
 
-**Issue:** Two leaderboard tools in tools_v2:
+**Issue:** Two leaderboard tools in tools:
 - `captain_coordination_tools.py` → `LeaderboardUpdaterTool`
 - `captain_tools.py` → `LeaderboardUpdateTool`
 

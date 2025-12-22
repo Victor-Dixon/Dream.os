@@ -42,8 +42,8 @@ After (SSOT):
 **Solution** (Agent-1's Implementation):
 ```python
 # tools/projectscanner.py (68 lines) - Thin CLI facade
-# ⚠️ DEPRECATED: Migrated to tools_v2/categories/analysis_tools.py
-# Current SSOT: tools_v2/categories/analysis_tools.py → ProjectScannerTool
+# ⚠️ DEPRECATED: Migrated to tools/categories/analysis_tools.py
+# Current SSOT: tools/categories/analysis_tools.py → ProjectScannerTool
 from projectscanner_core import ProjectScanner
 
 def main():
@@ -56,10 +56,10 @@ def main():
 # tools/projectscanner_workers.py (223 lines) - Threading
 # tools/projectscanner_modular_reports.py (263 lines) - Reports
 
-# ✅ CURRENT: tools_v2/categories/analysis_tools.py
+# ✅ CURRENT: tools/categories/analysis_tools.py
 # - ProjectScannerTool (IToolAdapter implementation)
-# - Registered in tools_v2/tool_registry.py as "analysis.project_scan"
-# - Use: python -m tools_v2.toolbelt analysis.project_scan
+# - Registered in tools/tool_registry.py as "analysis.project_scan"
+# - Use: python -m tools.toolbelt analysis.project_scan
 ```
 
 **Architecture**:

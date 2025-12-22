@@ -215,7 +215,7 @@ class DevlogPoster:
                 sys.path.insert(0, str(parent_dir))
             
             try:
-                from tools_v2.utils.discord_mermaid_renderer import DiscordMermaidRenderer
+                from tools.utils.discord_mermaid_renderer import DiscordMermaidRenderer
             except ImportError:
                 from tools.discord_mermaid_renderer import DiscordMermaidRenderer
             

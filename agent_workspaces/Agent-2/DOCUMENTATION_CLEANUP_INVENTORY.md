@@ -24,7 +24,7 @@
 
 1. ✅ **ADAPTER_PATTERN_AUDIT.md** (368 lines)
    - **Status:** ✅ Current (2025-01-27)
-   - **References:** ✅ All correct (tools_v2/)
+   - **References:** ✅ All correct (tools/)
    - **Action:** Keep
 
 2. ✅ **ADAPTER_MIGRATION_GUIDE.md** (324 lines)
@@ -93,14 +93,14 @@
      - Line 481-484: References to `tools/toolbelt.py` etc.
      - Line 540: "Create tools/README_TOOLBELT.md"
      - Line 616: "Scan tools/ directory automatically"
-   - **Action:** ⚡ **UPDATE REQUIRED** - Update all references to `tools_v2/`
+   - **Action:** ⚡ **UPDATE REQUIRED** - Update all references to `tools/`
    - **Priority:** HIGH (outdated architecture reference)
 
 14. ⚠️ **CONSOLIDATION_ARCHITECTURE_PATTERNS.md**
    - **Status:** ⚠️ **OUTDATED** - References `tools/` directory
    - **Issues Found:**
      - Line 43-54: References to `tools/projectscanner*.py` files
-   - **Action:** ⚡ **UPDATE REQUIRED** - Update to reference `tools_v2/` adapters
+   - **Action:** ⚡ **UPDATE REQUIRED** - Update to reference `tools/` adapters
    - **Priority:** MEDIUM (historical context, but should note migration)
 
 ---
@@ -118,7 +118,7 @@
 
 2. ✅ **V2_TOOLS_ARCHITECTURE_REVIEW.md**
    - **Status:** ✅ Current (2025-01-27)
-   - **References:** ✅ All correct (tools_v2/)
+   - **References:** ✅ All correct (tools/)
    - **Action:** Keep
 
 3. ✅ **V2_TOOLS_FLATTENING_REVIEW.md**
@@ -175,24 +175,24 @@
 
 ## 🔧 OUTDATED REFERENCES INVENTORY
 
-### **Priority 1: Critical Updates (tools/ → tools_v2/)**
+### **Priority 1: Critical Updates (tools/ → tools/)**
 
 #### **File:** `docs/architecture/CLI_TOOLBELT_ARCHITECTURE.md`
 
 **References to Update:**
-1. Line 36: `tools/` directory structure → Update to `tools_v2/`
-2. Line 383: "Scan tools/ directory" → "Scan tools_v2/ directory"
-3. Line 393: "Dynamically discover tools in tools/ directory" → "tools_v2/ directory"
-4. Line 481-484: `tools/toolbelt.py` → `tools_v2/toolbelt.py` (if exists) or note migration
+1. Line 36: `tools/` directory structure → Update to `tools/`
+2. Line 383: "Scan tools/ directory" → "Scan tools/ directory"
+3. Line 393: "Dynamically discover tools in tools/ directory" → "tools/ directory"
+4. Line 481-484: `tools/toolbelt.py` → `tools/toolbelt.py` (if exists) or note migration
 5. Line 540: "Create tools/README_TOOLBELT.md" → Update path
-6. Line 616: "Scan tools/ directory" → "Scan tools_v2/ directory"
+6. Line 616: "Scan tools/ directory" → "Scan tools/ directory"
 
 **Action:** ⚡ **UPDATE REQUIRED** - Add deprecation note for `tools/` references
 
 #### **File:** `docs/architecture/CONSOLIDATION_ARCHITECTURE_PATTERNS.md`
 
 **References to Update:**
-1. Line 43-54: `tools/projectscanner*.py` → Note migration to `tools_v2/categories/analysis_tools.py`
+1. Line 43-54: `tools/projectscanner*.py` → Note migration to `tools/categories/analysis_tools.py`
 
 **Action:** ⚡ **UPDATE REQUIRED** - Add migration note
 
@@ -205,7 +205,7 @@
 1. ⚡ **CLI_TOOLBELT_ARCHITECTURE.md**
    - **Issue:** Multiple outdated `tools/` references
    - **Impact:** Misleading architecture documentation
-   - **Action:** Update all references to `tools_v2/`
+   - **Action:** Update all references to `tools/`
    - **Estimated Effort:** 30 minutes
 
 ### **Priority 2: MEDIUM (This Cycle)**
@@ -259,14 +259,14 @@
 ### **Phase 2: Updates** (Next Steps)
 
 1. **Update CLI_TOOLBELT_ARCHITECTURE.md:**
-   - [ ] Replace `tools/` with `tools_v2/` (6 references)
+   - [ ] Replace `tools/` with `tools/` (6 references)
    - [ ] Add deprecation note for legacy `tools/` directory
    - [ ] Update directory structure diagrams
    - [ ] Verify all code examples
 
 2. **Update CONSOLIDATION_ARCHITECTURE_PATTERNS.md:**
    - [ ] Add migration note for `tools/projectscanner*.py`
-   - [ ] Reference `tools_v2/categories/analysis_tools.py`
+   - [ ] Reference `tools/categories/analysis_tools.py`
    - [ ] Note migration status
 
 3. **Review ARCHITECTURE_DESIGN_V2_COMPLIANCE_IMPLEMENTATION_REPORT.md:**

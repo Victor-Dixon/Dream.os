@@ -46,7 +46,7 @@
 
 **Current State**:
 - ⏳ 15+ `captain_*.py` files still in `tools/` directory
-- ⏳ Migration to `tools_v2/categories/` pending
+- ⏳ Migration to `tools/categories/` pending
 - ⏳ This is a **separate consolidation task**
 
 **Captain Tools Still in tools/**:

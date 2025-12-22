@@ -374,7 +374,7 @@ python -m src.services.messaging_cli --agent Agent-X --get-next-task
 
 **Check Compliance:**
 ```bash
-python -m tools_v2.toolbelt v2.compliance_check
+python -m tools.toolbelt v2.compliance_check
 ```
 
 ---

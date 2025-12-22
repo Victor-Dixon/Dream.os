@@ -49,7 +49,7 @@ Set up production-grade monitoring, health checks, and SLO tracking for system r
 ### **Step 1: System Health Ping**
 
 ```python
-from tools_v2.toolbelt_core import ToolbeltCore
+from tools.toolbelt_core import ToolbeltCore
 
 core = ToolbeltCore()
 

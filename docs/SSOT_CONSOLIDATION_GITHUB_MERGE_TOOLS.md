@@ -10,7 +10,7 @@
 
 **Issue**: Two GitHub merge tools existed, violating Single Source of Truth:
 1. `tools/repo_safe_merge.py` - Primary implementation (465 lines, comprehensive)
-2. `tools_v2/categories/github_consolidation_tools.py::GitHubRepoMergeExecutorTool` - Duplicate toolbelt tool
+2. `tools/categories/github_consolidation_tools.py::GitHubRepoMergeExecutorTool` - Duplicate toolbelt tool
 
 ---
 
@@ -30,7 +30,7 @@
   - Dry-run support
 
 ### **Wrapper Tool (Maintains Compatibility)**:
-- **File**: `tools_v2/categories/github_consolidation_tools.py`
+- **File**: `tools/categories/github_consolidation_tools.py`
 - **Class**: `GitHubRepoMergeExecutorTool`
 - **Status**: ✅ **WRAPPER - DELEGATES TO PRIMARY**
 - **Purpose**: Maintains toolbelt interface while using primary SSOT implementation
@@ -102,8 +102,8 @@ toolbelt.run("github.execute_merge", {
 ## 🔗 **RELATED FILES**
 
 - **Primary**: `tools/repo_safe_merge.py`
-- **Wrapper**: `tools_v2/categories/github_consolidation_tools.py::GitHubRepoMergeExecutorTool`
-- **Registry**: `tools_v2/tool_registry.py` (line 158)
+- **Wrapper**: `tools/categories/github_consolidation_tools.py::GitHubRepoMergeExecutorTool`
+- **Registry**: `tools/tool_registry.py` (line 158)
 
 ---
 

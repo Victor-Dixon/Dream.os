@@ -94,7 +94,7 @@ Agent-3 can use these SSOT validation tools:
 - `tools/ssot_validator.py` - Documentation-code alignment checker
 - `tools/import_chain_validator.py` - Import path validator
 - `tools/captain_import_validator.py` - Import validation
-- `tools_v2/categories/ssot_validation_tools.py` - SSOT validation utilities
+- `tools/categories/ssot_validation_tools.py` - SSOT validation utilities
 
 ---
 

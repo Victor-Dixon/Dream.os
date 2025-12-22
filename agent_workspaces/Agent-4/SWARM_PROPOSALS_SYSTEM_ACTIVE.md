@@ -26,7 +26,7 @@
 #### **1. proposal.create**
 ```python
 # Initialize new proposal topic
-from tools_v2.toolbelt_core import ToolbeltCore
+from tools.toolbelt_core import ToolbeltCore
 tb = ToolbeltCore()
 
 result = tb.run('proposal.create', {
@@ -200,7 +200,7 @@ debate = tb.run('proposal.debate', {
 #### **1. Track Swarm Status:**
 ```bash
 python -c "
-from tools_v2.toolbelt_core import ToolbeltCore
+from tools.toolbelt_core import ToolbeltCore
 tb = ToolbeltCore()
 status = tb.run('captain.swarm_status', {'include_metrics': True})
 print(status)
@@ -210,7 +210,7 @@ print(status)
 #### **2. Monitor Proposal Progress:**
 ```bash
 python -c "
-from tools_v2.toolbelt_core import ToolbeltCore
+from tools.toolbelt_core import ToolbeltCore
 tb = ToolbeltCore()
 proposals = tb.run('proposal.list', {'topic': 'orientation_system'})
 print(f'Total proposals: {len(proposals)}')
@@ -220,7 +220,7 @@ print(f'Total proposals: {len(proposals)}')
 #### **3. Track Agent Progress:**
 ```bash
 python -c "
-from tools_v2.toolbelt_core import ToolbeltCore
+from tools.toolbelt_core import ToolbeltCore
 tb = ToolbeltCore()
 progress = tb.run('captain.track_progress', {
     'agent_ids': ['Agent-1', 'Agent-2', 'Agent-3', 'Agent-5', 'Agent-6', 'Agent-7', 'Agent-8'],

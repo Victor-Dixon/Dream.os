@@ -32,7 +32,7 @@
 ### **1. MessageAllAgentsTool** ⭐⭐ HIGH PRIORITY
 
 **Source:** `tools/captain_message_all_agents.py`  
-**Target:** `tools_v2/categories/captain_tools.py`  
+**Target:** `tools/categories/captain_tools.py`  
 **Name:** `captain.message_all`
 
 **Design:**
@@ -60,7 +60,7 @@ class MessageAllAgentsTool(IToolAdapter):
 ```
 
 **Integration:**
-- Add to `tools_v2/categories/captain_tools.py`
+- Add to `tools/categories/captain_tools.py`
 - Register in `tool_registry.py` as `captain.message_all`
 - Deprecate `tools/captain_message_all_agents.py`
 
@@ -69,7 +69,7 @@ class MessageAllAgentsTool(IToolAdapter):
 ### **2. FindIdleAgentsTool** ⭐⭐ HIGH PRIORITY
 
 **Source:** `tools/captain_find_idle_agents.py`  
-**Target:** `tools_v2/categories/captain_tools.py`  
+**Target:** `tools/categories/captain_tools.py`  
 **Name:** `captain.find_idle`
 
 **Design:**
@@ -94,7 +94,7 @@ class FindIdleAgentsTool(IToolAdapter):
 ```
 
 **Integration:**
-- Add to `tools_v2/categories/captain_tools.py`
+- Add to `tools/categories/captain_tools.py`
 - Register in `tool_registry.py` as `captain.find_idle`
 - Deprecate `tools/captain_find_idle_agents.py`
 
@@ -103,7 +103,7 @@ class FindIdleAgentsTool(IToolAdapter):
 ### **3. GasCheckTool** ⭐⭐ HIGH PRIORITY
 
 **Source:** `tools/captain_gas_check.py`  
-**Target:** `tools_v2/categories/captain_tools.py`  
+**Target:** `tools/categories/captain_tools.py`  
 **Name:** `captain.gas_check`
 
 **Design:**
@@ -128,7 +128,7 @@ class GasCheckTool(IToolAdapter):
 ```
 
 **Integration:**
-- Add to `tools_v2/categories/captain_tools.py`
+- Add to `tools/categories/captain_tools.py`
 - Register in `tool_registry.py` as `captain.gas_check`
 - Deprecate `tools/captain_gas_check.py`
 

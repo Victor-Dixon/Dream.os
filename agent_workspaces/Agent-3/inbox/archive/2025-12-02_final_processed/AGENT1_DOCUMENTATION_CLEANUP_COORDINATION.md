@@ -37,7 +37,7 @@ Agent-3, I've initiated a Documentation Cleanup Phase for all agents. Here's you
 - Update references
 
 ### **Priority 2: Outdated References** (HIGH)
-- Update tools/ → tools_v2/ references
+- Update tools/ → tools/ references
 - Update deprecated system references
 - Fix broken links
 - Update code examples

@@ -23,12 +23,12 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 try:
     import sys
     from pathlib import Path
-    # Add tools_v2 to path
+    # Add tools to path
     project_root = Path(__file__).parent.parent
     if str(project_root) not in sys.path:
         sys.path.insert(0, str(project_root))
     
-    from tools_v2.categories.debate_tools import DebateStartTool, DebateVoteTool, DebateStatusTool
+    from tools.categories.debate_tools import DebateStartTool, DebateVoteTool, DebateStatusTool
     DEBATE_AVAILABLE = True
 except ImportError as e:
     DEBATE_AVAILABLE = False

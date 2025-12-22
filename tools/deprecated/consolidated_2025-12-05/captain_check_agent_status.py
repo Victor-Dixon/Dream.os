@@ -5,11 +5,11 @@ Captain's Tool: Check All Agent Status
 
 Quickly check status.json for all 8 agents to see who needs tasks.
 
-⚠️ DEPRECATED: This tool has been migrated to tools_v2.
-Use 'python -m tools_v2.toolbelt captain.status_check' instead.
+⚠️ DEPRECATED: This tool has been migrated to tools.
+Use 'python -m tools.toolbelt captain.status_check' instead.
 This file will be removed in future version.
 
-Migrated to: tools_v2/categories/captain_tools.py → StatusCheckTool
+Migrated to: tools/categories/captain_tools.py → StatusCheckTool
 Registry: captain.status_check
 
 Author: Agent-4 (Captain)
@@ -20,15 +20,15 @@ Deprecated: 2025-01-27 (Agent-6 - V2 Tools Flattening)
 import warnings
 
 warnings.warn(
-    "⚠️ DEPRECATED: This tool has been migrated to tools_v2. "
-    "Use 'python -m tools_v2.toolbelt captain.status_check' instead. "
+    "⚠️ DEPRECATED: This tool has been migrated to tools. "
+    "Use 'python -m tools.toolbelt captain.status_check' instead. "
     "This file will be removed in future version.",
     DeprecationWarning,
     stacklevel=2
 )
 
-# Legacy compatibility - delegate to tools_v2
-# For migration path, use: python -m tools_v2.toolbelt captain.status_check
+# Legacy compatibility - delegate to tools
+# For migration path, use: python -m tools.toolbelt captain.status_check
 
 import json
 from pathlib import Path
@@ -36,9 +36,9 @@ from pathlib import Path
 
 def check_all_agent_status():
     """Check status.json for all agents."""
-    # Delegate to tools_v2 adapter
+    # Delegate to tools adapter
     try:
-        from tools_v2.categories.captain_tools import StatusCheckTool
+        from tools.categories.captain_tools import StatusCheckTool
         
         tool = StatusCheckTool()
         result = tool.execute({}, None)

@@ -152,7 +152,7 @@ Agents can use webhook tools programmatically:
 ### **From Agent Toolbelt**
 
 ```python
-from tools_v2 import AgentToolbelt
+from tools import AgentToolbelt
 
 toolbelt = AgentToolbelt()
 
