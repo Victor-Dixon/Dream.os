@@ -13,12 +13,14 @@ V2 Compliance: < 300 lines, single responsibility, route definitions.
 from flask import Blueprint, jsonify, request
 
 from src.web.messaging_handlers import MessagingHandlers
+from src.web.messaging_template_handlers import MessagingTemplateHandlers
 
 # Create blueprint
 messaging_bp = Blueprint("messaging", __name__, url_prefix="/api/messaging")
 
-# Create handler instance (BaseHandler pattern)
+# Create handler instances (BaseHandler pattern)
 messaging_handlers = MessagingHandlers()
+template_handlers = MessagingTemplateHandlers()
 
 
 @messaging_bp.route("/cli/parse", methods=["POST"])
@@ -42,19 +44,19 @@ def execute_cli():
 @messaging_bp.route("/templates/list", methods=["GET"])
 def list_templates():
     """List available messaging templates."""
-    return messaging_handlers.handle_list_templates(request)
+    return template_handlers.handle_list_templates(request)
 
 
 @messaging_bp.route("/templates/render", methods=["POST"])
 def render_template():
     """Render messaging template with variables."""
-    return messaging_handlers.handle_render_template(request)
+    return template_handlers.handle_render_template(request)
 
 
 @messaging_bp.route("/templates/get", methods=["GET"])
 def get_template():
     """Get specific template by name."""
-    return messaging_handlers.handle_get_template(request)
+    return template_handlers.handle_get_template(request)
 
 
 @messaging_bp.route("/health", methods=["GET"])
