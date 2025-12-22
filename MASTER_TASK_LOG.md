@@ -46,6 +46,13 @@
 
 ## THIS_WEEK
 
+### Captain-Level Strategic Oversight Tasks
+
+- [ ] **HIGH**: Monitor Git repository sync execution - Agent-5 executing repository sync and merge. Monitor progress, coordinate blockers, ensure all agents have synchronized codebase. Status: Agent-5 EXECUTING. Current: Local ahead by 5 commits, remote ahead by 5 commits, 4 uncommitted changes. [Agent-4 CAPTAIN]
+- [ ] **HIGH**: Coordinate blocker resolution - Active blockers: (1) SSOT verification for Batches 2-8 (Agent-8), (2) Architecture review for Website SEO/UX (Agent-2). Monitor progress, coordinate resolution, unblock dependent tasks. [Agent-4 CAPTAIN]
+- [ ] **MEDIUM**: Strategic coordination review - Review all active coordinations, identify bottlenecks, optimize force multiplier utilization, ensure bilateral coordination loops are active. Current: 5 active coordinations, 2 blockers, 7 coordination opportunities. [Agent-4 CAPTAIN]
+- [ ] **MEDIUM**: System health monitoring - Monitor overall system health: toolbelt (100% healthy), import dependencies (0 issues), website audits (complete), V2 compliance (monitoring active). Track metrics and identify improvement opportunities. [Agent-4 CAPTAIN]
+
 ## WAITING_ON
 
 - [x] Agent-3: Batch 7 consolidation infrastructure health checks - ✅ RESOLVED (2025-12-22) - Batch 7 marked as N/A (does not exist, was never created during re-prioritization). Tools updated to handle missing batches gracefully. Agent-3 unblocked.
