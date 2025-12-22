@@ -1,6 +1,10 @@
 # MASTER TASK LOG
 
-> **Task Discovery:** When no tasks are available, follow [TASK_DISCOVERY_PROTOCOL.md](docs/TASK_DISCOVERY_PROTOCOL.md) to systematically find work opportunities.
+> **📋 Task Management Protocols:**
+> - **No Tasks Available?** → Follow [TASK_DISCOVERY_PROTOCOL.md](docs/TASK_DISCOVERY_PROTOCOL.md) to systematically find work opportunities
+> - **Creating Captain-Level Task?** → Follow [CAPTAIN_LEVEL_TASK_PROTOCOL.md](docs/CAPTAIN_LEVEL_TASK_PROTOCOL.md) - Complete Pre-Creation Checklist first
+> - **Cycle Planner Integration:** Tasks may be added to cycle planner (`src/core/resume_cycle_planner_integration.py`) for automatic agent assignment
+> - **Contract System:** Use `python -m src.services.messaging_cli --get-next-task --agent Agent-X` to claim tasks from cycle planner
 
 ## INBOX
 
@@ -49,6 +53,12 @@
 - [ ] **LOW**: Add ARIA labels to 2 websites - Missing on: prismblossom.online, southwestsecret.com. Requirements: Add ARIA labels to interactive elements, form inputs, buttons without text. Reference: docs/website_audits/COMPREHENSIVE_AUDIT_SUMMARY_2025-12-22.md [Agent-7]
 
 ## THIS_WEEK
+
+> **📚 Related Systems & Protocols:**
+> - **Cycle Planner:** `src/core/resume_cycle_planner_integration.py` - Automatic task assignment when agents resume work
+> - **Contract System:** `src/services/contract_system/` - Task claiming via `python -m src.services.messaging_cli --get-next-task --agent Agent-X`
+> - **Task Discovery:** [TASK_DISCOVERY_PROTOCOL.md](docs/TASK_DISCOVERY_PROTOCOL.md) - Systematic approach to finding work when no tasks available
+> - **Captain-Level Tasks:** [CAPTAIN_LEVEL_TASK_PROTOCOL.md](docs/CAPTAIN_LEVEL_TASK_PROTOCOL.md) - Protocol for creating Captain-Level Tasks
 
 ### Captain-Level Strategic Oversight Tasks
 
