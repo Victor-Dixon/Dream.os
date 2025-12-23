@@ -70,3 +70,4 @@ class MessageRoutingService:
             return explicit_category
         return _map_category_from_type(message_type)
 
+

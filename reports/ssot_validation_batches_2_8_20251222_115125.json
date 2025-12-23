@@ -1,0 +1,731 @@
+{
+  "timestamp": "2025-12-22T11:51:24.162299",
+  "source_file": "D:\\Agent_Cellphone_V2_Repository\\agent_workspaces\\Agent-8\\batches_2_8_for_ssot.json",
+  "batches": [
+    {
+      "batch_number": 2,
+      "total_groups": 15,
+      "groups_validation": [
+        {
+          "group_index": 0,
+          "ssot_path": "temp_repos\\Thea\\src\\dreamscape\\scrapers\\conversation\\unified_conversation_scraper.py",
+          "duplicate_paths": [
+            "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\src\\dreamscape\\scrapers\\conversation\\unified_conversation_scraper.py"
+          ],
+          "action": "DELETE",
+          "ssot_validation": {
+            "exists": true,
+            "path": "D:\\Agent_Cellphone_V2_Repository\\temp_repos\\Thea\\src\\dreamscape\\scrapers\\conversation\\unified_conversation_scraper.py",
+            "relative_path": "temp_repos\\Thea\\src\\dreamscape\\scrapers\\conversation\\unified_conversation_scraper.py",
+            "size": 23609,
+            "is_file": true
+          },
+          "ssot_location": {
+            "valid": true,
+            "location_type": "temp_repos",
+            "domain": "thea",
+            "note": "SSOT in temp_repos/Thea (expected for Thea domain)"
+          },
+          "duplicates_validation": [
+            {
+              "exists": false,
+              "path": "D:\\Agent_Cellphone_V2_Repository\\agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\src\\dreamscape\\scrapers\\conversation\\unified_conversation_scraper.py",
+              "relative_path": "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\src\\dreamscape\\scrapers\\conversation\\unified_conversation_scraper.py",
+              "warning": "Duplicate file does not exist (may already be deleted)"
+            }
+          ],
+          "overall_valid": true,
+          "issues": [
+            {
+              "severity": "warning",
+              "message": "Duplicate file not found: agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\src\\dreamscape\\scrapers\\conversation\\unified_conversation_scraper.py",
+              "note": "May already be deleted"
+            }
+          ]
+        },
+        {
+          "group_index": 1,
+          "ssot_path": "temp_repos\\Thea\\src\\dreamscape\\scrapers\\conversation_extractor.py",
+          "duplicate_paths": [
+            "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\src\\dreamscape\\scrapers\\conversation_extractor.py"
+          ],
+          "action": "DELETE",
+          "ssot_validation": {
+            "exists": true,
+            "path": "D:\\Agent_Cellphone_V2_Repository\\temp_repos\\Thea\\src\\dreamscape\\scrapers\\conversation_extractor.py",
+            "relative_path": "temp_repos\\Thea\\src\\dreamscape\\scrapers\\conversation_extractor.py",
+            "size": 4174,
+            "is_file": true
+          },
+          "ssot_location": {
+            "valid": true,
+            "location_type": "temp_repos",
+            "domain": "thea",
+            "note": "SSOT in temp_repos/Thea (expected for Thea domain)"
+          },
+          "duplicates_validation": [
+            {
+              "exists": false,
+              "path": "D:\\Agent_Cellphone_V2_Repository\\agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\src\\dreamscape\\scrapers\\conversation_extractor.py",
+              "relative_path": "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\src\\dreamscape\\scrapers\\conversation_extractor.py",
+              "warning": "Duplicate file does not exist (may already be deleted)"
+            }
+          ],
+          "overall_valid": true,
+          "issues": [
+            {
+              "severity": "warning",
+              "message": "Duplicate file not found: agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\src\\dreamscape\\scrapers\\conversation_extractor.py",
+              "note": "May already be deleted"
+            }
+          ]
+        },
+        {
+          "group_index": 2,
+          "ssot_path": "temp_repos\\Thea\\src\\dreamscape\\scrapers\\conversation_extractor_legacy.py",
+          "duplicate_paths": [
+            "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\src\\dreamscape\\scrapers\\conversation_extractor_legacy.py"
+          ],
+          "action": "DELETE",
+          "ssot_validation": {
+            "exists": true,
+            "path": "D:\\Agent_Cellphone_V2_Repository\\temp_repos\\Thea\\src\\dreamscape\\scrapers\\conversation_extractor_legacy.py",
+            "relative_path": "temp_repos\\Thea\\src\\dreamscape\\scrapers\\conversation_extractor_legacy.py",
+            "size": 7667,
+            "is_file": true
+          },
+          "ssot_location": {
+            "valid": true,
+            "location_type": "temp_repos",
+            "domain": "thea",
+            "note": "SSOT in temp_repos/Thea (expected for Thea domain)"
+          },
+          "duplicates_validation": [
+            {
+              "exists": false,
+              "path": "D:\\Agent_Cellphone_V2_Repository\\agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\src\\dreamscape\\scrapers\\conversation_extractor_legacy.py",
+              "relative_path": "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\src\\dreamscape\\scrapers\\conversation_extractor_legacy.py",
+              "warning": "Duplicate file does not exist (may already be deleted)"
+            }
+          ],
+          "overall_valid": true,
+          "issues": [
+            {
+              "severity": "warning",
+              "message": "Duplicate file not found: agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\src\\dreamscape\\scrapers\\conversation_extractor_legacy.py",
+              "note": "May already be deleted"
+            }
+          ]
+        },
+        {
+          "group_index": 3,
+          "ssot_path": "temp_repos\\Thea\\src\\dreamscape\\scrapers\\conversation_fetcher.py",
+          "duplicate_paths": [
+            "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\src\\dreamscape\\scrapers\\conversation_fetcher.py"
+          ],
+          "action": "DELETE",
+          "ssot_validation": {
+            "exists": true,
+            "path": "D:\\Agent_Cellphone_V2_Repository\\temp_repos\\Thea\\src\\dreamscape\\scrapers\\conversation_fetcher.py",
+            "relative_path": "temp_repos\\Thea\\src\\dreamscape\\scrapers\\conversation_fetcher.py",
+            "size": 2456,
+            "is_file": true
+          },
+          "ssot_location": {
+            "valid": true,
+            "location_type": "temp_repos",
+            "domain": "thea",
+            "note": "SSOT in temp_repos/Thea (expected for Thea domain)"
+          },
+          "duplicates_validation": [
+            {
+              "exists": false,
+              "path": "D:\\Agent_Cellphone_V2_Repository\\agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\src\\dreamscape\\scrapers\\conversation_fetcher.py",
+              "relative_path": "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\src\\dreamscape\\scrapers\\conversation_fetcher.py",
+              "warning": "Duplicate file does not exist (may already be deleted)"
+            }
+          ],
+          "overall_valid": true,
+          "issues": [
+            {
+              "severity": "warning",
+              "message": "Duplicate file not found: agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\src\\dreamscape\\scrapers\\conversation_fetcher.py",
+              "note": "May already be deleted"
+            }
+          ]
+        },
+        {
+          "group_index": 4,
+          "ssot_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\controllers\\main_controller.py",
+          "duplicate_paths": [
+            "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\controllers\\main_controller.py"
+          ],
+          "action": "DELETE",
+          "ssot_validation": {
+            "exists": true,
+            "path": "D:\\Agent_Cellphone_V2_Repository\\temp_repos\\Thea\\src\\dreamscape\\gui\\controllers\\main_controller.py",
+            "relative_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\controllers\\main_controller.py",
+            "size": 1517,
+            "is_file": true
+          },
+          "ssot_location": {
+            "valid": true,
+            "location_type": "temp_repos",
+            "domain": "thea",
+            "note": "SSOT in temp_repos/Thea (expected for Thea domain)"
+          },
+          "duplicates_validation": [
+            {
+              "exists": false,
+              "path": "D:\\Agent_Cellphone_V2_Repository\\agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\controllers\\main_controller.py",
+              "relative_path": "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\controllers\\main_controller.py",
+              "warning": "Duplicate file does not exist (may already be deleted)"
+            }
+          ],
+          "overall_valid": true,
+          "issues": [
+            {
+              "severity": "warning",
+              "message": "Duplicate file not found: agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\controllers\\main_controller.py",
+              "note": "May already be deleted"
+            }
+          ]
+        },
+        {
+          "group_index": 5,
+          "ssot_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\main_window.py",
+          "duplicate_paths": [
+            "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\main_window.py"
+          ],
+          "action": "DELETE",
+          "ssot_validation": {
+            "exists": true,
+            "path": "D:\\Agent_Cellphone_V2_Repository\\temp_repos\\Thea\\src\\dreamscape\\gui\\main_window.py",
+            "relative_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\main_window.py",
+            "size": 14238,
+            "is_file": true
+          },
+          "ssot_location": {
+            "valid": true,
+            "location_type": "temp_repos",
+            "domain": "thea",
+            "note": "SSOT in temp_repos/Thea (expected for Thea domain)"
+          },
+          "duplicates_validation": [
+            {
+              "exists": false,
+              "path": "D:\\Agent_Cellphone_V2_Repository\\agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\main_window.py",
+              "relative_path": "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\main_window.py",
+              "warning": "Duplicate file does not exist (may already be deleted)"
+            }
+          ],
+          "overall_valid": true,
+          "issues": [
+            {
+              "severity": "warning",
+              "message": "Duplicate file not found: agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\main_window.py",
+              "note": "May already be deleted"
+            }
+          ]
+        },
+        {
+          "group_index": 6,
+          "ssot_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\ai_agent_training_panel.py",
+          "duplicate_paths": [
+            "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\ai_agent_training_panel.py"
+          ],
+          "action": "DELETE",
+          "ssot_validation": {
+            "exists": true,
+            "path": "D:\\Agent_Cellphone_V2_Repository\\temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\ai_agent_training_panel.py",
+            "relative_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\ai_agent_training_panel.py",
+            "size": 32476,
+            "is_file": true
+          },
+          "ssot_location": {
+            "valid": true,
+            "location_type": "temp_repos",
+            "domain": "thea",
+            "note": "SSOT in temp_repos/Thea (expected for Thea domain)"
+          },
+          "duplicates_validation": [
+            {
+              "exists": false,
+              "path": "D:\\Agent_Cellphone_V2_Repository\\agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\ai_agent_training_panel.py",
+              "relative_path": "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\ai_agent_training_panel.py",
+              "warning": "Duplicate file does not exist (may already be deleted)"
+            }
+          ],
+          "overall_valid": true,
+          "issues": [
+            {
+              "severity": "warning",
+              "message": "Duplicate file not found: agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\ai_agent_training_panel.py",
+              "note": "May already be deleted"
+            }
+          ]
+        },
+        {
+          "group_index": 7,
+          "ssot_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\ai_interaction_panel.py",
+          "duplicate_paths": [
+            "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\ai_interaction_panel.py"
+          ],
+          "action": "DELETE",
+          "ssot_validation": {
+            "exists": true,
+            "path": "D:\\Agent_Cellphone_V2_Repository\\temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\ai_interaction_panel.py",
+            "relative_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\ai_interaction_panel.py",
+            "size": 17653,
+            "is_file": true
+          },
+          "ssot_location": {
+            "valid": true,
+            "location_type": "temp_repos",
+            "domain": "thea",
+            "note": "SSOT in temp_repos/Thea (expected for Thea domain)"
+          },
+          "duplicates_validation": [
+            {
+              "exists": false,
+              "path": "D:\\Agent_Cellphone_V2_Repository\\agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\ai_interaction_panel.py",
+              "relative_path": "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\ai_interaction_panel.py",
+              "warning": "Duplicate file does not exist (may already be deleted)"
+            }
+          ],
+          "overall_valid": true,
+          "issues": [
+            {
+              "severity": "warning",
+              "message": "Duplicate file not found: agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\ai_interaction_panel.py",
+              "note": "May already be deleted"
+            }
+          ]
+        },
+        {
+          "group_index": 8,
+          "ssot_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\ai_studio\\agent_training_component.py",
+          "duplicate_paths": [
+            "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\ai_studio\\agent_training_component.py"
+          ],
+          "action": "DELETE",
+          "ssot_validation": {
+            "exists": true,
+            "path": "D:\\Agent_Cellphone_V2_Repository\\temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\ai_studio\\agent_training_component.py",
+            "relative_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\ai_studio\\agent_training_component.py",
+            "size": 12128,
+            "is_file": true
+          },
+          "ssot_location": {
+            "valid": true,
+            "location_type": "temp_repos",
+            "domain": "thea",
+            "note": "SSOT in temp_repos/Thea (expected for Thea domain)"
+          },
+          "duplicates_validation": [
+            {
+              "exists": false,
+              "path": "D:\\Agent_Cellphone_V2_Repository\\agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\ai_studio\\agent_training_component.py",
+              "relative_path": "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\ai_studio\\agent_training_component.py",
+              "warning": "Duplicate file does not exist (may already be deleted)"
+            }
+          ],
+          "overall_valid": true,
+          "issues": [
+            {
+              "severity": "warning",
+              "message": "Duplicate file not found: agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\ai_studio\\agent_training_component.py",
+              "note": "May already be deleted"
+            }
+          ]
+        },
+        {
+          "group_index": 9,
+          "ssot_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\ai_studio\\ai_analytics_component.py",
+          "duplicate_paths": [
+            "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\ai_studio\\ai_analytics_component.py"
+          ],
+          "action": "DELETE",
+          "ssot_validation": {
+            "exists": true,
+            "path": "D:\\Agent_Cellphone_V2_Repository\\temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\ai_studio\\ai_analytics_component.py",
+            "relative_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\ai_studio\\ai_analytics_component.py",
+            "size": 17231,
+            "is_file": true
+          },
+          "ssot_location": {
+            "valid": true,
+            "location_type": "temp_repos",
+            "domain": "thea",
+            "note": "SSOT in temp_repos/Thea (expected for Thea domain)"
+          },
+          "duplicates_validation": [
+            {
+              "exists": false,
+              "path": "D:\\Agent_Cellphone_V2_Repository\\agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\ai_studio\\ai_analytics_component.py",
+              "relative_path": "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\ai_studio\\ai_analytics_component.py",
+              "warning": "Duplicate file does not exist (may already be deleted)"
+            }
+          ],
+          "overall_valid": true,
+          "issues": [
+            {
+              "severity": "warning",
+              "message": "Duplicate file not found: agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\ai_studio\\ai_analytics_component.py",
+              "note": "May already be deleted"
+            }
+          ]
+        },
+        {
+          "group_index": 10,
+          "ssot_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\ai_studio\\model_management_component.py",
+          "duplicate_paths": [
+            "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\ai_studio\\model_management_component.py"
+          ],
+          "action": "DELETE",
+          "ssot_validation": {
+            "exists": true,
+            "path": "D:\\Agent_Cellphone_V2_Repository\\temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\ai_studio\\model_management_component.py",
+            "relative_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\ai_studio\\model_management_component.py",
+            "size": 18099,
+            "is_file": true
+          },
+          "ssot_location": {
+            "valid": true,
+            "location_type": "temp_repos",
+            "domain": "thea",
+            "note": "SSOT in temp_repos/Thea (expected for Thea domain)"
+          },
+          "duplicates_validation": [
+            {
+              "exists": false,
+              "path": "D:\\Agent_Cellphone_V2_Repository\\agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\ai_studio\\model_management_component.py",
+              "relative_path": "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\ai_studio\\model_management_component.py",
+              "warning": "Duplicate file does not exist (may already be deleted)"
+            }
+          ],
+          "overall_valid": true,
+          "issues": [
+            {
+              "severity": "warning",
+              "message": "Duplicate file not found: agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\ai_studio\\model_management_component.py",
+              "note": "May already be deleted"
+            }
+          ]
+        },
+        {
+          "group_index": 11,
+          "ssot_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\ai_studio\\training_data_component.py",
+          "duplicate_paths": [
+            "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\ai_studio\\training_data_component.py"
+          ],
+          "action": "DELETE",
+          "ssot_validation": {
+            "exists": true,
+            "path": "D:\\Agent_Cellphone_V2_Repository\\temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\ai_studio\\training_data_component.py",
+            "relative_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\ai_studio\\training_data_component.py",
+            "size": 15859,
+            "is_file": true
+          },
+          "ssot_location": {
+            "valid": true,
+            "location_type": "temp_repos",
+            "domain": "thea",
+            "note": "SSOT in temp_repos/Thea (expected for Thea domain)"
+          },
+          "duplicates_validation": [
+            {
+              "exists": false,
+              "path": "D:\\Agent_Cellphone_V2_Repository\\agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\ai_studio\\training_data_component.py",
+              "relative_path": "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\ai_studio\\training_data_component.py",
+              "warning": "Duplicate file does not exist (may already be deleted)"
+            }
+          ],
+          "overall_valid": true,
+          "issues": [
+            {
+              "severity": "warning",
+              "message": "Duplicate file not found: agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\ai_studio\\training_data_component.py",
+              "note": "May already be deleted"
+            }
+          ]
+        },
+        {
+          "group_index": 12,
+          "ssot_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\ai_studio_panel.py",
+          "duplicate_paths": [
+            "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\ai_studio_panel.py"
+          ],
+          "action": "DELETE",
+          "ssot_validation": {
+            "exists": true,
+            "path": "D:\\Agent_Cellphone_V2_Repository\\temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\ai_studio_panel.py",
+            "relative_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\ai_studio_panel.py",
+            "size": 31221,
+            "is_file": true
+          },
+          "ssot_location": {
+            "valid": true,
+            "location_type": "temp_repos",
+            "domain": "thea",
+            "note": "SSOT in temp_repos/Thea (expected for Thea domain)"
+          },
+          "duplicates_validation": [
+            {
+              "exists": false,
+              "path": "D:\\Agent_Cellphone_V2_Repository\\agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\ai_studio_panel.py",
+              "relative_path": "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\ai_studio_panel.py",
+              "warning": "Duplicate file does not exist (may already be deleted)"
+            }
+          ],
+          "overall_valid": true,
+          "issues": [
+            {
+              "severity": "warning",
+              "message": "Duplicate file not found: agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\ai_studio_panel.py",
+              "note": "May already be deleted"
+            }
+          ]
+        },
+        {
+          "group_index": 13,
+          "ssot_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\base\\ai_studio_base.py",
+          "duplicate_paths": [
+            "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\base\\ai_studio_base.py"
+          ],
+          "action": "DELETE",
+          "ssot_validation": {
+            "exists": true,
+            "path": "D:\\Agent_Cellphone_V2_Repository\\temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\base\\ai_studio_base.py",
+            "relative_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\base\\ai_studio_base.py",
+            "size": 17082,
+            "is_file": true
+          },
+          "ssot_location": {
+            "valid": true,
+            "location_type": "temp_repos",
+            "domain": "thea",
+            "note": "SSOT in temp_repos/Thea (expected for Thea domain)"
+          },
+          "duplicates_validation": [
+            {
+              "exists": false,
+              "path": "D:\\Agent_Cellphone_V2_Repository\\agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\base\\ai_studio_base.py",
+              "relative_path": "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\base\\ai_studio_base.py",
+              "warning": "Duplicate file does not exist (may already be deleted)"
+            }
+          ],
+          "overall_valid": true,
+          "issues": [
+            {
+              "severity": "warning",
+              "message": "Duplicate file not found: agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\base\\ai_studio_base.py",
+              "note": "May already be deleted"
+            }
+          ]
+        },
+        {
+          "group_index": 14,
+          "ssot_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\consolidated_ai_studio_panel.py",
+          "duplicate_paths": [
+            "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\consolidated_ai_studio_panel.py"
+          ],
+          "action": "DELETE",
+          "ssot_validation": {
+            "exists": true,
+            "path": "D:\\Agent_Cellphone_V2_Repository\\temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\consolidated_ai_studio_panel.py",
+            "relative_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\consolidated_ai_studio_panel.py",
+            "size": 41305,
+            "is_file": true
+          },
+          "ssot_location": {
+            "valid": true,
+            "location_type": "temp_repos",
+            "domain": "thea",
+            "note": "SSOT in temp_repos/Thea (expected for Thea domain)"
+          },
+          "duplicates_validation": [
+            {
+              "exists": false,
+              "path": "D:\\Agent_Cellphone_V2_Repository\\agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\consolidated_ai_studio_panel.py",
+              "relative_path": "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\consolidated_ai_studio_panel.py",
+              "warning": "Duplicate file does not exist (may already be deleted)"
+            }
+          ],
+          "overall_valid": true,
+          "issues": [
+            {
+              "severity": "warning",
+              "message": "Duplicate file not found: agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\consolidated_ai_studio_panel.py",
+              "note": "May already be deleted"
+            }
+          ]
+        }
+      ],
+      "summary": {
+        "total_valid": 15,
+        "total_invalid": 0,
+        "total_warnings": 15
+      }
+    },
+    {
+      "batch_number": 3,
+      "total_groups": 4,
+      "groups_validation": [
+        {
+          "group_index": 0,
+          "ssot_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\modular\\consolidated_ai_studio_panel_refactored.py",
+          "duplicate_paths": [
+            "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\modular\\consolidated_ai_studio_panel_refactored.py"
+          ],
+          "action": "DELETE",
+          "ssot_validation": {
+            "exists": true,
+            "path": "D:\\Agent_Cellphone_V2_Repository\\temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\modular\\consolidated_ai_studio_panel_refactored.py",
+            "relative_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\modular\\consolidated_ai_studio_panel_refactored.py",
+            "size": 3681,
+            "is_file": true
+          },
+          "ssot_location": {
+            "valid": true,
+            "location_type": "temp_repos",
+            "domain": "thea",
+            "note": "SSOT in temp_repos/Thea (expected for Thea domain)"
+          },
+          "duplicates_validation": [
+            {
+              "exists": false,
+              "path": "D:\\Agent_Cellphone_V2_Repository\\agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\modular\\consolidated_ai_studio_panel_refactored.py",
+              "relative_path": "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\modular\\consolidated_ai_studio_panel_refactored.py",
+              "warning": "Duplicate file does not exist (may already be deleted)"
+            }
+          ],
+          "overall_valid": true,
+          "issues": [
+            {
+              "severity": "warning",
+              "message": "Duplicate file not found: agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\modular\\consolidated_ai_studio_panel_refactored.py",
+              "note": "May already be deleted"
+            }
+          ]
+        },
+        {
+          "group_index": 1,
+          "ssot_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\modular\\voice_modeling_panel_refactored.py",
+          "duplicate_paths": [
+            "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\modular\\voice_modeling_panel_refactored.py"
+          ],
+          "action": "DELETE",
+          "ssot_validation": {
+            "exists": true,
+            "path": "D:\\Agent_Cellphone_V2_Repository\\temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\modular\\voice_modeling_panel_refactored.py",
+            "relative_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\modular\\voice_modeling_panel_refactored.py",
+            "size": 1440,
+            "is_file": true
+          },
+          "ssot_location": {
+            "valid": true,
+            "location_type": "temp_repos",
+            "domain": "thea",
+            "note": "SSOT in temp_repos/Thea (expected for Thea domain)"
+          },
+          "duplicates_validation": [
+            {
+              "exists": false,
+              "path": "D:\\Agent_Cellphone_V2_Repository\\agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\modular\\voice_modeling_panel_refactored.py",
+              "relative_path": "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\modular\\voice_modeling_panel_refactored.py",
+              "warning": "Duplicate file does not exist (may already be deleted)"
+            }
+          ],
+          "overall_valid": true,
+          "issues": [
+            {
+              "severity": "warning",
+              "message": "Duplicate file not found: agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\modular\\voice_modeling_panel_refactored.py",
+              "note": "May already be deleted"
+            }
+          ]
+        },
+        {
+          "group_index": 2,
+          "ssot_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\multi_model_panel.py",
+          "duplicate_paths": [
+            "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\multi_model_panel.py"
+          ],
+          "action": "DELETE",
+          "ssot_validation": {
+            "exists": true,
+            "path": "D:\\Agent_Cellphone_V2_Repository\\temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\multi_model_panel.py",
+            "relative_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\multi_model_panel.py",
+            "size": 10145,
+            "is_file": true
+          },
+          "ssot_location": {
+            "valid": true,
+            "location_type": "temp_repos",
+            "domain": "thea",
+            "note": "SSOT in temp_repos/Thea (expected for Thea domain)"
+          },
+          "duplicates_validation": [
+            {
+              "exists": false,
+              "path": "D:\\Agent_Cellphone_V2_Repository\\agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\multi_model_panel.py",
+              "relative_path": "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\multi_model_panel.py",
+              "warning": "Duplicate file does not exist (may already be deleted)"
+            }
+          ],
+          "overall_valid": true,
+          "issues": [
+            {
+              "severity": "warning",
+              "message": "Duplicate file not found: agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\multi_model_panel.py",
+              "note": "May already be deleted"
+            }
+          ]
+        },
+        {
+          "group_index": 3,
+          "ssot_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\training_data_panel.py",
+          "duplicate_paths": [
+            "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\training_data_panel.py"
+          ],
+          "action": "DELETE",
+          "ssot_validation": {
+            "exists": true,
+            "path": "D:\\Agent_Cellphone_V2_Repository\\temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\training_data_panel.py",
+            "relative_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\training_data_panel.py",
+            "size": 29257,
+            "is_file": true
+          },
+          "ssot_location": {
+            "valid": true,
+            "location_type": "temp_repos",
+            "domain": "thea",
+            "note": "SSOT in temp_repos/Thea (expected for Thea domain)"
+          },
+          "duplicates_validation": [
+            {
+              "exists": false,
+              "path": "D:\\Agent_Cellphone_V2_Repository\\agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\training_data_panel.py",
+              "relative_path": "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\training_data_panel.py",
+              "warning": "Duplicate file does not exist (may already be deleted)"
+            }
+          ],
+          "overall_valid": true,
+          "issues": [
+            {
+              "severity": "warning",
+              "message": "Duplicate file not found: agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\training_data_panel.py",
+              "note": "May already be deleted"
+            }
+          ]
+        }
+      ],
+      "summary": {
+        "total_valid": 4,
+        "total_invalid": 0,
+        "total_warnings": 4
+      }
+    }
+  ]
+}
