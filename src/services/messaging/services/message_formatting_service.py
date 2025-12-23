@@ -105,3 +105,4 @@ class MessageFormattingService:
         """
         return build_queue_metadata(stalled, use_pyautogui, send_mode, category)
 
+

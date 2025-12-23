@@ -137,30 +137,38 @@ class ServiceManager:
                     [sys.executable, str(script)],
                     cwd=str(self.project_root),
                     stdout=subprocess.PIPE,
-                    stderr=subprocess.PIPE
+                    stderr=subprocess.STDOUT  # Combine stderr with stdout
                 )
                 self.processes['message_queue'] = process
                 self._save_pid('message_queue', process)
                 print("   ✅ Message Queue Processor started (PID: {})".format(process.pid))
+                # Start thread to monitor output
+                Thread(target=self._monitor_process_output, args=('message_queue', process), daemon=True).start()
                 return True
             except Exception as e:
                 print(f"   ❌ Failed to start Message Queue: {e}")
                 return False
         else:
-            # Fallback to module import (as used by start_discord_system.py)
-            try:
-                process = subprocess.Popen(
-                    [sys.executable, "-m", "src.core.message_queue_processor"],
-                    cwd=str(self.project_root),
-                    stdout=subprocess.PIPE,
-                    stderr=subprocess.PIPE
-                )
-                self.processes['message_queue'] = process
-                self._save_pid('message_queue', process)
-                print("   ✅ Message Queue Processor started (PID: {})".format(process.pid))
-                return True
-            except Exception as e:
-                print(f"   ❌ Failed to start Message Queue: {e}")
+            # Fallback to scripts directory
+            fallback_script = self.project_root / "scripts" / "start_queue_processor.py"
+            if fallback_script.exists():
+                try:
+                    process = subprocess.Popen(
+                        [sys.executable, str(fallback_script)],
+                        cwd=str(self.project_root),
+                        stdout=subprocess.PIPE,
+                        stderr=subprocess.STDOUT
+                    )
+                    self.processes['message_queue'] = process
+                    self._save_pid('message_queue', process)
+                    print("   ✅ Message Queue Processor started (PID: {})".format(process.pid))
+                    Thread(target=self._monitor_process_output, args=('message_queue', process), daemon=True).start()
+                    return True
+                except Exception as e:
+                    print(f"   ❌ Failed to start Message Queue: {e}")
+                    return False
+            else:
+                print("   ❌ Message Queue Processor script not found")
                 return False
 
     def start_twitch_bot(self):
@@ -252,13 +260,15 @@ class ServiceManager:
                 cwd=str(self.project_root),
                 env=env,
                 stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE
+                stderr=subprocess.STDOUT  # Combine stderr with stdout
             )
             self.processes['discord'] = process
             self._save_pid('discord', process)
             print("   ✅ Discord Bot started (PID: {})".format(process.pid))
             print(
                 "   ℹ️  Note: start_discord_system.py also starts message queue processor")
+            # Start thread to monitor output
+            Thread(target=self._monitor_process_output, args=('discord', process), daemon=True).start()
             return True
         except Exception as e:
             print(f"   ❌ Failed to start Discord Bot: {e}")
@@ -373,6 +383,19 @@ class ServiceManager:
                 pid_file.unlink()
         except Exception as e:
             print(f"   ⚠️  Failed to cleanup PID file: {e}")
+
+    def _monitor_process_output(self, service_name, process):
+        """Monitor process output and display errors."""
+        try:
+            for line in iter(process.stdout.readline, b''):
+                if line:
+                    decoded = line.decode('utf-8', errors='replace').strip()
+                    if decoded:
+                        # Only show errors/warnings to avoid spam
+                        if any(keyword in decoded.lower() for keyword in ['error', 'exception', 'failed', 'traceback', 'warning']):
+                            print(f"   [{service_name}] {decoded}")
+        except Exception:
+            pass  # Process may have terminated
 
     def stop_all(self):
         """Stop all running services."""
