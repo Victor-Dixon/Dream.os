@@ -186,10 +186,16 @@ config/*_key.txt
 config/*_secret.txt
 
 # Deployment credentials (FTP/SFTP passwords and usernames)
-.deploy_credentials/
-.deploy_credentials/**
-*.deploy_credentials.json
+# Exclude all files in .deploy_credentials/
+.deploy_credentials/*
+# But allow example files and README (safe to commit)
+!.deploy_credentials/*.example.json
+!.deploy_credentials/*.example.*
+!.deploy_credentials/README.md
+# Explicitly exclude actual credential files (redundant but clear)
 .deploy_credentials/blogging_api.json
+.deploy_credentials/sites.json
+*.deploy_credentials.json
 sites.json
 
 # Discord tokens and webhooks

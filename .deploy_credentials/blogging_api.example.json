@@ -1,0 +1,51 @@
+{
+  "freerideinvestor": {
+    "site_url": "https://freerideinvestor.com",
+    "username": "your_wordpress_username",
+    "app_password": "your_application_password_here",
+    "purpose": "trading_education",
+    "categories": ["Trading Education", "Market Analysis", "Trading Strategies"],
+    "default_tags": ["trading", "education", "analysis", "strategy", "risk management", "automation"]
+  },
+  "prismblossom.online": {
+    "site_url": "https://prismblossom.online",
+    "username": "your_wordpress_username",
+    "app_password": "your_application_password_here",
+    "purpose": "personal",
+    "categories": ["Personal", "Family Moments", "Birthday Blog"],
+    "default_tags": ["personal", "family", "birthday", "memories", "carmyn"]
+  },
+  "weareswarm.online": {
+    "site_url": "https://weareswarm.online",
+    "username": "your_wordpress_username",
+    "app_password": "your_application_password_here",
+    "purpose": "swarm_system",
+    "categories": ["System Updates", "Architecture", "Agent Swarm"],
+    "default_tags": ["swarm", "system", "architecture", "agents", "mcp", "infrastructure"]
+  },
+  "weareswarm.site": {
+    "site_url": "https://weareswarm.site",
+    "username": "your_wordpress_username",
+    "app_password": "your_application_password_here",
+    "purpose": "swarm_system",
+    "categories": ["System Updates", "Architecture", "Agent Swarm"],
+    "default_tags": ["swarm", "system", "architecture", "agents", "mcp", "infrastructure"]
+  },
+  "tradingrobotplug.com": {
+    "site_url": "https://tradingrobotplug.com",
+    "username": "your_wordpress_username",
+    "app_password": "your_application_password_here",
+    "purpose": "plugin",
+    "categories": ["Plugin Updates", "Changelog", "Strategy Reports"],
+    "default_tags": ["plugin", "update", "changelog", "trading robot", "automation", "strategy"]
+  },
+  "southwestsecret.com": {
+    "site_url": "https://southwestsecret.com",
+    "username": "your_wordpress_username",
+    "app_password": "your_application_password_here",
+    "purpose": "music",
+    "categories": ["Music", "Releases", "Events"],
+    "default_tags": ["music", "release", "dj", "mix", "southwestsecret"],
+    "note": "WordPress theme needs to be deployed first"
+  }
+}
