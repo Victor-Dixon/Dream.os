@@ -57,9 +57,9 @@ def detect_sender() -> str:
     except Exception as e:
         logger.debug(f"Could not detect sender from directory: {e}")
 
-    # Default to CAPTAIN
-    logger.debug("📍 No sender detected, defaulting to CAPTAIN")
-    return "CAPTAIN"
+    # Default to Agent-4 (CAPTAIN)
+    logger.debug("📍 No sender detected, defaulting to Agent-4 (CAPTAIN)")
+    return "Agent-4"
 
 
 def determine_message_type(sender: str, recipient: str) -> tuple[UnifiedMessageType, str]:
@@ -86,7 +86,8 @@ def determine_message_type(sender: str, recipient: str) -> tuple[UnifiedMessageT
 
     # Captain-to-Agent
     if sender_upper in ["CAPTAIN", "AGENT-4"]:
-        return UnifiedMessageType.CAPTAIN_TO_AGENT, "CAPTAIN"
+        # Normalize to "Agent-4" for clarity in templates (CAPTAIN is Agent-4)
+        return UnifiedMessageType.CAPTAIN_TO_AGENT, "Agent-4"
 
     # System-to-Agent
     if sender_upper in ["SYSTEM", "DISCORD", "COMMANDER"]:

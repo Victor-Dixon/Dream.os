@@ -4,6 +4,8 @@
 **Branch:** `cursor/107-v2-violations-inspection-c578`  
 **Analyst:** Cloud Agent
 
+> **⚠️ HISTORICAL DOCUMENT:** This report was created before the V2 guidelines update (2025-12-22). Current V2 guidelines: ~400 lines per file (guideline, not hard limit), with clean code principles taking precedence. See `docs/V2_COMPLIANCE_GUIDELINES_UPDATE.md` for current standards.
+
 ---
 
 ## Executive Summary
@@ -24,14 +26,14 @@
 
 Per `.cursor/rules/v2-compliance.mdc`:
 
-| Rule | Limit |
-|------|-------|
-| File size | **Maximum 300 lines** |
-| Class size | **Maximum 200 lines** |
-| Function size | **Maximum 30 lines** |
-| Cyclomatic complexity | **Maximum 10** |
-| Nesting depth | **Maximum 3 levels** |
-| Parameter count | **Maximum 5 parameters** |
+| Rule | Limit (Historical) | Current Guideline |
+|------|-------------------|-------------------|
+| File size | ~~Maximum 300 lines~~ | **~400 lines (guideline, clean code principles prioritized)** |
+| Class size | Maximum 200 lines | **~200 lines (guideline)** |
+| Function size | Maximum 30 lines | **~30 lines (guideline)** |
+| Cyclomatic complexity | Maximum 10 | **Maximum 10** |
+| Nesting depth | Maximum 3 levels | **Maximum 3 levels** |
+| Parameter count | Maximum 5 parameters | **Maximum 5 parameters** |
 
 ---
 

@@ -96,13 +96,21 @@ def add_task_system_flags(parser: argparse.ArgumentParser) -> None:
 
 
 def add_onboarding_flags(parser: argparse.ArgumentParser) -> None:
-    """Add hard onboarding flag arguments to parser."""
+    """Add onboarding flag arguments to parser."""
     parser.add_argument("--hard-onboarding", action="store_true",
                         help="Execute hard onboarding protocol (5-step reset) for agent")
+    parser.add_argument("--soft-onboarding", action="store_true",
+                        help="Execute soft onboarding protocol (6-step) for agent")
     parser.add_argument("--onboarding-file", type=str,
-                        help="Path to file containing onboarding message (for hard onboarding)")
+                        help="Path to file containing onboarding message (for onboarding)")
     parser.add_argument(
-        "--role", type=str, help="Agent role assignment (for hard onboarding with template)")
+        "--role", type=str, help="Agent role assignment (for onboarding with template)")
+    parser.add_argument("--agents", type=str,
+                        help="Comma-separated list of agent IDs (for multiple agent onboarding)")
+    parser.add_argument("--custom-cleanup-message", type=str,
+                        help="Custom cleanup message for soft onboarding")
+    parser.add_argument("--generate-cycle-report", action="store_true", default=True,
+                        help="Generate cycle accomplishments report after onboarding (default: True)")
     parser.add_argument("--dry-run", action="store_true",
                         help="Dry run mode - show what would be done without executing")
 

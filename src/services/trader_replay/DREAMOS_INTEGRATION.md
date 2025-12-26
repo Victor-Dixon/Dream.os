@@ -53,7 +53,7 @@ The `TraderReplayOrchestrator` coordinates:
 
 ### **V2 Compliance**
 
-- ✅ **File Size Limits**: All files <300 lines
+- ✅ **File Size Limits**: All files within ~400 line guideline
 - ✅ **Repository Pattern**: Data access through repositories
 - ✅ **Service Layer**: Business logic in orchestrator
 - ✅ **SSOT Tags**: Domain boundaries clearly marked

@@ -38,7 +38,7 @@ class HardOnboardingService(BaseService):
     def execute_hard_onboarding(
         self,
         agent_id: str,
-        onboarding_message: str,
+        onboarding_message: Optional[str] = None,
         role: Optional[str] = None,
     ) -> bool:
         """
@@ -46,7 +46,7 @@ class HardOnboardingService(BaseService):
         
         Args:
             agent_id: Target agent ID
-            onboarding_message: Onboarding message for new session
+            onboarding_message: Onboarding message for new session (if None, uses default)
             role: Optional role assignment
             
         Returns:
@@ -83,13 +83,13 @@ class HardOnboardingService(BaseService):
         return True
 
 
-def hard_onboard_agent(agent_id: str, onboarding_message: str, role: Optional[str] = None) -> bool:
+def hard_onboard_agent(agent_id: str, onboarding_message: Optional[str] = None, role: Optional[str] = None) -> bool:
     """
     Convenience function for hard onboarding single agent.
     
     Args:
         agent_id: Target agent ID
-        onboarding_message: Onboarding message
+        onboarding_message: Onboarding message (if None, uses default S2A HARD_ONBOARDING message)
         role: Optional role assignment
         
     Returns:
@@ -104,7 +104,7 @@ def hard_onboard_agent(agent_id: str, onboarding_message: str, role: Optional[st
 
 
 def hard_onboard_multiple_agents(
-    agents: list[tuple[str, str]], role: Optional[str] = None
+    agents: list[tuple[str, Optional[str]]], role: Optional[str] = None
 ) -> dict[str, bool]:
     """
     Hard onboard multiple agents sequentially.
@@ -137,7 +137,7 @@ def hard_onboard_multiple_agents(
 
 def execute_hard_onboarding(
     agent_id: str,
-    onboarding_message: str,
+    onboarding_message: Optional[str] = None,
     role: Optional[str] = None,
 ) -> bool:
     """
@@ -145,7 +145,7 @@ def execute_hard_onboarding(
     
     Args:
         agent_id: Target agent ID
-        onboarding_message: Onboarding message
+        onboarding_message: Onboarding message (if None, uses default S2A HARD_ONBOARDING message)
         role: Optional role assignment
         
     Returns:

@@ -506,9 +506,17 @@ MESSAGE_TEMPLATES: dict[MessageCategory, Any] = {
             "Priority: {priority}\n"
             "Message ID: {message_id}\n"
             "Timestamp: {timestamp}\n\n"
+            "Identity:\n"
+            "You are {recipient}. Act as this agent for this message.\n"
+            "If you are not {recipient}, do NOT reply; forward to {recipient}.\n\n"
+            "No-Ack Policy:\n"
+            "- Do not send empty acknowledgments.\n"
+            "- Respond with artifact/result or 1 blocker (blocker + proposed fix + owner).\n\n"
             "Context:\n{context}\n\n"
             "First Actions:\n{actions}\n\n"
             "{operating_cycle}\n"
+            "{cycle_checklist}\n"
+            "{discord_reporting}\n"
             "If blocked:\n{fallback}\n"
         ),
         "SOFT_ONBOARDING": (

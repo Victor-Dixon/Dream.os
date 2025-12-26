@@ -4,6 +4,8 @@
 **Total Violations:** 277 files  
 **Status:** Categorized and prioritized for action
 
+> **⚠️ HISTORICAL DOCUMENT:** This report was created before the V2 guidelines update (2025-12-22). Current V2 guidelines: ~400 lines per file (guideline, not hard limit), with clean code principles taking precedence. Files exceeding ~400 lines should be evaluated for quality and maintainability rather than automatically flagged. See `docs/V2_COMPLIANCE_GUIDELINES_UPDATE.md` for current standards.
+
 ---
 
 ## Executive Summary
@@ -111,7 +113,7 @@ These files are **actively imported** or **registered in `__init__.py`** - they 
 
 ### Priority 3: THRESHOLD (300-400 lines) - 72 files
 
-Files slightly over limit - lower priority for refactoring.
+> **Note:** Under current V2 guidelines (~400 line guideline), many of these files may be acceptable if they follow clean code principles. Evaluate for quality and maintainability rather than automatically refactoring.
 
 ---
 

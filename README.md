@@ -30,7 +30,7 @@ Agent Cellphone V2 is an autonomous multi-agent system designed for:
 - **Communication**: Discord bot integration, messaging, and coordination
 - **Data Processing**: Trading systems, analytics, and business intelligence
 
-The system follows **V2 Compliance Standards** (files ≤300 lines, modular architecture) and implements **SOLID principles** throughout.
+The system follows **V2 Compliance Standards** (files ~400 lines guideline, clean code principles prioritized) and implements **SOLID principles** throughout.
 
 ---
 
@@ -38,7 +38,7 @@ The system follows **V2 Compliance Standards** (files ≤300 lines, modular arch
 
 ### Core Principles
 
-- **Modular Design**: Single responsibility per module (<300 lines)
+- **Modular Design**: Single responsibility per module (~400 lines guideline, clean code principles)
 - **SOLID Compliance**: Dependency injection, clear boundaries
 - **Repository Pattern**: Data access abstraction
 - **Service Layer**: Business logic isolation
@@ -142,7 +142,7 @@ python tools/check_queue_status.py
 
 ### V2 Compliance
 
-- **Files**: ≤300 lines (preferred), ≤400 lines (acceptable)
+- **Files**: ~400 lines guideline (clean code principles take precedence over line counts)
 - **Classes**: ≤200 lines
 - **Functions**: ≤30 lines
 - **Enforcement**: Pre-commit hooks and CI/CD validation

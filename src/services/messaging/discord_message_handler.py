@@ -30,7 +30,7 @@ def send_discord_message_to_agent(
     agent: str, message: str, priority: str = "regular", use_pyautogui: bool = True,
     wait_for_delivery: bool = False, timeout: float = 30.0, discord_user_id: str | None = None,
     stalled: bool = False, apply_template: bool = False, message_category: MessageCategory | None = None,
-    sender: str | None = None, queue=None, messaging_cli_path: Path | None = None,
+    sender: str | None = None, queue_repository=None, messaging_cli_path: Path | None = None,
     project_root: Path | None = None, resolve_discord_sender_func=None, get_discord_username_func=None,
 ) -> dict[str, Any]:
     """Send Discord message to agent via message queue (synchronized delivery)."""
@@ -40,7 +40,7 @@ def send_discord_message_to_agent(
             message, agent, priority, sender, discord_user_id, apply_template, message_category, resolve_discord_sender_func
         )
         return route_discord_delivery(
-            queue, agent, message, templated_message, resolved_sender, priority_enum,
+            queue_repository, agent, message, templated_message, resolved_sender, priority_enum,
             stalled, messaging_cli_path, project_root, use_pyautogui, message_category, apply_template, wait_for_delivery, timeout, discord_user_id
         )
     except Exception as e:

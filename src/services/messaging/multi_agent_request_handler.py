@@ -31,7 +31,7 @@ logger = logging.getLogger(__name__)
 def send_multi_agent_request(
     recipients: list[str], message: str, sender: str = "CAPTAIN",
     priority=UnifiedMessagePriority.REGULAR, timeout_seconds: int = 300,
-    wait_for_all: bool = False, stalled: bool = False, queue=None,
+    wait_for_all: bool = False, stalled: bool = False, queue_repository=None,
 ) -> str:
     """Send multi-agent request that collects responses and combines them."""
     try:
@@ -44,7 +44,7 @@ def send_multi_agent_request(
         request_id = f"req_{uuid.uuid4().hex[:8]}"
         responder = get_multi_agent_responder()
         collector_id = create_request_collector(responder, request_id, sender, recipients, message, timeout_seconds, wait_for_all)
-        return process_multi_agent_request(queue, sender, recipients, message, collector_id, request_id, priority, stalled, timeout_seconds)
+        return process_multi_agent_request(queue_repository, sender, recipients, message, collector_id, request_id, priority, stalled, timeout_seconds)
     except Exception as e:
         logger.error(f"Error creating multi-agent request: {e}")
         return ""

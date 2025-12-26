@@ -45,16 +45,16 @@ class ConsolidatedMessagingService(BaseService):
         self.messaging_cli = self.project_root / \
             "src" / "services" / "messaging_cli.py"
 
-        # CRITICAL: Initialize message queue for synchronization
+        # CRITICAL: Initialize queue repository for synchronization
         try:
-            from src.core.message_queue import MessageQueue
+            from .repositories.queue_repository import QueueRepository
 
-            self.queue = MessageQueue()
+            self.queue_repository = QueueRepository()
             self.logger.info(
-                "✅ ConsolidatedMessagingService initialized with message queue")
+                "✅ ConsolidatedMessagingService initialized with queue repository")
         except Exception as e:
-            self.logger.error(f"⚠️ Failed to initialize message queue: {e}")
-            self.queue = None
+            self.logger.error(f"⚠️ Failed to initialize queue repository: {e}")
+            self.queue_repository = None
 
     def send_message(
         self,
@@ -76,7 +76,7 @@ class ConsolidatedMessagingService(BaseService):
             use_pyautogui=use_pyautogui, wait_for_delivery=wait_for_delivery,
             timeout=timeout, discord_user_id=discord_user_id, stalled=stalled,
             apply_template=apply_template, message_category=message_category,
-            sender=sender, queue=self.queue, messaging_cli_path=self.messaging_cli,
+            sender=sender, queue_repository=self.queue_repository, messaging_cli_path=self.messaging_cli,
             project_root=self.project_root,
             resolve_discord_sender_func=self._resolve_discord_sender,
             get_discord_username_func=self._get_discord_username,

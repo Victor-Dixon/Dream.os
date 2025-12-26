@@ -39,7 +39,7 @@ def broadcast_to_all(
     message: str,
     priority=UnifiedMessagePriority.REGULAR,
     stalled: bool = False,
-    queue=None,
+    queue_repository=None,
 ) -> int:
     """
     Broadcast message to all agents via message queue.
@@ -54,7 +54,7 @@ def broadcast_to_all(
         message: Message content
         priority: Message priority
         stalled: Use stalled delivery mode
-        queue: Message queue instance (injected dependency)
+        queue_repository: Queue repository instance (injected dependency)
 
     Returns:
         Number of messages successfully queued
@@ -65,7 +65,7 @@ def broadcast_to_all(
 
         validator = get_multi_agent_validator()
         return execute_broadcast_delivery(
-            queue, message, priority, stalled, validator
+            queue_repository, message, priority, stalled, validator
         )
     except Exception as e:
         logger.error(f"Error broadcasting message: {e}")

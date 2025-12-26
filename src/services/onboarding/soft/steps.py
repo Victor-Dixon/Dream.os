@@ -180,13 +180,13 @@ class SoftOnboardingSteps:
             logger.error(f"❌ Failed to navigate to onboarding: {e}")
             return False
     
-    def step_6_paste_onboarding_message(self, agent_id: str, message: str) -> bool:
+    def step_6_paste_onboarding_message(self, agent_id: str, message: Optional[str] = None) -> bool:
         """
-        Step 6: Paste and send onboarding message.
+        Step 6: Paste and send onboarding message using S2A SOFT_ONBOARDING template.
         
         Args:
             agent_id: Target agent ID
-            message: Onboarding message
+            message: Onboarding message (if provided, used as actions; otherwise uses default)
             
         Returns:
             True if successful
@@ -196,21 +196,58 @@ class SoftOnboardingSteps:
             return self.messaging.send_onboarding_via_messaging(agent_id, message)
         
         try:
-            logger.info(f"📝 Step 6: Pasting onboarding message for {agent_id}")
+            from src.core.messaging_models import (
+                MessageCategory,
+                UnifiedMessage,
+                UnifiedMessagePriority,
+                UnifiedMessageTag,
+                UnifiedMessageType,
+            )
+            from src.core.messaging_templates import render_message
+            from .default_message import get_default_soft_onboarding_message
+            
+            # Use default message if none provided, otherwise use provided message as actions
+            if message and message.strip():
+                context = "🚀 SOFT ONBOARD - Agent activation initiated."
+                actions = message
+            else:
+                context, actions = get_default_soft_onboarding_message(agent_id)
+            
+            # Create S2A message with proper category and tags
+            msg = UnifiedMessage(
+                content=actions,  # Content used for message body
+                sender="SYSTEM",
+                recipient=agent_id,
+                message_type=UnifiedMessageType.SYSTEM_TO_AGENT,
+                priority=UnifiedMessagePriority.REGULAR,
+                tags=[UnifiedMessageTag.SYSTEM],  # Use SYSTEM tag for S2A
+                category=MessageCategory.S2A,
+            )
+            
+            # Render using S2A SOFT_ONBOARDING template
+            rendered = render_message(
+                msg,
+                template_key="SOFT_ONBOARDING",
+                context=context,
+                actions=actions,
+                fallback="If blocked, escalate to Captain.",
+            )
+            
+            logger.info(f"📝 Step 6: Pasting S2A SOFT_ONBOARDING message for {agent_id}")
             
             # Clear input first
             if not self.ops.clear_input(wait=0.3):
                 return False
             
-            # Paste and send
-            if not self.ops.paste_text(message, wait=0.5):
+            # Paste and send rendered template message
+            if not self.ops.paste_text(rendered, wait=0.5):
                 return False
             
             # Press Enter
             if not self.ops.press_key("enter", wait=0.8):
                 return False
             
-            logger.info(f"✅ Onboarding message sent to {agent_id}")
+            logger.info(f"✅ S2A SOFT_ONBOARDING message sent to {agent_id}")
             return True
         except Exception as e:
             logger.error(f"❌ Failed to paste onboarding message: {e}")
