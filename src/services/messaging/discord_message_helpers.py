@@ -65,6 +65,15 @@ def apply_message_template(
         return message
 
     category = message_category or MessageCategory.D2A
+    
+    # Populate extra metadata based on category
+    extra_meta = {}
+    if category == MessageCategory.A2A:
+        extra_meta = {
+            "ask": message,  # Map message content to 'ask' field in A2A template
+            "context": "",  # Empty context by default, can be extended later
+        }
+    
     templated_message = _apply_template(
         category=category,
         message=message,
@@ -72,7 +81,7 @@ def apply_message_template(
         recipient=agent,
         priority=priority_enum,
         message_id=str(uuid.uuid4()),
-        extra={},
+        extra=extra_meta,
     )
 
     # CRITICAL FIX: If templated message ends with original message, it was appended incorrectly
@@ -169,33 +178,49 @@ def build_queue_message(
 
 
 def wait_for_message_delivery(
-    queue,
+    queue_repository,
     queue_id: str,
     agent: str,
     timeout: float,
 ) -> dict[str, Any]:
-    """Wait for message delivery and return result."""
+    """Wait for message delivery via repository and return result."""
+    import time
     logger.debug(f"⏳ Waiting for message {queue_id} delivery...")
-    delivered = queue.wait_for_delivery(queue_id, timeout=timeout)
-
-    if delivered:
-        logger.info(f"✅ Message {queue_id} delivered successfully")
-        return {
-            "success": True,
-            "message": f"Message delivered to {agent}",
-            "agent": agent,
-            "queue_id": queue_id,
-            "delivered": True,
-        }
-    else:
-        logger.warning(f"⚠️ Message {queue_id} delivery failed or timeout")
-        return {
-            "success": False,
-            "message": f"Message delivery failed or timeout for {agent}",
-            "agent": agent,
-            "queue_id": queue_id,
-            "delivered": False,
-        }
+    start_time = time.time()
+    
+    # Poll repository for delivery status
+    while time.time() - start_time < timeout:
+        status = queue_repository.get_status(queue_id)
+        if status:
+            status_value = status.get("status") if isinstance(status, dict) else getattr(status, "status", None)
+            if status_value == "DELIVERED":
+                logger.info(f"✅ Message {queue_id} delivered successfully")
+                return {
+                    "success": True,
+                    "message": f"Message delivered to {agent}",
+                    "agent": agent,
+                    "queue_id": queue_id,
+                    "delivered": True,
+                }
+            elif status_value == "FAILED":
+                logger.warning(f"⚠️ Message {queue_id} delivery failed")
+                return {
+                    "success": False,
+                    "message": f"Message delivery failed for {agent}",
+                    "agent": agent,
+                    "queue_id": queue_id,
+                    "delivered": False,
+                }
+        time.sleep(0.5)  # Poll every 500ms
+    
+    logger.warning(f"⚠️ Message {queue_id} delivery timeout")
+    return {
+        "success": False,
+        "message": f"Message delivery timeout for {agent}",
+        "agent": agent,
+        "queue_id": queue_id,
+        "delivered": False,
+    }
 
 
 def build_subprocess_command(
@@ -290,7 +315,7 @@ def prepare_discord_message(
 
 
 def build_and_enqueue_discord_message(
-    queue,
+    queue_repository,
     agent: str,
     templated_message: str,
     resolved_sender: str,
@@ -303,27 +328,28 @@ def build_and_enqueue_discord_message(
     message_category: MessageCategory | None,
     apply_template: bool,
 ) -> str:
-    """Build and enqueue Discord message, return queue ID."""
+    """Build and enqueue Discord message via repository, return queue ID."""
     queue_message = build_queue_message(
         agent, templated_message, resolved_sender, priority,
         explicit_message_type, discord_user_id, discord_username,
         stalled, message, message_category, apply_template
     )
-    queue_id = queue.enqueue(message=queue_message)
+    # Use repository pattern - queue_repository implements IQueueRepository
+    queue_id = queue_repository.enqueue(queue_message)
     logger.info(f"✅ Message queued for {agent} (ID: {queue_id}): {message[:50]}...")
     return queue_id
 
 
 def route_discord_delivery(
-    queue: Any, agent: str, message: str, templated_message: str, resolved_sender: str,
+    queue_repository: Any, agent: str, message: str, templated_message: str, resolved_sender: str,
     priority_enum: UnifiedMessagePriority, stalled: bool, messaging_cli_path: Path | None,
     project_root: Path | None, use_pyautogui: bool, message_category: MessageCategory | None,
     apply_template: bool, wait_for_delivery: bool, timeout: float, discord_user_id: str | None,
 ) -> dict[str, Any]:
-    """Route Discord message delivery via queue or fallback."""
-    if queue:
+    """Route Discord message delivery via queue repository or fallback."""
+    if queue_repository:
         return send_discord_via_queue(
-            queue=queue, agent=agent, templated_message=templated_message,
+            queue_repository=queue_repository, agent=agent, templated_message=templated_message,
             resolved_sender=resolved_sender, priority=priority_enum.value,
             explicit_message_type=determine_discord_message_type(message),
             discord_user_id=discord_user_id, discord_username=None, stalled=stalled,
@@ -338,7 +364,7 @@ def route_discord_delivery(
 
 
 def send_discord_via_queue(
-    queue,
+    queue_repository,
     agent: str,
     templated_message: str,
     resolved_sender: str,
@@ -353,13 +379,13 @@ def send_discord_via_queue(
     wait_for_delivery: bool,
     timeout: float,
 ) -> dict[str, Any]:
-    """Send Discord message via queue and return result."""
+    """Send Discord message via queue repository and return result."""
     queue_id = build_and_enqueue_discord_message(
-        queue, agent, templated_message, resolved_sender, priority,
+        queue_repository, agent, templated_message, resolved_sender, priority,
         explicit_message_type, discord_user_id, discord_username,
         stalled, message, message_category, apply_template
     )
     if wait_for_delivery:
-        return wait_for_message_delivery(queue, queue_id, agent, timeout)
+        return wait_for_message_delivery(queue_repository, queue_id, agent, timeout)
     return {"success": True, "message": f"Message queued for {agent}", "agent": agent, "queue_id": queue_id}
 

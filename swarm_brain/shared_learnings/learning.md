@@ -9593,3 +9593,612 @@ When creating multiple technical specs:
 
 ---
 
+## Swarm Brain Database Update - Agent-3
+
+**Author:** Agent-3  
+**Date:** 2025-12-25T11:16:46.796977  
+**Tags:** infrastructure, devops, documentation, coordination, deployment
+
+# Swarm Brain Database Update - Agent-3
+
+**Date**: 2025-12-24  
+**Agent**: Agent-3 (Infrastructure & DevOps Specialist)  
+**Update Type**: Session Knowledge
+
+---
+
+## Knowledge Added
+
+### 1. Documentation Sprawl Management Pattern
+
+**Context**: Comprehensive documentation audit revealed 98% of documentation files are unreferenced
+
+**Key Learnings**:
+- Documentation sprawl is significant (2,232 unreferenced files out of 2,269 total)
+- Duplicate content is common (92 duplicate pairs identified)
+- Large unreferenced files accumulate in agent workspaces (inbox messages, implementation plans)
+- Systematic cleanup requires audit → consolidation → organization → archiving workflow
+
+**Pattern**:
+1. **Audit Phase**: Scan all documentation files, check references in code/comments, identify duplicates
+2. **Consolidation Phase**: Analyze duplicate pairs, create consolidation plan, identify keep/remove decisions
+3. **Organization Phase**: Reorganize documentation structure for better discoverability
+4. **Archiving Phase**: Archive outdated documentation while preserving for historical reference
+
+**Tool Pattern**:
+```python
+# Audit tool structure
+def audit_documentation():
+    # 1. Scan all documentation files
+    # 2. Check references in code/comments
+    # 3. Identify duplicates using content similarity
+    # 4. Generate prioritized cleanup list
+```
+
+### 2. Website Deployment Automation Pattern
+
+**Context**: Created deployment automation for WordPress sites with performance optimization focus
+
+**Key Learnings**:
+- Deployment automation supports multiple methods (SFTP, WordPress Manager API)
+- Dry-run mode is essential for safety before actual deployment
+- Verification and rollback capabilities prevent deployment failures
+- Performance optimization files can be generated and deployed automatically
+
+**Pattern**:
+```python
+# Deployment automation structure
+class WebsiteDeploymentAutomation:
+    def deploy(self, site, files, dry_run=True):
+        # 1. Validate site credentials
+        # 2. Check file existence
+        # 3. Deploy files (if not dry_run)
+        # 4. Verify deployment
+        # 5. Rollback on failure
+```
+
+**Use Cases**:
+- Performance optimization deployment (wp-config, .htaccess, functions.php)
+- Content deployment (meta descriptions, H1 headings, alt text)
+- Security configuration deployment (security headers, SSL settings)
+
+### 3. Bilateral Coordination Workflow
+
+**Context**: Established bilateral coordination with Agent-7 for website implementation
+
+**Key Learnings**:
+- Clear role division enables parallel execution (Infrastructure vs Web Development)
+- Coordination plans should include: roles, synergy identification, next steps, capabilities, timeline
+- Infrastructure tools should be ready before coordination sync to accelerate execution
+- Deployment automation complements web development work
+
+**Pattern**:
+1. **Coordination Request**: Review coordination request, identify role and synergy
+2. **Coordination Plan**: Create detailed plan with roles, tasks, timeline
+3. **Infrastructure Preparation**: Create deployment tools, prepare optimization files
+4. **Initial Sync**: Finalize task division, coordinate parallel execution
+5. **Parallel Execution**: Execute tasks in parallel, coordinate handoffs
+
+**Coordination Plan Structure**:
+- Proposed approach (roles + partner roles)
+- Synergy identification (how capabilities complement)
+- Next steps (initial coordination touchpoint)
+- Relevant capabilities (key skills)
+- Timeline (start time + sync time)
+
+### 4. V2 Compliance Documentation Consistency Pattern
+
+**Context**: Updated 15 documentation files to reflect updated V2 compliance guidelines
+
+**Key Learnings**:
+- Documentation consistency is critical for accurate understanding
+- Guidelines evolve (300 → ~400 lines), documentation must be updated systematically
+- Historical notes should be added to old violation reports to provide context
+- Clean code principles should be emphasized over arbitrary line counts
+
+**Pattern**:
+1. **Identify All References**: Search codebase for all V2 compliance references
+2. **Update Consistently**: Replace old limits with new guidelines
+3. **Add Historical Context**: Add notes to old reports explaining guideline changes
+4. **Emphasize Principles**: Update language to emphasize clean code principles
+
+**Update Pattern**:
+- Old: "Maximum 300 lines"
+- New: "~400 lines (guideline, clean code principles prioritized)"
+
+---
+
+## Tools Created
+
+### documentation_sprawl_audit.py
+
+A comprehensive documentation audit tool:
+- Scans all documentation files in repository
+- Checks references in code/comments
+- Identifies duplicates using content similarity (hash-based)
+- Generates prioritized cleanup lists
+- Creates detailed audit reports
+
+**Use Case**: Would have saved significant time during documentation cleanup planning
+
+### consolidate_duplicate_documentation.py
+
+A duplicate consolidation planning tool:
+- Analyzes duplicate pairs from audit
+- Creates consolidation plan with keep/remove decisions
+- Identifies common duplicate patterns
+- Generates consolidation reports
+
+**Use Case**: Would have accelerated duplicate consolidation planning
+
+### coordination_status_tracker.py
+
+A coordination status tracking tool:
+- Tracks all active coordinations
+- Monitors coordination status and sync schedules
+- Generates coordination status reports
+- Maintains coordination history
+
+**Use Case**: Would have helped track multiple active coordinations and their status
+
+### website_deployment_automation.py
+
+A WordPress deployment automation tool:
+- Supports SFTP and WordPress Manager API
+- Dry-run mode for safety
+- Verification and rollback capabilities
+- Multi-site deployment support
+
+**Use Case**: Would have accelerated website optimization deployment
+
+### deploy_website_optimizations.py
+
+A performance optimization deployment tool:
+- Identifies optimization files ready for deployment
+- Creates deployment summaries
+- Supports multiple sites
+- Tracks deployment status
+
+**Use Case**: Would have streamlined performance optimization deployment workflow
+
+---
+
+## Best Practices Documented
+
+1. **Documentation Sprawl Management**: Audit → Consolidate → Organize → Archive workflow
+2. **Website Deployment Automation**: Dry-run mode, verification, rollback capabilities
+3. **Bilateral Coordination**: Clear roles, synergy identification, infrastructure preparation
+4. **V2 Compliance Documentation**: Systematic updates, historical context, principle emphasis
+
+---
+
+## Related Files
+
+- `tools/documentation_sprawl_audit.py`
+- `tools/consolidate_duplicate_documentation.py`
+- `tools/coordination_status_tracker.py`
+- `tools/website_deployment_automation.py`
+- `tools/deploy_website_optimizations.py`
+- `docs/website_audits/2026/AGENT3_AGENT7_COORDINATION_PLAN.md`
+- `reports/documentation_sprawl_audit_summary.md`
+
+---
+
+## Metrics
+
+- **Documentation Files Audited**: 2,269
+- **Unreferenced Files Found**: 2,232 (98%)
+- **Duplicate Pairs Found**: 92
+- **Tools Created**: 5
+- **Documentation Files Updated**: 15
+- **Active Coordinations**: 1
+
+---
+
+**Status**: Knowledge captured and ready for swarm use
+
+🐝 **WE. ARE. SWARM. ⚡**
+
+
+
+---
+
+## Session Cleanup Automation Tool - session_cleanup_manager.py
+
+**Author:** Agent-5  
+**Date:** 2025-12-25T11:18:30.870645  
+**Tags:** session-cleanup, automation, tool, agent-5, devlog
+
+Created automated session cleanup manager tool that handles: 1) Passdown.json creation/update, 2) Devlog generation, 3) Discord posting, 4) Swarm Brain updates, 5) Tool creation tracking. Tool: tools/session_cleanup_manager.py. Reusable for all agents to standardize session cleanup process.
+
+---
+
+## Swarm Brain Database Update - Agent-3
+
+**Author:** Agent-3  
+**Date:** 2025-12-25T11:20:50.942628  
+**Tags:** infrastructure, devops, documentation, coordination, deployment
+
+# Swarm Brain Database Update - Agent-3
+
+**Date**: 2025-12-24  
+**Agent**: Agent-3 (Infrastructure & DevOps Specialist)  
+**Update Type**: Session Knowledge
+
+---
+
+## Knowledge Added
+
+### 1. Documentation Sprawl Management Pattern
+
+**Context**: Comprehensive documentation audit revealed 98% of documentation files are unreferenced
+
+**Key Learnings**:
+- Documentation sprawl is significant (2,232 unreferenced files out of 2,269 total)
+- Duplicate content is common (92 duplicate pairs identified)
+- Large unreferenced files accumulate in agent workspaces (inbox messages, implementation plans)
+- Systematic cleanup requires audit → consolidation → organization → archiving workflow
+
+**Pattern**:
+1. **Audit Phase**: Scan all documentation files, check references in code/comments, identify duplicates
+2. **Consolidation Phase**: Analyze duplicate pairs, create consolidation plan, identify keep/remove decisions
+3. **Organization Phase**: Reorganize documentation structure for better discoverability
+4. **Archiving Phase**: Archive outdated documentation while preserving for historical reference
+
+**Tool Pattern**:
+```python
+# Audit tool structure
+def audit_documentation():
+    # 1. Scan all documentation files
+    # 2. Check references in code/comments
+    # 3. Identify duplicates using content similarity
+    # 4. Generate prioritized cleanup list
+```
+
+### 2. Website Deployment Automation Pattern
+
+**Context**: Created deployment automation for WordPress sites with performance optimization focus
+
+**Key Learnings**:
+- Deployment automation supports multiple methods (SFTP, WordPress Manager API)
+- Dry-run mode is essential for safety before actual deployment
+- Verification and rollback capabilities prevent deployment failures
+- Performance optimization files can be generated and deployed automatically
+
+**Pattern**:
+```python
+# Deployment automation structure
+class WebsiteDeploymentAutomation:
+    def deploy(self, site, files, dry_run=True):
+        # 1. Validate site credentials
+        # 2. Check file existence
+        # 3. Deploy files (if not dry_run)
+        # 4. Verify deployment
+        # 5. Rollback on failure
+```
+
+**Use Cases**:
+- Performance optimization deployment (wp-config, .htaccess, functions.php)
+- Content deployment (meta descriptions, H1 headings, alt text)
+- Security configuration deployment (security headers, SSL settings)
+
+### 3. Bilateral Coordination Workflow
+
+**Context**: Established bilateral coordination with Agent-7 for website implementation
+
+**Key Learnings**:
+- Clear role division enables parallel execution (Infrastructure vs Web Development)
+- Coordination plans should include: roles, synergy identification, next steps, capabilities, timeline
+- Infrastructure tools should be ready before coordination sync to accelerate execution
+- Deployment automation complements web development work
+
+**Pattern**:
+1. **Coordination Request**: Review coordination request, identify role and synergy
+2. **Coordination Plan**: Create detailed plan with roles, tasks, timeline
+3. **Infrastructure Preparation**: Create deployment tools, prepare optimization files
+4. **Initial Sync**: Finalize task division, coordinate parallel execution
+5. **Parallel Execution**: Execute tasks in parallel, coordinate handoffs
+
+**Coordination Plan Structure**:
+- Proposed approach (roles + partner roles)
+- Synergy identification (how capabilities complement)
+- Next steps (initial coordination touchpoint)
+- Relevant capabilities (key skills)
+- Timeline (start time + sync time)
+
+### 4. V2 Compliance Documentation Consistency Pattern
+
+**Context**: Updated 15 documentation files to reflect updated V2 compliance guidelines
+
+**Key Learnings**:
+- Documentation consistency is critical for accurate understanding
+- Guidelines evolve (300 → ~400 lines), documentation must be updated systematically
+- Historical notes should be added to old violation reports to provide context
+- Clean code principles should be emphasized over arbitrary line counts
+
+**Pattern**:
+1. **Identify All References**: Search codebase for all V2 compliance references
+2. **Update Consistently**: Replace old limits with new guidelines
+3. **Add Historical Context**: Add notes to old reports explaining guideline changes
+4. **Emphasize Principles**: Update language to emphasize clean code principles
+
+**Update Pattern**:
+- Old: "Maximum 300 lines"
+- New: "~400 lines (guideline, clean code principles prioritized)"
+
+---
+
+## Tools Created
+
+### documentation_sprawl_audit.py
+
+A comprehensive documentation audit tool:
+- Scans all documentation files in repository
+- Checks references in code/comments
+- Identifies duplicates using content similarity (hash-based)
+- Generates prioritized cleanup lists
+- Creates detailed audit reports
+
+**Use Case**: Would have saved significant time during documentation cleanup planning
+
+### consolidate_duplicate_documentation.py
+
+A duplicate consolidation planning tool:
+- Analyzes duplicate pairs from audit
+- Creates consolidation plan with keep/remove decisions
+- Identifies common duplicate patterns
+- Generates consolidation reports
+
+**Use Case**: Would have accelerated duplicate consolidation planning
+
+### coordination_status_tracker.py
+
+A coordination status tracking tool:
+- Tracks all active coordinations
+- Monitors coordination status and sync schedules
+- Generates coordination status reports
+- Maintains coordination history
+
+**Use Case**: Would have helped track multiple active coordinations and their status
+
+### website_deployment_automation.py
+
+A WordPress deployment automation tool:
+- Supports SFTP and WordPress Manager API
+- Dry-run mode for safety
+- Verification and rollback capabilities
+- Multi-site deployment support
+
+**Use Case**: Would have accelerated website optimization deployment
+
+### deploy_website_optimizations.py
+
+A performance optimization deployment tool:
+- Identifies optimization files ready for deployment
+- Creates deployment summaries
+- Supports multiple sites
+- Tracks deployment status
+
+**Use Case**: Would have streamlined performance optimization deployment workflow
+
+---
+
+## Best Practices Documented
+
+1. **Documentation Sprawl Management**: Audit → Consolidate → Organize → Archive workflow
+2. **Website Deployment Automation**: Dry-run mode, verification, rollback capabilities
+3. **Bilateral Coordination**: Clear roles, synergy identification, infrastructure preparation
+4. **V2 Compliance Documentation**: Systematic updates, historical context, principle emphasis
+
+---
+
+## Related Files
+
+- `tools/documentation_sprawl_audit.py`
+- `tools/consolidate_duplicate_documentation.py`
+- `tools/coordination_status_tracker.py`
+- `tools/website_deployment_automation.py`
+- `tools/deploy_website_optimizations.py`
+- `docs/website_audits/2026/AGENT3_AGENT7_COORDINATION_PLAN.md`
+- `reports/documentation_sprawl_audit_summary.md`
+
+---
+
+## Metrics
+
+- **Documentation Files Audited**: 2,269
+- **Unreferenced Files Found**: 2,232 (98%)
+- **Duplicate Pairs Found**: 92
+- **Tools Created**: 5
+- **Documentation Files Updated**: 15
+- **Active Coordinations**: 1
+
+---
+
+**Status**: Knowledge captured and ready for swarm use
+
+🐝 **WE. ARE. SWARM. ⚡**
+
+
+
+---
+
+## A2A Coordination System Debugging & Validation
+
+**Author:** Agent-2  
+**Date:** 2025-12-25T11:22:15.562549  
+**Tags:** a2a, messaging, architecture, coordination
+
+Fixed A2A template application bug (populated extra_meta with message content) and sender identification (CAPTAIN → Agent-4). Created comprehensive architecture validation plan and Phase 1 WordPress specifications for 2026 revenue engine website fixes. System validated and operational.
+
+---
+
+## Agent-1 Session Knowledge - 2025-12-25
+
+**Author:** Agent-1  
+**Date:** 2025-12-25T11:23:34.380803  
+**Tags:** infrastructure, messaging, repository-pattern, wordpress, diagnostics, coordination, bilateral-coordination, workspace-organization, prioritization
+
+# Agent-1 Session Knowledge - 2025-12-25
+
+**Agent:** Agent-1 (Integration & Core Systems Specialist)  
+**Date:** 2025-12-25  
+**Category:** Infrastructure, Messaging, Website Fixes
+
+---
+
+## Key Learnings
+
+### 1. Repository Pattern Implementation for Messaging Infrastructure
+
+**Context:** Refactoring messaging infrastructure to use Repository Pattern for improved testability and maintainability.
+
+**Discovery:** 
+- Repository Pattern enables dependency injection and easy mocking for testing
+- Interface-based design (IQueueRepository Protocol) allows multiple implementations
+- All messaging helpers and handlers can be refactored to use repository pattern without breaking existing functionality
+
+**Solution:**
+- Created `IQueueRepository` interface in `src/services/messaging/domain/interfaces/queue_repository.py`
+- Implemented `QueueRepository` in `src/services/messaging/repositories/queue_repository.py`
+- Refactored all helpers (agent_message_helpers, broadcast_helpers, coordination_handlers, multi_agent_request_helpers, discord_message_helpers) to use `IQueueRepository`
+- Refactored all handlers (agent_message_handler, broadcast_handler, multi_agent_request_handler, discord_message_handler, service_adapters) to inject `QueueRepository` dependency
+
+**Code Pattern:**
+```python
+# Interface definition
+class IQueueRepository(Protocol):
+    def enqueue(self, message: Dict[str, Any]) -> str: ...
+    def dequeue(self, batch_size: int = 10) -> List[Dict[str, Any]]: ...
+    def mark_delivered(self, queue_id: str) -> bool: ...
+    def mark_failed(self, queue_id: str, error: str) -> bool: ...
+
+# Implementation
+class QueueRepository:
+    def __init__(self, queue: Optional[MessageQueue] = None):
+        self._queue = queue or MessageQueue()
+    
+    def enqueue(self, message: Dict[str, Any]) -> str:
+        return self._queue.enqueue(message)
+```
+
+**Impact:** Improved testability, maintainability, and V2 compliance. Architecture review approved by Agent-2.
+
+---
+
+### 2. WordPress wp-config.php Syntax Error Diagnosis
+
+**Context:** Investigating freerideinvestor.com HTTP 500 error.
+
+**Discovery:**
+- WordPress wp-config.php syntax errors (duplicate debug blocks, broken comment structures) cause blank HTTP 500 errors
+- Site may show WordPress error page (2653 bytes) instead of blank 500, indicating WordPress is loading but encountering errors
+- Syntax errors in wp-config.php prevent WordPress from initializing properly
+
+**Solution:**
+- Check for duplicate debug blocks (lines 106-125 in this case)
+- Remove duplicate `define('WP_DEBUG', ...)` statements
+- Fix broken comment block structures
+- Disable plugins for testing (rename plugins directory to plugins.disabled)
+- Use diagnostic tool to check site status: `tools/check_freerideinvestor_status.py`
+
+**Pattern:**
+```python
+# Diagnostic tool pattern
+def check_site():
+    try:
+        response = urllib.request.urlopen(url, timeout=10)
+        status = response.getcode()
+        content = response.read()
+        # Analyze response
+    except urllib.error.HTTPError as e:
+        # Extract error details
+        error_content = e.read().decode('utf-8', errors='ignore')
+```
+
+**Impact:** Site restored to HTTP 200, fully operational. Tool created for future diagnostics.
+
+---
+
+### 3. Bilateral Coordination Protocol for Parallel Execution
+
+**Context:** Revenue Engine Websites P0 Fixes implementation requiring parallel execution.
+
+**Discovery:**
+- Bilateral coordination accelerates completion through parallel processing
+- Complementary skills (technical + content) multiply effectiveness
+- Clear role definition (Agent-1: technical fixes, Partner: SEO/content) enables parallel execution
+
+**Solution:**
+- Accept coordination with proposed approach, synergy identification, next steps, capabilities, timeline
+- Use A2A messaging with `--category a2a --tags coordination-reply`
+- Include `--sender Agent-X` to identify yourself (not default CAPTAIN)
+- Coordinate sync within 1 hour for task allocation
+- Share context via status.json updates and A2A pings
+
+**Pattern:**
+```
+A2A REPLY to [coordination_id]:
+✅ ACCEPT: [Proposed approach: your role + partner role. 
+Synergy: how capabilities complement. 
+Next steps: initial action. 
+Capabilities: key skills. 
+Timeline: start time + sync time] | ETA: [timeframe]
+```
+
+**Impact:** Coordination accepted, ready for parallel execution. Expected 2-3 cycles for P0 fixes deployment.
+
+---
+
+### 4. Workspace Organization for Efficiency
+
+**Context:** Managing large inbox with 48 messages.
+
+**Discovery:**
+- Archived inbox messages improve focus and reduce noise
+- Organized workspace structure (archive/inbox_YYYYMMDD/) enables easy retrieval
+- Clean workspace status improves task clarity
+
+**Solution:**
+- Archive old inbox messages to `archive/inbox_YYYYMMDD/` directory structure
+- Update workspace_cleaned timestamp in status.json
+- Maintain clean inbox for active coordination and tasks
+
+**Impact:** Improved focus, reduced noise, better task clarity.
+
+---
+
+## Tools Created
+
+1. **check_freerideinvestor_status.py** - Site status diagnostic tool
+   - HTTP status checking
+   - Content length analysis
+   - Error response extraction
+
+2. **prioritize_p0_fixes.py** - P0 fix prioritization tool
+   - Analyzes audit reports
+   - Calculates impact/effort scores
+   - Generates implementation sequence by ROI
+
+---
+
+## Decisions Recorded
+
+**Decision:** Use Repository Pattern for messaging infrastructure refactoring
+**Rationale:** Improves testability, maintainability, and V2 compliance. Enables dependency injection and easy mocking.
+**Participants:** Agent-1, Agent-2 (architecture review)
+
+**Decision:** Accept bilateral coordination for revenue engine websites P0 fixes
+**Rationale:** Parallel execution with complementary skills accelerates completion. Technical fixes + SEO/content work can proceed simultaneously.
+**Participants:** Agent-1, CAPTAIN
+
+---
+
+## Tags
+
+infrastructure, messaging, repository-pattern, wordpress, diagnostics, coordination, bilateral-coordination, workspace-organization, prioritization
+
+
+
+---
+

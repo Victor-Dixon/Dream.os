@@ -89,7 +89,7 @@ def format_message_for_queue(
 
 
 def enqueue_message(
-    queue,
+    queue_repository,
     sender: str,
     agent: str,
     formatted_message: str,
@@ -97,19 +97,20 @@ def enqueue_message(
     message_type: Any,
     metadata: Dict[str, Any],
 ) -> str:
-    """Enqueue message and return queue ID."""
-    queue_id = queue.enqueue(
-        message={
-            "type": "agent_message",
-            "sender": sender,
-            "recipient": agent,
-            "content": formatted_message,
-            "priority": priority.value if hasattr(priority, "value") else str(priority),
-            "message_type": message_type.value,
-            "tags": [UnifiedMessageTag.SYSTEM.value],
-            "metadata": metadata,
-        }
-    )
+    """Enqueue message via repository and return queue ID."""
+    message_dict = {
+        "type": "agent_message",
+        "sender": sender,
+        "recipient": agent,
+        "content": formatted_message,
+        "priority": priority.value if hasattr(priority, "value") else str(priority),
+        "message_type": message_type.value,
+        "tags": [UnifiedMessageTag.SYSTEM.value],
+        "metadata": metadata,
+    }
+    
+    # Use repository pattern - queue_repository implements IQueueRepository
+    queue_id = queue_repository.enqueue(message_dict)
     return queue_id
 
 
@@ -122,7 +123,7 @@ def update_last_inbound_category(agent: str, category: Optional[MessageCategory]
 
 
 def send_message_with_fallback(
-    queue,
+    queue_repository,
     sender_final: str,
     agent: str,
     formatted_message: str,
@@ -130,10 +131,10 @@ def send_message_with_fallback(
     message_type: Any,
     metadata: Dict[str, Any],
 ) -> Any:
-    """Send message via queue or fallback, return result."""
-    if queue:
-        return send_via_queue(queue, sender_final, agent, formatted_message, priority, message_type, metadata)
-    logger.warning("⚠️ Queue unavailable, falling back to direct send")
+    """Send message via queue repository or fallback, return result."""
+    if queue_repository:
+        return send_via_queue(queue_repository, sender_final, agent, formatted_message, priority, message_type, metadata)
+    logger.warning("⚠️ Queue repository unavailable, falling back to direct send")
     return send_via_fallback(sender_final, agent, formatted_message, priority, message_type, metadata)
 
 
@@ -152,13 +153,14 @@ def detect_and_determine_sender(
     else:
         from src.core.messaging_core import UnifiedMessageType
         message_type = UnifiedMessageType.TEXT
-        sender_final = sender or "CAPTAIN"
+        # Default to Agent-4 (CAPTAIN) for clarity in templates
+        sender_final = sender or "Agent-4"
 
     return message_type, sender_final
 
 
 def send_via_queue(
-    queue,
+    queue_repository,
     sender: str,
     agent: str,
     formatted_message: str,
@@ -166,9 +168,9 @@ def send_via_queue(
     message_type: Any,
     metadata: Dict[str, Any],
 ) -> Dict[str, Any]:
-    """Send message via queue and return result."""
+    """Send message via queue repository and return result."""
     queue_id = enqueue_message(
-        queue, sender, agent, formatted_message, priority, message_type, metadata)
+        queue_repository, sender, agent, formatted_message, priority, message_type, metadata)
     logger.info(
         f"✅ Message queued for {agent} (ID: {queue_id}): {formatted_message[:50]}...")
     return {"success": True, "queue_id": queue_id, "agent": agent}
@@ -205,7 +207,7 @@ def handle_blocked_message(block_result: Dict[str, Any], agent: str) -> None:
 
 
 def send_validated_message(
-    queue: Any,
+    queue_repository: Any,
     sender_final: str,
     agent: str,
     message: Any,
@@ -216,7 +218,7 @@ def send_validated_message(
     priority: Any,
     message_type: Any,
 ) -> Any:
-    """Send validated message via queue with fallback."""
+    """Send validated message via queue repository with fallback."""
     metadata = build_queue_metadata(
         stalled, use_pyautogui, send_mode, category)
 
@@ -230,6 +232,12 @@ def send_validated_message(
         if category == MessageCategory.A2A and isinstance(message, str):
             import uuid
 
+            # Populate extra metadata with message content for template
+            extra_meta = {
+                "ask": message,  # Map message content to 'ask' field in A2A template
+                "context": "",  # Empty context by default, can be extended later
+            }
+
             templated_message = _apply_template(
                 category=MessageCategory.A2A,
                 message=message,
@@ -237,15 +245,18 @@ def send_validated_message(
                 recipient=agent,
                 priority=priority,
                 message_id=str(uuid.uuid4()),
-                extra={},
+                extra=extra_meta,
             )
-    except Exception:
+    except Exception as e:
         # Safety: never block delivery if template application fails
+        import logging
+        logger = logging.getLogger(__name__)
+        logger.warning(f"A2A template application failed: {e}, using raw message")
         templated_message = message
 
     formatted_message = format_message_for_queue(templated_message, category)
     result = send_message_with_fallback(
-        queue,
+        queue_repository,
         sender_final,
         agent,
         formatted_message,

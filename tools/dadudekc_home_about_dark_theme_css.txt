@@ -1,0 +1,80 @@
+/* Dark Theme CSS for Home and About Pages - DaduDeKC.com */
+/* Add this CSS to WordPress Customizer → Additional CSS */
+/* OR add to individual page content in a <style> tag */
+
+<style>
+/* Target only home and about pages */
+.page-id-5,  /* Home page ID */
+.page-id-76, /* About page ID */
+body.home,
+body.page-template-default.page-id-5,
+body.page-template-default.page-id-76 {
+    background-color: #1a1a1a !important;
+    color: #e8e8e8 !important;
+}
+
+.page-id-5 .page-content,
+.page-id-5 .entry-content,
+.page-id-5 .site-content,
+.page-id-5 main,
+.page-id-5 article,
+.page-id-76 .page-content,
+.page-id-76 .entry-content,
+.page-id-76 .site-content,
+.page-id-76 main,
+.page-id-76 article {
+    background-color: #1a1a1a !important;
+    color: #e8e8e8 !important;
+}
+
+.page-id-5 h1, .page-id-5 h2, .page-id-5 h3, .page-id-5 h4, .page-id-5 h5, .page-id-5 h6,
+.page-id-76 h1, .page-id-76 h2, .page-id-76 h3, .page-id-76 h4, .page-id-76 h5, .page-id-76 h6 {
+    color: #ffffff !important;
+}
+
+.page-id-5 p, .page-id-5 li, .page-id-5 span, .page-id-5 div,
+.page-id-76 p, .page-id-76 li, .page-id-76 span, .page-id-76 div {
+    color: #e8e8e8 !important;
+}
+
+.page-id-5 a, .page-id-76 a {
+    color: #4a9eff !important;
+}
+
+.page-id-5 a:hover, .page-id-76 a:hover {
+    color: #6bb3ff !important;
+}
+
+.page-id-5 .container, .page-id-5 .wrapper, .page-id-5 .content-area, .page-id-5 .site-main,
+.page-id-76 .container, .page-id-76 .wrapper, .page-id-76 .content-area, .page-id-76 .site-main {
+    background-color: #1a1a1a !important;
+}
+
+.page-id-5 button, .page-id-5 .btn, .page-id-5 input[type="submit"], .page-id-5 .wp-block-button__link,
+.page-id-76 button, .page-id-76 .btn, .page-id-76 input[type="submit"], .page-id-76 .wp-block-button__link {
+    background-color: #4a9eff !important;
+    color: #ffffff !important;
+    border-color: #4a9eff !important;
+}
+
+.page-id-5 button:hover, .page-id-5 .btn:hover, .page-id-5 input[type="submit"]:hover,
+.page-id-76 button:hover, .page-id-76 .btn:hover, .page-id-76 input[type="submit"]:hover {
+    background-color: #6bb3ff !important;
+    border-color: #6bb3ff !important;
+}
+
+.page-id-5 input[type="text"], .page-id-5 input[type="email"], .page-id-5 input[type="tel"], .page-id-5 textarea, .page-id-5 select,
+.page-id-76 input[type="text"], .page-id-76 input[type="email"], .page-id-76 input[type="tel"], .page-id-76 textarea, .page-id-76 select {
+    background-color: #2a2a2a !important;
+    color: #e8e8e8 !important;
+    border-color: #3a3a3a !important;
+}
+
+.page-id-5 input[type="text"]:focus, .page-id-5 input[type="email"]:focus, .page-id-5 input[type="tel"]:focus, .page-id-5 textarea:focus,
+.page-id-76 input[type="text"]:focus, .page-id-76 input[type="email"]:focus, .page-id-76 input[type="tel"]:focus, .page-id-76 textarea:focus {
+    background-color: #2a2a2a !important;
+    border-color: #4a9eff !important;
+    color: #e8e8e8 !important;
+}
+</style>
+

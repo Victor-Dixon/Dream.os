@@ -49,7 +49,7 @@ def send_to_agent(
     sender: str = None,
     message_category: Optional[MessageCategory] = None,
     message_metadata: Optional[Dict[str, Any]] = None,
-    queue=None,
+    queue_repository=None,
     detect_sender_func=None,
     determine_message_type_func=None,
 ):
@@ -95,7 +95,7 @@ def send_to_agent(
             handle_blocked_message(block_result, agent)
             return block_result
         return send_validated_message(
-            queue,
+            queue_repository,
             sender_final,
             agent,
             message,

@@ -46,10 +46,15 @@ Press Enter when complete to proceed to next session onboarding!
             True if successful, False otherwise
         """
         try:
-            from ...services.messaging_infrastructure import MessageCoordinator
-            from ...core.messaging_models_core import MessageCategory, UnifiedMessageTag
-            from ...core.messaging_core import UnifiedMessagePriority, UnifiedMessage, UnifiedMessageType
-            from ...core.messaging_templates import render_message
+            from src.services.messaging_infrastructure import MessageCoordinator
+            from src.core.messaging_models import (
+                MessageCategory,
+                UnifiedMessage,
+                UnifiedMessagePriority,
+                UnifiedMessageTag,
+                UnifiedMessageType,
+            )
+            from src.core.messaging_templates import render_message
             
             message = custom_message or self._get_default_cleanup_message()
             msg = UnifiedMessage(
@@ -82,38 +87,51 @@ Press Enter when complete to proceed to next session onboarding!
             logger.error(f"❌ Failed to send cleanup via messaging: {e}")
             return False
     
-    def send_onboarding_via_messaging(self, agent_id: str, message: str) -> bool:
+    def send_onboarding_via_messaging(self, agent_id: str, message: Optional[str] = None) -> bool:
         """
-        Send onboarding via messaging system (S2A template, no-ack).
+        Send onboarding via messaging system (S2A SOFT_ONBOARDING template, no-ack).
         
         Args:
             agent_id: Target agent ID
-            message: Onboarding message
+            message: Onboarding message (if provided, used as actions; otherwise uses default)
             
         Returns:
             True if successful, False otherwise
         """
         try:
-            from ...services.messaging_infrastructure import MessageCoordinator
-            from ...core.messaging_models_core import MessageCategory, UnifiedMessageTag
-            from ...core.messaging_core import UnifiedMessagePriority, UnifiedMessage, UnifiedMessageType
-            from ...core.messaging_templates import render_message
+            from src.services.messaging_infrastructure import MessageCoordinator
+            from src.core.messaging_models import (
+                MessageCategory,
+                UnifiedMessage,
+                UnifiedMessagePriority,
+                UnifiedMessageTag,
+                UnifiedMessageType,
+            )
+            from src.core.messaging_templates import render_message
+            from .default_message import get_default_soft_onboarding_message
+            
+            # Use default message if none provided, otherwise use provided message as actions
+            if message and message.strip():
+                context = "🚀 SOFT ONBOARD - Agent activation initiated."
+                actions = message
+            else:
+                context, actions = get_default_soft_onboarding_message(agent_id)
             
             msg = UnifiedMessage(
-                content=message,
+                content=actions,  # Content used for message body
                 sender="SYSTEM",
                 recipient=agent_id,
-                message_type=UnifiedMessageType.ONBOARDING,
+                message_type=UnifiedMessageType.SYSTEM_TO_AGENT,
                 priority=UnifiedMessagePriority.REGULAR,
-                tags=[UnifiedMessageTag.ONBOARDING],
+                tags=[UnifiedMessageTag.SYSTEM],  # Use SYSTEM tag for S2A
                 category=MessageCategory.S2A,
             )
             
             rendered = render_message(
                 msg,
-                template_key="HARD_ONBOARDING",
-                context="Onboarding",
-                actions=message,
+                template_key="SOFT_ONBOARDING",
+                context=context,
+                actions=actions,
                 fallback="If blocked, escalate to Captain.",
             )
             

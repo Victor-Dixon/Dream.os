@@ -149,44 +149,69 @@ class HardOnboardingSteps:
             return False
     
     def step_5_send_onboarding_message(
-        self, agent_id: str, onboarding_message: str, role: Optional[str] = None
+        self, agent_id: str, onboarding_message: Optional[str] = None, role: Optional[str] = None
     ) -> bool:
         """
-        Step 5: Send onboarding message via Enter.
+        Step 5: Send onboarding message via Enter using S2A HARD_ONBOARDING template.
         
         Args:
             agent_id: Target agent ID
-            onboarding_message: Custom mission/instructions
-            role: Agent role (for full template)
+            onboarding_message: Custom mission/instructions (if None, uses default)
+            role: Agent role (for agent-specific instructions)
             
         Returns:
             True if successful
         """
         try:
-            logger.info(f"📝 Step 5: Sending onboarding message to {agent_id}")
-            
-            # Create FULL onboarding message with cycle duties template
-            if TEMPLATE_LOADER_AVAILABLE and role:
-                full_message = load_onboarding_template(
-                    agent_id=agent_id, role=role, custom_message=onboarding_message
-                )
-                logger.info("✅ Using FULL template with operating cycle duties")
-            else:
-                full_message = onboarding_message
-                logger.warning("⚠️ Using custom message only (template not available)")
-            
-            # Get agent-specific instructions
+            from src.core.messaging_models import (
+                MessageCategory,
+                UnifiedMessage,
+                UnifiedMessagePriority,
+                UnifiedMessageTag,
+                UnifiedMessageType,
+            )
+            from src.core.messaging_templates import render_message
+            from .default_message import get_default_hard_onboarding_message
             from ..agent_instructions import get_agent_specific_instructions
-            agent_instructions = get_agent_specific_instructions(agent_id)
             
-            # Jet Fuel header and footer
-            jet_fuel_header = """🚀 JET FUEL MESSAGE - HARD ONBOARDING
-
-Priority: HIGH
-Status: FULL AUTONOMY GRANTED
-
-"""
+            logger.info(f"📝 Step 5: Sending S2A HARD_ONBOARDING message to {agent_id}")
+            
+            # Use default message if none provided, otherwise use provided message as actions
+            if onboarding_message and onboarding_message.strip():
+                context = "## 🛰️ **S2A ACTIVATION DIRECTIVE — SWARM ONBOARDING v2.0**\n\n**Signal Type:** System → Agent (S2A)\n**Priority:** Immediate\n**Mode:** Autonomous Execution\n\n**HARD ONBOARDING**: Complete reset protocol - starting fresh session."
+                actions = onboarding_message
+            else:
+                context, actions = get_default_hard_onboarding_message(agent_id)
+            
+            # Create S2A message with proper category and tags
+            msg = UnifiedMessage(
+                content=actions,  # Content used for message body
+                sender="SYSTEM",
+                recipient=agent_id,
+                message_type=UnifiedMessageType.SYSTEM_TO_AGENT,
+                priority=UnifiedMessagePriority.URGENT,  # Hard onboarding is urgent
+                tags=[UnifiedMessageTag.SYSTEM],  # Use SYSTEM tag for S2A
+                category=MessageCategory.S2A,
+            )
+            
+            # Render using S2A HARD_ONBOARDING template
+            full_message = render_message(
+                msg,
+                template_key="HARD_ONBOARDING",
+                context=context,
+                actions=actions,
+                fallback="If blocked, escalate to Captain.",
+            )
+            
+            # Get agent-specific instructions and append them
+            agent_instructions = get_agent_specific_instructions(agent_id)
+            if agent_instructions:
+                full_message += agent_instructions
+            
+            # Add Jet Fuel footer for hard onboarding
             jet_fuel_footer = """
+
+---
 
 🔥 JET FUEL POWER:
 This message is your fuel - ACT NOW!
@@ -195,116 +220,7 @@ This message is your fuel - ACT NOW!
 - ACT, CREATE, MIGRATE, IMPROVE
 
 WE. ARE. SWARM. AUTONOMOUS. POWERFUL. 🐝⚡🔥🚀"""
-            
-            # Agent-4 specific captain instructions
-            if agent_id == "Agent-4":
-                captain_instructions = """
-
----
-
-👑 CAPTAIN PATTERN ACTIVATION - AGENT-4 SPECIFIC
-
-**YOUR ROLE**: Swarm Captain & Strategic Coordinator
-**YOUR MISSION**: Create and push long-term goals, coordinate agents, achieve AGI through autonomous development
-
-## 🎯 FINDING & OPERATING IN THE OPTIMIZED CAPTAIN PATTERN
-
-### **1. Read the Captain Pattern Documentation**:
-- **Primary Guide**: `docs/CAPTAIN_OPTIMIZED_OPERATING_CYCLE.md`
-- **Execution Pattern**: `docs/CAPTAIN_EXECUTION_PATTERN.md`
-- **Captain Handbook**: `agent_workspaces/Agent-4/CAPTAINS_HANDBOOK.md`
-
-### **2. The Optimized Captain Cycle** (4 Phases):
-**Phase 1: Read Swarm Brain & Identify Work** (2-3 min)
-- Read `swarm_brain/swarm_brain.json`
-- Check all agent `status.json` files
-- Identify test coverage gaps, blockers, opportunities
-- Find high-impact Captain work
-
-**Phase 2: Assign Work to All Agents** (5-10 min)
-- Send Jet Fuel assignments via PyAutoGUI
-- Specific files, clear targets, deliverables
-- NO acknowledgement required - agents execute immediately
-- Format: `[C2A] Agent-4 → Agent-X`
-
-**Phase 3: Execute Captain Work** (Rest of cycle)
-- Self-assign high-impact tasks
-- Complete deliverables
-- Post to Discord devlog
-- Lead by example
-
-**Phase 4: Monitor & Coordinate** (Ongoing)
-- Check agent Discord devlogs
-- Break acknowledgement loops
-- Resolve blockers immediately
-- Maintain momentum
-
-### **3. Core Captain Principles**:
-
-**🔥 PROMPTS ARE GAS - FUEL AGENT AUTONOMY**:
-- Prompts = Gas = Fuel that makes agents execute
-- High-quality prompts = High-octane fuel = AGI power
-- Send prompts at 75-80% completion to maintain perpetual motion
-- Quality prompts enable autonomous decision-making
-- With high enough quality, we achieve AGI within autonomous development
-
-**🎯 LONG-TERM GOALS**:
-- Create strategic goals in `agent_workspaces/Agent-4/CAPTAINS_HANDBOOK.md`
-- Push goals through agent assignments
-- Track progress in Captain's Log
-- Adjust strategy based on swarm performance
-
-**🤝 COORDINATING AGENTS**:
-- Assign specific work (not vague tasks)
-- Use Jet Fuel messages (autonomous work)
-- Monitor via Discord devlogs (not status.json)
-- Break acknowledgement loops immediately
-- Maintain perpetual motion
-
-**⚡ PERPETUAL MOTION PROTOCOL**:
-- Agents keep moving with continuous fuel (prompts)
-- Send gas at 75-80% completion
-- High-quality prompts = AGI-level autonomy
-- No idle agents = Maximum swarm velocity
-
-### **4. Your Tools**:
-- `tools/markov_8agent_roi_optimizer.py` - ROI task assignment
-- `tools/captain_message_all_agents.py` - Broadcast messages
-- `tools/captain_check_agent_status.py` - Status monitoring
-- `tools/swarm_orchestrator.py` - Autonomous coordination
-- See `docs/CAPTAIN_TOOLBELT_GUIDE.md` for complete list
-
-### **5. Success Metrics**:
-- All 8 agents have assignments
-- All agents posting to Discord devlogs
-- Zero acknowledgement loops
-- Captain executing work (not just coordinating)
-- Perpetual motion maintained
-
-### **6. Anti-Patterns to Avoid**:
-- ❌ Standing idle (waiting for agents)
-- ❌ Only coordinating (not executing)
-- ❌ Acknowledgement loops
-- ❌ Vague assignments
-- ❌ Low-quality prompts
-
-## 🚀 IMMEDIATE ACTIONS
-
-1. **Read**: `docs/CAPTAIN_OPTIMIZED_OPERATING_CYCLE.md`
-2. **Check**: All agent status.json files
-3. **Assign**: Jet Fuel work to all agents
-4. **Execute**: Your own high-impact work
-5. **Monitor**: Agent Discord devlogs
-6. **Repeat**: Maintain perpetual motion
-
-**REMEMBER**: Prompts are gas. High-quality prompts = AGI power. Perpetual motion = Autonomous development success.
-
-👑 **YOU ARE THE CAPTAIN - LEAD THE SWARM TO AGI!** 👑"""
-                full_message = jet_fuel_header + full_message + captain_instructions + jet_fuel_footer
-            elif agent_instructions:
-                full_message = jet_fuel_header + full_message + agent_instructions + jet_fuel_footer
-            else:
-                full_message = jet_fuel_header + full_message + jet_fuel_footer
+            full_message += jet_fuel_footer
             
             # Small delay before pasting
             time.sleep(0.8)
@@ -317,7 +233,7 @@ WE. ARE. SWARM. AUTONOMOUS. POWERFUL. 🐝⚡🔥🚀"""
             if not self.ops.press_key("enter", wait=0.8):
                 return False
             
-            logger.info(f"✅ Onboarding message sent to {agent_id} (with Jet Fuel)")
+            logger.info(f"✅ S2A HARD_ONBOARDING message sent to {agent_id}")
             return True
         except Exception as e:
             logger.error(f"❌ Failed to send onboarding message: {e}")

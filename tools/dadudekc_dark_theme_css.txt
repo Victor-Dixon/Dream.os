@@ -1,0 +1,78 @@
+<style>
+/* Dark Theme Styles for Home and About Pages */
+body {
+    background-color: #1a1a1a !important;
+    color: #e8e8e8 !important;
+}
+
+.page-content,
+.entry-content,
+.site-content,
+main,
+article {
+    background-color: #1a1a1a !important;
+    color: #e8e8e8 !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #ffffff !important;
+}
+
+p, li, span, div {
+    color: #e8e8e8 !important;
+}
+
+a {
+    color: #4a9eff !important;
+}
+
+a:hover {
+    color: #6bb3ff !important;
+}
+
+/* Ensure containers have dark background */
+.container,
+.wrapper,
+.content-area,
+.site-main {
+    background-color: #1a1a1a !important;
+}
+
+/* Button styles */
+button,
+.btn,
+input[type="submit"],
+.wp-block-button__link {
+    background-color: #4a9eff !important;
+    color: #ffffff !important;
+    border-color: #4a9eff !important;
+}
+
+button:hover,
+.btn:hover,
+input[type="submit"]:hover {
+    background-color: #6bb3ff !important;
+    border-color: #6bb3ff !important;
+}
+
+/* Form elements */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+textarea,
+select {
+    background-color: #2a2a2a !important;
+    color: #e8e8e8 !important;
+    border-color: #3a3a3a !important;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+textarea:focus,
+select:focus {
+    background-color: #2a2a2a !important;
+    border-color: #4a9eff !important;
+    color: #e8e8e8 !important;
+}
+</style>

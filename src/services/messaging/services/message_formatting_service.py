@@ -50,6 +50,11 @@ class MessageFormattingService:
         # Apply A2A coordination template for Agent-to-Agent messages
         if category == MessageCategory.A2A and isinstance(message, str):
             try:
+                # Populate extra metadata with message content for template
+                extra_meta = {
+                    "ask": message,  # Map message content to 'ask' field in A2A template
+                    "context": "",  # Empty context by default, can be extended later
+                }
                 return _apply_template(
                     category=MessageCategory.A2A,
                     message=message,
@@ -57,7 +62,7 @@ class MessageFormattingService:
                     recipient=recipient,
                     priority=priority,
                     message_id=str(uuid.uuid4()),
-                    extra={},
+                    extra=extra_meta,
                 )
             except Exception as e:
                 logger.warning(
@@ -104,5 +109,6 @@ class MessageFormattingService:
             Metadata dictionary
         """
         return build_queue_metadata(stalled, use_pyautogui, send_mode, category)
+
 
 

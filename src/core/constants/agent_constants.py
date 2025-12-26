@@ -51,7 +51,7 @@ AGENT_COORDINATES = {
     "Agent-2": (-308, 480),
     "Agent-3": (-1269, 1001),
     "Agent-5": (652, 421),
-    "Agent-6": (1612, 419),
+    "Agent-6": (1612, 469),
     "Agent-7": (653, 940),
     "Agent-8": (1611, 941),
     "Agent-4": (-308, 1000),  # Captain always last

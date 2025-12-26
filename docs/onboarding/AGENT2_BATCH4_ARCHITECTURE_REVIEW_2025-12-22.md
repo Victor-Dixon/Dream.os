@@ -14,8 +14,8 @@ This document provides architectural validation for Agent-1's Batch 4 refactorin
 **Current Status:**
 - ✅ **hard_onboarding_service.py**: 21 lines (shim) - V2 compliant
 - ✅ **soft_onboarding_service.py**: 22 lines (shim) - V2 compliant
-- ✅ **hard/service.py**: 141 lines - V2 compliant (< 300 lines)
-- ✅ **soft/service.py**: 209 lines - V2 compliant (< 300 lines)
+- ✅ **hard/service.py**: 141 lines - V2 compliant (well within ~400 line guideline)
+- ✅ **soft/service.py**: 209 lines - V2 compliant (well within ~400 line guideline)
 - ✅ **Refactoring complete**: Original 880/533 lines successfully reduced
 
 **Architecture Assessment:** ✅ **EXCELLENT** - Well-structured, follows best practices, V2 compliant
@@ -77,9 +77,9 @@ src/services/
 ### 2.1 V2 Compliance
 
 **✅ File Size Limits:**
-- All files < 300 lines (V2 requirement: < 500 lines)
+- All files well within ~400 line guideline (clean code principles prioritized)
 - Shims < 100 lines (excellent)
-- Service orchestrators < 300 lines (excellent)
+- Service orchestrators well within guideline (excellent)
 
 **✅ Function Size:**
 - Functions are focused and cohesive

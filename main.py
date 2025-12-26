@@ -14,13 +14,27 @@ Features:
 - Individual service control
 
 Usage:
-    python main.py                    # Start all services
+    python main.py                    # Start all services (foreground)
+    python main.py --background       # Start all services in background
     python main.py --status            # Check service status
+    python main.py --stop             # Stop all background services
+    python main.py --kill             # Force kill all services
     python main.py --select-mode       # Select agent mode (interactive)
     python main.py --message-queue    # Start only message queue
     python main.py --twitch           # Start only Twitch bot
     python main.py --discord          # Start only Discord bot
     python main.py --help             # Show help
+
+Background Mode:
+    With --background, services run as detached processes and main.py exits.
+    Services continue running after the terminal closes.
+    
+    To run main.py itself in background (Windows):
+        start /B python main.py --background
+    
+    To run main.py itself in background (Unix/Mac):
+        python main.py --background &
+        nohup python main.py --background &
 
 Author: Agent-2
 V2 Compliant: <300 lines
@@ -33,6 +47,7 @@ import sys
 import subprocess
 import time
 import psutil
+import platform
 from pathlib import Path
 from threading import Thread
 from typing import Optional
@@ -46,12 +61,15 @@ load_dotenv()
 class ServiceManager:
     """Manages all critical services."""
 
-    def __init__(self):
+    def __init__(self, background_mode: bool = False):
         self.project_root = project_root
         self.processes = {}
         self.pid_dir = self.project_root / "pids"
         self.pid_dir.mkdir(exist_ok=True)
+        self.log_dir = self.project_root / "runtime" / "logs"
+        self.log_dir.mkdir(parents=True, exist_ok=True)
         self.agent_mode_manager: Optional[object] = None
+        self.background_mode = background_mode
 
     def setup_agent_mode_manager(self):
         """Setup agent mode manager."""
@@ -125,51 +143,60 @@ class ServiceManager:
                 return
 
     def start_message_queue(self):
-        """Start message queue processor."""
+        """Start message queue processor directly using the main script."""
         print("📬 Starting Message Queue Processor...")
-        # Try script first (for backward compatibility)
-        script = self.project_root / "tools" / "start_message_queue_processor.py"
         
-        if script.exists():
-            # Use script if it exists
-            try:
-                process = subprocess.Popen(
-                    [sys.executable, str(script)],
-                    cwd=str(self.project_root),
-                    stdout=subprocess.PIPE,
-                    stderr=subprocess.STDOUT  # Combine stderr with stdout
-                )
-                self.processes['message_queue'] = process
-                self._save_pid('message_queue', process)
-                print("   ✅ Message Queue Processor started (PID: {})".format(process.pid))
+        # Use the actual script directly (not the wrapper)
+        script = self.project_root / "scripts" / "start_queue_processor.py"
+        
+        if not script.exists():
+            # Fallback to tools wrapper (for backward compatibility)
+            script = self.project_root / "tools" / "start_message_queue_processor.py"
+            if not script.exists():
+                print("   ❌ Message Queue Processor script not found")
+                print(f"      Checked: scripts/start_queue_processor.py")
+                print(f"      Checked: tools/start_message_queue_processor.py")
+                return False
+
+        try:
+            # Pass current environment to subprocess so it inherits .env variables
+            env = os.environ.copy()
+            
+            # Configure output based on background mode
+            if self.background_mode:
+                log_file = self.log_dir / "message_queue.log"
+                stdout = open(log_file, 'a')
+                stderr = subprocess.STDOUT
+                creation_flags = 0
+                if platform.system() == 'Windows':
+                    creation_flags = subprocess.CREATE_NEW_PROCESS_GROUP
+            else:
+                stdout = subprocess.PIPE
+                stderr = subprocess.STDOUT
+                creation_flags = 0
+            
+            process = subprocess.Popen(
+                [sys.executable, str(script)],
+                cwd=str(self.project_root),
+                env=env,
+                stdout=stdout,
+                stderr=stderr,
+                creationflags=creation_flags if platform.system() == 'Windows' else 0
+            )
+            self.processes['message_queue'] = process
+            self._save_pid('message_queue', process)
+            print("   ✅ Message Queue Processor started (PID: {})".format(process.pid))
+            if self.background_mode:
+                print(f"   📝 Logs: {log_file}")
+            else:
                 # Start thread to monitor output
                 Thread(target=self._monitor_process_output, args=('message_queue', process), daemon=True).start()
-                return True
-            except Exception as e:
-                print(f"   ❌ Failed to start Message Queue: {e}")
-                return False
-        else:
-            # Fallback to scripts directory
-            fallback_script = self.project_root / "scripts" / "start_queue_processor.py"
-            if fallback_script.exists():
-                try:
-                    process = subprocess.Popen(
-                        [sys.executable, str(fallback_script)],
-                        cwd=str(self.project_root),
-                        stdout=subprocess.PIPE,
-                        stderr=subprocess.STDOUT
-                    )
-                    self.processes['message_queue'] = process
-                    self._save_pid('message_queue', process)
-                    print("   ✅ Message Queue Processor started (PID: {})".format(process.pid))
-                    Thread(target=self._monitor_process_output, args=('message_queue', process), daemon=True).start()
-                    return True
-                except Exception as e:
-                    print(f"   ❌ Failed to start Message Queue: {e}")
-                    return False
-            else:
-                print("   ❌ Message Queue Processor script not found")
-                return False
+            return True
+        except Exception as e:
+            print(f"   ❌ Failed to start Message Queue: {e}")
+            import traceback
+            traceback.print_exc()
+            return False
 
     def start_twitch_bot(self):
         """Start Twitch bot."""
@@ -185,7 +212,14 @@ class ServiceManager:
             print(f"      Token: {'SET' if token else 'NOT SET'}")
             if not channel or not token:
                 print("   ❌ Cannot start Twitch Bot without configuration")
+                print("   💡 Run 'python tools/test_twitch_config.py' to validate your setup")
                 return False
+        
+        # Validate token format
+        token_clean = token.strip().strip('"').strip("'")
+        if not token_clean.startswith("oauth:"):
+            print("   ⚠️  Warning: Token should start with 'oauth:' prefix")
+            print("   💡 Run 'python tools/test_twitch_config.py' to validate your configuration")
 
         # Try script first (for backward compatibility)
         script = self.project_root / "tools" / "START_CHAT_BOT_NOW.py"
@@ -193,15 +227,33 @@ class ServiceManager:
         if script.exists():
             # Use script if it exists
             try:
+                # Configure output based on background mode
+                if self.background_mode:
+                    log_file = self.log_dir / "twitch_bot.log"
+                    stdout = open(log_file, 'a')
+                    stderr = subprocess.STDOUT
+                    creation_flags = 0
+                    if platform.system() == 'Windows':
+                        creation_flags = subprocess.CREATE_NEW_PROCESS_GROUP
+                else:
+                    stdout = subprocess.PIPE
+                    stderr = subprocess.PIPE
+                    creation_flags = 0
+                
+                env = os.environ.copy()
                 process = subprocess.Popen(
                     [sys.executable, str(script)],
                     cwd=str(self.project_root),
-                    stdout=subprocess.PIPE,
-                    stderr=subprocess.PIPE
+                    env=env,
+                    stdout=stdout,
+                    stderr=stderr,
+                    creationflags=creation_flags if platform.system() == 'Windows' else 0
                 )
                 self.processes['twitch'] = process
                 self._save_pid('twitch', process)
                 print("   ✅ Twitch Bot started (PID: {})".format(process.pid))
+                if self.background_mode:
+                    print(f"   📝 Logs: {log_file}")
                 return True
             except Exception as e:
                 print(f"   ❌ Failed to start Twitch Bot: {e}")
@@ -211,15 +263,33 @@ class ServiceManager:
             eventsub_script = self.project_root / "src" / "services" / "chat_presence" / "twitch_eventsub_server.py"
             if eventsub_script.exists():
                 try:
+                    # Configure output based on background mode
+                    if self.background_mode:
+                        log_file = self.log_dir / "twitch_bot.log"
+                        stdout = open(log_file, 'a')
+                        stderr = subprocess.STDOUT
+                        creation_flags = 0
+                        if platform.system() == 'Windows':
+                            creation_flags = subprocess.CREATE_NEW_PROCESS_GROUP
+                    else:
+                        stdout = subprocess.PIPE
+                        stderr = subprocess.PIPE
+                        creation_flags = 0
+                    
+                    env = os.environ.copy()
                     process = subprocess.Popen(
                         [sys.executable, str(eventsub_script)],
                         cwd=str(self.project_root),
-                        stdout=subprocess.PIPE,
-                        stderr=subprocess.PIPE
+                        env=env,
+                        stdout=stdout,
+                        stderr=stderr,
+                        creationflags=creation_flags if platform.system() == 'Windows' else 0
                     )
                     self.processes['twitch'] = process
                     self._save_pid('twitch', process)
                     print("   ✅ Twitch Bot started via EventSub server (PID: {})".format(process.pid))
+                    if self.background_mode:
+                        print(f"   📝 Logs: {log_file}")
                     return True
                 except Exception as e:
                     print(f"   ❌ Failed to start Twitch Bot via EventSub: {e}")
@@ -232,46 +302,58 @@ class ServiceManager:
                 return False
 
     def start_discord_bot(self):
-        """Start Discord bot using start_discord_system.py.
+        """Start Discord bot directly using bot_runner module.
 
-        Note: This script starts both Discord bot and message queue processor.
-        If message queue is already running, it will still start (separate processes).
+        This directly launches the Discord bot for reliable process management.
         """
         print("💬 Starting Discord Bot...")
-        script = self.project_root / "tools" / "start_discord_system.py"
-        if not script.exists():
-            # Fallback to direct bot script
-            script = self.project_root / "src" / \
-                "discord_commander" / "unified_discord_bot.py"
-            if not script.exists():
-                print(f"   ❌ Script not found: {script}")
-                return False
-
+        
         # Check configuration
         token = os.getenv("DISCORD_BOT_TOKEN", "").strip()
         if not token:
-            print("   ⚠️  Warning: Discord token not set")
+            print("   ⚠️  Warning: Discord token not set in .env or environment")
+            print("   ❌ Cannot start Discord Bot without DISCORD_BOT_TOKEN")
+            return False
 
         try:
             # Pass current environment to subprocess so it inherits .env variables
             env = os.environ.copy()
+            
+            # Configure output based on background mode
+            if self.background_mode:
+                log_file = self.log_dir / "discord_bot.log"
+                stdout = open(log_file, 'a')
+                stderr = subprocess.STDOUT
+                creation_flags = 0
+                if platform.system() == 'Windows':
+                    creation_flags = subprocess.CREATE_NEW_PROCESS_GROUP
+            else:
+                stdout = subprocess.PIPE
+                stderr = subprocess.STDOUT
+                creation_flags = 0
+            
+            # Run bot_runner directly as a module for clean process management
             process = subprocess.Popen(
-                [sys.executable, str(script)],
+                [sys.executable, "-m", "src.discord_commander.bot_runner"],
                 cwd=str(self.project_root),
                 env=env,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT  # Combine stderr with stdout
+                stdout=stdout,
+                stderr=stderr,
+                creationflags=creation_flags if platform.system() == 'Windows' else 0
             )
             self.processes['discord'] = process
             self._save_pid('discord', process)
             print("   ✅ Discord Bot started (PID: {})".format(process.pid))
-            print(
-                "   ℹ️  Note: start_discord_system.py also starts message queue processor")
-            # Start thread to monitor output
-            Thread(target=self._monitor_process_output, args=('discord', process), daemon=True).start()
+            if self.background_mode:
+                print(f"   📝 Logs: {log_file}")
+            else:
+                # Start thread to monitor output
+                Thread(target=self._monitor_process_output, args=('discord', process), daemon=True).start()
             return True
         except Exception as e:
             print(f"   ❌ Failed to start Discord Bot: {e}")
+            import traceback
+            traceback.print_exc()
             return False
 
     def check_status(self):
@@ -342,7 +424,7 @@ class ServiceManager:
                             expected_scripts = {
                                 'message_queue': ['start_message_queue_processor.py', 'message_queue_processor'],
                                 'twitch': ['START_CHAT_BOT_NOW.py', 'twitch_eventsub_server.py'],
-                                'discord': ['start_discord_system.py', 'unified_discord_bot.py']
+                                'discord': ['bot_runner', 'unified_discord_bot.py', 'discord_commander']
                             }
 
                             expected = expected_scripts.get(service_name, [])
@@ -417,6 +499,103 @@ class ServiceManager:
 
         self.processes.clear()
 
+    def stop_service(self, service_name: str, force: bool = False):
+        """Stop a specific service by reading its PID file."""
+        pid_file = self.pid_dir / f"{service_name}.pid"
+        
+        if not pid_file.exists():
+            print(f"   ⚠️  No PID file found for {service_name} (may not be running)")
+            return False
+        
+        try:
+            with open(pid_file, 'r') as f:
+                pid = int(f.read().strip())
+            
+            if not psutil.pid_exists(pid):
+                print(f"   ⚠️  Process {pid} for {service_name} not found (already stopped)")
+                self._cleanup_pid(service_name)
+                return False
+            
+            process = psutil.Process(pid)
+            
+            # Verify it's the right process
+            cmdline = ' '.join(process.cmdline())
+            expected_scripts = {
+                'message_queue': ['start_queue_processor.py', 'start_message_queue_processor.py', 'message_queue_processor'],
+                'twitch': ['START_CHAT_BOT_NOW.py', 'twitch_eventsub_server.py'],
+                'discord': ['bot_runner', 'unified_discord_bot.py', 'discord_commander']
+            }
+            
+            expected = expected_scripts.get(service_name, [])
+            if not any(script in cmdline for script in expected):
+                print(f"   ⚠️  PID {pid} doesn't match expected {service_name} process")
+                return False
+            
+            print(f"   Stopping {service_name} (PID: {pid})...")
+            
+            if force:
+                process.kill()
+                print(f"   ✅ {service_name} force killed")
+            else:
+                process.terminate()
+                try:
+                    process.wait(timeout=5)
+                    print(f"   ✅ {service_name} stopped gracefully")
+                except psutil.TimeoutExpired:
+                    process.kill()
+                    print(f"   ✅ {service_name} force killed (didn't respond to terminate)")
+            
+            self._cleanup_pid(service_name)
+            return True
+            
+        except (ValueError, FileNotFoundError, psutil.NoSuchProcess, psutil.AccessDenied) as e:
+            print(f"   ❌ Error stopping {service_name}: {e}")
+            # Clean up invalid PID file
+            try:
+                if pid_file.exists():
+                    pid_file.unlink()
+            except:
+                pass
+            return False
+
+    def stop_all_services(self, force: bool = False):
+        """Stop all services by reading PID files (for background services)."""
+        print("\n🛑 Stopping all services...")
+        print("=" * 60)
+        
+        # First stop services from current session
+        if self.processes:
+            print("\n🛑 Stopping services from current session...")
+            for name, process in list(self.processes.items()):
+                if process.poll() is None:
+                    print(f"   Stopping {name}...")
+                    if force:
+                        process.kill()
+                    else:
+                        process.terminate()
+                        try:
+                            process.wait(timeout=5)
+                        except subprocess.TimeoutExpired:
+                            process.kill()
+                    print(f"   ✅ {name} stopped")
+                    self._cleanup_pid(name)
+            self.processes.clear()
+        
+        # Then stop services from PID files (background services)
+        services = ['message_queue', 'twitch', 'discord']
+        stopped_count = 0
+        
+        for service_name in services:
+            if self.stop_service(service_name, force=force):
+                stopped_count += 1
+        
+        print()
+        print("=" * 60)
+        if stopped_count > 0:
+            print(f"✅ Stopped {stopped_count} background service(s)")
+        else:
+            print("ℹ️  No background services found running")
+
 
 def main():
     """Main entry point."""
@@ -448,10 +627,25 @@ def main():
         action='store_true',
         help='Select agent mode (interactive)'
     )
+    parser.add_argument(
+        '--background',
+        action='store_true',
+        help='Run services in background and exit immediately'
+    )
+    parser.add_argument(
+        '--stop',
+        action='store_true',
+        help='Stop all running services (reads from PID files)'
+    )
+    parser.add_argument(
+        '--kill',
+        action='store_true',
+        help='Force kill all running services (use if --stop fails)'
+    )
 
     args = parser.parse_args()
 
-    manager = ServiceManager()
+    manager = ServiceManager(background_mode=args.background)
 
     # Setup agent mode manager
     manager.setup_agent_mode_manager()
@@ -466,9 +660,18 @@ def main():
         manager.check_status()
         return
 
+    # Stop services mode
+    if args.stop or args.kill:
+        manager.stop_all_services(force=args.kill)
+        return
+
     # Start specific services
     if args.message_queue:
         manager.start_message_queue()
+        if args.background:
+            print("\n✅ Service started in background")
+            print("   To check status: python main.py --status")
+            return
         print("\n💡 Press Ctrl+C to stop")
         try:
             while True:
@@ -477,6 +680,10 @@ def main():
             manager.stop_all()
     elif args.twitch:
         manager.start_twitch_bot()
+        if args.background:
+            print("\n✅ Service started in background")
+            print("   To check status: python main.py --status")
+            return
         print("\n💡 Press Ctrl+C to stop")
         try:
             while True:
@@ -485,6 +692,10 @@ def main():
             manager.stop_all()
     elif args.discord:
         manager.start_discord_bot()
+        if args.background:
+            print("\n✅ Service started in background")
+            print("   To check status: python main.py --status")
+            return
         print("\n💡 Press Ctrl+C to stop")
         try:
             while True:
@@ -522,6 +733,17 @@ def main():
         print("=" * 60)
         print(f"✅ Started {success_count}/3 services")
         print()
+        
+        if args.background:
+            print("✅ All services started in background")
+            print("   To check status: python main.py --status")
+            print("   To stop services: python main.py --stop")
+            print("   To force kill: python main.py --kill")
+            print("   To change agent mode: python main.py --select-mode")
+            print("   PIDs saved to: pids/ directory")
+            print("   Logs saved to: runtime/logs/ directory")
+            return
+
         print("💡 All services running. Press Ctrl+C to stop all services.")
         print("   To check status: python main.py --status")
         print("   To change agent mode: python main.py --select-mode")

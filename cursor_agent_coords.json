@@ -26,8 +26,8 @@
       "description": "Business Intelligence Specialist"
     },
     "Agent-6": {
-      "chat_input_coordinates": [1612, 419],
-      "onboarding_input_coords": [1612, 369],
+      "chat_input_coordinates": [1612, 469],
+      "onboarding_input_coords": [1612, 419],
       "description": "Coordination & Communication Specialist"
     },
     "Agent-7": {

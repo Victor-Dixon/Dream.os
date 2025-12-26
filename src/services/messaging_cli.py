@@ -46,6 +46,15 @@ except ImportError:
     HardOnboardingHandler = None
     HARD_ONBOARDING_HANDLER_AVAILABLE = False
 
+# Import soft onboarding handler
+try:
+    from src.services.handlers.soft_onboarding_handler import SoftOnboardingHandler
+
+    SOFT_ONBOARDING_HANDLER_AVAILABLE = True
+except ImportError:
+    SoftOnboardingHandler = None
+    SOFT_ONBOARDING_HANDLER_AVAILABLE = False
+
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
@@ -75,6 +84,9 @@ class MessagingCLI:
         self.hard_onboarding_handler = (
             HardOnboardingHandler() if HARD_ONBOARDING_HANDLER_AVAILABLE else None
         )
+        self.soft_onboarding_handler = (
+            SoftOnboardingHandler() if SOFT_ONBOARDING_HANDLER_AVAILABLE else None
+        )
 
     def execute(self, args=None):
         """Execute CLI command based on arguments."""
@@ -84,8 +96,16 @@ class MessagingCLI:
         parsed_args = self.parser.parse_args(args)
 
         try:
-            # Check if hard onboarding handler can handle this request
+            # Check if soft onboarding handler can handle this request
             if (
+                SOFT_ONBOARDING_HANDLER_AVAILABLE
+                and self.soft_onboarding_handler
+                and self.soft_onboarding_handler.can_handle(parsed_args)
+            ):
+                self.soft_onboarding_handler.handle(parsed_args)
+                return self.soft_onboarding_handler.exit_code
+            # Check if hard onboarding handler can handle this request
+            elif (
                 HARD_ONBOARDING_HANDLER_AVAILABLE
                 and self.hard_onboarding_handler
                 and self.hard_onboarding_handler.can_handle(parsed_args)

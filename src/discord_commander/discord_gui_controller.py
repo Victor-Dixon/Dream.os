@@ -13,6 +13,7 @@ Original: Agent-3 (Infrastructure & DevOps)
 License: MIT
 """
 
+import asyncio
 import logging
 from typing import Any
 
@@ -121,6 +122,10 @@ class DiscordGUIController:
             )
             discord_user_id = str(getattr(discord_user, "id", "")) if discord_user else None
 
+            # Delay between agents to prevent race conditions and routing problems
+            # Queue operations need time to process and prevent conflicts
+            INTER_AGENT_QUEUE_DELAY = 0.5  # 500ms delay between queue operations
+
             for agent in agents:
                 result = self.messaging_service.send_message(
                     agent=agent, 
@@ -135,6 +140,10 @@ class DiscordGUIController:
                 )
                 if result.get("success"):
                     success_count += 1
+                
+                # Add delay between agents to prevent race conditions in queue routing
+                if agent != agents[-1]:  # Don't delay after the last agent
+                    await asyncio.sleep(INTER_AGENT_QUEUE_DELAY)
 
             return success_count == len(agents)
         except Exception as e:

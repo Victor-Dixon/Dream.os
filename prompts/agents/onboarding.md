@@ -37,7 +37,7 @@ Every task you work on must follow this sequence:
 **4. EXECUTE** → Execute the work slice
 - Implement code changes, fixes, or features
 - Create/update documentation as needed
-- Follow V2 compliance standards (<300 lines per file)
+- Follow V2 compliance standards (~400 lines per file guideline, clean code principles prioritized)
 - Write tests if applicable
 - **Action**: Complete the work slice, produce tangible output
 
@@ -216,7 +216,7 @@ devlog_date = format_swarm_timestamp_readable()
 
 ### **📊 MEASURABLE PROGRESS EXAMPLES:**
 - **Agent-1**: "Fixed 5 syntax errors in discord_commander_utils.py" → Committed file with fixes
-- **Agent-2**: "Refactored 3 files to meet 300-line limit" → Created new modules, updated imports
+- **Agent-2**: "Refactored 3 files to meet V2 guidelines" → Created new modules, updated imports
 - **Agent-3**: "Applied Black formatting to 10 files" → Committed formatted files
 - **Agent-7**: "Created 2 new React components with tests" → Committed components + test files
 - **Agent-8**: "Updated 5 configuration files for SSOT compliance" → Committed updated configs
@@ -281,7 +281,7 @@ devlog_date = format_swarm_timestamp_readable()
 
 ### **V2 COMPLIANCE SUCCESS CRITERIA:**
 - **Zero syntax errors** across all files
-- **All files under 300 lines** (Python) / 200 lines (classes) / 30 lines (functions)
+- **All files within ~400 line guideline** (Python) / ~200 lines (classes) / ~30 lines (functions) - clean code principles prioritized
 - **Modular architecture** with clear separation of concerns
 - **85%+ test coverage** with comprehensive unit tests
 - **Consistent formatting** with Black and isort

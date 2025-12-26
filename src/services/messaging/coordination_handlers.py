@@ -32,23 +32,23 @@ logger = logging.getLogger(__name__)
 
 
 class MessageCoordinator:
-    """Unified message coordination system - ALL messages route through queue."""
+    """Unified message coordination system - ALL messages route through queue repository."""
 
-    _queue = None
+    _queue_repository = None
 
     @classmethod
     def _get_queue(cls):
-        """Lazy initialization of message queue."""
-        if cls._queue is None:
+        """Lazy initialization of queue repository."""
+        if cls._queue_repository is None:
             try:
-                from src.core.message_queue import MessageQueue
-                cls._queue = MessageQueue()
+                from .repositories.queue_repository import QueueRepository
+                cls._queue_repository = QueueRepository()
                 logger.info(
-                    "✅ MessageCoordinator initialized with message queue")
+                    "✅ MessageCoordinator initialized with queue repository")
             except Exception as e:
-                logger.error(f"⚠️ Failed to initialize message queue: {e}")
-                cls._queue = None
-        return cls._queue
+                logger.error(f"⚠️ Failed to initialize queue repository: {e}")
+                cls._queue_repository = None
+        return cls._queue_repository
 
     @staticmethod
     def send_to_agent(
@@ -84,7 +84,7 @@ class MessageCoordinator:
                     "wait_seconds": wait_seconds
                 }
 
-        queue = MessageCoordinator._get_queue()
+        queue_repository = MessageCoordinator._get_queue()
         result = _send_to_agent(
             agent=agent,
             message=message,
@@ -95,7 +95,7 @@ class MessageCoordinator:
             sender=sender,
             message_category=message_category,
             message_metadata=message_metadata,
-            queue=queue,
+            queue_repository=queue_repository,
             detect_sender_func=MessageCoordinator._detect_sender,
             determine_message_type_func=MessageCoordinator._determine_message_type,
         )
@@ -123,7 +123,7 @@ class MessageCoordinator:
 
         Delegates to multi_agent_request_handler for V2 compliance.
         """
-        queue = MessageCoordinator._get_queue()
+        queue_repository = MessageCoordinator._get_queue()
         return _send_multi_agent_request(
             recipients=recipients,
             message=message,
@@ -132,7 +132,7 @@ class MessageCoordinator:
             timeout_seconds=timeout_seconds,
             wait_for_all=wait_for_all,
             stalled=stalled,
-            queue=queue,
+            queue_repository=queue_repository,
         )
 
     @staticmethod
@@ -144,12 +144,12 @@ class MessageCoordinator:
 
         Delegates to broadcast_handler for V2 compliance.
         """
-        queue = MessageCoordinator._get_queue()
+        queue_repository = MessageCoordinator._get_queue()
         return _broadcast_to_all(
             message=message,
             priority=priority,
             stalled=stalled,
-            queue=queue,
+            queue_repository=queue_repository,
         )
 
     @staticmethod

@@ -41,7 +41,7 @@ class SoftOnboardingService(BaseService):
     def execute_soft_onboarding(
         self,
         agent_id: str,
-        onboarding_message: str,
+        onboarding_message: Optional[str] = None,
         role: Optional[str] = None,
         custom_cleanup_message: Optional[str] = None,
     ) -> bool:
@@ -53,7 +53,7 @@ class SoftOnboardingService(BaseService):
         
         Args:
             agent_id: Target agent ID
-            onboarding_message: Onboarding message
+            onboarding_message: Onboarding message (if None, uses default S2A SOFT_ONBOARDING message)
             role: Optional role assignment
             custom_cleanup_message: Optional custom cleanup message
             
@@ -100,7 +100,7 @@ class SoftOnboardingService(BaseService):
             return False
 
 
-def soft_onboard_agent(agent_id: str, message: str, **kwargs) -> bool:
+def soft_onboard_agent(agent_id: str, message: Optional[str] = None, **kwargs) -> bool:
     """
     Convenience function for soft onboarding.
     
@@ -109,13 +109,13 @@ def soft_onboard_agent(agent_id: str, message: str, **kwargs) -> bool:
     
     Args:
         agent_id: Target agent ID
-        message: Onboarding message
+        message: Onboarding message (if None, uses default S2A SOFT_ONBOARDING message)
         **kwargs: Additional options
         
     Returns:
         True if successful
     """
-    from ...core.keyboard_control_lock import keyboard_control, is_locked
+    from src.core.keyboard_control_lock import keyboard_control, is_locked
     
     service = SoftOnboardingService()
     
@@ -132,7 +132,7 @@ def soft_onboard_agent(agent_id: str, message: str, **kwargs) -> bool:
 
 
 def soft_onboard_multiple_agents(
-    agents: list[tuple[str, str]], role: Optional[str] = None, generate_cycle_report: bool = True
+    agents: list[tuple[str, Optional[str]]], role: Optional[str] = None, generate_cycle_report: bool = True
 ) -> dict[str, bool]:
     """
     Soft onboard multiple agents sequentially.
@@ -148,7 +148,7 @@ def soft_onboard_multiple_agents(
     Returns:
         Dictionary of {agent_id: success_status}
     """
-    from ...core.keyboard_control_lock import keyboard_control
+    from src.core.keyboard_control_lock import keyboard_control
     from src.core.config.timeout_constants import TimeoutConstants
     
     results = {}
@@ -202,7 +202,7 @@ def soft_onboard_multiple_agents(
 
 def execute_soft_onboarding(
     agent_id: str,
-    onboarding_message: str,
+    onboarding_message: Optional[str] = None,
     role: Optional[str] = None,
     custom_cleanup_message: Optional[str] = None,
 ) -> bool:
@@ -211,7 +211,7 @@ def execute_soft_onboarding(
     
     Args:
         agent_id: Target agent ID
-        onboarding_message: Onboarding message
+        onboarding_message: Onboarding message (if None, uses default S2A SOFT_ONBOARDING message)
         role: Optional role assignment
         custom_cleanup_message: Optional custom cleanup message
         

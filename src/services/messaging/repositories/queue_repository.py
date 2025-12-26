@@ -64,13 +64,29 @@ class QueueRepository:
             batch_size: Maximum number of messages to dequeue
             
         Returns:
-            List of message dictionaries
+            List of message dictionaries (converted from IQueueEntry)
         """
         try:
-            # MessageQueue doesn't have dequeue, but we can get pending messages
-            # This is a placeholder - actual implementation depends on MessageQueue API
-            logger.debug(f"Dequeue requested: batch_size={batch_size}")
-            return []
+            # MessageQueue.dequeue() returns List[IQueueEntry]
+            entries = self._queue.dequeue(batch_size=batch_size)
+            
+            # Convert IQueueEntry objects to dictionaries
+            result = []
+            for entry in entries:
+                # Extract message dict and add status/metadata
+                entry_dict = {
+                    "queue_id": getattr(entry, 'queue_id', ''),
+                    "message": getattr(entry, 'message', {}),
+                    "status": getattr(entry, 'status', 'PENDING'),
+                    "priority_score": getattr(entry, 'priority_score', 0.5),
+                    "created_at": getattr(entry, 'created_at', None),
+                    "updated_at": getattr(entry, 'updated_at', None),
+                    "metadata": getattr(entry, 'metadata', {}),
+                }
+                result.append(entry_dict)
+            
+            logger.debug(f"Dequeued {len(result)} messages (batch_size={batch_size})")
+            return result
         except Exception as e:
             logger.error(f"Failed to dequeue messages: {e}")
             return []
@@ -86,9 +102,12 @@ class QueueRepository:
             True if marked successfully
         """
         try:
-            # MessageQueue implementation would mark as delivered
-            logger.debug(f"Marking message as delivered: {queue_id}")
-            return True
+            success = self._queue.mark_delivered(queue_id)
+            if success:
+                logger.debug(f"Message marked as delivered: {queue_id}")
+            else:
+                logger.warning(f"Failed to mark message as delivered: {queue_id} (entry not found)")
+            return success
         except Exception as e:
             logger.error(f"Failed to mark message as delivered: {e}")
             return False
@@ -105,9 +124,12 @@ class QueueRepository:
             True if marked successfully
         """
         try:
-            # MessageQueue implementation would mark as failed
-            logger.debug(f"Marking message as failed: {queue_id}, error: {error}")
-            return True
+            success = self._queue.mark_failed(queue_id, error)
+            if success:
+                logger.debug(f"Message marked as failed: {queue_id}, error: {error}")
+            else:
+                logger.warning(f"Failed to mark message as failed: {queue_id} (entry not found)")
+            return success
         except Exception as e:
             logger.error(f"Failed to mark message as failed: {e}")
             return False
@@ -120,11 +142,33 @@ class QueueRepository:
             queue_id: Queue identifier
             
         Returns:
-            Status dictionary or None if not found
+            Status dictionary with queue_id, status, message, metadata, etc. or None if not found
         """
         try:
-            # MessageQueue implementation would return status
-            logger.debug(f"Getting message status: {queue_id}")
+            # Access persistence layer to find entry by ID
+            entries = self._queue.persistence.load_entries()
+            
+            # Find entry by queue_id
+            for entry in entries:
+                if getattr(entry, 'queue_id', '') == queue_id:
+                    # Return status dictionary
+                    status_dict = {
+                        "queue_id": getattr(entry, 'queue_id', ''),
+                        "status": getattr(entry, 'status', 'UNKNOWN'),
+                        "message": getattr(entry, 'message', {}),
+                        "priority_score": getattr(entry, 'priority_score', 0.5),
+                        "created_at": getattr(entry, 'created_at', None),
+                        "updated_at": getattr(entry, 'updated_at', None),
+                        "metadata": getattr(entry, 'metadata', {}),
+                    }
+                    # Add delivery attempts if available
+                    if hasattr(entry, 'delivery_attempts'):
+                        status_dict["delivery_attempts"] = entry.delivery_attempts
+                    
+                    logger.debug(f"Retrieved status for message: {queue_id} (status: {status_dict['status']})")
+                    return status_dict
+            
+            logger.debug(f"Message not found: {queue_id}")
             return None
         except Exception as e:
             logger.error(f"Failed to get message status: {e}")

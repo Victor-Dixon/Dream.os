@@ -57,7 +57,7 @@ Validate file size against V2 limit
   "name": "validate_file_size",
   "arguments": {
     "file_path": "src/core/new_file.py",
-    "max_lines": 300
+    "max_lines": 400
   }
 }
 ```

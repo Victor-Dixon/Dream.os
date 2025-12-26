@@ -40,12 +40,7 @@ class HardOnboardingHandler(BaseService):
                 self.exit_code = 1
                 return True
 
-            if not args.message and not args.onboarding_file:
-                logger.error("❌ --message or --onboarding-file required for hard onboarding")
-                self.exit_code = 1
-                return True
-
-            # Load message from file if specified
+            # Load message from file if specified, otherwise use default
             message = args.message
             if args.onboarding_file:
                 try:
@@ -60,6 +55,10 @@ class HardOnboardingHandler(BaseService):
                     logger.error(f"❌ Failed to read onboarding file: {e}")
                     self.exit_code = 1
                     return True
+            # If no message provided, use None to trigger default message
+            if not message:
+                logger.info("📝 No message provided - using default S2A HARD_ONBOARDING message")
+                message = None
 
             # AUTONOMY: No confirmation required - Captain's directive is authorization
             # If Captain orders hard onboarding, execute immediately for autonomous operation

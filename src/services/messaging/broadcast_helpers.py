@@ -21,11 +21,13 @@ from typing import Any, Dict, List
 try:
     from src.core.agent_mode_manager import get_active_agents
     # Will be set dynamically per mode
+
     def get_swarm_agents():
         return get_active_agents()
 except Exception:
     # Fallback if mode manager unavailable
     from src.core.constants.agent_constants import AGENT_LIST
+
     def get_swarm_agents():
         return AGENT_LIST
 from src.core.messaging_core import (
@@ -37,8 +39,8 @@ from src.core.messaging_core import (
 
 logger = logging.getLogger(__name__)
 
-# Inter-agent delay for broadcast fallback to prevent routing race conditions
-INTER_AGENT_DELAY_BROADCAST = 2.5  # Delay between agents in broadcast fallback (increased from 1.0s)
+# Inter-agent delay for broadcast to prevent routing race conditions
+INTER_AGENT_DELAY_BROADCAST = 5.0  # Delay between agents in broadcast (5s to prevent routing race conditions)
 
 
 def validate_agent_for_broadcast(
@@ -99,10 +101,12 @@ def process_broadcast_agents(
     queue_ids = []
     skipped_agents = []
     swarm_agents = get_swarm_agents()  # Mode-aware agent list
-    for agent in swarm_agents:
-        can_send, error_message, pending_info = validate_agent_for_broadcast(validator, agent, message)
+    for idx, agent in enumerate(swarm_agents):
+        can_send, error_message, pending_info = validate_agent_for_broadcast(
+            validator, agent, message)
         if not can_send:
-            logger.warning(f"⏭️  Skipping {agent} in broadcast - has pending multi-agent request")
+            logger.warning(
+                f"⏭️  Skipping {agent} in broadcast - has pending multi-agent request")
             skipped_agents.append({
                 "agent": agent,
                 "reason": "pending_multi_agent_request",
@@ -110,8 +114,13 @@ def process_broadcast_agents(
                 "pending_info": pending_info
             })
             continue
-        queue_id = enqueue_broadcast_message(queue, agent, formatted_message, priority_value, metadata)
+        queue_id = enqueue_broadcast_message(
+            queue, agent, formatted_message, priority_value, metadata)
         queue_ids.append(queue_id)
+        # Add delay between agents to prevent routing race conditions
+        if idx < len(swarm_agents) - 1:
+            logger.debug(f"⏳ Broadcast delay {INTER_AGENT_DELAY_BROADCAST}s before next agent")
+            time.sleep(INTER_AGENT_DELAY_BROADCAST)
     return queue_ids, skipped_agents
 
 
@@ -125,18 +134,23 @@ def execute_broadcast_delivery(
     """Execute broadcast delivery via queue or fallback."""
     if queue:
         metadata = build_broadcast_metadata(stalled)
-        priority_value = priority.value if hasattr(priority, "value") else str(priority)
+        priority_value = priority.value if hasattr(
+            priority, "value") else str(priority)
         from .message_formatters import _format_normal_message_with_instructions
-        formatted_message = _format_normal_message_with_instructions(message, "BROADCAST")
+        formatted_message = _format_normal_message_with_instructions(
+            message, "BROADCAST")
         queue_ids, skipped_agents = process_broadcast_agents(
             queue, formatted_message, priority_value, metadata, validator, message
         )
         if skipped_agents:
-            logger.warning(f"⏭️  Broadcast skipped {len(skipped_agents)} agents with pending requests: {[a['agent'] for a in skipped_agents]}")
-        logger.info(f"✅ Broadcast queued for {len(queue_ids)} agents (skipped {len(skipped_agents)}): {message[:50]}...")
+            logger.warning(
+                f"⏭️  Broadcast skipped {len(skipped_agents)} agents with pending requests: {[a['agent'] for a in skipped_agents]}")
+        logger.info(
+            f"✅ Broadcast queued for {len(queue_ids)} agents (skipped {len(skipped_agents)}): {message[:50]}...")
         return len(queue_ids)
     else:
-        logger.warning("⚠️ Queue unavailable, falling back to direct broadcast")
+        logger.warning(
+            "⚠️ Queue unavailable, falling back to direct broadcast")
         return send_broadcast_fallback(message, priority, stalled)
 
 
@@ -152,14 +166,15 @@ def send_broadcast_fallback(
         metadata = {"stalled": stalled} if stalled else {}
         success_count = 0
         swarm_agents = get_swarm_agents()  # Mode-aware agent list
-        for agent in swarm_agents:
+        for idx, agent in enumerate(swarm_agents):
             ok = send_message(
                 content=message,
                 sender="CAPTAIN",
                 recipient=agent,
                 message_type=UnifiedMessageType.BROADCAST,
                 priority=priority,
-                tags=[UnifiedMessageTag.SYSTEM, UnifiedMessageTag.COORDINATION],
+                tags=[UnifiedMessageTag.SYSTEM,
+                      UnifiedMessageTag.COORDINATION],
                 metadata=metadata,
             )
             if ok:
@@ -167,25 +182,28 @@ def send_broadcast_fallback(
             # #region agent log
             import json
             from pathlib import Path
-            log_path = Path("d:\\Agent_Cellphone_V2_Repository\\.cursor\\debug.log")
+            log_path = Path(
+                "d:\\Agent_Cellphone_V2_Repository\\.cursor\\debug.log")
             delay_start = time.time()
             try:
                 with open(log_path, 'a', encoding='utf-8') as f:
-                    f.write(json.dumps({"sessionId": "debug-session", "runId": "run1", "hypothesisId": "C", "location": "broadcast_helpers.py:164", "message": "Before broadcast inter-agent delay", "data": {"agent": agent, "success": ok, "delay_seconds": INTER_AGENT_DELAY_BROADCAST}, "timestamp": int(time.time() * 1000)}) + "\n")
-            except: pass
+                    f.write(json.dumps({"sessionId": "debug-session", "runId": "run1", "hypothesisId": "C", "location": "broadcast_helpers.py:164", "message": "Before broadcast inter-agent delay", "data": {
+                            "agent": agent, "success": ok, "delay_seconds": INTER_AGENT_DELAY_BROADCAST}, "timestamp": int(time.time() * 1000)}) + "\n")
+            except:
+                pass
             # #endregion
-            time.sleep(INTER_AGENT_DELAY_BROADCAST)
+            # Add delay between agents to prevent routing race conditions
+            if idx < len(swarm_agents) - 1:
+                logger.debug(f"⏳ Broadcast fallback delay {INTER_AGENT_DELAY_BROADCAST}s before next agent")
+                time.sleep(INTER_AGENT_DELAY_BROADCAST)
             # #region agent log
             delay_end = time.time()
             actual_delay = delay_end - delay_start
             try:
                 with open(log_path, 'a', encoding='utf-8') as f:
-                    f.write(json.dumps({"sessionId": "debug-session", "runId": "run1", "hypothesisId": "C", "location": "broadcast_helpers.py:170", "message": "After broadcast inter-agent delay", "data": {"agent": agent, "expected_delay": INTER_AGENT_DELAY_BROADCAST, "actual_delay": round(actual_delay, 2)}, "timestamp": int(time.time() * 1000)}) + "\n")
-            except: pass
+                    f.write(json.dumps({"sessionId": "debug-session", "runId": "run1", "hypothesisId": "C", "location": "broadcast_helpers.py:170", "message": "After broadcast inter-agent delay", "data": {
+                            "agent": agent, "expected_delay": INTER_AGENT_DELAY_BROADCAST, "actual_delay": round(actual_delay, 2)}, "timestamp": int(time.time() * 1000)}) + "\n")
+            except:
+                pass
             # #endregion
         return success_count
-
-
-
-
-

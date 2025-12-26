@@ -61,48 +61,48 @@ def build_multi_agent_metadata(
 
 
 def enqueue_multi_agent_message(
-    queue: Any,
+    queue_repository: Any,
     sender: str,
     recipient: str,
     formatted_message: str,
     priority_value: str,
     metadata: Dict[str, Any],
 ) -> str:
-    """Enqueue multi-agent request message and return queue ID."""
-    return queue.enqueue(
-        message={
-            "type": "multi_agent_request",
-            "sender": sender,
-            "recipient": recipient,
-            "content": formatted_message,
-            "priority": priority_value,
-            "message_type": UnifiedMessageType.MULTI_AGENT_REQUEST.value,
-            "tags": [UnifiedMessageTag.COORDINATION.value],
-            "metadata": metadata,
-        }
-    )
+    """Enqueue multi-agent request message via repository and return queue ID."""
+    message_dict = {
+        "type": "multi_agent_request",
+        "sender": sender,
+        "recipient": recipient,
+        "content": formatted_message,
+        "priority": priority_value,
+        "message_type": UnifiedMessageType.MULTI_AGENT_REQUEST.value,
+        "tags": [UnifiedMessageTag.COORDINATION.value],
+        "metadata": metadata,
+    }
+    # Use repository pattern - queue_repository implements IQueueRepository
+    return queue_repository.enqueue(message_dict)
 
 
 def send_multi_agent_messages(
-    queue: Any,
+    queue_repository: Any,
     sender: str,
     recipients: List[str],
     formatted_message: str,
     priority_value: str,
     metadata: Dict[str, Any],
 ) -> List[str]:
-    """Send multi-agent messages to all recipients and return queue IDs."""
+    """Send multi-agent messages to all recipients via repository and return queue IDs."""
     queue_ids = []
     for recipient in recipients:
         queue_id = enqueue_multi_agent_message(
-            queue, sender, recipient, formatted_message, priority_value, metadata
+            queue_repository, sender, recipient, formatted_message, priority_value, metadata
         )
         queue_ids.append(queue_id)
     return queue_ids
 
 
 def process_multi_agent_request(
-    queue: Any,
+    queue_repository: Any,
     sender: str,
     recipients: List[str],
     message: str,
@@ -112,23 +112,23 @@ def process_multi_agent_request(
     stalled: bool,
     timeout_seconds: int,
 ) -> str:
-    """Process multi-agent request and return collector ID."""
+    """Process multi-agent request via repository and return collector ID."""
     import logging
     from .message_formatters import _format_multi_agent_request_message
     logger = logging.getLogger(__name__)
 
-    if queue:
+    if queue_repository:
         metadata = build_multi_agent_metadata(stalled, collector_id, request_id)
         priority_value = priority.value if hasattr(priority, "value") else str(priority)
         formatted_message = _format_multi_agent_request_message(
             message, collector_id, request_id, len(recipients), timeout_seconds
         )
         queue_ids = send_multi_agent_messages(
-            queue, sender, recipients, formatted_message, priority_value, metadata
+            queue_repository, sender, recipients, formatted_message, priority_value, metadata
         )
         logger.info(f"✅ Multi-agent request {collector_id} queued for {len(recipients)} agents")
         return collector_id
     else:
-        logger.error("Queue unavailable for multi-agent request")
+        logger.error("Queue repository unavailable for multi-agent request")
         return ""
 

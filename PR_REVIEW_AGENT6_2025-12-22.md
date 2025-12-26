@@ -85,13 +85,13 @@ This PR represents a massive cleanup effort that aligns with V2 compliance goals
 ### Modified Files Review
 
 1. **`tools/start_discord_system.py`**
-   - ✅ V2 compliant (70 lines, under 300 limit)
+   - ✅ V2 compliant (70 lines, well within ~400 line guideline)
    - ✅ Clean, focused implementation
    - ✅ Proper error handling
    - ✅ Good documentation
 
 2. **`tools/fix_consolidated_imports.py`**
-   - ✅ V2 compliant (under 300 lines)
+   - ✅ V2 compliant (well within ~400 line guideline)
    - ✅ Well-structured import fixing logic
    - ✅ Proper error handling and logging
 

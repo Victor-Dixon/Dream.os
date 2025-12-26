@@ -23,7 +23,7 @@ python tools/agent_toolbelt.py infra orchestrator_scan
 
 **Returns:**
 - Total orchestrators found
-- V2 violations (>400, >300, >250 lines)
+- V2 violations (>400 lines guideline - clean code principles prioritized)
 - Top 10 largest files
 - Severity ratings
 
