@@ -11,8 +11,17 @@ Features:
 - Integration with AgentLifecycle
 - Background task for continuous monitoring
 
+Improvements (2025-12-27 by Agent-1):
+- Enhanced error handling with specific exception types (ImportError, AttributeError, PermissionError, JSONDecodeError)
+- Detailed debug logging at all critical points
+- SSOT import error detection and logging
+- Better exception messages with type information
+- Non-blocking error recovery for task assignment failures
+- Detailed PyAutoGUI delivery logging for debugging
+
 Author: Agent-4 (Captain)
 Created: 2025-11-29
+Updated: 2025-12-27 (Agent-1 - Error Handling & Debugging Enhancement)
 """
 
 from src.core.config.timeout_constants import TimeoutConstants
@@ -99,10 +108,15 @@ class StatusChangeMonitor:
                 # FIX: Use correct import path for activity detector
                 from src.orchestrators.overnight.enhanced_agent_activity_detector import EnhancedAgentActivityDetector
                 activity_detector = EnhancedAgentActivityDetector()
-            except ImportError:
+                logger.debug("✅ EnhancedAgentActivityDetector imported successfully")
+            except ImportError as ie:
                 activity_detector = None
                 logger.warning(
-                    "AgentActivityDetector not available - using status.json only")
+                    f"⚠️ AgentActivityDetector not available - using status.json only. ImportError: {ie}", exc_info=True)
+            except Exception as e:
+                activity_detector = None
+                logger.error(
+                    f"❌ Unexpected error loading AgentActivityDetector: {e}", exc_info=True)
 
             changes_detected = 0
             for i in range(1, 9):
@@ -151,10 +165,15 @@ class StatusChangeMonitor:
 
                         except json.JSONDecodeError as e:
                             logger.error(
-                                f"❌ Invalid JSON in {agent_id} status.json: {e}")
+                                f"❌ Invalid JSON in {agent_id} status.json at {status_file}: {e}", exc_info=True)
+                            logger.debug(f"🔍 JSON decode error details - File: {status_file}, Error: {str(e)}")
+                        except PermissionError as e:
+                            logger.error(
+                                f"❌ Permission denied reading {agent_id} status.json: {e}")
                         except Exception as e:
                             logger.error(
-                                f"❌ Error reading status for {agent_id}: {e}", exc_info=True)
+                                f"❌ Error reading status for {agent_id}: {type(e).__name__}: {e}", exc_info=True)
+                            logger.debug(f"🔍 Status file path: {status_file}, exists: {status_file.exists()}")
 
                     # Check for inactivity (every 5 minutes = 20 iterations)
                     if activity_detector:
@@ -186,8 +205,12 @@ class StatusChangeMonitor:
     @monitor_status_changes.before_loop
     async def before_monitor(self):
         """Wait for bot to be ready before starting monitoring."""
+        logger.info("🔍 Waiting for bot to be ready before starting status monitoring...")
         await self.bot.wait_until_ready()
+        logger.info("✅ Bot ready, initializing status tracking for all agents...")
+        
         # Initialize tracking for all agents
+        initialized_count = 0
         for i in range(1, 9):
             agent_id = f"Agent-{i}"
             status_file = self.workspace_path / agent_id / "status.json"
@@ -200,14 +223,23 @@ class StatusChangeMonitor:
                     def get_file_mtime():
                         return status_file.stat().st_mtime
                     self.last_modified[agent_id] = await asyncio.to_thread(get_file_mtime)
+                    logger.debug(f"✅ Initialized mtime tracking for {agent_id}")
                     
                     # Read status file
                     def read_status_file():
                         with open(status_file, 'r', encoding='utf-8') as f:
                             return json.load(f)
                     self.last_status[agent_id] = await asyncio.to_thread(read_status_file)
-            except Exception:
-                pass
+                    logger.debug(f"✅ Loaded initial status for {agent_id}")
+                    initialized_count += 1
+                else:
+                    logger.debug(f"⚠️ Status file not found for {agent_id} at {status_file}")
+            except json.JSONDecodeError as je:
+                logger.error(f"❌ JSON decode error initializing {agent_id}: {je}")
+            except Exception as e:
+                logger.error(f"❌ Error initializing {agent_id}: {type(e).__name__}: {e}")
+        
+        logger.info(f"✅ Status monitoring initialized: {initialized_count}/8 agents tracked")
 
     def _detect_changes(self, old_status: dict, new_status: dict) -> Dict[str, any]:
         """Detect significant status changes."""
@@ -425,18 +457,27 @@ class StatusChangeMonitor:
                 pending_tasks = []
                 if self.scheduler:
                     try:
-                        from ...orchestrators.overnight.scheduler_integration import SchedulerStatusMonitorIntegration
+                        logger.debug(f"🔍 Attempting scheduler integration for {agent_id}")
+                        from src.orchestrators.overnight.scheduler_integration import SchedulerStatusMonitorIntegration
                         integration = SchedulerStatusMonitorIntegration(
                             scheduler=self.scheduler, status_monitor=self)
                         pending_tasks = integration.get_pending_tasks_for_agent(
                             agent_id)
+                        logger.debug(f"✅ Found {len(pending_tasks)} pending tasks for {agent_id}")
 
                         # Mark agent as inactive in scheduler
                         integration.mark_agent_inactive(
                             agent_id, summary.inactivity_duration_minutes)
-                    except Exception as e:
+                        logger.debug(f"✅ Marked {agent_id} as inactive in scheduler")
+                    except ImportError as ie:
                         logger.warning(
-                            f"Failed to query scheduler for {agent_id}: {e}")
+                            f"⚠️ Scheduler integration not available for {agent_id}: {ie}", exc_info=True)
+                    except AttributeError as ae:
+                        logger.error(
+                            f"❌ Scheduler attribute error for {agent_id}: {ae}. Scheduler object: {type(self.scheduler)}", exc_info=True)
+                    except Exception as e:
+                        logger.error(
+                            f"❌ Failed to query scheduler for {agent_id}: {type(e).__name__}: {e}", exc_info=True)
 
                 # Special handling for Agent-4 (Captain): Use Captain Restart Pattern from inbox
                 if agent_id == "Agent-4":
@@ -490,9 +531,13 @@ class StatusChangeMonitor:
             next_task_info = None
             task_assignment_text = ""
             try:
+                logger.debug(f"🔍 Attempting to get task assignment for {agent_id}")
                 from src.services.contract_system.manager import ContractManager
+                logger.debug(f"✅ ContractManager imported successfully")
                 contract_manager = ContractManager()
+                logger.debug(f"✅ ContractManager initialized")
                 task_result = contract_manager.get_next_task(agent_id)
+                logger.debug(f"✅ get_next_task returned: {task_result}")
                 
                 if task_result and task_result.get("status") == "assigned" and task_result.get("task"):
                     next_task_info = task_result.get("task")
@@ -518,8 +563,15 @@ class StatusChangeMonitor:
                     task_assignment_text += f"No tasks available in cycle planner or contract system.\n"
                     task_assignment_text += f"Check inbox for new assignments or continue with current mission.\n\n"
                     logger.info(f"⚠️ No tasks available for {agent_id} from cycle planner/contract system")
+                else:
+                    logger.warning(f"⚠️ Unexpected task_result format for {agent_id}: {task_result}")
+            except ImportError as ie:
+                logger.error(f"❌ Failed to import ContractManager for {agent_id}: {ie}", exc_info=True)
+                # Continue without task assignment - non-blocking
+            except AttributeError as ae:
+                logger.error(f"❌ ContractManager attribute error for {agent_id}: {ae}", exc_info=True)
             except Exception as e:
-                logger.warning(f"⚠️ Failed to get task assignment for {agent_id}: {e}")
+                logger.error(f"❌ Failed to get task assignment for {agent_id}: {type(e).__name__}: {e}", exc_info=True)
                 # Continue without task assignment - non-blocking
 
             # Format resume message with context (unless skip_wrapper=True for Agent-4)
@@ -549,14 +601,19 @@ class StatusChangeMonitor:
             # CRITICAL: Resumer must hit chat input coordinates.
             # Do NOT rely on queue success; attempt direct PyAutoGUI send and surface failures.
             try:
+                logger.debug(f"🔍 Starting PyAutoGUI messaging delivery for {agent_id}")
                 from src.core.messaging_pyautogui import PyAutoGUIMessagingDelivery
+                logger.debug(f"✅ PyAutoGUIMessagingDelivery imported")
                 from src.core.messaging_models_core import MessageCategory, UnifiedMessage
+                logger.debug(f"✅ messaging_models_core imported")
                 from src.core.messaging_core import (
                     UnifiedMessagePriority,
                     UnifiedMessageTag,
                     UnifiedMessageType,
                 )
+                logger.debug(f"✅ messaging_core enums imported")
                 from src.core.messaging_templates import render_message
+                logger.debug(f"✅ messaging_templates imported")
 
                 # Build actions text for SWARM_PULSE template
                 actions_text = "Resume by producing an artifact: commit/test/report or real code/doc delta."
@@ -636,34 +693,49 @@ class StatusChangeMonitor:
                     logger.warning(f"⚠️ SWARM_PULSE template render failed for {agent_id}: {template_error}")
                     rendered = resume_message
 
+                logger.debug(f"🔍 Creating PyAutoGUIMessagingDelivery instance")
                 delivery = PyAutoGUIMessagingDelivery()
+                logger.debug(f"✅ PyAutoGUIMessagingDelivery instance created")
+                
+                logger.debug(f"🔍 Creating UnifiedMessage for {agent_id} (send_mode={send_mode})")
+                message = UnifiedMessage(
+                    content=rendered,
+                    sender="SYSTEM",
+                    recipient=agent_id,
+                    message_type=UnifiedMessageType.SYSTEM_TO_AGENT,
+                    priority=UnifiedMessagePriority.URGENT,
+                    tags=[UnifiedMessageTag.SYSTEM],
+                    metadata={
+                        "stalled": send_mode == "ctrl_enter",
+                        "use_pyautogui": True,
+                        "send_mode": send_mode,
+                        "message_category": MessageCategory.S2A.value,
+                    },
+                    category=MessageCategory.S2A,
+                )
+                logger.debug(f"✅ UnifiedMessage created for {agent_id}")
+                
+                logger.debug(f"🔍 Sending message to {agent_id} via PyAutoGUI coords...")
                 ok = await asyncio.to_thread(
                     delivery.send_message,
-                    UnifiedMessage(
-                        content=rendered,
-                        sender="SYSTEM",
-                        recipient=agent_id,
-                        message_type=UnifiedMessageType.SYSTEM_TO_AGENT,
-                        priority=UnifiedMessagePriority.URGENT,
-                        tags=[UnifiedMessageTag.SYSTEM],
-                        metadata={
-                            "stalled": send_mode == "ctrl_enter",
-                            "use_pyautogui": True,
-                            "send_mode": send_mode,
-                            "message_category": MessageCategory.S2A.value,
-                        },
-                        category=MessageCategory.S2A,
-                    ),
+                    message,
                 )
+                logger.debug(f"✅ PyAutoGUI send_message completed for {agent_id}, result: {ok}")
 
                 self.resume_attempts[agent_id] = attempt
                 if ok:
-                    logger.info(f"✅ Resume message sent to {agent_id} via PyAutoGUI coords")
+                    logger.info(f"✅ Resume message sent to {agent_id} via PyAutoGUI coords (attempt {attempt}, mode={send_mode})")
                 else:
-                    logger.error(f"❌ Resume PyAutoGUI delivery FAILED for {agent_id} (coords send returned False)")
+                    logger.error(f"❌ Resume PyAutoGUI delivery FAILED for {agent_id} (coords send returned False, attempt {attempt}, mode={send_mode})")
 
+            except ImportError as ie:
+                logger.error(f"❌ Import error during PyAutoGUI resume send for {agent_id}: {ie}", exc_info=True)
+                logger.debug(f"🔍 Check SSOT domain markers and import paths")
+            except AttributeError as ae:
+                logger.error(f"❌ Attribute error during PyAutoGUI resume send for {agent_id}: {ae}", exc_info=True)
+                logger.debug(f"🔍 Check PyAutoGUIMessagingDelivery methods and UnifiedMessage attributes")
             except Exception as direct_error:
-                logger.error(f"❌ Direct PyAutoGUI resume send failed for {agent_id}: {direct_error}", exc_info=True)
+                logger.error(f"❌ Direct PyAutoGUI resume send failed for {agent_id}: {type(direct_error).__name__}: {direct_error}", exc_info=True)
                 # Best-effort CLI fallback (still PyAutoGUI-based)
                 import subprocess
                 import sys
@@ -752,33 +824,45 @@ class StatusChangeMonitor:
     async def _generate_generic_resume_prompt(self, agent_id: str, summary, pending_tasks: list = None) -> Optional[str]:
         """Generate generic resume prompt for regular agents."""
         try:
+            logger.debug(f"🔍 Generating resume prompt for {agent_id}")
             from src.core.optimized_stall_resume_prompt import generate_optimized_resume_prompt
+            logger.debug(f"✅ generate_optimized_resume_prompt imported")
 
             # Load status for context
             status_file = self.workspace_path / agent_id / "status.json"
             if not status_file.exists():
+                logger.warning(f"⚠️ Status file not found for {agent_id} at {status_file}")
                 return None
 
+            logger.debug(f"🔍 Reading status file for {agent_id}")
             with open(status_file, 'r', encoding='utf-8') as f:
                 status = json.load(f)
+            logger.debug(f"✅ Status loaded for {agent_id}")
 
             fsm_state = status.get("status", "active")
             last_mission = status.get("current_mission", "Unknown")
+            logger.debug(f"🔍 {agent_id} fsm_state={fsm_state}, mission={last_mission}")
 
             # Format scheduled tasks section if available
             scheduled_tasks_section = ""
             if pending_tasks and len(pending_tasks) > 0:
                 try:
-                    from ...orchestrators.overnight.scheduler_integration import SchedulerStatusMonitorIntegration
+                    logger.debug(f"🔍 Formatting {len(pending_tasks)} scheduled tasks for {agent_id}")
+                    from src.orchestrators.overnight.scheduler_integration import SchedulerStatusMonitorIntegration
                     integration = SchedulerStatusMonitorIntegration(
                         scheduler=self.scheduler, status_monitor=self)
                     scheduled_tasks_section = integration.format_scheduled_tasks_for_prompt(
                         agent_id) or ""
-                except Exception as e:
+                    logger.debug(f"✅ Scheduled tasks formatted for {agent_id}")
+                except ImportError as ie:
                     logger.warning(
-                        f"Failed to format scheduled tasks for {agent_id}: {e}")
+                        f"⚠️ Scheduler integration import failed for {agent_id}: {ie}", exc_info=True)
+                except Exception as e:
+                    logger.error(
+                        f"❌ Failed to format scheduled tasks for {agent_id}: {type(e).__name__}: {e}", exc_info=True)
 
             # Generate comprehensive SWARM_PULSE prompt with scheduled tasks integrated
+            logger.debug(f"🔍 Generating optimized resume prompt for {agent_id}")
             resumer_prompt = generate_optimized_resume_prompt(
                 agent_id=agent_id,
                 fsm_state=fsm_state,
@@ -787,14 +871,19 @@ class StatusChangeMonitor:
                 scheduler=self.scheduler,
                 scheduled_tasks_section=scheduled_tasks_section
             )
+            logger.debug(f"✅ Resume prompt generated for {agent_id}, length: {len(resumer_prompt) if resumer_prompt else 0}")
 
             return resumer_prompt
 
-        except ImportError:
-            logger.warning("OptimizedStallResumePrompt not available")
+        except ImportError as ie:
+            logger.error(f"❌ Import error generating resume prompt for {agent_id}: {ie}", exc_info=True)
+            logger.debug("🔍 Check SSOT domain markers and import paths for optimized_stall_resume_prompt")
+            return None
+        except json.JSONDecodeError as je:
+            logger.error(f"❌ JSON decode error in status file for {agent_id}: {je}", exc_info=True)
             return None
         except Exception as e:
-            logger.error(f"Error generating resume prompt for {agent_id}: {e}")
+            logger.error(f"❌ Error generating resume prompt for {agent_id}: {type(e).__name__}: {e}", exc_info=True)
             return None
 
     async def _post_resumer_prompt(self, agent_id: str, prompt: str, summary):
