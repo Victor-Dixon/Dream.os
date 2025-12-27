@@ -7,7 +7,16 @@ Actually deploys theme files to live server.
 """
 
 import sys
+import argparse
 from pathlib import Path
+
+# Handle --help flag early
+if '--help' in sys.argv or '-h' in sys.argv:
+    print("Deploy TradingRobotPlug Theme NOW")
+    print("\nUsage:")
+    print("  python tools/deploy_tradingrobotplug_theme_now.py")
+    print("\nDeploys TradingRobotPlug theme files to live server.")
+    sys.exit(0)
 
 # Add deployment tools to path
 sys.path.insert(0, str(Path("D:/websites/ops/deployment")))
