@@ -42,8 +42,8 @@ UNIFIED MESSAGING CORE SYSTEM - SINGLE SOURCE OF TRUTH
 
 <!-- SSOT Domain: integration -->
 
-V2 COMPLIANCE REFACTOR: Models extracted to messaging_models_core.py
-Original: 472 lines → Now: 336 lines (28% reduction)
+V2 COMPLIANCE REFACTOR: Phase 2C - Service Layer Pattern applied
+Original: 544 lines → Refactored with services (validation, template resolution, history, delivery orchestration)
 
 This is the ONE AND ONLY messaging system for the entire Agent Cellphone V2 project.
 Consolidates ALL messaging functionality into a single, unified system.
@@ -136,8 +136,24 @@ class UnifiedMessagingCore:
         else:
             self.message_repository = message_repository
 
+        # Initialize services (Phase 2C: Service Layer Pattern)
+        from .messaging_validation import MessageValidationService
+        from .messaging_template_resolution import TemplateResolutionService
+        from .messaging_history import MessageHistoryService
+        from .messaging_delivery_orchestration import MessageDeliveryOrchestrationService
+        
+        self.validation_service = MessageValidationService()
+        self.template_service = TemplateResolutionService()
+        self.history_service = MessageHistoryService(self.message_repository)
+        self.delivery_orchestration_service = MessageDeliveryOrchestrationService(
+            self.delivery_service
+        )
+
         # Initialize subsystems
         self._initialize_subsystems()
+        
+        # Update delivery orchestration service with initialized delivery service
+        self.delivery_orchestration_service.delivery_service = self.delivery_service
 
     def _initialize_subsystems(self):
         """Initialize all messaging subsystems."""
@@ -179,60 +195,22 @@ class UnifiedMessagingCore:
         VALIDATION: Checks if recipient has pending multi-agent request.
         If pending, blocks message and shows pending request in error.
         """
-        # Validate recipient can receive messages (check for pending multi-agent requests)
-        # Only validate if recipient is an agent (not system/captain)
-        if recipient.startswith("Agent-") and sender.startswith("Agent-"):
-            try:
-                from ..core.multi_agent_request_validator import get_multi_agent_validator
-
-                validator = get_multi_agent_validator()
-                can_send, error_message, pending_info = validator.validate_agent_can_send_message(
-                    agent_id=recipient,
-                    target_recipient=sender,  # Allow if responding to request sender
-                    message_content=content
-                )
-
-                if not can_send:
-                    # Recipient has pending request - block and show error
-                    self.logger.warning(
-                        f"❌ Message blocked - {recipient} has pending multi-agent request"
-                    )
-                    # Store error in metadata for caller to access
-                    if metadata is None:
-                        metadata = {}
-                    metadata["blocked"] = True
-                    metadata["blocked_reason"] = "pending_multi_agent_request"
-                    metadata["blocked_error_message"] = error_message
-                    return False
-
-                # If responding to request sender, auto-route to collector
-                if pending_info and sender == pending_info["sender"]:
-                    try:
-                        from ..core.multi_agent_responder import get_multi_agent_responder
-                        responder = get_multi_agent_responder()
-
-                        # Auto-submit response to collector
-                        collector_id = pending_info["collector_id"]
-                        responder.submit_response(
-                            collector_id, recipient, content)
-
-                        self.logger.info(
-                            f"✅ Auto-routed response from {recipient} to collector {collector_id}"
-                        )
-                        # Still send the message normally (it's their response)
-                    except Exception as e:
-                        self.logger.debug(f"Error auto-routing response: {e}")
-                        # Continue with normal message send
-            except ImportError:
-                # Validator not available, proceed normally
-                pass
-            except Exception as e:
-                self.logger.debug(f"Error validating recipient: {e}")
-                # Continue with normal flow
+        # Validate recipient can receive messages (Phase 2C: Use validation service)
+        metadata_dict = metadata or {}
+        can_send, updated_metadata = self.validation_service.validate_recipient_can_receive(
+            recipient=recipient,
+            sender=sender,
+            content=content,
+            metadata=metadata_dict
+        )
+        
+        if not can_send:
+            return False
+        
+        metadata_dict = updated_metadata or {}
 
         # Extract category from metadata if present (for template detection)
         category = None
-        metadata_dict = metadata or {}
         if isinstance(metadata_dict, dict):
             category_str = metadata_dict.get('message_category')
             if category_str:
@@ -258,164 +236,26 @@ class UnifiedMessagingCore:
     def send_message_object(self, message: UnifiedMessage) -> bool:
         """Send a UnifiedMessage object."""
         try:
-            # Role- and channel-aware template resolution hook
-            # Attach selected template into metadata for downstream delivery/formatting layers
-            try:
-                from ..services.messaging.policy_loader import (
-                    load_template_policy,
-                    resolve_template_by_channel,
-                    resolve_template_by_roles,
-                )
-            except Exception:
-                load_template_policy = None  # type: ignore
-                resolve_template_by_channel = None  # type: ignore
-                resolve_template_by_roles = None  # type: ignore
+            # Phase 2C: Template resolution using service
+            if isinstance(message.metadata, dict):
+                self.template_service.apply_template_to_message(message.metadata)
 
-            template = (
-                message.metadata.get("template") if isinstance(
-                    message.metadata, dict) else None
-            )
-            channel = (
-                (message.metadata or {}).get("channel", "standard")
-                if isinstance(message.metadata, dict)
-                else "standard"
-            )
-            sender_role = (
-                (message.metadata or {}).get("sender_role", "AGENT")
-                if isinstance(message.metadata, dict)
-                else "AGENT"
-            )
-            receiver_role = (
-                (message.metadata or {}).get("receiver_role", "AGENT")
-                if isinstance(message.metadata, dict)
-                else "AGENT"
-            )
+            # Phase 2C: Log message to history using service
+            self.history_service.log_message(message, status="sent")
 
-            if (
-                not template
-                and load_template_policy
-                and resolve_template_by_channel
-                and resolve_template_by_roles
-            ):
-                policy = load_template_policy()
-                # Channel overrides first
-                if channel in ("onboarding", "passdown", "standard"):
-                    template = resolve_template_by_channel(policy, channel)
-                # If not forced by channel, resolve by roles
-                if not template or template == "compact":
-                    template = resolve_template_by_roles(
-                        policy, str(sender_role), str(receiver_role)
-                    )
-
-                message.metadata["template"] = template  # type: ignore[index]
-
-            # Log message to history repository (Phase 1: Message History Logging - IMPLEMENTED)
-            if self.message_repository:
-                try:
-                    # Serialize metadata to ensure JSON compatibility (recursive)
-                    def serialize_value(value):
-                        """Recursively serialize values for JSON compatibility."""
-                        if isinstance(value, datetime):
-                            return value.isoformat()
-                        elif isinstance(value, dict):
-                            return {k: serialize_value(v) for k, v in value.items()}
-                        elif isinstance(value, (list, tuple)):
-                            return [serialize_value(item) for item in value]
-                        elif hasattr(value, '__dict__'):
-                            return str(value)
-                        else:
-                            return value
-
-                    metadata_serialized = serialize_value(
-                        message.metadata) if message.metadata else {}
-
-                    message_dict = {
-                        "from": message.sender,
-                        "to": message.recipient,
-                        "content": message.content[:200] + "..." if len(message.content) > 200 else message.content,
-                        "content_length": len(message.content),
-                        "message_type": message.message_type.value if hasattr(message.message_type, "value") else str(message.message_type),
-                        "priority": message.priority.value if hasattr(message.priority, "value") else str(message.priority),
-                        "tags": [tag.value if hasattr(tag, "value") else str(tag) for tag in message.tags],
-                        "metadata": metadata_serialized,
-                        "timestamp": format_swarm_timestamp(),
-                    }
-                    self.message_repository.save_message(message_dict)
-                    self.logger.debug(
-                        f"✅ Message logged to history: {message.sender} → {message.recipient}")
-                except Exception as e:
-                    self.logger.warning(
-                        f"⚠️ Failed to log message to history: {e}")
-            else:
-                # SSOT: Repository should be initialized in __init__ (Agent-8 - 2025-01-27)
-                # If not available, log warning but don't create duplicate instance
-                self.logger.warning(
-                    "MessageRepository not initialized - message history logging skipped. "
-                    "Repository should be initialized in __init__."
-                )
-
-            if self.delivery_service:
-                success = self.delivery_service.send_message(message)
-                # Update history with delivery status (SSOT FIX - Agent-4 - 2025-01-27)
-                if self.message_repository and success:
-                    try:
-                        # Update message with delivery status
-                        message_dict["status"] = "delivered"
-                        self.message_repository.save_message(message_dict)
-                        self.logger.debug(
-                            f"✅ Delivery status logged: {message.sender} → {message.recipient}")
-                    except Exception as e:
-                        self.logger.warning(
-                            f"⚠️ Failed to log delivery status: {e}")
-                
-                # FALLBACK QUEUING: If direct delivery fails, queue message for later processing
-                # This ensures system messages flow through the queue when PyAutoGUI fails
-                if not success:
-                    try:
-                        from .message_queue import MessageQueue
-                        queue = MessageQueue()
-                        queue_id = queue.enqueue(message)
-                        self.logger.info(
-                            f"📬 Direct delivery failed, message queued for later processing: {queue_id} "
-                            f"({message.sender} → {message.recipient})")
-                        # Return True to indicate message was handled (queued), even though direct delivery failed
-                        return True
-                    except Exception as queue_error:
-                        self.logger.error(
-                            f"❌ Failed to queue message after delivery failure: {queue_error}")
-                        return False
-                
-                return success
-            else:
-                # No delivery service - try to queue message instead of failing
-                try:
-                    from .message_queue import MessageQueue
-                    queue = MessageQueue()
-                    queue_id = queue.enqueue(message)
-                    self.logger.info(
-                        f"📬 No delivery service available, message queued: {queue_id} "
-                        f"({message.sender} → {message.recipient})")
-                    return True
-                except Exception as queue_error:
-                    self.logger.error(
-                        f"❌ No delivery service and queue unavailable: {queue_error}")
-                    return False
+            # Phase 2C: Orchestrate delivery using service
+            success = self.delivery_orchestration_service.orchestrate_delivery(message)
+            
+            # Log delivery status if successful
+            if success:
+                self.history_service.log_delivery_status(message, status="delivered")
+            
+            return success
+            
         except Exception as e:
             self.logger.error(f"Failed to send message: {e}")
-            # Log failure to history
-            if self.message_repository:
-                try:
-                    history_entry = {
-                        "from": message.sender,
-                        "to": message.recipient,
-                        "content": message.content[:500],
-                        "timestamp": message.timestamp,
-                        "status": "FAILED",
-                        "error": str(e)[:200],
-                    }
-                    self.message_repository.save_message(history_entry)
-                except Exception:
-                    pass  # Non-critical
+            # Phase 2C: Log failure using service
+            self.history_service.log_failure(message, e)
             return False
 
     def show_message_history(self):
