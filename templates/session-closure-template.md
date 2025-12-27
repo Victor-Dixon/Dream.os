@@ -84,4 +84,12 @@
 - Validation: `python tools/validate_closure_format.py <your-file.md>`
 - Example: `agent_workspaces/Agent-4/session_closures/2025-12-26_trading_dashboard_closure.md`
 
+## Shared Workspace Safety (Git Hygiene)
+
+- Do **not** run `git restore .` or `git clean -fd` in a shared repo checkout.
+- Do **not** use `git add .` unless you are certain only your files changed.
+- Prefer:
+  - `git add <exact paths you touched>` (path-scoped staging)
+  - `git add -p` (interactive staging)
+
 
