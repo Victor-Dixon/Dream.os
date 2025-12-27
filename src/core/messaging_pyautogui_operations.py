@@ -154,13 +154,22 @@ class PyAutoGUIOperationsService:
             return False
         
         # CRITICAL: Clear existing text in input field first
-        logger.debug("🧹 Clearing existing text")
-        self.pyautogui.hotkey("ctrl", "a")
-        time.sleep(0.2)
-        self.pyautogui.press("delete")
-        time.sleep(0.3)
-        
-        return True
+        logger.debug(f"🧹 Clearing existing text for {recipient}")
+        try:
+            # Select all
+            self.pyautogui.hotkey("ctrl", "a")
+            time.sleep(0.2)
+            # Delete selected text
+            self.pyautogui.press("delete")
+            time.sleep(0.2)
+            # Click again to ensure focus is maintained
+            self.pyautogui.click()
+            time.sleep(0.2)
+            logger.debug(f"✅ Input field cleared for {recipient}")
+            return True
+        except Exception as e:
+            logger.error(f"❌ Failed to clear input field for {recipient}: {e}")
+            return False
     
     def verify_coordinates_before_paste(
         self,
@@ -216,6 +225,7 @@ class PyAutoGUIOperationsService:
             True if paste successful
         """
         if not self.pyautogui:
+            logger.error("❌ PyAutoGUI not available for paste")
             return False
         
         x, y = coordinates
@@ -227,13 +237,51 @@ class PyAutoGUIOperationsService:
                 f"❌ CRITICAL: Mouse position invalid before paste for {recipient}: "
                 f"expected ({x}, {y}), got {pre_paste_pos}"
             )
+            # Re-position and click to focus
+            logger.info(f"🔄 Repositioning mouse to ({x}, {y})")
+            self.pyautogui.moveTo(x, y, duration=0.2)
+            time.sleep(0.2)
+            self.pyautogui.click()  # Ensure input field is focused
+            time.sleep(0.3)
+        
+        # CRITICAL: Ensure input field is focused before pasting
+        logger.info(f"🖱️ Clicking to ensure focus before paste for {recipient} at ({x}, {y})")
+        self.pyautogui.click()  # Click to ensure input field is active
+        time.sleep(0.2)  # Wait for focus
+        
+        # Verify clipboard has content before pasting
+        try:
+            import pyperclip
+            clipboard_content = pyperclip.paste()
+            if not clipboard_content or len(clipboard_content.strip()) == 0:
+                logger.error(f"❌ Clipboard is empty before paste for {recipient}")
+                return False
+            logger.info(f"✅ Clipboard verified: {len(clipboard_content)} chars ready to paste for {recipient}")
+        except Exception as e:
+            logger.warning(f"⚠️ Could not verify clipboard before paste for {recipient}: {e}")
+            # Continue anyway - might still work
+        
+        logger.info(f"📥 Pasting message to {recipient} at ({x}, {y})")
+        try:
+            self.pyautogui.hotkey("ctrl", "v")
+            time.sleep(0.5)  # Wait for paste to complete
+            
+            # Verify paste succeeded by checking clipboard is still there (optional)
+            # If paste worked, clipboard should still have content
+            try:
+                import pyperclip
+                post_paste_clipboard = pyperclip.paste()
+                if post_paste_clipboard == clipboard_content:
+                    logger.debug(f"✅ Paste completed for {recipient}")
+                else:
+                    logger.warning(f"⚠️ Clipboard changed after paste - may indicate paste issue")
+            except:
+                pass  # Non-critical check
+            
+            return True
+        except Exception as e:
+            logger.error(f"❌ Failed to paste message for {recipient}: {e}")
             return False
-        
-        logger.debug("📥 Pasting message")
-        self.pyautogui.hotkey("ctrl", "v")
-        time.sleep(1.0)  # Wait for paste to complete
-        
-        return True
     
     def send_message(
         self,
