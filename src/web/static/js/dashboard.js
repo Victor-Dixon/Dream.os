@@ -1,6 +1,8 @@
 /**
  * DASHBOARD.JS - MODULAR V2 COMPLIANT ORCHESTRATOR
- *
+ * 
+ * <!-- SSOT Domain: web -->
+ * 
  * REFACTORED FROM: 909 lines (609 over V2 limit) → 191 lines orchestrator
  * TOTAL REDUCTION: 718 lines eliminated (79% reduction)
  *
@@ -10,8 +12,9 @@
  * - dashboard-navigation.js (207 lines) - Navigation & routing
  * - dashboard-data-manager.js (152 lines) - Data management & state
  *
- * @author Agent-7A - Web Development Specialist
+ * @author Agent-7 - Web Development Specialist
  * @version 4.0.0 - V2 COMPLIANCE CORRECTION
+ * @see docs/WEB_DOMAIN_INDEX.md for navigation reference
  */
 
 // ================================

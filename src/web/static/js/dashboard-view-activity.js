@@ -2,9 +2,13 @@
  * Dashboard Agent Activity View Module - V2 Compliant
  * Handles agent activity tracking and visualization
  * 
+ * <!-- SSOT Domain: web -->
+ * 
  * @author Agent-7 - Web Development Specialist
  * @version 1.0.0
  * @license MIT
+ * @see docs/WEB_DOMAIN_INDEX.md for navigation reference
+ * @see src/web/vector_database/message_routes.py for API endpoint
  */
 
 /**
@@ -104,10 +108,10 @@ function calculateActivityStats(activity) {
     const activeAgents = new Set(activity.filter(a => a.status === 'active').map(a => a.agent_id));
     const totalActions = activity.reduce((sum, a) => sum + (a.action_count || 0), 0);
     const responseTimes = activity.filter(a => a.response_time).map(a => a.response_time);
-    const avgResponseTime = responseTimes.length > 0 
+    const avgResponseTime = responseTimes.length > 0
         ? Math.round(responseTimes.reduce((a, b) => a + b, 0) / responseTimes.length)
         : 0;
-    
+
     const healthScore = activity.length > 0
         ? Math.round((activeAgents.size / 8) * 100)
         : 0;
@@ -130,7 +134,7 @@ function renderActivityTimeline(activity) {
         return '<div class="text-center text-muted py-5">No activity data available</div>';
     }
 
-    const sortedActivity = [...activity].sort((a, b) => 
+    const sortedActivity = [...activity].sort((a, b) =>
         new Date(b.timestamp || b.last_activity) - new Date(a.timestamp || a.last_activity)
     );
 
@@ -213,7 +217,7 @@ function formatTimestamp(timestamp) {
     const now = new Date();
     const diff = now - date;
     const minutes = Math.floor(diff / 60000);
-    
+
     if (minutes < 1) return 'Just now';
     if (minutes < 60) return `${minutes}m ago`;
     const hours = Math.floor(minutes / 60);
@@ -227,28 +231,28 @@ function formatTimestamp(timestamp) {
 async function refreshActivityData() {
     const refreshBtn = document.querySelector('button[onclick="refreshActivityData()"]');
     const originalText = refreshBtn?.innerHTML;
-    
+
     try {
         // Show loading state
         if (refreshBtn) {
             refreshBtn.disabled = true;
             refreshBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Refreshing...';
         }
-        
+
         const response = await fetch('/api/messages/activity');
         const data = await response.json();
-        
+
         if (data.success) {
             const timeline = document.getElementById('activityTimeline');
             const statusList = document.getElementById('agentStatusList');
-            
+
             if (timeline) {
                 timeline.innerHTML = renderActivityTimeline(data.activity || []);
             }
             if (statusList) {
                 statusList.innerHTML = renderAgentStatusList(data.activity || []);
             }
-            
+
             // Show success feedback
             if (refreshBtn) {
                 refreshBtn.innerHTML = '<i class="fas fa-check"></i> Refreshed';
