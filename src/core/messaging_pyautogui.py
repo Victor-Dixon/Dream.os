@@ -154,6 +154,27 @@ class PyAutoGUIMessagingDelivery:
             logger.error(f"❌ Coordinates must be numeric for {agent_id}: ({x}, {y})")
             return False
 
+        # Platform-accurate bounds check: validate against the OS virtual screen bounds.
+        # This prevents false positives where negative X/Y are accepted even when the machine
+        # has no left/top monitor (common cause of "it rendered but never typed").
+        try:
+            from .utilities.validation_utilities import get_virtual_screen_bounds
+            min_x, min_y, max_x, max_y = get_virtual_screen_bounds()
+            if x < min_x or x > max_x:
+                logger.error(
+                    f"❌ X coordinate out of virtual screen bounds for {agent_id}: {x} "
+                    f"(bounds: {min_x}..{max_x}). Re-capture coords in cursor_agent_coords.json."
+                )
+                return False
+            if y < min_y or y > max_y:
+                logger.error(
+                    f"❌ Y coordinate out of virtual screen bounds for {agent_id}: {y} "
+                    f"(bounds: {min_y}..{max_y}). Re-capture coords in cursor_agent_coords.json."
+                )
+                return False
+        except Exception as e:
+            logger.debug(f"Virtual screen bounds check unavailable: {e}")
+
         # Validate against bounds from cursor_agent_coords.json
         try:
             from .coordinate_loader import get_coordinate_loader
@@ -178,13 +199,12 @@ class PyAutoGUIMessagingDelivery:
                 )
                 # Don't fail - allow with warning (screen resolution differences)
             
-            # Validate bounds from cursor_agent_coords.json validation_rules
-            # Default bounds: min_x=-2000, max_x=2000, min_y=0, max_y=1500
-            if x < -2000 or x > 2000:
-                logger.error(f"❌ X coordinate out of bounds for {agent_id}: {x} (expected -2000 to 2000)")
+            # Legacy coarse bounds (kept as a final backstop)
+            if x < -5000 or x > 5000:
+                logger.error(f"❌ X coordinate out of coarse bounds for {agent_id}: {x} (expected -5000..5000)")
                 return False
-            if y < 0 or y > 1500:
-                logger.error(f"❌ Y coordinate out of bounds for {agent_id}: {y} (expected 0 to 1500)")
+            if y < -2000 or y > 5000:
+                logger.error(f"❌ Y coordinate out of coarse bounds for {agent_id}: {y} (expected -2000..5000)")
                 return False
             
             logger.debug(f"✅ Coordinates validated for {agent_id}: {coords}")
