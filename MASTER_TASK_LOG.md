@@ -39,9 +39,9 @@
 
 - [x] **MEDIUM**: Web Domain Navigation Index (50 pts) - ✅ COMPLETE by Agent-7 (2025-12-27) - Created docs/WEB_DOMAIN_INDEX.md with comprehensive navigation: directory structure, file tables with purposes, related documentation links, tools reference, website repositories, common operations, API endpoints. Added SSOT tags to dashboard.js and dashboard-view-activity.js with @see references. [Agent-7 COMPLETE]
 
-- [ ] **MEDIUM**: Build-In-Public Phase 1 copy - 'What I Do' section (50 pts) - ⏳ PENDING - Remaining Phase 1 copy needed. Source: Agent-6 status.json current_mission. [Agent-7]
+- [x] **MEDIUM**: Build-In-Public Phase 1 copy - 'What I Do' section (50 pts) - ✅ COMPLETE by Agent-7 (2025-12-27) - Already integrated in front-page.php: "Three Ways to Work Together" with AI Build Sprints, Automation & Ops Systems, Experimental Builds offer cards. [Agent-7 COMPLETE]
 
-- [ ] **MEDIUM**: Build-In-Public Phase 1 copy - 'Live Experiments' section (50 pts) - ⏳ PENDING - Remaining Phase 1 copy needed. Source: Agent-6 status.json current_mission. [Agent-7]
+- [x] **MEDIUM**: Build-In-Public Phase 1 copy - 'Live Experiments' section (50 pts) - ✅ COMPLETE by Agent-7 (2025-12-27) - Enhanced dadudekc.com front-page.php: 3 real experiments (AI Agent Swarm, TradingRobotPlug Platform, Revenue Site Optimization), stats, links, featured styling. [Agent-7 COMPLETE]
 
 - [x] **MEDIUM**: Build-In-Public Phase 1 copy - Manifesto page (75 pts) - ✅ COMPLETE by Agent-7 (2025-12-27) - Full Phase 1 content created: Core beliefs, The Swarm Way, Our Commitment sections with comprehensive copy and styling. File: sites/weareswarm.online/wp/theme/swarm/page-swarm-manifesto.php. [Agent-7 COMPLETE]
 
