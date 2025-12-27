@@ -214,9 +214,25 @@ class ContractManager(BaseService):
         This gives the system a way to fall back to the global task log when
         both cycle planner and contract system are empty.
         """
+        # Import lazily, but avoid package-name collisions between `src/tools` (package)
+        # and repo-root `tools/` (scripts directory) by loading via file path.
         try:
-            # Import lazily to avoid hard dependency when tools are not available
-            from tools import master_task_log_to_cycle_planner as mtl2cp  # type: ignore[import]
+            import importlib.util
+
+            tool_path = self.cycle_planner.project_root / "tools" / "master_task_log_to_cycle_planner.py"
+            if not tool_path.exists():
+                logger.debug(f"master_task_log_to_cycle_planner not available at {tool_path}")
+                return False
+
+            spec = importlib.util.spec_from_file_location(
+                "master_task_log_to_cycle_planner", tool_path
+            )
+            if spec is None or spec.loader is None:
+                logger.debug("master_task_log_to_cycle_planner import spec unavailable")
+                return False
+
+            mtl2cp = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(mtl2cp)  # type: ignore[attr-defined]
         except Exception as e:  # pragma: no cover - defensive guard
             logger.debug(f"master_task_log_to_cycle_planner not available: {e}")
             return False
