@@ -1,0 +1,30 @@
+﻿[
+    {
+        "name":  "nextend-facebook-connect",
+        "type":  "static",
+        "path":  "D:\\websites\\FreeRideInvestor\\plugins\\nextend-facebook-connect",
+        "status":  "FAIL",
+        "notes":  "index.html is empty"
+    },
+    {
+        "name":  "ariajet.site",
+        "type":  "static",
+        "path":  "D:\\websites\\websites\\ariajet.site",
+        "status":  "WARN",
+        "notes":  "missing meta description | has title tag"
+    },
+    {
+        "name":  "southwestsecret.com",
+        "type":  "static",
+        "path":  "D:\\websites\\websites\\southwestsecret.com",
+        "status":  "PASS",
+        "notes":  "has title tag"
+    },
+    {
+        "name":  "games",
+        "type":  "static",
+        "path":  "D:\\websites\\websites\\ariajet.site\\games",
+        "status":  "WARN",
+        "notes":  "missing meta description | has title tag"
+    }
+]
