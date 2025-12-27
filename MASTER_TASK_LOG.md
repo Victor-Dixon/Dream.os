@@ -35,6 +35,8 @@
 
 - [ ] **CRITICAL**: Resolve deployment blocker - TradingRobotPlug.com theme (15 files) + Build-In-Public Phase 0 (10 files) (150 pts) - ⏳ BLOCKED - Server access credentials needed. Source: Agent-3 status.json current_mission. [Agent-3]
 
+- [ ] **CRITICAL**: TradingRobotPlug.com Credibility & Compliance Overhaul (200 pts) - ⏳ PENDING - External audit grade: D (very low credibility). Missing: Legal/compliance pages (risk disclosure, privacy, terms), About Us page, real trading performance data, placeholder content removal. P0: Add legal/compliance pages immediately. P1: Add performance transparency, content strategy. P2: Social proof, homepage redesign. Audit: docs/website_audits/2026/tradingrobotplug_credibility_audit_2025-12-27.md. [Agent-7 + Agent-3 coordination]
+
 - [ ] **HIGH**: Phase 2 Infrastructure Refactoring - messaging_pyautogui.py (775 lines) (200 pts) - ⏳ IN PROGRESS - Service Layer pattern, extract 4 services (CoordinateRoutingService, MessageFormattingService, ClipboardService, PyAutoGUIOperationsService). ETA: 1-2 cycles. Source: Agent-3 status.json current_tasks. [Agent-3]
 
 - [ ] **HIGH**: Phase 2 Infrastructure Refactoring - messaging_template_texts.py (876 lines) (200 pts) - ⏳ PENDING - Configuration/Data pattern. ETA: 1-2 cycles. Source: Agent-3 status.json current_tasks. [Agent-3]
