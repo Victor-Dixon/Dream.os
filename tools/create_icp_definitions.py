@@ -83,28 +83,79 @@ def create_icp_via_rest_api(site_domain: str) -> bool:
         print(f"   - {norm}_WP_USERNAME and {norm}_WP_APP_PASSWORD")
         return False
     
-    # ICP content definitions
+    # ICP content definitions (enhanced with detailed content from ICP_DEFINITION.md files)
     icp_content = {
         'freerideinvestor.com': {
             'title': 'FreeRide Investor Ideal Customer Profile',
-            'content': 'For active traders (day/swing traders, $10K-$500K accounts) struggling with inconsistent results, we eliminate guesswork and provide proven trading strategies. Your outcome: consistent edge, reduced losses, trading confidence.',
+            'content': '''<h2>For Active Traders Struggling with Inconsistent Results</h2>
+<p>For active traders (day/swing traders, $10K-$500K accounts) struggling with inconsistent results, we eliminate guesswork and provide proven trading strategies.</p>
+<p><strong>Your outcome:</strong> Consistent edge, reduced losses, trading confidence.</p>
+<h3>We eliminate:</h3>
+<ul>
+<li>Inconsistent trading results and guesswork</li>
+<li>Emotional trading decisions</li>
+<li>Lack of proven strategies</li>
+<li>Unclear entry/exit signals</li>
+</ul>
+<h3>You get:</h3>
+<ul>
+<li>Consistent trading edge with proven strategies</li>
+<li>Reduced losses through disciplined approach</li>
+<li>Trading confidence from clear methodology</li>
+<li>Systematic approach to market opportunities</li>
+</ul>''',
             'target_demographic': 'Active traders (day/swing traders, $10K-$500K accounts)',
-            'pain_points': 'inconsistent results, guesswork',
-            'desired_outcomes': 'consistent edge, reduced losses, trading confidence'
+            'pain_points': 'inconsistent results, guesswork, emotional trading, lack of proven strategies',
+            'desired_outcomes': 'consistent edge, reduced losses, trading confidence, systematic approach'
         },
         'dadudekc.com': {
-            'title': 'DadudeKC Ideal Customer Profile',
-            'content': 'For small business owners and entrepreneurs who struggle with manual workflows and time-consuming tasks, we eliminate operational bottlenecks through automation and systems. Your outcome: more time for growth, reduced operational stress, scalable processes.',
-            'target_demographic': 'Small business owners and entrepreneurs',
-            'pain_points': 'manual workflows, time-consuming tasks, operational bottlenecks',
-            'desired_outcomes': 'more time for growth, reduced operational stress, scalable processes'
+            'title': 'DaDudeKC Ideal Customer Profile',
+            'content': '''<h2>For Service Business Owners Drowning in Manual Tasks</h2>
+<p>For service business owners ($50K-$500K revenue) drowning in manual workflows, we eliminate workflow bottlenecks and deliver working automations in 2 weeks.</p>
+<p><strong>Your outcome:</strong> 10+ hours/week back, scalable operations, peace of mind.</p>
+<h3>We eliminate:</h3>
+<ul>
+<li>Manual workflows stealing 5-15 hours/week</li>
+<li>Follow-ups, scheduling, invoicing bottlenecks</li>
+<li>Lack of systems and processes</li>
+<li>Technical barriers to automation</li>
+<li>Scaling challenges without hiring</li>
+</ul>
+<h3>You get:</h3>
+<ul>
+<li>10+ hours/week back through automation</li>
+<li>Scalable operations without hiring</li>
+<li>Peace of mind from automated workflows</li>
+<li>Zero technical knowledge required</li>
+<li>Working automations delivered in 2 weeks</li>
+</ul>''',
+            'target_demographic': 'Service business owners ($50K-$500K revenue, 2-20 people teams)',
+            'pain_points': 'manual workflows (5-15 hours/week), follow-ups/scheduling/invoicing bottlenecks, lack of systems, technical barriers, scaling challenges',
+            'desired_outcomes': '10+ hours/week back, scalable operations, peace of mind, zero technical knowledge required, working automations in 2 weeks'
         },
         'crosbyultimateevents.com': {
             'title': 'Crosby Ultimate Events Ideal Customer Profile',
-            'content': 'For individuals and organizations planning special events who struggle with coordination, vendor management, and execution details, we eliminate event planning stress through comprehensive event management services. Your outcome: memorable events, stress-free planning, professional execution.',
-            'target_demographic': 'Individuals and organizations planning special events',
-            'pain_points': 'coordination challenges, vendor management, execution details',
-            'desired_outcomes': 'memorable events, stress-free planning, professional execution'
+            'content': '''<h2>For Busy Professionals Who Value Quality</h2>
+<p>For affluent professionals ($150K+ income, ages 35-65) who value time and quality, we eliminate event planning stress and deliver unforgettable experiences.</p>
+<p><strong>Your outcome:</strong> Flawless events that impress guests while you enjoy the moment.</p>
+<h3>We eliminate:</h3>
+<ul>
+<li>Event planning stress and coordination headaches</li>
+<li>Managing multiple vendors (chef, planner, decorator, etc.)</li>
+<li>Fear of things going wrong on the big day</li>
+<li>Generic catering that doesn't match the occasion</li>
+</ul>
+<h3>You get:</h3>
+<ul>
+<li>Flawless events that impress guests</li>
+<li>Ability to enjoy the moment instead of managing logistics</li>
+<li>One trusted partner handling everything</li>
+<li>Memorable culinary experiences</li>
+<li>Peace of mind knowing every detail is covered</li>
+</ul>''',
+            'target_demographic': 'Affluent professionals ($150K+ income, ages 35-65, urban/suburban areas)',
+            'pain_points': 'event planning stress, coordination headaches, managing multiple vendors, fear of things going wrong, generic catering',
+            'desired_outcomes': 'flawless events, ability to enjoy the moment, one trusted partner, memorable experiences, peace of mind'
         }
     }
     
