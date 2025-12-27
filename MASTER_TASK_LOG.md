@@ -9,6 +9,12 @@
 
 ## INBOX
 
+- [ ] **HIGH** (100 pts): [WEB] nextend-facebook-connect - Fix empty index.html file - ⏳ PENDING - Critical plugin directory issue: file exists but is completely empty, making site non-functional. Determine if plugin should be active or archived. If active: populate with proper landing page. If inactive: move to archive. Source: Website discovery scan (TASK_DISCOVERY_PROTOCOL.md WEB lane). Proof: runtime/task_discovery/websites_findings.json. [Agent-7]
+
+- [ ] **MEDIUM** (75 pts): [WEB] ariajet.site - Add SEO metadata - ⏳ PENDING - Site has title tag but missing meta description, reducing search engine visibility and click-through rates. Quick SEO win for improving discoverability. Add meta description (150-160 chars), keywords tag, Open Graph tags for social sharing. Source: Website discovery scan (TASK_DISCOVERY_PROTOCOL.md WEB lane). Proof: runtime/task_discovery/websites_findings.json. [Agent-7]
+
+- [ ] **MEDIUM** (75 pts): [WEB] games subdirectory - Add SEO metadata - ⏳ PENDING - Games section (ariajet.site/games) has title tag but missing meta description. Improves discoverability for game-specific content and social sharing UX. Add meta description highlighting games/entertainment, keywords, Open Graph tags. Source: Website discovery scan (TASK_DISCOVERY_PROTOCOL.md WEB lane). Proof: runtime/task_discovery/websites_findings.json. [Agent-7]
+
 - [ ] **HIGH**: Fix broken tools Phase 3 (32 runtime errors) - ⏳ IN PROGRESS by Agent-4 (2025-12-26) - Phase 1 & 2 complete (15/47 tools fixed). Phase 3 pending: 32 runtime errors need resolution. Priority: HIGH - blocking tool functionality. Reference: agent_workspaces/Agent-4/status.json. [Agent-4 CAPTAIN]
 
 - [x] **HIGH**: Create discord_webhook_validator.py tool (100 pts) - ✅ COMPLETE by Agent-4 (2025-12-26) - Tool created and tested. Validates webhook URL format, accessibility, username (checks for forbidden words like 'discord'), and test posting. Supports agent-specific webhooks and router webhook. All 8 agent webhooks validated successfully. Artifact: tools/discord_webhook_validator.py. Source: Agent-4 passdown.json tool_wishlist. [Agent-4 COMPLETE]
