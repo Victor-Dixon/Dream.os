@@ -96,8 +96,9 @@ class StatusChangeMonitor:
         try:
             # Import activity detector for inactivity detection
             try:
-                from tools.agent_activity_detector import AgentActivityDetector
-                activity_detector = AgentActivityDetector()
+                # FIX: Use correct import path for activity detector
+                from src.orchestrators.overnight.enhanced_agent_activity_detector import EnhancedAgentActivityDetector
+                activity_detector = EnhancedAgentActivityDetector()
             except ImportError:
                 activity_detector = None
                 logger.warning(
@@ -395,10 +396,28 @@ class StatusChangeMonitor:
     async def _check_inactivity(self, agent_id: str, activity_detector):
         """Check if agent is inactive and send resumer prompt if needed."""
         try:
+            import time as _time
+            from datetime import datetime as _datetime
+            
             inactivity_threshold_minutes = 5.0  # 5 minutes of inactivity
 
-            summary = activity_detector.detect_agent_activity(
-                agent_id, lookback_minutes=60)
+            # EnhancedAgentActivityDetector.detect_agent_activity() returns a dict
+            activity_data = activity_detector.detect_agent_activity(agent_id)
+            
+            # FIX: Convert dict response to an object-like summary for compatibility
+            class ActivitySummary:
+                def __init__(self, data):
+                    self.is_active = data.get("activity_count", 0) > 0
+                    latest = data.get("latest_activity")
+                    if latest:
+                        self.inactivity_duration_minutes = (_time.time() - latest) / 60
+                        self.last_activity = _datetime.fromtimestamp(latest)
+                    else:
+                        self.inactivity_duration_minutes = float('inf')
+                        self.last_activity = None
+                    self.activity_sources = data.get("activity_sources", [])
+            
+            summary = ActivitySummary(activity_data)
 
             # If agent is inactive for threshold duration
             if not summary.is_active or summary.inactivity_duration_minutes >= inactivity_threshold_minutes:

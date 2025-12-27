@@ -1,5 +1,5 @@
 ---
-description: Comprehensive messaging system standards with error handling and optimization guidelines
+description: Messaging system standards and protocols
 globs:
   - "src/services/messaging*.py"
   - "src/services/models/messaging_models.py"
@@ -118,108 +118,8 @@ Agent-1 → Agent-2 → Agent-3 → Agent-5 → Agent-6 → Agent-7 → Agent-8 
 4. **Content Delivery** → Paste from clipboard or type character-by-character
 5. **Execution** → Press enter to finalize message delivery
 
-## **🚨 SYSTEM LIMITATIONS & REQUIRED FIXES**
+## **📋 Related Rules**
 
-### **Timing Rigidities** (MUST BE ADDRESSED):
-- ❌ Fixed delays not adaptive to host performance
-- ❌ Clipboard propagation is assumed constant, which may fail
-- ❌ No system performance detection or dynamic adjustment
-
-### **Error Handling Gaps** (CRITICAL):
-- ❌ Failures silently ignored with no visibility
-- ❌ No retry mechanisms for failed deliveries
-- ❌ Missing pre-flight validation (PyAutoGUI availability, coordinates)
-
-### **Flag Logic Weaknesses** (MUST FIX):
-- ❌ `--bulk` and `--agent` conflict unchecked
-- ❌ `--high-priority` doesn't consistently override `--priority`
-- ❌ Default values differ between CLI and core library
-
-### **Sequential Bottlenecks** (PERFORMANCE):
-- ❌ No concurrency for parallel delivery
-- ❌ No conditional ordering based on urgency or agent availability
-- ❌ Linear processing creates unnecessary delays
-
-## **💡 REQUIRED ENHANCEMENTS**
-
-### **1. Adaptive Timing Engine** (IMPLEMENT FIRST):
-```python
-def measure_system_speed():
-    """Benchmarks typing/paste/GUI delay dynamically"""
-    return calibrated_delay
-
-# Use: Replace hardcoded 1.0s delays with adaptive timing
-```
-
-### **2. Resilient Error Handling** (CRITICAL):
-```python
-def send_with_retry(msg, max_retries=3, base_delay=1.0):
-    for attempt in range(max_retries):
-        if send_message(msg):
-            return True
-        time.sleep(base_delay * (2 ** attempt))
-    return False
-```
-
-### **3. Comprehensive Flag Validation** (BLOCKING):
-```python
-def validate_flags(args):
-    if args.bulk and args.agent:
-        raise ValueError("Cannot use --bulk with --agent")
-    if args.high_priority:
-        args.priority = "urgent"  # Force override
-```
-
-### **4. Intelligent Agent Ordering** (PERFORMANCE):
-- **URGENT** → Captain Agent-4 first for crisis response
-- **NORMAL** → Default sequence maintained
-- **Customizable** → Allow override for special operations
-
-### **5. Parallelized Delivery** (SCALING):
-```python
-async def send_parallel(messages, concurrency_limit=3):
-    semaphore = asyncio.Semaphore(concurrency_limit)
-    async def _send(msg):
-        async with semaphore:
-            return await send_message_async(msg)
-    return await asyncio.gather(*[_send(m) for m in messages])
-```
-
-### **6. Monitoring & Logging** (OBSERVABILITY):
-- ✅ Add verbose logging for each step
-- ✅ Persist retry attempts and outcomes
-- ✅ Expose metrics (delivery time, success rate)
-- ✅ Track failure patterns for optimization
-
-## **🛡️ ENFORCEMENT RULES**
-
-### **Prohibited Patterns**:
-- ❌ Hardcoded timing delays (use adaptive system)
-- ❌ Silent error handling (always log and retry)
-- ❌ Missing flag validation (validate all combinations)
-- ❌ Sequential-only delivery (implement parallel options)
-
-### **Required Patterns**:
-- ✅ Pre-flight checks before operations
-- ✅ Comprehensive error handling with retries
-- ✅ Flag combination validation
-- ✅ Performance monitoring and logging
-- ✅ Agent-4 last in all bulk operations
-
-### **Code Review Requirements**:
-- ✅ All new messaging code must include error handling
-- ✅ Timing must be configurable/adaptive, not hardcoded
-- ✅ Flag validation must prevent invalid combinations
-- ✅ Parallel delivery options must be available
-- ✅ Comprehensive logging for debugging and monitoring
-
-## **🧭 MESSAGING SSOT & AGENT COMMUNICATION CONDUCT**
-
-The **unified messaging system** is the single source of truth (SSOT) for how agents and tools communicate.
-
-- ✅ All A2A and A2C messages MUST use the unified messaging system:
-  - Use `python -m src.services.messaging_cli ...` **or**
-  - Call `src.core.messaging_core.send_message` together with the helpers in `src/core/messaging_templates.py` and `src/core/messaging_template_texts.py`.
-- ✅ Treat the **message templates** in `src/core/messaging_template_texts.py` (especially the `MessageCategory.A2A` and `MessageCategory.A2C` blocks) as the **authoritative definition** of how messages are structured and how recipients should respond.
-- ✅ When a message includes a “How to respond using the Unified Messaging CLI” snippet, agents SHOULD copy, fill in, and run that command instead of inventing a new pattern.
-- ❌ New tooling MUST NOT introduce ad-hoc `send_*` messaging scripts that manually construct headers or `[A2A]`/`[CAPTAIN]` prefixes. New automation MUST be built on top of the unified messaging CLI or `send_message` + standard templates.
+- Messaging contracts: `.cursor/rules/messaging-contracts.mdc`
+- CLI flag validation: `.cursor/rules/messaging/cli-flags.mdc`
+- PyAutoGUI operations: `.cursor/rules/messaging/pyautogui-operations.mdc`

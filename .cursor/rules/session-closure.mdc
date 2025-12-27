@@ -1,0 +1,263 @@
+---
+description: A+++ Session Closure Standard - Required format for all session closures
+globs:
+  - "**/session_closures/**/*.md"
+  - "**/passdown.json"
+  - "**/*closure*.md"
+alwaysApply: true
+---
+
+# A+++ Session Closure Standard
+
+## Purpose
+
+Session closures must be **internally closed, publicly explainable, and handoff-ready**. This standard ensures:
+- Zero context loss between sessions
+- Build-in-public readiness
+- Queryable truth in Swarm Brain
+- No work leakage across sessions
+
+## Required Format
+
+Every session closure MUST follow this exact structure:
+
+```markdown
+- **Task:** [Brief task description]
+- **Project:** [Project/repo name]
+
+- **Actions Taken:**
+  - [Bullet 1: factual action]
+  - [Bullet 2: factual action]
+
+- **Artifacts Created / Updated:**
+  - [Exact file path 1]
+  - [Exact file path 2]
+
+- **Verification:**
+  - [Proof/evidence bullet 1]
+  - [Proof/evidence bullet 2]
+
+- **Public Build Signal:**
+  [Single line, human-readable description of what changed]
+
+- **Git Commit:**
+  [Commit hash if committed, or "Not committed" if not]
+
+- **Git Push:**
+  [Push status: "Pushed to [branch]" or "Not pushed"]
+
+- **Website Blogging:**
+  [Blog post URL if published, or "Not published" if not applicable]
+
+- **Status:**
+  ✅ Ready
+  OR
+  🟡 Blocked (specific reason)
+```
+
+## Required Fields
+
+### Task
+- Brief, specific description of what was accomplished
+- Must be factual, not speculative
+
+### Project
+- Project or repository name
+- Enables proper categorization
+
+### Actions Taken
+- Bullet list of factual actions
+- No narration, no summaries
+- Each bullet = one completed action
+
+### Artifacts Created / Updated
+- **Exact file paths only**
+- No descriptions, no explanations
+- Must be verifiable paths
+
+### Verification
+- **Proof that work was completed**
+- Evidence bullets (e.g., "Deployed 16 files", "Tested endpoint returns 200")
+- Must show actual verification, not assumptions
+
+### Public Build Signal
+- **ONE sentence only**
+- Human-readable description
+- Suitable for Discord, changelogs, build feeds
+- Describes what changed, not what will change
+
+### Git Commit
+- Commit hash if work was committed to git
+- "Not committed" if work is not yet committed
+
+### Git Push
+- Push status: "Pushed to [branch]" if changes were pushed
+- "Not pushed" if changes are committed but not pushed
+
+### Website Blogging
+- Blog post URL if a blog post was published about this work
+- "Not published" if blogging is not applicable to this work
+
+### Status
+- ✅ Ready (work complete, verified)
+- 🟡 Blocked (specific blocker reason)
+
+## Forbidden Elements
+
+### ❌ "Next Steps"
+**Never include:**
+- "Next steps"
+- "TODO"
+- "Future work"
+- "Remaining tasks"
+- Any future-facing language
+
+**Why:** Closure = end of time horizon. Future work belongs in passdown.json or new task creation.
+
+### ❌ Narration / Summaries
+**Never include:**
+- Long narrative summaries
+- "We did X, then Y, then Z" storytelling
+- Background context (belongs in devlog)
+
+**Why:** Closure is a signal, not documentation. Documentation belongs in devlogs.
+
+### ❌ Speculation
+**Never include:**
+- "Should work"
+- "May need"
+- "Could be"
+- "Might require"
+
+**Why:** Closure must be deterministic. If uncertain, status = 🟡 Blocked.
+
+### ❌ Progress Reports
+**Never include:**
+- "Made progress on"
+- "Started working on"
+- "Partially completed"
+
+**Why:** Closure = completion. Progress reports belong in status.json.
+
+## Correct vs Incorrect Examples
+
+### ✅ CORRECT
+
+```markdown
+- **Task:** Trading Dashboard Focus + Market Data Infrastructure
+- **Project:** TradingRobotPlug / WordPress Theme
+
+- **Actions Taken:**
+  - Restricted dashboard symbols to TSLA, QQQ, SPY, NVDA
+  - Implemented 5-minute market data collection via WP-Cron
+  - Created persistent storage table wp_trp_stock_data
+  - Deployed 16 files to production via SFTP
+
+- **Artifacts Created / Updated:**
+  - inc/dashboard-api.php
+  - inc/charts-api.php
+  - wp_trp_stock_data (database table)
+  - REST: /wp-json/tradingrobotplug/v1/stock-data
+
+- **Verification:**
+  - ✅ Deployed 16 files (all successful, 0 failures)
+  - ✅ Database table creation function exists
+  - ✅ Cron schedule registered
+  - ✅ REST endpoints registered
+
+- **Public Build Signal:**
+  Trading dashboard now tracks TSLA, QQQ, SPY, and NVDA with live 5-minute market data accessible to all trading plugins via REST API.
+
+- **Git Commit:**
+  abc123def456
+
+- **Git Push:**
+  Pushed to main
+
+- **Website Blogging:**
+  Not published
+
+- **Status:**
+  ✅ Ready
+```
+
+### ❌ INCORRECT
+
+```markdown
+## Summary
+
+We worked on the trading dashboard and made good progress. We updated the symbols to focus on TSLA, QQQ, SPY, and NVDA. We also implemented data collection and created a database table.
+
+## Next Steps
+- Test the cron job
+- Integrate with trading plugins
+- Monitor data collection
+
+## Status
+In progress
+```
+
+**Violations:**
+- ❌ Narrative summary (forbidden)
+- ❌ "Next Steps" section (forbidden)
+- ❌ "Made progress" (progress report, not closure)
+- ❌ No verification block (required)
+- ❌ No public build signal (required)
+- ❌ "In progress" status (closure = complete)
+
+## Integration Points
+
+### Workspace Rules
+- This rule auto-applies to all agents
+- Cursor exposes rules automatically
+- Agents cannot claim ignorance
+
+### Canonical Prompt
+- `src/services/onboarding/soft/canonical_closure_prompt.py`
+- Must match this standard exactly
+- No contradictions allowed
+
+### Validation Tool
+- `tools/validate_closure_format.py`
+- Validates closures before acceptance
+- Catches violations automatically
+
+### Template
+- `templates/session-closure-template.md`
+- Copy and fill in
+- Reduces errors
+
+## Enforcement
+
+### Pre-Commit
+- Validation tool runs automatically
+- Blocks commits with invalid closures
+
+### CI/CD
+- Validates closure format in pipelines
+- Fails build on violations
+
+### Onboarding
+- New agents learn standard immediately
+- References in onboarding docs
+
+## Why This Matters
+
+**Without A++ closure:**
+- Context loss between sessions
+- Unclear what's actually done
+- "Next steps" leak across sessions
+- Build-in-public feeds are noisy
+
+**With A++ closure:**
+- Zero context loss
+- Deterministic state
+- Clean build feeds
+- Queryable truth
+
+## References
+
+- Canonical Prompt: `src/services/onboarding/soft/canonical_closure_prompt.py`
+- Validation Tool: `tools/validate_closure_format.py`
+- Template: `templates/session-closure-template.md`
+- Example: `agent_workspaces/Agent-4/session_closures/2025-12-26_trading_dashboard_closure.md`

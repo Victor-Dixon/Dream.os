@@ -157,6 +157,40 @@ class MessageQueue(IMessageQueue):
 
         return self.persistence.atomic_operation(_enqueue_operation)
 
+    def batch_enqueue(
+        self,
+        messages: List[Any],
+        delivery_callback: Optional[Callable[[Any], bool]] = None,
+    ) -> List[str]:
+        """Enqueue multiple messages in a single atomic operation to prevent race conditions.
+        
+        Args:
+            messages: List of messages to queue
+            delivery_callback: Optional callback for delivery attempts
+            
+        Returns:
+            List of queue IDs for tracking
+        """
+        queue_ids = []
+        entries = []
+        
+        for message in messages:
+            queue_id = str(uuid.uuid4())
+            priority_score = self._calculate_priority_score(message, datetime.now())
+            entry = self._create_queue_entry(queue_id, message, priority_score, delivery_callback)
+            queue_ids.append(queue_id)
+            entries.append(entry)
+        
+        def _batch_enqueue_operation():
+            existing_entries = self.persistence.load_entries()
+            self._validate_queue_size(existing_entries)
+            existing_entries.extend(entries)
+            self.persistence.save_entries(existing_entries)
+            self._log_info(f"Batch enqueued {len(entries)} messages")
+            return queue_ids
+        
+        return self.persistence.atomic_operation(_batch_enqueue_operation)
+
     def _create_queue_entry(
         self, queue_id: str, message: Any, priority_score: float,
         delivery_callback: Optional[Callable[[Any], bool]]

@@ -6,6 +6,9 @@ Setup P0 Metrics Collection
 Sets up automated metrics collection for Week 1 P0 fixes.
 Tracks conversion rates, CTA clicks, form submissions, analytics events.
 
+SSOT Domain: analytics
+SSOT Owner: Agent-5 (Business Intelligence Specialist)
+
 V2 Compliance | Author: Agent-5 | Date: 2025-12-26
 """
 

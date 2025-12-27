@@ -149,15 +149,16 @@ class HardOnboardingSteps:
             return False
     
     def step_5_send_onboarding_message(
-        self, agent_id: str, onboarding_message: Optional[str] = None, role: Optional[str] = None
+        self, agent_id: str, onboarding_message: Optional[str] = None, role: Optional[str] = None, include_jet_fuel: bool = False
     ) -> bool:
         """
-        Step 5: Send onboarding message via Enter using S2A HARD_ONBOARDING template.
+        Step 5: Send onboarding message via Enter using unified S2A ONBOARDING template.
         
         Args:
             agent_id: Target agent ID
             onboarding_message: Custom mission/instructions (if None, uses default)
             role: Agent role (for agent-specific instructions)
+            include_jet_fuel: Optional flag to include Jet Fuel footer (default: False)
             
         Returns:
             True if successful
@@ -174,7 +175,7 @@ class HardOnboardingSteps:
             from .default_message import get_default_hard_onboarding_message
             from ..agent_instructions import get_agent_specific_instructions
             
-            logger.info(f"📝 Step 5: Sending S2A HARD_ONBOARDING message to {agent_id}")
+            logger.info(f"📝 Step 5: Sending S2A ONBOARDING (HARD) message to {agent_id}")
             
             # Use default message if none provided, otherwise use provided message as actions
             if onboarding_message and onboarding_message.strip():
@@ -194,22 +195,10 @@ class HardOnboardingSteps:
                 category=MessageCategory.S2A,
             )
             
-            # Render using S2A HARD_ONBOARDING template
-            full_message = render_message(
-                msg,
-                template_key="HARD_ONBOARDING",
-                context=context,
-                actions=actions,
-                fallback="If blocked, escalate to Captain.",
-            )
-            
-            # Get agent-specific instructions and append them
-            agent_instructions = get_agent_specific_instructions(agent_id)
-            if agent_instructions:
-                full_message += agent_instructions
-            
-            # Add Jet Fuel footer for hard onboarding
-            jet_fuel_footer = """
+            # Build optional Jet Fuel footer
+            footer = ""
+            if include_jet_fuel:
+                footer = """
 
 ---
 
@@ -220,7 +209,22 @@ This message is your fuel - ACT NOW!
 - ACT, CREATE, MIGRATE, IMPROVE
 
 WE. ARE. SWARM. AUTONOMOUS. POWERFUL. 🐝⚡🔥🚀"""
-            full_message += jet_fuel_footer
+            
+            # Render using unified S2A ONBOARDING template with HARD mode
+            full_message = render_message(
+                msg,
+                template_key="ONBOARDING",
+                context=context,
+                actions=actions,
+                fallback="If blocked: 1 blocker + fix + owner.",
+                mode="HARD",
+                footer=footer,
+            )
+            
+            # Get agent-specific instructions and append them
+            agent_instructions = get_agent_specific_instructions(agent_id)
+            if agent_instructions:
+                full_message += agent_instructions
             
             # Small delay before pasting
             time.sleep(0.8)
@@ -233,7 +237,7 @@ WE. ARE. SWARM. AUTONOMOUS. POWERFUL. 🐝⚡🔥🚀"""
             if not self.ops.press_key("enter", wait=0.8):
                 return False
             
-            logger.info(f"✅ S2A HARD_ONBOARDING message sent to {agent_id}")
+            logger.info(f"✅ S2A ONBOARDING (HARD) message sent to {agent_id}")
             return True
         except Exception as e:
             logger.error(f"❌ Failed to send onboarding message: {e}")

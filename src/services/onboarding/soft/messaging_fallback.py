@@ -18,21 +18,9 @@ class OnboardingMessagingFallback:
     """Fallback messaging for onboarding when PyAutoGUI unavailable."""
     
     def _get_default_cleanup_message(self) -> str:
-        """Get default cleanup/passdown message."""
-        return """🎯 SESSION CLEANUP REQUIRED!
-
-Before starting your next session, please complete these tasks:
-
-1. Create/Update passdown.json
-2. Create Final Devlog
-3. Post Devlog to Discord
-4. Update Swarm Brain Database
-5. Create a Tool You Wished You Had
-
-Press Enter when complete to proceed to next session onboarding!
-
-📝 Remember: Quality documentation ensures civilization-building!
-🐝 WE. ARE. SWARM. ⚡"""
+        """Get default cleanup/passdown message (A++ canonical closure prompt)."""
+        from .cleanup_defaults import DEFAULT_SESSION_CLOSURE_PROMPT
+        return DEFAULT_SESSION_CLOSURE_PROMPT
     
     def send_cleanup_via_messaging(self, agent_id: str, custom_message: Optional[str] = None) -> bool:
         """
@@ -89,7 +77,7 @@ Press Enter when complete to proceed to next session onboarding!
     
     def send_onboarding_via_messaging(self, agent_id: str, message: Optional[str] = None) -> bool:
         """
-        Send onboarding via messaging system (S2A SOFT_ONBOARDING template, no-ack).
+        Send onboarding via messaging system (unified S2A ONBOARDING template with SOFT mode, no-ack).
         
         Args:
             agent_id: Target agent ID
@@ -111,8 +99,9 @@ Press Enter when complete to proceed to next session onboarding!
             from .default_message import get_default_soft_onboarding_message
             
             # Use default message if none provided, otherwise use provided message as actions
+            # Note: messaging_fallback doesn't support context_override (PyAutoGUI path only)
             if message and message.strip():
-                context = "🚀 SOFT ONBOARD - Agent activation initiated."
+                context = "## 🛰️ S2A ACTIVATION DIRECTIVE — CUSTOM\n" f"Agent: {agent_id}\n" "Mode: Autonomous Execution\n"
                 actions = message
             else:
                 context, actions = get_default_soft_onboarding_message(agent_id)
@@ -127,12 +116,15 @@ Press Enter when complete to proceed to next session onboarding!
                 category=MessageCategory.S2A,
             )
             
+            # Render using unified S2A ONBOARDING template with SOFT mode
             rendered = render_message(
                 msg,
-                template_key="SOFT_ONBOARDING",
+                template_key="ONBOARDING",
                 context=context,
                 actions=actions,
-                fallback="If blocked, escalate to Captain.",
+                fallback="If blocked: 1 blocker + fix + owner.",
+                mode="SOFT",
+                footer="",
             )
             
             return MessageCoordinator.send_to_agent(

@@ -118,17 +118,25 @@ def process_multi_agent_request(
     logger = logging.getLogger(__name__)
 
     if queue_repository:
-        metadata = build_multi_agent_metadata(stalled, collector_id, request_id)
-        priority_value = priority.value if hasattr(priority, "value") else str(priority)
-        formatted_message = _format_multi_agent_request_message(
-            message, collector_id, request_id, len(recipients), timeout_seconds
-        )
-        queue_ids = send_multi_agent_messages(
-            queue_repository, sender, recipients, formatted_message, priority_value, metadata
-        )
-        logger.info(f"✅ Multi-agent request {collector_id} queued for {len(recipients)} agents")
-        return collector_id
+        try:
+            metadata = build_multi_agent_metadata(stalled, collector_id, request_id)
+            priority_value = priority.value if hasattr(priority, "value") else str(priority)
+            formatted_message = _format_multi_agent_request_message(
+                message, collector_id, request_id, len(recipients), timeout_seconds
+            )
+            queue_ids = send_multi_agent_messages(
+                queue_repository, sender, recipients, formatted_message, priority_value, metadata
+            )
+            logger.info(f"✅ Multi-agent request {collector_id} queued for {len(recipients)} agents")
+            return collector_id
+        except Exception as e:
+            logger.warning(
+                f"⚠️ Failed to enqueue multi-agent request {collector_id}: {e}. "
+                "Multi-agent requests require queue processor - request cannot be processed.")
+            return ""
     else:
-        logger.error("Queue repository unavailable for multi-agent request")
+        logger.warning(
+            f"⚠️ Queue repository unavailable for multi-agent request {collector_id}. "
+            "Multi-agent requests require queue processor - request cannot be processed.")
         return ""
 

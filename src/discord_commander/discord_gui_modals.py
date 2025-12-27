@@ -494,15 +494,10 @@ class HardOnboardModal(discord.ui.Modal):
     async def on_submit(self, interaction: discord.Interaction):
         """Handle modal submission."""
         try:
-            import subprocess
             from pathlib import Path
-            from src.core.config.timeout_constants import TimeoutConstants
+            from src.services.hard_onboarding_service import hard_onboard_agent
 
             agent_ids = self.agent_input.value.strip()
-
-            # Get project root
-            project_root = Path(__file__).parent.parent.parent
-            cli_path = project_root / 'tools' / 'captain_hard_onboard_agent.py'
 
             # Parse agent list
             if not agent_ids or agent_ids.lower() == "all":
@@ -522,27 +517,48 @@ class HardOnboardModal(discord.ui.Modal):
             # Send initial response
             await interaction.response.defer(ephemeral=True)
 
+            # Get project root for loading onboarding messages
+            project_root = Path(__file__).parent.parent.parent
+
             # Execute hard onboarding for each agent
             successful = []
             failed = []
 
             for agent_id in agent_list:
                 try:
-                    result = subprocess.run(
-                        ['python', str(cli_path), agent_id],
-                        capture_output=True,
-                        text=True,
-                        timeout=TimeoutConstants.HTTP_MEDIUM,
-                        cwd=str(project_root)
+                    # Load onboarding message from agent's workspace
+                    onboarding_file = project_root / "agent_workspaces" / agent_id / "HARD_ONBOARDING_MESSAGE.md"
+
+                    if onboarding_file.exists():
+                        onboarding_message = onboarding_file.read_text(encoding="utf-8")
+                    else:
+                        # Use default onboarding message if file doesn't exist
+                        onboarding_message = f"""🚨 HARD ONBOARD - {agent_id}
+
+**Status**: RESET & ACTIVATE
+**Protocol**: Complete session reset
+
+**YOUR MISSION**: Resume autonomous operations immediately.
+
+**NEXT ACTIONS**:
+1. Check your inbox for assignments
+2. Update your status.json
+3. Resume autonomous execution
+4. Post devlog when work complete
+
+**WE. ARE. SWARM. AUTONOMOUS. POWERFUL. 🐝⚡🔥🚀**"""
+
+                    # Execute hard onboarding
+                    success = hard_onboard_agent(
+                        agent_id=agent_id,
+                        onboarding_message=onboarding_message,
+                        role=None
                     )
 
-                    if result.returncode == 0:
+                    if success:
                         successful.append(agent_id)
                     else:
-                        error_msg = result.stderr[:200] if result.stderr else "Unknown error"
-                        failed.append((agent_id, error_msg))
-                except subprocess.TimeoutExpired:
-                    failed.append((agent_id, "Timeout after 60 seconds"))
+                        failed.append((agent_id, "Hard onboarding service returned False"))
                 except Exception as e:
                     failed.append((agent_id, str(e)[:200]))
 

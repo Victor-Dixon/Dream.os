@@ -432,7 +432,9 @@ class ServiceManager:
                                 expected = [expected]
 
                             if any(script in ' '.join(cmdline) for script in expected):
-                                return True
+                                # Additional check: verify process is responsive (not zombie/hanging)
+                                if process.status() in ['running', 'sleeping']:
+                                    return True
                     except (psutil.NoSuchProcess, psutil.AccessDenied):
                         pass
 
@@ -445,6 +447,36 @@ class ServiceManager:
                     pid_file.unlink()
                 except:
                     pass
+
+        # Also check for processes without PID files (orphaned processes)
+        # This handles cases where processes were started outside of main.py
+        try:
+            for proc in psutil.process_iter(['pid', 'name', 'cmdline', 'status']):
+                try:
+                    if proc.info['name'] and proc.info['name'].lower() in ['python.exe', 'python3.exe', 'python']:
+                        if proc.info['cmdline']:
+                            cmdline = ' '.join(proc.info['cmdline'])
+                            
+                            # Define expected scripts/modules for each service
+                            expected_scripts = {
+                                'message_queue': ['start_message_queue_processor.py', 'message_queue_processor'],
+                                'twitch': ['START_CHAT_BOT_NOW.py', 'twitch_eventsub_server.py'],
+                                'discord': ['bot_runner', 'unified_discord_bot.py', 'discord_commander']
+                            }
+                            
+                            expected = expected_scripts.get(service_name, [])
+                            if isinstance(expected, str):
+                                expected = [expected]
+                            
+                            # Only match if it's the exact module/script we expect
+                            if any(script in cmdline for script in expected):
+                                # Verify it's a running process, not zombie/hanging
+                                if proc.info['status'] in ['running', 'sleeping']:
+                                    return True
+                except (psutil.NoSuchProcess, psutil.AccessDenied):
+                    continue
+        except Exception:
+            pass
 
         return False
 

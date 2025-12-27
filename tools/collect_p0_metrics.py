@@ -5,6 +5,9 @@ P0 Metrics Collection Script
 
 Automated metrics collection for Week 1 P0 fixes.
 Run daily to collect metrics from GA4/Pixel.
+
+SSOT Domain: analytics
+SSOT Owner: Agent-5 (Business Intelligence Specialist)
 """
 
 import json

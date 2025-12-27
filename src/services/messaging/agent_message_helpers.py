@@ -131,10 +131,23 @@ def send_message_with_fallback(
     message_type: Any,
     metadata: Dict[str, Any],
 ) -> Any:
-    """Send message via queue repository or fallback, return result."""
+    """
+    Send message via queue repository or fallback, return result.
+    
+    If queue_repository is None, falls back to direct send (bypassing queue).
+    This handles cases where queue processor isn't started or queue initialization failed.
+    """
     if queue_repository:
-        return send_via_queue(queue_repository, sender_final, agent, formatted_message, priority, message_type, metadata)
-    logger.warning("⚠️ Queue repository unavailable, falling back to direct send")
+        try:
+            return send_via_queue(queue_repository, sender_final, agent, formatted_message, priority, message_type, metadata)
+        except Exception as e:
+            logger.warning(
+                f"⚠️ Failed to enqueue message for {agent}: {e}. "
+                "Falling back to direct send.")
+            return send_via_fallback(sender_final, agent, formatted_message, priority, message_type, metadata)
+    logger.info(
+        f"📤 Queue repository unavailable - sending directly to {agent} "
+        "(queue processor not required for direct delivery)")
     return send_via_fallback(sender_final, agent, formatted_message, priority, message_type, metadata)
 
 

@@ -94,7 +94,7 @@ class SoftOnboardingSteps:
         
         Args:
             agent_id: Target agent ID
-            custom_cleanup_message: Optional custom cleanup message
+            custom_cleanup_message: Optional custom cleanup message (defaults to A++ session closure prompt)
             
         Returns:
             True if successful
@@ -104,7 +104,12 @@ class SoftOnboardingSteps:
             return self.messaging.send_cleanup_via_messaging(agent_id, custom_cleanup_message)
         
         try:
-            cleanup_message = custom_cleanup_message or self.messaging._get_default_cleanup_message()
+            from .cleanup_defaults import DEFAULT_SESSION_CLOSURE_PROMPT
+            cleanup_message = (
+                custom_cleanup_message.strip() 
+                if custom_cleanup_message and custom_cleanup_message.strip() 
+                else DEFAULT_SESSION_CLOSURE_PROMPT
+            )
             logger.info(f"📝 Step 3: Sending cleanup prompt to {agent_id}")
             
             # Clear input first
@@ -180,13 +185,19 @@ class SoftOnboardingSteps:
             logger.error(f"❌ Failed to navigate to onboarding: {e}")
             return False
     
-    def step_6_paste_onboarding_message(self, agent_id: str, message: Optional[str] = None) -> bool:
+    def step_6_paste_onboarding_message(
+        self,
+        agent_id: str,
+        message: Optional[str] = None,
+        context_override: Optional[str] = None,
+    ) -> bool:
         """
-        Step 6: Paste and send onboarding message using S2A SOFT_ONBOARDING template.
+        Step 6: Paste and send onboarding message using unified S2A ONBOARDING template.
         
         Args:
             agent_id: Target agent ID
             message: Onboarding message (if provided, used as actions; otherwise uses default)
+            context_override: Optional custom context (if provided, used instead of default context)
             
         Returns:
             True if successful
@@ -196,6 +207,7 @@ class SoftOnboardingSteps:
             return self.messaging.send_onboarding_via_messaging(agent_id, message)
         
         try:
+            from pathlib import Path
             from src.core.messaging_models import (
                 MessageCategory,
                 UnifiedMessage,
@@ -208,10 +220,21 @@ class SoftOnboardingSteps:
             
             # Use default message if none provided, otherwise use provided message as actions
             if message and message.strip():
-                context = "🚀 SOFT ONBOARD - Agent activation initiated."
                 actions = message
+                context = (
+                    context_override.strip()
+                    if context_override and context_override.strip()
+                    else (
+                        "## 🛰️ S2A ACTIVATION DIRECTIVE — CUSTOM\n"
+                        f"Agent: {agent_id}\n"
+                        "Mode: Autonomous Execution\n"
+                    )
+                )
             else:
                 context, actions = get_default_soft_onboarding_message(agent_id)
+                # Override context if provided
+                if context_override and context_override.strip():
+                    context = context_override.strip()
             
             # Create S2A message with proper category and tags
             msg = UnifiedMessage(
@@ -224,16 +247,36 @@ class SoftOnboardingSteps:
                 category=MessageCategory.S2A,
             )
             
-            # Render using S2A SOFT_ONBOARDING template
+            # Render using unified S2A ONBOARDING template with SOFT mode
             rendered = render_message(
                 msg,
-                template_key="SOFT_ONBOARDING",
+                template_key="ONBOARDING",
                 context=context,
                 actions=actions,
-                fallback="If blocked, escalate to Captain.",
+                fallback="If blocked: 1 blocker + fix + owner.",
+                mode="SOFT",
+                footer="",
             )
             
-            logger.info(f"📝 Step 6: Pasting S2A SOFT_ONBOARDING message for {agent_id}")
+            # Length guard: Save full message to artifact if too long
+            MAX_CHARS = 8000  # Conservative for chat UI stability; tune as needed
+            if len(rendered) > MAX_CHARS:
+                # Save full content (artifact) and send truncated + pointer
+                out_dir = Path(f"agent_workspaces/{agent_id}/inbox")
+                out_dir.mkdir(parents=True, exist_ok=True)
+                full_path = out_dir / "soft_onboarding_message_full.txt"
+                full_path.write_text(rendered, encoding="utf-8")
+                
+                truncated = (
+                    rendered[:MAX_CHARS - 300]
+                    + "\n\n[TRUNCATED]\n"
+                    + f"Full message saved: {full_path.as_posix()}\n"
+                    + "Action: open file and follow instructions.\n"
+                )
+                rendered = truncated
+                logger.info(f"⚠️  Message truncated ({len(rendered)} chars), full content saved to {full_path}")
+            
+            logger.info(f"📝 Step 6: Pasting S2A ONBOARDING (SOFT) message for {agent_id}")
             
             # Clear input first
             if not self.ops.clear_input(wait=0.3):
@@ -247,7 +290,7 @@ class SoftOnboardingSteps:
             if not self.ops.press_key("enter", wait=0.8):
                 return False
             
-            logger.info(f"✅ S2A SOFT_ONBOARDING message sent to {agent_id}")
+            logger.info(f"✅ S2A ONBOARDING (SOFT) message sent to {agent_id}")
             return True
         except Exception as e:
             logger.error(f"❌ Failed to paste onboarding message: {e}")

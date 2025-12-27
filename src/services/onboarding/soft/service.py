@@ -44,6 +44,7 @@ class SoftOnboardingService(BaseService):
         onboarding_message: Optional[str] = None,
         role: Optional[str] = None,
         custom_cleanup_message: Optional[str] = None,
+        onboarding_context: Optional[str] = None,
     ) -> bool:
         """
         Execute full soft onboarding protocol (6 steps with animations).
@@ -53,9 +54,10 @@ class SoftOnboardingService(BaseService):
         
         Args:
             agent_id: Target agent ID
-            onboarding_message: Onboarding message (if None, uses default S2A SOFT_ONBOARDING message)
+            onboarding_message: Onboarding message (if None, uses default S2A ONBOARDING message)
             role: Optional role assignment
-            custom_cleanup_message: Optional custom cleanup message
+            custom_cleanup_message: Optional custom cleanup message (defaults to A++ session closure prompt)
+            onboarding_context: Optional custom context for onboarding message (if provided, used instead of default context)
             
         Returns:
             True if all steps completed successfully
@@ -89,7 +91,7 @@ class SoftOnboardingService(BaseService):
                 return False
             
             # Step 6: Paste onboarding message
-            if not self.steps.step_6_paste_onboarding_message(agent_id, onboarding_message):
+            if not self.steps.step_6_paste_onboarding_message(agent_id, onboarding_message, onboarding_context):
                 logger.error("❌ Step 6 failed: Paste onboarding message")
                 return False
             
@@ -169,9 +171,12 @@ def soft_onboard_multiple_agents(
             time.sleep(2.0)
         
         # Generate cycle accomplishments report after onboarding all agents
+        # PROTOCOL: CYCLE_ACCOMPLISHMENTS_REPORT_GENERATION
+        # PROTOCOL_VERSION: 1.0
+        # PROTOCOL_SCRIPT: tools/generate_cycle_accomplishments_report.py
         if generate_cycle_report:
             try:
-                logger.info("📊 Generating cycle accomplishments report...")
+                logger.info("📊 Generating cycle accomplishments report (PROTOCOL: CYCLE_ACCOMPLISHMENTS_REPORT_GENERATION)...")
                 from pathlib import Path
                 import subprocess
                 import sys
@@ -186,16 +191,16 @@ def soft_onboard_multiple_agents(
                         timeout=TimeoutConstants.HTTP_DEFAULT
                     )
                     if result.returncode == 0:
-                        logger.info("✅ Cycle accomplishments report generated")
+                        logger.info("✅ Cycle accomplishments report generated (PROTOCOL: CYCLE_ACCOMPLISHMENTS_REPORT_GENERATION)")
                         for line in result.stdout.split('\n'):
                             if 'Report generated:' in line:
                                 logger.info(f"   {line.strip()}")
                     else:
-                        logger.warning(f"⚠️  Cycle report generation failed: {result.stderr[:200]}")
+                        logger.warning(f"⚠️  Cycle report generation failed (PROTOCOL: CYCLE_ACCOMPLISHMENTS_REPORT_GENERATION): {result.stderr[:200]}")
                 else:
-                    logger.warning(f"⚠️  Cycle report script not found: {report_script}")
+                    logger.warning(f"⚠️  Cycle report script not found (PROTOCOL: CYCLE_ACCOMPLISHMENTS_REPORT_GENERATION): {report_script}")
             except Exception as e:
-                logger.warning(f"⚠️  Failed to generate cycle report: {e}")
+                logger.warning(f"⚠️  Failed to generate cycle report (PROTOCOL: CYCLE_ACCOMPLISHMENTS_REPORT_GENERATION): {e}")
     
     return results
 
@@ -205,6 +210,7 @@ def execute_soft_onboarding(
     onboarding_message: Optional[str] = None,
     role: Optional[str] = None,
     custom_cleanup_message: Optional[str] = None,
+    onboarding_context: Optional[str] = None,
 ) -> bool:
     """
     Execute soft onboarding protocol.
@@ -213,11 +219,12 @@ def execute_soft_onboarding(
         agent_id: Target agent ID
         onboarding_message: Onboarding message (if None, uses default S2A SOFT_ONBOARDING message)
         role: Optional role assignment
-        custom_cleanup_message: Optional custom cleanup message
+        custom_cleanup_message: Optional custom cleanup message (defaults to A++ session closure prompt)
+        onboarding_context: Optional custom context for onboarding message (if provided, used instead of default context)
         
     Returns:
         True if successful
     """
     service = SoftOnboardingService()
-    return service.execute_soft_onboarding(agent_id, onboarding_message, role, custom_cleanup_message)
+    return service.execute_soft_onboarding(agent_id, onboarding_message, role, custom_cleanup_message, onboarding_context)
 
