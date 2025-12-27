@@ -185,10 +185,19 @@ def create_icp_via_rest_api(site_domain: str) -> bool:
         
         post_id = None
         if check_response.status_code == 200:
-            existing = check_response.json()
-            if existing:
-                post_id = existing[0].get('id')
-                print(f"   Found existing ICP (ID: {post_id}), updating...")
+            try:
+                existing = check_response.json()
+                if existing and isinstance(existing, list) and len(existing) > 0:
+                    post_id = existing[0].get('id')
+                    print(f"   Found existing ICP (ID: {post_id}), updating...")
+            except (ValueError, KeyError) as e:
+                # Empty response or invalid JSON - no existing ICP
+                print(f"   No existing ICP found (response: {check_response.status_code})")
+        elif check_response.status_code == 404:
+            # Custom Post Type not registered yet
+            print(f"   ⚠️  Custom Post Type endpoint not found (404)")
+            print(f"   This is normal if Custom Post Type was just deployed")
+            print(f"   Will attempt to create anyway...")
         
         # Prepare post data
         post_data = {
