@@ -9,7 +9,7 @@
 
 ## INBOX
 
-- [ ] **HIGH** (100 pts): [WEB] nextend-facebook-connect - Fix empty index.html file - ⏳ PENDING - Critical plugin directory issue: file exists but is completely empty, making site non-functional. Determine if plugin should be active or archived. If active: populate with proper landing page. If inactive: move to archive. Source: Website discovery scan (TASK_DISCOVERY_PROTOCOL.md WEB lane). Proof: runtime/task_discovery/websites_findings.json. [Agent-7]
+- [x] **HIGH** (100 pts): [WEB] nextend-facebook-connect - Fix empty index.html file - ✅ COMPLETE by Agent-7 (2025-12-27) - Added standard WordPress index.html file ("Silence is golden") to prevent directory listing. Plugin directory is active and functional. File: FreeRideInvestor/plugins/nextend-facebook-connect/index.html. Commit: [websites repo]. [Agent-7 COMPLETE]
 
 - [ ] **MEDIUM** (75 pts): [WEB] ariajet.site - Add SEO metadata - ⏳ PENDING - Site has title tag but missing meta description, reducing search engine visibility and click-through rates. Quick SEO win for improving discoverability. Add meta description (150-160 chars), keywords tag, Open Graph tags for social sharing. Source: Website discovery scan (TASK_DISCOVERY_PROTOCOL.md WEB lane). Proof: runtime/task_discovery/websites_findings.json. [Agent-7]
 
