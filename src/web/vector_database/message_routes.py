@@ -130,7 +130,21 @@ def get_agent_activity():
         from src.core.agent_activity_tracker import get_activity_tracker
         
         tracker = get_activity_tracker()
-        activity = tracker.get_recent_activity(limit=100)
+        
+        # FIX: Use get_all_agent_activity which exists, not get_recent_activity which doesn't
+        all_activity = tracker.get_all_agent_activity()
+        
+        # Transform to expected format
+        activity = []
+        for agent_id, agent_data in all_activity.items():
+            activity.append({
+                "agent_id": agent_id,
+                "status": agent_data.get("status", "inactive"),
+                "timestamp": agent_data.get("last_active"),
+                "last_activity": agent_data.get("last_active"),
+                "action_count": agent_data.get("activity_count", 0),
+                "operation": agent_data.get("operation", "unknown")
+            })
         
         return jsonify({
             "success": True,

@@ -8,6 +8,9 @@ Deploys GA4/Pixel analytics code to remote WordPress sites via:
 2. SFTP (fallback)
 3. Manual instructions (if automated methods unavailable)
 
+SSOT Domain: analytics
+SSOT Owner: Agent-5 (Business Intelligence Specialist)
+
 V2 Compliance | Author: Agent-3 | Date: 2025-12-25
 """
 

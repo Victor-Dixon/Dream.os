@@ -39,6 +39,8 @@ logger = logging.getLogger(__name__)
 # Increased delays to ensure PyAutoGUI routing stabilizes between agents
 INTER_AGENT_DELAY_SUCCESS = 4.5  # Delay after successful delivery (increased from 3.0s)
 INTER_AGENT_DELAY_FAILURE = 6.5  # Delay after failed delivery (increased from 5.0s)
+# Broadcast messages use longer delay to prevent routing race conditions
+INTER_AGENT_DELAY_BROADCAST = 5.0  # Delay for broadcast messages (matches broadcast_helpers.py)
 
 
 class MessageQueueProcessor:
@@ -104,6 +106,12 @@ class MessageQueueProcessor:
                     ok = self._deliver_entry(entry)
                     processed += 1
                     recipient = getattr(entry, 'recipient', 'unknown')
+                    
+                    # Check if this is a broadcast message to use broadcast delay
+                    message = getattr(entry, 'message', {})
+                    message_type = message.get('message_type', '') if isinstance(message, dict) else ''
+                    is_broadcast = message_type == 'broadcast'
+                    delay_seconds = INTER_AGENT_DELAY_BROADCAST if is_broadcast else (INTER_AGENT_DELAY_SUCCESS if ok else INTER_AGENT_DELAY_FAILURE)
 
                     # #region agent log
                     import json
@@ -112,35 +120,36 @@ class MessageQueueProcessor:
                     delay_start = time.time()
                     try:
                         with open(log_path, 'a', encoding='utf-8') as f:
-                            f.write(json.dumps({"sessionId": "debug-session", "runId": "run1", "hypothesisId": "A", "location": "processor.py:107", "message": "Before inter-agent delay", "data": {"recipient": recipient, "success": ok, "delay_seconds": INTER_AGENT_DELAY_SUCCESS if ok else INTER_AGENT_DELAY_FAILURE}, "timestamp": int(time.time() * 1000)}) + "\n")
+                            f.write(json.dumps({"sessionId": "debug-session", "runId": "run1", "hypothesisId": "A", "location": "processor.py:107", "message": "Before inter-agent delay", "data": {"recipient": recipient, "success": ok, "is_broadcast": is_broadcast, "delay_seconds": delay_seconds}, "timestamp": int(time.time() * 1000)}) + "\n")
                     except: pass
                     # #endregion
 
                     if ok:
                         # Extended pause after successful delivery to prevent routing race conditions
-                        time.sleep(INTER_AGENT_DELAY_SUCCESS)
+                        # Use broadcast delay for broadcast messages, otherwise use standard delay
+                        time.sleep(delay_seconds)
                         # #region agent log
                         delay_end = time.time()
                         actual_delay = delay_end - delay_start
                         try:
                             with open(log_path, 'a', encoding='utf-8') as f:
-                                f.write(json.dumps({"sessionId": "debug-session", "runId": "run1", "hypothesisId": "A", "location": "processor.py:121", "message": "After inter-agent delay (success)", "data": {"recipient": recipient, "expected_delay": INTER_AGENT_DELAY_SUCCESS, "actual_delay": round(actual_delay, 2)}, "timestamp": int(time.time() * 1000)}) + "\n")
+                                f.write(json.dumps({"sessionId": "debug-session", "runId": "run1", "hypothesisId": "A", "location": "processor.py:121", "message": "After inter-agent delay (success)", "data": {"recipient": recipient, "is_broadcast": is_broadcast, "expected_delay": delay_seconds, "actual_delay": round(actual_delay, 2)}, "timestamp": int(time.time() * 1000)}) + "\n")
                         except: pass
                         # #endregion
                         logger.debug(
-                            f"✅ Delivery complete for {recipient}, waiting {INTER_AGENT_DELAY_SUCCESS}s before next agent")
+                            f"✅ Delivery complete for {recipient}, waiting {delay_seconds}s before next agent{' (BROADCAST)' if is_broadcast else ''}")
                     else:
-                        time.sleep(INTER_AGENT_DELAY_FAILURE)  # Extended pause after failed delivery
+                        time.sleep(delay_seconds)  # Extended pause after failed delivery
                         # #region agent log
                         delay_end = time.time()
                         actual_delay = delay_end - delay_start
                         try:
                             with open(log_path, 'a', encoding='utf-8') as f:
-                                f.write(json.dumps({"sessionId": "debug-session", "runId": "run1", "hypothesisId": "B", "location": "processor.py:133", "message": "After inter-agent delay (failure)", "data": {"recipient": recipient, "expected_delay": INTER_AGENT_DELAY_FAILURE, "actual_delay": round(actual_delay, 2)}, "timestamp": int(time.time() * 1000)}) + "\n")
+                                f.write(json.dumps({"sessionId": "debug-session", "runId": "run1", "hypothesisId": "B", "location": "processor.py:133", "message": "After inter-agent delay (failure)", "data": {"recipient": recipient, "is_broadcast": is_broadcast, "expected_delay": delay_seconds, "actual_delay": round(actual_delay, 2)}, "timestamp": int(time.time() * 1000)}) + "\n")
                         except: pass
                         # #endregion
                         logger.debug(
-                            f"⚠️ Delivery failed, waiting {INTER_AGENT_DELAY_FAILURE}s for recovery before next agent")
+                            f"⚠️ Delivery failed, waiting {delay_seconds}s for recovery before next agent{' (BROADCAST)' if is_broadcast else ''}")
 
                 if max_messages and processed >= max_messages:
                     break

@@ -38,8 +38,9 @@ from .messaging_template_texts import (
 S2A_KEYS = {
     "CONTROL",
     "SWARM_PULSE",
-    "HARD_ONBOARDING",
-    "SOFT_ONBOARDING",
+    "ONBOARDING",  # Unified onboarding template
+    "HARD_ONBOARDING",  # DEPRECATED: Use ONBOARDING with mode="HARD"
+    "SOFT_ONBOARDING",  # DEPRECATED: Use ONBOARDING with mode="SOFT"
     "PASSDOWN",
     "TELEPHONE_STATUS_GAME",
     "TASK_CYCLE",
@@ -50,7 +51,7 @@ S2A_KEYS = {
 
 # Priority-ordered tag routing: first match wins.
 S2A_TAG_ROUTING = [
-    (UnifiedMessageTag.ONBOARDING, "HARD_ONBOARDING"),  # default onboarding flavor
+    (UnifiedMessageTag.ONBOARDING, "ONBOARDING"),  # unified onboarding template
     (UnifiedMessageTag.WRAPUP, "PASSDOWN"),
     (UnifiedMessageTag.SYSTEM, "CONTROL"),
     (UnifiedMessageTag.COORDINATION, "TASK_CYCLE"),  # system coordination = cycle tasks
@@ -58,7 +59,7 @@ S2A_TAG_ROUTING = [
 
 # MessageType hinting for S2A when tags are missing.
 S2A_TYPE_ROUTING = {
-    UnifiedMessageType.ONBOARDING: "HARD_ONBOARDING",
+    UnifiedMessageType.ONBOARDING: "ONBOARDING",  # unified onboarding template
     UnifiedMessageType.SYSTEM_TO_AGENT: "CONTROL",
     UnifiedMessageType.MULTI_AGENT_REQUEST: "CONTROL",
     UnifiedMessageType.BROADCAST: "CONTROL",
@@ -98,6 +99,10 @@ def format_s2a_message(template_key: str, **kwargs: Any) -> str:
     kwargs.setdefault("context", "")
     kwargs.setdefault("actions", "")
     kwargs.setdefault("fallback", "Escalate to Captain.")
+    # ONBOARDING template requires mode and footer fields
+    if template_key == "ONBOARDING":
+        kwargs.setdefault("mode", "HARD")  # Default to HARD if not specified
+        kwargs.setdefault("footer", "")  # Default to no footer
     return template.format(**kwargs)
 
 

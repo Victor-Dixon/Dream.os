@@ -20,6 +20,15 @@ except ImportError:
     SwarmMemory = None
 
 
+# NON-CANONICAL disclaimer header for Swarm Brain content
+SWARM_BRAIN_DISCLAIMER = """---
+NON-CANONICAL: This content is advisory only and does not constitute enforceable requirements.
+See docs/governance/GOVERNANCE_MAP.md for LAW vs MEMORY distinction.
+---
+
+"""
+
+
 def share_learning(
     agent_id: str, title: str, content: str, tags: Optional[List[str]] = None
 ) -> Dict[str, Any]:
@@ -28,6 +37,10 @@ def share_learning(
         return {"success": False, "error": "Swarm Brain not available"}
 
     try:
+        # Prepend NON-CANONICAL disclaimer if content doesn't already include it
+        if "NON-CANONICAL" not in content:
+            content = SWARM_BRAIN_DISCLAIMER + content
+
         memory = SwarmMemory(agent_id=agent_id)
         entry_id = memory.share_learning(
             title=title,

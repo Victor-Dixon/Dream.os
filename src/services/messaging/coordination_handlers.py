@@ -38,7 +38,12 @@ class MessageCoordinator:
 
     @classmethod
     def _get_queue(cls):
-        """Lazy initialization of queue repository."""
+        """
+        Lazy initialization of queue repository.
+        
+        Returns queue repository if available, None if initialization fails.
+        When None is returned, handlers will fall back to direct send.
+        """
         if cls._queue_repository is None:
             try:
                 from .repositories.queue_repository import QueueRepository
@@ -46,7 +51,10 @@ class MessageCoordinator:
                 logger.info(
                     "✅ MessageCoordinator initialized with queue repository")
             except Exception as e:
-                logger.error(f"⚠️ Failed to initialize queue repository: {e}")
+                logger.warning(
+                    f"⚠️ Failed to initialize queue repository: {e}. "
+                    "Messages will be sent directly (fallback mode). "
+                    "Note: Queue processor must be running for queued delivery.")
                 cls._queue_repository = None
         return cls._queue_repository
 

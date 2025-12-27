@@ -11,6 +11,7 @@ This directory contains Cursor IDE rules that enforce V2 compliance standards an
 - **`messaging.mdc`** - Messaging system standards and protocols
 - **`swarm-protocol.mdc`** - Agent Swarm communication protocols
 - **`v2-compliance.mdc`** - V2 compliance guardrails and standards
+- **`session-closure.mdc`** - A+++ session closure standard (required format for all closures)
 
 ### **Scoped Rules** (Context-Specific)
 - **`messaging/pyautogui-operations.mdc`** - PyAutoGUI delivery operations
@@ -64,6 +65,7 @@ alwaysApply: true|false               # Whether to always apply this rule
 - Communication cycle standards
 - Status tracking requirements
 - Emergency protocols
+- Session closure format (A++ standard)
 
 ### **Messaging System**
 - Message type and priority standards
@@ -94,6 +96,7 @@ alwaysApply: true|false               # Whether to always apply this rule
 
 ## 📚 Related Documentation
 
+- **`docs/governance/GOVERNANCE_MAP.md`** - Governance structure (LAW vs MEMORY precedence) ⚖️
 - **`AGENTS.md`** - Complete project guidelines
 - **`ONBOARDING_GUIDE.md`** - Agent onboarding process
 - **`docs/onboarding/README.md`** - Onboarding documentation
