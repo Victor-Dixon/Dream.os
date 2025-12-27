@@ -122,6 +122,9 @@ reporting_archive/*
 # Audit heavy artifacts (keep diffs slim)
 reports/metrics/
 
+# Tool state files (local runtime artifacts)
+tools/.analytics_validation_scheduler_state.json
+
 # Message system runtime data (sensitive - do not commit)
 data/message_history.json
 message_queue/*.json

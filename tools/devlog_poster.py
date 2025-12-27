@@ -149,7 +149,8 @@ async def post_devlog_async(agent_id: str, devlog_path: str, title: str = None) 
     
     # Run bot
     try:
-        await bot.start(token)
+        async with bot:
+            await bot.start(token)
     except Exception as e:
         error_msg = str(e)
         print(f"❌ Failed to connect to Discord: {e}")

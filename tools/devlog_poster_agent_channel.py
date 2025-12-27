@@ -151,7 +151,8 @@ async def post_to_agent_channel(agent_id: str, devlog_path: str, title: str = No
     
     # Run bot
     try:
-        await bot.start(token)
+        async with bot:
+            await bot.start(token)
     except Exception as e:
         print(f"❌ Failed to connect to Discord: {e}")
         return False
