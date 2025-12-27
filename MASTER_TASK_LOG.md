@@ -37,9 +37,9 @@
 
 - [ ] **HIGH**: Phase 2 Infrastructure Refactoring - messaging_pyautogui.py (775 lines) (200 pts) - ⏳ IN PROGRESS - Service Layer pattern, extract 4 services (CoordinateRoutingService, MessageFormattingService, ClipboardService, PyAutoGUIOperationsService). ETA: 1-2 cycles. Source: Agent-3 status.json current_tasks. [Agent-3]
 
-- [ ] **HIGH**: Phase 2 Infrastructure Refactoring - messaging_template_texts.py (876 lines) (200 pts) - ⏳ PENDING - Configuration/Data pattern. ETA: 1-2 cycles. Source: Agent-3 status.json current_tasks. [Agent-3]
+- [x] **HIGH**: Phase 2 Infrastructure Refactoring - messaging_template_texts.py (876 lines) (200 pts) - ✅ COMPLETE by Agent-3 (2025-12-27) - Configuration/Data pattern applied: templates extracted to messaging_templates_data/ directory, main file refactored (876→75 lines, 91% reduction), V2 compliant. Artifact: src/core/messaging_templates_data/ (9 modules). [Agent-3 COMPLETE]
 
-- [ ] **HIGH**: Phase 2 Infrastructure Refactoring - messaging_core.py (544 lines) (150 pts) - ⏳ PENDING - Service Layer pattern. ETA: 1 cycle. Source: Agent-3 status.json current_tasks. [Agent-3]
+- [x] **HIGH**: Phase 2 Infrastructure Refactoring - messaging_core.py (544 lines) (150 pts) - ✅ COMPLETE by Agent-3 (2025-12-27) - Service Layer pattern applied: 4 service modules created (MessageValidationService, TemplateResolutionService, MessageHistoryService, MessageDeliveryOrchestrationService), main file refactored (544→478 lines, 12% reduction), backward compatibility maintained, import verified. Commit: 1ee67a8c5. Artifact: src/core/messaging_validation.py, messaging_template_resolution.py, messaging_history.py, messaging_delivery_orchestration.py. [Agent-3 COMPLETE]
 
 - [ ] **MEDIUM**: SSOT Coordination - Tag 646 tools missing tags (150 pts) - ⏳ ACTIVE - Coordinate SSOT validation across agents, track 646 tools missing tags, facilitate SSOT domain updates, monitor SSOT compliance. Source: Agent-6 status.json current_mission. [Agent-6]
 
