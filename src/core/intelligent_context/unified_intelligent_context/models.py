@@ -13,32 +13,10 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
 from typing import Any
+import warnings
 
 
 class ContextType(Enum):
-
-"""
-⚠️ DEPRECATED - Priority enum is deprecated.
-
-This enum has been consolidated into src/core/coordination/swarm/coordination_models.py as SSOT.
-Please update imports to use the SSOT location instead.
-
-Migration:
-  OLD: from swarm.coordination_models import Priority
-  NEW: from core.coordination.swarm.coordination_models import Priority
-
-Note: SSOT has TaskPriority (LOW, MEDIUM, HIGH, CRITICAL) - use TaskPriority or alias
-
-This enum will be removed in a future release.
-"""
-
-import warnings
-warnings.warn(
-    "Priority is deprecated. Use src/core/coordination/swarm/coordination_models.py instead.",
-    DeprecationWarning,
-    stacklevel=2
-)
-
     """Context type enumeration."""
 
     MISSION = "mission"
@@ -49,12 +27,31 @@ warnings.warn(
 
 
 class Priority(Enum):
-    """Priority enumeration."""
+    """
+    Priority enumeration.
+
+    ⚠️ DEPRECATED
+
+    This enum has been consolidated into `src/core/coordination/swarm/coordination_models.py` as SSOT.
+    Please update imports to use the SSOT location instead.
+
+    Migration:
+      OLD: from swarm.coordination_models import Priority
+      NEW: from core.coordination.swarm.coordination_models import Priority
+
+    Note: SSOT has TaskPriority (LOW, MEDIUM, HIGH, CRITICAL) - use TaskPriority or alias.
+    """
 
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
+
+warnings.warn(
+    "Priority is deprecated. Use src/core/coordination/swarm/coordination_models.py instead.",
+    DeprecationWarning,
+    stacklevel=2,
+)
 
 
 class Status(Enum):
@@ -68,7 +65,6 @@ class Status(Enum):
 
 
 # DEPRECATED: Use SSOT from src.services.models.vector_models instead
-import warnings
 from src.services.models.vector_models import SearchResult as SSOTSearchResult
 
 @dataclass
