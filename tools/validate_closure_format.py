@@ -223,6 +223,16 @@ def validate_file(file_path: Path) -> Tuple[bool, List[str], List[str]]:
 
 def main():
     """Main entry point"""
+    # Handle --help flag
+    if '--help' in sys.argv or '-h' in sys.argv:
+        print("A+++ Closure Format Validator")
+        print("\nUsage:")
+        print("  python tools/validate_closure_format.py <closure_file.md>")
+        print("  python tools/validate_closure_format.py --check <closure_file.md>")
+        print("\nValidates session closure documents against A+++ standard.")
+        print("Returns pass/fail with specific violations.")
+        sys.exit(0)
+    
     if len(sys.argv) < 2:
         print("Usage: python tools/validate_closure_format.py <closure_file.md>")
         print("   or: python tools/validate_closure_format.py --check <closure_file.md>")
