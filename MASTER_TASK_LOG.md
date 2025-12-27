@@ -47,7 +47,7 @@
 
 - [x] **MEDIUM**: Build-In-Public Phase 1 copy - 'How the Swarm Works' page (75 pts) - ✅ COMPLETE by Agent-7 (2025-12-27) - Full Phase 1 content created: Operating Cycle (7 steps), Meet the Agents (all 8 agents), Coordination Philosophy, Outcome Focus with metrics. File: sites/weareswarm.online/wp/theme/swarm/page-how-the-swarm-works.php. [Agent-7 COMPLETE]
 
-- [ ] **MEDIUM**: Build-In-Public Phase 1 copy - 'Build in Public' feed (100 pts) - ⏳ PENDING - Remaining Phase 1 copy needed. Source: Agent-6 status.json current_mission. [Agent-7]
+- [x] **MEDIUM**: Build-In-Public Phase 1 copy - 'Build in Public' feed (100 pts) - ✅ COMPLETE by Agent-7 (2025-12-27) - Full Phase 1 front-page.php with: Hero section (stats, CTAs), Live Build Feed (today's activity, yesterday's activity, currently building), cross-links to GitHub/sites. Real content showing Tier 1 completion, Manifesto pages, tool validation. [Agent-7 COMPLETE]
 
 - [ ] **HIGH**: TradingRobotPlug.com WEB-04 contact page deployment verification (75 pts) - ⏳ PENDING - Template created ✅ (page-contact.php), template mapped ✅, form handler integrated ✅, awaiting deployment verification. Source: Agent-7 status.json current_tasks. [Agent-3]
 
