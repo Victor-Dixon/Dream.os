@@ -1,6 +1,0 @@
-usage: unified_analyzer.py [-h]
-                           [--category {repository,structure,file,consolidation,overlaps,all}]
-                           [--file FILE] [--repos REPOS]
-                           [--analysis-dir ANALYSIS_DIR]
-                           [--project-root PROJECT_ROOT] [--json]
-unified_analyzer.py: error: unrecognized arguments: consolidation
