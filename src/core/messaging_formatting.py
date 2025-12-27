@@ -19,9 +19,8 @@ from typing import Optional
 
 logger = logging.getLogger(__name__)
 
-# Import formatting functions from messaging_pyautogui.py
-# These will be moved here once refactoring is complete
-from .messaging_pyautogui import get_message_tag, format_c2a_message
+# Formatting functions will be moved here - for now use inline implementations
+# TODO: Move get_message_tag and format_c2a_message from messaging_pyautogui.py
 
 
 class MessageFormattingService:

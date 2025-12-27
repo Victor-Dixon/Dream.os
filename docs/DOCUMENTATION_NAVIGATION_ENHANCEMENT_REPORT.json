@@ -1,9 +1,9 @@
 {
-  "total_files": 268,
+  "total_files": 275,
   "domains": {
     "architecture": 1,
-    "documentation": 8,
-    "web": 18,
+    "documentation": 13,
+    "web": 19,
     "integration": 2,
     "onboarding": 1,
     "seo": 4,
@@ -16,6 +16,6 @@
     "documentation": 1,
     "operations": 1
   },
-  "missing_tags_count": 110,
-  "missing_metadata_count": 29
+  "missing_tags_count": 111,
+  "missing_metadata_count": 31
 }
