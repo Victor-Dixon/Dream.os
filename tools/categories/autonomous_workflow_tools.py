@@ -85,9 +85,8 @@ class AutoAssignmentEngine:
     
     def __init__(self):
         self.workspace_path = Path("agent_workspaces")
-        self.agents = self._load_agents()
         
-        # Agent skill profiles (from historical performance)
+        # Agent skill profiles (from historical performance) - must be defined before _load_agents()
         self.skill_profiles = {
             "Agent-1": ["integration", "core_systems", "debugging", "system_recovery"],
             "Agent-2": ["architecture", "design", "refactoring", "documentation"],
@@ -97,6 +96,8 @@ class AutoAssignmentEngine:
             "Agent-7": ["web_development", "frontend", "ui", "integration"],
             "Agent-8": ["ssot", "system_integration", "configuration", "data_flow"],
         }
+        
+        self.agents = self._load_agents()
     
     def assign_task(self, task: WorkflowAssignmentTask, dry_run: bool = False) -> Assignment:
         """
