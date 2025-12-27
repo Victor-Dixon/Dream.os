@@ -10,10 +10,13 @@ Date: 2025-10-16
 Points: Part of 1,500-2,000 pts mission
 """
 
+from __future__ import annotations
+
 import re
 from collections.abc import Callable
 from pathlib import Path
 from typing import Any
+import sys
 
 
 def validate_import_syntax(import_statement: str) -> bool:
@@ -203,6 +206,51 @@ def validate_coordinates(
         return False
 
     return -screen_width <= x <= screen_width and -screen_height <= y <= screen_height
+
+
+def get_virtual_screen_bounds() -> tuple[int, int, int, int]:
+    """
+    Get OS virtual screen bounds as (min_x, min_y, max_x, max_y).
+
+    On Windows this reflects the full multi-monitor desktop space and can include negative
+    coordinates when a monitor is positioned left/top of the primary.
+
+    Falls back to (0,0,width-1,height-1) based on pyautogui size if platform APIs are unavailable.
+    """
+    if sys.platform.startswith("win"):
+        try:
+            import ctypes
+
+            SM_XVIRTUALSCREEN = 76
+            SM_YVIRTUALSCREEN = 77
+            SM_CXVIRTUALSCREEN = 78
+            SM_CYVIRTUALSCREEN = 79
+
+            user32 = ctypes.windll.user32
+            min_x = int(user32.GetSystemMetrics(SM_XVIRTUALSCREEN))
+            min_y = int(user32.GetSystemMetrics(SM_YVIRTUALSCREEN))
+            width = int(user32.GetSystemMetrics(SM_CXVIRTUALSCREEN))
+            height = int(user32.GetSystemMetrics(SM_CYVIRTUALSCREEN))
+
+            # Defensive: if API returns nonsense, fall back
+            if width <= 0 or height <= 0:
+                raise ValueError(f"Invalid virtual screen size: {width}x{height}")
+
+            max_x = min_x + width - 1
+            max_y = min_y + height - 1
+            return min_x, min_y, max_x, max_y
+        except Exception:
+            # Fall through to pyautogui fallback
+            pass
+
+    try:
+        import pyautogui
+
+        w, h = pyautogui.size()
+        return 0, 0, int(w) - 1, int(h) - 1
+    except Exception:
+        # Conservative fallback
+        return -2000, 0, 2000, 1500
 
 
 def validate_forecast_accuracy(forecast: dict[str, Any], actual: dict[str, Any]) -> float:
