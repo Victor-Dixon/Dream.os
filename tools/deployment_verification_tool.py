@@ -20,6 +20,8 @@ Example:
     python tools/deployment_verification_tool.py --site dadudekc.com --deployment build-in-public-phase0
 """
 
+from __future__ import annotations
+
 import sys
 import argparse
 import json
@@ -29,13 +31,20 @@ from typing import Dict, List, Optional
 
 project_root = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(project_root))
+sys.path.insert(0, str(Path("D:/websites/ops/deployment").resolve()))
 
-try:
-    from ops.deployment.simple_wordpress_deployer import SimpleWordPressDeployer
-    DEPLOYER_AVAILABLE = True
-except ImportError:
-    DEPLOYER_AVAILABLE = False
-    print("⚠️  SimpleWordPressDeployer not available - file checks only")
+DEPLOYER_AVAILABLE = False
+
+def _try_load_deployer():
+    """Lazy-import deployer so `--help` stays fast and annotations never NameError."""
+    global DEPLOYER_AVAILABLE
+    try:
+        from simple_wordpress_deployer import SimpleWordPressDeployer  # type: ignore
+        DEPLOYER_AVAILABLE = True
+        return SimpleWordPressDeployer
+    except Exception:
+        DEPLOYER_AVAILABLE = False
+        return None
 
 
 class DeploymentVerifier:
@@ -53,7 +62,7 @@ class DeploymentVerifier:
         }
     
     def verify_file_presence(self, file_list: List[str], 
-                           deployer: Optional[SimpleWordPressDeployer] = None) -> Dict:
+                           deployer: Optional[object] = None) -> Dict:
         """
         Verify that all expected files are present on remote server.
         
@@ -99,7 +108,7 @@ class DeploymentVerifier:
         return results
     
     def verify_theme_activation(self, theme_name: str,
-                               deployer: Optional[SimpleWordPressDeployer] = None) -> Dict:
+                               deployer: Optional[object] = None) -> Dict:
         """
         Verify that theme is activated on WordPress site.
         
@@ -124,7 +133,7 @@ class DeploymentVerifier:
         
         return results
     
-    def verify_cache_status(self, deployer: Optional[SimpleWordPressDeployer] = None) -> Dict:
+    def verify_cache_status(self, deployer: Optional[object] = None) -> Dict:
         """
         Verify cache status (WordPress cache, CDN cache).
         
@@ -161,9 +170,8 @@ class DeploymentVerifier:
             Complete verification results
         """
         deployer = None
-        if DEPLOYER_AVAILABLE:
-            # Initialize deployer (would need site credentials from .env)
-            pass
+        _ = _try_load_deployer()
+        # Initialize deployer (would need site credentials from .env). Intentionally not auto-connecting here.
         
         # Run all verification checks
         self.verification_results["checks"]["file_presence"] = self.verify_file_presence(

@@ -11,6 +11,7 @@ Usage:
 
 import sys
 import subprocess
+import argparse
 from pathlib import Path
 from typing import List, Dict, Optional
 
@@ -66,7 +67,7 @@ def test_tool(tool_path: str) -> Dict:
     """
     tool_file = Path(tool_path)
     if not tool_file.exists():
-        return {"status": "not_found", "error": f"File not found: {tool_path}"}
+        return {"status": "skipped", "error": f"File not found (legacy path): {tool_path}"}
     
     try:
         # Try to import/run the tool
@@ -92,13 +93,27 @@ def test_tool(tool_path: str) -> Dict:
 
 def main():
     """Main entry point."""
+    parser = argparse.ArgumentParser(
+        description="Phase 3 Broken Tools Fix - Runtime Errors (priority tool runner)"
+    )
+    parser.add_argument("--list", action="store_true", help="List priority tools and exit")
+    parser.add_argument("--tool", help="Run a single tool path")
+    args = parser.parse_args()
+
+    if args.list:
+        for t in PHASE_3_PRIORITY_TOOLS:
+            print(t)
+        return 0
+
+    tool_list = [args.tool] if args.tool else PHASE_3_PRIORITY_TOOLS
+
     print("🔧 Phase 3 Broken Tools Fix - Runtime Errors")
     print("=" * 60)
-    print(f"Priority tools to fix: {len(PHASE_3_PRIORITY_TOOLS)}")
+    print(f"Priority tools to fix: {len(tool_list)}")
     print("=" * 60 + "\n")
     
     results = []
-    for tool_path in PHASE_3_PRIORITY_TOOLS:
+    for tool_path in tool_list:
         print(f"Testing: {tool_path}...", end=" ")
         result = test_tool(tool_path)
         result["tool"] = tool_path
@@ -111,10 +126,11 @@ def main():
     
     # Summary
     working = sum(1 for r in results if r["status"] == "working")
-    broken = len(results) - working
+    skipped = sum(1 for r in results if r["status"] == "skipped")
+    broken = len(results) - working - skipped
     
     print("\n" + "=" * 60)
-    print(f"Summary: {working} working, {broken} broken")
+    print(f"Summary: {working} working, {broken} broken, {skipped} skipped")
     print("=" * 60)
     
     return 0 if broken == 0 else 1

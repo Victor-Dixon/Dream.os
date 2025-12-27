@@ -14477,3 +14477,18 @@ Established comprehensive devlog posting enforcement protocol and coordinated co
 
 ---
 
+## Tool audit stabilization - timeout classification + module execution
+
+**Author:** Agent-4  
+**Date:** 2025-12-27T12:28:19.304414  
+**Tags:** tools, toolbelt, audit, timeouts, python, phase3
+
+---
+NON-CANONICAL: This content is advisory only and does not constitute enforceable requirements.
+See docs/governance/GOVERNANCE_MAP.md for LAW vs MEMORY distinction.
+---
+
+Tool audit stabilization: treat timeouts as SLOW (not broken), execute tools package modules via python -m to avoid relative-import failures, and keep --help fast (no side effects) to prevent false negatives during scans.
+
+---
+

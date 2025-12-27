@@ -7,6 +7,8 @@ from . import test_bi_tools
 from . import test_toolbelt_basic
 from . import tool_registry
 from . import toolbelt_core
+from .tool_registry import ToolRegistry, get_tool_registry
+from .toolbelt_core import ToolbeltCore
 
 __all__ = [
     'advisor_cli',
@@ -15,4 +17,7 @@ __all__ = [
     'test_toolbelt_basic',
     'tool_registry',
     'toolbelt_core',
+    'ToolRegistry',
+    'get_tool_registry',
+    'ToolbeltCore',
 ]
