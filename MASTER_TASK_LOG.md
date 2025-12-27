@@ -37,6 +37,8 @@
 
 - [ ] **MEDIUM**: SSOT Coordination - Tag 646 tools missing tags (150 pts) - ⏳ ACTIVE - Coordinate SSOT validation across agents, track 646 tools missing tags, facilitate SSOT domain updates, monitor SSOT compliance. Source: Agent-6 status.json current_mission. [Agent-6]
 
+- [x] **MEDIUM**: Web Domain Navigation Index (50 pts) - ✅ COMPLETE by Agent-7 (2025-12-27) - Created docs/WEB_DOMAIN_INDEX.md with comprehensive navigation: directory structure, file tables with purposes, related documentation links, tools reference, website repositories, common operations, API endpoints. Added SSOT tags to dashboard.js and dashboard-view-activity.js with @see references. [Agent-7 COMPLETE]
+
 - [ ] **MEDIUM**: Build-In-Public Phase 1 copy - 'What I Do' section (50 pts) - ⏳ PENDING - Remaining Phase 1 copy needed. Source: Agent-6 status.json current_mission. [Agent-7]
 
 - [ ] **MEDIUM**: Build-In-Public Phase 1 copy - 'Live Experiments' section (50 pts) - ⏳ PENDING - Remaining Phase 1 copy needed. Source: Agent-6 status.json current_mission. [Agent-7]
