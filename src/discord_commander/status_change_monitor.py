@@ -546,32 +546,19 @@ class StatusChangeMonitor:
                 resume_message += "\n**Action Required**: Resume by producing a real artifact (commit, file update, test run, report). Do not reply with acknowledgments.\n"
                 resume_message += f"\n🐝 WE. ARE. SWARM. ⚡🔥"
 
-            # CRITICAL: Send message via MessageCoordinator with PyAutoGUI explicitly enabled
-            # This ensures delivery to chat input coordinates using the message queue system
+            # CRITICAL: Resumer must hit chat input coordinates.
+            # Do NOT rely on queue success; attempt direct PyAutoGUI send and surface failures.
             try:
-                from src.services.messaging_infrastructure import MessageCoordinator
-                from src.core.messaging_models_core import (
-                    MessageCategory,
-                    UnifiedMessage,
+                from src.core.messaging_pyautogui import PyAutoGUIMessagingDelivery
+                from src.core.messaging_models_core import MessageCategory, UnifiedMessage
+                from src.core.messaging_core import (
                     UnifiedMessagePriority,
+                    UnifiedMessageTag,
                     UnifiedMessageType,
                 )
                 from src.core.messaging_templates import render_message
-                
-                # Use MessageCoordinator.send_to_agent() with use_pyautogui=True
-                # This routes through the message queue and ensures PyAutoGUI delivery
-                # Build canonical UnifiedMessage for rendering
-                msg = UnifiedMessage(
-                    content=resume_message,
-                    sender="SYSTEM",
-                    recipient=agent_id,
-                    message_type=UnifiedMessageType.SYSTEM_TO_AGENT,
-                    priority=UnifiedMessagePriority.URGENT,
-                    tags=[],
-                    category=MessageCategory.S2A,
-                )
 
-                # Build actions text with task assignment if available
+                # Build actions text for SWARM_PULSE template
                 actions_text = "Resume by producing an artifact: commit/test/report or real code/doc delta."
                 if next_task_info:
                     task_title = next_task_info.get("title", "Unknown Task")
@@ -579,50 +566,109 @@ class StatusChangeMonitor:
                     task_source = task_result.get("source", "contract_system")
                     actions_text = f"**TASK ASSIGNED**: {task_title}\n"
                     if task_description:
-                        actions_text += f"Description: {task_description[:150]}{'...' if len(task_description) > 150 else ''}\n"
+                        actions_text += (
+                            f"Description: {task_description[:150]}{'...' if len(task_description) > 150 else ''}\n"
+                        )
                     actions_text += f"Source: {task_source}\n"
-                    actions_text += f"\n**Action**: Begin work on this assigned task immediately.\n"
+                    actions_text += "\n**Action**: Begin work on this assigned task immediately.\n"
                     actions_text += f"**Claim Command**: `python -m src.services.messaging_cli --get-next-task --agent {agent_id}`\n"
-                    actions_text += f"\nIf task is complete or blocked, produce an artifact (commit/test/report) instead."
                 elif task_result and task_result.get("status") == "no_tasks":
-                    actions_text = "No tasks available in cycle planner. Check inbox for new assignments or continue with current mission.\n"
-                    actions_text += "Resume by producing an artifact: commit/test/report or real code/doc delta."
+                    actions_text = (
+                        "No tasks available in cycle planner. Check inbox for new assignments or continue with current mission.\n"
+                        "Resume by producing an artifact: commit/test/report or real code/doc delta."
+                    )
 
-                rendered = render_message(
-                    msg,
-                    template_key="SWARM_PULSE",
-                    context=f"Inactivity Detected: {safe_minutes} minutes",
-                    actions=actions_text,
-                    fallback="If blocked, escalate to Captain with concrete blocker + ETA.",
+                # Required SWARM_PULSE fields (best-effort from status.json)
+                fsm_state = "UNKNOWN"
+                current_mission = "Not specified"
+                time_since_update = f"{safe_minutes} minutes"
+                try:
+                    status_file = self.workspace_path / agent_id / "status.json"
+                    if status_file.exists():
+                        def _read_status():
+                            with open(status_file, "r", encoding="utf-8") as f:
+                                return json.load(f)
+                        status = await asyncio.to_thread(_read_status)
+                        fsm_state = status.get("fsm_state") or status.get("status") or fsm_state
+                        current_mission = status.get("current_mission", current_mission)
+                except Exception:
+                    pass
+
+                next_task = "No task assigned"
+                task_priority = "normal"
+                task_points = "0"
+                task_status = "unassigned"
+                if next_task_info:
+                    next_task = next_task_info.get("title", next_task)
+                    task_priority = str(next_task_info.get("priority", task_priority))
+                    task_points = str(next_task_info.get("points", task_points))
+                    task_status = str(next_task_info.get("status", "assigned"))
+                elif task_result and task_result.get("status") == "no_tasks":
+                    next_task = "No tasks available"
+                    task_status = "no_tasks"
+
+                # Render SWARM_PULSE; if templating fails, fall back to raw resume_message
+                try:
+                    msg_for_template = UnifiedMessage(
+                        content=resume_message,
+                        sender="SYSTEM",
+                        recipient=agent_id,
+                        message_type=UnifiedMessageType.SYSTEM_TO_AGENT,
+                        priority=UnifiedMessagePriority.URGENT,
+                        tags=[],
+                        category=MessageCategory.S2A,
+                    )
+                    rendered = render_message(
+                        msg_for_template,
+                        template_key="SWARM_PULSE",
+                        context=f"Inactivity Detected: {safe_minutes} minutes",
+                        actions=actions_text,
+                        fallback="If blocked, escalate to Captain with concrete blocker + ETA.",
+                        fsm_state=fsm_state,
+                        current_mission=current_mission,
+                        time_since_update=time_since_update,
+                        next_task=next_task,
+                        task_priority=task_priority,
+                        task_points=task_points,
+                        task_status=task_status,
+                    )
+                except Exception as template_error:
+                    logger.warning(f"⚠️ SWARM_PULSE template render failed for {agent_id}: {template_error}")
+                    rendered = resume_message
+
+                delivery = PyAutoGUIMessagingDelivery()
+                ok = await asyncio.to_thread(
+                    delivery.send_message,
+                    UnifiedMessage(
+                        content=rendered,
+                        sender="SYSTEM",
+                        recipient=agent_id,
+                        message_type=UnifiedMessageType.SYSTEM_TO_AGENT,
+                        priority=UnifiedMessagePriority.URGENT,
+                        tags=[UnifiedMessageTag.SYSTEM],
+                        metadata={
+                            "stalled": send_mode == "ctrl_enter",
+                            "use_pyautogui": True,
+                            "send_mode": send_mode,
+                            "message_category": MessageCategory.S2A.value,
+                        },
+                        category=MessageCategory.S2A,
+                    ),
                 )
 
-                result = MessageCoordinator.send_to_agent(
-                    agent=agent_id,
-                    message=rendered,
-                    priority=UnifiedMessagePriority.URGENT,
-                    use_pyautogui=True,  # CRITICAL: Explicitly enable PyAutoGUI
-                    stalled=(send_mode == "ctrl_enter"),  # Escalation: ctrl+enter on 2nd+ attempt
-                    send_mode=send_mode,
-                    message_category=MessageCategory.S2A,
-                )
-                # Track attempt count after dispatch
                 self.resume_attempts[agent_id] = attempt
-                
-                if result and result.get("success"):
-                    logger.info(
-                        f"✅ Resume message sent to {agent_id} via MessageCoordinator (PyAutoGUI enabled)")
+                if ok:
+                    logger.info(f"✅ Resume message sent to {agent_id} via PyAutoGUI coords")
                 else:
-                    error_msg = result.get("error_message", "Unknown error") if result else "No result returned"
-                    logger.warning(
-                        f"⚠️ Failed to send resume message to {agent_id}: {error_msg}")
-                    
-            except ImportError:
-                # Fallback to CLI method if core messaging not available
-                logger.warning("Core messaging not available, falling back to CLI method")
+                    logger.error(f"❌ Resume PyAutoGUI delivery FAILED for {agent_id} (coords send returned False)")
+
+            except Exception as direct_error:
+                logger.error(f"❌ Direct PyAutoGUI resume send failed for {agent_id}: {direct_error}", exc_info=True)
+                # Best-effort CLI fallback (still PyAutoGUI-based)
                 import subprocess
                 import sys
                 from pathlib import Path
-                
+
                 project_root = Path(__file__).parent.parent.parent
                 cmd = [
                     sys.executable,
@@ -634,10 +680,10 @@ class StatusChangeMonitor:
                     resume_message,
                     "--priority",
                     "urgent",
-                    "--mode",
-                    "pyautogui",  # Explicitly specify PyAutoGUI mode
+                    "--pyautogui",
+                    "--category",
+                    "s2a",
                 ]
-
                 env = {"PYTHONPATH": str(project_root)}
                 result = subprocess.run(
                     cmd,
@@ -645,16 +691,13 @@ class StatusChangeMonitor:
                     text=True,
                     timeout=TimeoutConstants.HTTP_DEFAULT,
                     env=env,
-                    cwd=str(project_root)
+                    cwd=str(project_root),
                 )
-
                 if result.returncode == 0:
-                    logger.info(
-                        f"✅ Resume message sent to {agent_id} via messaging CLI (PyAutoGUI mode)")
+                    logger.info(f"✅ Resume message sent to {agent_id} via messaging CLI (PyAutoGUI)")
                 else:
                     error_msg = result.stderr or result.stdout or "Unknown error"
-                    logger.warning(
-                        f"⚠️ Failed to send resume message to {agent_id}: {error_msg}")
+                    logger.error(f"❌ Resume CLI PyAutoGUI delivery failed for {agent_id}: {error_msg}")
 
         except Exception as e:
             logger.error(
