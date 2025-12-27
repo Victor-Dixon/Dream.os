@@ -64,10 +64,10 @@ class ClipboardService:
         
         with _clipboard_lock:
             try:
-                logger.debug(f"📋 Copying message to clipboard: {content[:50]}...")
+                logger.info(f"📋 Copying message to clipboard: {len(content)} chars (preview: {content[:50]}...)")
                 pyperclip.copy(content)
                 time.sleep(0.5)  # Wait for clipboard to be ready
-                logger.debug("✅ Content copied to clipboard")
+                logger.info("✅ Content copied to clipboard successfully")
                 return True
             except Exception as e:
                 logger.error(f"❌ Failed to copy to clipboard: {e}")

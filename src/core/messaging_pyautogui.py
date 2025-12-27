@@ -646,28 +646,51 @@ class PyAutoGUIMessagingDelivery:
             
             # Focus input field
             if not self.operations_service.focus_input_field(message.recipient, (x, y)):
-                return False
+                logger.warning(f"⚠️ Focus failed for {message.recipient}, continuing anyway")
             
             # Clear input field
             if not self.operations_service.clear_input_field(message.recipient):
-                return False
+                logger.warning(f"⚠️ Clear failed for {message.recipient}, continuing anyway")
             
             # Verify coordinates before paste
             if not self.operations_service.verify_coordinates_before_paste(message.recipient, (x, y)):
+                logger.warning(f"⚠️ Coordinate verification failed for {message.recipient}, repositioning")
                 # Service handles repositioning, continue
-                pass
+            
+            # CRITICAL: Ensure input field is focused one more time before clipboard operations
+            logger.info(f"🖱️ Final focus check before paste for {message.recipient} at ({x}, {y})")
+            # Re-click at coordinates to ensure focus
+            try:
+                import pyautogui
+                pyautogui.click(x, y)
+                time.sleep(0.3)  # Wait for focus to stabilize
+                logger.info(f"✅ Focus click completed for {message.recipient}")
+            except Exception as e:
+                logger.warning(f"⚠️ Final focus click failed for {message.recipient}: {e}, continuing anyway")
             
             # Copy to clipboard and paste (using ClipboardService)
-            with self.clipboard_service.get_clipboard_lock():
-                if not self.clipboard_service.copy_to_clipboard(msg_content):
+            # NOTE: copy_to_clipboard() already uses internal locking, so don't wrap in another lock
+            logger.info(f"📋 Copying message to clipboard for {message.recipient} ({len(msg_content)} chars)")
+            try:
+                copy_result = self.clipboard_service.copy_to_clipboard(msg_content)
+                logger.info(f"📋 Copy result for {message.recipient}: {copy_result}")
+                if not copy_result:
+                    logger.error(f"❌ Failed to copy to clipboard for {message.recipient}")
                     return False
                 
-                # One final coordinate check before paste
+                logger.info(f"✅ Clipboard ready ({len(msg_content)} chars), pasting to {message.recipient}")
+                
+                # One final coordinate check and paste
                 if not self.operations_service.paste_content(message.recipient, (x, y), self.clipboard_service):
+                    logger.error(f"❌ Failed to paste message for {message.recipient}")
                     return False
                 
                 # Verify clipboard (optional check)
-                self.clipboard_service.verify_clipboard(msg_content)
+                if not self.clipboard_service.verify_clipboard(msg_content):
+                    logger.warning(f"⚠️ Clipboard verification failed for {message.recipient}, but paste may have succeeded")
+            except Exception as e:
+                logger.error(f"❌ Exception during clipboard/paste operations for {message.recipient}: {e}", exc_info=True)
+                return False
             
             # Send message
             message_metadata = message.metadata if isinstance(message.metadata, dict) else {}
