@@ -62,7 +62,9 @@ MANDATORY CLOSURE TASKS
 3. Git Verification (ALWAYS REQUIRED)
    - Run: `git status`
    - If changes exist:
-     - `git add .`
+     - ⚠️ **Shared workspace safety**: DO NOT run `git add .`, `git restore .`, or `git clean -fd` in a shared repo checkout.
+       - These commands can stage/revert/delete other agents' uncommitted work and untracked artifacts.
+       - Use a path-scoped add instead: `git add <paths-you-touched>` OR interactive staging: `git add -p`
      - `git commit -m "agent-<n>: <brief description>"`
      - `git push`
    - If no changes:
