@@ -541,5 +541,119 @@ Before adding a discovered task to MASTER_TASK_LOG:
 - **Execution** → Agent status.json updates
 - **Completion** → Mark complete in MASTER_TASK_LOG
 
+---
+
+## 📜 APPENDIX: Complete Discovery Command Reference
+
+### Verify Protocol Exists
+```bash
+# Check that governance docs are present
+ls -la docs/TASK_DISCOVERY_PROTOCOL.md docs/CAPTAIN_LEVEL_TASK_PROTOCOL.md 2>/dev/null
+ls -la MASTER_TASK_LOG.md DELEGATION_BOARD.md 2>/dev/null
+```
+
+### Find Repository-Specific Tools
+```bash
+# Locate scanner/health tools this repo uses
+rg -n "project_scanner|TASK_DISCOVERY_PROTOCOL|system health|health check|scanner" -S . || true
+find tools scripts -maxdepth 3 -type f \( -name "*scan*.py" -o -name "*health*.py" -o -name "*audit*.py" -o -name "*project*scanner*.py" \) 2>/dev/null
+```
+
+### Lane 1: System Health Scan
+```bash
+# Run linting and type checking
+mkdir -p runtime/task_discovery
+python -m ruff check . 2>&1 | tee runtime/task_discovery/ruff.txt || true
+python -m mypy . 2>&1 | tee runtime/task_discovery/mypy.txt || true
+```
+
+### Lane 2: Tests
+```bash
+# Locate test conventions
+rg -n "pytest|coverage|--cov|tox|nox|unittest|ruff|mypy" -S pyproject.toml setup.cfg tox.ini noxfile.py .github 2>/dev/null
+
+# Run tests with coverage
+mkdir -p runtime/task_discovery
+pytest --maxfail=1 -q
+pytest --cov --cov-report=term-missing | tee runtime/task_discovery/coverage.txt
+```
+
+### Lane 3: Documentation
+```bash
+# Harvest doc debt markers
+mkdir -p runtime/task_discovery
+rg -n "TODO|FIXME|TBD|DEPRECATED|OUTDATED" -S README.md docs/ | tee runtime/task_discovery/docs_debt.txt
+
+# Check for missing essential guides
+for guide in "how to run" "how to test" "how to deploy" "getting started" "contributing"; do
+  echo "Checking for: $guide"
+  rg -i "$guide" README.md docs/ || echo "  ⚠️  Missing: $guide"
+done
+```
+
+### Lane 4: Duplication / Tech Debt
+```bash
+# Find duplicate detection tooling
+mkdir -p runtime/task_discovery
+rg -n "duplicate|duplication|copy[- ]paste|complexity|radon|lizard" -S . || true
+
+# Find oversized files (V2 policy breaches)
+find src -name "*.py" -exec wc -l {} \; | awk '$1 > 300 {print}' | tee runtime/task_discovery/oversized_files.txt
+```
+
+### Lane 5: Websites (Windows PowerShell)
+```powershell
+# Run automated website discovery
+powershell.exe -ExecutionPolicy Bypass -File "runtime\task_discovery\inventory_scanner.ps1"
+powershell.exe -ExecutionPolicy Bypass -File "runtime\task_discovery\health_scanner.ps1"
+powershell.exe -ExecutionPolicy Bypass -File "runtime\task_discovery\verify_artifacts.ps1"
+```
+
+### Lane 5: Websites (Bash/Linux - Manual)
+```bash
+# Find site roots manually
+mkdir -p runtime/task_discovery
+find . -maxdepth 4 -type f \( -name "package.json" -o -name "wp-config.php" -o -name "index.html" -o -name "next.config.*" -o -name "astro.config.*" \) 2>/dev/null | tee runtime/task_discovery/site_roots.txt
+```
+
+### Complete All-Lanes Discovery (One Command)
+```bash
+#!/bin/bash
+# Complete discovery workflow - run all 5 primary lanes
+
+echo "🔍 TASK DISCOVERY - ALL LANES"
+echo "=============================="
+mkdir -p runtime/task_discovery
+
+echo ""
+echo "Lane 1: HEALTH Scan..."
+python -m ruff check . 2>&1 | tee runtime/task_discovery/ruff.txt || true
+python -m mypy . 2>&1 | tee runtime/task_discovery/mypy.txt || true
+
+echo ""
+echo "Lane 2: TESTS..."
+pytest --cov --cov-report=term-missing | tee runtime/task_discovery/coverage.txt 2>&1 || true
+
+echo ""
+echo "Lane 3: DOCS..."
+rg -n "TODO|FIXME|TBD|DEPRECATED|OUTDATED" -S README.md docs/ | tee runtime/task_discovery/docs_debt.txt 2>&1 || true
+
+echo ""
+echo "Lane 4: DEBT..."
+find src -name "*.py" -exec wc -l {} \; | awk '$1 > 300 {print}' | tee runtime/task_discovery/oversized_files.txt 2>&1 || true
+
+echo ""
+echo "Lane 5: WEB... (if Windows with PowerShell)"
+# powershell.exe -ExecutionPolicy Bypass -File "runtime\task_discovery\inventory_scanner.ps1" 2>&1 || true
+
+echo ""
+echo "✅ Discovery complete! Review artifacts in runtime/task_discovery/"
+echo "Next: Analyze findings and add tasks to MASTER_TASK_LOG.md"
+```
+
+**Save the above script as `tools/discover_all_lanes.sh` for quick discovery runs.**
+
+---
+
 🐝 WE. ARE. SWARM. ⚡🔥
 
