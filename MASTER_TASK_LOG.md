@@ -29,7 +29,7 @@
 
 - [x] **MEDIUM**: Create analytics_validation_scheduler.py tool (75 pts) - ✅ COMPLETE by Agent-5 (2025-12-27) - Stateful scheduler monitors GA4/Pixel readiness for P0 sites, persists last snapshot, writes markdown report on status changes, supports --watch mode with configurable interval, optional --validate-on-ready flag. Unit test created. Commit: 4a3bb07ee. Artifact: tools/analytics_validation_scheduler.py, tests/tools/test_analytics_validation_scheduler.py. [Agent-5 COMPLETE]
 
-- [ ] **MEDIUM**: Create configuration_sync_checker.py tool (75 pts) - ⏳ PENDING - Tool to verify wp-config.php sync across environments and detect configuration drift. Source: Agent-5 passdown.json tool_wishlist. [Agent-5]
+- [x] **MEDIUM**: Create configuration_sync_checker.py tool (75 pts) - ✅ COMPLETE by Agent-5 (2025-12-27) - Checks wp-config.php for tracked keys (DB, debug, analytics IDs), generates markdown report with masked sensitive values. Unit tests created. Commit: 4e7dfa8c4. Artifact: tools/configuration_sync_checker.py, tests/tools/test_configuration_sync_checker.py. [Agent-5 COMPLETE]
 
 - [ ] **HIGH**: Complete Tier 1 analytics validation (target: Day 2 end) (100 pts) - ⏳ BLOCKED - Awaiting GA4/Pixel ID configuration. Once IDs configured, run automated validation: automated_p0_analytics_validation.py --validate-ready. Source: Agent-5 passdown.json next_session_priorities. [Agent-5]
 
