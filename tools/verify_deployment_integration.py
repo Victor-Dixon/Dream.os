@@ -65,6 +65,23 @@ class DeploymentVerifier:
     def __init__(self):
         self.results = []
         self.timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+
+    @staticmethod
+    def _build_api_url(base_url: str, api_base: str, endpoint: str) -> str:
+        """
+        Build a REST URL safely.
+
+        `urljoin` treats a leading '/' as an absolute path (dropping prior path),
+        so we normalize segments before joining.
+        """
+        root = base_url.rstrip("/") + "/"
+        api = (api_base or "").strip("/")
+        ep = (endpoint or "").strip("/")
+        if api and ep:
+            return urljoin(root, f"{api}/{ep}")
+        if api:
+            return urljoin(root, api)
+        return urljoin(root, ep)
     
     def check_site_accessible(self, url: str) -> Dict[str, Any]:
         """Check if site is accessible."""
@@ -138,10 +155,10 @@ class DeploymentVerifier:
         
         # Check custom REST API endpoints
         if config.get("endpoints"):
-            api_base = urljoin(base_url, config.get("rest_api_base", ""))
             endpoint_results = []
             for endpoint in config["endpoints"]:
-                endpoint_check = self.check_rest_api_endpoint(api_base, endpoint)
+                api_url = self._build_api_url(base_url, config.get("rest_api_base", ""), endpoint)
+                endpoint_check = self.check_rest_api_endpoint(api_url, "")
                 endpoint_results.append({
                     "endpoint": endpoint,
                     **endpoint_check
