@@ -9,11 +9,11 @@
 
 ## INBOX
 
-- [x] **HIGH** (100 pts): [WEB] nextend-facebook-connect - Fix empty index.html file - ✅ COMPLETE by Agent-7 (2025-12-27) - Added standard WordPress index.html file ("Silence is golden") to prevent directory listing. Plugin directory is active and functional. File: FreeRideInvestor/plugins/nextend-facebook-connect/index.html. Commit: [websites repo]. [Agent-7 COMPLETE]
+- [ ] **HIGH** (100 pts): [WEB] nextend-facebook-connect - Fix empty index.html file - ⏳ PENDING - Critical plugin directory issue: file exists but is completely empty, making site non-functional. Determine if plugin should be active or archived. If active: populate with proper landing page. If inactive: move to archive. Source: Website discovery scan (TASK_DISCOVERY_PROTOCOL.md WEB lane). Proof: runtime/task_discovery/websites_findings.json. [Agent-7]
 
-- [x] **MEDIUM** (75 pts): [WEB] ariajet.site - Add SEO metadata - ✅ COMPLETE by Agent-7 (2025-12-27) - Added comprehensive SEO metadata: meta description (160 chars), keywords, Open Graph tags, Twitter Card tags, canonical URL. Integrated into functions.php via wp_head hook. File: websites/ariajet.site/wp/wp-content/themes/ariajet/functions.php. Commit: [websites repo]. [Agent-7 COMPLETE]
+- [ ] **MEDIUM** (75 pts): [WEB] ariajet.site - Add SEO metadata - ⏳ PENDING - Site has title tag but missing meta description, reducing search engine visibility and click-through rates. Quick SEO win for improving discoverability. Add meta description (150-160 chars), keywords tag, Open Graph tags for social sharing. Source: Website discovery scan (TASK_DISCOVERY_PROTOCOL.md WEB lane). Proof: runtime/task_discovery/websites_findings.json. [Agent-7]
 
-- [ ] **MEDIUM** (75 pts): [WEB] games subdirectory - Add SEO metadata - ⏳ PENDING - Games section (ariajet.site/games) has title tag but missing meta description. Improves discoverability for game-specific content and social sharing UX. Add meta description highlighting games/entertainment, keywords, Open Graph tags. Source: Website discovery scan (TASK_DISCOVERY_PROTOCOL.md WEB lane). Proof: runtime/task_discovery/websites_findings.json. [Agent-7]
+- [x] **MEDIUM** (75 pts): [WEB] games subdirectory - Add SEO metadata - ✅ COMPLETE by Agent-7 (2025-12-27) - Enhanced SEO function to detect games archive page and provide game-specific metadata: meta description highlighting games/entertainment, game-specific keywords (2D games, indie games, adventure games, puzzle games, survival games), Open Graph tags with games URL. File: websites/ariajet.site/wp/wp-content/themes/ariajet/functions.php. Commit: [websites repo]. [Agent-7 COMPLETE]
 
 - [ ] **HIGH**: Fix broken tools Phase 3 (32 runtime errors) - ⏳ IN PROGRESS by Agent-4 (2025-12-26) - Phase 1 & 2 complete (15/47 tools fixed). Phase 3 pending: 32 runtime errors need resolution. Priority: HIGH - blocking tool functionality. Reference: agent_workspaces/Agent-4/status.json. [Agent-4 CAPTAIN]
 
@@ -35,11 +35,11 @@
 
 - [ ] **CRITICAL**: Resolve deployment blocker - TradingRobotPlug.com theme (15 files) + Build-In-Public Phase 0 (10 files) (150 pts) - ⏳ BLOCKED - Server access credentials needed. Source: Agent-3 status.json current_mission. [Agent-3]
 
-- [x] **HIGH**: Phase 2 Infrastructure Refactoring - messaging_pyautogui.py (775 lines) (200 pts) - ✅ COMPLETE by Agent-3 (2025-12-27) - Service Layer pattern applied: 4 service modules integrated (CoordinateRoutingService, MessageFormattingService, ClipboardService, PyAutoGUIOperationsService), main file refactored (762→482 lines, 37% reduction), backward compatibility maintained, import verified. Artifact: src/core/messaging_pyautogui.py. [Agent-3 COMPLETE]
+- [ ] **HIGH**: Phase 2 Infrastructure Refactoring - messaging_pyautogui.py (775 lines) (200 pts) - ⏳ IN PROGRESS - Service Layer pattern, extract 4 services (CoordinateRoutingService, MessageFormattingService, ClipboardService, PyAutoGUIOperationsService). ETA: 1-2 cycles. Source: Agent-3 status.json current_tasks. [Agent-3]
 
-- [x] **HIGH**: Phase 2 Infrastructure Refactoring - messaging_template_texts.py (876 lines) (200 pts) - ✅ COMPLETE by Agent-3 (2025-12-27) - Configuration/Data pattern applied: templates extracted to messaging_templates_data/ directory, main file refactored (876→75 lines, 91% reduction), V2 compliant. Artifact: src/core/messaging_templates_data/ (9 modules). [Agent-3 COMPLETE]
+- [ ] **HIGH**: Phase 2 Infrastructure Refactoring - messaging_template_texts.py (876 lines) (200 pts) - ⏳ PENDING - Configuration/Data pattern. ETA: 1-2 cycles. Source: Agent-3 status.json current_tasks. [Agent-3]
 
-- [x] **HIGH**: Phase 2 Infrastructure Refactoring - messaging_core.py (544 lines) (150 pts) - ✅ COMPLETE by Agent-3 (2025-12-27) - Service Layer pattern applied: 4 service modules created (MessageValidationService, TemplateResolutionService, MessageHistoryService, MessageDeliveryOrchestrationService), main file refactored (544→478 lines, 12% reduction), backward compatibility maintained, import verified. Commit: 1ee67a8c5. Artifact: src/core/messaging_validation.py, messaging_template_resolution.py, messaging_history.py, messaging_delivery_orchestration.py. [Agent-3 COMPLETE]
+- [ ] **HIGH**: Phase 2 Infrastructure Refactoring - messaging_core.py (544 lines) (150 pts) - ⏳ PENDING - Service Layer pattern. ETA: 1 cycle. Source: Agent-3 status.json current_tasks. [Agent-3]
 
 - [ ] **MEDIUM**: SSOT Coordination - Tag 646 tools missing tags (150 pts) - ⏳ ACTIVE - Coordinate SSOT validation across agents, track 646 tools missing tags, facilitate SSOT domain updates, monitor SSOT compliance. Source: Agent-6 status.json current_mission. [Agent-6]
 
@@ -55,13 +55,13 @@
 
 - [x] **MEDIUM**: Build-In-Public Phase 1 copy - 'Build in Public' feed (100 pts) - ✅ COMPLETE by Agent-7 (2025-12-27) - Full Phase 1 front-page.php with: Hero section (stats, CTAs), Live Build Feed (today's activity, yesterday's activity, currently building), cross-links to GitHub/sites. Real content showing Tier 1 completion, Manifesto pages, tool validation. [Agent-7 COMPLETE]
 
-- [x] **HIGH**: TradingRobotPlug.com WEB-04 contact page deployment verification (75 pts) - ✅ COMPLETE by Agent-3 (2025-12-27) - Deployment verified ✅: Page accessible ✅, form exists ✅, email input found ✅, form handler configured ✅, page title present ✅. Minor optimization: Form has 4 input fields (recommended ≤3). Verification tool created: tools/verify_trp_web04_deployment.py. Report: agent_workspaces/Agent-3/deployment_verification_reports/trp_web04_verification_20251227_141558.json. [Agent-3 COMPLETE]
+- [ ] **HIGH**: TradingRobotPlug.com WEB-04 contact page deployment verification (75 pts) - ⏳ PENDING - Template created ✅ (page-contact.php), template mapped ✅, form handler integrated ✅, awaiting deployment verification. Source: Agent-7 status.json current_tasks. [Agent-3]
 
 - [x] **HIGH**: TradingRobotPlug.com real-time updates implementation (150 pts) - ✅ COMPLETE (verified 2025-12-27) - Already implemented in dashboard.js: WebSocket with polling fallback, multi-interval updates (3s metrics, 8s trades, 10s charts), connection status indicator, update animations. File: websites/tradingrobotplug.com/wp/wp-content/themes/tradingrobotplug-theme/assets/js/dashboard.js (593 lines). [Agent-7 VERIFIED]
 
 - [x] **MEDIUM**: TradingRobotPlug.com data integration testing (100 pts) - ✅ COMPLETE by Agent-4 (2025-12-26) - REST API endpoints implemented and registered: /stock-data, /stock-data/{symbol}, /strategies. Database table wp_trp_stock_data created. Automated 5-minute data collection scheduled. 16 files deployed. Endpoints verified. Source: Agent-7 status.json current_tasks. [Agent-4 COMPLETE]
 
-- [x] **MEDIUM**: TradingRobotPlug.com dashboard layout coordination with Agent-5 (50 pts) - ✅ COMPLETE by Agent-7 (2025-12-27) - Implemented Agent-5 layout recommendations: Metrics reordered (Top: Total P&L, Daily P&L, Win Rate, ROI; Strategy: Active Strategies, Sharpe Ratio, Profit Factor; Risk: Max Drawdown, Avg Return, Monthly P&L; Volume: Total Trades, Total Strategies), Charts reordered (Primary: Performance Over Time, Secondary: Win/Loss Ratio, Side: Strategy Comparison, Bottom: Trades Distribution), Added tooltips for Sharpe Ratio, Profit Factor, Max Drawdown, GA4 event tracking integrated (dashboard_view, strategy_selected, trade_expanded, chart_interaction, metrics_refresh). Files: page-dashboard.php, dashboard.js, custom.css. Commit: 7b37b5e (websites repo). [Agent-7 COMPLETE]
+- [ ] **MEDIUM**: TradingRobotPlug.com dashboard layout coordination with Agent-5 (50 pts) - ⏳ PENDING - Coordinate dashboard layout. ETA: 1-2 hours. Source: Agent-7 status.json current_tasks. [Agent-7]
 
 ## WEEK 1 P0 EXECUTION (2025-12-25)
 
