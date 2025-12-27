@@ -80,6 +80,60 @@ Follow this systematic checklist in order. Stop when you find actionable work.
 
 ---
 
+### Step 2b: Scan Websites (Automated Discovery)
+
+**Objective:** Discover and health-check all website projects, identify SEO/deployment/build issues
+
+- [ ] **Run Automated Website Discovery Scanner**
+  - Tool: `powershell.exe -ExecutionPolicy Bypass -File "runtime\task_discovery\inventory_scanner.ps1"`
+  - Scans: D:\websites (or configured website directory) recursively
+  - Detects: WordPress, Next.js, Vite, Astro, CRA, static sites
+  - Generates: `runtime/task_discovery/websites_inventory.json` and `.md`
+  - **Task Opportunity:** Newly discovered sites need initialization/documentation
+
+- [ ] **Run Website Health Checks**
+  - Tool: `powershell.exe -ExecutionPolicy Bypass -File "runtime\task_discovery\health_scanner.ps1"`
+  - Checks: 
+    - Node-based: node_modules presence, build scripts
+    - Static: title tags, meta descriptions, basic HTML structure
+    - WordPress: notes for theme/plugin audits
+  - Generates: `runtime/task_discovery/websites_findings.json` and `.md`
+  - **Task Opportunity:** Sites with WARN/FAIL status need fixes
+
+- [ ] **Review Generated Task Recommendations**
+  - Location: `runtime/task_discovery/master_task_log_web_lane.md`
+  - Contains: Paste-ready tasks grouped by site with priorities, points, proof artifacts
+  - Action: Copy tasks to MASTER_TASK_LOG.md INBOX section
+  - **Task Opportunity:** All WARN/FAIL sites generate claimable tasks
+
+**Automated Scanner Features:**
+- **Recursive discovery**: Finds all site roots at any depth
+- **Type detection**: Automatically identifies framework/CMS type
+- **Health scoring**: PASS/WARN/FAIL status per site
+- **Task generation**: Creates formatted MASTER_TASK_LOG entries
+- **Proof artifacts**: All findings JSON-backed for verification
+- **Reusable**: Can be run anytime queue is empty
+
+**Tools:**
+- `runtime/task_discovery/inventory_scanner.ps1` - Discovers all sites
+- `runtime/task_discovery/health_scanner.ps1` - Runs health checks
+- `runtime/task_discovery/verify_artifacts.ps1` - Validates outputs
+- Output: `runtime/task_discovery/master_task_log_web_lane.md` (paste-ready tasks)
+
+**Example Task Output:**
+```markdown
+- [ ] **HIGH** (100 pts): [WEB] site-name - Fix issue description. 
+  Source: Website discovery scan. Proof: runtime/task_discovery/websites_findings.json. [Agent-7]
+```
+
+**When to Use:**
+- Queue is empty and no website tasks in MASTER_TASK_LOG
+- After major website deployments (verify health)
+- Monthly website health checks
+- When new sites are added to D:\websites
+
+---
+
 ### Step 3: Consult with Thea
 
 **Objective:** Get AI consultation on project priorities and next steps
@@ -371,6 +425,7 @@ When multiple opportunities are found, prioritize in this order:
 |--------|---------|----------------|-------------------|
 | Project Reports | Understand state | `find docs/ -name "*report*"` | Updates, gap filling |
 | Project Scan | Find violations | `python tools/project_scanner.py` | V2 fixes, tech debt |
+| Website Scanner | Find site issues | `runtime/task_discovery/inventory_scanner.ps1` | SEO, builds, deploys |
 | Thea Consultation | Strategic guidance | AI consultation | Strategic tasks |
 | Agent Status | Find blockers | `grep -r "blockers" agent_workspaces/` | Blocker resolution |
 | Recent Commits | Find follow-ups | `git log --since="7 days ago"` | Completion tasks |
@@ -387,7 +442,7 @@ When multiple opportunities are found, prioritize in this order:
 **Regular Discovery Schedule:**
 - **Daily:** Review agent status files, check recent commits
 - **Weekly:** Run project scan, review cycle accomplishments
-- **Monthly:** Comprehensive documentation review, system health check
+- **Monthly:** Comprehensive documentation review, system health check, website scanner audit
 
 **Discovery Triggers:**
 - After completing all assigned tasks
@@ -414,11 +469,11 @@ Before adding a discovered task to MASTER_TASK_LOG:
 ## 📌 Quick Reference
 
 **Discovery Order:**
-1. Project Reports → 2. Project Scan → 3. Thea Consultation → 4. Agent Status → 5. Recent Commits → 6. Test Coverage → 7. Cycle Reports → 8. Documentation → 9. System Health → 10. Error Logs
+1. Project Reports → 2. Project Scan → **2b. Website Scanner** → 3. Thea Consultation → 4. Agent Status → 5. Recent Commits → 6. Test Coverage → 7. Cycle Reports → 8. Documentation → 9. System Health → 10. Error Logs
 
 **Stop When:**
 - You find actionable work
-- You've completed all 10 steps
+- You've completed all steps
 - You've identified 3+ tasks (prioritize and add top priority)
 
 **Always:**
