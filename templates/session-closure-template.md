@@ -56,6 +56,13 @@
   [Commit hash or "Not committed"]
 
 - **Git Push:**
+
+<!-- Public Surface Expansion (PSE) — governance/safety/template changes -->
+<!-- If this closure modified governance, safety, protocols, or templates, ensure three blog artifacts exist. Checkboxes below must be all checked or explicitly not applicable. -->
+- [ ] BLOG_DADUDEKC.md present (builder voice)
+- [ ] BLOG_WEARESWARM.md present (swarm ops voice)
+- [ ] BLOG_DREAMSCAPE.md present (lore voice)
+
   <!-- Push status: "Pushed to [branch]" or "Not pushed" -->
   [Push status]
 

@@ -70,7 +70,16 @@ MANDATORY CLOSURE TASKS
    - If no changes:
      - Explicitly state: "No code changes — verified via git status"
 
-4. Publish Devlog (Internal / Discord)
+4. PUBLIC SURFACE EXPANSION (PSE) — GOVERNANCE & SAFETY CHANGES
+   - If this work touches governance, safety rules, protocols, templates, closure logic, or swarm behavior **you must produce three derivative public artifacts** (PSE).
+   - Trigger keywords (any): governance, safety, protocol, closure, canonical prompt, template, shared workspace, swarm rule
+   - Required outputs (use template `templates/public_surface_expansion_template.md`):
+       1. BLOG_DADUDEKC.md – personal / builder log
+       2. BLOG_WEARESWARM.md – swarm ops / doctrine
+       3. BLOG_DREAMSCAPE.md – lore / mythic encoding
+   - Validation fails if these artifacts are absent when triggers matched
+
+5. Publish Devlog (Internal / Discord)
    - Post to Discord using: `python tools/devlog_poster.py --agent Agent-X --file <devlog_path>`
    - This represents the internal build record and public-facing update
 
