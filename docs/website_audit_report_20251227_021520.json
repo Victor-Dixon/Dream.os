@@ -1,0 +1,113 @@
+{
+  "audit_timestamp": "2025-12-27T02:15:20.158059",
+  "websites_audited": 5,
+  "results": [
+    {
+      "url": "https://crosbyultimateevents.com",
+      "timestamp": "2025-12-27T02:15:20.156057",
+      "status": "completed",
+      "issues": [],
+      "warnings": [],
+      "recommendations": [],
+      "metrics": {
+        "audit_type": "comprehensive",
+        "checks_performed": [
+          "page_load",
+          "seo_elements",
+          "accessibility",
+          "content_structure",
+          "navigation",
+          "mobile_responsiveness",
+          "security_headers"
+        ]
+      }
+    },
+    {
+      "url": "https://dadudekc.com",
+      "timestamp": "2025-12-27T02:15:20.156057",
+      "status": "completed",
+      "issues": [],
+      "warnings": [],
+      "recommendations": [],
+      "metrics": {
+        "audit_type": "comprehensive",
+        "checks_performed": [
+          "page_load",
+          "seo_elements",
+          "accessibility",
+          "content_structure",
+          "navigation",
+          "mobile_responsiveness",
+          "security_headers"
+        ]
+      }
+    },
+    {
+      "url": "https://freerideinvestor.com",
+      "timestamp": "2025-12-27T02:15:20.156057",
+      "status": "completed",
+      "issues": [],
+      "warnings": [],
+      "recommendations": [],
+      "metrics": {
+        "audit_type": "comprehensive",
+        "checks_performed": [
+          "page_load",
+          "seo_elements",
+          "accessibility",
+          "content_structure",
+          "navigation",
+          "mobile_responsiveness",
+          "security_headers"
+        ]
+      }
+    },
+    {
+      "url": "https://houstonsipqueen.com",
+      "timestamp": "2025-12-27T02:15:20.157057",
+      "status": "completed",
+      "issues": [],
+      "warnings": [],
+      "recommendations": [],
+      "metrics": {
+        "audit_type": "comprehensive",
+        "checks_performed": [
+          "page_load",
+          "seo_elements",
+          "accessibility",
+          "content_structure",
+          "navigation",
+          "mobile_responsiveness",
+          "security_headers"
+        ]
+      }
+    },
+    {
+      "url": "https://tradingrobotplug.com",
+      "timestamp": "2025-12-27T02:15:20.157057",
+      "status": "completed",
+      "issues": [],
+      "warnings": [],
+      "recommendations": [],
+      "metrics": {
+        "audit_type": "comprehensive",
+        "checks_performed": [
+          "page_load",
+          "seo_elements",
+          "accessibility",
+          "content_structure",
+          "navigation",
+          "mobile_responsiveness",
+          "security_headers"
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_websites": 5,
+    "total_issues": 0,
+    "total_warnings": 0,
+    "websites_with_issues": 0,
+    "websites_with_warnings": 0
+  }
+}

@@ -24,6 +24,11 @@ import threading
 from .keyboard_control_lock import keyboard_control
 from typing import Dict, List, Callable, Any, Optional, Union, Tuple, Set
 
+# Import service modules (Phase 2A refactoring)
+from .messaging_coordinate_routing import CoordinateRoutingService
+from .messaging_formatting import MessageFormattingService
+from .messaging_clipboard import ClipboardService
+from .messaging_pyautogui_operations import PyAutoGUIOperationsService
 
 logger = logging.getLogger(__name__)
 
@@ -122,6 +127,12 @@ class PyAutoGUIMessagingDelivery:
         if not PYAUTOGUI_AVAILABLE:
             raise ImportError("PyAutoGUI not available")
         self.pyautogui = pyautogui
+        
+        # Initialize service modules (Phase 2A refactoring)
+        self.coordinate_service = CoordinateRoutingService()
+        self.formatting_service = MessageFormattingService()
+        self.clipboard_service = ClipboardService()
+        self.operations_service = PyAutoGUIOperationsService(pyautogui_module=pyautogui)
 
     def validate_coordinates(self, agent_id: str, coords: tuple[int, int]) -> bool:
         """
@@ -624,160 +635,47 @@ class PyAutoGUIMessagingDelivery:
                 except: pass
                 # #endregion
 
-            # Click agent chat input - ensure proper focus
-            logger.debug(f"📍 Moving to coordinates: ({x}, {y})")
-            self.pyautogui.moveTo(x, y, duration=0.5)
-            
-            # CRITICAL: Validate coordinates AFTER moveTo but BEFORE paste
-            # This ensures we're at the correct location before attempting paste
-            current_mouse_pos = self.pyautogui.position()
-            coords_valid = self.validate_coordinates(message.recipient, (x, y))
-            
-            # Verify mouse actually moved to target coordinates (within tolerance)
-            distance = ((current_mouse_pos[0] - x) ** 2 + (current_mouse_pos[1] - y) ** 2) ** 0.5
-            if distance > 10:  # Allow 10px tolerance for screen variations
-                logger.warning(
-                    f"⚠️ Mouse position mismatch for {message.recipient}: "
-                    f"expected ({x}, {y}), got {current_mouse_pos}, distance={distance:.1f}px"
-                )
-                # Retry moveTo if too far off
-                self.pyautogui.moveTo(x, y, duration=0.3)
-                time.sleep(0.2)
-                current_mouse_pos = self.pyautogui.position()
-                distance = ((current_mouse_pos[0] - x) ** 2 + (current_mouse_pos[1] - y) ** 2) ** 0.5
-                if distance > 10:
-                    logger.error(
-                        f"❌ Failed to move to coordinates for {message.recipient}: "
-                        f"expected ({x}, {y}), still at {current_mouse_pos}"
-                    )
-                    return False
-            
-            if not coords_valid:
-                logger.error(f"❌ Coordinate validation failed for {message.recipient} at ({x}, {y})")
+            # Execute PyAutoGUI operations using PyAutoGUIOperationsService (Phase 2A refactoring)
+            # Move to coordinates with validation
+            if not self.operations_service.move_to_coordinates(
+                (x, y), 
+                message.recipient,
+                validate_callback=self.validate_coordinates
+            ):
                 return False
             
-            # Click to focus window and input field
-            logger.debug("🖱️ Clicking to focus input field")
-            self.pyautogui.click()
-            time.sleep(0.5)  # Wait for initial focus
+            # Focus input field
+            if not self.operations_service.focus_input_field(message.recipient, (x, y)):
+                return False
             
-            # Click again to ensure input field is active
-            self.pyautogui.click()
-            time.sleep(0.5)  # Wait for input field to be ready
+            # Clear input field
+            if not self.operations_service.clear_input_field(message.recipient):
+                return False
             
-            # CRITICAL: Clear existing text in input field first
-            logger.debug("🧹 Clearing existing text")
-            self.pyautogui.hotkey("ctrl", "a")
-            time.sleep(0.2)
-            self.pyautogui.press("delete")
-            time.sleep(0.3)
-
-            # CRITICAL: Final coordinate validation RIGHT BEFORE paste
-            # This is the last chance to catch coordinate issues before pasting
-            final_mouse_pos = self.pyautogui.position()
-            final_distance = ((final_mouse_pos[0] - x) ** 2 + (final_mouse_pos[1] - y) ** 2) ** 0.5
-            if final_distance > 10:
-                logger.error(
-                    f"❌ CRITICAL: Mouse moved away before paste for {message.recipient}: "
-                    f"expected ({x}, {y}), got {final_mouse_pos}"
-                )
-                # Re-position before paste
-                self.pyautogui.moveTo(x, y, duration=0.2)
-                time.sleep(0.2)
-                self.pyautogui.click()  # Re-focus
-                time.sleep(0.3)
-
-            # RACE CONDITION FIX #1: Clipboard lock (prevents concurrent overwrites!)
-            with _clipboard_lock:
-                # Paste message (clipboard locked during this entire block!)
-                logger.debug(f"📋 Copying message to clipboard: {msg_content[:50]}...")
-                pyperclip.copy(msg_content)
-                time.sleep(0.5)  # Wait for clipboard to be ready
-                
-                # CRITICAL: One final coordinate check before paste
-                pre_paste_pos = self.pyautogui.position()
-                if abs(pre_paste_pos[0] - x) > 10 or abs(pre_paste_pos[1] - y) > 10:
-                    logger.error(
-                        f"❌ CRITICAL: Mouse position invalid before paste for {message.recipient}: "
-                        f"expected ({x}, {y}), got {pre_paste_pos}"
-                    )
+            # Verify coordinates before paste
+            if not self.operations_service.verify_coordinates_before_paste(message.recipient, (x, y)):
+                # Service handles repositioning, continue
+                pass
+            
+            # Copy to clipboard and paste (using ClipboardService)
+            with self.clipboard_service.get_clipboard_lock():
+                if not self.clipboard_service.copy_to_clipboard(msg_content):
                     return False
                 
-                logger.debug("📥 Pasting message")
-                self.pyautogui.hotkey("ctrl", "v")
-                time.sleep(1.0)  # Wait for paste to complete
+                # One final coordinate check before paste
+                if not self.operations_service.paste_content(message.recipient, (x, y), self.clipboard_service):
+                    return False
                 
-                # Verify paste worked by checking clipboard still matches
-                # (This is a sanity check, not a guarantee)
-                try:
-                    clipboard_check = pyperclip.paste()
-                    if clipboard_check == msg_content:
-                        logger.debug("✅ Clipboard verified")
-                    else:
-                        logger.warning(
-                            f"⚠️ Clipboard mismatch after paste for {message.recipient}: "
-                            f"expected {len(msg_content)} chars, got {len(clipboard_check)} chars"
-                        )
-                except Exception:
-                    pass  # Non-critical check
-
-            # CRITICAL: Send message (use Ctrl+Enter for stalled flag, regular enter for all others)
-            send_mode = None
-            is_stalled = False
-            if isinstance(message.metadata, dict):
-                send_mode = message.metadata.get("send_mode")
-                is_stalled = message.metadata.get("stalled", False)
+                # Verify clipboard (optional check)
+                self.clipboard_service.verify_clipboard(msg_content)
             
-            logger.debug(f"📤 Sending message (stalled={is_stalled}, send_mode={send_mode})")
-            # Priority: explicit send_mode -> stalled flag -> default enter
-            if send_mode == "ctrl_enter" or (send_mode is None and is_stalled):
-                logger.debug("⚠️ Using Ctrl+Enter send")
-                self.pyautogui.hotkey("ctrl", "enter")
-            else:
-                logger.debug("✅ Using Enter send")
-                self.pyautogui.press("enter")
-            time.sleep(1.0)  # Wait for message to be sent
+            # Send message
+            message_metadata = message.metadata if isinstance(message.metadata, dict) else {}
+            if not self.operations_service.send_message(message.recipient, message_metadata):
+                return False
             
-            # CRITICAL: Verify message was sent and UI has settled
-            # This ensures the full sequence completed before returning
-            try:
-                # #region agent log
-                import json
-                from pathlib import Path
-                log_path = Path("d:\\Agent_Cellphone_V2_Repository\\.cursor\\debug.log")
-                settlement_start = time.time()
-                recipient = message.get('recipient') if isinstance(message, dict) else getattr(message, 'recipient', 'unknown')
-                try:
-                    with open(log_path, 'a', encoding='utf-8') as f:
-                        f.write(json.dumps({"sessionId": "debug-session", "runId": "run1", "hypothesisId": "D", "location": "messaging_pyautogui.py:744", "message": "Before UI settlement delay", "data": {"recipient": recipient, "delay_seconds": 2.5}, "timestamp": int(time.time() * 1000)}) + "\n")
-                except: pass
-                # #endregion
-                # Additional delay to allow UI to fully process and coordinate validation to complete
-                # Increased to 2.5s to prevent routing race conditions between agents
-                time.sleep(2.5)  # Increased from 2.0s to 2.5s for routing stability
-                # #region agent log
-                settlement_end = time.time()
-                actual_delay = settlement_end - settlement_start
-                try:
-                    with open(log_path, 'a', encoding='utf-8') as f:
-                        f.write(json.dumps({"sessionId": "debug-session", "runId": "run1", "hypothesisId": "D", "location": "messaging_pyautogui.py:751", "message": "After UI settlement delay", "data": {"recipient": recipient, "expected_delay": 2.5, "actual_delay": round(actual_delay, 2)}, "timestamp": int(time.time() * 1000)}) + "\n")
-                except: pass
-                # #endregion
-                
-                # Verify mouse is still at correct coordinates (confirms UI is stable)
-                final_verify_pos = self.pyautogui.position()
-                verify_distance = ((final_verify_pos[0] - x) ** 2 + (final_verify_pos[1] - y) ** 2) ** 0.5
-                if verify_distance > 20:  # Allow some movement tolerance
-                    logger.warning(
-                        f"⚠️ Mouse moved significantly after send for {message.recipient}: "
-                        f"distance={verify_distance:.1f}px (may indicate UI interaction)"
-                    )
-                else:
-                    logger.debug(f"✅ Mouse position stable after send (distance={verify_distance:.1f}px)")
-                
-                logger.debug("✅ Message send sequence completed and UI settled")
-            except Exception as e:
-                logger.warning(f"⚠️ Could not verify message send completion: {e}")
+            # Verify send completion
+            self.operations_service.verify_send_completion(message.recipient, (x, y))
 
             logger.info(f"✅ Message sent to {message.recipient} at {coords} (attempt {attempt_num}) - UI settled")
             return True

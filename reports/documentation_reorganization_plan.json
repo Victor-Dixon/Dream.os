@@ -1,31 +1,30 @@
 {
-  "timestamp": "2025-12-25T13:12:17.116435",
+  "timestamp": "2025-12-27T02:45:14.338760",
   "current_state": {
-    "total_files": 43,
-    "total_dirs": 11,
-    "missing_readme": 11,
+    "total_files": 141,
+    "total_dirs": 14,
+    "missing_readme": 13,
     "deep_nesting": 0
   },
   "taxonomy_distribution": {
-    "architecture": 9,
-    "protocols": 3,
-    "guides": 3,
-    "api": 0,
+    "architecture": 18,
+    "protocols": 7,
+    "guides": 4,
+    "api": 3,
     "agent_workspaces": 0,
-    "reports": 16,
-    "coordination": 2,
+    "reports": 62,
+    "coordination": 5,
     "messaging": 1,
-    "website": 1,
-    "other": 8
+    "website": 3,
+    "other": 38
   },
   "recommendations": [
     {
       "type": "missing_readme",
       "priority": "MEDIUM",
-      "count": 11,
+      "count": 13,
       "action": "Add README.md files to directories with content",
       "directories": [
-        ".",
         "infrastructure",
         "messaging",
         "toolbelt",
@@ -34,7 +33,8 @@
         "website_seo",
         "onboarding",
         "seo",
-        "discord"
+        "discord",
+        "dadudekc"
       ]
     }
   ],
