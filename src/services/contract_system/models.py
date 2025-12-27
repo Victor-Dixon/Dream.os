@@ -102,6 +102,13 @@ class Contract:
         self.completed_at = kwargs.get("completed_at", "")
         self.tasks = kwargs.get("tasks", [])
         self.last_updated = kwargs.get("last_updated", datetime.now().isoformat())
+        
+        # ROI Scoring Fields
+        self.user_value = kwargs.get("user_value", 0.0)
+        self.risk = kwargs.get("risk", 1.0)
+        self.effort = kwargs.get("effort", 1.0)
+        self.dependency_count = kwargs.get("dependency_count", 0)
+        self.roi_score = kwargs.get("roi_score", 0.0)
 
     def to_dict(self) -> dict[str, Any]:
         """Convert contract to dictionary using SSOT utility."""
@@ -133,3 +140,18 @@ class Contract:
             self.tasks = []
         self.tasks.append(task)
         self.last_updated = datetime.now().isoformat()
+
+    def calculate_roi(self) -> float:
+        """
+        Calculate ROI score based on user value, risk, effort, and dependencies.
+        
+        Formula: User Value / (Effort + Dependency Count) / Risk
+        Risk is 1-10 (1=low, 10=high).
+        Effort is arbitrary units (e.g. hours or points).
+        User Value is arbitrary units (e.g. 1-100).
+        """
+        effort_factor = max(0.1, float(self.effort) + float(self.dependency_count))
+        risk_penalty = max(1.0, float(self.risk))
+        
+        self.roi_score = float(self.user_value) / effort_factor / risk_penalty
+        return self.roi_score

@@ -119,8 +119,26 @@ class ContractManager(BaseService):
             
             # Fall back to contract system
             logger.debug(f"No cycle planner tasks found for {agent_id}, checking contracts...")
-            all_contracts = self.storage.get_all_contracts()
-            available_tasks = [c for c in all_contracts if c.get("status") == "pending"]
+            all_contracts_data = self.storage.get_all_contracts()
+            
+            # Filter for pending contracts and calculate ROI
+            available_tasks = []
+            for data in all_contracts_data:
+                if data.get("status") == "pending":
+                    # Create temporary contract object to calculate ROI
+                    try:
+                        contract = Contract.from_dict(data)
+                        contract.calculate_roi()
+                        # Update data with calculated ROI
+                        data["roi_score"] = contract.roi_score
+                        available_tasks.append(data)
+                    except Exception as e:
+                        logger.warning(f"Failed to calculate ROI for contract {data.get('contract_id')}: {e}")
+                        # Add without ROI if calculation fails
+                        available_tasks.append(data)
+
+            # Sort by ROI score descending (high ROI first)
+            available_tasks.sort(key=lambda x: x.get("roi_score", 0.0), reverse=True)
 
             if not available_tasks:
                 # No contracts either – attempt to bootstrap from MASTER_TASK_LOG
