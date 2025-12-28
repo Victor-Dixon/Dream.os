@@ -88,8 +88,8 @@ def execute_wp_cli(site_key: str, command: str, allow_root: bool = True) -> Dict
         return {"success": False, "error": str(e)}
 
 
-def wp_core_version(site_key: str) -> Dict[str, Any]:
-    """Get WordPress core version."""
+def wp_core_info(site_key: str) -> Dict[str, Any]:
+    """Get WordPress core version and information."""
     return execute_wp_cli(site_key, "core version")
 
 
@@ -126,6 +126,19 @@ def wp_plugin_deactivate(site_key: str, plugin: str) -> Dict[str, Any]:
     return execute_wp_cli(site_key, f"plugin deactivate {plugin}")
 
 
+def wp_plugin_install(site_key: str, plugin: str, activate: bool = False) -> Dict[str, Any]:
+    """Install a WordPress plugin."""
+    cmd = f"plugin install {plugin}"
+    if activate:
+        cmd += " --activate"
+    return execute_wp_cli(site_key, cmd)
+
+
+def wp_plugin_update(site_key: str, plugin: str = "--all") -> Dict[str, Any]:
+    """Update WordPress plugin(s)."""
+    return execute_wp_cli(site_key, f"plugin update {plugin}")
+
+
 def wp_theme_list(site_key: str) -> Dict[str, Any]:
     """List WordPress themes."""
     result = execute_wp_cli(site_key, "theme list --format=json")
@@ -148,6 +161,14 @@ def wp_theme_list(site_key: str) -> Dict[str, Any]:
 def wp_theme_activate(site_key: str, theme: str) -> Dict[str, Any]:
     """Activate a WordPress theme."""
     return execute_wp_cli(site_key, f"theme activate {theme}")
+
+
+def wp_theme_install(site_key: str, theme: str, activate: bool = False) -> Dict[str, Any]:
+    """Install a WordPress theme."""
+    cmd = f"theme install {theme}"
+    if activate:
+        cmd += " --activate"
+    return execute_wp_cli(site_key, cmd)
 
 
 def wp_cache_flush(site_key: str) -> Dict[str, Any]:
@@ -210,7 +231,29 @@ def wp_db_optimize(site_key: str) -> Dict[str, Any]:
     return execute_wp_cli(site_key, "db optimize")
 
 
-def wp_site_health(site_key: str) -> Dict[str, Any]:
+def wp_search_replace(site_key: str, old: str, new: str) -> Dict[str, Any]:
+    """Search and replace in database."""
+    return execute_wp_cli(site_key, f"search-replace '{old}' '{new}'")
+
+
+def wp_cron_event_list(site_key: str) -> Dict[str, Any]:
+    """List WordPress cron events."""
+    result = execute_wp_cli(site_key, "cron event list --format=json")
+    if result.get("success") and result.get("output"):
+        try:
+            events = json.loads(result["output"])
+            return {
+                "success": True,
+                "site": site_key,
+                "events": events,
+                "count": len(events),
+            }
+        except json.JSONDecodeError:
+            return result
+    return result
+
+
+def wp_health_check(site_key: str) -> Dict[str, Any]:
     """Get WordPress site health status."""
     results = {}
     
@@ -254,8 +297,8 @@ def main():
                 "required": ["site_key", "command"],
             },
         },
-        "wp_core_version": {
-            "description": "Get WordPress core version",
+        "wp_core_info": {
+            "description": "Get WordPress core version and information",
             "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -297,6 +340,29 @@ def main():
                 "required": ["site_key", "plugin"],
             },
         },
+        "wp_plugin_install": {
+            "description": "Install a WordPress plugin",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "site_key": {"type": "string", "description": "Site key"},
+                    "plugin": {"type": "string", "description": "Plugin slug or URL"},
+                    "activate": {"type": "boolean", "default": False, "description": "Activate after install"},
+                },
+                "required": ["site_key", "plugin"],
+            },
+        },
+        "wp_plugin_update": {
+            "description": "Update WordPress plugin(s)",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "site_key": {"type": "string", "description": "Site key"},
+                    "plugin": {"type": "string", "default": "--all", "description": "Plugin slug or --all"},
+                },
+                "required": ["site_key"],
+            },
+        },
         "wp_theme_list": {
             "description": "List WordPress themes",
             "inputSchema": {
@@ -318,12 +384,35 @@ def main():
                 "required": ["site_key", "theme"],
             },
         },
+        "wp_theme_install": {
+            "description": "Install a WordPress theme",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "site_key": {"type": "string", "description": "Site key"},
+                    "theme": {"type": "string", "description": "Theme slug or URL"},
+                    "activate": {"type": "boolean", "default": False, "description": "Activate after install"},
+                },
+                "required": ["site_key", "theme"],
+            },
+        },
         "wp_cache_flush": {
             "description": "Flush WordPress cache",
             "inputSchema": {
                 "type": "object",
                 "properties": {
                     "site_key": {"type": "string", "description": "Site key"},
+                },
+                "required": ["site_key"],
+            },
+        },
+        "wp_transient_delete": {
+            "description": "Delete WordPress transients",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "site_key": {"type": "string", "description": "Site key"},
+                    "transient": {"type": "string", "default": "--all", "description": "Transient name or --all"},
                 },
                 "required": ["site_key"],
             },
@@ -391,8 +480,30 @@ def main():
                 "required": ["site_key"],
             },
         },
-        "wp_site_health": {
-            "description": "Get comprehensive WordPress site health status",
+        "wp_search_replace": {
+            "description": "Search and replace in database",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "site_key": {"type": "string", "description": "Site key"},
+                    "old": {"type": "string", "description": "Old string"},
+                    "new": {"type": "string", "description": "New string"},
+                },
+                "required": ["site_key", "old", "new"],
+            },
+        },
+        "wp_cron_event_list": {
+            "description": "List WordPress cron events",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "site_key": {"type": "string", "description": "Site key"},
+                },
+                "required": ["site_key"],
+            },
+        },
+        "wp_health_check": {
+            "description": "Perform comprehensive WordPress health check",
             "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -405,20 +516,26 @@ def main():
 
     tool_map = {
         "execute_wp_cli": execute_wp_cli,
-        "wp_core_version": wp_core_version,
+        "wp_core_info": wp_core_info,
         "wp_plugin_list": wp_plugin_list,
         "wp_plugin_activate": wp_plugin_activate,
         "wp_plugin_deactivate": wp_plugin_deactivate,
+        "wp_plugin_install": wp_plugin_install,
+        "wp_plugin_update": wp_plugin_update,
         "wp_theme_list": wp_theme_list,
         "wp_theme_activate": wp_theme_activate,
+        "wp_theme_install": wp_theme_install,
         "wp_cache_flush": wp_cache_flush,
+        "wp_transient_delete": wp_transient_delete,
         "wp_rewrite_flush": wp_rewrite_flush,
         "wp_option_get": wp_option_get,
         "wp_option_update": wp_option_update,
         "wp_user_list": wp_user_list,
         "wp_db_check": wp_db_check,
         "wp_db_optimize": wp_db_optimize,
-        "wp_site_health": wp_site_health,
+        "wp_search_replace": wp_search_replace,
+        "wp_cron_event_list": wp_cron_event_list,
+        "wp_health_check": wp_health_check,
     }
 
     # Handle requests from stdin
