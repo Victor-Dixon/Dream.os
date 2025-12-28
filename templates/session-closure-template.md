@@ -93,6 +93,13 @@
 
 ## Shared Workspace Safety (Git Hygiene)
 
+### Agent Ownership Boundary
+- Agent may modify ONLY files they created in this slice **or** files under `agent_workspaces/Agent-X/**`
+- Any change outside scope requires explicit authorization
+
+### Destructive Action Escalation
+- If you believe deletion/reset is required → STOP and mark 🟡 Blocked
+
 - Do **not** run `git restore .` or `git clean -fd` in a shared repo checkout.
 - Do **not** use `git add .` unless you are certain only your files changed.
 - Prefer:

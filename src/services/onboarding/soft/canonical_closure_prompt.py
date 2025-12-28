@@ -106,6 +106,18 @@ MANDATORY CLOSURE TASKS
 
 ────────────────────────────────────────
 HARD RULES (NON-NEGOTIABLE)
+
+❌ SHARED WORKSPACE SAFETY (CRITICAL)
+- NEVER run `git clean -fd` or delete untracked files in a shared repo
+- NEVER delete files outside agent-owned directories
+- If untracked files exist outside agent scope → Status MUST be 🟡 Blocked
+
+❌ DESTRUCTIVE GIT COMMANDS ARE FORBIDDEN IN SHARED WORKSPACES
+- git clean -fd
+- git restore .
+- rm -rf on repo paths
+
+When in doubt, choose NON-DESTRUCTIVE verification over cleanup.
 ────────────────────────────────────────
 
 - No narration
@@ -156,6 +168,9 @@ OUTPUT CONTRACT (STRICT - A++ FORMAT)
   🟡 Blocked (specific reason)
 
 FORBIDDEN IN CLOSURE:
+- ❌ Workspace cleanup (janitorial deletion)
+- ❌ Repo normalization by mass restore/clean
+- ❌ Aligning local state via deletion
 - ❌ "Next steps" or any future-facing language
 - ❌ Narration or summaries (belongs in devlog)
 - ❌ Speculation ("should work", "may need")
@@ -163,6 +178,12 @@ FORBIDDEN IN CLOSURE:
 
 ────────────────────────────────────────
 PROGRESSION GATE
+
+🚧 DESTRUCTIVE-ACTION ESCALATION GATE
+- If closure requires deleting, cleaning, or resetting repo files:
+  - STOP immediately
+  - Emit 🟡 Blocked
+  - State exact conflict and await Captain arbitration
 ────────────────────────────────────────
 
 Do NOT:
