@@ -23,11 +23,12 @@ sys.path.insert(0, str(Path(__file__).parent.parent / "tools"))
 
 # Try to import WordPress manager for deployments
 try:
-    from tools.wordpress_manager import WordPressManager
+    from ops.deployment.simple_wordpress_deployer import SimpleWordPressDeployer, load_site_configs
     HAS_WORDPRESS = True
 except ImportError:
     HAS_WORDPRESS = False
-    WordPressManager = None
+    SimpleWordPressDeployer = None
+    load_site_configs = None
 
 # Constants
 TIMEOUT = 15
@@ -92,8 +93,9 @@ def deploy_wordpress_theme(
         return {"success": False, "error": "WordPress tools not available"}
     
     try:
-        manager = WordPressManager(site_key=site_key, dry_run=dry_run)
-        if not manager.connect():
+        configs = load_site_configs()
+        deployer = SimpleWordPressDeployer(site_key=site_key, site_configs=configs)
+        if not deployer.connect():
             return {"success": False, "error": "Failed to connect to WordPress"}
         
         deployed_files = []
@@ -114,13 +116,13 @@ def deploy_wordpress_theme(
             if dry_run:
                 deployed_files.append({"file": local_file, "remote": remote, "status": "dry_run"})
             else:
-                success = manager.deploy_theme(local_path=file_path, remote_path=remote)
+                success = deployer.deploy_file(local_path=file_path, remote_path=remote)
                 if success:
                     deployed_files.append({"file": local_file, "remote": remote, "status": "deployed"})
                 else:
                     failed_files.append({"file": local_file, "error": "Deployment failed"})
         
-        manager.disconnect()
+        deployer.disconnect()
         
         return {
             "success": len(failed_files) == 0,
@@ -159,22 +161,18 @@ def deploy_wordpress_file(
         return {"success": False, "error": "WordPress tools not available"}
     
     try:
-        manager = WordPressManager(site_key=site_key, dry_run=False)
-        if not manager.connect():
+        configs = load_site_configs()
+        deployer = SimpleWordPressDeployer(site_key=site_key, site_configs=configs)
+        if not deployer.connect():
             return {"success": False, "error": "Failed to connect to WordPress"}
         
         local_file = Path(local_path)
         if not local_file.exists():
             return {"success": False, "error": f"Local file not found: {local_path}"}
         
-        if file_type == "theme":
-            success = manager.deploy_theme(local_path=local_file, remote_path=remote_path)
-        elif file_type == "plugin":
-            success = manager.deploy_plugin_file(local_path=local_file, remote_path=remote_path)
-        else:
-            success = manager.deploy_file(local_path=local_file, remote_path=remote_path)
+        success = deployer.deploy_file(local_path=local_file, remote_path=remote_path)
         
-        manager.disconnect()
+        deployer.disconnect()
         
         return {
             "success": success,
@@ -516,15 +514,16 @@ def create_deployment_snapshot(site_key: str, description: str = "") -> Dict[str
         current_files = []
         if HAS_WORDPRESS:
             try:
-                manager = WordPressManager(site_key=site_key, dry_run=True)
-                if manager.connect():
+                configs = load_site_configs()
+                deployer = SimpleWordPressDeployer(site_key=site_key, site_configs=configs)
+                if deployer.connect():
                     # This would list current theme/plugin files
                     # For now, we'll create a basic snapshot structure
                     current_files = [
                         {"path": "wp-content/themes/active-theme/style.css", "hash": "placeholder"},
                         {"path": "wp-content/themes/active-theme/functions.php", "hash": "placeholder"}
                     ]
-                    manager.disconnect()
+                    deployer.disconnect()
             except Exception:
                 pass
 
@@ -741,6 +740,7 @@ def deploy_with_staging(site_key: str, theme_files: List[str], description: str 
             "success": deployment_result["success"],
             "site_key": site_key,
             "deployment": deployment_result,
+            "error": deployment_result.get("error") if not deployment_result["success"] else None,
             "pre_snapshot": snapshot_result,
             "post_snapshot": post_snapshot_result if post_snapshot_result["success"] else None,
             "rollback_available": snapshot_result["success"],
