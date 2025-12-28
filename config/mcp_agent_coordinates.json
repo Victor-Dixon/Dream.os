@@ -1,0 +1,32 @@
+{
+  "agents": {
+    "Agent-1": {
+      "chat_input_coordinates": [
+        -1269,
+        481
+      ],
+      "onboarding_coordinates": [
+        -1269,
+        431
+      ],
+      "description": "Integration Specialist",
+      "active": true
+    },
+    "Agent-2": {
+      "chat_input_coordinates": [
+        -308,
+        480
+      ],
+      "onboarding_coordinates": [
+        -308,
+        430
+      ],
+      "description": "Architecture Specialist",
+      "active": true
+    }
+  },
+  "metadata": {
+    "version": "1.0",
+    "last_updated": "2025-12-28T08:36:45.271722+00:00"
+  }
+}
