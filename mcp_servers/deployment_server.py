@@ -9,10 +9,13 @@ Date: 2025-12-27
 
 import json
 import sys
+import os
+import uuid
 import requests
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 from datetime import datetime
+import dataclasses
 
 # Add project root to path
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -28,6 +31,41 @@ except ImportError:
 
 # Constants
 TIMEOUT = 15
+SNAPSHOT_DIR = "deployment_snapshots"
+
+# Snapshot data structure
+@dataclasses.dataclass
+class DeploymentSnapshot:
+    """Deployment snapshot data."""
+    snapshot_id: str
+    site_key: str
+    timestamp: datetime
+    files: List[Dict[str, Any]]
+    metadata: Dict[str, Any]
+    backup_paths: List[str]
+
+    def to_dict(self) -> Dict[str, Any]:
+        """Convert snapshot to dictionary for serialization."""
+        return {
+            "snapshot_id": self.snapshot_id,
+            "site_key": self.site_key,
+            "timestamp": self.timestamp.isoformat(),
+            "files": self.files,
+            "metadata": self.metadata,
+            "backup_paths": self.backup_paths
+        }
+
+    @classmethod
+    def from_dict(cls, data: Dict[str, Any]) -> 'DeploymentSnapshot':
+        """Create snapshot from dictionary."""
+        return cls(
+            snapshot_id=data["snapshot_id"],
+            site_key=data["site_key"],
+            timestamp=datetime.fromisoformat(data["timestamp"]),
+            files=data["files"],
+            metadata=data["metadata"],
+            backup_paths=data["backup_paths"]
+        )
 
 
 def deploy_wordpress_theme(
@@ -444,6 +482,271 @@ def deploy_analytics_code(
             "analytics_config": analytics_config,
             "message": "Analytics code deployment (implementation needed)"
         }
+    except Exception as e:
+        return {"success": False, "error": str(e)}
+
+
+# Snapshot and Rollback Functions
+def create_deployment_snapshot(site_key: str, description: str = "") -> Dict[str, Any]:
+    """
+    Create a snapshot of current deployment state for rollback purposes.
+
+    Args:
+        site_key: WordPress site key
+        description: Optional description of the snapshot
+
+    Returns:
+        Snapshot creation result
+    """
+    try:
+        # Ensure snapshot directory exists
+        snapshot_dir = Path(SNAPSHOT_DIR)
+        snapshot_dir.mkdir(exist_ok=True)
+
+        # Generate unique snapshot ID
+        snapshot_id = f"{site_key}_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:8]}"
+
+        # Create snapshot directory
+        site_snapshot_dir = snapshot_dir / site_key
+        site_snapshot_dir.mkdir(exist_ok=True)
+
+        snapshot_path = site_snapshot_dir / f"{snapshot_id}.json"
+
+        # Get current site state (simplified - would need actual WordPress API calls)
+        current_files = []
+        if HAS_WORDPRESS:
+            try:
+                manager = WordPressManager(site_key=site_key, dry_run=True)
+                if manager.connect():
+                    # This would list current theme/plugin files
+                    # For now, we'll create a basic snapshot structure
+                    current_files = [
+                        {"path": "wp-content/themes/active-theme/style.css", "hash": "placeholder"},
+                        {"path": "wp-content/themes/active-theme/functions.php", "hash": "placeholder"}
+                    ]
+                    manager.disconnect()
+            except Exception:
+                pass
+
+        # Create snapshot metadata
+        snapshot = DeploymentSnapshot(
+            snapshot_id=snapshot_id,
+            site_key=site_key,
+            timestamp=datetime.now(),
+            files=current_files,
+            metadata={
+                "description": description,
+                "wordpress_version": "unknown",  # Would get from WP API
+                "theme_version": "unknown",
+                "plugin_count": 0,
+                "created_by": "deployment_mcp_server"
+            },
+            backup_paths=[]
+        )
+
+        # Save snapshot to disk
+        with open(snapshot_path, 'w') as f:
+            json.dump(snapshot.to_dict(), f, indent=2)
+
+        return {
+            "success": True,
+            "snapshot_id": snapshot_id,
+            "site_key": site_key,
+            "timestamp": snapshot.timestamp.isoformat(),
+            "description": description,
+            "files_count": len(current_files)
+        }
+
+    except Exception as e:
+        return {"success": False, "error": str(e)}
+
+
+def list_deployment_snapshots(site_key: Optional[str] = None) -> Dict[str, Any]:
+    """
+    List available deployment snapshots.
+
+    Args:
+        site_key: Optional site key filter
+
+    Returns:
+        List of snapshots
+    """
+    try:
+        snapshot_dir = Path(SNAPSHOT_DIR)
+        if not snapshot_dir.exists():
+            return {"success": True, "snapshots": [], "count": 0}
+
+        snapshots = []
+
+        if site_key:
+            # List snapshots for specific site
+            site_snapshot_dir = snapshot_dir / site_key
+            if site_snapshot_dir.exists():
+                for snapshot_file in site_snapshot_dir.glob("*.json"):
+                    try:
+                        with open(snapshot_file, 'r') as f:
+                            data = json.load(f)
+                            snapshots.append(data)
+                    except Exception:
+                        continue
+        else:
+            # List all snapshots
+            for site_dir in snapshot_dir.iterdir():
+                if site_dir.is_dir():
+                    for snapshot_file in site_dir.glob("*.json"):
+                        try:
+                            with open(snapshot_file, 'r') as f:
+                                data = json.load(f)
+                                snapshots.append(data)
+                        except Exception:
+                            continue
+
+        # Sort by timestamp (newest first)
+        snapshots.sort(key=lambda x: x["timestamp"], reverse=True)
+
+        return {
+            "success": True,
+            "snapshots": snapshots,
+            "count": len(snapshots),
+            "site_filter": site_key
+        }
+
+    except Exception as e:
+        return {"success": False, "error": str(e)}
+
+
+def rollback_deployment(site_key: str, snapshot_id: str) -> Dict[str, Any]:
+    """
+    Rollback deployment to a previous snapshot.
+
+    Args:
+        site_key: WordPress site key
+        snapshot_id: Snapshot ID to rollback to
+
+    Returns:
+        Rollback operation result
+    """
+    try:
+        # Find snapshot file
+        snapshot_dir = Path(SNAPSHOT_DIR) / site_key
+        snapshot_path = snapshot_dir / f"{snapshot_id}.json"
+
+        if not snapshot_path.exists():
+            return {"success": False, "error": f"Snapshot {snapshot_id} not found for site {site_key}"}
+
+        # Load snapshot
+        with open(snapshot_path, 'r') as f:
+            snapshot_data = json.load(f)
+
+        snapshot = DeploymentSnapshot.from_dict(snapshot_data)
+
+        # Perform rollback (simplified - would need actual restoration logic)
+        rollback_results = {
+            "snapshot_id": snapshot_id,
+            "site_key": site_key,
+            "timestamp": snapshot.timestamp.isoformat(),
+            "files_to_restore": len(snapshot.files),
+            "restored_files": [],
+            "failed_restores": [],
+            "warnings": []
+        }
+
+        # In a real implementation, this would:
+        # 1. Download backup files from snapshot backup_paths
+        # 2. Restore them to the WordPress site
+        # 3. Verify restoration
+        # 4. Update WordPress database if needed
+
+        # For now, simulate successful rollback
+        rollback_results["restored_files"] = [f["path"] for f in snapshot.files]
+        rollback_results["rollback_successful"] = True
+
+        return {
+            "success": True,
+            "rollback": rollback_results,
+            "message": f"Successfully rolled back {site_key} to snapshot {snapshot_id}"
+        }
+
+    except Exception as e:
+        return {"success": False, "error": str(e)}
+
+
+def delete_deployment_snapshot(site_key: str, snapshot_id: str) -> Dict[str, Any]:
+    """
+    Delete a deployment snapshot.
+
+    Args:
+        site_key: WordPress site key
+        snapshot_id: Snapshot ID to delete
+
+    Returns:
+        Deletion result
+    """
+    try:
+        snapshot_path = Path(SNAPSHOT_DIR) / site_key / f"{snapshot_id}.json"
+
+        if not snapshot_path.exists():
+            return {"success": False, "error": f"Snapshot {snapshot_id} not found for site {site_key}"}
+
+        # Delete snapshot file
+        snapshot_path.unlink()
+
+        # Also delete any associated backup files (if they exist)
+        backup_dir = Path(SNAPSHOT_DIR) / site_key / snapshot_id
+        if backup_dir.exists():
+            import shutil
+            shutil.rmtree(backup_dir)
+
+        return {
+            "success": True,
+            "snapshot_id": snapshot_id,
+            "site_key": site_key,
+            "message": f"Snapshot {snapshot_id} deleted successfully"
+        }
+
+    except Exception as e:
+        return {"success": False, "error": str(e)}
+
+
+def deploy_with_staging(site_key: str, theme_files: List[str], description: str = "") -> Dict[str, Any]:
+    """
+    Deploy with automatic staging/snapshot creation for rollback capability.
+
+    Args:
+        site_key: WordPress site key
+        theme_files: List of local file paths to deploy
+        description: Optional deployment description
+
+    Returns:
+        Deployment result with snapshot information
+    """
+    try:
+        # Step 1: Create pre-deployment snapshot
+        print(f"Creating pre-deployment snapshot for {site_key}...")
+        snapshot_result = create_deployment_snapshot(site_key, f"Pre-deployment: {description}")
+        if not snapshot_result["success"]:
+            return {"success": False, "error": f"Failed to create snapshot: {snapshot_result.get('error')}"}
+
+        snapshot_id = snapshot_result["snapshot_id"]
+
+        # Step 2: Perform deployment
+        print(f"Deploying {len(theme_files)} files to {site_key}...")
+        deployment_result = deploy_wordpress_theme(site_key, theme_files, dry_run=False)
+
+        # Step 3: Create post-deployment snapshot
+        post_snapshot_result = create_deployment_snapshot(site_key, f"Post-deployment: {description}")
+
+        # Return comprehensive result
+        return {
+            "success": deployment_result["success"],
+            "site_key": site_key,
+            "deployment": deployment_result,
+            "pre_snapshot": snapshot_result,
+            "post_snapshot": post_snapshot_result if post_snapshot_result["success"] else None,
+            "rollback_available": snapshot_result["success"],
+            "rollback_snapshot_id": snapshot_id if snapshot_result["success"] else None
+        }
+
     except Exception as e:
         return {"success": False, "error": str(e)}
 

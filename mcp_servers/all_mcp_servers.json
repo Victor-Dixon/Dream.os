@@ -1,12 +1,5 @@
 {
   "mcpServers": {
-    "swarm-messaging": {
-      "command": "python",
-      "args": [
-        "D:/Agent_Cellphone_V2_Repository/mcp_servers/messaging_server.py"
-      ],
-      "description": "Swarm messaging system (PyAutoGUI-based agent messaging)"
-    },
     "agent-messaging": {
       "command": "python",
       "args": [
