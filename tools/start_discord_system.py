@@ -25,6 +25,7 @@ import os
 import subprocess
 import sys
 from pathlib import Path
+from typing import Iterable
 
 
 def _repo_root() -> Path:
@@ -83,6 +84,45 @@ def _start_detached(cmd: list[str], cwd: Path, stdout_path: Path) -> int:
     return int(p.pid)
 
 
+def _iter_pids_by_cmd_substrings(substrings: Iterable[str]) -> list[int]:
+    """
+    Best-effort: find Windows process ids whose CommandLine contains any of the provided substrings.
+    Returns [] on failure or on non-Windows platforms.
+    """
+    if os.name != "nt":
+        return []
+    try:
+        import subprocess as _sp
+
+        # Use PowerShell to query Win32_Process (works without extra deps)
+        joined = ",".join([f"'{s}'" for s in substrings])
+        ps = (
+            "$subs=@(" + joined + ");"
+            "Get-CimInstance Win32_Process | "
+            "Where-Object { $_.CommandLine -and ($subs | ForEach-Object { $_ }) -ne $null } | "
+            "Where-Object { $cl=$_.CommandLine; ($subs | Where-Object { $cl -like ('*'+$_+'*') }).Count -gt 0 } | "
+            "Select-Object -ExpandProperty ProcessId"
+        )
+        out = _sp.check_output(["powershell", "-NoProfile", "-Command", ps], text=True, stderr=_sp.DEVNULL)
+        pids: list[int] = []
+        for line in out.splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                pids.append(int(line))
+            except ValueError:
+                continue
+        return sorted(set(pids))
+    except Exception:
+        return []
+
+
+def _kill_by_cmd_substrings(substrings: Iterable[str]) -> None:
+    for pid in _iter_pids_by_cmd_substrings(substrings):
+        _taskkill(pid)
+
+
 def main() -> int:
     repo_root = _repo_root()
     _load_env(repo_root)
@@ -95,7 +135,8 @@ def main() -> int:
 
     pid_dir = repo_root / "pids"
     discord_pid_file = pid_dir / "discord.pid"
-    queue_pid_file = pid_dir / "queue.pid"
+    # Align naming with main.py (ServiceManager uses message_queue.pid)
+    message_queue_pid_file = pid_dir / "message_queue.pid"
 
     existing_pid = _read_pid(discord_pid_file)
     if args.status:
@@ -106,6 +147,9 @@ def main() -> int:
     if args.restart and existing_pid:
         print(f"Stopping existing Discord bot pid={existing_pid} ...")
         _taskkill(existing_pid)
+    if args.restart:
+        # Also clean up orphaned bot runners even if pid file is missing/stale
+        _kill_by_cmd_substrings(["src.discord_commander.bot_runner", "discord_commander.bot_runner"])
 
     token = os.getenv("DISCORD_BOT_TOKEN")
     if not token:
@@ -133,12 +177,15 @@ def main() -> int:
     if args.with_queue:
         queue_stdout = logs_dir / "message_queue_processor_stdout.log"
         print("📬 Starting message queue processor (detached)...")
+        if args.restart:
+            # Kill orphaned/duplicate queue processors (common failure mode: multiple instances)
+            _kill_by_cmd_substrings(["scripts/start_queue_processor.py", "start_queue_processor.py", "message_queue_processor"])
         queue_pid = _start_detached(
             [sys.executable, str(repo_root / "scripts" / "start_queue_processor.py")],
             cwd=repo_root,
             stdout_path=queue_stdout,
         )
-        _write_pid(queue_pid_file, queue_pid)
+        _write_pid(message_queue_pid_file, queue_pid)
         print(f"✅ Queue processor started (PID: {queue_pid})")
         print(f"   stdout/stderr -> {queue_stdout}")
 
