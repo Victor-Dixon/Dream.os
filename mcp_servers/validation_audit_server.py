@@ -47,10 +47,10 @@ FORBIDDEN_PATTERNS = [
 def validate_closure_format(closure_file_path: str) -> Dict[str, Any]:
     """
     Validate session closure document against A+++ standard.
-    
+
     Args:
         closure_file_path: Path to closure markdown file
-        
+
     Returns:
         Dict with validation results
     """
@@ -61,18 +61,18 @@ def validate_closure_format(closure_file_path: str) -> Dict[str, Any]:
                 "success": False,
                 "error": f"File not found: {closure_file_path}"
             }
-        
+
         content = file_path.read_text(encoding='utf-8')
-        
+
         violations = []
         missing_fields = []
-        
+
         # Check for required fields
         for field in REQUIRED_FIELDS:
             pattern = rf'\*\*{re.escape(field)}\*\*'
             if not re.search(pattern, content, re.IGNORECASE):
                 missing_fields.append(field)
-        
+
         # Check for forbidden patterns
         for pattern, description in FORBIDDEN_PATTERNS:
             matches = re.findall(pattern, content, re.IGNORECASE)
@@ -83,7 +83,7 @@ def validate_closure_format(closure_file_path: str) -> Dict[str, Any]:
                     "pattern": pattern,
                     "matches": len(matches)
                 })
-        
+
         # Check status field format
         status_match = re.search(r'\*\*Status:\*\*\s*([✅🟡❌])', content)
         if not status_match:
@@ -91,9 +91,9 @@ def validate_closure_format(closure_file_path: str) -> Dict[str, Any]:
                 "type": "missing_status_emoji",
                 "description": "Status field must include emoji (✅, 🟡, or ❌)"
             })
-        
+
         is_valid = len(missing_fields) == 0 and len(violations) == 0
-        
+
         return {
             "success": True,
             "valid": is_valid,
@@ -114,10 +114,10 @@ def validate_closure_format(closure_file_path: str) -> Dict[str, Any]:
 def validate_seo_integration(site_key: str) -> Dict[str, Any]:
     """
     Validate SEO integration for a site.
-    
+
     Args:
         site_key: Site identifier
-        
+
     Returns:
         Dict with SEO validation results
     """
@@ -137,10 +137,10 @@ def validate_seo_integration(site_key: str) -> Dict[str, Any]:
 def audit_website_structure(site_key: str) -> Dict[str, Any]:
     """
     Audit website structure and identify issues.
-    
+
     Args:
         site_key: Site identifier
-        
+
     Returns:
         Dict with audit results
     """
@@ -157,25 +157,27 @@ def audit_website_structure(site_key: str) -> Dict[str, Any]:
 def check_php_syntax(site_key: str, file_path: str) -> Dict[str, Any]:
     """
     Check PHP syntax for a remote WordPress file.
-    
+
     Uses SSH/WP-CLI or SFTP to execute `php -l` on the remote server.
-    
+
     Args:
         site_key: Site identifier
         file_path: Remote file path (e.g., "wp-content/themes/theme/functions.php")
-        
+
     Returns:
         Dict with syntax validation results
     """
     try:
         # Try to import deployment tools for remote execution
-        sys.path.insert(0, str(Path(__file__).parent.parent.parent / "websites" / "ops" / "deployment"))
-        
+        sys.path.insert(
+            0, str(Path(__file__).parent.parent.parent / "websites" / "ops" / "deployment"))
+
         try:
             from simple_wordpress_deployer import SimpleWordPressDeployer, load_site_configs
             configs = load_site_configs()
-            deployer = SimpleWordPressDeployer(site_key=site_key, site_configs=configs)
-            
+            deployer = SimpleWordPressDeployer(
+                site_key=site_key, site_configs=configs)
+
             if not deployer.connect():
                 return {
                     "success": False,
@@ -183,7 +185,7 @@ def check_php_syntax(site_key: str, file_path: str) -> Dict[str, Any]:
                     "site_key": site_key,
                     "file_path": file_path
                 }
-            
+
             # Use deployer's check_php_syntax method if available
             if hasattr(deployer, 'check_php_syntax'):
                 result = deployer.check_php_syntax(file_path)
@@ -202,12 +204,12 @@ def check_php_syntax(site_key: str, file_path: str) -> Dict[str, Any]:
                 command = f"php -l {file_path} 2>&1"
                 output = deployer.execute_command(command)
                 deployer.disconnect()
-                
+
                 # Parse output
                 is_valid = "No syntax errors" in output or "syntax is OK" in output
                 line_number = None
                 error_message = None
-                
+
                 if not is_valid:
                     # Try to extract line number from error
                     import re
@@ -215,7 +217,7 @@ def check_php_syntax(site_key: str, file_path: str) -> Dict[str, Any]:
                     if line_match:
                         line_number = int(line_match.group(1))
                     error_message = output.strip()
-                
+
                 return {
                     "success": True,
                     "site_key": site_key,
@@ -227,7 +229,8 @@ def check_php_syntax(site_key: str, file_path: str) -> Dict[str, Any]:
                 }
         except ImportError:
             # Fallback: Try local PHP syntax check if file is accessible locally
-            local_path = Path(__file__).parent.parent.parent / "websites" / "sites" / site_key / "wp" / file_path
+            local_path = Path(__file__).parent.parent.parent / \
+                "websites" / "sites" / site_key / "wp" / file_path
             if local_path.exists():
                 import subprocess
                 result = subprocess.run(
@@ -236,10 +239,10 @@ def check_php_syntax(site_key: str, file_path: str) -> Dict[str, Any]:
                     text=True,
                     timeout=10
                 )
-                
+
                 is_valid = result.returncode == 0
                 output = result.stdout + result.stderr
-                
+
                 line_number = None
                 error_message = None
                 if not is_valid:
@@ -248,7 +251,7 @@ def check_php_syntax(site_key: str, file_path: str) -> Dict[str, Any]:
                     if line_match:
                         line_number = int(line_match.group(1))
                     error_message = output.strip()
-                
+
                 return {
                     "success": True,
                     "site_key": site_key,
@@ -279,66 +282,74 @@ def check_php_syntax(site_key: str, file_path: str) -> Dict[str, Any]:
 def wordpress_health_check(site_key: str) -> Dict[str, Any]:
     """
     Perform comprehensive WordPress health check.
-    
+
     Includes core version, database health, plugin status, theme status, 
     and error detection.
-    
+
     Args:
         site_key: Site identifier
-        
+
     Returns:
         Dict with health check results
     """
     try:
         # Try to import deployment tools
-        sys.path.insert(0, str(Path(__file__).parent.parent.parent / "websites" / "ops" / "deployment"))
-        
+        sys.path.insert(
+            0, str(Path(__file__).parent.parent.parent / "websites" / "ops" / "deployment"))
+
         try:
             from simple_wordpress_deployer import SimpleWordPressDeployer, load_site_configs
             configs = load_site_configs()
-            deployer = SimpleWordPressDeployer(site_key=site_key, site_configs=configs)
-            
+            deployer = SimpleWordPressDeployer(
+                site_key=site_key, site_configs=configs)
+
             if not deployer.connect():
                 return {
                     "success": False,
                     "error": f"Failed to connect to {site_key}",
                     "site_key": site_key
                 }
-            
+
             results = {}
-            
+
             # 1. Core Version
-            core_version = deployer.execute_command("wp core version --allow-root").strip()
+            core_version = deployer.execute_command(
+                "wp core version --allow-root").strip()
             results["core_version"] = core_version
-            
+
             # 2. Database Health
-            db_check = deployer.execute_command("wp db check --allow-root").strip()
+            db_check = deployer.execute_command(
+                "wp db check --allow-root").strip()
             results["db_status"] = "OK" if "Success" in db_check else "Warning/Error"
             results["db_output"] = db_check
-            
+
             # 3. Active Plugins
-            plugin_list = deployer.execute_command("wp plugin list --status=active --format=count --allow-root").strip()
-            results["active_plugins_count"] = int(plugin_list) if plugin_list.isdigit() else 0
-            
+            plugin_list = deployer.execute_command(
+                "wp plugin list --status=active --format=count --allow-root").strip()
+            results["active_plugins_count"] = int(
+                plugin_list) if plugin_list.isdigit() else 0
+
             # 4. Active Theme
-            theme_name = deployer.execute_command("wp theme list --status=active --field=name --allow-root").strip()
+            theme_name = deployer.execute_command(
+                "wp theme list --status=active --field=name --allow-root").strip()
             results["active_theme"] = theme_name
-            
+
             # 5. Check for Error Logs (tail last 20 lines of debug.log)
             # remote_path = configs.get(site_key, {}).get("remote_path", f"domains/{site_key}/public_html")
             # debug_log_path = f"{remote_path}/wp-content/debug.log"
             # error_log = deployer.execute_command(f"tail -n 20 {debug_log_path} 2>/dev/null").strip()
             # results["recent_errors"] = error_log if error_log else "No recent errors found in debug.log"
-            
+
             deployer.disconnect()
-            
+
             return {
                 "success": True,
                 "site_key": site_key,
                 "health": results,
-                "timestamp": str(Path(__file__).stat().st_mtime) # Placeholder for real timestamp
+                # Placeholder for real timestamp
+                "timestamp": str(Path(__file__).stat().st_mtime)
             }
-            
+
         except ImportError:
             return {
                 "success": False,
@@ -500,7 +511,8 @@ def main():
                 elif tool_name == "wordpress_health_check":
                     result = wordpress_health_check(**arguments)
                 else:
-                    result = {"success": False, "error": f"Unknown tool: {tool_name}"}
+                    result = {"success": False,
+                              "error": f"Unknown tool: {tool_name}"}
 
                 print(
                     json.dumps(
@@ -552,4 +564,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

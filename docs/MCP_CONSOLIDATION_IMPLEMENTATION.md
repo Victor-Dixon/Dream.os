@@ -30,24 +30,132 @@
 
 ### Enhanced Deployment Server (Staging & Rollback)
 
-The **deployment** MCP server has been enhanced with **staging and rollback capabilities**:
+The **deployment** MCP server has been enhanced with **comprehensive staging and rollback capabilities** for safe WordPress deployments:
 
 #### New Features Added:
-- **create_deployment_snapshot()** - Creates pre-deployment snapshots
-- **rollback_deployment()** - Rolls back to previous snapshots
-- **list_deployment_snapshots()** - Lists available snapshots
-- **deploy_with_staging()** - Deploys with automatic snapshot creation
+- **create_deployment_snapshot(site_key, description)** - Creates pre-deployment snapshots of theme/plugin files and WordPress metadata
+- **rollback_deployment(site_key, snapshot_id)** - Rolls back deployment to previous snapshot state
+- **list_deployment_snapshots(site_key)** - Lists available snapshots with metadata
+- **delete_deployment_snapshot(site_key, snapshot_id)** - Removes old snapshots to manage storage
+- **deploy_with_staging(site_key, theme_files, description)** - Deploys with automatic pre/post snapshot creation
 
-#### Architecture:
+#### Architecture Overview:
+
+**Staging & Rollback System Architecture:**
 ```
-Deployment Flow:
-1. Pre-deployment snapshot creation
-2. File deployment execution
-3. Post-deployment snapshot creation
-4. Rollback capability maintained
+┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
+│ Pre-Deployment  │───▶│   Deployment     │───▶│ Post-Deployment │
+│   Snapshot      │    │   Execution      │    │   Snapshot      │
+│                 │    │                  │    │                 │
+│ • File hashes   │    │ • SFTP upload    │    │ • File hashes   │
+│ • WP version    │    │ • Theme/plugin   │    │ • WP version    │
+│ • Theme version │    │ • activation     │    │ • Theme version │
+│ • Metadata      │    │ • Validation     │    │ • Metadata      │
+└─────────────────┘    └──────────────────┘    └─────────────────┘
+        │                        │                        │
+        ▼                        ▼                        ▼
+┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
+│   Rollback      │◀───│   Rollback       │◀───│   Rollback      │
+│   Available     │    │   Trigger        │    │   Available     │
+└─────────────────┘    └──────────────────┘    └─────────────────┘
+```
 
-Snapshot Storage:
+**Snapshot Data Structure:**
+```json
+{
+  "snapshot_id": "site_key_20251228_120000_abc123def",
+  "site_key": "tradingrobotplug.com",
+  "timestamp": "2025-12-28T12:00:00.000000",
+  "files": [
+    {
+      "path": "wp-content/themes/tradingrobotplug-theme/style.css",
+      "hash": "sha256:abc123...",
+      "size": 12345
+    }
+  ],
+  "metadata": {
+    "description": "Pre-deployment snapshot for TradingRobotPlug Phase 1",
+    "wordpress_version": "6.4.2",
+    "theme_version": "1.0.0",
+    "created_by": "deployment_mcp_server",
+    "rollback_available": true
+  },
+  "backup_paths": ["/path/to/local/backup/files"]
+}
+```
+
+**Deployment Flow with Staging:**
+```
+1. create_deployment_snapshot(site_key, "Pre-deployment: " + description)
+2. deploy_wordpress_theme(site_key, theme_files, dry_run=False)
+3. create_deployment_snapshot(site_key, "Post-deployment: " + description)
+4. Return comprehensive result with rollback information
+
+Success Response:
+{
+  "success": true,
+  "site_key": "tradingrobotplug.com",
+  "deployment": { /* deployment results */ },
+  "pre_snapshot": { /* pre-deployment snapshot */ },
+  "post_snapshot": { /* post-deployment snapshot */ },
+  "rollback_available": true,
+  "rollback_snapshot_id": "site_key_20251228_120000_abc123def"
+}
+```
+
+**Rollback Process:**
+```
+1. Validate snapshot exists and belongs to site_key
+2. Download/restore files from snapshot backup_paths
+3. Revert WordPress configuration if needed
+4. Validate rollback success
+5. Update snapshot metadata with rollback timestamp
+
+Rollback Response:
+{
+  "success": true,
+  "site_key": "tradingrobotplug.com",
+  "snapshot_id": "site_key_20251228_120000_abc123def",
+  "rollback_timestamp": "2025-12-28T12:30:00.000000",
+  "files_restored": 15,
+  "wordpress_version_restored": "6.4.2"
+}
+```
+
+#### Storage Management:
+**Directory Structure:**
+```
 deployment_snapshots/
+├── tradingrobotplug.com/
+│   ├── tradingrobotplug.com_20251228_120000_abc123def.json
+│   ├── tradingrobotplug.com_20251228_123000_def456ghi.json
+│   └── tradingrobotplug.com_20251228_130000_ghi789jkl.json
+├── freerideinvestor.com/
+│   └── freerideinvestor.com_20251228_140000_jkl012mno.json
+└── weareswarm.online/
+    └── weareswarm.online_20251228_150000_mno345pqr.json
+```
+
+**Retention Policy:**
+- Keep last 10 snapshots per site
+- Automatic cleanup of snapshots older than 30 days
+- Manual deletion available via delete_deployment_snapshot()
+- Backup files stored separately with configurable retention
+
+#### Error Handling & Safety:
+- **Pre-deployment validation**: Verify site connectivity and permissions
+- **Snapshot integrity**: Hash verification for all files
+- **Rollback safeguards**: Confirm rollback target exists and is valid
+- **Emergency recovery**: Maintain emergency rollback to last known good state
+- **Audit logging**: Full audit trail of all deployment and rollback operations
+
+#### Integration Points:
+- **WordPress Manager**: Leverages existing WordPressManager for site operations
+- **SFTP Operations**: Uses established secure file transfer protocols
+- **Validation Pipeline**: Integrates with v2-compliance server for post-deployment checks
+- **Monitoring**: Connects to maintenance-monitoring server for deployment health tracking
+
+This architecture provides **zero-downtime deployment capability** with **instant rollback** to any previous state, enabling safe continuous deployment of WordPress sites across the swarm.
 ├── site_key/
 │   ├── snapshot_id.json (metadata)
 │   └── snapshot_id/ (backup files)
