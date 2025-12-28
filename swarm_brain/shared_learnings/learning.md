@@ -14492,3 +14492,25 @@ Tool audit stabilization: treat timeouts as SLOW (not broken), execute tools pac
 
 ---
 
+## Mods Repo Bootstrap + MSBuild Intermediate Path Fix (2025-12-27)
+
+**Author:** Agent-8  
+**Date:** 2025-12-28T03:48:19.464233  
+**Tags:** repo-bootstrap, git, github, msbuild, dotnet, cs2-mods
+
+# Mods Repo Bootstrap + MSBuild Intermediate Path Fix (2025-12-27)
+
+## Repo bootstrap (Mods)
+- Initialized `D:\mods` as git repo and created initial commit `1e0bac3`.
+- Added `.gitignore` to prevent committing game installs, archives, and build outputs.
+- Push to `Victor-Dixon/Mods` failed with **403** (`Permission denied`) because the authenticated user lacked write access.
+
+## Build reliability fix (MSBuild)
+- `Directory.Build.props` originally forced intermediates to `obj_build/`, which triggered Windows file-lock / access-denied failures during `dotnet test`.
+- Fix applied:
+  - Use standard `obj/` intermediates
+  - Add `DefaultItemExcludes` entries for `obj_build/**` and `obj_temp/**` to prevent accidental compilation of generated files when those folders exist.
+
+
+---
+

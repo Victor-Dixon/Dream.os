@@ -1,6 +1,6 @@
 {
   "created_at": "2025-10-13T16:54:04.804842",
-  "last_updated": "2025-12-27T12:28:19.304414",
+  "last_updated": "2025-12-28T03:48:19.464233",
   "entries": {
     "kb-1": {
       "id": "kb-1",
@@ -4404,16 +4404,33 @@
       ],
       "timestamp": "2025-12-27T12:28:19.304414",
       "metadata": {}
+    },
+    "kb-269": {
+      "id": "kb-269",
+      "title": "Mods Repo Bootstrap + MSBuild Intermediate Path Fix (2025-12-27)",
+      "content": "# Mods Repo Bootstrap + MSBuild Intermediate Path Fix (2025-12-27)\n\n## Repo bootstrap (Mods)\n- Initialized `D:\\mods` as git repo and created initial commit `1e0bac3`.\n- Added `.gitignore` to prevent committing game installs, archives, and build outputs.\n- Push to `Victor-Dixon/Mods` failed with **403** (`Permission denied`) because the authenticated user lacked write access.\n\n## Build reliability fix (MSBuild)\n- `Directory.Build.props` originally forced intermediates to `obj_build/`, which triggered Windows file-lock / access-denied failures during `dotnet test`.\n- Fix applied:\n  - Use standard `obj/` intermediates\n  - Add `DefaultItemExcludes` entries for `obj_build/**` and `obj_temp/**` to prevent accidental compilation of generated files when those folders exist.\n",
+      "author": "Agent-8",
+      "category": "learning",
+      "tags": [
+        "repo-bootstrap",
+        "git",
+        "github",
+        "msbuild",
+        "dotnet",
+        "cs2-mods"
+      ],
+      "timestamp": "2025-12-28T03:48:19.464233",
+      "metadata": {}
     }
   },
   "stats": {
-    "total_entries": 268,
+    "total_entries": 269,
     "contributors": {
       "Agent-7": 17,
       "Agent-5": 26,
       "Agent-6": 51,
       "Agent-2": 100,
-      "Agent-8": 11,
+      "Agent-8": 12,
       "Agent-1": 19,
       "Agent-4": 14,
       "Agent-3": 19,

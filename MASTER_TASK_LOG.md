@@ -13,7 +13,7 @@
 - [ ] **HIGH**: Deployment MCP: Staging, Rollback & Snapshots Implementation [Agent-2]
 - [ ] **HIGH**: Resolve TRP/Build-In-Public Blockers & PHP Syntax Validation MCP Enhancement [Agent-3]
 - [ ] **HIGH**: Analytics Validation Completion & Database Manager MCP Implementation [Agent-5]
-- [ ] **HIGH**: Coordinate 646 SSOT tags & PSE Rule Implementation [Agent-6]
+- [ ] **HIGH**: Coordinate 646 SSOT tags & PSE Rule Implementation [Agent-6] - ⏳ IN PROGRESS - Websites repo cleanup: 200+ tools archived to tools/_archived/, dependency audit in progress
 - [ ] **HIGH**: P0 Foundation: Offer Ladders & ICP Definitions for Tier 2 Sites [Agent-7]
 - [ ] **HIGH**: Unified Tool Registry MCP Integration & final 1444+ tool audit [Agent-8]
 
