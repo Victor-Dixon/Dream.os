@@ -56,12 +56,12 @@
       ],
       "description": "Unified tool server exposing all tools via tool registry"
     },
-    "deployment-verification": {
+    "deployment": {
       "command": "python",
       "args": [
-        "D:/Agent_Cellphone_V2_Repository/mcp_servers/deployment_verification_server.py"
+        "D:/Agent_Cellphone_V2_Repository/mcp_servers/deployment_server.py"
       ],
-      "description": "Deployment status checking and verification operations"
+      "description": "Unified deployment and verification operations - consolidates deployment_manager_server, deployment_verification_server, and scattered deployment tools"
     },
     "validation-audit": {
       "command": "python",
@@ -91,12 +91,5 @@
       ],
       "description": "Workspace cleanup, session cleanup, and archive operations"
     },
-    "deployment-manager": {
-      "command": "python",
-      "args": [
-        "D:/Agent_Cellphone_V2_Repository/mcp_servers/deployment_manager_server.py"
-      ],
-      "description": "Deployment status checking, verification, and history tracking"
-    }
   }
 }
