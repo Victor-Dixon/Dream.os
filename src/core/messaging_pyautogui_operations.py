@@ -176,35 +176,17 @@ class PyAutoGUIOperationsService:
         recipient: str,
         coordinates: Tuple[int, int]
     ) -> bool:
-        """
-        Verify coordinates before pasting (final check).
-        
-        Args:
-            recipient: Agent recipient ID (for logging)
-            coordinates: Tuple of (x, y) coordinates
-            
-        Returns:
-            True if coordinates valid
-        """
-        if not self.pyautogui:
-            return False
-        
+        """Verify coordinates and reposition if needed."""
+        if not self.pyautogui: return False
         x, y = coordinates
-        final_mouse_pos = self.pyautogui.position()
-        final_distance = ((final_mouse_pos[0] - x) ** 2 + (final_mouse_pos[1] - y) ** 2) ** 0.5
-        
-        if final_distance > 10:
-            logger.error(
-                f"❌ CRITICAL: Mouse moved away before paste for {recipient}: "
-                f"expected ({x}, {y}), got {final_mouse_pos}"
-            )
-            # Re-position before paste
+        curr_pos = self.pyautogui.position()
+        if ((curr_pos[0] - x) ** 2 + (curr_pos[1] - y) ** 2) ** 0.5 > 10:
+            logger.warning(f"⚠️ Repositioning for {recipient} at ({x}, {y})")
             self.pyautogui.moveTo(x, y, duration=0.2)
             time.sleep(0.2)
-            self.pyautogui.click()  # Re-focus
+            self.pyautogui.click()
             time.sleep(0.3)
             return False
-        
         return True
     
     def paste_content(
@@ -213,74 +195,22 @@ class PyAutoGUIOperationsService:
         coordinates: Tuple[int, int],
         clipboard_service
     ) -> bool:
-        """
-        Paste content from clipboard.
-        
-        Args:
-            recipient: Agent recipient ID (for logging)
-            coordinates: Tuple of (x, y) coordinates
-            clipboard_service: ClipboardService instance
-            
-        Returns:
-            True if paste successful
-        """
-        if not self.pyautogui:
-            logger.error("❌ PyAutoGUI not available for paste")
-            return False
-        
+        """Paste content from clipboard."""
+        if not self.pyautogui: return False
         x, y = coordinates
         
-        # One final coordinate check before paste
-        pre_paste_pos = self.pyautogui.position()
-        if abs(pre_paste_pos[0] - x) > 10 or abs(pre_paste_pos[1] - y) > 10:
-            logger.error(
-                f"❌ CRITICAL: Mouse position invalid before paste for {recipient}: "
-                f"expected ({x}, {y}), got {pre_paste_pos}"
-            )
-            # Re-position and click to focus
-            logger.info(f"🔄 Repositioning mouse to ({x}, {y})")
-            self.pyautogui.moveTo(x, y, duration=0.2)
-            time.sleep(0.2)
-            self.pyautogui.click()  # Ensure input field is focused
-            time.sleep(0.3)
+        # Final check and focus
+        self.verify_coordinates_before_paste(recipient, coordinates)
+        self.pyautogui.click()
+        time.sleep(0.2)
         
-        # CRITICAL: Ensure input field is focused before pasting
-        logger.info(f"🖱️ Clicking to ensure focus before paste for {recipient} at ({x}, {y})")
-        self.pyautogui.click()  # Click to ensure input field is active
-        time.sleep(0.2)  # Wait for focus
-        
-        # Verify clipboard has content before pasting
-        try:
-            import pyperclip
-            clipboard_content = pyperclip.paste()
-            if not clipboard_content or len(clipboard_content.strip()) == 0:
-                logger.error(f"❌ Clipboard is empty before paste for {recipient}")
-                return False
-            logger.info(f"✅ Clipboard verified: {len(clipboard_content)} chars ready to paste for {recipient}")
-        except Exception as e:
-            logger.warning(f"⚠️ Could not verify clipboard before paste for {recipient}: {e}")
-            # Continue anyway - might still work
-        
-        logger.info(f"📥 Pasting message to {recipient} at ({x}, {y})")
+        logger.info(f"📥 Pasting to {recipient} at ({x}, {y})")
         try:
             self.pyautogui.hotkey("ctrl", "v")
-            time.sleep(0.5)  # Wait for paste to complete
-            
-            # Verify paste succeeded by checking clipboard is still there (optional)
-            # If paste worked, clipboard should still have content
-            try:
-                import pyperclip
-                post_paste_clipboard = pyperclip.paste()
-                if post_paste_clipboard == clipboard_content:
-                    logger.debug(f"✅ Paste completed for {recipient}")
-                else:
-                    logger.warning(f"⚠️ Clipboard changed after paste - may indicate paste issue")
-            except:
-                pass  # Non-critical check
-            
+            time.sleep(0.5)
             return True
         except Exception as e:
-            logger.error(f"❌ Failed to paste message for {recipient}: {e}")
+            logger.error(f"❌ Paste failed for {recipient}: {e}")
             return False
     
     def send_message(

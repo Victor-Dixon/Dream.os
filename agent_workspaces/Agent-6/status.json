@@ -1,10 +1,11 @@
 {
   "agent_id": "Agent-6",
   "agent_name": "Coordination & Communication Specialist",
-  "cycle_count": 5,
+  "cycle_count": 6,
   "status": "ACTIVE_AGENT_MODE",
-  "current_phase": "TASK_EXECUTION",
-  "last_updated": "2025-12-28 14:00:00",
+  "fsm_state": "ACTIVE",
+  "current_phase": "INITIALIZATION",
+  "last_updated": "2025-12-28 10:00:00",
   "current_mission": "Swarm Phase 3 Consolidation & Work Distribution",
   "mission_priority": "HIGH",
   "active_coordinations": [

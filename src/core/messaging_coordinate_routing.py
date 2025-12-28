@@ -96,206 +96,120 @@ class CoordinateRoutingService:
             return coords
     
     def _handle_agent4_routing(
-        self,
-        message,
-        sender: str,
-        chat_coords_expected: Tuple[int, int],
-        onboarding_coords_check: Tuple[int, int],
-        message_type_str: str
+        self, message, sender: str, chat_coords: Tuple[int, int], onboarding_coords: Tuple[int, int], message_type_str: str
     ) -> Tuple[int, int]:
-        """
-        Handle Agent-4 coordinate routing with hardcoded coordinates.
+        """Handle Agent-4 coordinate routing with hardcoded overrides."""
+        # Use hardcoded if loader mismatch
+        if chat_coords != self.AGENT4_CHAT_COORDS: chat_coords = self.AGENT4_CHAT_COORDS
+        if onboarding_coords != self.AGENT4_ONBOARDING_COORDS: onboarding_coords = self.AGENT4_ONBOARDING_COORDS
         
-        CRITICAL: Agent-4 ALWAYS uses chat coordinates unless EXPLICITLY ONBOARDING type.
-        This includes Discord messages, CAPTAIN_TO_AGENT, SYSTEM_TO_AGENT, etc.
-        """
-        # Verify loader returned correct coords
-        if chat_coords_expected != self.AGENT4_CHAT_COORDS:
-            logger.warning(
-                f"⚠️ Agent-4 chat coords mismatch! Loader: {chat_coords_expected}, "
-                f"Expected: {self.AGENT4_CHAT_COORDS}. Using hardcoded."
-            )
-            chat_coords_expected = self.AGENT4_CHAT_COORDS
+        is_onboarding = self._is_onboarding_message(message)
+        is_discord = self._is_discord_message(message)
         
-        if onboarding_coords_check != self.AGENT4_ONBOARDING_COORDS:
-            logger.warning(
-                f"⚠️ Agent-4 onboarding coords mismatch! Loader: {onboarding_coords_check}, "
-                f"Expected: {self.AGENT4_ONBOARDING_COORDS}. Using hardcoded."
-            )
-            onboarding_coords_check = self.AGENT4_ONBOARDING_COORDS
-        
-        logger.info(
-            f"✅ Agent-4 coordinates verified: "
-            f"Chat={chat_coords_expected}, Onboarding={onboarding_coords_check}"
-        )
-        
-        # Check if message is onboarding type
-        is_onboarding_type = self._is_onboarding_message(message)
-        
-        # Check if Discord message
-        is_discord_message = self._is_discord_message(message)
-        
-        if is_discord_message:
-            logger.info(f"📍 Agent-4: Discord message detected - forcing chat coordinates")
-            metadata = message.metadata if isinstance(message.metadata, dict) else {}
-            logger.info(
-                f"📍 Agent-4: Metadata source: {metadata.get('source', 'N/A')}"
-            )
-        
-        # ONLY use onboarding coords if EXPLICITLY ONBOARDING type
-        if is_onboarding_type:
-            coords = self.AGENT4_ONBOARDING_COORDS
-            logger.info(
-                f"📍 Agent-4: Using ONBOARDING coordinates "
-                f"(EXPLICIT ONBOARDING type confirmed): {coords}"
-            )
+        # Discord or non-onboarding always uses chat coords
+        if is_discord or not is_onboarding:
+            coords = chat_coords
+            logger.info(f"📍 Agent-4: Using chat coordinates (discord={is_discord})")
         else:
-            # ALL other message types for Agent-4 use chat coordinates - NO EXCEPTIONS
-            coords = self.AGENT4_CHAT_COORDS
-            logger.info(
-                f"📍 Agent-4: FORCING hardcoded chat coordinates "
-                f"(type: {message_type_str}, sender: {sender}, is_discord: {is_discord_message}): {coords}"
-            )
-            logger.info(
-                f"📍 Agent-4: ABSOLUTE OVERRIDE - Chat coords hardcoded to prevent routing errors"
-            )
-        
-        # Final verification for Agent-4
-        return self._finalize_agent4_coordinates(message, coords, message_type_str)
+            coords = onboarding_coords
+            logger.info(f"📍 Agent-4: Using onboarding coordinates")
+            
+        return coords
     
     def _handle_agent2_routing(
-        self,
-        message,
-        chat_coords_expected: Tuple[int, int],
-        onboarding_coords_check: Tuple[int, int],
-        message_type_str: str
+        self, message, chat_coords: Tuple[int, int], onboarding_coords: Tuple[int, int], message_type_str: str
     ) -> Tuple[int, int]:
         """Handle Agent-2 coordinate routing."""
         if message.message_type == UnifiedMessageType.ONBOARDING:
-            coords = onboarding_coords_check
-            logger.info(
-                f"📍 Agent-2: Using ONBOARDING coordinates "
-                f"(explicit ONBOARDING type): {coords}"
-            )
-        else:
-            coords = chat_coords_expected
-            logger.info(
-                f"📍 Agent-2: Using chat coordinates (type: {message_type_str}): {coords}"
-            )
-            # Defensive check
-            if coords == onboarding_coords_check:
-                logger.error(
-                    f"❌ CRITICAL BUG: Agent-2 non-ONBOARDING message selected "
-                    f"onboarding coords! FORCING chat coords."
-                )
-                coords = chat_coords_expected
-        
-        return coords
-    
-    def _finalize_agent4_coordinates(
-        self,
-        message,
-        coords: Tuple[int, int],
-        message_type_str: str
-    ) -> Tuple[int, int]:
-        """
-        Final verification and hardcoded override for Agent-4 coordinates.
-        
-        CRITICAL: Absolute hardcoded override to prevent routing errors.
-        """
-        # Re-check onboarding type status
-        final_is_onboarding = self._is_onboarding_message(message)
-        
-        # Re-check Discord source
-        final_is_discord = self._is_discord_message(message)
-        
-        logger.info(f"🔍 Agent-4 FINAL VERIFICATION:")
-        logger.info(f"   - Final is_onboarding check: {final_is_onboarding}")
-        logger.info(f"   - Final is_discord check: {final_is_discord}")
-        logger.info(f"   - Selected coords: {coords}")
-        logger.info(f"   - Hardcoded chat: {self.AGENT4_CHAT_COORDS}")
-        logger.info(f"   - Hardcoded onboarding: {self.AGENT4_ONBOARDING_COORDS}")
-        
-        # CRITICAL: Discord messages ALWAYS use chat coordinates
-        if final_is_discord:
-            if coords != self.AGENT4_CHAT_COORDS:
-                logger.error(
-                    f"❌ CRITICAL ROUTING ERROR: Agent-4 Discord message using wrong coords!"
-                )
-                logger.error(
-                    f"   Expected hardcoded chat: {self.AGENT4_CHAT_COORDS}, Got: {coords}"
-                )
-                coords = self.AGENT4_CHAT_COORDS
-                logger.warning(
-                    f"⚠️ ABSOLUTE OVERRIDE: Agent-4 Discord message forced to "
-                    f"chat coordinates: {coords}"
-                )
-            else:
-                logger.info(
-                    f"✅ Agent-4 Discord message verified: Using chat coordinates"
-                )
-        elif not final_is_onboarding:
-            # ABSOLUTE OVERRIDE: Force hardcoded chat coords for Agent-4 if not onboarding
-            if coords != self.AGENT4_CHAT_COORDS:
-                logger.error(
-                    f"❌ CRITICAL ROUTING ERROR: Agent-4 non-ONBOARDING message "
-                    f"using wrong coords!"
-                )
-                logger.error(
-                    f"   Expected hardcoded chat: {self.AGENT4_CHAT_COORDS}, Got: {coords}"
-                )
-                logger.error(f"   Message type: {message.message_type}, "
-                           f"Message type str: {message_type_str}")
-                logger.error(f"   Is onboarding check: {final_is_onboarding}")
-                coords = self.AGENT4_CHAT_COORDS
-                logger.warning(
-                    f"⚠️ ABSOLUTE HARDCODED OVERRIDE: Agent-4 routing fixed - "
-                    f"using hardcoded chat coordinates: {coords}"
-                )
-            else:
-                logger.info(
-                    f"✅ Agent-4 routing verified: Using hardcoded chat coordinates "
-                    f"for non-ONBOARDING message"
-                )
-        else:
-            # Verify onboarding coords match hardcoded
-            if coords != self.AGENT4_ONBOARDING_COORDS:
-                logger.warning(
-                    f"⚠️ Agent-4 ONBOARDING coords mismatch, using hardcoded: "
-                    f"{self.AGENT4_ONBOARDING_COORDS}"
-                )
-                coords = self.AGENT4_ONBOARDING_COORDS
-        
-        return coords
-    
+            return onboarding_coords
+        return chat_coords
+
     def _is_onboarding_message(self, message) -> bool:
         """Check if message is of ONBOARDING type."""
-        message_type = message.message_type
-        
-        if hasattr(message_type, 'value'):
-            return message_type.value == "onboarding" or \
-                   message_type == UnifiedMessageType.ONBOARDING
-        elif isinstance(message_type, str):
-            return message_type.lower() == "onboarding"
-        else:
-            return message_type == UnifiedMessageType.ONBOARDING
+        m_type = message.message_type
+        if hasattr(m_type, 'value'): return m_type.value == "onboarding" or m_type == UnifiedMessageType.ONBOARDING
+        return str(m_type).lower() == "onboarding" or m_type == UnifiedMessageType.ONBOARDING
     
     def _is_discord_message(self, message) -> bool:
         """Check if message is from Discord source."""
-        if not hasattr(message, 'metadata') or not isinstance(message.metadata, dict):
-            return False
-        
-        metadata = message.metadata
-        source = metadata.get("source", "")
-        
-        return (
-            source == "discord" or
-            source == "DISCORD" or
-            "discord" in str(source).lower() or
-            metadata.get("discord_user_id") is not None or
-            metadata.get("discord_username") is not None
-        )
+        if not hasattr(message, 'metadata') or not isinstance(message.metadata, dict): return False
+        source = str(message.metadata.get("source", "")).lower()
+        return "discord" in source or message.metadata.get("discord_user_id") is not None
     
+    def validate_coordinates(self, agent_id: str, coords: Tuple[int, int]) -> bool:
+        """
+        Validate coordinates before sending with comprehensive checks.
+
+        Args:
+            agent_id: Agent identifier
+            coords: Coordinate tuple (x, y)
+
+        Returns:
+            True if coordinates are valid
+        """
+        if not coords or len(coords) != 2:
+            logger.error(f"❌ Invalid coordinates for {agent_id}: {coords}")
+            return False
+
+        x, y = coords
+        if not isinstance(x, (int, float)) or not isinstance(y, (int, float)):
+            logger.error(f"❌ Coordinates must be numeric for {agent_id}: ({x}, {y})")
+            return False
+
+        # Platform-accurate bounds check: validate against the OS virtual screen bounds.
+        try:
+            from .utilities.validation_utilities import get_virtual_screen_bounds
+            min_x, min_y, max_x, max_y = get_virtual_screen_bounds()
+            if x < min_x or x > max_x:
+                logger.error(
+                    f"❌ X coordinate out of virtual screen bounds for {agent_id}: {x} "
+                    f"(bounds: {min_x}..{max_x}). Re-capture coords in cursor_agent_coords.json."
+                )
+                return False
+            if y < min_y or y > max_y:
+                logger.error(
+                    f"❌ Y coordinate out of virtual screen bounds for {agent_id}: {y} "
+                    f"(bounds: {min_y}..{max_y}). Re-capture coords in cursor_agent_coords.json."
+                )
+                return False
+        except Exception as e:
+            logger.debug(f"Virtual screen bounds check unavailable: {e}")
+
+        # Validate against bounds from cursor_agent_coords.json
+        try:
+            # Get expected coordinates for this agent
+            expected_chat_coords = self.coord_loader.get_chat_coordinates(agent_id)
+            expected_onboarding_coords = self.coord_loader.get_onboarding_coordinates(agent_id)
+            
+            # Check if coords match expected (within tolerance for screen variations)
+            coords_match = (
+                coords == expected_chat_coords or 
+                coords == expected_onboarding_coords or
+                (abs(x - expected_chat_coords[0]) <= 5 and abs(y - expected_chat_coords[1]) <= 5) or
+                (abs(x - expected_onboarding_coords[0]) <= 5 and abs(y - expected_onboarding_coords[1]) <= 5)
+            )
+            
+            if not coords_match:
+                logger.warning(
+                    f"⚠️ Coordinate mismatch for {agent_id}: got {coords}, "
+                    f"expected chat={expected_chat_coords} or onboarding={expected_onboarding_coords}"
+                )
+            
+            # Legacy coarse bounds (kept as a final backstop)
+            if x < -5000 or x > 5000:
+                logger.error(f"❌ X coordinate out of coarse bounds for {agent_id}: {x} (expected -5000..5000)")
+                return False
+            if y < -2000 or y > 5000:
+                logger.error(f"❌ Y coordinate out of coarse bounds for {agent_id}: {y} (expected -2000..5000)")
+                return False
+            
+            logger.debug(f"✅ Coordinates validated for {agent_id}: {coords}")
+            return True
+            
+        except Exception as e:
+            logger.warning(f"⚠️ Could not validate coordinates against SSOT: {e}, using basic validation")
+            return True
+
     def validate_coordinate_selection(
         self,
         recipient: str,
