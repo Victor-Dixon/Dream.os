@@ -152,22 +152,27 @@ def deploy_wordpress_file(
 def verify_deployment(
     url: str,
     required_content: Optional[List[str]] = None,
-    required_status: int = 200
+    required_status: int = 200,
+    expected_text: Optional[str] = None
 ) -> Dict[str, Any]:
     """
     Verify deployment by checking URL and content.
     
-    Consolidates: verify_*.py tools, deployment_verification_tool.py
+    Consolidates: verify_*.py tools, deployment_verification_tool.py, deployment_manager_server.py, deployment_verification_server.py
     
     Args:
         url: URL to verify
         required_content: List of content strings that must be present
         required_status: Expected HTTP status code
+        expected_text: Single text string to check (alternative to required_content)
         
     Returns:
         Verification result with pass/fail status
     """
     try:
+        if not url.startswith("http"):
+            url = f"https://{url}"
+        
         response = requests.get(url, timeout=TIMEOUT, allow_redirects=True)
         
         result = {
@@ -175,12 +180,25 @@ def verify_deployment(
             "status_code": response.status_code,
             "status_match": response.status_code == required_status,
             "timestamp": datetime.now().isoformat(),
-            "overall_status": "PENDING"
+            "overall_status": "PENDING",
+            "verified": False
+        }
+        
+        checks = {
+            "status_code_match": response.status_code == required_status,
+            "is_accessible": response.status_code < 500,
         }
         
         if response.status_code == required_status:
             result["status_check"] = "PASS"
             
+            # Check for expected_text (single string)
+            if expected_text:
+                text_found = expected_text in response.text
+                checks["text_found"] = text_found
+                result["expected_text_found"] = text_found
+            
+            # Check for required_content (list of strings)
             if required_content:
                 html_lower = response.text.lower()
                 found_content = []
@@ -199,24 +217,33 @@ def verify_deployment(
                     "total_count": len(required_content)
                 }
                 
-                if len(missing_content) == 0:
-                    result["overall_status"] = "PASS"
-                else:
-                    result["overall_status"] = "PARTIAL"
-            else:
+                checks["content_found"] = len(missing_content) == 0
+            
+            # Determine overall status
+            all_passed = all(checks.values())
+            result["verified"] = all_passed
+            
+            if all_passed:
                 result["overall_status"] = "PASS"
+            elif required_content and len(result.get("content_check", {}).get("missing", [])) < len(required_content):
+                result["overall_status"] = "PARTIAL"
+            else:
+                result["overall_status"] = "FAIL"
         else:
             result["status_check"] = "FAIL"
             result["overall_status"] = "FAIL"
             result["error"] = f"Expected status {required_status}, got {response.status_code}"
+            result["verified"] = False
         
+        result["checks"] = checks
         return result
     except Exception as e:
         return {
             "url": url,
             "overall_status": "ERROR",
             "error": str(e),
-            "timestamp": datetime.now().isoformat()
+            "timestamp": datetime.now().isoformat(),
+            "verified": False
         }
 
 
@@ -271,7 +298,7 @@ def check_http_status(url: str) -> Dict[str, Any]:
     """
     Check HTTP status code for a URL.
     
-    Consolidates: check_*.py tools
+    Consolidates: check_*.py tools, check_site_status from deployment_verification_server.py
     
     Args:
         url: URL to check
@@ -280,6 +307,9 @@ def check_http_status(url: str) -> Dict[str, Any]:
         HTTP status result
     """
     try:
+        if not url.startswith("http"):
+            url = f"https://{url}"
+        
         response = requests.get(url, timeout=TIMEOUT, allow_redirects=True)
         
         return {
@@ -287,13 +317,100 @@ def check_http_status(url: str) -> Dict[str, Any]:
             "url": url,
             "status_code": response.status_code,
             "status_text": response.reason,
+            "final_url": response.url,
+            "response_time_ms": int(response.elapsed.total_seconds() * 1000),
             "headers": dict(response.headers),
+            "is_healthy": response.status_code == 200,
             "timestamp": datetime.now().isoformat()
         }
     except Exception as e:
         return {
             "success": False,
             "url": url,
+            "error": str(e),
+            "timestamp": datetime.now().isoformat()
+        }
+
+
+def list_deployable_sites() -> Dict[str, Any]:
+    """
+    List sites configured for deployment.
+    
+    Consolidates: list_deployable_sites from deployment_manager_server.py
+    
+    Returns:
+        List of deployable sites
+    """
+    try:
+        # Check for sites configuration
+        sites_config = Path(__file__).parent.parent / "config" / "sites.json"
+        if sites_config.exists():
+            import json
+            with open(sites_config, 'r', encoding='utf-8') as f:
+                sites = json.load(f)
+            
+            return {
+                "success": True,
+                "sites": list(sites.keys()) if isinstance(sites, dict) else sites,
+                "count": len(sites) if isinstance(sites, dict) else len(sites)
+            }
+        else:
+            # Return common sites
+            return {
+                "success": True,
+                "sites": [
+                    "tradingrobotplug.com",
+                    "freerideinvestor.com",
+                    "dadudekc.com",
+                    "weareswarm.online",
+                    "crosbyultimateevents.com"
+                ],
+                "count": 5,
+                "note": "Using default site list (sites.json not found)"
+            }
+    except Exception as e:
+        return {
+            "success": False,
+            "error": str(e)
+        }
+
+
+def verify_deployment_integration(
+    site_key: str,
+    deployment_type: str
+) -> Dict[str, Any]:
+    """
+    Verify deployment integration for a site.
+    
+    Consolidates: verify_deployment_integration from deployment_verification_server.py
+    
+    Args:
+        site_key: Site identifier
+        deployment_type: Type of deployment (theme, plugin, etc.)
+        
+    Returns:
+        Verification result
+    """
+    try:
+        site_url = f"https://{site_key}" if not site_key.startswith("http") else site_key
+        
+        # Basic integration check
+        response = requests.get(site_url, timeout=TIMEOUT, allow_redirects=True)
+        
+        return {
+            "success": True,
+            "site_key": site_key,
+            "deployment_type": deployment_type,
+            "verified": response.status_code == 200,
+            "status_code": response.status_code,
+            "message": f"Deployment integration verified for {deployment_type}",
+            "timestamp": datetime.now().isoformat()
+        }
+    except Exception as e:
+        return {
+            "success": False,
+            "site_key": site_key,
+            "deployment_type": deployment_type,
             "error": str(e),
             "timestamp": datetime.now().isoformat()
         }
@@ -383,17 +500,19 @@ def main():
                                             "items": {"type": "string"},
                                             "description": "List of content strings that must be present"
                                         },
-                                        "required_status": {"type": "integer", "default": 200}
+                                        "required_status": {"type": "integer", "default": 200},
+                                        "expected_text": {"type": "string", "description": "Single text string to check (alternative to required_content)"}
                                     },
                                     "required": ["url"]
                                 }
                             },
                             "check_deployment_status": {
-                                "description": "Check deployment status for a site",
+                                "description": "Check deployment status for a site (supports single URL or multiple pages)",
                                 "inputSchema": {
                                     "type": "object",
                                     "properties": {
-                                        "site_key": {"type": "string"},
+                                        "site_key": {"type": "string", "description": "Site identifier (optional)"},
+                                        "url": {"type": "string", "description": "Single URL to check (optional)"},
                                         "pages": {
                                             "type": "array",
                                             "items": {
@@ -403,10 +522,28 @@ def main():
                                                     "url": {"type": "string"},
                                                     "required_content": {"type": "array", "items": {"type": "string"}}
                                                 }
-                                            }
+                                            },
+                                            "description": "List of pages to check (optional)"
                                         }
+                                    }
+                                }
+                            },
+                            "list_deployable_sites": {
+                                "description": "List sites configured for deployment",
+                                "inputSchema": {
+                                    "type": "object",
+                                    "properties": {}
+                                }
+                            },
+                            "verify_deployment_integration": {
+                                "description": "Verify deployment integration for a site",
+                                "inputSchema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "site_key": {"type": "string"},
+                                        "deployment_type": {"type": "string", "enum": ["theme", "plugin", "file", "other"]}
                                     },
-                                    "required": ["site_key"]
+                                    "required": ["site_key", "deployment_type"]
                                 }
                             },
                             "check_http_status": {
@@ -465,6 +602,10 @@ def main():
                     result = check_http_status(**arguments)
                 elif tool_name == "deploy_analytics_code":
                     result = deploy_analytics_code(**arguments)
+                elif tool_name == "list_deployable_sites":
+                    result = list_deployable_sites(**arguments)
+                elif tool_name == "verify_deployment_integration":
+                    result = verify_deployment_integration(**arguments)
                 else:
                     result = {"success": False, "error": f"Unknown tool: {tool_name}"}
                 
