@@ -17,6 +17,46 @@ Session closures must be **internally closed, publicly explainable, and handoff-
 - Queryable truth in Swarm Brain
 - No work leakage across sessions
 
+## HARD RULES (NON-NEGOTIABLE)
+
+**When in doubt, choose NON-DESTRUCTIVE verification over cleanup.**
+
+### ❌ SHARED WORKSPACE SAFETY (CRITICAL)
+**Destructive git commands are FORBIDDEN in shared workspaces:**
+- ❌ `git clean -fd`
+- ❌ `git restore .`
+- ❌ `rm -rf` on repo paths
+- ❌ Deleting untracked files (they may belong to other agents)
+
+**If untracked files exist outside agent scope → Status MUST be 🟡 Blocked**
+
+### Agent Ownership Boundary
+**Agent may modify ONLY:**
+- `src/` modules explicitly owned by this agent
+- `agent_workspaces/Agent-X/**` (own workspace only)
+- Files explicitly listed in task assignment
+
+**Any change outside scope requires explicit Captain authorization.**
+
+### Git Safety Rules
+- Only stage files listed in **Artifacts Created / Updated**
+- Use explicit paths: `git add <file1> <file2>`
+- Do NOT stage or delete unrelated files
+- Any additional file change → Status MUST be 🟡 Blocked
+
+### Working Tree Verification
+- Run `git status` to observe state
+- If untracked or modified files exist OUTSIDE agent scope → 🟡 Blocked
+- Do NOT delete files to achieve cleanliness
+- Cleanliness must be **observed**, not **enforced**
+
+### Destructive-Action Escalation Gate
+**If closure requires file deletion, cleanup, or reset:**
+- STOP immediately
+- Emit 🟡 Blocked
+- State exact conflict
+- Await Captain or human arbitration
+
 ## Required Format
 
 Every session closure MUST follow this exact structure:
@@ -181,6 +221,16 @@ Every session closure MUST follow this exact structure:
 - Files created/updated
 - Commands executed
 - State changes
+
+### ❌ Workspace Cleanup Actions
+**Never include or perform:**
+- "Cleaned up workspace"
+- "Normalized repo state"
+- "Aligned local state"
+- Deleting files to achieve cleanliness
+- Any janitorial deletion outside owned files
+
+**Why:** Closure ≠ janitorial duty. Cleanup destroys other agents' work.
 
 ## Correct vs Incorrect Examples
 
