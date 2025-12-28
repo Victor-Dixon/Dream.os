@@ -62,7 +62,8 @@ class DiscordRouterPoster:
         agent_id: str,
         message: str,
         title: Optional[str] = None,
-        priority: str = "normal"
+        priority: str = "normal",
+        file_path: Optional[str] = None
     ) -> Dict[str, Any]:
         """
         Post update to Discord via router.
@@ -72,6 +73,7 @@ class DiscordRouterPoster:
             message: Message content
             title: Optional title (defaults to agent update)
             priority: Priority level (normal, high, urgent)
+            file_path: Optional path to a file to upload
         
         Returns:
             Result dict with success status
@@ -123,9 +125,37 @@ class DiscordRouterPoster:
                 "error": f"Payload too large ({payload_size} bytes, Discord limit: 2000 bytes)",
             }
         
+        files = None
+        if file_path:
+            path = Path(file_path)
+            if path.exists():
+                try:
+                    files = {
+                        'file': (path.name, open(path, 'rb'))
+                    }
+                except Exception as e:
+                    print(f"⚠️ Failed to open file for upload: {e}")
+            else:
+                print(f"⚠️ File not found for upload: {file_path}")
+
         try:
-            response = requests.post(self.webhook_url, json=payload, timeout=10)
+            if files:
+                # When uploading files, payload must be sent as 'payload_json' in multipart/form-data
+                response = requests.post(
+                    self.webhook_url, 
+                    data={'payload_json': json.dumps(payload)}, 
+                    files=files, 
+                    timeout=30
+                )
+            else:
+                response = requests.post(self.webhook_url, json=payload, timeout=10)
+                
             response.raise_for_status()
+            
+            # Close file if it was opened
+            if files:
+                files['file'][1].close()
+                
             return {
                 "success": True,
                 "message": f"Posted update to Discord: {title}",
@@ -137,17 +167,29 @@ class DiscordRouterPoster:
                 "response_text": response.text[:500] if hasattr(response, 'text') else "No response text",
                 "error": str(e)
             }
+            if files:
+                files['file'][1].close()
             return {
                 "success": False,
                 "error": f"HTTP {response.status_code}: {error_details['response_text']}",
                 "details": error_details
             }
         except requests.exceptions.RequestException as e:
+            if files:
+                try:
+                    files['file'][1].close()
+                except:
+                    pass
             return {
                 "success": False,
                 "error": f"Request failed: {str(e)}",
             }
         except Exception as e:
+            if files:
+                try:
+                    files['file'][1].close()
+                except:
+                    pass
             return {
                 "success": False,
                 "error": f"Unexpected error: {str(e)}",

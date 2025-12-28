@@ -281,9 +281,18 @@ def generate_report():
                             
                             agent_msg += task_str
                     
-                    # Post final chunk for this agent
                     if agent_msg:
                         poster.post_update(agent_id="Agent-4", message=agent_msg, title=f"📄 {agent_id}: {agent_name}", priority="normal")
+
+                # 3. Upload Full Report File
+                print("Uploading full report file...")
+                poster.post_update(
+                    agent_id="Agent-4",
+                    message="📎 **Full Cycle Accomplishments Report (Attached)**",
+                    title="📊 Full Report Download",
+                    priority="normal",
+                    file_path=str(report_path)
+                )
 
             except Exception as e:
                 print(f"⚠️ Error posting to Discord: {e}")
