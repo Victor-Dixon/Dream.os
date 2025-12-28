@@ -259,6 +259,171 @@ def purge_wordpress_cache(site_key: str) -> Dict[str, Any]:
         return {"success": False, "error": str(e)}
 
 
+def activate_theme(site_key: str, theme_name: str) -> Dict[str, Any]:
+    """Activate a WordPress theme."""
+    if not HAS_WORDPRESS:
+        return {"success": False, "error": "WordPress tools not available"}
+
+    try:
+        manager = WordPressManager(site_key=site_key, dry_run=False)
+        if not manager.connect():
+            return {"success": False, "error": "Failed to connect to WordPress"}
+
+        # Execute WP-CLI command to activate theme
+        result = manager.execute_wp_cli(f"theme activate {theme_name}")
+        success = result.get("success", False)
+
+        manager.disconnect()
+
+        return {
+            "success": success,
+            "site": site_key,
+            "theme": theme_name,
+            "message": result.get("output", ""),
+        }
+    except Exception as e:
+        return {"success": False, "error": str(e)}
+
+
+def toggle_plugin(site_key: str, plugin_slug: str, action: str = "activate") -> Dict[str, Any]:
+    """Activate or deactivate a WordPress plugin."""
+    if not HAS_WORDPRESS:
+        return {"success": False, "error": "WordPress tools not available"}
+
+    if action not in ["activate", "deactivate"]:
+        return {"success": False, "error": f"Invalid action: {action}. Use 'activate' or 'deactivate'"}
+
+    try:
+        manager = WordPressManager(site_key=site_key, dry_run=False)
+        if not manager.connect():
+            return {"success": False, "error": "Failed to connect to WordPress"}
+
+        # Execute WP-CLI command
+        result = manager.execute_wp_cli(f"plugin {action} {plugin_slug}")
+        success = result.get("success", False)
+
+        manager.disconnect()
+
+        return {
+            "success": success,
+            "site": site_key,
+            "plugin": plugin_slug,
+            "action": action,
+            "message": result.get("output", ""),
+        }
+    except Exception as e:
+        return {"success": False, "error": str(e)}
+
+
+def list_plugins(site_key: str, status: Optional[str] = None) -> Dict[str, Any]:
+    """List WordPress plugins."""
+    if not HAS_WORDPRESS:
+        return {"success": False, "error": "WordPress tools not available"}
+
+    try:
+        manager = WordPressManager(site_key=site_key, dry_run=False)
+        if not manager.connect():
+            return {"success": False, "error": "Failed to connect to WordPress"}
+
+        # Execute WP-CLI command
+        cmd = "plugin list --format=json"
+        if status:
+            cmd += f" --status={status}"
+        
+        result = manager.execute_wp_cli(cmd)
+        
+        plugins = []
+        if result.get("success") and result.get("output"):
+            try:
+                plugins = json.loads(result.get("output", "[]"))
+            except json.JSONDecodeError:
+                plugins = []
+
+        manager.disconnect()
+
+        return {
+            "success": True,
+            "site": site_key,
+            "plugins": plugins,
+            "count": len(plugins),
+            "filter": status,
+        }
+    except Exception as e:
+        return {"success": False, "error": str(e)}
+
+
+def clear_cache(site_key: str, cache_type: str = "all") -> Dict[str, Any]:
+    """Clear WordPress cache by type."""
+    if not HAS_WORDPRESS:
+        return {"success": False, "error": "WordPress tools not available"}
+
+    try:
+        manager = WordPressManager(site_key=site_key, dry_run=False)
+        if not manager.connect():
+            return {"success": False, "error": "Failed to connect to WordPress"}
+
+        results = {}
+        
+        if cache_type in ["all", "transient"]:
+            result = manager.execute_wp_cli("transient delete --all")
+            results["transients"] = result.get("success", False)
+        
+        if cache_type in ["all", "object"]:
+            result = manager.execute_wp_cli("cache flush")
+            results["object_cache"] = result.get("success", False)
+        
+        if cache_type in ["all", "rewrite"]:
+            result = manager.execute_wp_cli("rewrite flush")
+            results["rewrite_rules"] = result.get("success", False)
+
+        manager.disconnect()
+
+        return {
+            "success": True,
+            "site": site_key,
+            "cache_type": cache_type,
+            "results": results,
+        }
+    except Exception as e:
+        return {"success": False, "error": str(e)}
+
+
+def list_themes(site_key: str, status: Optional[str] = None) -> Dict[str, Any]:
+    """List WordPress themes."""
+    if not HAS_WORDPRESS:
+        return {"success": False, "error": "WordPress tools not available"}
+
+    try:
+        manager = WordPressManager(site_key=site_key, dry_run=False)
+        if not manager.connect():
+            return {"success": False, "error": "Failed to connect to WordPress"}
+
+        cmd = "theme list --format=json"
+        if status:
+            cmd += f" --status={status}"
+        
+        result = manager.execute_wp_cli(cmd)
+        
+        themes = []
+        if result.get("success") and result.get("output"):
+            try:
+                themes = json.loads(result.get("output", "[]"))
+            except json.JSONDecodeError:
+                themes = []
+
+        manager.disconnect()
+
+        return {
+            "success": True,
+            "site": site_key,
+            "themes": themes,
+            "count": len(themes),
+            "filter": status,
+        }
+    except Exception as e:
+        return {"success": False, "error": str(e)}
+
+
 # MCP Server Protocol
 def main():
     """MCP server main loop."""
@@ -415,8 +580,102 @@ def main():
                                     "required": ["site_key"],
                                 },
                             },
+                            "activate_theme": {
+                                "description": "Activate a WordPress theme",
+                                "inputSchema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "site_key": {
+                                            "type": "string",
+                                            "description": "Site key",
+                                        },
+                                        "theme_name": {
+                                            "type": "string",
+                                            "description": "Theme name/slug to activate",
+                                        },
+                                    },
+                                    "required": ["site_key", "theme_name"],
+                                },
+                            },
+                            "toggle_plugin": {
+                                "description": "Activate or deactivate a WordPress plugin",
+                                "inputSchema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "site_key": {
+                                            "type": "string",
+                                            "description": "Site key",
+                                        },
+                                        "plugin_slug": {
+                                            "type": "string",
+                                            "description": "Plugin slug",
+                                        },
+                                        "action": {
+                                            "type": "string",
+                                            "enum": ["activate", "deactivate"],
+                                            "default": "activate",
+                                            "description": "Action to perform",
+                                        },
+                                    },
+                                    "required": ["site_key", "plugin_slug"],
+                                },
+                            },
+                            "list_plugins": {
+                                "description": "List WordPress plugins",
+                                "inputSchema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "site_key": {
+                                            "type": "string",
+                                            "description": "Site key",
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "enum": ["active", "inactive", "mustuse", "dropins"],
+                                            "description": "Optional: Filter by status",
+                                        },
+                                    },
+                                    "required": ["site_key"],
+                                },
+                            },
+                            "list_themes": {
+                                "description": "List WordPress themes",
+                                "inputSchema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "site_key": {
+                                            "type": "string",
+                                            "description": "Site key",
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "enum": ["active", "inactive", "parent"],
+                                            "description": "Optional: Filter by status",
+                                        },
+                                    },
+                                    "required": ["site_key"],
+                                },
+                            },
+                            "clear_cache": {
+                                "description": "Clear WordPress cache by type",
+                                "inputSchema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "site_key": {
+                                            "type": "string",
+                                            "description": "Site key",
+                                        },
+                                        "cache_type": {
+                                            "type": "string",
+                                            "enum": ["all", "transient", "object", "rewrite"],
+                                            "default": "all",
+                                            "description": "Type of cache to clear",
+                                        },
+                                    },
+                                    "required": ["site_key"],
+                                },
+                            },
                         }
-    }
     initialized = False
 
     # Handle requests from stdin
@@ -493,6 +752,16 @@ def main():
                     result = generate_image_prompts(**arguments)
                 elif tool_name == "purge_wordpress_cache":
                     result = purge_wordpress_cache(**arguments)
+                elif tool_name == "activate_theme":
+                    result = activate_theme(**arguments)
+                elif tool_name == "toggle_plugin":
+                    result = toggle_plugin(**arguments)
+                elif tool_name == "list_plugins":
+                    result = list_plugins(**arguments)
+                elif tool_name == "list_themes":
+                    result = list_themes(**arguments)
+                elif tool_name == "clear_cache":
+                    result = clear_cache(**arguments)
                 else:
                     result = {"success": False, "error": f"Unknown tool: {tool_name}"}
 

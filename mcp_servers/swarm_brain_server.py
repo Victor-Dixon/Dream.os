@@ -182,150 +182,186 @@ def get_agent_notes(agent_id: str, note_type: Optional[str] = None) -> Dict[str,
 # MCP Server Protocol
 def main():
     """MCP server main loop."""
-    print(
-        json.dumps(
-            {
-                "jsonrpc": "2.0",
-                "method": "initialize",
-                "result": {
-                    "protocolVersion": "2024-11-05",
-                    "capabilities": {
-                        "tools": {
-                            "share_learning": {
-                                "description": "Share a learning to Swarm Brain knowledge base",
-                                "inputSchema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "agent_id": {
-                                            "type": "string",
-                                            "description": "Agent ID (e.g., 'Agent-1')",
-                                        },
-                                        "title": {
-                                            "type": "string",
-                                            "description": "Learning title",
-                                        },
-                                        "content": {
-                                            "type": "string",
-                                            "description": "Learning content (markdown supported)",
-                                        },
-                                        "tags": {
-                                            "type": "array",
-                                            "items": {"type": "string"},
-                                            "description": "Optional: Tags for categorization",
-                                        },
-                                    },
-                                    "required": ["agent_id", "title", "content"],
-                                },
-                            },
-                            "record_decision": {
-                                "description": "Record a decision to Swarm Brain",
-                                "inputSchema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "agent_id": {
-                                            "type": "string",
-                                            "description": "Agent ID",
-                                        },
-                                        "title": {
-                                            "type": "string",
-                                            "description": "Decision title",
-                                        },
-                                        "decision": {
-                                            "type": "string",
-                                            "description": "What was decided",
-                                        },
-                                        "rationale": {
-                                            "type": "string",
-                                            "description": "Why this decision was made",
-                                        },
-                                        "participants": {
-                                            "type": "array",
-                                            "items": {"type": "string"},
-                                            "description": "Optional: List of participating agents",
-                                        },
-                                    },
-                                    "required": ["agent_id", "title", "decision", "rationale"],
-                                },
-                            },
-                            "search_swarm_knowledge": {
-                                "description": "Search Swarm Brain knowledge base",
-                                "inputSchema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "agent_id": {
-                                            "type": "string",
-                                            "description": "Agent ID",
-                                        },
-                                        "query": {
-                                            "type": "string",
-                                            "description": "Search query",
-                                        },
-                                        "limit": {
-                                            "type": "integer",
-                                            "default": 10,
-                                            "description": "Maximum number of results (default: 10)",
-                                        },
-                                    },
-                                    "required": ["agent_id", "query"],
-                                },
-                            },
-                            "take_note": {
-                                "description": "Take a personal note (agent-specific, not shared)",
-                                "inputSchema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "agent_id": {
-                                            "type": "string",
-                                            "description": "Agent ID",
-                                        },
-                                        "content": {
-                                            "type": "string",
-                                            "description": "Note content",
-                                        },
-                                        "note_type": {
-                                            "type": "string",
-                                            "enum": ["important", "learning", "todo", "general"],
-                                            "default": "important",
-                                            "description": "Type of note",
-                                        },
-                                    },
-                                    "required": ["agent_id", "content"],
-                                },
-                            },
-                            "get_agent_notes": {
-                                "description": "Get agent's personal notes",
-                                "inputSchema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "agent_id": {
-                                            "type": "string",
-                                            "description": "Agent ID",
-                                        },
-                                        "note_type": {
-                                            "type": "string",
-                                            "enum": ["important", "learning", "todo", "general"],
-                                            "description": "Optional: Filter by note type",
-                                        },
-                                    },
-                                    "required": ["agent_id"],
-                                },
-                            },
-                        }
+    # Server state
+    server_info = {"name": "swarm-brain-server", "version": "1.0.0"}
+    tools_definitions = {
+        "share_learning": {
+            "description": "Share a learning to Swarm Brain knowledge base",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "agent_id": {
+                        "type": "string",
+                        "description": "Agent ID (e.g., 'Agent-1')",
                     },
-                    "serverInfo": {"name": "swarm-brain-server", "version": "1.0.0"},
+                    "title": {
+                        "type": "string",
+                        "description": "Learning title",
+                    },
+                    "content": {
+                        "type": "string",
+                        "description": "Learning content (markdown supported)",
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {"type": "string"},
+                        "description": "Optional: Tags for categorization",
+                    },
                 },
-            }
-        )
-    )
+                "required": ["agent_id", "title", "content"],
+            },
+        },
+        "record_decision": {
+            "description": "Record a decision to Swarm Brain",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "agent_id": {
+                        "type": "string",
+                        "description": "Agent ID",
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Decision title",
+                    },
+                    "decision": {
+                        "type": "string",
+                        "description": "What was decided",
+                    },
+                    "rationale": {
+                        "type": "string",
+                        "description": "Why this decision was made",
+                    },
+                    "participants": {
+                        "type": "array",
+                        "items": {"type": "string"},
+                        "description": "Optional: List of participating agents",
+                    },
+                },
+                "required": ["agent_id", "title", "decision", "rationale"],
+            },
+        },
+        "search_swarm_knowledge": {
+            "description": "Search Swarm Brain knowledge base",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "agent_id": {
+                        "type": "string",
+                        "description": "Agent ID",
+                    },
+                    "query": {
+                        "type": "string",
+                        "description": "Search query",
+                    },
+                    "limit": {
+                        "type": "integer",
+                        "default": 10,
+                        "description": "Maximum number of results (default: 10)",
+                    },
+                },
+                "required": ["agent_id", "query"],
+            },
+        },
+        "take_note": {
+            "description": "Take a personal note (agent-specific, not shared)",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "agent_id": {
+                        "type": "string",
+                        "description": "Agent ID",
+                    },
+                    "content": {
+                        "type": "string",
+                        "description": "Note content",
+                    },
+                    "note_type": {
+                        "type": "string",
+                        "enum": ["important", "learning", "todo", "general"],
+                        "default": "important",
+                        "description": "Type of note",
+                    },
+                },
+                "required": ["agent_id", "content"],
+            },
+        },
+        "get_agent_notes": {
+            "description": "Get agent's personal notes",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "agent_id": {
+                        "type": "string",
+                        "description": "Agent ID",
+                    },
+                    "note_type": {
+                        "type": "string",
+                        "enum": ["important", "learning", "todo", "general"],
+                        "description": "Optional: Filter by note type",
+                    },
+                },
+                "required": ["agent_id"],
+            },
+        },
+    }
+    initialized = False
 
-    # Handle tool calls
+    # Handle requests from stdin
     for line in sys.stdin:
         try:
             request = json.loads(line)
             method = request.get("method")
             params = request.get("params", {})
+            request_id = request.get("id")
 
-            if method == "tools/call":
+            if method == "initialize":
+                # Respond to initialize request
+                initialized = True
+                print(
+                    json.dumps(
+                        {
+                            "jsonrpc": "2.0",
+                            "id": request_id,
+                            "result": {
+                                "protocolVersion": "2024-11-05",
+                                "capabilities": {
+                                    "tools": tools_definitions,
+                                },
+                                "serverInfo": server_info,
+                            },
+                        }
+                    )
+                )
+                sys.stdout.flush()
+
+            elif method == "tools/list":
+                # Handle ListOfferings request
+                tools_list = []
+                for tool_name, tool_def in tools_definitions.items():
+                    tools_list.append(
+                        {
+                            "name": tool_name,
+                            "description": tool_def["description"],
+                            "inputSchema": tool_def["inputSchema"],
+                        }
+                    )
+                print(
+                    json.dumps(
+                        {
+                            "jsonrpc": "2.0",
+                            "id": request_id,
+                            "result": {
+                                "tools": tools_list,
+                                "serverInfo": server_info,
+                            },
+                        }
+                    )
+                )
+                sys.stdout.flush()
+
+            elif method == "tools/call":
+                # Handle tool execution
                 tool_name = params.get("name")
                 arguments = params.get("arguments", {})
 
@@ -340,28 +376,54 @@ def main():
                 elif tool_name == "get_agent_notes":
                     result = get_agent_notes(**arguments)
                 else:
-                    result = {"success": False,
-                              "error": f"Unknown tool: {tool_name}"}
+                    result = {"success": False, "error": f"Unknown tool: {tool_name}"}
 
                 print(
                     json.dumps(
                         {
                             "jsonrpc": "2.0",
-                            "id": request.get("id"),
+                            "id": request_id,
                             "result": {"content": [{"type": "text", "text": json.dumps(result)}]},
                         }
                     )
                 )
+                sys.stdout.flush()
+
+            else:
+                # Unknown method
+                print(
+                    json.dumps(
+                        {
+                            "jsonrpc": "2.0",
+                            "id": request_id,
+                            "error": {"code": -32601, "message": f"Unknown method: {method}"},
+                        }
+                    )
+                )
+                sys.stdout.flush()
+
+        except json.JSONDecodeError as e:
+            print(
+                json.dumps(
+                    {
+                        "jsonrpc": "2.0",
+                        "id": request.get("id") if "request" in locals() else None,
+                        "error": {"code": -32700, "message": f"Parse error: {str(e)}"},
+                    }
+                )
+            )
+            sys.stdout.flush()
         except Exception as e:
             print(
                 json.dumps(
                     {
                         "jsonrpc": "2.0",
-                        "id": request.get("id"),
+                        "id": request.get("id") if "request" in locals() else None,
                         "error": {"code": -32603, "message": str(e)},
                     }
                 )
             )
+            sys.stdout.flush()
 
 
 if __name__ == "__main__":

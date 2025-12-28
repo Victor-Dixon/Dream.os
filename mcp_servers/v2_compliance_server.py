@@ -352,7 +352,6 @@ def main():
                                 },
                             },
                         }
-    }
     initialized = False
 
     # Handle requests from stdin

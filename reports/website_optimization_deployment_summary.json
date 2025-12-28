@@ -1,9 +1,9 @@
 {
-  "deployment_date": "2025-12-27T02:44:28.953479",
+  "deployment_date": "2025-12-27T16:03:12.248251",
   "sites": {
     "dadudekc.com": {
       "site": "dadudekc.com",
-      "timestamp": "2025-12-27T02:44:28.955481",
+      "timestamp": "2025-12-27T16:03:12.257257",
       "dry_run": true,
       "files_found": [
         "wp-config-cache.php",
@@ -16,7 +16,7 @@
     },
     "southwestsecret.com": {
       "site": "southwestsecret.com",
-      "timestamp": "2025-12-27T02:44:28.958483",
+      "timestamp": "2025-12-27T16:03:12.295339",
       "dry_run": true,
       "files_found": [
         "wp-config-cache.php",

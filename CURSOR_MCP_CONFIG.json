@@ -35,12 +35,110 @@
       ],
       "description": "Git operations and work verification for agents"
     },
+    "github-professional": {
+      "command": "python",
+      "args": [
+        "D:/Agent_Cellphone_V2_Repository/mcp_servers/github_professional_server.py"
+      ],
+      "description": "Professional GitHub operations with full API coverage (repos, PRs, issues, teams)"
+    },
     "v2-compliance": {
       "command": "python",
       "args": [
         "D:/Agent_Cellphone_V2_Repository/mcp_servers/v2_compliance_server.py"
       ],
       "description": "V2 compliance checking and validation for agents"
+    },
+    "unified-tools": {
+      "command": "python",
+      "args": [
+        "D:/Agent_Cellphone_V2_Repository/mcp_servers/unified_tool_server.py"
+      ],
+      "description": "Unified tool server exposing all tools via tool registry"
+    },
+    "deployment": {
+      "command": "python",
+      "args": [
+        "D:/Agent_Cellphone_V2_Repository/mcp_servers/deployment_server.py"
+      ],
+      "description": "Unified deployment and verification operations - consolidates deployment_manager_server, deployment_verification_server, and scattered deployment tools"
+    },
+    "validation-audit": {
+      "command": "python",
+      "args": [
+        "D:/Agent_Cellphone_V2_Repository/mcp_servers/validation_audit_server.py"
+      ],
+      "description": "Validation and audit operations for closures, SEO, and website structure"
+    },
+    "devlog-manager": {
+      "command": "python",
+      "args": [
+        "D:/Agent_Cellphone_V2_Repository/mcp_servers/devlog_manager_server.py"
+      ],
+      "description": "Devlog creation, posting, validation, and feed generation"
+    },
+    "discord-integration": {
+      "command": "python",
+      "args": [
+        "D:/Agent_Cellphone_V2_Repository/mcp_servers/discord_integration_server.py"
+      ],
+      "description": "Discord webhook posting, embeds, and notifications"
+    },
+    "cleanup-manager": {
+      "command": "python",
+      "args": [
+        "D:/Agent_Cellphone_V2_Repository/mcp_servers/cleanup_manager_server.py"
+      ],
+      "description": "Workspace cleanup, session cleanup, and archive operations"
+    },
+    "wordpress-theme": {
+      "command": "python",
+      "args": [
+        "D:/Agent_Cellphone_V2_Repository/mcp_servers/wordpress_theme_server.py"
+      ],
+      "description": "WordPress theme management, deployment, validation, and fixes"
+    },
+    "content-management": {
+      "command": "python",
+      "args": [
+        "D:/Agent_Cellphone_V2_Repository/mcp_servers/content_management_server.py"
+      ],
+      "description": "WordPress content operations including posts, pages, categories, and bulk updates"
+    },
+    "analytics-seo": {
+      "command": "python",
+      "args": [
+        "D:/Agent_Cellphone_V2_Repository/mcp_servers/analytics_seo_server.py"
+      ],
+      "description": "Google Analytics, SEO optimization, meta tags, structured data, and tracking"
+    },
+    "maintenance-monitoring": {
+      "command": "python",
+      "args": [
+        "D:/Agent_Cellphone_V2_Repository/mcp_servers/maintenance_monitoring_server.py"
+      ],
+      "description": "WordPress maintenance, monitoring, updates, health checks, and performance optimization"
+    },
+    "development-testing": {
+      "command": "python",
+      "args": [
+        "D:/Agent_Cellphone_V2_Repository/mcp_servers/development_testing_server.py"
+      ],
+      "description": "Development workflows, testing operations, debugging, quality assurance, and development tooling"
+    },
+    "coordination": {
+      "command": "python",
+      "args": [
+        "D:/Agent_Cellphone_V2_Repository/mcp_servers/coordination_server.py"
+      ],
+      "description": "Coordination and status management - consolidates scattered coordination tools (a2a_coordination_queue, coordination_status_dashboard, etc.)"
+    },
+    "wp-cli-manager": {
+      "command": "python",
+      "args": [
+        "D:/Agent_Cellphone_V2_Repository/mcp_servers/wp_cli_manager_server.py"
+      ],
+      "description": "WP-CLI Manager - Remote WordPress operations via WP-CLI over SSH (plugins, themes, cache, database, options)"
     }
   }
 }

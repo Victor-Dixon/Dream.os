@@ -248,101 +248,137 @@ def get_tasks(section: Optional[str] = None) -> Dict[str, Any]:
 # MCP Server Protocol
 def main():
     """MCP server main loop."""
-    print(
-        json.dumps(
-            {
-                "jsonrpc": "2.0",
-                "method": "initialize",
-                "result": {
-                    "protocolVersion": "2024-11-05",
-                    "capabilities": {
-                        "tools": {
-                            "add_task_to_inbox": {
-                                "description": "Add a task to the INBOX section of MASTER_TASK_LOG.md",
-                                "inputSchema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "task": {
-                                            "type": "string",
-                                            "description": "Task description to add",
-                                        },
-                                        "agent_id": {
-                                            "type": "string",
-                                            "description": "Optional: Agent ID reporting this task",
-                                        },
-                                    },
-                                    "required": ["task"],
-                                },
-                            },
-                            "mark_task_complete": {
-                                "description": "Mark a task as complete in MASTER_TASK_LOG.md",
-                                "inputSchema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "task_description": {
-                                            "type": "string",
-                                            "description": "Task description to mark complete",
-                                        },
-                                        "section": {
-                                            "type": "string",
-                                            "enum": ["THIS WEEK", "INBOX"],
-                                            "default": "THIS WEEK",
-                                            "description": "Section where task is located",
-                                        },
-                                    },
-                                    "required": ["task_description"],
-                                },
-                            },
-                            "move_task_to_waiting": {
-                                "description": "Move a task to WAITING ON section",
-                                "inputSchema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "task_description": {
-                                            "type": "string",
-                                            "description": "Task description to move",
-                                        },
-                                        "reason": {
-                                            "type": "string",
-                                            "description": "Reason why task is waiting (e.g., 'blocked on X', 'waiting for Y')",
-                                        },
-                                        "agent_id": {
-                                            "type": "string",
-                                            "description": "Optional: Agent ID reporting this",
-                                        },
-                                    },
-                                    "required": ["task_description", "reason"],
-                                },
-                            },
-                            "get_tasks": {
-                                "description": "Get tasks from MASTER_TASK_LOG.md",
-                                "inputSchema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "section": {
-                                            "type": "string",
-                                            "enum": ["INBOX", "THIS WEEK", "WAITING ON", "PARKED"],
-                                            "description": "Optional: Specific section to get tasks from. If not provided, returns all sections",
-                                        },
-                                    },
-                                },
-                            },
-                        }
+    # Server state
+    server_info = {"name": "task-manager-server", "version": "1.0.0"}
+    tools_definitions = {
+        "add_task_to_inbox": {
+            "description": "Add a task to the INBOX section of MASTER_TASK_LOG.md",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "task": {
+                        "type": "string",
+                        "description": "Task description to add",
                     },
-                    "serverInfo": {"name": "task-manager-server", "version": "1.0.0"},
+                    "agent_id": {
+                        "type": "string",
+                        "description": "Optional: Agent ID reporting this task",
+                    },
                 },
-            }
-        )
-    )
+                "required": ["task"],
+            },
+        },
+        "mark_task_complete": {
+            "description": "Mark a task as complete in MASTER_TASK_LOG.md",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "task_description": {
+                        "type": "string",
+                        "description": "Task description to mark complete",
+                    },
+                    "section": {
+                        "type": "string",
+                        "enum": ["THIS WEEK", "INBOX"],
+                        "default": "THIS WEEK",
+                        "description": "Section where task is located",
+                    },
+                },
+                "required": ["task_description"],
+            },
+        },
+        "move_task_to_waiting": {
+            "description": "Move a task to WAITING ON section",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "task_description": {
+                        "type": "string",
+                        "description": "Task description to move",
+                    },
+                    "reason": {
+                        "type": "string",
+                        "description": "Reason why task is waiting (e.g., 'blocked on X', 'waiting for Y')",
+                    },
+                    "agent_id": {
+                        "type": "string",
+                        "description": "Optional: Agent ID reporting this",
+                    },
+                },
+                "required": ["task_description", "reason"],
+            },
+        },
+        "get_tasks": {
+            "description": "Get tasks from MASTER_TASK_LOG.md",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "section": {
+                        "type": "string",
+                        "enum": ["INBOX", "THIS WEEK", "WAITING ON", "PARKED"],
+                        "description": "Optional: Specific section to get tasks from. If not provided, returns all sections",
+                    },
+                },
+            },
+        },
+    }
+    initialized = False
 
-    # Handle tool calls
+    # Handle requests from stdin
     for line in sys.stdin:
         try:
             request = json.loads(line)
             method = request.get("method")
             params = request.get("params", {})
+            request_id = request.get("id")
 
-            if method == "tools/call":
+            if method == "initialize":
+                # Respond to initialize request
+                initialized = True
+                print(
+                    json.dumps(
+                        {
+                            "jsonrpc": "2.0",
+                            "id": request_id,
+                            "result": {
+                                "protocolVersion": "2024-11-05",
+                                "capabilities": {
+                                    "tools": tools_definitions,
+                                },
+                                "serverInfo": server_info,
+                            },
+                        }
+                    )
+                )
+                sys.stdout.flush()
+
+            elif method == "tools/list":
+                # Handle ListOfferings request
+                tools_list = []
+                for tool_name, tool_def in tools_definitions.items():
+                    tools_list.append(
+                        {
+                            "name": tool_name,
+                            "description": tool_def["description"],
+                            "inputSchema": tool_def["inputSchema"],
+                        }
+                    )
+                print(
+                    json.dumps(
+                        {
+                            "jsonrpc": "2.0",
+                            "id": request_id,
+                            "result": {
+                                "tools": tools_list,
+                                "serverInfo": server_info,
+                            },
+                        }
+                    )
+                )
+                sys.stdout.flush()
+
+            elif method == "tools/call":
+                # Handle tool execution
                 tool_name = params.get("name")
                 arguments = params.get("arguments", {})
 
@@ -355,28 +391,54 @@ def main():
                 elif tool_name == "get_tasks":
                     result = get_tasks(**arguments)
                 else:
-                    result = {"success": False,
-                              "error": f"Unknown tool: {tool_name}"}
+                    result = {"success": False, "error": f"Unknown tool: {tool_name}"}
 
                 print(
                     json.dumps(
                         {
                             "jsonrpc": "2.0",
-                            "id": request.get("id"),
+                            "id": request_id,
                             "result": {"content": [{"type": "text", "text": json.dumps(result)}]},
                         }
                     )
                 )
+                sys.stdout.flush()
+
+            else:
+                # Unknown method
+                print(
+                    json.dumps(
+                        {
+                            "jsonrpc": "2.0",
+                            "id": request_id,
+                            "error": {"code": -32601, "message": f"Unknown method: {method}"},
+                        }
+                    )
+                )
+                sys.stdout.flush()
+
+        except json.JSONDecodeError as e:
+            print(
+                json.dumps(
+                    {
+                        "jsonrpc": "2.0",
+                        "id": request.get("id") if "request" in locals() else None,
+                        "error": {"code": -32700, "message": f"Parse error: {str(e)}"},
+                    }
+                )
+            )
+            sys.stdout.flush()
         except Exception as e:
             print(
                 json.dumps(
                     {
                         "jsonrpc": "2.0",
-                        "id": request.get("id"),
+                        "id": request.get("id") if "request" in locals() else None,
                         "error": {"code": -32603, "message": str(e)},
                     }
                 )
             )
+            sys.stdout.flush()
 
 
 if __name__ == "__main__":

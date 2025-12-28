@@ -9,6 +9,14 @@
 
 ## 📥 INBOX
 
+- [ ] **HIGH**: Infrastructure Refactoring (messaging_pyautogui.py) & WP-CLI MCP Server Implementation [Agent-1]
+- [ ] **HIGH**: Deployment MCP: Staging, Rollback & Snapshots Implementation [Agent-2]
+- [ ] **HIGH**: Resolve TRP/Build-In-Public Blockers & PHP Syntax Validation MCP Enhancement [Agent-3]
+- [ ] **HIGH**: Analytics Validation Completion & Database Manager MCP Implementation [Agent-5]
+- [ ] **HIGH**: Coordinate 646 SSOT tags & PSE Rule Implementation [Agent-6]
+- [ ] **HIGH**: P0 Foundation: Offer Ladders & ICP Definitions for Tier 2 Sites [Agent-7]
+- [ ] **HIGH**: Unified Tool Registry MCP Integration & final 1444+ tool audit [Agent-8]
+
 - [ ] **HIGH**: Swarm Phase 3 Consolidation & V2 Completion - Work Distribution (7 Blocks) - ⏳ DISTRIBUTED by Agent-4 (2025-12-28) - **SIMULTANEOUS EXECUTION MODE**. Block 1 (Agent-1): Infrastructure refactoring + WP-CLI integration + Phase 3 runtime errors. Block 2 (Agent-2): Staging/rollback infrastructure + deployment MCP enhancements. Block 3 (Agent-3): Critical deployments + PHP validation + GA4/Pixel config. Block 4 (Agent-5): Analytics validation + DB operations + WordPress health checks. Block 5 (Agent-6): SSOT tagging (646 tools) + PSE rule validation + archived tools audit. Block 6 (Agent-7): P0 Foundation fixes (Tier 2) + Offer Ladders + ICP Definitions + website-manager MCP enhancements. Block 7 (Agent-8): Unified tool registry + cache management + tool discovery audit. Full distribution: docs/SWARM_PHASE3_WORK_DISTRIBUTION_2025-12-28.md. [Agent-4 CAPTAIN]
 
 - [ ] **HIGH** (100 pts): [WEB] nextend-facebook-connect - Fix empty index.html file - ⏳ PENDING - Critical plugin directory issue: file exists but is completely empty, making site non-functional. Determine if plugin should be active or archived. If active: populate with proper landing page. If inactive: move to archive. Source: Website discovery scan (TASK_DISCOVERY_PROTOCOL.md WEB lane). Proof: runtime/task_discovery/websites_findings.json. [Agent-7]

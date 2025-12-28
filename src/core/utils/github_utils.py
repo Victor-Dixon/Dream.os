@@ -3,13 +3,18 @@
 GitHub Utilities - SSOT for GitHub Operations
 =============================================
 
+⚠️  PARTIALLY DEPRECATED: Core utilities still used, but extended functionality
+   available through GitHub Professional MCP Server for comprehensive operations.
+
 Provides standardized GitHub API operations and token management.
 Consolidates duplicate GitHub code across tools.
 
 <!-- SSOT Domain: core -->
+<!-- PARTIALLY DEPRECATED: Use github-professional MCP server for advanced operations -->
 
 Author: Agent-5 (Business Intelligence Specialist)
 Date: 2025-12-04
+Updated: 2025-12-28 (GitHub Professional MCP Server available)
 V2 Compliant: Yes (<300 lines)
 """
 
