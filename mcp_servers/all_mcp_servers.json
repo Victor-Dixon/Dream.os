@@ -132,6 +132,13 @@
         "D:/Agent_Cellphone_V2_Repository/mcp_servers/coordination_server.py"
       ],
       "description": "Coordination and status management - consolidates scattered coordination tools (a2a_coordination_queue, coordination_status_dashboard, etc.)"
+    },
+    "wp-cli-manager": {
+      "command": "python",
+      "args": [
+        "D:/Agent_Cellphone_V2_Repository/mcp_servers/wp_cli_manager_server.py"
+      ],
+      "description": "WP-CLI Manager - Remote WordPress operations via WP-CLI over SSH (plugins, themes, cache, database, options)"
     }
   }
 }

@@ -9,17 +9,34 @@ Author: Agent-7 - Repository Cloning Specialist
 """
 
 import logging
+import sys
 import time
+from pathlib import Path
 from typing import Any
 
-from .adapters.base_adapter import ToolResult
-from .adapters.error_types import (
-    ToolExecutionError,
-    ToolNotFoundError,
-    ToolValidationError,
-    format_toolbelt_error,
-)
-from .tool_registry import get_tool_registry
+# Handle both module and script execution
+# Use absolute imports when package context is unavailable
+try:
+    from .adapters.base_adapter import ToolResult
+    from .adapters.error_types import (
+        ToolExecutionError,
+        ToolNotFoundError,
+        ToolValidationError,
+        format_toolbelt_error,
+    )
+    from .tool_registry import get_tool_registry
+except ImportError:
+    _tools_dir = Path(__file__).parent
+    if str(_tools_dir) not in sys.path:
+        sys.path.insert(0, str(_tools_dir))
+    from adapters.base_adapter import ToolResult
+    from adapters.error_types import (
+        ToolExecutionError,
+        ToolNotFoundError,
+        ToolValidationError,
+        format_toolbelt_error,
+    )
+    from tool_registry import get_tool_registry
 
 logger = logging.getLogger(__name__)
 
