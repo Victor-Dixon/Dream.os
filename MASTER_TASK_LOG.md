@@ -7,7 +7,7 @@
 > - **Contract System:** Use `python -m src.services.messaging_cli --get-next-task --agent Agent-X` to claim tasks from cycle planner
 > - **Reinforcement Learning System:** See [POINT_SYSTEM_INTEGRATION.md](docs/POINT_SYSTEM_INTEGRATION.md) - Points serve as reinforcement signals for agent training. Tasks should include point values (e.g., `**HIGH** (150 pts): Task description`)
 
-## INBOX
+## 📥 INBOX
 
 - [ ] **HIGH**: Swarm Phase 3 Consolidation & V2 Completion - Work Distribution (7 Blocks) - ⏳ DISTRIBUTED by Agent-4 (2025-12-28) - **SIMULTANEOUS EXECUTION MODE**. Block 1 (Agent-1): Infrastructure refactoring + WP-CLI integration + Phase 3 runtime errors. Block 2 (Agent-2): Staging/rollback infrastructure + deployment MCP enhancements. Block 3 (Agent-3): Critical deployments + PHP validation + GA4/Pixel config. Block 4 (Agent-5): Analytics validation + DB operations + WordPress health checks. Block 5 (Agent-6): SSOT tagging (646 tools) + PSE rule validation + archived tools audit. Block 6 (Agent-7): P0 Foundation fixes (Tier 2) + Offer Ladders + ICP Definitions + website-manager MCP enhancements. Block 7 (Agent-8): Unified tool registry + cache management + tool discovery audit. Full distribution: docs/SWARM_PHASE3_WORK_DISTRIBUTION_2025-12-28.md. [Agent-4 CAPTAIN]
 
@@ -61,11 +61,17 @@
 
 - [ ] **HIGH**: TradingRobotPlug.com WEB-04 contact page deployment verification (75 pts) - ⏳ PENDING - Template created ✅ (page-contact.php), template mapped ✅, form handler integrated ✅, awaiting deployment verification. Source: Agent-7 status.json current_tasks. [Agent-3]
 
-- [x] **HIGH**: TradingRobotPlug.com real-time updates implementation (150 pts) - ✅ COMPLETE (verified 2025-12-27) - Already implemented in dashboard.js: WebSocket with polling fallback, multi-interval updates (3s metrics, 8s trades, 10s charts), connection status indicator, update animations. File: websites/tradingrobotplug.com/wp/wp-content/themes/tradingrobotplug-theme/assets/js/dashboard.js (593 lines). [Agent-7 VERIFIED]
-
-- [x] **MEDIUM**: TradingRobotPlug.com data integration testing (100 pts) - ✅ COMPLETE by Agent-4 (2025-12-26) - REST API endpoints implemented and registered: /stock-data, /stock-data/{symbol}, /strategies. Database table wp_trp_stock_data created. Automated 5-minute data collection scheduled. 16 files deployed. Endpoints verified. Source: Agent-7 status.json current_tasks. [Agent-4 COMPLETE]
-
 - [ ] **MEDIUM**: TradingRobotPlug.com dashboard layout coordination with Agent-5 (50 pts) - ⏳ PENDING - Coordinate dashboard layout. ETA: 1-2 hours. Source: Agent-7 status.json current_tasks. [Agent-7]
+- [ ] Infrastructure Refactoring (messaging_pyautogui.py) & WP-CLI MCP Server Implementation (from Agent-1)
+- [ ] Deployment MCP: Staging, Rollback & Snapshots Implementation (from Agent-2)
+- [ ] Resolve TRP/Build-In-Public Blockers & PHP Syntax Validation MCP Enhancement (from Agent-3)
+- [ ] Analytics Validation Completion & Database Manager MCP Implementation (from Agent-5)
+- [ ] Coordinate 646 SSOT tags & PSE Rule Implementation (from Agent-6)
+- [ ] P0 Foundation: Offer Ladders & ICP Definitions for Tier 2 Sites (from Agent-7)
+- [ ] Unified Tool Registry MCP Integration & final 1444+ tool audit (from Agent-8)
+
+
+---
 
 ## WEEK 1 P0 EXECUTION (2025-12-25)
 
@@ -125,35 +131,28 @@
 - [x] Blocker resolution coordination - ✅ COMPLETE by Agent-6 (2025-12-26) - Blocker tracking active: GA4/Pixel setup (validation blocker, Agent-5/Agent-3 coordinating). Agent-7 inbox cleanup complete (7 old PRE-PUBLIC AUDIT messages from Dec 20 archived to archive/2025-12-26_processed/). Inbox now clean. Status: Coordination active, blockers tracked in P0_FIX_TRACKING.md, inbox cleanup complete.
 - [ ] Timeline management - ⏳ ACTIVE
 
-## NOTES
+---
 
-- **Week 1 Target:** 19 fixes (11 Quick Wins + 8 Foundation) by end of Day 5
-- **Current Progress:** 8/19 fixes complete (42%)
-- **Tier 1 Target:** Complete all 11 Quick Wins by end of Day 2 (3 remaining)
-- **Expected Impact:** +25-35 points per site improvement (current avg: 35.5/100, target: 80+/100)
-- **Priority Site:** freerideinvestor.com (39/100, highest revenue potential)
-- **Tracking:** docs/website_audits/2026/P0_FIX_TRACKING.md
-- **Framework:** docs/website_audits/2026/STRATEGIC_P0_PRIORITIZATION_FRAMEWORK_2025-12-25.md
+## 🎯 THIS WEEK (Max 5 Items)
 
-## THIS_WEEK
+1. [ ] **HIGH**: Fix broken tools Phase 3 (32 runtime errors)
+2. [ ] **HIGH**: Resolve TRP/Build-In-Public deployment blockers
+3. [ ] **MEDIUM**: SSOT Coordination - Tag 646 tools missing tags
+4. [ ] **CRITICAL**: TradingRobotPlug.com Credibility & Compliance Overhaul
+5. [ ] **HIGH**: Phase 2 Infrastructure Refactoring
 
-> **📚 Related Systems & Protocols:**
-> - **Cycle Planner:** `src/core/resume_cycle_planner_integration.py` - Automatic task assignment when agents resume work
-> - **Contract System:** `src/services/contract_system/` - Task claiming via `python -m src.services.messaging_cli --get-next-task --agent Agent-X`
-> - **Task Discovery:** [TASK_DISCOVERY_PROTOCOL.md](docs/TASK_DISCOVERY_PROTOCOL.md) - Systematic approach to finding work when no tasks available
-> - **Captain-Level Tasks:** [CAPTAIN_LEVEL_TASK_PROTOCOL.md](docs/CAPTAIN_LEVEL_TASK_PROTOCOL.md) - Protocol for creating Captain-Level Tasks
+---
 
-### Captain-Level Strategic Oversight Tasks
-
-
-## BUILD-IN-PUBLIC INITIATIVE (A4-WEB-PUBLIC-001)
-
-- [ ] **dadudekc.com** - BUILD-IN-PUBLIC Phase 0 - ❌ CODE COMPLETE - DEPLOYMENT PENDING (2025-12-26 Captain verification: NOT DEPLOYED - NO "What I Do", "Receipts/Proof", "Live Experiments" sections visible)
-- [ ] **weareswarm.online** - BUILD-IN-PUBLIC Phase 0 - ❌ CODE COMPLETE - DEPLOYMENT PENDING (2025-12-26 Captain verification: NOT DEPLOYED - NO Manifesto page, NO "How the Swarm Works" page, NO Build in Public section)
-- **Assignee:** Agent-7 (code complete ✅), Agent-3 (deployment required URGENT)
-- **Status:** 🟡 BLOCKED - Awaiting Agent-3 deployment execution
-
-## WAITING_ON
+## ⏳ WAITING ON
 
 - Agent-3 deployment execution for TradingRobotPlug.com theme (URGENT)
 - Agent-3 deployment execution for BUILD-IN-PUBLIC Phase 0 (dadudekc.com + weareswarm.online) (URGENT)
+
+---
+
+## 🧊 PARKED / LATER
+
+- [ ] **LOW**: Website SEO Audit Phase 2 (all sites)
+- [ ] **LOW**: Agent Swarm Personality Refinement
+
+---
