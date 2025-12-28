@@ -2,6 +2,9 @@
 """
 Update GitHub repository descriptions to professional standards.
 Updates all 3 repositories under Victor-Dixon account.
+
+⚠️  DEPRECATED: This script is being replaced by the GitHub Professional MCP Server
+   Use the 'github-professional' MCP server for repository management instead.
 """
 
 import os
