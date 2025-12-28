@@ -17,6 +17,7 @@ import re
 import json
 import base64
 import requests
+import markdown
 from pathlib import Path
 from datetime import datetime
 
@@ -44,6 +45,98 @@ def parse_frontmatter(content):
                     frontmatter[key] = value
                     
     return frontmatter, body
+
+def convert_to_html_with_styling(markdown_content):
+    """Convert Markdown to HTML and inject professional dark theme styling."""
+    
+    # Convert MD to HTML
+    html_content = markdown.markdown(markdown_content, extensions=['fenced_code', 'codehilite'])
+    
+    # Define Professional Dark Theme Styles (Based on Victor's preference & dadudekc dark theme)
+    # Using specific class names to avoid global conflicts, but injecting them into the content container
+    
+    css = """
+    <style>
+    .victor-report {
+        font-family: 'SF Mono', 'Segoe UI Mono', 'Roboto Mono', Menlo, Courier, monospace;
+        line-height: 1.6;
+        color: #e8e8e8;
+        background-color: #1a1a1a;
+        padding: 2rem;
+        border-radius: 8px;
+        border: 1px solid #333;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    .victor-report h1, .victor-report h2, .victor-report h3 {
+        color: #fff;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+    }
+    .victor-report h1 { font-size: 2.2rem; border-bottom: 1px solid #333; padding-bottom: 0.5rem; }
+    .victor-report h2 { font-size: 1.5rem; color: #4a9eff; }
+    .victor-report h3 { font-size: 1.2rem; color: #a0a0a0; }
+    
+    .victor-report p { margin-bottom: 1.2rem; font-size: 1rem; }
+    
+    .victor-report ul, .victor-report ol { margin-bottom: 1.2rem; padding-left: 1.5rem; }
+    .victor-report li { margin-bottom: 0.5rem; color: #ccc; }
+    
+    .victor-report code {
+        background-color: #2a2a2a;
+        color: #ff79c6;
+        padding: 0.2rem 0.4rem;
+        border-radius: 4px;
+        font-size: 0.9em;
+    }
+    
+    .victor-report pre {
+        background-color: #0f0f0f;
+        padding: 1.5rem;
+        border-radius: 6px;
+        overflow-x: auto;
+        border: 1px solid #333;
+        margin-bottom: 1.5rem;
+    }
+    
+    .victor-report pre code {
+        background-color: transparent;
+        color: #f8f8f2;
+        padding: 0;
+    }
+    
+    .victor-report .status-block {
+        display: inline-block;
+        padding: 0.2rem 0.6rem;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        margin-right: 0.5rem;
+    }
+    
+    .victor-report .status-active { background-color: #28a745; color: white; }
+    .victor-report .priority-high { background-color: #ffc107; color: black; }
+    
+    .victor-report hr {
+        border: 0;
+        border-top: 1px solid #333;
+        margin: 2rem 0;
+    }
+    </style>
+    """
+    
+    # Wrap content
+    wrapped_html = f"""
+    {css}
+    <div class="victor-report">
+        {html_content}
+    </div>
+    """
+    
+    return wrapped_html
 
 def post_to_wordpress(site_url, username, password, title, content, excerpt="", status="draft", tags=None, categories=None):
     """Post content to WordPress via REST API."""
@@ -142,7 +235,11 @@ def main():
         sys.exit(1)
         
     print(f"🚀 Posting '{title}' to {wp_url}...")
-    result = post_to_wordpress(wp_url, wp_user, wp_password, title, body, excerpt, args.status)
+    
+    # Convert body (Markdown) to styled HTML
+    html_body = convert_to_html_with_styling(body)
+    
+    result = post_to_wordpress(wp_url, wp_user, wp_password, title, html_body, excerpt, args.status)
     
     if result:
         print(f"✅ Posted successfully! ID: {result.get('id')}")
