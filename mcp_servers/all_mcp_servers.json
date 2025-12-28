@@ -119,6 +119,13 @@
       ],
       "description": "WordPress maintenance, monitoring, updates, health checks, and performance optimization"
     },
+    "development-testing": {
+      "command": "python",
+      "args": [
+        "D:/Agent_Cellphone_V2_Repository/mcp_servers/development_testing_server.py"
+      ],
+      "description": "Development workflows, testing operations, debugging, quality assurance, and development tooling"
+    },
     "coordination": {
       "command": "python",
       "args": [
