@@ -14,7 +14,7 @@ import json
 import time
 import sys
 from pathlib import Path
-from typing import Dict, Tuple, List
+from typing import Dict, Tuple, List, Any
 import logging
 
 # Try to import PyAutoGUI

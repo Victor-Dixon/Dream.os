@@ -83,7 +83,7 @@ async def main() -> int:
     bot = UnifiedDiscordBot(token=token, channel_id=channel_id)
     print(f"🔍 DEBUG: Bot instance created successfully")
 
-    # Reconnection settings
+    # Enhanced reconnection settings for network stability
     max_reconnect_attempts = 999999
     base_delay = 5
     max_delay = 300
@@ -91,6 +91,11 @@ async def main() -> int:
     reconnect_count = 0
     consecutive_failures = 0
     max_consecutive_failures = 10
+
+    # Network health tracking
+    network_failures = 0
+    max_network_failures = 5
+    last_successful_connection = None
 
     print("🚀 Starting Discord Commander...")
     print("🐝 WE. ARE. SWARM.")
@@ -116,10 +121,21 @@ async def main() -> int:
                 consecutive_failures += 1
                 reconnect_count += 1
 
-                if consecutive_failures >= max_consecutive_failures:
-                    reconnect_delay = min(max_delay, reconnect_delay * 2)
+                # Special handling for rate limiting
+                if "429" in str(runtime_error) or "rate limit" in str(runtime_error).lower():
+                    logger.warning("🚦 Rate limiting detected - implementing backoff strategy...")
+                    reconnect_delay = min(max_delay, reconnect_delay * 3)  # More aggressive backoff for rate limits
+                    consecutive_failures = max_consecutive_failures  # Force longer delay
+
+                    # Add rate limit recovery delay
+                    import time
+                    logger.info("⏳ Waiting 30 seconds for rate limit recovery...")
+                    time.sleep(30)
                 else:
-                    reconnect_delay = min(max_delay, reconnect_delay * 1.5)
+                    if consecutive_failures >= max_consecutive_failures:
+                        reconnect_delay = min(max_delay, reconnect_delay * 2)
+                    else:
+                        reconnect_delay = min(max_delay, reconnect_delay * 1.5)
 
                 import random
                 jitter = random.uniform(0.8, 1.2)
@@ -136,6 +152,14 @@ async def main() -> int:
             if hasattr(bot, '_intentional_shutdown') and bot._intentional_shutdown:
                 logger.info("✅ Bot shutdown requested - exiting cleanly")
                 return 0
+
+            # Reset network failure counter on successful connection
+            if last_successful_connection is None:
+                last_successful_connection = datetime.now()
+                logger.info(f"🎉 First successful connection at {last_successful_connection}")
+            else:
+                last_successful_connection = datetime.now()
+                network_failures = 0  # Reset on successful connection
 
             logger.warning("⚠️ Bot disconnected - will reconnect in next iteration")
             reconnect_count += 1
@@ -188,18 +212,32 @@ async def main() -> int:
         except (ConnectionError, OSError, asyncio.TimeoutError) as e:
             consecutive_failures += 1
             reconnect_count += 1
+            network_failures += 1
 
             error_type = type(e).__name__
             logger.warning(
                 f"⚠️ Network error ({error_type}): {e}\n"
                 f"   Attempt {reconnect_count}, consecutive failures: {consecutive_failures}\n"
+                f"   Network failures: {network_failures}/{max_network_failures}\n"
                 f"   Retrying in {reconnect_delay} seconds..."
             )
 
-            if consecutive_failures >= max_consecutive_failures:
-                reconnect_delay = min(max_delay, reconnect_delay * 2)
+            # If too many network failures, try a longer delay and reset
+            if network_failures >= max_network_failures:
+                logger.warning(f"🔄 Too many network failures ({network_failures}), resetting connection strategy...")
+                reconnect_delay = max_delay  # Use maximum delay
+                network_failures = 0
+                consecutive_failures = 0
+
+                # Add extra delay for network recovery
+                import time
+                logger.info("⏳ Waiting 60 seconds for network recovery...")
+                time.sleep(60)
             else:
-                reconnect_delay = min(max_delay, reconnect_delay * 1.5)
+                if consecutive_failures >= max_consecutive_failures:
+                    reconnect_delay = min(max_delay, reconnect_delay * 2)
+                else:
+                    reconnect_delay = min(max_delay, reconnect_delay * 1.5)
 
             import random
             jitter = random.uniform(0.8, 1.2)
