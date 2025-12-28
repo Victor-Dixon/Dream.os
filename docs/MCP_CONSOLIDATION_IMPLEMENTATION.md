@@ -299,3 +299,4 @@ python tools/add_mcp_to_cursor_settings.py
 - ⏳ Tool migration (pending)
 - ⏳ Documentation update (pending)
 
+

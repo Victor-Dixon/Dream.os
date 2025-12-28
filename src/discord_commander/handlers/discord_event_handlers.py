@@ -39,39 +39,67 @@ class DiscordEventHandlers:
 
     async def handle_on_ready(self) -> None:
         """Handle bot ready event."""
-        # Update connection health
-        self.bot.connection_healthy = True
-        self.bot.last_heartbeat = time.time()
+        try:
+            # Update connection health
+            self.bot.connection_healthy = True
+            self.bot.last_heartbeat = time.time()
 
-        # Prevent duplicate startup messages on reconnection
-        if not hasattr(self.bot, '_startup_sent'):
-            self.logger.info(f"✅ Discord Commander Bot ready: {self.bot.user}")
-            self.logger.info(f"📊 Guilds: {len(self.bot.guilds)}")
+            # Prevent duplicate startup messages on reconnection
+            if not hasattr(self.bot, '_startup_sent'):
+                self.logger.info(
+                    f"✅ Discord Commander Bot ready: {self.bot.user}")
+                self.logger.info(f"📊 Guilds: {len(self.bot.guilds)}")
 
-            # Initialize status change monitor
-            await self._initialize_status_monitor()
+                # Initialize status change monitor
+                try:
+                    await self._initialize_status_monitor()
+                except Exception as e:
+                    self.logger.error(
+                        f"❌ Error initializing status monitor: {e}", exc_info=True)
+                    # Continue startup even if status monitor fails
 
-            self.logger.info(f"🤖 Latency: {round(self.bot.latency * 1000, 2)}ms")
+                self.logger.info(
+                    f"🤖 Latency: {round(self.bot.latency * 1000, 2)}ms")
 
-            # Set bot presence
-            await self.bot.change_presence(
-                activity=discord.Activity(
-                    type=discord.ActivityType.watching, name="the swarm 🐝")
-            )
+                # Set bot presence
+                try:
+                    await self.bot.change_presence(
+                        activity=discord.Activity(
+                            type=discord.ActivityType.watching, name="the swarm 🐝")
+                    )
+                except Exception as e:
+                    self.logger.error(
+                        f"❌ Error setting bot presence: {e}", exc_info=True)
+                    # Continue startup even if presence fails
 
-            # Optional: auto-refresh Thea cookies headless on startup if env set
-            if os.getenv("THEA_AUTO_REFRESH", "0") == "1":
-                await self.bot.ensure_thea_session(
-                    allow_interactive=False,
-                    min_interval_minutes=self.bot.thea_min_interval_minutes
-                )
+                # Optional: auto-refresh Thea cookies headless on startup if env set
+                if os.getenv("THEA_AUTO_REFRESH", "0") == "1":
+                    try:
+                        await self.bot.ensure_thea_session(
+                            allow_interactive=False,
+                            min_interval_minutes=self.bot.thea_min_interval_minutes
+                        )
+                    except Exception as e:
+                        self.logger.error(
+                            f"❌ Error ensuring Thea session: {e}", exc_info=True)
+                        # Continue startup even if Thea session fails
 
-            # Send startup message with control panel (only once)
-            await self.bot.send_startup_message()
-            self.bot._startup_sent = True
-        else:
-            # Reconnection - just log, don't spam startup message
-            self.logger.info(f"🔄 Discord Bot reconnected: {self.bot.user}")
+                # Send startup message with control panel (only once)
+                try:
+                    await self.bot.send_startup_message()
+                except Exception as e:
+                    self.logger.error(
+                        f"❌ Error sending startup message: {e}", exc_info=True)
+                    # Continue startup even if startup message fails
+
+                self.bot._startup_sent = True
+            else:
+                # Reconnection - just log, don't spam startup message
+                self.logger.info(f"🔄 Discord Bot reconnected: {self.bot.user}")
+        except Exception as e:
+            self.logger.error(
+                f"❌ Critical error in handle_on_ready: {e}", exc_info=True)
+            # Don't re-raise - let bot continue running
 
     async def _initialize_status_monitor(self) -> None:
         """Initialize status change monitor."""
@@ -138,7 +166,8 @@ class DiscordEventHandlers:
                               '[VICTOR]', '[CARYMN]', '[CHARLES]')
 
         # Check if message starts with a supported prefix
-        has_prefix = any(content.startswith(prefix) for prefix in supported_prefixes)
+        has_prefix = any(content.startswith(prefix)
+                         for prefix in supported_prefixes)
 
         # Also check for simple "Agent-X" format
         simple_format = content.split('\n')[0].strip().startswith('Agent-')
@@ -148,7 +177,8 @@ class DiscordEventHandlers:
 
         try:
             # Get developer prefix from Discord user ID
-            developer_prefix = self.bot._get_developer_prefix(str(message.author.id))
+            developer_prefix = self.bot._get_developer_prefix(
+                str(message.author.id))
 
             # Parse message format
             recipient, message_content, message_prefix = parse_message_format(
@@ -162,9 +192,9 @@ class DiscordEventHandlers:
             await self._send_message_to_agent(message, recipient, message_content, message_prefix)
 
         except Exception as e:
-            self.logger.error(f"❌ Error processing message: {e}", exc_info=True)
+            self.logger.error(
+                f"❌ Error processing message: {e}", exc_info=True)
             await message.add_reaction("❌")
-
 
     async def _send_message_to_agent(
         self, message: discord.Message, recipient: str,
@@ -268,4 +298,3 @@ async def handle_on_error(bot: "UnifiedDiscordBot", event: str, *args, **kwargs)
     """Handle on_error event."""
     handler = DiscordEventHandlers(bot)
     await handler.handle_on_error(event, *args, **kwargs)
-
