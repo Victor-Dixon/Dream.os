@@ -1,5 +1,12 @@
 {
   "version": "2.0.0",
+  "_meta": {
+    "purpose": "Tool registry lockfile mapping tool names to (module_path, class_name).",
+    "usage": "Read by tools/tool_registry.py via data.get('tools', {}). Extra keys are ignored.",
+    "author": "Swarm (SSOT tagging remediation)",
+    "date": "2025-12-28",
+    "description": "Lockfile for deterministic tool discovery; do not rename tool keys without updating adapters."
+  },
   "tools": {
     "vector.context": [
       "tools.categories.vector_tools",
