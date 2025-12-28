@@ -80,23 +80,23 @@ def start_bot():
     """Start the Discord bot."""
     print("🚀 Starting Discord Bot...")
     print("🐝 WE. ARE. SWARM.")
-    
+
     # Check for token
     token = os.getenv("DISCORD_BOT_TOKEN")
     if not token:
         print("❌ DISCORD_BOT_TOKEN not set in environment!")
         print("   Set it with: $env:DISCORD_BOT_TOKEN='your_token' (Windows)")
         sys.exit(1)
-    
+
     # Stop existing bot if running
     stop_existing_bot()
-    
+
     # Start bot process
     bot_script = project_root / "src" / "discord_commander" / "bot_runner.py"
-    
+
     # Use Python executable
     python_exe = sys.executable
-    
+
     # Start process
     process = subprocess.Popen(
         [python_exe, "-m", "src.discord_commander.bot_runner"],
@@ -106,7 +106,7 @@ def start_bot():
         text=True,
         bufsize=1
     )
-    
+
     # Write PID
     write_pid(process.pid)
     print(f"✅ Bot started (PID: {process.pid})")
@@ -114,16 +114,16 @@ def start_bot():
     print(f"📋 Logs: {LOG_DIR / 'discord_bot_*.log'}")
     print("\n🔄 Bot will auto-restart on crashes")
     print("🛑 Press Ctrl+C to stop\n")
-    
+
     # Monitor process
     try:
         # Stream output
         for line in process.stdout:
             print(line.rstrip())
-        
+
         # Wait for process to complete
         return_code = process.wait()
-        
+
         if return_code != 0:
             print(f"\n⚠️ Bot exited with code {return_code}")
             print("🔄 Will restart in 5 seconds...")
@@ -133,7 +133,7 @@ def start_bot():
             print("\n✅ Bot stopped cleanly")
             PID_FILE.unlink(missing_ok=True)
             return 0
-            
+
     except KeyboardInterrupt:
         print("\n🛑 Stopping bot...")
         try:
@@ -159,4 +159,3 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print("\n🛑 Startup interrupted")
         sys.exit(0)
-

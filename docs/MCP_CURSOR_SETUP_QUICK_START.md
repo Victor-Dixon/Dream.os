@@ -104,3 +104,4 @@ This bypasses MCP protocol but provides same functionality.
 Run `python tools/setup_cursor_mcp.py` to generate `CURSOR_MCP_CONFIG.json` with the exact configuration needed.
 
 
+

@@ -89,19 +89,14 @@ $table_prefix = 'wp_';
  *
  * @link https://wordpress.org/support/article/debugging-in-wordpress/
  */
-if ( ! defined( 'WP_DEBUG' ) ) {
-	define( 'WP_DEBUG', false );
-}
+define( 'WP_DEBUG', true );
+define( 'WP_DEBUG_LOG', true );
+define( 'WP_DEBUG_DISPLAY', false );
+@ini_set( 'display_errors', 0 );
 
 define( 'FS_METHOD', 'direct' );
 define( 'COOKIEHASH', '4d22f306a86667e9d349ccd82dfc67ab' );
 define( 'WP_AUTO_UPDATE_CORE', 'minor' );
-
-// Enable WordPress debug mode
-define('WP_DEBUG', true);
-define('WP_DEBUG_LOG', true);
-define('WP_DEBUG_DISPLAY', false);
-@ini_set('display_errors', 0);
 
 
 // GA4/Pixel Analytics Configuration
