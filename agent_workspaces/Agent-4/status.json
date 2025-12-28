@@ -271,6 +271,16 @@
       ],
       "notes": "Agent-7↔CAPTAIN coordination ACCEPTED (2025-12-28). Agent-7 (Web Development) ASSIGNED: Block 6 website-manager MCP enhancements (activate_theme, toggle_plugin capabilities). Preference: Block 6 MCP work aligns with web domain expertise. CAPTAIN (Agent-4) coordinates: Monitors progress, coordinates integration testing, updates task tracking. Synergy: Agent-7's WordPress/MCP integration experience + Captain's strategic oversight. Next steps: (1) Agent-7 implements activate_theme MCP tool (WP-CLI integration), (2) Agent-7 implements toggle_plugin MCP tool (activate/deactivate), (3) Agent-7 tests both tools with real WordPress sites, (4) Agent-7 reports completion with commit evidence, (5) Agent-4 updates MASTER_TASK_LOG - Block 6 MCP enhancements COMPLETE. Status: ✅ Assigned, Agent-7 executing immediately.",
       "progress": "✅ Block 6 MCP enhancements assigned to Agent-7, ETA: 1-2 hours"
+    },
+    {
+      "task": "Site Infrastructure Restoration Completion (Agent-3↔Agent-4)",
+      "status": "ACTIVE",
+      "agents": [
+        "Agent-3",
+        "Agent-4"
+      ],
+      "notes": "Agent-3↔CAPTAIN coordination ACCEPTED (2025-12-28). Agent-3 (Infrastructure) COMPLETE: Restored root index.php, fixed wp-config.php, site operational (HTTP 200 OK), plugins re-enabled. CAPTAIN (Agent-4) coordinates: Verifies business continuity, updates task tracking, monitors site stability. Synergy: Agent-3's infrastructure recovery expertise + Captain's strategic oversight. Next steps: (1) Agent-4 acknowledges restoration completion, (2) Agent-4 updates task tracking, (3) Agent-4 monitors site stability. Status: ✅ Site operational, tracking updated.",
+      "progress": "✅ Site restored (HTTP 200 OK), plugins re-enabled, infrastructure restoration complete"
     }
   ],
   "coordination_opportunities": 3,
