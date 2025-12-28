@@ -69,6 +69,34 @@
         "D:/Agent_Cellphone_V2_Repository/mcp_servers/validation_audit_server.py"
       ],
       "description": "Validation and audit operations for closures, SEO, and website structure"
+    },
+    "devlog-manager": {
+      "command": "python",
+      "args": [
+        "D:/Agent_Cellphone_V2_Repository/mcp_servers/devlog_manager_server.py"
+      ],
+      "description": "Devlog creation, posting, validation, and feed generation"
+    },
+    "discord-integration": {
+      "command": "python",
+      "args": [
+        "D:/Agent_Cellphone_V2_Repository/mcp_servers/discord_integration_server.py"
+      ],
+      "description": "Discord webhook posting, embeds, and notifications"
+    },
+    "cleanup-manager": {
+      "command": "python",
+      "args": [
+        "D:/Agent_Cellphone_V2_Repository/mcp_servers/cleanup_manager_server.py"
+      ],
+      "description": "Workspace cleanup, session cleanup, and archive operations"
+    },
+    "deployment-manager": {
+      "command": "python",
+      "args": [
+        "D:/Agent_Cellphone_V2_Repository/mcp_servers/deployment_manager_server.py"
+      ],
+      "description": "Deployment status checking, verification, and history tracking"
     }
   }
 }
