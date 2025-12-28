@@ -45,7 +45,24 @@ class ToolRegistry:
     def _load_registry_data(self) -> dict[str, list[str]]:
         """Load tool registry data from JSON file."""
         try:
-            with open("tools_v2/tool_registry.lock.json", "r") as f:
+            # Check multiple possible locations for the lock file
+            candidate_paths = [
+                Path("tools/tool_registry.lock.json"),
+                Path("tools_v2/tool_registry.lock.json"),
+                Path(__file__).parent / "tool_registry.lock.json"
+            ]
+            
+            lock_path = None
+            for path in candidate_paths:
+                if path.exists():
+                    lock_path = path
+                    break
+            
+            if not lock_path:
+                logger.warning("Could not find tool_registry.lock.json")
+                return {}
+                
+            with open(lock_path, "r") as f:
                 data = json.load(f)
                 return data.get("tools", {})
         except (FileNotFoundError, json.JSONDecodeError) as e:
@@ -79,6 +96,11 @@ class ToolRegistry:
     def resolve(self, tool_name: str) -> type[IToolAdapter]:
         """Resolve tool class by name."""
         return self.get_tool_class(tool_name)
+
+    def get_tool(self, tool_name: str) -> IToolAdapter:
+        """Get instantiated tool adapter by name."""
+        adapter_class = self.resolve(tool_name)
+        return adapter_class()
 
     def list_tools(self) -> list[str]:
         """List all available tools."""
