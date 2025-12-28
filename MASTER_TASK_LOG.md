@@ -43,6 +43,8 @@
 
 - [ ] **HIGH**: Complete Tier 1 analytics validation (target: Day 2 end) (100 pts) - ⏳ BLOCKED - Awaiting GA4/Pixel ID configuration. Once IDs configured, run automated validation: automated_p0_analytics_validation.py --validate-ready. Source: Agent-5 passdown.json next_session_priorities. [Agent-5]
 
+- [x] **HIGH**: freerideinvestor.com HTTP 500 error resolution - ✅ COMPLETE by Agent-7 (2025-12-28) - Root cause: corrupted WordPress core files (index.php checksum failed). Fix applied: restored WordPress core via wp core download --force, activated correct theme (freerideinvestor-modern), fixed CLI command guards. Site now operational (HTTP 200). ICP content creation unblocked - Post ID 110 created successfully via WP-CLI. Next: Verify ICP content accessible via REST API, proceed with frontend integration. [Agent-7 COMPLETE]
+
 - [ ] **CRITICAL**: Resolve deployment blocker - TradingRobotPlug.com theme (15 files) + Build-In-Public Phase 0 (10 files) (150 pts) - ⏳ BLOCKED - Server access credentials needed. Source: Agent-3 status.json current_mission. [Agent-3]
 
 - [ ] **CRITICAL**: TradingRobotPlug.com Credibility & Compliance Overhaul (200 pts) - ⏳ PENDING - External audit grade: D (very low credibility). **HYBRID MODEL**: Both custom development services ("I will build you a trading robot") AND showcasing/selling existing trading robots. Requires dual-track compliance: Service Terms (lower risk) + Product Terms & Risk Disclosure (higher risk, financial product regulations). P0: Homepage restructure (Services + Products sections), Service Terms, Product Terms & Risk Disclosure (CRITICAL - financial product compliance), Privacy Policy, remove placeholder content. P1: Services page, Products/Showcase page with performance data (disclaimers required), content strategy. P2: Performance transparency (backtests with disclaimers), social proof, enhanced homepage. Key requirement: Clear separation between services and products, performance disclaimers on every product display. Audit: docs/website_audits/2026/tradingrobotplug_credibility_audit_2025-12-27.md. Hybrid model: docs/website_audits/2026/tradingrobotplug_hybrid_model_2025-12-27.md. [Agent-7 + Agent-3 coordination]
@@ -77,7 +79,8 @@
 - [ ] Coordinate 646 SSOT tags & PSE Rule Implementation (from Agent-6)
 - [ ] P0 Foundation: Offer Ladders & ICP Definitions for Tier 2 Sites (from Agent-7)
 - [ ] Unified Tool Registry MCP Integration & final 1444+ tool audit (from Agent-8)
-- [ ] **HIGH**: Analytics Validation Completion & Database Manager MCP Implementation [Agent-5] (IN PROGRESS) (from Agent-5)
+- [x] **HIGH**: Analytics Validation Completion & Database Manager MCP Implementation [Agent-5] (IN PROGRESS)
+- [ ] **HIGH**: Analytics Validation Completion & Database Manager MCP Implementation [Agent-5] (DB MCP DONE, HEALTH CHECK TOOL IN PROGRESS) (from Agent-5)
 
 
 ---
