@@ -875,6 +875,60 @@ def main():
                                     },
                                     "required": ["site_key", "analytics_config"]
                                 }
+                            },
+                            "create_deployment_snapshot": {
+                                "description": "Create a snapshot of current deployment state for rollback",
+                                "inputSchema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "site_key": {"type": "string", "description": "WordPress site key"},
+                                        "description": {"type": "string", "description": "Optional snapshot description"}
+                                    },
+                                    "required": ["site_key"]
+                                }
+                            },
+                            "list_deployment_snapshots": {
+                                "description": "List available deployment snapshots",
+                                "inputSchema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "site_key": {"type": "string", "description": "Optional site key filter"}
+                                    }
+                                }
+                            },
+                            "rollback_deployment": {
+                                "description": "Rollback deployment to a previous snapshot",
+                                "inputSchema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "site_key": {"type": "string", "description": "WordPress site key"},
+                                        "snapshot_id": {"type": "string", "description": "Snapshot ID to rollback to"}
+                                    },
+                                    "required": ["site_key", "snapshot_id"]
+                                }
+                            },
+                            "delete_deployment_snapshot": {
+                                "description": "Delete a deployment snapshot",
+                                "inputSchema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "site_key": {"type": "string", "description": "WordPress site key"},
+                                        "snapshot_id": {"type": "string", "description": "Snapshot ID to delete"}
+                                    },
+                                    "required": ["site_key", "snapshot_id"]
+                                }
+                            },
+                            "deploy_with_staging": {
+                                "description": "Deploy with automatic staging/snapshot creation for rollback",
+                                "inputSchema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "site_key": {"type": "string", "description": "WordPress site key"},
+                                        "theme_files": {"type": "array", "items": {"type": "string"}, "description": "List of local file paths to deploy"},
+                                        "description": {"type": "string", "description": "Optional deployment description"}
+                                    },
+                                    "required": ["site_key", "theme_files"]
+                                }
                             }
                         }
                     }
@@ -909,6 +963,16 @@ def main():
                     result = list_deployable_sites(**arguments)
                 elif tool_name == "verify_deployment_integration":
                     result = verify_deployment_integration(**arguments)
+                elif tool_name == "create_deployment_snapshot":
+                    result = create_deployment_snapshot(**arguments)
+                elif tool_name == "list_deployment_snapshots":
+                    result = list_deployment_snapshots(**arguments)
+                elif tool_name == "rollback_deployment":
+                    result = rollback_deployment(**arguments)
+                elif tool_name == "delete_deployment_snapshot":
+                    result = delete_deployment_snapshot(**arguments)
+                elif tool_name == "deploy_with_staging":
+                    result = deploy_with_staging(**arguments)
                 else:
                     result = {"success": False, "error": f"Unknown tool: {tool_name}"}
                 
