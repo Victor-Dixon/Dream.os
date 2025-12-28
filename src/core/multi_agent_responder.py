@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from __future__ import annotations
 """
 Multi-Agent Responder
 ======================
@@ -10,22 +11,6 @@ Author: Agent-2 (Architecture Specialist)
 Created: 2025-12-01
 Usage: Import and use MultiAgentResponder class for agent communication
 """
-"""
-Multi-Agent Responder - Response Collection & Combination
-
-<!-- SSOT Domain: infrastructure -->
-
-==========================================================
-
-Collects responses from multiple agents and combines them into a single message.
-Solves queue buildup problem: Instead of 7 messages, recipient gets 1 combined message.
-
-Author: Agent-4 (Captain) - Autonomous Implementation
-Date: 2025-11-27
-Status: 🚀 ACTIVE - Powering Swarm Towards AGI
-"""
-
-from __future__ import annotations
 
 import logging
 import threading
