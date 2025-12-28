@@ -4,6 +4,24 @@ import os
 import datetime
 from pathlib import Path
 import glob
+import sys
+
+# Add project root to path to allow imports from src/tools
+project_root = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(project_root))
+
+try:
+    from tools.categories.communication_tools import DiscordRouterPoster
+    DISCORD_AVAILABLE = True
+except ImportError as e:
+    print(f"⚠️  Could not import DiscordRouterPoster. Discord posting will be skipped.")
+    print(f"   Error details: {e}")
+    DISCORD_AVAILABLE = False
+except Exception as e:
+    print(f"⚠️  Unexpected error importing DiscordRouterPoster: {e}")
+    import traceback
+    traceback.print_exc()
+    DISCORD_AVAILABLE = False
 
 def generate_report():
     workspace_root = Path("/workspace")
@@ -161,6 +179,43 @@ def generate_report():
         with open(report_path, 'w') as f:
             f.write(report_content)
         print(f"Report generated: {report_path}")
+        
+        # Post to Discord
+        if DISCORD_AVAILABLE:
+            print("Posting summary to Discord...")
+            try:
+                poster = DiscordRouterPoster(agent_id="Agent-4")
+                
+                discord_message = f"""**Cycle Accomplishments Report Generated**
+
+**Date:** {date_str}
+**Total Agents:** {active_agents}
+**Total Completed Tasks:** {total_completed_tasks}
+**Total Achievements:** {total_achievements}
+
+**Report File:** `reports/{report_path.name}`
+
+*Full report available in reports directory.*
+"""
+                
+                result = poster.post_update(
+                    agent_id="Agent-4",
+                    message=discord_message,
+                    title="📊 Cycle Accomplishments Report",
+                    priority="normal"
+                )
+                
+                if result.get("success"):
+                    print("✅ Summary posted to Discord")
+                else:
+                    print(f"⚠️ Failed to post to Discord: {result.get('error')}")
+                    if result.get("details"):
+                        print(f"   Details: {result['details']}")
+            except Exception as e:
+                print(f"⚠️ Error posting to Discord: {e}")
+        else:
+            print("ℹ️ Discord posting skipped (module not available)")
+            
     except Exception as e:
         print(f"Error writing report: {e}")
 
