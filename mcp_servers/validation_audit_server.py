@@ -172,8 +172,9 @@ def check_php_syntax(site_key: str, file_path: str) -> Dict[str, Any]:
         sys.path.insert(0, str(Path(__file__).parent.parent.parent / "websites" / "ops" / "deployment"))
         
         try:
-            from simple_wordpress_deployer import SimpleWordPressDeployer
-            deployer = SimpleWordPressDeployer(site_key=site_key)
+            from simple_wordpress_deployer import SimpleWordPressDeployer, load_site_configs
+            configs = load_site_configs()
+            deployer = SimpleWordPressDeployer(site_key=site_key, site_configs=configs)
             
             if not deployer.connect():
                 return {
