@@ -32,7 +32,7 @@ def load_mcp_config():
             return json.load(f)
     return None
 
-def add_mcp_to_settings(dry_run=False):
+def add_mcp_to_settings(dry_run=False, force_yes=False):
     """Add MCP configuration to Cursor settings.json"""
     settings_path = get_cursor_settings_path()
     
@@ -66,10 +66,13 @@ def add_mcp_to_settings(dry_run=False):
         for name in settings["mcp.servers"].keys():
             print(f"      - {name}")
         
-        response = input("\n   Overwrite existing configuration? (y/N): ")
-        if response.lower() != 'y':
-            print("   Skipping update")
-            return False
+        if not force_yes:
+            response = input("\n   Overwrite existing configuration? (y/N): ")
+            if response.lower() != 'y':
+                print("   Skipping update")
+                return False
+        else:
+            print("\n   --yes flag provided, overwriting configuration")
     
     # Prepare MCP servers config (remove description field for Cursor)
     mcp_servers = {}
@@ -112,14 +115,15 @@ def main():
     print("="*60)
     print()
     
-    # Check for dry run flag
+    # Check for dry run and yes flags
     dry_run = "--dry-run" in os.sys.argv or "-n" in os.sys.argv
+    force_yes = "--yes" in os.sys.argv or "-y" in os.sys.argv
     
     if dry_run:
         print("🔍 DRY RUN MODE - No changes will be made")
         print()
     
-    success = add_mcp_to_settings(dry_run=dry_run)
+    success = add_mcp_to_settings(dry_run=dry_run, force_yes=force_yes)
     
     print()
     print("="*60)

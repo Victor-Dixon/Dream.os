@@ -99,9 +99,10 @@ class DiscordRouterPoster:
         
         # Discord has a 2000 character limit for message content
         # If content is too long, truncate with a note
-        max_discord_length = 2000
+        # Being more conservative to stay under the 2000 byte total payload limit
+        max_discord_length = 1800
         if len(content) > max_discord_length:
-            truncate_at = max_discord_length - 100  # Leave room for truncation message
+            truncate_at = max_discord_length - 150  # Leave room for truncation message
             content = content[:truncate_at] + "\n\n... (message truncated - see full content in workspace)"
             print(f"⚠️  Message truncated for Discord ({len(content)} chars → {max_discord_length} chars)")
         

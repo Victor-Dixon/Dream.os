@@ -8,7 +8,7 @@
     {
       "task": "Broken Tools Fix (Chunk 4)",
       "status": "IN_PROGRESS",
-      "progress": "Phase 1 & 2 complete (15/47 tools fixed), Phase 3 pending (32 runtime errors)",
+      "progress": "Phase 1 & 2 complete (15/47 tools fixed), Phase 3 pending (17/47 stable)",
       "agents": [
         "Agent-4"
       ]
@@ -71,7 +71,7 @@
     {
       "task": "Sales Funnel P0 Execution",
       "status": "ACTIVE",
-      "progress": "1/5 positioning statements complete",
+      "progress": "3/5 positioning statements complete",
       "agents": [
         "User",
         "Agent-4"
