@@ -481,7 +481,7 @@ class StatusChangeMonitor:
 
                 # Special handling for Agent-4 (Captain): Use Captain Restart Pattern from inbox
                 if agent_id == "Agent-4":
-                    resumer_prompt = self._get_captain_restart_pattern(
+                    resumer_prompt = await self._get_captain_restart_pattern(
                         inactivity_minutes=summary.inactivity_duration_minutes)
                     if not resumer_prompt:
                         # Fallback to generic prompt if pattern not found
@@ -736,7 +736,7 @@ class StatusChangeMonitor:
                 logger.debug(f"🔍 Check PyAutoGUIMessagingDelivery methods and UnifiedMessage attributes")
             except Exception as direct_error:
                 logger.error(f"❌ Direct PyAutoGUI resume send failed for {agent_id}: {type(direct_error).__name__}: {direct_error}", exc_info=True)
-                # Best-effort CLI fallback (still PyAutoGUI-based)
+                # Best-effort CLI fallback (still PyAutoGUI-based) - run in thread to avoid blocking
                 import subprocess
                 import sys
                 from pathlib import Path
@@ -757,14 +757,20 @@ class StatusChangeMonitor:
                     "s2a",
                 ]
                 env = {"PYTHONPATH": str(project_root)}
-                result = subprocess.run(
-                    cmd,
-                    capture_output=True,
-                    text=True,
-                    timeout=TimeoutConstants.HTTP_DEFAULT,
-                    env=env,
-                    cwd=str(project_root),
-                )
+                
+                def _run_cli_fallback():
+                    """Run CLI fallback in thread to avoid blocking event loop."""
+                    return subprocess.run(
+                        cmd,
+                        capture_output=True,
+                        text=True,
+                        timeout=TimeoutConstants.HTTP_DEFAULT,
+                        env=env,
+                        cwd=str(project_root),
+                    )
+                
+                # Run subprocess in thread to prevent Discord heartbeat blocking
+                result = await asyncio.to_thread(_run_cli_fallback)
                 if result.returncode == 0:
                     logger.info(f"✅ Resume message sent to {agent_id} via messaging CLI (PyAutoGUI)")
                 else:
@@ -775,51 +781,57 @@ class StatusChangeMonitor:
             logger.error(
                 f"❌ Error sending resume message to {agent_id}: {e}", exc_info=True)
 
-    def _get_captain_restart_pattern(self, inactivity_minutes: float = 0.0) -> Optional[str]:
-        """Get Captain Restart Pattern from Agent-4 inbox, modified for resume context."""
-        try:
-            inbox_dir = self.workspace_path / "Agent-4" / "inbox"
-            if not inbox_dir.exists():
-                return None
+    async def _get_captain_restart_pattern(self, inactivity_minutes: float = 0.0) -> Optional[str]:
+        """Get Captain Restart Pattern from Agent-4 inbox, modified for resume context.
+        
+        Made async to avoid blocking Discord event loop during file I/O.
+        """
+        def _read_pattern_sync():
+            """Synchronous file read wrapped for asyncio.to_thread()."""
+            try:
+                inbox_dir = self.workspace_path / "Agent-4" / "inbox"
+                if not inbox_dir.exists():
+                    return None
 
-            # Look for Captain Restart Pattern files
-            pattern_files = list(inbox_dir.glob("CAPTAIN_RESTART_PATTERN*.md"))
-            if not pattern_files:
-                return None
+                # Look for Captain Restart Pattern files
+                pattern_files = list(inbox_dir.glob("CAPTAIN_RESTART_PATTERN*.md"))
+                if not pattern_files:
+                    return None
 
-            # Get most recent pattern file
-            pattern_file = max(pattern_files, key=lambda p: p.stat().st_mtime)
+                # Get most recent pattern file
+                pattern_file = max(pattern_files, key=lambda p: p.stat().st_mtime)
 
-            # Read pattern content
-            with open(pattern_file, 'r', encoding='utf-8') as f:
-                pattern_content = f.read()
+                # Read pattern content
+                with open(pattern_file, 'r', encoding='utf-8') as f:
+                    pattern_content = f.read()
 
-            # Extract the pattern message (skip headers if present)
-            # Look for the actual pattern content after headers
-            lines = pattern_content.split('\n')
-            start_idx = 0
-            for i, line in enumerate(lines):
-                if line.startswith('Subject:') or (line.startswith('#') and 'RESTART' in line.upper()):
-                    start_idx = i
-                    break
+                # Extract the pattern message (skip headers if present)
+                lines = pattern_content.split('\n')
+                start_idx = 0
+                for i, line in enumerate(lines):
+                    if line.startswith('Subject:') or (line.startswith('#') and 'RESTART' in line.upper()):
+                        start_idx = i
+                        break
 
-            pattern_message = '\n'.join(lines[start_idx:])
+                pattern_message = '\n'.join(lines[start_idx:])
 
-            # Modify pattern for resume context: Add inactivity header
-            resume_header = f"""🚨 RESUMER PROMPT - Captain Inactivity Detected
+                # Modify pattern for resume context: Add inactivity header
+                resume_header = f"""🚨 RESUMER PROMPT - Captain Inactivity Detected
 
 **Inactivity Duration**: {inactivity_minutes:.1f} minutes
 **Trigger**: Status Monitor detected inactivity (5+ minute threshold)
 
 ---
 """
-            modified_pattern = resume_header + pattern_message
+                modified_pattern = resume_header + pattern_message
+                return modified_pattern
 
-            return modified_pattern
-
-        except Exception as e:
-            logger.warning(f"Could not load Captain Restart Pattern: {e}")
-            return None
+            except Exception as e:
+                logger.warning(f"Could not load Captain Restart Pattern: {e}")
+                return None
+        
+        # Run file I/O in thread to avoid blocking Discord heartbeat
+        return await asyncio.to_thread(_read_pattern_sync)
 
     async def _generate_generic_resume_prompt(self, agent_id: str, summary, pending_tasks: list = None) -> Optional[str]:
         """Generate generic resume prompt for regular agents."""
@@ -828,15 +840,19 @@ class StatusChangeMonitor:
             from src.core.optimized_stall_resume_prompt import generate_optimized_resume_prompt
             logger.debug(f"✅ generate_optimized_resume_prompt imported")
 
-            # Load status for context
+            # Load status for context (use asyncio.to_thread to avoid blocking event loop)
             status_file = self.workspace_path / agent_id / "status.json"
             if not status_file.exists():
                 logger.warning(f"⚠️ Status file not found for {agent_id} at {status_file}")
                 return None
 
+            def _read_status_sync():
+                """Read status file synchronously for asyncio.to_thread."""
+                with open(status_file, 'r', encoding='utf-8') as f:
+                    return json.load(f)
+            
             logger.debug(f"🔍 Reading status file for {agent_id}")
-            with open(status_file, 'r', encoding='utf-8') as f:
-                status = json.load(f)
+            status = await asyncio.to_thread(_read_status_sync)
             logger.debug(f"✅ Status loaded for {agent_id}")
 
             fsm_state = status.get("status", "active")
@@ -967,11 +983,3 @@ def setup_status_monitor(bot, channel_id: Optional[int] = None, scheduler=None) 
     Args:
         bot: Discord bot instance
         channel_id: Optional channel ID for status updates
-        scheduler: Optional TaskScheduler instance for integration
-
-    Returns:
-        StatusChangeMonitor instance
-    """
-    monitor = StatusChangeMonitor(bot, channel_id, scheduler=scheduler)
-    monitor.start_monitoring()
-    return monitor

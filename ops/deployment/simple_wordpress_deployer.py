@@ -213,27 +213,38 @@ class SimpleWordPressDeployer:
                 full_remote_path = f"{base_path}/{local_path.name}" if base_path else local_path.name
             
             full_remote_path = full_remote_path.replace('\\', '/')
-            if not full_remote_path.startswith('/'):
-                username = self.site_config.get('username') or self.site_config.get('sftp', {}).get('username', '')
-                if username and not full_remote_path.startswith(f'/home/{username}'):
-                    full_remote_path = f"/home/{username}/{full_remote_path}"
             
-            remote_dir = str(Path(full_remote_path).parent)
+            # Ensure parent directories exist
+            remote_dir = str(Path(full_remote_path).parent).replace('\\', '/')
+            
+            # Create directories recursively
             parts = remote_dir.strip('/').split('/')
             current = ''
+            if remote_dir.startswith('/'):
+                current = '/'
+            
             for part in parts:
-                if part:
-                    current = f"{current}/{part}" if current else f"/{part}"
+                if not part: continue
+                # Skip home and username if absolute path used
+                if part == 'home' and current == '/': 
+                    current = '/home'
+                    continue
+                
+                new_current = os.path.join(current, part).replace('\\', '/')
+                try:
+                    self.sftp.stat(new_current)
+                except FileNotFoundError:
                     try:
-                        self.sftp.stat(current)
-                    except FileNotFoundError:
-                        try:
-                            self.sftp.mkdir(current)
-                        except Exception: pass
+                        self.sftp.mkdir(new_current)
+                    except Exception as e:
+                        # print(f"Warning: Could not create dir {new_current}: {e}")
+                        pass
+                current = new_current
             
             self.sftp.put(str(local_path.resolve()), full_remote_path)
             return True
-        except Exception:
+        except Exception as e:
+            print(f"❌ Deployment failed for {local_path}: {e}")
             return False
     
     def execute_command(self, command: str) -> str:
@@ -369,4 +380,3 @@ class SimpleWordPressDeployer:
     def disconnect(self):
         if self.sftp: self.sftp.close()
         if self.transport: self.transport.close()
-
