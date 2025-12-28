@@ -139,6 +139,13 @@
         "D:/Agent_Cellphone_V2_Repository/mcp_servers/wp_cli_manager_server.py"
       ],
       "description": "WP-CLI Manager - Remote WordPress operations via WP-CLI over SSH (plugins, themes, cache, database, options)"
+    },
+    "database-manager": {
+      "command": "python",
+      "args": [
+        "D:/Agent_Cellphone_V2_Repository/mcp_servers/database_manager_server.py"
+      ],
+      "description": "Database Manager - Safe database operations (SQLite) with query validation and read-only protection"
     }
   }
 }

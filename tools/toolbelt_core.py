@@ -138,7 +138,10 @@ class ToolbeltCore:
         Returns:
             Dictionary mapping category to tool names
         """
-        return self.registry.list_by_category()
+        grouped = {}
+        for category in self.registry.get_categories():
+            grouped[category] = self.registry.list_by_category(category)
+        return grouped
 
     def get_tool_help(self, tool_name: str) -> str:
         """

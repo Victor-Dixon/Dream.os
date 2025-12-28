@@ -18,7 +18,7 @@ from . import scheduler
 from . import scheduler_helpers
 from . import scheduler_models
 from . import scheduler_queue
-from . import scheduler_refactored
+# from . import scheduler_refactored  # Disabled: causes circular import
 from . import scheduler_tracking
 
 __all__ = [
@@ -39,6 +39,6 @@ __all__ = [
     'scheduler_helpers',
     'scheduler_models',
     'scheduler_queue',
-    'scheduler_refactored',
+    # 'scheduler_refactored',  # Disabled: causes circular import
     'scheduler_tracking',
 ]

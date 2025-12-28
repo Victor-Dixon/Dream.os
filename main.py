@@ -495,8 +495,9 @@ class ServiceManager:
         try:
             if pid_file.exists():
                 pid_file.unlink()
-        except Exception as e:
-            print(f"   ⚠️  Failed to cleanup PID file: {e}")
+        except (Exception, KeyboardInterrupt) as e:
+            # Silently handle - PID cleanup is best-effort
+            pass
 
     def _monitor_process_output(self, service_name, process):
         """Monitor process output and display errors."""
@@ -514,22 +515,30 @@ class ServiceManager:
     def stop_all(self):
         """Stop all running services."""
         print("\n🛑 Stopping all services...")
-        for name, process in self.processes.items():
-            if process.poll() is None:
-                print(f"   Stopping {name}...")
-                process.terminate()
+        try:
+            for name, process in list(self.processes.items()):
                 try:
-                    process.wait(timeout=5)
-                except subprocess.TimeoutExpired:
-                    process.kill()
-                print(f"   ✅ {name} stopped")
-                self._cleanup_pid(name)
+                    if process.poll() is None:
+                        print(f"   Stopping {name}...")
+                        process.terminate()
+                        try:
+                            process.wait(timeout=5)
+                        except subprocess.TimeoutExpired:
+                            process.kill()
+                        print(f"   ✅ {name} stopped")
+                    self._cleanup_pid(name)
+                except (Exception, KeyboardInterrupt):
+                    # Best-effort cleanup - don't let one failure stop others
+                    pass
 
-        # Also clean up PID files for services started in other sessions
-        for service_name in ['message_queue', 'twitch', 'discord']:
-            self._cleanup_pid(service_name)
+            # Also clean up PID files for services started in other sessions
+            for service_name in ['message_queue', 'twitch', 'discord']:
+                self._cleanup_pid(service_name)
 
-        self.processes.clear()
+            self.processes.clear()
+        except (Exception, KeyboardInterrupt):
+            # Ensure we always clear the processes dict
+            self.processes.clear()
 
     def stop_service(self, service_name: str, force: bool = False):
         """Stop a specific service by reading its PID file."""
@@ -791,8 +800,12 @@ def main():
                             f"⚠️  {name} process exited (code: {process.returncode})")
                         del manager.processes[name]
         except KeyboardInterrupt:
-            print("\n\n🛑 Shutting down all services...")
-            manager.stop_all()
+            print("\n\n📦 Shutting down all services...")
+            try:
+                manager.stop_all()
+            except (Exception, KeyboardInterrupt):
+                # Force cleanup on second interrupt
+                pass
             print("\n👋 All services stopped. Goodbye!")
 
 

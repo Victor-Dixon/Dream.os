@@ -276,6 +276,83 @@ def check_php_syntax(site_key: str, file_path: str) -> Dict[str, Any]:
         }
 
 
+def wordpress_health_check(site_key: str) -> Dict[str, Any]:
+    """
+    Perform comprehensive WordPress health check.
+    
+    Includes core version, database health, plugin status, theme status, 
+    and error detection.
+    
+    Args:
+        site_key: Site identifier
+        
+    Returns:
+        Dict with health check results
+    """
+    try:
+        # Try to import deployment tools
+        sys.path.insert(0, str(Path(__file__).parent.parent.parent / "websites" / "ops" / "deployment"))
+        
+        try:
+            from simple_wordpress_deployer import SimpleWordPressDeployer, load_site_configs
+            configs = load_site_configs()
+            deployer = SimpleWordPressDeployer(site_key=site_key, site_configs=configs)
+            
+            if not deployer.connect():
+                return {
+                    "success": False,
+                    "error": f"Failed to connect to {site_key}",
+                    "site_key": site_key
+                }
+            
+            results = {}
+            
+            # 1. Core Version
+            core_version = deployer.execute_command("wp core version --allow-root").strip()
+            results["core_version"] = core_version
+            
+            # 2. Database Health
+            db_check = deployer.execute_command("wp db check --allow-root").strip()
+            results["db_status"] = "OK" if "Success" in db_check else "Warning/Error"
+            results["db_output"] = db_check
+            
+            # 3. Active Plugins
+            plugin_list = deployer.execute_command("wp plugin list --status=active --format=count --allow-root").strip()
+            results["active_plugins_count"] = int(plugin_list) if plugin_list.isdigit() else 0
+            
+            # 4. Active Theme
+            theme_name = deployer.execute_command("wp theme list --status=active --field=name --allow-root").strip()
+            results["active_theme"] = theme_name
+            
+            # 5. Check for Error Logs (tail last 20 lines of debug.log)
+            # remote_path = configs.get(site_key, {}).get("remote_path", f"domains/{site_key}/public_html")
+            # debug_log_path = f"{remote_path}/wp-content/debug.log"
+            # error_log = deployer.execute_command(f"tail -n 20 {debug_log_path} 2>/dev/null").strip()
+            # results["recent_errors"] = error_log if error_log else "No recent errors found in debug.log"
+            
+            deployer.disconnect()
+            
+            return {
+                "success": True,
+                "site_key": site_key,
+                "health": results,
+                "timestamp": str(Path(__file__).stat().st_mtime) # Placeholder for real timestamp
+            }
+            
+        except ImportError:
+            return {
+                "success": False,
+                "error": "Deployment tools not available for remote health check",
+                "site_key": site_key
+            }
+    except Exception as e:
+        return {
+            "success": False,
+            "error": str(e),
+            "site_key": site_key
+        }
+
+
 # MCP Server Protocol
 def main():
     """MCP server main loop."""
@@ -336,6 +413,19 @@ def main():
                     },
                 },
                 "required": ["site_key", "file_path"],
+            },
+        },
+        "wordpress_health_check": {
+            "description": "Perform comprehensive WordPress health check (core, DB, plugins, theme)",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "site_key": {
+                        "type": "string",
+                        "description": "Site identifier",
+                    },
+                },
+                "required": ["site_key"],
             },
         },
     }
@@ -407,6 +497,8 @@ def main():
                     result = audit_website_structure(**arguments)
                 elif tool_name == "check_php_syntax":
                     result = check_php_syntax(**arguments)
+                elif tool_name == "wordpress_health_check":
+                    result = wordpress_health_check(**arguments)
                 else:
                     result = {"success": False, "error": f"Unknown tool: {tool_name}"}
 

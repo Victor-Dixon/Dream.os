@@ -275,43 +275,16 @@ class MessageFormattingService:
         return msg_content
     
     def _detect_template_header(self, content: str) -> bool:
-        """
-        Detect if content has a template header.
-        
-        Args:
-            content: Message content string
-            
-        Returns:
-            True if template header detected
-        """
-        return (
-            content.startswith("[HEADER]") or
-            "[HEADER]" in content or
-            "[HEADER] D2A" in content or
-            "[HEADER] S2A" in content or
-            "[HEADER] C2A" in content or
-            "[HEADER] A2A" in content
-        )
-    
+        """Detect if content has a template header."""
+        return "[HEADER]" in content
+
     def _extract_category_value(self, message_category) -> Optional[str]:
-        """
-        Extract category value from message category (handles enums and strings).
-        
-        Args:
-            message_category: Category value (enum, string, or None)
-            
-        Returns:
-            Lowercase category string or None
-        """
+        """Extract category value from message category (handles enums and strings)."""
         if not message_category:
             return None
-        
         if isinstance(message_category, str):
             return message_category.lower()
-        elif hasattr(message_category, 'value'):
+        if hasattr(message_category, 'value'):
             return message_category.value.lower()
-        elif hasattr(message_category, 'name'):
-            return message_category.name.lower()
-        
-        return None
+        return getattr(message_category, 'name', '').lower() or None
 
