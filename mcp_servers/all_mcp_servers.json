@@ -55,6 +55,20 @@
         "D:/Agent_Cellphone_V2_Repository/mcp_servers/unified_tool_server.py"
       ],
       "description": "Unified tool server exposing all tools via tool registry"
+    },
+    "deployment-verification": {
+      "command": "python",
+      "args": [
+        "D:/Agent_Cellphone_V2_Repository/mcp_servers/deployment_verification_server.py"
+      ],
+      "description": "Deployment status checking and verification operations"
+    },
+    "validation-audit": {
+      "command": "python",
+      "args": [
+        "D:/Agent_Cellphone_V2_Repository/mcp_servers/validation_audit_server.py"
+      ],
+      "description": "Validation and audit operations for closures, SEO, and website structure"
     }
   }
 }
