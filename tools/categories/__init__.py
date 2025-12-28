@@ -1,3 +1,31 @@
+"""
+Tools Categories Package
+=======================
+
+Purpose: Aggregates tool category modules that register tool adapters/commands.
+Usage:
+    # Most callers should not import this directly; categories are discovered via tool registry.
+    from tools import tool_registry
+
+Author: Swarm (SSOT tagging remediation)
+Date: 2025-12-28
+Description: Central namespace for category modules used by the tool registry.
+"""
+
+"""
+Tools Categories Package
+=======================
+
+Purpose: Aggregates tool category modules (e.g. messaging, discord, infra) for registry-based discovery.
+Usage:
+    # Typically discovered via the tool registry; not imported directly by consumers.
+    from tools import tool_registry
+
+Author: Swarm (SSOT tagging remediation)
+Date: 2025-12-28
+Description: Namespace package containing category modules referenced by tool_registry.lock.json.
+"""
+
 # AUTO-GENERATED __init__.py
 # DO NOT EDIT MANUALLY - changes may be overwritten
 
