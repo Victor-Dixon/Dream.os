@@ -2,6 +2,16 @@
 """
 Test MCP Server Connectivity
 Tests if MCP servers can be imported and basic functions work
+
+SSOT TOOL METADATA
+Purpose: Quick local smoke test to verify MCP server modules import and basic APIs are callable.
+Description: Imports key `mcp_servers.*_server` modules and calls a small subset of functions to validate wiring.
+Usage:
+  - python tools/test_mcp_server_connectivity.py
+  - python tools/test_mcp_server_connectivity.py > connectivity.log
+Author: Swarm (maintainers)
+Date: 2025-12-28
+Tags: ssot, mcp, connectivity, smoke-test
 """
 
 import sys
