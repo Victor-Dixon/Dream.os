@@ -250,7 +250,8 @@
   ],
   "current_tasks": [
     "Fix broken tools Phase 3 (32 runtime errors) - IN PROGRESS - Fixed validate_closure_format.py (1/32)",
-    "Discord bot agent resume - enforce PyAutoGUI typing + coordinate validation - IN PROGRESS"
+    "Discord bot agent resume - enforce PyAutoGUI typing + coordinate validation - IN PROGRESS",
+    "Debug MCP servers - IN PROGRESS - Created debugging tool and guide"
   ],
   "completed_tasks": [
     "TradingRobotPlug stock data collection system - COMPLETE (2025-12-26)",
@@ -260,7 +261,8 @@
     "Create discord_webhook_validator.py tool (100 pts) - COMPLETE (2025-12-26)",
     "Verify all agent-specific Discord webhooks are configured correctly (50 pts) - COMPLETE (2025-12-26)",
     "Create devlog_auto_poster.py tool (75 pts) - COMPLETE (2025-12-26)",
-    "Create coordination_status_dashboard.py tool (125 pts) - COMPLETE (2025-12-26)"
+    "Create coordination_status_dashboard.py tool (125 pts) - COMPLETE (2025-12-26)",
+    "Create MCP server debugging tool - COMPLETE (2025-12-27)"
   ],
-  "last_updated": "2025-12-27T18:25:29Z"
+  "last_updated": "2025-12-27T21:20:00Z"
 }
