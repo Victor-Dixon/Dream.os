@@ -91,5 +91,40 @@
       ],
       "description": "Workspace cleanup, session cleanup, and archive operations"
     },
+    "wordpress-theme": {
+      "command": "python",
+      "args": [
+        "D:/Agent_Cellphone_V2_Repository/mcp_servers/wordpress_theme_server.py"
+      ],
+      "description": "WordPress theme management, deployment, validation, and fixes"
+    },
+    "content-management": {
+      "command": "python",
+      "args": [
+        "D:/Agent_Cellphone_V2_Repository/mcp_servers/content_management_server.py"
+      ],
+      "description": "WordPress content operations including posts, pages, categories, and bulk updates"
+    },
+    "analytics-seo": {
+      "command": "python",
+      "args": [
+        "D:/Agent_Cellphone_V2_Repository/mcp_servers/analytics_seo_server.py"
+      ],
+      "description": "Google Analytics, SEO optimization, meta tags, structured data, and tracking"
+    },
+    "maintenance-monitoring": {
+      "command": "python",
+      "args": [
+        "D:/Agent_Cellphone_V2_Repository/mcp_servers/maintenance_monitoring_server.py"
+      ],
+      "description": "WordPress maintenance, monitoring, updates, health checks, and performance optimization"
+    },
+    "coordination": {
+      "command": "python",
+      "args": [
+        "D:/Agent_Cellphone_V2_Repository/mcp_servers/coordination_server.py"
+      ],
+      "description": "Coordination and status management - consolidates scattered coordination tools (a2a_coordination_queue, coordination_status_dashboard, etc.)"
+    }
   }
 }
