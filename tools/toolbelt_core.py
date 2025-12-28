@@ -6,6 +6,14 @@ Thin orchestrator for Agent Toolbelt operations (resolve→validate→execute→
 
 V2 Compliance: <240 lines
 Author: Agent-7 - Repository Cloning Specialist
+
+SSOT TOOL METADATA
+Purpose: Execute tools end-to-end via ToolRegistry (resolve → validate → execute → record), with consistent error formatting.
+Description: Provides a thin orchestration layer for adapters; intended as the stable runtime entry for tool execution.
+Usage:
+  - from tools.toolbelt_core import get_toolbelt_core; tb = get_toolbelt_core(); tb.run(\"task-manager.get_tasks\", {\"section\":\"INBOX\"})
+Date: 2025-12-28
+Tags: ssot, tooling, orchestrator, toolbelt
 """
 
 import logging

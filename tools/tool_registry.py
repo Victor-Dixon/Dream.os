@@ -7,6 +7,16 @@ Includes MCP server discovery and metadata for the 20-server architecture.
 
 V2 Compliance: <200 lines
 Author: Agent-5 (Business Intelligence Specialist)
+
+SSOT TOOL METADATA
+Purpose: Central registry for discovering and resolving tool adapters by name (including MCP-backed tools).
+Description: Loads `tool_registry.lock.json`, resolves adapter classes dynamically, and caches resolved adapters for reuse.
+Usage:
+  - from tools.tool_registry import get_tool_registry; registry = get_tool_registry()
+  - adapter_cls = registry.resolve(\"task-manager.get_tasks\")
+  - python -c \"from tools.tool_registry import get_tool_registry; print(get_tool_registry().list_tools()[:5])\"
+Date: 2025-12-28
+Tags: ssot, tooling, registry, mcp
 """
 
 import importlib

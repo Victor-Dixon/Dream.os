@@ -103,20 +103,9 @@ class StatusChangeMonitor:
     async def monitor_status_changes(self):
         """Background task to monitor status.json files for changes."""
         try:
-            # Import activity detector for inactivity detection
-            try:
-                # FIX: Use correct import path for activity detector
-                from src.orchestrators.overnight.enhanced_agent_activity_detector import EnhancedAgentActivityDetector
-                activity_detector = EnhancedAgentActivityDetector()
-                logger.debug("✅ EnhancedAgentActivityDetector imported successfully")
-            except ImportError as ie:
-                activity_detector = None
-                logger.warning(
-                    f"⚠️ AgentActivityDetector not available - using status.json only. ImportError: {ie}", exc_info=True)
-            except Exception as e:
-                activity_detector = None
-                logger.error(
-                    f"❌ Unexpected error loading AgentActivityDetector: {e}", exc_info=True)
+            # Activity detector disabled - was blocking Discord event loop
+            # TODO: Re-enable with proper async implementation
+            activity_detector = None
 
             changes_detected = 0
             for i in range(1, 9):
@@ -176,17 +165,19 @@ class StatusChangeMonitor:
                             logger.debug(f"🔍 Status file path: {status_file}, exists: {status_file.exists()}")
 
                     # Check for inactivity (every 5 minutes = 20 iterations)
-                    if activity_detector:
-                        if not hasattr(self, '_inactivity_check_counter'):
-                            self._inactivity_check_counter = {}
-                        if agent_id not in self._inactivity_check_counter:
-                            self._inactivity_check_counter[agent_id] = 0
-
-                        self._inactivity_check_counter[agent_id] += 1
-                        # 5 minutes (20 * 15s)
-                        if self._inactivity_check_counter[agent_id] >= 20:
-                            self._inactivity_check_counter[agent_id] = 0
-                            await self._check_inactivity(agent_id, activity_detector)
+                    # DISABLED: Activity detection was blocking the Discord event loop
+                    # TODO: Re-enable with proper async implementation
+                    # if activity_detector:
+                    #     if not hasattr(self, '_inactivity_check_counter'):
+                    #         self._inactivity_check_counter = {}
+                    #     if agent_id not in self._inactivity_check_counter:
+                    #         self._inactivity_check_counter[agent_id] = 0
+                    #
+                    #     self._inactivity_check_counter[agent_id] += 1
+                    #     # 5 minutes (20 * 15s)
+                    #     if self._inactivity_check_counter[agent_id] >= 20:
+                    #         self._inactivity_check_counter[agent_id] = 0
+                    #         await self._check_inactivity(agent_id, activity_detector)
                 except FileNotFoundError:
                     logger.debug(
                         f"Status file not found for {agent_id} (may have been deleted)")
