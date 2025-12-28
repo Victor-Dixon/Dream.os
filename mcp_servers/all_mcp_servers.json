@@ -35,12 +35,26 @@
       ],
       "description": "Git operations and work verification for agents"
     },
+    "github-professional": {
+      "command": "python",
+      "args": [
+        "D:/Agent_Cellphone_V2_Repository/mcp_servers/github_professional_server.py"
+      ],
+      "description": "Professional GitHub operations with full API coverage (repos, PRs, issues, teams)"
+    },
     "v2-compliance": {
       "command": "python",
       "args": [
         "D:/Agent_Cellphone_V2_Repository/mcp_servers/v2_compliance_server.py"
       ],
       "description": "V2 compliance checking and validation for agents"
+    },
+    "unified-tools": {
+      "command": "python",
+      "args": [
+        "D:/Agent_Cellphone_V2_Repository/mcp_servers/unified_tool_server.py"
+      ],
+      "description": "Unified tool server exposing all tools via tool registry"
     }
   }
 }
