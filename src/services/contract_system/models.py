@@ -18,7 +18,6 @@ from src.core.utils.serialization_utils import to_dict
 
 class ContractStatus(Enum):
     """Contract status enumeration."""
-
     PENDING = "pending"
     ACTIVE = "active"
     COMPLETED = "completed"
@@ -27,7 +26,6 @@ class ContractStatus(Enum):
 
 class ContractPriority(Enum):
     """Contract priority enumeration."""
-
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -39,7 +37,6 @@ class ContractPriority(Enum):
 
 class TaskStatus(Enum):
     """Task status enumeration."""
-
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -47,8 +44,7 @@ class TaskStatus(Enum):
 
 
 class ContractTask:
-    """Contract task data model (contract system domain-specific, not to be confused with domain entity Task)."""
-
+    """Contract task data model."""
     def __init__(self, **kwargs):
         """Initialize task with provided data."""
         self.task_id = kwargs.get("task_id", "")
@@ -75,7 +71,6 @@ class ContractTask:
         """Update task status."""
         self.status = status
         self.last_updated = datetime.now().isoformat()
-
         if status == TaskStatus.COMPLETED.value:
             self.completed_at = datetime.now().isoformat()
 
@@ -88,7 +83,6 @@ class ContractTask:
 
 class Contract:
     """Contract data model."""
-
     def __init__(self, **kwargs):
         """Initialize contract with provided data."""
         self.contract_id = kwargs.get("contract_id", "")
@@ -116,7 +110,6 @@ class Contract:
         """Update contract status."""
         self.status = status
         self.last_updated = datetime.now().isoformat()
-
         if status == ContractStatus.COMPLETED.value:
             self.completed_at = datetime.now().isoformat()
 
