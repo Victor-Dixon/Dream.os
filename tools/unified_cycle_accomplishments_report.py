@@ -182,37 +182,113 @@ def generate_report():
         
         # Post to Discord
         if DISCORD_AVAILABLE:
-            print("Posting summary to Discord...")
+            print("Posting report to Discord (chunked)...")
             try:
                 poster = DiscordRouterPoster(agent_id="Agent-4")
                 
-                discord_message = f"""**Cycle Accomplishments Report Generated**
-
+                # 1. Post Summary
+                summary_msg = f"""**Cycle Accomplishments Report**
 **Date:** {date_str}
-**Total Agents:** {active_agents}
-**Total Completed Tasks:** {total_completed_tasks}
-**Total Achievements:** {total_achievements}
+**Agents:** {active_agents}
+**Tasks:** {total_completed_tasks} | **Achievements:** {total_achievements}
 
-**Report File:** `reports/{report_path.name}`
-
-*Full report available in reports directory.*
+*Full report generated at: `reports/{report_path.name}`*
 """
-                
-                result = poster.post_update(
-                    agent_id="Agent-4",
-                    message=discord_message,
-                    title="📊 Cycle Accomplishments Report",
+                poster.post_update(
+                    agent_id="Agent-4", 
+                    message=summary_msg, 
+                    title="📊 Cycle Report Summary", 
                     priority="normal"
                 )
-                
-                if result.get("success"):
-                    print("✅ Summary posted to Discord")
-                else:
-                    print(f"⚠️ Failed to post to Discord: {result.get('error')}")
-                    if result.get("details"):
-                        print(f"   Details: {result['details']}")
+
+                # 2. Post per-agent details
+                for data in agents_data:
+                    agent_id = data.get("agent_id", "Unknown")
+                    agent_name = data.get("agent_name", "Unknown")
+                    
+                    # Construct Agent Message
+                    # We need to manually chunk to avoid truncation in DiscordRouterPoster (limit ~1800 chars total)
+                    # Safe limit for message body: 1600 chars
+                    MAX_CHUNK_SIZE = 1600
+                    
+                    # Header stats
+                    status = data.get("status", "Unknown")
+                    priority = data.get("mission_priority", data.get("priority", "Normal"))
+                    current_mission = data.get("current_mission", "No mission set.")
+                    
+                    # Start first chunk
+                    agent_msg = f"**Status:** {status} | **Priority:** {priority}\n"
+                    agent_msg += f"**Mission:** {current_mission}\n\n"
+                    
+                    # Completed Tasks
+                    completed = data.get("completed_tasks", [])
+                    if completed:
+                        agent_msg += f"**Completed ({len(completed)}):**\n"
+                        for task in completed: 
+                            task_str = ""
+                            if isinstance(task, str):
+                                task_str = f"- {task}\n"
+                            elif isinstance(task, dict):
+                                task_desc = task.get("task", "Unknown")
+                                details = task.get("details", "")
+                                if details:
+                                    task_str = f"- {task_desc}: {details}\n"
+                                else:
+                                    task_str = f"- {task_desc}\n"
+                            
+                            # Check length
+                            if len(agent_msg) + len(task_str) > MAX_CHUNK_SIZE:
+                                # Post current chunk
+                                poster.post_update(agent_id="Agent-4", message=agent_msg, title=f"📄 {agent_id}: {agent_name}", priority="normal")
+                                agent_msg = f"**{agent_id} (Continued):**\n"
+                            
+                            agent_msg += task_str
+                        agent_msg += "\n"
+
+                    # Achievements
+                    achievements = data.get("achievements", [])
+                    if achievements:
+                        agent_msg += f"**Achievements ({len(achievements)}):**\n"
+                        for ach in achievements:
+                            ach_str = ""
+                            if isinstance(ach, str):
+                                ach_str = f"- {ach}\n"
+                            elif isinstance(ach, dict):
+                                title = ach.get("title", ach.get("description", str(ach)))
+                                ach_str = f"- {title}\n"
+                            
+                            if len(agent_msg) + len(ach_str) > MAX_CHUNK_SIZE:
+                                poster.post_update(agent_id="Agent-4", message=agent_msg, title=f"📄 {agent_id}: {agent_name}", priority="normal")
+                                agent_msg = f"**{agent_id} (Continued):**\n"
+                            
+                            agent_msg += ach_str
+                            
+                    # Active Tasks
+                    active = data.get("current_tasks", [])
+                    if active:
+                         agent_msg += f"**Active Tasks ({len(active)}):**\n"
+                         for task in active[:10]:
+                            task_str = ""
+                            if isinstance(task, str):
+                                task_str = f"- {task}\n"
+                            elif isinstance(task, dict):
+                                task_desc = task.get("task", "Unknown Task")
+                                task_str = f"- {task_desc}\n"
+                            
+                            if len(agent_msg) + len(task_str) > MAX_CHUNK_SIZE:
+                                poster.post_update(agent_id="Agent-4", message=agent_msg, title=f"📄 {agent_id}: {agent_name}", priority="normal")
+                                agent_msg = f"**{agent_id} (Continued):**\n"
+                            
+                            agent_msg += task_str
+                    
+                    # Post final chunk for this agent
+                    if agent_msg:
+                        poster.post_update(agent_id="Agent-4", message=agent_msg, title=f"📄 {agent_id}: {agent_name}", priority="normal")
+
             except Exception as e:
                 print(f"⚠️ Error posting to Discord: {e}")
+                import traceback
+                traceback.print_exc()
         else:
             print("ℹ️ Discord posting skipped (module not available)")
             
