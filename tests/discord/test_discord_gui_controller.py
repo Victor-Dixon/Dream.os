@@ -5,10 +5,14 @@ Target: ≥85% coverage, 15+ test methods.
 """
 
 import pytest
-from unittest.mock import Mock, patch, MagicMock, AsyncMock
+from unittest.mock import Mock, patch, MagicMock, AsyncMock, ANY
 import sys
 from pathlib import Path
 import importlib.util
+
+# Mock pyautogui to prevent display connection errors in headless environment
+mock_pyautogui = MagicMock()
+sys.modules["pyautogui"] = mock_pyautogui
 
 # Add project root to path
 _project_root = Path(__file__).parent.parent.parent
@@ -116,7 +120,11 @@ class TestDiscordGUIController:
             priority="regular",
             use_pyautogui=True,
             wait_for_delivery=False,
-            stalled=False
+            stalled=False,
+            discord_user_id=ANY,
+            apply_template=ANY,
+            message_category=ANY,
+            sender=ANY
         )
         assert result is True
 
@@ -131,7 +139,11 @@ class TestDiscordGUIController:
             priority="high",
             use_pyautogui=True,
             wait_for_delivery=False,
-            stalled=True
+            stalled=True,
+            discord_user_id=ANY,
+            apply_template=ANY,
+            message_category=ANY,
+            sender=ANY
         )
 
     @pytest.mark.asyncio

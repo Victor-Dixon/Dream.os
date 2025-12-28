@@ -8,8 +8,13 @@ import os
 import pytest
 import asyncio
 from unittest.mock import Mock, patch, MagicMock, AsyncMock
-from datetime import datetime
 import sys
+
+# Mock pyautogui to prevent display connection errors in headless environment
+mock_pyautogui = MagicMock()
+sys.modules["pyautogui"] = mock_pyautogui
+
+from datetime import datetime
 from pathlib import Path
 import importlib.util
 

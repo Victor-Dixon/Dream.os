@@ -221,7 +221,7 @@ class DiscordService:
     def send_devlog_notification(self, devlog_data: dict[str, Any]) -> bool:
         """Send devlog notification to Discord."""
         if not self.webhook_url:
-            get_logger().warning("❌ Discord webhook URL not set")
+            logger.warning("❌ Discord webhook URL not set")
             return False
 
         try:
@@ -295,7 +295,7 @@ class DiscordService:
     def test_webhook_connection(self) -> bool:
         """Test Discord webhook connection."""
         if not self.webhook_url:
-            get_logger().warning("❌ Discord webhook URL not set")
+            logger.warning("❌ Discord webhook URL not set")
             return False
 
         try:
