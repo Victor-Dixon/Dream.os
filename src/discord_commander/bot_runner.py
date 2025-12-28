@@ -113,7 +113,17 @@ async def main() -> int:
             logger.info("🔌 Connecting to Discord...")
             print(f"🔍 DEBUG: About to call bot.start(token)...")
             try:
+                # Wrap bot.start in a try-except to catch any startup errors
                 await bot.start(token)
+            except KeyboardInterrupt:
+                # Re-raise KeyboardInterrupt to allow clean shutdown
+                raise
+            except discord.LoginFailure:
+                # Re-raise login failures - these shouldn't retry
+                raise
+            except discord.PrivilegedIntentsRequired:
+                # Re-raise intent errors - these shouldn't retry
+                raise
             except Exception as runtime_error:
                 logger.error(
                     f"❌ Runtime error during bot operation: {runtime_error}\n"

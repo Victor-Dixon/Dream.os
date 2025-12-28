@@ -39,8 +39,8 @@ def test_snapshot_creation():
     """Test snapshot creation functionality."""
     print("\n🖼️ Testing Snapshot Creation...")
 
-    # Test with a mock site key
-    result = create_deployment_snapshot("test_site", "Test snapshot creation")
+    # Test with a real site key
+    result = create_deployment_snapshot("tradingrobotplug.com", "Test snapshot creation")
 
     if result.get("success"):
         print("✅ Snapshot creation successful")
@@ -49,7 +49,7 @@ def test_snapshot_creation():
         print(f"   Files: {result['files_count']}")
 
         # Verify snapshot file exists
-        snapshot_dir = Path("deployment_snapshots/test_site")
+        snapshot_dir = Path("deployment_snapshots/tradingrobotplug.com")
         if snapshot_dir.exists():
             snapshot_files = list(snapshot_dir.glob("*.json"))
             if snapshot_files:
@@ -77,9 +77,9 @@ def test_snapshot_listing(snapshot_id):
         print(f"✅ Snapshot listing successful: {result['count']} snapshots found")
 
         # Test filtering by site
-        site_result = list_deployment_snapshots("test_site")
+        site_result = list_deployment_snapshots("tradingrobotplug.com")
         if site_result.get("success"):
-            print(f"   ✅ Site filtering works: {site_result['count']} snapshots for test_site")
+            print(f"   ✅ Site filtering works: {site_result['count']} snapshots for tradingrobotplug.com")
 
             # Check if our snapshot is in the list
             snapshot_ids = [s['snapshot_id'] for s in site_result['snapshots']]
@@ -101,14 +101,14 @@ def test_snapshot_deletion(snapshot_id):
     """Test snapshot deletion functionality."""
     print("\n🗑️ Testing Snapshot Deletion...")
 
-    result = delete_deployment_snapshot("test_site", snapshot_id)
+    result = delete_deployment_snapshot("tradingrobotplug.com", snapshot_id)
 
     if result.get("success"):
         print("✅ Snapshot deletion successful")
         print(f"   Deleted snapshot: {snapshot_id}")
 
         # Verify snapshot file is gone
-        snapshot_path = Path(f"deployment_snapshots/test_site/{snapshot_id}.json")
+        snapshot_path = Path(f"deployment_snapshots/tradingrobotplug.com/{snapshot_id}.json")
         if not snapshot_path.exists():
             print("   ✅ Snapshot file successfully deleted")
             return True
@@ -134,7 +134,7 @@ def test_staging_deployment():
 
         # Test staging deployment
         result = deploy_with_staging(
-            site_key="test_site",
+            site_key="tradingrobotplug.com",
             theme_files=[test_file],
             description="Test staging deployment"
         )
@@ -169,7 +169,7 @@ def test_rollback_functionality(snapshot_id):
         print("❌ No snapshot ID provided for rollback test")
         return False
 
-    result = rollback_deployment("test_site", snapshot_id)
+    result = rollback_deployment("tradingrobotplug.com", snapshot_id)
 
     if result.get("success"):
         print("✅ Rollback successful")
@@ -189,7 +189,7 @@ def cleanup_test_data():
     import shutil
 
     # Remove test snapshot directory
-    test_snapshot_dir = Path("deployment_snapshots/test_site")
+    test_snapshot_dir = Path("deployment_snapshots/tradingrobotplug.com")
     if test_snapshot_dir.exists():
         try:
             shutil.rmtree(test_snapshot_dir)
