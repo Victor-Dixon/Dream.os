@@ -69,6 +69,8 @@ Every session closure MUST follow this exact structure:
 - Bullet list of factual actions
 - No narration, no summaries
 - Each bullet = one completed action
+- **Forbidden verbs:** responded, synced, reviewed, checked, coordinated, discussed, analyzed, investigated, explored, considered
+- **Allowed actions:** code changes (added, removed, modified), files created/updated, commands executed, state changes
 
 ### Artifacts Created / Updated
 - **Exact file paths only**
@@ -77,8 +79,15 @@ Every session closure MUST follow this exact structure:
 
 ### Verification
 - **Proof that work was completed**
-- Evidence bullets (e.g., "Deployed 16 files", "Tested endpoint returns 200")
-- Must show actual verification, not assumptions
+- Each bullet MUST include at least ONE proof token:
+  - Command output (exact text or summary)
+  - Commit hash
+  - Message ID / timestamp
+  - File checksum or line count
+  - HTTP status code
+  - Test pass count
+- "Verified via review" or similar phrasing is INVALID
+- If no mechanical proof exists, status = 🟡 Blocked
 
 ### Public Build Signal
 - **ONE sentence only**
@@ -99,8 +108,28 @@ Every session closure MUST follow this exact structure:
 - "Not published" if blogging is not applicable to this work
 
 ### Status
-- ✅ Ready (work complete, verified)
-- 🟡 Blocked (specific blocker reason)
+- MUST include emoji exactly as shown:
+  - ✅ Ready (work complete, verified)
+  - 🟡 Blocked (specific blocker reason)
+- Missing emoji = INVALID
+- Any formatting deviation = 🟡 Blocked
+
+### passdown.json Requirement
+- passdown.json MUST be accompanied by proof:
+  - Inlined content (for small files), OR
+  - Git diff reference (commit hash), OR
+  - Checksum (md5/sha256)
+- Claiming "passdown.json updated" without proof = INVALID
+
+### Closure Improvement (REQUIRED)
+- Must complete exactly ONE:
+  - a) Create small utility tool (150 lines max)
+  - b) Define protocol (10 lines max)
+  - c) Improve documentation (delete/merge/deduplicate)
+- To skip, MUST provide:
+  - Gap evaluated
+  - Reason non-actionable
+- "Skipped - no gap identified" alone is INVALID
 
 ## Forbidden Elements
 
@@ -138,6 +167,20 @@ Every session closure MUST follow this exact structure:
 - "Partially completed"
 
 **Why:** Closure = completion. Progress reports belong in status.json.
+
+### ❌ Process Narration
+**Forbidden verbs in Actions Taken:**
+- responded, synced, reviewed, checked
+- coordinated, discussed, analyzed
+- investigated, explored, considered
+
+**Why:** Actions describe system changes, not agent activities. Process narration is fluff.
+
+**Actions must describe ONLY:**
+- Code changes (added, removed, modified)
+- Files created/updated
+- Commands executed
+- State changes
 
 ## Correct vs Incorrect Examples
 
