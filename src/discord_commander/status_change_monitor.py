@@ -983,3 +983,11 @@ def setup_status_monitor(bot, channel_id: Optional[int] = None, scheduler=None) 
     Args:
         bot: Discord bot instance
         channel_id: Optional channel ID for status updates
+        scheduler: Optional TaskScheduler instance for integration
+
+    Returns:
+        StatusChangeMonitor instance
+    """
+    monitor = StatusChangeMonitor(bot, channel_id, scheduler=scheduler)
+    monitor.start_monitoring()
+    return monitor
