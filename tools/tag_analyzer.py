@@ -144,13 +144,13 @@ class ToolTaggingAnalyzer:
         scores = [r.score for r in results]
         avg_score = sum(scores) / total_files
 
-        perfect_files = sum(1 for r in r.score == 5)
-        needs_work = sum(1 for r in r.score < 3)
+        perfect_files = sum(1 for r in results if r.score == 5)
+        needs_work = sum(1 for r in results if r.score < 3)
 
         # Group by score
         score_distribution = {}
         for i in range(6):
-            score_distribution[i] = sum(1 for r in r.score == i)
+            score_distribution[i] = sum(1 for r in results if r.score == i)
 
         report = f"""# Tool Tagging Analysis Report
 **Generated:** {timestamp}
@@ -159,8 +159,8 @@ class ToolTaggingAnalyzer:
 
 ## Executive Summary
 - **Average Tag Score:** {avg_score:.1f}/5.0
-- **Perfect Files (5/5):** {perfect_files} ({perfect_files/total_files*100:.1f}%)
-- **Needs Work (<3/5):** {needs_work} ({needs_work/total_files*100:.1f}%)
+- **Perfect Files (5/5):** {score_distribution[5]} ({score_distribution[5]/total_files*100:.1f}%)
+- **Needs Work (<3/5):** {sum(score_distribution[i] for i in range(3))} ({sum(score_distribution[i] for i in range(3))/total_files*100:.1f}%)
 
 ## Score Distribution
 
@@ -280,8 +280,8 @@ def main():
 
         scores = [r.score for r in results]
         avg_score = sum(scores) / total_files
-        perfect_files = sum(1 for r in r.score == 5)
-        needs_work = sum(1 for r in r.score < 3)
+        perfect_files = sum(1 for r in results if r.score == 5)
+        needs_work = sum(1 for r in results if r.score < 3)
 
         print("Tag Analysis Summary:")
         print(f"  Directory: {target_dir}")

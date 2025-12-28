@@ -1,5 +1,4 @@
-# tools package init
-# Lazy imports to avoid circular dependencies
+import importlib
 
 __all__ = [
     'tool_registry',
@@ -13,13 +12,13 @@ __all__ = [
 def __getattr__(name):
     """Lazy import to avoid circular dependencies."""
     if name in ('tool_registry', 'ToolRegistry', 'get_tool_registry'):
-        from . import tool_registry as _tool_registry
+        module = importlib.import_module('.tool_registry', __package__)
         if name == 'tool_registry':
-            return _tool_registry
-        return getattr(_tool_registry, name)
+            return module
+        return getattr(module, name)
     elif name in ('toolbelt_core', 'ToolbeltCore'):
-        from . import toolbelt_core as _toolbelt_core
+        module = importlib.import_module('.toolbelt_core', __package__)
         if name == 'toolbelt_core':
-            return _toolbelt_core
-        return getattr(_toolbelt_core, name)
+            return module
+        return getattr(module, name)
     raise AttributeError(f"module 'tools' has no attribute '{name}'")
