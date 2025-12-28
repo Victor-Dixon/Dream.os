@@ -273,4 +273,15 @@ def main():
         print("   • deploy_with_staging() - Deploy with automatic rollback protection")
         print("\n🔧 Ready for production deployment with rollback safety!")
     else:
-        print("⚠️  Some tests failed. Check the
+        print("⚠️  Some tests failed. Check the error messages above.")
+        print("\n🔧 Troubleshooting:")
+        print("   1. Check file permissions for snapshot directory creation")
+        print("   2. Verify deployment server dependencies")
+        print("   3. Check for existing snapshot conflicts")
+
+    return passed == total
+
+
+if __name__ == "__main__":
+    success = main()
+    sys.exit(0 if success else 1)
