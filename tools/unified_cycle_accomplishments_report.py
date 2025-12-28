@@ -171,6 +171,33 @@ def generate_report():
 **Format:** Markdown
 """
 
+    # Save to docs/blog for autoblogger
+    blog_dir = workspace_root / "docs" / "blog"
+    blog_dir.mkdir(parents=True, exist_ok=True)
+    
+    blog_filename = f"cycle_accomplishments_{date_str}.md"
+    blog_path = blog_dir / blog_filename
+    
+    # Create blog-friendly content (maybe add a header metadata block)
+    blog_content = f"""---
+title: Cycle Accomplishments Report - {date_str}
+date: {date_str}
+author: Swarm Captain
+category: DevLog
+tags: [cycle-report, swarm, devlog]
+excerpt: Cycle accomplishments report for {date_str}. {active_agents} agents active, {total_completed_tasks} tasks completed.
+---
+
+{report_content}
+"""
+    
+    try:
+        with open(blog_path, 'w') as f:
+            f.write(blog_content)
+        print(f"Blog post ready: {blog_path}")
+    except Exception as e:
+        print(f"Error writing blog post: {e}")
+
     report_dir = workspace_root / "reports"
     report_dir.mkdir(exist_ok=True)
     report_path = report_dir / f"cycle_accomplishments_{filename_ts}.md"
