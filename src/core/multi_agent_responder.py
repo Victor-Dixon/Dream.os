@@ -1,5 +1,16 @@
 #!/usr/bin/env python3
 """
+Multi-Agent Responder
+======================
+
+Handles inter-agent communication and coordination in the swarm system.
+
+Purpose: Enable seamless agent-to-agent messaging and coordination
+Author: Agent-2 (Architecture Specialist)
+Created: 2025-12-01
+Usage: Import and use MultiAgentResponder class for agent communication
+"""
+"""
 Multi-Agent Responder - Response Collection & Combination
 
 <!-- SSOT Domain: infrastructure -->
