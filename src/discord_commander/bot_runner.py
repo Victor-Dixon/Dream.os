@@ -18,10 +18,13 @@ from pathlib import Path
 # Load environment variables from .env file
 try:
     from dotenv import load_dotenv
-    load_dotenv()
+    # Prefer repo-root .env regardless of current working directory
+    repo_root = Path(__file__).resolve().parents[2]
+    load_dotenv(dotenv_path=repo_root / ".env")
 except ImportError:
     print("⚠️  python-dotenv not installed. Install with: pip install python-dotenv")
     print("⚠️  Continuing without .env support...")
+    repo_root = Path(__file__).resolve().parents[2]
 
 try:
     import discord
@@ -39,7 +42,7 @@ logger = logging.getLogger(__name__)
 async def main() -> int:
     """Main function to run the unified Discord bot with automatic reconnection."""
     # Setup logging with file output for debugging
-    log_dir = Path("runtime/logs")
+    log_dir = repo_root / "runtime" / "logs"
     log_dir.mkdir(parents=True, exist_ok=True)
     log_file = log_dir / f"discord_bot_{datetime.now().strftime('%Y%m%d')}.log"
 
@@ -128,9 +131,8 @@ async def main() -> int:
                     consecutive_failures = max_consecutive_failures  # Force longer delay
 
                     # Add rate limit recovery delay
-                    import time
                     logger.info("⏳ Waiting 30 seconds for rate limit recovery...")
-                    time.sleep(30)
+                    await asyncio.sleep(30)
                 else:
                     if consecutive_failures >= max_consecutive_failures:
                         reconnect_delay = min(max_delay, reconnect_delay * 2)
@@ -230,9 +232,8 @@ async def main() -> int:
                 consecutive_failures = 0
 
                 # Add extra delay for network recovery
-                import time
                 logger.info("⏳ Waiting 60 seconds for network recovery...")
-                time.sleep(60)
+                await asyncio.sleep(60)
             else:
                 if consecutive_failures >= max_consecutive_failures:
                     reconnect_delay = min(max_delay, reconnect_delay * 2)
