@@ -55,8 +55,7 @@ from typing import Optional
 project_root = Path(__file__).parent
 sys.path.insert(0, str(project_root))
 
-# Always load repo-root .env (avoid accidentally loading a parent-directory .env)
-load_dotenv(dotenv_path=project_root / ".env")
+load_dotenv()
 
 
 class ServiceManager:
@@ -327,8 +326,7 @@ class ServiceManager:
                 stderr = subprocess.STDOUT
                 creation_flags = 0
                 if platform.system() == 'Windows':
-                    # Detach so bot survives when main.py/terminal closes
-                    creation_flags = subprocess.CREATE_NEW_PROCESS_GROUP | subprocess.DETACHED_PROCESS
+                    creation_flags = subprocess.CREATE_NEW_PROCESS_GROUP
             else:
                 stdout = subprocess.PIPE
                 stderr = subprocess.STDOUT
@@ -426,8 +424,7 @@ class ServiceManager:
                             expected_scripts = {
                                 'message_queue': ['start_message_queue_processor.py', 'message_queue_processor'],
                                 'twitch': ['START_CHAT_BOT_NOW.py', 'twitch_eventsub_server.py'],
-                                # Be strict: only count the actual Discord bot runner, not unrelated discord tooling
-                                'discord': ['bot_runner']
+                                'discord': ['bot_runner', 'unified_discord_bot.py', 'discord_commander']
                             }
 
                             expected = expected_scripts.get(service_name, [])
@@ -464,8 +461,7 @@ class ServiceManager:
                             expected_scripts = {
                                 'message_queue': ['start_message_queue_processor.py', 'message_queue_processor'],
                                 'twitch': ['START_CHAT_BOT_NOW.py', 'twitch_eventsub_server.py'],
-                                # Be strict: only count the actual Discord bot runner, not unrelated discord tooling
-                                'discord': ['bot_runner']
+                                'discord': ['bot_runner', 'unified_discord_bot.py', 'discord_commander']
                             }
                             
                             expected = expected_scripts.get(service_name, [])
@@ -568,8 +564,7 @@ class ServiceManager:
             expected_scripts = {
                 'message_queue': ['start_queue_processor.py', 'start_message_queue_processor.py', 'message_queue_processor'],
                 'twitch': ['START_CHAT_BOT_NOW.py', 'twitch_eventsub_server.py'],
-                # Be strict: only stop the actual Discord bot runner
-                'discord': ['bot_runner']
+                'discord': ['bot_runner', 'unified_discord_bot.py', 'discord_commander']
             }
             
             expected = expected_scripts.get(service_name, [])

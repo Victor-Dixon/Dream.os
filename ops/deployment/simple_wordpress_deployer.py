@@ -247,6 +247,16 @@ class SimpleWordPressDeployer:
             print(f"❌ Deployment failed for {local_path}: {e}")
             return False
     
+    def download_file(self, remote_path: str, local_path: Path) -> bool:
+        """Download a file from the remote server."""
+        if not self.sftp: return False
+        try:
+            self.sftp.get(remote_path, str(local_path))
+            return True
+        except Exception as e:
+            print(f"❌ Download failed for {remote_path}: {e}")
+            return False
+    
     def execute_command(self, command: str) -> str:
         if not PARAMIKO_AVAILABLE: return ""
         try:
