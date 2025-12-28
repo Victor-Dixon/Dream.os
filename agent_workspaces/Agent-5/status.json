@@ -37,6 +37,14 @@
   ],
   "active_coordinations": [
     {
+      "coordination_id": "f7913c70-da54-4c20-86d6-34ce97cc8b06",
+      "partner": "Agent-7",
+      "type": "Web Domain Index & SSOT Coordination",
+      "status": "ACTIVE",
+      "role": "Maintain WEB_DOMAIN_INDEX accuracy, cross-reference with GA4/Pixel config sync report",
+      "next_action": "Scan web domain for index-to-FS alignment"
+    },
+    {
       "coordination_id": "af721268-901a-4c01-8463-46a86db4f0d7",
       "partner": "Agent-7",
       "type": "TradingRobotPlug.com Dashboard Layout Coordination",
