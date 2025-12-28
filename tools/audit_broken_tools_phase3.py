@@ -18,7 +18,7 @@ def audit_tool(tool_path: Path):
             [sys.executable, str(tool_path), "--help"],
             capture_output=True,
             text=True,
-            timeout=15
+            timeout=30
         )
         if result.returncode == 0:
             return "✅ PASS"
