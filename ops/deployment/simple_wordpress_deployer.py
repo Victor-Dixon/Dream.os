@@ -271,6 +271,101 @@ class SimpleWordPressDeployer:
         except Exception:
             return ""
 
+    def check_php_syntax(self, remote_file_path: str) -> Dict[str, any]:
+        """
+        Check PHP file syntax and return detailed error information with line numbers.
+        
+        Args:
+            remote_file_path: Path to PHP file on remote server
+            
+        Returns:
+            Dictionary with syntax check results including line numbers
+        """
+        if not self.sftp:
+            return {
+                "valid": False,
+                "error": "Not connected. Call connect() first.",
+                "line_number": None,
+                "error_message": None
+            }
+        
+        try:
+            command = f"php -l {remote_file_path} 2>&1"
+            result = self.execute_command(command)
+            
+            # Parse PHP syntax error output
+            if "No syntax errors" in result or "syntax is OK" in result:
+                return {
+                    "valid": True,
+                    "error": None,
+                    "line_number": None,
+                    "error_message": None,
+                    "output": result.strip()
+                }
+            
+            # Extract line number from error message
+            # PHP error format: "Parse error: ... in /path/to/file.php on line N"
+            import re
+            line_match = re.search(r'on line (\d+)', result, re.IGNORECASE)
+            line_number = int(line_match.group(1)) if line_match else None
+            
+            # Extract error type and message
+            error_type_match = re.search(r'(Parse error|Fatal error|Warning|Notice):\s*(.+?)(?:\s+in\s|$)', result, re.IGNORECASE | re.DOTALL)
+            error_type = error_type_match.group(1) if error_type_match else "Unknown error"
+            error_message = error_type_match.group(2).strip() if error_type_match else result.strip()
+            
+            # Get context around error line if line number found
+            context = None
+            if line_number:
+                try:
+                    # Read lines around the error (5 lines before and after)
+                    start_line = max(1, line_number - 5)
+                    end_line = line_number + 5
+                    context_command = f"sed -n '{start_line},{end_line}p' {remote_file_path}"
+                    context = self.execute_command(context_command)
+                except Exception:
+                    context = None
+            
+            return {
+                "valid": False,
+                "error": error_type,
+                "line_number": line_number,
+                "error_message": error_message,
+                "output": result.strip(),
+                "context": context,
+                "file_path": remote_file_path
+            }
+        except Exception as e:
+            return {
+                "valid": False,
+                "error": f"Syntax check failed: {str(e)}",
+                "line_number": None,
+                "error_message": str(e),
+                "output": None
+            }
+
+    def list_files(self, remote_path: str) -> List[str]:
+        """List files in a remote directory."""
+        if not self.sftp:
+            return []
+        
+        try:
+            return self.sftp.listdir(remote_path)
+        except Exception:
+            return []
+
+    def file_exists(self, remote_path: str) -> bool:
+        """Check if a file exists on the remote server."""
+        if not self.sftp:
+            return False
+        try:
+            self.sftp.stat(remote_path)
+            return True
+        except FileNotFoundError:
+            return False
+        except Exception:
+            return False
+
     def disconnect(self):
         if self.sftp: self.sftp.close()
         if self.transport: self.transport.close()
