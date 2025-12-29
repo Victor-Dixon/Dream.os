@@ -1,6 +1,5 @@
 """
 
-<!-- SSOT Domain: config -->
 Configuration Scanners - V2 Compliance Module
 ===========================================
 
@@ -19,7 +18,6 @@ from .config_models import ConfigPattern
 
 class ConfigurationScanner(ABC):
     """Abstract base class for configuration scanners."""
-<!-- SSOT Domain: config -->
 
     @abstractmethod
     def scan_file(self, file_path: Path, lines: List[str]) -> List[ConfigPattern]:
@@ -31,7 +29,6 @@ class ConfigurationScanner(ABC):
     def pattern_type(self) -> str:
         """Get the type of patterns this scanner detects."""
 
-<!-- SSOT Domain: config -->
         pass
 
 
@@ -45,7 +42,6 @@ class EnvironmentVariableScanner(ConfigurationScanner):
     def scan_file(self, file_path: Path, lines: List[str]) -> List[ConfigPattern]:
         """Find environment variable usage patterns."""
 
-<!-- SSOT Domain: config -->
         patterns = []
         for i, line in enumerate(lines, 1):
             if 'os.getenv' in line:
@@ -74,7 +70,6 @@ class HardcodedValueScanner(ConfigurationScanner):
     def scan_file(self, file_path: Path, lines: List[str]) -> List[ConfigPattern]:
         """Find hardcoded configuration values."""
 
-<!-- SSOT Domain: config -->
         patterns = []
         config_patterns = [
             (r'(\w+)\s*=\s*["\']([^"\']+)["\']', 'string_value'),
@@ -119,7 +114,6 @@ class HardcodedValueScanner(ConfigurationScanner):
 
 class ConfigConstantScanner(ConfigurationScanner):
     """Scans for configuration constant definitions."""
-<!-- SSOT Domain: config -->
 
     @property
     def pattern_type(self) -> str:
@@ -149,7 +143,6 @@ class ConfigConstantScanner(ConfigurationScanner):
     def _is_config_constant(self, key: str, value: str) -> bool:
         """Check if this is a configuration constant."""
 
-<!-- SSOT Domain: config -->
         # Constants should be uppercase with underscores
         if not re.match(r'^[A-Z_][A-Z0-9_]*$', key):
             return False
@@ -171,7 +164,6 @@ class SettingsPatternScanner(ConfigurationScanner):
     def scan_file(self, file_path: Path, lines: List[str]) -> List[ConfigPattern]:
         """Find settings-related patterns."""
 
-<!-- SSOT Domain: config -->
         patterns = []
         settings_keywords = ['settings', 'config', 'configuration', 'options']
 
@@ -199,7 +191,6 @@ def create_default_scanners() -> List[ConfigurationScanner]:
         List of default configuration scanners.
     """
 
-<!-- SSOT Domain: config -->
     return [
         EnvironmentVariableScanner(),
         HardcodedValueScanner(),

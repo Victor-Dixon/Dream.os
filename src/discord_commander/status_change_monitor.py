@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-<!-- SSOT Domain: monitoring -->
+
 """
 Status Change Monitor - Automatic Discord Updates
 =================================================
@@ -14,7 +14,8 @@ Improvements (V2 Compliance):
 
 Author: Agent-4 (Captain)
 Refactored by: Agent-1 (V2 Compliance)
-"""
+
+""""""
 
 import asyncio
 import json

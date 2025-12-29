@@ -1,6 +1,5 @@
 """
 
-<!-- SSOT Domain: logging -->
 Logger Port - Domain Interface
 ==============================
 
@@ -14,7 +13,6 @@ from typing import Any, Protocol
 
 class LogLevel(Enum):
     """Log levels for different types of messages."""
-<!-- SSOT Domain: logging -->
 
     DEBUG = "DEBUG"
     INFO = "INFO"
@@ -30,7 +28,6 @@ class Logger(Protocol):
     This protocol allows domain objects to log events and debug information
     without depending on specific logging implementations.
     """
-<!-- SSOT Domain: logging -->
 
     def debug(self, message: str, **context: Any) -> None:
         """
@@ -41,7 +38,6 @@ class Logger(Protocol):
             **context: Additional context data
         """
 
-<!-- SSOT Domain: logging -->
         ...
 
     def info(self, message: str, **context: Any) -> None:
@@ -53,7 +49,6 @@ class Logger(Protocol):
             **context: Additional context data
         """
 
-<!-- SSOT Domain: logging -->
         ...
 
     def warning(self, message: str, **context: Any) -> None:
@@ -65,7 +60,6 @@ class Logger(Protocol):
             **context: Additional context data
         """
 
-<!-- SSOT Domain: logging -->
         ...
 
     def error(self, message: str, exception: Exception = None, **context: Any) -> None:
@@ -78,7 +72,6 @@ class Logger(Protocol):
             **context: Additional context data
         """
 
-<!-- SSOT Domain: logging -->
         ...
 
     def critical(self, message: str, exception: Exception = None, **context: Any) -> None:
@@ -91,7 +84,6 @@ class Logger(Protocol):
             **context: Additional context data
         """
 
-<!-- SSOT Domain: logging -->
         ...
 
     def log(
@@ -107,5 +99,4 @@ class Logger(Protocol):
             **context: Additional context data
         """
 
-<!-- SSOT Domain: logging -->
         ...

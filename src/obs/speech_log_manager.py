@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-<!-- SSOT Domain: logging -->
+
 """
 Speech Log Manager
 ==================
@@ -12,7 +12,8 @@ Manages logging of speech captions to:
 V2 Compliance: <400 lines, single responsibility
 Author: Agent-7 (Web Development Specialist)
 License: MIT
-"""
+
+""""""
 
 import json
 import logging

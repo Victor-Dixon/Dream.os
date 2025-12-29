@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Coordination Models - KISS Simplified
 =====================================
 

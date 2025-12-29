@@ -1,6 +1,5 @@
 """
 
-<!-- SSOT Domain: logging -->
 Login Handler for DreamVault ChatGPT Scraper
 
 Handles ChatGPT login with credentials, manual login, and 2FA support.
@@ -19,7 +18,6 @@ logger = logging.getLogger(__name__)
 
 class LoginHandler:
     """Handles ChatGPT login with various methods."""
-<!-- SSOT Domain: logging -->
 
     def __init__(
         self,
@@ -36,7 +34,6 @@ class LoginHandler:
             totp_secret: TOTP secret for 2FA
         """
 
-<!-- SSOT Domain: logging -->
         self.username = username
         self.password = password
         self.totp_secret = totp_secret
@@ -55,7 +52,6 @@ class LoginHandler:
             True if login successful, False otherwise
         """
 
-<!-- SSOT Domain: logging -->
         try:
             # Navigate to ChatGPT
             driver.get("https://chat.openai.com")
@@ -126,7 +122,6 @@ class LoginHandler:
     def _automated_login(self, driver) -> bool:
         """Perform automated login with credentials."""
 
-<!-- SSOT Domain: logging -->
         try:
             logger.info("🔄 Attempting automated login...")
 
@@ -200,7 +195,6 @@ class LoginHandler:
     def _manual_login(self, driver, timeout: int) -> bool:
         """Allow manual login with timeout."""
 
-<!-- SSOT Domain: logging -->
         try:
             logger.info(f"⏰ Manual login timeout: {timeout} seconds")
             logger.info("👤 Please log in manually in the browser...")
