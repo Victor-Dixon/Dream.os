@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 """
 Task Completion Detector - SSOT for Detecting Task/Command Completion
 ======================================================================

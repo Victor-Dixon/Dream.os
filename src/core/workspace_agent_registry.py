@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 # src/core/agent_registry.py
 from __future__ import annotations
 

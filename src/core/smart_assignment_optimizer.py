@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+<!-- SSOT Domain: core -->
 """
 Smart Assignment Optimizer - Swarm Brain + Markov Chain
 ========================================================
