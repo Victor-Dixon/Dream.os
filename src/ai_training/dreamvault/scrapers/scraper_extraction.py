@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 """ChatGPT Scraper Extraction Methods - V2 Compliance | Agent-5"""
 
 import logging

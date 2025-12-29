@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 """ChatGPT Scraper Progress Tracking - V2 Compliance | Agent-5"""
 
 import hashlib

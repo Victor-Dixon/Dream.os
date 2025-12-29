@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 """
 AI Training - DreamVault Integration.
 

@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 """
 Database Abstraction Layer for DreamVault
 

@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 """
 Filesystem Utilities - V2 Compliant
 ===================================
