@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+<!-- SSOT Domain: core -->
 """
 Vector Integration Analytics - V2 Compliant Module
 =================================================

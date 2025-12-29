@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+<!-- SSOT Domain: core -->
 """
 Stress Test Metrics Collector
 ==============================
