@@ -116,7 +116,7 @@ class PyAutoGUIMessagingDelivery:
         message = self.formatting_service.normalize_message(message)
         if not message:
             return False
-            
+
         # Get sender for lock identifier
         sender = message.sender
         if isinstance(message.metadata, dict):
