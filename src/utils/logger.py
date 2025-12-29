@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+<!-- SSOT Domain: logging -->
 """
 Enhanced Logging System - Agent Cellphone V2
 ===========================================

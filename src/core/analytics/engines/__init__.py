@@ -1,10 +1,10 @@
-<!-- SSOT Domain: core -->
 # AUTO-GENERATED __init__.py
 # DO NOT EDIT MANUALLY - changes may be overwritten
 
 """
 Analytics Engines Module
 
+# SSOT Domain: core
 <!-- SSOT Domain: analytics -->
 """
 

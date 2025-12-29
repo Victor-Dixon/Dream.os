@@ -1,4 +1,6 @@
 """
+
+<!-- SSOT Domain: monitoring -->
 Monitor State Management
 ========================
 
@@ -15,6 +17,7 @@ from typing import Any
 
 class MonitorState:
     """Manages monitor state and agent tracking."""
+<!-- SSOT Domain: monitoring -->
 
     def __init__(self, config: dict):
         """Initialize monitor state."""
@@ -36,6 +39,8 @@ class MonitorState:
 
     def start_monitoring(self) -> None:
         """Start monitoring state."""
+
+<!-- SSOT Domain: monitoring -->
         self.is_monitoring = True
         self.start_time = time.time()
 
@@ -58,6 +63,8 @@ class MonitorState:
 
     def update_cycle(self, cycle_number: int, cycle_start_time: float) -> None:
         """Update cycle tracking."""
+
+<!-- SSOT Domain: monitoring -->
         self.current_cycle = cycle_number
         self.cycle_start_times[cycle_number] = cycle_start_time
 
@@ -68,6 +75,8 @@ class MonitorState:
 
     def get_stalled_agents(self) -> list[str]:
         """Get list of stalled agents using enhanced activity detection."""
+
+<!-- SSOT Domain: monitoring -->
         stalled = []
         
         # Enhanced: Use comprehensive activity detection (Agent-1 proposal)
@@ -159,6 +168,8 @@ class MonitorState:
 
     def get_info(self) -> dict[str, Any]:
         """Get monitor configuration info."""
+
+<!-- SSOT Domain: monitoring -->
         return {
             "monitoring_active": self.is_monitoring,
             "check_interval": self.check_interval,

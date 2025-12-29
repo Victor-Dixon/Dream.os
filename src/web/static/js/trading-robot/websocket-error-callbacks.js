@@ -1,3 +1,4 @@
+<!-- SSOT Domain: error_handling -->
 /**
  * WebSocket Error Callbacks Module - V2 Compliant
  * Specialized callback management for error events

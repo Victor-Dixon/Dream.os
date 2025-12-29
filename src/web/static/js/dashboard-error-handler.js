@@ -1,3 +1,4 @@
+<!-- SSOT Domain: error_handling -->
 /**
  * Dashboard Error Handler - V2 Compliance Module
  * Extracted from dashboard-consolidated-refactored.js

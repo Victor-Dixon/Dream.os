@@ -1,3 +1,4 @@
+<!-- SSOT Domain: deployment -->
 /**
  * Deployment Repository - V2 Compliance Implementation
  * Centralizes all deployment coordination and validation data

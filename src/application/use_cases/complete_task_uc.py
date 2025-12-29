@@ -1,5 +1,6 @@
-<!-- SSOT Domain: core -->
 """
+
+<!-- SSOT Domain: core -->
 Complete Task Use Case - Application Layer
 ==========================================
 
@@ -22,6 +23,7 @@ from ...domain.value_objects.ids import AgentId, TaskId
 @dataclass
 class CompleteTaskRequest:
     """Request DTO for task completion."""
+<!-- SSOT Domain: core -->
 
     task_id: str
     agent_id: str  # Agent completing the task
@@ -39,6 +41,8 @@ class CompleteTaskResponse:
 
 class CompleteTaskUseCase:
     """
+
+<!-- SSOT Domain: core -->
     Use case for completing tasks.
 
     This use case handles the business logic of marking tasks as complete
@@ -59,6 +63,8 @@ class CompleteTaskUseCase:
 
     def execute(self, request: CompleteTaskRequest) -> CompleteTaskResponse:
         """
+
+<!-- SSOT Domain: core -->
         Execute the task completion use case.
 
         Args:

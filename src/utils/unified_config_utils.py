@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+<!-- SSOT Domain: config -->
 """
 Unified Configuration Utilities - V2 Compliance Module
 =====================================================

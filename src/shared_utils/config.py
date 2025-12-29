@@ -1,4 +1,5 @@
 """Configuration utilities for the unified workspace.
+<!-- SSOT Domain: config -->
 
 This module loads environment variables and provides helper
 functions for accessing workspace settings.
@@ -14,6 +15,8 @@ from dotenv import load_dotenv
 
 def get_workspace_root() -> Path:
     """Return the root directory of the workspace."""
+
+<!-- SSOT Domain: config -->
     return Path(__file__).resolve().parents[2]
 
 
@@ -26,6 +29,7 @@ def load_env() -> None:
 
 def get_setting(key: str, default: str | None = None) -> str | None:
     """Retrieve a setting from the environment.
+<!-- SSOT Domain: config -->
 
     Args:
         key: Name of the environment variable to retrieve.

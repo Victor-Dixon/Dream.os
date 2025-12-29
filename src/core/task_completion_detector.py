@@ -1,5 +1,6 @@
-<!-- SSOT Domain: core -->
 """
+
+<!-- SSOT Domain: core -->
 Task Completion Detector - SSOT for Detecting Task/Command Completion
 ======================================================================
 
@@ -22,6 +23,8 @@ logger = logging.getLogger(__name__)
 
 class TaskCompletionDetector:
     """
+
+<!-- SSOT Domain: core -->
     SSOT for detecting task/command completion.
     
     Detects completion through:
@@ -34,6 +37,8 @@ class TaskCompletionDetector:
 
     def __init__(self, timeout_seconds: int = 300):
         """Initialize completion detector."""
+
+<!-- SSOT Domain: core -->
         self.timeout_seconds = timeout_seconds
         self.active_tasks: Dict[str, Dict[str, Any]] = {}
         self.completion_callbacks: Dict[str, Callable] = {}
@@ -58,6 +63,8 @@ class TaskCompletionDetector:
             failure_patterns: List of strings that indicate failure
             timeout: Task-specific timeout (overrides default)
         """
+
+<!-- SSOT Domain: core -->
         self.active_tasks[task_id] = {
             "task_id": task_id,
             "task_type": task_type,
@@ -85,6 +92,8 @@ class TaskCompletionDetector:
         Returns:
             True if task is complete, False otherwise
         """
+
+<!-- SSOT Domain: core -->
         if task_id not in self.active_tasks:
             logger.warning(f"Task not registered: {task_id}")
             return False
@@ -157,6 +166,8 @@ class TaskCompletionDetector:
 
     def _trigger_completion(self, task_id: str, result: str, reason: str) -> None:
         """Trigger completion callback if registered."""
+
+<!-- SSOT Domain: core -->
         if task_id in self.completion_callbacks:
             try:
                 callback = self.completion_callbacks[task_id]
@@ -171,6 +182,8 @@ class TaskCompletionDetector:
         Returns:
             Tuple of (is_complete, status)
         """
+
+<!-- SSOT Domain: core -->
         if task_id not in self.active_tasks:
             return False, None
 
@@ -196,6 +209,8 @@ class TaskCompletionDetector:
 
     def cleanup_completed_tasks(self, max_age_hours: int = 24) -> int:
         """
+
+<!-- SSOT Domain: core -->
         Remove completed tasks older than max_age_hours.
         
         Returns:
@@ -222,6 +237,8 @@ class TaskCompletionDetector:
         self, task_id: str, callback: Callable[[str, str, str, Dict], None]
     ) -> None:
         """Register callback to be called when task completes."""
+
+<!-- SSOT Domain: core -->
         self.completion_callbacks[task_id] = callback
 
     def detect_output_completion(
@@ -239,6 +256,8 @@ class TaskCompletionDetector:
         Returns:
             Tuple of (is_complete, reason)
         """
+
+<!-- SSOT Domain: core -->
         if not output:
             return False, None
 
@@ -316,6 +335,8 @@ def get_completion_detector() -> TaskCompletionDetector:
 
 def detect_command_completion(output: str) -> Tuple[bool, Optional[str]]:
     """
+
+<!-- SSOT Domain: core -->
     Quick helper to detect if command output indicates completion.
     
     Returns:

@@ -1,5 +1,6 @@
-<!-- SSOT Domain: core -->
 """
+
+<!-- SSOT Domain: core -->
 Filesystem Utilities - V2 Compliant
 ===================================
 
@@ -23,6 +24,8 @@ logger = logging.getLogger(__name__)
 
 def make_executable(path: Path) -> None:
     """
+
+<!-- SSOT Domain: core -->
     Make a file executable by adding execute permissions.
 
     Args:

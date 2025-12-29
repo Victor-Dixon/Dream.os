@@ -1,4 +1,6 @@
 """
+
+<!-- SSOT Domain: monitoring -->
 Monitor Discord Alerts - Discord Router Integration
 ===================================================
 
@@ -23,6 +25,8 @@ logger = logging.getLogger(__name__)
 
 def get_agent_webhook(agent_id: str) -> Optional[str]:
     """
+
+<!-- SSOT Domain: monitoring -->
     Get Discord webhook URL for an agent.
     
     Args:
@@ -53,6 +57,8 @@ def get_agent_webhook(agent_id: str) -> Optional[str]:
 
 def send_stall_alert(agent_id: str, stall_duration_seconds: float, activity_details: Dict[str, Any]) -> bool:
     """
+
+<!-- SSOT Domain: monitoring -->
     Send Discord alert for stalled agent.
     
     Args:
@@ -83,6 +89,7 @@ def send_stall_alert(agent_id: str, stall_duration_seconds: float, activity_deta
     
     # Create alert message
     content = f"""## 🚨 Agent Stall Alert
+<!-- SSOT Domain: monitoring -->
 
 **Agent**: {agent_id}
 **Stall Duration**: {duration_str}
@@ -117,6 +124,8 @@ Agent has been stalled for {duration_str}. Recovery system will attempt to rescu
 
 def send_recovery_alert(agent_id: str, recovery_status: str, details: Optional[str] = None) -> bool:
     """
+
+<!-- SSOT Domain: monitoring -->
     Send Discord alert for recovery action.
     
     Args:
@@ -137,6 +146,7 @@ def send_recovery_alert(agent_id: str, recovery_status: str, details: Optional[s
     emoji = "✅" if recovery_status == "succeeded" else "🔄" if recovery_status == "attempted" else "❌"
     
     content = f"""## {emoji} Agent Recovery Alert
+<!-- SSOT Domain: monitoring -->
 
 **Agent**: {agent_id}
 **Recovery Status**: {recovery_status.upper()}
@@ -163,6 +173,8 @@ def send_recovery_alert(agent_id: str, recovery_status: str, details: Optional[s
 
 def send_health_alert(issues: List[str], health_status: Dict[str, Any]) -> bool:
     """
+
+<!-- SSOT Domain: monitoring -->
     Send Discord alert for system health issues.
     
     Args:
@@ -183,6 +195,7 @@ def send_health_alert(issues: List[str], health_status: Dict[str, Any]) -> bool:
         return False
     
     content = f"""## 🚨 System Health Alert
+<!-- SSOT Domain: monitoring -->
 
 **Issues Detected**: {len(issues)}
 **Health Status**: {'❌ UNHEALTHY' if not health_status.get('healthy', True) else '⚠️ DEGRADED'}

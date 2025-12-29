@@ -1,3 +1,4 @@
+<!-- SSOT Domain: performance -->
 /**
  * Performance Optimization Orchestrator - V2 Compliant
  * Main orchestrator for performance analysis and optimization

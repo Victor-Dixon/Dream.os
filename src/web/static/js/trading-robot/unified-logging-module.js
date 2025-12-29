@@ -1,3 +1,4 @@
+<!-- SSOT Domain: logging -->
 /**
  * Unified Logging Module - V2 Compliant
  * Centralized logging system for trading robot components

@@ -1,5 +1,5 @@
-<!-- SSOT Domain: core -->
 """ChatGPT Scraper Progress Tracking - V2 Compliance | Agent-5"""
+<!-- SSOT Domain: core -->
 
 import hashlib
 import json
@@ -14,6 +14,8 @@ class ScraperProgressTracker:
 
     def __init__(self, progress_file: str):
         """Initialize progress tracker."""
+
+<!-- SSOT Domain: core -->
         self.progress_file = progress_file
         self.processed_conversations = self._load_progress()
 
@@ -31,6 +33,8 @@ class ScraperProgressTracker:
 
     def _save_progress(self):
         """Save progress to file."""
+
+<!-- SSOT Domain: core -->
         try:
             progress_path = Path(self.progress_file)
             progress_path.parent.mkdir(parents=True, exist_ok=True)
@@ -47,6 +51,8 @@ class ScraperProgressTracker:
 
     def _is_conversation_processed(self, conversation: dict) -> bool:
         """Check if conversation has been processed."""
+
+<!-- SSOT Domain: core -->
         conv_hash = self._get_conversation_hash(conversation)
         return conv_hash in self.processed_conversations
 
@@ -63,6 +69,8 @@ class ScraperProgressTracker:
 
     def reset_progress(self):
         """Reset progress tracking."""
+
+<!-- SSOT Domain: core -->
         self.processed_conversations = {}
         self._save_progress()
         logger.info("✅ Progress reset")

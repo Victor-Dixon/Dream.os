@@ -1,3 +1,4 @@
+<!-- SSOT Domain: infrastructure -->
 # 🎯 Unified Logger Refactoring - ROI Task Complete
 
 **Agent**: Agent-3 - Infrastructure & DevOps Specialist  

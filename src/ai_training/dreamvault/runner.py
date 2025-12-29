@@ -1,5 +1,6 @@
-<!-- SSOT Domain: core -->
 """
+
+<!-- SSOT Domain: core -->
 Batch runner for ShadowArchive processing pipeline.
 """
 
@@ -23,6 +24,7 @@ SummarySchema = Any  # type: ignore
 
 class BatchRunner:
     """Batch processor for conversation ingestion pipeline."""
+<!-- SSOT Domain: core -->
 
     def __init__(self, config):
         """
@@ -31,6 +33,8 @@ class BatchRunner:
         Args:
             config: Configuration object
         """
+
+<!-- SSOT Domain: core -->
         self.config = config
         self.batch_config = config.get_batch_config()
         self.rate_limiter = RateLimiter(config.get("rate_limits", {}))
@@ -69,6 +73,8 @@ class BatchRunner:
 
     def add_conversations_to_queue(self, conversation_ids: List[str]) -> int:
         """
+
+<!-- SSOT Domain: core -->
         Add conversations to processing queue.
 
         Args:
@@ -89,6 +95,8 @@ class BatchRunner:
 
     def _fetch_conversation(self, conversation_id: str) -> Optional[Dict[str, Any]]:
         """
+
+<!-- SSOT Domain: core -->
         Fetch conversation data (mock implementation).
 
         Args:
@@ -130,6 +138,8 @@ class BatchRunner:
 
     def _process_conversation(self, conversation_id: str) -> bool:
         """
+
+<!-- SSOT Domain: core -->
         Process a single conversation through the pipeline.
 
         Args:
@@ -193,6 +203,8 @@ class BatchRunner:
         self, max_conversations: Optional[int] = None, batch_size: Optional[int] = None
     ) -> Dict[str, Any]:
         """
+
+<!-- SSOT Domain: core -->
         Run batch processing of conversations.
 
         Args:
@@ -268,6 +280,8 @@ class BatchRunner:
 
     def _save_stats(self) -> None:
         """Save processing statistics to file."""
+
+<!-- SSOT Domain: core -->
         try:
             stats_dir = Path("ops/metrics")
             stats_dir.mkdir(parents=True, exist_ok=True)
@@ -290,6 +304,8 @@ class BatchRunner:
 
     def cleanup_old_data(self, days_old: int = 7) -> Dict[str, int]:
         """
+
+<!-- SSOT Domain: core -->
         Clean up old data files.
 
         Args:
@@ -313,6 +329,8 @@ class BatchRunner:
 
     def rebuild_indexes(self) -> Dict[str, int]:
         """
+
+<!-- SSOT Domain: core -->
         Rebuild all indexes from summary files.
 
         Returns:
@@ -331,6 +349,8 @@ class BatchRunner:
 
     def get_system_stats(self) -> Dict[str, Any]:
         """Get comprehensive system statistics."""
+
+<!-- SSOT Domain: core -->
         return {
             "queue": self.queue.get_queue_stats(),
             "rate_limiter": self.rate_limiter.get_stats(),

@@ -1,4 +1,3 @@
-<!-- SSOT Domain: core -->
 from __future__ import annotations
 
 import logging
@@ -22,6 +21,8 @@ except ImportError:
 
 class UIUnavailableError(Exception):
     """Raised when UI automation is not available."""
+
+<!-- SSOT Domain: core -->
     pass
 
 
@@ -30,6 +31,8 @@ class UIOnboarder:
 
     def __init__(self, tolerance: int=3, retries: int=1, dry_run: bool=False):
         """Initialize UI onboarder with configuration."""
+
+<!-- SSOT Domain: core -->
         if not PYAUTOGUI_AVAILABLE:
             raise UIUnavailableError(
                 'PyAutoGUI not available for UI automation')
@@ -55,6 +58,8 @@ class UIOnboarder:
         Returns:
             bool: True if successful, False otherwise
         """
+
+<!-- SSOT Domain: core -->
         if self.dry_run:
             logger.info(
                 f'🧪 DRY-RUN: Would onboard {agent_id} at {coords} with message'
@@ -112,6 +117,8 @@ class UIOnboarder:
         Returns:
             True if coordinates are valid, False otherwise
         """
+
+<!-- SSOT Domain: core -->
         if x < 0 or y < 0:
             return False
         if x > 5000 or y > 5000:
@@ -132,6 +139,8 @@ class UIOnboarder:
         Returns:
             True if message format is valid, False otherwise
         """
+
+<!-- SSOT Domain: core -->
         if not message.startswith(f'YOU ARE {agent_id}'):
             logger.info(f"❌ Message does not start with 'YOU ARE {agent_id}'")
             return False

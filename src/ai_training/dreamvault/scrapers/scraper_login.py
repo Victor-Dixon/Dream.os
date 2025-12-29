@@ -1,4 +1,5 @@
 """ChatGPT Scraper Login Logic - V2 Compliance | Agent-5"""
+<!-- SSOT Domain: logging -->
 
 import logging
 import time
@@ -14,6 +15,8 @@ class ScraperLoginHelper:
         driver, cookie_manager, login_handler, allow_manual=True, manual_timeout=TimeoutConstants.HTTP_MEDIUM
     ) -> bool:
         """Ensure user is logged into ChatGPT with cookie handling."""
+
+<!-- SSOT Domain: logging -->
         try:
             # Ensure on ChatGPT domain before loading cookies
             if not driver.current_url.startswith("https://chat.openai.com"):

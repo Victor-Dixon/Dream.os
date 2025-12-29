@@ -1,3 +1,4 @@
+<!-- SSOT Domain: performance -->
 /**
  * Frontend Performance Monitor - V2 Compliant
  * ===========================================

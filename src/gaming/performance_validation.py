@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+<!-- SSOT Domain: performance -->
 """Gaming Performance Validation.
 
 Performance validation script for refactored gaming infrastructure components.

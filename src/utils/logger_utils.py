@@ -1,4 +1,6 @@
 """
+
+<!-- SSOT Domain: logging -->
 Logger Utilities - Wrapper for Unified Logging System
 ======================================================
 
@@ -24,6 +26,8 @@ except ImportError:
 
 def setup_logger(name: str, level: str = "INFO", log_file: str = None):
     """
+
+<!-- SSOT Domain: logging -->
     Set up logger with specified configuration.
 
     Args:
@@ -61,6 +65,8 @@ def setup_logger(name: str, level: str = "INFO", log_file: str = None):
 
 def get_logger(name: str):
     """
+
+<!-- SSOT Domain: logging -->
     Get logger instance by name.
 
     Args:
@@ -77,6 +83,8 @@ def get_logger(name: str):
 
 def create_logger(name: str, level: str = "INFO"):
     """Create logger (backward compatible)."""
+
+<!-- SSOT Domain: logging -->
     return setup_logger(name, level)
 
 

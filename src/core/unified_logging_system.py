@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-<!-- SSOT Domain: core -->
 """
 Unified Logging System - V2 Compliance
 =====================================
@@ -9,6 +8,8 @@ Provides consistent logging across all modules.
 
 Author: Agent-2 (Architecture & Design Specialist)
 License: MIT
+
+# SSOT Domain: core
 """
 
 from __future__ import annotations

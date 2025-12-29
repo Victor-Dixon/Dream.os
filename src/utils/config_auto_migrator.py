@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# <!-- SSOT Domain: config -->
+"""
+Config Auto Migrator
+"""
 """
 Configuration Auto-Migrator - Autonomous Config System
 ======================================================

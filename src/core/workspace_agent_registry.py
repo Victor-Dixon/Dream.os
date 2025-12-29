@@ -1,4 +1,3 @@
-<!-- SSOT Domain: core -->
 # src/core/agent_registry.py
 from __future__ import annotations
 
@@ -47,6 +46,7 @@ class AgentRegistry:
 
     def force_onboard(self, agent_id: str, timeout: int = 30) -> None:
         """Send aggressive onboarding messages via your existing messaging bus.
+<!-- SSOT Domain: core -->
 
         Here we simulate by marking onboarded=True. Replace with real bus call.
         """
@@ -67,6 +67,7 @@ class AgentRegistry:
 
     def synchronize(self) -> None:
         """Force a global sync across agents.
+<!-- SSOT Domain: core -->
 
         Stub for now; integrate your real sync.
         """
@@ -84,6 +85,7 @@ class AgentRegistry:
 
     def get_onboarding_coords(self, agent_id: str) -> tuple[int, int]:
         """Get onboarding coordinates for an agent.
+<!-- SSOT Domain: core -->
 
         Uses SSOT coordinate loader for consistency across the system.
 

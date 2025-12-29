@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+<!-- SSOT Domain: config -->
 """
 Configuration Models - V2 Compliance Module
 ============================================

@@ -1,5 +1,6 @@
-<!-- SSOT Domain: core -->
 """
+
+<!-- SSOT Domain: core -->
 Hardened Agent Activity Detector - V2 Refactored (Handler+Helper Pattern)
 ==========================================================================
 
@@ -44,6 +45,8 @@ logger = logging.getLogger(__name__)
 
 class HardenedActivityDetector:
     """
+
+<!-- SSOT Domain: core -->
     Hardened activity detector with multi-source validation.
 
     Uses Handler+Helper pattern:
@@ -53,6 +56,8 @@ class HardenedActivityDetector:
 
     def __init__(self, workspace_root: Optional[Path] = None):
         """Initialize hardened activity detector."""
+
+<!-- SSOT Domain: core -->
         self.workspace_root = workspace_root or Path(".")
         self.agent_workspaces = self.workspace_root / "agent_workspaces"
         self.activity_event_file = Path(
@@ -100,6 +105,8 @@ class HardenedActivityDetector:
         Returns:
             ActivityAssessment with confidence score and validation status
         """
+
+<!-- SSOT Domain: core -->
         lookback_time = datetime.now() - timedelta(minutes=lookback_minutes)
         signals: List[ActivitySignal] = []
 

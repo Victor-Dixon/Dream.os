@@ -1,3 +1,4 @@
+<!-- SSOT Domain: performance -->
 /**
  * Recommendation Engine Module - V2 Compliant
  * Generates performance optimization recommendations

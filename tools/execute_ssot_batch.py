@@ -38,7 +38,8 @@ def file_has_ssot_tag(file_path: Path, domain: str) -> bool:
     try:
         content = file_path.read_text(encoding='utf-8')
         tag = SSOT_TAG_FORMAT.format(domain=domain)
-        return tag in content
+        # Check for both HTML comment format and Python comment format
+        return tag in content or f"# {tag}" in content
     except Exception:
         return False
 
@@ -47,6 +48,7 @@ def add_ssot_tag_to_file(file_path: Path, domain: str) -> bool:
     """
     Add SSOT domain tag to file.
     Places tag at the top of the file, after shebang if present.
+    For Python files, uses # comment format.
     """
     try:
         content = file_path.read_text(encoding='utf-8')
@@ -57,6 +59,13 @@ def add_ssot_tag_to_file(file_path: Path, domain: str) -> bool:
         
         tag = SSOT_TAG_FORMAT.format(domain=domain)
         lines = content.splitlines(keepends=True)
+        
+        # For Python files, use # comment format
+        is_python = file_path.suffix == '.py'
+        if is_python:
+            tag_line = f"# {tag}\n"
+        else:
+            tag_line = f"{tag}\n"
         
         # Find insertion point (after shebang and encoding, before docstring)
         insert_index = 0
@@ -73,8 +82,16 @@ def add_ssot_tag_to_file(file_path: Path, domain: str) -> bool:
         while insert_index < len(lines) and lines[insert_index].strip() == '':
             insert_index += 1
         
+        # For Python files, check if next line is a docstring - insert before it
+        if is_python and insert_index < len(lines):
+            # Check if next non-blank line is a docstring
+            next_line_idx = insert_index
+            while next_line_idx < len(lines) and lines[next_line_idx].strip() == '':
+                next_line_idx += 1
+            if next_line_idx < len(lines) and (lines[next_line_idx].strip().startswith('"""') or lines[next_line_idx].strip().startswith("'''")):
+                insert_index = next_line_idx
+        
         # Insert tag
-        tag_line = tag + '\n'
         if insert_index == 0:
             lines.insert(0, tag_line)
         else:

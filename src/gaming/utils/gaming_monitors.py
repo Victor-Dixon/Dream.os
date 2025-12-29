@@ -1,4 +1,5 @@
 """Gaming Performance Monitors.
+<!-- SSOT Domain: monitoring -->
 
 Performance monitoring utilities for gaming integration system.
 
@@ -10,6 +11,7 @@ logger = logging.getLogger(__name__)
 
 class GamingPerformanceMonitors:
     """Performance monitoring utilities for gaming systems."""
+<!-- SSOT Domain: monitoring -->
 
     @staticmethod
     def monitor_fps() -> Dict[str, Any]:
@@ -19,6 +21,8 @@ class GamingPerformanceMonitors:
     @staticmethod
     def monitor_memory() -> Dict[str, Any]:
         """Monitor memory usage."""
+
+<!-- SSOT Domain: monitoring -->
         return {"memory_usage": 45.2, "memory_available": 54.8}
 
     @staticmethod
@@ -29,4 +33,6 @@ class GamingPerformanceMonitors:
     @staticmethod
     def monitor_network() -> Dict[str, Any]:
         """Monitor network performance."""
+
+<!-- SSOT Domain: monitoring -->
         return {"latency": 15, "bandwidth": 100}

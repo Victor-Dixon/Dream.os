@@ -1,3 +1,4 @@
+<!-- SSOT Domain: performance -->
 /**
  * Bundle Analyzer Module - V2 Compliant
  * Analyzes JavaScript bundle size and composition
