@@ -29,11 +29,13 @@ class UtilityCommands(commands.Cog):
         self.logger = logging.getLogger(__name__)
 
     @commands.command(name="mermaid", description="Render Mermaid diagram")
+    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def mermaid(self, ctx: commands.Context, *, diagram_code: str):
         """Render Mermaid diagram code.
 
         Usage: !mermaid graph TD; A-->B; B-->C;
         """
+        self.logger.info(f"Command 'mermaid' triggered by {ctx.author}")
         try:
             # Remove code block markers if present
             diagram_code = diagram_code.strip()
@@ -78,8 +80,10 @@ class UtilityCommands(commands.Cog):
             await ctx.send(f"❌ Error rendering mermaid diagram: {e}")
 
     @commands.command(name="help", description="Show help information")
+    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def help_cmd(self, ctx: commands.Context):
         """Show interactive help menu with navigation buttons."""
+        self.logger.info(f"Command 'help' triggered by {ctx.author}")
         try:
             from ..views import HelpGUIView
 
@@ -92,8 +96,10 @@ class UtilityCommands(commands.Cog):
             await ctx.send(f"❌ Error: {e}")
 
     @commands.command(name="commands", description="List all registered commands (use Control Panel buttons instead!)")
+    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def list_commands(self, ctx: commands.Context):
         """List all registered bot commands - redirects to Control Panel button view."""
+        self.logger.info(f"Command 'commands' triggered by {ctx.author}")
         try:
             # Instead of listing commands, open Control Panel which has all buttons
             control_view = self.gui_controller.create_control_panel()
@@ -135,6 +141,7 @@ class UtilityCommands(commands.Cog):
             await ctx.send(f"❌ Error: {e}")
 
     @commands.command(name="git_push", aliases=["push", "github_push"], description="Push project to GitHub")
+    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def git_push(self, ctx: commands.Context, *, commit_message: str = None):
         """
         Push project to GitHub. Automatically stages, commits, and pushes changes.
@@ -143,6 +150,7 @@ class UtilityCommands(commands.Cog):
         !git_push "Your commit message"
         !push "Fixed bug in messaging system"
         """
+        self.logger.info(f"Command 'git_push' triggered by {ctx.author}")
         try:
             # Get project root
             project_root = Path(__file__).parent.parent.parent
@@ -289,8 +297,10 @@ class UtilityCommands(commands.Cog):
             await ctx.send(f"❌ Error: {e}")
 
     @commands.command(name="unstall", description="Unstall an agent (recover from stall)")
+    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def unstall(self, ctx: commands.Context, agent_id: str):
         """Unstall an agent by sending reset signal and continuation message."""
+        self.logger.info(f"Command 'unstall' triggered by {ctx.author} on {agent_id}")
         try:
             # Read agent's status.json to get last known state
             status_file = Path(f"agent_workspaces/{agent_id}/status.json")
