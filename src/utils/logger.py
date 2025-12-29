@@ -12,7 +12,7 @@ Maintained for backward compatibility.
 
 Author: V2 SWARM CAPTAIN
 License: MIT
-""""
+"""
 
 import logging
 from pathlib import Path
