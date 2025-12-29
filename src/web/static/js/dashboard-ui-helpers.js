@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Dashboard UI Helpers Module - V2 Compliant
  * UI helper functions for dashboard communication and display

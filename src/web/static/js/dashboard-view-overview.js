@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Dashboard Overview View Module - V2 Compliant
  * Handles overview and contract status view rendering

@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Dashboard Time Module - V2 Compliant
  * Handles time-related functionality and updates

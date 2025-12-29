@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Agent-8 SSOT Integration - Web Layer Implementation
  * Single Source of Truth integration for web layer components

@@ -19,6 +19,14 @@
     },
     {
       "partner": "Agent-1",
+      "type": "SSOT Batch Tagging Coordination",
+      "status": "COMPLETE",
+      "message_id": "f2621a54-a883-4c00-a48a-c454dba83f1e",
+      "role": "Executor - completed core_batch_31 and core_batch_32 (30 files)",
+      "next_action": "Report completion to Agent-1"
+    },
+    {
+      "partner": "Agent-1",
       "type": "Infrastructure Refactoring Coordination",
       "status": "ACTIVE",
       "message_id": "msg_20251228_1400_a1",
@@ -30,6 +38,7 @@
     "Execute self-batch of SSOT tagging (180 files)"
   ],
   "completed_tasks": [
+    "Execute SSOT batch tagging for core_batch_31 and core_batch_32 (30 files) - Agent-1 coordination",
     "Implement Public Surface Expansion (PSE) rule validation in validation-audit MCP",
     "Coordinate tagging of 646+ tools (distributed 1258 files into 7 batches to swarm)",
     "Audit archived tools in websites/tools/_archived/ and verified no active dependencies",

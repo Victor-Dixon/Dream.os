@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 // Import modular components for V2 compliance
 import { Navigation } from './navigation.js';
 import { Modal } from './modal.js';

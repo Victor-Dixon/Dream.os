@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Unified Logging System - Web Layer Integration
  * Centralized logging system for web layer components

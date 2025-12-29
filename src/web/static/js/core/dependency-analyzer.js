@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Dependency Analyzer Module - V2 Compliant
  * Dependency graph analysis and validation utilities

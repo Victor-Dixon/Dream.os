@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 import { debounce, throttle } from '../portal/utils.js';
 import { breakpoints } from './config.js';
 

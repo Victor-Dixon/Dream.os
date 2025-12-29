@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Dashboard Agent Activity View Module - V2 Compliant
  * Handles agent activity tracking and visualization

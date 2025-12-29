@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Unified Configuration System - Web Layer Integration
  * Centralized configuration management for web layer components

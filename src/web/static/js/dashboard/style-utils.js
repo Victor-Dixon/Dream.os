@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Dashboard Style Utilities Module - V2 Compliant
  * Color and style utilities for dashboard components

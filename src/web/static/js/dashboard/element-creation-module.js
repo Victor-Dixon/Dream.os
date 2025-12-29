@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Element Creation Module - V2 Compliant
  * DOM element creation utilities

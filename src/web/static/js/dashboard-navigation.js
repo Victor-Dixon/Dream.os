@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Dashboard Navigation Module - V2 Compliant
  * Handles navigation and view management functionality

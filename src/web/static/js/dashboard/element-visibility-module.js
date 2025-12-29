@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Element Visibility Module - V2 Compliant
  * Element visibility and positioning utilities

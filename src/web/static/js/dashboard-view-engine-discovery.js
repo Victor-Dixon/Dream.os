@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Dashboard Engine Discovery View - V2 Compliant
  * 
