@@ -30,6 +30,7 @@ class OnboardingCommands(commands.Cog):
         self.logger = logging.getLogger(__name__)
 
     @commands.command(name="soft_onboard", aliases=["soft"], description="Soft onboard agent(s)")
+    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def soft_onboard(self, ctx: commands.Context, *, agent_ids: str = None):
         """
         Soft onboard agent(s). Can specify single agent, multiple agents, or all.
@@ -39,6 +40,7 @@ class OnboardingCommands(commands.Cog):
         !soft Agent-1,Agent-2,Agent-3
         !soft all
         """
+        self.logger.info(f"Command 'soft_onboard' triggered by {ctx.author} with agent_ids={agent_ids}")
         try:
             # If no agents specified, default to all
             if not agent_ids or agent_ids.strip().lower() == "all":
@@ -180,6 +182,7 @@ class OnboardingCommands(commands.Cog):
             await ctx.send(f"❌ Error: {e}")
 
     @commands.command(name="hard_onboard", aliases=["hard"], description="Hard onboard agent(s)")
+    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def hard_onboard(self, ctx: commands.Context, *, agent_ids: str = None):
         """
         Hard onboard agent(s). Can specify single agent, multiple agents, or all.
@@ -189,6 +192,7 @@ class OnboardingCommands(commands.Cog):
         !hard_onboard Agent-1,Agent-2,Agent-3
         !hard_onboard all
         """
+        self.logger.info(f"Command 'hard_onboard' triggered by {ctx.author} with agent_ids={agent_ids}")
         try:
             # If no agents specified, default to all
             if not agent_ids or agent_ids.strip().lower() == "all":

@@ -27,6 +27,7 @@ class AgentManagementCommands(commands.Cog):
         self.logger = logging.getLogger(__name__)
 
     @commands.command(name="heal", aliases=["self_heal", "healing"], description="Self-healing system commands")
+    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def heal(self, ctx: commands.Context, action: str = "status", agent_id: str = None):
         """
         Self-healing system commands.
@@ -37,6 +38,7 @@ class AgentManagementCommands(commands.Cog):
         !heal stats [Agent-X] - Show detailed stats for agent (or all agents)
         !heal cancel_count [Agent-X] - Show terminal cancellation count today
         """
+        self.logger.info(f"Command 'heal' triggered by {ctx.author} with args: action={action}, agent_id={agent_id}")
         try:
             from src.core.agent_self_healing_system import (
                 get_self_healing_system,
