@@ -121,9 +121,9 @@
 **Active Batches (In Progress):**
 - 🔄 Batch 6 (infrastructure_batch_1) - ~34 files - Agent-3 ACCEPTED, executing tagging (ETA 60 min)
 - 🔄 Batch 7 (web_batch_1) - ~65 files - Agent-7 ACCEPTED, executing tagging (ETA 60-90 min)
+- 🔄 Batch 8 (analytics_batch_1) - ~47 files - Agent-5 ACCEPTED, executing tagging (ETA 45-60 min)
 
 **Assigned Batches (Awaiting Acceptance):**
-- 🔄 Batch 8 (analytics_batch_1) - ~47 files - Agent-5 assigned, coordination message sent
 
 **Pending Batches:**
 - ⏳ Integration domain - Next batch TBD (after Batch 5 complete)
