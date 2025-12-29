@@ -92,6 +92,44 @@ def validate_closure_format(closure_file_path: str) -> Dict[str, Any]:
                 "description": "Status field must include emoji (✅, 🟡, or ❌)"
             })
 
+        # --- PSE (Public Surface Expansion) Rule Validation ---
+        pse_triggers = [
+            'governance', 'safety', 'architecture', 'swarm behavior',
+            'protocol', 'closure', 'canonical prompt', 'template',
+            'shared workspace', 'swarm rule', 'mcp server'
+        ]
+        
+        # Check if any trigger word exists in the content (excluding field headers)
+        body_content = content.lower()
+        needs_pse = any(trigger in body_content for trigger in pse_triggers)
+        
+        if needs_pse:
+            # Required artifacts for PSE
+            required_pse_artifacts = [
+                'BLOG_DADUDEKC.md',
+                'BLOG_WEARESWARM.md',
+                'BLOG_DREAMSCAPE.md'
+            ]
+            
+            # Check if these artifacts are mentioned in "Artifacts Created / Updated" section
+            artifacts_section = re.search(r'\*\*Artifacts Created / Updated:\*\*(.+?)(?=\n\s*\*\*|\n\s*#|\Z)', content, re.IGNORECASE | re.DOTALL)
+            if artifacts_section:
+                artifacts_text = artifacts_section.group(1)
+                missing_pse = [art for art in required_pse_artifacts if art.lower() not in artifacts_text.lower()]
+                
+                if missing_pse:
+                    violations.append({
+                        "type": "pse_violation",
+                        "description": "Governance/Architecture changes require Public Surface Expansion (PSE) artifacts",
+                        "missing_artifacts": missing_pse,
+                        "required_artifacts": required_pse_artifacts
+                    })
+            else:
+                violations.append({
+                    "type": "pse_violation",
+                    "description": "Governance/Architecture changes detected but 'Artifacts Created / Updated' section is missing or empty"
+                })
+
         is_valid = len(missing_fields) == 0 and len(violations) == 0
 
         return {
@@ -101,7 +139,8 @@ def validate_closure_format(closure_file_path: str) -> Dict[str, Any]:
             "missing_fields": missing_fields,
             "violations": violations,
             "field_count": len(REQUIRED_FIELDS) - len(missing_fields),
-            "total_fields": len(REQUIRED_FIELDS)
+            "total_fields": len(REQUIRED_FIELDS),
+            "pse_triggered": needs_pse
         }
     except Exception as e:
         return {

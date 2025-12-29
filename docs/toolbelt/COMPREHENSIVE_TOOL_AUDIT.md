@@ -1,6 +1,6 @@
 # Comprehensive Tool Audit Report
 
-**Total Assets Found:** 292
+**Total Assets Found:** 296
 
 ## 🛠️ Tool Classes
 Found 170 tool classes in `tools/categories/`.
@@ -179,7 +179,7 @@ Found 170 tool classes in `tools/categories/`.
 | `DiscordPostTool` | `tools.categories.communication_tools` | `communication` |
 
 ## 📜 Standalone Scripts
-Found 122 scripts with `main()` entry points.
+Found 126 scripts with `main()` entry points.
 
 - `scripts\activate_vector_database_integration.py`
 - `scripts\add_ci_cd_to_github_repos.py`
@@ -276,6 +276,7 @@ Found 122 scripts with `main()` entry points.
 - `tools\devlog_manager.py`
 - `tools\devlog_poster_agent_channel.py`
 - `tools\discord_health_monitor.py`
+- `tools\find_missing_ssot_tags.py`
 - `tools\generate_blog_preview.py`
 - `tools\generate_cycle_accomplishments_report.py`
 - `tools\manage_env.py`
@@ -292,11 +293,14 @@ Found 122 scripts with `main()` entry points.
 - `tools\sync_feed_to_weareswarm.py`
 - `tools\system_health_dashboard.py`
 - `tools\tag_analyzer.py`
+- `tools\tag_web_domain_ssot.py`
 - `tools\test_bi_tools.py`
 - `tools\test_deployment_staging.py`
 - `tools\test_mcp_server_connectivity.py`
+- `tools\test_risk_websocket.py`
 - `tools\test_toolbelt_basic.py`
 - `tools\test_twitch_config.py`
+- `tools\test_unified_tool_registry_mcp.py`
 - `tools\unified_cycle_accomplishments_report.py`
 - `tools\update_github_repo_description.py`
 - `tools\validate_closure_format.py`

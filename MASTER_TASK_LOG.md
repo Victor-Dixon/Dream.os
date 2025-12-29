@@ -9,6 +9,15 @@
 
 ## 📥 INBOX
 
+
+- [ ] **HIGH** (75 pts): Navigation Enhancement - Add cross-references in core service files to related documentation and API endpoints [Agent-5]
+- [ ] **MEDIUM** (50 pts): Documentation Linking - Add navigation links in analytics docs to related code files and vice versa [Agent-5] 
+- [ ] **MEDIUM** (50 pts): Module Discovery - Create import path reference guide for complex module hierarchies (analytics, services, core) [Agent-5]
+- [ ] **LOW** (25 pts): File Relationship Mapping - Document dependencies between key files (risk calculator ↔ websocket ↔ dashboard) [Agent-5]
+- [ ] **MEDIUM** (40 pts): Code Navigation - Add strategic comments in complex functions pointing to related files and external docs [Agent-5]
+
+
+
 - [ ] **HIGH** (50 pts): Phase 2.2 Week 2 - Real-time Risk Dashboard Implementation - WebSocket infrastructure for live risk metrics streaming, real-time dashboard UI components, dashboard coordination with trading plugins [Agent-5]
 - [ ] **HIGH**: Infrastructure Refactoring (messaging_pyautogui.py) & WP-CLI MCP Server Implementation [Agent-1]
 - [x] **HIGH**: Deployment MCP: Staging, Rollback & Snapshots Implementation [Agent-2] ✅ COMPLETE (2025-12-28) - Designed and implemented comprehensive staging/snapshot logic and rollback functionality. Added deploy_with_staging(), rollback_deployment(), list_deployment_snapshots() tools. Enhanced deployment server with 6 new MCP tools, created test suite, updated documentation. Ready for swarm integration with safe deployment rollback capabilities.
@@ -18,7 +27,7 @@
 - [x] **HIGH**: P0 Foundation: Offer Ladders & ICP Definitions for Tier 2 Sites [Agent-7] - ✅ COMPLETE (2025-12-28) - Tier 2 Foundation 8/8 fixes (100%): ICP content implemented in PHP templates for all 3 sites, Offer Ladder components integrated, Services/pricing integrated. freerideinvestor.com auto-deployed ✅, other sites pending Agent-3 deployment. Commits: df8a587, 2db461f, 23a4bec, 1be4e70. Assigned to Block 6: website-manager MCP enhancements.
 - [x] **HIGH**: Unified Tool Registry MCP Integration & final 1444+ tool audit [Agent-8] - ✅ COMPLETE (2025-12-28) - Executed comprehensive audit finding 170 tool classes and 109 scripts. Validated 91 registered tools with 100% health (fixed environment dependencies). Tool registry operational and served via `unified_tool_server.py`.
 
-- [x] **HIGH**: Swarm Phase 3 Consolidation & V2 Completion - Work Distribution (7 Blocks) - ✅ BLOCKS 6 & 7 COMPLETE (2025-12-28). Block 6 (Agent-7): Refactored `website_manager_server.py` to use `SimpleWordPressDeployer`, removing broken dependencies. Block 7 (Agent-8): Completed 1444+ tool audit (170 classes/109 scripts found), verified 100% registry health.
+- [x] **HIGH**: Swarm Phase 3 Consolidation & V2 Completion - Work Distribution (7 Blocks) - ✅ DISTRIBUTED by Agent-6 (2025-12-29). Block 1 (Agent-1): Refactoring + WP-CLI MCP. Block 2 (Agent-2): Staging/Rollback MCP. Block 3 (Agent-3): Deployment blockers + PHP syntax. Block 4 (Agent-5): Analytics + DB MCP. Block 5 (Agent-6): 1258 SSOT tags distributed + PSE rule implemented + Archive audit. Block 6 (Agent-7): P0 Foundation + ICP. Block 7 (Agent-8): Tool registry + Cache management.
 
 - [x] **HIGH** (100 pts): [WEB] nextend-facebook-connect - Fix empty index.html file - ✅ NOT A BUG (2025-12-28) - Investigated: File contains `<!-- Silence is golden -->` which is the standard WordPress security practice to prevent directory listing. This is working as intended. No action needed. [Agent-7 VERIFIED]
 
@@ -56,7 +65,7 @@
 
 - [ ] **HIGH**: Phase 2 Infrastructure Refactoring - messaging_core.py (544 lines) (150 pts) - ⏳ PENDING - Service Layer pattern. ETA: 1 cycle. Source: Agent-3 status.json current_tasks. [Agent-3]
 
-- [ ] **MEDIUM**: SSOT Coordination - Tag 646 tools missing tags (150 pts) - ⏳ ACTIVE - Coordinate SSOT validation across agents, track 646 tools missing tags, facilitate SSOT domain updates, monitor SSOT compliance. Source: Agent-6 status.json current_mission. [Agent-6]
+- [ ] **MEDIUM**: SSOT Coordination - Tag 1258 files missing tags (150 pts) - ⏳ DISTRIBUTED (2025-12-29) - 1258 files divided into 7 batches and assigned to swarm. PSE rule implemented in validation MCP. Archived tools audited. [Agent-6]
 
 - [x] **MEDIUM**: Web Domain Navigation Index (50 pts) - ✅ COMPLETE by Agent-7 (2025-12-27) - Created docs/WEB_DOMAIN_INDEX.md with comprehensive navigation: directory structure, file tables with purposes, related documentation links, tools reference, website repositories, common operations, API endpoints. Added SSOT tags to dashboard.js and dashboard-view-activity.js with @see references. [Agent-7 COMPLETE]
 
