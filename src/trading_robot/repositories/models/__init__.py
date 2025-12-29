@@ -1,6 +1,10 @@
 # AUTO-GENERATED __init__.py
 # DO NOT EDIT MANUALLY - changes may be overwritten
 
+"""
+<!-- SSOT Domain: trading_robot -->
+"""
+
 from . import portfolio
 from . import position
 from . import trade

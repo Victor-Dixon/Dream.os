@@ -5,6 +5,8 @@ Position Repository Interface - V2 Compliant Module
 Abstract interface for position data access with V2 compliance.
 Extracted from trading_repository.py for V2 compliance.
 
+<!-- SSOT Domain: trading_robot -->
+
 V2 Compliance: < 300 lines, single responsibility.
 
 Author: Agent-7 - Web Development Specialist

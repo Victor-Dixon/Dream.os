@@ -1,6 +1,10 @@
 # AUTO-GENERATED __init__.py
 # DO NOT EDIT MANUALLY - changes may be overwritten
 
+"""
+<!-- SSOT Domain: trading_robot -->
+"""
+
 from . import portfolio_repository_interface
 from . import position_repository_interface
 from . import trading_repository_interface

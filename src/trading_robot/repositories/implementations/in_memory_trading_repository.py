@@ -5,6 +5,8 @@ In-Memory Trading Repository - V2 Compliant
 In-memory trading repository orchestrator.
 Refactored for V2 compliance by Agent-3.
 
+<!-- SSOT Domain: trading_robot -->
+
 Original: Agent-7 - Web Development Specialist
 V2 Refactor: Agent-3 - Infrastructure & DevOps Specialist
 """

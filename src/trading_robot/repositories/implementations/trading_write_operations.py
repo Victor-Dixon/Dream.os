@@ -5,6 +5,8 @@ Trading Repository Write Operations - V2 Compliant
 Write operations for trading repository.
 Extracted from trading_repository_impl.py for V2 compliance.
 
+<!-- SSOT Domain: trading_robot -->
+
 Author: Agent-3 - Infrastructure & DevOps Specialist (extracted from Agent-7's work)
 """
 

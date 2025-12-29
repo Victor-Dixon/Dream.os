@@ -5,6 +5,8 @@ Trading Repository V2 - V2 Compliant Modular Architecture
 Main trading repository that coordinates all trading data access modules.
 Refactored from monolithic trading_repository.py for V2 compliance.
 
+<!-- SSOT Domain: trading_robot -->
+
 V2 Compliance: < 300 lines, single responsibility.
 
 Author: Agent-7 - Web Development Specialist
