@@ -24,7 +24,6 @@ from ...domain.value_objects.ids import AgentId, TaskId
 @dataclass
 class AssignTaskRequest:
     """Request DTO for task assignment."""
-<!-- SSOT Domain: core -->
 
     task_id: str
     agent_id: str | None = None  # If None, auto-assign best agent
