@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Logging Manager - Logging Operations
 =====================================
 

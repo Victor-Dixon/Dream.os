@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: core -->
+
 Unified Validation Orchestrator - V2 Compliant Module
 ====================================================
 

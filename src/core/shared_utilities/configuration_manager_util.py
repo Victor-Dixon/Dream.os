@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Configuration Manager Utility - Configuration Management
 ========================================================
 

@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 # Unified Validation Framework
 
 A comprehensive, extensible validation framework that provides unified validation capabilities across multiple domains including contracts, workflows, security, quality, and more.

@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Base Utility - Abstract Base Class
 ===================================
 

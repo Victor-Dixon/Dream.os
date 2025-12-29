@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Shared Utilities - Core Manager Utilities (Refactored)
 =======================================================
 

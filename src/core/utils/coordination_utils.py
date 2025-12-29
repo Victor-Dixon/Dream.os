@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Coordination Utilities - Shared V2 Compliant Utilities
 Main coordination utilities module that aggregates focused utility modules
 V2 Compliance: Under 300-line limit with modular architecture

@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Agent Matching Utilities - V2 Compliant Agent Matching Logic
 Focused utility for agent capability matching and scoring
 V2 Compliance: Under 300-line limit with focused functionality

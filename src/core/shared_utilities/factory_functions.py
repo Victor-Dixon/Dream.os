@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Factory Functions - Utility Instance Creation
 =============================================
 

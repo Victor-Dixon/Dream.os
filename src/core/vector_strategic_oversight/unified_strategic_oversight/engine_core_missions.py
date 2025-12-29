@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Strategic Oversight Engine Core Missions - KISS Simplified
 =========================================================
 

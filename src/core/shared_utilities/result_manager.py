@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Result Manager - Result Management
 ==================================
 

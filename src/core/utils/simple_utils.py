@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: core -->
+
 Simple Utils - V2 Compliance Redirect Shim
 ==========================================
 

@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: core -->
+
 Prediction Analyzer - V2 Compliance Module
 
 Author: Agent-6 (Coordination & Communication Specialist)
