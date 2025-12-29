@@ -32,6 +32,7 @@ class SystemControlCommands(commands.Cog):
         self.logger = logging.getLogger(__name__)
 
     @commands.command(name="thea", aliases=["thea-refresh"], description="Ensure Thea session (headless keepalive, interactive only if needed)")
+    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def thea(self, ctx: commands.Context, force: str = ""):
         """
         Ensure Thea session with self-throttling keepalive.
@@ -39,6 +40,7 @@ class SystemControlCommands(commands.Cog):
         - Default: headless refresh if stale; interactive fallback if headless fails.
         - force: bypass throttle (set any value to force refresh).
         """
+        self.logger.info(f"Command 'thea' triggered by {ctx.author}")
         allow_interactive = True
         min_interval = 0 if force else self.bot.thea_min_interval_minutes
         await ctx.send("🔄 Ensuring Thea session (headless)...")
@@ -49,8 +51,10 @@ class SystemControlCommands(commands.Cog):
             await ctx.send("❌ Thea session failed. Try again to trigger interactive login.")
 
     @commands.command(name="control", aliases=["panel", "menu"], description="Open main control panel")
+    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def control_panel(self, ctx: commands.Context):
         """Open main interactive control panel."""
+        self.logger.info(f"Command 'control_panel' triggered by {ctx.author}")
         try:
             control_view = self.gui_controller.create_control_panel()
             embed = discord.Embed(
@@ -84,8 +88,10 @@ class SystemControlCommands(commands.Cog):
             await ctx.send(f"❌ Error: {e}")
 
     @commands.command(name="shutdown", description="Gracefully shutdown the bot")
+    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def shutdown_cmd(self, ctx: commands.Context):
         """Gracefully shutdown the Discord bot."""
+        self.logger.info(f"Command 'shutdown' triggered by {ctx.author}")
         try:
             # Confirmation embed
             embed = discord.Embed(
@@ -122,8 +128,10 @@ class SystemControlCommands(commands.Cog):
             await ctx.send(f"❌ Error: {e}")
 
     @commands.command(name="startdiscord", aliases=["start_discord", "start"], description="Start the Discord bot and queue processor")
+    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def startdiscord_cmd(self, ctx: commands.Context):
         """Start the Discord bot and message queue processor."""
+        self.logger.info(f"Command 'startdiscord' triggered by {ctx.author}")
         try:
             project_root = Path(__file__).parent.parent.parent.parent
             start_script = project_root / "tools" / "start_discord_system.py"
@@ -211,8 +219,10 @@ class SystemControlCommands(commands.Cog):
             await ctx.send(f"❌ Error: {e}")
 
     @commands.command(name="restart", description="Restart the Discord bot (true restart - fresh process)")
+    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def restart_cmd(self, ctx: commands.Context):
         """Restart the Discord bot with a true process restart (kills current process, starts fresh)."""
+        self.logger.info(f"Command 'restart' triggered by {ctx.author}")
         try:
             # Confirmation embed
             embed = discord.Embed(
