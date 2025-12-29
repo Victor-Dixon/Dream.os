@@ -30,6 +30,7 @@ on:
     # Run security scans weekly
     - cron: '0 2 * * 1'
   workflow_dispatch:
+
     inputs:
       test_category:
         description: 'Test category to run'
@@ -44,6 +45,12 @@ on:
           - performance
           - security
           - v2-standards
+
+# Required permissions for creating releases and writing to repository
+permissions:
+  contents: write
+  packages: write
+  actions: read
 
 env:
   PYTHON_VERSION: '3.9'
@@ -606,12 +613,22 @@ jobs:
             echo "⚠️  tests/smoke/ and tests/test_basic.py not found, skipping smoke tests"
           fi
 
+      - name: 📅 Generate release tag
+        id: release_tag
+        run: |
+          # Generate date-based tag with run number for uniqueness
+          RELEASE_DATE=$(date +'%Y.%m.%d')
+          TAG_NAME="v${RELEASE_DATE}-${{ github.run_number }}"
+          echo "tag_name=${TAG_NAME}" >> $GITHUB_OUTPUT
+          echo "release_name=Release ${TAG_NAME}" >> $GITHUB_OUTPUT
+          echo "Generated tag: ${TAG_NAME}"
+
       - name: 📤 Create release
         if: success()
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: "v$(date +'%Y.%m.%d')"
-          name: "Release v$(date +'%Y.%m.%d')"
+          tag_name: ${{ steps.release_tag.outputs.tag_name }}
+          name: ${{ steps.release_tag.outputs.release_name }}
           body: |
             🚀 Automated Release - Agent_Cellphone_V2
 
@@ -625,6 +642,8 @@ jobs:
             - Commit: ${{ github.sha }}
           draft: false
           prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   # 📊 Test Results Summary
   test-summary:
