@@ -1,15 +1,12 @@
 #!/usr/bin/env python3
-# <!-- SSOT Domain: config -->
-"""
-Config Auto Migrator
-
-""""""
 """
 Configuration Auto-Migrator - Autonomous Config System
 ======================================================
 
 Automatically migrates hardcoded config values to unified_config.
 Self-configuring system with zero human intervention.
+
+<!-- SSOT Domain: config -->
 
 AUTONOMY FEATURES:
 - Auto-detects hardcoded values
