@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Base Engine - Stub for missing BaseEngine
 
 This file provides the BaseEngine class needed by unified_dashboard modules.

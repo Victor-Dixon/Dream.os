@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Strategic Oversight Mission Factory - V2 Compliance Module
 =========================================================
 

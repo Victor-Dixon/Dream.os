@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Strategic Oversight Factory Methods - V2 Compliance Refactored
 =============================================================
 

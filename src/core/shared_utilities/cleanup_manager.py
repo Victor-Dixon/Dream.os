@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Cleanup Manager - Cleanup Operations
 =====================================
 

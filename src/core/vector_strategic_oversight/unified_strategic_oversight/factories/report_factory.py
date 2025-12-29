@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Strategic Oversight Report Factory - V2 Compliance Module
 ========================================================
 

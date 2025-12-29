@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Strategic Oversight Extended Models
 ===================================
 

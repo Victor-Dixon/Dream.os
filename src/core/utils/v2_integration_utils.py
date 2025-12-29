@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 V2 Integration Utilities - SSOT
 ================================
 

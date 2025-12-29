@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: core -->
+
 Unified Validation System - Modular Architecture (V2 Compliance)
 
 Refactored from monolithic 421-line file into clean, modular architecture:

@@ -4,6 +4,8 @@ from dataclasses import dataclass, field
 
 logger = logging.getLogger(__name__)
 """
+<!-- SSOT Domain: core -->
+
 Coordination & Communication Validation Engine - Agent Cellphone V2
 ================================================================
 
