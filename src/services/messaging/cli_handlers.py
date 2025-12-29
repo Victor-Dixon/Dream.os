@@ -24,7 +24,13 @@ from src.core.gamification.autonomous_competition_system import get_competition_
 from src.core.messaging_core import UnifiedMessagePriority
 from src.core.messaging_models_core import MessageCategory, MESSAGE_TEMPLATES
 
-import pyautogui
+try:
+    import pyautogui
+    PYAUTOGUI_AVAILABLE = True
+except ImportError:
+    PYAUTOGUI_AVAILABLE = False
+    pyautogui = None
+
 
 from .coordination_handlers import MessageCoordinator
 from .delivery_handlers import send_message_to_onboarding_coords
@@ -164,6 +170,10 @@ def handle_start_agents(args) -> int:
 def handle_save(args, parser) -> int:
     """Handle save operation (Ctrl+Enter to all agents)."""
     try:
+        if not PYAUTOGUI_AVAILABLE:
+            print("❌ ERROR: PyAutoGUI not available - cannot execute save operation")
+            return 1
+
         if not args.message:
             print("❌ ERROR: --message required for save operation")
             return 1
