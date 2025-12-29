@@ -8,7 +8,13 @@ Handles command execution logic
 import logging
 import time
 
-import pyautogui
+try:
+    import pyautogui
+    PYAUTOGUI_AVAILABLE = True
+except ImportError:
+    PYAUTOGUI_AVAILABLE = False
+    pyautogui = None
+
 
 from src.core.coordinate_loader import get_coordinate_loader
 from src.core.gamification.autonomous_competition_system import get_competition_system
@@ -27,7 +33,7 @@ from .messaging_cli_formatters import (
     SURVEY_MESSAGE_TEMPLATE,
 )
 
-from src.core.constants.agent_constants import AGENT_LIST
+from src.core.constants.agent_constants import AGENT_LIST as SWARM_AGENTS
 
 logger = logging.getLogger(__name__)
 
@@ -220,6 +226,10 @@ def handle_start_agents(args):
 
 def handle_save(args, parser):
     """Handle save command - send to all agents and press Ctrl+Enter."""
+    if not PYAUTOGUI_AVAILABLE:
+        logger.error("❌ PyAutoGUI not available - cannot execute save command")
+        return 1
+        
     if not args.message:
         parser.error("--save requires --message MESSAGE")
     coords_loader = get_coordinate_loader()
