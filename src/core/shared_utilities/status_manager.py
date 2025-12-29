@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Status Manager - Status Management
 ===================================
 

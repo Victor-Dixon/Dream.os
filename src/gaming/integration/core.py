@@ -1,3 +1,4 @@
+# <!-- SSOT Domain: core -->
 """Core integration logic for gaming systems."""
 
 from __future__ import annotations

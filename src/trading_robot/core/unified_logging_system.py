@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Minimal unified logging system stub for trading_robot tests.
 """
 

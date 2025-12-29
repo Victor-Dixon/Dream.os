@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Message Generator - Generates test messages for stress testing
 
 Creates test messages for 9 concurrent agents and 4 message types.

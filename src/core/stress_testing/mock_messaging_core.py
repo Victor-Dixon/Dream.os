@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Mock Messaging Core - Zero real agent interaction simulation
 
 Simulates message delivery for stress testing without touching real agents.

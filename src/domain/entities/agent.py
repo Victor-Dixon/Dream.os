@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Agent Entity - Core Domain Object
 ==================================
 

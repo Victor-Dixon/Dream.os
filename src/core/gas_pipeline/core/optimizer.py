@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: core -->
+
 Jet Fuel Optimizer - Gas Timing Optimization
 ===========================================
 

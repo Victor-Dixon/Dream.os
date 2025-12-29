@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: core -->
+
 Gas Decision Stage - Determine Gas Sending
 =========================================
 

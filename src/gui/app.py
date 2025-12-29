@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Dream.OS GUI Application - V2 Compliant
 =======================================
 

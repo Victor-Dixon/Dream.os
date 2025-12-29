@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Dashboard Charts Module - V2 Compliant
  * Handles all chart initialization and management

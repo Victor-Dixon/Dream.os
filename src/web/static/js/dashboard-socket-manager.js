@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Dashboard Socket Manager Module - V2 Compliant
  * Main orchestrator for WebSocket functionality

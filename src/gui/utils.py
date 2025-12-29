@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 GUI System Utilities - V2 Compliance Redirect Shim
 ==================================================
 

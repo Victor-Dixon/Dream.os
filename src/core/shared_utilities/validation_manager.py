@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Validation Manager - Validation Operations
 ==========================================
 

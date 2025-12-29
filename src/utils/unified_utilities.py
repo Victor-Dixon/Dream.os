@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: core -->
+
 Unified Utilities - V2 Compliant Module
 ======================================
 

@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Memory Database Operations - V2 Compliant
 ==========================================
 

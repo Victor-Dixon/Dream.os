@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Deployment Coordinator - SSOT for deployment coordination
 ========================================================
 

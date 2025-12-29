@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: core -->
+
 Memory System for Personal Jarvis
 Enables Jarvis to remember conversations, user preferences, and context
 """

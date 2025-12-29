@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Clock Port - Domain Interface
 =============================
 

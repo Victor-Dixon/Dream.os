@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: core -->
+
 Conversation Engine for Personal Jarvis
 Enables intelligent, contextual conversations with memory and learning
 """

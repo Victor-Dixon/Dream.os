@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Dashboard Initializer Module - V2 Compliant with Unified Logging
  * Initialization logic for dashboard components

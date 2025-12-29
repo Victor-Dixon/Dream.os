@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Dashboard Data Manager Module - V2 Compliant
  * Orchestrator for dashboard data operations

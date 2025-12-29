@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Minimal unified validation system stub for trading_robot tests.
 """
 

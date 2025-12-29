@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Dashboard Data Operations Module - V2 Compliant
  * Core data operations extracted from dashboard-data-manager.js

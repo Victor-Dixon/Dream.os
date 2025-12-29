@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Dashboard State Manager Module - V2 Compliant
  * Centralized state management for dashboard components

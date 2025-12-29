@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Value Objects - Immutable Domain Objects
 ========================================
 

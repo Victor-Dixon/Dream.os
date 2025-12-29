@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Stress Test Runner - Orchestrates stress tests for MessageQueueProcessor
 
 Main stress test orchestrator that coordinates message generation,

@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Browser Port Interface - Domain Layer
 =====================================
 
