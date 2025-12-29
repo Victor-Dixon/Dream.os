@@ -44,6 +44,23 @@ Session closures must be **internally closed, publicly explainable, and handoff-
 - Do NOT stage or delete unrelated files
 - Any additional file change → Status MUST be 🟡 Blocked
 
+### Branch Policy (UNIFIED MAIN ONLY)
+**All repos must have only ONE branch: `main` (or `master` for legacy repos)**
+- ❌ Do NOT create feature branches
+- ❌ Do NOT leave cursor/* branches after work
+- ✅ Commit directly to main
+- ✅ If branches exist from previous work, merge to main and delete them
+- ✅ Prune stale remote tracking refs: `git fetch --prune`
+- ✅ Remove redundant remotes: keep only `origin`
+
+**Before session closure:**
+```bash
+git branch -a  # Verify only main exists
+git remote -v  # Verify only origin exists
+```
+
+**If stale branches exist → merge/delete before closure**
+
 ### Working Tree Verification
 - Run `git status` to observe state
 - If untracked or modified files exist OUTSIDE agent scope → 🟡 Blocked
