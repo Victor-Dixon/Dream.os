@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Enhanced Agent Activity Detector
 =================================
 

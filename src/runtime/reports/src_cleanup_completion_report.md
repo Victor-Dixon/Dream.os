@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 # 🧹 SRC Directory Cleanup Completion Report
 
 **Date:** 2025-09-06 19:10:09  

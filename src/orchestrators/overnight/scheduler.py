@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Task Scheduler - V2 Compliant Facade
 =====================================
 

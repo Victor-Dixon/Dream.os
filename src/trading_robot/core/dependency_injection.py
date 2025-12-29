@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Trading Robot Dependency Injection Container - V2 Compliant DI Framework
 Centralized dependency management with service registration and resolution
 REFACTORED: Clean DI container with comprehensive service management

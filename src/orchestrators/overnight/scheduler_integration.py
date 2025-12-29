@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Scheduler Integration - Status Monitor & Resume Logic
 =====================================================
 

@@ -1,4 +1,6 @@
 """API client utilities for the unified workspace.
+<!-- SSOT Domain: core -->
+
 
 Concrete improvements implemented:
 - Synchronous client now has retry with backoff, default timeouts, and context manager support
