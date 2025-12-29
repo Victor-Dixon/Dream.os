@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 """
 Unified Import System - V2 Compliance Refactored
 ===============================================

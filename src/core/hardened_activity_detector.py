@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 """
 Hardened Agent Activity Detector - V2 Refactored (Handler+Helper Pattern)
 ==========================================================================

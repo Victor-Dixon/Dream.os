@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+<!-- SSOT Domain: core -->
 """
 Gasline Integration Hub
 Connects existing components to activation/messaging system
