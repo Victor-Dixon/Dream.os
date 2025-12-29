@@ -168,27 +168,49 @@ def search_tools(query: str) -> Dict[str, Any]:
 # MCP Server Protocol
 def main():
     """MCP server main loop."""
-    # Send initialize response
-    print(
-        json.dumps(
-            {
-                "jsonrpc": "2.0",
-                "id": 1,
-                "result": {
-                    "protocolVersion": "2024-11-05",
-                    "capabilities": {
-                        "tools": {}
-                    },
-                    "serverInfo": {
-                        "name": "unified-tool-server",
-                        "version": "1.0.0"
-                    }
-                }
-            }
-        )
-    )
+    server_info = {"name": "unified-tool-server", "version": "1.0.0"}
+    tools_definitions = {
+        "list_all_tools": {
+            "description": "List all available tools from the registry",
+            "inputSchema": {
+                "type": "object",
+                "properties": {},
+            },
+        },
+        "get_tool_info": {
+            "description": "Get tool metadata and documentation",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "tool_name": {"type": "string", "description": "Name of the tool"},
+                },
+                "required": ["tool_name"],
+            },
+        },
+        "execute_tool": {
+            "description": "Execute a tool by name with provided parameters",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "tool_name": {"type": "string", "description": "Name of the tool to execute"},
+                    "parameters": {"type": "object", "description": "Tool parameters"},
+                },
+                "required": ["tool_name"],
+            },
+        },
+        "search_tools": {
+            "description": "Search tools by name or description",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "query": {"type": "string", "description": "Search query"},
+                },
+                "required": ["query"],
+            },
+        },
+    }
+    initialized = False
 
-    # Handle tool calls
     for line in sys.stdin:
         try:
             request = json.loads(line)
@@ -196,37 +218,43 @@ def main():
             params = request.get("params", {})
             request_id = request.get("id")
 
-            if method == "tools/list":
-                # List all available tools
-                tools_result = list_all_tools()
-                
-                # Convert to MCP tools format
-                mcp_tools = []
-                if tools_result.get("success"):
-                    for tool_name in tools_result.get("tools", []):
-                        tool_info = get_tool_info(tool_name)
-                        if tool_info.get("success"):
-                            mcp_tools.append({
-                                "name": tool_info["name"],
-                                "description": tool_info["description"],
-                                "inputSchema": {
-                                    "type": "object",
-                                    "properties": tool_info.get("parameters", {}),
-                                    "required": []
-                                }
-                            })
-                
+            if method == "initialize":
+                initialized = True
                 print(
                     json.dumps(
                         {
                             "jsonrpc": "2.0",
                             "id": request_id,
                             "result": {
-                                "tools": mcp_tools
-                            }
+                                "protocolVersion": "2024-11-05",
+                                "capabilities": {"tools": tools_definitions},
+                                "serverInfo": server_info,
+                            },
                         }
                     )
                 )
+                sys.stdout.flush()
+
+            elif method == "tools/list":
+                tools_list = []
+                for tool_name, tool_def in tools_definitions.items():
+                    tools_list.append(
+                        {
+                            "name": tool_name,
+                            "description": tool_def["description"],
+                            "inputSchema": tool_def["inputSchema"],
+                        }
+                    )
+                print(
+                    json.dumps(
+                        {
+                            "jsonrpc": "2.0",
+                            "id": request_id,
+                            "result": {"tools": tools_list, "serverInfo": server_info},
+                        }
+                    )
+                )
+                sys.stdout.flush()
 
             elif method == "tools/call":
                 tool_name = params.get("name")
@@ -262,33 +290,42 @@ def main():
                         }
                     )
                 )
+                sys.stdout.flush()
 
-        except json.JSONDecodeError:
+            else:
+                print(
+                    json.dumps(
+                        {
+                            "jsonrpc": "2.0",
+                            "id": request_id,
+                            "error": {"code": -32601, "message": f"Unknown method: {method}"},
+                        }
+                    )
+                )
+                sys.stdout.flush()
+
+        except json.JSONDecodeError as e:
             print(
                 json.dumps(
                     {
                         "jsonrpc": "2.0",
-                        "id": request.get("id") if 'request' in locals() else None,
-                        "error": {
-                            "code": -32700,
-                            "message": "Parse error"
-                        }
+                        "id": request.get("id") if "request" in locals() else None,
+                        "error": {"code": -32700, "message": f"Parse error: {str(e)}"},
                     }
                 )
             )
+            sys.stdout.flush()
         except Exception as e:
             print(
                 json.dumps(
                     {
                         "jsonrpc": "2.0",
-                        "id": request.get("id") if 'request' in locals() else None,
-                        "error": {
-                            "code": -32603,
-                            "message": str(e)
-                        }
+                        "id": request.get("id") if "request" in locals() else None,
+                        "error": {"code": -32603, "message": str(e)},
                     }
                 )
             )
+            sys.stdout.flush()
 
 
 if __name__ == "__main__":
