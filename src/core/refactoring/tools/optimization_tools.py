@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Refactoring Optimization Tools - V2 Compliance Module
 ====================================================
 

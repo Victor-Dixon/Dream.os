@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 # SSOT System Deprecation Notice
 
 ## 🚨 **IMPORTANT: Canonical Implementation Migration**

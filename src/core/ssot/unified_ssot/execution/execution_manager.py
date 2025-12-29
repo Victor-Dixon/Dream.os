@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 SSOT Execution Manager - V2 Compliance Module
 ============================================
 

@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Processing Utilities - Consolidated Processing Functions
 ========================================================
 

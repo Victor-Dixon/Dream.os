@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 SSOT Enums - V2 Compliance Micro-refactoring
 ============================================
 

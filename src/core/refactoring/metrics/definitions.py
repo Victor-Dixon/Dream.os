@@ -1,3 +1,4 @@
+# <!-- SSOT Domain: core -->
 """Metric definitions for refactoring processes."""
 
 from dataclasses import dataclass

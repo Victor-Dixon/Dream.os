@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 # SSOT System Naming Conventions
 
 This document establishes the official naming conventions for the SSOT (Single Source of Truth) system to ensure consistency, maintainability, and clarity across all components.

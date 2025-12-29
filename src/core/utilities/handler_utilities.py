@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Handler Utilities - Consolidated Handler Functions
 ==================================================
 

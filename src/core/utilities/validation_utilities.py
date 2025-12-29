@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Validation Utilities - Consolidated Validation Functions
 ========================================================
 

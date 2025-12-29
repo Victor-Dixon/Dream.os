@@ -1,3 +1,4 @@
+# <!-- SSOT Domain: core -->
 from dataclasses import dataclass
 
 from ...services.unified_messaging_imports import get_unified_utility

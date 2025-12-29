@@ -1,3 +1,4 @@
+# <!-- SSOT Domain: core -->
 """Unified access to refactoring analysis tools."""
 
 from .duplicate_analysis import DuplicateFile, find_duplicate_files
