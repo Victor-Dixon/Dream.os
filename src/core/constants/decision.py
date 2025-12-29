@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: core -->
+
 Decision Constants - V2 Compliance Decision Module Definitions
 ================================================================
 

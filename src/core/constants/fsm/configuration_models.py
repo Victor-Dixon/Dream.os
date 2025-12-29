@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 FSM Configuration Models - V2 Compliance Module
 ==============================================
 

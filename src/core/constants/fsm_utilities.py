@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 FSM Utilities - V2 Compliance Finite State Machine Utilities
 ===========================================================
 

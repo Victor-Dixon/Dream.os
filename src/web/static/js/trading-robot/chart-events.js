@@ -2,6 +2,8 @@
  * Chart Events - V2 Compliant Event Management Module
  * Handles all chart event listeners and interactions
  *
+ * <!-- SSOT Domain: trading_robot -->
+ *
  * @author Agent-1 - Integration & Core Systems Specialist
  * @version 1.0.0 - Trading Robot Frontend V2 Compliance
  * @license MIT

@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
-<!-- SSOT Domain: config -->
 """
 Configuration Models - V2 Compliance Module
 ============================================
+
+<!-- SSOT Domain: config -->
 
 Data models for configuration pattern detection.
 Extracted from config_scanners.py for V2 compliance.
 
 Author: Agent-4 (Captain) - V2 Refactoring & Autonomy Enhancement
 License: MIT
-"""
+""""
 
 from dataclasses import dataclass
 from pathlib import Path
