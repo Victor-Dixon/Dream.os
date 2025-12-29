@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: core -->
+
 Alert Manager - V2 Compliance Module
 ===================================
 

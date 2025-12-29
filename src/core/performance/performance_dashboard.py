@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: core -->
+
 Performance Dashboard - V2 Compliant Redirect
 =============================================
 

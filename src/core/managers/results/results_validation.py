@@ -1,3 +1,4 @@
+# <!-- SSOT Domain: core -->
 """Results Validation - V2 Compliance | Agent-5"""
 
 from typing import Any

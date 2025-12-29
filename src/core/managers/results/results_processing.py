@@ -1,3 +1,4 @@
+# <!-- SSOT Domain: core -->
 """Results Processing - V2 Compliance | Agent-5"""
 
 from datetime import datetime, timedelta

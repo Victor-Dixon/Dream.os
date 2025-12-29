@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Monitoring Lifecycle Manager - Phase-2 V2 Compliance Refactoring
 ================================================================
 Manages monitoring lifecycle, initialization, cleanup, and background tasks.

@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Dashboard Reporter - V2 Compliance
 =================================
 

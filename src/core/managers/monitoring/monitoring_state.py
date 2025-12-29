@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Monitoring State Manager - Phase-2 V2 Compliance Refactoring
 ============================================================
 

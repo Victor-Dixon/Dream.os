@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Single Source of Truth (SSOT) for Execution Domain Management
 Domain: execution
 Owner: Agent-2 (Architecture & Design)

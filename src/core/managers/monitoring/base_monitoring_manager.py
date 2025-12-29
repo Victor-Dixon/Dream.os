@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Base Monitoring Manager - Phase-2 V2 Compliance Refactoring + DUP-004
 ===========================================================
 
