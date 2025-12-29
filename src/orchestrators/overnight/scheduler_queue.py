@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Scheduler Queue Manager - Task Queue Operations
 ===============================================
 

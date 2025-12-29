@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Recovery Handlers
 =================
 

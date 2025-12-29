@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: core -->
+
 FSM Updates Processor - V2 Compliant
 =====================================
 

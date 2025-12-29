@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Overnight Orchestrator - V2 Compliant
 =====================================
 

@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Scheduler Tracking - Task State Management
 ==========================================
 
