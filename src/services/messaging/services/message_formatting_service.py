@@ -6,6 +6,8 @@ Message Formatting Service - Service Layer Pattern
 Encapsulates business logic for message formatting and templating.
 Handles template application, message formatting, and metadata building.
 
+<!-- SSOT Domain: integration -->
+
 V2 Compliance | Author: Agent-1 | Date: 2025-12-22
 """
 

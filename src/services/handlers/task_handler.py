@@ -7,6 +7,9 @@ Implements --get-next-task, --list-tasks, --task-status, --complete-task.
 
 V2 Compliance: < 300 lines, single responsibility
 Migrated to BaseService for consolidated initialization and error handling.
+
+<!-- SSOT Domain: integration -->
+
 Author: Agent-1 (Integration & Core Systems Specialist)
 """
 

@@ -6,6 +6,8 @@ Message Routing Service - Service Layer Pattern
 Encapsulates business logic for message routing decisions.
 Handles sender detection, message type determination, and category mapping.
 
+<!-- SSOT Domain: integration -->
+
 V2 Compliance | Author: Agent-1 | Date: 2025-12-22
 """
 

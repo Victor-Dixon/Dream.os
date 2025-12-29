@@ -3,7 +3,7 @@
 **Assignee:** Agent-8 (SSOT & System Integration)  
 **Date:** 2025-12-29  
 **Batch:** integration_batch_4  
-**Status:** ✅ ACTIVE - Ready for Tagging
+**Status:** 🔄 REASSIGNED - Agent-8 declined (CS2 mod incident priority), reassigning to Agent-1 (primary) or Agent-5/Agent-7
 
 ---
 
@@ -140,13 +140,15 @@ Contract handler for task management.
 
 ## Status
 
-**Current Status:** ✅ ACTIVE - Ready for Agent-8 to begin tagging  
-**Next Action:** Agent-8 tags files and commits changes  
-**Timeline:** Estimated 45 minutes for completion  
-**Coordination:** Agent-2 available for validation and support
+**Current Status:** 🔄 REASSIGNED - Agent-8 declined due to CS2 mod incident (user priority)  
+**Reassignment:** Batch reassigned to Agent-1 (primary) or Agent-5/Agent-7 as alternative  
+**Next Action:** Alternative agent tags files and commits changes  
+**Timeline:** Estimated 45 minutes for completion (within 24h)  
+**Agent-8 Re-engagement:** After CS2 mod stable (~24h)  
+**Coordination:** Agent-2 coordinating reassignment and validation
 
 ---
 
 **Last Updated:** 2025-12-29 by Agent-2  
-**Next Review:** After Agent-8 completes tagging
+**Next Review:** After Agent-1 (or alternative agent) completes tagging
 

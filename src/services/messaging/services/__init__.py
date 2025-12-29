@@ -5,6 +5,8 @@ Messaging Services - Service Layer Pattern
 Service classes that encapsulate business logic for messaging operations.
 Handlers delegate to these services for business rule enforcement.
 
+<!-- SSOT Domain: integration -->
+
 V2 Compliance | Author: Agent-1 | Date: 2025-12-22
 """
 

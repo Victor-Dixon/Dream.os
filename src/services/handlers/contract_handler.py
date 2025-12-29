@@ -10,6 +10,8 @@ Extracted from messaging_cli_handlers.py for V2 compliance.
 V2 Compliance: < 300 lines, single responsibility.
 Migrated to BaseService for consolidated initialization and error handling.
 
+<!-- SSOT Domain: integration -->
+
 Author: Agent-4 - Strategic Oversight & Emergency Intervention Manager
 License: MIT
 """

@@ -8,6 +8,8 @@ Handles utility commands for messaging system.
 V2 Compliance: < 300 lines, single responsibility.
 Migrated to BaseService for consolidated initialization and error handling.
 
+<!-- SSOT Domain: integration -->
+
 Author: V2 SWARM CAPTAIN
 License: MIT
 """

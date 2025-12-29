@@ -7,6 +7,8 @@ Integrates with soft_onboarding_service for 6-step protocol.
 
 V2 Compliance: < 300 lines, single responsibility
 Migrated to BaseService for consolidated initialization and error handling.
+
+<!-- SSOT Domain: integration -->
 """
 
 import logging
