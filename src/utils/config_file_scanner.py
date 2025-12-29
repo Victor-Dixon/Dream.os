@@ -10,8 +10,7 @@ Extracted from unified_config_utils.py for V2 compliance.
 Author: Agent-4 (Captain) - V2 Refactoring & Autonomy Enhancement
 Original: Agent-3 (DevOps Specialist)
 License: MIT
-
-""""""
+""""
 
 import logging
 from pathlib import Path
