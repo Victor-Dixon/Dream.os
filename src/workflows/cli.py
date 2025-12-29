@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Workflow CLI - V2 Compliant
 ==========================
 

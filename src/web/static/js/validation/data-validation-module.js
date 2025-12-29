@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Data Validation Module - V2 Compliant
  * Handles data structure and API response validation

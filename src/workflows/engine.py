@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Workflow Engine - V2 Compliant
 ==============================
 

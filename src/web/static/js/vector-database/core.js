@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Vector Database Core - V2 Compliant Module
  * =========================================

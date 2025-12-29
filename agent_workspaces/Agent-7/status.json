@@ -37,18 +37,22 @@
       "remaining": 864
     }
   },
-  "last_updated": "2025-12-28T20:30:00Z",
+  "last_updated": "2025-12-29T17:40:00Z",
   "onboard_status": "SOFT_ONBOARD_ACTIVE",
   "autonomous_mode": "ACTIVE",
   "current_mission": "V2 Web Violations Parallel Refactoring + Pre-Public Audit (Bilateral with Agent-5) + 2026 Revenue Engine Implementation (Bilateral with Agent-3) - 27 P0 Fixes Priority + TradingRobotPlug.com Strategic Rebuild (Coordinated Swarm Initiative)",
   "mission_priority": "HIGH",
   "current_tasks": [
-    "Block 6: website-manager MCP enhancements - ✅ COMPLETE (2025-12-28)",
-    "weareswarm.online text rendering fix - ✅ COMPLETE (2025-12-28) - Added Google Fonts loading, commit 43bb139, awaiting deployment",
-    "TradingRobotPlug.com P0 compliance pages - ✅ COMPLETE (2025-12-28) - Created Privacy, Terms of Service, Product Terms & Risk Disclosure pages, commit 74a98a0",
-    "TradingRobotPlug.com Strategic Rebuild - ✅ IN PROGRESS - awaiting Agent-3 deployment"
+    "SSOT batch tagging batches 33-34 - ✅ COMPLETE (30 files tagged)",
+    "WordPress automation system - ✅ COMPLETE (multi-site routing integrated)",
+    "dadudekc.com dynamic content system - ✅ COMPLETE (experiments, projects, resume CPTs created)",
+    "dadudekc.com homepage SSOT alignment - ✅ COMPLETE (Victor's voice, no em dashes)"
   ],
   "completed_tasks": [
+    "SSOT batch tagging core_batch_33-34: 30 files tagged with <!-- SSOT Domain: core -->",
+    "WordPress automation system: Created swarm_to_wordpress_automation.py with multi-site content generator integration",
+    "Dynamic content system: Created 3 CPTs (experiment, project, resume_item) with dynamic components",
+    "dadudekc.com homepage: Updated to SSOT whiteboard (Victor's voice, removed em dashes, added Primary Outputs & Content Sources sections)",
     "Refactored website_manager_server.py: Removed dependencies on non-existent tools, integrated SimpleWordPressDeployer.",
     "Verified Website Manager MCP Protocol: Server initializes and responds to capabilities request.",
     "Tier 2 Foundation (8/8 fixes): Completed Offer Ladders and ICP Definitions for freerideinvestor.com, dadudekc.com, crosbyultimateevents.com.",

@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Field Validation Module - V2 Compliant
  * Handles basic field-level validation functions

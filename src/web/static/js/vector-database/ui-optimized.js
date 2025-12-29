@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Vector Database UI - Performance Optimized
  * Author: Agent-7 - Web Development Specialist

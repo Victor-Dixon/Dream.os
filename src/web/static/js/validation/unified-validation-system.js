@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Unified Validation System - V2 Compliant (MODULAR REFACTOR)
  * REFACTORED FROM: 340 lines (40 over V2 limit)

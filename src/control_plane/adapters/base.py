@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Control Plane Adapter Contracts
 ===============================
 

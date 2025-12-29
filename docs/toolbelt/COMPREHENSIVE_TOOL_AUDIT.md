@@ -1,6 +1,6 @@
 # Comprehensive Tool Audit Report
 
-**Total Assets Found:** 296
+**Total Assets Found:** 301
 
 ## 🛠️ Tool Classes
 Found 170 tool classes in `tools/categories/`.
@@ -179,7 +179,7 @@ Found 170 tool classes in `tools/categories/`.
 | `DiscordPostTool` | `tools.categories.communication_tools` | `communication` |
 
 ## 📜 Standalone Scripts
-Found 126 scripts with `main()` entry points.
+Found 131 scripts with `main()` entry points.
 
 - `scripts\activate_vector_database_integration.py`
 - `scripts\add_ci_cd_to_github_repos.py`
@@ -276,20 +276,25 @@ Found 126 scripts with `main()` entry points.
 - `tools\devlog_manager.py`
 - `tools\devlog_poster_agent_channel.py`
 - `tools\discord_health_monitor.py`
+- `tools\execute_ssot_batch.py`
 - `tools\find_missing_ssot_tags.py`
+- `tools\fix_ssot_tag_syntax.py`
 - `tools\generate_blog_preview.py`
 - `tools\generate_cycle_accomplishments_report.py`
 - `tools\manage_env.py`
 - `tools\master_task_log_to_cycle_planner.py`
+- `tools\multi_site_content_generator.py`
 - `tools\post_cycle_report_to_blog.py`
 - `tools\protocol_validator.py`
 - `tools\setup_cursor_mcp.py`
 - `tools\soft_onboard_cli.py`
 - `tools\ssot_coordination_report.py`
 - `tools\ssot_tagging_batch_assigner.py`
+- `tools\ssot_tagging_distributor.py`
 - `tools\ssot_tagging_validator.py`
 - `tools\start_discord_bot.py`
 - `tools\start_discord_system.py`
+- `tools\swarm_to_wordpress_automation.py`
 - `tools\sync_feed_to_weareswarm.py`
 - `tools\system_health_dashboard.py`
 - `tools\tag_analyzer.py`
