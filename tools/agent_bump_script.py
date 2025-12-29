@@ -182,6 +182,55 @@ class AgentBumpScript:
             print(f"  {version_info}")
 
 
+def bump_agents_by_number(agent_numbers: List[int]) -> Dict[str, bool]:
+    """
+    Bump agents via GUI: click agent chat input + press Shift+Backspace.
+
+    This function is used by Discord bot commands/views:
+    - `src/discord_commander/messaging_commands.py`
+    - `src/discord_commander/views/bump_agent_view.py`
+
+    Returns:
+        Dict mapping Agent-X -> success bool
+    """
+    results: Dict[str, bool] = {}
+
+    # Import PyAutoGUI lazily so module import works in headless/test envs.
+    try:
+        import pyautogui  # type: ignore
+
+        pyautogui.FAILSAFE = True
+        pyautogui.PAUSE = 0.1
+    except Exception:
+        for n in agent_numbers:
+            results[f"Agent-{n}"] = False
+        return results
+
+    try:
+        from src.core.coordinate_loader import get_coordinate_loader
+
+        loader = get_coordinate_loader()
+    except Exception:
+        for n in agent_numbers:
+            results[f"Agent-{n}"] = False
+        return results
+
+    for n in agent_numbers:
+        agent_id = f"Agent-{n}"
+        try:
+            x, y = loader.get_chat_coordinates(agent_id)
+            pyautogui.moveTo(x, y, duration=0.5)
+            pyautogui.click()
+            time.sleep(0.5)
+            pyautogui.hotkey("shift", "backspace")
+            time.sleep(0.5)
+            results[agent_id] = True
+        except Exception:
+            results[agent_id] = False
+
+    return results
+
+
 def main():
     """Main CLI entry point."""
     parser = argparse.ArgumentParser(
