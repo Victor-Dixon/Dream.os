@@ -118,12 +118,14 @@
 **Completed Batches:**
 - ✅ Batch 5 (integration_batch_4) - 15 files - Agent-1 executed, Agent-2 validated
 
+**Assigned Batches (Awaiting Acceptance):**
+- 🔄 Batch 6 (infrastructure_batch_1) - ~34 files - Agent-3 assigned, coordination message sent
+- 🔄 Batch 7 (web_batch_1) - ~65 files - Agent-7 assigned, coordination message sent
+- 🔄 Batch 8 (analytics_batch_1) - ~47 files - Agent-5 assigned, coordination message sent
+
 **Pending Batches:**
-- ⏳ Integration domain - Next batch TBD
-- ⏳ Infrastructure domain - Batch assignment pending
-- ⏳ Web domain - Batch assignment pending
-- ⏳ Analytics domain - Batch assignment pending
-- ⏳ Core domain - Batch assignment pending
+- ⏳ Integration domain - Next batch TBD (after Batch 5 complete)
+- ⏳ Core domain - Batch assignment pending (Agent-2 self-coordinated)
 
 ---
 
