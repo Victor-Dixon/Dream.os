@@ -1,5 +1,6 @@
-<!-- SSOT Domain: core -->
 """
+
+<!-- SSOT Domain: core -->
 Assign Task Use Case - Application Layer
 ========================================
 
@@ -23,6 +24,7 @@ from ...domain.value_objects.ids import AgentId, TaskId
 @dataclass
 class AssignTaskRequest:
     """Request DTO for task assignment."""
+<!-- SSOT Domain: core -->
 
     task_id: str
     agent_id: str | None = None  # If None, auto-assign best agent
@@ -40,6 +42,8 @@ class AssignTaskResponse:
 
 class AssignTaskUseCase:
     """
+
+<!-- SSOT Domain: core -->
     Use case for assigning tasks to agents.
 
     This use case orchestrates the domain objects to fulfill
@@ -62,6 +66,8 @@ class AssignTaskUseCase:
 
     def execute(self, request: AssignTaskRequest) -> AssignTaskResponse:
         """
+
+<!-- SSOT Domain: core -->
         Execute the task assignment use case.
 
         Args:

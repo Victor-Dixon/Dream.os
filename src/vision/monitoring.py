@@ -1,4 +1,6 @@
 """
+
+<!-- SSOT Domain: monitoring -->
 Vision Monitoring
 ================
 
@@ -19,6 +21,8 @@ from typing import Any
 
 class VisionMonitoring:
     """
+
+<!-- SSOT Domain: monitoring -->
     Manages continuous vision monitoring with callbacks.
 
     Capabilities:
@@ -30,6 +34,8 @@ class VisionMonitoring:
 
     def __init__(self, config: dict = None):
         """
+
+<!-- SSOT Domain: monitoring -->
         Initialize vision monitoring manager.
 
         Args:
@@ -55,6 +61,8 @@ class VisionMonitoring:
         **capture_kwargs,
     ) -> None:
         """
+
+<!-- SSOT Domain: monitoring -->
         Start continuous monitoring with callback.
 
         Args:
@@ -115,6 +123,8 @@ class VisionMonitoring:
 
     def stop_monitoring(self) -> None:
         """Stop continuous monitoring."""
+
+<!-- SSOT Domain: monitoring -->
         if self.is_monitoring:
             self.is_monitoring = False
             self.monitoring_callback = None
@@ -129,6 +139,8 @@ class VisionMonitoring:
         Returns:
             Dictionary with monitoring information
         """
+
+<!-- SSOT Domain: monitoring -->
         return {
             "is_monitoring": self.is_monitoring,
             "has_callback": self.monitoring_callback is not None,

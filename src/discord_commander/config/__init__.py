@@ -1,4 +1,6 @@
 """
+
+<!-- SSOT Domain: config -->
 Bot Configuration
 =================
 

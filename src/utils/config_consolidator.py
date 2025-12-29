@@ -3,6 +3,8 @@ from __future__ import annotations
 import logging
 logger = logging.getLogger(__name__)
 """
+
+<!-- SSOT Domain: config -->
 Configuration Consolidator - V2 Compliance Module
 ================================================
 
@@ -33,6 +35,8 @@ except ImportError:
     # PatternAnalyzer is optional - create stub if missing
     class PatternAnalyzer:
         """Stub PatternAnalyzer for when module is not available."""
+
+<!-- SSOT Domain: config -->
         def add_patterns(self, patterns):
             pass
         def analyze_patterns(self):
@@ -50,6 +54,7 @@ class ConfigurationConsolidator:
 
     Uses dependency injection and delegates to specialized components.
     """
+<!-- SSOT Domain: config -->
 
     def __init__(
         self,
@@ -66,6 +71,8 @@ class ConfigurationConsolidator:
 
     def _create_default_scanners(self) -> List[ConfigurationScanner]:
         """Create default set of configuration scanners."""
+
+<!-- SSOT Domain: config -->
         return [
             EnvironmentVariableScanner(),
             HardcodedValueScanner(),
@@ -98,6 +105,8 @@ class ConfigurationConsolidator:
 
     def consolidate_patterns(self) -> Dict[str, Any]:
         """Consolidate found patterns into actionable insights."""
+
+<!-- SSOT Domain: config -->
         statistics = self.pattern_analyzer.get_statistics()
         unique_keys = self.pattern_analyzer.get_unique_keys()
 
@@ -118,6 +127,7 @@ class ConfigurationConsolidator:
 
         # Add consolidation-specific information
         consolidation_info = f"""
+<!-- SSOT Domain: config -->
 
 📈 Consolidation Summary:
 - Patterns Consolidated: {self.consolidated_count}
@@ -138,6 +148,8 @@ class ConfigurationConsolidator:
 
 def run_configuration_consolidation(root_dir: Path=None) ->dict[str, Any]:
     """Run the complete configuration consolidation process."""
+
+<!-- SSOT Domain: config -->
     if root_dir is None:
         root_dir = Path(__file__).resolve().parents[2]
     consolidator = ConfigurationConsolidator()

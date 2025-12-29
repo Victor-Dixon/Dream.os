@@ -1,5 +1,6 @@
-<!-- SSOT Domain: core -->
 """
+
+<!-- SSOT Domain: core -->
 Core Messaging Commands
 =======================
 
@@ -18,6 +19,7 @@ logger = logging.getLogger(__name__)
 
 class CoreMessagingCommands(commands.Cog):
     """Core messaging commands for agent communication."""
+<!-- SSOT Domain: core -->
 
     def __init__(self, bot, gui_controller):
         """Initialize core messaging commands."""
@@ -29,6 +31,8 @@ class CoreMessagingCommands(commands.Cog):
     @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def gui(self, ctx: commands.Context):
         """Open interactive messaging GUI."""
+
+<!-- SSOT Domain: core -->
         self.logger.info(f"Command 'gui' triggered by {ctx.author}")
         try:
             embed = discord.Embed(
@@ -90,6 +94,8 @@ class CoreMessagingCommands(commands.Cog):
     @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def monitor(self, ctx: commands.Context, action: str = "status"):
         """Control status change monitor."""
+
+<!-- SSOT Domain: core -->
         self.logger.info(f"Command 'monitor' triggered by {ctx.author} with action={action}")
         try:
             action = action.lower()
@@ -203,6 +209,8 @@ class CoreMessagingCommands(commands.Cog):
     @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def broadcast(self, ctx: commands.Context, *, message: str):
         """Broadcast message to all agents."""
+
+<!-- SSOT Domain: core -->
         self.logger.info(f"Command 'broadcast' triggered by {ctx.author}")
         try:
             success = await self.gui_controller.broadcast_message(

@@ -1,3 +1,4 @@
+<!-- SSOT Domain: performance -->
 /**
  * DOM Performance Analyzer Module - V2 Compliant
  * Analyzes DOM manipulation and query performance

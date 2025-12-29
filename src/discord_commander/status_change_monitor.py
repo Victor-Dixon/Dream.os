@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+<!-- SSOT Domain: monitoring -->
 """
 Status Change Monitor - Automatic Discord Updates
 =================================================
@@ -107,7 +108,7 @@ class StatusChangeMonitor:
             if datetime.now().second < 10:  # Approx once per minute
                 await self._run_inactivity_checks()
 
-        except Exception as e:
+            except Exception as e:
             logger.error(f"❌ Error in status monitoring loop: {e}", exc_info=True)
 
     async def _check_files(self):

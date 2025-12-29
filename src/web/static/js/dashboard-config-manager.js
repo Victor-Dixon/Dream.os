@@ -1,3 +1,4 @@
+<!-- SSOT Domain: config -->
 /**
  * Dashboard Configuration Manager - V2 Compliant Configuration Management
  * Specialized configuration management for dashboard core

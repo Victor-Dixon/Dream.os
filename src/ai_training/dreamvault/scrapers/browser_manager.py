@@ -1,5 +1,6 @@
-<!-- SSOT Domain: core -->
 """
+
+<!-- SSOT Domain: core -->
 Browser Manager for DreamVault ChatGPT Scraper
 
 Handles browser initialization, driver management, and undetected Chrome setup.
@@ -20,6 +21,7 @@ logger = logging.getLogger(__name__)
 
 class BrowserManager:
     """Manages browser driver creation and configuration."""
+<!-- SSOT Domain: core -->
 
     def __init__(self, headless: bool = False, use_undetected: bool = True):
         """
@@ -29,6 +31,8 @@ class BrowserManager:
             headless: Run browser in headless mode
             use_undetected: Use undetected-chromedriver if available
         """
+
+<!-- SSOT Domain: core -->
         self.headless = headless
         self.use_undetected = use_undetected
         self.driver = None
@@ -40,6 +44,8 @@ class BrowserManager:
         Returns:
             Configured Chrome driver or None if failed
         """
+
+<!-- SSOT Domain: core -->
         try:
             if self.use_undetected:
                 return self._create_undetected_driver()
@@ -75,6 +81,8 @@ class BrowserManager:
 
     def _create_standard_driver(self) -> webdriver.Chrome | None:
         """Create standard Chrome driver."""
+
+<!-- SSOT Domain: core -->
         try:
             options = Options()
 

@@ -1,3 +1,4 @@
+<!-- SSOT Domain: performance -->
 /**
  * Dashboard Performance Views Module - V2 Compliant
  * Handles agent performance and workload view rendering

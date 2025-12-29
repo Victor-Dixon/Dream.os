@@ -1,3 +1,4 @@
+<!-- SSOT Domain: config -->
 export const breakpoints = {
     xs: 0,
     sm: 576,
