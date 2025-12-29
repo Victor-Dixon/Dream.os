@@ -407,3 +407,70 @@ def send_discord_via_queue(
         return wait_for_message_delivery(queue_repository, queue_id, agent, timeout)
     return {"success": True, "message": f"Message queued for {agent}", "agent": agent, "queue_id": queue_id}
 
+
+def queue_message_for_agent_by_number(
+    agent_number: int,
+    message: str,
+    priority: str = "regular",
+    sender: str | None = None,
+    discord_user_id: str | None = None,
+    stalled: bool = False,
+    apply_template: bool = False,
+    message_category: Any = None,
+    wait_for_delivery: bool = False,
+    timeout: float = 30.0,
+    queue_repository = None,
+    **kwargs
+) -> dict[str, Any]:
+    """
+    Queue message for agent by number.
+    
+    Restored helper function for agent bumping.
+    
+    Args:
+        agent_number: Agent number (1-8)
+        message: Message content
+        priority: Priority (regular/urgent)
+        sender: Sender name
+        
+    Returns:
+        Result dictionary
+    """
+    agent = f"Agent-{agent_number}"
+    
+    # If repo not provided, create default
+    if queue_repository is None:
+        try:
+            from .repositories.queue_repository import QueueRepository
+            queue_repository = QueueRepository()
+        except ImportError:
+            logger.warning("Could not import QueueRepository, forcing subprocess delivery")
+            queue_repository = None
+
+    # Resolve paths if not provided
+    project_root = Path(__file__).resolve().parents[3] # src/services/messaging/helpers.py -> /workspace
+    messaging_cli_path = project_root / "src" / "services" / "messaging_cli.py"
+
+    # Prepare message
+    priority_enum, resolved_sender, templated_message = prepare_discord_message(
+        message, agent, priority, sender, discord_user_id, apply_template, message_category, None
+    )
+    
+    # Route delivery
+    return route_discord_delivery(
+        queue_repository=queue_repository,
+        agent=agent,
+        message=message,
+        templated_message=templated_message,
+        resolved_sender=resolved_sender,
+        priority_enum=priority_enum,
+        stalled=stalled,
+        messaging_cli_path=messaging_cli_path,
+        project_root=project_root,
+        use_pyautogui=True,
+        message_category=message_category,
+        apply_template=apply_template,
+        wait_for_delivery=wait_for_delivery,
+        timeout=timeout,
+        discord_user_id=discord_user_id
+    )
