@@ -1,5 +1,16 @@
 #!/usr/bin/env python3
-"""Deploy weareswarm.online Google Fonts fix immediately."""
+"""
+Deploy WeAreswarm Font Fix
+==========================
+
+Purpose: Deploy Google Fonts fix to weareswarm.online immediately.
+Usage: python tools/deploy_weareswarm_font_fix.py
+Author: Agent-7 (Web Development Specialist)
+Date: 2025-12-29
+Description: Immediate deployment tool for fixing Google Fonts issues on weareswarm.online website.
+
+<!-- SSOT Domain: web -->
+"""
 import sys
 from pathlib import Path
 

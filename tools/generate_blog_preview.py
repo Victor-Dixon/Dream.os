@@ -3,8 +3,17 @@
 Generate Blog Preview
 =====================
 
-Generates a standalone HTML preview of the styled blog post.
+Purpose: Generates a standalone HTML preview of the styled blog post.
+Usage: python tools/generate_blog_preview.py <markdown_file> [output_file]
+Author: Agent-7 (Web Development Specialist)
+Date: 2025-12-29
+Description: Tool for generating HTML previews of blog posts with proper styling and formatting.
+
+<!-- SSOT Domain: web -->
 """
+
+import sys
+import os
 
 import sys
 import os
