@@ -7,6 +7,12 @@ Target: ≥85% coverage, 12+ test methods.
 import pytest
 import asyncio
 from unittest.mock import Mock, patch, MagicMock, mock_open
+import sys
+
+# Mock pyautogui to prevent display connection errors in headless environment
+mock_pyautogui = MagicMock()
+sys.modules["pyautogui"] = mock_pyautogui
+
 from datetime import datetime
 from pathlib import Path
 import json
@@ -72,6 +78,7 @@ class TestDiscordService:
         service = DiscordService()
         assert service.webhook_url is None
 
+    @pytest.mark.asyncio
     @patch.object(Path, 'exists', return_value=False)
     async def test_start_devlog_monitoring_no_directory(self, mock_exists):
         """Test starting devlog monitoring when directory doesn't exist."""
@@ -79,6 +86,7 @@ class TestDiscordService:
         await service.start_devlog_monitoring(check_interval=0.1)
         assert service.is_running is False
 
+    @pytest.mark.asyncio
     @patch.object(Path, 'exists', return_value=True)
     @patch.object(DiscordService, 'test_webhook_connection', return_value=True)
     @patch.object(DiscordService, '_check_for_new_devlogs')
@@ -127,6 +135,7 @@ class TestDiscordService:
         result = service._find_new_devlogs()
         assert len(result) == 2
 
+    @pytest.mark.asyncio
     @patch('builtins.open', new_callable=mock_open, read_data='# Test DevLog\n\nThis is a test devlog content.')
     @patch.object(DiscordService, 'send_devlog_notification', return_value=True)
     @patch.object(DiscordService, '_notify_agents_of_devlog')
@@ -140,6 +149,7 @@ class TestDiscordService:
         mock_send.assert_called_once()
         mock_notify.assert_called_once()
 
+    @pytest.mark.asyncio
     @patch('builtins.open', new_callable=mock_open, read_data='# Test DevLog\n\nThis is a test devlog content.')
     @patch.object(DiscordService, 'send_devlog_notification', return_value=False)
     @patch.object(DiscordService, '_notify_agents_of_devlog')
@@ -310,6 +320,7 @@ class TestDiscordService:
         service.stop_monitoring()
         assert service.is_running is False
 
+    @pytest.mark.asyncio
     @patch.object(DiscordService, 'test_webhook_connection', return_value=True)
     @patch.object(DiscordService, 'send_devlog_notification', return_value=True)
     async def test_test_integration_success(self, mock_send, mock_test):
@@ -322,6 +333,7 @@ class TestDiscordService:
         result = await service.test_integration()
         assert result is True
 
+    @pytest.mark.asyncio
     @patch.object(DiscordService, 'test_webhook_connection', return_value=False)
     async def test_test_integration_webhook_fail(self, mock_test):
         """Test integration test when webhook fails."""

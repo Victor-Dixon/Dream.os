@@ -181,7 +181,7 @@ class BroadcastTemplatesView(discord.ui.View):
         # Clear existing items
         self.clear_items()
 
-        # Mode selector buttons (Row 0)
+        # Mode selector buttons
         modes = [
             ("Regular", "regular", discord.ButtonStyle.primary),
             ("Urgent", "urgent", discord.ButtonStyle.danger),
@@ -197,7 +197,14 @@ class BroadcastTemplatesView(discord.ui.View):
             if "agent_commands" in ENHANCED_BROADCAST_TEMPLATES:
                 modes.append(("Agent Cmds", "agent_commands", discord.ButtonStyle.success if hasattr(discord.ButtonStyle, 'success') else discord.ButtonStyle.primary))
 
-        for label, mode, style in modes:
+        # Add mode buttons handling row limits (max 5 items per row)
+        current_row = 0
+        max_cols = 5
+        
+        for idx, (label, mode, style) in enumerate(modes):
+            # Calculate row for mode buttons
+            current_row = idx // max_cols
+            
             # Emoji mapping for modes
             mode_emojis = {
                 "regular": "📋",
@@ -215,36 +222,42 @@ class BroadcastTemplatesView(discord.ui.View):
                 style=style if mode == self.current_mode else discord.ButtonStyle.secondary,
                 emoji=emoji,
                 custom_id=f"template_mode_{mode}",
-                row=0,
+                row=current_row,
             )
             btn.callback = lambda i, m=mode: self.on_mode_select(i, m)
             self.add_item(btn)
 
-        # Template buttons for current mode (Row 1-2)
+        # Template buttons for current mode (Start at next available row)
+        start_template_row = current_row + 1
+        
         # Use enhanced templates if available, fallback to original
         if USE_ENHANCED_TEMPLATES and self.current_mode in ENHANCED_BROADCAST_TEMPLATES:
             templates = ENHANCED_BROADCAST_TEMPLATES.get(self.current_mode, [])
         else:
             templates = BROADCAST_TEMPLATES.get(self.current_mode, [])
-        row = 1
-        max_rows = 2
-        max_cols = 5  # Discord view grid is 5 columns per row
+            
+        # Max rows in Discord view is 5 (0-4). We used up to current_row.
+        # So remaining rows are start_template_row to 4.
+        max_view_rows = 5
+        
         for idx, template in enumerate(templates):
-            # compute target row/col in a 5-column grid starting at row 1
-            row = 1 + (idx // max_cols)
-            if row > 1 + max_rows:
+            # compute target row/col
+            template_row_offset = idx // max_cols
+            target_row = start_template_row + template_row_offset
+            
+            if target_row >= max_view_rows:
                 logger.warning(
-                    f"Skipping template button idx={idx} (row {row}) - exceeds max_rows {max_rows}."
+                    f"Skipping template button idx={idx} (row {target_row}) - exceeds max view rows {max_view_rows}."
                 )
                 continue
-            col = idx % max_cols
+                
             try:
                 btn = discord.ui.Button(
                     label=template.get("name", f"Template {idx+1}"),
                     style=discord.ButtonStyle.primary,
                     emoji=template.get("emoji"),
                     custom_id=f"template_{self.current_mode}_{idx}",
-                    row=row,
+                    row=target_row,
                 )
                 btn.callback = lambda i, t=template: self.on_template_select(i, t)
                 self.add_item(btn)
