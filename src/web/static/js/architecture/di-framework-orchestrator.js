@@ -1,3 +1,4 @@
+<!-- SSOT Domain: architecture -->
 /**
  * DI Framework Orchestrator - V2 Compliant
  * Main orchestrator for dependency injection framework

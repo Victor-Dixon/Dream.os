@@ -1,3 +1,4 @@
+<!-- SSOT Domain: architecture -->
 /**
  * DI Decorators Module - V2 Compliant
  * Dependency injection decorators and utilities

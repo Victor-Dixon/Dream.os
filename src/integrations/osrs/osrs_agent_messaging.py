@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: messaging -->
+
 OSRS Agent Message Handling
 Extracted from osrs_agent_core.py for V2 compliance.
 """
