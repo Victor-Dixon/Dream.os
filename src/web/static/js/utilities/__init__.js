@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Unified Frontend Utilities - V2 Compliant Modular Architecture
  * =============================================================

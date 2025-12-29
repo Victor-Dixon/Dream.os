@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Vector Database Manager - V2 Compliant Module
  * ============================================

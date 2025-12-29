@@ -9,6 +9,9 @@ Analytics and reporting utility functions for vector database operations.
 V2 Compliance: < 100 lines, single responsibility.
 
 Author: Agent-3 - Infrastructure & DevOps Specialist
+
+
+<!-- SSOT Domain: web -->
 """
 
 from .models import AnalyticsData

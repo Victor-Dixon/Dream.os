@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Hostinger Site Adapter - AriaJet
 ================================
 """

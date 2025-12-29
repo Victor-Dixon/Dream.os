@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Autonomous Workflow Strategy - V2 Compliant
 ==========================================
 

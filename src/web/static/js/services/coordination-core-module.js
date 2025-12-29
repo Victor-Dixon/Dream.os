@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Coordination Core Module - V2 Compliant
  * Core deployment coordination functionality

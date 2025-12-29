@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Vector Database Search - V2 Compliant Module
  * ===========================================

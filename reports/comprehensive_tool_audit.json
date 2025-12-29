@@ -1,8 +1,8 @@
 {
   "summary": {
     "discovered_tool_classes": 170,
-    "potential_scripts": 126,
-    "total_assets": 296
+    "potential_scripts": 131,
+    "total_assets": 301
   },
   "tool_classes": [
     {
@@ -1071,6 +1071,11 @@
     "tools\\find_missing_ssot_tags.py",
     "tools\\START_CHAT_BOT_NOW.py",
     "tools\\test_twitch_config.py",
+    "tools\\ssot_tagging_distributor.py",
+    "tools\\execute_ssot_batch.py",
+    "tools\\fix_ssot_tag_syntax.py",
+    "tools\\multi_site_content_generator.py",
+    "tools\\swarm_to_wordpress_automation.py",
     "tools\\soft_onboard_cli.py",
     "tools\\manage_env.py",
     "tools\\capture_agent_coordinates.py",

@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Shared UI helpers for vector database modules.
  * Provides reusable setup functions to maintain SSOT across UI variants.

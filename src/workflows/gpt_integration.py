@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 GPT Integration for Workflows - V2 Compliant
 ============================================
 

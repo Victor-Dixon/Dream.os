@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Form Validation Module - V2 Compliant
  * Handles form input validation and type checking utilities

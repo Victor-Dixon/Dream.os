@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Vector Database Web Interface - V2 Compliant Modular Architecture
  * ================================================================

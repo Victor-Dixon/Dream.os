@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Dashboard Data Repository - V2 Compliance Implementation
  * Centralizes all dashboard data access operations
