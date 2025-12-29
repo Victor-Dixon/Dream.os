@@ -26,8 +26,10 @@ class ProfileCommands(commands.Cog):
         self.logger = logging.getLogger(__name__)
 
     @commands.command(name="aria", description="✨ View Aria's interactive profile!")
+    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def aria_profile(self, ctx: commands.Context):
         """Display Aria's interactive profile with buttons!"""
+        self.logger.info(f"Command 'aria_profile' triggered by {ctx.author}")
         try:
             from src.discord_commander.views.aria_profile_view import AriaProfileView
 
@@ -39,8 +41,10 @@ class ProfileCommands(commands.Cog):
             await ctx.send(f"❌ Oops! Something went wrong: {e}")
 
     @commands.command(name="carmyn", aliases=["carymn"], description="🌟 Display Carmyn's awesome profile!")
+    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def carmyn_profile(self, ctx: commands.Context):
         """Display Carmyn's interactive profile with buttons!"""
+        self.logger.info(f"Command 'carmyn_profile' triggered by {ctx.author}")
         try:
             from ..views.carmyn_profile_view import CarmynProfileView
 

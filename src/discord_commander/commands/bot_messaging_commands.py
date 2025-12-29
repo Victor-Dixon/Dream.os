@@ -46,8 +46,10 @@ class MessagingCommands(commands.Cog):
         self.logger = logging.getLogger(__name__)
 
     @commands.command(name="thea", aliases=["thea-refresh"], description="Ensure Thea session")
+    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def thea(self, ctx: commands.Context, force: str = ""):
         """Ensure Thea session with self-throttling keepalive."""
+        self.logger.info(f"Command 'thea' triggered by {ctx.author}")
         allow_interactive = True
         min_interval = 0 if force else self.bot.thea_min_interval_minutes
         await ctx.send("🔄 Ensuring Thea session (headless)...")
@@ -59,8 +61,10 @@ class MessagingCommands(commands.Cog):
             await ctx.send("❌ Thea session failed. Try again to trigger interactive login.")
 
     @commands.command(name="control", aliases=["panel", "menu"], description="Open main control panel")
+    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def control_panel(self, ctx: commands.Context):
         """Open main interactive control panel."""
+        self.logger.info(f"Command 'control_panel' triggered by {ctx.author}")
         try:
             control_view = self.gui_controller.create_control_panel()
             embed = discord.Embed(
@@ -78,8 +82,10 @@ class MessagingCommands(commands.Cog):
             await ctx.send(f"❌ Error: {e}")
 
     @commands.command(name="gui", description="Open messaging GUI")
+    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def gui(self, ctx: commands.Context):
         """Open interactive messaging GUI."""
+        self.logger.info(f"Command 'gui' triggered by {ctx.author}")
         try:
             embed = discord.Embed(
                 title="🤖 Agent Messaging Control Panel",
@@ -124,8 +130,10 @@ class MessagingCommands(commands.Cog):
             await ctx.send(f"❌ Error: {e}")
 
     @commands.command(name="monitor", description="Control status change monitor")
+    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def monitor(self, ctx: commands.Context, action: str = "status"):
         """Control status change monitor."""
+        self.logger.info(f"Command 'monitor' triggered by {ctx.author} with action={action}")
         try:
             action = action.lower()
             if not hasattr(self.bot, 'status_monitor'):
@@ -195,8 +203,10 @@ class MessagingCommands(commands.Cog):
             await ctx.send("⚠️ Status monitor not initialized.")
 
     @commands.command(name="message", description="Send message to agent")
+    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def message(self, ctx: commands.Context, agent_id: str, *, message: str):
         """Send direct message to agent."""
+        self.logger.info(f"Command 'message' triggered by {ctx.author} to {agent_id}")
         try:
             success = await self.gui_controller.send_message(
                 agent_id=agent_id,
@@ -263,8 +273,10 @@ class MessagingCommands(commands.Cog):
         return diagram_code.strip()
 
     @commands.command(name="broadcast", description="Broadcast to all agents")
+    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def broadcast(self, ctx: commands.Context, *, message: str):
         """Broadcast message to all agents."""
+        self.logger.info(f"Command 'broadcast' triggered by {ctx.author}")
         try:
             success = await self.gui_controller.broadcast_message(
                 message=message,
@@ -369,8 +381,10 @@ class MessagingCommands(commands.Cog):
             await ctx.send(f"❌ Error: {e}")
 
     @commands.command(name="shutdown", description="Gracefully shutdown the bot")
+    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def shutdown_cmd(self, ctx: commands.Context):
         """Gracefully shutdown the Discord bot."""
+        self.logger.info(f"Command 'shutdown' triggered by {ctx.author}")
         try:
             embed = discord.Embed(
                 title="🛑 Shutdown Requested",
@@ -397,8 +411,10 @@ class MessagingCommands(commands.Cog):
             await ctx.send(f"❌ Error: {e}")
 
     @commands.command(name="restart", description="Restart the Discord bot")
+    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def restart_cmd(self, ctx: commands.Context):
         """Restart the Discord bot with a true process restart."""
+        self.logger.info(f"Command 'restart' triggered by {ctx.author}")
         try:
             embed = discord.Embed(
                 title="🔄 True Restart Requested",
