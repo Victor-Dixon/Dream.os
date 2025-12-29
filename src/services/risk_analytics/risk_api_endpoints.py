@@ -227,7 +227,10 @@ class RiskAnalyticsAPI:
         # For now, return mock data for API testing
 
         # Mock returns data (normally from wp_trp_trading_performance)
-        mock_returns = [0.01, -0.005, 0.015, -0.002, 0.008, 0.012, -0.01] * 36  # ~252 days
+        base_pattern = [0.01, -0.005, 0.015, -0.002, 0.008, 0.012, -0.01]
+        # Repeat pattern to get at least 'days' returns
+        repeats = (days // len(base_pattern)) + 1
+        mock_returns = (base_pattern * repeats)[:days]
 
         # Mock equity curve (normally calculated from trading performance)
         mock_equity = [10000]  # Starting equity
@@ -263,8 +266,9 @@ class RiskAnalyticsAPI:
             returns, _ = self._get_trading_data(int(user_id), strategy_id)
 
             # Calculate VaR
+            returns_array = np.array(returns, dtype=float)
             self.risk_calculator.var_calculator.confidence_level = confidence_level
-            var_value = self.risk_calculator.var_calculator.calculate_var(returns)
+            var_value = self.risk_calculator.var_calculator.calculate_var(returns_array)
 
             return self._format_risk_response('var_95', var_value, int(user_id), strategy_id)
 
@@ -284,11 +288,12 @@ class RiskAnalyticsAPI:
 
             # Get trading data
             returns, _ = self._get_trading_data(int(user_id), strategy_id)
+            returns_array = np.array(returns, dtype=float)
 
             # Calculate VaR first, then CVaR
             self.risk_calculator.var_calculator.confidence_level = confidence_level
-            var_value = self.risk_calculator.var_calculator.calculate_var(returns)
-            cvar_value = self.risk_calculator.var_calculator.calculate_cvar(returns, var_value)
+            var_value = self.risk_calculator.var_calculator.calculate_var(returns_array)
+            cvar_value = self.risk_calculator.var_calculator.calculate_cvar(returns_array, var_value)
 
             return self._format_risk_response('cvar_95', cvar_value, int(user_id), strategy_id)
 
@@ -311,9 +316,10 @@ class RiskAnalyticsAPI:
 
             # Get trading data
             returns, _ = self._get_trading_data(int(user_id), strategy_id)
+            returns_array = np.array(returns, dtype=float)
 
             # Calculate Sharpe Ratio
-            sharpe_ratio = self.risk_calculator.calculate_sharpe_ratio(returns)
+            sharpe_ratio = self.risk_calculator.calculate_sharpe_ratio(returns_array)
 
             return self._format_risk_response('sharpe_ratio', sharpe_ratio, int(user_id), strategy_id)
 
@@ -332,9 +338,10 @@ class RiskAnalyticsAPI:
 
             # Get trading data
             _, equity_curve = self._get_trading_data(int(user_id), strategy_id)
+            equity_array = np.array(equity_curve, dtype=float)
 
             # Calculate Maximum Drawdown
-            max_drawdown = self.risk_calculator.calculate_max_drawdown(equity_curve)
+            max_drawdown = self.risk_calculator.calculate_max_drawdown(equity_array)
 
             return self._format_risk_response('max_drawdown', max_drawdown, int(user_id), strategy_id)
 
@@ -353,11 +360,13 @@ class RiskAnalyticsAPI:
 
             # Get trading data
             returns, equity_curve = self._get_trading_data(int(user_id), strategy_id)
+            returns_array = np.array(returns, dtype=float)
+            equity_array = np.array(equity_curve, dtype=float)
 
             # Calculate risk-adjusted returns
-            max_drawdown = self.risk_calculator.calculate_max_drawdown(equity_curve)
-            calmar_ratio = self.risk_calculator.calculate_calmar_ratio(returns, max_drawdown)
-            sortino_ratio = self.risk_calculator.calculate_sortino_ratio(returns)
+            max_drawdown = self.risk_calculator.calculate_max_drawdown(equity_array)
+            calmar_ratio = self.risk_calculator.calculate_calmar_ratio(returns_array, max_drawdown)
+            sortino_ratio = self.risk_calculator.calculate_sortino_ratio(returns_array)
 
             return {
                 'user_id': int(user_id),
