@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Agent Coordination Strategies - V2 Compliant Strategy Pattern Implementation
 Focused strategies for different agent types coordination
 V2 Compliance: Under 300-line limit with strategy pattern

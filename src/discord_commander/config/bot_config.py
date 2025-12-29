@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-<!-- SSOT Domain: config -->
 """
 Bot Configuration
+
 =================
 
 Configuration management for Discord bot.

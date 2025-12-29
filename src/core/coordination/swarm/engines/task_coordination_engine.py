@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: core -->
+
 Task Coordination Engine - V2 Compliance Module
 ==============================================
 

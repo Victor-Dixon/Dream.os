@@ -1,5 +1,6 @@
-"""FSM Monitoring Helper - Extracted for C-056 | Agent-5"""
-<!-- SSOT Domain: monitoring -->
+"""FSM Monitoring Helper - Extracted for C-056 | Agent-5
+
+""""""
 
 import logging
 import threading
@@ -14,7 +15,6 @@ class FSMMonitoringHelper:
     def start_monitoring(orchestrator):
         """Start background monitoring thread."""
 
-<!-- SSOT Domain: monitoring -->
         if orchestrator._monitoring:
             logger.warning("Monitoring already started")
             return
@@ -41,7 +41,6 @@ class FSMMonitoringHelper:
     def _monitor_loop(orchestrator):
         """Background monitoring loop."""
 
-<!-- SSOT Domain: monitoring -->
         while not orchestrator._stop_event.is_set():
             FSMMonitoringHelper._check_inboxes(orchestrator)
             orchestrator._stop_event.wait(timeout=TimeoutConstants.HTTP_SHORT)

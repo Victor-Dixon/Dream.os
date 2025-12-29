@@ -1,6 +1,5 @@
 """
 
-<!-- SSOT Domain: monitoring -->
 Monitor Metrics
 ===============
 
@@ -17,7 +16,6 @@ from typing import Any
 
 class MonitorMetrics:
     """Calculates performance metrics."""
-<!-- SSOT Domain: monitoring -->
 
     def __init__(self):
         """Initialize metrics tracker."""
@@ -33,7 +31,6 @@ class MonitorMetrics:
     def update_cycle_metrics(self, cycle_start_times: dict, current_cycle: int) -> None:
         """Update cycle-based metrics."""
 
-<!-- SSOT Domain: monitoring -->
         if current_cycle > 1:
             cycle_times = []
             for i in range(1, current_cycle):
@@ -53,7 +50,6 @@ class MonitorMetrics:
     def mark_completed(self, duration: float) -> None:
         """Mark task as completed."""
 
-<!-- SSOT Domain: monitoring -->
         self.metrics["completed_tasks"] += 1
 
         total_completed = self.metrics["completed_tasks"]
@@ -71,7 +67,6 @@ class MonitorMetrics:
     ) -> dict[str, Any]:
         """Get comprehensive performance metrics."""
 
-<!-- SSOT Domain: monitoring -->
         current_time = time.time()
         uptime = current_time - start_time if start_time > 0 else 0
 

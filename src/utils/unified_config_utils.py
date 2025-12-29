@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-<!-- SSOT Domain: config -->
+# SSOT Domain: config
 """
 Unified Configuration Utilities - V2 Compliance Module
 =====================================================
@@ -18,7 +18,8 @@ SOLID Implementation:
 
 Author: Agent-3 (DevOps Specialist)
 License: MIT
-"""
+
+""""""
 
 import logging
 import re

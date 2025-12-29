@@ -1,5 +1,4 @@
 """Logging utilities for the unified workspace.
-<!-- SSOT Domain: logging -->
 
 **CONSOLIDATED**: This module now redirects to unified_logging_system.
 Maintained for backward compatibility.
@@ -21,7 +20,6 @@ except ImportError:
 def setup_logger(name: str = "workspace", level: int = logging.INFO) -> logging.Logger:
     """
 
-<!-- SSOT Domain: logging -->
     Set up and return a logger with console and file handlers.
     
     **CONSOLIDATED**: Now uses unified_logging_system.

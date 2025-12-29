@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: core -->
+
 Swarm Coordination Orchestrator - V2 Compliance Module
 =====================================================
 

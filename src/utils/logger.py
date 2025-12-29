@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-<!-- SSOT Domain: logging -->
+
 """
 Enhanced Logging System - Agent Cellphone V2
 ===========================================
@@ -12,7 +12,8 @@ Maintained for backward compatibility.
 
 Author: V2 SWARM CAPTAIN
 License: MIT
-"""
+
+""""""
 
 import logging
 from pathlib import Path

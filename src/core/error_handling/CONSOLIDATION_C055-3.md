@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 # 🔄 ERROR HANDLING CONSOLIDATION - C-055-3
 
 **Agent**: Agent-3 - Infrastructure & DevOps Specialist  

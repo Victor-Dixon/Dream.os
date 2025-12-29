@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-<!-- SSOT Domain: performance -->
+
 """Gaming Performance Validation.
 
 Performance validation script for refactored gaming infrastructure components.
@@ -7,7 +7,8 @@ Integrates with Agent-1 performance benchmarking suite.
 
 Author: Agent-3 - Infrastructure & DevOps Specialist
 Mission: V2 Compliance Implementation - Performance Validation
-"""
+
+""""""
 
 from datetime import datetime
 
