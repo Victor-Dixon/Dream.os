@@ -25,8 +25,10 @@ class CoreMessagingCommands(commands.Cog):
         self.logger = logging.getLogger(__name__)
 
     @commands.command(name="gui", description="Open messaging GUI")
+    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def gui(self, ctx: commands.Context):
         """Open interactive messaging GUI."""
+        self.logger.info(f"Command 'gui' triggered by {ctx.author}")
         try:
             embed = discord.Embed(
                 title="🤖 Agent Messaging Control Panel",
@@ -54,8 +56,10 @@ class CoreMessagingCommands(commands.Cog):
             await ctx.send(f"❌ Error: {e}")
 
     @commands.command(name="status", description="View swarm status. Use '!status refresh' to force update.")
+    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def status(self, ctx: commands.Context, *, args: str = ""):
         """View swarm status. Use '!status refresh' to force immediate update."""
+        self.logger.info(f"Command 'status' triggered by {ctx.author} with args={args}")
         try:
             # Force refresh if requested
             if args.lower() == "refresh":
@@ -82,8 +86,10 @@ class CoreMessagingCommands(commands.Cog):
             await ctx.send(f"❌ Error: {e}")
 
     @commands.command(name="monitor", description="Control status change monitor. Usage: !monitor [start|stop|status] (manual start via control panel)")
+    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def monitor(self, ctx: commands.Context, action: str = "status"):
         """Control status change monitor."""
+        self.logger.info(f"Command 'monitor' triggered by {ctx.author} with action={action}")
         try:
             action = action.lower()
 
@@ -153,8 +159,10 @@ class CoreMessagingCommands(commands.Cog):
             await ctx.send(f"❌ Error: {e}")
 
     @commands.command(name="message", description="Send message to agent")
+    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def message(self, ctx: commands.Context, agent_id: str, *, message: str):
         """Send direct message to agent."""
+        self.logger.info(f"Command 'message' triggered by {ctx.author} to {agent_id}")
         try:
             success = await self.gui_controller.send_message(
                 agent_id=agent_id,
@@ -191,8 +199,10 @@ class CoreMessagingCommands(commands.Cog):
             await ctx.send(f"❌ Error: {e}")
 
     @commands.command(name="broadcast", description="Broadcast to all agents")
+    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def broadcast(self, ctx: commands.Context, *, message: str):
         """Broadcast message to all agents."""
+        self.logger.info(f"Command 'broadcast' triggered by {ctx.author}")
         try:
             success = await self.gui_controller.broadcast_message(
                 message=message,

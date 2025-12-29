@@ -29,8 +29,10 @@ class PlaceholderCommands(commands.Cog):
         self.logger = logging.getLogger(__name__)
 
     @commands.command(name="obs", description="View observations")
+    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def obs(self, ctx: commands.Context):
         """View observations."""
+        self.logger.info(f"Command 'obs' triggered by {ctx.author}")
         try:
             embed = discord.Embed(
                 title="👁️ Observations",
@@ -48,8 +50,10 @@ class PlaceholderCommands(commands.Cog):
             await ctx.send(f"❌ Error: {e}")
 
     @commands.command(name="pieces", description="View pieces")
+    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def pieces(self, ctx: commands.Context):
         """View pieces."""
+        self.logger.info(f"Command 'pieces' triggered by {ctx.author}")
         try:
             embed = discord.Embed(
                 title="🧩 Pieces",
@@ -67,8 +71,10 @@ class PlaceholderCommands(commands.Cog):
             await ctx.send(f"❌ Error: {e}")
 
     @commands.command(name="sftp", aliases=["sftp_creds", "ftp"], description="Get SFTP credentials guide")
+    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def sftp(self, ctx: commands.Context):
         """Get SFTP credentials - streamlined guide."""
+        self.logger.info(f"Command 'sftp' triggered by {ctx.author}")
         try:
             embed = discord.Embed(
                 title="🔑 How to Get SFTP Credentials (30 seconds)",
@@ -130,6 +136,7 @@ class PlaceholderCommands(commands.Cog):
             await ctx.send(f"❌ Error: {e}")
 
     @commands.command(name="session", aliases=["sessions", "cycle"], description="Post session accomplishments report")
+    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def session(self, ctx: commands.Context, date: str = None):
         """
         Post beautiful session accomplishments report to Discord.
@@ -139,6 +146,7 @@ class PlaceholderCommands(commands.Cog):
         !session 2025-11-28 - Show report for specific date
         !session latest - Show most recent report
         """
+        self.logger.info(f"Command 'session' triggered by {ctx.author} with date={date}")
         try:
             cycles_dir = Path("docs/archive/cycles")
             if not cycles_dir.exists():

@@ -416,13 +416,13 @@ class ServiceManager:
                     try:
                         process = psutil.Process(pid)
                         # Check if it's a Python process and cmdline contains the expected service script
-                        if process.name().lower() in ['python.exe', 'python3.exe', 'python']:
+                        if process.name().lower() in ['python.exe', 'python3.exe', 'python', 'python3']:
                             cmdline = process.cmdline()
 
                             # Define expected scripts/modules for each service
                             # Include both script names and module import patterns
                             expected_scripts = {
-                                'message_queue': ['start_message_queue_processor.py', 'message_queue_processor'],
+                                'message_queue': ['start_queue_processor.py', 'start_message_queue_processor.py', 'message_queue_processor'],
                                 'twitch': ['START_CHAT_BOT_NOW.py', 'twitch_eventsub_server.py'],
                                 'discord': ['bot_runner', 'unified_discord_bot.py', 'discord_commander']
                             }
@@ -453,13 +453,13 @@ class ServiceManager:
         try:
             for proc in psutil.process_iter(['pid', 'name', 'cmdline', 'status']):
                 try:
-                    if proc.info['name'] and proc.info['name'].lower() in ['python.exe', 'python3.exe', 'python']:
+                    if proc.info['name'] and proc.info['name'].lower() in ['python.exe', 'python3.exe', 'python', 'python3']:
                         if proc.info['cmdline']:
                             cmdline = ' '.join(proc.info['cmdline'])
                             
                             # Define expected scripts/modules for each service
                             expected_scripts = {
-                                'message_queue': ['start_message_queue_processor.py', 'message_queue_processor'],
+                                'message_queue': ['start_queue_processor.py', 'start_message_queue_processor.py', 'message_queue_processor'],
                                 'twitch': ['START_CHAT_BOT_NOW.py', 'twitch_eventsub_server.py'],
                                 'discord': ['bot_runner', 'unified_discord_bot.py', 'discord_commander']
                             }
