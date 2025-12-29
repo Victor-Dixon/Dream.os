@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 """
 Batch runner for ShadowArchive processing pipeline.
 """

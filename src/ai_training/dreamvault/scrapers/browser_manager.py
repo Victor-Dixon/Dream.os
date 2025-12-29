@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 """
 Browser Manager for DreamVault ChatGPT Scraper
 

@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 """
 Core Messaging Commands
 =======================

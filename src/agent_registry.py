@@ -1,4 +1,8 @@
-"""Shared agent registry for system-wide constants."""
+"""
+Shared agent registry for system-wide constants.
+
+<!-- SSOT Domain: core -->
+"""
 
 from __future__ import annotations
 

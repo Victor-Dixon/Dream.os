@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 """
 Single Source of Truth (SSOT) for Command Execution Results
 Domain: core
