@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
+"""
 <!-- SSOT Domain: core -->
+"""
 """
 🚀 AUTOMATED GAS PIPELINE SYSTEM
 Monitors status.json + FSM → Auto-sends gas at 75-80% → UNLIMITED FUEL!
