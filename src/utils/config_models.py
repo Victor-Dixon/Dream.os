@@ -10,7 +10,7 @@ Extracted from config_scanners.py for V2 compliance.
 
 Author: Agent-4 (Captain) - V2 Refactoring & Autonomy Enhancement
 License: MIT
-""""
+"""
 
 from dataclasses import dataclass
 from pathlib import Path
