@@ -9,6 +9,7 @@
 
 ## 📥 INBOX
 
+- [ ] **HIGH** (50 pts): Phase 2.2 Week 2 - Real-time Risk Dashboard Implementation - WebSocket infrastructure for live risk metrics streaming, real-time dashboard UI components, dashboard coordination with trading plugins [Agent-5]
 - [ ] **HIGH**: Infrastructure Refactoring (messaging_pyautogui.py) & WP-CLI MCP Server Implementation [Agent-1]
 - [x] **HIGH**: Deployment MCP: Staging, Rollback & Snapshots Implementation [Agent-2] ✅ COMPLETE (2025-12-28) - Designed and implemented comprehensive staging/snapshot logic and rollback functionality. Added deploy_with_staging(), rollback_deployment(), list_deployment_snapshots() tools. Enhanced deployment server with 6 new MCP tools, created test suite, updated documentation. Ready for swarm integration with safe deployment rollback capabilities.
 - [x] **HIGH**: Resolve TRP/Build-In-Public Blockers & PHP Syntax Validation MCP Enhancement [Agent-3] ✅ COMPLETE (2025-12-28) - Resolved deployment blockers for P0 sites, enhanced validation-audit MCP with PHP syntax validation, and configured GA4/Pixel IDs.

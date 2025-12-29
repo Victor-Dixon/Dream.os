@@ -262,6 +262,7 @@ class TestRiskAnalyticsAPI:
         returns, equity = risk_api._get_trading_data(1, None, days=100)
         
         assert len(returns) == 100
+        assert len(equity) == len(returns) + 1  # Equity includes starting value
 
     @patch('src.services.risk_analytics.risk_api_endpoints.logger')
     def test_get_var_error_handling(self, mock_logger, risk_api):
