@@ -82,6 +82,7 @@
 - [x] **HIGH**: Analytics Validation Completion & Database Manager MCP Implementation [Agent-5] (IN PROGRESS)
 - [ ] **HIGH**: Analytics Validation Completion & Database Manager MCP Implementation [Agent-5] (DB MCP DONE, HEALTH CHECK TOOL IN PROGRESS) (from Agent-5)
 - [ ] Discord bot operational report conflicts with local evidence: no bot_runner process and discord.pid missing; investigate actual bot launch path and ensure pids/discord.pid + runtime/logs updated. (from Agent-8)
+- [ ] CS2: Verify RegionalServer runs on localhost:5000 and complete HTTP smoke test for /api/regions and /api/regions/code/{code} (from Agent-8)
 
 
 ---

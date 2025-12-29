@@ -259,3 +259,4 @@ WHERE NOT EXISTS (
     AND JSON_EXTRACT(calculation_results, '$.migration') = 'phase2_2_risk_analytics_schema'
 )
 LIMIT 1;
+

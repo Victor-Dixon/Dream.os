@@ -32,3 +32,4 @@
 3. `tools/enable_wp_debug_freerideinvestor.py` - Enables WP_DEBUG for error logging
 4. `tools/check_freerideinvestor_error.py` - Checks error logs
 
+

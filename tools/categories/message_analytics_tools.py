@@ -6,8 +6,7 @@ Message Analytics Tools - BI Analysis for Message System
 Autonomous BI tools for analyzing message patterns, communication flows,
 and system insights from message history.
 
-SSOT Domain: analytics
-SSOT Owner: Agent-5 (Business Intelligence Specialist)
+<!-- SSOT Domain: analytics -->
 
 Author: Agent-5 (Business Intelligence Specialist)
 Date: 2025-01-27

@@ -78,6 +78,65 @@ except ImportError as e:
 class MessagingCLI:
     """Command-line interface for messaging operations."""
 
+    def _send_simple_s2a(self, agent_id: str, body: str, tags: list[str]):
+        """Send a simple S2A message via messaging bus."""
+        send_message(
+            recipient=agent_id,
+            content=body,
+            category='s2a',
+            sender='SYSTEM',
+            tags=tags,
+        )
+        logger.info(f"✅ Sent onboarding message to {agent_id} via lite pathway")
+        return 0
+
+    def _handle_soft_onboard_lite(self, agent_id: str) -> int:
+        """Handle --soft-onboard-lite flag: send template-based soft onboarding message."""
+        from uuid import uuid4
+        from datetime import datetime
+        from pathlib import Path
+        t_path = Path('src/services/onboarding/soft/templates/soft_onboard_template.md')
+        if t_path.exists():
+            templ = t_path.read_text(encoding='utf-8')
+            body = (
+                templ.replace('{{AGENT}}', agent_id)
+                .replace('{{UUID}}', str(uuid4()))
+                .replace('{{TIMESTAMP}}', datetime.utcnow().isoformat())
+            )
+        else:
+            # Fallback to default message constants
+            from src.services.onboarding.soft.default_message import get_default_soft_onboarding_message
+            ctx, actions = get_default_soft_onboarding_message(agent_id)
+            body = (
+                f"[HEADER] S2A ONBOARDING (SOFT)\nFrom: SYSTEM\nTo: {agent_id}\n"
+                f"Priority: regular\nMessage ID: {uuid4()}\nTimestamp: {datetime.utcnow().isoformat()}\n\n"
+                f"{ctx}\n\n{actions}"
+            )
+        return self._send_simple_s2a(agent_id, body, ['onboarding'])
+
+    def _handle_hard_onboard_lite(self, agent_id: str) -> int:
+        """Handle --hard-onboard-lite flag: send template-based hard onboarding message."""
+        from uuid import uuid4
+        from datetime import datetime
+        from pathlib import Path
+        t_path = Path('src/services/onboarding/hard/templates/hard_onboard_template.md')
+        if t_path.exists():
+            templ = t_path.read_text(encoding='utf-8')
+            body = (
+                templ.replace('{{AGENT}}', agent_id)
+                .replace('{{UUID}}', str(uuid4()))
+                .replace('{{TIMESTAMP}}', datetime.utcnow().isoformat())
+            )
+        else:
+            from src.services.onboarding.hard.default_message import get_default_hard_onboarding_message
+            ctx, actions = get_default_hard_onboarding_message(agent_id)
+            body = (
+                f"[HEADER] S2A ONBOARDING (HARD)\nFrom: SYSTEM\nTo: {agent_id}\n"
+                f"Priority: regular\nMessage ID: {uuid4()}\nTimestamp: {datetime.utcnow().isoformat()}\n\n"
+                f"{ctx}\n\n{actions}"
+            )
+        return self._send_simple_s2a(agent_id, body, ['onboarding','hard'])
+
     def __init__(self):
         self.parser = create_messaging_parser()
         self.task_handler = TaskHandler() if TASK_HANDLER_AVAILABLE else None
@@ -94,6 +153,12 @@ class MessagingCLI:
             return 1
 
         parsed_args = self.parser.parse_args(args)
+
+        # Lite onboarding shortcuts (template render only) - check FIRST before handlers
+        if getattr(parsed_args, 'soft_onboard_lite', None):
+            return self._handle_soft_onboard_lite(parsed_args.soft_onboard_lite)
+        if getattr(parsed_args, 'hard_onboard_lite', None):
+            return self._handle_hard_onboard_lite(parsed_args.hard_onboard_lite)
 
         try:
             # Check if soft onboarding handler can handle this request

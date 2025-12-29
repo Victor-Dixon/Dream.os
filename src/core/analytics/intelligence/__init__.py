@@ -1,6 +1,8 @@
 # AUTO-GENERATED __init__.py
 # DO NOT EDIT MANUALLY - changes may be overwritten
 
+<!-- SSOT Domain: analytics -->
+
 from . import anomaly_detection_engine
 from . import business_intelligence_engine
 from . import business_intelligence_engine_core

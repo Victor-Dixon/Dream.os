@@ -105,3 +105,4 @@ Run `python tools/setup_cursor_mcp.py` to generate `CURSOR_MCP_CONFIG.json` with
 
 
 
+

@@ -112,28 +112,28 @@ class StatusChangeMonitor:
 
     async def _check_files(self):
         """Check all agent status files for changes."""
-        for i in range(1, 9):
-            agent_id = f"Agent-{i}"
-            status_file = self.workspace_path / agent_id / "status.json"
+            for i in range(1, 9):
+                agent_id = f"Agent-{i}"
+                status_file = self.workspace_path / agent_id / "status.json"
 
-            if not status_file.exists():
-                continue
+                if not status_file.exists():
+                    continue
 
             try:
                 # Non-blocking stat
                 current_mtime = await asyncio.to_thread(lambda: status_file.stat().st_mtime)
-                last_mtime = self.last_modified.get(agent_id, 0)
+                    last_mtime = self.last_modified.get(agent_id, 0)
 
-                if current_mtime > last_mtime:
+                    if current_mtime > last_mtime:
                     # Read with retry
                     new_status = await self._read_json_with_retry(status_file)
                     if not new_status:
                         continue
 
-                    old_status = self.last_status.get(agent_id, {})
+                            old_status = self.last_status.get(agent_id, {})
                     changes = self._detect_changes(old_status, new_status)
 
-                    if changes:
+                            if changes:
                         logger.info(f"📊 Change detected for {agent_id}: {list(changes.keys())}")
                         # Add to pending updates (Debouncing)
                         self.pending_updates[agent_id] = {
@@ -142,10 +142,10 @@ class StatusChangeMonitor:
                             "timestamp": datetime.now()
                         }
                     
-                    self.last_modified[agent_id] = current_mtime
-                    self.last_status[agent_id] = new_status.copy()
+                            self.last_modified[agent_id] = current_mtime
+                            self.last_status[agent_id] = new_status.copy()
 
-            except Exception as e:
+                        except Exception as e:
                 logger.error(f"Error checking file for {agent_id}: {e}")
 
     async def _read_json_with_retry(self, file_path: Path, retries=3) -> Optional[dict]:
@@ -154,7 +154,7 @@ class StatusChangeMonitor:
             try:
                 def _read():
                     with open(file_path, 'r', encoding='utf-8') as f:
-                        return json.load(f)
+                            return json.load(f)
                 return await asyncio.to_thread(_read)
             except json.JSONDecodeError:
                 if attempt < retries - 1:

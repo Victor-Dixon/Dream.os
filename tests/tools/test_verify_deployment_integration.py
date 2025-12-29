@@ -13,3 +13,4 @@ def test_build_api_url_preserves_api_base_when_endpoint_has_leading_slash():
     assert url == "https://tradingrobotplug.com/wp-json/tradingrobotplug/v1/stock-data"
 
 
+

@@ -4,7 +4,7 @@ Analytics Utils
 
 Analytics and reporting utility functions for vector database operations.
 
-<!-- SSOT Domain: web -->
+<!-- SSOT Domain: analytics -->
 
 V2 Compliance: < 100 lines, single responsibility.
 

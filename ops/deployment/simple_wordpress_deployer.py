@@ -390,3 +390,4 @@ class SimpleWordPressDeployer:
     def disconnect(self):
         if self.sftp: self.sftp.close()
         if self.transport: self.transport.close()
+
