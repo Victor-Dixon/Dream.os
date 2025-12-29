@@ -1,8 +1,8 @@
 {
   "summary": {
     "discovered_tool_classes": 170,
-    "potential_scripts": 122,
-    "total_assets": 292
+    "potential_scripts": 126,
+    "total_assets": 296
   },
   "tool_classes": [
     {
@@ -1065,6 +1065,10 @@
     "tools\\deploy_weareswarm_feed_system.py",
     "tools\\test_bi_tools.py",
     "tools\\test_toolbelt_basic.py",
+    "tools\\tag_web_domain_ssot.py",
+    "tools\\test_unified_tool_registry_mcp.py",
+    "tools\\test_risk_websocket.py",
+    "tools\\find_missing_ssot_tags.py",
     "tools\\START_CHAT_BOT_NOW.py",
     "tools\\test_twitch_config.py",
     "tools\\soft_onboard_cli.py",

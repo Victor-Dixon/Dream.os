@@ -81,11 +81,11 @@
   ],
   "active_work": {
     "weareswarm_font_fix": {
-        "status": "COMPLETE",
+      "status": "COMPLETE",
         "notes": "Added Google Fonts (Inter) loading to functions.php + preconnect in header.php. Commit 43bb139. Awaiting Agent-3 deployment."
     },
     "tradingrobotplug_p0_compliance": {
-        "status": "COMPLETE",
+      "status": "COMPLETE",
         "notes": "Created 3 legal pages: page-privacy.php, page-terms-of-service.php, page-product-terms.php. Updated footer with legal links. Commit 74a98a0."
     },
     "deployment_coordination": {
