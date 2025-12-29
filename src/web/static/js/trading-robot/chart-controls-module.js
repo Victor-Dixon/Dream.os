@@ -2,6 +2,8 @@
  * Chart Controls Module - V2 Compliant
  * Chart controls and UI setup functionality
  *
+ * <!-- SSOT Domain: trading_robot -->
+ *
  * @author Agent-7 - Web Development Specialist
  * @version 1.0.0 - V2 COMPLIANCE MODULARIZATION
  * @license MIT

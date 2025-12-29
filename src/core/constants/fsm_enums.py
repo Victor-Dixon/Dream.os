@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 FSM Enums - V2 Compliance Finite State Machine Enumerations
 ===========================================================
 

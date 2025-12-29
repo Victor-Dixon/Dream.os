@@ -2,6 +2,8 @@
  * Portfolio Management Modules - V2 Compliant Portfolio Management Utilities
  * Handles all portfolio calculations and management operations
  *
+ * <!-- SSOT Domain: trading_robot -->
+ *
  * @author Agent-1 - Integration & Core Systems Specialist
  * @version 1.0.0 - Trading Robot Frontend V2 Compliance
  * @license MIT

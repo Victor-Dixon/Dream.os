@@ -2,6 +2,8 @@
  * Order Processing Modules - V2 Compliant Order Processing Utilities
  * Handles all order processing and validation operations
  *
+ * <!-- SSOT Domain: trading_robot -->
+ *
  * @author Agent-1 - Integration & Core Systems Specialist
  * @version 1.0.0 - Trading Robot Frontend V2 Compliance
  * @license MIT

@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 FSM Models - V2 Compliance Refactored
 ====================================
 

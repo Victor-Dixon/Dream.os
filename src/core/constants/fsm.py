@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: core -->
+
 FSM Constants - Finite State Machine Definitions
 
 This module provides FSM-related constants.

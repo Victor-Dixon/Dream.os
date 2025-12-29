@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: core -->
+
 FSM Constants - V2 Compliance Finite State Machine Constants
 ===========================================================
 

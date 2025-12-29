@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: core -->
+
 Utility Consolidation Engine - KISS Compliant
 =============================================
 

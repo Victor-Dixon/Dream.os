@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 FSM Transition Models - V2 Compliance Module
 ===========================================
 

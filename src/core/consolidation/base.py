@@ -8,6 +8,8 @@ import shutil
 from ..config_ssot import get_config
 
 """Base utilities for consolidation tasks.
+<!-- SSOT Domain: core -->
+
 
 Provides common helpers for consolidating scattered files into a
 central single source of truth (SSOT).

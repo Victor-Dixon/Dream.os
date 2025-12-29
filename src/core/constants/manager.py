@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Single Source of Truth (SSOT) for Manager System Constants
 Domain: core
 Owner: Agent-2 (Architecture & Design)

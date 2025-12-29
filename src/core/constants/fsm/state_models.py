@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 FSM State Models - V2 Compliance Module
 ======================================
 

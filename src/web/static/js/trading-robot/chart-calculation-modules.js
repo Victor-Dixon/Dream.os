@@ -2,6 +2,8 @@
  * Chart Calculation Modules - V2 Compliant Chart Calculation Utilities
  * Handles all chart calculation operations
  *
+ * <!-- SSOT Domain: trading_robot -->
+ *
  * @author Agent-1 - Integration & Core Systems Specialist
  * @version 1.0.0 - Trading Robot Frontend V2 Compliance
  * @license MIT

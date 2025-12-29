@@ -1,6 +1,8 @@
 import logging
 logger = logging.getLogger(__name__)
 """
+<!-- SSOT Domain: core -->
+
 Utility Consolidation Orchestrator - V2 Compliance Module
 =========================================================
 

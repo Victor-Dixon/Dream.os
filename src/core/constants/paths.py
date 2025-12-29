@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: core -->
+
 Paths Constants - Repository Path Definitions
 
 This module provides path-related constants for the V2 compliance system.
