@@ -3,6 +3,8 @@
  * Real-time trading dashboard with live metrics and portfolio management
  * V2 COMPLIANCE: Under 300-line limit achieved
  *
+ * <!-- SSOT Domain: trading_robot -->
+ *
  * @author Agent-7 - Web Development Specialist
  * @version 1.0.0 - Trading Robot Frontend V2 Compliance
  * @license MIT

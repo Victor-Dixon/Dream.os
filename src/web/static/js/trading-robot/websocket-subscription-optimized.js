@@ -9,6 +9,8 @@
  * - Memory leak prevention
  * - Performance monitoring
  *
+ * <!-- SSOT Domain: trading_robot -->
+ *
  * Author: Agent-7 - Web Development Specialist
  * License: MIT
  */

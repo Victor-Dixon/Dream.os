@@ -2,6 +2,8 @@
  * WebSocket Message Handler Module - V2 Compliant
  * WebSocket message parsing and handling
  *
+ * <!-- SSOT Domain: trading_robot -->
+ *
  * @author Agent-7 - Web Development Specialist
  * @version 1.0.0 - V2 COMPLIANCE MODULARIZATION
  * @license MIT
