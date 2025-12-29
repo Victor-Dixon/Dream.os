@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 """
 Test Categories Configuration
 =============================

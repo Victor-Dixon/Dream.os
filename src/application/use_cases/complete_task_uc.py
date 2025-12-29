@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 """
 Complete Task Use Case - Application Layer
 ==========================================

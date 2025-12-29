@@ -1,3 +1,8 @@
+"""
+Core Module
+
+<!-- SSOT Domain: core -->
+"""
 # Core Module - Essential Exports Only
 # ====================================
 #
