@@ -1,3 +1,4 @@
+<!-- SSOT Domain: architecture -->
 /**
  * DI Container Module - V2 Compliant
  * Core dependency injection container functionality

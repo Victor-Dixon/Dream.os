@@ -1,3 +1,4 @@
+<!-- SSOT Domain: architecture -->
 /**
  * Web Service Registry Module - V2 Compliant
  * Web layer service registration and management

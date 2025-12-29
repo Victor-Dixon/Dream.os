@@ -1,3 +1,4 @@
+<!-- SSOT Domain: architecture -->
 /**
  * Dependency Injection Framework - V2 Compliant (MODULAR REFACTOR)
  * REFACTORED FROM: 332 lines (32 over V2 limit)

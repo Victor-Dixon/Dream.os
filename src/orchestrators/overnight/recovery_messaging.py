@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: messaging -->
+
 Recovery Messaging - V2 Compliant
 ==================================
 

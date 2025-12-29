@@ -1,3 +1,4 @@
+<!-- SSOT Domain: architecture -->
 /**
  * Architecture Pattern Coordinator - Agent-2 Support for Agent-7
  * =============================================================
