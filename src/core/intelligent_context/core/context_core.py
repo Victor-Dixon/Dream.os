@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Intelligent Context Core - V2 Compliance Module
 ==============================================
 

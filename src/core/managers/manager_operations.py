@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Manager Operations - Base Manager Operation Execution
 =====================================================
 Extracted from base_manager.py for V2 compliance.

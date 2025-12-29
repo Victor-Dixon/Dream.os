@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 File Locking Engine Operations - V2 Compliance Module
 ====================================================
 

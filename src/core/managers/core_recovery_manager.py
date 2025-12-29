@@ -1,3 +1,4 @@
+# <!-- SSOT Domain: core -->
 """Specialized manager handling error recovery operations."""
 
 from __future__ import annotations

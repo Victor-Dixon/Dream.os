@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Error Reporting Utilities - Agent Cellphone V2
 ==============================================
 

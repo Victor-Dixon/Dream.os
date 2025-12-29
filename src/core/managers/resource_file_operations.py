@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Resource File Operations - Helper Module
 ========================================
 

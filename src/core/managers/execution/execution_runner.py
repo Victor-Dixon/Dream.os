@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Execution Runner - Task Execution Logic
 =======================================
 Task execution and thread management extracted for V2 compliance.

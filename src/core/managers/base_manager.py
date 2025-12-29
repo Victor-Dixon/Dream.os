@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Base Manager - Phase 2 Manager Consolidation (V2 Compliant)
 ===========================================================
 Unified base class for all managers implementing SSOT principles.

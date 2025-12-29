@@ -1,1 +1,1 @@
- 
+ # <!-- SSOT Domain: core -->

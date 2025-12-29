@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Risk Assessment Engine - V2 Compliant Module
 ===========================================
 

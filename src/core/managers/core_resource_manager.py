@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Core Resource Manager - Phase-2 Manager Consolidation
 ====================================================
 

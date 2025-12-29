@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Resource CRUD Operations Helper
 ================================
 

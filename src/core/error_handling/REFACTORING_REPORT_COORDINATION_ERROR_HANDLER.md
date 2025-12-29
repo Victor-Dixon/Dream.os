@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 # 🎯 Coordination Error Handler Refactoring - COMPLETE
 
 **Agent**: Agent-3 - Infrastructure & DevOps Specialist  

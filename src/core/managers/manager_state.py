@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Manager State - Base Manager State Management
 ==============================================
 Extracted from base_manager.py for V2 compliance.

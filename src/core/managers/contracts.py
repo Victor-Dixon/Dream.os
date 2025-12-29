@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Manager Contracts - Phase-2 Manager Consolidation
 ================================================
 

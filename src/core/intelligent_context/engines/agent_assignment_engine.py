@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Agent Assignment Engine - V2 Compliant Module
 ============================================
 

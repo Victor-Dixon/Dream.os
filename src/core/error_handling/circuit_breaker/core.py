@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Circuit Breaker Core - V2 Compliance Module
 ==========================================
 

@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Manager Lifecycle - Base Manager Lifecycle Helpers
 ==================================================
 Extracted from base_manager.py for V2 compliance.

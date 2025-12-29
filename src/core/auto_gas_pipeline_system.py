@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 """
-<!-- SSOT Domain: core -->
-"""
-"""
 🚀 AUTOMATED GAS PIPELINE SYSTEM
+
+<!-- SSOT Domain: core -->
 Monitors status.json + FSM → Auto-sends gas at 75-80% → UNLIMITED FUEL!
 
 Backward compatibility shim for auto_gas_pipeline_system refactoring.

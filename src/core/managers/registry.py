@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Manager Registry - Phase-2 Manager Consolidation
 ===============================================
 
