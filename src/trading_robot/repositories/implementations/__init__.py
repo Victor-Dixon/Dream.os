@@ -1,6 +1,10 @@
 # AUTO-GENERATED __init__.py
 # DO NOT EDIT MANUALLY - changes may be overwritten
 
+"""
+<!-- SSOT Domain: trading_robot -->
+"""
+
 from . import in_memory_query_operations
 from . import in_memory_trading_repository
 from . import in_memory_write_operations

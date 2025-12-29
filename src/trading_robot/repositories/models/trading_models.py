@@ -6,6 +6,8 @@ Trading Models - V2 Compliance Module
 Data models for trading operations with V2 compliance validation.
 Extracted from trading_repository.py for V2 compliance.
 
+<!-- SSOT Domain: trading_robot -->
+
 Author: Agent-7 - Web Development Specialist
 License: MIT
 """

@@ -5,6 +5,8 @@ Portfolio Repository Interface - V2 Compliant Module
 Abstract interface for portfolio data access with V2 compliance.
 Extracted from trading_repository.py for V2 compliance.
 
+<!-- SSOT Domain: trading_robot -->
+
 V2 Compliance: < 300 lines, single responsibility.
 Repository Pattern: Clean data access abstraction.
 

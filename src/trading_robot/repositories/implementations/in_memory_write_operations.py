@@ -5,6 +5,8 @@ In-Memory Write Operations - V2 Compliant
 Write operations for in-memory trading repository.
 Extracted for V2 compliance.
 
+<!-- SSOT Domain: trading_robot -->
+
 Author: Agent-3 - Infrastructure & DevOps Specialist (extracted from Agent-7's work)
 """
 
