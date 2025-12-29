@@ -7,6 +7,7 @@ Automatically adds MCP servers to Cursor User Settings
 import json
 import platform
 import os
+import sys
 from pathlib import Path
 
 def get_cursor_settings_path():
@@ -111,13 +112,27 @@ def add_mcp_to_settings(dry_run=False, force_yes=False):
         return False
 
 def main():
+    # Handle --help flag
+    if "--help" in sys.argv or "-h" in sys.argv:
+        print("Usage: python add_mcp_to_cursor_settings.py [OPTIONS]")
+        print()
+        print("Options:")
+        print("  --dry-run, -n    Preview changes without modifying settings")
+        print("  --yes, -y        Overwrite existing MCP configuration without prompting")
+        print("  --help, -h       Show this help message")
+        print()
+        print("Description:")
+        print("  Adds MCP server configuration to Cursor User Settings (settings.json)")
+        print("  Reads MCP server config from: mcp_servers/all_mcp_servers.json")
+        return 0
+    
     print("🔧 Add MCP Servers to Cursor Settings")
     print("="*60)
     print()
     
     # Check for dry run and yes flags
-    dry_run = "--dry-run" in os.sys.argv or "-n" in os.sys.argv
-    force_yes = "--yes" in os.sys.argv or "-y" in os.sys.argv
+    dry_run = "--dry-run" in sys.argv or "-n" in sys.argv
+    force_yes = "--yes" in sys.argv or "-y" in sys.argv
     
     if dry_run:
         print("🔍 DRY RUN MODE - No changes will be made")

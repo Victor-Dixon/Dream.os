@@ -366,5 +366,19 @@
     "Fix MCP server protocol implementation - COMPLETE (2025-12-27) - Fixed website_manager, git_operations, v2_compliance servers",
     "Stage-4 workspace integrity enforcement - COMPLETE (2025-12-28) - Audit evidence gate + HTTP /tasks endpoint"
   ],
-  "last_updated": "2025-12-29T03:35:00Z"
+  "last_updated": "2025-12-29T17:32:00Z",
+  "captain_active_work": {
+    "status": "ACTIVE",
+    "current_actions": [
+      "Unblocked Agent-5: Provided trading_robot file lists (4 batches, 47 files) - coordination message sent",
+      "Fixed broken tools: check_audit_evidence.py (graceful handling when no audit exists), start_discord_bot.py (improved error message)",
+      "Monitoring SSOT tagging progress: Agent-1 (30 batches complete), Agent-5 (awaiting file lists - UNBLOCKED), Agent-8 (batches in progress)",
+      "Continuing broken tools Phase 3 fixes (3/32 tools fixed)"
+    ],
+    "coordination_active": [
+      "Agent-5 SSOT tagging unblocked - trading_robot batches ready",
+      "Agent-1 SSOT tagging coordination - 90.5% complete (38/42 batches)",
+      "Agent-2 SSOT validation coordination - ready for final 4 batches"
+    ]
+  }
 }
