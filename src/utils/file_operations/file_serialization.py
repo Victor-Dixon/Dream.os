@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: core -->
+
 File Serialization Operations - V2 Compliance Module
 ==================================================
 

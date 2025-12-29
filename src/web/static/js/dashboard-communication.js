@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Dashboard Communication Module - V2 Compliant
  * WebSocket communication and real-time updates for dashboard

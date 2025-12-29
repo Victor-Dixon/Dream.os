@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Gaming Integration Core - SOLID Compliant Refactoring
 ====================================================
 

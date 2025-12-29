@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Metrics Collector - Collects and analyzes stress test metrics
 
 Tracks message delivery metrics, calculates statistics, and generates reports.

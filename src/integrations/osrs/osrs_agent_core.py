@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: core -->
+
 @file osrs_agent_core.py
 @brief Core OSRS Agent - Autonomous Old School RuneScape coordination agent
 @author Agent-4 Captain

@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Agent Card Component - V2 Compliant
 ===================================
 

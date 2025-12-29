@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: core -->
+
 Queue Utilities - Helper Functions for Message Queue Processing
 ================================================================
 

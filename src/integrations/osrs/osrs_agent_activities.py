@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: core -->
+
 OSRS Agent Role-Specific Activities
 Extracted from osrs_agent_core.py for V2 compliance.
 """

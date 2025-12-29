@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: core -->
+
 Delivery Core - Primary PyAutoGUI Delivery
 ==========================================
 

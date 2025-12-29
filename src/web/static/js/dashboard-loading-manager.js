@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Dashboard Loading Manager Module - V2 Compliant
  * Loading state management extracted from dashboard-data-manager.js

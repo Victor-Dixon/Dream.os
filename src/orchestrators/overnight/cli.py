@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Overnight Runner CLI - V2 Compliant
 ===================================
 

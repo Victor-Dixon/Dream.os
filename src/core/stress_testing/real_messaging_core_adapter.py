@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Real Messaging Core Adapter - Wraps real messaging_core for protocol compliance
 
 Adapter that wraps the real messaging_core.send_message function to match

@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: core -->
+
 Backup Utilities - V2 Compliant Module
 =====================================
 

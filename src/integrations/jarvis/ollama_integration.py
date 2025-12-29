@@ -2,6 +2,8 @@ from ..core.unified_entry_point_system import main
 from src.core.config.timeout_constants import TimeoutConstants
 
 """
+<!-- SSOT Domain: core -->
+
 Ollama Integration for Local Agents
 Provides local LLM capabilities for our custom agents
 """

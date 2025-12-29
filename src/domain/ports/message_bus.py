@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Message Bus Port - Domain Layer
 ================================
 

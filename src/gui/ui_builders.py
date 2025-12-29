@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 GUI UI Builders
 ===============
 

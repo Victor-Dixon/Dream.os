@@ -23,7 +23,6 @@ from ...domain.value_objects.ids import AgentId, TaskId
 @dataclass
 class CompleteTaskRequest:
     """Request DTO for task completion."""
-<!-- SSOT Domain: core -->
 
     task_id: str
     agent_id: str  # Agent completing the task

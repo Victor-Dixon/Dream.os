@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Status Panel Component - V2 Compliant
 =====================================
 

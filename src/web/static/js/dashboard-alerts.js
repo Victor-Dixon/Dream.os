@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Dashboard Alerts Module - V2 Compliant
  * Handles alert management functionality

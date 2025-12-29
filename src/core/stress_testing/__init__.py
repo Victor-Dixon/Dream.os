@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Stress Testing Module for MessageQueueProcessor
 
 Provides mock messaging core and stress testing utilities for testing

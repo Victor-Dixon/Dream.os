@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Conversation Pattern Data - V2 Compliant
 =========================================
 

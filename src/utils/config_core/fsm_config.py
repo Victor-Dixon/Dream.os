@@ -1,4 +1,6 @@
 """Compatibility wrapper for FSM configuration utilities.
+<!-- SSOT Domain: core -->
+
 
 This module preserves the previous import path while delegating to the
 centralized configuration implementation in :mod:`utils.config_core`.

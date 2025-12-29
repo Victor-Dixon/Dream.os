@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 GUI Themes - V2 Compliant
 ========================
 

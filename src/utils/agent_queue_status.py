@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: core -->
+
 Agent Queue Status Manager - Cursor Queue Buildup Prevention
 =============================================================
 

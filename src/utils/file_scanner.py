@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 File Scanner - V2 Compliance Module
 ================================
 

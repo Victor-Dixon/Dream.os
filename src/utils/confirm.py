@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: core -->
+
 Minimal confirmation utility for handlers.
 Provides basic confirm functionality to support onboarding/utility handlers.
 """

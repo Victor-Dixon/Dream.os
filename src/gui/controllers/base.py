@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Base GUI Controller - V2 Compliant
 ==================================
 
