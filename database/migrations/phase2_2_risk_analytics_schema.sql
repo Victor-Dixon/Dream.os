@@ -3,6 +3,19 @@
 -- Date: 2025-12-29
 -- Description: Database schema extensions for advanced risk analytics
 
+-- Navigation References:
+-- ├── Related Files:
+-- │   ├── Risk Calculator → src/services/risk_analytics/risk_calculator_service.py
+-- │   ├── API Endpoints → src/services/risk_analytics/risk_api_endpoints.py
+-- │   ├── WebSocket Server → src/services/risk_analytics/risk_websocket_server.py
+-- │   └── Dashboard UI → docs/analytics/risk_dashboard.html
+-- ├── Documentation:
+-- │   └── Architecture → docs/analytics/TRADINGROBOTPLUG_ANALYTICS_ARCHITECTURE.md
+-- └── Tables Created:
+--     ├── wp_trp_risk_metrics (risk calculations storage)
+--     ├── wp_trp_risk_alerts (alert thresholds and notifications)
+--     └── wp_trp_risk_thresholds (configurable risk limits)
+
 -- =====================================================
 -- Risk Metrics Storage Table
 -- =====================================================

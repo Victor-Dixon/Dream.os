@@ -14,6 +14,18 @@ Description: WebSocket server providing 1Hz live risk metrics updates with <100m
 
 <!-- SSOT Domain: analytics -->
 
+Navigation References:
+├── Related Files:
+│   ├── Risk Calculator → src/services/risk_analytics/risk_calculator_service.py
+│   ├── API Endpoints → src/services/risk_analytics/risk_api_endpoints.py
+│   ├── Dashboard UI → docs/analytics/risk_dashboard.html
+│   └── Database Schema → database/migrations/phase2_2_risk_analytics_schema.sql
+├── Documentation:
+│   ├── Architecture → docs/analytics/TRADINGROBOTPLUG_ANALYTICS_ARCHITECTURE.md
+│   └── Testing → tools/test_risk_websocket.py
+└── Usage:
+    └── Start Server → python src/services/risk_analytics/risk_websocket_server.py
+
 Endpoints:
 - /ws/risk/live - Live risk metrics streaming
 - /ws/risk/dashboard - Dashboard-specific data

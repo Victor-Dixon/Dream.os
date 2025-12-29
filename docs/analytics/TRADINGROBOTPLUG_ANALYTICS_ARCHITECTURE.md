@@ -4,6 +4,26 @@
 **Author:** Agent-5 (Business Intelligence Specialist)
 **Status:** Ready for Agent-2 Architecture Review
 
+## 📚 Navigation References
+
+### 🔗 Related Files
+- **Risk Calculator Service** → `src/services/risk_analytics/risk_calculator_service.py`
+- **WebSocket Server** → `src/services/risk_analytics/risk_websocket_server.py`
+- **API Endpoints** → `src/services/risk_analytics/risk_api_endpoints.py`
+- **Dashboard UI** → `docs/analytics/risk_dashboard.html`
+- **Database Schema** → `database/migrations/phase2_2_risk_analytics_schema.sql`
+
+### 📋 Implementation Status
+- ✅ **Phase 2.1:** WebSocket Foundation Complete
+- ✅ **Phase 2.2 Week 1:** Risk Calculator Service Complete
+- ✅ **Phase 2.2 Week 2:** Real-time Dashboard Complete
+- 🔄 **Phase 2.3:** Advanced Analytics (Planned)
+
+### 🧪 Testing & Validation
+- **Unit Tests** → `tests/unit/services/test_risk_*.py`
+- **WebSocket Tests** → `tools/test_risk_websocket.py`
+- **Validation Tools** → `tools/analytics_validation_scheduler.py`
+
 ## Executive Summary
 
 Comprehensive analytics architecture for TradingRobotPlug.com, designed to track trading performance, user engagement, and conversion metrics across the trading robot platform.
