@@ -1,27 +1,33 @@
 {
   "summary": {
     "discovered_tool_classes": 170,
-    "potential_scripts": 109,
-    "total_assets": 279
+    "potential_scripts": 122,
+    "total_assets": 292
   },
   "tool_classes": [
     {
-      "name": "PointsCalculatorTool",
-      "module": "tools.categories.captain_tools_advanced",
-      "class": "PointsCalculatorTool",
-      "category": "captain_advanced"
+      "name": "AgentActivityTrackerTool",
+      "module": "tools.categories.agent_activity_tools",
+      "class": "AgentActivityTrackerTool",
+      "category": "agent_activity"
     },
     {
-      "name": "MissionAssignTool",
-      "module": "tools.categories.captain_tools_advanced",
-      "class": "MissionAssignTool",
-      "category": "captain_advanced"
+      "name": "AgentActivityMonitorTool",
+      "module": "tools.categories.agent_activity_tools",
+      "class": "AgentActivityMonitorTool",
+      "category": "agent_activity"
     },
     {
-      "name": "MarkovOptimizerTool",
-      "module": "tools.categories.captain_tools_advanced",
-      "class": "MarkovOptimizerTool",
-      "category": "captain_advanced"
+      "name": "AgentStatusTool",
+      "module": "tools.categories.agent_ops_tools",
+      "class": "AgentStatusTool",
+      "category": "agent_ops"
+    },
+    {
+      "name": "ClaimTaskTool",
+      "module": "tools.categories.agent_ops_tools",
+      "class": "ClaimTaskTool",
+      "category": "agent_ops"
     },
     {
       "name": "ProjectScanTool",
@@ -40,306 +46,6 @@
       "module": "tools.categories.analysis_tools",
       "class": "DuplicationTool",
       "category": "analysis"
-    },
-    {
-      "name": "CoverageReportTool",
-      "module": "tools.categories.testing_tools",
-      "class": "CoverageReportTool",
-      "category": "testing"
-    },
-    {
-      "name": "MutationGateTool",
-      "module": "tools.categories.testing_tools",
-      "class": "MutationGateTool",
-      "category": "testing"
-    },
-    {
-      "name": "SwarmPulseTool",
-      "module": "tools.categories.swarm_consciousness",
-      "class": "SwarmPulseTool",
-      "category": "swarm_consciousness"
-    },
-    {
-      "name": "ModuleExtractorPlannerTool",
-      "module": "tools.categories.infrastructure_utility_tools",
-      "class": "ModuleExtractorPlannerTool",
-      "category": "infrastructure_utility"
-    },
-    {
-      "name": "InfrastructureROICalculatorTool",
-      "module": "tools.categories.infrastructure_utility_tools",
-      "class": "InfrastructureROICalculatorTool",
-      "category": "infrastructure_utility"
-    },
-    {
-      "name": "BrowserPoolManagerTool",
-      "module": "tools.categories.infrastructure_utility_tools",
-      "class": "BrowserPoolManagerTool",
-      "category": "infrastructure_utility"
-    },
-    {
-      "name": "DiscordProfileViewerTool",
-      "module": "tools.categories.discord_profile_tools",
-      "class": "DiscordProfileViewerTool",
-      "category": "discord_profile"
-    },
-    {
-      "name": "DiscordPostTool",
-      "module": "tools.categories.communication_tools",
-      "class": "DiscordPostTool",
-      "category": "communication"
-    },
-    {
-      "name": "SessionCleanupTool",
-      "module": "tools.categories.session_tools",
-      "class": "SessionCleanupTool",
-      "category": "session"
-    },
-    {
-      "name": "PassdownTool",
-      "module": "tools.categories.session_tools",
-      "class": "PassdownTool",
-      "category": "session"
-    },
-    {
-      "name": "SessionPointsCalculatorTool",
-      "module": "tools.categories.session_tools",
-      "class": "SessionPointsCalculatorTool",
-      "category": "session"
-    },
-    {
-      "name": "StatusCheckTool",
-      "module": "tools.categories.captain_tools_core",
-      "class": "StatusCheckTool",
-      "category": "captain_core"
-    },
-    {
-      "name": "GitVerifyTool",
-      "module": "tools.categories.captain_tools_core",
-      "class": "GitVerifyTool",
-      "category": "captain_core"
-    },
-    {
-      "name": "WorkVerifyTool",
-      "module": "tools.categories.captain_tools_core",
-      "class": "WorkVerifyTool",
-      "category": "captain_core"
-    },
-    {
-      "name": "IntegrityCheckTool",
-      "module": "tools.categories.captain_tools_core",
-      "class": "IntegrityCheckTool",
-      "category": "captain_core"
-    },
-    {
-      "name": "SendMessageTool",
-      "module": "tools.categories.messaging_tools",
-      "class": "SendMessageTool",
-      "category": "messaging"
-    },
-    {
-      "name": "BroadcastTool",
-      "module": "tools.categories.messaging_tools",
-      "class": "BroadcastTool",
-      "category": "messaging"
-    },
-    {
-      "name": "InboxCheckTool",
-      "module": "tools.categories.messaging_tools",
-      "class": "InboxCheckTool",
-      "category": "messaging"
-    },
-    {
-      "name": "MemoryLeakDetectorTool",
-      "module": "tools.categories.memory_safety_adapters",
-      "class": "MemoryLeakDetectorTool",
-      "category": "memory_safety_adapters"
-    },
-    {
-      "name": "FileVerificationTool",
-      "module": "tools.categories.memory_safety_adapters",
-      "class": "FileVerificationTool",
-      "category": "memory_safety_adapters"
-    },
-    {
-      "name": "UnboundedScanTool",
-      "module": "tools.categories.memory_safety_adapters",
-      "class": "UnboundedScanTool",
-      "category": "memory_safety_adapters"
-    },
-    {
-      "name": "MemorySafetyImportValidatorTool",
-      "module": "tools.categories.memory_safety_adapters",
-      "class": "MemorySafetyImportValidatorTool",
-      "category": "memory_safety_adapters"
-    },
-    {
-      "name": "FileHandleCheckTool",
-      "module": "tools.categories.memory_safety_adapters",
-      "class": "FileHandleCheckTool",
-      "category": "memory_safety_adapters"
-    },
-    {
-      "name": "GitHubRepoSimilarityAnalyzerTool",
-      "module": "tools.categories.github_consolidation_tools",
-      "class": "GitHubRepoSimilarityAnalyzerTool",
-      "category": "github_consolidation"
-    },
-    {
-      "name": "GitHubRepoConsolidationPlannerTool",
-      "module": "tools.categories.github_consolidation_tools",
-      "class": "GitHubRepoConsolidationPlannerTool",
-      "category": "github_consolidation"
-    },
-    {
-      "name": "GitHubRepoMergeExecutorTool",
-      "module": "tools.categories.github_consolidation_tools",
-      "class": "GitHubRepoMergeExecutorTool",
-      "category": "github_consolidation"
-    },
-    {
-      "name": "TestFileGeneratorTool",
-      "module": "tools.categories.test_generation_tools",
-      "class": "TestFileGeneratorTool",
-      "category": "test_generation"
-    },
-    {
-      "name": "CoveragePyramidReportTool",
-      "module": "tools.categories.test_generation_tools",
-      "class": "CoveragePyramidReportTool",
-      "category": "test_generation"
-    },
-    {
-      "name": "TakeNoteTool",
-      "module": "tools.categories.swarm_brain_tools",
-      "class": "TakeNoteTool",
-      "category": "swarm_brain"
-    },
-    {
-      "name": "ShareLearningTool",
-      "module": "tools.categories.swarm_brain_tools",
-      "class": "ShareLearningTool",
-      "category": "swarm_brain"
-    },
-    {
-      "name": "SearchKnowledgeTool",
-      "module": "tools.categories.swarm_brain_tools",
-      "class": "SearchKnowledgeTool",
-      "category": "swarm_brain"
-    },
-    {
-      "name": "LogSessionTool",
-      "module": "tools.categories.swarm_brain_tools",
-      "class": "LogSessionTool",
-      "category": "swarm_brain"
-    },
-    {
-      "name": "GetAgentNotesTool",
-      "module": "tools.categories.swarm_brain_tools",
-      "class": "GetAgentNotesTool",
-      "category": "swarm_brain"
-    },
-    {
-      "name": "DashboardGenerateTool",
-      "module": "tools.categories.dashboard_tools",
-      "class": "DashboardGenerateTool",
-      "category": "dashboard"
-    },
-    {
-      "name": "DashboardDataAggregateTool",
-      "module": "tools.categories.dashboard_tools",
-      "class": "DashboardDataAggregateTool",
-      "category": "dashboard"
-    },
-    {
-      "name": "DashboardHTMLTool",
-      "module": "tools.categories.dashboard_tools",
-      "class": "DashboardHTMLTool",
-      "category": "dashboard"
-    },
-    {
-      "name": "DashboardChartsTool",
-      "module": "tools.categories.dashboard_tools",
-      "class": "DashboardChartsTool",
-      "category": "dashboard"
-    },
-    {
-      "name": "DashboardStylesTool",
-      "module": "tools.categories.dashboard_tools",
-      "class": "DashboardStylesTool",
-      "category": "dashboard"
-    },
-    {
-      "name": "DiscordStatusDashboardTool",
-      "module": "tools.categories.dashboard_tools",
-      "class": "DiscordStatusDashboardTool",
-      "category": "dashboard"
-    },
-    {
-      "name": "TaskContextTool",
-      "module": "tools.categories.vector_tools",
-      "class": "TaskContextTool",
-      "category": "vector"
-    },
-    {
-      "name": "VectorSearchTool",
-      "module": "tools.categories.vector_tools",
-      "class": "VectorSearchTool",
-      "category": "vector"
-    },
-    {
-      "name": "IndexWorkTool",
-      "module": "tools.categories.vector_tools",
-      "class": "IndexWorkTool",
-      "category": "vector"
-    },
-    {
-      "name": "OSSCloneTool",
-      "module": "tools.categories.oss_tools",
-      "class": "OSSCloneTool",
-      "category": "oss"
-    },
-    {
-      "name": "OSSFetchIssuesTool",
-      "module": "tools.categories.oss_tools",
-      "class": "OSSFetchIssuesTool",
-      "category": "oss"
-    },
-    {
-      "name": "OSSImportIssuesTool",
-      "module": "tools.categories.oss_tools",
-      "class": "OSSImportIssuesTool",
-      "category": "oss"
-    },
-    {
-      "name": "OSSPortfolioTool",
-      "module": "tools.categories.oss_tools",
-      "class": "OSSPortfolioTool",
-      "category": "oss"
-    },
-    {
-      "name": "OSSStatusTool",
-      "module": "tools.categories.oss_tools",
-      "class": "OSSStatusTool",
-      "category": "oss"
-    },
-    {
-      "name": "ValidateConfigSSOTAdapter",
-      "module": "tools.categories.config_tools",
-      "class": "ValidateConfigSSOTAdapter",
-      "category": "config"
-    },
-    {
-      "name": "ListConfigSourcesAdapter",
-      "module": "tools.categories.config_tools",
-      "class": "ListConfigSourcesAdapter",
-      "category": "config"
-    },
-    {
-      "name": "CheckConfigImportsAdapter",
-      "module": "tools.categories.config_tools",
-      "class": "CheckConfigImportsAdapter",
-      "category": "config"
     },
     {
       "name": "QuickMetricsTool",
@@ -366,112 +72,166 @@
       "category": "bi"
     },
     {
-      "name": "CreateProposalTool",
-      "module": "tools.categories.proposal_tools",
-      "class": "CreateProposalTool",
-      "category": "proposal"
+      "name": "CompletionProcessorTool",
+      "module": "tools.categories.captain_coordination_tools",
+      "class": "CompletionProcessorTool",
+      "category": "captain_coordination"
     },
     {
-      "name": "ListProposalsTool",
-      "module": "tools.categories.proposal_tools",
-      "class": "ListProposalsTool",
-      "category": "proposal"
+      "name": "LeaderboardUpdaterTool",
+      "module": "tools.categories.captain_coordination_tools",
+      "class": "LeaderboardUpdaterTool",
+      "category": "captain_coordination"
     },
     {
-      "name": "ViewProposalTool",
-      "module": "tools.categories.proposal_tools",
-      "class": "ViewProposalTool",
-      "category": "proposal"
+      "name": "NextTaskPickerTool",
+      "module": "tools.categories.captain_coordination_tools",
+      "class": "NextTaskPickerTool",
+      "category": "captain_coordination"
     },
     {
-      "name": "ContributeProposalTool",
-      "module": "tools.categories.proposal_tools",
-      "class": "ContributeProposalTool",
-      "category": "proposal"
+      "name": "ROIQuickCalculatorTool",
+      "module": "tools.categories.captain_coordination_tools",
+      "class": "ROIQuickCalculatorTool",
+      "category": "captain_coordination"
     },
     {
-      "name": "StartDebateTool",
-      "module": "tools.categories.proposal_tools",
-      "class": "StartDebateTool",
-      "category": "proposal"
+      "name": "PointsCalculatorTool",
+      "module": "tools.categories.captain_tools_advanced",
+      "class": "PointsCalculatorTool",
+      "category": "captain_advanced"
     },
     {
-      "name": "CreateWebhookTool",
-      "module": "tools.categories.discord_webhook_tools",
-      "class": "CreateWebhookTool",
-      "category": "discord_webhook"
+      "name": "MissionAssignTool",
+      "module": "tools.categories.captain_tools_advanced",
+      "class": "MissionAssignTool",
+      "category": "captain_advanced"
     },
     {
-      "name": "ListWebhooksTool",
-      "module": "tools.categories.discord_webhook_tools",
-      "class": "ListWebhooksTool",
-      "category": "discord_webhook"
+      "name": "MarkovOptimizerTool",
+      "module": "tools.categories.captain_tools_advanced",
+      "class": "MarkovOptimizerTool",
+      "category": "captain_advanced"
     },
     {
-      "name": "SaveWebhookTool",
-      "module": "tools.categories.discord_webhook_tools",
-      "class": "SaveWebhookTool",
-      "category": "discord_webhook"
+      "name": "ArchitecturalCheckerTool",
+      "module": "tools.categories.captain_tools_architecture",
+      "class": "ArchitecturalCheckerTool",
+      "category": "captain_architecture"
     },
     {
-      "name": "TestWebhookTool",
-      "module": "tools.categories.discord_webhook_tools",
-      "class": "TestWebhookTool",
-      "category": "discord_webhook"
+      "name": "MorningBriefingTool",
+      "module": "tools.categories.captain_tools_coordination",
+      "class": "MorningBriefingTool",
+      "category": "captain_coordination"
     },
     {
-      "name": "WebhookManagerTool",
-      "module": "tools.categories.discord_webhook_tools",
-      "class": "WebhookManagerTool",
-      "category": "discord_webhook"
+      "name": "StatusCheckTool",
+      "module": "tools.categories.captain_tools_core",
+      "class": "StatusCheckTool",
+      "category": "captain_core"
     },
     {
-      "name": "FindSSOTViolationsAdapter",
-      "module": "tools.categories.integration_tools",
-      "class": "FindSSOTViolationsAdapter",
-      "category": "integration"
+      "name": "GitVerifyTool",
+      "module": "tools.categories.captain_tools_core",
+      "class": "GitVerifyTool",
+      "category": "captain_core"
     },
     {
-      "name": "FindDuplicateFunctionalityAdapter",
-      "module": "tools.categories.integration_tools",
-      "class": "FindDuplicateFunctionalityAdapter",
-      "category": "integration"
+      "name": "WorkVerifyTool",
+      "module": "tools.categories.captain_tools_core",
+      "class": "WorkVerifyTool",
+      "category": "captain_core"
     },
     {
-      "name": "FindIntegrationOpportunitiesAdapter",
-      "module": "tools.categories.integration_tools",
-      "class": "FindIntegrationOpportunitiesAdapter",
-      "category": "integration"
+      "name": "IntegrityCheckTool",
+      "module": "tools.categories.captain_tools_core",
+      "class": "IntegrityCheckTool",
+      "category": "captain_core"
     },
     {
-      "name": "CheckImportDependenciesAdapter",
-      "module": "tools.categories.integration_tools",
-      "class": "CheckImportDependenciesAdapter",
-      "category": "integration"
+      "name": "SelfMessageTool",
+      "module": "tools.categories.captain_tools_messaging",
+      "class": "SelfMessageTool",
+      "category": "captain_messaging"
     },
     {
-      "name": "AuditImportsTool",
-      "module": "tools.categories.integration_tools",
-      "class": "AuditImportsTool",
-      "category": "integration"
+      "name": "MessageAllAgentsTool",
+      "module": "tools.categories.captain_tools_messaging",
+      "class": "MessageAllAgentsTool",
+      "category": "captain_messaging"
     },
     {
-      "name": "InboxCleanupTool",
-      "module": "tools.categories.workflow_tools",
-      "class": "InboxCleanupTool",
-      "category": "workflow"
+      "name": "GasDeliveryTool",
+      "module": "tools.categories.captain_tools_monitoring",
+      "class": "GasDeliveryTool",
+      "category": "captain_monitoring"
     },
     {
-      "name": "MissionClaimTool",
-      "module": "tools.categories.workflow_tools",
-      "class": "MissionClaimTool",
-      "category": "workflow"
+      "name": "LeaderboardUpdateTool",
+      "module": "tools.categories.captain_tools_monitoring",
+      "class": "LeaderboardUpdateTool",
+      "category": "captain_monitoring"
     },
     {
-      "name": "ROICalculatorTool",
-      "module": "tools.categories.workflow_tools",
-      "class": "ROICalculatorTool",
-      "category": "workflow"
+      "name": "CycleReportTool",
+      "module": "tools.categories.captain_tools_monitoring",
+      "class": "CycleReportTool",
+      "category": "captain_monitoring"
+    },
+    {
+      "name": "FindIdleAgentsTool",
+      "module": "tools.categories.captain_tools_utilities",
+      "class": "FindIdleAgentsTool",
+      "category": "captain_utilities"
+    },
+    {
+      "name": "GasCheckTool",
+      "module": "tools.categories.captain_tools_utilities",
+      "class": "GasCheckTool",
+      "category": "captain_utilities"
+    },
+    {
+      "name": "UpdateLogTool",
+      "module": "tools.categories.captain_tools_utilities",
+      "class": "UpdateLogTool",
+      "category": "captain_utilities"
+    },
+    {
+      "name": "ToolbeltHelpTool",
+      "module": "tools.categories.captain_tools_utilities",
+      "class": "ToolbeltHelpTool",
+      "category": "captain_utilities"
+    },
+    {
+      "name": "ComplianceHistoryTool",
+      "module": "tools.categories.compliance_tools",
+      "class": "ComplianceHistoryTool",
+      "category": "compliance"
+    },
+    {
+      "name": "PolicyCheckTool",
+      "module": "tools.categories.compliance_tools",
+      "class": "PolicyCheckTool",
+      "category": "compliance"
+    },
+    {
+      "name": "ValidateConfigSSOTAdapter",
+      "module": "tools.categories.config_tools",
+      "class": "ValidateConfigSSOTAdapter",
+      "category": "config"
+    },
+    {
+      "name": "ListConfigSourcesAdapter",
+      "module": "tools.categories.config_tools",
+      "class": "ListConfigSourcesAdapter",
+      "category": "config"
+    },
+    {
+      "name": "CheckConfigImportsAdapter",
+      "module": "tools.categories.config_tools",
+      "class": "CheckConfigImportsAdapter",
+      "category": "config"
     },
     {
       "name": "FindDomainExpertAdapter",
@@ -516,28 +276,70 @@
       "category": "coordination"
     },
     {
-      "name": "SoftOnboardTool",
-      "module": "tools.categories.onboarding_tools",
-      "class": "SoftOnboardTool",
-      "category": "onboarding"
+      "name": "DashboardGenerateTool",
+      "module": "tools.categories.dashboard_tools",
+      "class": "DashboardGenerateTool",
+      "category": "dashboard"
     },
     {
-      "name": "HardOnboardTool",
-      "module": "tools.categories.onboarding_tools",
-      "class": "HardOnboardTool",
-      "category": "onboarding"
+      "name": "DashboardDataAggregateTool",
+      "module": "tools.categories.dashboard_tools",
+      "class": "DashboardDataAggregateTool",
+      "category": "dashboard"
     },
     {
-      "name": "HealthPingTool",
-      "module": "tools.categories.health_tools",
-      "class": "HealthPingTool",
-      "category": "health"
+      "name": "DashboardHTMLTool",
+      "module": "tools.categories.dashboard_tools",
+      "class": "DashboardHTMLTool",
+      "category": "dashboard"
     },
     {
-      "name": "SnapshotTool",
-      "module": "tools.categories.health_tools",
-      "class": "SnapshotTool",
-      "category": "health"
+      "name": "DashboardChartsTool",
+      "module": "tools.categories.dashboard_tools",
+      "class": "DashboardChartsTool",
+      "category": "dashboard"
+    },
+    {
+      "name": "DashboardStylesTool",
+      "module": "tools.categories.dashboard_tools",
+      "class": "DashboardStylesTool",
+      "category": "dashboard"
+    },
+    {
+      "name": "DiscordStatusDashboardTool",
+      "module": "tools.categories.dashboard_tools",
+      "class": "DiscordStatusDashboardTool",
+      "category": "dashboard"
+    },
+    {
+      "name": "DebateStartTool",
+      "module": "tools.categories.debate_tools",
+      "class": "DebateStartTool",
+      "category": "debate"
+    },
+    {
+      "name": "DebateVoteTool",
+      "module": "tools.categories.debate_tools",
+      "class": "DebateVoteTool",
+      "category": "debate"
+    },
+    {
+      "name": "DebateStatusTool",
+      "module": "tools.categories.debate_tools",
+      "class": "DebateStatusTool",
+      "category": "debate"
+    },
+    {
+      "name": "DebateNotifyTool",
+      "module": "tools.categories.debate_tools",
+      "class": "DebateNotifyTool",
+      "category": "debate"
+    },
+    {
+      "name": "DiscordProfileViewerTool",
+      "module": "tools.categories.discord_profile_tools",
+      "class": "DiscordProfileViewerTool",
+      "category": "discord_profile"
     },
     {
       "name": "DiscordBotHealthTool",
@@ -558,226 +360,154 @@
       "category": "discord"
     },
     {
-      "name": "SelfMessageTool",
-      "module": "tools.categories.captain_tools_messaging",
-      "class": "SelfMessageTool",
-      "category": "captain_messaging"
+      "name": "CreateWebhookTool",
+      "module": "tools.categories.discord_webhook_tools",
+      "class": "CreateWebhookTool",
+      "category": "discord_webhook"
     },
     {
-      "name": "MessageAllAgentsTool",
-      "module": "tools.categories.captain_tools_messaging",
-      "class": "MessageAllAgentsTool",
-      "category": "captain_messaging"
+      "name": "ListWebhooksTool",
+      "module": "tools.categories.discord_webhook_tools",
+      "class": "ListWebhooksTool",
+      "category": "discord_webhook"
     },
     {
-      "name": "GasDeliveryTool",
-      "module": "tools.categories.captain_tools_monitoring",
-      "class": "GasDeliveryTool",
-      "category": "captain_monitoring"
+      "name": "SaveWebhookTool",
+      "module": "tools.categories.discord_webhook_tools",
+      "class": "SaveWebhookTool",
+      "category": "discord_webhook"
     },
     {
-      "name": "LeaderboardUpdateTool",
-      "module": "tools.categories.captain_tools_monitoring",
-      "class": "LeaderboardUpdateTool",
-      "category": "captain_monitoring"
+      "name": "TestWebhookTool",
+      "module": "tools.categories.discord_webhook_tools",
+      "class": "TestWebhookTool",
+      "category": "discord_webhook"
     },
     {
-      "name": "CycleReportTool",
-      "module": "tools.categories.captain_tools_monitoring",
-      "class": "CycleReportTool",
-      "category": "captain_monitoring"
+      "name": "WebhookManagerTool",
+      "module": "tools.categories.discord_webhook_tools",
+      "class": "WebhookManagerTool",
+      "category": "discord_webhook"
     },
     {
-      "name": "MessageIngestTool",
-      "module": "tools.categories.message_task_tools",
-      "class": "MessageIngestTool",
-      "category": "message_task"
+      "name": "DocsSearchTool",
+      "module": "tools.categories.docs_tools",
+      "class": "DocsSearchTool",
+      "category": "docs"
     },
     {
-      "name": "TaskParserTool",
-      "module": "tools.categories.message_task_tools",
-      "class": "TaskParserTool",
-      "category": "message_task"
+      "name": "DocsExportTool",
+      "module": "tools.categories.docs_tools",
+      "class": "DocsExportTool",
+      "category": "docs"
     },
     {
-      "name": "TaskFingerprintTool",
-      "module": "tools.categories.message_task_tools",
-      "class": "TaskFingerprintTool",
-      "category": "message_task"
+      "name": "GitHubRepoSimilarityAnalyzerTool",
+      "module": "tools.categories.github_consolidation_tools",
+      "class": "GitHubRepoSimilarityAnalyzerTool",
+      "category": "github_consolidation"
     },
     {
-      "name": "MetricsSnapshotTool",
-      "module": "tools.categories.observability_tools",
-      "class": "MetricsSnapshotTool",
-      "category": "observability"
+      "name": "GitHubRepoConsolidationPlannerTool",
+      "module": "tools.categories.github_consolidation_tools",
+      "class": "GitHubRepoConsolidationPlannerTool",
+      "category": "github_consolidation"
     },
     {
-      "name": "MetricsTool",
-      "module": "tools.categories.observability_tools",
-      "class": "MetricsTool",
-      "category": "observability"
+      "name": "GitHubRepoMergeExecutorTool",
+      "module": "tools.categories.github_consolidation_tools",
+      "class": "GitHubRepoMergeExecutorTool",
+      "category": "github_consolidation"
     },
     {
-      "name": "SystemHealthTool",
-      "module": "tools.categories.observability_tools",
-      "class": "SystemHealthTool",
-      "category": "observability"
+      "name": "HealthPingTool",
+      "module": "tools.categories.health_tools",
+      "class": "HealthPingTool",
+      "category": "health"
     },
     {
-      "name": "SLOCheckTool",
-      "module": "tools.categories.observability_tools",
-      "class": "SLOCheckTool",
-      "category": "observability"
+      "name": "SnapshotTool",
+      "module": "tools.categories.health_tools",
+      "class": "SnapshotTool",
+      "category": "health"
     },
     {
-      "name": "ComplianceHistoryTool",
-      "module": "tools.categories.compliance_tools",
-      "class": "ComplianceHistoryTool",
-      "category": "compliance"
+      "name": "ImportValidatorTool",
+      "module": "tools.categories.import_fix_tools",
+      "class": "ImportValidatorTool",
+      "category": "import_fix"
     },
     {
-      "name": "PolicyCheckTool",
-      "module": "tools.categories.compliance_tools",
-      "class": "PolicyCheckTool",
-      "category": "compliance"
+      "name": "ModuleExtractorTool",
+      "module": "tools.categories.import_fix_tools",
+      "class": "ModuleExtractorTool",
+      "category": "import_fix"
     },
     {
-      "name": "FileSizeCheckTool",
-      "module": "tools.categories.refactoring_tools",
-      "class": "FileSizeCheckTool",
-      "category": "refactoring"
+      "name": "QuickLineCountTool",
+      "module": "tools.categories.import_fix_tools",
+      "class": "QuickLineCountTool",
+      "category": "import_fix"
     },
     {
-      "name": "AutoExtractTool",
-      "module": "tools.categories.refactoring_tools",
-      "class": "AutoExtractTool",
-      "category": "refactoring"
+      "name": "PublicAPIImportValidatorTool",
+      "module": "tools.categories.import_fix_tools",
+      "class": "PublicAPIImportValidatorTool",
+      "category": "import_fix"
     },
     {
-      "name": "TestPyramidAnalyzerTool",
-      "module": "tools.categories.refactoring_tools",
-      "class": "TestPyramidAnalyzerTool",
-      "category": "refactoring"
+      "name": "ImportChainValidatorTool",
+      "module": "tools.categories.import_fix_tools",
+      "class": "ImportChainValidatorTool",
+      "category": "import_fix"
     },
     {
-      "name": "LintFixTool",
-      "module": "tools.categories.refactoring_tools",
-      "class": "LintFixTool",
-      "category": "refactoring"
+      "name": "OrchestratorScanTool",
+      "module": "tools.categories.infrastructure_audit_tools",
+      "class": "OrchestratorScanTool",
+      "category": "infrastructure_audit"
     },
     {
-      "name": "ArchitecturalCheckerTool",
-      "module": "tools.categories.captain_tools_architecture",
-      "class": "ArchitecturalCheckerTool",
-      "category": "captain_architecture"
+      "name": "FileLineCounterTool",
+      "module": "tools.categories.infrastructure_audit_tools",
+      "class": "FileLineCounterTool",
+      "category": "infrastructure_audit"
     },
     {
-      "name": "V2CheckTool",
-      "module": "tools.categories.v2_tools",
-      "class": "V2CheckTool",
-      "category": "v2"
+      "name": "ToolRuntimeAuditTool",
+      "module": "tools.categories.infrastructure_audit_tools",
+      "class": "ToolRuntimeAuditTool",
+      "category": "infrastructure_audit"
     },
     {
-      "name": "V2ReportTool",
-      "module": "tools.categories.v2_tools",
-      "class": "V2ReportTool",
-      "category": "v2"
+      "name": "BrokenToolsAuditTool",
+      "module": "tools.categories.infrastructure_audit_tools",
+      "class": "BrokenToolsAuditTool",
+      "category": "infrastructure_audit"
     },
     {
-      "name": "AgentStatusTool",
-      "module": "tools.categories.agent_ops_tools",
-      "class": "AgentStatusTool",
-      "category": "agent_ops"
+      "name": "ProjectComponentsAuditTool",
+      "module": "tools.categories.infrastructure_audit_tools",
+      "class": "ProjectComponentsAuditTool",
+      "category": "infrastructure_audit"
     },
     {
-      "name": "ClaimTaskTool",
-      "module": "tools.categories.agent_ops_tools",
-      "class": "ClaimTaskTool",
-      "category": "agent_ops"
+      "name": "ModuleExtractorPlannerTool",
+      "module": "tools.categories.infrastructure_utility_tools",
+      "class": "ModuleExtractorPlannerTool",
+      "category": "infrastructure_utility"
     },
     {
-      "name": "QueueStatusMonitorTool",
-      "module": "tools.categories.queue_monitor_tools",
-      "class": "QueueStatusMonitorTool",
-      "category": "queue_monitor"
+      "name": "InfrastructureROICalculatorTool",
+      "module": "tools.categories.infrastructure_utility_tools",
+      "class": "InfrastructureROICalculatorTool",
+      "category": "infrastructure_utility"
     },
     {
-      "name": "MessageHistoryViewerTool",
-      "module": "tools.categories.message_history_tools",
-      "class": "MessageHistoryViewerTool",
-      "category": "message_history"
-    },
-    {
-      "name": "MessageHistoryAnalyzerTool",
-      "module": "tools.categories.message_history_tools",
-      "class": "MessageHistoryAnalyzerTool",
-      "category": "message_history"
-    },
-    {
-      "name": "MessageCompressionTool",
-      "module": "tools.categories.message_history_tools",
-      "class": "MessageCompressionTool",
-      "category": "message_history"
-    },
-    {
-      "name": "DiscordMermaidRendererTool",
-      "module": "tools.categories.web_tools",
-      "class": "DiscordMermaidRendererTool",
-      "category": "web"
-    },
-    {
-      "name": "DiscordWebTestTool",
-      "module": "tools.categories.web_tools",
-      "class": "DiscordWebTestTool",
-      "category": "web"
-    },
-    {
-      "name": "MorningBriefingTool",
-      "module": "tools.categories.captain_tools_coordination",
-      "class": "MorningBriefingTool",
-      "category": "captain_coordination"
-    },
-    {
-      "name": "CompletionProcessorTool",
-      "module": "tools.categories.captain_coordination_tools",
-      "class": "CompletionProcessorTool",
-      "category": "captain_coordination"
-    },
-    {
-      "name": "LeaderboardUpdaterTool",
-      "module": "tools.categories.captain_coordination_tools",
-      "class": "LeaderboardUpdaterTool",
-      "category": "captain_coordination"
-    },
-    {
-      "name": "NextTaskPickerTool",
-      "module": "tools.categories.captain_coordination_tools",
-      "class": "NextTaskPickerTool",
-      "category": "captain_coordination"
-    },
-    {
-      "name": "ROIQuickCalculatorTool",
-      "module": "tools.categories.captain_coordination_tools",
-      "class": "ROIQuickCalculatorTool",
-      "category": "captain_coordination"
-    },
-    {
-      "name": "SystemDateTimeTool",
-      "module": "tools.categories.system_tools",
-      "class": "SystemDateTimeTool",
-      "category": "system"
-    },
-    {
-      "name": "CheckInSystemTool",
-      "module": "tools.categories.system_tools",
-      "class": "CheckInSystemTool",
-      "category": "system"
-    },
-    {
-      "name": "CheckInViewerTool",
-      "module": "tools.categories.system_tools",
-      "class": "CheckInViewerTool",
-      "category": "system"
+      "name": "BrowserPoolManagerTool",
+      "module": "tools.categories.infrastructure_utility_tools",
+      "class": "BrowserPoolManagerTool",
+      "category": "infrastructure_utility"
     },
     {
       "name": "WorkspaceHealthMonitorTool",
@@ -816,6 +546,36 @@
       "category": "infrastructure_workspace"
     },
     {
+      "name": "FindSSOTViolationsAdapter",
+      "module": "tools.categories.integration_tools",
+      "class": "FindSSOTViolationsAdapter",
+      "category": "integration"
+    },
+    {
+      "name": "FindDuplicateFunctionalityAdapter",
+      "module": "tools.categories.integration_tools",
+      "class": "FindDuplicateFunctionalityAdapter",
+      "category": "integration"
+    },
+    {
+      "name": "FindIntegrationOpportunitiesAdapter",
+      "module": "tools.categories.integration_tools",
+      "class": "FindIntegrationOpportunitiesAdapter",
+      "category": "integration"
+    },
+    {
+      "name": "CheckImportDependenciesAdapter",
+      "module": "tools.categories.integration_tools",
+      "class": "CheckImportDependenciesAdapter",
+      "category": "integration"
+    },
+    {
+      "name": "AuditImportsTool",
+      "module": "tools.categories.integration_tools",
+      "class": "AuditImportsTool",
+      "category": "integration"
+    },
+    {
       "name": "MissionAdvisorTool",
       "module": "tools.categories.intelligent_mission_advisor_adapter",
       "class": "MissionAdvisorTool",
@@ -840,16 +600,340 @@
       "category": "intelligent_mission_advisor_adapter"
     },
     {
-      "name": "AgentActivityTrackerTool",
-      "module": "tools.categories.agent_activity_tools",
-      "class": "AgentActivityTrackerTool",
-      "category": "agent_activity"
+      "name": "MemoryLeakDetectorTool",
+      "module": "tools.categories.memory_safety_adapters",
+      "class": "MemoryLeakDetectorTool",
+      "category": "memory_safety_adapters"
     },
     {
-      "name": "AgentActivityMonitorTool",
-      "module": "tools.categories.agent_activity_tools",
-      "class": "AgentActivityMonitorTool",
-      "category": "agent_activity"
+      "name": "FileVerificationTool",
+      "module": "tools.categories.memory_safety_adapters",
+      "class": "FileVerificationTool",
+      "category": "memory_safety_adapters"
+    },
+    {
+      "name": "UnboundedScanTool",
+      "module": "tools.categories.memory_safety_adapters",
+      "class": "UnboundedScanTool",
+      "category": "memory_safety_adapters"
+    },
+    {
+      "name": "MemorySafetyImportValidatorTool",
+      "module": "tools.categories.memory_safety_adapters",
+      "class": "MemorySafetyImportValidatorTool",
+      "category": "memory_safety_adapters"
+    },
+    {
+      "name": "FileHandleCheckTool",
+      "module": "tools.categories.memory_safety_adapters",
+      "class": "FileHandleCheckTool",
+      "category": "memory_safety_adapters"
+    },
+    {
+      "name": "MessagePatternAnalyzerTool",
+      "module": "tools.categories.message_analytics_tools",
+      "class": "MessagePatternAnalyzerTool",
+      "category": "message_analytics"
+    },
+    {
+      "name": "MessageMetricsDashboardTool",
+      "module": "tools.categories.message_analytics_tools",
+      "class": "MessageMetricsDashboardTool",
+      "category": "message_analytics"
+    },
+    {
+      "name": "MessageLearningExtractorTool",
+      "module": "tools.categories.message_analytics_tools",
+      "class": "MessageLearningExtractorTool",
+      "category": "message_analytics"
+    },
+    {
+      "name": "MessageHistoryViewerTool",
+      "module": "tools.categories.message_history_tools",
+      "class": "MessageHistoryViewerTool",
+      "category": "message_history"
+    },
+    {
+      "name": "MessageHistoryAnalyzerTool",
+      "module": "tools.categories.message_history_tools",
+      "class": "MessageHistoryAnalyzerTool",
+      "category": "message_history"
+    },
+    {
+      "name": "MessageCompressionTool",
+      "module": "tools.categories.message_history_tools",
+      "class": "MessageCompressionTool",
+      "category": "message_history"
+    },
+    {
+      "name": "MessageIngestTool",
+      "module": "tools.categories.message_task_tools",
+      "class": "MessageIngestTool",
+      "category": "message_task"
+    },
+    {
+      "name": "TaskParserTool",
+      "module": "tools.categories.message_task_tools",
+      "class": "TaskParserTool",
+      "category": "message_task"
+    },
+    {
+      "name": "TaskFingerprintTool",
+      "module": "tools.categories.message_task_tools",
+      "class": "TaskFingerprintTool",
+      "category": "message_task"
+    },
+    {
+      "name": "SendMessageTool",
+      "module": "tools.categories.messaging_tools",
+      "class": "SendMessageTool",
+      "category": "messaging"
+    },
+    {
+      "name": "BroadcastTool",
+      "module": "tools.categories.messaging_tools",
+      "class": "BroadcastTool",
+      "category": "messaging"
+    },
+    {
+      "name": "InboxCheckTool",
+      "module": "tools.categories.messaging_tools",
+      "class": "InboxCheckTool",
+      "category": "messaging"
+    },
+    {
+      "name": "MetricsSnapshotTool",
+      "module": "tools.categories.observability_tools",
+      "class": "MetricsSnapshotTool",
+      "category": "observability"
+    },
+    {
+      "name": "MetricsTool",
+      "module": "tools.categories.observability_tools",
+      "class": "MetricsTool",
+      "category": "observability"
+    },
+    {
+      "name": "SystemHealthTool",
+      "module": "tools.categories.observability_tools",
+      "class": "SystemHealthTool",
+      "category": "observability"
+    },
+    {
+      "name": "SLOCheckTool",
+      "module": "tools.categories.observability_tools",
+      "class": "SLOCheckTool",
+      "category": "observability"
+    },
+    {
+      "name": "SoftOnboardTool",
+      "module": "tools.categories.onboarding_tools",
+      "class": "SoftOnboardTool",
+      "category": "onboarding"
+    },
+    {
+      "name": "HardOnboardTool",
+      "module": "tools.categories.onboarding_tools",
+      "class": "HardOnboardTool",
+      "category": "onboarding"
+    },
+    {
+      "name": "OSSCloneTool",
+      "module": "tools.categories.oss_tools",
+      "class": "OSSCloneTool",
+      "category": "oss"
+    },
+    {
+      "name": "OSSFetchIssuesTool",
+      "module": "tools.categories.oss_tools",
+      "class": "OSSFetchIssuesTool",
+      "category": "oss"
+    },
+    {
+      "name": "OSSImportIssuesTool",
+      "module": "tools.categories.oss_tools",
+      "class": "OSSImportIssuesTool",
+      "category": "oss"
+    },
+    {
+      "name": "OSSPortfolioTool",
+      "module": "tools.categories.oss_tools",
+      "class": "OSSPortfolioTool",
+      "category": "oss"
+    },
+    {
+      "name": "OSSStatusTool",
+      "module": "tools.categories.oss_tools",
+      "class": "OSSStatusTool",
+      "category": "oss"
+    },
+    {
+      "name": "CreateProposalTool",
+      "module": "tools.categories.proposal_tools",
+      "class": "CreateProposalTool",
+      "category": "proposal"
+    },
+    {
+      "name": "ListProposalsTool",
+      "module": "tools.categories.proposal_tools",
+      "class": "ListProposalsTool",
+      "category": "proposal"
+    },
+    {
+      "name": "ViewProposalTool",
+      "module": "tools.categories.proposal_tools",
+      "class": "ViewProposalTool",
+      "category": "proposal"
+    },
+    {
+      "name": "ContributeProposalTool",
+      "module": "tools.categories.proposal_tools",
+      "class": "ContributeProposalTool",
+      "category": "proposal"
+    },
+    {
+      "name": "StartDebateTool",
+      "module": "tools.categories.proposal_tools",
+      "class": "StartDebateTool",
+      "category": "proposal"
+    },
+    {
+      "name": "QueueStatusMonitorTool",
+      "module": "tools.categories.queue_monitor_tools",
+      "class": "QueueStatusMonitorTool",
+      "category": "queue_monitor"
+    },
+    {
+      "name": "FileSizeCheckTool",
+      "module": "tools.categories.refactoring_tools",
+      "class": "FileSizeCheckTool",
+      "category": "refactoring"
+    },
+    {
+      "name": "AutoExtractTool",
+      "module": "tools.categories.refactoring_tools",
+      "class": "AutoExtractTool",
+      "category": "refactoring"
+    },
+    {
+      "name": "TestPyramidAnalyzerTool",
+      "module": "tools.categories.refactoring_tools",
+      "class": "TestPyramidAnalyzerTool",
+      "category": "refactoring"
+    },
+    {
+      "name": "LintFixTool",
+      "module": "tools.categories.refactoring_tools",
+      "class": "LintFixTool",
+      "category": "refactoring"
+    },
+    {
+      "name": "SessionCleanupTool",
+      "module": "tools.categories.session_tools",
+      "class": "SessionCleanupTool",
+      "category": "session"
+    },
+    {
+      "name": "PassdownTool",
+      "module": "tools.categories.session_tools",
+      "class": "PassdownTool",
+      "category": "session"
+    },
+    {
+      "name": "SessionPointsCalculatorTool",
+      "module": "tools.categories.session_tools",
+      "class": "SessionPointsCalculatorTool",
+      "category": "session"
+    },
+    {
+      "name": "TakeNoteTool",
+      "module": "tools.categories.swarm_brain_tools",
+      "class": "TakeNoteTool",
+      "category": "swarm_brain"
+    },
+    {
+      "name": "ShareLearningTool",
+      "module": "tools.categories.swarm_brain_tools",
+      "class": "ShareLearningTool",
+      "category": "swarm_brain"
+    },
+    {
+      "name": "SearchKnowledgeTool",
+      "module": "tools.categories.swarm_brain_tools",
+      "class": "SearchKnowledgeTool",
+      "category": "swarm_brain"
+    },
+    {
+      "name": "LogSessionTool",
+      "module": "tools.categories.swarm_brain_tools",
+      "class": "LogSessionTool",
+      "category": "swarm_brain"
+    },
+    {
+      "name": "GetAgentNotesTool",
+      "module": "tools.categories.swarm_brain_tools",
+      "class": "GetAgentNotesTool",
+      "category": "swarm_brain"
+    },
+    {
+      "name": "SwarmPulseTool",
+      "module": "tools.categories.swarm_consciousness",
+      "class": "SwarmPulseTool",
+      "category": "swarm_consciousness"
+    },
+    {
+      "name": "SystemDateTimeTool",
+      "module": "tools.categories.system_tools",
+      "class": "SystemDateTimeTool",
+      "category": "system"
+    },
+    {
+      "name": "CheckInSystemTool",
+      "module": "tools.categories.system_tools",
+      "class": "CheckInSystemTool",
+      "category": "system"
+    },
+    {
+      "name": "CheckInViewerTool",
+      "module": "tools.categories.system_tools",
+      "class": "CheckInViewerTool",
+      "category": "system"
+    },
+    {
+      "name": "TestFileGeneratorTool",
+      "module": "tools.categories.test_generation_tools",
+      "class": "TestFileGeneratorTool",
+      "category": "test_generation"
+    },
+    {
+      "name": "CoveragePyramidReportTool",
+      "module": "tools.categories.test_generation_tools",
+      "class": "CoveragePyramidReportTool",
+      "category": "test_generation"
+    },
+    {
+      "name": "CoverageReportTool",
+      "module": "tools.categories.testing_tools",
+      "class": "CoverageReportTool",
+      "category": "testing"
+    },
+    {
+      "name": "MutationGateTool",
+      "module": "tools.categories.testing_tools",
+      "class": "MutationGateTool",
+      "category": "testing"
+    },
+    {
+      "name": "V2CheckTool",
+      "module": "tools.categories.v2_tools",
+      "class": "V2CheckTool",
+      "category": "v2"
+    },
+    {
+      "name": "V2ReportTool",
+      "module": "tools.categories.v2_tools",
+      "class": "V2ReportTool",
+      "category": "v2"
     },
     {
       "name": "SmokeTestTool",
@@ -888,253 +972,182 @@
       "category": "validation"
     },
     {
-      "name": "MessagePatternAnalyzerTool",
-      "module": "tools.categories.message_analytics_tools",
-      "class": "MessagePatternAnalyzerTool",
-      "category": "message_analytics"
+      "name": "TaskContextTool",
+      "module": "tools.categories.vector_tools",
+      "class": "TaskContextTool",
+      "category": "vector"
     },
     {
-      "name": "MessageMetricsDashboardTool",
-      "module": "tools.categories.message_analytics_tools",
-      "class": "MessageMetricsDashboardTool",
-      "category": "message_analytics"
+      "name": "VectorSearchTool",
+      "module": "tools.categories.vector_tools",
+      "class": "VectorSearchTool",
+      "category": "vector"
     },
     {
-      "name": "MessageLearningExtractorTool",
-      "module": "tools.categories.message_analytics_tools",
-      "class": "MessageLearningExtractorTool",
-      "category": "message_analytics"
+      "name": "IndexWorkTool",
+      "module": "tools.categories.vector_tools",
+      "class": "IndexWorkTool",
+      "category": "vector"
     },
     {
-      "name": "OrchestratorScanTool",
-      "module": "tools.categories.infrastructure_audit_tools",
-      "class": "OrchestratorScanTool",
-      "category": "infrastructure_audit"
+      "name": "DiscordMermaidRendererTool",
+      "module": "tools.categories.web_tools",
+      "class": "DiscordMermaidRendererTool",
+      "category": "web"
     },
     {
-      "name": "FileLineCounterTool",
-      "module": "tools.categories.infrastructure_audit_tools",
-      "class": "FileLineCounterTool",
-      "category": "infrastructure_audit"
+      "name": "DiscordWebTestTool",
+      "module": "tools.categories.web_tools",
+      "class": "DiscordWebTestTool",
+      "category": "web"
     },
     {
-      "name": "ToolRuntimeAuditTool",
-      "module": "tools.categories.infrastructure_audit_tools",
-      "class": "ToolRuntimeAuditTool",
-      "category": "infrastructure_audit"
+      "name": "InboxCleanupTool",
+      "module": "tools.categories.workflow_tools",
+      "class": "InboxCleanupTool",
+      "category": "workflow"
     },
     {
-      "name": "BrokenToolsAuditTool",
-      "module": "tools.categories.infrastructure_audit_tools",
-      "class": "BrokenToolsAuditTool",
-      "category": "infrastructure_audit"
+      "name": "MissionClaimTool",
+      "module": "tools.categories.workflow_tools",
+      "class": "MissionClaimTool",
+      "category": "workflow"
     },
     {
-      "name": "ProjectComponentsAuditTool",
-      "module": "tools.categories.infrastructure_audit_tools",
-      "class": "ProjectComponentsAuditTool",
-      "category": "infrastructure_audit"
+      "name": "ROICalculatorTool",
+      "module": "tools.categories.workflow_tools",
+      "class": "ROICalculatorTool",
+      "category": "workflow"
     },
     {
-      "name": "DebateStartTool",
-      "module": "tools.categories.debate_tools",
-      "class": "DebateStartTool",
-      "category": "debate"
-    },
-    {
-      "name": "DebateVoteTool",
-      "module": "tools.categories.debate_tools",
-      "class": "DebateVoteTool",
-      "category": "debate"
-    },
-    {
-      "name": "DebateStatusTool",
-      "module": "tools.categories.debate_tools",
-      "class": "DebateStatusTool",
-      "category": "debate"
-    },
-    {
-      "name": "DebateNotifyTool",
-      "module": "tools.categories.debate_tools",
-      "class": "DebateNotifyTool",
-      "category": "debate"
-    },
-    {
-      "name": "DocsSearchTool",
-      "module": "tools.categories.docs_tools",
-      "class": "DocsSearchTool",
-      "category": "docs"
-    },
-    {
-      "name": "DocsExportTool",
-      "module": "tools.categories.docs_tools",
-      "class": "DocsExportTool",
-      "category": "docs"
-    },
-    {
-      "name": "FindIdleAgentsTool",
-      "module": "tools.categories.captain_tools_utilities",
-      "class": "FindIdleAgentsTool",
-      "category": "captain_utilities"
-    },
-    {
-      "name": "GasCheckTool",
-      "module": "tools.categories.captain_tools_utilities",
-      "class": "GasCheckTool",
-      "category": "captain_utilities"
-    },
-    {
-      "name": "UpdateLogTool",
-      "module": "tools.categories.captain_tools_utilities",
-      "class": "UpdateLogTool",
-      "category": "captain_utilities"
-    },
-    {
-      "name": "ToolbeltHelpTool",
-      "module": "tools.categories.captain_tools_utilities",
-      "class": "ToolbeltHelpTool",
-      "category": "captain_utilities"
-    },
-    {
-      "name": "ImportValidatorTool",
-      "module": "tools.categories.import_fix_tools",
-      "class": "ImportValidatorTool",
-      "category": "import_fix"
-    },
-    {
-      "name": "ModuleExtractorTool",
-      "module": "tools.categories.import_fix_tools",
-      "class": "ModuleExtractorTool",
-      "category": "import_fix"
-    },
-    {
-      "name": "QuickLineCountTool",
-      "module": "tools.categories.import_fix_tools",
-      "class": "QuickLineCountTool",
-      "category": "import_fix"
-    },
-    {
-      "name": "PublicAPIImportValidatorTool",
-      "module": "tools.categories.import_fix_tools",
-      "class": "PublicAPIImportValidatorTool",
-      "category": "import_fix"
-    },
-    {
-      "name": "ImportChainValidatorTool",
-      "module": "tools.categories.import_fix_tools",
-      "class": "ImportChainValidatorTool",
-      "category": "import_fix"
+      "name": "DiscordPostTool",
+      "module": "tools.categories.communication_tools",
+      "class": "DiscordPostTool",
+      "category": "communication"
     }
   ],
   "scripts": [
-    "tools/audit_broken_tools_phase3.py",
-    "tools/discord_health_monitor.py",
-    "tools/update_github_repo_description.py",
-    "tools/START_CHAT_BOT_NOW.py",
-    "tools/verify_mcp_server_protocol.py",
-    "tools/validate_closure_format.py",
-    "tools/configuration_sync_checker.py",
-    "tools/test_mcp_server_connectivity.py",
-    "tools/ssot_tagging_validator.py",
-    "tools/system_health_dashboard.py",
-    "tools/add_mcp_to_cursor_settings.py",
-    "tools/tag_analyzer.py",
-    "tools/test_deployment_staging.py",
-    "tools/calibrate_agent_coordinates.py",
-    "tools/capture_agent_coordinates.py",
-    "tools/protocol_validator.py",
-    "tools/audit_toolbelt_comprehensive.py",
-    "tools/check_audit_evidence.py",
-    "tools/test_toolbelt_basic.py",
-    "tools/ssot_tagging_batch_assigner.py",
-    "tools/test_twitch_config.py",
-    "tools/verify_deployment_integration.py",
-    "tools/manage_env.py",
-    "tools/devlog_manager.py",
-    "tools/setup_cursor_mcp.py",
-    "tools/test_bi_tools.py",
-    "tools/comprehensive_audit.py",
-    "tools/soft_onboard_cli.py",
-    "tools/ssot_coordination_report.py",
-    "tools/master_task_log_to_cycle_planner.py",
-    "tools/advisor_cli.py",
-    "tools/devlog_poster_agent_channel.py",
-    "scripts/code_comment_mismatch_detector.py",
-    "scripts/create_case_variation_prs.py",
-    "scripts/post_agent4_update_to_discord.py",
-    "scripts/post_swarm_site_health_breakthrough.py",
-    "scripts/test_discord_commands.py",
-    "scripts/archive_source_repos.py",
-    "scripts/agent_fuel_monitor.py",
-    "scripts/post_4agent_mode_blog.py",
-    "scripts/post_swarm_introduction.py",
-    "scripts/test_pyautogui_delivery_verbose.py",
-    "scripts/agent_documentation_cli.py",
-    "scripts/get_file_line_counts.py",
-    "scripts/validate_imports.py",
-    "scripts/deploy_via_wordpress_admin.py",
-    "scripts/verify_message_logging.py",
-    "scripts/activate_vector_database_integration.py",
-    "scripts/check_push_status.py",
-    "scripts/test_end_to_end_message_flow.py",
-    "scripts/cleanup_v2_compliance.py",
-    "scripts/fix_and_ingest_vector_database.py",
-    "scripts/scan_core_domain_files.py",
-    "scripts/init_daily_cycle.py",
-    "scripts/tmp_menu_fix.py",
-    "scripts/setup_gpt_automation.py",
-    "scripts/validate_v2_compliance.py",
-    "scripts/extract_integration_files.py",
-    "scripts/task_cli.py",
-    "scripts/run_test_suite_validation.py",
-    "scripts/enforce_python_standards.py",
-    "scripts/check_system_updates.py",
-    "scripts/test_message_delivery.py",
-    "scripts/status_embedding_refresh.py",
-    "scripts/setup_chat_mate.py",
-    "scripts/list_discord_commands.py",
-    "scripts/start_queue_processor.py",
-    "scripts/check_all_repos_needing_archive.py",
-    "scripts/validate_config_ssot.py",
-    "scripts/setup_enhanced_discord.py",
-    "scripts/terminal_completion_monitor.py",
-    "scripts/check_keyboard_lock_status.py",
-    "scripts/v2_refactoring_tracker.py",
-    "scripts/check_theme_syntax.py",
-    "scripts/agent_onboarding.py",
-    "scripts/test_enhanced_discord.py",
-    "scripts/create_merge1_pr.py",
-    "scripts/test_message_logging_all_paths.py",
-    "scripts/check_duplicate_accomplishments.py",
-    "scripts/v2_release_summary.py",
-    "scripts/identify_infrastructure_files.py",
-    "scripts/post_agent2_update_to_discord.py",
-    "scripts/execute_end_of_cycle_push.py",
-    "scripts/scan_core_domain_quality.py",
-    "scripts/auto_assign_violations.py",
-    "scripts/post_agent8_update_to_discord.py",
-    "scripts/reset_stuck_messages.py",
-    "scripts/tmp_cleanup_nav.py",
-    "scripts/test_queue_processing_delivery_logging.py",
-    "scripts/post_swarm_philosophy_blog.py",
-    "scripts/run_canon_extraction.py",
-    "scripts/cleanup_superpowered_venv.py",
-    "scripts/fix_dadudekc_theme_syntax_error.py",
-    "scripts/captain_add_knowledge_to_swarm_brain.py",
-    "scripts/create_work_session.py",
-    "scripts/test_activity_tracking.py",
-    "scripts/check_dashboard_page.py",
-    "scripts/add_ci_cd_to_github_repos.py",
-    "scripts/index_v2_refactoring.py",
-    "scripts/test_compression_integration.py",
-    "scripts/create_ariajet_game_posts.py",
-    "scripts/captain_update_log.py",
-    "scripts/validate_workspace_coords.py",
-    "scripts/verify_agent8_ssot_files.py",
-    "scripts/post_agent7_update_to_discord.py",
-    "scripts/run_unified.py",
-    "scripts/validate_refactored_files.py",
-    "scripts/v2_compliance_mcp_ci_checks.py",
-    "scripts/setup_dream_os_dreamvault.py"
+    "tools\\validate_closure_format.py",
+    "tools\\test_deployment_staging.py",
+    "tools\\configuration_sync_checker.py",
+    "tools\\devlog_manager.py",
+    "tools\\tag_analyzer.py",
+    "tools\\master_task_log_to_cycle_planner.py",
+    "tools\\ssot_tagging_validator.py",
+    "tools\\verify_deployment_integration.py",
+    "tools\\audit_broken_tools_phase3.py",
+    "tools\\check_audit_evidence.py",
+    "tools\\protocol_validator.py",
+    "tools\\comprehensive_audit.py",
+    "tools\\discord_health_monitor.py",
+    "tools\\calibrate_agent_coordinates.py",
+    "tools\\system_health_dashboard.py",
+    "tools\\ssot_tagging_batch_assigner.py",
+    "tools\\devlog_poster_agent_channel.py",
+    "tools\\ssot_coordination_report.py",
+    "tools\\start_discord_bot.py",
+    "tools\\start_discord_system.py",
+    "tools\\add_mcp_to_cursor_settings.py",
+    "tools\\wordpress_manager.py",
+    "tools\\advisor_cli.py",
+    "tools\\setup_cursor_mcp.py",
+    "tools\\update_github_repo_description.py",
+    "tools\\verify_mcp_server_protocol.py",
+    "tools\\generate_cycle_accomplishments_report.py",
+    "tools\\agent_bump_script.py",
+    "tools\\deploy_tradingrobotplug_now.py",
+    "tools\\audit_toolbelt_comprehensive.py",
+    "tools\\generate_blog_preview.py",
+    "tools\\post_cycle_report_to_blog.py",
+    "tools\\unified_cycle_accomplishments_report.py",
+    "tools\\deploy_weareswarm_font_fix.py",
+    "tools\\sync_feed_to_weareswarm.py",
+    "tools\\deploy_weareswarm_feed_system.py",
+    "tools\\test_bi_tools.py",
+    "tools\\test_toolbelt_basic.py",
+    "tools\\START_CHAT_BOT_NOW.py",
+    "tools\\test_twitch_config.py",
+    "tools\\soft_onboard_cli.py",
+    "tools\\manage_env.py",
+    "tools\\capture_agent_coordinates.py",
+    "tools\\test_mcp_server_connectivity.py",
+    "scripts\\add_ci_cd_to_github_repos.py",
+    "scripts\\agent_documentation_cli.py",
+    "scripts\\agent_onboarding.py",
+    "scripts\\auto_assign_violations.py",
+    "scripts\\captain_add_knowledge_to_swarm_brain.py",
+    "scripts\\cleanup_v2_compliance.py",
+    "scripts\\enforce_python_standards.py",
+    "scripts\\fix_and_ingest_vector_database.py",
+    "scripts\\index_v2_refactoring.py",
+    "scripts\\setup_chat_mate.py",
+    "scripts\\setup_dream_os_dreamvault.py",
+    "scripts\\setup_enhanced_discord.py",
+    "scripts\\setup_gpt_automation.py",
+    "scripts\\status_embedding_refresh.py",
+    "scripts\\terminal_completion_monitor.py",
+    "scripts\\test_enhanced_discord.py",
+    "scripts\\v2_release_summary.py",
+    "scripts\\validate_config_ssot.py",
+    "scripts\\validate_workspace_coords.py",
+    "scripts\\check_push_status.py",
+    "scripts\\execute_end_of_cycle_push.py",
+    "scripts\\init_daily_cycle.py",
+    "scripts\\run_unified.py",
+    "scripts\\list_discord_commands.py",
+    "scripts\\post_agent2_update_to_discord.py",
+    "scripts\\post_agent7_update_to_discord.py",
+    "scripts\\post_agent8_update_to_discord.py",
+    "scripts\\reset_stuck_messages.py",
+    "scripts\\test_activity_tracking.py",
+    "scripts\\test_compression_integration.py",
+    "scripts\\test_end_to_end_message_flow.py",
+    "scripts\\test_message_delivery.py",
+    "scripts\\test_message_logging_all_paths.py",
+    "scripts\\test_pyautogui_delivery_verbose.py",
+    "scripts\\test_queue_processing_delivery_logging.py",
+    "scripts\\verify_message_logging.py",
+    "scripts\\check_duplicate_accomplishments.py",
+    "scripts\\code_comment_mismatch_detector.py",
+    "scripts\\get_file_line_counts.py",
+    "scripts\\identify_infrastructure_files.py",
+    "scripts\\post_agent4_update_to_discord.py",
+    "scripts\\scan_core_domain_files.py",
+    "scripts\\scan_core_domain_quality.py",
+    "scripts\\v2_compliance_mcp_ci_checks.py",
+    "scripts\\verify_agent8_ssot_files.py",
+    "scripts\\activate_vector_database_integration.py",
+    "scripts\\agent_fuel_monitor.py",
+    "scripts\\archive_source_repos.py",
+    "scripts\\captain_update_log.py",
+    "scripts\\check_all_repos_needing_archive.py",
+    "scripts\\check_dashboard_page.py",
+    "scripts\\check_keyboard_lock_status.py",
+    "scripts\\check_system_updates.py",
+    "scripts\\check_theme_syntax.py",
+    "scripts\\cleanup_superpowered_venv.py",
+    "scripts\\create_ariajet_game_posts.py",
+    "scripts\\create_case_variation_prs.py",
+    "scripts\\create_merge1_pr.py",
+    "scripts\\create_work_session.py",
+    "scripts\\deploy_via_wordpress_admin.py",
+    "scripts\\extract_integration_files.py",
+    "scripts\\fix_dadudekc_theme_syntax_error.py",
+    "scripts\\post_4agent_mode_blog.py",
+    "scripts\\post_swarm_introduction.py",
+    "scripts\\post_swarm_philosophy_blog.py",
+    "scripts\\post_swarm_site_health_breakthrough.py",
+    "scripts\\run_canon_extraction.py",
+    "scripts\\run_test_suite_validation.py",
+    "scripts\\start_queue_processor.py",
+    "scripts\\task_cli.py",
+    "scripts\\test_discord_commands.py",
+    "scripts\\tmp_cleanup_nav.py",
+    "scripts\\tmp_menu_fix.py",
+    "scripts\\validate_imports.py",
+    "scripts\\v2_refactoring_tracker.py",
+    "scripts\\validate_refactored_files.py",
+    "scripts\\validate_v2_compliance.py",
+    "scripts\\generate_state_of_project.py"
   ]
 }
