@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Import System Mixins - Registry Methods
 =======================================
 

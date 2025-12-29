@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Core Execution Manager V2 - Phase-2 V2 Compliance Refactoring
 ==============================================================
 

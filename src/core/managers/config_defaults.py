@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Configuration Defaults and Validation Rules
 ===========================================
 Default configurations and validation rules for core configuration manager.

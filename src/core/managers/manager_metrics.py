@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Manager Metrics - Base Manager Metrics Tracking
 ===============================================
 Extracted from base_manager.py for V2 compliance.

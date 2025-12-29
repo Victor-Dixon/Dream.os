@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 File Locking Engine Base - Redirect Shim
 =========================================
 

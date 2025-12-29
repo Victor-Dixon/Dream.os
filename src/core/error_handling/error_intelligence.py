@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: core -->
+
 Error Intelligence & Predictive Models - Agent Cellphone V2
 ===========================================================
 

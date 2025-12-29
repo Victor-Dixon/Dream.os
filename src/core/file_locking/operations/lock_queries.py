@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 File Lock Queries - V2 Compliance Module
 =======================================
 

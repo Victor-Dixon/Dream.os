@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Import System Registry - V2 Compliance Module
 ===========================================
 

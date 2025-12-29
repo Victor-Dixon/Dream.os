@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Intelligent Context Search Operations
 ====================================
 

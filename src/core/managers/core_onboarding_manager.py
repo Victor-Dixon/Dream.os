@@ -1,3 +1,4 @@
+# <!-- SSOT Domain: core -->
 """Specialized manager handling agent onboarding operations."""
 
 from __future__ import annotations

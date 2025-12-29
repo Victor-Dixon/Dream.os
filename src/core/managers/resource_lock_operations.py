@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Resource Lock Operations - Helper Module
 ========================================
 

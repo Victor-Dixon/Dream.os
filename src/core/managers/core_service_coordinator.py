@@ -1,3 +1,4 @@
+# <!-- SSOT Domain: core -->
 """Coordinator that composes specialized service managers."""
 
 from __future__ import annotations

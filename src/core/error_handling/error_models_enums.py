@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Error Models Enums - V2 Compliance Error Handling Enumerations
 =============================================================
 

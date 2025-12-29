@@ -1,3 +1,4 @@
+# <!-- SSOT Domain: core -->
 """Specialized manager for processing and retrieving results."""
 
 from __future__ import annotations

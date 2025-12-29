@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Resource Context Operations - Helper Module
 ===========================================
 

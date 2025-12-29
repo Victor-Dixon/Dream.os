@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Import System Utilities - V2 Compliance Module
 =============================================
 

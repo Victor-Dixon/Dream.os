@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Error Alerts - V2 Compliance Module
 ==================================
 

@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: core -->
+
 Intelligent Context Orchestrator - V2 Compliant Redirect
 ========================================================
 

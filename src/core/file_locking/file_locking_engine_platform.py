@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 File Locking Engine Platform - V2 Compliance Module
 ===================================================
 

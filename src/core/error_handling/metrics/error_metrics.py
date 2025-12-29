@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Error Metrics - V2 Compliance Module
 ===================================
 
