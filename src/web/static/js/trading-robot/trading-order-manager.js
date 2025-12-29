@@ -3,6 +3,8 @@
  * Order submission, tracking, and execution management
  * V2 COMPLIANCE: Under 300-line limit achieved
  *
+ * <!-- SSOT Domain: trading_robot -->
+ *
  * @author Agent-1 - Integration & Core Systems Specialist
  * @version 1.0.0 - Trading Robot Frontend V2 Compliance
  * @license MIT

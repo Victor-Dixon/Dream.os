@@ -4,6 +4,8 @@
  * RESULT: 55 lines orchestrator + 5 modular components
  * TOTAL REDUCTION: 273 lines eliminated (83% reduction)
  *
+ * <!-- SSOT Domain: trading_robot -->
+ *
  * MODULAR COMPONENTS:
  * - websocket-connection-module.js (Connection management)
  * - websocket-message-handler-module.js (Message parsing and handling)

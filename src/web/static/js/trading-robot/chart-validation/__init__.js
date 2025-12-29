@@ -5,6 +5,8 @@
  * Modular chart state validation with clean separation of concerns.
  * Each module handles a specific aspect of chart validation.
  *
+ * <!-- SSOT Domain: trading_robot -->
+ *
  * V2 Compliance: < 300 lines per module, single responsibility.
  *
  * Author: Agent-7 - Web Development Specialist

@@ -4,6 +4,8 @@
  *
  * Chart state validation rules and rule definitions.
  *
+ * <!-- SSOT Domain: trading_robot -->
+ *
  * V2 Compliance: < 300 lines, single responsibility.
  *
  * Author: Agent-7 - Web Development Specialist

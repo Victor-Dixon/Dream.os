@@ -1,16 +1,12 @@
 #!/usr/bin/env python3
 """
-Configuration Orchestrator
-
-# SSOT Domain: config
-
-""""""
-"""
 Autonomous Config Orchestrator - Self-Configuring System
 ========================================================
 
 Orchestrates the entire autonomous configuration system.
 Zero human intervention required.
+
+<!-- SSOT Domain: config -->
 
 AUTONOMY FLOW:
 1. Auto-scan for config patterns

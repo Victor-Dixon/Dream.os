@@ -2,6 +2,8 @@
  * WebSocket Order & Portfolio Callbacks Module - V2 Compliant
  * Specialized callback management for order and portfolio events
  *
+ * <!-- SSOT Domain: trading_robot -->
+ *
  * @author Agent-7 - Web Development Specialist
  * @version 1.0.0 - V2 COMPLIANCE MODULARIZATION
  * @license MIT

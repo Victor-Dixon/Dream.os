@@ -4,6 +4,8 @@
  * RESULT: 50 lines orchestrator + 5 modular components
  * TOTAL REDUCTION: 252 lines eliminated (83% reduction)
  *
+ * <!-- SSOT Domain: trading_robot -->
+ *
  * MODULAR COMPONENTS:
  * - chart-data-module.js (Data management and sample data)
  * - chart-controls-module.js (Chart controls and UI setup)

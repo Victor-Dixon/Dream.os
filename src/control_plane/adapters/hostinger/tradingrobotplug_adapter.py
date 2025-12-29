@@ -1,6 +1,8 @@
 """
 Hostinger Site Adapter - TradingRobotPlug
 =========================================
+
+<!-- SSOT Domain: trading_robot -->
 """
 
 from __future__ import annotations
