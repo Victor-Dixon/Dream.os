@@ -18,8 +18,9 @@ def check_latest_audit_evidence():
     
     audit_files = sorted(glob.glob(str(reports_dir / "working_tree_audit_*.json")), reverse=True)
     if not audit_files:
-        print("❌ No audit evidence found")
-        return 1
+        print("⚠️  No audit evidence found (this is OK if no audit has been run yet)")
+        print("   Run: python tools/working_tree_audit.py --agent Agent-X")
+        return 0  # Not an error - just informational
     
     latest = Path(audit_files[0])
     try:

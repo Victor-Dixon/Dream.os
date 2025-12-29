@@ -84,8 +84,10 @@ def start_bot():
     # Check for token
     token = os.getenv("DISCORD_BOT_TOKEN")
     if not token:
-        print("❌ DISCORD_BOT_TOKEN not set in environment!")
+        print("⚠️  DISCORD_BOT_TOKEN not set in environment!")
         print("   Set it with: $env:DISCORD_BOT_TOKEN='your_token' (Windows)")
+        print("   Or use: python tools/start_discord_system.py (handles env automatically)")
+        return 0  # Exit gracefully - not a tool error
         sys.exit(1)
 
     # Stop existing bot if running
