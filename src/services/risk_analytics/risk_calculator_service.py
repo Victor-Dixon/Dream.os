@@ -7,6 +7,18 @@ A standalone service for calculating advanced risk metrics for trading performan
 
 <!-- SSOT Domain: analytics -->
 
+Navigation References:
+├── Related Files:
+│   ├── API Endpoints → src/services/risk_analytics/risk_api_endpoints.py
+│   ├── WebSocket Server → src/services/risk_analytics/risk_websocket_server.py
+│   ├── Database Schema → database/migrations/phase2_2_risk_analytics_schema.sql
+│   └── Dashboard UI → docs/analytics/risk_dashboard.html
+├── Documentation:
+│   ├── Architecture → docs/analytics/TRADINGROBOTPLUG_ANALYTICS_ARCHITECTURE.md
+│   └── Phase 2.2 Guide → docs/analytics/AGENT2_PHASE2_GUIDANCE.md
+└── Testing:
+    └── Unit Tests → tests/unit/services/test_risk_*.py
+
 Features:
 - Value at Risk (VaR) calculations
 - Conditional VaR (CVaR) calculations
