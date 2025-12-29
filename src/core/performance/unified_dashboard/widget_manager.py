@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Dashboard Widget Manager - V2 Compliance Module
 ==============================================
 

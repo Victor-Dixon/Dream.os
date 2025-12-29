@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Dashboard Engine - V2 Compliance Refactored
 ==========================================
 

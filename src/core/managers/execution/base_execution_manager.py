@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Base Execution Manager - Phase-2 V2 Compliance Refactoring + DUP-004
 ==========================================================
 Base class for execution management. Refactored to <200 lines.

@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Base Results Manager - Phase-2 V2 Compliance Refactoring + DUP-004
 ========================================================
 Base class for results management. Refactored to <200 lines.

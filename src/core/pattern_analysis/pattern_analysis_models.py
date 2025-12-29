@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: core -->
+
 Pattern Analysis Models - V2 Compliance Module
 =============================================
 

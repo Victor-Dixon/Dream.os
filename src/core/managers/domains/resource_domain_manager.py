@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Single Source of Truth (SSOT) for Resource Domain Management
 Domain: resources
 Owner: Agent-2 (Architecture & Design)

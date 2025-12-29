@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Dashboard Models - V2 Compliance
 ================================
 

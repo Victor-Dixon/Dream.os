@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Single Source of Truth (SSOT) for Results Domain Management
 Domain: Results (Analysis + Validation + Integration + Performance)
 Owner: Agent-2 (Architecture & Design)

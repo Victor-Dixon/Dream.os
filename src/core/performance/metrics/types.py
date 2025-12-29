@@ -1,5 +1,7 @@
 from typing import Dict
 """Compatibility layer for metric definitions.
+<!-- SSOT Domain: core -->
+
 
 The actual data structures live in :mod:`src.services.metrics_definitions` to
 provide a single source of truth for metric schemas.  This module simply

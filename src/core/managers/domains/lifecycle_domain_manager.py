@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Single Source of Truth (SSOT) for Lifecycle Domain Management
 Domain: Lifecycle (Onboarding + Recovery)
 Owner: Agent-2 (Architecture & Design)

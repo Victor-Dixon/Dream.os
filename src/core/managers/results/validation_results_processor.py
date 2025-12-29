@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Validation Results Processor - Phase-2 V2 Compliance Refactoring
 ================================================================
 

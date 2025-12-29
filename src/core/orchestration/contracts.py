@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Orchestration Contracts - Core Interfaces
 ==========================================
 

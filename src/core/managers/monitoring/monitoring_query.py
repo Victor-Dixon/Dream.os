@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Monitoring Query Operations - Phase-2 V2 Compliance Refactoring
 ===============================================================
 Handles query and update operations for monitoring resources.

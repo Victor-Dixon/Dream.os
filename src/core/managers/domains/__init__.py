@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 SSOT Domain Managers - Single Source of Truth for Core Domains
 ===============================================================
 

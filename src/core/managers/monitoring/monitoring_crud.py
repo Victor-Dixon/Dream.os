@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Monitoring CRUD Operations - Phase-2 V2 Compliance Refactoring
 ==============================================================
 Handles create operations for monitoring resources.

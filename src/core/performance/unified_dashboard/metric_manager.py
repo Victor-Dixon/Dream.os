@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Dashboard Metric Manager - V2 Compliance Module
 ==============================================
 

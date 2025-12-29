@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 """
+<!-- SSOT Domain: core -->
+
 ⚠️ DEPRECATED - TaskStatus enum is deprecated.
 
 This enum has been consolidated into src/core/coordination/swarm/coordination_models.py as SSOT.
