@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: core -->
+
 Architecture Analysis Tools Core - V2 Compliance Module
 =======================================================
 

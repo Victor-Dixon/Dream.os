@@ -1,5 +1,7 @@
 
 """
+<!-- SSOT Domain: core -->
+
 ⚠️ DEPRECATED - This module is deprecated.
 
 This utility has been consolidated into shared_utilities/ as SSOT.

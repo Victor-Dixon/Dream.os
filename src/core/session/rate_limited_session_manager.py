@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Rate Limited Session Manager - V2 Compliant
 ===========================================
 

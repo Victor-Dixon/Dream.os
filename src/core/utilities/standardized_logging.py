@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Standardized Logging - DUP-007 Logging Patterns Consolidation
 ============================================================
 

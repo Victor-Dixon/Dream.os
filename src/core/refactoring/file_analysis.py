@@ -1,3 +1,4 @@
+# <!-- SSOT Domain: core -->
 import ast
 from dataclasses import dataclass
 

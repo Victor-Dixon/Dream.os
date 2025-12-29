@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Strict SSOT Validator
 =====================
 

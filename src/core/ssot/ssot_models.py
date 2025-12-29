@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: core -->
+
 SSOT Models - V2 Compliant
 =========================
 

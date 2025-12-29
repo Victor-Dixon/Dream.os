@@ -1,3 +1,4 @@
+# <!-- SSOT Domain: core -->
 """Facade module aggregating refactoring tools."""
 
 from .analysis_tools import (

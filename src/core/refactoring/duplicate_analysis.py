@@ -1,3 +1,4 @@
+# <!-- SSOT Domain: core -->
 import hashlib
 from collections import defaultdict
 from dataclasses import dataclass

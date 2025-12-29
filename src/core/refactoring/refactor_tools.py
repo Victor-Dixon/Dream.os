@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: core -->
+
 Refactoring Tools - V2 Compliance Implementation
 
 This module provides V2-compliant refactoring tools for the architecture system.

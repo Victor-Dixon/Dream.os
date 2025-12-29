@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Base Session Manager - V2 Compliant
 ====================================
 

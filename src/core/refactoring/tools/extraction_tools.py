@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Refactoring Extraction Tools - V2 Compliance Module
 ==================================================
 
