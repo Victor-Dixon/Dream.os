@@ -6,6 +6,8 @@ Message Validation Service - Service Layer Pattern
 Encapsulates business logic for message validation.
 Handles ack blocking, recipient validation, and message preparation.
 
+<!-- SSOT Domain: integration -->
+
 V2 Compliance | Author: Agent-1 | Date: 2025-12-22
 """
 

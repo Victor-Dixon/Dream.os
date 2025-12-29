@@ -5,6 +5,8 @@ Task Repository Loader - Helper to load task repo without full infrastructure
 This helper loads only the task repository without triggering full infrastructure
 imports that have browser dependencies.
 
+<!-- SSOT Domain: integration -->
+
 Author: Agent-1
 """
 

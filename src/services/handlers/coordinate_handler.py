@@ -6,6 +6,8 @@ Handles agent coordinate management and validation.
 Extracted from messaging_cli_handlers_orchestrator.py for V2 compliance.
 Migrated to BaseService for consolidated initialization and error handling.
 
+<!-- SSOT Domain: integration -->
+
 Author: Agent-7 - Web Development Specialist
 License: MIT
 """
