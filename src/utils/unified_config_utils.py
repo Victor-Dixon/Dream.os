@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# SSOT Domain: config
 """
 Unified Configuration Utilities - V2 Compliance Module
 =====================================================
@@ -11,6 +10,8 @@ Combines functionality from:
 - config_core.py
 - config_core/fsm_config.py
 
+<!-- SSOT Domain: config -->
+
 SOLID Implementation:
 - SRP: Each class has single responsibility
 - OCP: Extensible scanner system
@@ -18,8 +19,7 @@ SOLID Implementation:
 
 Author: Agent-3 (DevOps Specialist)
 License: MIT
-
-""""""
+"""
 
 import logging
 import re
