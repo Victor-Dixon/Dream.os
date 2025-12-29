@@ -109,7 +109,12 @@ class MessageCoordinator:
         )
 
         # Record coordination for throttling if it was sent successfully
-        if (result and result.get("success") and message_category == MessageCategory.A2A and sender):
+        # Handle both dict results (from queue) and bool results (from fallback/direct send)
+        is_success = (
+            (isinstance(result, dict) and result.get("success"))
+            or (isinstance(result, bool) and result is True)
+        )
+        if is_success and message_category == MessageCategory.A2A and sender:
             from src.services.coordination.coordination_throttler import get_coordination_throttler
             throttler = get_coordination_throttler()
             throttler.record_coordination(agent, sender)
