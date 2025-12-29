@@ -48,7 +48,8 @@ def add_ssot_tag_to_file(file_path: Path, domain: str) -> bool:
     """
     Add SSOT domain tag to file.
     Places tag at the top of the file, after shebang if present.
-    For Python files, uses # comment format.
+    For Python files with docstrings, inserts tag inside docstring.
+    For Python files without docstrings, uses # comment format.
     """
     try:
         content = file_path.read_text(encoding='utf-8')
@@ -58,47 +59,59 @@ def add_ssot_tag_to_file(file_path: Path, domain: str) -> bool:
             return True  # Already tagged
         
         tag = SSOT_TAG_FORMAT.format(domain=domain)
-        lines = content.splitlines(keepends=True)
-        
-        # For Python files, use # comment format
         is_python = file_path.suffix == '.py'
+        
+        # For Python files, try to insert inside docstring first
         if is_python:
-            tag_line = f"# {tag}\n"
+            # Check if file has a docstring
+            import re
+            # Pattern to match docstring at module level (after shebang/encoding)
+            docstring_pattern = r'(^#!.*?\n)?(^#.*coding.*?\n)?(^""")(.*?)(^""")'
+            match = re.search(docstring_pattern, content, re.MULTILINE | re.DOTALL)
+            
+            if match:
+                # Insert tag inside docstring (after opening """)
+                docstring_start = match.start(3)
+                docstring_content_start = match.end(3)
+                # Find first newline after opening """
+                newline_pos = content.find('\n', docstring_content_start)
+                if newline_pos != -1:
+                    # Insert tag after first line of docstring
+                    tag_line = f"\n{tag}\n"
+                    content = content[:newline_pos] + tag_line + content[newline_pos:]
+                else:
+                    # Fallback: insert before closing """
+                    tag_line = f"\n{tag}\n"
+                    content = content[:match.start(4)] + tag_line + content[match.start(4):]
+            else:
+                # No docstring - insert as comment after shebang
+                lines = content.splitlines(keepends=True)
+                insert_index = 0
+                if lines and lines[0].startswith('#!'):
+                    insert_index = 1
+                if insert_index < len(lines) and ('coding:' in lines[insert_index] or 'encoding:' in lines[insert_index]):
+                    insert_index += 1
+                while insert_index < len(lines) and lines[insert_index].strip() == '':
+                    insert_index += 1
+                tag_line = f"# {tag}\n"
+                lines.insert(insert_index, tag_line)
+                content = ''.join(lines)
         else:
+            # Non-Python file - insert as HTML comment
+            lines = content.splitlines(keepends=True)
+            insert_index = 0
+            if lines and lines[0].startswith('#!'):
+                insert_index = 1
+            if insert_index < len(lines) and ('coding:' in lines[insert_index] or 'encoding:' in lines[insert_index]):
+                insert_index += 1
+            while insert_index < len(lines) and lines[insert_index].strip() == '':
+                insert_index += 1
             tag_line = f"{tag}\n"
-        
-        # Find insertion point (after shebang and encoding, before docstring)
-        insert_index = 0
-        
-        # Skip shebang
-        if lines and lines[0].startswith('#!'):
-            insert_index = 1
-        
-        # Skip encoding declaration
-        if insert_index < len(lines) and ('coding:' in lines[insert_index] or 'encoding:' in lines[insert_index]):
-            insert_index += 1
-        
-        # Skip blank lines at top
-        while insert_index < len(lines) and lines[insert_index].strip() == '':
-            insert_index += 1
-        
-        # For Python files, check if next line is a docstring - insert before it
-        if is_python and insert_index < len(lines):
-            # Check if next non-blank line is a docstring
-            next_line_idx = insert_index
-            while next_line_idx < len(lines) and lines[next_line_idx].strip() == '':
-                next_line_idx += 1
-            if next_line_idx < len(lines) and (lines[next_line_idx].strip().startswith('"""') or lines[next_line_idx].strip().startswith("'''")):
-                insert_index = next_line_idx
-        
-        # Insert tag
-        if insert_index == 0:
-            lines.insert(0, tag_line)
-        else:
             lines.insert(insert_index, tag_line)
+            content = ''.join(lines)
         
         # Write back
-        file_path.write_text(''.join(lines), encoding='utf-8')
+        file_path.write_text(content, encoding='utf-8')
         return True
         
     except Exception as e:
