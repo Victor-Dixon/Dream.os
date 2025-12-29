@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Dashboard Queue Status View Module - V2 Compliant
  * Handles message queue status monitoring and visualization

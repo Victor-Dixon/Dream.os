@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 import { layoutUtils } from './layout.js';
 
 export const FormEnhancement = {

@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Dashboard View Renderer - V2 Compliant
  * View rendering methods extracted from dashboard-refactored-main.js

@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Dashboard Message History View Module - V2 Compliant
  * Handles message history visualization and statistics

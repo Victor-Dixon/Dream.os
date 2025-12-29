@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * CSS Class Management Module - V2 Compliant
  * CSS class manipulation utilities

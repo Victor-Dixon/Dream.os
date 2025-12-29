@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Dashboard Date Utilities Module - V2 Compliant
  * Date and time formatting utilities for dashboard components

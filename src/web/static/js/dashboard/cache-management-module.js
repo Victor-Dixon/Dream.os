@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Cache Management Module - V2 Compliant
  * DOM element caching for performance optimization

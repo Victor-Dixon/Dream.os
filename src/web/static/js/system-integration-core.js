@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * System Integration Test Core - Phase 3 Final Implementation
  * Core functionality and data structures for system integration testing

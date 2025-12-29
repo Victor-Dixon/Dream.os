@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Dependency Container V2 - V2 Compliant Main Orchestrator
  * Main orchestrator for dependency injection modules with clean architecture

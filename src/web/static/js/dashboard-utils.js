@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Dashboard Utils V2 - V2 Compliant Main Orchestrator
  * Main orchestrator for dashboard utility modules with lazy loading

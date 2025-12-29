@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 /**
  * Element Selection Module - V2 Compliant
  * DOM element selection utilities

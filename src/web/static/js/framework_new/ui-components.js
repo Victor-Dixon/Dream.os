@@ -1,3 +1,4 @@
+<!-- SSOT Domain: core -->
 import { layoutUtils } from './layout.js';
 import { events } from './events.js';
 import { config } from './config.js';
