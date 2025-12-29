@@ -19,3 +19,4 @@ def test_devlog_manager_help_exits_zero():
 
     assert result.returncode == 0
     assert "devlog" in (result.stdout + result.stderr).lower()
+

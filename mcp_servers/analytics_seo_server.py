@@ -6,6 +6,8 @@ Analytics & SEO MCP Server
 Google Analytics, SEO optimization, meta tags, structured data,
 and analytics tracking across all websites.
 
+<!-- SSOT Domain: analytics -->
+
 Author: Agent-2 (Architecture & Design Specialist)
 Date: 2025-12-28
 V2 Compliant: Yes (<300 lines per function)

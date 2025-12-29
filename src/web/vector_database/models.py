@@ -7,6 +7,9 @@ V2 Compliance: < 200 lines, single responsibility.
 
 Author: Agent-7 - Repository Cloning & Consolidation Specialist
 Created: 2025-10-11 (fixing missing import)
+
+
+<!-- SSOT Domain: web -->
 """
 
 from dataclasses import dataclass, field

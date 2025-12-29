@@ -85,3 +85,4 @@ def check_cursor_mcp_config():
 if __name__ == '__main__':
     success = check_cursor_mcp_config()
     sys.exit(0 if success else 1)
+

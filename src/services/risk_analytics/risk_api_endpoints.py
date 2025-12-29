@@ -5,6 +5,8 @@ Risk Analytics API Endpoints
 
 WordPress REST API endpoints for risk analytics calculations.
 
+<!-- SSOT Domain: analytics -->
+
 Endpoints:
 - GET /wp-json/tradingrobotplug/v1/analytics/risk/var
 - GET /wp-json/tradingrobotplug/v1/analytics/risk/cvar

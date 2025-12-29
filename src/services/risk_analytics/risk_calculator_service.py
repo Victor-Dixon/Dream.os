@@ -5,6 +5,8 @@ Risk Calculator Service
 
 A standalone service for calculating advanced risk metrics for trading performance.
 
+<!-- SSOT Domain: analytics -->
+
 Features:
 - Value at Risk (VaR) calculations
 - Conditional VaR (CVaR) calculations
@@ -350,3 +352,4 @@ if __name__ == "__main__":
         print(f"- {alert.severity.upper()}: {alert.message}")
 
     print("\n✅ Risk Calculator Service implementation complete!")
+

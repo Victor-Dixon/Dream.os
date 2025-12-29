@@ -6,6 +6,8 @@ Message Delivery Service - Service Layer Pattern
 Encapsulates business logic for message delivery orchestration.
 Handles queue operations, fallback logic, and delivery coordination.
 
+<!-- SSOT Domain: integration -->
+
 V2 Compliance | Author: Agent-1 | Date: 2025-12-22
 """
 
