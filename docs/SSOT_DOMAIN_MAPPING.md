@@ -142,26 +142,26 @@ This document provides a comprehensive mapping of all Single Source of Truth (SS
 
 21. **safety** - Safety systems, safety checks, safety protocols
    - **Examples:** Safety validation, safety checks, safety protocols
-   - **Owner:** Infrastructure (Agent-3) - Proposed (needs confirmation)
+   - **Owner:** Infrastructure (Agent-3)
    - **Status:** ACTIVE - 5 files tagged
 
 ### System Integration Domains
 
 22. **swarm_brain** - Swarm brain/knowledge system, swarm intelligence, knowledge management
    - **Examples:** Swarm brain tools, knowledge management, swarm intelligence systems
-   - **Owner:** SSOT & System Integration (Agent-8) or Coordination (Agent-6) - TBD (needs confirmation)
+   - **Owner:** SSOT & System Integration (Agent-8)
    - **Status:** ACTIVE - 9 files tagged
 
 ### Version Control & Error Handling Domains
 
 23. **git** - Git operations, version control, repository management
    - **Examples:** Git tools, version control utilities, repository management
-   - **Owner:** Infrastructure (Agent-3) - Proposed (needs confirmation)
+   - **Owner:** Infrastructure (Agent-3)
    - **Status:** ACTIVE - 3 files tagged
 
 24. **error_handling** - Error handling logic, error management, exception handling
    - **Examples:** Error handlers, exception handling, error management utilities
-   - **Owner:** Infrastructure (Agent-3) or Integration (Agent-1) - TBD (needs confirmation)
+   - **Owner:** Infrastructure (Agent-3)
    - **Status:** ACTIVE - 2 files tagged
 
 ### Additional Domains (Proposed - To Be Validated)
@@ -247,8 +247,8 @@ Module description.
 - **Web Development (Agent-7):** web, seo (shared with Agent-2)
 - **Business Intelligence (Agent-5):** data, analytics, ai_training, trading_robot
 - **Coordination (Agent-6):** communication, coordination
-- **SSOT & System Integration (Agent-8):** qa, validation, swarm_brain (TBD - needs confirmation)
-- **Infrastructure (Agent-3):** performance, safety (TBD - needs confirmation), git (TBD - needs confirmation), error_handling (TBD - needs confirmation)
+- **SSOT & System Integration (Agent-8):** qa, validation, swarm_brain
+- **Infrastructure (Agent-3):** performance, safety, git, error_handling
 
 ### Coordination Protocol
 
