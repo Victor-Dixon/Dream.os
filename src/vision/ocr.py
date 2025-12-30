@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: vision -->
+
 OCR Text Extraction - V2 Compliant
 =================================
 

@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: gaming -->
+
 Dream.OS UI Integration - Gamification API Endpoints.
 
 V2 Compliance: Flask API for gamification UI

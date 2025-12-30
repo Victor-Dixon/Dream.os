@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: logging -->
+
 
 Logger Utilities - Wrapper for Unified Logging System
 ======================================================

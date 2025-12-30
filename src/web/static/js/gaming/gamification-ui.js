@@ -1,3 +1,4 @@
+<!-- SSOT Domain: gaming -->
 /**
  * Gamification UI - Dream.OS Integration
  * XP, Skills, Quests, and Achievement System

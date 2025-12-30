@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: vision -->
+
 Vision CLI - V2 Compliant
 ========================
 

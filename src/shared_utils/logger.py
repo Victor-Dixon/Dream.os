@@ -1,4 +1,6 @@
 """Logging utilities for the unified workspace.
+<!-- SSOT Domain: logging -->
+
 
 **CONSOLIDATED**: This module now redirects to unified_logging_system.
 Maintained for backward compatibility.

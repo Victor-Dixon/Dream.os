@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: vision -->
+
 Vision System Integration - V2 Compliant Orchestrator
 ====================================================
 

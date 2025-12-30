@@ -1,4 +1,6 @@
 """Gaming Alert Models.
+<!-- SSOT Domain: gaming -->
+
 
 Extracted models for gaming alert system to achieve V2 compliance.
 Contains AlertSeverity, AlertType, and GamingAlert classes.

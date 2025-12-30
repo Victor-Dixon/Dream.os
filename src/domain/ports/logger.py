@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: logging -->
+
 
 Logger Port - Domain Interface
 ==============================

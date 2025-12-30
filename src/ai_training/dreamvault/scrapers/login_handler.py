@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: logging -->
+
 
 Login Handler for DreamVault ChatGPT Scraper
 

@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: gaming -->
+
 FSM Models - Task and Report Data Structures
 =============================================
 

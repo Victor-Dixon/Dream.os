@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: vision -->
+
 Screen Capture - V2 Compliant
 ============================
 

@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: gaming -->
+
 FSM File Operations Module
 ==========================
 
