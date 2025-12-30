@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: integration -->
+
 Architectural Principles Data Definitions
 ==========================================
 

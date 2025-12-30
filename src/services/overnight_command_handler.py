@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: integration -->
+
 Overnight Command Handler - V2 Compliant Module
 ==============================================
 

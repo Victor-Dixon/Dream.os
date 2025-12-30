@@ -1,3 +1,4 @@
+# <!-- SSOT Domain: integration -->
 # ✅ SINGLE SOURCE OF TRUTH: Consolidated Configuration System
 """Shared configuration options and constants for messaging services."""
 

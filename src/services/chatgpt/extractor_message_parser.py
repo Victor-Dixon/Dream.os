@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: integration -->
+
 Message Parser - ChatGPT Conversation Extraction
 ================================================
 

@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: integration -->
+
 Role Command Handler - V2 Compliant Module
 =========================================
 

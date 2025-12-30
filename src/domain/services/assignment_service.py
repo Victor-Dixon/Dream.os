@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: integration -->
+
 Assignment Service - Domain Service
 ===================================
 

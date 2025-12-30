@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: integration -->
+
 Hard Onboarding Service - Backward Compatibility Shim
 ======================================================
 

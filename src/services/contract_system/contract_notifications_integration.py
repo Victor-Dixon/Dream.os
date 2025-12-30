@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: integration -->
+
 Contract System → Discord Notifications Integration
 Hooks ContractNotifier into contract lifecycle events.
 

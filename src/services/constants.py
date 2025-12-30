@@ -1,3 +1,4 @@
+# <!-- SSOT Domain: integration -->
 """Common constants for validation services."""
 
 # Constants for validation services

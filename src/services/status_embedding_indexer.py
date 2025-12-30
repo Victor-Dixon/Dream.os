@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """Status Embedding Indexer
+<!-- SSOT Domain: integration -->
+
 ===========================
 
 Refresh agent status embeddings in the unified vector database.

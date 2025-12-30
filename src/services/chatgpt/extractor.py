@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: integration -->
+
 Conversation Extractor - V2 Compliant Facade
 ===========================================
 
