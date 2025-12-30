@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: integration -->
+
 ChatGPT CLI - V2 Compliant
 =========================
 

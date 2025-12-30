@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: integration -->
+
 Message Identity Clarification - Agent Cellphone V2
 ==================================================
 

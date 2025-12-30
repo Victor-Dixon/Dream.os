@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: integration -->
+
 ChatGPT Session Manager - V2 Compliant
 =====================================
 

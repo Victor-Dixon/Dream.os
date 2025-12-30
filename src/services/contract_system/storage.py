@@ -1,6 +1,8 @@
 import logging
 logger = logging.getLogger(__name__)
 """
+<!-- SSOT Domain: integration -->
+
 Contract System Storage - V2 Compliant Module
 =============================================
 

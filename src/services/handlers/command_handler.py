@@ -1,4 +1,6 @@
 """Command Handler - V2 Compliance Module.
+<!-- SSOT Domain: integration -->
+
 Migrated to BaseService for consolidated initialization and error handling.
 """
 import logging

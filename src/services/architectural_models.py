@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: integration -->
+
 Architectural Models - V2 Compliance Module
 ==========================================
 

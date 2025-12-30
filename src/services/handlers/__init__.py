@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: integration -->
+
 Handler module loader.
 
 Wrap imports to avoid hard failures when optional handler dependencies are

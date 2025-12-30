@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: integration -->
+
 Storage Manager - ChatGPT Conversation Persistence
 ==================================================
 

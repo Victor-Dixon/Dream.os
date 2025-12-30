@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: integration -->
+
 Session Persistence Helper
 ===========================
 

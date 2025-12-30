@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: integration -->
+
 Architectural Principles - V2 Compliance Module
 ================================================
 

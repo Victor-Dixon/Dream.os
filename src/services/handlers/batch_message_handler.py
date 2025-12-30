@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: integration -->
+
 Batch Message Handler - V2 Compliant Module
 ==========================================
 

@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: integration -->
+
 ChatGPT Navigator - V2 Compliant
 ===============================
 

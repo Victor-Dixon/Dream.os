@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: integration -->
+
 Unified Agent Management Module
 ================================
 

@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: integration -->
+
 Cycle Planner Integration - Contract System
 ===========================================
 
