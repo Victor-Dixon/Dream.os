@@ -1,0 +1,92 @@
+# Trade Entry Template
+# For: FreerideInvestor
+# Input: trade_entry payload with screenshots, plan, results, learnings
+# <!-- SSOT Domain: web -->
+
+template_name: trade_entry
+target_brand: freerideinvestor
+input_requirements:
+  required:
+    - screenshots: "4-6 screenshots (min 4, max 6)"
+    - plan: "Trade plan/strategy"
+    - results: "Trade execution results"
+    - learnings: "Reflection/learnings from trade"
+  optional:
+    - entry_date: "Trade date (ISO8601)"
+    - symbols: "Trading symbols"
+    - timeframe: "Trading timeframe"
+
+structure:
+  - section: hook
+    purpose: "Engage reader with trade outcome or lesson"
+    word_count: 50-100
+    required: true
+
+  - section: trade_setup
+    purpose: "Describe the trade plan, entry strategy, and setup"
+    word_count: 200-300
+    required: true
+    content_sources:
+      - plan
+      - screenshots[0-1]  # Entry/setup screenshots
+
+  - section: execution
+    purpose: "Describe trade execution, management, and exit"
+    word_count: 200-300
+    required: true
+    content_sources:
+      - results
+      - screenshots[2-4]  # Execution/management screenshots
+
+  - section: results
+    purpose: "Quantify trade outcome (P&L, win/loss, metrics)"
+    word_count: 100-200
+    required: true
+    content_sources:
+      - results
+      - screenshots[5]  # Results screenshot (if available)
+
+  - section: learnings
+    purpose: "Reflection on what worked, what didn't, and takeaways"
+    word_count: 200-300
+    required: true
+    content_sources:
+      - learnings
+
+  - section: cta
+    purpose: "Call to action (follow signals, join community, etc.)"
+    word_count: 50-100
+    required: true
+    default_cta: "Follow my signals and learn with me"
+
+voice_guidelines:
+  tone: "Educational, transparent, learn-with-me"
+  style: "Share wins and losses honestly, focus on learning"
+  avoid: "Overly promotional, hiding losses, making excuses"
+  include: "Real numbers, honest reflection, actionable insights"
+
+screenshot_usage:
+  - screenshot_1: "Entry/setup (chart, entry point)"
+  - screenshot_2: "Trade management (stop loss, take profit levels)"
+  - screenshot_3: "Exit/close (final result)"
+  - screenshot_4: "Results/metrics (P&L, win rate, etc.)"
+  - screenshot_5: "Optional: Strategy context or market conditions"
+  - screenshot_6: "Optional: Learning visualization or comparison"
+
+validation:
+  - must_have_screenshots: "At least 4 screenshots"
+  - must_cite_data: "All claims must cite provided trade data"
+  - no_invented_facts: "Do not invent trade details not in input"
+  - must_include_learnings: "Learnings section is mandatory"
+
+promo_snippets:
+  twitter:
+    focus: "Trade outcome + key learning"
+    format: "{outcome} on {symbol}. Key learning: {learning}. {link}"
+  linkedin:
+    focus: "Educational reflection on trade"
+    format: "Trade journal entry: {summary}. What I learned: {learning}. {link}"
+  discord:
+    focus: "Casual share of trade + learnings"
+    format: "Just closed {outcome}. Here's what I learned: {learning}. Full journal: {link}"
+

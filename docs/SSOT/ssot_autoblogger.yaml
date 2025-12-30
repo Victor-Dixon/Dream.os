@@ -1,0 +1,148 @@
+# SSOT Autoblogger Pipeline Configuration
+# Routing + DoD Gates for 4 Brands
+# <!-- SSOT Domain: web -->
+
+routing:
+  # Input type → Brand mapping
+  trade_entry:
+    target_brand: freerideinvestor
+    template: trade_entry.yaml
+    voice_profile: freerideinvestor.md
+    dod_gates:
+      - has_screenshots: "4-6 screenshots required (min 4, max 6)"
+      - has_plan: "Trade plan must be present"
+      - has_results: "Trade results must be present"
+      - has_learnings: "Learnings/reflection must be present"
+    output:
+      - draft_blog_post
+      - promo_twitter
+      - promo_linkedin
+      - promo_discord
+
+  project_devlog:
+    target_brand: weareswarm
+    template: project_devlog.yaml
+    voice_profile: weareswarm.md
+    dod_gates:
+      - has_project_name: "Project name required"
+      - has_implementation_details: "Implementation details required"
+      - has_publication_value: "Must document DreamOS or agent tools"
+    output:
+      - draft_blog_post
+      - promo_twitter
+      - promo_linkedin
+      - promo_discord
+
+  backtest_report:
+    target_brand: tradingrobotplug
+    template: backtest_report.yaml
+    voice_profile: tradingrobotplug.md
+    dod_gates:
+      - has_backtest_data: "Backtest results required"
+      - has_preset_or_script: "Preset or script reference required"
+      - has_iteration_log: "Iteration log entry required"
+      - has_learnings: "Learnings/insights required"
+    output:
+      - draft_blog_post
+      - promo_twitter
+      - promo_linkedin
+      - promo_discord
+
+  dreamvault_convo:
+    target_brand: dadudekc
+    template: dreamvault_convo.yaml
+    voice_profile: victor.md
+    dod_gates:
+      - has_conversation_history: "Dreamvault+ChatGPT conversation required"
+      - has_ideas_or_experiments: "Ideas/brainstorms or experiments required"
+      - has_learnings: "Learnings extracted from conversation"
+    output:
+      - draft_blog_post
+      - resume_delta
+      - promo_twitter
+      - promo_linkedin
+      - promo_discord
+
+brands:
+  dadudekc:
+    name: "Dadudekc"
+    ssot_purpose: "sound like me hub. Ideas/brainstorms, experiments→learnings, project demos=content, skills learned→resume, compile portfolio"
+    dod: "Dreamvault+ChatGPT convo history → blog posts + resume delta"
+    voice_file: content/voices/victor.md
+    brand_config: content/brands/dadudekc.yaml
+    word_count: [900, 1400]
+    structure:
+      - hook
+      - pain_story
+      - framework
+      - steps
+      - example
+      - cta
+
+  freerideinvestor:
+    name: "FreerideInvestor"
+    ssot_purpose: "learn-with-me + follow my signals. Trade journal must be automated + comprehensive"
+    dod: "Per trade 4 screenshots (6 max) → journal entry → blog post; plan/results/learnings=content"
+    voice_file: content/voices/freerideinvestor.md  # TODO: Create
+    brand_config: content/brands/freerideinvestor.yaml  # TODO: Create
+    word_count: [800, 1200]
+    structure:
+      - hook
+      - trade_setup
+      - execution
+      - results
+      - learnings
+      - cta
+
+  tradingrobotplug:
+    name: "TradingRobotPlug"
+    ssot_purpose: "Algorithmic trading lab. Content: backtests/presets/scripts/results/plans/learnings"
+    dod: "Iterate until retirement (iteration logs mandatory)"
+    voice_file: content/voices/tradingrobotplug.md  # TODO: Create
+    brand_config: content/brands/trading.yaml
+    word_count: [800, 1200]
+    structure:
+      - hook
+      - backtest_setup
+      - results
+      - analysis
+      - iteration_notes
+      - next_steps
+      - cta
+
+  weareswarm:
+    name: "WeAreSwarm.online"
+    ssot_purpose: "Documents+implements+publicizes projects (DreamOS + agent tools) enabling everything"
+    dod: "Project documentation → blog post (DreamOS + agent tools focus)"
+    voice_file: content/voices/weareswarm.md  # TODO: Create
+    brand_config: content/brands/swarm.yaml
+    word_count: [1500, 2500]
+    structure:
+      - hook
+      - project_overview
+      - implementation
+      - technical_details
+      - impact
+      - cta
+
+validation_rules:
+  no_invented_facts: true
+  cite_only_provided_data: true
+  missing_output_handling: "NEEDED_INPUTS"
+  fact_checking: "Only use data from input payload"
+  citation_required: "All claims must cite input data"
+
+promo_snippet_rules:
+  twitter:
+    max_length: 280
+    include_hashtags: true
+    include_link: true
+  linkedin:
+    max_length: 300
+    professional_tone: true
+    include_link: true
+  discord:
+    max_length: 500
+    casual_tone: true
+    include_link: true
+

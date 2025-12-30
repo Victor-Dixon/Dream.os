@@ -1,0 +1,62 @@
+# Real Run Payload - Project Devlog
+# Latest available payload for SSOT Autoblogger Pipeline test
+# Generated: 2025-12-30
+
+input_type: project_devlog
+source_data:
+  project_name: "SSOT Autoblogger Pipeline"
+  project_date: "2025-12-30"
+  implementation_details: |
+    Built unified SSOT publishing pipeline that routes one input payload to 4 tailored blog drafts.
+    
+    Architecture:
+    - Routing YAML (ssot_autoblogger.yaml) defines input_type → brand mapping
+    - Template system (YAML templates) defines structure per content type
+    - Generator prompt (generator_prompt.md) orchestrates multi-site generation
+    - DoD gates enforce brand-specific requirements
+    
+    Technical stack:
+    - YAML for configuration and templates
+    - Markdown for prompts and documentation
+    - Python-ready structure (can be integrated into autoblogger system)
+    
+    Implementation:
+    1. Created routing configuration with DoD gates
+    2. Created 3 templates (trade_entry, project_devlog, backtest_report)
+    3. Created generator prompt with validation rules
+    4. Executed proof-of-concept run
+    
+    Challenges:
+    - No existing unified pipeline (greenfield implementation)
+    - Missing input parsers (screenshots, backtest logs, Dreamvault)
+    - Need voice profiles for FreerideInvestor, TradingRobotPlug, WeAreSwarm
+    
+    Impact:
+    - Enables automated multi-site content generation
+    - Enforces SSOT requirements per brand
+    - Provides foundation for full automation pipeline
+    - Supports DreamOS + agent tools documentation (WeAreSwarm focus)
+  
+  technologies:
+    - YAML
+    - Markdown
+    - Python (ready for integration)
+  
+  challenges:
+    - Greenfield implementation (no existing unified pipeline)
+    - Missing input parsers (screenshots, backtest logs, Dreamvault)
+    - Need voice profiles for 3 brands
+  
+  impact: |
+    - Enables automated multi-site content generation from one input
+    - Enforces SSOT requirements per brand (DoD gates)
+    - Provides foundation for full automation pipeline
+    - Supports DreamOS + agent tools documentation (WeAreSwarm focus)
+    - Enables future integrations: Dreamvault, trade journal, backtest logs
+
+metadata:
+  timestamp: "2025-12-30T06:53:44Z"
+  author: "Agent-7"
+  tags: ["ssot", "autoblogger", "pipeline", "multi-site", "automation"]
+  attachments: []
+
