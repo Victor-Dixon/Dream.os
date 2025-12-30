@@ -35,6 +35,7 @@ def main():
     files_to_deploy = [
         "front-page.php",  # Optimized homepage (4 sections)
         "footer.php",  # Updated footer with legal section
+        "inc/dashboard-api.php",  # Fixed stock data API with live fetch fallback
         "page-privacy.php",
         "page-terms-of-service.php",
         "page-product-terms.php",
