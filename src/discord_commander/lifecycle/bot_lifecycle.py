@@ -10,6 +10,7 @@ Handles bot startup, shutdown, and lifecycle operations.
 V2 Compliance | Author: Agent-1 | Date: 2025-12-14
 """
 
+import asyncio
 import logging
 from typing import TYPE_CHECKING
 
@@ -153,7 +154,14 @@ class BotLifecycleManager:
             if not channel:
                 return
 
+            # Wait a moment to ensure all status.json files are written/flushed
+            # This ensures we get a fresh snapshot, not stale cached data
+            await asyncio.sleep(0.5)
+            self.logger.info("📊 Generating fresh swarm snapshot...")
+            
             snapshot = get_swarm_snapshot(self.logger)
+            self.logger.info(f"✅ Fresh snapshot generated: {len(snapshot.get('active_agents', []))} active agents")
+            
             snapshot_view, snapshot_embed = self._create_snapshot_view(snapshot)
 
             embed = self._create_startup_embed(snapshot, snapshot_embed)
