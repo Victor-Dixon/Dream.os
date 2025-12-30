@@ -26,7 +26,6 @@ from .messaging_models import (
 )
 from ..utils.swarm_time import format_swarm_timestamp, get_swarm_time_display
 from typing import Any, Protocol
-from pathlib import Path
 from datetime import datetime
 import logging
 warnings.warn(
@@ -311,26 +310,8 @@ class UnifiedMessagingCore:
 
             if self.send_message_object(message):
                 success_count += 1
-                # #region agent log
-                import json
-                from pathlib import Path
-                log_path = Path("d:\\Agent_Cellphone_V2_Repository\\.cursor\\debug.log")
-                broadcast_delay_start = time.time()
-                try:
-                    with open(log_path, 'a', encoding='utf-8') as f:
-                        f.write(json.dumps({"sessionId": "debug-session", "runId": "run1", "hypothesisId": "E", "location": "messaging_core.py:472", "message": "Before broadcast inter-agent delay", "data": {"agent": agent, "success": True, "delay_seconds": 0.5}, "timestamp": int(time.time() * 1000)}) + "\n")
-                except: pass
-                # #endregion
                 # Small delay between broadcast sends to prevent routing race conditions
                 time.sleep(0.5)
-                # #region agent log
-                broadcast_delay_end = time.time()
-                actual_delay = broadcast_delay_end - broadcast_delay_start
-                try:
-                    with open(log_path, 'a', encoding='utf-8') as f:
-                        f.write(json.dumps({"sessionId": "debug-session", "runId": "run1", "hypothesisId": "E", "location": "messaging_core.py:478", "message": "After broadcast inter-agent delay", "data": {"agent": agent, "expected_delay": 0.5, "actual_delay": round(actual_delay, 2)}, "timestamp": int(time.time() * 1000)}) + "\n")
-                except: pass
-                # #endregion
 
         return success_count > 0
 
