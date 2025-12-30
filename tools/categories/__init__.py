@@ -10,6 +10,8 @@ Usage:
 Author: Swarm (SSOT tagging remediation)
 Date: 2025-12-28
 Description: Central namespace for category modules used by the tool registry.
+
+<!-- SSOT Domain: tools -->
 """
 
 """

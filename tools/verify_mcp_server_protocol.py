@@ -2,6 +2,8 @@
 """
 Verify MCP Server Protocol Implementation
 Tests if MCP servers follow correct JSON-RPC protocol
+
+<!-- SSOT Domain: tools -->
 """
 
 import json

@@ -14,6 +14,8 @@ This module handles the analytical core of the mission advisor:
 
 Author: Agent-5 (Business Intelligence & Team Beta Leader)
 License: MIT
+
+<!-- SSOT Domain: tools -->
 """
 
 import json

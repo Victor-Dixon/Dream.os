@@ -7,6 +7,8 @@ Thin orchestrator for Agent Toolbelt operations (resolve→validate→execute→
 V2 Compliance: <240 lines
 Author: Agent-7 - Repository Cloning Specialist
 
+<!-- SSOT Domain: tools -->
+
 SSOT TOOL METADATA
 Purpose: Execute tools end-to-end via ToolRegistry (resolve → validate → execute → record), with consistent error formatting.
 Description: Provides a thin orchestration layer for adapters; intended as the stable runtime entry for tool execution.

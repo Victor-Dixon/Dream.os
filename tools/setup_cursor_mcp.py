@@ -2,6 +2,8 @@
 """
 Setup Cursor MCP Configuration
 Helps configure MCP servers for Cursor IDE
+
+<!-- SSOT Domain: tools -->
 """
 
 import json

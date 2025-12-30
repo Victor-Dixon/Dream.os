@@ -13,6 +13,8 @@ This file maintains backward compatibility by re-exporting all classes.
 
 V2 Compliance: <400 lines (now a facade module)
 Author: Agent-4 (Captain) - Refactored 2025-01-27
+
+<!-- SSOT Domain: tools -->
 """
 
 # Core operations

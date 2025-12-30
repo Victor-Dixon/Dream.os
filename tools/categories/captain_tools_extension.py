@@ -13,6 +13,8 @@ This file maintains backward compatibility by re-exporting all tools.
 V2 Compliance: <400 lines (backward compatibility layer)
 Author: Agent-2 (Architecture & Design) - 2025-01-27
 Split from original 986-line file for V2 compliance
+
+<!-- SSOT Domain: tools -->
 """
 
 # Re-export all tools from split files for backward compatibility

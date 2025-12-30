@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 Shared agent registry for system-wide constants.
 
 # SSOT Domain: core

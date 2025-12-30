@@ -9,6 +9,8 @@ Usage:
 Author: Swarm (SSOT tagging remediation)
 Date: 2025-12-28
 Description: Package exports adapter primitives for tool discovery/execution.
+
+<!-- SSOT Domain: tools -->
 """
 
 """
