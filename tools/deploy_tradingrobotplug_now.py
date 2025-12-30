@@ -33,6 +33,8 @@ def main():
     # Files to deploy
     theme_dir = Path("D:/websites/websites/tradingrobotplug.com/wp/wp-content/themes/tradingrobotplug-theme")
     files_to_deploy = [
+        "front-page.php",  # Optimized homepage (4 sections)
+        "footer.php",  # Updated footer with legal section
         "page-privacy.php",
         "page-terms-of-service.php",
         "page-product-terms.php",
@@ -42,7 +44,6 @@ def main():
         "page-features.php",
         "page-ai-swarm.php",
         "page-blog.php",
-        "footer.php",
         "inc/template-helpers.php",
     ]
     
