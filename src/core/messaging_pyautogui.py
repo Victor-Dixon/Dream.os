@@ -158,13 +158,6 @@ class PyAutoGUIMessagingDelivery:
             self.operations_service.clear_input_field(message.recipient)
             self.operations_service.verify_coordinates_before_paste(message.recipient, (x, y))
             
-            # Final focus check
-            try:
-                import pyautogui
-                pyautogui.click(x, y)
-                time.sleep(0.3)
-            except Exception: pass
-            
             # Copy and paste
             if not self.clipboard_service.copy_to_clipboard(msg_content):
                 return False
