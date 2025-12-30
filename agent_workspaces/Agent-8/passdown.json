@@ -29,87 +29,82 @@
   ],
   "tools_created": [],
   "lessons_learned": [
-    "Complex mocking issues warrant early delegation to infra/testing specialists",
-    "Keep proof_ledger path handling deterministic and avoid double-writes when mocks wrap os.makedirs",
-    "Always pair stall-recovery actions with immediate artifacts (devlog, passdown) to show progress",
-    "Tooling gaps (mock sandbox) should be captured as actionable specs for future cycles",
-    "Coordination messages must include context, expected deliverables, and escalation path"
+    "SSOT domain registry updates require coordination between documentation and validation tools",
+    "Pattern matching must support all SSOT tag formats used in codebase (HTML comments are standard)",
+    "Dynamic domain extraction from SSOT_DOMAIN_MAPPING.md prevents registry drift",
+    "A2A coordination enables parallel validation and registry updates for faster completion",
+    "Registry updates should be verified with re-validation to confirm all domains recognized"
   ],
   "next_actions": [
-    "Monitor Agent-3 response and pull patch for proof_ledger tests",
-    "Run pytest on proof_ledger suite after fix delivery",
-    "Update Swarm Brain with final resolution notes and patterns",
-    "Inform Captain with validation results and delta summary",
-    "Post completion devlog after validation"
+    "Await Agent-6 re-validation results after registry update",
+    "Coordinate with Agent-6 on validation results and any remaining domain issues",
+    "Update status.json with validation results once received from Agent-6"
   ],
-  "blockers": "Awaiting Agent-3 fix for proof_ledger test mocking (directory creation)",
-  "recent_devlog": "devlogs/2025-12-11_agent-8_session_cleanup.md",
-  "swarm_brain_entry": "kb-proof-ledger-delegation-2025-12-11",
-  "tool_wishlist": "Pytest Mock Sandbox for filesystem path/makedirs testing without brittle mocks",
+  "blockers": "None - registry update complete, awaiting Agent-6 re-validation",
+  "recent_devlog": "devlogs/2025-12-30_ssot_domain_registry_update.md",
+  "swarm_brain_entry": "Not updated - internal tool update",
+  "tool_wishlist": "",
   "gas_pipeline": {
     "status": "HEALTHY",
-    "blockers": [
-      "Proof_ledger pytest fixes pending Agent-3 delivery"
-    ],
+    "blockers": [],
     "dependencies": [
-      "Agent-3 proof_ledger test fix delivery"
+      "Agent-6 re-validation results"
     ],
     "ready_for_new_work": true
   },
   "cycle_handoff": {
     "identity_reminder": "You are Agent-8 (SSOT & System Integration Specialist). Act as Agent-8 for this message.",
     "context_recap": [
-      "Received stall recovery ping; selected delegation path for proof_ledger pytest failures",
-      "Sent A2A delegation to Agent-3 with full context and deliverables",
-      "Posted delegation devlog to Discord and Swarm Brain; documented session cleanup artifacts",
-      "Tool wishlist captured to address mocking pain points in future cycles"
+      "Accepted A2A coordination request from Agent-6 for SSOT domain registry update",
+      "Updated tools/ssot_tagging_validator.py with 12 missing domains and fixed HTML comment pattern matching",
+      "Sent A2A reply to Agent-6 confirming acceptance and proposed coordination approach",
+      "Created devlog documenting registry update and pattern matching fixes"
     ],
     "mission_focus_next_slice": [
-      "Monitor Agent-3 proof_ledger fix and run pytest validation",
-      "Integrate fix, ensure SSOT tags remain intact, and backstop with devlog",
-      "Capture mocking patterns into Swarm Brain for reuse",
-      "Report validation results to Captain"
+      "Await Agent-6 re-validation results after registry update",
+      "Coordinate with Agent-6 on validation results and any remaining domain issues",
+      "Update status.json with validation results once received"
     ],
     "do_dont": {
       "do": [
-        "Monitor Agent-3 inbox responses and validation artifacts",
-        "Validate proof_ledger fixes with pytest and capture results",
-        "Update Swarm Brain with coordination and testing patterns",
-        "Report status to Captain with concrete validation evidence"
+        "Monitor Agent-6 inbox for re-validation results",
+        "Coordinate with Agent-6 on validation results and any remaining domain issues",
+        "Update status.json with validation results once received",
+        "Verify all 12 missing domains are now recognized by validation tool"
       ],
       "dont": [
-        "Don't modify Agent-3 fixes without coordination",
-        "Don't skip pytest validation before reporting success",
-        "Don't omit Swarm Brain updates after resolution",
-        "Don't delay Captain updates once validation completes"
+        "Don't modify validation tool registry without coordination with Agent-6",
+        "Don't skip re-validation verification",
+        "Don't omit status updates after receiving validation results",
+        "Don't delay coordination responses"
       ]
     },
     "if_blocked": {
-      "blocker": "Agent-3 delay on proof_ledger fix",
-      "proposed_fix": "Ping Agent-3 via A2A; escalate to Captain if no response",
+      "blocker": "Agent-6 delay on re-validation",
+      "proposed_fix": "Ping Agent-6 via A2A; escalate to Captain if no response after 30 minutes",
       "owner": "Agent-8",
       "eta": "Next inbox check"
     },
     "checklist_alignment": {
       "cycle_start": [
-        "Check inbox for Agent-3 update on proof_ledger tests",
+        "Check inbox for Agent-6 re-validation results",
         "Review passdown.json for current coordination context",
         "Monitor status.json for coordination state"
       ],
       "during_cycle": [
-        "Update status.json after reviewing Agent-3 progress",
-        "Coordinate with Agent-3 if blockers persist",
-        "Validate proof_ledger tests with pytest once patch arrives"
+        "Update status.json after reviewing Agent-6 validation results",
+        "Coordinate with Agent-6 if any domains still missing",
+        "Verify all 12 missing domains are now recognized"
       ],
       "cycle_end": [
         "Update passdown.json with validation results",
         "Post completion devlog to Discord",
-        "Update Swarm Brain with learnings and patterns"
+        "Update status.json with final validation confirmation"
       ]
     },
     "optional_commands": [
       "python -m src.services.messaging_cli --check-status",
-      "python -m src.services.messaging_cli --agent Agent-3 --message 'Proof_ledger pytest status update requested'"
+      "python -m src.services.messaging_cli --agent Agent-6 --message 'Re-validation status update requested'"
     ]
   }
 }
