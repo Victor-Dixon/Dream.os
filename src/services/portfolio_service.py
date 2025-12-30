@@ -2,6 +2,17 @@
 """
 <!-- SSOT Domain: integration -->
 
+Navigation References:
+├── Related Files:
+│   ├── Base Service → src/core/base/base_service.py
+│   ├── Timeout Constants → src/core/config/timeout_constants.py
+│   ├── Portfolio Builder → src/opensource/portfolio_builder.py
+│   └── Trading Analytics → src/trading_robot/services/analytics/performance_metrics_engine.py
+├── Documentation:
+│   └── Integration Domain → docs/SSOT/ (integration domain docs)
+└── Testing:
+    └── Unit Tests → tests/unit/services/test_portfolio_*.py
+
 Portfolio Service - DreamBank Integration
 ==========================================
 
