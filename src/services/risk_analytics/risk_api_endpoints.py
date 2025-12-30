@@ -7,6 +7,18 @@ WordPress REST API endpoints for risk analytics calculations.
 
 <!-- SSOT Domain: analytics -->
 
+Navigation References:
+├── Related Files:
+│   ├── Risk Calculator → src/services/risk_analytics/risk_calculator_service.py
+│   ├── WebSocket Server → src/services/risk_analytics/risk_websocket_server.py
+│   ├── Dashboard UI → docs/analytics/risk_dashboard.html
+│   └── Database Schema → database/migrations/phase2_2_risk_analytics_schema.sql
+├── Documentation:
+│   ├── Architecture → docs/analytics/TRADINGROBOTPLUG_ANALYTICS_ARCHITECTURE.md
+│   └── Phase 2.2 Guide → docs/analytics/AGENT2_PHASE2_GUIDANCE.md
+└── Testing:
+    └── Unit Tests → tests/unit/services/test_risk_*.py
+
 Endpoints:
 - GET /wp-json/tradingrobotplug/v1/analytics/risk/var
 - GET /wp-json/tradingrobotplug/v1/analytics/risk/cvar
