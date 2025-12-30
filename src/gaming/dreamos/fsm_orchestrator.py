@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: gaming -->
+
 FSM Orchestrator - Core component for managing task states and agent coordination
 Manages task states, processes agent reports, emits verification messages.
 Refactored for C-056 | Agent-5

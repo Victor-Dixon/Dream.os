@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 """
+<!-- SSOT Domain: logging -->
+
 Speech Log Manager
 ==================
 

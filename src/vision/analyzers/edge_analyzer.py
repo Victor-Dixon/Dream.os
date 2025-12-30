@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: vision -->
+
 Edge Analyzer
 ============
 

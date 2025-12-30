@@ -1,4 +1,6 @@
 """Gaming Models.
+<!-- SSOT Domain: gaming -->
+
 
 Data models and enums for gaming integration system.
 

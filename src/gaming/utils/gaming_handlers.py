@@ -1,4 +1,6 @@
 """Gaming Event Handlers.
+<!-- SSOT Domain: gaming -->
+
 
 Event handling utilities for gaming integration system.
 

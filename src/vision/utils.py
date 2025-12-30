@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: vision -->
+
 Vision System Utilities - V2 Compliance Redirect Shim
 ======================================================
 

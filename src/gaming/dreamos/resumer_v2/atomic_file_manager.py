@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: gaming -->
+
 Atomic File Manager
 ------------------
 Provides atomic file operations for safe file updates.

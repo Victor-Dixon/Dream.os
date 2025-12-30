@@ -1,3 +1,4 @@
+# <!-- SSOT Domain: gaming -->
 """Data models for gaming integration."""
 
 from __future__ import annotations

@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: vision -->
+
 Visual Analysis - V2 Compliant Orchestrator
 ==========================================
 
