@@ -13,9 +13,9 @@
 
 This document provides a comprehensive mapping of all Single Source of Truth (SSOT) domains used across the codebase. SSOT domains are used to categorize and organize code, tools, and documentation to ensure clear ownership and maintainability.
 
-**Total Domains:** 32 (as defined by Agent-8 Phase 1)  
-**Currently Tagged in Codebase:** 20 unique domains found  
-**Proposed Additional Domains:** 12 domains (to be validated with Agent-8)  
+**Total Domains:** 24 ACTIVE domains (12 missing domains added 2025-12-30)  
+**Currently Tagged in Codebase:** 24 unique domains found  
+**Additional Proposed Domains:** 9 domains (to be validated)  
 **Format:** HTML comment `<!-- SSOT Domain: domain_name -->`  
 **Scan Date:** 2025-12-27  
 **Scan Tool:** `tools/scan_ssot_domains.py`  
@@ -66,12 +66,14 @@ This document provides a comprehensive mapping of all Single Source of Truth (SS
 9. **analytics** - Analytics, metrics, tracking, reporting
    - **Examples:** Analytics tools, metrics collection, analytics dashboards
    - **Owner:** Business Intelligence (Agent-5)
+   - **Status:** ACTIVE - 28 files tagged
 
 ### Communication & Coordination Domains
 
 10. **communication** - Communication systems, messaging, notifications
     - **Examples:** Messaging systems, communication protocols
     - **Owner:** Coordination (Agent-6)
+    - **Status:** ACTIVE - 30 files tagged
 
 11. **coordination** - Agent coordination, swarm coordination, multi-agent systems
     - **Examples:** Coordination handlers, swarm coordination, agent coordination
@@ -86,6 +88,7 @@ This document provides a comprehensive mapping of all Single Source of Truth (SS
 13. **qa** - Quality assurance, testing, validation, quality checks
     - **Examples:** QA tools, validation tools, quality checks
     - **Owner:** SSOT & System Integration (Agent-8)
+    - **Status:** ACTIVE - 4 files tagged
 
 14. **validation** - Validation logic, validation tools, validation checks
     - **Examples:** Validation handlers, validation tools, validation checks
@@ -106,10 +109,12 @@ This document provides a comprehensive mapping of all Single Source of Truth (SS
 17. **domain** - Domain-specific code, domain logic, domain models
     - **Examples:** Domain models, domain logic, domain-specific implementations
     - **Owner:** Architecture & Design (Agent-2)
+    - **Status:** ACTIVE - 3 files tagged
 
 18. **ai_training** - AI training, machine learning, model training
     - **Examples:** AI training tools, ML models, training pipelines
     - **Owner:** Business Intelligence (Agent-5)
+    - **Status:** ACTIVE - 1 file tagged
 
 ### Additional Domains (To Be Validated)
 
@@ -121,55 +126,79 @@ This document provides a comprehensive mapping of all Single Source of Truth (SS
     - **Examples:** General utilities, common functionality
     - **Owner:** TBD
 
-### Additional Domains (Proposed - To Be Validated with Agent-8)
+### Trading & Business Domains
 
-Based on codebase structure analysis, the following 12 domains are proposed to complete the 32-domain registry. These need validation against Agent-8's original Phase 1 mapping:
+19. **trading_robot** - Trading robot specific code, trading logic, trading algorithms
+   - **Examples:** Trading strategies, trading algorithms, trading data processing
+   - **Owner:** Business Intelligence (Agent-5)
+   - **Status:** ACTIVE - 47 files tagged
 
-21. **repositories** - Repository pattern implementations, data access abstractions  
+### Performance & Infrastructure Domains
+
+20. **performance** - Performance optimization, performance monitoring, performance analysis
+   - **Examples:** Performance tools, performance monitoring, performance optimization
+   - **Owner:** Infrastructure (Agent-3)
+   - **Status:** ACTIVE - 6 files tagged
+
+21. **safety** - Safety systems, safety checks, safety protocols
+   - **Examples:** Safety validation, safety checks, safety protocols
+   - **Owner:** Infrastructure (Agent-3) - Proposed (needs confirmation)
+   - **Status:** ACTIVE - 5 files tagged
+
+### System Integration Domains
+
+22. **swarm_brain** - Swarm brain/knowledge system, swarm intelligence, knowledge management
+   - **Examples:** Swarm brain tools, knowledge management, swarm intelligence systems
+   - **Owner:** SSOT & System Integration (Agent-8) or Coordination (Agent-6) - TBD (needs confirmation)
+   - **Status:** ACTIVE - 9 files tagged
+
+### Version Control & Error Handling Domains
+
+23. **git** - Git operations, version control, repository management
+   - **Examples:** Git tools, version control utilities, repository management
+   - **Owner:** Infrastructure (Agent-3) - Proposed (needs confirmation)
+   - **Status:** ACTIVE - 3 files tagged
+
+24. **error_handling** - Error handling logic, error management, exception handling
+   - **Examples:** Error handlers, exception handling, error management utilities
+   - **Owner:** Infrastructure (Agent-3) or Integration (Agent-1) - TBD (needs confirmation)
+   - **Status:** ACTIVE - 2 files tagged
+
+### Additional Domains (Proposed - To Be Validated)
+
+25. **repositories** - Repository pattern implementations, data access abstractions  
     - **Owner:** Business Intelligence (Agent-5) or Integration (Agent-1) - TBD  
     - **Status:** Proposed - needs validation
 
-22. **orchestrators** - Orchestration logic, workflow orchestration  
+26. **orchestrators** - Orchestration logic, workflow orchestration  
     - **Owner:** Infrastructure (Agent-3) or Integration (Agent-1) - TBD  
     - **Status:** Proposed - needs validation
 
-23. **gaming** - Gaming-related code, gaming integrations  
+27. **gaming** - Gaming-related code, gaming integrations  
     - **Owner:** TBD (may be part of integration domain)  
     - **Status:** Proposed - needs validation
 
-24. **vision** - Vision/image processing, computer vision  
+28. **vision** - Vision/image processing, computer vision  
     - **Owner:** TBD  
     - **Status:** Proposed - needs validation
 
-25. **workflows** - Workflow management, workflow engines  
+29. **workflows** - Workflow management, workflow engines  
     - **Owner:** Integration (Agent-1) or Infrastructure (Agent-3) - TBD  
     - **Status:** Proposed - needs validation
 
-26. **testing** - Test files, test utilities, test infrastructure  
+30. **testing** - Test files, test utilities, test infrastructure  
     - **Owner:** SSOT & System Integration (Agent-8) - Proposed  
     - **Status:** Proposed - needs validation
 
-27. **security** - Security code, authentication, authorization  
+31. **security** - Security code, authentication, authorization  
     - **Owner:** Infrastructure (Agent-3) - Proposed  
     - **Status:** Proposed - needs validation
 
-28. **monitoring** - Monitoring systems, health checks, observability  
+32. **monitoring** - Monitoring systems, health checks, observability  
     - **Owner:** Infrastructure (Agent-3) - Proposed  
     - **Status:** Proposed - needs validation
 
-29. **performance** - Performance optimization, performance monitoring  
-    - **Owner:** Infrastructure (Agent-3) - Proposed  
-    - **Status:** Proposed - needs validation
-
-30. **trading_robot** - Trading robot specific code, trading logic  
-    - **Owner:** Business Intelligence (Agent-5) - Proposed  
-    - **Status:** Proposed - needs validation
-
-31. **swarm_brain** - Swarm brain/knowledge system, swarm intelligence  
-    - **Owner:** SSOT & System Integration (Agent-8) or Coordination (Agent-6) - TBD  
-    - **Status:** Proposed - needs validation
-
-32. **deployment** - Deployment code, deployment automation, CI/CD  
+33. **deployment** - Deployment code, deployment automation, CI/CD  
     - **Owner:** Infrastructure (Agent-3) - Proposed  
     - **Status:** Proposed - needs validation
 
@@ -216,9 +245,10 @@ Module description.
 - **Integration (Agent-1):** services, integration, onboarding
 - **Infrastructure (Agent-3):** infrastructure
 - **Web Development (Agent-7):** web, seo (shared with Agent-2)
-- **Business Intelligence (Agent-5):** data, analytics, ai_training
+- **Business Intelligence (Agent-5):** data, analytics, ai_training, trading_robot
 - **Coordination (Agent-6):** communication, coordination
-- **SSOT & System Integration (Agent-8):** qa, validation
+- **SSOT & System Integration (Agent-8):** qa, validation, swarm_brain (TBD - needs confirmation)
+- **Infrastructure (Agent-3):** performance, safety (TBD - needs confirmation), git (TBD - needs confirmation), error_handling (TBD - needs confirmation)
 
 ### Coordination Protocol
 
