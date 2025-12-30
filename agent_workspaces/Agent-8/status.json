@@ -4,7 +4,7 @@
   "status": "ACTIVE_AGENT_MODE",
   "fsm_state": "ACTIVE",
   "current_phase": "TASK_EXECUTION",
-  "last_updated": "2025-12-29 18:05:00",
+  "last_updated": "2025-12-30 03:15:00",
   "current_mission": "Unified Tool Registry + SSOT Tagging Remediation (A2A support)",
   "mission_priority": "HIGH",
   "current_tasks": [
@@ -14,7 +14,8 @@
     "Unified Tool Registry MCP Integration Testing - ✅ COMPLETE (2025-12-29, Agent-7 assistance)",
     "Inbox cleanup - ✅ COMPLETE (2025-12-29): Archived 74 old messages, kept 5 active",
     "A2A PR Review Coordination - ✅ ACCEPTED (2025-12-29): On-call for Agent-4 PR review",
-    "SSOT Tagging Remediation Batch 2 - ✅ COMPLETE (2025-12-29): Added SSOT tags to 17 files in tools/ directory, validation confirmed by Agent-5 (19 files verified with SSOT Domain: tools tags, tag format compliant, validation report: reports/tag_analysis_batch2_validation.md)"
+    "SSOT Tagging Remediation Batch 2 - ✅ COMPLETE (2025-12-29): Added SSOT tags to 17 files in tools/ directory, validation confirmed by Agent-5 (19 files verified with SSOT Domain: tools tags, tag format compliant, validation report: reports/tag_analysis_batch2_validation.md)",
+    "Tool Classification Signal vs Noise - ✅ COMPLETE (2025-12-30): Classified 146 tools - 92 SIGNAL (63.0%), 3 NOISE (2.1%), 51 UNKNOWN (34.9%), classification tool: tools/classify_tools_signal_noise.py, report: reports/tool_classification_signal_noise.json"
   ],
   "completed_tasks": [
     "Phase -1: Classified all 737 tools (435 SIGNAL, 262 NOISE, 40 UNKNOWN)",
@@ -63,7 +64,8 @@
     "Unified Tool Registry MCP Integration (2025-12-29): Completion report: agent_workspaces/Agent-8/UNIFIED_TOOL_REGISTRY_MCP_INTEGRATION_COMPLETE.md",
     "Inbox Cleanup (2025-12-29): Created cleanup script (cleanup_inbox.py), archived 74 old messages (Dec 14-27), kept 5 active messages",
     "A2A Coordination (2025-12-29): Accepted PR review coordination from Agent-4, on-call for 15-minute review window",
-    "SSOT Tagging Remediation Batch 2 (2025-12-29): Added SSOT domain tags to 17 files in tools/ directory (tool_registry.py, toolbelt_core.py, tool_facade.py, validate_closure_format.py, test_deployment_staging.py, captain_tools.py, captain_tools_extension.py, adapters/__init__.py, categories/__init__.py, core/__init__.py, audit_broken_tools_phase3.py, check_audit_evidence.py, comprehensive_audit.py, manage_env.py, verify_mcp_server_protocol.py, setup_cursor_mcp.py, intelligent_mission_advisor_analysis.py, discord_mermaid_renderer.py, error_types.py), validation confirmed by Agent-5 (19 files verified with SSOT Domain: tools tags, tag format compliant, tag_analyzer report: 157 files analyzed, average 2.7/5.0 score, 17 perfect files)"
+    "SSOT Tagging Remediation Batch 2 (2025-12-29): Added SSOT domain tags to 17 files in tools/ directory (tool_registry.py, toolbelt_core.py, tool_facade.py, validate_closure_format.py, test_deployment_staging.py, captain_tools.py, captain_tools_extension.py, adapters/__init__.py, categories/__init__.py, core/__init__.py, audit_broken_tools_phase3.py, check_audit_evidence.py, comprehensive_audit.py, manage_env.py, verify_mcp_server_protocol.py, setup_cursor_mcp.py, intelligent_mission_advisor_analysis.py, discord_mermaid_renderer.py, error_types.py), validation confirmed by Agent-5 (19 files verified with SSOT Domain: tools tags, tag format compliant, tag_analyzer report: 157 files analyzed, average 2.7/5.0 score, 17 perfect files)",
+    "Tool Classification Signal vs Noise (2025-12-30): Created classification tool (tools/classify_tools_signal_noise.py), classified 146 tools in tools/ directory - 92 SIGNAL (63.0%, registered/imported/core infrastructure/utility tools), 3 NOISE (2.1%, deprecated tools), 51 UNKNOWN (34.9%, need manual review), generated detailed report (reports/tool_classification_signal_noise.json) and summary (reports/tool_classification_signal_noise_summary.md)"
   ],
   "achievements": [
     "Phase -1: Tool classification complete (435 SIGNAL tools identified)",
@@ -75,6 +77,7 @@
   ],
   "next_actions": [
     "Await Agent-4 PR ping for merge conflict review (MASTER_TASK_LOG.md + main.py)",
+    "Review UNKNOWN tools classification (51 tools need manual review)",
     "Continue SSOT Tagging Remediation (Batch 3) - identify next batch of files needing tags",
     "Support Agent-6 SSOT Tagging Batch Coordination (646 tools still need tags)"
   ],
