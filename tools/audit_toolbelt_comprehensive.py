@@ -25,13 +25,13 @@ project_root = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(project_root))
 
 try:
-    from tools.audit_toolbelt import ToolbeltHealthAuditor
+    from tools.audit.audit_toolbelt import ToolbeltHealthAuditor
 except ImportError:
     try:
-        from audit_toolbelt import ToolbeltHealthAuditor
+        from audit.audit_toolbelt import ToolbeltHealthAuditor
     except ImportError:
-        sys.path.append(str(project_root))
-        from audit_toolbelt import ToolbeltHealthAuditor
+        sys.path.append(str(project_root / "tools"))
+        from audit.audit_toolbelt import ToolbeltHealthAuditor
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
