@@ -9,6 +9,8 @@ Supports Agent-6's Block 5 SSOT tagging coordination efforts.
 Author: Agent-2 (Architecture & Design Specialist)
 Date: 2025-12-28
 V2 Compliant: Yes (<300 lines)
+
+<!-- SSOT Domain: tools -->
 """
 
 import os
@@ -54,7 +56,11 @@ class SSOTTaggingValidator:
             'coordination', 'logging', 'error_handling', 'config', 'security',
             'performance', 'monitoring', 'testing', 'deployment', 'git',
             'github', 'discord', 'vision', 'gaming', 'trading_robot', 'swarm_brain',
-            'orchestration', 'repositories', 'workflows', 'architecture', 'design'
+            'orchestration', 'repositories', 'workflows', 'architecture', 'design',
+            # Additional domains from SSOT_DOMAIN_MAPPING.md
+            'communication', 'data', 'analytics', 'safety', 'domain',
+            'ai_training', 'qa', 'services', 'web', 'seo', 'documentation',
+            'tools', 'validation'
         }
 
         # Try to load from SSOT domain mapping if available
@@ -63,11 +69,16 @@ class SSOTTaggingValidator:
             try:
                 with open(ssot_mapping, 'r', encoding='utf-8') as f:
                     content = f.read()
-                    # Extract domains from markdown
-                    domain_matches = re.findall(r'\b[a-z_]+\b', content)
-                    for match in domain_matches:
-                        if len(match) > 2 and match not in ['the', 'and', 'for', 'with']:
-                            domains.add(match)
+                    # Extract domains from HTML comment format: <!-- SSOT Domain: domain_name -->
+                    html_comment_pattern = r'<!--\s*SSOT\s+Domain:\s*([a-zA-Z_][a-zA-Z0-9_]*)\s*-->'
+                    html_matches = re.findall(html_comment_pattern, content, re.IGNORECASE)
+                    for match in html_matches:
+                        domains.add(match.lower())
+                    # Also extract from domain list sections
+                    domain_list_pattern = r'\*\*([a-zA-Z_][a-zA-Z0-9_]*)\*\*.*?Owner:'
+                    list_matches = re.findall(domain_list_pattern, content, re.IGNORECASE | re.DOTALL)
+                    for match in list_matches:
+                        domains.add(match.lower())
             except Exception:
                 pass
 
@@ -84,11 +95,12 @@ class SSOTTaggingValidator:
                 content = f.read()
 
             # Check for SSOT domain tags in comments/docstrings
-            ssot_pattern = r'@domain\s+(\w+)|@ssot\s+(\w+)|SSOT\s*domain\s*:\s*(\w+)'
+            # Support multiple formats: HTML comments, @domain, @ssot, SSOT domain:
+            ssot_pattern = r'<!--\s*SSOT\s+Domain:\s*(\w+)\s*-->|@domain\s+(\w+)|@ssot\s+(\w+)|SSOT\s*domain\s*:\s*(\w+)'
             matches = re.findall(ssot_pattern, content, re.IGNORECASE)
 
             for match in matches:
-                domain = match[0] or match[1] or match[2]
+                domain = match[0] or match[1] or match[2] or match[3]
                 if domain:
                     domain_tags.append(domain.lower())
 

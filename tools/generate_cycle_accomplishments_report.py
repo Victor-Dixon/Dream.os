@@ -9,6 +9,8 @@ Protocol: CYCLE_ACCOMPLISHMENTS_REPORT_GENERATION v1.0
 Author: Agent-2 (Architecture & Design)
 Date: 2025-12-28
 V2 Compliant: Yes
+
+<!-- SSOT Domain: tools -->
 """
 
 import json
@@ -309,4 +311,5 @@ def main():
 
 if __name__ == "__main__":
     exit(main())
+
 

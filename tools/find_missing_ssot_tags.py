@@ -11,12 +11,24 @@ def find_missing_tags(root_dir, search_dirs):
     missing_files = []
     tag_pattern = "SSOT Domain:"
     
+    # Exclude cache directories and generated files
+    excluded_dirs = {'__pycache__', '.git', 'node_modules', '.next', '.venv', 'venv', 'env', '.pytest_cache'}
+    excluded_patterns = {'.pyc', '.pyo', '.pyd'}
+    
     for search_dir in search_dirs:
         dir_path = Path(root_dir) / search_dir
         if not dir_path.exists():
             continue
             
         for file_path in dir_path.rglob("*"):
+            # Skip excluded directories
+            if any(excluded_dir in file_path.parts for excluded_dir in excluded_dirs):
+                continue
+            
+            # Skip excluded file patterns
+            if file_path.suffix in excluded_patterns:
+                continue
+            
             if file_path.suffix in [".py", ".md"]:
                 try:
                     content = file_path.read_text(encoding='utf-8')

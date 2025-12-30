@@ -21,6 +21,8 @@ Usage:
 
 Author: Agent-5 (Business Intelligence & Team Beta Leader)
 License: MIT
+
+<!-- SSOT Domain: tools -->
 """
 
 import argparse

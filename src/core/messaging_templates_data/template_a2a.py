@@ -51,7 +51,15 @@ A2A_TEMPLATE = (
     "- **Be proactive**: Propose concrete next steps rather than 'standing by'\n"
     "- **Identify synergy**: Explain how your skills complement your partner's\n"
     "- **Suggest handoffs**: Propose coordination touchpoints or integration points\n\n"
-    "If blocked: Send brief blocker description + proposed solution\n\n"
+    "**IMPORTANT**: **Push directives forward**: Don't just acknowledge repeat messages—use them to power more work or suggest new tasks back instead of reiterating the same thing. If you receive a message that's essentially repeating previous coordination, use it as fuel to execute work or propose the next task rather than just confirming again.\n\n"
+    "**DIRECTIVE PUSH PRINCIPLE**: When receiving messages (especially repeat/reminder messages), push directives forward—don't just respond. Use the message energy to execute more work or suggest a new task back instead of reiterating the same acknowledgment. Transform message receipt into action or task proposal.\n\n"
+    "If blocked: Send brief blocker description + proposed solution\n"
+    "**PUSH DIRECTIVES, DON'T REPEAT**: When you receive a message that repeats previous coordination or asks for status you've already provided, don't just reiterate—use it as momentum to:\n"
+    "- Execute the next logical work step immediately\n"
+    "- Propose a new task or next action back to the sender\n"
+    "- Suggest a concrete follow-up task that advances the coordination\n"
+    "- Take initiative to unblock yourself or others\n"
+    "Messages are fuel for action, not just confirmation loops. Turn repeat messages into forward progress.\n\n"
     "#A2A #BILATERAL-COORDINATION #SWARM-FORCE-MULTIPLIER\n"
 )
 

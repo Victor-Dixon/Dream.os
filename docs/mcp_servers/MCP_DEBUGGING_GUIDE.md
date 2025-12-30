@@ -314,3 +314,4 @@ python -c "import mcp; print(mcp.__version__)"
 **Next:** Verify Cursor MCP client configuration and connection
 
 
+

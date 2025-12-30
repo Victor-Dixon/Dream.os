@@ -19,6 +19,8 @@ Features:
 
 Author: Agent-5 (Business Intelligence Specialist)
 Created: 2025-12-27
+
+<!-- SSOT Domain: tools -->
 """
 
 import argparse

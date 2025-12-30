@@ -2,6 +2,8 @@
 """
 Add MCP Server Configuration to Cursor Settings
 Automatically adds MCP servers to Cursor User Settings
+
+<!-- SSOT Domain: tools -->
 """
 
 import json

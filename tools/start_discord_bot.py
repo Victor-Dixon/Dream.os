@@ -7,6 +7,8 @@ Starts the Discord bot and automatically restarts it if it crashes.
 Includes process management and health monitoring.
 
 V2 Compliance | Author: Agent-4 | Date: 2025-12-28
+
+<!-- SSOT Domain: tools -->
 """
 
 import os

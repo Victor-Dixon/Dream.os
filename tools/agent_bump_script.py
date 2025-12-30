@@ -9,6 +9,8 @@ Purpose: Coordinate agent version updates and status synchronization
 Author: Agent-5 (Business Intelligence Specialist)
 Created: 2025-12-28
 Usage: python tools/agent_bump_script.py --agent Agent-X --action bump|status|sync
+
+<!-- SSOT Domain: tools -->
 """
 
 import argparse
