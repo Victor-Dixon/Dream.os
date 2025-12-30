@@ -246,8 +246,14 @@ Agent_Cellphone_V2_Repository/
 ## 📚 Documentation
 
 - **[STANDARDS.md](STANDARDS.md)**: Code quality and architecture standards
+- **[DEPRECATION_NOTICES.md](docs/standards/DEPRECATION_NOTICES.md)**: Deprecation notices and migration guides
 - **[AGENTS.md](AGENTS.md)**: Agent system documentation
-- **[docs/](docs/)**: Additional documentation and guides
+- **[docs/DOCUMENTATION_INDEX.md](docs/DOCUMENTATION_INDEX.md)**: Complete documentation navigation hub
+- **[docs/guides/](docs/guides/)**: How-to guides and tutorials ([QUICK_START_GUIDE.md](docs/guides/QUICK_START_GUIDE.md), [DELEGATION_BOARD.md](docs/guides/DELEGATION_BOARD.md))
+- **[docs/standards/](docs/standards/)**: Code standards and conventions
+- **[docs/protocols/](docs/protocols/)**: Operational protocols and workflows
+- **[docs/architecture/](docs/architecture/)**: System architecture documentation
+- **[docs/archive/](docs/archive/)**: Historical documentation (archived by year/type)
 - **Agent Workspaces**: `agent_workspaces/{Agent-X}/` for agent-specific docs
 
 ---
