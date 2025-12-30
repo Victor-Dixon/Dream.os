@@ -58,5 +58,5 @@ def check_agent1_batch_status():
         print(f"  {domain}: {count} batches")
 
 if __name__ == '__main__':
-    check_agent1_ssot_batch_status()
+    check_agent1_batch_status()
 
