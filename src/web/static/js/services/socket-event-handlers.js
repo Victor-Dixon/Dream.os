@@ -1,3 +1,4 @@
+<!-- SSOT Domain: integration -->
 /**
  * Socket Event Handlers - V2 Compliant
  * Socket event handling methods extracted from dashboard-event-service.js

@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: integration -->
+
 Trading Business Intelligence Analytics Service - V2 Compliant Redirect
 ======================================================================
 

@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: integration -->
+
 Messaging Fallback for Soft Onboarding
 =======================================
 

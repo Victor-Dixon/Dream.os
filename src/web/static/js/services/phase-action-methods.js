@@ -1,3 +1,4 @@
+<!-- SSOT Domain: integration -->
 /**
  * Phase Action Methods - V2 Compliant
  * Phase action execution methods extracted from deployment-phase-service.js

@@ -1,3 +1,4 @@
+<!-- SSOT Domain: integration -->
 /**
  * Performance Recommendation Module - V2 Compliant
  * Performance recommendations generation functionality

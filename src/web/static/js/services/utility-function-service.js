@@ -1,3 +1,4 @@
+<!-- SSOT Domain: integration -->
 /**
  * Utility Function Service - V2 Compliant with Modular Architecture
  * Main orchestrator importing specialized utility modules

@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: integration -->
+
 Default Soft Onboarding Message - S2A Template Content
 =======================================================
 

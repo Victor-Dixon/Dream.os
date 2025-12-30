@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: integration -->
+
 Hard Onboarding Protocol Steps
 ================================
 

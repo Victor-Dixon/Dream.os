@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: integration -->
+
 Soft Onboarding Service
 ========================
 

@@ -1,3 +1,4 @@
+<!-- SSOT Domain: integration -->
 /**
  * Coordination Reporting Module - V2 Compliant
  * Coordination reporting functionality

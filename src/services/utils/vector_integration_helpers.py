@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: integration -->
+
 Vector Integration Helper Functions
 ===================================
 Utility functions for vector integration service formatting and recommendations.

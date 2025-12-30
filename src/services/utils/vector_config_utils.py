@@ -1,3 +1,4 @@
+# <!-- SSOT Domain: integration -->
 """Utility helpers for vector configuration (SSOT)."""
 
 from typing import Any

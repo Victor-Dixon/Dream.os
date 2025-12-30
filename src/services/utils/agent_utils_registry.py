@@ -1,3 +1,4 @@
+# <!-- SSOT Domain: integration -->
 from typing import Any
 
 AGENTS: dict[str, dict[str, Any]] = {

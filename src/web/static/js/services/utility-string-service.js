@@ -1,3 +1,4 @@
+<!-- SSOT Domain: integration -->
 /**
  * Utility String Service - V2 Compliant with Unified Logging
  * String manipulation utilities extracted from utility-service.js

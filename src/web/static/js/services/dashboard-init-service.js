@@ -1,3 +1,4 @@
+<!-- SSOT Domain: integration -->
 /**
  * Dashboard Initialization Service - V2 Compliant
  * Handles dashboard initialization and configuration

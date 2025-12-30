@@ -1,3 +1,4 @@
+<!-- SSOT Domain: integration -->
 /**
  * Report Generation Module - V2 Compliant
  * Core report generation functionality

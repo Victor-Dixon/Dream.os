@@ -1,3 +1,4 @@
+<!-- SSOT Domain: integration -->
 /**
  * Business Insights Module - V2 Compliant
  * Business insights generation functionality

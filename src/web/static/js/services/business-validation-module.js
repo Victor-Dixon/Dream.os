@@ -1,3 +1,4 @@
+<!-- SSOT Domain: integration -->
 /**
  * Business Validation Module - V2 Compliant
  * Business validation and scoring functionality

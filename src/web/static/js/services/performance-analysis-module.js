@@ -1,3 +1,4 @@
+<!-- SSOT Domain: integration -->
 /**
  * Performance Analysis Module - V2 Compliant
  * Performance results analysis functionality

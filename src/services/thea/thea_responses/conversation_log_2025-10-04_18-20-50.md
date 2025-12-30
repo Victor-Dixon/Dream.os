@@ -1,3 +1,4 @@
+<!-- SSOT Domain: integration -->
 # Thea Conversation Log
 **Timestamp:** 2025-10-04 18:20:50
 

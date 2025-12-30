@@ -1,3 +1,4 @@
+<!-- SSOT Domain: integration -->
 /**
  * Deployment Validation Service - V2 Compliant
  * Validation functionality extracted from deployment-service.js

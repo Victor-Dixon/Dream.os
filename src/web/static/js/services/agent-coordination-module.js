@@ -1,3 +1,4 @@
+<!-- SSOT Domain: integration -->
 /**
  * Agent Coordination Module - V2 Compliant
  * Individual agent coordination functionality

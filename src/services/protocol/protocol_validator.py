@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: integration -->
+
 Protocol Validator - V2 Compliant Module
 ========================================
 

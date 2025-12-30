@@ -1,3 +1,4 @@
+<!-- SSOT Domain: integration -->
 /**
  * Report History Module - V2 Compliant
  * Report storage and retrieval functionality

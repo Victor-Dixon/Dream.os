@@ -1,3 +1,4 @@
+<!-- SSOT Domain: integration -->
 /**
  * Scenario Validation Module - V2 Compliant (MODULAR REFACTOR)
  * REFACTORED FROM: 314 lines (14 over V2 limit)

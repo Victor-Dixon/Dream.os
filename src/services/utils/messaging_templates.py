@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: integration -->
+
 Messaging CLI Templates
 ======================
 Message templates for CLI operations. Enhanced with validation and structure.
