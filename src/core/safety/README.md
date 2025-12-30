@@ -1,8 +1,17 @@
 # Safety Foundation Module - AGI Phase 0
 
-**Status:** ✅ Implemented  
-**Version:** 1.0.0  
+**Status:** ✅ Implemented
+**Version:** 1.0.0
 **Date:** 2025-12-28
+
+<!-- SSOT Domain: safety -->
+
+SSOT TOOL METADATA
+Purpose: Comprehensive documentation for AGI Phase 0 safety foundation
+Description: Complete guide to safety components including sandbox, kill switch, blast radius limiter, audit trail, and state snapshots
+Usage: Reference for implementing autonomous operations with safety checks
+Date: 2025-12-30
+Tags: safety, agi, documentation, autonomous, security
 
 ---
 
