@@ -8,6 +8,8 @@ Tests the new staging/snapshot and rollback capabilities in the deployment MCP s
 Author: Agent-2 (Architecture & Design Specialist)
 Date: 2025-12-28
 V2 Compliant: Yes (<300 lines)
+
+<!-- SSOT Domain: tools -->
 """
 
 import sys

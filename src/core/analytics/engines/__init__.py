@@ -2,6 +2,8 @@
 # DO NOT EDIT MANUALLY - changes may be overwritten
 
 """
+<!-- SSOT Domain: core -->
+
 Analytics Engines Module
 
 # SSOT Domain: core

@@ -13,6 +13,16 @@ Improvements (V2 Compliance):
 - Logic extracted to helper modules
 
 Author: Agent-4 (Captain)
+
+<!-- SSOT Domain: discord -->
+
+SSOT TOOL METADATA
+Purpose: Monitor agent status changes and post Discord updates automatically
+Description: Monitors status.json files for changes, debounces updates, posts to Discord with retry logic
+Usage: Automatically runs in background to provide real-time status updates
+Date: 2025-12-30
+Tags: discord, monitoring, status, automation
+"""
 Refactored by: Agent-1 (V2 Compliance)
 
 """"""

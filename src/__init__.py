@@ -2,6 +2,8 @@
 # DO NOT EDIT MANUALLY - changes may be overwritten
 
 """
+<!-- SSOT Domain: core -->
+
 Core Module
 
 # SSOT Domain: core

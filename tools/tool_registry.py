@@ -8,6 +8,8 @@ Includes MCP server discovery and metadata for the 20-server architecture.
 V2 Compliance: <200 lines
 Author: Agent-5 (Business Intelligence Specialist)
 
+<!-- SSOT Domain: tools -->
+
 SSOT TOOL METADATA
 Purpose: Central registry for discovering and resolving tool adapters by name (including MCP-backed tools).
 Description: Loads `tool_registry.lock.json`, resolves adapter classes dynamically, and caches resolved adapters for reuse.

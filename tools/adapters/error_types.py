@@ -6,6 +6,8 @@ Error taxonomy for Agent Toolbelt operations.
 
 V2 Compliance: <120 lines
 Author: Agent-7 - Repository Cloning Specialist
+
+<!-- SSOT Domain: tools -->
 """
 
 

@@ -9,6 +9,8 @@ Usage:
 Author: Swarm (SSOT tagging remediation)
 Date: 2025-12-28
 Description: Provides core building blocks for unified tool access.
+
+<!-- SSOT Domain: tools -->
 """
 
 # AUTO-GENERATED __init__.py

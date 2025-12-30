@@ -10,6 +10,8 @@ Usage:
 Author: Swarm (SSOT tagging remediation)
 Date: 2025-12-28
 Description: Backwards-compatible facade pattern for unified tool access.
+
+<!-- SSOT Domain: tools -->
 """
 
 from ..toolbelt_core import ToolbeltCore

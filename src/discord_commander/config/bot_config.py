@@ -7,6 +7,15 @@ Bot Configuration
 Configuration management for Discord bot.
 
 V2 Compliance | Author: Agent-1 | Date: 2025-12-14
+
+<!-- SSOT Domain: discord -->
+
+SSOT TOOL METADATA
+Purpose: Discord bot configuration management and user mapping
+Description: Manages bot configuration, developer prefixes, user mappings, and Discord-specific settings
+Usage: BotConfig class for configuration, load_discord_user_map() for user management
+Date: 2025-12-30
+Tags: discord, config, bot, user-mapping
 """
 
 import json

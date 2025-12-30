@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: core -->
+
 
 # SSOT Domain: core
 Application Layer - Use Cases & Orchestration

@@ -2,6 +2,8 @@
 """
 Check Audit Evidence Utility
 Quick utility to verify audit evidence exists and is fresh for closure validation.
+
+<!-- SSOT Domain: tools -->
 """
 import json
 import glob

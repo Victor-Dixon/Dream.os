@@ -3,6 +3,8 @@
 Audit Broken Tools Phase 3
 ==========================
 Scans tools for runtime errors and identifies those needing fixes.
+
+<!-- SSOT Domain: tools -->
 """
 
 import os

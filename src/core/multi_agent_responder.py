@@ -10,6 +10,15 @@ Purpose: Enable seamless agent-to-agent messaging and coordination
 Author: Agent-2 (Architecture Specialist)
 Created: 2025-12-01
 Usage: Import and use MultiAgentResponder class for agent communication
+
+<!-- SSOT Domain: core -->
+
+SSOT TOOL METADATA
+Purpose: Multi-agent communication and coordination system
+Description: Handles inter-agent messaging, timeout checking, and swarm coordination
+Usage: MultiAgentResponder class for agent communication workflows
+Date: 2025-12-30
+Tags: core, messaging, coordination, swarm
 """
 
 import logging

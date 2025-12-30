@@ -13,6 +13,8 @@ Options:
     --load-env            Load .env and set environment variables
     --env-file <path>     Path to .env file (default: .env)
     --example-file <path> Path to .env.example file (default: env.example)
+
+<!-- SSOT Domain: tools -->
 """
 
 import sys

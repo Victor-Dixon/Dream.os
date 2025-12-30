@@ -11,6 +11,8 @@ Returns pass/fail with specific violations.
 Usage:
     python tools/validate_closure_format.py <closure_file.md>
     python tools/validate_closure_format.py --check <closure_file.md>
+
+<!-- SSOT Domain: tools -->
 """
 
 import json
