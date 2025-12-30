@@ -12,22 +12,26 @@ V2 Compliance | Author: Agent-1 | Date: 2025-12-14
 
 import json
 import logging
+from datetime import datetime
 from pathlib import Path
 
 
 def get_swarm_snapshot(logger: logging.Logger) -> dict:
-    """Get current swarm work snapshot."""
+    """Get current swarm work snapshot - always reads fresh from disk."""
     snapshot = {
         "active_agents": [],
         "recent_activity": [],
         "current_focus": [],
         "engagement_rate": 0.0,
+        "snapshot_timestamp": datetime.utcnow().isoformat(),  # Track when snapshot was generated
     }
 
     try:
         workspace_root = Path("agent_workspaces")
+        # Force fresh read by processing all status files
         active_count = _process_agent_statuses(workspace_root, snapshot, logger)
         snapshot["engagement_rate"] = (active_count / 8 * 100) if active_count > 0 else 0.0
+        logger.debug(f"Fresh snapshot generated at {snapshot['snapshot_timestamp']}: {active_count} active agents")
     except Exception as e:
         logger.warning(f"Error getting swarm snapshot: {e}")
 
@@ -61,9 +65,14 @@ def _process_agent_statuses(workspace_root: Path, snapshot: dict, logger: loggin
 
 
 def _load_agent_status(status_file: Path, logger: logging.Logger) -> dict | None:
-    """Load and process agent status file."""
-    with open(status_file, 'r', encoding='utf-8') as f:
-        status = json.load(f)
+    """Load and process agent status file - always reads fresh from disk."""
+    # Force fresh read by opening file each time (no caching)
+    try:
+        with open(status_file, 'r', encoding='utf-8') as f:
+            status = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError) as e:
+        logger.debug(f"Could not read status file {status_file}: {e}")
+        return None
 
     agent_status = status.get("status", "")
     if "ACTIVE" not in agent_status.upper():
