@@ -19,6 +19,8 @@ Usage:
 Author: Swarm (maintainers)
 Date: 2025-12-28
 Tags: ssot, tooling, python-package
+
+<!-- SSOT Domain: tools -->
 """
 
 

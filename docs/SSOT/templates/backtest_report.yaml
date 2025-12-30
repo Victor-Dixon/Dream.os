@@ -92,3 +92,4 @@ promo_snippets:
     focus: "Casual share of backtest + iteration"
     format: "Just backtested {preset}. Got {result}. Iteration {n}: {note}. Full report: {link}"
 
+

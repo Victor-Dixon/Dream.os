@@ -4,6 +4,8 @@ Devlog Poster - Agent-Specific Channel
 ======================================
 Posts a devlog markdown file to an agent-specific Discord channel.
 Uses DiscordRouterPoster for centralized webhook management.
+
+<!-- SSOT Domain: tools -->
 """
 
 import os

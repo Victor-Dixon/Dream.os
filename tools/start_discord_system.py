@@ -16,6 +16,8 @@ Usage:
 Author: Agent-8 (stability patch)
 Date: 2025-12-28
 Tags: discord, bot, supervisor, ssot, tooling
+
+<!-- SSOT Domain: tools -->
 """
 
 from __future__ import annotations

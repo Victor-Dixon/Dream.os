@@ -2,6 +2,8 @@
 """
 Deploy TradingRobotPlug.com theme files immediately.
 No coordination required - any agent can deploy.
+
+<!-- SSOT Domain: tools -->
 """
 import sys
 from pathlib import Path

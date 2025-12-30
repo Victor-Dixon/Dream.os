@@ -1,6 +1,6 @@
 # Comprehensive Tool Audit Report
 
-**Total Assets Found:** 302
+**Total Assets Found:** 307
 
 ## 🛠️ Tool Classes
 Found 170 tool classes in `tools/categories/`.
@@ -179,7 +179,7 @@ Found 170 tool classes in `tools/categories/`.
 | `DiscordPostTool` | `tools.categories.communication_tools` | `communication` |
 
 ## 📜 Standalone Scripts
-Found 132 scripts with `main()` entry points.
+Found 137 scripts with `main()` entry points.
 
 - `scripts\activate_vector_database_integration.py`
 - `scripts\add_ci_cd_to_github_repos.py`
@@ -265,9 +265,11 @@ Found 132 scripts with `main()` entry points.
 - `tools\agent_bump_script.py`
 - `tools\audit_broken_tools_phase3.py`
 - `tools\audit_toolbelt_comprehensive.py`
+- `tools\automated_p0_analytics_validation.py`
 - `tools\calibrate_agent_coordinates.py`
 - `tools\capture_agent_coordinates.py`
 - `tools\check_audit_evidence.py`
+- `tools\classify_tools_signal_noise.py`
 - `tools\comprehensive_audit.py`
 - `tools\configuration_sync_checker.py`
 - `tools\deploy_tradingrobotplug_font_fix.py`
@@ -282,6 +284,7 @@ Found 132 scripts with `main()` entry points.
 - `tools\fix_ssot_tag_syntax.py`
 - `tools\generate_blog_preview.py`
 - `tools\generate_cycle_accomplishments_report.py`
+- `tools\identify_agent1_batches.py`
 - `tools\manage_env.py`
 - `tools\master_task_log_to_cycle_planner.py`
 - `tools\multi_site_content_generator.py`
@@ -309,7 +312,9 @@ Found 132 scripts with `main()` entry points.
 - `tools\test_unified_tool_registry_mcp.py`
 - `tools\unified_cycle_accomplishments_report.py`
 - `tools\update_github_repo_description.py`
+- `tools\validate_all_ssot_files.py`
 - `tools\validate_closure_format.py`
+- `tools\validate_integration_batches.py`
 - `tools\verify_deployment_integration.py`
 - `tools\verify_mcp_server_protocol.py`
 - `tools\wordpress_manager.py`

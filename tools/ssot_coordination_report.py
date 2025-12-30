@@ -9,6 +9,8 @@ Provides actionable insights and coordination recommendations.
 Author: Agent-2 (Architecture & Design)
 Date: 2025-12-28
 V2 Compliant: Yes (<300 lines)
+
+<!-- SSOT Domain: tools -->
 """
 
 import json
@@ -194,4 +196,5 @@ def main():
 
 if __name__ == "__main__":
     exit(main())
+
 

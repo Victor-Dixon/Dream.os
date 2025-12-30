@@ -1,8 +1,8 @@
 {
   "summary": {
     "discovered_tool_classes": 170,
-    "potential_scripts": 132,
-    "total_assets": 302
+    "potential_scripts": 137,
+    "total_assets": 307
   },
   "tool_classes": [
     {
@@ -1078,6 +1078,11 @@
     "tools\\swarm_to_wordpress_automation.py",
     "tools\\soft_onboard_cli.py",
     "tools\\deploy_tradingrobotplug_font_fix.py",
+    "tools\\classify_tools_signal_noise.py",
+    "tools\\identify_agent1_batches.py",
+    "tools\\validate_integration_batches.py",
+    "tools\\automated_p0_analytics_validation.py",
+    "tools\\validate_all_ssot_files.py",
     "tools\\manage_env.py",
     "tools\\capture_agent_coordinates.py",
     "tools\\test_mcp_server_connectivity.py",

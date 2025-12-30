@@ -20,6 +20,8 @@ Features:
 Author: Agent-5 (Business Intelligence Specialist)
 Created: 2025-12-28
 Purpose: Improve agent discoverability and tool documentation
+
+<!-- SSOT Domain: tools -->
 """
 
 import argparse
@@ -125,7 +127,19 @@ class ToolTaggingAnalyzer:
             print(f"Directory {self.target_dir} does not exist")
             return results
 
+        # Exclude cache directories and generated files
+        excluded_dirs = {'__pycache__', '.git', 'node_modules', '.next', '.venv', 'venv', 'env'}
+        excluded_patterns = {'.pyc', '.pyo', '.pyd', '.pyc.'}
+
         for file_path in self.target_dir.rglob('*'):
+            # Skip excluded directories
+            if any(excluded_dir in file_path.parts for excluded_dir in excluded_dirs):
+                continue
+            
+            # Skip excluded file patterns
+            if file_path.suffix in excluded_patterns:
+                continue
+            
             if file_path.is_file() and file_path.suffix in self.supported_extensions:
                 analysis = self.analyze_file(file_path)
                 results.append(analysis)
