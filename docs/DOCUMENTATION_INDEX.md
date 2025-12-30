@@ -8,6 +8,9 @@
 
 _System architecture, design patterns, technical decisions_
 
+- [TASK_MANAGEMENT_INTEGRATION_SUMMARY.md](docs/architecture/TASK_MANAGEMENT_INTEGRATION_SUMMARY.md) - Task management system integration
+- [OWNERSHIP_DECISION_MATRIX.md](docs/architecture/OWNERSHIP_DECISION_MATRIX.md) - File ownership decision matrix
+- [TECHNICAL_DEBT_TASKS_INDEX.md](docs/architecture/TECHNICAL_DEBT_TASKS_INDEX.md) - Technical debt tracking
 - [POINT_SYSTEM_INTEGRATION.md](docs/POINT_SYSTEM_INTEGRATION.md)
 - [TASK_MANAGEMENT_SYSTEM_INTEGRATION.md](docs/TASK_MANAGEMENT_SYSTEM_INTEGRATION.md)
 - [system_health_monitoring_report_2025-12-22.md](docs/system_health_monitoring_report_2025-12-22.md)
@@ -24,6 +27,7 @@ _System architecture, design patterns, technical decisions_
 
 _Operational protocols, workflows, procedures_
 
+- [SWARM_TASK_PACKETS.md](docs/protocols/SWARM_TASK_PACKETS.md) - Swarm task packet protocol
 - [CAPTAIN_LEVEL_TASK_PROTOCOL.md](docs/CAPTAIN_LEVEL_TASK_PROTOCOL.md)
 - [DAILY_EPISODE_WORKFLOW.md](docs/DAILY_EPISODE_WORKFLOW.md)
 - [TASK_DISCOVERY_PROTOCOL.md](docs/TASK_DISCOVERY_PROTOCOL.md)
@@ -36,6 +40,9 @@ _Operational protocols, workflows, procedures_
 
 _How-to guides, tutorials, getting started_
 
+- [QUICK_START_GUIDE.md](docs/guides/QUICK_START_GUIDE.md) - Project quick start guide
+- [DELEGATION_BOARD.md](docs/guides/DELEGATION_BOARD.md) - Task delegation guide
+- [QUEUE_PROCESSOR_USAGE.md](docs/guides/QUEUE_PROCESSOR_USAGE.md) - Message queue processor guide
 - [V2_COMPLIANCE_GUIDELINES_UPDATE.md](docs/V2_COMPLIANCE_GUIDELINES_UPDATE.md)
 - [discord_webhook_username_fix_guide_2025-12-26.md](docs/discord_webhook_username_fix_guide_2025-12-26.md)
 - [messaging\WORK_RESUME_GUIDE.md](docs/messaging\WORK_RESUME_GUIDE.md)
