@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: integration -->
+
 Cleanup Defaults - Soft Onboarding
 ===================================
 

@@ -1,3 +1,4 @@
+<!-- SSOT Domain: integration -->
 /**
  * Deployment Coordination Service - V2 Compliant (MODULAR REFACTOR)
  * REFACTORED FROM: 301 lines (1 over V2 limit)

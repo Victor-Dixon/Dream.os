@@ -1,3 +1,4 @@
+<!-- SSOT Domain: integration -->
 /**
  * Deployment Metrics Service - V2 Compliant
  * Metrics and analytics functionality extracted from deployment-service.js

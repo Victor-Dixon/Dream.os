@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: integration -->
+
 Canonical Swarm Closure Prompt (A+++ Grade)
 ==========================================
 

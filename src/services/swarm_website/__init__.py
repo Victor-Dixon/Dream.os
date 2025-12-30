@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: integration -->
+
 Swarm Website Integration Service
 ==================================
 

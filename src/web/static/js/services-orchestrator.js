@@ -1,3 +1,4 @@
+<!-- SSOT Domain: integration -->
 /**
  * Services Orchestrator - V2 Compliant Modular System
  * Coordinates all service modules with proper separation of concerns

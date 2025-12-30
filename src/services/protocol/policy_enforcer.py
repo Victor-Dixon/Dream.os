@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: integration -->
+
 Policy Enforcer - V2 Compliant Module
 =====================================
 

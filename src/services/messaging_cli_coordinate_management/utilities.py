@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: integration -->
+
 Coordinate Management Utilities
 ==============================
 

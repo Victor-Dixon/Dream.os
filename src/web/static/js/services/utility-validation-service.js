@@ -1,3 +1,4 @@
+<!-- SSOT Domain: integration -->
 /**
  * Utility Validation Service - V2 Compliant with Modular Architecture
  * Main orchestrator using specialized validation modules

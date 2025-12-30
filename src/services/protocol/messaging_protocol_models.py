@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: integration -->
+
 Messaging Protocol Models - V2 Compliance Module
 ================================================
 

@@ -195,19 +195,22 @@ def main():
     parser.add_argument('--priority', type=int, help='Process all batches of this priority')
     parser.add_argument('--domain', help='Process all batches for this domain')
     parser.add_argument('--dry-run', action='store_true', help='Show what would be tagged without making changes')
-    parser.add_argument('--json-file', default='ssot_batch_assignments_latest.json', help='Batch assignments JSON file')
+    parser.add_argument('--json-file', default='reports/ssot/ssot_batch_assignments_latest.json', help='Batch assignments JSON file')
     
     args = parser.parse_args()
     
     assignments = load_batch_assignments(args.json_file)
     batches = assignments.get('batches', {})
     
-    # Get priority 1 batches
-    priority_1_batches = batches.get('priority_1', [])
+    # Get all batches from all priorities
+    all_batches = []
+    all_batches.extend(batches.get('priority_1', []))
+    all_batches.extend(batches.get('priority_2', []))
+    all_batches.extend(batches.get('priority_3', []))
     
     if args.batch_id:
         # Process specific batch
-        batch = next((b for b in priority_1_batches if b['batch_id'] == args.batch_id), None)
+        batch = next((b for b in all_batches if b['batch_id'] == args.batch_id), None)
         if not batch:
             print(f"❌ Batch not found: {args.batch_id}")
             sys.exit(1)
@@ -215,18 +218,19 @@ def main():
         print(f"\n📊 Results: {results['tagged']} tagged, {results['already_tagged']} already tagged, {results['failed']} failed")
     elif args.priority:
         # Process all batches of this priority
-        batches_to_process = [b for b in priority_1_batches if b.get('priority') == args.priority]
+        batches_to_process = [b for b in all_batches if b.get('priority') == args.priority]
         print(f"🎯 Processing {len(batches_to_process)} batches with priority {args.priority}...")
         for batch in batches_to_process:
             process_batch(batch, dry_run=args.dry_run)
     elif args.domain:
         # Process all batches for this domain
-        batches_to_process = [b for b in priority_1_batches if b.get('domain') == args.domain]
+        batches_to_process = [b for b in all_batches if b.get('domain') == args.domain]
         print(f"🎯 Processing {len(batches_to_process)} batches for domain '{args.domain}'...")
         for batch in batches_to_process:
             process_batch(batch, dry_run=args.dry_run)
     else:
         # Process first Priority 1 batch as example
+        priority_1_batches = batches.get('priority_1', [])
         if priority_1_batches:
             print("🎯 Processing first Priority 1 batch (use --batch-id, --priority, or --domain for more)...")
             batch = priority_1_batches[0]

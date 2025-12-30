@@ -1,3 +1,4 @@
+<!-- SSOT Domain: integration -->
 /**
  * Trend Analysis Module - V2 Compliant
  * Trend analysis functionality for test results

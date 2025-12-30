@@ -1,3 +1,4 @@
+<!-- SSOT Domain: integration -->
 /**
  * Dashboard Data Service - V2 Compliant
  * Handles dashboard data loading, processing, and caching

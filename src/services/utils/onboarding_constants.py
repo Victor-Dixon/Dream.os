@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: integration -->
+
 Onboarding Constants and Configuration
 ======================================
 Phase 2 status tracking and default configurations for onboarding service.

@@ -1,3 +1,4 @@
+<!-- SSOT Domain: integration -->
 /**
  * Component Validation Module - V2 Compliant
  * Core component validation functionality

@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: integration -->
+
 Trading BI Risk Analysis Engine
 ==============================
 

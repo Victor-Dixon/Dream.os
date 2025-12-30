@@ -1,3 +1,4 @@
+<!-- SSOT Domain: integration -->
 /**
  * Rule Evaluation Module - V2 Compliant
  * Validation rule evaluation functionality

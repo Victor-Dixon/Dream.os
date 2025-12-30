@@ -1,3 +1,4 @@
+<!-- SSOT Domain: integration -->
 /**
  * Performance Configuration Module - V2 Compliant
  * Performance thresholds and baselines management

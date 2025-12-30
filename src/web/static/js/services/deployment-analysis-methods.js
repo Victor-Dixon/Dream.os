@@ -1,3 +1,4 @@
+<!-- SSOT Domain: integration -->
 /**
  * Deployment Analysis Methods - V2 Compliant
  * Analysis methods extracted from deployment-metrics-service.js

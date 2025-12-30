@@ -1,3 +1,4 @@
+<!-- SSOT Domain: integration -->
 /**
  * Metrics Aggregation Module - V2 Compliant
  * Metrics calculation and aggregation functionality

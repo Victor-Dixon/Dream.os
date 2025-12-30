@@ -1,3 +1,4 @@
+<!-- SSOT Domain: integration -->
 /**
  * Deployment Phase Service - V2 Compliant
  * Phase management functionality extracted from deployment-service.js
