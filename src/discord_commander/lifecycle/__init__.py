@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: discord -->
+
 Bot Lifecycle Management
 ========================
 

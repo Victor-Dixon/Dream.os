@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: discord -->
+
 Main Control Panel View - V2 Compliance Refactor
 ==================================================
 

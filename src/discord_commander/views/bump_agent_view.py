@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: discord -->
+
 Bump Agent View - Agent Selection for Bumping
 ============================================
 

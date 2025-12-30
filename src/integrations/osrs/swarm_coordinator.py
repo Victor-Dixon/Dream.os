@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """OSRS Swarm Coordinator - Manages coordination between 8 OSRS agents
+<!-- SSOT Domain: swarm_brain -->
+
 
 V2 COMPLIANT: Refactored to ≤400 lines by extracting:
 - Strategic planning → swarm_strategic_planner.py

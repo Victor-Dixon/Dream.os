@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: git -->
+
 GitHub Book Viewer - WOW FACTOR Discord Display
 ================================================
 

@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: swarm_brain -->
+
 OSRS Swarm Activity Planner - V2 Compliant
 ===========================================
 

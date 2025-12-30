@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: discord -->
+
 Swarm Status GUI View - V2 Compliance Refactor
 ===============================================
 

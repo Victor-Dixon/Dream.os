@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: git -->
+
 GitHub Repository Scanner - Team Delta Evaluation Tool
 ======================================================
 

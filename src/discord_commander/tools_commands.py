@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: discord -->
+
 Tools Commands - Discord Bot Commands for Toolbelt
 ==================================================
 

@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: discord -->
+
 Status Controller - WOW FACTOR Dedicated Controller
 ===================================================
 

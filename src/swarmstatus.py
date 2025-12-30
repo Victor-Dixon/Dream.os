@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: swarm_brain -->
+
 Single Source of Truth (SSOT) for Swarm System Status
 Domain: coordination
 Owner: Agent-2 (Architecture & Design)

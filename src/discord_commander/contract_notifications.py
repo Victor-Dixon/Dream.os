@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: discord -->
+
 Discord Contract Notifications
 Real-time contract event notifications for Captain monitoring.
 

@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: discord -->
+
 System Control Commands
 =======================
 

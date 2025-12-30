@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: discord -->
+
 Swarm Tasks Controller - WOW FACTOR Dedicated Controller
 =========================================================
 

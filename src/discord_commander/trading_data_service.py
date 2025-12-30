@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: discord -->
+
 Trading Data Service - Real Market Data Integration
 ====================================================
 

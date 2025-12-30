@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: discord -->
+
 Carmyn Preferences Manager - Self-Improving Template System
 ===========================================================
 

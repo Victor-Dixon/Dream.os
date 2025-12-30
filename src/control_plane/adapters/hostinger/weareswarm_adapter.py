@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: swarm_brain -->
+
 Hostinger Site Adapter - WeAreSwarm
 ===================================
 

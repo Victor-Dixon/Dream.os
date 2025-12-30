@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: swarm_brain -->
+
 Swarm Time Utility - Centralized Local Time Management
 =====================================================
 
