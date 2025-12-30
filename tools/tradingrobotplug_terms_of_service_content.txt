@@ -1,0 +1,132 @@
+# Terms of Service
+
+**Last Updated:** December 30, 2025
+
+## Agreement to Terms
+
+By accessing or using TradingRobotPlug ("Service"), you agree to be bound by these Terms of Service ("Terms"). If you disagree with any part of these terms, you may not access the Service.
+
+## Description of Service
+
+TradingRobotPlug provides automated trading tools, backtesting capabilities, and trading signal services. Our platform allows users to:
+- Access automated trading algorithms
+- Backtest trading strategies
+- Receive trading signals and alerts
+- Monitor trading performance
+
+## User Accounts
+
+### Registration
+To use certain features of our Service, you must register for an account. You agree to:
+- Provide accurate, current, and complete information
+- Maintain and update your information to keep it accurate
+- Maintain the security of your password
+- Accept responsibility for all activities under your account
+- Notify us immediately of any unauthorized use
+
+### Account Termination
+We reserve the right to suspend or terminate your account at any time for:
+- Violation of these Terms
+- Fraudulent or illegal activity
+- Non-payment of fees
+- Any other reason we deem necessary
+
+## Service Limitations
+
+### No Guarantees
+- **No Guaranteed Returns:** Trading involves substantial risk of loss. We make no promises or guarantees of profits or returns.
+- **Past Performance:** Past performance does not guarantee future results.
+- **Market Risk:** All trading involves risk of loss. You may lose some or all of your invested capital.
+- **Service Availability:** We do not guarantee uninterrupted or error-free service.
+
+### Trading Risks
+You acknowledge and agree that:
+- Trading financial instruments carries significant risk
+- You may lose money trading
+- Automated trading systems can fail or malfunction
+- Market conditions can change rapidly
+- No trading system is 100% accurate
+
+## User Responsibilities
+
+You agree to:
+- Use the Service only for lawful purposes
+- Not attempt to reverse engineer or copy our algorithms
+- Not share your account credentials
+- Comply with all applicable laws and regulations
+- Not use the Service to violate any third-party rights
+- Report any bugs or security issues responsibly
+
+## Intellectual Property
+
+All content, features, and functionality of the Service are owned by TradingRobotPlug and are protected by international copyright, trademark, and other intellectual property laws. You may not:
+- Copy, modify, or distribute our content
+- Use our trademarks without permission
+- Reverse engineer our algorithms
+- Create derivative works based on our Service
+
+## Payment Terms
+
+### Fees
+Some features of our Service require payment. You agree to:
+- Pay all fees as described on our Pricing page
+- Provide accurate billing information
+- Authorize us to charge your payment method
+- Pay all applicable taxes
+
+### Refunds
+Refund policies are described on our Pricing page. We reserve the right to refuse refunds in cases of:
+- Violation of these Terms
+- Fraudulent activity
+- Abuse of our refund policy
+
+## Disclaimers
+
+**THE SERVICE IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.**
+
+We do not warrant that:
+- The Service will be uninterrupted or error-free
+- Defects will be corrected
+- The Service is free of viruses or harmful components
+- Results obtained from using the Service will be accurate or reliable
+
+## Limitation of Liability
+
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, TRADINGROBOTPLUG SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO LOSS OF PROFITS, DATA, USE, OR OTHER INTANGIBLE LOSSES, RESULTING FROM YOUR USE OF THE SERVICE.
+
+## Indemnification
+
+You agree to indemnify and hold harmless TradingRobotPlug, its officers, directors, employees, and agents from any claims, damages, losses, liabilities, and expenses (including legal fees) arising from:
+- Your use of the Service
+- Your violation of these Terms
+- Your violation of any third-party rights
+- Any content you submit or transmit through the Service
+
+## Dispute Resolution
+
+### Governing Law
+These Terms shall be governed by and construed in accordance with the laws of [Jurisdiction], without regard to its conflict of law provisions.
+
+### Arbitration
+Any dispute arising out of or relating to these Terms or the Service shall be resolved through binding arbitration in accordance with the rules of [Arbitration Organization].
+
+## Changes to Terms
+
+We reserve the right to modify these Terms at any time. We will notify users of material changes by:
+- Posting the updated Terms on this page
+- Updating the "Last Updated" date
+- Sending email notifications (for significant changes)
+
+Your continued use of the Service after changes constitutes acceptance of the new Terms.
+
+## Severability
+
+If any provision of these Terms is found to be unenforceable or invalid, that provision shall be limited or eliminated to the minimum extent necessary, and the remaining provisions shall remain in full force and effect.
+
+## Contact Information
+
+If you have questions about these Terms, please contact us:
+
+**Email:** legal@tradingrobotplug.com  
+**Website:** https://tradingrobotplug.com/contact
+
