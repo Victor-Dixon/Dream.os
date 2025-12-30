@@ -1,0 +1,51 @@
+# FastAPI systemd Service File
+# Place in /etc/systemd/system/fastapi.service
+# Usage: sudo systemctl enable fastapi && sudo systemctl start fastapi
+
+[Unit]
+Description=FastAPI REST API Service
+Documentation=https://github.com/yourorg/Agent_Cellphone_V2_Repository
+After=network.target postgresql.service
+Wants=postgresql.service
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/path/to/Agent_Cellphone_V2_Repository
+Environment="PATH=/path/to/venv/bin"
+Environment="PYTHONUNBUFFERED=1"
+
+# Load environment variables from .env file
+EnvironmentFile=/path/to/Agent_Cellphone_V2_Repository/.env
+
+# FastAPI startup command
+# Adjust module path based on actual FastAPI app location
+ExecStart=/path/to/venv/bin/uvicorn src.api.main:app \
+    --host ${API_HOST:-0.0.0.0} \
+    --port ${API_PORT:-8000} \
+    --workers ${API_WORKERS:-4} \
+    --log-level ${LOG_LEVEL:-info}
+
+# Restart policy
+Restart=always
+RestartSec=10
+StartLimitInterval=60
+StartLimitBurst=3
+
+# Security settings
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/path/to/Agent_Cellphone_V2_Repository/data
+ReadWritePaths=/var/log/fastapi
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=fastapi
+
+[Install]
+WantedBy=multi-user.target
+
