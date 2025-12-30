@@ -1,3 +1,4 @@
+<!-- SSOT Domain: discord -->
 # 🤖 Discord GUI Controller - Complete Documentation
 
 **Agent-3 (Infrastructure & DevOps) - Discord GUI Consolidation**  

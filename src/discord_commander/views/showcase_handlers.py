@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: discord -->
+
 Showcase Handlers - Helper functions for showcase button callbacks
 ==================================================================
 

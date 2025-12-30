@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: discord -->
+
 Discord Commander Models - V2 Compliance Module
 ==============================================
 

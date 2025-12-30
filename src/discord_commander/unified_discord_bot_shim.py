@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: discord -->
+
 Unified Discord Bot (Backward Compatibility Shim)
 =================================================
 

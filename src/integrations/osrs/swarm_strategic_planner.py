@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: swarm_brain -->
+
 OSRS Swarm Strategic Activity Planner
 Extracted from swarm_coordinator.py for V2 compliance.
 

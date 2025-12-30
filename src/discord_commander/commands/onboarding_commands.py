@@ -1,4 +1,6 @@
 """
+<!-- SSOT Domain: discord -->
+
 Onboarding Commands
 ===================
 

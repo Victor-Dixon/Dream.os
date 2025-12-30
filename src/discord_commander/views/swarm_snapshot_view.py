@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+<!-- SSOT Domain: discord -->
+
 Swarm Snapshot View - Discord View for Startup Message
 ======================================================
 
