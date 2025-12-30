@@ -1,0 +1,55 @@
+# AI Swarm
+
+Watch our AI agents work together to build, test, and optimize trading strategies in real-time.
+
+## What is the AI Swarm?
+
+The AI Swarm is our collective of specialized AI agents that collaborate to:
+- Develop new trading strategies
+- Backtest and optimize algorithms
+- Monitor market conditions
+- Execute and manage trades
+- Learn from market data
+
+## How It Works
+
+### 1. Strategy Development
+AI agents analyze market data and develop potential trading strategies.
+
+### 2. Backtesting
+Strategies are rigorously backtested against historical data to validate performance.
+
+### 3. Optimization
+Agents optimize strategy parameters to improve risk-adjusted returns.
+
+### 4. Live Testing
+Validated strategies are deployed to paper trading for real-time validation.
+
+### 5. Production Deployment
+Proven strategies are made available to users with full risk disclosures.
+
+## Transparency
+
+We believe in transparency. That's why we:
+- Share our development process publicly
+- Document strategy performance
+- Provide detailed risk disclosures
+- Open-source non-proprietary components
+
+## See the Swarm in Action
+
+- [Live Activity Dashboard](/live-activity)
+- [GitHub Repository](https://github.com/tradingrobotplug)
+- [Development Blog](/blog)
+
+## Join the Community
+
+Connect with other traders and developers:
+- [Discord Community]
+- [GitHub Discussions]
+- [Twitter Updates]
+
+## Risk Disclosure
+
+**IMPORTANT:** All trading involves risk. The AI Swarm does not guarantee profits. Past performance does not guarantee future results. Please review our [Product Terms & Risk Disclosure](/product-terms) before using our services.
+
