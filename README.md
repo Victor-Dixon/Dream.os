@@ -204,12 +204,42 @@ Agent_Cellphone_V2_Repository/
 ├── tests/                 # Test suite
 │   ├── unit/             # Unit tests
 │   └── integration/      # Integration tests
-├── tools/                # Utility scripts
-├── agent_workspaces/     # Agent-specific workspaces
-├── docs/                 # Documentation
+├── tools/                # Utility scripts and tools
+├── scripts/              # Organized scripts by purpose
+│   ├── health/           # Health check scripts
+│   ├── deployment/       # Deployment scripts
+│   ├── debug/            # Debug utilities
+│   └── tasks/            # Task management scripts
+├── docs/                 # Documentation (organized by domain)
+│   ├── guides/           # How-to guides and tutorials
+│   ├── standards/        # Code standards and conventions
+│   ├── protocols/        # Operational protocols
+│   ├── architecture/     # System architecture docs
+│   ├── planning/         # Planning documents (by year)
+│   ├── archive/          # Historical documentation
+│   │   ├── audits/       # Historical audit reports
+│   │   ├── investigations/ # Investigation reports
+│   │   ├── reports/      # Historical status reports
+│   │   └── task_logs/    # Historical task logs
+│   └── ...               # Additional documentation
+├── data/                 # Data files (organized by type)
+│   ├── ssot/             # SSOT-related data
+│   ├── cache/            # Cache files
+│   └── feeds/            # Feed data
+├── reports/              # Current reports
+│   ├── ssot/             # SSOT-related reports
+│   └── data/             # Report data files
 ├── config/               # Configuration files
+├── agent_workspaces/     # Agent-specific workspaces
+├── archive/              # Archived files
+│   └── temp/             # Temporary archived files
+├── README.md             # This file (project entry point)
+├── CHANGELOG.md          # Project changelog
+├── MASTER_TASK_LOG.md    # Active task log
 └── requirements.txt      # Python dependencies
 ```
+
+**Note:** This structure was reorganized in December 2025 for improved maintainability and discoverability. Historical files are archived in `docs/archive/` and `archive/` directories.
 
 ---
 
