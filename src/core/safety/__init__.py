@@ -14,6 +14,15 @@ Components:
 
 Author: Agent-4 (Captain) with Cloud Agent
 License: MIT
+
+<!-- SSOT Domain: safety -->
+
+SSOT TOOL METADATA
+Purpose: Package initialization for AGI Phase 0 safety foundation
+Description: Exports all safety components for autonomous operation protection
+Usage: Import safety components from src.core.safety
+Date: 2025-12-30
+Tags: safety, agi, autonomous, security, initialization
 """
 
 from .safety_sandbox import SafetySandbox, SandboxConfig, SandboxViolation

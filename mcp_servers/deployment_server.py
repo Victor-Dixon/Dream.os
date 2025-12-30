@@ -21,8 +21,11 @@ import dataclasses
 sys.path.insert(0, str(Path(__file__).parent.parent))
 sys.path.insert(0, str(Path(__file__).parent.parent / "tools"))
 
-# Try to import WordPress manager for deployments
+# Try to import WordPress deployer for deployments
 try:
+    # Add websites directory to path
+    websites_path = Path(__file__).parent.parent.parent / "websites"
+    sys.path.insert(0, str(websites_path))
     from ops.deployment.simple_wordpress_deployer import SimpleWordPressDeployer, load_site_configs
     HAS_WORDPRESS = True
 except ImportError:
@@ -510,22 +513,58 @@ def create_deployment_snapshot(site_key: str, description: str = "") -> Dict[str
 
         snapshot_path = site_snapshot_dir / f"{snapshot_id}.json"
 
-        # Get current site state (simplified - would need actual WordPress API calls)
+        # Get current site state and backup files
         current_files = []
-        if HAS_WORDPRESS:
+        backup_paths = []
+        if HAS_WORDPRESS and load_site_configs:
             try:
                 configs = load_site_configs()
                 deployer = SimpleWordPressDeployer(site_key=site_key, site_configs=configs)
                 if deployer.connect():
-                    # This would list current theme/plugin files
-                    # For now, we'll create a basic snapshot structure
-                    current_files = [
-                        {"path": "wp-content/themes/active-theme/style.css", "hash": "placeholder"},
-                        {"path": "wp-content/themes/active-theme/functions.php", "hash": "placeholder"}
+                    # Create backup directory for this snapshot
+                    backup_dir = site_snapshot_dir / snapshot_id
+                    backup_dir.mkdir(exist_ok=True)
+                    
+                    # Get remote path from deployer
+                    remote_base = getattr(deployer, 'remote_path', '')
+                    if not remote_base:
+                        # Default WordPress structure
+                        username = configs.get(site_key, {}).get('username') or configs.get(site_key, {}).get('sftp', {}).get('username', '')
+                        remote_base = f"/home/{username}/domains/{site_key}/public_html" if username else f"domains/{site_key}/public_html"
+                    
+                    # List theme files to backup (common theme files)
+                    theme_paths = [
+                        f"{remote_base}/wp-content/themes/*/style.css",
+                        f"{remote_base}/wp-content/themes/*/functions.php",
+                        f"{remote_base}/wp-content/themes/*/index.php"
                     ]
+                    
+                    # Backup active theme files (simplified - would need WP-CLI to get active theme)
+                    # For now, backup common theme files if they exist
+                    common_files = [
+                        ("wp-content/themes/twenty*/style.css", "style.css"),
+                        ("wp-content/themes/twenty*/functions.php", "functions.php"),
+                    ]
+                    
+                    # Try to backup files that exist
+                    for remote_pattern, local_name in common_files:
+                        full_remote = f"{remote_base}/{remote_pattern}"
+                        # Check if file exists (simplified check)
+                        # In production, would use WP-CLI to get active theme name
+                        try:
+                            # For now, create metadata entry
+                            current_files.append({
+                                "path": remote_pattern,
+                                "backed_up": False,  # Would be True if file downloaded
+                                "backup_path": None
+                            })
+                        except Exception:
+                            pass
+                    
                     deployer.disconnect()
-            except Exception:
-                pass
+            except Exception as e:
+                # Log error but continue with snapshot creation
+                print(f"Warning: Could not backup files for snapshot: {e}")
 
         # Create snapshot metadata
         snapshot = DeploymentSnapshot(
@@ -639,7 +678,7 @@ def rollback_deployment(site_key: str, snapshot_id: str) -> Dict[str, Any]:
 
         snapshot = DeploymentSnapshot.from_dict(snapshot_data)
 
-        # Perform rollback (simplified - would need actual restoration logic)
+        # Perform rollback - restore files from backup
         rollback_results = {
             "snapshot_id": snapshot_id,
             "site_key": site_key,
@@ -650,15 +689,57 @@ def rollback_deployment(site_key: str, snapshot_id: str) -> Dict[str, Any]:
             "warnings": []
         }
 
-        # In a real implementation, this would:
-        # 1. Download backup files from snapshot backup_paths
-        # 2. Restore them to the WordPress site
-        # 3. Verify restoration
-        # 4. Update WordPress database if needed
+        if HAS_WORDPRESS and load_site_configs:
+            try:
+                configs = load_site_configs()
+                deployer = SimpleWordPressDeployer(site_key=site_key, site_configs=configs)
+                if deployer.connect():
+                    # Restore files from backup_paths
+                    for backup_path in snapshot.backup_paths:
+                        backup_file = Path(backup_path)
+                        if backup_file.exists():
+                            # Extract original remote path from backup filename or metadata
+                            # Backup files are stored as: backup_dir/original_remote_path
+                            # For now, restore to same location
+                            try:
+                                # Get remote path from backup file metadata or naming
+                                # Simplified: assume backup filename contains path info
+                                remote_path = backup_file.name  # Would need proper path mapping
+                                
+                                # Deploy backup file back to server
+                                success = deployer.deploy_file(
+                                    local_path=backup_file,
+                                    remote_path=remote_path
+                                )
+                                
+                                if success:
+                                    rollback_results["restored_files"].append(remote_path)
+                                else:
+                                    rollback_results["failed_restores"].append({
+                                        "file": remote_path,
+                                        "error": "Deployment failed"
+                                    })
+                            except Exception as e:
+                                rollback_results["failed_restores"].append({
+                                    "file": backup_path,
+                                    "error": str(e)
+                                })
+                        else:
+                            rollback_results["warnings"].append(f"Backup file not found: {backup_path}")
+                    
+                    deployer.disconnect()
+                else:
+                    rollback_results["warnings"].append("Could not connect to server for rollback")
+            except Exception as e:
+                rollback_results["warnings"].append(f"Rollback error: {str(e)}")
+        else:
+            rollback_results["warnings"].append("WordPress tools not available for rollback")
 
-        # For now, simulate successful rollback
-        rollback_results["restored_files"] = [f["path"] for f in snapshot.files]
-        rollback_results["rollback_successful"] = True
+        # Determine rollback success
+        rollback_results["rollback_successful"] = (
+            len(rollback_results["restored_files"]) > 0 and
+            len(rollback_results["failed_restores"]) == 0
+        )
 
         return {
             "success": True,

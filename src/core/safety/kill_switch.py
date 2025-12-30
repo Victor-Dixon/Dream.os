@@ -14,6 +14,16 @@ Features:
 
 V2 Compliance: ≤400 lines, SOLID principles, comprehensive error handling.
 
+<!-- SSOT Domain: safety -->
+
+SSOT TOOL METADATA
+Purpose: Emergency stop mechanism for autonomous operations
+Description: AGI-18 component providing instant shutdown with multiple trigger channels
+Usage: KillSwitch class for emergency stop functionality
+Date: 2025-12-30
+Tags: safety, agi, kill-switch, emergency, shutdown
+"""
+
 Author: Agent-4 (Captain) with Cloud Agent
 License: MIT
 """

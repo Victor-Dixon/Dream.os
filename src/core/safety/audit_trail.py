@@ -13,6 +13,16 @@ Features:
 - 90-day retention policy
 - Queryable history
 
+<!-- SSOT Domain: safety -->
+
+SSOT TOOL METADATA
+Purpose: Immutable audit logging for autonomous decisions
+Description: AGI-20 component providing append-only logging with integrity verification
+Usage: AuditTrail class for logging and querying autonomous operation decisions
+Date: 2025-12-30
+Tags: safety, agi, audit, logging, immutable
+"""
+
 V2 Compliance: ≤400 lines, SOLID principles, comprehensive error handling.
 
 Author: Agent-4 (Captain) with Cloud Agent
