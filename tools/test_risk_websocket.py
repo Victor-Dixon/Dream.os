@@ -86,7 +86,8 @@ class RiskWebSocketTester:
                             if data.get("type") == "risk_metrics_live":
                                 update_count += 1
                                 if update_count >= 3:  # Got at least 3 updates
-                                    print("✅ Live Endpoint: Received streaming data updates"                                    break
+                                    print("✅ Live Endpoint: Received streaming data updates")
+                                    break
                         except asyncio.TimeoutError:
                             print("❌ Live Endpoint: Timeout waiting for data updates")
                             return False
@@ -122,7 +123,8 @@ class RiskWebSocketTester:
                             data = json.loads(response)
 
                             if data.get("type") == "dashboard_update":
-                                print("✅ Dashboard Endpoint: Received dashboard update"                                print(f"   Metrics: {len(data.get('metrics', {}))} fields")
+                                print("✅ Dashboard Endpoint: Received dashboard update")
+                                print(f"   Metrics: {len(data.get('metrics', {}))} fields")
                                 print(f"   Charts: {len(data.get('charts', {}))} datasets")
                                 print(f"   Alerts: {len(data.get('alerts', []))} active alerts")
                                 return True
@@ -164,7 +166,8 @@ class RiskWebSocketTester:
 
                             if data.get("type") == "heartbeat":
                                 heartbeat_received = True
-                                print("✅ Heartbeat: Received from server"                                return True
+                                print("✅ Heartbeat: Received from server")
+                                return True
                         except asyncio.TimeoutError:
                             continue
             except Exception as e:
@@ -229,7 +232,7 @@ class RiskWebSocketTester:
         for test_name, result in self.test_results.items():
             status = "✅ PASS" if result else "❌ FAIL"
             clean_name = test_name.replace("_", " ").title()
-            print("30")
+            print(f"{status:10} | {clean_name}")
 
         print(f"\n🎯 Overall Result: {passed_tests}/{total_tests} tests passed")
 
@@ -257,6 +260,14 @@ async def main():
 
 
 if __name__ == "__main__":
+    # Handle --help argument
+    if len(sys.argv) > 1 and sys.argv[1] == "--help":
+        print(__doc__)
+        print("\nUsage: python tools/test_risk_websocket.py")
+        print("\nTests the Risk Analytics WebSocket server connectivity and functionality.")
+        print("Expects server to be running on localhost:8765")
+        sys.exit(0)
+
     try:
         asyncio.run(main())
     except KeyboardInterrupt:
