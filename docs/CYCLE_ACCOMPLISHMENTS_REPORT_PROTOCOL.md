@@ -1,9 +1,10 @@
 # Cycle Accomplishments Report Protocol
 
 **Protocol ID:** CYCLE_ACCOMPLISHMENTS_REPORT_GENERATION  
-**Protocol Version:** 1.0  
+**Protocol Version:** 2.0  
 **Protocol Status:** ACTIVE  
-**Last Updated:** 2025-12-26
+**Last Updated:** 2025-12-30  
+**Implementation:** Modular (`tools/cycle_accomplishments/`)
 
 ---
 
@@ -25,11 +26,30 @@ Generate a consolidated report showing:
 
 ## Protocol Execution
 
-### Manual Execution
+### Manual Execution (Recommended)
 
+**Primary Implementation (v2.0):**
 ```bash
-python tools/generate_cycle_accomplishments_report.py
+# Full features (report + blog + Discord)
+python -m tools.cycle_accomplishments.main
+
+# Convenience wrapper
+python tools/generate_cycle_accomplishments.py
 ```
+
+**Options:**
+```bash
+--no-blog          # Skip blog post generation
+--no-discord       # Skip Discord posting
+--no-details       # Skip per-agent details in Discord
+--no-file          # Skip file upload to Discord
+--workspace-root   # Specify workspace root path
+--agent-id         # Target Discord channel (default: Agent-4)
+```
+
+**Legacy Implementations (Deprecated):**
+- `tools/generate_cycle_accomplishments_report.py` (v1.0) - ⚠️ Deprecated
+- `tools/unified_cycle_accomplishments_report.py` (v2.0) - ⚠️ Deprecated
 
 ### Automatic Execution
 
@@ -57,20 +77,32 @@ The protocol is automatically triggered by:
   - Extracts: `current_mission`
   - Extracts: `status`, `mission_priority`, `last_updated`
 
-### Output File
+### Output Files
 
-- `reports/cycle_accomplishments_YYYY-MM-DD_HHMMSS.md`
+**Report:**
+- `reports/cycle_accomplishments_YYYYMMDD_HHMMSS.md`
   - Format: Markdown
   - Location: `reports/` directory
   - Naming: Timestamp-based for chronological tracking
 
-### Discord Posting
+**Blog Post (v2.0):**
+- `docs/blog/cycle_accomplishments_YYYY-MM-DD.md`
+  - Format: Markdown with frontmatter
+  - Location: `docs/blog/` directory
+  - Content: Victor-voiced narrative for autoblogger
+  - Voice Profile: `config/voice_profiles/victor_voice_profile.yaml`
+
+### Discord Posting (v2.0 Enhanced)
 
 - **Automatic:** Report summary automatically posted to Discord
-- **Channel:** Agent-4 (Captain) channel via DiscordRouterPoster
-- **Content:** Summary with totals (agents, tasks, achievements) and report file reference
-- **Protocol:** Uses `tools/categories/communication_tools.py` DiscordRouterPoster
+- **Channel:** Agent-4 (Captain) channel via DiscordRouterPoster (configurable)
+- **Content:** 
+  - Summary message with totals (agents, tasks, achievements)
+  - Per-agent detailed messages (chunked for readability, max 1600 chars)
+  - Full report file upload
+- **Protocol:** Uses `tools/categories/communication_tools.py` DiscordRouterPoster directly
 - **Error Handling:** Discord posting failures don't block report generation
+- **Chunking:** Large agent details automatically split into multiple messages
 
 ---
 
@@ -147,9 +179,23 @@ The protocol automatically posts a summary to Discord:
 
 ### Tool Location
 
-- **File:** `tools/generate_cycle_accomplishments_report.py`
+**Primary Implementation (v2.0):**
+- **Module:** `tools/cycle_accomplishments/`
+- **Entrypoint:** `tools/cycle_accomplishments/main.py`
+- **Convenience Wrapper:** `tools/generate_cycle_accomplishments.py`
 - **Protocol Tag:** CYCLE_ACCOMPLISHMENTS_REPORT_GENERATION
-- **Protocol Version:** 1.0
+- **Protocol Version:** 2.0
+
+**Module Structure:**
+- `data_collector.py` - Collects agent status from workspaces
+- `report_generator.py` - Generates markdown reports
+- `blog_generator.py` - Generates Victor-voiced blog posts
+- `discord_poster.py` - Handles Discord posting (chunked + file upload)
+- `main.py` - CLI entrypoint
+
+**Legacy Implementations (Deprecated):**
+- `tools/generate_cycle_accomplishments_report.py` (v1.0) - ⚠️ Deprecated
+- `tools/unified_cycle_accomplishments_report.py` (v2.0) - ⚠️ Deprecated
 
 ---
 
@@ -199,6 +245,17 @@ The protocol automatically posts a summary to Discord:
 
 ### Version History
 
+- **v2.0 (2025-12-30):** Modular implementation
+  - Modular architecture (separate modules for data collection, report generation, blog generation, Discord posting)
+  - Blog post generation (Victor-voiced narrative)
+  - Enhanced Discord posting (chunked messages + file upload)
+  - Cross-platform compatibility (fixed hardcoded paths)
+  - Type hints throughout
+  - V2 compliance (all modules under 400 lines, functions under 30 lines)
+  - More detailed reports (20 tasks vs 10, 15 achievements vs 5)
+  - Active tasks grouping by status
+  - Block status from MASTER_TASK_LOG.md
+
 - **v1.0 (2025-12-26):** Initial protocol definition
   - Basic report generation
   - Agent status aggregation
@@ -220,9 +277,10 @@ The protocol automatically posts a summary to Discord:
 ### Required Tags
 
 All protocol-related code must include:
-- `PROTOCOL: CYCLE_ACCOMPLISHMENTS_REPORT_GENERATION`
-- `PROTOCOL_VERSION: 1.0`
-- `PROTOCOL_STATUS: ACTIVE`
+- `Protocol: CYCLE_ACCOMPLISHMENTS_REPORT_GENERATION` (in docstring)
+- `Protocol Version: 2.0` (in docstring)
+- `<!-- SSOT Domain: tools -->` (in docstring comment)
+- Protocol ID in module docstrings
 
 ### Documentation Requirements
 
@@ -234,5 +292,6 @@ All protocol-related code must include:
 
 **Protocol Status:** ✅ ACTIVE  
 **Protocol Compliance:** ✅ VERIFIED  
-**Last Verified:** 2025-12-26
+**Last Verified:** 2025-12-30  
+**Implementation:** ✅ Modular v2.0 (`tools/cycle_accomplishments/`)
 

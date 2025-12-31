@@ -17,9 +17,33 @@ from typing import Any
 
 logger = logging.getLogger(__name__)
 
+# Try to use unified library, fallback to direct reading
+try:
+    from src.core.agent_status import aggregate_swarm_state, read_all_agent_status
+    USE_UNIFIED_LIBRARY = True
+except ImportError:
+    USE_UNIFIED_LIBRARY = False
+
 
 def read_swarm_state() -> dict[str, Any]:
     """Read complete swarm state from all agents."""
+    # Use unified library if available
+    if USE_UNIFIED_LIBRARY:
+        try:
+            aggregated = aggregate_swarm_state(workspace_root=Path.cwd())
+            # Convert to legacy format for backward compatibility
+            swarm_state = {
+                "agents": aggregated.get("agents", {}),
+                "active_missions": aggregated.get("active_missions", []),
+                "completed_today": aggregated.get("completed_today", []),
+                "total_points": aggregated.get("total_points", 0),
+                "summary": aggregated.get("summary", {}),
+            }
+            return swarm_state
+        except Exception as e:
+            logger.warning(f"Unified library failed, falling back: {e}")
+    
+    # Fallback to direct reading (legacy implementation)
     swarm_state = {
         "agents": {},
         "active_missions": [],

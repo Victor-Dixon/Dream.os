@@ -276,14 +276,65 @@ def main():
         "--output",
         help="Output file path (default: auto-generated)"
     )
+    parser.add_argument(
+        "--phase3",
+        action="store_true",
+        help="Filter to Phase 3 SSOT remediation files only"
+    )
+    parser.add_argument(
+        "--domain",
+        help="Filter to specific SSOT domain (e.g., 'data', 'trading_robot')"
+    )
 
     args = parser.parse_args()
 
     target_dir = Path(args.directory) if args.directory else Path("tools")
     analyzer = ToolTaggingAnalyzer(target_dir)
+    
+    # Phase 3 file filtering
+    phase3_files = None
+    repo_root = Path(__file__).parent.parent
+    if args.phase3:
+        phase3_list_path = repo_root / "docs" / "SSOT" / "PHASE3_PRIORITY23_FILE_LISTS.json"
+        if phase3_list_path.exists():
+            with open(phase3_list_path, 'r', encoding='utf-8') as f:
+                phase3_data = json.load(f)
+            phase3_files = set()
+            if 'priority3_tag_placement' in phase3_data:
+                for file_info in phase3_data['priority3_tag_placement']['files']:
+                    # Handle both absolute and relative paths
+                    file_path = Path(file_info['file_path'])
+                    if not file_path.is_absolute():
+                        file_path = repo_root / file_path
+                    phase3_files.add(file_path.resolve())
 
     # Run analysis
     results = analyzer.analyze_directory()
+    
+    # Apply Phase 3 filtering
+    if args.phase3 and phase3_files:
+        # Normalize paths for comparison
+        results = [r for r in results if r.file_path.resolve() in phase3_files]
+        if not args.report_only:
+            print(f"🔍 Phase 3 mode: Filtered to {len(results)} Phase 3 files")
+    
+    # Apply domain filtering
+    if args.domain:
+        domain_filtered = []
+        for r in results:
+            try:
+                content = r.file_path.read_text(encoding='utf-8')
+                # Extract SSOT domain from file
+                import re
+                pattern = r'<!--\s*SSOT\s+Domain:\s*([a-zA-Z_][a-zA-Z0-9_]*)\s*-->'
+                match = re.search(pattern, content, re.IGNORECASE)
+                if match and match.group(1).lower() == args.domain.lower():
+                    domain_filtered.append(r)
+            except Exception:
+                pass  # Skip files that can't be read
+        results = domain_filtered
+        if not args.report_only:
+            print(f"🔍 Domain filter '{args.domain}': {len(results)} files")
 
     if not args.report_only:
         # Console output

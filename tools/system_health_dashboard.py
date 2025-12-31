@@ -13,6 +13,7 @@ V2 Compliant: Yes (<300 lines)
 """
 
 import json
+import sys
 import time
 import psutil
 import threading
@@ -24,18 +25,18 @@ import logging
 class SystemHealthDashboard:
     """Comprehensive system health monitoring dashboard."""
 
-    def __init__(self):
-        self.services = {
+    def __init__(self) -> None:
+        self.services: Dict[str, Dict[str, Any]] = {
             "message_queue": {"pid": None, "status": "unknown", "last_check": None},
             "discord_bot": {"pid": None, "status": "unknown", "last_check": None},
             "twitch_bot": {"pid": None, "status": "unknown", "last_check": None}
         }
-        self.alerts = []
-        self.monitoring = False
-        self.check_interval = 30  # seconds
-        self.logger = logging.getLogger(__name__)
+        self.alerts: List[Dict[str, Any]] = []
+        self.monitoring: bool = False
+        self.check_interval: int = 30  # seconds
+        self.logger: logging.Logger = logging.getLogger(__name__)
 
-    def start_monitoring(self):
+    def start_monitoring(self) -> None:
         """Start the health monitoring."""
         if self.monitoring:
             return
@@ -47,19 +48,19 @@ class SystemHealthDashboard:
         monitor_thread = threading.Thread(target=self._monitor_loop, daemon=True)
         monitor_thread.start()
 
-    def stop_monitoring(self):
+    def stop_monitoring(self) -> None:
         """Stop the health monitoring."""
         self.monitoring = False
         self.logger.info("System health monitoring stopped")
 
-    def update_service_pid(self, service_name: str, pid: int):
+    def update_service_pid(self, service_name: str, pid: int) -> None:
         """Update the PID for a service."""
         if service_name in self.services:
             self.services[service_name]["pid"] = pid
             self.services[service_name]["last_check"] = datetime.now()
             self.logger.info(f"Updated {service_name} PID: {pid}")
 
-    def _monitor_loop(self):
+    def _monitor_loop(self) -> None:
         """Main monitoring loop."""
         while self.monitoring:
             try:
@@ -74,7 +75,7 @@ class SystemHealthDashboard:
                 self.logger.error(f"Monitoring loop error: {e}")
                 time.sleep(self.check_interval)
 
-    def _check_all_services(self):
+    def _check_all_services(self) -> None:
         """Check the health of all services."""
         for service_name, service_info in self.services.items():
             pid = service_info["pid"]
@@ -97,9 +98,9 @@ class SystemHealthDashboard:
 
                         # Check for high resource usage
                         if cpu_percent > 80:
-                            self._add_alert(".1f")
+                            self._add_alert(f"{service_name}: High CPU usage: {cpu_percent:.1f}%", "warning")
                         if memory_mb > 400:
-                            self._add_alert(".1f")
+                            self._add_alert(f"{service_name}: High memory usage: {memory_mb:.1f}MB", "warning")
 
                 except psutil.NoSuchProcess:
                     self._add_alert(f"{service_name}: Process not found (PID: {pid})", "critical")
@@ -112,24 +113,26 @@ class SystemHealthDashboard:
 
             service_info["last_check"] = datetime.now()
 
-    def _check_system_resources(self):
+    def _check_system_resources(self) -> None:
         """Check overall system resources."""
         try:
             cpu_percent = psutil.cpu_percent(interval=1)
             memory = psutil.virtual_memory()
-            disk = psutil.disk_usage('/')
+            # Use platform-specific disk path (Windows uses drive letters, Unix uses '/')
+            disk_path = 'C:\\' if sys.platform == 'win32' else '/'
+            disk = psutil.disk_usage(disk_path)
 
             if cpu_percent > 90:
-                self._add_alert(".1f")
+                self._add_alert(f"System CPU usage high: {cpu_percent:.1f}%", "warning")
             if memory.percent > 90:
-                self._add_alert(".1f")
+                self._add_alert(f"System memory usage high: {memory.percent:.1f}%", "warning")
             if disk.percent > 95:
-                self._add_alert(".1f")
+                self._add_alert(f"Disk usage high: {disk.percent:.1f}%", "critical")
 
         except Exception as e:
             self._add_alert(f"System resource check failed: {e}", "error")
 
-    def _check_agent_coordinates(self):
+    def _check_agent_coordinates(self) -> None:
         """Check if agent coordinates are still valid."""
         try:
             # This would integrate with the coordinate calibration tool
@@ -162,7 +165,7 @@ class SystemHealthDashboard:
         except Exception as e:
             self._add_alert(f"Coordinate check failed: {e}", "error")
 
-    def _add_alert(self, message: str, level: str):
+    def _add_alert(self, message: str, level: str) -> None:
         """Add an alert to the dashboard."""
         alert = {
             "timestamp": datetime.now(),
@@ -174,7 +177,7 @@ class SystemHealthDashboard:
         self.alerts.append(alert)
         self.logger.log(getattr(logging, level.upper(), logging.INFO), message)
 
-    def _cleanup_old_alerts(self):
+    def _cleanup_old_alerts(self) -> None:
         """Clean up old alerts (older than 1 hour)."""
         cutoff_time = datetime.now() - timedelta(hours=1)
         self.alerts = [alert for alert in self.alerts if alert["timestamp"] > cutoff_time]
@@ -195,7 +198,7 @@ class SystemHealthDashboard:
             return {
                 "cpu_percent": psutil.cpu_percent(),
                 "memory_percent": psutil.virtual_memory().percent,
-                "disk_percent": psutil.disk_usage('/').percent,
+                "disk_percent": psutil.disk_usage('C:\\' if sys.platform == 'win32' else '/').percent,
                 "python_version": f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}",
                 "platform": sys.platform
             }
@@ -218,7 +221,7 @@ class SystemHealthDashboard:
             "overall_status": "healthy" if critical_alerts == 0 else "critical" if critical_alerts > 2 else "warning"
         }
 
-    def print_dashboard(self):
+    def print_dashboard(self) -> None:
         """Print the current dashboard to console."""
         data = self.get_dashboard_data()
 

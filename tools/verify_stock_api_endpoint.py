@@ -69,3 +69,4 @@ if __name__ == "__main__":
     success = verify_stock_api(args.site)
     exit(0 if success else 1)
 
+

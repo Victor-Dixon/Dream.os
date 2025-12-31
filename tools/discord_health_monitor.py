@@ -78,7 +78,7 @@ class DiscordHealthMonitor:
                 self.logger.error(f"Health monitoring error: {e}")
                 time.sleep(self.check_interval)
 
-    def _handle_timeout(self):
+    def _handle_timeout(self) -> None:
         """Handle heartbeat timeout."""
         self.logger.info("Attempting to recover from heartbeat timeout...")
 
@@ -112,12 +112,12 @@ class DiscordHealthMonitor:
             self.logger.error(f"Graceful restart failed: {e}")
             return False
 
-    def _trigger_shutdown(self):
+    def _trigger_shutdown(self) -> None:
         """Trigger system shutdown due to unrecoverable error."""
         self.logger.critical("Triggering system shutdown due to Discord health failure")
         # This would integrate with the main system shutdown mechanism
 
-    def _check_bot_responsiveness(self):
+    def _check_bot_responsiveness(self) -> None:
         """Check if the Discord bot is responsive."""
         try:
             # Basic responsiveness check
@@ -127,9 +127,9 @@ class DiscordHealthMonitor:
             memory_mb = process.memory_info().rss / 1024 / 1024
 
             if cpu_percent > 90:
-                self.logger.warning(".1f")
+                self.logger.warning(f"Discord bot high CPU usage: {cpu_percent:.1f}%")
             if memory_mb > 500:  # 500MB threshold
-                self.logger.warning(".1f")
+                self.logger.warning(f"Discord bot high memory usage: {memory_mb:.1f}MB")
 
         except Exception as e:
             self.logger.error(f"Bot responsiveness check failed: {e}")
