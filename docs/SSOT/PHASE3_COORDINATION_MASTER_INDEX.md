@@ -35,6 +35,8 @@ Master index of all Phase 3 coordination materials. Use this document to quickly
 - **Report Template:** `FINAL_PHASE3_VALIDATION_REPORT_TEMPLATE.md`
 - **Automation Script:** `tools/populate_validation_report.py`
 - **Execution Checklist:** `FINAL_VALIDATION_EXECUTION_CHECKLIST.md`
+- **Readiness Checklist:** `FINAL_VALIDATION_READINESS_CHECKLIST.md`
+- **Quick Reference:** `FINAL_VALIDATION_QUICK_REFERENCE.md`
 
 ---
 
@@ -125,6 +127,21 @@ python tools/populate_validation_report.py \
     --template docs/SSOT/FINAL_PHASE3_VALIDATION_REPORT_TEMPLATE.md \
     --output docs/SSOT/FINAL_PHASE3_VALIDATION_REPORT.md
 ```
+
+#### 12. Final Validation Readiness Checklist
+**File:** `docs/SSOT/FINAL_VALIDATION_READINESS_CHECKLIST.md`  
+**Purpose:** Pre-execution checklist for final validation with prerequisites, validation tool preparation, execution steps, success criteria, and troubleshooting  
+**Use When:** Preparing for final validation execution after all Priority 3 files are fixed
+
+#### 13. Priority 3 Status Summary
+**File:** `docs/SSOT/PRIORITY3_STATUS_SUMMARY.md`  
+**Purpose:** Real-time status summary of Priority 3 remediation progress with completion tracking  
+**Use When:** Quick reference for Priority 3 progress (updated in real-time)
+
+#### 14. Final Validation Quick Reference
+**File:** `docs/SSOT/FINAL_VALIDATION_QUICK_REFERENCE.md`  
+**Purpose:** One-page quick reference card for final validation execution with commands and success criteria  
+**Use When:** Need quick reference for final validation execution steps
 
 ---
 
