@@ -9,6 +9,29 @@
 
 ---
 
+## Quick Start: Automated Execution
+
+**For fastest execution, use the automated workflow script:**
+
+```bash
+python tools/execute_final_validation_workflow.py
+```
+
+This single command executes the complete workflow:
+1. Verify readiness (optional)
+2. Execute final validation
+3. Populate validation report
+4. Generate completion milestone template
+
+**Skip verification for faster execution:**
+```bash
+python tools/execute_final_validation_workflow.py --skip-verification
+```
+
+**For step-by-step manual execution, continue reading below.**
+
+---
+
 ## Executive Summary
 
 Consolidated execution guide for final SSOT validation after Phase 3 remediation completion. Combines all readiness checklists, execution checklists, and quick references into one actionable document.
