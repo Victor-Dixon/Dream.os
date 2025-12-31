@@ -1,15 +1,16 @@
 # Phase 3: SSOT File-Level Remediation Coordination Plan
 
 **Documentation Created:** 2025-12-30 by Agent-6  
-**Status:** READY FOR EXECUTION  
-**Timeline:** After Phase 2 Re-Validation Completion  
-**Priority:** LOW (Partial remediation required for high-compliance domains)
+**Last Updated:** 2025-12-30 18:25:00  
+**Status:** UPDATED WITH PHASE 2 RESULTS - READY FOR EXECUTION  
+**Timeline:** After Phase 2 Re-Validation Completion ✅  
+**Priority:** MIXED (Priority 1: IMMEDIATE, Priority 2: HIGH, Priority 3: MEDIUM)
 
 ---
 
 ## Executive Summary
 
-Phase 3 focuses on file-level SSOT tag remediation for domains that have high compliance rates (>90%) but contain a small number of invalid files requiring tag format or placement fixes. This phase targets **37 files across 3 domains** after Phase 2 re-validation confirms domain registry compliance.
+Phase 3 focuses on file-level SSOT tag remediation based on Phase 2 re-validation results. **Phase 2 COMPLETE ✅** (1369 files scanned, 95.6% success rate, 60 invalid files identified). This phase targets **64 files across 3 priority categories** requiring remediation: Priority 1 (17 files - domain registry updates), Priority 2 (34 files - compilation errors), Priority 3 (15 files - tag placement).
 
 ---
 
@@ -23,32 +24,69 @@ Phase 3 focuses on file-level SSOT tag remediation for domains that have high co
 
 ---
 
+## Phase 2 Results Integration
+
+**Phase 2 Validation Report:** `docs/SSOT/AGENT2_PHASE2_REVALIDATION_REPORT.md`  
+**Validation Timestamp:** 2025-12-30 17:50:53  
+**Total Files Scanned:** 1369  
+**Valid Files:** 1309 (95.6%)  
+**Invalid Files:** 60 (4.4%)
+
+**Key Findings:**
+- ✅ All 12 Phase 1 domains recognized by validation tool
+- ⚠️ 60 files require remediation across 3 priority categories
+- ✅ Domain registry compliance verified (95.6% success rate)
+
+---
+
 ## Scope
 
-### Domain Owner Assignments
+### Remediation Priority Categories
 
-Based on Phase 1 validation checkpoint results:
+Based on Phase 2 validation results:
 
-#### 1. core Domain (33 invalid files)
-- **Owner:** Architecture & Design (Agent-2)
-- **Priority:** MEDIUM
-- **Issue Type:** Tag format, domain registry, or tag placement issues
-- **Baseline:** 566 total files, 533 valid (94.2% compliance)
-- **Action Required:** Review invalid files and fix SSOT tag format/placement
+#### Priority 1: Domain Registry Updates (17 files) - IMMEDIATE
 
-#### 2. integration Domain (3 invalid files)
-- **Owner:** Integration & Core Systems (Agent-1)
-- **Priority:** LOW
-- **Issue Type:** Tag format, domain registry, or tag placement issues
-- **Baseline:** 238 total files, 235 valid (98.7% compliance)
-- **Action Required:** Review invalid files and fix SSOT tag format/placement
+**Owner:** Agent-2 (ready for immediate execution)  
+**ETA:** 30-45 minutes  
+**Issue Type:** Missing domain registry entries + placeholder domains
 
-#### 3. infrastructure Domain (1 invalid file)
-- **Owner:** Infrastructure & DevOps (Agent-3)
-- **Priority:** LOW
-- **Issue Type:** Tag format, domain registry, or tag placement issues
-- **Baseline:** 82 total files, 81 valid (98.8% compliance)
-- **Action Required:** Review invalid file and fix SSOT tag format/placement
+**Breakdown:**
+- **domain_name placeholder:** 15 files (replace with actual domain names)
+- **seo domain:** 1 file (add to validation tool registry)
+- **validation domain:** 1 file (add to validation tool registry)
+
+**Action Required:**
+1. Add "seo" and "validation" domains to validation tool VALID_DOMAINS list (5 minutes)
+2. Replace 15 "domain_name" placeholders with actual domain names (30 minutes)
+
+#### Priority 2: Compilation Errors (34 files) - HIGH
+
+**Owner:** Domain owners (Agent-1, Agent-2, Agent-7 coordination needed)  
+**ETA:** 2-3 hours  
+**Issue Type:** SSOT tags placed incorrectly in Python files (HTML comments in code, not in docstrings)
+
+**Examples:**
+- `src/discord_commander/commands/core_messaging_commands.py`
+- `src/ai_automation/__init__.py`
+- Multiple files in `src/core/`
+
+**Remediation:** Move SSOT tags to module docstrings (first 50 lines)
+
+**Domain Distribution:** (Needs extraction from Phase 2 validation report)
+
+#### Priority 3: Tag Placement Issues (15 files) - MEDIUM
+
+**Owner:** Domain owners (coordination needed)  
+**ETA:** 30 minutes  
+**Issue Type:** SSOT tags found outside first 50 lines (documents, status.json files)
+
+**Examples:**
+- `docs/SSOT/AGENT2_INTEGRATION_BATCHES_7-9_VALIDATION_REPORT.md`
+- `agent_workspaces/Agent-2/status.json`
+- Various coordination documents
+
+**Remediation:** Move tags to file headers (first 50 lines)
 
 ---
 
