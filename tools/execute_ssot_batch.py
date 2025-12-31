@@ -18,7 +18,7 @@ import sys
 from pathlib import Path
 from typing import List, Dict, Any
 
-# SSOT tag format: <!-- SSOT Domain: domain_name -->
+# SSOT tag format: <!-- SSOT Domain: <domain> -->
 SSOT_TAG_FORMAT = "<!-- SSOT Domain: {domain} -->"
 
 

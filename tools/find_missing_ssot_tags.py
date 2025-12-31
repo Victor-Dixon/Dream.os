@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Find files missing SSOT tags (<!-- SSOT Domain: domain_name -->).
+Find files missing SSOT tags (<!-- SSOT Domain: <domain> -->).
 Focuses on .py and .md files in src, tools, and scripts.
 
 <!-- SSOT Domain: tools -->

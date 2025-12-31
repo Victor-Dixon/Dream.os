@@ -7,7 +7,7 @@
   "progress_summary": [
     "Accepted A2A coordination request from Agent-6 for SSOT domain registry update (Message ID: e477275b-5aad-4a2d-bce0-aec7797edeb4)",
     "Updated tools/ssot_tagging_validator.py domain registry with 12 missing domains: communication, data, analytics, safety, domain, ai_training, qa, services, web, seo, documentation, tools, validation",
-    "Fixed HTML comment pattern matching to recognize <!-- SSOT Domain: domain_name --> format",
+    "Fixed HTML comment pattern matching to recognize <!-- SSOT Domain: <domain> --> format",
     "Enhanced domain loading from docs/SSOT_DOMAIN_MAPPING.md with HTML comment and domain list pattern extraction",
     "Sent A2A reply to Agent-6 confirming acceptance and proposed coordination approach"
   ],
@@ -22,7 +22,7 @@
   },
   "knowledge_transfers": [
     "SSOT domain registry must be kept in sync between docs/SSOT_DOMAIN_MAPPING.md and validation tools",
-    "HTML comment format <!-- SSOT Domain: domain_name --> is the standard SSOT tag format",
+    "HTML comment format <!-- SSOT Domain: <domain> --> is the standard SSOT tag format",
     "Validation tools should extract domains from SSOT_DOMAIN_MAPPING.md dynamically to avoid registry drift",
     "Pattern matching for SSOT tags must support multiple formats: HTML comments, @domain, @ssot, SSOT domain:",
     "A2A coordination enables parallel work: Agent-6 validation + Agent-8 registry updates = faster completion"
