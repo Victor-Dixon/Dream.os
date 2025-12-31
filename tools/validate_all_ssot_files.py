@@ -32,7 +32,7 @@ VALID_DOMAINS = [
 
 def extract_ssot_domain(content: str) -> Tuple[str, bool]:
     """Extract SSOT domain from file content"""
-    # Pattern: <!-- SSOT Domain: domain_name -->
+    # Pattern: <!-- SSOT Domain: <domain> -->
     pattern = r'<!--\s*SSOT\s+Domain:\s*([a-zA-Z_][a-zA-Z0-9_]*)\s*-->'
     match = re.search(pattern, content, re.IGNORECASE)
     if match:

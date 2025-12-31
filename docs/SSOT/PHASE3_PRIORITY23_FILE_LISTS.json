@@ -1,0 +1,253 @@
+{
+  "priority2_compilation_errors": {
+    "total": 32,
+    "by_domain": {
+      "discord": 1,
+      "core": 26,
+      "logging": 2,
+      "safety": 3
+    },
+    "files": [
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\src\\discord_commander\\status_change_monitor.py",
+        "domain": "discord",
+        "error": "Compilation error: File \"D:\\Agent_Cellphone_V2_Repository\\src\\discord_commander\\status_change_monitor.py\", line 26\n    Refactored by: Agent-1 (V2 Compliance)\n               ^^\nSyntaxError: invalid syntax"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\src\\discord_commander\\commands\\core_messaging_commands.py",
+        "domain": "core",
+        "error": "Compilation error: File \"D:\\Agent_Cellphone_V2_Repository\\src\\discord_commander\\commands\\core_messaging_commands.py\", line 22\n    <!-- SSOT Domain: core -->\n    ^\nSyntaxError: invalid syntax"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\src\\ai_automation\\__init__.py",
+        "domain": "core",
+        "error": "Compilation error: File \"D:\\Agent_Cellphone_V2_Repository\\src\\ai_automation\\__init__.py\", line 5\n    <!-- SSOT Domain: core -->\n    ^\nSyntaxError: invalid syntax"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\src\\ai_automation\\utils\\__init__.py",
+        "domain": "core",
+        "error": "Compilation error: File \"D:\\Agent_Cellphone_V2_Repository\\src\\ai_automation\\utils\\__init__.py\", line 5\n    <!-- SSOT Domain: core -->\n    ^\nSyntaxError: invalid syntax"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\src\\ai_training\\dreamvault\\__init__.py",
+        "domain": "core",
+        "error": "Compilation error: File \"D:\\Agent_Cellphone_V2_Repository\\src\\ai_training\\dreamvault\\__init__.py\", line 5\n    <!-- SSOT Domain: core -->\n    ^\nSyntaxError: invalid syntax"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\src\\ai_training\\dreamvault\\database.py",
+        "domain": "core",
+        "error": "Compilation error: File \"D:\\Agent_Cellphone_V2_Repository\\src\\ai_training\\dreamvault\\database.py\", line 70\n    <!-- SSOT Domain: core -->\n    ^\nSyntaxError: invalid syntax"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\src\\ai_training\\dreamvault\\runner.py",
+        "domain": "core",
+        "error": "Compilation error: File \"D:\\Agent_Cellphone_V2_Repository\\src\\ai_training\\dreamvault\\runner.py\", line 27\n    <!-- SSOT Domain: core -->\n    ^\nSyntaxError: invalid syntax"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\src\\ai_training\\dreamvault\\scrapers\\browser_manager.py",
+        "domain": "core",
+        "error": "Compilation error: File \"D:\\Agent_Cellphone_V2_Repository\\src\\ai_training\\dreamvault\\scrapers\\browser_manager.py\", line 24\n    <!-- SSOT Domain: core -->\n    ^\nSyntaxError: invalid syntax"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\src\\ai_training\\dreamvault\\scrapers\\scraper_conversation_methods.py",
+        "domain": "core",
+        "error": "Compilation error: File \"D:\\Agent_Cellphone_V2_Repository\\src\\ai_training\\dreamvault\\scrapers\\scraper_conversation_methods.py\", line 2\n    <!-- SSOT Domain: core -->\n    ^\nSyntaxError: invalid syntax"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\src\\ai_training\\dreamvault\\scrapers\\scraper_extraction.py",
+        "domain": "core",
+        "error": "Compilation error: File \"D:\\Agent_Cellphone_V2_Repository\\src\\ai_training\\dreamvault\\scrapers\\scraper_extraction.py\", line 2\n    <!-- SSOT Domain: core -->\n    ^\nSyntaxError: invalid syntax"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\src\\ai_training\\dreamvault\\scrapers\\scraper_progress.py",
+        "domain": "core",
+        "error": "Compilation error: File \"D:\\Agent_Cellphone_V2_Repository\\src\\ai_training\\dreamvault\\scrapers\\scraper_progress.py\", line 2\n    <!-- SSOT Domain: core -->\n    ^\nSyntaxError: invalid syntax"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\src\\ai_training\\dreamvault\\scrapers\\__init__.py",
+        "domain": "core",
+        "error": "Compilation error: File \"D:\\Agent_Cellphone_V2_Repository\\src\\ai_training\\dreamvault\\scrapers\\__init__.py\", line 5\n    <!-- SSOT Domain: core -->\n    ^\nSyntaxError: invalid syntax"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\src\\ai_training\\dreamvault\\scrapers\\scraper_login.py",
+        "domain": "logging",
+        "error": "Compilation error: File \"D:\\Agent_Cellphone_V2_Repository\\src\\ai_training\\dreamvault\\scrapers\\scraper_login.py\", line 65\n    \"\"\"Handle workspace selection modal.\"\"\"\n                                        ^\nSyntaxError:"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\src\\core\\test_categories_config.py",
+        "domain": "core",
+        "error": "Compilation error: File \"D:\\Agent_Cellphone_V2_Repository\\src\\core\\test_categories_config.py\", line 19\n    <!-- SSOT Domain: core -->\n    ^\nSyntaxError: invalid syntax"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\src\\core\\vector_integration_analytics.py",
+        "domain": "core",
+        "error": "Compilation error: File \"D:\\Agent_Cellphone_V2_Repository\\src\\core\\vector_integration_analytics.py\", line 2\n    <!-- SSOT Domain: core -->\n    ^\nSyntaxError: invalid syntax"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\src\\core\\unified_data_processing_system.py",
+        "domain": "core",
+        "error": "Compilation error: File \"D:\\Agent_Cellphone_V2_Repository\\src\\core\\unified_data_processing_system.py\", line 2\n    <!-- SSOT Domain: core -->\n    ^\nSyntaxError: invalid syntax"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\src\\core\\stress_test_analysis_report.py",
+        "domain": "core",
+        "error": "Compilation error: File \"D:\\Agent_Cellphone_V2_Repository\\src\\core\\stress_test_analysis_report.py\", line 2\n    <!-- SSOT Domain: core -->\n    ^\nSyntaxError: invalid syntax"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\src\\core\\stress_test_metrics.py",
+        "domain": "core",
+        "error": "Compilation error: File \"D:\\Agent_Cellphone_V2_Repository\\src\\core\\stress_test_metrics.py\", line 2\n    <!-- SSOT Domain: core -->\n    ^\nSyntaxError: invalid syntax"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\src\\core\\stress_test_metrics_analyzer.py",
+        "domain": "core",
+        "error": "Compilation error: File \"D:\\Agent_Cellphone_V2_Repository\\src\\core\\stress_test_metrics_analyzer.py\", line 2\n    <!-- SSOT Domain: core -->\n    ^\nSyntaxError: invalid syntax"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\src\\core\\stress_test_metrics_integration.py",
+        "domain": "core",
+        "error": "Compilation error: File \"D:\\Agent_Cellphone_V2_Repository\\src\\core\\stress_test_metrics_integration.py\", line 2\n    <!-- SSOT Domain: core -->\n    ^\nSyntaxError: invalid syntax"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\src\\core\\task_completion_detector.py",
+        "domain": "core",
+        "error": "Compilation error: File \"D:\\Agent_Cellphone_V2_Repository\\src\\core\\task_completion_detector.py\", line 41\n    <!-- SSOT Domain: core -->\n    ^\nSyntaxError: invalid syntax"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\src\\core\\gasline_integrations.py",
+        "domain": "core",
+        "error": "Compilation error: File \"D:\\Agent_Cellphone_V2_Repository\\src\\core\\gasline_integrations.py\", line 2\n    <!-- SSOT Domain: core -->\n    ^\nSyntaxError: invalid syntax"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\src\\core\\hardened_activity_detector.py",
+        "domain": "core",
+        "error": "Compilation error: File \"D:\\Agent_Cellphone_V2_Repository\\src\\core\\hardened_activity_detector.py\", line 60\n    <!-- SSOT Domain: core -->\n    ^\nSyntaxError: invalid syntax"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\src\\core\\smart_assignment_optimizer.py",
+        "domain": "core",
+        "error": "Compilation error: File \"D:\\Agent_Cellphone_V2_Repository\\src\\core\\smart_assignment_optimizer.py\", line 2\n    <!-- SSOT Domain: core -->\n    ^\nSyntaxError: invalid syntax"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\src\\core\\stress_test_runner.py",
+        "domain": "core",
+        "error": "Compilation error: File \"D:\\Agent_Cellphone_V2_Repository\\src\\core\\stress_test_runner.py\", line 2\n    <!-- SSOT Domain: core -->\n    ^\nSyntaxError: invalid syntax"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\src\\core\\synthetic_github.py",
+        "domain": "core",
+        "error": "Compilation error: File \"D:\\Agent_Cellphone_V2_Repository\\src\\core\\synthetic_github.py\", line 2\n    <!-- SSOT Domain: core -->\n    ^\nSyntaxError: invalid syntax"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\src\\core\\unified_import_system.py",
+        "domain": "core",
+        "error": "Compilation error: File \"D:\\Agent_Cellphone_V2_Repository\\src\\core\\unified_import_system.py\", line 37\n    <!-- SSOT Domain: core -->\n    ^\nSyntaxError: invalid syntax"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\src\\core\\intelligent_context\\intelligent_context_optimization_models.py",
+        "domain": "core",
+        "error": "Compilation timeout"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\src\\core\\safety\\audit_trail.py",
+        "domain": "safety",
+        "error": "Compilation error: File \"D:\\Agent_Cellphone_V2_Repository\\src\\core\\safety\\audit_trail.py\", line 26\n    V2 Compliance: \u2264400 lines, SOLID principles, comprehensive error handling.\n                   ^\nSyntaxError: invalid"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\src\\core\\safety\\blast_radius.py",
+        "domain": "safety",
+        "error": "Compilation error: File \"D:\\Agent_Cellphone_V2_Repository\\src\\core\\safety\\blast_radius.py\", line 405\n    \"\"\"Get the global blast radius limiter instance.\"\"\"\n                                                    ^\nSyntaxEr"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\src\\core\\safety\\kill_switch.py",
+        "domain": "safety",
+        "error": "Compilation error: File \"D:\\Agent_Cellphone_V2_Repository\\src\\core\\safety\\kill_switch.py\", line 378\n    \"\"\"Get the global kill switch instance.\"\"\"\n                                           ^\nSyntaxError: unterminated t"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\src\\obs\\speech_log_manager.py",
+        "domain": "logging",
+        "error": "Compilation error: Sorry: IndentationError: unexpected indent (speech_log_manager.py, line 31)"
+      }
+    ]
+  },
+  "priority3_tag_placement": {
+    "total": 13,
+    "by_domain": {
+      "data": 1,
+      "trading_robot": 1,
+      "core": 3,
+      "integration": 3,
+      "domain_name": 1,
+      "infrastructure": 2,
+      "domain": 1,
+      "validation": 1
+    },
+    "files": [
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\src\\core\\intelligent_context\\unified_intelligent_context\\models.py",
+        "domain": "data",
+        "error": "Tag not found in module docstring/header (first 50 lines)"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\docs\\SSOT\\AGENT2_AGENT5_TRADING_ROBOT_COORDINATION.md",
+        "domain": "trading_robot",
+        "error": "Tag not found in module docstring/header (first 50 lines)"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\docs\\SSOT\\FINAL_VALIDATION_CHECKPOINT_20251230_052232.json",
+        "domain": "core",
+        "error": "Tag not found in module docstring/header (first 50 lines)"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\docs\\SSOT\\AGENT2_INTEGRATION_BATCHES_7-9_VALIDATION_REPORT.md",
+        "domain": "integration",
+        "error": "Tag not found in module docstring/header (first 50 lines)"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\docs\\SSOT\\FINAL_CHECKPOINT_EXECUTION_PLAN.md",
+        "domain": "domain_name",
+        "error": "Tag not found in module docstring/header (first 50 lines)"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\docs\\SSOT\\AGENT2_FINAL_BATCHES_29-30_35-36_VALIDATION_REPORT.md",
+        "domain": "core",
+        "error": "Tag not found in module docstring/header (first 50 lines)"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\tools\\validate_integration_batches.py",
+        "domain": "integration",
+        "error": "Tag not found in module docstring/header (first 50 lines)"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\agent_workspaces\\Agent-7\\status.json",
+        "domain": "core",
+        "error": "Tag not found in module docstring/header (first 50 lines)"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\agent_workspaces\\Agent-3\\infrastructure_ssot_tagging_coordination_2025-12-13.md",
+        "domain": "infrastructure",
+        "error": "Tag not found in module docstring/header (first 50 lines)"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\agent_workspaces\\Agent-2\\status.json",
+        "domain": "integration",
+        "error": "Tag not found in module docstring/header (first 50 lines)"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\agent_workspaces\\Agent-2\\archive\\inbox_processed\\processed_2025-12-15\\CAPTAIN_SITES_REGISTRY_CONSOLIDATION_ACKNOWLEDGED.md",
+        "domain": "infrastructure",
+        "error": "Tag not found in module docstring/header (first 50 lines)"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\agent_workspaces\\Agent-1\\status.json",
+        "domain": "domain",
+        "error": "Tag not found in module docstring/header (first 50 lines)"
+      },
+      {
+        "file_path": "D:\\Agent_Cellphone_V2_Repository\\agent_workspaces\\Agent-5\\TOOL_CONSOLIDATION_ANALYSIS.json",
+        "domain": "validation",
+        "error": "Tag not found in module docstring/header (first 50 lines)"
+      }
+    ]
+  }
+}

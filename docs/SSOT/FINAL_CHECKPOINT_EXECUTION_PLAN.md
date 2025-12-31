@@ -127,7 +127,7 @@ python tools/validate_all_ssot_files.py
 ### Validation Criteria
 
 #### 1. Tag Format
-- Pattern: `<!-- SSOT Domain: domain_name -->`
+- Pattern: `<!-- SSOT Domain: <domain_name> -->` (where `<domain_name>` is replaced with actual domain)
 - Case-insensitive matching
 - Valid domain name format (alphanumeric + underscores)
 

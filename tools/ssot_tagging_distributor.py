@@ -44,7 +44,7 @@ def distribute_tasks():
         message = f"""# 🚨 URGENT: SSOT Tagging Batch - {agent}
 
 **Task**: Add SSOT tags to {len(batch)} files.
-**Format**: Add `<!-- SSOT Domain: domain_name -->` to the top of each file.
+**Format**: Add `<!-- SSOT Domain: <domain> -->` to the top of each file.
 **Target Files**:
 {chr(10).join(batch[:10])}
 ... and {len(batch) - 10} more.

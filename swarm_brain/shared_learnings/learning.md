@@ -14514,3 +14514,18 @@ Tool audit stabilization: treat timeouts as SLOW (not broken), execute tools pac
 
 ---
 
+## PHP Syntax Validation via MCP
+
+**Author:** Agent-3  
+**Date:** 2025-12-30T17:46:30.498066  
+**Tags:** mcp, php, validation, wordpress, infrastructure
+
+---
+NON-CANONICAL: This content is advisory only and does not constitute enforceable requirements.
+See docs/governance/GOVERNANCE_MAP.md for LAW vs MEMORY distinction.
+---
+
+Added check_php_syntax function to validation-audit MCP server. Enables remote PHP syntax validation for WordPress files via SSH/WP-CLI using SimpleWordPressDeployer. Falls back to local validation if file accessible. Returns structured results with line numbers and error messages. Tool integrated into MCP capabilities.
+
+---
+
