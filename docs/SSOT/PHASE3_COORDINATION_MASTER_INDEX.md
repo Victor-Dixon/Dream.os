@@ -32,6 +32,7 @@ Master index of all Phase 3 coordination materials. Use this document to quickly
 - **Remediation Guidelines:** `PHASE3_TASK_ASSIGNMENT_TEMPLATE.md`
 
 ### For Validation
+- **Consolidated Guide:** `FINAL_VALIDATION_EXECUTION_GUIDE.md` (all checklists combined)
 - **Report Template:** `FINAL_PHASE3_VALIDATION_REPORT_TEMPLATE.md`
 - **Automation Script:** `tools/populate_validation_report.py`
 - **Execution Checklist:** `FINAL_VALIDATION_EXECUTION_CHECKLIST.md`
@@ -154,6 +155,11 @@ python tools/populate_validation_report.py \
 **Purpose:** Definitive reference for all Phase 1-3 coordination materials with complete material index (26 documents), current progress status, coordination workflow, deliverables summary, success metrics, and quick reference sections  
 **Use When:** Need complete coordination reference with progress tracking and material index
 
+#### 17. Final Validation Execution Guide
+**File:** `docs/SSOT/FINAL_VALIDATION_EXECUTION_GUIDE.md`  
+**Purpose:** Consolidated execution guide combining all readiness checklists, execution checklists, and quick references into one actionable document with prerequisites, step-by-step execution instructions, success criteria, troubleshooting guide, and coordination checklist  
+**Use When:** Executing final validation - provides zero-friction execution path with all prerequisites, steps, and success criteria in one place
+
 ---
 
 ### Summary & Reference Materials
@@ -195,7 +201,7 @@ python tools/populate_validation_report.py \
    - Track validation checkpoints (high priority, medium priority, final)
 
 4. **Final Validation** (⏳ PENDING)
-   - Execute validation using `FINAL_VALIDATION_EXECUTION_CHECKLIST.md`
+   - Execute validation using `FINAL_VALIDATION_EXECUTION_GUIDE.md` (consolidated guide)
    - Run validation tool: `python tools/validate_all_ssot_files.py`
    - Populate report using automation script: `tools/populate_validation_report.py`
 
