@@ -1,5 +1,7 @@
 # SSOT Tagging Coordination - Trading Robot Batches
 
+<!-- SSOT Domain: trading_robot -->
+
 **Coordinator:** Agent-2 (SSOT Domain Mapping Owner)  
 **Assignee:** Agent-5 (Analytics domain owner, executing trading_robot batches)  
 **Date:** 2025-12-29  
@@ -97,8 +99,6 @@ Add SSOT domain tag in module docstring or file header:
 ```python
 """
 Module description here.
-
-<!-- SSOT Domain: trading_robot -->
 """
 ```
 

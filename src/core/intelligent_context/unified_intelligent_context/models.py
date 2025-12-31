@@ -5,6 +5,8 @@ Intelligent Context Search Models
 Data models for intelligent context search operations.
 V2 Compliance: < 200 lines, single responsibility.
 
+<!-- SSOT Domain: data -->
+
 Author: Agent-2 - Architecture & Design Specialist
 Mission: Placeholder Implementation - Intelligent Context Search
 """
@@ -75,8 +77,6 @@ class SearchResult(SSOTSearchResult):
     Use src.services.models.vector_models.SearchResult instead.
     
     This class will be removed in a future version.
-    
-    <!-- SSOT Domain: data -->
     """
     
     def __init__(self, result_id: str, title: str = "", description: str = "",
