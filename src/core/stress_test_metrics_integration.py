@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-<!-- SSOT Domain: core -->
 """
+<!-- SSOT Domain: core -->
 Stress Test Metrics Integration
 ================================
 

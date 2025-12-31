@@ -33,8 +33,6 @@ class UnifiedImportSystem:
 
     def __init__(self):
         """Initialize the unified import system."""
-
-<!-- SSOT Domain: core -->
         self._core = ImportSystemCore()
         self._utilities = ImportUtilities()
         self._registry = ImportRegistry()
@@ -52,8 +50,6 @@ class UnifiedImportSystem:
     @property
     def sys(self):
         """Get sys module."""
-
-<!-- SSOT Domain: core -->
         return self._core.sys
 
     @property
@@ -64,8 +60,6 @@ class UnifiedImportSystem:
     @property
     def logging(self):
         """Get logging module."""
-
-<!-- SSOT Domain: core -->
         return self._core.logging
 
     @property
@@ -76,8 +70,6 @@ class UnifiedImportSystem:
     @property
     def time(self):
         """Get time module."""
-
-<!-- SSOT Domain: core -->
         return self._core.time
 
     @property
@@ -88,8 +80,6 @@ class UnifiedImportSystem:
     @property
     def datetime(self):
         """Get datetime class."""
-
-<!-- SSOT Domain: core -->
         return self._core.datetime
 
     @property
@@ -104,8 +94,6 @@ class UnifiedImportSystem:
     @property
     def Any(self):
         """Get Any type."""
-
-<!-- SSOT Domain: core -->
         return self._core.Any
 
     @property
@@ -116,8 +104,6 @@ class UnifiedImportSystem:
     @property
     def List(self):
         """Get List type."""
-
-<!-- SSOT Domain: core -->
         return self._core.List
 
     @property
@@ -128,8 +114,6 @@ class UnifiedImportSystem:
     @property
     def Union(self):
         """Get Union type."""
-
-<!-- SSOT Domain: core -->
         return self._core.Union
 
     @property
@@ -140,8 +124,6 @@ class UnifiedImportSystem:
     @property
     def Tuple(self):
         """Get Tuple type."""
-
-<!-- SSOT Domain: core -->
         return self._core.Tuple
 
     # ================================
@@ -156,8 +138,6 @@ class UnifiedImportSystem:
     @property
     def field(self):
         """Get field function."""
-
-<!-- SSOT Domain: core -->
         return self._core.field
 
     # ================================
@@ -176,8 +156,6 @@ class UnifiedImportSystem:
     @property
     def ABC(self):
         """Get ABC class."""
-
-<!-- SSOT Domain: core -->
         return self._core.ABC
 
     @property
@@ -191,8 +169,6 @@ class UnifiedImportSystem:
 
     def get_module_path(self, module_name: str):
         """Get the path to a module."""
-
-<!-- SSOT Domain: core -->
         return self._utilities.get_module_path(module_name)
 
     def is_module_available(self, module_name: str) -> bool:
@@ -201,8 +177,6 @@ class UnifiedImportSystem:
 
     def get_import_path(self, module_name: str):
         """Get the import path for a module."""
-
-<!-- SSOT Domain: core -->
         return self._utilities.get_import_path(module_name)
 
     def resolve_relative_import(self, base_module: str, relative_path: str) -> str:
@@ -211,8 +185,6 @@ class UnifiedImportSystem:
 
     def get_package_root(self, module_name: str):
         """Get the root package directory for a module."""
-
-<!-- SSOT Domain: core -->
         return self._utilities.get_package_root(module_name)
 
     def list_module_contents(self, module_name: str):
@@ -221,8 +193,6 @@ class UnifiedImportSystem:
 
     def get_module_docstring(self, module_name: str):
         """Get the docstring of a module."""
-
-<!-- SSOT Domain: core -->
         return self._utilities.get_module_docstring(module_name)
 
     def validate_import_syntax(self, import_statement: str) -> bool:
@@ -231,8 +201,6 @@ class UnifiedImportSystem:
 
     def get_import_dependencies(self, module_name: str):
         """Get the dependencies of a module."""
-
-<!-- SSOT Domain: core -->
         return self._utilities.get_import_dependencies(module_name)
 
     def create_import_alias(self, module_name: str, alias: str) -> str:
@@ -241,8 +209,6 @@ class UnifiedImportSystem:
 
     def create_from_import(self, module_name: str, item: str, alias: str = None) -> str:
         """Create a from import statement."""
-
-<!-- SSOT Domain: core -->
         return self._utilities.create_from_import(module_name, item, alias)
 
     # ================================
@@ -255,8 +221,6 @@ class UnifiedImportSystem:
 
     def get_import(self, name: str):
         """Get an import from the cache."""
-
-<!-- SSOT Domain: core -->
         return self._registry.get_import(name)
 
     def has_import(self, name: str) -> bool:
@@ -265,8 +229,6 @@ class UnifiedImportSystem:
 
     def remove_import(self, name: str) -> bool:
         """Remove an import from the cache."""
-
-<!-- SSOT Domain: core -->
         return self._registry.remove_import(name)
 
     def clear_cache(self) -> None:
@@ -275,8 +237,6 @@ class UnifiedImportSystem:
 
     def get_cache_stats(self):
         """Get cache statistics."""
-
-<!-- SSOT Domain: core -->
         return self._registry.get_cache_stats()
 
     def mark_failed_import(self, name: str) -> None:
@@ -285,8 +245,6 @@ class UnifiedImportSystem:
 
     def is_failed_import(self, name: str) -> bool:
         """Check if an import has failed."""
-
-<!-- SSOT Domain: core -->
         return self._registry.is_failed_import(name)
 
     def clear_failed_imports(self) -> None:
@@ -295,8 +253,6 @@ class UnifiedImportSystem:
 
     def get_import_history(self, limit: int = 100):
         """Get import history."""
-
-<!-- SSOT Domain: core -->
         return self._registry.get_import_history(limit)
 
     def cleanup_old_imports(self, max_age_hours: int = 24) -> int:
@@ -305,8 +261,6 @@ class UnifiedImportSystem:
 
     def get_import_patterns(self):
         """Get common import patterns."""
-
-<!-- SSOT Domain: core -->
         return self._registry.get_import_patterns()
 
     def validate_import_pattern(self, pattern: str) -> bool:
@@ -320,8 +274,6 @@ _global_import_system = None
 
 def get_unified_import_system() -> UnifiedImportSystem:
     """Get global unified import system instance."""
-
-<!-- SSOT Domain: core -->
     global _global_import_system
 
     if _global_import_system is None:

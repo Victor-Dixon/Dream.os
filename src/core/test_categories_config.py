@@ -15,8 +15,6 @@ from typing import Any
 
 def get_test_categories() -> dict[str, dict[str, Any]]:
     """Get test category definitions."""
-
-<!-- SSOT Domain: core -->
     return {
         "smoke": {
             "description": "Smoke tests for basic functionality validation",

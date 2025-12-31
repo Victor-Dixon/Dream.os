@@ -24,7 +24,6 @@ SummarySchema = Any  # type: ignore
 
 class BatchRunner:
     """Batch processor for conversation ingestion pipeline."""
-<!-- SSOT Domain: core -->
 
     def __init__(self, config):
         """
@@ -33,8 +32,6 @@ class BatchRunner:
         Args:
             config: Configuration object
         """
-
-<!-- SSOT Domain: core -->
         self.config = config
         self.batch_config = config.get_batch_config()
         self.rate_limiter = RateLimiter(config.get("rate_limits", {}))
@@ -280,8 +277,6 @@ class BatchRunner:
 
     def _save_stats(self) -> None:
         """Save processing statistics to file."""
-
-<!-- SSOT Domain: core -->
         try:
             stats_dir = Path("ops/metrics")
             stats_dir.mkdir(parents=True, exist_ok=True)
@@ -349,8 +344,6 @@ class BatchRunner:
 
     def get_system_stats(self) -> Dict[str, Any]:
         """Get comprehensive system statistics."""
-
-<!-- SSOT Domain: core -->
         return {
             "queue": self.queue.get_queue_stats(),
             "rate_limiter": self.rate_limiter.get_stats(),
@@ -358,5 +351,8 @@ class BatchRunner:
             "summarizer": self.summarizer.get_summarization_stats(),
             "embedding_builder": self.embedding_builder.get_embedding_stats(),
             "index_builder": self.index_builder.get_index_stats(),
+            "last_batch": self.stats,
+        }
+        stats(),
             "last_batch": self.stats,
         }

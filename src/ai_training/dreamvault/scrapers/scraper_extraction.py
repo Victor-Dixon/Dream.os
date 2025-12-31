@@ -1,5 +1,6 @@
-"""ChatGPT Scraper Extraction Methods - V2 Compliance | Agent-5"""
+"""ChatGPT Scraper Extraction Methods - V2 Compliance | Agent-5
 <!-- SSOT Domain: core -->
+"""
 
 import logging
 from pathlib import Path
@@ -13,8 +14,6 @@ class ScraperExtraction:
     @staticmethod
     def reverse_file_numbering(output_dir: str, total_count: int):
         """Reverse file numbering to match conversation order."""
-
-<!-- SSOT Domain: core -->
         try:
             output_path = Path(output_dir)
             json_files = sorted(output_path.glob("*.json"))

@@ -1,3 +1,5 @@
+<!-- SSOT Domain: core -->
+
 # Final Batches 29-30, 35-36 Validation Report
 
 **Author:** Agent-2 (Architecture & Design Specialist)  

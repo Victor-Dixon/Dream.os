@@ -27,8 +27,7 @@ except ImportError:
 
 class DatabaseConnection:
     """
-
-<!-- SSOT Domain: core -->
+    <!-- SSOT Domain: core -->
     Database connection abstraction supporting SQLite and PostgreSQL.
 
     Usage:
@@ -47,8 +46,6 @@ class DatabaseConnection:
 
     def __init__(self, database_url: str | None = None):
         """
-
-<!-- SSOT Domain: core -->
         Initialize database connection.
 
         Args:
@@ -66,8 +63,6 @@ class DatabaseConnection:
 
     def _detect_database_type(self) -> str:
         """Detect database type from URL."""
-
-<!-- SSOT Domain: core -->
         scheme = self.parsed_url.scheme
 
         if scheme in ("sqlite", "sqlite3"):
@@ -95,8 +90,6 @@ class DatabaseConnection:
 
     def get_connection(self) -> sqlite3.Connection | Any:
         """
-
-<!-- SSOT Domain: core -->
         Get a database connection.
 
         Returns:
@@ -111,8 +104,6 @@ class DatabaseConnection:
 
     def _get_sqlite_connection(self) -> sqlite3.Connection:
         """Get SQLite connection."""
-
-<!-- SSOT Domain: core -->
         # Extract path from URL (handle both sqlite:/// and sqlite://)
         path = self.parsed_url.path
         if path.startswith("/"):
@@ -280,7 +271,5 @@ def get_database_connection(database_url: str | None = None) -> DatabaseConnecti
 
 def reset_database_connection():
     """Reset the global database connection (useful for testing)."""
-
-<!-- SSOT Domain: core -->
     global _global_connection
     _global_connection = None
