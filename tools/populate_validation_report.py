@@ -12,13 +12,27 @@ Usage:
         --output docs/SSOT/FINAL_PHASE3_VALIDATION_REPORT.md
 """
 
+#!/usr/bin/env python3
+"""
+Populate Final Phase 3 Validation Report from JSON Results
+
+Automatically populates FINAL_PHASE3_VALIDATION_REPORT_TEMPLATE.md
+with results from FINAL_PHASE3_VALIDATION_REPORT.json.
+
+Usage:
+    python tools/populate_validation_report.py \
+        --json docs/SSOT/FINAL_PHASE3_VALIDATION_REPORT.json \
+        --template docs/SSOT/FINAL_PHASE3_VALIDATION_REPORT_TEMPLATE.md \
+        --output docs/SSOT/FINAL_PHASE3_VALIDATION_REPORT.md
+"""
+
 import json
 import argparse
 from pathlib import Path
 from datetime import datetime
 from collections import defaultdict
 
-<!-- SSOT Domain: tools -->
+# SSOT Domain: tools
 
 def load_json_report(json_path):
     """Load validation report JSON."""
