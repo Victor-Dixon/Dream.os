@@ -22,10 +22,8 @@ Description: Monitors status.json files for changes, debounces updates, posts to
 Usage: Automatically runs in background to provide real-time status updates
 Date: 2025-12-30
 Tags: discord, monitoring, status, automation
-"""
 Refactored by: Agent-1 (V2 Compliance)
-
-""""""
+"""
 
 import asyncio
 import json
@@ -119,7 +117,7 @@ class StatusChangeMonitor:
             if datetime.now().second < 10:  # Approx once per minute
                 await self._run_inactivity_checks()
 
-            except Exception as e:
+        except Exception as e:
             logger.error(f"❌ Error in status monitoring loop: {e}", exc_info=True)
 
     async def _check_files(self):
