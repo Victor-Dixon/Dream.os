@@ -148,11 +148,15 @@ Validation monitoring checklist for Phase 3 remediation progress. Use this check
 **File:** `agent_workspaces/Agent-5/TOOL_CONSOLIDATION_ANALYSIS.json`
 
 **Issues Fixed:**
-- Tag placement (JSON metadata field added)
+- Tag placement (JSON metadata field `_ssot_domain: "validation"` added as first field)
 
 **Progress Tracking:**
 - [x] Agent-8 fixed validation domain file
-- [x] Agent-8 verified fix (local, gitignored)
+- [x] Agent-8 verified fix (local, gitignored directory)
+- [x] Agent-6 tracked progress ✅
+- [x] Fix verified and documented
+
+**Note:** File is in gitignored `agent_workspaces/` directory, so fix is local only. Validation tool will recognize the fix when scanning.
 
 **ETA:** ✅ COMPLETE
 
