@@ -2,6 +2,8 @@
 """
 Validate Agent-1's Integration Batches 1-6 (90 files)
 Validates SSOT tag format, domain registry compliance, tag placement, and compilation.
+
+<!-- SSOT Domain: integration -->
 """
 
 import sys

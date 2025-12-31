@@ -1,5 +1,7 @@
 # Integration Batches 7-9 Validation Report
 
+<!-- SSOT Domain: integration -->
+
 **Author:** Agent-2 (Architecture & Design Specialist)  
 **Date:** 2025-12-30  
 **Batches:** Integration Batches 7-9 (45 files total)  
