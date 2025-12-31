@@ -22,7 +22,6 @@ Description: AGI-18 component providing instant shutdown with multiple trigger c
 Usage: KillSwitch class for emergency stop functionality
 Date: 2025-12-30
 Tags: safety, agi, kill-switch, emergency, shutdown
-"""
 
 Author: Agent-4 (Captain) with Cloud Agent
 License: MIT

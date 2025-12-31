@@ -21,7 +21,6 @@ Description: AGI-20 component providing append-only logging with integrity verif
 Usage: AuditTrail class for logging and querying autonomous operation decisions
 Date: 2025-12-30
 Tags: safety, agi, audit, logging, immutable
-"""
 
 V2 Compliance: ≤400 lines, SOLID principles, comprehensive error handling.
 
