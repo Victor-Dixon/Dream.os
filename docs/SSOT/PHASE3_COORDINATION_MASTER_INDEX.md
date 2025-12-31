@@ -190,6 +190,11 @@ python tools/verify_final_validation_readiness.py
 **Purpose:** Consolidated execution guide combining all readiness checklists, execution checklists, and quick references into one actionable document with prerequisites, step-by-step execution instructions, success criteria, troubleshooting guide, and coordination checklist  
 **Use When:** Executing final validation - provides zero-friction execution path with all prerequisites, steps, and success criteria in one place
 
+#### 17a. Final Validation Execution Decision Tree
+**File:** `docs/SSOT/FINAL_VALIDATION_EXECUTION_DECISION_TREE.md`  
+**Purpose:** Visual decision flow for choosing between automated (single command) and manual (step-by-step) execution paths, with execution path comparison, prerequisites checklist, quick verification commands, troubleshooting guide, and reference documents  
+**Use When:** Need to quickly choose execution path - provides visual decision flow and path comparison
+
 #### 18. Agent-6 Validation Execution Readiness Summary
 **File:** `docs/SSOT/AGENT6_VALIDATION_EXECUTION_READINESS_SUMMARY.md`  
 **Purpose:** Single-page validation execution readiness summary for Agent-6 with consolidated guide prioritized, execution path clear, all materials cross-referenced, current blocker status, and validation readiness checklist  
@@ -219,6 +224,21 @@ python tools/verify_final_validation_readiness.py
 **File:** `docs/SSOT/FINAL_VALIDATION_EXECUTION_READINESS_VERIFICATION.md`  
 **Purpose:** Final verification checklist to confirm all validation execution materials are prepared, cross-referenced, and ready for immediate execution - complete readiness verification with material inventory, cross-reference verification, execution readiness checklist, and execution path verification  
 **Use When:** Need final verification before execution - provides complete readiness verification checklist
+
+#### 24. Agent-6 Validation Execution Quick Card
+**File:** `docs/SSOT/AGENT6_VALIDATION_EXECUTION_QUICK_CARD.md`  
+**Purpose:** Single-page quick reference card specifically for Agent-6 with quick execution steps (20-35 minutes), primary references, prerequisites checklist, execution readiness, current progress, automation tools, and success criteria - consolidated quick reference for immediate execution  
+**Use When:** Need quick execution reference - provides single-page consolidated quick card for Agent-6
+
+#### 25. Validation Execution Materials Index
+**File:** `docs/SSOT/VALIDATION_EXECUTION_MATERIALS_INDEX.md`  
+**Purpose:** Complete index of all validation execution materials (21 documents) prepared for Phase 3 final validation - single reference point for all materials with quick access links, materials by category, quick access by use case, automation tools, material count summary, and cross-reference status  
+**Use When:** Need complete materials inventory - provides single reference point for all 21 materials with quick access links
+
+#### 26. Final Validation Execution Readiness Summary
+**File:** `docs/SSOT/FINAL_VALIDATION_EXECUTION_READINESS_SUMMARY.md`  
+**Purpose:** Complete readiness summary for Phase 3 final validation execution - all 21 materials prepared, verified, and cross-referenced, execution readiness checklist, quick execution path, current progress, automation tools, success criteria, and key documents - single-page executive summary of complete readiness  
+**Use When:** Need executive summary of complete readiness - provides single-page summary of all readiness status
 
 ---
 
