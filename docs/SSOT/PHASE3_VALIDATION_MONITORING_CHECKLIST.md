@@ -156,7 +156,7 @@ Validation monitoring checklist for Phase 3 remediation progress. Use this check
 - [x] Agent-6 tracked progress ✅
 - [x] Fix verified and documented
 
-**Note:** File is in gitignored `agent_workspaces/` directory, so fix is local only. Validation tool will recognize the fix when scanning.
+**Note:** File is in gitignored `agent_workspaces/Agent-5/` directory (Agent-5's workspace). Fix is local only and won't be committed to main repo, but validation tool will recognize the fix when scanning filesystem (validation tool scans all files regardless of git status).
 
 **ETA:** ✅ COMPLETE
 
