@@ -23,17 +23,25 @@
 
 ## Execution Commands
 
-### Step 1: Run Final Validation
+### Step 1: Run Final Validation (Automated)
 
+**Option A: Automated Execution (Recommended)**
+```bash
+python tools/execute_phase3_final_validation.py
+```
+
+**Option B: Manual Execution**
 ```bash
 python tools/validate_all_ssot_files.py > docs/SSOT/FINAL_PHASE3_VALIDATION_REPORT.json 2>&1
 ```
 
-**Expected:** JSON report generated at `docs/SSOT/FINAL_PHASE3_VALIDATION_REPORT.json`
+**Expected:** 
+- JSON report: `docs/SSOT/FINAL_PHASE3_VALIDATION_REPORT.json`
+- Markdown report: `docs/SSOT/FINAL_PHASE3_VALIDATION_REPORT.md` (if using Option A)
 
 ---
 
-### Step 2: Populate Validation Report
+### Step 2: Populate Validation Report (If Using Manual Execution)
 
 ```bash
 python tools/populate_validation_report.py \
@@ -83,11 +91,13 @@ python tools/populate_validation_report.py \
 - **Readiness Checklist:** `docs/SSOT/FINAL_VALIDATION_READINESS_CHECKLIST.md`
 - **Execution Checklist:** `docs/SSOT/FINAL_VALIDATION_EXECUTION_CHECKLIST.md`
 - **Report Template:** `docs/SSOT/FINAL_PHASE3_VALIDATION_REPORT_TEMPLATE.md`
-- **Status Summary:** `docs/SSOT/PRIORITY3_STATUS_SUMMARY.md`
+- **Status Summary:** `docs/SSOT/PHASE3_STATUS_SUMMARY.md`
 - **Progress Tracker:** `docs/SSOT/PHASE3_PROGRESS_TRACKER.md`
+- **Automation Script:** `tools/execute_phase3_final_validation.py`
 
 ---
 
 **Status:** Ready for Final Validation Execution  
-**Last Updated:** 2025-12-30 22:15 UTC by Agent-8
+**Current Progress:** 14/44 files complete (31.8%)  
+**Last Updated:** 2025-12-30 22:32 UTC by Agent-4
 

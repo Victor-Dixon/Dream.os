@@ -34,7 +34,7 @@ PHASE2_TOTAL = 1369
 PHASE2_SUCCESS_RATE = 95.62
 
 def run_validation():
-    """Run comprehensive validation and save to JSON."""
+    """Run comprehensive validation and find the generated JSON report."""
     print("🔍 Running comprehensive SSOT validation...")
     
     try:
@@ -45,55 +45,45 @@ def run_validation():
             cwd=REPO_ROOT
         )
         
-        # Save output to JSON report
-        with open(JSON_REPORT, 'w', encoding='utf-8') as f:
-            f.write(result.stdout)
+        # Validation tool writes JSON to timestamped file - find the latest one
+        report_dir = REPO_ROOT / "docs" / "SSOT"
+        json_files = sorted(report_dir.glob("FINAL_VALIDATION_CHECKPOINT_*.json"), reverse=True)
         
-        if result.returncode != 0:
-            print(f"⚠️  Validation tool returned exit code {result.returncode}")
-            print("📄 Output saved to:", JSON_REPORT)
+        if not json_files:
+            print("❌ No validation report JSON file found")
+            if result.returncode != 0:
+                print(f"⚠️  Validation tool returned exit code {result.returncode}")
             return None
         
-        print(f"✅ Validation complete. Results saved to: {JSON_REPORT}")
-        return result.stdout
+        # Use the latest report file
+        latest_report = json_files[0]
+        
+        # Copy to our expected location
+        import shutil
+        shutil.copy2(latest_report, JSON_REPORT)
+        
+        print(f"✅ Validation complete. Report: {latest_report.name}")
+        print(f"📄 Copied to: {JSON_REPORT.name}")
+        
+        # Read and return the JSON data
+        with open(JSON_REPORT, 'r', encoding='utf-8') as f:
+            return json.load(f)
         
     except Exception as e:
         print(f"❌ Error running validation: {e}")
         return None
 
-def parse_validation_results(output):
-    """Parse validation output to extract key metrics."""
+def parse_validation_results(data):
+    """Parse validation JSON data to extract key metrics."""
     try:
-        # Try to find JSON in output
-        json_start = output.find('{')
-        json_end = output.rfind('}') + 1
-        
-        if json_start == -1 or json_end == 0:
-            # Fallback: parse from summary section
-            lines = output.split('\n')
-            metrics = {}
-            for line in lines:
-                if 'Total Files:' in line:
-                    metrics['total'] = int(line.split(':')[1].strip())
-                elif 'Valid:' in line and 'Invalid:' not in line:
-                    metrics['valid'] = int(line.split(':')[1].strip().split()[0])
-                elif 'Invalid:' in line:
-                    metrics['invalid'] = int(line.split(':')[1].strip().split()[0])
-                elif 'Success Rate:' in line:
-                    metrics['success_rate'] = float(line.split(':')[1].strip().replace('%', ''))
-            
-            return metrics
-        
-        json_str = output[json_start:json_end]
-        data = json.loads(json_str)
-        
-        return {
-            'total': data.get('total_files_scanned', 0),
-            'valid': data.get('valid_files', 0),
-            'invalid': data.get('invalid_files', 0),
-            'success_rate': data.get('success_rate', 0.0)
-        }
-        
+        if isinstance(data, dict):
+            return {
+                'total': data.get('total_files', 0),
+                'valid': data.get('valid_files', 0),
+                'invalid': data.get('invalid_files', 0),
+                'success_rate': data.get('success_rate', 0.0)
+            }
+        return None
     except Exception as e:
         print(f"⚠️  Error parsing results: {e}")
         return None
@@ -112,11 +102,18 @@ def generate_report(metrics):
     improvement = success_rate - PHASE2_SUCCESS_RATE
     overall_improvement = success_rate - 57.75  # Baseline from Phase 1
     
+    # Pre-compute values to avoid backslashes in f-string expressions
+    generated_time = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')
+    status_text = '✅ PASS' if invalid == 0 else '⚠️  PARTIAL'
+    success_text = '✅ **SUCCESS:** All files valid. Phase 3 remediation complete.' if invalid == 0 else f'⚠️  **PARTIAL:** {invalid} files still need attention.'
+    next_steps_text = '✅ Phase 3 complete. Ready for milestone closure.' if invalid == 0 else f'1. Review invalid files in {JSON_REPORT.name}\n2. Assign remaining files to domain owners\n3. Re-run validation after fixes'
+    generated_iso = datetime.utcnow().isoformat()
+    
     report = f"""# Final Phase 3 Validation Report
 
-**Generated:** {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')}  
+**Generated:** {generated_time}  
 **Validation Tool:** `tools/validate_all_ssot_files.py`  
-**Status:** {'✅ PASS' if invalid == 0 else '⚠️  PARTIAL'}
+**Status:** {status_text}
 
 ---
 
@@ -143,18 +140,18 @@ def generate_report(metrics):
 
 ## Validation Results
 
-{'✅ **SUCCESS:** All files valid. Phase 3 remediation complete.' if invalid == 0 else f'⚠️  **PARTIAL:** {invalid} files still need attention.'}
+{success_text}
 
 ### Next Steps
 
-{'✅ Phase 3 complete. Ready for milestone closure.' if invalid == 0 else f'1. Review invalid files in {JSON_REPORT.name}\n2. Assign remaining files to domain owners\n3. Re-run validation after fixes'}
+{next_steps_text}
 
 ---
 
 ## Detailed Results
 
 **Full validation report:** `{JSON_REPORT.name}`  
-**Generated:** {datetime.utcnow().isoformat()}
+**Generated:** {generated_iso}
 """
     
     with open(MARKDOWN_REPORT, 'w', encoding='utf-8') as f:
@@ -171,14 +168,14 @@ def main():
     print()
     
     # Step 1: Run validation
-    output = run_validation()
-    if not output:
+    validation_data = run_validation()
+    if not validation_data:
         print("❌ Validation failed. Check output above.")
         return 1
     
     # Step 2: Parse results
     print("\n📊 Parsing validation results...")
-    metrics = parse_validation_results(output)
+    metrics = parse_validation_results(validation_data)
     
     if not metrics:
         print("⚠️  Could not parse metrics. Check JSON report manually.")

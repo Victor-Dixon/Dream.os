@@ -16,8 +16,8 @@ from datetime import datetime
 
 # Test configuration
 WORDPRESS_BASE_URL = "https://tradingrobotplug.com"
-FASTAPI_BASE_URL = "http://localhost:8000"  # FastAPI REST API
-FASTAPI_WS_URL = "ws://localhost:8000/ws/events"  # FastAPI WebSocket endpoint
+FASTAPI_BASE_URL = "http://localhost:8001"  # FastAPI REST API
+FASTAPI_WS_URL = "ws://localhost:8001/ws/events"  # FastAPI WebSocket endpoint
 WP_REST_NAMESPACE = "/wp-json/tradingrobotplug/v1"
 FASTAPI_NAMESPACE = "/api/v1"
 

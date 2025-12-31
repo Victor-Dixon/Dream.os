@@ -13,7 +13,7 @@
 
 **All validation execution materials are prepared, verified, and ready for immediate execution.**
 
-- **Total Materials:** 21+ documents prepared and cross-referenced
+- **Total Materials:** 22+ documents prepared and cross-referenced (includes decision tree)
 - **Automation Tools:** 2 scripts ready (readiness verification + complete workflow)
 - **Execution Paths:** Automated (PRIMARY) + Manual (fallback)
 - **Current Progress:** 14/44 files complete (31.8%), awaiting Agent-2 completion
@@ -274,7 +274,7 @@ python tools/populate_validation_report.py \
 
 **All validation execution materials are prepared, verified, and ready for immediate execution.**
 
-- ✅ **21+ documents** prepared and cross-referenced
+- ✅ **22+ documents** prepared and cross-referenced (includes decision tree)
 - ✅ **2 automation scripts** ready (verification + complete workflow)
 - ✅ **Both execution paths** available (automated PRIMARY + manual fallback)
 - ✅ **All prerequisites** met and verified

@@ -1,5 +1,20 @@
 #!/usr/bin/env python3
 """
+⚠️  DEPRECATED: This script is deprecated and will be removed in a future version.
+
+Please use the new modular implementation instead:
+    python -m tools.cycle_accomplishments.main
+
+The new implementation combines all features from v1.0 and v2.0 with:
+- Better modular architecture
+- Blog post generation (Victor voice)
+- Enhanced Discord posting (chunked + file upload)
+- Cross-platform compatibility
+- Protocol v2.0
+
+This script will continue to work but is no longer maintained.
+=====================================
+
 Generate Cycle Accomplishments Report
 =====================================
 

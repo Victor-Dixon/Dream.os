@@ -90,7 +90,6 @@ def start_bot():
         print("   Set it with: $env:DISCORD_BOT_TOKEN='your_token' (Windows)")
         print("   Or use: python tools/start_discord_system.py (handles env automatically)")
         return 0  # Exit gracefully - not a tool error
-        sys.exit(1)
 
     # Stop existing bot if running
     stop_existing_bot()
