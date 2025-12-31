@@ -1,8 +1,6 @@
 """ChatGPT Scraper Login Logic - V2 Compliance | Agent-5
 <!-- SSOT Domain: logging -->
-
-
-""""""
+"""
 
 import logging
 import time

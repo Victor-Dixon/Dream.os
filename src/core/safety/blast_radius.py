@@ -22,7 +22,6 @@ Description: AGI-19 component providing cost, file, and API call limits with tim
 Usage: BlastRadiusLimiter class for checking and recording resource usage
 Date: 2025-12-30
 Tags: safety, agi, limits, blast-radius, autonomous
-"""
 
 Author: Agent-4 (Captain) with Cloud Agent
 License: MIT
