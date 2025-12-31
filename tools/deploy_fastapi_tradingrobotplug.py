@@ -19,7 +19,10 @@ from simple_wordpress_deployer import SimpleWordPressDeployer, load_site_configs
 
 # FastAPI application paths
 FASTAPI_BACKEND_PATH = Path("D:/websites/TradingRobotPlugWeb/backend")
-REMOTE_BACKEND_BASE = "/opt/tradingrobotplug/backend"
+# Deploy to user's home directory (accessible via SFTP)
+# On Hostinger: /home/username/domains/tradingrobotplug.com/public_html/backend
+# We'll use a relative path that the deployer will resolve
+REMOTE_BACKEND_BASE = "backend"
 
 # Site configuration
 SITE_KEY = "tradingrobotplug.com"
@@ -109,19 +112,37 @@ def deploy_fastapi_backend():
             print(f"⚠️  Local file not found: {local_file} (skipping)")
             continue
         
-        print(f"📤 Deploying: {local_rel_path}")
+        print(f"📤 Deploying: {local_rel_path} -> {remote_path}")
         try:
-            # Ensure remote directory exists
+            # Ensure remote directory exists using SSH
             remote_dir = '/'.join(remote_path.split('/')[:-1])
-            deployer.execute_command(f"mkdir -p {remote_dir}")
+            if remote_dir:
+                # Try to create directory via SSH command
+                mkdir_output = deployer.execute_command(f"mkdir -p {remote_dir} 2>&1 || true")
+                if mkdir_output:
+                    print(f"   📁 Directory creation: {mkdir_output.strip()}")
             
-            success = deployer.deploy_file(local_file, remote_path)
+            # Use absolute path for local file
+            local_file_abs = local_file.resolve()
+            if not local_file_abs.exists():
+                print(f"   ❌ Local file does not exist: {local_file_abs}")
+                failed_count += 1
+                continue
+                
+            # Deploy file - use full remote path
+            # The deployer will handle path resolution relative to remote_path
+            full_remote = f"{REMOTE_BACKEND_BASE}/{remote_rel_path}"
+            success = deployer.deploy_file(local_file_abs, full_remote)
             if success:
                 deployed_count += 1
+                print(f"   ✅ Deployed successfully")
             else:
                 failed_count += 1
+                print(f"   ❌ Deployment failed (check SFTP permissions/path)")
         except Exception as e:
             print(f"   ❌ Error deploying {local_rel_path}: {e}")
+            import traceback
+            traceback.print_exc()
             failed_count += 1
     
     # Deploy systemd service file
