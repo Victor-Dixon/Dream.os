@@ -32,9 +32,15 @@ Master index of all Phase 3 coordination materials. Use this document to quickly
 - **Remediation Guidelines:** `PHASE3_TASK_ASSIGNMENT_TEMPLATE.md`
 
 ### For Validation
-- **Consolidated Guide:** `FINAL_VALIDATION_EXECUTION_GUIDE.md` (all checklists combined)
+- **Consolidated Guide:** `FINAL_VALIDATION_EXECUTION_GUIDE.md` (PRIMARY - all checklists combined)
+- **Workflow Automation:** `tools/execute_final_validation_workflow.py` (PRIMARY for automation - single command execution)
+- **Readiness Verification:** `tools/verify_final_validation_readiness.py` (automated prerequisite checking)
+- **Command Card:** `VALIDATION_EXECUTION_COMMAND_CARD.md` (copy-paste ready commands)
+- **Complete Readiness Report:** `PHASE3_VALIDATION_EXECUTION_COMPLETE_READINESS_REPORT.md` (complete materials inventory, readiness checklist, execution path)
+- **Agent-6 Readiness Summary:** `AGENT6_VALIDATION_EXECUTION_READINESS_SUMMARY.md` (single-page reference for Agent-6)
+- **Quick Readiness Check:** `QUICK_VALIDATION_READINESS_CHECK.md` (one-minute verification)
 - **Report Template:** `FINAL_PHASE3_VALIDATION_REPORT_TEMPLATE.md`
-- **Automation Script:** `tools/populate_validation_report.py`
+- **Report Automation:** `tools/populate_validation_report.py`
 - **Execution Checklist:** `FINAL_VALIDATION_EXECUTION_CHECKLIST.md`
 - **Readiness Checklist:** `FINAL_VALIDATION_READINESS_CHECKLIST.md`
 - **Quick Reference:** `FINAL_VALIDATION_QUICK_REFERENCE.md`
@@ -130,6 +136,30 @@ python tools/populate_validation_report.py \
     --output docs/SSOT/FINAL_PHASE3_VALIDATION_REPORT.md
 ```
 
+#### 11a. Final Validation Workflow Automation Script
+**File:** `tools/execute_final_validation_workflow.py`  
+**Purpose:** Single-command automation script that executes complete validation workflow (verify readiness → execute validation → populate report → generate milestone)  
+**Use When:** Fastest execution path - single command executes entire workflow
+
+**Usage:**
+```bash
+# With verification (recommended)
+python tools/execute_final_validation_workflow.py
+
+# Skip verification for faster execution
+python tools/execute_final_validation_workflow.py --skip-verification
+```
+
+#### 11b. Readiness Verification Script
+**File:** `tools/verify_final_validation_readiness.py`  
+**Purpose:** Automated prerequisite checking script that verifies Phase 3 completion, validation tool readiness, report script readiness, documentation templates, and output directories  
+**Use When:** Verifying all prerequisites before validation execution
+
+**Usage:**
+```bash
+python tools/verify_final_validation_readiness.py
+```
+
 #### 12. Final Validation Readiness Checklist
 **File:** `docs/SSOT/FINAL_VALIDATION_READINESS_CHECKLIST.md`  
 **Purpose:** Pre-execution checklist for final validation with prerequisites, validation tool preparation, execution steps, success criteria, and troubleshooting  
@@ -159,6 +189,36 @@ python tools/populate_validation_report.py \
 **File:** `docs/SSOT/FINAL_VALIDATION_EXECUTION_GUIDE.md`  
 **Purpose:** Consolidated execution guide combining all readiness checklists, execution checklists, and quick references into one actionable document with prerequisites, step-by-step execution instructions, success criteria, troubleshooting guide, and coordination checklist  
 **Use When:** Executing final validation - provides zero-friction execution path with all prerequisites, steps, and success criteria in one place
+
+#### 18. Agent-6 Validation Execution Readiness Summary
+**File:** `docs/SSOT/AGENT6_VALIDATION_EXECUTION_READINESS_SUMMARY.md`  
+**Purpose:** Single-page validation execution readiness summary for Agent-6 with consolidated guide prioritized, execution path clear, all materials cross-referenced, current blocker status, and validation readiness checklist  
+**Use When:** Agent-6 needs quick reference for validation execution - provides single-page summary with all key information and execution path
+
+#### 19. Phase 3 Validation Execution Complete Readiness Report
+**File:** `docs/SSOT/PHASE3_VALIDATION_EXECUTION_COMPLETE_READINESS_REPORT.md`  
+**Purpose:** Complete readiness report with materials inventory (15+ documents), readiness checklist, execution path, completed owners status, current blocker status, and quick reference links - single source of truth for validation execution readiness  
+**Use When:** Need complete readiness verification - provides full materials inventory, readiness checklist, and execution path in one document
+
+#### 20. Validation Execution Workflow
+**File:** `docs/SSOT/VALIDATION_EXECUTION_WORKFLOW.md`  
+**Purpose:** Complete workflow document showing execution flow from Agent-2 completion to validation execution to milestone generation, with decision points, timeline estimates, and reference documents by step  
+**Use When:** Need to understand complete execution workflow - provides step-by-step flow with decision points and timeline estimates
+
+#### 21. Final Validation Execution Summary
+**File:** `docs/SSOT/FINAL_VALIDATION_EXECUTION_SUMMARY.md`  
+**Purpose:** Final summary of all validation execution materials prepared (16+ documents), complete inventory, quick execution path, reference quick links, and readiness checklist - single reference point for complete validation execution readiness  
+**Use When:** Need final summary of all materials - provides complete inventory and quick execution path in one document
+
+#### 22. Validation Execution Status
+**File:** `docs/SSOT/VALIDATION_EXECUTION_STATUS.md`  
+**Purpose:** Current validation execution status document with blocker status, materials prepared status (17/17 ready), completed owners status, execution readiness checklist, and quick execution reference - real-time status tracking  
+**Use When:** Need current status snapshot - provides real-time readiness status and execution reference
+
+#### 23. Final Validation Execution Readiness Verification
+**File:** `docs/SSOT/FINAL_VALIDATION_EXECUTION_READINESS_VERIFICATION.md`  
+**Purpose:** Final verification checklist to confirm all validation execution materials are prepared, cross-referenced, and ready for immediate execution - complete readiness verification with material inventory, cross-reference verification, execution readiness checklist, and execution path verification  
+**Use When:** Need final verification before execution - provides complete readiness verification checklist
 
 ---
 
