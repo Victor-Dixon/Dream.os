@@ -353,6 +353,3 @@ class BatchRunner:
             "index_builder": self.index_builder.get_index_stats(),
             "last_batch": self.stats,
         }
-        stats(),
-            "last_batch": self.stats,
-        }
