@@ -32,6 +32,7 @@ Master index of all Phase 3 coordination materials. Use this document to quickly
 - **Remediation Guidelines:** `PHASE3_TASK_ASSIGNMENT_TEMPLATE.md`
 
 ### For Validation
+- **Decision Tree:** `FINAL_VALIDATION_EXECUTION_DECISION_TREE.md` (PRIMARY for path selection - choose execution path)
 - **Consolidated Guide:** `FINAL_VALIDATION_EXECUTION_GUIDE.md` (PRIMARY - all checklists combined)
 - **Workflow Automation:** `tools/execute_final_validation_workflow.py` (PRIMARY for automation - single command execution)
 - **Readiness Verification:** `tools/verify_final_validation_readiness.py` (automated prerequisite checking)
@@ -195,6 +196,11 @@ python tools/verify_final_validation_readiness.py
 **Purpose:** Visual decision flow for choosing between automated (single command) and manual (step-by-step) execution paths, with execution path comparison, prerequisites checklist, quick verification commands, troubleshooting guide, and reference documents  
 **Use When:** Need to quickly choose execution path - provides visual decision flow and path comparison
 
+#### 17b. Final Validation Execution Trigger
+**File:** `docs/SSOT/FINAL_VALIDATION_EXECUTION_TRIGGER.md`  
+**Purpose:** Immediate execution trigger document with exact steps to execute the moment Phase 3 completes, decision tree integration, automated workflow prioritization, zero-delay execution path, success criteria, troubleshooting guide, and post-execution actions  
+**Use When:** Phase 3 just completed - provides immediate execution steps with zero-delay execution path
+
 #### 18. Agent-6 Validation Execution Readiness Summary
 **File:** `docs/SSOT/AGENT6_VALIDATION_EXECUTION_READINESS_SUMMARY.md`  
 **Purpose:** Single-page validation execution readiness summary for Agent-6 with consolidated guide prioritized, execution path clear, all materials cross-referenced, current blocker status, and validation readiness checklist  
@@ -239,6 +245,16 @@ python tools/verify_final_validation_readiness.py
 **File:** `docs/SSOT/FINAL_VALIDATION_EXECUTION_READINESS_SUMMARY.md`  
 **Purpose:** Complete readiness summary for Phase 3 final validation execution - all 21 materials prepared, verified, and cross-referenced, execution readiness checklist, quick execution path, current progress, automation tools, success criteria, and key documents - single-page executive summary of complete readiness  
 **Use When:** Need executive summary of complete readiness - provides single-page summary of all readiness status
+
+#### 27. Validation Execution Ready Signal
+**File:** `docs/SSOT/VALIDATION_EXECUTION_READY_SIGNAL.md`  
+**Purpose:** Final "EXECUTION READY" signal document - definitive go signal when Agent-2 completes, immediate execution path, primary execution references, prerequisites checklist, current progress, automation tools, success criteria, execution notes, and final readiness confirmation - single-page definitive execution ready signal  
+**Use When:** Need definitive execution ready signal - provides single-page "go" signal with immediate execution path when Agent-2 completes
+
+#### 28. Validation Execution Complete Checklist
+**File:** `docs/SSOT/VALIDATION_EXECUTION_COMPLETE_CHECKLIST.md`  
+**Purpose:** Ultimate go/no-go checklist for Phase 3 final validation execution - single consolidated checklist combining all prerequisites, materials verification, tool readiness, execution path selection, execution steps (automated + manual), success criteria verification, primary execution references, current status, and final readiness confirmation - complete execution checklist  
+**Use When:** Need ultimate go/no-go checklist - provides single consolidated checklist for complete execution verification and execution steps
 
 ---
 
