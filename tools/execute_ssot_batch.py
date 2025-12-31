@@ -9,6 +9,8 @@ Processes batches from ssot_batch_assignments_latest.json.
 V2 Compliant: <300 lines
 Author: Agent-1 (Integration & Core Systems Specialist)
 Date: 2025-12-29
+
+<!-- SSOT Domain: tools -->
 """
 
 import json

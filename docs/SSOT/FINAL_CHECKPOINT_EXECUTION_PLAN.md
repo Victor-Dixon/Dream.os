@@ -5,6 +5,8 @@
 **Purpose:** Execute final validation checkpoint for all 42 SSOT tagging batches (1258 files)  
 **Status:** ⏳ Ready - Waiting for all 42 batches to complete
 
+<!-- SSOT Domain: documentation -->
+
 ---
 
 ## Executive Summary
