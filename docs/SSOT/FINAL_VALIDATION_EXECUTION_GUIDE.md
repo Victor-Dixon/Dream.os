@@ -289,6 +289,7 @@ python tools/populate_validation_report.py \
 
 ### Key Tools
 
+- **Automated Workflow Script:** `tools/execute_final_validation_workflow.py` (recommended - single command execution)
 - **Readiness Verification Script:** `tools/verify_final_validation_readiness.py`
 - **Validation Tool:** `tools/validate_all_ssot_files.py`
 - **Report Population Script:** `tools/populate_validation_report.py`
