@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-<!-- SSOT Domain: core -->
 """
+<!-- SSOT Domain: core -->
 Unified Data Processing System - V2 Compliance Module
 ===================================================
 

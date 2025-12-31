@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-<!-- SSOT Domain: core -->
 """
+<!-- SSOT Domain: core -->
 Synthetic GitHub - Local-First GitHub Wrapper
 =============================================
 

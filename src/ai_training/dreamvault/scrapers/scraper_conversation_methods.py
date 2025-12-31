@@ -1,5 +1,6 @@
-"""ChatGPT Scraper Conversation Methods - V2 Compliance | Agent-5"""
+"""ChatGPT Scraper Conversation Methods - V2 Compliance | Agent-5
 <!-- SSOT Domain: core -->
+"""
 
 import logging
 from collections.abc import Callable
@@ -20,8 +21,6 @@ class ScraperConversationMethods:
         skip_processed: bool,
     ) -> dict[str, int]:
         """SMART extraction method."""
-
-<!-- SSOT Domain: core -->
         try:
             logger.info("🧠 Starting SMART conversation extraction...")
             Path(output_dir).mkdir(parents=True, exist_ok=True)
