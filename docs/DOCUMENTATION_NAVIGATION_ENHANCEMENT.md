@@ -26,7 +26,7 @@ This protocol defines standards for documentation tagging, cross-referencing, an
 **Format:** HTML comment at top of file
 
 ```html
-<!-- SSOT Domain: domain_name -->
+<!-- SSOT Domain: documentation -->
 ```
 
 **Purpose:** Categorize documentation by SSOT domain for domain-specific discovery

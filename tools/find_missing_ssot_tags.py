@@ -2,6 +2,8 @@
 """
 Find files missing SSOT tags (<!-- SSOT Domain: domain_name -->).
 Focuses on .py and .md files in src, tools, and scripts.
+
+<!-- SSOT Domain: tools -->
 """
 
 import os

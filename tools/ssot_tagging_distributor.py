@@ -2,6 +2,8 @@
 """
 Distributes missing SSOT tag tasks to all 7 agents.
 Divides the list of missing files into batches.
+
+<!-- SSOT Domain: tools -->
 """
 
 import os
