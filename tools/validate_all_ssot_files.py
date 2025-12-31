@@ -14,13 +14,20 @@ from collections import defaultdict
 from datetime import datetime
 
 # SSOT Domain Registry - all valid domains
+# Updated 2025-12-30: Added 12 new domains from Phase 1 remediation
 VALID_DOMAINS = [
     "core", "architecture", "services", "integration", "infrastructure",
     "messaging", "onboarding", "web", "frontend", "backend", "api",
     "database", "storage", "security", "authentication", "authorization",
     "logging", "monitoring", "testing", "documentation", "tools",
     "utilities", "gaming", "trading", "discord", "vision", "ai",
-    "automation", "deployment", "config", "models", "utils"
+    "automation", "deployment", "config", "models", "utils",
+    # Phase 1 remediation domains (added 2025-12-30)
+    "trading_robot", "communication", "analytics", "swarm_brain",
+    "data", "performance", "safety", "qa", "git", "domain",
+    "error_handling", "ai_training",
+    # Additional domains from Phase 2 validation
+    "seo", "validation"
 ]
 
 def extract_ssot_domain(content: str) -> Tuple[str, bool]:
@@ -132,28 +139,31 @@ def find_ssot_files(repo_root: Path) -> List[Path]:
     excluded_dirs = {'__pycache__', '.git', 'node_modules', '.next', '.venv', 'venv', 'env', '.pytest_cache'}
     excluded_patterns = {'.pyc', '.pyo', '.pyd', '.pyc.'}
     
-    # Search in src/ directory
-    src_dir = repo_root / "src"
-    if not src_dir.exists():
-        return []
+    # Search directories (src/, docs/, tools/, agent_workspaces/)
+    search_dirs = ["src", "docs", "tools", "agent_workspaces"]
     
-    for file_path in src_dir.rglob("*"):
-        # Skip excluded directories
-        if any(excluded_dir in file_path.parts for excluded_dir in excluded_dirs):
+    for dir_name in search_dirs:
+        search_dir = repo_root / dir_name
+        if not search_dir.exists():
             continue
         
-        # Skip excluded file patterns
-        if file_path.suffix in excluded_patterns:
-            continue
-        
-        if file_path.is_file() and not file_path.name.startswith('.'):
-            try:
-                content = file_path.read_text(encoding='utf-8', errors='ignore')
-                if re.search(pattern, content, re.IGNORECASE):
-                    ssot_files.append(file_path)
-            except Exception:
-                # Skip files that can't be read
+        for file_path in search_dir.rglob("*"):
+            # Skip excluded directories
+            if any(excluded_dir in file_path.parts for excluded_dir in excluded_dirs):
                 continue
+            
+            # Skip excluded file patterns
+            if file_path.suffix in excluded_patterns:
+                continue
+            
+            if file_path.is_file() and not file_path.name.startswith('.'):
+                try:
+                    content = file_path.read_text(encoding='utf-8', errors='ignore')
+                    if re.search(pattern, content, re.IGNORECASE):
+                        ssot_files.append(file_path)
+                except Exception:
+                    # Skip files that can't be read
+                    continue
     
     return ssot_files
 
@@ -161,7 +171,7 @@ def main():
     """Validate all SSOT-tagged files"""
     repo_root = Path(__file__).parent.parent
     print("=" * 80)
-    print("Final SSOT Validation Checkpoint - All 42 Batches (1258 files)")
+    print("Phase 2 SSOT Validation Checkpoint - All SSOT-Tagged Files")
     print("=" * 80)
     print()
     print("🔍 Scanning for SSOT-tagged files...")
