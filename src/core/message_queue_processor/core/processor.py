@@ -12,11 +12,15 @@ V2 Compliance: <200 lines (orchestrator only)
 """
 
 import logging
+import os
 import time
 from typing import Any, Optional
 
 from ....core.message_queue import MessageQueue, QueueConfig
 from ....core.message_queue_persistence import QueueEntry
+from systems.output_flywheel.integration.status_json_integration import (
+    StatusJsonIntegration,
+)
 from ..processing.message_parser import parse_message_data
 from ..processing.message_validator import validate_message_data
 from ..processing.message_router import route_message_delivery
@@ -72,6 +76,15 @@ class MessageQueueProcessor:
         self.message_repository = message_repository
         self.messaging_core = messaging_core
         self.running = False
+        self.output_flywheel_integration = self._init_output_flywheel_integration()
+        self.output_flywheel_check_interval = float(
+            os.getenv("OUTPUT_FLYWHEEL_STATUS_INTERVAL", "60")
+        )
+        self.next_output_flywheel_check = (
+            time.time() + self.output_flywheel_check_interval
+            if self.output_flywheel_integration
+            else None
+        )
 
         # Initialize performance metrics collector
         try:
@@ -94,6 +107,7 @@ class MessageQueueProcessor:
 
         try:
             while self.running:
+                self._maybe_trigger_output_flywheel()
                 entries = safe_dequeue(self.queue, batch_size)
                 if not entries:
                     if max_messages is None:
@@ -170,6 +184,42 @@ class MessageQueueProcessor:
             logger.info(f"✅ Queue processor complete: {processed} delivered")
 
         return processed
+
+    def _init_output_flywheel_integration(self) -> Optional[StatusJsonIntegration]:
+        agent_id = os.getenv("OUTPUT_FLYWHEEL_AGENT_ID")
+        if not agent_id:
+            return None
+        logger.info(
+            "🔄 Output Flywheel integration enabled for %s",
+            agent_id,
+        )
+        return StatusJsonIntegration(agent_id)
+
+    def _maybe_trigger_output_flywheel(self) -> None:
+        if not self.output_flywheel_integration:
+            return
+
+        now = time.time()
+        if self.next_output_flywheel_check is None or now < self.next_output_flywheel_check:
+            return
+
+        try:
+            session = self.output_flywheel_integration.check_and_trigger()
+            if session and isinstance(session, dict):
+                artifacts = session.get("artifacts", {})
+                session_id = session.get("session_id")
+                if artifacts:
+                    self.output_flywheel_integration.update_status_with_artifacts(
+                        artifacts,
+                        session_id,
+                    )
+        except Exception as exc:
+            logger.warning(
+                "Output Flywheel integration check failed: %s",
+                exc,
+            )
+        finally:
+            self.next_output_flywheel_check = now + self.output_flywheel_check_interval
 
     def _deliver_entry(self, entry: Any) -> bool:
         """Deliver queue entry using extracted modules."""
