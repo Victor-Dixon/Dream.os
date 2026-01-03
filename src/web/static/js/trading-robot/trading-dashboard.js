@@ -5,6 +5,29 @@
  *
  * <!-- SSOT Domain: trading_robot -->
  *
+ * Navigation References:
+ * ├── Related Files:
+ * │   ├── Risk Integration → src/web/static/js/trading-robot/risk-dashboard-integration.js
+ * │   ├── WebSocket Server → src/services/risk_analytics/risk_websocket_server.py
+ * │   ├── Risk Calculator → src/services/risk_analytics/risk_calculator_service.py
+ * │   └── Trading Robot Main → src/web/static/js/trading-robot/trading-robot-main.js
+ * ├── Documentation:
+ * │   ├── Risk Dashboard → docs/analytics/risk_dashboard.html
+ * │   ├── Integration Demo → docs/analytics/trading_robot_risk_integration_demo.html
+ * │   └── Architecture → docs/analytics/TRADINGROBOTPLUG_ANALYTICS_ARCHITECTURE.md
+ * └── Usage:
+ *     └── Initialize → new TradingDashboard().initialize()
+ *
+ * Bidirectional Links:
+ * ├── From Code to Docs:
+ * │   ├── This dashboard → docs/analytics/TRADINGROBOTPLUG_ANALYTICS_ARCHITECTURE.md
+ * │   ├── This dashboard → docs/analytics/trading_robot_risk_integration_demo.html
+ * │   └── This dashboard → docs/analytics/risk_dashboard.html
+ * └── From Docs to Code:
+ *     ├── docs/analytics/TRADINGROBOTPLUG_ANALYTICS_ARCHITECTURE.md → This dashboard
+ *     ├── docs/analytics/trading_robot_risk_integration_demo.html → This dashboard
+ *     └── docs/analytics/risk_dashboard.html → This dashboard
+ *
  * @author Agent-7 - Web Development Specialist
  * @version 1.0.0 - Trading Robot Frontend V2 Compliance
  * @license MIT

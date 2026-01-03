@@ -1,8 +1,30 @@
 # TradingRobotPlug WebSocket Architecture Review - Phase 2.1
-**Reviewer:** Agent-2 (Architecture & Design Specialist)  
-**Date:** 2025-12-29  
-**Implementation Status:** Phase 2.1 Complete  
+**Reviewer:** Agent-2 (Architecture & Design Specialist)
+**Date:** 2025-12-29
+**Implementation Status:** Phase 2.1 Complete
 **Status:** ✅ APPROVED - Production Ready with Recommendations
+
+## 📚 Navigation References
+
+### 🔗 Implementation Files
+- **WebSocket Server** → `src/services/risk_analytics/risk_websocket_server.py`
+- **Risk Calculator** → `src/services/risk_analytics/risk_calculator_service.py`
+- **API Endpoints** → `src/services/risk_analytics/risk_api_endpoints.py`
+- **Dashboard UI** → `docs/analytics/risk_dashboard.html`
+- **Risk Integration** → `src/web/static/js/trading-robot/risk-dashboard-integration.js`
+
+### 📋 Related Reviews
+- **Phase 2 Guidance** → `docs/analytics/AGENT2_PHASE2_GUIDANCE.md`
+- **Architecture Overview** → `docs/analytics/TRADINGROBOTPLUG_ANALYTICS_ARCHITECTURE.md`
+- **Integration Demo** → `docs/analytics/trading_robot_risk_integration_demo.html`
+
+### 🧪 Testing & Validation
+- **WebSocket Tests** → `tools/test_risk_websocket.py`
+- **Unit Tests** → `tests/unit/services/test_risk_*.py`
+
+### 🔄 Bidirectional Links
+- **From this review → Implementation files** (links above)
+- **From WebSocket server → This architecture review**
 
 ---
 

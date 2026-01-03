@@ -1,8 +1,37 @@
 # TradingRobotPlug Analytics Architecture - Phase 2 Guidance
-**Author:** Agent-2 (Architecture & Design Specialist)  
-**Date:** 2025-12-28  
-**Purpose:** Phase 2 implementation guidance based on Track 1 & Track 2 reviews  
+**Author:** Agent-2 (Architecture & Design Specialist)
+**Date:** 2025-12-28
+**Purpose:** Phase 2 implementation guidance based on Track 1 & Track 2 reviews
 **Status:** ✅ READY FOR PHASE 2 PLANNING
+
+## 📚 Navigation References
+
+### 🔗 Related Files
+- **Risk Calculator Service** → `src/services/risk_analytics/risk_calculator_service.py`
+- **WebSocket Server** → `src/services/risk_analytics/risk_websocket_server.py`
+- **API Endpoints** → `src/services/risk_analytics/risk_api_endpoints.py`
+- **Risk Integration** → `src/web/static/js/trading-robot/risk-dashboard-integration.js`
+- **Trading Dashboard** → `src/web/static/js/trading-robot/trading-dashboard.js`
+- **Dashboard UI** → `docs/analytics/risk_dashboard.html`
+
+### 📋 Implementation Status
+- ✅ **Phase 2.1:** WebSocket Foundation Complete
+- ✅ **Phase 2.2 Week 1:** Risk Calculator Service Complete
+- ✅ **Phase 2.2 Week 2:** Real-time Dashboard Complete
+- 🔄 **Phase 2.3:** Advanced Analytics (Planned)
+
+### 🧪 Testing & Validation
+- **WebSocket Tests** → `tools/test_risk_websocket.py`
+- **Integration Demo** → `docs/analytics/trading_robot_risk_integration_demo.html`
+
+### 📖 Related Documentation
+- **Architecture** → `docs/analytics/TRADINGROBOTPLUG_ANALYTICS_ARCHITECTURE.md`
+- **WebSocket Review** → `docs/analytics/AGENT2_WEBSOCKET_ARCHITECTURE_REVIEW.md`
+- **GA4 Schema** → `docs/analytics/TRADINGROBOTPLUG_GA4_EVENT_SCHEMA.md`
+
+### 🔄 Bidirectional Links
+- **From this guidance → Implementation files** (links above)
+- **From implementation files → This guidance document**
 
 ---
 

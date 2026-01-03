@@ -18,13 +18,29 @@ Navigation References:
 ├── Related Files:
 │   ├── Risk Calculator → src/services/risk_analytics/risk_calculator_service.py
 │   ├── API Endpoints → src/services/risk_analytics/risk_api_endpoints.py
+│   ├── Risk Integration → src/web/static/js/trading-robot/risk-dashboard-integration.js
+│   ├── Trading Dashboard → src/web/static/js/trading-robot/trading-dashboard.js
 │   ├── Dashboard UI → docs/analytics/risk_dashboard.html
 │   └── Database Schema → database/migrations/phase2_2_risk_analytics_schema.sql
 ├── Documentation:
 │   ├── Architecture → docs/analytics/TRADINGROBOTPLUG_ANALYTICS_ARCHITECTURE.md
+│   ├── Integration Demo → docs/analytics/trading_robot_risk_integration_demo.html
+│   ├── WebSocket Architecture → docs/analytics/AGENT2_WEBSOCKET_ARCHITECTURE_REVIEW.md
 │   └── Testing → tools/test_risk_websocket.py
 └── Usage:
     └── Start Server → python src/services/risk_analytics/risk_websocket_server.py
+
+Bidirectional Links:
+├── From Code to Docs:
+│   ├── This server → docs/analytics/TRADINGROBOTPLUG_ANALYTICS_ARCHITECTURE.md
+│   ├── This server → docs/analytics/risk_dashboard.html
+│   ├── This server → docs/analytics/trading_robot_risk_integration_demo.html
+│   └── This server → docs/analytics/AGENT2_WEBSOCKET_ARCHITECTURE_REVIEW.md
+└── From Docs to Code:
+    ├── docs/analytics/TRADINGROBOTPLUG_ANALYTICS_ARCHITECTURE.md → This server
+    ├── docs/analytics/risk_dashboard.html → This server
+    ├── docs/analytics/trading_robot_risk_integration_demo.html → This server
+    └── docs/analytics/AGENT2_WEBSOCKET_ARCHITECTURE_REVIEW.md → This server
 
 Endpoints:
 - /ws/risk/live - Live risk metrics streaming

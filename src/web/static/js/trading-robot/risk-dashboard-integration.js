@@ -5,6 +5,29 @@
  *
  * <!-- SSOT Domain: trading_robot -->
  *
+ * Navigation References:
+ * ├── Related Files:
+ * │   ├── WebSocket Server → src/services/risk_analytics/risk_websocket_server.py
+ * │   ├── Risk Calculator → src/services/risk_analytics/risk_calculator_service.py
+ * │   ├── API Endpoints → src/services/risk_analytics/risk_api_endpoints.py
+ * │   └── Trading Dashboard → src/web/static/js/trading-robot/trading-dashboard.js
+ * ├── Documentation:
+ * │   ├── Architecture → docs/analytics/TRADINGROBOTPLUG_ANALYTICS_ARCHITECTURE.md
+ * │   ├── Integration Demo → docs/analytics/trading_robot_risk_integration_demo.html
+ * │   └── Risk Dashboard → docs/analytics/risk_dashboard.html
+ * └── Usage:
+ *     └── Risk Integration → new RiskDashboardIntegration().initialize()
+ *
+ * Bidirectional Links:
+ * ├── From Code to Docs:
+ * │   ├── This integration → docs/analytics/TRADINGROBOTPLUG_ANALYTICS_ARCHITECTURE.md
+ * │   ├── This integration → docs/analytics/trading_robot_risk_integration_demo.html
+ * │   └── This integration → docs/analytics/risk_dashboard.html
+ * └── From Docs to Code:
+ *     ├── docs/analytics/TRADINGROBOTPLUG_ANALYTICS_ARCHITECTURE.md → This integration
+ *     ├── docs/analytics/trading_robot_risk_integration_demo.html → This integration
+ *     └── docs/analytics/risk_dashboard.html → This integration
+ *
  * @author Agent-4 (Captain) - Working Solo Implementation
  * @version 1.0.0 - Risk Dashboard Integration for Trading Plugins
  * @license MIT
