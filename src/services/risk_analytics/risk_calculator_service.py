@@ -11,13 +11,26 @@ Navigation References:
 ├── Related Files:
 │   ├── API Endpoints → src/services/risk_analytics/risk_api_endpoints.py
 │   ├── WebSocket Server → src/services/risk_analytics/risk_websocket_server.py
+│   ├── Risk Integration → src/web/static/js/trading-robot/risk-dashboard-integration.js
+│   ├── Trading Dashboard → src/web/static/js/trading-robot/trading-dashboard.js
 │   ├── Database Schema → database/migrations/phase2_2_risk_analytics_schema.sql
 │   └── Dashboard UI → docs/analytics/risk_dashboard.html
 ├── Documentation:
 │   ├── Architecture → docs/analytics/TRADINGROBOTPLUG_ANALYTICS_ARCHITECTURE.md
+│   ├── Integration Demo → docs/analytics/trading_robot_risk_integration_demo.html
 │   └── Phase 2.2 Guide → docs/analytics/AGENT2_PHASE2_GUIDANCE.md
 └── Testing:
     └── Unit Tests → tests/unit/services/test_risk_*.py
+
+Bidirectional Links:
+├── From Code to Docs:
+│   ├── This service → docs/analytics/TRADINGROBOTPLUG_ANALYTICS_ARCHITECTURE.md
+│   ├── This service → docs/analytics/risk_dashboard.html
+│   └── This service → docs/analytics/trading_robot_risk_integration_demo.html
+└── From Docs to Code:
+    ├── docs/analytics/TRADINGROBOTPLUG_ANALYTICS_ARCHITECTURE.md → This service
+    ├── docs/analytics/risk_dashboard.html → This service
+    └── docs/analytics/trading_robot_risk_integration_demo.html → This service
 
 Features:
 - Value at Risk (VaR) calculations

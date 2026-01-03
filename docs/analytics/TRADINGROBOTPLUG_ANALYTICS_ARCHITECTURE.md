@@ -11,7 +11,11 @@
 - **WebSocket Server** → `src/services/risk_analytics/risk_websocket_server.py`
 - **API Endpoints** → `src/services/risk_analytics/risk_api_endpoints.py`
 - **Dashboard UI** → `docs/analytics/risk_dashboard.html`
+- **Risk Integration** → `src/web/static/js/trading-robot/risk-dashboard-integration.js`
+- **Trading Dashboard** → `src/web/static/js/trading-robot/trading-dashboard.js`
 - **Database Schema** → `database/migrations/phase2_2_risk_analytics_schema.sql`
+- **GA4 Integration** → `sites/tradingrobotplug.com/wp/wp-content/themes/tradingrobotplug-theme/functions.php`
+- **Stock Data API** → `sites/tradingrobotplug.com/wp/wp-content/themes/tradingrobotplug-theme/inc/dashboard-api.php`
 
 ### 📋 Implementation Status
 - ✅ **Phase 2.1:** WebSocket Foundation Complete
@@ -23,6 +27,22 @@
 - **Unit Tests** → `tests/unit/services/test_risk_*.py`
 - **WebSocket Tests** → `tools/test_risk_websocket.py`
 - **Validation Tools** → `tools/analytics_validation_scheduler.py`
+- **Integration Demo** → `docs/analytics/trading_robot_risk_integration_demo.html`
+
+### 📖 Related Documentation
+- **Phase 2 Guidance** → `docs/analytics/AGENT2_PHASE2_GUIDANCE.md`
+- **WebSocket Architecture** → `docs/analytics/AGENT2_WEBSOCKET_ARCHITECTURE_REVIEW.md`
+- **GA4 Schema** → `docs/analytics/TRADINGROBOTPLUG_GA4_EVENT_SCHEMA.md`
+- **Risk Integration Demo** → `docs/analytics/trading_robot_risk_integration_demo.html`
+
+### 🔄 Bidirectional Links
+- **From Code to Docs:**
+  - `src/services/risk_analytics/risk_calculator_service.py` → Links to this architecture document
+  - `src/services/risk_analytics/risk_websocket_server.py` → Links to WebSocket architecture review
+  - `src/web/static/js/trading-robot/risk-dashboard-integration.js` → Links to integration demo
+- **From Docs to Code:**
+  - This document → Links to all implementation files
+  - `docs/analytics/risk_dashboard.html` → Links to WebSocket server and risk calculator
 
 ## Executive Summary
 

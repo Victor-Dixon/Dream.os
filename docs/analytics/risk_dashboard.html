@@ -7,15 +7,25 @@
     │   ├── WebSocket Server → src/services/risk_analytics/risk_websocket_server.py
     │   ├── Risk Calculator → src/services/risk_analytics/risk_calculator_service.py
     │   ├── API Endpoints → src/services/risk_analytics/risk_api_endpoints.py
+    │   ├── Risk Integration → src/web/static/js/trading-robot/risk-dashboard-integration.js
+    │   ├── Trading Dashboard → src/web/static/js/trading-robot/trading-dashboard.js
     │   └── Database Schema → database/migrations/phase2_2_risk_analytics_schema.sql
     ├── Documentation:
     │   ├── Architecture → docs/analytics/TRADINGROBOTPLUG_ANALYTICS_ARCHITECTURE.md
+    │   ├── Integration Demo → docs/analytics/trading_robot_risk_integration_demo.html
+    │   ├── Phase 2 Guidance → docs/analytics/AGENT2_PHASE2_GUIDANCE.md
     │   └── Testing → tools/test_risk_websocket.py
     └── Usage:
         └── Start Server → python src/services/risk_analytics/risk_websocket_server.py
 
     Real-time risk metrics dashboard with live VaR, CVaR, Sharpe Ratio monitoring.
     Connects to WebSocket server at ws://localhost:8765/ws/risk/dashboard
+
+    Bidirectional Links:
+    - From this dashboard → WebSocket server provides data
+    - From WebSocket server → Links back to this dashboard UI
+    - From risk calculator → Provides metrics displayed here
+    - From trading dashboard → Integrates this risk data
 -->
 <!DOCTYPE html>
 <html lang="en">
