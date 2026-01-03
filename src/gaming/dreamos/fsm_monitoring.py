@@ -1,6 +1,5 @@
 """FSM Monitoring Helper - Extracted for C-056 | Agent-5
-
-""""""
+"""""
 
 import logging
 import threading

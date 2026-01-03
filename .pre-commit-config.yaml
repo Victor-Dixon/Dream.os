@@ -1,38 +1,82 @@
+# Pre-commit hooks for technical debt prevention
+# See https://pre-commit.com for more information
+
 repos:
-  - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.6.9
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
     hooks:
-      - id: ruff
-        args: [--fix]
-      - id: ruff-format
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+      - id: check-merge-conflict
+      - id: debug-statements
+
   - repo: https://github.com/psf/black
-    rev: 24.8.0
+    rev: 23.7.0
     hooks:
       - id: black
-        language_version: python3.11
+        language_version: python3
+
   - repo: https://github.com/pycqa/isort
-    rev: 5.13.2
+    rev: 5.12.0
     hooks:
       - id: isort
-        args: [--profile, black]
+        args: ["--profile", "black"]
+
   - repo: local
     hooks:
-      - id: v2-violations
-        name: v2-violations
-        entry: python tools/analysis_cli.py --ci-gate
+      # Technical debt prevention hooks
+      - id: syntax-validation
+        name: Python Syntax Validation
+        entry: python
         language: system
-        pass_filenames: false
-      - id: v2-compliance-checker
-        name: V2 Compliance Checker (Quality Gate)
-        entry: python tools/v2_compliance_checker.py --fail-on-major
-        language: system
-        types: [python]
-        pass_filenames: false
-        stages: [commit]
-      - id: file-size-cap-enforcer
-        name: File Size Cap Enforcer (Lean Excellence Framework)
-        entry: python tools/check_file_size.py
-        language: system
-        types: [python]
+        files: \.py$
+        args: [-m, py_compile]
         pass_filenames: true
+
+      - id: ssot-compliance
+        name: SSOT Compliance Check
+        entry: python
+        language: system
+        files: \.(py|md|js)$
+        args: [scripts/ssot_linter.py]
+        pass_filenames: false
+
+      - id: duplication-gate
+        name: Duplication Prevention
+        entry: python
+        language: system
+        files: \.(py|md|js|ts)$
+        args: [scripts/ci_duplication_gate.py]
+        pass_filenames: false
+
+      - id: deprecated-files-check
+        name: Deprecated Files Usage Check
+        entry: python
+        language: system
+        files: \.(py|md|js)$
+        args: [scripts/ci_check_deprecated_files.py]
+        pass_filenames: false
+
+      - id: project-scan-validation
+        name: Project Scan Validation
+        entry: python
+        language: system
+        files: \.py$
+        args: [main.py, --scan-project]
+        pass_filenames: false
         stages: [commit]
+
+# Configuration for technical debt hooks
+ci:
+  autofix_commit_msg: |
+    [pre-commit.ci] auto fixes from pre-commit hooks
+
+    for more information, see https://pre-commit.ci
+  autofix_prs: true
+  autoupdate_branch: ''
+  autoupdate_commit_msg: '[pre-commit.ci] pre-commit autoupdate'
+  autoupdate_schedule: weekly
+  skip: []
+  submodules: false

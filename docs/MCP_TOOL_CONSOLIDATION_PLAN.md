@@ -39,7 +39,7 @@ Tools are scattered across the codebase:
 
 #### 3. Website & WordPress Tools
 - `tools/categories/web_tools.py`
-- `tools/unified_wordpress_manager.py`
+- `mcp_servers/wp_cli_manager_server.py` (canonical replacement)
 - `tools/create_icp_definitions.py`
 - `tools/deploy_*.py` scripts
 - **Target:** Enhance `website-manager` server

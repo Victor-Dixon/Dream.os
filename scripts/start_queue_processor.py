@@ -20,8 +20,9 @@ from pathlib import Path
 # Add project root to path BEFORE importing project modules
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
+sys.path.insert(0, str(project_root / "systems"))  # Add systems directory for Wave C extracted components
 
-from src.core.message_queue_processor import MessageQueueProcessor
+from src.core.message_queue.core.processor import MessageQueueProcessor
 
 
 logging.basicConfig(

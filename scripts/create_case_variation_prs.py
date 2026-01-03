@@ -73,8 +73,6 @@ def create_pr(
                     print(f"✅ Found existing PR: {existing_pr.get('html_url')}")
                     return existing_pr
                 # SSOT utility already checked above, no fallback needed
-                        print(f"✅ Found existing PR: {prs[0].get('html_url')}")
-                        return prs[0]
             print(f"❌ PR creation failed for {repo}: {error_data}")
             return None
         else:

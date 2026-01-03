@@ -44,7 +44,7 @@ python tools/sync_feed_to_weareswarm.py --dry-run
 
 ```bash
 # Deploy front-page.php and plugin updates
-python tools/deploy_weareswarm_feed_system.py
+python mcp_servers/deployment_server.py
 ```
 
 ## Feed Format

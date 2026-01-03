@@ -1,5 +1,16 @@
 #!/usr/bin/env python3
 """
+⚠️ DEPRECATED - DO NOT USE
+
+This file is deprecated as part of the SSOT consolidation effort.
+
+REPLACEMENT: mcp_servers/deployment_server.py
+MIGRATION: Use deploy_wordpress_file() function instead of this standalone script
+DEADLINE: 2026-02-01
+
+For new code, use: mcp_servers/deployment_server.py::deploy_wordpress_file()
+
+Original docstring:
 Deploy via WordPress Admin - Browser Automation
 ================================================
 
@@ -234,7 +245,7 @@ def deploy_via_wordpress_admin(
 def main():
     """Main deployment function."""
     import argparse
-from src.core.config.timeout_constants import TimeoutConstants
+    from src.core.config.timeout_constants import TimeoutConstants
 
     parser = argparse.ArgumentParser(description="Deploy file via WordPress admin")
     parser.add_argument("--site", default="freerideinvestor.com", help="Site domain")
