@@ -8,6 +8,22 @@ AI Service - DigitalDreamscape + Thea Integration
 Unified AI service integrating DigitalDreamscape and Thea AI frameworks.
 Service Enhancement pattern: Integrates conversation and model logic.
 
+Navigation References:
+├── Related Files:
+│   ├── Thea Integration → src/services/thea/
+│   ├── ChatGPT Service → src/services/chatgpt/
+│   ├── Vector Database → src/services/vector/
+│   └── AI Models → src/services/models/
+├── Documentation:
+│   ├── AI Architecture → docs/architecture/AI_SYSTEM_ARCHITECTURE.md
+│   ├── Thea Integration → src/services/thea/README.md
+│   └── Vector Search → docs/VECTOR_DATABASE_INTEGRATION.md
+├── API Endpoints:
+│   ├── Chat API → src/services/thea/api_endpoints.py
+│   └── Vector API → src/services/vector/vector_database_service.py
+└── Usage:
+    └── AI Chat → src/services/thea/chat_interface.py
+
 Author: Agent-2 (Architecture & Design Specialist)
 Date: 2025-11-27
 V2 Compliance: <400 lines

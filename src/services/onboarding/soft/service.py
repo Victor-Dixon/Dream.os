@@ -7,6 +7,22 @@ Soft Onboarding Service - Refactored
 Main service orchestrator for soft onboarding protocol.
 Uses extracted steps for maintainability.
 
+Navigation References:
+├── Related Files:
+│   ├── Onboarding Steps → src/services/onboarding/soft/steps.py
+│   ├── Hard Onboarding → src/services/onboarding/hard/
+│   ├── Messaging Fallback → src/services/onboarding/soft/messaging_fallback.py
+│   ├── Coordinates → src/services/onboarding/shared/coordinates.py
+│   └── Operations → src/services/onboarding/shared/operations.py
+├── Documentation:
+│   ├── Onboarding Protocol → docs/ONBOARDING_PROTOCOL.md
+│   ├── Agent Setup → docs/AGENTS.md
+│   └── Soft Onboarding → docs/SOFT_ONBOARDING_PROCEDURE.md
+├── API Endpoints:
+│   └── Onboarding API → src/services/onboarding/onboarding_api.py
+└── Usage:
+    └── Onboard Agent → python -m src.services.onboarding.soft.service --agent Agent-X
+
 V2 Compliant: < 300 lines
 """
 

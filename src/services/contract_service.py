@@ -7,6 +7,21 @@ Contract Service - Agent Cellphone V2
 SOLID-compliant contract management service.
 Refactored to follow Single Responsibility, Open-Closed, and Dependency Inversion principles.
 
+Navigation References:
+├── Related Files:
+│   ├── Contract Handlers → src/services/handlers/contract_handler.py
+│   ├── Contract System → src/services/contract_system/
+│   ├── Task Handler → src/services/handlers/task_handler.py
+│   └── CLI Interface → src/services/messaging_cli.py
+├── Documentation:
+│   ├── Contract Protocol → docs/CONTRACT_SYSTEM_PROTOCOL.md
+│   ├── Task Management → docs/TASK_MANAGEMENT_PROTOCOL.md
+│   └── Agent Contracts → contracts/agentX_first_contract.json
+├── API Endpoints:
+│   └── Contract API → src/services/contract_system/contract_api.py
+└── Usage:
+    └── Get Contract → python -m src.services.messaging_cli --agent Agent-X --get-next-task
+
 V2 Compliance: Migrated to BaseService for consolidated initialization and error handling.
 
 Author: Agent-6 (SOLID Sentinel)
