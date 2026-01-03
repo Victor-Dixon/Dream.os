@@ -16,6 +16,7 @@ import { createTradingDashboard } from './trading-dashboard.js';
 import { createTradingOrderManager } from './trading-order-manager.js';
 import { createTradingPortfolioManager } from './trading-portfolio-manager.js';
 import { createTradingWebSocketManager } from './trading-websocket-manager.js';
+import { RiskDashboardIntegration } from './risk-dashboard-integration.js';
 
 import { AppManagementModules } from './app-management-modules.js';
 
@@ -34,6 +35,7 @@ export class TradingRobotApp {
         this.portfolioManager = null;
         this.orderManager = null;
         this.chartManager = null;
+        this.riskDashboard = new RiskDashboardIntegration();
         this.isInitialized = false;
         this.appConfig = {
             version: '1.0.0',
@@ -76,6 +78,9 @@ export class TradingRobotApp {
 
             // Initialize all components
             await this.initializeComponents();
+
+            // Initialize risk dashboard integration
+            await this.riskDashboard.initialize();
 
             // Set up cross-component communication
             this.setupComponentCommunication();

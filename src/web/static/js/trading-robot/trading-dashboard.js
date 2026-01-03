@@ -18,6 +18,7 @@ import { TradingChartManager } from './trading-chart-manager.js';
 import { TradingOrderManager } from './trading-order-manager.js';
 import { TradingPortfolioManager } from './trading-portfolio-manager.js';
 import { TradingWebSocketManager } from './trading-websocket-manager.js';
+import { RiskDashboardIntegration } from './risk-dashboard-integration.js';
 
 // ================================
 // TRADING DASHBOARD
@@ -33,6 +34,7 @@ export class TradingDashboard {
         this.portfolioManager = new TradingPortfolioManager();
         this.orderManager = new TradingOrderManager();
         this.chartManager = new TradingChartManager();
+        this.riskDashboard = new RiskDashboardIntegration();
         this.isInitialized = false;
 
         // V2 Compliance: Use structured logging instead of console
@@ -67,6 +69,7 @@ export class TradingDashboard {
             await this.portfolioManager.initialize();
             await this.orderManager.initialize();
             await this.chartManager.initialize();
+            await this.riskDashboard.initialize();
 
             // Set up real-time data connections
             this.setupRealTimeConnections();
@@ -96,6 +99,131 @@ export class TradingDashboard {
         // Portfolio updates
         this.portfolioManager.onPortfolioUpdate((portfolio) => {
             this.updatePortfolioDisplay(portfolio);
+        });
+    }
+
+    /**
+     * Update risk metrics display in trading dashboard
+     */
+    updateRiskMetricsDisplay(metrics, alerts) {
+        // Update risk metrics indicators in the UI
+        this.updateRiskIndicators(metrics);
+
+        // Display risk alerts if any
+        if (alerts && alerts.length > 0) {
+            this.displayRiskAlerts(alerts);
+        }
+
+        // Update risk-adjusted portfolio calculations
+        this.updateRiskAdjustedCalculations(metrics);
+    }
+
+    /**
+     * Update risk indicators in the trading dashboard UI
+     */
+    updateRiskIndicators(metrics) {
+        // Update VaR display
+        const varElement = document.getElementById('trading-var-indicator');
+        if (varElement) {
+            varElement.textContent = `${(metrics.var_95 * 100).toFixed(1)}%`;
+            varElement.className = metrics.var_95 > 0.20 ? 'risk-indicator high-risk' : 'risk-indicator normal-risk';
+        }
+
+        // Update Sharpe ratio display
+        const sharpeElement = document.getElementById('trading-sharpe-indicator');
+        if (sharpeElement) {
+            sharpeElement.textContent = metrics.sharpe_ratio.toFixed(2);
+            sharpeElement.className = metrics.sharpe_ratio < 1.0 ? 'risk-indicator medium-risk' : 'risk-indicator normal-risk';
+        }
+
+        // Update drawdown display
+        const drawdownElement = document.getElementById('trading-drawdown-indicator');
+        if (drawdownElement) {
+            drawdownElement.textContent = `${(metrics.max_drawdown * 100).toFixed(1)}%`;
+            drawdownElement.className = metrics.max_drawdown > 0.10 ? 'risk-indicator critical-risk' : 'risk-indicator normal-risk';
+        }
+    }
+
+    /**
+     * Display risk alerts in the trading dashboard
+     */
+    displayRiskAlerts(alerts) {
+        const alertsContainer = document.getElementById('trading-risk-alerts');
+        if (!alertsContainer) return;
+
+        alertsContainer.innerHTML = alerts.map(alert => `
+            <div class="risk-alert ${alert.level}">
+                <span class="alert-icon">${this.getAlertIcon(alert.level)}</span>
+                <span class="alert-message">${alert.message}</span>
+                <span class="alert-time">${new Date(alert.timestamp).toLocaleTimeString()}</span>
+            </div>
+        `).join('');
+    }
+
+    /**
+     * Update risk-adjusted calculations for portfolio
+     */
+    updateRiskAdjustedCalculations(metrics) {
+        // Calculate risk-adjusted return using Sharpe ratio
+        const riskAdjustedReturn = metrics.sharpe_ratio * 0.1; // Rough estimate
+
+        const rarElement = document.getElementById('risk-adjusted-return');
+        if (rarElement) {
+            rarElement.textContent = `${(riskAdjustedReturn * 100).toFixed(1)}%`;
+        }
+
+        // Update portfolio risk score
+        const riskScore = this.calculatePortfolioRiskScore(metrics);
+        const scoreElement = document.getElementById('portfolio-risk-score');
+        if (scoreElement) {
+            scoreElement.textContent = riskScore.toFixed(1);
+            scoreElement.className = riskScore > 7 ? 'risk-score high-risk' : riskScore > 4 ? 'risk-score medium-risk' : 'risk-score low-risk';
+        }
+    }
+
+    /**
+     * Calculate overall portfolio risk score (1-10 scale)
+     */
+    calculatePortfolioRiskScore(metrics) {
+        // Simple risk scoring based on multiple factors
+        let score = 0;
+
+        // VaR contribution (0-3 points)
+        if (metrics.var_95 > 0.25) score += 3;
+        else if (metrics.var_95 > 0.15) score += 2;
+        else if (metrics.var_95 > 0.10) score += 1;
+
+        // Sharpe ratio contribution (0-3 points)
+        if (metrics.sharpe_ratio < 0.5) score += 3;
+        else if (metrics.sharpe_ratio < 1.0) score += 2;
+        else if (metrics.sharpe_ratio < 1.5) score += 1;
+
+        // Drawdown contribution (0-4 points)
+        if (metrics.max_drawdown > 0.15) score += 4;
+        else if (metrics.max_drawdown > 0.10) score += 3;
+        else if (metrics.max_drawdown > 0.05) score += 2;
+        else if (metrics.max_drawdown > 0.02) score += 1;
+
+        return Math.min(10, Math.max(1, score));
+    }
+
+    /**
+     * Get alert icon based on level
+     */
+    getAlertIcon(level) {
+        switch (level) {
+            case 'critical': return '🚨';
+            case 'high': return '⚠️';
+            case 'medium': return 'ℹ️';
+            default: return '🔔';
+        }
+    }
+
+        // Risk metrics updates from risk dashboard
+        this.riskDashboard.subscribe((update) => {
+            if (update.type === 'risk_update') {
+                this.updateRiskMetricsDisplay(update.metrics, update.alerts);
+            }
         });
 
         // Order updates
