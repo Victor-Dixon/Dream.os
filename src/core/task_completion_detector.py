@@ -332,8 +332,3 @@ def detect_command_completion(output: str) -> Tuple[bool, Optional[str]]:
 
 
 
-  return detector.detect_output_completion(output)
-
-
-
-

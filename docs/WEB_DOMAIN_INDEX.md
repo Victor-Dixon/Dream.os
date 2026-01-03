@@ -83,9 +83,9 @@
 
 | Tool | Path | Purpose |
 |------|------|---------|
-| Website Deployer | `tools/simple_wordpress_deployer.py` | Deploy files to WordPress sites |
-| Theme Activator | `tools/activate_theme_ssh.py` | Activate themes via SSH |
-| Unified Manager | `tools/unified_wordpress_manager.py` | Full WordPress management |
+| Website Deployer | `mcp_servers/deployment_server.py` | Deploy files to WordPress sites |
+| Theme Activator | `mcp_servers/wp_cli_manager_server.py` | Activate themes via WP-CLI |
+| Unified Manager | `mcp_servers/wp_cli_manager_server.py` | Full WordPress management |
 | Devlog Poster | `tools/devlog_poster.py` | Post devlogs to Discord |
 | Grade Card Auditor | `tools/audit_websites_grade_cards.py` | Website quality audits |
 
@@ -122,7 +122,7 @@
 git add <files> && git commit -m "message"
 
 # Manual deploy (if needed)
-python tools/simple_wordpress_deployer.py --site <sitename>
+python mcp_servers/deployment_server.py --site <sitename>
 ```
 
 ### Post Devlog

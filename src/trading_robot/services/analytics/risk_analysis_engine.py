@@ -17,6 +17,8 @@ import statistics
 from datetime import datetime
 
 from ...repositories.trading_repository import Trade
+
+# Import models directly to avoid circular dependency
 from .trading_bi_models import RiskAssessmentConfig, RiskLevel, RiskMetrics
 
 

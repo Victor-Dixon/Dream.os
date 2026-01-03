@@ -16,7 +16,7 @@ from typing import Optional, Dict, Any
 
 try:
     import requests
-from src.core.config.timeout_constants import TimeoutConstants
+    from src.core.config.timeout_constants import TimeoutConstants
     REQUESTS_AVAILABLE = True
 except ImportError:
     REQUESTS_AVAILABLE = False

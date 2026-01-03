@@ -187,7 +187,7 @@ Files may be granted exceptions if they meet ALL of the following:
 
 ---
 
-#### `tools/wordpress_manager.py` - 1080 lines ✅
+#### `mcp_servers/wp_cli_manager_server.py` - 1080 lines ✅
 **Reason:** Comprehensive WordPress management tool providing unified interface for all WordPress operations.
 **Justification:**
 - Single responsibility: Complete WordPress management SSOT (deployment, WP-CLI, menus, pages, themes)

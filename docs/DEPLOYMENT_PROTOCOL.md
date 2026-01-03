@@ -20,12 +20,13 @@ Deployment is a technical operation, not a coordination bottleneck. If code is r
 
 ## Deployment Tools
 
-### Primary Tool: `simple_wordpress_deployer.py`
-Location: `ops/deployment/simple_wordpress_deployer.py`
+### Primary Tool: `deployment_server.py`
+Location: `mcp_servers/deployment_server.py`
 
 **Usage:**
 ```python
-from ops.deployment.simple_wordpress_deployer import SimpleWordPressDeployer, load_site_configs
+# Use MCP deployment server
+from mcp_servers.deployment_server import deploy_wordpress_file, deploy_wordpress_theme
 
 configs = load_site_configs()
 deployer = SimpleWordPressDeployer("tradingrobotplug.com", configs)
@@ -103,7 +104,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 sys.path.insert(0, str(Path(__file__).parent.parent / "websites"))
 
-from ops.deployment.simple_wordpress_deployer import SimpleWordPressDeployer, load_site_configs
+# Use MCP deployment server instead
+from mcp_servers.deployment_server import deploy_wordpress_file
 
 def main():
     site_key = "[site].com"
@@ -138,7 +140,7 @@ This protocol is **MANDATORY** for all agents:
 
 ## References
 
-- Deployment Tool: `ops/deployment/simple_wordpress_deployer.py`
+- Deployment Tool: `mcp_servers/deployment_server.py`
 - Site Configs: `websites/configs/site_configs.json`
 - Example Script: `tools/deploy_tradingrobotplug_now.py`
 

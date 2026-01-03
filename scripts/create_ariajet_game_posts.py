@@ -24,7 +24,7 @@ except ImportError:
 
 try:
     from dotenv import load_dotenv
-from src.core.config.timeout_constants import TimeoutConstants
+    from src.core.config.timeout_constants import TimeoutConstants
     load_dotenv()
 except ImportError:
     pass

@@ -98,7 +98,7 @@ def run_test_suite(timeout=None):
             if "passed" in line.lower() and "failed" in line.lower():
                 # Try to extract numbers
                 import re
-from src.core.config.timeout_constants import TimeoutConstants
+                from src.core.config.timeout_constants import TimeoutConstants
                 numbers = re.findall(r'\d+', line)
                 if len(numbers) >= 2:
                     result["tests_passed"] = int(numbers[0]) if numbers else 0

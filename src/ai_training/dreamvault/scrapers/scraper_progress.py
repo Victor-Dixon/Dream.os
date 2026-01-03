@@ -80,6 +80,3 @@ class ScraperProgressTracker:
             "failed": total - successful,
             "success_rate": (successful / total * 100) if total > 0 else 0,
         }
-
-            "success_rate": (successful / total * 100) if total > 0 else 0,
-        }

@@ -308,6 +308,52 @@ class TaskHandler(BaseService):
             print(f"Completed at: {task.completed_at.strftime('%Y-%m-%d %H:%M:%S')}")
             print("=" * 60 + "\n")
 
+            # 🔗 INTEGRATION: Trigger Output Flywheel for completed tasks
+            try:
+                from systems.output_flywheel.integration.agent_session_hooks import end_of_session_hook
+
+                # Determine session type based on task content
+                task_content = f"{task.title} {task.description or ''}".lower()
+                if any(keyword in task_content for keyword in ['trade', 'trading', 'market', 'stock', 'financial']):
+                    session_type = "trade"
+                elif any(keyword in task_content for keyword in ['game', 'gaming', 'aria', 'website', 'life']):
+                    session_type = "life_aria"
+                else:
+                    session_type = "build"  # Default for code/development tasks
+
+                # Trigger Output Flywheel
+                artifacts = end_of_session_hook(
+                    agent_id=agent_id,
+                    session_type=session_type,
+                    metadata={
+                        "task_id": task_id,
+                        "task_title": task.title,
+                        "task_priority": self._priority_name(task.priority),
+                        "completed_at": task.completed_at.isoformat(),
+                        "duration_minutes": None,  # Could be calculated if task has start time
+                    },
+                    auto_trigger=True
+                )
+
+                if artifacts:
+                    print(f"\n🔗 Output Flywheel Integration:")
+                    generated_artifacts = artifacts.get('artifacts', {})
+                    if generated_artifacts:
+                        for artifact_type, artifact_path in generated_artifacts.items():
+                            print(f"   📄 Generated {artifact_type}: {artifact_path}")
+                        print(f"   ✅ Artifacts published to publication queue")
+                    else:
+                        print(f"   ⚠️  No artifacts generated (may still be processing)")
+                else:
+                    print(f"   ⚠️  Output Flywheel integration skipped (session may be in progress)")
+
+            except ImportError as e:
+                logger.warning(f"⚠️ Output Flywheel not available: {e}")
+                print(f"   💡 Output Flywheel integration requires systems/output_flywheel")
+            except Exception as e:
+                logger.error(f"❌ Output Flywheel integration failed: {e}")
+                print(f"   ⚠️  Output Flywheel integration failed, but task completion succeeded")
+
             logger.info(f"✅ Task {task_id} completed by {agent_id}")
             self.exit_code = 0
             return True

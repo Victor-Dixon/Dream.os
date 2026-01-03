@@ -22,7 +22,7 @@ from src.repositories.message_repository import MessageRepository
 from src.core.messaging_core import UnifiedMessagingCore
 from src.core.messaging_models_core import UnifiedMessageType, UnifiedMessagePriority
 from src.core.message_queue import MessageQueue
-from src.core.message_queue_processor import MessageQueueProcessor
+# from src.core.message_queue.core.processor import MessageQueueProcessor  # Temporarily disabled during consolidation
 
 def test_end_to_end_flow():
     """Test complete message flow from creation to history."""

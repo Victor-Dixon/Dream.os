@@ -338,7 +338,7 @@ LEGENDARY FINISH! Complete mission this cycle! 🏆"""
 def main():
     """CLI entry point."""
     import argparse
-from src.core.config.timeout_constants import TimeoutConstants
+    from src.core.config.timeout_constants import TimeoutConstants
     
     parser = argparse.ArgumentParser(description="Monitor agents and deliver periodic GAS")
     parser.add_argument("--dry-run", action="store_true", help="Report only, don't deliver fuel")

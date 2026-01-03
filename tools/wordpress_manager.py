@@ -1,5 +1,16 @@
 #!/usr/bin/env python3
 """
+⚠️ DEPRECATED - DO NOT USE
+
+This file is deprecated as part of the SSOT consolidation effort.
+
+REPLACEMENT: mcp_servers/wp_cli_manager_server.py
+MIGRATION: Use WP-CLI based management functions instead of direct API calls
+DEADLINE: 2026-02-01
+
+For new code, use: mcp_servers/wp_cli_manager_server.py
+
+Original docstring:
 WordPress Manager - MCP Server Adapter
 ======================================
 
