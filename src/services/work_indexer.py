@@ -8,6 +8,21 @@ Agent work indexing operations for vector database.
 V2 Compliance: < 100 lines, single responsibility.
 Migrated to BaseService for consolidated initialization and error handling.
 
+Navigation References:
+├── Related Files:
+│   ├── Vector Database → src/services/vector_database_service_unified.py
+│   ├── Vector Models → src/services/models/vector_models.py
+│   ├── Document Types → src/services/vector_database/vector_database_models.py
+│   └── Agent Workspaces → agent_workspaces/
+├── Documentation:
+│   ├── Vector Integration → docs/VECTOR_DATABASE_INTEGRATION.md
+│   ├── Search Architecture → docs/architecture/SEARCH_SYSTEM_ARCHITECTURE.md
+│   └── Agent Workflows → docs/AGENTS.md
+├── API Endpoints:
+│   └── Vector Search API → src/services/vector/vector_database_service.py
+└── Usage:
+    └── Index Work → python -m src.services.work_indexer --help
+
 Author: Agent-7 - Web Development Specialist
 """
 

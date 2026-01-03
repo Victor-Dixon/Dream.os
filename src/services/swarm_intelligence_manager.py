@@ -8,6 +8,21 @@ Swarm intelligence operations for agent vector integration.
 V2 Compliance: < 100 lines, single responsibility.
 Migrated to BaseService for consolidated initialization and error handling.
 
+Navigation References:
+├── Related Files:
+│   ├── Agent Management → src/services/agent_management.py
+│   ├── Vector Database → src/services/vector_database.py
+│   ├── Coordination Service → src/services/coordination/
+│   └── Agent Workspaces → agent_workspaces/
+├── Documentation:
+│   ├── Swarm Intelligence → docs/SWARM_INTELLIGENCE_FRAMEWORK.md
+│   ├── Agent Coordination → docs/architecture/COORDINATION_SYSTEM.md
+│   └── Agent Workspaces → docs/AGENTS.md
+├── API Endpoints:
+│   └── Swarm API → src/services/swarm/swarm_api.py
+└── Usage:
+    └── Swarm Operations → python -m src.services.swarm_intelligence_manager
+
 Author: Agent-2 (Architecture & Design Specialist)
 """
 

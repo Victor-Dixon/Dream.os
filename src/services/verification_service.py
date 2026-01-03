@@ -9,6 +9,23 @@ Provides automated verification for claims:
 - Unit test execution
 - Link checking
 
+<!-- SSOT Domain: integration -->
+
+Navigation References:
+├── Related Files:
+│   ├── Test Runners → tests/unit/ and tests/integration/
+│   ├── Validation Tools → tools/validation_audit_mcp.py
+│   ├── Deployment Scripts → scripts/deployment_verification.py
+│   └── CI/CD Pipeline → .github/workflows/
+├── Documentation:
+│   ├── Testing Guide → docs/TESTING_PROTOCOL.md
+│   ├── Validation Audit → docs/VALIDATION_AUDIT_PROCEDURE.md
+│   └── CI/CD Setup → docs/CI_CD_INTEGRATION.md
+├── API Endpoints:
+│   └── Validation API → src/services/validation_audit/validation_api.py
+└── Usage:
+    └── Run Tests → python -m pytest tests/
+
 Author: Agent-Generic
 License: MIT
 """

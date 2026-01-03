@@ -9,6 +9,23 @@ Handles system failures by:
 3. Validating fixes
 4. Rolling forward/back
 
+<!-- SSOT Domain: integration -->
+
+Navigation References:
+├── Related Files:
+│   ├── Verification Service → src/services/verification_service.py
+│   ├── AI Service → src/services/ai_service.py
+│   ├── Error Handling → src/core/error_handling/
+│   └── Deployment MCP → src/mcp_servers/deployment_mcp_server.py
+├── Documentation:
+│   ├── Error Recovery → docs/ERROR_RECOVERY_PROTOCOL.md
+│   ├── System Reliability → docs/SYSTEM_RELIABILITY_FRAMEWORK.md
+│   └── Deployment Rollback → docs/DEPLOYMENT_ROLLBACK_PROCEDURE.md
+├── API Endpoints:
+│   └── Recovery API → src/services/recovery/recovery_api.py
+└── Usage:
+    └── Auto Recovery → src/core/error_handling/auto_recovery.py
+
 Author: Agent-Generic
 License: MIT
 """

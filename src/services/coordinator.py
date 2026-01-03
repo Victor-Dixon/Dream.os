@@ -6,6 +6,21 @@ Coordinator Service - Agent Cellphone V2
 
 Service for managing coordinator operations.
 
+Navigation References:
+├── Related Files:
+│   ├── Coordination Logic → src/services/coordination/
+│   ├── Contract System → src/services/contract_service.py
+│   ├── Task Handler → src/services/handlers/task_handler.py
+│   └── Agent Management → src/services/agent_management.py
+├── Documentation:
+│   ├── Coordination Guide → docs/architecture/COORDINATION_SYSTEM.md
+│   ├── Agent Workspaces → docs/AGENTS.md
+│   └── Task Management → docs/TASK_MANAGEMENT_PROTOCOL.md
+├── API Endpoints:
+│   └── Coordination API → src/services/coordination/coordination_api.py
+└── Usage:
+    └── Agent Status → agent_workspaces/Agent-X/status.json
+
 Author: Agent-1 (System Recovery Specialist)
 License: MIT
 """

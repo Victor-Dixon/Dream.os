@@ -8,6 +8,21 @@ Recommendation and insight generation for agent workflows.
 V2 Compliance: < 100 lines, single responsibility.
 Migrated to BaseService for consolidated initialization and error handling.
 
+Navigation References:
+├── Related Files:
+│   ├── Learning Recommender → src/services/learning_recommender.py
+│   ├── Vector Database → src/services/vector_database.py
+│   ├── AI Service → src/services/ai_service.py
+│   └── Agent Management → src/services/agent_management.py
+├── Documentation:
+│   ├── Agent Learning → docs/AGENT_LEARNING_SYSTEM.md
+│   ├── Recommendation System → docs/RECOMMENDATION_ENGINE_ARCHITECTURE.md
+│   └── Vector Search → docs/VECTOR_DATABASE_INTEGRATION.md
+├── API Endpoints:
+│   └── Recommendation API → src/services/recommendation/recommendation_api.py
+└── Usage:
+    └── Generate Recommendations → python -m src.services.recommendation_engine
+
 Author: Agent-7 - Web Development Specialist
 """
 

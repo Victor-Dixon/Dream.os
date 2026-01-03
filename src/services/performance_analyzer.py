@@ -8,6 +8,21 @@ Performance analysis operations for agent vector integration.
 V2 Compliance: < 100 lines, single responsibility.
 Migrated to BaseService for consolidated initialization and error handling.
 
+Navigation References:
+├── Related Files:
+│   ├── Vector Database → src/services/vector_database.py
+│   ├── Search Models → src/services/vector_database/search_models.py
+│   ├── Analytics Engine → src/trading_robot/services/analytics/
+│   └── Performance Metrics → src/core/performance_monitoring.py
+├── Documentation:
+│   ├── Analytics Architecture → docs/analytics/TRADINGROBOTPLUG_ANALYTICS_ARCHITECTURE.md
+│   ├── Performance Monitoring → docs/PERFORMANCE_MONITORING_GUIDE.md
+│   └── Vector Search → docs/VECTOR_DATABASE_INTEGRATION.md
+├── API Endpoints:
+│   └── Analytics API → src/services/risk_analytics/risk_api_endpoints.py
+└── Usage:
+    └── Performance Analysis → python -m src.services.performance_analyzer
+
 Author: Agent-2 (Architecture & Design Specialist)
 """
 

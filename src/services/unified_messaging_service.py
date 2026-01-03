@@ -7,6 +7,23 @@ Unified Messaging Service - Wrapper for Messaging Service
 Provides unified interface to messaging system.
 Wraps ConsolidatedMessagingService for backward compatibility.
 
+Navigation References:
+├── Related Files:
+│   ├── Core Messaging → src/services/messaging_infrastructure.py
+│   ├── CLI Interface → src/services/messaging_cli.py
+│   ├── Message Queue → src/core/message_queue/message_queue_impl.py
+│   ├── WebSocket Server → src/services/risk_analytics/risk_websocket_server.py
+│   └── Discord Integration → src/services/messaging_discord.py
+├── Documentation:
+│   ├── Messaging Architecture → docs/architecture/MESSAGING_ARCHITECTURE.md
+│   ├── Agent Communication → docs/AGENTS.md
+│   └── Messaging Contracts → docs/messaging-contracts.mdc
+├── API Endpoints:
+│   ├── REST API → src/services/messaging/messaging_rest_api.py
+│   └── WebSocket API → ws://localhost:8765/ws/risk/live
+└── Usage:
+    └── CLI Tool → python -m src.services.messaging_cli --help
+
 V2 Compliance: Wrapper pattern, <400 lines
 """
 
