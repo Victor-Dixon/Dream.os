@@ -87,6 +87,15 @@ The system follows **V2 Compliance Standards** (files ~400 lines guideline, clea
 - **Activity Detection**: Multi-source agent activity monitoring
 - **GitHub Integration**: Synthetic GitHub wrapper with local-first strategy
 
+### Packaging & Deployment
+
+- **🐳 Docker**: Containerized deployment with docker-compose
+- **📦 Python Package**: PyPI distribution ready
+- **⚙️ Configuration**: Environment-based config management
+- **🔄 Auto-Updates**: Built-in update and health monitoring
+- **📊 Monitoring**: Comprehensive system health checks
+- **💾 Backup/Restore**: Automated data protection
+
 ### Integrations
 
 - **Discord**: Bot commands, messaging, webhooks
@@ -100,28 +109,69 @@ The system follows **V2 Compliance Standards** (files ~400 lines guideline, clea
 
 ### Prerequisites
 
-- Python 3.11+
-- Git
-- (Optional) Node.js for web components
+- Python 3.11+ **OR** Docker
+- Git (for cloning)
+- 4GB RAM, 10GB disk space
 
-### Installation
+### Installation Options
 
+#### 🐳 Docker (Recommended - 2 minutes)
 ```bash
-# Clone repository
+# Clone and install
 git clone <repository-url>
 cd Agent_Cellphone_V2_Repository
+./install.sh --docker
 
-# Install dependencies
-pip install -r requirements.txt
-pip install -r requirements-dev.txt
+# Start system
+docker-compose up -d
 
-# Setup environment
-cp env.example .env
-# Edit .env with your configuration
-
-# Verify installation
-python -m pytest tests/ --version
+# Access dashboard
+open http://localhost:8000
 ```
+
+#### 🐍 Native Python (5 minutes)
+```bash
+# Clone and install
+git clone <repository-url>
+cd Agent_Cellphone_V2_Repository
+./install.sh
+
+# Edit configuration
+nano .env
+
+# Start system
+python main.py --background
+
+# Access dashboard
+open http://localhost:8000
+```
+
+#### 🪟 Windows (5 minutes)
+```batch
+git clone <repository-url>
+cd Agent_Cellphone_V2_Repository
+install.bat
+REM Edit .env file, then:
+python main.py --background
+```
+
+### First Steps
+
+```bash
+# Check system status
+python main.py --status
+
+# Send test message to agents
+python -m src.services.messaging_cli --bulk -m "System online"
+
+# Run health check
+python scripts/health_check.py --check
+
+# View logs
+make logs
+```
+
+📖 **[Complete Quick Start Guide](QUICKSTART.md)**
 
 ### Basic Usage
 
