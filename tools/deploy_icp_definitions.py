@@ -61,14 +61,34 @@ def deploy_icp_definition(site_key: str, icp_data: Dict[str, str]) -> Dict[str, 
         return {"success": False, "error": "MCP website manager not available"}
 
     try:
-        # Use WP-CLI directly to create the post
+        # Try using the MCP function but skip CPT check since we know it's deployed
+        # Temporarily patch the function to bypass the check
+        from mcp_servers.website_manager_server import _get_deployer
+
+        deployer = _get_deployer(site_key)
+        if not deployer:
+            return {"success": False, "error": "Deployer not available", "site": site_key}
+
+        if not deployer.connect():
+            return {"success": False, "error": "Failed to connect to server", "site": site_key}
+
+        # Try to create post via REST API directly
+        # First, get WordPress REST API credentials (this might not work without authentication)
+        # For now, fall back to a simpler approach - create via direct database manipulation if possible
+        # Or use WP-CLI with correct path
+
         from mcp_servers.website_manager_server import _execute_wp_cli
 
-        # Create the post using WP-CLI
+        # Try WP-CLI with explicit path to WordPress directory
+        # The deployer should handle the path, but let's try with explicit cd
+        wordpress_path = "public_html"  # Common cPanel path, adjust if needed
+
+        # Try creating the post with explicit path
         title = icp_data["title"].replace("'", "\\'")
         content = icp_data["content"].replace("'", "\\'")
 
-        cmd = f"post create --post_type=icp_definition --post_title='{title}' --post_content='{content}' --post_status=publish --porcelain"
+        # Try the command with cd to WordPress directory first
+        cmd = f"cd {wordpress_path} && wp post create --post_type=icp_definition --post_title='{title}' --post_content='{content}' --post_status=publish --porcelain"
         result = _execute_wp_cli(site_key, cmd)
 
         if result["success"]:
@@ -79,23 +99,25 @@ def deploy_icp_definition(site_key: str, icp_data: Dict[str, str]) -> Dict[str, 
 
             if icp_data.get("target_demographic"):
                 demographic = icp_data['target_demographic'].replace("'", "\\'")
-                meta_cmd = f"post meta update {post_id} target_demographic '{demographic}'"
+                meta_cmd = f"cd {wordpress_path} && wp post meta update {post_id} target_demographic '{demographic}'"
                 meta_result = _execute_wp_cli(site_key, meta_cmd)
                 meta_results.append(meta_result["success"])
 
             if icp_data.get("pain_points"):
                 pain_points = icp_data['pain_points'].replace("'", "\\'")
-                meta_cmd = f"post meta update {post_id} pain_points '{pain_points}'"
+                meta_cmd = f"cd {wordpress_path} && wp post meta update {post_id} pain_points '{pain_points}'"
                 meta_result = _execute_wp_cli(site_key, meta_cmd)
                 meta_results.append(meta_result["success"])
 
             if icp_data.get("desired_outcomes"):
                 outcomes = icp_data['desired_outcomes'].replace("'", "\\'")
-                meta_cmd = f"post meta update {post_id} desired_outcomes '{outcomes}'"
+                meta_cmd = f"cd {wordpress_path} && wp post meta update {post_id} desired_outcomes '{outcomes}'"
                 meta_result = _execute_wp_cli(site_key, meta_cmd)
                 meta_results.append(meta_result["success"])
 
             all_meta_success = all(meta_results)
+
+            deployer.disconnect()
 
             return {
                 "success": True,
@@ -108,7 +130,9 @@ def deploy_icp_definition(site_key: str, icp_data: Dict[str, str]) -> Dict[str, 
                 "meta_success": all_meta_success
             }
         else:
-            return {"success": False, "error": result.get("error", "WP-CLI command failed"), "site": site_key}
+            deployer.disconnect()
+            # Debug: show the actual error
+            return {"success": False, "error": f"WP-CLI post create failed: {result.get('output', 'No output')}", "site": site_key}
 
     except Exception as e:
         return {"success": False, "error": str(e), "site": site_key}

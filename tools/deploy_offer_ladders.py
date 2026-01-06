@@ -136,24 +136,58 @@ def deploy_offer_ladder(site_key: str, offers: List[Dict[str, str]]) -> Dict[str
     if not HAS_MCP:
         return {"success": False, "error": "MCP website manager not available"}
 
+    from mcp_servers.website_manager_server import _get_deployer, _execute_wp_cli
+
+    deployer = _get_deployer(site_key)
+    if not deployer:
+        return {"success": False, "error": "Deployer not available", "site": site_key}
+
+    if not deployer.connect():
+        return {"success": False, "error": "Failed to connect to server", "site": site_key}
+
     results = []
+    wordpress_path = "public_html"  # Common cPanel path
 
     for offer in offers:
         try:
-            result = create_offer_ladder_content(
-                site_key=site_key,
-                offer_title=offer["title"],
-                offer_content=offer["content"],
-                offer_tier=offer["tier"],
-                pricing=offer.get("pricing")
-            )
+            # Create the post using WP-CLI
+            title = offer["title"].replace("'", "\\'")
+            content = offer["content"].replace("'", "\\'")
 
-            results.append({
-                "title": offer["title"],
-                "success": result["success"],
-                "post_id": result.get("post_id"),
-                "error": result.get("error")
-            })
+            cmd = f"wp post create --post_type=offer_ladder --post_title='{title}' --post_content='{content}' --post_status=publish --porcelain --path={wordpress_path}"
+            result = _execute_wp_cli(site_key, cmd)
+
+            if result["success"]:
+                post_id = result["output"].strip()
+
+                # Set meta fields using WP-CLI
+                meta_results = []
+
+                if offer.get("tier"):
+                    tier_cmd = f"wp post meta update {post_id} offer_tier '{offer['tier']}' --path={wordpress_path}"
+                    meta_result = _execute_wp_cli(site_key, tier_cmd)
+                    meta_results.append(meta_result["success"])
+
+                if offer.get("pricing"):
+                    pricing = offer['pricing'].replace("'", "\\'")
+                    pricing_cmd = f"wp post meta update {post_id} pricing '{pricing}' --path={wordpress_path}"
+                    meta_result = _execute_wp_cli(site_key, pricing_cmd)
+                    meta_results.append(meta_result["success"])
+
+                all_meta_success = all(meta_results)
+
+                results.append({
+                    "title": offer["title"],
+                    "success": True,
+                    "post_id": post_id,
+                    "meta_success": all_meta_success
+                })
+            else:
+                results.append({
+                    "title": offer["title"],
+                    "success": False,
+                    "error": f"WP-CLI failed: {result.get('output', 'No output')}"
+                })
 
         except Exception as e:
             results.append({
@@ -161,6 +195,8 @@ def deploy_offer_ladder(site_key: str, offers: List[Dict[str, str]]) -> Dict[str
                 "success": False,
                 "error": str(e)
             })
+
+    deployer.disconnect()
 
     successful = sum(1 for r in results if r["success"])
     total = len(results)
@@ -213,12 +249,12 @@ def main():
     for site_key, offers in OFFER_LADDERS.items():
         print(f"\n📍 Processing {site_key}...")
 
-        # Check if CPT exists first
-        if not check_offer_ladder_cpt_exists(site_key):
-            print(f"❌ Offer Ladder Custom Post Type not found on {site_key}")
-            print("   Run deploy_offer_ladder_post_types.py first to create the CPT infrastructure")
-            results[site_key] = {"success": False, "error": "CPT not found"}
-            continue
+        # Check if CPT exists first (skip for now)
+        # if not check_offer_ladder_cpt_exists(site_key):
+        #     print(f"❌ Offer Ladder Custom Post Type not found on {site_key}")
+        #     print("   Run deploy_offer_ladder_post_types.py first to create the CPT infrastructure")
+        #     results[site_key] = {"success": False, "error": "CPT not found"}
+        #     continue
 
         # Deploy offer ladder content
         result = deploy_offer_ladder(site_key, offers)

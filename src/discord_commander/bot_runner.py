@@ -213,6 +213,47 @@ async def main() -> int:
 
             continue
 
+        except asyncio.CancelledError as e:
+            # Handle task cancellation (often from network timeouts)
+            consecutive_failures += 1
+            reconnect_count += 1
+            network_failures += 1
+
+            logger.warning(
+                f"⚠️ Task cancelled (likely network timeout): {e}\n"
+                f"   Attempt {reconnect_count}, consecutive failures: {consecutive_failures}\n"
+                f"   Network failures: {network_failures}/{max_network_failures}\n"
+                f"   This usually indicates network connectivity issues\n"
+                f"   Retrying in {reconnect_delay} seconds..."
+            )
+
+            # If too many network failures, try a longer delay and reset
+            if network_failures >= max_network_failures:
+                logger.warning(f"🔄 Too many network failures ({network_failures}), resetting connection strategy...")
+                reconnect_delay = max_delay  # Use maximum delay
+                network_failures = 0
+                consecutive_failures = 0
+
+                # Add extra delay for network recovery
+                logger.info("⏳ Waiting 60 seconds for network recovery...")
+                await asyncio.sleep(60)
+            else:
+                if consecutive_failures >= max_consecutive_failures:
+                    reconnect_delay = min(max_delay, reconnect_delay * 2)
+                else:
+                    reconnect_delay = min(max_delay, reconnect_delay * 1.5)
+
+            import random
+            jitter = random.uniform(0.8, 1.2)
+            reconnect_delay = int(reconnect_delay * jitter)
+
+            try:
+                await bot.close()
+            except Exception as close_error:
+                logger.error(f"Error closing bot after task cancellation: {close_error}", exc_info=True)
+
+            continue
+
         except (ConnectionError, OSError, asyncio.TimeoutError) as e:
             consecutive_failures += 1
             reconnect_count += 1
@@ -257,12 +298,34 @@ async def main() -> int:
             consecutive_failures += 1
             reconnect_count += 1
 
+            # Categorize the error for better handling
+            error_type = type(e).__name__
+            if "timeout" in str(e).lower() or "TimeoutError" in error_type:
+                error_category = "timeout"
+            elif "connection" in str(e).lower() or "ConnectionError" in error_type:
+                error_category = "connection"
+            elif "discord" in str(e).lower() or hasattr(e, '__module__') and 'discord' in e.__module__:
+                error_category = "discord"
+            else:
+                error_category = "general"
+
             logger.error(
-                f"❌ Bot error: {e}\n"
+                f"❌ Bot error ({error_category}): {e}\n"
+                f"   Error type: {error_type}\n"
                 f"   Attempt {reconnect_count}, consecutive failures: {consecutive_failures}\n"
                 f"   Retrying in {reconnect_delay} seconds...",
                 exc_info=True
             )
+
+            # Special handling for different error categories
+            if error_category == "timeout":
+                # For timeout errors, be more conservative with reconnection
+                reconnect_delay = min(max_delay, max(reconnect_delay, 30))
+            elif error_category == "discord" and ("429" in str(e) or "rate limit" in str(e).lower()):
+                # Rate limiting detected in general exception handler
+                logger.warning("🚦 Rate limiting detected in general handler - implementing backoff strategy...")
+                reconnect_delay = min(max_delay, reconnect_delay * 3)
+                consecutive_failures = max_consecutive_failures
 
             if consecutive_failures >= max_consecutive_failures:
                 reconnect_delay = min(max_delay, reconnect_delay * 2)
