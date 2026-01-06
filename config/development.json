@@ -1,0 +1,10 @@
+{
+  "log_level": "DEBUG",
+  "web": {
+    "debug": true,
+    "port": 8000
+  },
+  "database": {
+    "ssl_mode": "disable"
+  }
+}

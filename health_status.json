@@ -1,0 +1,62 @@
+{
+  "timestamp": "2026-01-06T07:12:44.705075",
+  "overall_status": "critical",
+  "checks": {
+    "message_queue": {
+      "status": "unknown",
+      "details": "Service status check"
+    },
+    "discord_bot": {
+      "status": "unknown",
+      "details": "Bot connectivity check"
+    },
+    "twitch_bot": {
+      "status": "unknown",
+      "details": "Bot connectivity check"
+    },
+    "auto_gas": {
+      "status": "unknown",
+      "details": "Fuel delivery system"
+    },
+    "agent_registry": {
+      "status": "healthy",
+      "details": "5 active agents"
+    },
+    "agent_workspaces": {
+      "status": "warning",
+      "details": "0/8 healthy workspaces"
+    },
+    "database": {
+      "status": "healthy",
+      "details": "Database connection successful"
+    },
+    "web_dashboard": {
+      "status": "critical",
+      "details": "Dashboard not responding"
+    },
+    "api_endpoints": {
+      "status": "critical",
+      "details": "API endpoints not responding"
+    },
+    "disk_space": {
+      "status": "healthy",
+      "details": "34.3% disk usage (1224GB free)"
+    },
+    "memory": {
+      "status": "healthy",
+      "details": "65.8% memory usage (11193MB free)"
+    },
+    "internet": {
+      "status": "healthy",
+      "details": "Internet connectivity confirmed"
+    }
+  },
+  "issues": [
+    "agent_workspaces: 0/8 healthy workspaces",
+    "web_dashboard: Dashboard not responding",
+    "api_endpoints: API endpoints not responding"
+  ],
+  "recommendations": [
+    "Restart web services or check configuration"
+  ]
+}
