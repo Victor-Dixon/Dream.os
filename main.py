@@ -25,6 +25,7 @@ Usage:
     python main.py --discord          # Start only Discord bot
     python main.py --autonomous-reports # Display autonomous config reports
     python main.py --run-autonomous-config # Run autonomous config system
+    python main.py --cleanup-logs     # Clean up old log files
     python main.py --help             # Show help
 
 Background Mode:
@@ -50,6 +51,8 @@ import subprocess
 import time
 import psutil
 import platform
+import logging
+from logging.handlers import RotatingFileHandler
 from pathlib import Path
 from threading import Thread
 from typing import Optional
@@ -59,6 +62,76 @@ sys.path.insert(0, str(project_root))
 sys.path.insert(0, str(project_root / "systems"))  # Add systems directory for Wave C extracted components
 
 load_dotenv()
+
+
+def cleanup_old_logs(log_dir: Path, max_age_days: int = 30, max_size_mb: int = 50) -> int:
+    """Clean up old and oversized log files to prevent disk space issues."""
+    import time
+    import os
+
+    if not log_dir.exists():
+        return 0
+
+    cleaned_count = 0
+    current_time = time.time()
+    max_age_seconds = max_age_days * 24 * 60 * 60
+    max_size_bytes = max_size_mb * 1024 * 1024
+
+    for log_file in log_dir.glob("*.log"):
+        try:
+            # Check file age
+            file_age = current_time - log_file.stat().st_mtime
+            file_size = log_file.stat().st_size
+
+            # Remove if too old or too large
+            if file_age > max_age_seconds or file_size > max_size_bytes:
+                log_file.unlink()
+                cleaned_count += 1
+                print(f"   🗑️ Removed old/oversized log: {log_file.name} ({file_size/1024/1024:.1f}MB, {file_age/86400:.1f} days old)")
+        except Exception as e:
+            print(f"   ⚠️ Failed to clean log {log_file.name}: {e}")
+
+    return cleaned_count
+
+
+def setup_logging(log_dir: Path, log_level: int = logging.INFO) -> logging.Logger:
+    """Setup logging with rotation for main service launcher."""
+    log_dir.mkdir(parents=True, exist_ok=True)
+    log_file = log_dir / "main_service_launcher.log"
+
+    # Create logger
+    logger = logging.getLogger('main_service_launcher')
+    logger.setLevel(log_level)
+
+    # Remove any existing handlers to avoid duplicates
+    logger.handlers.clear()
+
+    # Create rotating file handler (max 10MB per file, keep 5 backup files)
+    file_handler = RotatingFileHandler(
+        log_file,
+        maxBytes=10*1024*1024,  # 10MB
+        backupCount=5,
+        encoding='utf-8'
+    )
+    file_handler.setLevel(log_level)
+
+    # Create console handler
+    console_handler = logging.StreamHandler()
+    console_handler.setLevel(log_level)
+
+    # Create formatter
+    formatter = logging.Formatter(
+        '%(asctime)s | %(levelname)s | %(name)s | %(message)s',
+        datefmt='%Y-%m-%d %H:%M:%S'
+    )
+    file_handler.setFormatter(formatter)
+    console_handler.setFormatter(formatter)
+
+    # Add handlers to logger
+    logger.addHandler(file_handler)
+    logger.addHandler(console_handler)
+
+    return logger
 
 
 class ServiceManager:
@@ -74,6 +147,14 @@ class ServiceManager:
         self.agent_mode_manager: Optional[object] = None
         self.background_mode = background_mode
         self.auto_gas_system: Optional[object] = None
+
+        # Setup logging for service manager
+        self.logger = setup_logging(self.log_dir, logging.INFO)
+
+        # Clean up old logs on startup
+        cleaned_logs = cleanup_old_logs(self.log_dir)
+        if cleaned_logs > 0:
+            self.logger.info(f"Cleaned up {cleaned_logs} old/oversized log files on startup")
 
     def setup_agent_mode_manager(self):
         """Setup agent mode manager."""
@@ -163,30 +244,58 @@ class ServiceManager:
                 return False
 
         try:
+            # Validate script exists and is executable
+            if not script.exists():
+                print(f"   ❌ Message Queue script not found: {script}")
+                print(f"   📝 Expected location: scripts/start_queue_processor.py or tools/start_message_queue_processor.py")
+                return False
+
             # Pass current environment to subprocess so it inherits .env variables
             env = os.environ.copy()
-            
+
             # Configure output based on background mode
-            if self.background_mode:
-                log_file = self.log_dir / "message_queue.log"
-                stdout = open(log_file, 'a')
-                stderr = subprocess.STDOUT
-                creation_flags = 0
-                if platform.system() == 'Windows':
-                    creation_flags = subprocess.CREATE_NEW_PROCESS_GROUP
-            else:
-                stdout = subprocess.PIPE
-                stderr = subprocess.STDOUT
-                creation_flags = 0
-            
-            process = subprocess.Popen(
-                [sys.executable, str(script)],
-                cwd=str(self.project_root),
-                env=env,
-                stdout=stdout,
-                stderr=stderr,
-                creationflags=creation_flags if platform.system() == 'Windows' else 0
-            )
+            stdout = None
+            stderr = None
+            creation_flags = 0
+
+            try:
+                if self.background_mode:
+                    log_file = self.log_dir / "message_queue.log"
+                    stdout = open(log_file, 'a')
+                    stderr = subprocess.STDOUT
+                    if platform.system() == 'Windows':
+                        creation_flags = subprocess.CREATE_NEW_PROCESS_GROUP
+                else:
+                    stdout = subprocess.PIPE
+                    stderr = subprocess.STDOUT
+            except (OSError, IOError) as file_error:
+                print(f"   ❌ Failed to open log file: {file_error}")
+                return False
+
+            try:
+                process = subprocess.Popen(
+                    [sys.executable, str(script)],
+                    cwd=str(self.project_root),
+                    env=env,
+                    stdout=stdout,
+                    stderr=stderr,
+                    creationflags=creation_flags if platform.system() == 'Windows' else 0
+                )
+            except (OSError, FileNotFoundError) as proc_error:
+                print(f"   ❌ Failed to create subprocess: {proc_error}")
+                print("   💡 Check if Python executable is available and script is valid")
+                return False
+            except subprocess.SubprocessError as sub_error:
+                print(f"   ❌ Subprocess error: {sub_error}")
+                return False
+
+            # Verify process started successfully
+            if process.poll() is not None:
+                # Process exited immediately
+                exit_code = process.returncode
+                print(f"   ❌ Message Queue process exited immediately (exit code: {exit_code})")
+                return False
+
             self.processes['message_queue'] = process
             self._save_pid('message_queue', process)
             print("   ✅ Message Queue Processor started (PID: {})".format(process.pid))
@@ -196,8 +305,10 @@ class ServiceManager:
                 # Start thread to monitor output
                 Thread(target=self._monitor_process_output, args=('message_queue', process), daemon=True).start()
             return True
+
         except Exception as e:
-            print(f"   ❌ Failed to start Message Queue: {e}")
+            error_type = type(e).__name__
+            print(f"   ❌ Failed to start Message Queue ({error_type}): {e}")
             import traceback
             traceback.print_exc()
             return False
@@ -218,7 +329,22 @@ class ServiceManager:
                 print("   ❌ Cannot start Twitch Bot without configuration")
                 print("   💡 Run 'python tools/test_twitch_config.py' to validate your setup")
                 return False
-        
+
+        # Validate and normalize channel format
+        if channel.startswith("#"):
+            channel = channel[1:]
+            print(f"   ⚠️  Removed # prefix from channel: {channel}")
+
+        if "twitch.tv/" in channel.lower():
+            # Extract channel name from URL
+            parts = channel.lower().split("twitch.tv/")
+            if len(parts) > 1:
+                channel = parts[-1].split("/")[0].split("?")[0].rstrip("/")
+                print(f"   ⚠️  Extracted channel name from URL: {channel}")
+
+        # Normalize channel (lowercase, no spaces)
+        channel = channel.lower().strip()
+
         # Validate token format
         token_clean = token.strip().strip('"').strip("'")
         if not token_clean.startswith("oauth:"):
@@ -320,42 +446,75 @@ class ServiceManager:
             return False
 
         try:
+            # Validate Discord module is available
+            try:
+                import src.discord_commander.bot_runner
+            except ImportError as import_error:
+                print(f"   ❌ Discord bot module not found: {import_error}")
+                print("   💡 Run: pip install discord.py")
+                return False
+
             # Pass current environment to subprocess so it inherits .env variables
             env = os.environ.copy()
 
             # Configure output based on background mode
-            if self.background_mode:
-                log_file = self.log_dir / "discord_bot.log"
-                stdout = open(log_file, 'a')
-                stderr = subprocess.STDOUT
-                creation_flags = 0
-                if platform.system() == 'Windows':
-                    creation_flags = subprocess.CREATE_NEW_PROCESS_GROUP
-            else:
-                stdout = subprocess.PIPE
-                stderr = subprocess.STDOUT
-                creation_flags = 0
+            stdout = None
+            stderr = None
+            creation_flags = 0
+            log_file = None
 
-            # Run bot_runner directly as a module for clean process management
-            process = subprocess.Popen(
-                [sys.executable, "-m", "src.discord_commander.bot_runner"],
-                cwd=str(self.project_root),
-                env=env,
-                stdout=stdout,
-                stderr=stderr,
-                creationflags=creation_flags if platform.system() == 'Windows' else 0
-            )
+            try:
+                if self.background_mode:
+                    log_file = self.log_dir / "discord_bot.log"
+                    stdout = open(log_file, 'a')
+                    stderr = subprocess.STDOUT
+                    if platform.system() == 'Windows':
+                        creation_flags = subprocess.CREATE_NEW_PROCESS_GROUP
+                else:
+                    stdout = subprocess.PIPE
+                    stderr = subprocess.STDOUT
+            except (OSError, IOError) as file_error:
+                print(f"   ❌ Failed to open Discord log file: {file_error}")
+                return False
+
+            try:
+                # Run bot_runner directly as a module for clean process management
+                process = subprocess.Popen(
+                    [sys.executable, "-m", "src.discord_commander.bot_runner"],
+                    cwd=str(self.project_root),
+                    env=env,
+                    stdout=stdout,
+                    stderr=stderr,
+                    creationflags=creation_flags if platform.system() == 'Windows' else 0
+                )
+            except (OSError, FileNotFoundError) as proc_error:
+                print(f"   ❌ Failed to create Discord subprocess: {proc_error}")
+                print("   💡 Check if Python executable is available and discord module is properly installed")
+                return False
+            except subprocess.SubprocessError as sub_error:
+                print(f"   ❌ Discord subprocess error: {sub_error}")
+                return False
+
+            # Verify process started successfully
+            if process.poll() is not None:
+                # Process exited immediately
+                exit_code = process.returncode
+                print(f"   ❌ Discord Bot process exited immediately (exit code: {exit_code})")
+                return False
+
             self.processes['discord'] = process
             self._save_pid('discord', process)
             print("   ✅ Discord Bot started (PID: {})".format(process.pid))
-            if self.background_mode:
+            if self.background_mode and log_file:
                 print(f"   📝 Logs: {log_file}")
             else:
                 # Start thread to monitor output
                 Thread(target=self._monitor_process_output, args=('discord', process), daemon=True).start()
             return True
+
         except Exception as e:
-            print(f"   ❌ Failed to start Discord Bot: {e}")
+            error_type = type(e).__name__
+            print(f"   ❌ Failed to start Discord Bot ({error_type}): {e}")
             import traceback
             traceback.print_exc()
             return False
@@ -932,6 +1091,11 @@ def main():
         action='store_true',
         help='Run autonomous configuration system (dry run by default)'
     )
+    parser.add_argument(
+        '--cleanup-logs',
+        action='store_true',
+        help='Clean up old and oversized log files'
+    )
 
     args = parser.parse_args()
 
@@ -948,6 +1112,13 @@ def main():
     # Status check mode
     if args.status:
         manager.check_status()
+        return
+
+    # Log cleanup mode
+    if args.cleanup_logs:
+        log_dir = project_root / "runtime" / "logs"
+        cleaned_count = cleanup_old_logs(log_dir)
+        print(f"✅ Log cleanup completed: {cleaned_count} files removed")
         return
 
     # Stop services mode
