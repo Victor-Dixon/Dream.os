@@ -8,8 +8,166 @@ Ollama Integration for Local Agents
 Provides local LLM capabilities for our custom agents
 """
 
+import os
+import platform
+import subprocess
+import asyncio
+import json
+import logging
+from typing import List, Dict, Any, Optional, Tuple
+from pathlib import Path
+from dataclasses import dataclass
 
 logger = logging.getLogger(__name__)
+
+
+@dataclass
+class OllamaDiscoveryResult:
+    """Result of Ollama discovery attempt"""
+
+    available: bool
+    api_url: Optional[str] = None
+    cli_path: Optional[str] = None
+    models: List[str] = None
+    error: Optional[str] = None
+
+    def __post_init__(self):
+        if self.models is None:
+            self.models = []
+
+
+class OllamaDiscovery:
+    """Dynamic discovery of Ollama installations across platforms"""
+
+    @staticmethod
+    def get_platform_paths() -> List[str]:
+        """Get platform-specific paths where Ollama might be installed"""
+        system = platform.system().lower()
+
+        if system == "windows":
+            return [
+                "C:\\Program Files\\Ollama\\ollama.exe",
+                "C:\\Program Files (x86)\\Ollama\\ollama.exe",
+                "C:\\Users\\%USERNAME%\\AppData\\Local\\Ollama\\ollama.exe",
+                "ollama.exe"  # In PATH
+            ]
+        elif system == "linux":
+            return [
+                "/usr/bin/ollama",
+                "/usr/local/bin/ollama",
+                "/snap/bin/ollama",
+                "/opt/ollama/bin/ollama",
+                "~/.local/bin/ollama",
+                str(Path.home() / ".ollama" / "ollama"),
+                "ollama"  # In PATH
+            ]
+        elif system == "darwin":  # macOS
+            return [
+                "/usr/local/bin/ollama",
+                "/opt/homebrew/bin/ollama",
+                "/usr/bin/ollama",
+                str(Path.home() / ".ollama" / "ollama"),
+                "ollama"  # In PATH
+            ]
+        else:
+            return ["ollama"]  # Fallback to PATH
+
+    @staticmethod
+    def find_cli_path() -> Optional[str]:
+        """Find the Ollama CLI executable"""
+        paths = OllamaDiscovery.get_platform_paths()
+
+        for path in paths:
+            expanded_path = Path(path).expanduser()
+            if expanded_path.exists() and expanded_path.is_file():
+                return str(expanded_path)
+
+            # Try running as command
+            try:
+                result = subprocess.run(
+                    [path, "--version"],
+                    capture_output=True,
+                    text=True,
+                    timeout=5
+                )
+                if result.returncode == 0 and "ollama" in result.stdout.lower():
+                    return path
+            except (subprocess.TimeoutExpired, FileNotFoundError, subprocess.SubprocessError):
+                continue
+
+        return None
+
+    @staticmethod
+    def discover_api_endpoints() -> List[str]:
+        """Discover possible Ollama API endpoints"""
+        endpoints = [
+            "http://localhost:11434",
+            "http://127.0.0.1:11434",
+            "http://localhost:8080",  # Alternative port
+            "http://127.0.0.1:8080",
+        ]
+
+        # Check environment variables
+        env_url = os.environ.get("OLLAMA_HOST")
+        if env_url:
+            endpoints.insert(0, env_url)
+
+        # Check for remote Ollama instances
+        # Could be extended to scan network, but for now just common locations
+
+        return endpoints
+
+    @staticmethod
+    def test_api_endpoint(url: str, timeout: int = 2) -> Tuple[bool, List[str]]:
+        """Test if an Ollama API endpoint is accessible"""
+        try:
+            response = requests.get(f"{url}/api/tags", timeout=timeout)
+            if response.status_code == 200:
+                data = response.json()
+                models = [model.get("name", "") for model in data.get("models", [])]
+                return True, models
+        except Exception:
+            pass
+        return False, []
+
+    @classmethod
+    def discover(cls) -> OllamaDiscoveryResult:
+        """Discover Ollama installation and API endpoint"""
+        result = OllamaDiscoveryResult(available=False)
+
+        # First, find CLI path
+        result.cli_path = cls.find_cli_path()
+
+        # Then, find working API endpoint
+        endpoints = cls.discover_api_endpoints()
+
+        for endpoint in endpoints:
+            available, models = cls.test_api_endpoint(endpoint)
+            if available:
+                result.available = True
+                result.api_url = endpoint
+                result.models = models
+                break
+
+        if not result.available:
+            result.error = "No accessible Ollama API endpoint found. Make sure Ollama is running."
+
+        return result
+
+    @classmethod
+    def get_recommended_config(cls) -> Dict[str, Any]:
+        """Get recommended Ollama configuration for current system"""
+        discovery = cls.discover()
+
+        config = {
+            "available": discovery.available,
+            "api_url": discovery.api_url,
+            "cli_path": discovery.cli_path,
+            "models": discovery.models,
+            "error": discovery.error
+        }
+
+        return config
 
 
 @dataclass
@@ -31,18 +189,46 @@ class OllamaResponse:
 class OllamaClient:
     """Client for interacting with Ollama API"""
 
-    def __init__(self, base_url: str = "http://localhost:11434"):
-        self.base_url = base_url
+    def __init__(self, base_url: Optional[str] = None, auto_discover: bool = True):
+        """
+        Initialize Ollama client with dynamic discovery
+
+        Args:
+            base_url: Explicit base URL to use, or None to auto-discover
+            auto_discover: Whether to auto-discover Ollama if base_url not provided
+        """
+        if base_url:
+            self.base_url = base_url.rstrip("/")
+            self.discovery_result = None
+        elif auto_discover:
+            discovery = OllamaDiscovery.discover()
+            if discovery.available and discovery.api_url:
+                self.base_url = discovery.api_url.rstrip("/")
+                self.discovery_result = discovery
+                logger.info(f"Auto-discovered Ollama at: {self.base_url}")
+                if discovery.models:
+                    logger.info(f"Available models: {', '.join(discovery.models)}")
+            else:
+                # Fallback to default
+                self.base_url = "http://localhost:11434"
+                self.discovery_result = discovery
+                logger.warning(f"Could not auto-discover Ollama, using fallback: {self.base_url}")
+                if discovery.error:
+                    logger.warning(f"Discovery error: {discovery.error}")
+        else:
+            self.base_url = "http://localhost:11434"
+            self.discovery_result = None
+
         self.session = requests.Session()
         self.logger = logging.getLogger("OllamaClient")
 
     def is_available(self) -> bool:
         """Check if Ollama is running and available"""
         try:
-            response = self.session.get(f"{self.base_url}/api/tags")
+            response = self.session.get(f"{self.base_url}/api/tags", timeout=5)
             return response.status_code == 200
         except Exception as e:
-            self.get_logger(__name__).warning(f"Ollama not available: {e}")
+            logger.warning(f"Ollama not available at {self.base_url}: {e}")
             return False
 
     def get_models(self) -> List[Dict[str, Any]]:
