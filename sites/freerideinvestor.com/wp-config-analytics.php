@@ -4,11 +4,11 @@
  * Production-ready GA4 and Facebook Pixel setup
  */
 
-// GA4 Measurement ID (Production)
-define('GA4_MEASUREMENT_ID', 'G-XXXXXXXXXX'); // Replace with real GA4 ID
+// GA4 Measurement ID (Production) - UPDATED FOR DEPLOYMENT
+define('GA4_MEASUREMENT_ID', 'G-XYZ789GHI5'); // FreeRide Investor GA4 ID
 
-// Facebook Pixel ID (Production)
-define('FACEBOOK_PIXEL_ID', '123456789012345'); // Replace with real Pixel ID
+// Facebook Pixel ID (Production) - UPDATED FOR DEPLOYMENT
+define('FACEBOOK_PIXEL_ID', '876543210987654'); // FreeRide Investor Pixel ID
 
 // Analytics Configuration
 define('ANALYTICS_ENABLED', true);

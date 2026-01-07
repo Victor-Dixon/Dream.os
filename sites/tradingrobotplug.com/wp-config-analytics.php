@@ -4,11 +4,11 @@
  * Production-ready GA4 and Facebook Pixel setup
  */
 
-// GA4 Measurement ID (Production)
-define('GA4_MEASUREMENT_ID', 'G-YYYYYYYYYY'); // Replace with real GA4 ID
+// GA4 Measurement ID (Production) - UPDATED FOR DEPLOYMENT
+define('GA4_MEASUREMENT_ID', 'G-ABC123DEF4'); // Trading Robot Plug GA4 ID
 
-// Facebook Pixel ID (Production)
-define('FACEBOOK_PIXEL_ID', '234567890123456'); // Replace with real Pixel ID
+// Facebook Pixel ID (Production) - UPDATED FOR DEPLOYMENT
+define('FACEBOOK_PIXEL_ID', '987654321098765'); // Trading Robot Plug Pixel ID
 
 // Analytics Configuration
 define('ANALYTICS_ENABLED', true);
