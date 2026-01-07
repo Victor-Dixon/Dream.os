@@ -204,7 +204,7 @@ class WebValidationTestSuite:
         """
         success_rate = (report.successful_tests / report.total_endpoints * 100) if report.total_endpoints > 0 else 0
 
-        html = ".2f"".2f"".2f"f"""
+        html = f"""
         <!DOCTYPE html>
         <html lang="en">
         <head>
@@ -336,9 +336,11 @@ async def main():
             f.write(dashboard_html)
 
         # Print summary
-        print("📊 Validation Complete!"        print(f"   ✅ Successful: {report.successful_tests}/{report.total_endpoints}")
+        print("📊 Validation Complete!")
+        print(f"   ✅ Successful: {report.successful_tests}/{report.total_endpoints}")
         print(f"   ❌ Failed: {report.failed_tests}/{report.total_endpoints}")
-        print(".2f"        print(".2f"        print("   📊 Dashboard saved: web_monitoring_dashboard.html"
+        print(f"   ⏱️  Average Response Time: {report.average_response_time:.2f}s")
+        print(f"   📊 Dashboard saved: web_monitoring_dashboard.html")
 
         # Print detailed results
         print("\n🔍 Detailed Results:")
