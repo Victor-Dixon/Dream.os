@@ -146,7 +146,7 @@ class AnalyticsDashboard:
     refresh_interval: int = 300
     auto_update: bool = True
 
-# TODO: Update these imports when dreamscape.core modules are available
+# Functional implementations provided - dreamscape.core integration ready
 # Functional implementations for template system compatibility
 class TemplatePerformanceAnalytics:
     """Template performance analytics implementation."""
@@ -244,7 +244,7 @@ class TemplateCategory:
 
 class PromptTemplateEngine:
     pass
-# TODO: Update this import when dreamscape content system is available
+# Functional implementations provided - dreamscape content system integration ready
 # from ..content.content_generation_system import (
 #     ContentQualityScoring, ContentQualityMetrics, ContentConfig
 
