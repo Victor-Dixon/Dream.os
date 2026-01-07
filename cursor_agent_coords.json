@@ -1,39 +1,25 @@
 {
-  "Agent-1": {
+  "Agent-A": {
     "chat_input": [200, 300],
     "onboarding_coords": [200, 200]
   },
-  "Agent-2": {
+  "Agent-B": {
     "chat_input": [600, 300], 
     "onboarding_coords": [600, 200]
   },
-  "Agent-3": {
+  "Agent-C": {
     "chat_input": [1000, 300],
     "onboarding_coords": [1000, 200]
   },
-  "Agent-4": {
+  "Agent-D": {
     "chat_input": [1400, 300],
     "onboarding_coords": [1400, 200]
-  },
-  "Agent-5": {
-    "chat_input": [200, 700],
-    "onboarding_coords": [200, 600]
-  },
-  "Agent-6": {
-    "chat_input": [600, 700],
-    "onboarding_coords": [600, 600]
-  },
-  "Agent-7": {
-    "chat_input": [1000, 700],
-    "onboarding_coords": [1000, 600]
-  },
-  "Agent-8": {
-    "chat_input": [1400, 700],
-    "onboarding_coords": [1400, 600]
   },
   "screen_bounds": {
     "width": 1920,
     "height": 1080
   },
-  "linux_configured": true
+  "linux_configured": true,
+  "agent_count": 4,
+  "agent_names": ["Agent-A", "Agent-B", "Agent-C", "Agent-D"]
 }
