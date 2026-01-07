@@ -55,6 +55,7 @@ from .cli_handlers import (
     handle_start_agents,
     handle_save,
     handle_leaderboard,
+    handle_robinhood_stats,
 )
 
 __all__ = [

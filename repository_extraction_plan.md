@@ -145,7 +145,8 @@ tradingrobotplug/
 #### **Step 1.3: Update Imports**
 ```python
 # Before (Agent Cellphone V2):
-from src.web.fastapi_app import create_app
+# PHASE 4 CONSOLIDATION: FastAPI components moved to TradingRobotPlug repository
+# from trading_robot.web.fastapi_app import create_app
 
 # After (dream.os):
 from tradingrobotplug.src.api.app import create_app

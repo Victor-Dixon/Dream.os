@@ -115,11 +115,105 @@ class VerificationService(BaseService):
         return {"success": exists, "path": path}
 
     def run_lighthouse_audit(self, url: str) -> Dict[str, Any]:
-        """Run lighthouse audit (stub)."""
-        # TODO: Implement actual lighthouse integration
-        # Requires 'npm install -g lighthouse' and subprocess call
-        return {
-            "success": False, 
-            "url": url, 
-            "error": "Lighthouse integration not yet implemented. Requires 'npm install -g lighthouse'."
+        """
+        Run comprehensive Lighthouse audit on a website.
+        Provides performance, accessibility, SEO, and best practices scoring.
+        """
+        import subprocess
+        import json
+        import tempfile
+        import os
+        from datetime import datetime
+
+        result = {
+            "success": False,
+            "url": url,
+            "timestamp": datetime.now().isoformat(),
+            "categories": {},
+            "error": None
         }
+
+        try:
+            # Check if lighthouse is available
+            try:
+                subprocess.run(['lighthouse', '--version'],
+                             capture_output=True, check=True, timeout=10)
+            except (subprocess.CalledProcessError, FileNotFoundError):
+                result["error"] = "Lighthouse not installed. Install with: npm install -g lighthouse"
+                return result
+
+            # Create temporary file for results
+            with tempfile.NamedTemporaryFile(mode='w+', suffix='.json', delete=False) as tmp_file:
+                tmp_path = tmp_file.name
+
+            try:
+                # Run lighthouse audit with comprehensive categories
+                cmd = [
+                    'lighthouse',
+                    url,
+                    '--output=json',
+                    f'--output-path={tmp_path}',
+                    '--chrome-flags=--headless --no-sandbox --disable-dev-shm-usage',
+                    '--only-categories=performance,accessibility,best-practices,seo',
+                    '--quiet'
+                ]
+
+                # Execute lighthouse
+                process = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
+
+                if process.returncode == 0:
+                    # Read and parse results
+                    with open(tmp_path, 'r') as f:
+                        lighthouse_data = json.load(f)
+
+                    result["success"] = True
+
+                    # Extract category scores
+                    categories = lighthouse_data.get('categories', {})
+                    for category_name, category_data in categories.items():
+                        score = category_data.get('score', 0) * 100  # Convert to percentage
+                        result["categories"][category_name] = {
+                            "score": score,
+                            "title": category_data.get('title', category_name),
+                            "description": category_data.get('description', '')
+                        }
+
+                    # Add overall performance insights
+                    result["insights"] = {
+                        "performance_score": result["categories"].get("performance", {}).get("score", 0),
+                        "accessibility_score": result["categories"].get("accessibility", {}).get("score", 0),
+                        "seo_score": result["categories"].get("seo", {}).get("score", 0),
+                        "best_practices_score": result["categories"].get("best-practices", {}).get("score", 0)
+                    }
+
+                    # Add recommendations based on scores
+                    recommendations = []
+                    if result["insights"]["performance_score"] < 70:
+                        recommendations.append("Performance score below 70 - optimize images, minify resources, enable compression")
+                    if result["insights"]["accessibility_score"] < 80:
+                        recommendations.append("Accessibility score below 80 - add alt text, improve color contrast, fix keyboard navigation")
+                    if result["insights"]["seo_score"] < 80:
+                        recommendations.append("SEO score below 80 - add meta descriptions, improve page titles, fix crawl errors")
+                    if result["insights"]["best_practices_score"] < 80:
+                        recommendations.append("Best practices score below 80 - fix deprecated APIs, enable HTTPS, remove unused code")
+
+                    result["recommendations"] = recommendations
+
+                else:
+                    result["error"] = f"Lighthouse audit failed: {process.stderr}"
+
+            finally:
+                # Clean up temporary file
+                try:
+                    os.unlink(tmp_path)
+                except:
+                    pass
+
+        except subprocess.TimeoutExpired:
+            result["error"] = "Lighthouse audit timed out after 120 seconds"
+        except json.JSONDecodeError as e:
+            result["error"] = f"Failed to parse Lighthouse results: {e}"
+        except Exception as e:
+            result["error"] = f"Unexpected error during Lighthouse audit: {e}"
+
+        return result

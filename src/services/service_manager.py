@@ -60,7 +60,7 @@ class ServiceManager:
             },
             'fastapi': {
                 'name': 'FastAPI Service',
-                'script': 'src/web/fastapi_app.py',
+                'script': 'src/web/fastapi_server.py',
                 'pid_file': 'fastapi.pid',
                 'log_file': 'fastapi.log',
                 'status': 'stopped'
@@ -180,9 +180,16 @@ class ServiceManager:
             from src.discord_bot import main
             main()
         elif service_name == 'fastapi':
-            from src.web.fastapi_app import app
-            import uvicorn
-            uvicorn.run(app, host="0.0.0.0", port=8001)
+            # PHASE 4 CONSOLIDATION: FastAPI components moved to TradingRobotPlug repository
+            # Import from TradingRobotPlug.web.fastapi_app
+            try:
+                from trading_robot.web.fastapi_app import app
+                import uvicorn
+                uvicorn.run(app, host="0.0.0.0", port=8001)
+            except ImportError as e:
+                logger.error(f"FastAPI service failed to import from TradingRobotPlug: {e}")
+                logger.error("Ensure TradingRobotPlug repository is available and in Python path")
+                raise
         else:
             raise ValueError(f"Unknown service: {service_name}")
 
@@ -200,17 +207,20 @@ class ServiceManager:
         try:
             if self._is_process_running(pid):
                 if force:
-                    os.kill(pid, signal.SIGKILL)
+                    # Use taskkill on Windows
+                    import subprocess
+                    subprocess.run(['taskkill', '/PID', str(pid), '/F'], capture_output=True)
                     logger.info(f"Force killed {service_name} (PID: {pid})")
                 else:
-                    os.kill(pid, signal.SIGTERM)
-                    # Wait for graceful shutdown
-                    time.sleep(2)
-                    if self._is_process_running(pid):
-                        os.kill(pid, signal.SIGKILL)
-                        logger.info(f"Force killed {service_name} after graceful shutdown timeout")
-                    else:
+                    # Use taskkill for graceful termination
+                    import subprocess
+                    result = subprocess.run(['taskkill', '/PID', str(pid)], capture_output=True)
+                    if result.returncode == 0:
                         logger.info(f"Gracefully stopped {service_name} (PID: {pid})")
+                    else:
+                        # If graceful termination failed, force kill
+                        subprocess.run(['taskkill', '/PID', str(pid), '/F'], capture_output=True)
+                        logger.info(f"Force killed {service_name} after graceful termination failed (PID: {pid})")
             else:
                 logger.info(f"Service {service_name} was not running")
 

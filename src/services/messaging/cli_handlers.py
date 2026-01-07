@@ -38,6 +38,32 @@ from .delivery_handlers import send_message_to_onboarding_coords
 logger = logging.getLogger(__name__)
 
 
+def handle_robinhood_stats() -> int:
+    """Handle Robinhood statistics command."""
+    try:
+        # Import here to avoid circular imports
+        import subprocess
+        import sys
+        from pathlib import Path
+
+        # Path to the robinhood stats tool
+        tool_path = Path(__file__).parent.parent.parent.parent / "tools" / "robinhood_stats_2026.py"
+
+        if not tool_path.exists():
+            print(f"❌ Robinhood stats tool not found at: {tool_path}")
+            return 1
+
+        # Run the tool
+        result = subprocess.run([sys.executable, str(tool_path)], cwd=Path.cwd())
+
+        return result.returncode
+
+    except Exception as e:
+        logger.error(f"Error handling Robinhood stats: {e}")
+        print(f"❌ Error accessing Robinhood statistics: {e}")
+        return 1
+
+
 def handle_cycle_v2_message(args, parser) -> int:
     """Handle CYCLE_V2 message sending with template."""
     try:

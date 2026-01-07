@@ -38,3 +38,17 @@ from .modal_specializations import OnboardingModalBase, BroadcastModalBase, Temp
 __all__ = [
     # Modal classes
     "AgentMessageModal",
+    "BroadcastMessageModal",
+    "JetFuelMessageModal",
+    "SelectiveBroadcastModal",
+    "JetFuelBroadcastModal",
+    "TemplateBroadcastModal",
+    "SoftOnboardModal",
+    "MermaidModal",
+    "HardOnboardModal",
+    # Base classes
+    "BaseMessageModal",
+    "OnboardingModalBase",
+    "BroadcastModalBase",
+    "TemplateModalBase",
+]
