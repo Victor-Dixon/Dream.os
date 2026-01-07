@@ -47,91 +47,96 @@ class MessagingCommands(commands.Cog):
         self.gui_controller = gui_controller
         self.logger = logging.getLogger(__name__)
 
-    @commands.command(name="thea", aliases=["thea-refresh"], description="Ensure Thea session")
-    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
-    async def thea(self, ctx: commands.Context, force: str = ""):
-        """Ensure Thea session with self-throttling keepalive."""
-        self.logger.info(f"Command 'thea' triggered by {ctx.author}")
-        allow_interactive = True
-        min_interval = 0 if force else self.bot.thea_min_interval_minutes
-        await ctx.send("🔄 Ensuring Thea session (headless)...")
-        success = await self.bot.ensure_thea_session(
-            allow_interactive=allow_interactive, min_interval_minutes=min_interval)
-        if success:
-            await ctx.send("✅ Thea session is healthy (cookies saved).")
-        else:
-            await ctx.send("❌ Thea session failed. Try again to trigger interactive login.")
+    # Thea command moved to SystemControlCommands to avoid duplicate registration
+    # @commands.command(name="thea", aliases=["thea-refresh"], description="Ensure Thea session")
+    # @commands.has_any_role("Admin", "Captain", "Swarm Commander")
+    # async def thea(self, ctx: commands.Context, force: str = ""):
+    #     """Ensure Thea session with self-throttling keepalive."""
+    #     self.logger.info(f"Command 'thea' triggered by {ctx.author}")
+    #     allow_interactive = True
+    #     min_interval = 0 if force else self.bot.thea_min_interval_minutes
+    #     await ctx.send("🔄 Ensuring Thea session (headless)...")
+    #     success = await self.bot.ensure_thea_session(
+    #         allow_interactive=allow_interactive, min_interval_minutes=min_interval)
+    #     if success:
+    #         await ctx.send("✅ Thea session is healthy (cookies saved).")
+    #     else:
+    #         await ctx.send("❌ Thea session failed. Try again to trigger interactive login.")
 
-    @commands.command(name="control", aliases=["panel", "menu"], description="Open main control panel")
-    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
-    async def control_panel(self, ctx: commands.Context):
-        """Open main interactive control panel."""
-        self.logger.info(f"Command 'control_panel' triggered by {ctx.author}")
-        try:
-            control_view = self.gui_controller.create_control_panel()
-            embed = discord.Embed(
-                title="🎛️ SWARM CONTROL PANEL",
-                description="**Complete Interactive Control Interface**\n\nUse buttons below to access all features:",
-                color=discord.Color.blue(),
-            )
-            embed.add_field(name="📨 Messaging", value="Message individual agents or broadcast to all", inline=True)
-            embed.add_field(name="📊 Monitoring", value="View swarm status and task dashboards", inline=True)
-            embed.add_field(name="📚 Content", value="Access GitHub book and documentation", inline=True)
-            embed.set_footer(text="🐝 WE. ARE. SWARM. ⚡ Interactive GUI-Driven Control")
-            await ctx.send(embed=embed, view=control_view)
-        except Exception as e:
-            self.logger.error(f"Error opening control panel: {e}")
-            await ctx.send(f"❌ Error: {e}")
+    # Control command moved to CoreMessagingCommands to avoid duplicate registration
+    # @commands.command(name="control", aliases=["panel", "menu"], description="Open main control panel")
+    # @commands.has_any_role("Admin", "Captain", "Swarm Commander")
+    # async def control_panel(self, ctx: commands.Context):
+    #     """Open main interactive control panel."""
+    #     self.logger.info(f"Command 'control_panel' triggered by {ctx.author}")
+    #     try:
+    #         control_view = self.gui_controller.create_control_panel()
+    #         embed = discord.Embed(
+    #             title="🎛️ SWARM CONTROL PANEL",
+    #             description="**Complete Interactive Control Interface**\n\nUse buttons below to access all features:",
+    #             color=discord.Color.blue(),
+    #         )
+    #         embed.add_field(name="📨 Messaging", value="Message individual agents or broadcast to all", inline=True)
+    #         embed.add_field(name="📊 Monitoring", value="View swarm status and task dashboards", inline=True)
+    #         embed.add_field(name="📚 Content", value="Access GitHub book and documentation", inline=True)
+    #         embed.set_footer(text="🐝 WE. ARE. SWARM. ⚡ Interactive GUI-Driven Control")
+    #         await ctx.send(embed=embed, view=control_view)
+    #     except Exception as e:
+    #         self.logger.error(f"Error opening control panel: {e}")
+    #         await ctx.send(f"❌ Error: {e}")
 
-    @commands.command(name="gui", description="Open messaging GUI")
-    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
-    async def gui(self, ctx: commands.Context):
-        """Open interactive messaging GUI."""
-        self.logger.info(f"Command 'gui' triggered by {ctx.author}")
-        try:
-            embed = discord.Embed(
-                title="🤖 Agent Messaging Control Panel",
-                description="Use the controls below to interact with the swarm",
-                color=discord.Color.blue(),
-                timestamp=discord.utils.utcnow(),
-            )
-            embed.add_field(
-                name="📋 Instructions",
-                value=(
-                    "1. Select an agent from dropdown to send message\n"
-                    "2. Click 'Broadcast' to message all agents\n"
-                    "3. Click 'Status' to view swarm status\n"
-                    "4. Click 'Refresh' to reload agent list"
-                ),
-                inline=False,
-            )
-            view = self.gui_controller.create_main_gui()
-            await ctx.send(embed=embed, view=view)
-        except Exception as e:
-            self.logger.error(f"Error opening GUI: {e}")
-            await ctx.send(f"❌ Error: {e}")
+    # GUI command moved to CoreMessagingCommands to avoid duplicate registration
+    # @commands.command(name="gui", description="Open messaging GUI")
+    # @commands.has_any_role("Admin", "Captain", "Swarm Commander")
+    # async def gui(self, ctx: commands.Context):
+    #     """Open interactive messaging GUI."""
+    #     self.logger.info(f"Command 'gui' triggered by {ctx.author}")
+    #     try:
+    #         embed = discord.Embed(
+    #             title="🤖 Agent Messaging Control Panel",
+    #             description="Use the controls below to interact with the swarm",
+    #             color=discord.Color.blue(),
+    #             timestamp=discord.utils.utcnow(),
+    #         )
+    #         embed.add_field(
+    #             name="📋 Instructions",
+    #             value=(
+    #                 "1. Select an agent from dropdown to send message\n"
+    #                 "2. Click 'Broadcast' to message all agents\n"
+    #                 "3. Click 'Status' to view swarm status\n"
+    #                 "4. Click 'Refresh' to reload agent list"
+    #             ),
+    #             inline=False,
+    #         )
+    #         view = self.gui_controller.create_main_gui()
+    #         await ctx.send(embed=embed, view=view)
+    #     except Exception as e:
+    #         self.logger.error(f"Error opening GUI: {e}")
+    #         await ctx.send(f"❌ Error: {e}")
 
-    @commands.command(name="status", description="View swarm status")
-    async def status(self, ctx: commands.Context, *, args: str = ""):
-        """View swarm status. Use '!status refresh' to force update."""
-        try:
-            if args.lower() == "refresh":
-                from src.discord_commander.status_reader import StatusReader
-                status_reader = StatusReader()
-                status_reader.clear_cache()
-                await ctx.send("🔄 Status cache cleared - refreshing...", delete_after=3)
+    # Status command moved to CoreMessagingCommands to avoid duplicate registration
+    # @commands.command(name="status", description="View swarm status")
+    # async def status(self, ctx: commands.Context, *, args: str = ""):
+    #     """View swarm status. Use '!status refresh' to force update."""
+    #     try:
+    #         if args.lower() == "refresh":
+    #             from src.discord_commander.status_reader import StatusReader
+    #             status_reader = StatusReader()
+    #             status_reader.clear_cache()
+    #             await ctx.send("🔄 Status cache cleared - refreshing...", delete_after=3)
+    #
+    #         view = self.gui_controller.create_status_gui()
+    #         from src.discord_commander.status_reader import StatusReader
+    #         status_reader = StatusReader()
+    #         main_view = self.gui_controller.create_main_gui()
+    #         embed = await main_view._create_status_embed(status_reader)
+    #         await ctx.send(embed=embed, view=view)
+    #     except Exception as e:
+    #         self.logger.error(f"Error showing status: {e}")
+    #         await ctx.send(f"❌ Error: {e}")
 
-            view = self.gui_controller.create_status_gui()
-            from src.discord_commander.status_reader import StatusReader
-            status_reader = StatusReader()
-            main_view = self.gui_controller.create_main_gui()
-            embed = await main_view._create_status_embed(status_reader)
-            await ctx.send(embed=embed, view=view)
-        except Exception as e:
-            self.logger.error(f"Error showing status: {e}")
-            await ctx.send(f"❌ Error: {e}")
-
-    @commands.command(name="monitor", description="Control status change monitor")
+    # Monitor command moved to CoreMessagingCommands to avoid duplicate registration
+    # @commands.command(name="monitor", description="Control status change monitor")
     @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def monitor(self, ctx: commands.Context, action: str = "status"):
         """Control status change monitor."""

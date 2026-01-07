@@ -14,7 +14,7 @@ from collections import defaultdict
 from datetime import datetime
 
 # SSOT Domain Registry - all valid domains
-# Updated 2025-12-30: Added 12 new domains from Phase 1 remediation
+# Updated 2026-01-06: Added orchestrators domain for Phase 3 remediation
 VALID_DOMAINS = [
     "core", "architecture", "services", "integration", "infrastructure",
     "messaging", "onboarding", "web", "frontend", "backend", "api",
@@ -27,7 +27,9 @@ VALID_DOMAINS = [
     "data", "performance", "safety", "qa", "git", "domain",
     "error_handling", "ai_training",
     # Additional domains from Phase 2 validation
-    "seo", "validation"
+    "seo", "validation",
+    # Phase 3 remediation domains (added 2026-01-06)
+    "orchestrators"
 ]
 
 def extract_ssot_domain(content: str) -> Tuple[str, bool]:
@@ -52,11 +54,15 @@ def validate_domain_registry(domain: str) -> Tuple[bool, str]:
         return True, f"Domain '{domain}' matches SSOT registry"
     return False, f"Domain '{domain}' not in SSOT registry"
 
-def validate_tag_placement(content: str) -> Tuple[bool, str]:
+def validate_tag_placement(content: str, file_path: Path = None) -> Tuple[bool, str]:
     """Validate tag placement in docstrings/headers (first 50 lines)"""
+    # Skip JSON files - they can't have HTML comments
+    if file_path and file_path.suffix.lower() == '.json':
+        return True, "JSON file (tag placement validation skipped)"
+
     lines = content.split('\n')[:50]
     header_content = '\n'.join(lines)
-    
+
     pattern = r'<!--\s*SSOT\s+Domain:\s*[a-zA-Z_][a-zA-Z0-9_]*\s*-->'
     if re.search(pattern, header_content, re.IGNORECASE):
         return True, "Tag placed in module docstring/header"
@@ -116,7 +122,7 @@ def validate_file(file_path: Path) -> Dict:
         "domain": domain,
         "tag_format": validate_tag_format(content),
         "domain_registry": validate_domain_registry(domain),
-        "tag_placement": validate_tag_placement(content),
+        "tag_placement": validate_tag_placement(content, file_path),
         "compilation": validate_compilation(file_path)
     }
     

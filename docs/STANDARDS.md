@@ -1,8 +1,10 @@
-# Lean Excellence Framework - Repository Standards
+<!-- SSOT Domain: documentation -->
+
+# dream.os Standards
 
 ## 🎯 **Purpose**
 
-This document serves as the **Single Source of Truth (SSOT)** for code quality standards, process rules, and reporting protocols across the AutoDream OS Agent Cellphone V2 repository.
+This document serves as the **Single Source of Truth (SSOT)** for code quality standards, process rules, and reporting protocols across the dream.os Agent Cellphone V2 repository.
 
 ---
 

@@ -1,5 +1,7 @@
 """
 
+<!-- SSOT Domain: orchestrators -->
+
 Monitor Discord Alerts - Discord Router Integration
 ===================================================
 

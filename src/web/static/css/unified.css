@@ -734,9 +734,28 @@ body {
 }
 
 /* ================================
-   ACCESSIBILITY
+   ACCESSIBILITY ENHANCEMENTS - PHASE 3
    ================================ */
 
+/* Skip links for keyboard navigation */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 6px;
+    background: var(--primary-color);
+    color: white;
+    padding: 8px;
+    text-decoration: none;
+    border-radius: 4px;
+    z-index: 1000;
+    font-weight: bold;
+}
+
+.skip-link:focus {
+    top: 6px;
+}
+
+/* Screen reader only content */
 .sr-only {
     position: absolute;
     width: 1px;
@@ -749,12 +768,254 @@ body {
     border: 0;
 }
 
-/* Focus styles for keyboard navigation */
+.sr-only-focusable:focus,
+.sr-only-focusable:active {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: inherit;
+    margin: inherit;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+}
+
+/* Enhanced focus styles for keyboard navigation - WCAG AA compliant */
 .btn:focus,
 .form-control:focus,
-.form-check-input:focus {
-    outline: 2px solid var(--primary-color);
+.form-check-input:focus,
+.form-select:focus,
+.nav-link:focus,
+.dropdown-toggle:focus,
+.modal:focus,
+.tab:focus,
+.accordion-button:focus {
+    outline: 3px solid var(--primary-color);
     outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.25);
+    border-radius: 4px;
+}
+
+/* Focus styles for dark mode */
+@media (prefers-color-scheme: dark) {
+    .btn:focus,
+    .form-control:focus,
+    .form-check-input:focus,
+    .form-select:focus,
+    .nav-link:focus,
+    .dropdown-toggle:focus,
+    .modal:focus,
+    .tab:focus,
+    .accordion-button:focus {
+        outline: 3px solid #4dabf7;
+        box-shadow: 0 0 0 4px rgba(77, 171, 247, 0.25);
+    }
+}
+
+/* High contrast focus for better visibility */
+@media (prefers-contrast: high) {
+    .btn:focus,
+    .form-control:focus,
+    .form-check-input:focus,
+    .form-select:focus,
+    .nav-link:focus,
+    .dropdown-toggle:focus,
+    .modal:focus,
+    .tab:focus,
+    .accordion-button:focus {
+        outline: 4px solid #000000;
+        outline-offset: 1px;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Enhanced color contrast for better readability */
+.text-high-contrast {
+    color: var(--text-primary) !important;
+}
+
+.bg-high-contrast {
+    background-color: var(--background-primary) !important;
+}
+
+/* ARIA live regions for dynamic content */
+.live-region {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+.live-region[aria-live] {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+}
+
+/* Focus trap for modals and dialogs */
+.focus-trap:focus-within {
+    outline: none;
+}
+
+/* Improved semantic elements */
+main[role="main"],
+nav[role="navigation"],
+aside[role="complementary"] {
+    outline: none; /* Remove default outlines for semantic elements */
+}
+
+/* Better table accessibility */
+.table caption {
+    caption-side: top;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    text-align: left;
+}
+
+/* Form accessibility enhancements */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.form-group label.required::after {
+    content: " *";
+    color: var(--error-color);
+}
+
+/* Error message styling */
+.form-error {
+    color: var(--error-color);
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: block;
+}
+
+/* Success message styling */
+.form-success {
+    color: var(--success-color);
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: block;
+}
+
+/* Loading states for better UX - Phase 3 Enhancement */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+    position: relative;
+    transition: opacity 0.3s ease;
+}
+
+.loading::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid var(--border-color);
+    border-top: 2px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Skeleton loading states for better perceived performance */
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+    border-radius: 4px;
+}
+
+.skeleton-text {
+    height: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.skeleton-title {
+    height: 1.5rem;
+    width: 60%;
+    margin-bottom: 1rem;
+}
+
+.skeleton-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+@keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Micro-interactions */
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+}
+
+.btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+/* Progressive enhancement for modern browsers */
+@supports (backdrop-filter: blur(10px)) {
+    .modal-backdrop {
+        backdrop-filter: blur(10px);
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+}
+
+/* Hide loading spinner for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .loading::after {
+        display: none;
+    }
+    .loading {
+        opacity: 0.8;
+    }
+    .skeleton {
+        animation: none;
+        background: var(--background-secondary);
+    }
+    .btn:hover, .card:hover {
+        transform: none;
+    }
 }
 
 /* ================================

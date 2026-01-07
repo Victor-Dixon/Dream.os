@@ -1,5 +1,5 @@
 #!/bin/bash
-# Agent Cellphone V2 - Installation Script
+# dream.os - Installation Script
 # ========================================
 
 set -e

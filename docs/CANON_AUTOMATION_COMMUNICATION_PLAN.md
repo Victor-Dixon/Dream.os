@@ -1,6 +1,8 @@
+<!-- SSOT Domain: documentation -->
+
 # Canon Automation: Communication Plan
 
-**Date**: 2025-12-22  
+**Date**: 2025-12-22
 **Purpose**: How swarm members will learn about the canon automation system
 
 ---

@@ -1,130 +1,274 @@
-# Agent Cellphone V2 - Docker Compose Configuration
-# ================================================
+# Docker Compose for Infrastructure Phase 3A
+# Container orchestration foundation
 
 version: '3.8'
 
 services:
-  # Main Agent Cellphone Application
-  agent-cellphone:
+  # Flask web service
+  flask_app:
     build:
       context: .
-      dockerfile: Dockerfile
-    container_name: agent-cellphone-v2
-    restart: unless-stopped
-    volumes:
-      # Persistent data volumes
-      - ./agent_workspaces:/app/agent_workspaces:rw
-      - ./logs:/app/logs:rw
-      - ./data:/app/data:rw
-      - ./runtime:/app/runtime:rw
-      # Configuration (read-only)
-      - ./config:/app/config:ro
-      - ./.env:/app/.env:ro
+      dockerfile: Dockerfile.flask
+    container_name: flask-service
     ports:
-      - "8000:8000"  # Web interface
-      - "8080:8080"  # API endpoints
+      - "5000:5000"
     environment:
-      - AGENT_CELLPHONE_ENV=docker
-      - PYTHONPATH=/app
-      - DOCKER_COMPOSE=true
+      - FLASK_ENV=production
+      - FLASK_DEBUG=false
+    volumes:
+      - ./config:/app/config:ro
+      - ./ssl:/app/ssl:ro
+      - ./logs:/app/logs
     networks:
-      - agent-network
+      - tradingrobotplug-network
     depends_on:
       - redis
       - postgres
+    restart: unless-stopped
     healthcheck:
-      test: ["CMD", "python", "-c", "from src.core.health_check import check_system_health; check_system_health()"]
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 60s
+      start_period: 40s
 
-  # Redis for message queuing and caching
-  redis:
-    image: redis:7-alpine
-    container_name: agent-cellphone-redis
-    restart: unless-stopped
-    volumes:
-      - redis_data:/data
+  # FastAPI analytics service
+  fastapi_app:
+    build:
+      context: .
+      dockerfile: Dockerfile.fastapi
+    container_name: fastapi-service
     ports:
-      - "6379:6379"
-    networks:
-      - agent-network
-    command: redis-server --appendonly yes
-
-  # PostgreSQL for data persistence
-  postgres:
-    image: postgres:15-alpine
-    container_name: agent-cellphone-postgres
-    restart: unless-stopped
+      - "8001:8001"
     environment:
-      POSTGRES_DB: agent_cellphone
-      POSTGRES_USER: agent
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-agent_password}
+      - FASTAPI_ENV=production
+      - FASTAPI_DEBUG=false
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
-    ports:
-      - "5432:5432"
+      - ./config:/app/config:ro
+      - ./ssl:/app/ssl:ro
+      - ./logs:/app/logs
     networks:
-      - agent-network
-
-  # Vector Database (ChromaDB)
-  chromadb:
-    image: chromadb/chroma:latest
-    container_name: agent-cellphone-chromadb
+      - tradingrobotplug-network
+    depends_on:
+      - redis
+      - postgres
     restart: unless-stopped
-    volumes:
-      - chromadb_data:/chroma/chroma
-    ports:
-      - "8001:8000"
-    environment:
-      - CHROMA_HOST=0.0.0.0
-      - CHROMA_PORT=8000
-    networks:
-      - agent-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 
-  # Nginx reverse proxy
+  # Kong API Gateway (Phase 3A enterprise scaling)
+  kong:
+    image: kong:3.4
+    container_name: kong-gateway
+    environment:
+      KONG_DATABASE: "off"
+      KONG_DECLARATIVE_CONFIG: "/opt/kong/kong.yml"
+      KONG_PROXY_ACCESS_LOG: "/dev/stdout"
+      KONG_ADMIN_ACCESS_LOG: "/dev/stdout"
+      KONG_PROXY_ERROR_LOG: "/dev/stderr"
+      KONG_ADMIN_ERROR_LOG: "/dev/stderr"
+      KONG_ADMIN_LISTEN: "0.0.0.0:8001, 0.0.0.0:8444 ssl"
+    ports:
+      - "8000:8000"  # Kong proxy port
+      - "8443:8443"  # Kong proxy SSL port
+      - "127.0.0.1:8001:8001"  # Kong admin API
+    volumes:
+      - ./config/kong/kong.yml:/opt/kong/kong.yml:ro
+      - ./ssl:/etc/ssl/certs:ro
+    networks:
+      - tradingrobotplug-network
+    depends_on:
+      - flask_app
+      - fastapi_app
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Nginx reverse proxy / API Gateway (Infrastructure Block 4 finalization)
   nginx:
     image: nginx:alpine
-    container_name: agent-cellphone-nginx
-    restart: unless-stopped
+    container_name: reverse-proxy
     ports:
       - "80:80"
       - "443:443"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./nginx/ssl:/etc/nginx/ssl:ro
-      - nginx_logs:/var/log/nginx
+      - ./ssl:/etc/ssl/certs:ro
+      - ./logs/nginx:/var/log/nginx
     networks:
-      - agent-network
+      - tradingrobotplug-network
     depends_on:
-      - agent-cellphone
-
-  # Monitoring and logging (optional)
-  monitoring:
-    image: grafana/grafana:latest
-    container_name: agent-cellphone-grafana
+      - flask_app
+      - fastapi_app
+      - kong
+      - redis
+      - postgres
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Redis for caching and session storage with Phase 5 connection pooling
+  redis:
+    image: redis:7-alpine
+    container_name: redis-cache
+    ports:
+      - "6379:6379"
+    environment:
+      # Phase 5 connection pooling and performance optimizations
+      - REDIS_MAXMEMORY=256mb
+      - REDIS_MAXMEMORY_POLICY=allkeys-lru
+      - REDIS_TCP_BACKLOG=511
+      - REDIS_TCP_KEEPALIVE=300
+      - REDIS_TIMEOUT=300
+    volumes:
+      - redis_data:/data
+      - ./config/redis.conf:/etc/redis/redis.conf:ro
+    networks:
+      - tradingrobotplug-network
+    restart: unless-stopped
+    command: redis-server /etc/redis/redis.conf --maxmemory 256mb --maxmemory-policy allkeys-lru --tcp-backlog 511 --tcp-keepalive 300 --timeout 300
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # PostgreSQL database with Phase 5 connection pooling
+  postgres:
+    image: postgres:15-alpine
+    container_name: postgres-db
+    environment:
+      POSTGRES_DB: tradingrobotplug
+      POSTGRES_USER: tradingrobotplug
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme123}
+      # Phase 5 connection pooling optimizations
+      POSTGRES_MAX_CONNECTIONS: 100
+      POSTGRES_SHARED_BUFFERS: 256MB
+      POSTGRES_EFFECTIVE_CACHE_SIZE: 1GB
+      POSTGRES_WORK_MEM: 4MB
+      POSTGRES_MAINTENANCE_WORK_MEM: 64MB
+      POSTGRES_CHECKPOINT_COMPLETION_TARGET: 0.9
+      POSTGRES_WAL_BUFFERS: 16MB
+      POSTGRES_DEFAULT_STATISTICS_TARGET: 100
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./config/postgres.conf:/etc/postgresql/postgresql.conf:ro
+    networks:
+      - tradingrobotplug-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tradingrobotplug"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]
+
+  # Prometheus monitoring
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    networks:
+      - tradingrobotplug-network
+    restart: unless-stopped
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+
+  # Grafana for dashboards - Phase 5 Enhanced
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:-admin123}
+      # Phase 5 enhancements
+      GF_USERS_ALLOW_SIGN_UP: false
+      GF_USERS_AUTO_ASSIGN_ORG: true
+      GF_USERS_AUTO_ASSIGN_ORG_ROLE: Viewer
+      GF_SMTP_ENABLED: true
+      GF_SMTP_HOST: ${SMTP_HOST:-localhost}
+      GF_SMTP_USER: ${SMTP_USER:-}
+      GF_SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      GF_ALERTING_ENABLED: true
+      GF_UNIFIED_ALERTING_ENABLED: true
+      GF_FEATURE_TOGGLES_ENABLE: unifiedAlerting
     ports:
       - "3000:3000"
     volumes:
       - grafana_data:/var/lib/grafana
-      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning:ro
-    environment:
-      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
+      - ./config/grafana/provisioning:/etc/grafana/provisioning:ro
     networks:
-      - agent-network
-    profiles:
-      - monitoring
+      - tradingrobotplug-network
+    restart: unless-stopped
+    depends_on:
+      - prometheus
 
+  # Istio service mesh (Kubernetes service mesh implementation for production) - Phase 5 Enhanced
+  istio-proxy:
+    image: istio/proxyv2:1.20.0
+    container_name: istio-proxy
+    environment:
+      - PILOT_CERT_PROVIDER=kubernetes
+      - CA_ADDR=kubernetes.default.svc:15012
+      - NODE_NAME=istio-proxy
+      - POD_NAME=istio-proxy
+      - POD_NAMESPACE=default
+      # Phase 5 enhancements for service mesh
+      - PILOT_TRACE_SAMPLING=1.0
+      - GODEBUG=x509ignoreCN=0
+      - GRPC_GO_LOG_SEVERITY_LEVEL=info
+      - GRPC_GO_LOG_VERBOSITY_LEVEL=0
+    ports:
+      - "15090:15090"  # Envoy admin
+      - "15000:15000"  # Envoy proxy port
+      - "15001:15001"  # Envoy outbound port
+    volumes:
+      - ./config/istio:/etc/istio/config:ro
+      - ./ssl:/etc/istio/certs:ro
+    networks:
+      - tradingrobotplug-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:15000/healthz/ready"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    depends_on:
+      - nginx
+
+# Networks
 networks:
-  agent-network:
+  tradingrobotplug-network:
     driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
 
+# Volumes
 volumes:
   redis_data:
+    driver: local
   postgres_data:
-  chromadb_data:
+    driver: local
+  prometheus_data:
+    driver: local
   grafana_data:
-  nginx_logs:
+    driver: local

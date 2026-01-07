@@ -1,3 +1,5 @@
+<!-- SSOT Domain: architecture -->
+
 # Cycle Snapshot System - Status Reset Logic Design
 
 **Date:** 2025-12-31  

@@ -18,7 +18,7 @@ from typing import Any, Dict
 
 # Lazy import to avoid circular dependencies
 def _get_swarm_intelligence_manager(agent_id: str = "Agent-7"):
-    from src.services.swarm_intelligence_manager import SwarmIntelligenceManager
+    from src.services.unified_service_managers import SwarmIntelligenceManager
     return SwarmIntelligenceManager(agent_id)
 
 # Create blueprint

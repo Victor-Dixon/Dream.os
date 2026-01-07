@@ -1,3 +1,5 @@
+<!-- SSOT Domain: documentation -->
+
 # Cycle Accomplishments Protocol → Project State Report Integration
 
 **Document Version:** 1.0  

@@ -1,4 +1,6 @@
-# Agent Cellphone V2 Documentation
+<!-- SSOT Domain: documentation -->
+
+# dream.os Documentation
 
 **Last Updated:** 2025-12-25
 

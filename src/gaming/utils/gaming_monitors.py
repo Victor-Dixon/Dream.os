@@ -1,5 +1,7 @@
 """Gaming Performance Monitors.
 
+<!-- SSOT Domain: gaming -->
+
 Performance monitoring utilities for gaming integration system.
 
 Author: Agent-3 - Infrastructure & DevOps Specialist

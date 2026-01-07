@@ -7,7 +7,7 @@ Target: ≥85% coverage, 15+ tests.
 import pytest
 from unittest.mock import Mock, patch
 from datetime import datetime
-from src.services.contract_system.manager import ContractManager
+from src.services.unified_service_managers import UnifiedContractManager
 
 
 class TestContractManager:
@@ -15,13 +15,13 @@ class TestContractManager:
 
     def test_init(self):
         """Test ContractManager initialization."""
-        manager = ContractManager()
+        manager = UnifiedContractManager()
         assert manager.storage is not None
         assert manager.logger is not None
 
     def test_get_system_status_success(self):
         """Test successful system status retrieval."""
-        manager = ContractManager()
+        manager = UnifiedContractManager()
 
         # Mock storage - create mock Contract objects with to_dict method
         class MockContract:
@@ -50,7 +50,7 @@ class TestContractManager:
 
     def test_get_system_status_exception(self):
         """Test system status retrieval with exception."""
-        manager = ContractManager()
+        manager = UnifiedContractManager()
         manager.storage.get_all_contracts = Mock(
             side_effect=Exception("Error"))
 
@@ -60,7 +60,7 @@ class TestContractManager:
 
     def test_get_agent_status_success(self):
         """Test successful agent status retrieval."""
-        manager = ContractManager()
+        manager = UnifiedContractManager()
 
         # Mock storage - create mock Contract objects with to_dict method
         class MockContract:
@@ -87,7 +87,7 @@ class TestContractManager:
 
     def test_get_agent_status_empty(self):
         """Test agent status retrieval with no contracts."""
-        manager = ContractManager()
+        manager = UnifiedContractManager()
         manager.storage.get_agent_contracts = Mock(return_value=[])
 
         status = manager.get_agent_status("Agent-1")
@@ -97,7 +97,7 @@ class TestContractManager:
 
     def test_get_agent_status_exception(self):
         """Test agent status retrieval with exception."""
-        manager = ContractManager()
+        manager = UnifiedContractManager()
         manager.storage.get_agent_contracts = Mock(
             side_effect=Exception("Error"))
 
@@ -108,7 +108,7 @@ class TestContractManager:
 
     def test_get_next_task_success(self):
         """Test successful next task retrieval."""
-        manager = ContractManager()
+        manager = UnifiedContractManager()
 
         mock_contracts = [
             {"id": "task1", "status": "pending", "title": "Task 1"},
@@ -128,7 +128,7 @@ class TestContractManager:
 
     def test_get_next_task_no_tasks(self):
         """Test next task retrieval with no available tasks."""
-        manager = ContractManager()
+        manager = UnifiedContractManager()
         # Mock both cycle planner and storage to return no tasks
         manager.cycle_planner.get_next_cycle_task = Mock(return_value=None)
         manager.storage.get_all_contracts = Mock(return_value=[])
@@ -142,7 +142,7 @@ class TestContractManager:
 
     def test_get_next_task_only_active(self):
         """Test next task retrieval when only active tasks exist."""
-        manager = ContractManager()
+        manager = UnifiedContractManager()
 
         mock_contracts = [
             {"id": "task1", "status": "active", "title": "Task 1"},
@@ -156,7 +156,7 @@ class TestContractManager:
 
     def test_get_next_task_exception(self):
         """Test next task retrieval with exception."""
-        manager = ContractManager()
+        manager = UnifiedContractManager()
         manager.storage.get_all_contracts = Mock(
             side_effect=Exception("Error"))
 
@@ -167,7 +167,7 @@ class TestContractManager:
 
     def test_add_task_to_contract_success(self):
         """Test successful task addition to contract."""
-        manager = ContractManager()
+        manager = UnifiedContractManager()
 
         mock_contract = {
             "id": "contract1",
@@ -189,7 +189,7 @@ class TestContractManager:
 
     def test_add_task_to_contract_not_found(self):
         """Test task addition when contract not found."""
-        manager = ContractManager()
+        manager = UnifiedContractManager()
         manager.storage.get_contract = Mock(return_value=None)
 
         result = manager.add_task_to_contract("nonexistent", {"id": "task1"})
@@ -198,7 +198,7 @@ class TestContractManager:
 
     def test_add_task_to_contract_no_tasks_key(self):
         """Test task addition when contract has no tasks key."""
-        manager = ContractManager()
+        manager = UnifiedContractManager()
 
         mock_contract = {"id": "contract1"}
 
@@ -215,7 +215,7 @@ class TestContractManager:
 
     def test_add_task_to_contract_exception(self):
         """Test task addition with exception."""
-        manager = ContractManager()
+        manager = UnifiedContractManager()
         manager.storage.get_contract = Mock(side_effect=Exception("Error"))
 
         result = manager.add_task_to_contract("contract1", {"id": "task1"})

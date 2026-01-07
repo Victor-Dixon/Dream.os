@@ -2,6 +2,8 @@
 Safety Sandbox - AGI-17
 ========================
 
+<!-- SSOT Domain: safety -->
+
 Isolated execution environment for autonomous operations.
 All autonomous code runs in a restricted sandbox before production.
 

@@ -1,4 +1,4 @@
-# 🚀 Agent Cellphone V2 - Quick Start Guide
+# 🚀 dream.os - Quick Start Guide
 
 **Get your multi-agent system running in under 15 minutes**
 
@@ -346,7 +346,7 @@ send_message(
 
 ## 🎉 You're All Set!
 
-Your Agent Cellphone V2 system is now running. The agents will begin coordinating automatically based on their configured roles and the tasks you assign them.
+Your dream.os system is now running. The agents will begin coordinating automatically based on their configured roles and the tasks you assign them.
 
 **Next steps:**
 1. Explore the web dashboard

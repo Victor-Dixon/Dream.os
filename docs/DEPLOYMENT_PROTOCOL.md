@@ -1,3 +1,5 @@
+<!-- SSOT Domain: documentation -->
+
 # Deployment Protocol - No Coordination Required
 
 ## Core Principle

@@ -1,0 +1,78 @@
+{
+  "total_files": 27,
+  "syntax_errors": [],
+  "import_errors": [
+    {
+      "file": "project_context_producer.py",
+      "issues": [
+        "Private module import: __future__"
+      ]
+    }
+  ],
+  "functional_tests": [],
+  "file_sizes": {
+    "auto_task_claimer.py": 1532,
+    "brainstorm_tank.py": 1433,
+    "broadcast_directive.py": 2457,
+    "check_confirmation_state.py": 1802,
+    "code_applicator.py": 1920,
+    "compile_lore.py": 5893,
+    "consolidate_master_tasks.py": 938,
+    "context_planner.py": 12292,
+    "demo_local_channel.py": 2292,
+    "diagnostics.py": 8447,
+    "dreamctl.py": 4596,
+    "event_bus.py": 1534,
+    "file_lock_manager.py": 2837,
+    "find_potential_scripts.py": 6007,
+    "log_analyzer.py": 2446,
+    "monitor_console.py": 907,
+    "parse_feedback_stats.py": 1963,
+    "project_context_producer.py": 5700,
+    "project_scanner.py": 33639,
+    "proposal_security_scanner.py": 7348,
+    "reload_agent_context.py": 1709,
+    "reset_tasks.py": 1783,
+    "run_agent.py": 6252,
+    "run_qa.py": 10890,
+    "set_project.py": 1201,
+    "supervisor_task_consolidator.py": 2014,
+    "swarm_orchestrator.py": 3002
+  },
+  "line_counts": {
+    "auto_task_claimer.py": 50,
+    "brainstorm_tank.py": 34,
+    "broadcast_directive.py": 63,
+    "check_confirmation_state.py": 51,
+    "code_applicator.py": 53,
+    "compile_lore.py": 134,
+    "consolidate_master_tasks.py": 32,
+    "context_planner.py": 258,
+    "demo_local_channel.py": 72,
+    "diagnostics.py": 189,
+    "dreamctl.py": 129,
+    "event_bus.py": 47,
+    "file_lock_manager.py": 85,
+    "find_potential_scripts.py": 151,
+    "log_analyzer.py": 67,
+    "monitor_console.py": 32,
+    "parse_feedback_stats.py": 63,
+    "project_context_producer.py": 175,
+    "project_scanner.py": 797,
+    "proposal_security_scanner.py": 171,
+    "reload_agent_context.py": 47,
+    "reset_tasks.py": 49,
+    "run_agent.py": 159,
+    "run_qa.py": 297,
+    "set_project.py": 35,
+    "supervisor_task_consolidator.py": 70,
+    "swarm_orchestrator.py": 103
+  },
+  "complexity_warnings": [
+    {
+      "file": "project_scanner.py",
+      "issue": "Very large file (>300 lines)",
+      "lines": 797
+    }
+  ]
+}

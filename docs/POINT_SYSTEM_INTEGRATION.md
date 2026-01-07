@@ -1,3 +1,5 @@
+<!-- SSOT Domain: documentation -->
+
 # Point System Integration Guide
 
 **Version:** 1.0  

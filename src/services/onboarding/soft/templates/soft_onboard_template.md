@@ -1,3 +1,5 @@
+<!-- SSOT Domain: onboarding -->
+
 [HEADER] S2A ONBOARDING (SOFT)
 From: SYSTEM
 To: {{AGENT}}

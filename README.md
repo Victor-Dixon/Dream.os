@@ -1,4 +1,4 @@
-# Agent Cellphone V2 - AutoDream OS
+# dream.os
 
 **A multi-agent autonomous system for software development, automation, and infrastructure management.**
 
@@ -24,7 +24,7 @@
 
 ## 🎯 Overview
 
-Agent Cellphone V2 is an autonomous multi-agent system designed for:
+dream.os is an autonomous multi-agent system designed for:
 - **Software Development**: Automated code refactoring, testing, and quality assurance
 - **Infrastructure Management**: Browser automation, deployment, and monitoring
 - **Communication**: Discord bot integration, messaging, and coordination
@@ -112,6 +112,29 @@ The system follows **V2 Compliance Standards** (files ~400 lines guideline, clea
 - Python 3.11+ **OR** Docker
 - Git (for cloning)
 - 4GB RAM, 10GB disk space
+
+### ⚙️ First Time Setup (Required)
+
+Run the interactive setup wizard to configure your environment:
+
+```bash
+# Clone repository
+git clone <repository-url>
+cd Agent_Cellphone_V2_Repository
+
+# Run setup wizard (interactive)
+python setup_wizard.py
+
+# Validate configuration
+python setup_wizard.py --validate
+```
+
+The setup wizard will guide you through:
+- Environment configuration (development/staging/production)
+- API key setup (Discord, Twitch, OpenAI)
+- Service selection and configuration
+- Network settings and ports
+- Advanced performance tuning
 
 ### Installation Options
 

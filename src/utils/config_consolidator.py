@@ -4,6 +4,8 @@ import logging
 logger = logging.getLogger(__name__)
 """
 
+<!-- SSOT Domain: core -->
+
 Configuration Consolidator - V2 Compliance Module
 ================================================
 

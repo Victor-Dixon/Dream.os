@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="swarmGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea"/>
+      <stop offset="100%" style="stop-color:#764ba2"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background circle -->
+  <circle cx="256" cy="256" r="240" fill="url(#swarmGradient)" stroke="#fff" stroke-width="8"/>
+
+  <!-- Swarm bees -->
+  <g transform="translate(256,256)">
+    <!-- Bee 1 -->
+    <circle cx="-80" cy="-60" r="20" fill="#ffd700" stroke="#000" stroke-width="2"/>
+    <circle cx="-70" cy="-60" r="8" fill="#000"/>
+    <circle cx="-90" cy="-60" r="8" fill="#000"/>
+    <rect x="-85" y="-45" width="10" height="15" fill="#000"/>
+    <path d="M-80,-40 Q-70,-30 -80,-20" stroke="#000" stroke-width="2" fill="none"/>
+    <path d="M-80,-40 Q-90,-30 -80,-20" stroke="#000" stroke-width="2" fill="none"/>
+
+    <!-- Bee 2 -->
+    <circle cx="60" cy="-80" r="20" fill="#ffd700" stroke="#000" stroke-width="2"/>
+    <circle cx="70" cy="-80" r="8" fill="#000"/>
+    <circle cx="50" cy="-80" r="8" fill="#000"/>
+    <rect x="55" y="-65" width="10" height="15" fill="#000"/>
+    <path d="M60,-60 Q70,-50 60,-40" stroke="#000" stroke-width="2" fill="none"/>
+    <path d="M60,-60 Q50,-50 60,-40" stroke="#000" stroke-width="2" fill="none"/>
+
+    <!-- Bee 3 -->
+    <circle cx="-40" cy="70" r="20" fill="#ffd700" stroke="#000" stroke-width="2"/>
+    <circle cx="-30" cy="70" r="8" fill="#000"/>
+    <circle cx="-50" cy="70" r="8" fill="#000"/>
+    <rect x="-45" y="85" width="10" height="15" fill="#000"/>
+    <path d="M-40,90 Q-30,100 -40,110" stroke="#000" stroke-width="2" fill="none"/>
+    <path d="M-40,90 Q-50,100 -40,110" stroke="#000" stroke-width="2" fill="none"/>
+
+    <!-- Bee 4 -->
+    <circle cx="80" cy="40" r="20" fill="#ffd700" stroke="#000" stroke-width="2"/>
+    <circle cx="90" cy="40" r="8" fill="#000"/>
+    <circle cx="70" cy="40" r="8" fill="#000"/>
+    <rect x="75" y="55" width="10" height="15" fill="#000"/>
+    <path d="M80,60 Q90,70 80,80" stroke="#000" stroke-width="2" fill="none"/>
+    <path d="M80,60 Q70,70 80,80" stroke="#000" stroke-width="2" fill="none"/>
+  </g>
+
+  <!-- Swarm text -->
+  <text x="256" y="400" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="24" font-weight="bold">SWARM</text>
+</svg>

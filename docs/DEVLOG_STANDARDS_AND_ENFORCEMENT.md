@@ -1,3 +1,5 @@
+<!-- SSOT Domain: documentation -->
+
 # Devlog Standards & Enforcement Protocol
 
 **Effective:** 2025-12-26  

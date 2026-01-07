@@ -14,7 +14,7 @@ Consolidated: Uses BaseHandler (30% code reduction).
 from flask import jsonify, request
 
 from src.core.base.base_handler import BaseHandler
-from src.services.contract_system.manager import ContractManager
+from src.services.unified_service_managers import UnifiedContractManager
 
 
 class ContractHandlers(BaseHandler):
@@ -35,7 +35,7 @@ class ContractHandlers(BaseHandler):
             Tuple of (response_data, status_code)
         """
         try:
-            manager = ContractManager()
+            manager = UnifiedContractManager()
             status = manager.get_system_status()
 
             if "error" in status:
@@ -61,7 +61,7 @@ class ContractHandlers(BaseHandler):
             Tuple of (response_data, status_code)
         """
         try:
-            manager = ContractManager()
+            manager = UnifiedContractManager()
             status = manager.get_agent_status(agent_id)
 
             if "error" in status:
@@ -93,7 +93,7 @@ class ContractHandlers(BaseHandler):
                 error_response = self.format_response(None, success=False, error="agent_id is required")
                 return jsonify(error_response), 400
 
-            manager = ContractManager()
+            manager = UnifiedContractManager()
             task = manager.get_next_task(agent_id)
 
             if "error" in task:

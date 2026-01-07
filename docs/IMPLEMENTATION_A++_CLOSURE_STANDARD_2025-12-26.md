@@ -1,3 +1,5 @@
+<!-- SSOT Domain: documentation -->
+
 # A++ Closure Standard Implementation - 2025-12-26
 
 ## Implementation Complete

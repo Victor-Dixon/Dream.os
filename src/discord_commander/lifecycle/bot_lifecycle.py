@@ -69,6 +69,7 @@ class BotLifecycleManager:
                 AgentManagementCommands,
                 ProfileCommands,
                 PlaceholderCommands,
+                MessagingCommands,
             )
             
             await self.bot.add_cog(CoreMessagingCommands(self.bot, self.bot.gui_controller))
@@ -78,13 +79,20 @@ class BotLifecycleManager:
             await self.bot.add_cog(AgentManagementCommands(self.bot, self.bot.gui_controller))
             await self.bot.add_cog(ProfileCommands(self.bot, self.bot.gui_controller))
             await self.bot.add_cog(PlaceholderCommands(self.bot, self.bot.gui_controller))
+            await self.bot.add_cog(MessagingCommands(self.bot, self.bot.gui_controller))
             
-            # Verify gui command is registered
+            # Verify gui and control commands are registered
             gui_command = self.bot.get_command("gui")
             if gui_command:
                 self.logger.info(f"✅ GUI command registered: {gui_command.name}")
             else:
-                self.logger.warning("⚠️ GUI command not found after loading CoreMessagingCommands")
+                self.logger.warning("⚠️ GUI command not found after loading messaging commands")
+
+            control_command = self.bot.get_command("control")
+            if control_command:
+                self.logger.info(f"✅ Control command registered: {control_command.name}")
+            else:
+                self.logger.warning("⚠️ Control command not found after loading messaging commands")
             
             self.logger.info("✅ All messaging command cogs loaded (V2 compliant modules)")
         except Exception as e:

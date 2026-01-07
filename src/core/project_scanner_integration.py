@@ -3,6 +3,8 @@
 Project Scanner Integration
 ===========================
 
+<!-- SSOT Domain: core -->
+
 Integrates the universal project scanner into the agent operating cycle.
 
 Features:

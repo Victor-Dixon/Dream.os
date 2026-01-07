@@ -12,10 +12,10 @@ docker-install:
 	./install.sh --docker
 
 docker-build:
-	docker build -t agent-cellphone-v2:latest .
+	docker build -t dream-os:latest .
 
 docker-run:
-	docker run -d --name agent-cellphone -p 8000:8000 -v $(PWD)/agent_workspaces:/app/agent_workspaces agent-cellphone-v2:latest
+	docker run -d --name dream-os -p 8000:8000 -v $(PWD)/agent_workspaces:/app/agent_workspaces dream-os:latest
 
 docker-compose-up:
 	docker-compose up -d

@@ -1,3 +1,5 @@
+<!-- SSOT Domain: documentation -->
+
 # System Integration Architecture
 
 ## Overview

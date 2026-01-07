@@ -2,6 +2,8 @@
 Trading Robot Broker Factory
 ============================
 
+<!-- SSOT Domain: trading_robot -->
+
 Provides broker factory for trading operations.
 
 Author: Agent-7 (Web Development Specialist)

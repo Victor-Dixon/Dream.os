@@ -25,6 +25,11 @@ import { DashboardCommunication, initializeDashboardCommunication } from './dash
 import { DashboardNavigation, initializeDashboardNavigation, navigateToView } from './dashboard-navigation.js';
 import { DashboardDataManager, initializeDashboardDataManager, loadDashboardData, loadMultipleViews } from './dashboard-data-manager.js';
 import { showAlert, updateCurrentTime, getStatusClass, formatPercentage, formatNumber, showLoadingState, hideLoadingState } from './dashboard-ui-helpers.js';
+import { DashboardAccessibility } from './dashboard-accessibility.js';
+import { PerformanceUtils } from './performance-utils.js';
+import { BehaviorAnalyticsEngine } from './ai-behavior-analytics.js';
+import { PredictiveUIAdaptation } from './predictive-ui-adaptation.js';
+import { BehavioralInsightsDashboard } from './behavioral-insights-dashboard.js';
 
 // ================================
 // DASHBOARD ORCHESTRATOR (V2 COMPLIANT)
@@ -53,6 +58,26 @@ class DashboardOrchestrator {
         console.log('🚀 Initializing Modular Dashboard V4.0 (V2 Compliant)...');
 
         try {
+            // Initialize accessibility first (Phase 3 enhancement)
+            this.accessibility = new DashboardAccessibility();
+            await this.accessibility.initialize();
+
+            // Initialize performance optimizations (Phase 3 enhancement)
+            this.performance = new PerformanceUtils();
+            await this.performance.initialize();
+
+            // Initialize AI behavior analytics (Phase 4 enhancement)
+            this.aiAnalytics = new BehaviorAnalyticsEngine();
+            await this.aiAnalytics.initialize();
+
+            // Initialize predictive UI adaptation (Phase 4 Sprint 2 enhancement)
+            this.predictiveUI = new PredictiveUIAdaptation();
+            await this.predictiveUI.initialize();
+
+            // Initialize behavioral insights dashboard (Phase 4 Sprint 3 enhancement)
+            this.insightsDashboard = new BehavioralInsightsDashboard();
+            await this.insightsDashboard.initialize('behavioral-insights-dashboard');
+
             // Initialize all modular components
             await Promise.all([
                 initializeDashboardCommunication(),
@@ -65,6 +90,11 @@ class DashboardOrchestrator {
             this.modules.set('navigation', { status: 'active' });
             this.modules.set('dataManager', { status: 'active' });
             this.modules.set('uiHelpers', { status: 'active' });
+            this.modules.set('accessibility', { status: 'active' });
+            this.modules.set('performance', { status: 'active' });
+            this.modules.set('aiAnalytics', { status: 'active' });
+            this.modules.set('predictiveUI', { status: 'active' });
+            this.modules.set('insightsDashboard', { status: 'active' });
 
             // Setup event coordination
             this.setupEventCoordination();
