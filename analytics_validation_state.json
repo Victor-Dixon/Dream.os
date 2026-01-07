@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-01-07T05:36:40.137828",
+  "timestamp": "2026-01-07T05:42:22.231354",
   "sites": {
     "freerideinvestor.com": {
       "site_name": "freerideinvestor.com",
@@ -8,7 +8,7 @@
       "ga4_configured": false,
       "pixel_configured": false,
       "tracking_verified": false,
-      "last_checked": "2026-01-07T05:36:26.408878",
+      "last_checked": "2026-01-07T05:42:19.150010",
       "status": "configured",
       "issues": [
         "GA4 Measurement ID not configured or invalid",
@@ -22,7 +22,7 @@
       "ga4_configured": false,
       "pixel_configured": false,
       "tracking_verified": false,
-      "last_checked": "2026-01-07T05:36:27.417623",
+      "last_checked": "2026-01-07T05:42:19.982264",
       "status": "configured",
       "issues": [
         "GA4 Measurement ID not configured or invalid",
@@ -36,7 +36,7 @@
       "ga4_configured": false,
       "pixel_configured": false,
       "tracking_verified": false,
-      "last_checked": "2026-01-07T05:36:28.396029",
+      "last_checked": "2026-01-07T05:42:20.707924",
       "status": "error",
       "issues": [
         "Configuration check error: Live site check failed: 500 Server Error: Internal Server Error for url: https://dadudekc.com/"
@@ -49,7 +49,7 @@
       "ga4_configured": false,
       "pixel_configured": false,
       "tracking_verified": false,
-      "last_checked": "2026-01-07T05:36:39.330434",
+      "last_checked": "2026-01-07T05:42:21.434587",
       "status": "error",
       "issues": [
         "Configuration check error: Live site check failed: 500 Server Error: Internal Server Error for url: https://crosbyultimateevents.com/"
