@@ -459,7 +459,7 @@ async def health_check(request: HealthRequest = None):
 ai_service = None
 try:
     from src.services.ai_service import AIService
-from src.services.ai_context_engine import ai_context_engine
+    from src.services.ai_context_engine import ai_context_engine
     ai_service = AIService()
     logger.info("✅ AI service loaded for chat interface")
 except ImportError as e:
@@ -1507,6 +1507,22 @@ async def get_ai_context(request: Request):
         await set_cached_response(cache_key, context_response, CACHE_TTL * 2)  # Longer TTL for context
 
         return context_response
+
+    except Exception as e:
+        logger.error(f"AI context retrieval failed: {e}")
+        return {
+            "capabilities": ["Basic chat support"],
+            "status": "degraded",
+            "features": {
+                "chat_interface": True,
+                "code_suggestions": False,
+                "context_awareness": False,
+                "real_time_responses": False,
+                "conversation_memory": False
+            },
+            "error": str(e),
+            "timestamp": time.time()
+        }
 
 
 # Streaming AI Chat Endpoint - Phase 2 Optimization

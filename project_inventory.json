@@ -1,0 +1,333 @@
+{
+  "timestamp": "2026-01-07T16:49:23.183126",
+  "repository_stats": {
+    "total_files": 14295,
+    "total_directories": 1456,
+    "total_size_mb": 569.69,
+    "file_types": {
+      ".json": 961,
+      ".md": 8920,
+      ".toml": 1,
+      ".py": 2952,
+      "": 417,
+      ".yml": 21,
+      ".txt": 158,
+      ".sh": 10,
+      ".bat": 10,
+      ".ini": 5,
+      ".flask": 1,
+      ".fastapi": 1,
+      ".example": 4,
+      ".js": 199,
+      ".html": 37,
+      ".php": 107,
+      ".yaml": 65,
+      ".pkl": 6,
+      ".png": 31,
+      ".sql": 4,
+      ".css": 27,
+      ".svg": 4,
+      ".env": 1,
+      ".service": 1,
+      ".conf": 7,
+      ".jpg": 4,
+      ".log": 63,
+      ".ps1": 11,
+      ".tmp": 4,
+      ".db": 18,
+      ".db-journal": 2,
+      ".TMP": 1,
+      ".pma": 1,
+      ".dat": 1,
+      ".pb": 1,
+      ".old": 5,
+      ".jsonl": 13,
+      ".zip": 1,
+      ".pid": 2,
+      ".backup": 5,
+      ".sqlite3": 2,
+      ".bin": 8,
+      ".pem": 2,
+      ".key": 1,
+      ".crt": 1,
+      ".pth": 7,
+      ".npy": 1,
+      ".patch": 1,
+      ".j2": 42,
+      ".gz": 113,
+      ".xml": 2,
+      ".info": 1,
+      ".map": 6,
+      ".ts": 17,
+      ".lock": 2,
+      ".1": 1,
+      ".csv": 4,
+      ".index": 1,
+      ".xsd": 1
+    },
+    "largest_files": [
+      [
+        "logs\\chat_presence_orchestrator.log",
+        304798058
+      ],
+      [
+        "logs\\structured_errors.log",
+        53463929
+      ],
+      [
+        "logs\\agent_cellphone.log.backup",
+        10485760
+      ],
+      [
+        "logs\\agent_cellphone.log.1",
+        10485739
+      ],
+      [
+        "runtime\\logs\\message_queue_processor_stdout.log",
+        7026897
+      ]
+    ],
+    "recently_modified": [
+      "MASTER_TASK_LOG.md",
+      "README.md",
+      "coordination_cache.json",
+      "Dockerfile",
+      "main.py",
+      "dependency_cache.json",
+      "project_analysis.json",
+      "wave_a_completion_report.md",
+      "docker-compose.yml",
+      "phase3b_duplicates.json"
+    ]
+  },
+  "domain_summary": {
+    "unknown": {
+      "total_tools": 94,
+      "active_tools": 54,
+      "deprecated_tools": 39,
+      "ssot_compliant_tools": 0,
+      "capabilities_count": 242
+    },
+    "swarm_brain": {
+      "total_tools": 1,
+      "active_tools": 1,
+      "deprecated_tools": 0,
+      "ssot_compliant_tools": 1,
+      "capabilities_count": 6
+    },
+    "discord": {
+      "total_tools": 7,
+      "active_tools": 7,
+      "deprecated_tools": 0,
+      "ssot_compliant_tools": 7,
+      "capabilities_count": 31
+    },
+    "web": {
+      "total_tools": 2,
+      "active_tools": 2,
+      "deprecated_tools": 0,
+      "ssot_compliant_tools": 0,
+      "capabilities_count": 10
+    },
+    "infrastructure": {
+      "total_tools": 8,
+      "active_tools": 6,
+      "deprecated_tools": 2,
+      "ssot_compliant_tools": 8,
+      "capabilities_count": 37
+    },
+    "core": {
+      "total_tools": 14,
+      "active_tools": 14,
+      "deprecated_tools": 0,
+      "ssot_compliant_tools": 14,
+      "capabilities_count": 33
+    },
+    "integration": {
+      "total_tools": 14,
+      "active_tools": 12,
+      "deprecated_tools": 2,
+      "ssot_compliant_tools": 14,
+      "capabilities_count": 52
+    },
+    "communication": {
+      "total_tools": 3,
+      "active_tools": 3,
+      "deprecated_tools": 0,
+      "ssot_compliant_tools": 3,
+      "capabilities_count": 13
+    },
+    "business": {
+      "total_tools": 1,
+      "active_tools": 1,
+      "deprecated_tools": 0,
+      "ssot_compliant_tools": 0,
+      "capabilities_count": 5
+    },
+    "analytics": {
+      "total_tools": 4,
+      "active_tools": 4,
+      "deprecated_tools": 0,
+      "ssot_compliant_tools": 4,
+      "capabilities_count": 17
+    },
+    "git": {
+      "total_tools": 1,
+      "active_tools": 1,
+      "deprecated_tools": 0,
+      "ssot_compliant_tools": 1,
+      "capabilities_count": 6
+    },
+    "trading_robot": {
+      "total_tools": 1,
+      "active_tools": 1,
+      "deprecated_tools": 0,
+      "ssot_compliant_tools": 1,
+      "capabilities_count": 6
+    },
+    "tests": {
+      "total_tools": 1,
+      "active_tools": 1,
+      "deprecated_tools": 0,
+      "ssot_compliant_tools": 0,
+      "capabilities_count": 6
+    }
+  },
+  "integration_readiness": {
+    "overall_readiness_score": 83.9,
+    "domain_readiness": {
+      "unknown": {
+        "score": 34.5,
+        "active_tools_ratio": 0.57,
+        "ssot_compliance_ratio": 0.0,
+        "cross_references": 3
+      },
+      "swarm_brain": {
+        "score": 100.0,
+        "active_tools_ratio": 1.0,
+        "ssot_compliance_ratio": 1.0,
+        "cross_references": 1
+      },
+      "discord": {
+        "score": 100.0,
+        "active_tools_ratio": 1.0,
+        "ssot_compliance_ratio": 1.0,
+        "cross_references": 1
+      },
+      "web": {
+        "score": 60.0,
+        "active_tools_ratio": 1.0,
+        "ssot_compliance_ratio": 0.0,
+        "cross_references": 2
+      },
+      "infrastructure": {
+        "score": 85.0,
+        "active_tools_ratio": 0.75,
+        "ssot_compliance_ratio": 1.0,
+        "cross_references": 2
+      },
+      "core": {
+        "score": 100.0,
+        "active_tools_ratio": 1.0,
+        "ssot_compliance_ratio": 1.0,
+        "cross_references": 2
+      },
+      "integration": {
+        "score": 91.4,
+        "active_tools_ratio": 0.86,
+        "ssot_compliance_ratio": 1.0,
+        "cross_references": 2
+      },
+      "communication": {
+        "score": 100.0,
+        "active_tools_ratio": 1.0,
+        "ssot_compliance_ratio": 1.0,
+        "cross_references": 1
+      },
+      "business": {
+        "score": 60.0,
+        "active_tools_ratio": 1.0,
+        "ssot_compliance_ratio": 0.0,
+        "cross_references": 1
+      },
+      "analytics": {
+        "score": 100.0,
+        "active_tools_ratio": 1.0,
+        "ssot_compliance_ratio": 1.0,
+        "cross_references": 2
+      },
+      "git": {
+        "score": 100.0,
+        "active_tools_ratio": 1.0,
+        "ssot_compliance_ratio": 1.0,
+        "cross_references": 2
+      },
+      "trading_robot": {
+        "score": 100.0,
+        "active_tools_ratio": 1.0,
+        "ssot_compliance_ratio": 1.0,
+        "cross_references": 2
+      },
+      "tests": {
+        "score": 60.0,
+        "active_tools_ratio": 1.0,
+        "ssot_compliance_ratio": 0.0,
+        "cross_references": 0
+      }
+    },
+    "integration_gaps": [
+      "Domain 'unknown' has low readiness (57.4%) - 39 deprecated tools",
+      "Isolated domains with no cross-references: tests"
+    ],
+    "cross_domain_dependencies": {
+      "logging": [
+        "unknown",
+        "swarm_brain",
+        "discord",
+        "web",
+        "infrastructure",
+        "core",
+        "integration",
+        "communication",
+        "business",
+        "analytics",
+        "git",
+        "trading_robot"
+      ],
+      "data": [
+        "unknown",
+        "web",
+        "infrastructure",
+        "core",
+        "integration",
+        "analytics",
+        "git",
+        "trading_robot"
+      ],
+      "performance": [
+        "unknown"
+      ]
+    },
+    "ssot_compliance": {
+      "unknown": 0.0,
+      "swarm_brain": 100.0,
+      "discord": 100.0,
+      "web": 0.0,
+      "infrastructure": 100.0,
+      "core": 100.0,
+      "integration": 100.0,
+      "communication": 100.0,
+      "business": 0.0,
+      "analytics": 100.0,
+      "git": 100.0,
+      "trading_robot": 100.0,
+      "tests": 0.0
+    }
+  },
+  "recommendations": [
+    "Improve SSOT compliance in domains: unknown, web, business, tests",
+    "Address low readiness in domains: unknown, web, business, tests",
+    "Domain 'unknown' has low readiness (57.4%) - 39 deprecated tools",
+    "Isolated domains with no cross-references: tests"
+  ]
+}

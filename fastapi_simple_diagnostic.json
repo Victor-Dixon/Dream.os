@@ -1,0 +1,111 @@
+{
+  "timestamp": "2026-01-07T16:44:20.034465",
+  "health_test_results": {
+    "http://localhost:8000/health": {
+      "status": "error",
+      "error": "HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /health (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000002081C52E0D0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "response_time": null
+    },
+    "http://localhost:8001/health": {
+      "status": "error",
+      "error": "HTTPConnectionPool(host='localhost', port=8001): Max retries exceeded with url: /health (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000002081C5347D0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "response_time": null
+    },
+    "http://localhost:5000/health": {
+      "status": "success",
+      "response_time": 8.835,
+      "status_code": 503,
+      "threshold": 2.0,
+      "within_threshold": false
+    }
+  },
+  "alert_analysis": {
+    "fastapi_alerts_count": 13,
+    "recent_fastapi_alerts": [
+      {
+        "level": "warning",
+        "title": "FastAPI Slow Response",
+        "message": "Endpoint /health took 5.04s (threshold: 2.0s)",
+        "source": "fastapi_performance_monitor",
+        "timestamp": "2026-01-07T06:57:51.004716",
+        "metadata": {
+          "endpoint": "/health",
+          "duration": 5.036656618118286,
+          "threshold": 2.0
+        }
+      },
+      {
+        "level": "warning",
+        "title": "FastAPI Slow Response",
+        "message": "Endpoint /health took 5.03s (threshold: 2.0s)",
+        "source": "fastapi_performance_monitor",
+        "timestamp": "2026-01-07T06:58:20.313553",
+        "metadata": {
+          "endpoint": "/health",
+          "duration": 5.027127981185913,
+          "threshold": 2.0
+        }
+      },
+      {
+        "level": "warning",
+        "title": "FastAPI Slow Response",
+        "message": "Endpoint /health took 5.03s (threshold: 2.0s)",
+        "source": "fastapi_performance_monitor",
+        "timestamp": "2026-01-07T06:59:21.472683",
+        "metadata": {
+          "endpoint": "/health",
+          "duration": 5.0326642990112305,
+          "threshold": 2.0
+        }
+      },
+      {
+        "level": "warning",
+        "title": "FastAPI Slow Response",
+        "message": "Endpoint /health took 5.49s (threshold: 2.0s)",
+        "source": "fastapi_performance_monitor",
+        "timestamp": "2026-01-07T07:26:02.472215",
+        "metadata": {
+          "endpoint": "/health",
+          "duration": 5.492896795272827,
+          "threshold": 2.0
+        }
+      },
+      {
+        "level": "warning",
+        "title": "FastAPI Slow Response",
+        "message": "Endpoint /health took 5.71s (threshold: 2.0s)",
+        "source": "fastapi_performance_monitor",
+        "timestamp": "2026-01-07T22:44:19.962402",
+        "metadata": {
+          "endpoint": "/health",
+          "duration": 5.708439588546753,
+          "threshold": 2.0
+        }
+      }
+    ],
+    "other_alerts": [
+      {
+        "level": "warning",
+        "title": "Test Alert",
+        "message": "Testing alerting system integration",
+        "source": "cli_test",
+        "timestamp": "2025-12-14T17:23:05.755722",
+        "metadata": {}
+      },
+      {
+        "level": "warning",
+        "title": "\u26a0\ufe0f WARNING: Disk Space High",
+        "message": "Disk usage at 86.3% - 32.6 GB free",
+        "source": "disk_monitor",
+        "timestamp": "2025-12-14T17:23:35.917369",
+        "metadata": {
+          "usage_percent": 86.3,
+          "free_gb": 32.57,
+          "threshold": 85.0
+        }
+      }
+    ]
+  },
+  "working_endpoints": 1,
+  "slow_endpoints": 1
+}
