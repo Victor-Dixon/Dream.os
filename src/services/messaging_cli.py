@@ -21,6 +21,7 @@ from src.services.messaging import (
     handle_coordinates,
     handle_leaderboard,
     handle_message,
+    handle_robinhood_stats,
     handle_save,
     handle_start_agents,
     handle_survey,
@@ -199,6 +200,9 @@ class MessagingCLI:
                 return handle_save(parsed_args, self.parser)
             elif parsed_args.leaderboard:
                 return handle_leaderboard()
+            elif parsed_args.robinhood_stats:
+                # Handle Robinhood statistics command
+                return handle_robinhood_stats()
             elif parsed_args.resend_failed:
                 # Handle resend failed messages
                 from src.core.message_queue import MessageQueue

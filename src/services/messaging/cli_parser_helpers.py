@@ -81,6 +81,8 @@ def add_utility_flags(parser: argparse.ArgumentParser) -> None:
     )
     parser.add_argument("--leaderboard", action="store_true",
                         help="Display the autonomous competition leaderboard")
+    parser.add_argument("--robinhood-stats", action="store_true",
+                        help="Get 2026 Robinhood options statistics and balance (real data)")
 
 
 def add_task_system_flags(parser: argparse.ArgumentParser) -> None:

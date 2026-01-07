@@ -1,0 +1,56 @@
+{
+  "timestamp": "2026-01-07T02:32:38.153517",
+  "compliance_type": "v2",
+  "checks": {
+    "file_size": {
+      "status": "\u274c FAIL",
+      "oversized_files": [
+        {
+          "file": "setup_wizard.py",
+          "lines": 497
+        },
+        {
+          "file": "setup.py",
+          "lines": 344
+        },
+        {
+          "file": "web_validation_test_suite.py",
+          "lines": 359
+        },
+        {
+          "file": "src\\swarm_pulse\\intelligence.py",
+          "lines": 342
+        },
+        {
+          "file": "src\\discord_commander\\status_reader.py",
+          "lines": 312
+        },
+        {
+          "file": "src\\discord_commander\\systems_inventory_commands.py",
+          "lines": 356
+        },
+        {
+          "file": "src\\discord_commander\\webhook_commands.py",
+          "lines": 412
+        },
+        {
+          "file": "src\\discord_commander\\bot_runner.py",
+          "lines": 362
+        },
+        {
+          "file": "src\\discord_commander\\discord_service.py",
+          "lines": 390
+        },
+        {
+          "file": "src\\discord_commander\\status_change_monitor.py",
+          "lines": 331
+        }
+      ]
+    },
+    "ssot_compliance": {
+      "status": "\u2705 PASS",
+      "success_rate": 95.83815028901735
+    }
+  },
+  "overall_status": "\u274c NON-COMPLIANT"
+}

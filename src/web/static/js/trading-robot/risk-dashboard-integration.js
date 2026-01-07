@@ -151,8 +151,23 @@ export class RiskDashboardIntegration {
 
     /**
      * Handle incoming WebSocket messages
+     *
+     * Navigation References:
+     * ├── WebSocket Server → src/services/risk_analytics/risk_websocket_server.py::_handle_live_connection()
+     * ├── Risk Calculator → src/services/risk_analytics/risk_calculator_service.py::calculate_comprehensive_risk_metrics()
+     * ├── Trading Dashboard → src/web/static/js/trading-robot/trading-dashboard.js
+     * ├── Risk Alerts → src/web/static/js/trading-robot/risk-alerts.js
+     * ├── Chart Updates → src/web/static/js/trading-robot/risk-charts.js::updateRiskCharts()
+     * └── Message Format → docs/analytics/TRADINGROBOTPLUG_ANALYTICS_ARCHITECTURE.md#websocket-protocol
+     *
+     * Message processing pipeline:
+     * 1. Parse JSON message from WebSocket server
+     * 2. Route by message type (risk_metrics_live, heartbeat, etc.)
+     * 3. Update local risk metrics state
+     * 4. Check and generate risk alerts
+     * 5. Notify all dashboard subscribers
+     * 6. Trigger UI updates and chart refreshes
      */
-    handleMessage(data) {
         try {
             const message = JSON.parse(data);
 
