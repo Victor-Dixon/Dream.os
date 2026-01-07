@@ -1,5 +1,5 @@
 {
-  "current_mode": "8-agent",
+  "current_mode": "linux-4-agent",
   "modes": {
     "4-agent": {
       "active_agents": [
@@ -38,6 +38,21 @@
         "Agent-4"
       ],
       "monitor_setup": "dual"
+    },
+    "linux-4-agent": {
+      "active_agents": [
+        "Agent-A",
+        "Agent-B",
+        "Agent-C",
+        "Agent-D"
+      ],
+      "processing_order": [
+        "Agent-A",
+        "Agent-B",
+        "Agent-C",
+        "Agent-D"
+      ],
+      "monitor_setup": "single"
     }
   }
 }
