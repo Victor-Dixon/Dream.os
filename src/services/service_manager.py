@@ -60,7 +60,7 @@ class ServiceManager:
             },
             'fastapi': {
                 'name': 'FastAPI Service',
-                'script': 'src/web/fastapi_app.py',
+                'script': 'src/web/fastapi_server.py',
                 'pid_file': 'fastapi.pid',
                 'log_file': 'fastapi.log',
                 'status': 'stopped'
@@ -180,9 +180,16 @@ class ServiceManager:
             from src.discord_bot import main
             main()
         elif service_name == 'fastapi':
-            from src.web.fastapi_app import app
-            import uvicorn
-            uvicorn.run(app, host="0.0.0.0", port=8001)
+            # PHASE 4 CONSOLIDATION: FastAPI components moved to TradingRobotPlug repository
+            # Import from TradingRobotPlug.web.fastapi_app
+            try:
+                from trading_robot.web.fastapi_app import app
+                import uvicorn
+                uvicorn.run(app, host="0.0.0.0", port=8001)
+            except ImportError as e:
+                logger.error(f"FastAPI service failed to import from TradingRobotPlug: {e}")
+                logger.error("Ensure TradingRobotPlug repository is available and in Python path")
+                raise
         else:
             raise ValueError(f"Unknown service: {service_name}")
 

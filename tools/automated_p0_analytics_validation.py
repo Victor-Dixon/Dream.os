@@ -58,13 +58,13 @@ class AutomatedP0AnalyticsValidator:
 
     def __init__(self):
         """Initialize the validator."""
-        self.sites_dir = Path("websites/sites")
+        self.sites_dir = Path("../../websites")
         self.sites = P0_SITES
 
     def check_wp_config(self, site_name: str) -> Dict[str, Optional[str]]:
-        """Check wp-config.php for analytics constants (local or remote)."""
+        """Check wp-config-analytics.php for analytics constants (local or remote)."""
         # Try local config first
-        config_path = self.sites_dir / site_name / "wp-config.php"
+        config_path = self.sites_dir / site_name / "wp-config-analytics.php"
         
         if config_path.exists():
             try:

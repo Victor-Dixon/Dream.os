@@ -11,7 +11,8 @@ Date: 2026-01-04
 """
 
 import logging
-from typing import Optional, Dict, Any
+import importlib
+from typing import Optional, Dict, Any, Tuple
 from abc import ABC, abstractmethod
 
 logger = logging.getLogger(__name__)
@@ -80,6 +81,11 @@ class BrokerFactory:
         "mock": MockBroker,
     }
 
+    # Dynamic imports for safety (Robinhood loaded only when requested)
+    _dynamic_brokers = {
+        "robinhood": ("src.trading_robot.core.robinhood_broker", "RobinhoodBroker"),
+    }
+
     @classmethod
     def create_broker(cls, broker_type: str = "mock", **kwargs) -> Optional[BrokerInterface]:
         """
@@ -92,12 +98,24 @@ class BrokerFactory:
         Returns:
             Broker instance or None if broker type not supported
         """
-        if broker_type not in cls._brokers:
+        # Check static brokers first
+        if broker_type in cls._brokers:
+            broker_class = cls._brokers[broker_type]
+        # Check dynamic brokers (for safety - Robinhood loaded on demand)
+        elif broker_type in cls._dynamic_brokers:
+            try:
+                module_path, class_name = cls._dynamic_brokers[broker_type]
+                module = importlib.import_module(module_path)
+                broker_class = getattr(module, class_name)
+                logger.info(f"Dynamically loaded {broker_type} broker")
+            except Exception as e:
+                logger.error(f"Failed to dynamically load {broker_type} broker: {e}")
+                return None
+        else:
             logger.warning(f"Unsupported broker type: {broker_type}")
             return None
 
         try:
-            broker_class = cls._brokers[broker_type]
             broker = broker_class(**kwargs)
             logger.info(f"Created {broker_type} broker")
             return broker
@@ -108,9 +126,13 @@ class BrokerFactory:
     @classmethod
     def get_available_brokers(cls) -> list[str]:
         """Get list of available broker types."""
-        return list(cls._brokers.keys())
+        return list(cls._brokers.keys()) + list(cls._dynamic_brokers.keys())
 
     @classmethod
+    def register_broker(cls, name: str, broker_class: type) -> None:
+        """Register a new broker type."""
+        cls._brokers[name] = broker_class
+        logger.info(f"Registered broker: {name}")
     def register_broker(cls, name: str, broker_class: type) -> None:
         """Register a new broker type."""
         cls._brokers[name] = broker_class

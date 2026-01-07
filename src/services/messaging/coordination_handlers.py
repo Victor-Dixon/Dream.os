@@ -73,8 +73,23 @@ class MessageCoordinator:
         """
         Send message to agent via message queue (prevents race conditions).
 
-        Includes coordination throttling for A2A messages to prevent spam.
+        Navigation References:
+        ├── Message Queue → src/core/message_queue/message_queue_impl.py::enqueue_message()
+        ├── Agent Handler → src/services/messaging/agent_message_handler.py::send_to_agent()
+        ├── Coordination Throttler → src/services/coordination/coordination_throttler.py
+        ├── Message Templates → src/core/messaging/messaging_template_texts.py
+        ├── Queue Processor → src/core/message_queue/message_queue_processor.py
+        └── Testing → tests/integration/test_messaging_coordination.py
 
+        Complex coordination pipeline:
+        1. A2A throttling check (prevents spam between agents)
+        2. Queue repository initialization (lazy loading pattern)
+        3. Message enqueueing with metadata preservation
+        4. Priority-based routing and delivery scheduling
+        5. Fallback to direct send if queue unavailable
+        6. Coordination metrics and logging
+
+        Includes coordination throttling for A2A messages to prevent spam.
         Delegates to agent_message_handler for V2 compliance.
         """
         # Check coordination throttling for A2A messages

@@ -246,7 +246,26 @@ class RiskCalculatorService:
         equity_curve: np.ndarray,
         benchmark_returns: Optional[np.ndarray] = None
     ) -> RiskMetrics:
-        """Calculate all comprehensive risk metrics."""
+        """
+        Calculate all comprehensive risk metrics.
+
+        Navigation References:
+        ├── Risk Metrics → See RiskMetrics dataclass above for output structure
+        ├── WebSocket Streaming → src/services/risk_analytics/risk_websocket_server.py::_generate_live_risk_data()
+        ├── Dashboard Display → src/web/static/js/trading-robot/risk-dashboard-integration.js::updateRiskMetrics()
+        ├── Chart Visualization → docs/analytics/risk_dashboard.html#risk-metrics-display
+        ├── Validation Testing → tests/unit/services/test_risk_calculator_service.py
+        └── Performance Benchmark → docs/analytics/TRADINGROBOTPLUG_ANALYTICS_ARCHITECTURE.md#performance-requirements
+
+        Complex processing pipeline:
+        1. Statistical validation of input data
+        2. VaR/CVaR calculation using Historical Simulation method
+        3. Sharpe ratio with annualized returns/volatility
+        4. Maximum drawdown from equity curve analysis
+        5. Sortino ratio with downside deviation
+        6. Calmar ratio combining return and drawdown
+        7. Information ratio vs benchmark (if provided)
+        """
         if len(returns) < 30:
             logger.warning(f"Insufficient data for risk calculations: {len(returns)} returns")
             return self._create_empty_metrics()
