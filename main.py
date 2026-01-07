@@ -39,16 +39,74 @@ from src.cli.argument_parser import parse_main_args
 from src.cli.validation_runner import ValidationRunner
 
 def _handle_status_command(service_manager: ServiceManager):
-    """Handle status command."""
-    print("📊 Service Status Report")
-    print("=" * 40)
+    """Handle status command with enhanced health checks and troubleshooting."""
+    print("🐝 dream.os - Service Status Report")
+    print("=" * 50)
 
     all_status = service_manager.get_all_status()
+
+    if not all_status:
+        print("❌ No services configured or found.")
+        print("\n💡 Quick Fix:")
+        print("   1. Run setup: python setup.py")
+        print("   2. Check config: python setup_wizard.py --validate")
+        return
+
+    # Count running services
+    running_count = sum(1 for status in all_status.values() if status == "running")
+    total_count = len(all_status)
+
+    print(f"📊 Services: {running_count}/{total_count} running")
+    print()
+
+    # Display each service with enhanced info
     for service_name, status in all_status.items():
         status_icon = "🟢" if status == "running" else "🔴"
         info = service_manager.get_service_info(service_name)
         pid = info.get('pid', 'N/A')
-        print(f"{status_icon} {service_name}: {status.upper()} (PID: {pid})")
+        port = info.get('port', 'N/A')
+        health = info.get('health', 'unknown')
+
+        # Enhanced status display
+        health_icon = "💚" if health == "healthy" else "💔" if health == "unhealthy" else "🤔"
+        port_info = f" (Port: {port})" if port != 'N/A' else ""
+
+        print(f"{status_icon} {service_name}: {status.upper()} {health_icon}{port_info}")
+        if pid != 'N/A':
+            print(f"   └─ PID: {pid}")
+
+    print()
+
+    # Overall health assessment
+    if running_count == total_count:
+        print("🎉 All systems operational!")
+        print("\n🚀 Ready to use:")
+        print("   • Web Dashboard: http://localhost:5000")
+        print("   • API Docs: http://localhost:8001/docs")
+        print("   • Discord Bot: Ready for commands")
+    elif running_count > 0:
+        print("⚠️ Partial system operational")
+        print("   Some services are running, but not all.")
+    else:
+        print("❌ System offline")
+        print("   No services are currently running.")
+
+    # Troubleshooting section
+    if running_count < total_count:
+        print("\n🔧 Troubleshooting:")
+        if running_count == 0:
+            print("   • Start services: python main.py --background")
+            print("   • Check setup: python setup.py --validate")
+        else:
+            print("   • Check logs: tail -f logs/app.log")
+            print("   • Restart failed services individually")
+            print("   • Run health check: python scripts/health_check.py")
+
+    print("\n💡 Commands:")
+    print("   • Start all: python main.py --background")
+    print("   • Stop all: python main.py --stop")
+    print("   • Health check: python scripts/health_check.py")
+    print("   • View logs: tail -f logs/app.log")
 
 def _handle_stop_command(service_manager: ServiceManager, force: bool = False):
     """Handle stop/kill commands."""
@@ -100,48 +158,108 @@ def _handle_run_autonomous_config_command():
     print("   python setup_wizard.py")
 
 def _handle_start_services_command(service_manager: ServiceManager, command_info: dict):
-    """Handle start services command."""
+    """Handle start services command with enhanced feedback and health checks."""
     services = command_info['services']
     background = command_info['background']
 
     if not services:
         print("❌ No services specified")
+        print("💡 Try: python main.py --background  # Start all services")
         return
 
     mode = "background" if background else "foreground"
-    print(f"🚀 Starting {len(services)} service(s) in {mode} mode...")
+    print(f"🐝 dream.os - Starting Services")
+    print("=" * 40)
+    print(f"🚀 Launching {len(services)} service(s) in {mode} mode...")
+    print()
 
     success_count = 0
+    failed_services = []
+
     for service_name in services:
+        print(f"   Starting {service_name}...", end=" ")
         if service_manager.start_service(service_name, background=background):
             success_count += 1
-            status_icon = "✅"
+            print("✅")
         else:
-            status_icon = "❌"
-        print(f"   {status_icon} {service_name}")
+            failed_services.append(service_name)
+            print("❌")
 
-    print(f"📊 Started {success_count}/{len(services)} services successfully")
+    print()
+    print(f"📊 Results: {success_count}/{len(services)} services started successfully")
 
     if background:
-        print("\n✅ Services started in background mode")
-        print("   Check status: python main.py --status")
-        print("   Stop services: python main.py --stop")
-        print("   Force kill: python main.py --kill")
+        if success_count > 0:
+            print("\n🎉 Services are running in the background!")
+            print("\n🌐 Access Points:")
+            print("   • Web Dashboard: http://localhost:5000")
+            print("   • API Documentation: http://localhost:8001/docs")
+            print("   • Discord Bot: Ready for !commands")
+
+            print("\n🛠️ Management Commands:")
+            print("   • Check status: python main.py --status")
+            print("   • Stop services: python main.py --stop")
+            print("   • View logs: tail -f logs/app.log")
+            print("   • Health check: python scripts/health_check.py")
+
+            # Quick health verification
+            print("\n🔍 Performing quick health check...")
+            try:
+                import time
+                time.sleep(3)  # Give services time to start
+                all_status = service_manager.get_all_status()
+                running_now = sum(1 for status in all_status.values() if status == "running")
+                if running_now == success_count:
+                    print("✅ All started services are healthy!")
+                else:
+                    print(f"⚠️ {running_now}/{success_count} services are responding")
+            except Exception:
+                print("⚠️ Health check inconclusive (services may still be starting)")
+
+        if failed_services:
+            print(f"\n❌ Failed to start: {', '.join(failed_services)}")
+            print("\n🔧 Troubleshooting:")
+            print("   • Check logs: tail -f logs/app.log")
+            print("   • Verify configuration: python setup_wizard.py --validate")
+            print("   • Check port conflicts: netstat -tulpn | grep :5000")
+            print("   • Restart failed services individually")
+
     else:
-        print("\n💡 Services running in foreground. Press Ctrl+C to stop.")
+        # Foreground mode
+        print("\n💡 Services running in foreground mode")
+        print("   Press Ctrl+C to stop all services")
+        print()
+
         try:
             import time
+            running_check_count = 0
+
             while True:
-                time.sleep(1)
-                # Basic health monitoring
+                time.sleep(5)  # Check every 5 seconds
+
+                # Periodic health check
                 all_status = service_manager.get_all_status()
-                if not any(status == "running" for status in all_status.values()):
-                    print("⚠️ All services have stopped")
+                running_count = sum(1 for status in all_status.values() if status == "running")
+
+                running_check_count += 1
+                if running_check_count % 6 == 0:  # Every 30 seconds
+                    print(f"📊 Health check: {running_count}/{len(services)} services running")
+
+                if running_count == 0:
+                    print("⚠️ All services have stopped unexpectedly")
                     break
+
         except KeyboardInterrupt:
-            print("\n🛑 Stopping all services...")
-            service_manager.stop_all_services(force=True)
-            print("👋 All services stopped. Goodbye!")
+            print("\n🛑 Received shutdown signal...")
+            print("👋 Stopping all services gracefully...")
+
+        # Always attempt clean shutdown
+        shutdown_success = service_manager.stop_all_services(force=False)
+        if shutdown_success:
+            print("✅ All services stopped successfully. Goodbye! 👋")
+        else:
+            print("⚠️ Some services may not have stopped cleanly.")
+            print("   Force kill if needed: python main.py --kill")
 
 def main():
     """Main entry point - simplified launcher using modular components."""

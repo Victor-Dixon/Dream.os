@@ -107,94 +107,97 @@ The system follows **V2 Compliance Standards** (files ~400 lines guideline, clea
 
 ## 🚀 Quick Start
 
-### Prerequisites
+**Get dream.os running in under 5 minutes!**
 
-- Python 3.11+ **OR** Docker
-- Git (for cloning)
-- 4GB RAM, 10GB disk space
+### ⚡ One-Command Setup (New!)
 
-### ⚙️ First Time Setup (Required)
-
-Run the interactive setup wizard to configure your environment:
+**The easiest way to get started:**
 
 ```bash
-# Clone repository
+# Clone and complete setup in one command!
 git clone <repository-url>
 cd Agent_Cellphone_V2_Repository
-
-# Run setup wizard (interactive)
-python setup_wizard.py
-
-# Validate configuration
-python setup_wizard.py --validate
+python setup.py
 ```
 
-The setup wizard will guide you through:
-- Environment configuration (development/staging/production)
-- API key setup (Discord, Twitch, OpenAI)
-- Service selection and configuration
-- Network settings and ports
-- Advanced performance tuning
+That's it! The interactive setup script will:
+- ✅ Validate your system
+- ✅ Guide you through configuration
+- ✅ Install dependencies
+- ✅ Start all services
+- ✅ Verify everything works
+
+### Prerequisites
+
+- Python 3.11+ **OR** Docker Desktop
+- Git (for cloning)
+- 4GB RAM, 10GB disk space
 
 ### Installation Options
 
 #### 🐳 Docker (Recommended - 2 minutes)
 ```bash
-# Clone and install
 git clone <repository-url>
 cd Agent_Cellphone_V2_Repository
-./install.sh --docker
-
-# Start system
-docker-compose up -d
-
-# Access dashboard
-open http://localhost:8000
+python setup.py --docker
 ```
 
 #### 🐍 Native Python (5 minutes)
 ```bash
-# Clone and install
 git clone <repository-url>
 cd Agent_Cellphone_V2_Repository
-./install.sh
-
-# Edit configuration
-nano .env
-
-# Start system
-python main.py --background
-
-# Access dashboard
-open http://localhost:8000
+python setup.py --native
 ```
 
-#### 🪟 Windows (5 minutes)
+#### 🪟 Windows
 ```batch
 git clone <repository-url>
 cd Agent_Cellphone_V2_Repository
-install.bat
-REM Edit .env file, then:
-python main.py --background
+python setup.py
 ```
 
-### First Steps
+### First Validation
+
+Before setup, validate your environment:
+
+```bash
+python scripts/post_clone_check.py
+```
+
+This checks:
+- ✅ Python version compatibility
+- ✅ Operating system support
+- ✅ Required files present
+- ✅ Disk space availability
+- ✅ Docker availability (optional)
+
+### Access Points
+
+After successful setup:
+
+- 🌐 **Web Dashboard**: http://localhost:5000
+- 📚 **API Documentation**: http://localhost:8001/docs
+- 🤖 **Discord Bot**: Ready for commands
+- 📊 **Monitoring**: http://localhost:3000 (admin/admin123)
+
+### Management Commands
 
 ```bash
 # Check system status
 python main.py --status
 
-# Send test message to agents
-python -m src.services.messaging_cli --bulk -m "System online"
+# Start/stop services
+python main.py --background  # Start all
+python main.py --stop        # Stop all
 
-# Run health check
+# Health monitoring
 python scripts/health_check.py --check
 
 # View logs
-make logs
+tail -f logs/app.log
 ```
 
-📖 **[Complete Quick Start Guide](QUICKSTART.md)**
+📖 **[Platform Setup Guide](PLATFORM_SETUP.md)** | **[Quick Start Details](QUICKSTART.md)**
 
 ### Basic Usage
 

@@ -200,17 +200,20 @@ class ServiceManager:
         try:
             if self._is_process_running(pid):
                 if force:
-                    os.kill(pid, signal.SIGKILL)
+                    # Use taskkill on Windows
+                    import subprocess
+                    subprocess.run(['taskkill', '/PID', str(pid), '/F'], capture_output=True)
                     logger.info(f"Force killed {service_name} (PID: {pid})")
                 else:
-                    os.kill(pid, signal.SIGTERM)
-                    # Wait for graceful shutdown
-                    time.sleep(2)
-                    if self._is_process_running(pid):
-                        os.kill(pid, signal.SIGKILL)
-                        logger.info(f"Force killed {service_name} after graceful shutdown timeout")
-                    else:
+                    # Use taskkill for graceful termination
+                    import subprocess
+                    result = subprocess.run(['taskkill', '/PID', str(pid)], capture_output=True)
+                    if result.returncode == 0:
                         logger.info(f"Gracefully stopped {service_name} (PID: {pid})")
+                    else:
+                        # If graceful termination failed, force kill
+                        subprocess.run(['taskkill', '/PID', str(pid), '/F'], capture_output=True)
+                        logger.info(f"Force killed {service_name} after graceful termination failed (PID: {pid})")
             else:
                 logger.info(f"Service {service_name} was not running")
 
