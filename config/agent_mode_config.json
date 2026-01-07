@@ -1,6 +1,23 @@
 {
-  "current_mode": "8-agent",
+  "current_mode": "linux-4-agent",
   "modes": {
+    "linux-4-agent": {
+      "active_agents": [
+        "Agent-A",
+        "Agent-B",
+        "Agent-C",
+        "Agent-D"
+      ],
+      "processing_order": [
+        "Agent-A",
+        "Agent-B",
+        "Agent-C",
+        "Agent-D"
+      ],
+      "monitor_setup": "single",
+      "platform": "linux",
+      "default_agent_names": ["Agent-A", "Agent-B", "Agent-C", "Agent-D"]
+    },
     "4-agent": {
       "active_agents": [
         "Agent-1",
@@ -14,7 +31,8 @@
         "Agent-3",
         "Agent-4"
       ],
-      "monitor_setup": "single"
+      "monitor_setup": "single",
+      "platform": "windows"
     },
     "8-agent": {
       "active_agents": [
@@ -37,7 +55,8 @@
         "Agent-8",
         "Agent-4"
       ],
-      "monitor_setup": "dual"
+      "monitor_setup": "dual",
+      "platform": "windows"
     }
   }
 }

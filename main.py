@@ -1,4 +1,26 @@
 #!/usr/bin/env python3
+from pathlib import Path
+import platform
+import sys
+from pathlib import Path
+
+# Linux first-run setup check
+def check_linux_setup():
+    """Check if Linux setup is needed."""
+    if platform.system().lower() == "linux":
+        setup_file = Path(".linux_setup_complete")
+        if not setup_file.exists():
+            print("🐧 First run on Linux detected! Running setup...")
+            import subprocess
+            result = subprocess.run([sys.executable, "linux_first_run_setup.py"], 
+                                  capture_output=False, text=True)
+            if result.returncode == 0:
+                print("\n✅ Linux setup completed! Run the command again to start services.")
+            else:
+                print("\n❌ Setup failed. Please run: python linux_first_run_setup.py")
+            sys.exit(0)
+
+check_linux_setup()
 """
 Main Service Launcher - Agent Cellphone V2
 ==========================================
