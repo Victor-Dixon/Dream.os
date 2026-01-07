@@ -2,6 +2,8 @@
 Safety Foundation CLI
 =====================
 
+<!-- SSOT Domain: safety -->
+
 Command-line interface for managing safety components.
 
 Usage:

@@ -38,15 +38,11 @@ from . import autonomous_workflow_tools
 from . import bi_tools
 from . import captain_coordination_tools
 from . import captain_tools
-from . import captain_tools_advanced
-from . import captain_tools_architecture
-from . import captain_tools_coordination
-from . import captain_tools_core
-from . import captain_tools_extension
-from . import captain_tools_messaging
-from . import captain_tools_monitoring
-from . import captain_tools_utilities
-from . import captain_tools_validation
+from . import captain_tools_advanced_v2
+from . import captain_tools_core_v2
+from . import captain_tools_monitoring_v2
+from . import captain_tools_operations_v2
+from . import captain_tools_utilities_v2
 from . import communication_tools
 from . import compliance_tools
 from . import config_tools
@@ -105,15 +101,11 @@ __all__ = [
     'bi_tools',
     'captain_coordination_tools',
     'captain_tools',
-    'captain_tools_advanced',
-    'captain_tools_architecture',
-    'captain_tools_coordination',
-    'captain_tools_core',
-    'captain_tools_extension',
-    'captain_tools_messaging',
-    'captain_tools_monitoring',
-    'captain_tools_utilities',
-    'captain_tools_validation',
+    'captain_tools_advanced_v2',
+    'captain_tools_core_v2',
+    'captain_tools_monitoring_v2',
+    'captain_tools_operations_v2',
+    'captain_tools_utilities_v2',
     'communication_tools',
     'compliance_tools',
     'config_tools',

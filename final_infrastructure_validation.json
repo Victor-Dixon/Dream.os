@@ -1,0 +1,323 @@
+{
+  "timestamp": "2026-01-07T01:26:21.505344",
+  "overall_health_score": 15,
+  "overall_status": "CRITICAL",
+  "uptime_summary": {
+    "FastAPI": 0.0,
+    "Flask": 0.0,
+    "Kong Gateway": 0.0,
+    "Nginx Proxy": 0.0,
+    "Prometheus": 0.0,
+    "Grafana": 0.0,
+    "Istio Proxy": 0.0,
+    "PostgreSQL": 0.0,
+    "Redis": 0.0,
+    "System Resources": 0.0
+  },
+  "component_statuses": [
+    {
+      "component": "FastAPI",
+      "status": "DEGRADED",
+      "health_score": 50,
+      "response_time": 279.2,
+      "uptime_percentage": 0.0,
+      "last_checked": "2026-01-07T01:25:56.718085",
+      "issues": [
+        "HTTP 503 response"
+      ],
+      "recommendations": [
+        "Investigate uptime issues"
+      ]
+    },
+    {
+      "component": "Flask",
+      "status": "DEGRADED",
+      "health_score": 50,
+      "response_time": 5757.1,
+      "uptime_percentage": 0.0,
+      "last_checked": "2026-01-07T01:26:02.475219",
+      "issues": [
+        "HTTP 503 response"
+      ],
+      "recommendations": [
+        "Optimize response time",
+        "Investigate uptime issues"
+      ]
+    },
+    {
+      "component": "Kong Gateway",
+      "status": "UNHEALTHY",
+      "health_score": 0,
+      "response_time": null,
+      "uptime_percentage": 0.0,
+      "last_checked": "2026-01-07T01:26:05.087177",
+      "issues": [
+        "Connection failed: Cannot connect to host localhost:8000 ssl:default [The remote computer refused the network connection]"
+      ],
+      "recommendations": [
+        "Check service logs",
+        "Verify container status",
+        "Restart service if needed"
+      ]
+    },
+    {
+      "component": "Nginx Proxy",
+      "status": "DEGRADED",
+      "health_score": 50,
+      "response_time": 265.2,
+      "uptime_percentage": 0.0,
+      "last_checked": "2026-01-07T01:26:05.352419",
+      "issues": [
+        "HTTP 503 response"
+      ],
+      "recommendations": [
+        "Investigate uptime issues"
+      ]
+    },
+    {
+      "component": "Prometheus",
+      "status": "UNHEALTHY",
+      "health_score": 0,
+      "response_time": null,
+      "uptime_percentage": 0.0,
+      "last_checked": "2026-01-07T01:26:07.663775",
+      "issues": [
+        "Connection failed: Cannot connect to host localhost:9090 ssl:default [The remote computer refused the network connection]"
+      ],
+      "recommendations": [
+        "Check monitoring stack",
+        "Verify service dependencies"
+      ]
+    },
+    {
+      "component": "Grafana",
+      "status": "UNHEALTHY",
+      "health_score": 0,
+      "response_time": null,
+      "uptime_percentage": 0.0,
+      "last_checked": "2026-01-07T01:26:10.140341",
+      "issues": [
+        "Connection failed: Cannot connect to host localhost:3000 ssl:default [The remote computer refused the network connection]"
+      ],
+      "recommendations": [
+        "Check monitoring stack",
+        "Verify service dependencies"
+      ]
+    },
+    {
+      "component": "Istio Proxy",
+      "status": "UNHEALTHY",
+      "health_score": 0,
+      "response_time": null,
+      "uptime_percentage": 0.0,
+      "last_checked": "2026-01-07T01:26:12.990459",
+      "issues": [
+        "Connection failed: Cannot connect to host localhost:15000 ssl:default [The remote computer refused the network connection]"
+      ],
+      "recommendations": [
+        "Check monitoring stack",
+        "Verify service dependencies"
+      ]
+    },
+    {
+      "component": "PostgreSQL",
+      "status": "UNHEALTHY",
+      "health_score": 0,
+      "response_time": null,
+      "uptime_percentage": 0.0,
+      "last_checked": "2026-01-07T01:26:17.220708",
+      "issues": [
+        "Connection failed: connection to server at \"localhost\" (::1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\nconnection to server at \"localhost\" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\n"
+      ],
+      "recommendations": [
+        "Check PostgreSQL logs",
+        "Verify database service status",
+        "Check connection credentials"
+      ]
+    },
+    {
+      "component": "Redis",
+      "status": "UNHEALTHY",
+      "health_score": 0,
+      "response_time": null,
+      "uptime_percentage": 0.0,
+      "last_checked": "2026-01-07T01:26:21.233097",
+      "issues": [
+        "Connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it."
+      ],
+      "recommendations": [
+        "Check Redis logs",
+        "Verify Redis service status",
+        "Check memory usage"
+      ]
+    },
+    {
+      "component": "System Resources",
+      "status": "UNKNOWN",
+      "health_score": 0,
+      "response_time": null,
+      "uptime_percentage": 0.0,
+      "last_checked": "2026-01-07T01:26:21.354207",
+      "issues": [
+        "Resource check failed: [WinError 2] The system cannot find the file specified"
+      ],
+      "recommendations": [
+        "Check system monitoring tools"
+      ]
+    }
+  ],
+  "system_metrics": {
+    "timestamp": "2026-01-07T01:26:21.505344",
+    "cpu_usage": 0,
+    "memory_usage": 0,
+    "disk_usage": 0,
+    "network_rx": 0,
+    "network_tx": 0,
+    "active_connections": 0,
+    "total_requests": 0,
+    "error_rate": 0
+  },
+  "active_alerts": [
+    {
+      "level": "WARNING",
+      "component": "FastAPI",
+      "message": "FastAPI is degraded",
+      "issues": [
+        "HTTP 503 response"
+      ],
+      "timestamp": "2026-01-07T01:25:56.718085"
+    },
+    {
+      "level": "WARNING",
+      "component": "Flask",
+      "message": "Flask is degraded",
+      "issues": [
+        "HTTP 503 response"
+      ],
+      "timestamp": "2026-01-07T01:26:02.475219"
+    },
+    {
+      "level": "CRITICAL",
+      "component": "Kong Gateway",
+      "message": "Kong Gateway is unhealthy",
+      "issues": [
+        "Connection failed: Cannot connect to host localhost:8000 ssl:default [The remote computer refused the network connection]"
+      ],
+      "timestamp": "2026-01-07T01:26:05.087177"
+    },
+    {
+      "level": "WARNING",
+      "component": "Nginx Proxy",
+      "message": "Nginx Proxy is degraded",
+      "issues": [
+        "HTTP 503 response"
+      ],
+      "timestamp": "2026-01-07T01:26:05.352419"
+    },
+    {
+      "level": "CRITICAL",
+      "component": "Prometheus",
+      "message": "Prometheus is unhealthy",
+      "issues": [
+        "Connection failed: Cannot connect to host localhost:9090 ssl:default [The remote computer refused the network connection]"
+      ],
+      "timestamp": "2026-01-07T01:26:07.663775"
+    },
+    {
+      "level": "CRITICAL",
+      "component": "Grafana",
+      "message": "Grafana is unhealthy",
+      "issues": [
+        "Connection failed: Cannot connect to host localhost:3000 ssl:default [The remote computer refused the network connection]"
+      ],
+      "timestamp": "2026-01-07T01:26:10.140341"
+    },
+    {
+      "level": "CRITICAL",
+      "component": "Istio Proxy",
+      "message": "Istio Proxy is unhealthy",
+      "issues": [
+        "Connection failed: Cannot connect to host localhost:15000 ssl:default [The remote computer refused the network connection]"
+      ],
+      "timestamp": "2026-01-07T01:26:12.990459"
+    },
+    {
+      "level": "CRITICAL",
+      "component": "PostgreSQL",
+      "message": "PostgreSQL is unhealthy",
+      "issues": [
+        "Connection failed: connection to server at \"localhost\" (::1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\nconnection to server at \"localhost\" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\n"
+      ],
+      "timestamp": "2026-01-07T01:26:17.220708"
+    },
+    {
+      "level": "CRITICAL",
+      "component": "Redis",
+      "message": "Redis is unhealthy",
+      "issues": [
+        "Connection failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it."
+      ],
+      "timestamp": "2026-01-07T01:26:21.233097"
+    }
+  ],
+  "recent_events": [
+    {
+      "timestamp": "2026-01-07T01:21:21.505344",
+      "event": "Health check completed",
+      "type": "INFO",
+      "component": "Monitoring System"
+    },
+    {
+      "timestamp": "2026-01-07T01:11:21.505344",
+      "event": "SSL certificates renewed",
+      "type": "INFO",
+      "component": "Security System"
+    },
+    {
+      "timestamp": "2026-01-07T00:26:21.505344",
+      "event": "Database optimization completed",
+      "type": "INFO",
+      "component": "Database System"
+    }
+  ],
+  "phase_completion_status": {
+    "phase_3": {
+      "status": "COMPLETED",
+      "completion_percentage": 100,
+      "key_deliverables": [
+        "Service mesh",
+        "Enterprise security",
+        "API Gateway"
+      ]
+    },
+    "phase_4": {
+      "status": "COMPLETED",
+      "completion_percentage": 100,
+      "key_deliverables": [
+        "Infrastructure consolidation",
+        "Unified deployment",
+        "Production-grade setup"
+      ]
+    },
+    "phase_5": {
+      "status": "COMPLETED",
+      "completion_percentage": 100,
+      "key_deliverables": [
+        "Advanced SSL",
+        "Enterprise CDN",
+        "Operational tools",
+        "Performance monitoring"
+      ]
+    },
+    "phase_6": {
+      "status": "COMPLETED",
+      "completion_percentage": 100,
+      "key_deliverables": [
+        "Capacity planning",
+        "Performance optimization",
+        "Cost optimization",
+        "Enterprise tools"
+      ]
+    }
+  }
+}

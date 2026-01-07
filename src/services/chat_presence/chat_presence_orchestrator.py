@@ -95,6 +95,11 @@ class ChatPresenceOrchestrator(BaseService):
             obs_config: OBS configuration dict
         """
         super().__init__("ChatPresenceOrchestrator")
+
+        # Load config from environment if not provided
+        if twitch_config is None:
+            twitch_config = self._load_twitch_config_from_env()
+
         self.twitch_config = twitch_config or {}
         self.obs_config = obs_config or {}
 
@@ -129,6 +134,56 @@ class ChatPresenceOrchestrator(BaseService):
             admin_list = [a.strip().lower()
                           for a in admin_list.split(",") if a.strip()]
         self.admin_users.update(admin_list)
+
+    def _load_twitch_config_from_env(self) -> dict:
+        """
+        Load Twitch configuration from environment variables with URL parsing.
+
+        Returns:
+            Dict containing Twitch configuration
+        """
+        import os
+
+        config = {}
+
+        # Get channel from environment
+        channel = os.getenv("TWITCH_CHANNEL", "").strip()
+        if channel:
+            # Parse URL if present
+            if channel.startswith("#"):
+                channel = channel[1:]
+                print("   ⚠️  Removed # prefix from channel")
+
+            if "twitch.tv/" in channel.lower():
+                # Extract channel name from URL
+                parts = channel.lower().split("twitch.tv/")
+                if len(parts) > 1:
+                    channel = parts[-1].split("/")[0].split("?")[0].rstrip("/")
+                    print(f"   ⚠️  Extracted channel name from URL: {channel}")
+
+            # Normalize channel
+            channel = channel.lower().strip()
+            config["channel"] = channel
+
+        # Get token from environment
+        token = os.getenv("TWITCH_ACCESS_TOKEN", "").strip()
+        if token:
+            # Ensure it starts with oauth: prefix
+            if not token.startswith("oauth:"):
+                token = f"oauth:{token}"
+            config["oauth_token"] = token
+
+        # Get username from environment or use channel name
+        username = os.getenv("TWITCH_BOT_USERNAME", "").strip() or channel
+        if username:
+            config["username"] = username.lower().strip()
+
+        # Get admin users
+        admin_users = os.getenv("TWITCH_ADMIN_USERS", "").strip()
+        if admin_users:
+            config["admin_users"] = [u.strip().lower() for u in admin_users.split(",") if u.strip()]
+
+        return config
 
     async def start(self) -> bool:
         """

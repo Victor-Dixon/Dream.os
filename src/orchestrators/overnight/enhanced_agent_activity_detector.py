@@ -1291,8 +1291,8 @@ class EnhancedAgentActivityDetector:
     def _check_contract_activity(self, agent_id: str) -> Optional[Dict[str, Any]]:
         """Check contract system for agent task activity (Agent-5 Phase 1 - HIGH priority)."""
         try:
-            from src.services.contract_system.manager import ContractManager
-            manager = ContractManager()
+            from src.services.unified_service_managers import UnifiedContractManager
+            manager = UnifiedContractManager()
             agent_status = manager.get_agent_status(agent_id)
 
             # Check for active contracts or recent completions

@@ -1,6 +1,8 @@
+<!-- SSOT Domain: documentation -->
+
 # Comprehensive Website Audit Report
-**Date**: 2025-12-22  
-**Auditor**: Agent-7 (Web Development Specialist)  
+**Date**: 2025-12-22
+**Auditor**: Agent-7 (Web Development Specialist)
 **Websites Audited**: 5
 
 ---

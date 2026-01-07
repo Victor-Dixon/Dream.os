@@ -28,7 +28,7 @@ from src.services.messaging import (
 
 # Import task handler with guard to handle missing dependencies gracefully
 try:
-    from .handlers.task_handler import TaskHandler
+    from .unified_cli_handlers import TaskHandler
 
     TASK_HANDLER_AVAILABLE = True
 except ImportError:
@@ -39,7 +39,7 @@ except ImportError:
 
 # Import hard onboarding handler
 try:
-    from src.services.handlers.hard_onboarding_handler import HardOnboardingHandler
+    from src.services.unified_onboarding_handlers import HardOnboardingHandler
 
     HARD_ONBOARDING_HANDLER_AVAILABLE = True
 except ImportError:
@@ -48,7 +48,7 @@ except ImportError:
 
 # Import soft onboarding handler
 try:
-    from src.services.handlers.soft_onboarding_handler import SoftOnboardingHandler
+    from src.services.unified_onboarding_handlers import SoftOnboardingHandler
 
     SOFT_ONBOARDING_HANDLER_AVAILABLE = True
 except ImportError:

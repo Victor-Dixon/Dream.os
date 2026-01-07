@@ -7,6 +7,8 @@
  * @license MIT
  */
 
+// <!-- SSOT Domain: web -->
+
 // ================================
 // PATTERN COORDINATION METHODS
 // ================================

@@ -2,6 +2,8 @@
 Status Monitor Embed Factory
 ============================
 
+<!-- SSOT Domain: discord -->
+
 Helper module for creating Discord embeds for the Status Monitor.
 Extracted from status_change_monitor.py for V2 compliance.
 """

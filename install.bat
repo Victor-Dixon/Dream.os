@@ -1,5 +1,5 @@
 @echo off
-REM Agent Cellphone V2 - Windows Installation Script
+REM dream.os - Windows Installation Script
 REM ================================================
 
 setlocal enabledelayedexpansion

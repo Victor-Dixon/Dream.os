@@ -1,5 +1,7 @@
 """
 
+<!-- SSOT Domain: core -->
+
 Configuration Scanners - V2 Compliance Module
 ===========================================
 

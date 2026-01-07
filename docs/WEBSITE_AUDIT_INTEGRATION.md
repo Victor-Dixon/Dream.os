@@ -1,3 +1,5 @@
+<!-- SSOT Domain: documentation -->
+
 # Website Audit Integration Summary
 
 **Date**: 2025-12-22  

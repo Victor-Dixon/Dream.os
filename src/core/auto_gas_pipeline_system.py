@@ -3,6 +3,8 @@
 Auto-Gas Pipeline System - UNLIMITED FUEL SOLUTION
 =================================================
 
+<!-- SSOT Domain: core -->
+
 Automated gas/fuel delivery system for perpetual agent pipeline operation.
 
 Features:
@@ -27,11 +29,12 @@ import json
 import os
 
 from .agent_status.aggregator import SwarmStateAggregator
+from .unified_service_base import UnifiedServiceBase
 
 logger = logging.getLogger(__name__)
 
 
-class AutoGasPipelineSystem:
+class AutoGasPipelineSystem(UnifiedServiceBase):
     """
     Auto-Gas Pipeline System - Prevents pipeline stalls through automated fuel delivery.
 
@@ -43,13 +46,35 @@ class AutoGasPipelineSystem:
 
     def __init__(self, workspace_root: Optional[Path] = None, monitoring_interval: int = 60):
         """Initialize the auto-gas pipeline system."""
-        self.workspace_root = workspace_root or Path.cwd()
-        self.monitoring_interval = monitoring_interval  # seconds
-        self.running = False
+
+        # Configuration schema for unified service
+        config_schema = {
+            'defaults': {
+                'workspace_root': str(workspace_root or Path.cwd()),
+                'monitoring_interval': monitoring_interval,
+                'jet_fuel_enabled': False,
+                'discord_reporting': True,
+            },
+            'types': {
+                'workspace_root': str,
+                'monitoring_interval': int,
+                'jet_fuel_enabled': bool,
+                'discord_reporting': bool,
+            }
+        }
+
+        # Initialize unified service base
+        super().__init__(
+            service_name="AutoGasPipelineSystem",
+            config_schema=config_schema,
+            loop_interval=monitoring_interval
+        )
+
+        # Service-specific attributes
         self.monitor_thread = None
 
         # Initialize components
-        self.status_aggregator = SwarmStateAggregator(self.workspace_root)
+        self.status_aggregator = SwarmStateAggregator(Path(self.config['workspace_root']))
         self.agent_progress_cache: Dict[str, Dict[str, Any]] = {}
         self.gas_delivery_log: List[Dict[str, Any]] = []
 
@@ -57,77 +82,51 @@ class AutoGasPipelineSystem:
         self.agent_velocity_history: Dict[str, List[float]] = {}
         self.adaptive_thresholds: Dict[str, Dict[str, float]] = {}
 
-        logger.info("✅ Auto-Gas Pipeline System initialized")
+        # Legacy compatibility - map config to old attributes
+        self.monitoring_interval = self.config['monitoring_interval']
+        self.jet_fuel_enabled = self.config.get('jet_fuel_enabled', False)
 
-    def start(self, jet_fuel: bool = False) -> bool:
+        self.logger.info("✅ Auto-Gas Pipeline System initialized with unified patterns")
+
+    def run_once(self) -> None:
+        """Main service execution logic - monitor agents and deliver gas as needed."""
+        try:
+            self._monitor_agents()
+        except Exception as e:
+            self.logger.error(f"Error in gas pipeline run_once: {e}")
+
+    def check_health(self) -> Dict[str, Any]:
+        """Check service health."""
+        return {
+            "healthy": True,
+            "status": "monitoring",
+            "agents_monitored": len(self.agent_progress_cache),
+            "gas_deliveries": len(self.gas_delivery_log),
+            "jet_fuel_enabled": self.config.get('jet_fuel_enabled', False),
+            "timestamp": datetime.now().isoformat()
+        }
+
+    def start(self, jet_fuel: bool = False, mode: str = "foreground") -> bool:
         """
         Start the auto-gas pipeline monitoring.
 
         Args:
             jet_fuel: Enable jet fuel optimization
+            mode: Startup mode (foreground/background)
 
         Returns:
             Success status
         """
-        if self.running:
-            logger.warning("Auto-Gas Pipeline already running")
-            return True
+        # Update configuration with jet fuel setting
+        self.set_config_value('jet_fuel_enabled', jet_fuel)
 
-        try:
-            self.running = True
-            self.jet_fuel_enabled = jet_fuel
-
-            # Start monitoring thread
-            self.monitor_thread = threading.Thread(
-                target=self._monitoring_loop,
-                daemon=True,
-                name="AutoGasMonitor"
-            )
-            self.monitor_thread.start()
-
-            logger.info(f"🚀 Auto-Gas Pipeline started (Jet Fuel: {jet_fuel})")
-            logger.info(f"   Monitoring interval: {self.monitoring_interval}s")
-            logger.info("   Thresholds: 75%, 90%, 100%")
-
-            return True
-
-        except Exception as e:
-            logger.error(f"Failed to start Auto-Gas Pipeline: {e}")
-            self.running = False
-            return False
+        # Use unified service base startup
+        return super().start(mode)
 
     def stop(self) -> bool:
         """Stop the auto-gas pipeline monitoring."""
-        if not self.running:
-            return True
-
-        try:
-            self.running = False
-
-            if self.monitor_thread and self.monitor_thread.is_alive():
-                self.monitor_thread.join(timeout=5)
-
-            logger.info("🛑 Auto-Gas Pipeline stopped")
-            return True
-
-        except Exception as e:
-            logger.error(f"Error stopping Auto-Gas Pipeline: {e}")
-            return False
-
-    def _monitoring_loop(self):
-        """Main monitoring loop that runs continuously."""
-        logger.info("🔄 Auto-Gas Pipeline monitoring loop started")
-
-        while self.running:
-            try:
-                self._monitor_agents()
-                time.sleep(self.monitoring_interval)
-
-            except Exception as e:
-                logger.error(f"Error in monitoring loop: {e}")
-                time.sleep(self.monitoring_interval)
-
-        logger.info("🔄 Auto-Gas Pipeline monitoring loop ended")
+        # Use unified service base stop
+        return super().stop()
 
     def _monitor_agents(self):
         """Monitor all agents and deliver gas as needed."""

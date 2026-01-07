@@ -1,3 +1,5 @@
+<!-- SSOT Domain: documentation -->
+
 # Cycle Accomplishments Report Protocol
 
 **Protocol ID:** CYCLE_ACCOMPLISHMENTS_REPORT_GENERATION  

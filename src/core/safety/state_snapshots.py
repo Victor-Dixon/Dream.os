@@ -2,6 +2,8 @@
 State Snapshot Manager - AGI-26
 ================================
 
+<!-- SSOT Domain: safety -->
+
 Automated state snapshots for rollback capability.
 Captures system state hourly to enable < 5 minute rollback.
 

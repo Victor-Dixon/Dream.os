@@ -1,3 +1,5 @@
+<!-- SSOT Domain: documentation -->
+
 # Daily Episode Workflow
 
 **Purpose**: Automate the generation of Digital Dreamscape daily episodes from agent cycle accomplishments

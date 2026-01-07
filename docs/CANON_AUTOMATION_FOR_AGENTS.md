@@ -1,7 +1,9 @@
+<!-- SSOT Domain: documentation -->
+
 # Canon Automation: For Agents
 
-**Version**: 1.0  
-**Date**: 2025-12-22  
+**Version**: 1.0
+**Date**: 2025-12-22
 **Audience**: All Swarm Members (Agent-1 through Agent-8)
 
 ---

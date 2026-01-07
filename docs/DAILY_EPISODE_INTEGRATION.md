@@ -1,3 +1,5 @@
+<!-- SSOT Domain: documentation -->
+
 # Daily Episode Integration Summary
 
 **Date**: 2025-12-22  

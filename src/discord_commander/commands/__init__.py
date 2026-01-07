@@ -18,6 +18,7 @@ from .utility_commands import UtilityCommands
 from .agent_management_commands import AgentManagementCommands
 from .profile_commands import ProfileCommands
 from .placeholder_commands import PlaceholderCommands
+from .bot_messaging_commands import MessagingCommands
 
 __all__ = [
     "CoreMessagingCommands",
@@ -27,5 +28,6 @@ __all__ = [
     "AgentManagementCommands",
     "ProfileCommands",
     "PlaceholderCommands",
+    "MessagingCommands",
 ]
 

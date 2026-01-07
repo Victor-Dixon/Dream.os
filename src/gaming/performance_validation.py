@@ -2,6 +2,8 @@
 
 """Gaming Performance Validation.
 
+<!-- SSOT Domain: gaming -->
+
 Performance validation script for refactored gaming infrastructure components.
 Integrates with Agent-1 performance benchmarking suite.
 

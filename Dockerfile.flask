@@ -1,0 +1,65 @@
+# Multi-stage Docker build for Flask service
+# Phase 3A: Container orchestration foundation
+
+FROM python:3.11-slim as base
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONHASHSEED=random \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    curl \
+    build-essential \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create non-root user
+RUN groupadd -r flaskuser && useradd -r -g flaskuser flaskuser
+
+# Set work directory
+WORKDIR /app
+
+# Install Python dependencies in a virtual environment
+FROM base as builder
+
+# Create virtual environment
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+# Copy requirements and install dependencies
+COPY requirements.txt .
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt
+
+# Production stage
+FROM base as production
+
+# Copy virtual environment from builder
+COPY --from=builder /opt/venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+# Copy application code
+COPY src/ ./src/
+COPY scripts/start_web_server.py .
+COPY config/ ./config/
+
+# Create necessary directories
+RUN mkdir -p /app/logs /app/runtime/logs /app/ssl
+
+# Set proper permissions
+RUN chown -R flaskuser:flaskuser /app
+USER flaskuser
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:5000/health || exit 1
+
+# Expose port
+EXPOSE 5000
+
+# Start application
+CMD ["python", "start_web_server.py", "--background"]

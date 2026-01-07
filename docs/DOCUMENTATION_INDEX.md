@@ -1,3 +1,5 @@
+<!-- SSOT Domain: documentation -->
+
 # Documentation Index
 
 **Generated:** 2025-12-27 02:50:03

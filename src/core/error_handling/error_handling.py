@@ -3,6 +3,8 @@
 Comprehensive Error Handling and Logging Framework
 ===================================================
 
+<!-- SSOT Domain: error_handling -->
+
 V2 Compliance: Centralized error handling with proper logging, recovery, and monitoring.
 
 Features:

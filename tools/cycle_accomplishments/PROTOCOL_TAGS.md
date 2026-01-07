@@ -1,3 +1,5 @@
+<!-- SSOT Domain: tools -->
+
 # Protocol Tagging Verification
 
 **Date:** 2025-12-30  

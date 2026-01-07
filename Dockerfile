@@ -1,4 +1,4 @@
-# Agent Cellphone V2 - Multi-Stage Docker Build
+# dream.os - Multi-Stage Docker Build
 # ================================================
 
 # Base stage with Python and system dependencies

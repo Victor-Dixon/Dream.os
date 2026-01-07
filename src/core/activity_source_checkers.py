@@ -338,8 +338,8 @@ class ActivitySourceCheckers:
         signals = []
 
         try:
-            from src.services.contract_system.manager import ContractManager
-            manager = ContractManager()
+            from src.services.unified_service_managers import UnifiedContractManager
+            manager = UnifiedContractManager()
             agent_status = manager.get_agent_status(agent_id)
 
             contracts = agent_status.get("contracts", [])

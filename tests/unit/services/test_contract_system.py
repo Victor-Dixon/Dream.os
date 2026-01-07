@@ -380,8 +380,8 @@ class TestContractManager:
             from src.services.contract_system.storage import ContractStorage
             mock_storage.return_value = ContractStorage(base_path=self.temp_dir)
             
-            from src.services.contract_system.manager import ContractManager
-            self.manager = ContractManager()
+            from src.services.unified_service_managers import UnifiedContractManager
+            self.manager = UnifiedContractManager()
             self.manager.storage = ContractStorage(base_path=self.temp_dir)
 
     def teardown_method(self):

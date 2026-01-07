@@ -8,6 +8,8 @@
  * @license MIT
  */
 
+// <!-- SSOT Domain: web -->
+
 import { CrossAgentCoordination } from './cross-agent-coordination.js';
 
 /**

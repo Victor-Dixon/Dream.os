@@ -1,5 +1,7 @@
 """
 
+<!-- SSOT Domain: vision -->
+
 Vision Monitoring
 ================
 

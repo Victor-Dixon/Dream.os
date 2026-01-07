@@ -46,7 +46,6 @@ async def main():
     # Get configuration from environment
     channel = os.getenv("TWITCH_CHANNEL", "").strip()
     oauth_token = os.getenv("TWITCH_ACCESS_TOKEN", "").strip()
-    username = os.getenv("TWITCH_BOT_USERNAME", "").strip() or channel
 
     # Validate configuration exists
     if not channel:
@@ -65,16 +64,19 @@ async def main():
     if channel.startswith("#"):
         channel = channel[1:]
         print(f"   ⚠️  Removed # prefix from channel: {channel}")
-    
+
     if "twitch.tv/" in channel.lower():
         # Extract channel name from URL
         parts = channel.lower().split("twitch.tv/")
         if len(parts) > 1:
             channel = parts[-1].split("/")[0].split("?")[0].rstrip("/")
             print(f"   ⚠️  Extracted channel name from URL: {channel}")
-    
+
     # Normalize channel (lowercase, no spaces)
     channel = channel.lower().strip()
+
+    # Set username after channel parsing (use channel name, not full URL)
+    username = os.getenv("TWITCH_BOT_USERNAME", "").strip() or channel
 
     # Validate token format
     token_clean = oauth_token.strip().strip('"').strip("'")
@@ -84,11 +86,7 @@ async def main():
     else:
         oauth_token = token_clean
 
-    # Validate username
-    if not username:
-        username = channel
-        print(f"   ⚠️  TWITCH_BOT_USERNAME not set, using channel name: {username}")
-    
+    # Username should already be set above, but ensure it's lowercase
     username = username.lower().strip()
 
     print("🐺 SWARM Twitch Chat Bot Starting...")

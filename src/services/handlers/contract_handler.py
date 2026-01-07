@@ -17,7 +17,7 @@ License: MIT
 """
 from typing import Any
 from ...core.base.base_service import BaseService
-from ..contract_system.manager import ContractManager
+from ..unified_service_managers import UnifiedContractManager
 from ..contract_system.storage import ContractStorage
 
 
@@ -41,8 +41,8 @@ class ContractHandler(BaseService):
         """Initialize contract handler."""
         super().__init__("ContractHandler")
         try:
-            from ..contract_system.manager import ContractManager
-            self.manager = ContractManager()
+            from ..unified_service_managers import UnifiedContractManager
+            self.manager = UnifiedContractManager()
         except ImportError:
             self.manager = None
         self._initialize_default_tasks()
@@ -142,7 +142,7 @@ class ContractHandler(BaseService):
             shutil.rmtree(contracts_dir)
         os.makedirs(contracts_dir, exist_ok=True)
         self.storage = ContractStorage()
-        self.manager = ContractManager(self.storage)
+        self.manager = UnifiedContractManager()
         self._initialize_default_tasks()
 
     def get_contract_status(self) ->dict[str, Any]:

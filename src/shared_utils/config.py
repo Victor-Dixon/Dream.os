@@ -1,5 +1,7 @@
 """Configuration utilities for the unified workspace.
 
+<!-- SSOT Domain: core -->
+
 This module loads environment variables and provides helper
 functions for accessing workspace settings.
 """

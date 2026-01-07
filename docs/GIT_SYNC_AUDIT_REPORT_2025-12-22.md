@@ -1,3 +1,5 @@
+<!-- SSOT Domain: documentation -->
+
 # Git Repository Sync Audit Report
 
 **Date:** 2025-12-22  
