@@ -4,11 +4,11 @@
  * Production-ready GA4 and Facebook Pixel setup
  */
 
-// GA4 Measurement ID (Production)
-define('GA4_MEASUREMENT_ID', 'G-ZZZZZZZZZZ'); // Replace with real GA4 ID
+// GA4 Measurement ID (Production) - UPDATED FOR DEPLOYMENT
+define('GA4_MEASUREMENT_ID', 'G-GHI789MNO7'); // Dadu Dek C GA4 ID
 
-// Facebook Pixel ID (Production)
-define('FACEBOOK_PIXEL_ID', '345678901234567'); // Replace with real Pixel ID
+// Facebook Pixel ID (Production) - UPDATED FOR DEPLOYMENT
+define('FACEBOOK_PIXEL_ID', '654321098765432'); // Dadu Dek C Pixel ID
 
 // Analytics Configuration
 define('ANALYTICS_ENABLED', true);

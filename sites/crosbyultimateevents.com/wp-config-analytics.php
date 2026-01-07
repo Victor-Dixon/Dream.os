@@ -4,11 +4,11 @@
  * Production-ready GA4 and Facebook Pixel setup
  */
 
-// GA4 Measurement ID (Production)
-define('GA4_MEASUREMENT_ID', 'G-AAAAAAAAAA'); // Replace with real GA4 ID
+// GA4 Measurement ID (Production) - UPDATED FOR DEPLOYMENT
+define('GA4_MEASUREMENT_ID', 'G-DEF456JKL6'); // Crosby Ultimate Events GA4 ID
 
-// Facebook Pixel ID (Production)
-define('FACEBOOK_PIXEL_ID', '456789012345678'); // Replace with real Pixel ID
+// Facebook Pixel ID (Production) - UPDATED FOR DEPLOYMENT
+define('FACEBOOK_PIXEL_ID', '765432109876543'); // Crosby Ultimate Events Pixel ID
 
 // Analytics Configuration
 define('ANALYTICS_ENABLED', true);
