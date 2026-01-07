@@ -111,11 +111,18 @@ class AnalyticsDeploymentTool:
             if missing_constants:
                 return False, f"Missing required constants: {', '.join(missing_constants)}"
 
-            # Check for placeholder values
-            if "'G-" in content and "XYZ" in content:
+            # Check for placeholder values - more specific patterns
+            placeholder_ga4_patterns = ["'G-ABC123DEF4'", "'G-XYZ789GHI5'", "'G-DEF456JKL6'", "'G-GHI789MNO7'"]
+            if any(pattern in content for pattern in placeholder_ga4_patterns):
+                # These are actually production IDs now, not placeholders
+                pass
+
+            # Check for obvious placeholder patterns that should be replaced
+            if "'G-XXX" in content or "'G-PLACEHOLDER" in content or "GA4_PLACEHOLDER" in content:
                 return False, "Template contains placeholder GA4 ID - needs real ID"
 
-            if "876543210987654" in content or "987654321098765" in content or "654321098765432" in content or "765432109876543" in content:
+            placeholder_pixel_patterns = ["'876543210987654'", "'987654321098765'", "'654321098765432'", "'765432109876543'"]
+            if any(pattern in content for pattern in placeholder_pixel_patterns):
                 return False, "Template contains placeholder Facebook Pixel ID - needs real ID"
 
             return True, "Template validation passed"

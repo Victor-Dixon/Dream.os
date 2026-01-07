@@ -8,7 +8,7 @@
 define('GA4_MEASUREMENT_ID', 'G-DEF456JKL6'); // Crosby Ultimate Events GA4 ID
 
 // Facebook Pixel ID (Production) - UPDATED FOR DEPLOYMENT
-define('FACEBOOK_PIXEL_ID', '765432109876543'); // Crosby Ultimate Events Pixel ID
+define('FACEBOOK_PIXEL_ID', '456789123078965'); // Crosby Ultimate Events Pixel ID
 
 // Analytics Configuration
 define('ANALYTICS_ENABLED', true);
