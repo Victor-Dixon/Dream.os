@@ -8,7 +8,7 @@
 define('GA4_MEASUREMENT_ID', 'G-XYZ789GHI5'); // FreeRide Investor GA4 ID
 
 // Facebook Pixel ID (Production) - UPDATED FOR DEPLOYMENT
-define('FACEBOOK_PIXEL_ID', '876543210987654'); // FreeRide Investor Pixel ID
+define('FACEBOOK_PIXEL_ID', '789456123012345'); // FreeRide Investor Pixel ID
 
 // Analytics Configuration
 define('ANALYTICS_ENABLED', true);

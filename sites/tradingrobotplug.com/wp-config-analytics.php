@@ -8,7 +8,7 @@
 define('GA4_MEASUREMENT_ID', 'G-ABC123DEF4'); // Trading Robot Plug GA4 ID
 
 // Facebook Pixel ID (Production) - UPDATED FOR DEPLOYMENT
-define('FACEBOOK_PIXEL_ID', '987654321098765'); // Trading Robot Plug Pixel ID
+define('FACEBOOK_PIXEL_ID', '321654987036925'); // Trading Robot Plug Pixel ID
 
 // Analytics Configuration
 define('ANALYTICS_ENABLED', true);
