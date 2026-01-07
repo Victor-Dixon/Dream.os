@@ -1071,9 +1071,80 @@ class TechnicalDebtCommands(commands.Cog):
 
             await ctx.send(embed=embed)
 
-            # TODO: Integration with task creation system
-            # This would automatically create tasks in MASTER_TASK_LOG.md
+            # Task creation integration implemented
+            await self._create_technical_debt_tasks(proposal_data)
 
         except Exception as e:
             self.logger.error(f"Error adopting proposal: {e}")
             await ctx.send(f"❌ Error adopting proposal: {e}")
+
+    async def _create_technical_debt_tasks(self, proposal_data: dict):
+        """
+        Create tasks in MASTER_TASK_LOG.md for adopted technical debt proposals.
+
+        Args:
+            proposal_data: Dictionary containing proposal information including:
+                - title: Proposal title
+                - description: Proposal description
+                - priority: HIGH/MEDIUM/LOW
+                - estimated_effort: Implementation effort estimate
+                - proposed_by: Agent who proposed it
+        """
+        try:
+            # Calculate point value based on priority and effort
+            priority = proposal_data.get('priority', 'MEDIUM')
+            effort = proposal_data.get('estimated_effort', 'medium')
+
+            # Point calculation logic
+            base_points = {'HIGH': 75, 'MEDIUM': 50, 'LOW': 25}
+            effort_multiplier = {'small': 0.8, 'medium': 1.0, 'large': 1.2}
+
+            points = int(base_points.get(priority, 50) * effort_multiplier.get(effort, 1.0))
+
+            # Format task description
+            task_title = proposal_data.get('title', 'Technical Debt Implementation')
+            task_description = f"**{priority.upper()}** ({points} pts): {task_title}"
+
+            # Add implementation context
+            task_description += f" - Implement technical debt proposal: {proposal_data.get('description', '')[:100]}..."
+
+            # Add agent assignment if available
+            proposed_by = proposal_data.get('proposed_by')
+            if proposed_by:
+                task_description += f" [{proposed_by}]"
+
+            # Create the task entry
+            task_entry = f"- [ ] {task_description}\n"
+
+            # Read current MASTER_TASK_LOG.md
+            master_task_log_path = Path("MASTER_TASK_LOG.md")
+            if not master_task_log_path.exists():
+                self.logger.error("MASTER_TASK_LOG.md not found")
+                return
+
+            # Read the current content
+            with open(master_task_log_path, 'r', encoding='utf-8') as f:
+                content = f.read()
+
+            # Find the INBOX section and add the task
+            inbox_marker = "## 📥 INBOX"
+            if inbox_marker in content:
+                # Split content at INBOX section
+                parts = content.split(inbox_marker, 1)
+                if len(parts) == 2:
+                    # Insert task at the beginning of INBOX section
+                    updated_content = parts[0] + inbox_marker + "\n\n" + task_entry + parts[1]
+
+                    # Write back to file
+                    with open(master_task_log_path, 'w', encoding='utf-8') as f:
+                        f.write(updated_content)
+
+                    self.logger.info(f"✅ Added technical debt task to MASTER_TASK_LOG.md: {task_title}")
+                else:
+                    self.logger.error("Could not parse MASTER_TASK_LOG.md structure")
+            else:
+                self.logger.error("INBOX section not found in MASTER_TASK_LOG.md")
+
+        except Exception as e:
+            self.logger.error(f"Error creating technical debt tasks: {e}")
+            # Don't raise exception - task creation failure shouldn't break proposal adoption
