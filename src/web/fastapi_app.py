@@ -20,12 +20,14 @@ import hashlib
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException, BackgroundTasks, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse, HTMLResponse
+from fastapi.responses import JSONResponse, HTMLResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from typing import Optional, Dict, Any, List
 import redis.asyncio as redis
+import asyncio
+from typing import AsyncGenerator
 
 logger = logging.getLogger(__name__)
 
@@ -36,10 +38,22 @@ templates = Jinja2Templates(directory=os.path.join(os.path.dirname(__file__), "t
 redis_client = None
 CACHE_TTL = 300  # 5 minutes default TTL
 
+# Connection pooling setup - Phase 2 Optimization
+connection_pools = {
+    "redis": None,
+    "external_apis": None
+}
+
+# Horizontal scaling configuration - Phase 2 Optimization
+HORIZONTAL_SCALING_ENABLED = os.getenv("HORIZONTAL_SCALING", "false").lower() == "true"
+INSTANCE_ID = os.getenv("INSTANCE_ID", "instance-1")
+LOAD_BALANCER_HEALTH_CHECK = "/health"
+
 try:
     redis_url = os.getenv("REDIS_URL", "redis://localhost:6379")
+    # Use connection pool for better performance and resource management
     redis_client = redis.Redis.from_url(redis_url, decode_responses=True)
-    logger.info("✅ Redis caching initialized")
+    logger.info("✅ Redis caching initialized with connection pooling")
 except Exception as e:
     logger.warning(f"Redis not available, caching disabled: {e}")
     redis_client = None
@@ -98,6 +112,74 @@ async def set_cached_response(cache_key: str, response: Dict[str, Any], ttl: int
         logger.info(f"Cache set: {cache_key} (TTL: {ttl}s)")
     except Exception as e:
         logger.warning(f"Cache write error: {e}")
+
+# Response streaming utilities - Phase 2 Optimization
+async def create_streaming_response(content_generator: AsyncGenerator[str, None]):
+    """Create a streaming response for real-time AI responses."""
+    async def generate():
+        try:
+            async for chunk in content_generator:
+                yield f"data: {chunk}\n\n"
+                await asyncio.sleep(0.01)  # Small delay for proper streaming
+            yield "data: [DONE]\n\n"
+        except Exception as e:
+            yield f"data: {{\"error\": \"{str(e)}\"}}\n\n"
+
+    return StreamingResponse(
+        generate(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers": "Cache-Control",
+        }
+    )
+
+# Connection pooling utilities - Phase 2 Optimization
+async def initialize_connection_pools():
+    """Initialize connection pools for external services."""
+    global connection_pools
+
+    # Redis connection pool
+    try:
+        redis_url = os.getenv("REDIS_URL", "redis://localhost:6379")
+        connection_pools["redis"] = redis.ConnectionPool.from_url(
+            redis_url,
+            max_connections=20,
+            decode_responses=True,
+            retry_on_timeout=True,
+            socket_timeout=5,
+            socket_connect_timeout=5,
+            socket_keepalive=True,
+            socket_keepalive_options={},
+            health_check_interval=30
+        )
+        logger.info("✅ Redis connection pool initialized")
+    except Exception as e:
+        logger.warning(f"Redis connection pool failed: {e}")
+
+    # External API connection pool (using aiohttp for HTTP connections)
+    try:
+        import aiohttp
+        timeout = aiohttp.ClientTimeout(total=30, connect=10)
+        connector = aiohttp.TCPConnector(
+            limit=100,  # Max connections per host
+            limit_per_host=10,  # Max connections to single host
+            ttl_dns_cache=300,  # DNS cache TTL
+            use_dns_cache=True,
+            keepalive_timeout=60,
+            enable_cleanup_closed=True,
+        )
+        connection_pools["external_apis"] = {
+            "connector": connector,
+            "timeout": timeout
+        }
+        logger.info("✅ External API connection pool initialized")
+    except ImportError:
+        logger.warning("aiohttp not available, external API connection pooling disabled")
+    except Exception as e:
+        logger.warning(f"External API connection pool failed: {e}")
 
 # Rate limiting utilities - Phase 1 Optimization
 async def check_rate_limit(client_ip: str, endpoint: str) -> bool:
@@ -252,6 +334,19 @@ async def rate_limiting_middleware(request: Request, call_next):
     # Track response status
     if response.status_code >= 400:
         monitoring_metrics["errors_total"] += 1
+
+    return response
+
+# Horizontal scaling middleware - Phase 2 Optimization
+@app.middleware("http")
+async def horizontal_scaling_middleware(request: Request, call_next):
+    """Horizontal scaling middleware for load balancer health checks and instance identification."""
+    # Add instance ID to response headers for load balancer identification
+    response = await call_next()
+
+    if HORIZONTAL_SCALING_ENABLED:
+        response.headers["X-Instance-ID"] = INSTANCE_ID
+        response.headers["X-Load-Balancer"] = "enabled"
 
     return response
 
@@ -923,8 +1018,12 @@ async def ai_chat_endpoint(message: ChatMessage, request: Request):
         # Check cache first (skip for new conversations or context changes)
         if message.conversation_id and not message.context:
             cached_response = await get_cached_response(cache_key)
-            if cached_response:
-                return ChatResponse(**cached_response)
+        if cached_response:
+            return ChatResponse(**cached_response)
+
+        # Check if streaming is requested - Phase 2 Optimization
+        if request.query_params.get("stream") == "true":
+            return await streaming_ai_chat_endpoint(message, request)
 
         # Import Thea client dynamically to avoid circular imports
         from src.services.thea_client import TheaClient
@@ -1129,6 +1228,80 @@ async def get_ai_context(request: Request):
         await set_cached_response(cache_key, context_response, CACHE_TTL * 2)  # Longer TTL for context
 
         return context_response
+
+
+# Streaming AI Chat Endpoint - Phase 2 Optimization
+async def streaming_ai_chat_endpoint(message: ChatMessage, request: Request) -> StreamingResponse:
+    """Streaming AI chat endpoint for real-time responses."""
+    try:
+        # Rate limiting check
+        client_ip = request.client.host if request.client else "unknown"
+        if not await check_rate_limit(client_ip, "/api/ai/chat/stream"):
+            async def error_generator():
+                yield '{"error": "Rate limit exceeded", "status": 429}'
+            return await create_streaming_response(error_generator())
+
+        # Import Thea client dynamically
+        from src.services.thea_client import TheaClient
+
+        # Initialize Thea client with connection pooling
+        async with TheaClient() as thea_client:
+            # Prepare context
+            context = message.context or {}
+            context.update({
+                "source": "web_dashboard",
+                "streaming": True,
+                "timestamp": time.time(),
+                "user_type": "dashboard_user"
+            })
+
+            # Get streaming response
+            response = await thea_client.get_guidance(
+                prompt=message.message,
+                context=context
+            )
+
+            # Create streaming response generator
+            async def response_generator():
+                if response:
+                    # Stream response in chunks for real-time experience
+                    words = response.split()
+                    for i, word in enumerate(words):
+                        chunk = {
+                            "token": word,
+                            "position": i,
+                            "finished": False,
+                            "conversation_id": message.conversation_id or f"conv_{int(time.time())}"
+                        }
+                        yield json.dumps(chunk)
+                        # Realistic typing delay for better UX
+                        await asyncio.sleep(0.05)
+
+                    # Send completion signal
+                    completion_chunk = {
+                        "finished": True,
+                        "conversation_id": message.conversation_id or f"conv_{int(time.time())}",
+                        "total_tokens": len(words)
+                    }
+                    yield json.dumps(completion_chunk)
+                else:
+                    # Fallback for AI service unavailability
+                    yield json.dumps({
+                        "error": "AI service temporarily unavailable",
+                        "fallback": True,
+                        "suggestions": ["Check Thea service status", "Try again later"]
+                    })
+
+        return await create_streaming_response(response_generator())
+
+    except Exception as e:
+        logger.error(f"Streaming AI chat failed: {e}")
+        async def error_generator():
+            yield json.dumps({
+                "error": f"Streaming failed: {str(e)}",
+                "fallback": True
+            })
+        return await create_streaming_response(error_generator())
 
 
 @app.get("/api/metrics")
