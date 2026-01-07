@@ -27,6 +27,13 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# Import the FastAPI app for uvicorn
+from src.web.fastapi_app import app
+
+def run_fastapi_server():
+    """Function to run the FastAPI server (for service manager compatibility)."""
+    main()
+
 def main():
     """Main entry point for FastAPI server."""
     try:
