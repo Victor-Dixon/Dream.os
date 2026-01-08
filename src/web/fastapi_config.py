@@ -47,6 +47,19 @@ class FastAPISettings:
         self.ai_service_enabled: bool = os.getenv("FASTAPI_AI_ENABLED", "true").lower() == "true"
         self.ai_service_url: Optional[str] = os.getenv("FASTAPI_AI_URL")
 
+        # PERFORMANCE OPTIMIZATION: Performance settings
+        self.enable_caching: bool = os.getenv("FASTAPI_ENABLE_CACHING", "true").lower() == "true"
+        self.cache_ttl: int = int(os.getenv("FASTAPI_CACHE_TTL", "300"))  # 5 minutes default
+        self.cache_max_size: int = int(os.getenv("FASTAPI_CACHE_MAX_SIZE", "1000"))
+        self.enable_compression: bool = os.getenv("FASTAPI_ENABLE_COMPRESSION", "true").lower() == "true"
+        self.compression_level: int = int(os.getenv("FASTAPI_COMPRESSION_LEVEL", "6"))
+        self.enable_performance_monitoring: bool = os.getenv("FASTAPI_PERFORMANCE_MONITORING", "true").lower() == "true"
+
+        # PERFORMANCE OPTIMIZATION: Connection settings
+        self.max_connections: int = int(os.getenv("FASTAPI_MAX_CONNECTIONS", "100"))
+        self.connection_timeout: int = int(os.getenv("FASTAPI_CONNECTION_TIMEOUT", "30"))
+        self.keep_alive_timeout: int = int(os.getenv("FASTAPI_KEEP_ALIVE_TIMEOUT", "65"))
+
         # Monitoring settings
         self.enable_monitoring: bool = os.getenv("FASTAPI_MONITORING", "true").lower() == "true"
         self.metrics_enabled: bool = os.getenv("FASTAPI_METRICS", "true").lower() == "true"

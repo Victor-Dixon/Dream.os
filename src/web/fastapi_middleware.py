@@ -15,15 +15,154 @@ Date: 2026-01-08
 
 import time
 import logging
-from typing import Callable
+import gzip
+import hashlib
+from typing import Callable, Optional
 from fastapi import Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import JSONResponse
 
 from .fastapi_config import settings, get_cors_origins
 
 logger = logging.getLogger(__name__)
+
+# PERFORMANCE OPTIMIZATION: Response cache
+_response_cache = {}
+_cache_max_size = 1000
+_cache_ttl = 300  # 5 minutes
+
+
+def _get_cache_key(request: Request) -> str:
+    """Generate cache key from request."""
+    key_parts = [
+        request.method,
+        str(request.url),
+        str(request.query_params),
+        hashlib.md5(request.headers.get("authorization", "").encode()).hexdigest()[:8]
+    ]
+    return hashlib.md5("|".join(key_parts).encode()).hexdigest()
+
+
+def _is_cacheable_request(request: Request) -> bool:
+    """Check if request can be cached."""
+    return (
+        request.method == "GET" and
+        not request.headers.get("authorization") and  # Don't cache authenticated requests
+        not any(param.startswith("nocache") for param in request.query_params.keys())
+    )
+
+
+def _is_cacheable_response(response: Response) -> bool:
+    """Check if response can be cached."""
+    return (
+        response.status_code == 200 and
+        not response.headers.get("cache-control") == "no-cache"
+    )
+
+
+async def response_caching_middleware(request: Request, call_next: Callable) -> Response:
+    """
+    PERFORMANCE OPTIMIZATION: Response caching middleware.
+    Caches GET responses to reduce processing overhead.
+    """
+    if not _is_cacheable_request(request):
+        return await call_next(request)
+
+    cache_key = _get_cache_key(request)
+    current_time = time.time()
+
+    # Check cache
+    if cache_key in _response_cache:
+        cached_response, cache_time = _response_cache[cache_key]
+        if current_time - cache_time < _cache_ttl:
+            logger.debug(f"Cache hit for {request.url.path}")
+            # Return cached response (deep copy to avoid mutation)
+            return Response(
+                content=cached_response["content"],
+                status_code=cached_response["status_code"],
+                headers=cached_response["headers"]
+            )
+        else:
+            # Remove expired cache entry
+            del _response_cache[cache_key]
+
+    # Process request
+    response = await call_next(request)
+
+    # Cache successful responses
+    if _is_cacheable_response(response):
+        try:
+            content = response.body if hasattr(response, 'body') else b""
+            _response_cache[cache_key] = {
+                "content": content,
+                "status_code": response.status_code,
+                "headers": dict(response.headers),
+                "cached_at": current_time
+            }
+
+            # Maintain cache size limit
+            if len(_response_cache) > _cache_max_size:
+                # Remove oldest entries
+                sorted_entries = sorted(_response_cache.items(), key=lambda x: x[1]["cached_at"])
+                for key, _ in sorted_entries[:100]:  # Remove 10% of entries
+                    del _response_cache[key]
+
+            logger.debug(f"Cached response for {request.url.path}")
+
+        except Exception as e:
+            logger.warning(f"Failed to cache response: {e}")
+
+    return response
+
+
+async def performance_monitoring_middleware(request: Request, call_next: Callable) -> Response:
+    """
+    PERFORMANCE OPTIMIZATION: Enhanced performance monitoring.
+    Tracks detailed performance metrics for optimization.
+    """
+    start_time = time.time()
+    start_memory = 0
+
+    # Track memory usage if available
+    try:
+        import psutil
+        process = psutil.Process()
+        start_memory = process.memory_info().rss
+    except ImportError:
+        pass
+
+    try:
+        response = await call_next(request)
+
+        # Calculate performance metrics
+        duration = time.time() - start_time
+        memory_used = 0
+
+        try:
+            import psutil
+            process = psutil.Process()
+            memory_used = process.memory_info().rss - start_memory
+        except ImportError:
+            pass
+
+        # Add performance headers
+        response.headers["X-Response-Time"] = ".2f"
+        response.headers["X-Memory-Usage"] = str(memory_used)
+        response.headers["X-Cache-Status"] = "HIT" if hasattr(response, '_from_cache') else "MISS"
+
+        # Log performance warnings
+        if duration > 1.0:  # Log slow requests
+            logger.warning(f"Slow request: {duration:.2f}s for {request.url.path}")
+        if memory_used > 50 * 1024 * 1024:  # Log high memory usage (>50MB)
+            logger.warning(f"High memory usage: {memory_used / 1024 / 1024:.1f}MB for {request.url.path}")
+
+        return response
+
+    except Exception as e:
+        logger.error(f"Performance monitoring error: {e}")
+        raise
 
 
 async def request_logging_middleware(request: Request, call_next: Callable) -> Response:
@@ -89,7 +228,10 @@ async def security_headers_middleware(request: Request, call_next: Callable) -> 
 
 
 def setup_all_middleware(app) -> None:
-    """Setup all middleware for the FastAPI application."""
+    """Setup all middleware for the FastAPI application with performance optimizations."""
+
+    # PERFORMANCE OPTIMIZATION: GZip compression middleware
+    app.add_middleware(GZipMiddleware, minimum_size=1000)
 
     # CORS middleware
     app.add_middleware(
@@ -107,7 +249,13 @@ def setup_all_middleware(app) -> None:
             allowed_hosts=["your-domain.com", "*.your-domain.com"]
         )
 
-    # Request logging middleware
+    # PERFORMANCE OPTIMIZATION: Response caching middleware (applied first)
+    app.middleware("http")(response_caching_middleware)
+
+    # PERFORMANCE OPTIMIZATION: Enhanced performance monitoring
+    app.middleware("http")(performance_monitoring_middleware)
+
+    # Request logging middleware (applied last to capture all processing)
     app.middleware("http")(request_logging_middleware)
 
     # Security headers middleware
