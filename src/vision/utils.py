@@ -14,7 +14,7 @@ License: MIT
 """
 
 # Redirect to SSOT
-from ...core.utils.v2_integration_utils import (
+from ..core.utils.v2_integration_utils import (
     get_coordinate_loader,
     get_logger,
     get_unified_config,
