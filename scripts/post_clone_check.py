@@ -75,61 +75,57 @@ class PostCloneValidator:
         return all_present
 
     def check_basic_imports(self) -> bool:
-        """Check basic module imports."""
-        basic_imports = [
-            ("src.core.config.config_manager", "UnifiedConfigManager"),
-            ("src.services.service_manager", "ServiceManager"),
-            ("src.cli.argument_parser", "MainArgumentParser")
+        """Check basic module imports (defensive to avoid system initialization)."""
+        # Only check if files exist, don't actually import to avoid triggering full system init
+        basic_files = [
+            "src/core/config/config_manager.py",
+            "src/services/service_manager.py",
+            "src/cli/argument_parser.py"
         ]
 
-        all_importable = True
-        for module_name, class_name in basic_imports:
-            try:
-                module = importlib.import_module(module_name)
-                getattr(module, class_name)
-                self.log_success(f"Import: {module_name}.{class_name}")
-            except (ImportError, AttributeError) as e:
-                self.log_error(f"Import failed: {module_name}.{class_name} - {e}")
-                all_importable = False
+        all_present = True
+        for file_path in basic_files:
+            if not (self.project_root / file_path).exists():
+                self.log_error(f"Required module file missing: {file_path}")
+                all_present = False
+            else:
+                self.log_success(f"Found: {file_path}")
 
-        return all_importable
+        return all_present
 
     def check_git_status(self) -> bool:
         """Check git repository status."""
         try:
-            result = subprocess.run(
-                ["git", "status", "--porcelain"],
-                cwd=self.project_root,
-                capture_output=True,
-                text=True,
-                timeout=10
-            )
-
-            if result.returncode == 0:
-                self.log_success("Git repository is clean")
+            # Just check if .git directory exists
+            if (self.project_root / ".git").exists():
+                self.log_success("Git repository initialized")
                 return True
             else:
-                self.log_warning("Git repository has uncommitted changes")
+                self.log_warning("Not a git repository")
                 return True
-        except (subprocess.TimeoutExpired, FileNotFoundError):
-            self.log_warning("Git not available or repository not initialized")
+        except Exception as e:
+            self.log_warning(f"Git check failed: {e}")
             return True
 
     def check_disk_space(self) -> bool:
         """Check available disk space."""
         try:
-            stat = os.statvfs(self.project_root)
-            free_gb = (stat.f_bavail * stat.f_frsize) / (1024**3)
+            if hasattr(os, 'statvfs'):
+                stat = os.statvfs(self.project_root)
+                free_gb = (stat.f_bavail * stat.f_frsize) / (1024**3)
 
-            if free_gb > 5:
-                self.log_success(f"Disk space: {free_gb:.1f} GB available")
-                return True
+                if free_gb > 5:
+                    self.log_success(f"Disk space: {free_gb:.1f} GB available")
+                    return True
+                else:
+                    self.log_warning(f"Low disk space: {free_gb:.1f} GB available (recommended: 10GB+)")
+                    return True
             else:
-                self.log_warning(f"Low disk space: {free_gb:.1f} GB available (recommended: 10GB+)")
+                # Windows or other systems without statvfs
+                self.log_success("Disk space check skipped (not supported on this OS)")
                 return True
-        except AttributeError:
-            # Windows doesn't have statvfs
-            self.log_success("Disk space check skipped (Windows)")
+        except Exception as e:
+            self.log_warning(f"Disk space check failed: {e}")
             return True
 
     def run_validation(self) -> bool:

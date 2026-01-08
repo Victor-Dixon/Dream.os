@@ -6,7 +6,7 @@ V2 Compliance: <100 lines
 Immediate AI utilization for infrastructure operations
 """
 
-from src.ai_training.dreamvault.advanced_reasoning import AdvancedReasoningEngine
+from src.ai_training.dreamvault.advanced_reasoning import AdvancedReasoningEngine, ReasoningContext, ReasoningMode, ResponseFormat
 from typing import Dict, List, Any
 import json
 
@@ -32,10 +32,15 @@ class AIPoweredInfrastructureAnalyzer:
         5. Implementation priority (High/Medium/Low)
         """
 
-        result = self.ai_engine.reason(analysis_query, mode="technical")
+        context = ReasoningContext(
+            query=analysis_query,
+            mode=ReasoningMode.TECHNICAL,
+            format=ResponseFormat.TEXT
+        )
+        result = self.ai_engine.reason(context)
         return {
             "ai_analysis": result.response,
-            "confidence": result.confidence_score,
+            "confidence": result.confidence,
             "recommendations": self._extract_recommendations(result.response)
         }
 
@@ -54,10 +59,15 @@ class AIPoweredInfrastructureAnalyzer:
         5. Success metrics
         """
 
-        result = self.ai_engine.reason(strategy_query, mode="strategic")
+        context = ReasoningContext(
+            query=strategy_query,
+            mode=ReasoningMode.STRATEGIC,
+            format=ResponseFormat.TEXT
+        )
+        result = self.ai_engine.reason(context)
         return {
             "optimized_strategy": result.response,
-            "confidence": result.confidence_score,
+            "confidence": result.confidence,
             "implementation_steps": self._extract_steps(result.response)
         }
 
@@ -78,7 +88,12 @@ class AIPoweredInfrastructureAnalyzer:
         Provide prioritized list with reasoning.
         """
 
-        result = self.ai_engine.reason(prioritization_query, mode="strategic")
+        context = ReasoningContext(
+            query=prioritization_query,
+            mode=ReasoningMode.STRATEGIC,
+            format=ResponseFormat.TEXT
+        )
+        result = self.ai_engine.reason(context)
 
         # Add AI prioritization to each task
         for i, task in enumerate(tasks):

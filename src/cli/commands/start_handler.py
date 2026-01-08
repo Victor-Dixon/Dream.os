@@ -146,7 +146,7 @@ class StartHandler:
 
         for _ in range(timeout):
             status = self.service_manager.get_service_status(service_name)
-            if status and status.get('status') == 'running':
+            if status == 'running':
                 # Additional health checks could go here
                 return True
             time.sleep(1)

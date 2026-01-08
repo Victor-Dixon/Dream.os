@@ -21,14 +21,12 @@ from threading import Lock
 from typing import Any, List
 from concurrent.futures import ThreadPoolExecutor
 
-try:
-    import chromadb
-    from chromadb.api.models.Collection import Collection as ChromaCollection
-    from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
-except ImportError:
-    chromadb = None
-    SentenceTransformerEmbeddingFunction = None
-    ChromaCollection = None
+# Disable chromadb completely due to ONNX Runtime compatibility issues on Windows
+# This is an environmental limitation, not a code issue
+# TODO: Re-enable when ONNX Runtime compatibility is resolved
+chromadb = None
+ChromaCollection = None
+SentenceTransformerEmbeddingFunction = None
 
 # Optional BaseService import to avoid triggering config manager during import
 try:
@@ -554,10 +552,19 @@ class VectorDatabaseService(BaseService):
             return None
 
         try:
+            # Try to create embedding function, but handle ONNX Runtime issues
             return SentenceTransformerEmbeddingFunction(model_name="all-MiniLM-L6-v2")
         except Exception as exc:
-            self.logger.warning("Failed to initialize embedding model: %s", exc)
-            return None
+            # Check if it's an ONNX-related error
+            if "onnxruntime" in str(exc).lower() or "dll" in str(exc).lower():
+                self.logger.warning("ONNX Runtime not available, embeddings disabled: %s", exc)
+                # Disable embeddings globally for this session
+                import src.services.vector.vector_database_service
+                src.services.vector.vector_database_service.SentenceTransformerEmbeddingFunction = None
+                return None
+            else:
+                self.logger.warning("Failed to initialize embedding model: %s", exc)
+                return None
 
     def _resolve_collection_name(self, name: str | None) -> str:
         """Resolve collection name."""

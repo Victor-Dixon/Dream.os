@@ -29,10 +29,20 @@ def _lazy_import_vector_services():
 
     try:
         from .vector_database_integration import LocalVectorStore as _LocalVectorStore
-        from .vector_database_service import VectorDatabaseService as _VectorDatabaseService
-
         LocalVectorStore = _LocalVectorStore
-        VectorDatabaseService = _VectorDatabaseService
+
+        # Try to import VectorDatabaseService, but handle chromadb/ONNX issues
+        try:
+            from .vector_database_service import VectorDatabaseService as _VectorDatabaseService
+            VectorDatabaseService = _VectorDatabaseService
+        except ImportError as e:
+            if "onnxruntime" in str(e).lower():
+                print(f"⚠️  Vector database service unavailable (ONNX Runtime issue): {e}")
+                VectorDatabaseService = None
+            else:
+                print(f"⚠️  Vector database service unavailable: {e}")
+                VectorDatabaseService = None
+
         VECTOR_SERVICES_AVAILABLE = True
     except ImportError as e:
         print(f"⚠️  Vector services not available: {e}")

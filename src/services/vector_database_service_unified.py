@@ -45,6 +45,17 @@ def _lazy_import_vector_database():
         VectorOperationResult = _VectorOperationResult
         DEFAULT_COLLECTION = _DEFAULT_COLLECTION
         VECTOR_DATABASE_AVAILABLE = True
+    except ImportError as e:
+        # Handle ONNX Runtime and other import issues
+        if "onnxruntime" in str(e).lower() or "chromadb" in str(e).lower():
+            # Vector services unavailable due to dependencies
+            LocalVectorStore = None
+            VectorDatabaseService = None
+            VectorOperationResult = None
+            VECTOR_DATABASE_AVAILABLE = False
+        else:
+            # Re-raise other import errors
+            raise
 
         # Override the global function
         global get_vector_database_service
