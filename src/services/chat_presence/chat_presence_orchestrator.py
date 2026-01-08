@@ -28,12 +28,11 @@ import logging
 from pathlib import Path
 from typing import Optional, List
 
-# Import extracted coordinators
-# TODO: Re-enable when coordinator modules are implemented
-# from .chat_config_manager import ChatConfigManager
-# from .twitch_coordinator import TwitchCoordinator
-# from .obs_coordinator import OBSCoordinator
-# from .agent_coordinator import AgentCoordinator
+# Import extracted coordinators - V2 MODULARIZATION ENABLED
+from .chat_config_manager import ChatConfigManager
+from .twitch_coordinator import TwitchCoordinator
+from .obs_coordinator import OBSCoordinator
+from .agent_coordinator import AgentCoordinator
 
 # Legacy imports for backward compatibility
 from .twitch_bridge import TwitchChatBridge
@@ -59,22 +58,30 @@ class ChatPresenceOrchestrator(BaseService):
         obs_config: Optional[dict] = None,
     ):
         """
-        Initialize chat presence orchestrator.
+        Initialize chat presence orchestrator - V2 MODULAR ARCHITECTURE.
+
+        Uses coordinator pattern for clean separation of concerns.
 
         Args:
-            twitch_config: Twitch configuration dict
-            obs_config: OBS configuration dict
+            twitch_config: Twitch configuration dict (legacy support)
+            obs_config: OBS configuration dict (legacy support)
         """
         super().__init__("ChatPresenceOrchestrator")
 
-        # Load config from environment if not provided
+        # V2 MODULAR ARCHITECTURE: Initialize coordinators
+        self.config_manager = ChatConfigManager()
+        self.twitch_coordinator = TwitchCoordinator(self.config_manager)
+        self.obs_coordinator = OBSCoordinator(self.config_manager)
+        self.agent_coordinator = AgentCoordinator(self.config_manager)
+
+        # Legacy support - load config from environment if not provided
         if twitch_config is None:
             twitch_config = self._load_twitch_config_from_env()
 
         self.twitch_config = twitch_config or {}
         self.obs_config = obs_config or {}
 
-        # Initialize components
+        # Legacy components for backward compatibility
         self.message_interpreter = MessageInterpreter()
         self.chat_scheduler = ChatScheduler()
         self.status_reader = AgentStatusReader()
@@ -86,7 +93,7 @@ class ChatPresenceOrchestrator(BaseService):
             self.caption_interpreter = None
             self.speech_log_manager = None
 
-        # Bridges (initialized on start)
+        # Bridges (initialized on start) - LEGACY
         self.twitch_bridge: Optional[TwitchChatBridge] = None
         self.obs_listener: Optional[OBSCaptionListener] = None
 
@@ -158,29 +165,52 @@ class ChatPresenceOrchestrator(BaseService):
 
     async def start(self) -> bool:
         """
-        Start chat presence system.
+        Start chat presence system - V2 MODULAR ARCHITECTURE.
+
+        Uses coordinators for clean separation of concerns.
 
         Returns:
             True if started successfully
         """
-        logger.info("🚀 Starting Chat Presence Orchestrator...")
+        logger.info("🚀 Starting Chat Presence Orchestrator (V2)...")
 
-        # Start Twitch bridge
+        # V2 MODULAR STARTUP: Start coordinators
+        coordinator_results = []
+
+        # Start Twitch coordinator
+        twitch_success = await self.twitch_coordinator.start()
+        coordinator_results.append(("Twitch", twitch_success))
+
+        # Start OBS coordinator
+        obs_success = await self.obs_coordinator.start()
+        coordinator_results.append(("OBS", obs_success))
+
+        # Start Agent coordinator
+        agent_success = await self.agent_coordinator.start()
+        coordinator_results.append(("Agent", agent_success))
+
+        # Log coordinator startup results
+        for name, success in coordinator_results:
+            if success:
+                logger.info(f"✅ {name} coordinator started")
+            else:
+                logger.warning(f"⚠️ {name} coordinator failed to start")
+
+        # LEGACY SUPPORT: Start old bridges for backward compatibility
         if self.twitch_config:
             success = await self._start_twitch()
             if not success:
-                logger.warning("⚠️ Twitch bridge failed to start")
+                logger.warning("⚠️ Legacy Twitch bridge failed to start")
 
-        # Start OBS listener
         if self.obs_config:
             success = await self._start_obs()
             if not success:
-                logger.warning("⚠️ OBS listener failed to start")
+                logger.warning("⚠️ Legacy OBS listener failed to start")
 
         self.running = True
 
-        # Start periodic status updates (every 5 minutes)
-        if self.twitch_bridge:
+        # Start periodic status updates using coordinators
+        if self.twitch_coordinator.is_healthy():
             self._status_update_task = asyncio.create_task(
                 self._periodic_status_updates()
             )
@@ -787,8 +817,8 @@ class ChatPresenceOrchestrator(BaseService):
                 await asyncio.sleep(60)  # Wait 1 minute before retry
 
     async def stop(self) -> None:
-        """Stop chat presence system."""
-        logger.info("🛑 Stopping Chat Presence Orchestrator...")
+        """Stop chat presence system - V2 MODULAR ARCHITECTURE."""
+        logger.info("🛑 Stopping Chat Presence Orchestrator (V2)...")
         self.running = False
 
         # Cancel periodic status updates
@@ -799,13 +829,19 @@ class ChatPresenceOrchestrator(BaseService):
             except asyncio.CancelledError:
                 pass
 
+        # V2 MODULAR SHUTDOWN: Stop coordinators
+        await self.twitch_coordinator.stop()
+        await self.obs_coordinator.stop()
+        await self.agent_coordinator.stop()
+
+        # LEGACY SUPPORT: Stop old bridges
         if self.twitch_bridge:
             self.twitch_bridge.stop()
 
         if self.obs_listener:
             await self.obs_listener.disconnect()
 
-        logger.info("✅ Chat Presence Orchestrator stopped")
+        logger.info("✅ Chat Presence Orchestrator stopped (V2)")
 
 
 __all__ = ["ChatPresenceOrchestrator"]
