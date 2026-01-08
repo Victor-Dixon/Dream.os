@@ -21,6 +21,10 @@ class StartHandler:
     def __init__(self, service_manager: ServiceManager):
         self.service_manager = service_manager
 
+    def execute(self, command_info: Dict[str, Any]) -> None:
+        """Execute start command based on command_info."""
+        self.handle_start_services_command(command_info)
+
     def handle_start_services_command(self, command_info: Dict[str, Any]) -> None:
         """Handle start services command with enhanced feedback and health checks."""
         services = command_info.get('services', [])

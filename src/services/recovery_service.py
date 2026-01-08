@@ -53,8 +53,37 @@ class RecoveryService(BaseService):
 
     def handle_failure(self, error_context: Dict[str, Any]) -> Dict[str, Any]:
         """
-        Main entry point for recovery.
-        
+        Main entry point for autonomous self-healing recovery.
+
+        Navigation References:
+        ├── Diagnosis Engine → diagnose_error() method (AI-powered root cause analysis)
+        ├── Patch Generation → propose_patch() method (LLM-generated fix proposals)
+        ├── Backup System → create_backup() method (atomic file versioning)
+        ├── Validation Engine → validate_fix() method (test suite execution)
+        ├── Rollback System → rollback() method (atomic recovery)
+        ├── Error Handling → src/core/error_handling/auto_recovery.py
+        ├── Deployment MCP → src/mcp_servers/deployment_mcp_server.py::rollback_deployment()
+        ├── External Docs → docs/ERROR_RECOVERY_PROTOCOL.md#autonomous-recovery
+        └── Testing → tests/integration/test_recovery_service.py
+
+        Complex recovery pipeline:
+        1. Error diagnosis with AI assistance
+           └── See: AIService.process_message() for LLM analysis
+        2. Patch generation and validation
+           └── See: propose_patch() for fix synthesis
+        3. Atomic backup and application
+           └── See: create_backup() for file versioning
+        4. Automated validation and testing
+           └── See: VerificationService.run_unit_tests()
+        5. Conditional rollback on failure
+           └── See: rollback() for atomic recovery
+
+        Strategic Business Impact:
+        - Enables 24/7 autonomous system reliability
+        - Reduces mean time to recovery (MTTR)
+        - Maintains service availability during failures
+        - Provides self-healing capabilities for production systems
+
         Args:
             error_context: Dict containing 'error', 'file_path', 'test_path', etc.
         """

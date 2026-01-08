@@ -79,15 +79,29 @@ class MessageCoordinator:
         ├── Coordination Throttler → src/services/coordination/coordination_throttler.py
         ├── Message Templates → src/core/messaging/messaging_template_texts.py
         ├── Queue Processor → src/core/message_queue/message_queue_processor.py
+        ├── External Docs → docs/architecture/MESSAGING_ARCHITECTURE.md
+        ├── A2A Protocol → docs/A2A_COORDINATION_PROTOCOL.md
         └── Testing → tests/integration/test_messaging_coordination.py
 
         Complex coordination pipeline:
         1. A2A throttling check (prevents spam between agents)
+           └── See: coordination_throttler.py::can_send_coordination()
         2. Queue repository initialization (lazy loading pattern)
+           └── See: queue_repository.py::QueueRepository()
         3. Message enqueueing with metadata preservation
+           └── See: message_queue_impl.py::enqueue_message()
         4. Priority-based routing and delivery scheduling
+           └── See: UnifiedMessagePriority enum in messaging_core.py
         5. Fallback to direct send if queue unavailable
+           └── See: agent_message_handler.py fallback logic
         6. Coordination metrics and logging
+           └── See: Swarm Brain Database for coordination analytics
+
+        Strategic Business Impact:
+        - Prevents race conditions in multi-agent coordination
+        - Enables reliable message delivery across distributed agents
+        - Supports swarm intelligence through coordinated communication
+        - Maintains message integrity and prevents lost coordination signals
 
         Includes coordination throttling for A2A messages to prevent spam.
         Delegates to agent_message_handler for V2 compliance.

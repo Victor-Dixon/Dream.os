@@ -86,10 +86,11 @@ def _check_services() -> Dict[str, Any]:
     # FastAPI service (self)
     services["fastapi_status"] = "healthy"
 
-    # Analytics service
+    # Analytics service (PHASE 4 CONSOLIDATION)
     try:
-        from src.infrastructure.analytics_service import get_analytics_service
-        analytics_svc = get_analytics_service()
+        from tools.infrastructure_tools import UnifiedInfrastructureManager
+        infra_mgr = UnifiedInfrastructureManager()
+        analytics_svc = infra_mgr.get_service("analytics")
         services["analytics_status"] = "healthy" if analytics_svc else "unavailable"
     except ImportError:
         services["analytics_status"] = "unavailable"

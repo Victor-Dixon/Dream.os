@@ -91,6 +91,18 @@ def main():
     if not check_environment():
         return 1
 
+    # Check if running interactively
+    import sys
+    if not sys.stdin.isatty():
+        print("❌ INTERACTIVE MODE REQUIRED")
+        print("   This tool requires manual 2FA approval from Robinhood app.")
+        print("   Please run directly in your terminal:")
+        print(f"   python {sys.argv[0]}")
+        print("   Or:")
+        print("   cd D:\\Agent_Cellphone_V2_Repository")
+        print("   python tools/robinhood_stats_2026.py")
+        return 1
+
     try:
         # Create Robinhood broker
         print("🔐 Connecting to Robinhood...")
@@ -98,12 +110,14 @@ def main():
 
         # Manual approval flow for 2FA
         if not broker.is_authenticated:
-            print("🔐 Manual 2FA approval required...")
-            print("   Please open your Robinhood app and approve this login request.")
-            print("   Press Enter after you've approved the login...")
+            print("\n🔐 MANUAL 2FA APPROVAL REQUIRED:")
+            print("   1. Open your Robinhood app on your phone")
+            print("   2. Look for a 'Device Approval' or 'Login Request' notification")
+            print("   3. Approve the login request in the app")
+            print("   4. Press Enter here after you've approved the login...")
 
             try:
-                input()  # Wait for user to press Enter
+                input("\nPress Enter after approving login in Robinhood app: ")
                 print("   ✅ Approval confirmed, checking login status...")
 
                 # Try to connect again after approval
@@ -130,9 +144,9 @@ def main():
 
         print(format_balance(balance))
 
-        # Get 2026 options statistics
-        print("📈 Retrieving 2026 options statistics...")
-        stats = broker.get_2026_options_statistics()
+        # Get 2025 options statistics
+        print("📈 Retrieving 2025 options statistics...")
+        stats = broker.get_2025_options_statistics()
 
         print(format_options_stats(stats))
 

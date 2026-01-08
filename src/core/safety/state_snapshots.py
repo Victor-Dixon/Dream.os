@@ -246,15 +246,69 @@ class StateSnapshotManager:
                     return True
             
             elif self.config.db_type == "postgres":
-                # TODO: Implement postgres dump
-                logger.warning("Postgres snapshot not yet implemented")
-                return False
+                return self._create_postgres_dump(snapshot_path)
             
             return False
-        
+
         except Exception as e:
             logger.error(f"Database snapshot failed: {e}")
             return False
+
+    def _create_postgres_dump(self, snapshot_path: Path) -> bool:
+        """Create PostgreSQL database dump using pg_dump."""
+        try:
+            dump_file = snapshot_path / "database.sql"
+            cmd = self._build_pg_dump_command(dump_file)
+            env = self._setup_pg_env()
+
+            result = self._execute_pg_dump(cmd, env)
+
+            if result.returncode == 0:
+                logger.debug("PostgreSQL dump created successfully")
+                return True
+            else:
+                logger.error(f"pg_dump failed: {result.stderr}")
+                return False
+
+        except subprocess.TimeoutExpired:
+            logger.error("PostgreSQL dump timed out after 5 minutes")
+            return False
+        except FileNotFoundError:
+            logger.error("pg_dump command not found - PostgreSQL tools not installed")
+            return False
+        except Exception as e:
+            logger.error(f"PostgreSQL dump failed: {e}")
+            return False
+
+    def _build_pg_dump_command(self, dump_file: Path) -> list:
+        """Build pg_dump command with connection parameters."""
+        return [
+            "pg_dump",
+            "--host", self.config.db_host or "localhost",
+            "--port", str(self.config.db_port or 5432),
+            "--username", self.config.db_user,
+            "--dbname", self.config.db_name,
+            "--no-password",
+            "--format", "custom",
+            "--compress", "9",
+            "--file", str(dump_file)
+        ]
+
+    def _setup_pg_env(self) -> dict:
+        """Setup environment variables for pg_dump."""
+        env = os.environ.copy()
+        env["PGPASSWORD"] = self.config.db_password
+        return env
+
+    def _execute_pg_dump(self, cmd: list, env: dict) -> subprocess.CompletedProcess:
+        """Execute pg_dump command."""
+        return subprocess.run(
+            cmd,
+            env=env,
+            capture_output=True,
+            text=True,
+            timeout=300
+        )
     
     def _snapshot_files(self, snapshot_path: Path) -> bool:
         """Snapshot file system state."""

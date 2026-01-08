@@ -396,6 +396,65 @@ add_filter('template_include', function ($template) {
 }, 999);
 
 /**
+ * Handle contact form submission (WEB-04)
+ * Processes email submissions and redirects appropriately
+ */
+function handle_contact_form() {
+    // Verify nonce for security
+    if (!isset($_POST['contact_nonce']) || !wp_verify_nonce($_POST['contact_nonce'], 'contact_form')) {
+        wp_die('Security check failed');
+    }
+
+    // Sanitize and validate email
+    $email = sanitize_email($_POST['email']);
+    if (!is_email($email)) {
+        wp_redirect(add_query_arg('contact_error', 'invalid_email', wp_get_referer()));
+        exit;
+    }
+
+    // Store email in database for waitlist
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'trading_robot_waitlist';
+
+    // Create table if it doesn't exist
+    $charset_collate = $wpdb->get_charset_collate();
+    $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+        id int(11) NOT NULL AUTO_INCREMENT,
+        email varchar(255) NOT NULL,
+        signup_date datetime DEFAULT CURRENT_TIMESTAMP,
+        status enum('active','inactive') DEFAULT 'active',
+        PRIMARY KEY (id),
+        UNIQUE KEY email (email)
+    ) $charset_collate;";
+
+    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+    dbDelta($sql);
+
+    // Insert or update email
+    $wpdb->replace(
+        $table_name,
+        array(
+            'email' => $email,
+            'status' => 'active'
+        ),
+        array('%s', '%s')
+    );
+
+    // Send confirmation email (optional - could integrate with email service)
+    $subject = 'Welcome to TradingRobotPlug Waitlist!';
+    $message = "Thank you for joining our waitlist!\n\nWe'll notify you when our trading robots are ready and give you priority access.\n\nBest regards,\nTradingRobotPlug Team";
+    $headers = array('Content-Type: text/plain; charset=UTF-8');
+
+    wp_mail($email, $subject, $message, $headers);
+
+    // Redirect back with success message
+    wp_redirect(add_query_arg('contact_success', '1', wp_get_referer()));
+    exit;
+}
+add_action('admin_post_handle_contact_form', 'handle_contact_form');
+add_action('admin_post_nopriv_handle_contact_form', 'handle_contact_form');
+
+/**
  * Clear cache when theme is activated or updated
  * This helps ensure template changes take effect immediately
  */

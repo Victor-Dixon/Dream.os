@@ -129,17 +129,9 @@ def _handle_stop_command(service_manager: ServiceManager, force: bool = False):
 
 def _handle_validate_command():
     """Handle validation command."""
-    runner = ValidationRunner()
-    results = runner.run_comprehensive_validation('main_validation.json')
-
-    print("📊 Comprehensive Validation Results")
-    print("=" * 40)
-    print(f"🏥 Overall Status: {results['overall_status']}")
-
-    for validation_name, result in results.get('validations', {}).items():
-        status = result.get('status', 'UNKNOWN')
-        status_icon = "✅" if status == "PASS" else "❌"
-        print(f"{status_icon} {validation_name.replace('_', ' ').title()}: {status}")
+    handler = ValidationHandler()
+    exit_code = handler.execute()
+    return exit_code
 
 def _handle_cleanup_command(service_manager: ServiceManager):
     """Handle cleanup logs command."""
@@ -232,11 +224,11 @@ def _handle_start_services_command(service_manager: ServiceManager, command_info
             print("   • Check port conflicts: netstat -tulpn | grep :5000")
             print("   • Restart failed services individually")
 
-    else:
-        # Foreground mode
-        print("\n💡 Services running in foreground mode")
-        print("   Press Ctrl+C to stop all services")
-        print()
+        else:
+            # Foreground mode
+            print("\n💡 Services running in foreground mode")
+            print("   Press Ctrl+C to stop all services")
+            print()
 
         try:
             import time
@@ -300,8 +292,8 @@ def main():
             handler = ModeHandler()
             result = handler.execute()
             if result:
-                print("
-💾 Configuration saved!"                print("💡 Start services with: python main.py --start")
+                print("\n💾 Configuration saved!")
+                print("💡 Start services with: python main.py --start")
                 print(f"💡 Or use specific mode: python main.py --start --mode {result['mode']}")
         elif command_type == 'autonomous_reports':
             handler = AutonomousHandler()
@@ -317,6 +309,8 @@ def main():
             sys.exit(1)
     except Exception as e:
         print(f"❌ Command execution failed: {e}")
+        import traceback
+        traceback.print_exc()
         sys.exit(1)
 
 if __name__ == "__main__":

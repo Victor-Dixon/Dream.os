@@ -46,6 +46,23 @@ def handle_robinhood_stats() -> int:
         import sys
         from pathlib import Path
 
+        # Check if running interactively
+        if not sys.stdin.isatty():
+            print("❌ INTERACTIVE MODE REQUIRED FOR ROBINHOOD LOGIN")
+            print("   Robinhood requires manual 2FA approval from your phone app.")
+            print("   Please run the tool directly in your terminal:")
+            print()
+            print("   Option 1 - Direct execution:")
+            print("   cd D:\\Agent_Cellphone_V2_Repository")
+            print("   python tools/robinhood_stats_2026.py")
+            print()
+            print("   Option 2 - Through messaging CLI:")
+            print("   python -m src.services.messaging_cli --robinhood-stats")
+            print("   (Run this in your local terminal, not through automated tools)")
+            print()
+            print("   The tool will prompt you to approve login in your Robinhood app.")
+            return 1
+
         # Path to the robinhood stats tool
         tool_path = Path(__file__).parent.parent.parent.parent / "tools" / "robinhood_stats_2026.py"
 

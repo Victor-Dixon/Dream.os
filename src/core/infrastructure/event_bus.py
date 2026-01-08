@@ -30,74 +30,17 @@ import asyncio
 import json
 import logging
 from typing import Dict, List, Any, Callable, Optional, Set, Union
-from dataclasses import dataclass, asdict
 from datetime import datetime, timedelta
-import uuid
 import redis.asyncio as redis
 from contextlib import asynccontextmanager
 
+# Import extracted modules
+from .event_models import Event, EventSubscription, create_event
+from .event_metrics import EventBusMetrics
+from .event_publisher import EventPublisher
+from .event_subscriber import EventSubscriber
+
 logger = logging.getLogger(__name__)
-
-
-@dataclass
-class Event:
-    """Standard event structure for the event bus."""
-    event_id: str
-    event_type: str
-    source_service: str
-    timestamp: str
-    correlation_id: Optional[str] = None
-    data: Dict[str, Any] = None
-    metadata: Dict[str, Any] = None
-    priority: str = "normal"  # "low", "normal", "high", "critical"
-
-    def __post_init__(self):
-        if self.data is None:
-            self.data = {}
-        if self.metadata is None:
-            self.metadata = {}
-        if not self.event_id:
-            self.event_id = str(uuid.uuid4())
-        if not self.timestamp:
-            self.timestamp = datetime.now().isoformat()
-
-
-@dataclass
-class EventSubscription:
-    """Event subscription configuration."""
-    subscription_id: str
-    event_types: List[str]
-    callback: Callable[[Event], Any]
-    filter_conditions: Optional[Dict[str, Any]] = None
-    retry_policy: Dict[str, Any] = None
-    dead_letter_queue: Optional[str] = None
-
-    def __post_init__(self):
-        if self.filter_conditions is None:
-            self.filter_conditions = {}
-        if self.retry_policy is None:
-            self.retry_policy = {
-                "max_retries": 3,
-                "backoff_multiplier": 2.0,
-                "initial_delay": 1.0
-            }
-
-
-class EventBusMetrics:
-    """Metrics collection for event bus performance monitoring."""
-
-    def __init__(self):
-        self.events_published = 0
-        self.events_delivered = 0
-        self.events_failed = 0
-        self.events_retried = 0
-        self.average_processing_time = 0.0
-        self.subscription_counts = {}
-        self.error_counts = {}
-
-    def record_event_published(self, event_type: str):
-        """Record successful event publication."""
-        self.events_published += 1
 
     def record_event_delivered(self, event_type: str):
         """Record successful event delivery."""
@@ -165,9 +108,9 @@ class EventBus:
 
         # Core components
         self.redis = None
-        self.subscriptions: Dict[str, EventSubscription] = {}
-        self.active_subscribers: Dict[str, asyncio.Task] = {}
         self.metrics = EventBusMetrics()
+        self.publisher = EventPublisher()
+        self.subscriber = EventSubscriber(metrics=self.metrics)
 
         # Configuration
         self.event_ttl = 3600 * 24 * 7  # 7 days
@@ -193,6 +136,14 @@ class EventBus:
 
             # Test connection
             await self.redis.ping()
+
+            # Connect EventPublisher
+            self.publisher.redis = self.redis
+            await self.publisher.connect()
+
+            # Connect EventSubscriber
+            self.subscriber.redis = self.redis
+            await self.subscriber.connect()
 
             self._startup_time = datetime.now()
             logger.info("Event Bus initialized successfully")
@@ -236,24 +187,20 @@ class EventBus:
         """
         Publish an event to all subscribers.
 
-        Args:
-            event: Event to publish
-
-        Returns:
-            str: Event ID
+        Delegates to EventPublisher for V2 compliance.
         """
         start_time = asyncio.get_event_loop().time()
 
         try:
-            # Serialize event
-            event_dict = asdict(event)
+            # Convert event to dict for publishing
+            event_dict = event.to_dict()
 
-            # Publish to Redis channel
+            # Publish using EventPublisher
             channel = f"events:{event.event_type}"
-            message = json.dumps(event_dict)
+            success = await self.publisher.publish_event(event_dict, channel)
 
-            # Publish to channel
-            await self.redis.publish(channel, message)
+            if not success:
+                raise Exception("Failed to publish event via EventPublisher")
 
             # Persist event if enabled
             if self.enable_persistence:
@@ -263,14 +210,14 @@ class EventBus:
             self.metrics.record_event_published(event.event_type)
 
             processing_time = asyncio.get_event_loop().time() - start_time
-            self.metrics.update_processing_time(processing_time)
+            self.metrics.record_event_delivered(event.event_type, processing_time)
 
             logger.debug(f"Published event {event.event_id} of type {event.event_type}")
             return event.event_id
 
         except Exception as e:
             logger.error(f"Failed to publish event {event.event_id}: {e}")
-            self.metrics.record_event_failed(event.event_type, e)
+            self.metrics.record_event_failed(event.event_type, type(e).__name__)
             raise
 
     async def subscribe_to_events(self,
@@ -278,64 +225,17 @@ class EventBus:
         """
         Subscribe to events with specified configuration.
 
-        Args:
-            subscription: Subscription configuration
-
-        Returns:
-            str: Subscription ID
+        Delegates to EventSubscriber for V2 compliance.
         """
-        subscription_id = subscription.subscription_id
-
-        # Store subscription
-        self.subscriptions[subscription_id] = subscription
-
-        # Start subscriber task
-        task = asyncio.create_task(
-            self._subscriber_loop(subscription),
-            name=f"subscriber-{subscription_id}"
-        )
-
-        self.active_subscribers[subscription_id] = task
-
-        # Update metrics
-        for event_type in subscription.event_types:
-            if event_type not in self.metrics.subscription_counts:
-                self.metrics.subscription_counts[event_type] = 0
-            self.metrics.subscription_counts[event_type] += 1
-
-        logger.info(f"Subscribed to events: {subscription.event_types}")
-        return subscription_id
+        return await self.subscriber.add_subscription(subscription)
 
     async def unsubscribe(self, subscription_id: str) -> bool:
         """
         Unsubscribe from events.
 
-        Args:
-            subscription_id: ID of subscription to remove
-
-        Returns:
-            bool: Success status
+        Delegates to EventSubscriber for V2 compliance.
         """
-        if subscription_id not in self.subscriptions:
-            return False
-
-        # Cancel subscriber task
-        if subscription_id in self.active_subscribers:
-            self.active_subscribers[subscription_id].cancel()
-            del self.active_subscribers[subscription_id]
-
-        # Remove subscription
-        subscription = self.subscriptions[subscription_id]
-
-        # Update metrics
-        for event_type in subscription.event_types:
-            if event_type in self.metrics.subscription_counts:
-                self.metrics.subscription_counts[event_type] -= 1
-
-        del self.subscriptions[subscription_id]
-
-        logger.info(f"Unsubscribed from events: {subscription.event_types}")
-        return True
+        return await self.subscriber.remove_subscription(subscription_id)
 
     async def _subscriber_loop(self, subscription: EventSubscription):
         """Main subscriber loop for processing events."""
@@ -571,26 +471,15 @@ class EventBus:
         """
         Helper method to create standardized events.
 
-        Args:
-            event_type: Type of event
-            source_service: Service that generated the event
-            data: Event payload data
-            correlation_id: Correlation ID for request tracing
-            priority: Event priority level
-            metadata: Additional metadata
-
-        Returns:
-            Event: Created event object
+        Delegates to the extracted create_event function for V2 compliance.
         """
-        return Event(
-            event_id=str(uuid.uuid4()),
+        return create_event(
             event_type=event_type,
             source_service=source_service,
-            timestamp=datetime.now().isoformat(),
+            data=data,
             correlation_id=correlation_id,
-            data=data or {},
-            metadata=metadata or {},
-            priority=priority
+            priority=priority,
+            metadata=metadata
         )
 
 
