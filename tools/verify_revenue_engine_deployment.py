@@ -12,7 +12,7 @@ import requests
 import time
 import json
 import logging
-from typing import Dict, List, Tuple, Optional
+from typing import Dict, List, Tuple, Optional, Any
 from datetime import datetime
 from pathlib import Path
 
@@ -362,8 +362,8 @@ def main():
 
     # Print summary
     summary = results["summary"]
-    print("
-📊 VERIFICATION SUMMARY"    print(f"Total Tests: {summary['total']}")
+    print("\n📊 VERIFICATION SUMMARY")
+    print(f"Total Tests: {summary['total']}")
     print(f"Passed: {summary['passed']}")
     print(f"Failed: {summary['failed']}")
     print(f"Success Rate: {(summary['passed']/summary['total']*100):.1f}%")
