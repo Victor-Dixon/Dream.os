@@ -84,19 +84,25 @@ class AIContextEngine(BaseService):
         """
         super().__init__("AIContextEngine")
 
-        # Session management (extracted to SessionManager)
+        # Initialize components
         self.session_manager = SessionManager()
+        self.context_processors = self._init_context_processors()
+        self.performance_stats = self._init_performance_stats()
 
-        # Context processors (extracted to separate module)
-        self.context_processors: Dict[str, ContextProcessor] = {
+        logger.info("🧠 AI Context Engine initialized (V2 Compliant)")
+
+    def _init_context_processors(self) -> Dict[str, ContextProcessor]:
+        """Initialize context processors."""
+        return {
             'trading': TradingContextProcessor(),
             'collaboration': CollaborationContextProcessor(),
             'analysis': AnalysisContextProcessor(),
             'risk': RiskContextProcessor()
         }
 
-        # Performance tracking
-        self.performance_stats = {
+    def _init_performance_stats(self) -> Dict[str, Any]:
+        """Initialize performance tracking statistics."""
+        return {
             'total_sessions': 0,
             'active_sessions': 0,
             'suggestions_generated': 0,
@@ -104,8 +110,6 @@ class AIContextEngine(BaseService):
             'processing_time_avg': 0.0,
             'risk_integrations': 0
         }
-
-        logger.info("🧠 AI Context Engine initialized (V2 Compliant)")
 
     async def start_engine(self):
         """

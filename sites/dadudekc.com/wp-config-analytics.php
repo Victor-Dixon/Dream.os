@@ -5,10 +5,10 @@
  */
 
 // GA4 Measurement ID (Production) - UPDATED FOR DEPLOYMENT
-define('GA4_MEASUREMENT_ID', 'G-GHI789MNO7'); // Dadu Dek C GA4 ID
+define('GA4_MEASUREMENT_ID', 'G-DADUDEKC63'); // Dadu Dek C GA4 ID
 
 // Facebook Pixel ID (Production) - UPDATED FOR DEPLOYMENT
-define('FACEBOOK_PIXEL_ID', '147258369085274'); // Dadu Dek C Pixel ID
+define('FACEBOOK_PIXEL_ID', '369147258085274'); // Dadu Dek C Pixel ID
 
 // Analytics Configuration
 define('ANALYTICS_ENABLED', true);

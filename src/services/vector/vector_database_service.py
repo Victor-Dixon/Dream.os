@@ -21,17 +21,53 @@ from threading import Lock
 from typing import Any, List
 from concurrent.futures import ThreadPoolExecutor
 
-try:
-    import chromadb
-    from chromadb.api.models.Collection import Collection as ChromaCollection
-    from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
-except ImportError:
-    chromadb = None
-    SentenceTransformerEmbeddingFunction = None
-    ChromaCollection = None
+# Lazy imports - chromadb is imported only when needed to avoid initialization issues
+CHROMADB_AVAILABLE = False
+chromadb = None
+SentenceTransformerEmbeddingFunction = None
+ChromaCollection = None
 
-from src.core.base.base_service import BaseService
-from src.core.unified_logging_system import get_logger
+def _ensure_chromadb():
+    """Lazy import chromadb and check availability."""
+    global chromadb, SentenceTransformerEmbeddingFunction, ChromaCollection, CHROMADB_AVAILABLE
+
+    if chromadb is not None:
+        return CHROMADB_AVAILABLE
+
+    try:
+        import chromadb as _chromadb
+        from chromadb.api.models.Collection import Collection as _ChromaCollection
+        from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction as _SentenceTransformerEmbeddingFunction
+
+        chromadb = _chromadb
+        ChromaCollection = _ChromaCollection
+        SentenceTransformerEmbeddingFunction = _SentenceTransformerEmbeddingFunction
+        CHROMADB_AVAILABLE = True
+        return True
+    except (ImportError, ValueError) as e:
+        print(f"⚠️  ChromaDB not available: {e}")
+        CHROMADB_AVAILABLE = False
+        return False
+
+# Optional BaseService import to avoid triggering config manager during import
+try:
+    from src.core.base.base_service import BaseService
+    _base_service_available = True
+except ImportError:
+    # Fallback base class when BaseService is not available
+    class BaseService:
+        def __init__(self, name: str):
+            self.name = name
+            self.logger = get_logger(name)
+    _base_service_available = False
+# Optional logging import to avoid triggering config manager during import
+try:
+    from src.core.unified_logging_system import get_logger
+    _logger_available = True
+except ImportError:
+    import logging
+    get_logger = logging.getLogger
+    _logger_available = False
 from src.services.models.vector_models import VectorDocument
 from src.services.vector.vector_database_chromadb_helpers import to_csv
 from src.services.vector.vector_database_chromadb_operations import (
@@ -513,8 +549,8 @@ class VectorDatabaseService(BaseService):
 
     def _initialize_client(self) -> None:
         """Initialize ChromaDB client or fallback store."""
-        if chromadb is None:
-            self.logger.info("chromadb not installed; using local fallback store")
+        if not _ensure_chromadb():
+            self.logger.info("chromadb not available; using local fallback store")
             self._fallback_store = LocalVectorStore()
             return
 
@@ -532,7 +568,7 @@ class VectorDatabaseService(BaseService):
 
     def _build_embedding_function(self) -> SentenceTransformerEmbeddingFunction | None:
         """Build embedding function."""
-        if SentenceTransformerEmbeddingFunction is None:
+        if not _ensure_chromadb() or SentenceTransformerEmbeddingFunction is None:
             self.logger.warning("sentence-transformers not available")
             return None
 
