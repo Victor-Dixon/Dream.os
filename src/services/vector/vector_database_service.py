@@ -298,17 +298,44 @@ class VectorDatabaseService(BaseService):
         query: str,
         collection_name: str | None = None,
         limit: int = 10,
-        threshold: float = 0.7
+        threshold: float = 0.7,
+        use_reasoning: bool = True
     ) -> List[SearchResult]:
         """
-        SEMANTIC SEARCH: Perform semantic search using embeddings.
-        Integrates with AI training pipeline for intelligent retrieval.
+        ADVANCED SEMANTIC SEARCH: Perform intelligent semantic search with LLM reasoning.
+        Integrates embeddings, summarization, and advanced reasoning for superior results.
         """
         try:
             from src.ai_training.dreamvault.embedding_builder import EmbeddingBuilder
             from src.ai_training.dreamvault.summarizer import Summarizer
+            from src.ai_training.dreamvault.advanced_reasoning import (
+                AdvancedReasoningEngine, ReasoningContext, ReasoningMode, ResponseFormat
+            )
 
-            # Generate embedding for query
+            # Use advanced reasoning to understand and enhance the query
+            if use_reasoning:
+                reasoning_engine = AdvancedReasoningEngine()
+                reasoning_context = ReasoningContext(
+                    query=query,
+                    mode=ReasoningMode.ANALYTICAL,
+                    format=ResponseFormat.TEXT,
+                    max_tokens=200,
+                    temperature=0.3,
+                    system_prompt="You are a search query optimizer. Analyze the user's query and suggest the most effective search terms and context. Keep your response concise."
+                )
+
+                try:
+                    reasoning_result = reasoning_engine.reason(reasoning_context)
+                    if reasoning_result.confidence > 0.6:
+                        # Use reasoning-enhanced query for better search
+                        enhanced_query = reasoning_result.response.strip()
+                        if len(enhanced_query) > len(query):
+                            query = enhanced_query
+                            self.logger.debug(f"Enhanced query using reasoning: {query}")
+                except Exception as e:
+                    self.logger.debug(f"Query reasoning failed, using original: {e}")
+
+            # Generate embedding for query (original or enhanced)
             embedder = EmbeddingBuilder()
             query_embedding = embedder.build_embedding(query)
 
@@ -324,20 +351,38 @@ class VectorDatabaseService(BaseService):
             # Execute search
             results = self.search(search_request)
 
-            # Enhance results with AI-powered summarization
-            summarizer = Summarizer()
-            for result in results:
-                if hasattr(result, 'content') and len(result.content) > 200:
-                    # Generate summary for long content
-                    summary = summarizer.summarize(result.content[:1000])  # Limit input size
-                    if summary and len(summary) < len(result.content):
-                        result.summary = summary
+            # Enhance results with AI-powered summarization and reasoning
+            if results:
+                summarizer = Summarizer()
+
+                for result in results:
+                    if hasattr(result, 'content') and len(result.content) > 200:
+                        # Generate summary for long content
+                        summary = summarizer.summarize(result.content[:1000])
+                        if summary and len(summary) < len(result.content):
+                            result.summary = summary
+
+                        # Use reasoning to generate insights about the result
+                        if use_reasoning and summary:
+                            try:
+                                insight_context = ReasoningContext(
+                                    query=f"Summarize key insights from this content: {summary[:500]}",
+                                    mode=ReasoningMode.ANALYTICAL,
+                                    format=ResponseFormat.TEXT,
+                                    max_tokens=100,
+                                    temperature=0.2
+                                )
+                                insight_result = reasoning_engine.reason(insight_context)
+                                if insight_result.confidence > 0.5:
+                                    result.insights = insight_result.response
+                            except Exception as e:
+                                self.logger.debug(f"Insight generation failed: {e}")
 
             return results
 
         except ImportError as exc:
-            self.logger.warning("AI modules not available for semantic search: %s", exc)
-            # Fallback to text-based search
+            self.logger.warning("AI modules not available for advanced semantic search: %s", exc)
+            # Fallback to basic text-based search
             search_request = SearchRequest(
                 query=query,
                 collection=collection_name or self.default_collection,
@@ -345,7 +390,7 @@ class VectorDatabaseService(BaseService):
             )
             return self.search(search_request)
         except Exception as exc:
-            self.logger.error("Semantic search failed: %s", exc)
+            self.logger.error("Advanced semantic search failed: %s", exc)
             return []
 
     def hybrid_search(
