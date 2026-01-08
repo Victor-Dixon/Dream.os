@@ -9,9 +9,22 @@ from . import trading_bi_models
 
 # Import orchestrator directly to avoid circular import issues
 try:
-    from .trading_bi_orchestrator import TradingBiAnalyticsOrchestrator
+    from .trading_bi_orchestrator import TradingBiAnalyticsOrchestrator, create_trading_bi_analytics_orchestrator
 except ImportError:
     TradingBiAnalyticsOrchestrator = None
+    create_trading_bi_analytics_orchestrator = None
+
+# Import specific classes that other modules need
+from .trading_bi_models import (
+    MarketTrend,
+    TrendAnalysisConfig,
+    PerformanceConfig,
+    PerformanceMetrics,
+    PnLResult,
+    RiskLevel,
+    RiskMetrics,
+    RiskAssessmentConfig
+)
 
 __all__ = [
     'market_trend_engine',
@@ -19,4 +32,13 @@ __all__ = [
     'risk_analysis_engine',
     'trading_bi_models',
     'TradingBiAnalyticsOrchestrator',
+    'create_trading_bi_analytics_orchestrator',
+    'MarketTrend',
+    'TrendAnalysisConfig',
+    'PerformanceConfig',
+    'PerformanceMetrics',
+    'PnLResult',
+    'RiskLevel',
+    'RiskMetrics',
+    'RiskAssessmentConfig',
 ]

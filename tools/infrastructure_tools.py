@@ -437,7 +437,7 @@ class DatabaseManager:
         """Check database connectivity."""
         try:
             with self.get_read_session() as session:
-                session.execute("SELECT 1")
+                session.execute(text("SELECT 1"))
             return True
         except Exception as e:
             logger.error(f"Database health check failed: {e}")
@@ -829,7 +829,30 @@ class UnifiedInfrastructureManager:
             "rbac": RBACManager()
         }
 
-        logger.info("✅ Unified Infrastructure Manager initialized")
+        # PERFORMANCE OPTIMIZATION: Add unified performance monitoring
+        self.performance = PerformanceMonitor(self.database, self.cache)
+
+        # PERFORMANCE OPTIMIZATION: Auto-start background monitoring
+        self._start_background_monitoring()
+
+        logger.info("✅ Unified Infrastructure Manager initialized with performance optimizations")
+
+    def _start_background_monitoring(self):
+        """Start background performance monitoring."""
+        import threading
+        import time
+
+        def monitor_loop():
+            while True:
+                try:
+                    self.performance.collect_metrics()
+                    time.sleep(60)  # Collect metrics every minute
+                except Exception as e:
+                    logger.error(f"Background monitoring error: {e}")
+                    time.sleep(300)  # Wait 5 minutes on error
+
+        monitor_thread = threading.Thread(target=monitor_loop, daemon=True)
+        monitor_thread.start()
 
     def health_check(self) -> Dict[str, bool]:
         """Comprehensive infrastructure health check."""
@@ -849,9 +872,36 @@ class UnifiedInfrastructureManager:
             "database": self.database,
             "cache": self.cache,
             "jwt": self.security["jwt"],
-            "rbac": self.security["rbac"]
+            "rbac": self.security["rbac"],
+            "performance": self.performance
         }
         return services.get(service_name)
+
+    def optimize_performance(self) -> Dict[str, Any]:
+        """
+        PERFORMANCE OPTIMIZATION: Run comprehensive optimization across all services.
+        """
+        results = {
+            "cache_optimization": self.cache.optimize_memory(),
+            "database_cache_cleanup": len(self.database.query_cache),
+            "performance_report": self.performance.get_performance_report()
+        }
+
+        # Clear expired database cache entries
+        self.database._clean_cache()
+
+        logger.info("✅ Performance optimization completed")
+        return results
+
+    def get_system_performance(self) -> Dict[str, Any]:
+        """
+        PERFORMANCE OPTIMIZATION: Get complete system performance overview.
+        """
+        return {
+            "infrastructure_health": self.health_check(),
+            "performance_metrics": self.performance.get_performance_report(),
+            "optimization_status": self.optimize_performance()
+        }
 
 
 # ============================================================================
