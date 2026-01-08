@@ -33,32 +33,32 @@ class StatusHandler:
         unhealthy = []
         stopped = []
 
-        for service_name, status_info in all_status.items():
-            if status_info.get('status') == 'running':
-                healthy.append((service_name, status_info))
-            elif status_info.get('status') == 'error':
-                unhealthy.append((service_name, status_info))
+        for service_name, status in all_status.items():
+            if status == 'running':
+                healthy.append((service_name, status))
+            elif status == 'error':
+                unhealthy.append((service_name, status))
             else:
-                stopped.append((service_name, status_info))
+                stopped.append((service_name, status))
 
         # Report healthy services
         if healthy:
             print(f"\n✅ HEALTHY SERVICES ({len(healthy)}):")
-            for service_name, status_info in healthy:
-                print(f"   🟢 {service_name}: {status_info.get('message', 'Running')}")
+            for service_name, status in healthy:
+                print(f"   🟢 {service_name}: Running")
 
         # Report unhealthy services with troubleshooting
         if unhealthy:
             print(f"\n❌ UNHEALTHY SERVICES ({len(unhealthy)}):")
-            for service_name, status_info in unhealthy:
-                print(f"   🔴 {service_name}: {status_info.get('message', 'Error')}")
+            for service_name, status in unhealthy:
+                print(f"   🔴 {service_name}: Error")
                 self._print_troubleshooting(service_name)
 
         # Report stopped services
         if stopped:
             print(f"\n⏹️  STOPPED SERVICES ({len(stopped)}):")
-            for service_name, status_info in stopped:
-                print(f"   ⭕ {service_name}: {status_info.get('message', 'Stopped')}")
+            for service_name, status in stopped:
+                print(f"   ⭕ {service_name}: Stopped")
 
         # Overall system health
         total_services = len(all_status)

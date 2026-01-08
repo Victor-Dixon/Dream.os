@@ -15,11 +15,17 @@ License: MIT
 import asyncio
 import json
 import logging
+import sys
+from pathlib import Path
 from typing import Dict, Any, Optional
 from datetime import datetime
 from fastapi import FastAPI, HTTPException, BackgroundTasks
 from pydantic import BaseModel
 import uvicorn
+
+# Add project root to Python path
+project_root = Path(__file__).parent.parent.parent
+sys.path.insert(0, str(project_root))
 
 from src.services.thea.thea_service import TheaService
 
