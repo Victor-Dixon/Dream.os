@@ -155,6 +155,7 @@ def main():
 
         print(f"\n💾 Detailed report saved to: {args.output}")
 
-    print("
-✅ Analysis complete!"if __name__ == "__main__":
+    print("\n✅ Analysis complete!")
+
+if __name__ == "__main__":
     main()
