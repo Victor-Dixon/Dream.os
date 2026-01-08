@@ -19,8 +19,9 @@ from src.core.base.base_handler import BaseHandler
 try:
     from src.services.chat_presence.chat_presence_orchestrator import ChatPresenceOrchestrator
     CHAT_PRESENCE_AVAILABLE = True
-except ImportError:
+except (ImportError, NameError):
     CHAT_PRESENCE_AVAILABLE = False
+    ChatPresenceOrchestrator = None
 
 
 class ChatPresenceHandlers(BaseHandler, AvailabilityMixin):
@@ -30,8 +31,10 @@ class ChatPresenceHandlers(BaseHandler, AvailabilityMixin):
         """Initialize chat presence handlers."""
         super().__init__("ChatPresenceHandlers")
 
-    def _get_orchestrator(self) -> ChatPresenceOrchestrator:
+    def _get_orchestrator(self):
         """Get chat presence orchestrator instance."""
+        if not CHAT_PRESENCE_AVAILABLE or ChatPresenceOrchestrator is None:
+            raise ImportError("ChatPresenceOrchestrator not available")
         # Initialize with optional configs from request or environment
         return ChatPresenceOrchestrator()
 

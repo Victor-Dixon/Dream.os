@@ -43,7 +43,12 @@ class BrokerInterface(ABC):
 
 
 class MockBroker(BrokerInterface):
-    """Mock broker implementation for testing."""
+    """
+    Mock broker implementation for testing (PHASE 4 CONSOLIDATION).
+
+    Provides demo balance data for safe development and testing.
+    This is the OFFICIAL mock implementation - all others should use this.
+    """
 
     def __init__(self):
         self.connected = False
@@ -58,10 +63,17 @@ class MockBroker(BrokerInterface):
         logger.info("Mock broker disconnected")
 
     def get_account_info(self) -> Dict[str, Any]:
+        """Get mock account info (consolidated format for Phase 4)."""
         return {
             "balance": 10000.0,
+            "cash": 10000.0,  # Added for compatibility
+            "portfolio_value": 10000.0,  # Added for compatibility
+            "buying_power": 10000.0,  # Added for compatibility
             "currency": "USD",
-            "account_type": "demo"
+            "account_type": "demo",
+            "status": "active",
+            "data_source": "mock_demo",  # Marks as mock data
+            "consolidated": True  # Phase 4 consolidation marker
         }
 
     def place_order(self, symbol: str, quantity: int, order_type: str, **kwargs) -> Dict[str, Any]:

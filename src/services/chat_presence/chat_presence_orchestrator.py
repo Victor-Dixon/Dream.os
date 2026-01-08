@@ -22,51 +22,22 @@ from src.core.messaging_models_core import (
 from src.core.messaging_core import send_message
 from src.core.base.base_service import BaseService
 from src.core.agent_mode_manager import get_mode_manager, get_active_agents
+from src.obs import InterpretedCaption
 import asyncio
 import logging
 from pathlib import Path
 from typing import Optional, List
 
-# Use unified logging system
-from src.core.unified_logging_system import get_logger, configure_logging
+# Import extracted coordinators
+# TODO: Re-enable when coordinator modules are implemented
+# from .chat_config_manager import ChatConfigManager
+# from .twitch_coordinator import TwitchCoordinator
+# from .obs_coordinator import OBSCoordinator
+# from .agent_coordinator import AgentCoordinator
 
-from .agent_personality import format_chat_message, get_personality
-from .chat_scheduler import ChatScheduler
-from .message_interpreter import MessageInterpreter
-from .status_reader import AgentStatusReader
+# Legacy imports for backward compatibility
 from .twitch_bridge import TwitchChatBridge
 from .quote_generator import get_random_quote, format_quote_for_chat
-
-# Configure logging for chat_presence with file handler
-log_dir = Path(__file__).parent.parent.parent.parent / "logs"
-log_dir.mkdir(parents=True, exist_ok=True)
-log_file = log_dir / "chat_presence_orchestrator.log"
-configure_logging(level="DEBUG", log_file=log_file)
-
-logger = get_logger(__name__)
-# OBS imports (optional - bot can run without OBS)
-try:
-    from src.obs.caption_interpreter import CaptionInterpreter, InterpretedCaption
-    from src.obs.caption_listener import OBSCaptionListener
-    from src.obs.speech_log_manager import SpeechLogManager
-    OBS_AVAILABLE = True
-except ImportError:
-    OBS_AVAILABLE = False
-    # Create stub classes for when OBS is not available
-
-    class CaptionInterpreter:
-        def __init__(self):
-            pass
-
-    class InterpretedCaption:
-        pass
-
-    class OBSCaptionListener:
-        pass
-
-    class SpeechLogManager:
-        def __init__(self):
-            pass
 
 logger = logging.getLogger(__name__)
 

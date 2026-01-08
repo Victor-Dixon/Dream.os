@@ -437,9 +437,9 @@ class MainControlPanelView(discord.ui.View):
             logger.error(f"Error showing GitHub book: {e}")
             embed = ControlPanelEmbedFactory.create_github_book_fallback_embed()
             # Add any additional fields if needed
-                name="Quick Access",
-                value="Type `!github_book 1` to start reading, or `!github_book` for navigation menu.",
-                inline=False,
+                name = "Quick Access",
+                value = "Type `!github_book 1` to start reading, or `!github_book` for navigation menu.",
+                inline = False,
             )
             await interaction.response.send_message(embed=embed, ephemeral=True)
 
@@ -580,7 +580,7 @@ class MainControlPanelView(discord.ui.View):
             await interaction.response.send_modal(modal)
         except Exception as e:
             logger.error(
-                f"Error showing soft onboard modal: {e}", exc_info=True)
+                f"Error showing soft onboard modal: {e}", exc_info = True)
             await self._handle_error(interaction, e, "opening soft onboard modal")
 
     async def show_hard_onboard_modal(self, interaction: discord.Interaction):
@@ -592,7 +592,7 @@ class MainControlPanelView(discord.ui.View):
             await interaction.response.send_modal(modal)
         except Exception as e:
             logger.error(
-                f"Error showing hard onboard modal: {e}", exc_info=True)
+                f"Error showing hard onboard modal: {e}", exc_info = True)
             await self._handle_error(interaction, e, "opening hard onboard modal")
 
     async def show_templates(self, interaction: discord.Interaction):
@@ -725,9 +725,9 @@ class MainControlPanelView(discord.ui.View):
 
             for category, commands in commands_by_category.items():
                 embed.add_field(
-                    name=category,
-                    value="\n".join(commands),
-                    inline=False,
+                    name = category,
+                    value = "\n".join(commands),
+                    inline = False,
                 )
 
             embed.add_field(

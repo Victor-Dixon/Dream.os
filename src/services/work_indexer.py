@@ -83,6 +83,31 @@ class WorkIndexer(BaseService):
         """
         Index agent's completed work to vector database.
 
+        Navigation References:
+        ├── Vector Database → src/services/vector/vector_database_service.py::add_document_to_vector_db()
+        ├── Document Types → src/services/vector/vector_document_types.py::DocumentType
+        ├── Vector Document → src/services/vector/vector_document.py::VectorDocument
+        ├── Agent Workspaces → agent_workspaces/{agent_id}/work_index.json
+        ├── Search Integration → src/services/recommendation_engine.py::search_agent_work()
+        ├── External Docs → docs/VECTOR_DATABASE_INTEGRATION.md#agent-work-indexing
+        └── Swarm Brain → Swarm Brain Database for cross-agent work discovery
+
+        Complex indexing pipeline:
+        1. File validation and content extraction
+           └── See: Path validation, encoding handling
+        2. Vector document creation with metadata enrichment
+           └── See: VectorDocument constructor, tag generation
+        3. Database insertion with error handling
+           └── See: add_document_to_vector_db() error recovery
+        4. Search optimization and indexing metrics
+           └── See: metadata enrichment for better search relevance
+
+        Strategic Business Impact:
+        - Enables cross-agent work discovery and reuse
+        - Powers intelligent task recommendations
+        - Supports swarm learning through work pattern analysis
+        - Maintains searchable knowledge base of agent contributions
+
         Args:
             file_path: Path to the file to index
             work_type: Type of work (code, documentation, test, etc.)

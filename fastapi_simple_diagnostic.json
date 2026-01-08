@@ -1,39 +1,27 @@
 {
-  "timestamp": "2026-01-07T16:44:20.034465",
+  "timestamp": "2026-01-07T17:49:55.969810",
   "health_test_results": {
     "http://localhost:8000/health": {
       "status": "error",
-      "error": "HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /health (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000002081C52E0D0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "error": "HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /health (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001AE29DDE110>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
       "response_time": null
     },
     "http://localhost:8001/health": {
       "status": "error",
-      "error": "HTTPConnectionPool(host='localhost', port=8001): Max retries exceeded with url: /health (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000002081C5347D0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "error": "HTTPConnectionPool(host='localhost', port=8001): Max retries exceeded with url: /health (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001AE29DE8850>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
       "response_time": null
     },
     "http://localhost:5000/health": {
       "status": "success",
-      "response_time": 8.835,
+      "response_time": 10.484,
       "status_code": 503,
       "threshold": 2.0,
       "within_threshold": false
     }
   },
   "alert_analysis": {
-    "fastapi_alerts_count": 13,
+    "fastapi_alerts_count": 14,
     "recent_fastapi_alerts": [
-      {
-        "level": "warning",
-        "title": "FastAPI Slow Response",
-        "message": "Endpoint /health took 5.04s (threshold: 2.0s)",
-        "source": "fastapi_performance_monitor",
-        "timestamp": "2026-01-07T06:57:51.004716",
-        "metadata": {
-          "endpoint": "/health",
-          "duration": 5.036656618118286,
-          "threshold": 2.0
-        }
-      },
       {
         "level": "warning",
         "title": "FastAPI Slow Response",
@@ -79,6 +67,18 @@
         "metadata": {
           "endpoint": "/health",
           "duration": 5.708439588546753,
+          "threshold": 2.0
+        }
+      },
+      {
+        "level": "warning",
+        "title": "FastAPI Slow Response",
+        "message": "Endpoint /health took 7.28s (threshold: 2.0s)",
+        "source": "fastapi_performance_monitor",
+        "timestamp": "2026-01-07T23:49:55.316260",
+        "metadata": {
+          "endpoint": "/health",
+          "duration": 7.276522159576416,
           "threshold": 2.0
         }
       }

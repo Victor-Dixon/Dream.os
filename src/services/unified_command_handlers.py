@@ -277,6 +277,346 @@ class RoleCommandHandler(BaseService):
         return True
 
 
+class TaskCommandHandler(BaseService):
+    """Handler for task-related CLI commands (--get-next-task, --list-tasks, --task-status, --complete-task).
+
+    PHASE 4 CONSOLIDATION: Migrated from handlers/task_handler.py
+    Consolidated task management operations with unified interface.
+    """
+
+    def __init__(self):
+        """Initialize task command handler."""
+        super().__init__("TaskCommandHandler")
+        self.task_manager = None
+        self._init_task_manager()
+
+    def _init_task_manager(self):
+        """Initialize task manager with fallback."""
+        try:
+            from .unified_service_managers import UnifiedContractManager
+            self.task_manager = UnifiedContractManager()
+        except ImportError:
+            logger.warning("UnifiedContractManager not available for task operations")
+            self.task_manager = None
+
+    def can_handle(self, args) -> bool:
+        """Check if this handler can handle the given arguments."""
+        return (hasattr(args, 'get_next_task') and args.get_next_task) or \
+               (hasattr(args, 'list_tasks') and args.list_tasks) or \
+               (hasattr(args, 'task_status') and args.task_status) or \
+               (hasattr(args, 'complete_task') and args.complete_task)
+
+    def handle(self, args) -> bool:
+        """Handle task-related commands."""
+        try:
+            if hasattr(args, 'get_next_task') and args.get_next_task:
+                return self._handle_get_next_task(args)
+            elif hasattr(args, 'list_tasks') and args.list_tasks:
+                return self._handle_list_tasks(args)
+            elif hasattr(args, 'task_status') and args.task_status:
+                return self._handle_task_status(args)
+            elif hasattr(args, 'complete_task') and args.complete_task:
+                return self._handle_complete_task(args)
+            return False
+        except Exception as e:
+            logger.error(f"Task command handling error: {e}")
+            return False
+
+    def _handle_get_next_task(self, args) -> bool:
+        """Handle get next task command."""
+        try:
+            if not self.task_manager:
+                print("❌ Task manager not available")
+                return False
+
+            agent_id = getattr(args, 'agent', None)
+            if not agent_id:
+                print("❌ Agent ID required for task assignment")
+                return False
+
+            task = self.task_manager.get_next_task(agent_id)
+            if task:
+                print(f"✅ Task assigned to {agent_id}:")
+                print(f"   📋 {task.get('title', 'No title')}")
+                print(f"   📝 {task.get('description', 'No description')}")
+                if task.get('priority'):
+                    print(f"   🔥 Priority: {priority}")
+                return True
+            else:
+                print(f"ℹ️  No tasks available for {agent_id}")
+                return True
+        except Exception as e:
+            logger.error(f"Get next task error: {e}")
+            return False
+
+    def _handle_list_tasks(self, args) -> bool:
+        """Handle list tasks command."""
+        try:
+            if not self.task_manager:
+                print("❌ Task manager not available")
+                return False
+
+            agent_id = getattr(args, 'agent', None)
+            tasks = self.task_manager.list_tasks(agent_id) if agent_id else self.task_manager.list_all_tasks()
+
+            if tasks:
+                print(f"📋 Tasks ({len(tasks)}):")
+                for i, task in enumerate(tasks, 1):
+                    status = task.get('status', 'unknown')
+                    priority = task.get('priority', 'normal')
+                    print(f"   {i}. [{status.upper()}] {task.get('title', 'No title')}")
+                    if priority != 'normal':
+                        print(f"      🔥 Priority: {priority}")
+            else:
+                print("ℹ️  No tasks found")
+            return True
+        except Exception as e:
+            logger.error(f"List tasks error: {e}")
+            return False
+
+    def _handle_task_status(self, args) -> bool:
+        """Handle task status command."""
+        try:
+            if not self.task_manager:
+                print("❌ Task manager not available")
+                return False
+
+            task_id = getattr(args, 'task_id', None)
+            if not task_id:
+                print("❌ Task ID required")
+                return False
+
+            status = self.task_manager.get_task_status(task_id)
+            if status:
+                print(f"📊 Task {task_id} Status:")
+                print(f"   📋 Title: {status.get('title', 'Unknown')}")
+                print(f"   🔄 Status: {status.get('status', 'unknown')}")
+                print(f"   👤 Assigned to: {status.get('assigned_to', 'unassigned')}")
+                if status.get('progress'):
+                    print(f"   📈 Progress: {status['progress']}%")
+                return True
+            else:
+                print(f"❌ Task {task_id} not found")
+                return False
+        except Exception as e:
+            logger.error(f"Task status error: {e}")
+            return False
+
+    def _handle_complete_task(self, args) -> bool:
+        """Handle complete task command."""
+        try:
+            if not self.task_manager:
+                print("❌ Task manager not available")
+                return False
+
+            task_id = getattr(args, 'task_id', None)
+            if not task_id:
+                print("❌ Task ID required")
+                return False
+
+            success = self.task_manager.complete_task(task_id)
+            if success:
+                print(f"✅ Task {task_id} marked as completed")
+                return True
+            else:
+                print(f"❌ Failed to complete task {task_id}")
+                return False
+        except Exception as e:
+            logger.error(f"Complete task error: {e}")
+            return False
+
+
+class BatchMessageCommandHandler(BaseService):
+    """Handler for batch message CLI commands (--batch-start, --batch-add, --batch-send, --batch-status, --batch-cancel).
+
+    PHASE 4 CONSOLIDATION: Migrated from handlers/batch_message_handler.py
+    Consolidated batch messaging operations with unified interface.
+    """
+
+    def __init__(self):
+        """Initialize batch message command handler."""
+        super().__init__("BatchMessageCommandHandler")
+        self.batch_service = None
+        self._init_batch_service()
+
+    def _init_batch_service(self):
+        """Initialize batch service with fallback."""
+        try:
+            from ..message_batching_service import MessageBatchingService
+            self.batch_service = MessageBatchingService()
+        except ImportError:
+            logger.warning("MessageBatchingService not available for batch operations")
+            self.batch_service = None
+
+    def can_handle(self, args) -> bool:
+        """Check if this handler can handle the given arguments."""
+        return (hasattr(args, 'batch_start') and args.batch_start) or \
+               (hasattr(args, 'batch_add') and args.batch_add) or \
+               (hasattr(args, 'batch_send') and args.batch_send) or \
+               (hasattr(args, 'batch_status') and args.batch_status) or \
+               (hasattr(args, 'batch_cancel') and args.batch_cancel) or \
+               (hasattr(args, 'batch') and args.batch)
+
+    def handle(self, args) -> bool:
+        """Handle batch message commands."""
+        try:
+            if hasattr(args, 'batch_start') and args.batch_start:
+                return self._handle_batch_start(args)
+            elif hasattr(args, 'batch_add') and args.batch_add:
+                return self._handle_batch_add(args)
+            elif hasattr(args, 'batch_send') and args.batch_send:
+                return self._handle_batch_send(args)
+            elif hasattr(args, 'batch_status') and args.batch_status:
+                return self._handle_batch_status(args)
+            elif hasattr(args, 'batch_cancel') and args.batch_cancel:
+                return self._handle_batch_cancel(args)
+            elif hasattr(args, 'batch') and args.batch:
+                return self._handle_batch_list(args)
+            return False
+        except Exception as e:
+            logger.error(f"Batch message command handling error: {e}")
+            return False
+
+    def _handle_batch_start(self, args) -> bool:
+        """Handle batch start command."""
+        try:
+            if not self.batch_service:
+                print("❌ Batch service not available")
+                return False
+
+            batch_id = self.batch_service.start_batch()
+            print(f"✅ Batch started with ID: {batch_id}")
+            print("   Use --batch-add to add messages to this batch")
+            return True
+        except Exception as e:
+            logger.error(f"Batch start error: {e}")
+            return False
+
+    def _handle_batch_add(self, args) -> bool:
+        """Handle batch add command."""
+        try:
+            if not self.batch_service:
+                print("❌ Batch service not available")
+                return False
+
+            batch_id = getattr(args, 'batch_id', None)
+            message = getattr(args, 'message', None)
+            recipient = getattr(args, 'recipient', None)
+
+            if not all([batch_id, message, recipient]):
+                print("❌ Batch ID, message, and recipient required")
+                return False
+
+            success = self.batch_service.add_to_batch(batch_id, message, recipient)
+            if success:
+                print(f"✅ Message added to batch {batch_id}")
+                return True
+            else:
+                print(f"❌ Failed to add message to batch {batch_id}")
+                return False
+        except Exception as e:
+            logger.error(f"Batch add error: {e}")
+            return False
+
+    def _handle_batch_send(self, args) -> bool:
+        """Handle batch send command."""
+        try:
+            if not self.batch_service:
+                print("❌ Batch service not available")
+                return False
+
+            batch_id = getattr(args, 'batch_id', None)
+            if not batch_id:
+                print("❌ Batch ID required")
+                return False
+
+            success = self.batch_service.send_batch(batch_id)
+            if success:
+                print(f"✅ Batch {batch_id} sent successfully")
+                return True
+            else:
+                print(f"❌ Failed to send batch {batch_id}")
+                return False
+        except Exception as e:
+            logger.error(f"Batch send error: {e}")
+            return False
+
+    def _handle_batch_status(self, args) -> bool:
+        """Handle batch status command."""
+        try:
+            if not self.batch_service:
+                print("❌ Batch service not available")
+                return False
+
+            batch_id = getattr(args, 'batch_id', None)
+            if batch_id:
+                status = self.batch_service.get_batch_status(batch_id)
+                if status:
+                    print(f"📊 Batch {batch_id} Status:")
+                    print(f"   🔄 Status: {status.get('status', 'unknown')}")
+                    print(f"   📨 Messages: {status.get('message_count', 0)}")
+                    print(f"   ✅ Sent: {status.get('sent_count', 0)}")
+                    print(f"   ❌ Failed: {status.get('failed_count', 0)}")
+                else:
+                    print(f"❌ Batch {batch_id} not found")
+                    return False
+            else:
+                # List all batches
+                batches = self.batch_service.list_batches()
+                if batches:
+                    print(f"📋 Active Batches ({len(batches)}):")
+                    for batch in batches:
+                        print(f"   • {batch['id']}: {batch['status']} ({batch['message_count']} messages)")
+                else:
+                    print("ℹ️  No active batches")
+            return True
+        except Exception as e:
+            logger.error(f"Batch status error: {e}")
+            return False
+
+    def _handle_batch_cancel(self, args) -> bool:
+        """Handle batch cancel command."""
+        try:
+            if not self.batch_service:
+                print("❌ Batch service not available")
+                return False
+
+            batch_id = getattr(args, 'batch_id', None)
+            if not batch_id:
+                print("❌ Batch ID required")
+                return False
+
+            success = self.batch_service.cancel_batch(batch_id)
+            if success:
+                print(f"✅ Batch {batch_id} cancelled")
+                return True
+            else:
+                print(f"❌ Failed to cancel batch {batch_id}")
+                return False
+        except Exception as e:
+            logger.error(f"Batch cancel error: {e}")
+            return False
+
+    def _handle_batch_list(self, args) -> bool:
+        """Handle batch list command."""
+        try:
+            if not self.batch_service:
+                print("❌ Batch service not available")
+                return False
+
+            batches = self.batch_service.list_batches()
+            if batches:
+                print(f"📋 All Batches ({len(batches)}):")
+                for batch in batches:
+                    print(f"   • {batch['id']}: {batch['status']} ({batch['message_count']} messages)")
+            else:
+                print("ℹ️  No batches found")
+            return True
+        except Exception as e:
+            logger.error(f"Batch list error: {e}")
+            return False
+
+
 # Backward compatibility aliases
 CommandHandler = MessageCommandHandler
 
@@ -285,5 +625,7 @@ __all__ = [
     "MessageCommandHandler",
     "OvernightCommandHandler",
     "RoleCommandHandler",
+    "TaskCommandHandler",
+    "BatchMessageCommandHandler",
     "CommandHandler",  # Backward compatibility
 ]
