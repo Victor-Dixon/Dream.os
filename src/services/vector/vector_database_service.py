@@ -21,33 +21,14 @@ from threading import Lock
 from typing import Any, List
 from concurrent.futures import ThreadPoolExecutor
 
-# Lazy imports - chromadb is imported only when needed to avoid initialization issues
-CHROMADB_AVAILABLE = False
-chromadb = None
-SentenceTransformerEmbeddingFunction = None
-ChromaCollection = None
-
-def _ensure_chromadb():
-    """Lazy import chromadb and check availability."""
-    global chromadb, SentenceTransformerEmbeddingFunction, ChromaCollection, CHROMADB_AVAILABLE
-
-    if chromadb is not None:
-        return CHROMADB_AVAILABLE
-
-    try:
-        import chromadb as _chromadb
-        from chromadb.api.models.Collection import Collection as _ChromaCollection
-        from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction as _SentenceTransformerEmbeddingFunction
-
-        chromadb = _chromadb
-        ChromaCollection = _ChromaCollection
-        SentenceTransformerEmbeddingFunction = _SentenceTransformerEmbeddingFunction
-        CHROMADB_AVAILABLE = True
-        return True
-    except (ImportError, ValueError) as e:
-        print(f"⚠️  ChromaDB not available: {e}")
-        CHROMADB_AVAILABLE = False
-        return False
+try:
+    import chromadb
+    from chromadb.api.models.Collection import Collection as ChromaCollection
+    from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
+except ImportError:
+    chromadb = None
+    SentenceTransformerEmbeddingFunction = None
+    ChromaCollection = None
 
 # Optional BaseService import to avoid triggering config manager during import
 try:
@@ -549,7 +530,7 @@ class VectorDatabaseService(BaseService):
 
     def _initialize_client(self) -> None:
         """Initialize ChromaDB client or fallback store."""
-        if not _ensure_chromadb():
+        if chromadb is None:
             self.logger.info("chromadb not available; using local fallback store")
             self._fallback_store = LocalVectorStore()
             return
@@ -568,7 +549,7 @@ class VectorDatabaseService(BaseService):
 
     def _build_embedding_function(self) -> SentenceTransformerEmbeddingFunction | None:
         """Build embedding function."""
-        if not _ensure_chromadb() or SentenceTransformerEmbeddingFunction is None:
+        if SentenceTransformerEmbeddingFunction is None:
             self.logger.warning("sentence-transformers not available")
             return None
 

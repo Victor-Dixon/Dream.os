@@ -32,34 +32,29 @@ from datetime import datetime
 
 from ..core.base.base_service import BaseService
 
-# Optional vector database imports
+# Optional vector database imports - import directly to avoid services __init__ chain
 try:
-    from .vector_database_service_unified import (
-        get_vector_database_service,
-    )
-    from .vector_database.vector_database_models import VectorDocument
+    from .vector.vector_database_service import VectorDatabaseService
+    from .vector.vector_database_models import VectorDocument
     VECTOR_DB_AVAILABLE = True
-except (ImportError, ValueError) as e:
-    print(f"⚠️  Vector database not available for work indexer: {e}")
-    VECTOR_DB_AVAILABLE = False
+
     def get_vector_database_service():
-        return None
-    VectorDocument = None
-    from src.services.models.vector_models import DocumentType  # SSOT
-    def add_document_to_vector_db(doc: VectorDocument):
+        return VectorDatabaseService()
+
+    def add_document_to_vector_db(doc):
         service = get_vector_database_service()
         if service:
             return service.add_document(doc)
         return False
-    VECTOR_DB_AVAILABLE = True
-except ImportError:
+
+except (ImportError, ValueError, AttributeError) as e:
+    print(f"⚠️  Vector database not available for work indexer: {e}")
     VECTOR_DB_AVAILABLE = False
     def get_vector_database_service():
         return None
     def add_document_to_vector_db(doc):
         return False
-    # SSOT: Import DocumentType from SSOT instead of defining locally
-    from src.services.models.vector_models import DocumentType
+    # Fallback VectorDocument class
     from dataclasses import dataclass
     @dataclass
     class VectorDocument:

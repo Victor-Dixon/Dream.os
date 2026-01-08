@@ -23,8 +23,7 @@ try:
         search_vector_database,
     )
     VECTOR_DB_AVAILABLE = True
-except (ImportError, ValueError) as e:
-    print(f"⚠️  Vector database not available: {e}")
+except ImportError:
     VECTOR_DB_AVAILABLE = False
     def get_vector_database_service():
         return None
