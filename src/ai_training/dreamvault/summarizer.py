@@ -8,6 +8,7 @@ V2 Compliant: <100 lines, single responsibility
 Text summarization for conversation processing and training data preparation.
 """
 
+import os
 import logging
 from typing import Dict, Any, List, Optional
 from dataclasses import dataclass
