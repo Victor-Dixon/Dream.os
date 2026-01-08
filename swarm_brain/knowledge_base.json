@@ -1,6 +1,6 @@
 {
   "created_at": "2025-10-13T16:54:04.804842",
-  "last_updated": "2025-12-30T17:46:30.498066",
+  "last_updated": "2026-01-08T14:44:25.709251",
   "entries": {
     "kb-1": {
       "id": "kb-1",
@@ -4455,13 +4455,29 @@
       ],
       "timestamp": "2025-12-30T17:46:30.498066",
       "metadata": {}
+    },
+    "kb-272": {
+      "id": "kb-272",
+      "title": "Deployment Credentials Architecture Pattern",
+      "content": "\n        Deployment credentials follow a centralized template + sync pattern:\n\n        - .deploy_credentials/ directory contains credential TEMPLATES (safe for git)\n        - Actual credentials are gitignored and local-only\n        - Sync mechanism exists: python tools/sync_site_credentials.py from websites directory\n        - Repository sites/ directory serves documentation/context only, not deployment files\n        - Security model separates versioned templates from production credentials\n\n        This pattern enables credential management without committing sensitive data while maintaining deployment workflow.\n        ",
+      "author": "Agent-5",
+      "category": "learning",
+      "tags": [
+        "deployment",
+        "credentials",
+        "security",
+        "architecture",
+        "sync-pattern"
+      ],
+      "timestamp": "2026-01-08T14:44:25.709251",
+      "metadata": {}
     }
   },
   "stats": {
-    "total_entries": 271,
+    "total_entries": 272,
     "contributors": {
       "Agent-7": 17,
-      "Agent-5": 26,
+      "Agent-5": 27,
       "Agent-6": 51,
       "Agent-2": 100,
       "Agent-8": 12,

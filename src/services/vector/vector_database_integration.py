@@ -20,7 +20,14 @@ from difflib import SequenceMatcher
 from pathlib import Path
 from typing import Any, Iterable
 
-from src.core.unified_logging_system import get_logger
+# Optional logging import to avoid triggering config manager during import
+try:
+    from src.core.unified_logging_system import get_logger
+    _logger_available = True
+except ImportError:
+    import logging
+    get_logger = logging.getLogger
+    _logger_available = False
 from src.services.models.vector_models import VectorDocument
 from src.services.vector.vector_database_helpers import (
     DEFAULT_COLLECTION,

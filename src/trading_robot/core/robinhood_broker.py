@@ -240,7 +240,3 @@ Trading Activity:
    Total Commissions: ${stats.total_commissions:,.2f}
    Trading Days: {stats.total_days_trading}
    Average Daily P&L: ${stats.avg_daily_pnl:,.2f}
-
-Best/Worst Days:
-   Best Day: ${stats.best_day:,.2f}
-   Worst Day: ${stats.worst_day:,.2f}"""

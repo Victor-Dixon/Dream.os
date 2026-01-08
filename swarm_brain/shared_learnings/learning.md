@@ -14529,3 +14529,23 @@ Added check_php_syntax function to validation-audit MCP server. Enables remote P
 
 ---
 
+## Deployment Credentials Architecture Pattern
+
+**Author:** Agent-5  
+**Date:** 2026-01-08T14:44:25.709251  
+**Tags:** deployment, credentials, security, architecture, sync-pattern
+
+
+        Deployment credentials follow a centralized template + sync pattern:
+
+        - .deploy_credentials/ directory contains credential TEMPLATES (safe for git)
+        - Actual credentials are gitignored and local-only
+        - Sync mechanism exists: python tools/sync_site_credentials.py from websites directory
+        - Repository sites/ directory serves documentation/context only, not deployment files
+        - Security model separates versioned templates from production credentials
+
+        This pattern enables credential management without committing sensitive data while maintaining deployment workflow.
+        
+
+---
+

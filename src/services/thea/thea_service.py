@@ -106,22 +106,28 @@ class TheaService(BaseService):
             self.logger.info("✅ Using secure encrypted cookie storage")
         elif COOKIE_MANAGER_AVAILABLE:
             # Fallback to legacy manager (deprecated)
-            self.cookie_manager = TheaCookieManager(str(cookie_file).replace('.enc', '.json'))
+            self.cookie_manager = TheaCookieManager(
+                str(cookie_file).replace('.enc', '.json'))
             self.secure_cookies = False
-            self.logger.warning("⚠️ Using legacy cookie manager - upgrade recommended")
+            self.logger.warning(
+                "⚠️ Using legacy cookie manager - upgrade recommended")
         else:
             self.cookie_manager = None
             self.secure_cookies = False
-            self.logger.warning("❌ No cookie manager available - basic handling only")
+            self.logger.warning(
+                "❌ No cookie manager available - basic handling only")
 
         # Validate dependencies
         if not SELENIUM_AVAILABLE:
             raise ImportError("Selenium required: pip install selenium")
         if not PYAUTOGUI_AVAILABLE:
-            self.logger.warning("PyAutoGUI not available - message sending may not work")
+            self.logger.warning(
+                "PyAutoGUI not available - message sending may not work")
         if not UNDETECTED_AVAILABLE:
-            self.logger.warning("undetected-chromedriver not available - will use standard Chrome (may be detected)")
-            self.logger.info("💡 Install with: pip install undetected-chromedriver")
+            self.logger.warning(
+                "undetected-chromedriver not available - will use standard Chrome (may be detected)")
+            self.logger.info(
+                "💡 Install with: pip install undetected-chromedriver")
 
     def start_browser(self) -> bool:
         """Initialize browser with cookies using undetected-chromedriver."""
@@ -131,18 +137,21 @@ class TheaService(BaseService):
             # Try undetected-chromedriver first (bypasses bot detection)
             if UNDETECTED_AVAILABLE:
                 try:
-                    self.logger.info("🔐 Using undetected-chromedriver for anti-bot bypass...")
-                    
+                    self.logger.info(
+                        "🔐 Using undetected-chromedriver for anti-bot bypass...")
+
                     options = uc.ChromeOptions()
                     if self.headless:
-                        self.logger.warning("⚠️ Headless mode may be detected by anti-bot systems")
+                        self.logger.warning(
+                            "⚠️ Headless mode may be detected by anti-bot systems")
                         options.add_argument("--headless=new")
-                    
+
                     options.add_argument("--no-sandbox")
                     options.add_argument("--disable-dev-shm-usage")
                     options.add_argument("--disable-gpu")
                     options.add_argument("--window-size=1920,1080")
-                    options.add_argument("--disable-blink-features=AutomationControlled")
+                    options.add_argument(
+                        "--disable-blink-features=AutomationControlled")
 
                     self.driver = uc.Chrome(
                         options=options,
@@ -151,7 +160,7 @@ class TheaService(BaseService):
                     )
                     self.logger.info("✅ Undetected Chrome browser started")
                     return True
-                    
+
                 except Exception as e:
                     self.logger.warning(f"⚠️ Undetected Chrome failed: {e}")
                     self.logger.info("🔄 Falling back to standard Chrome...")
@@ -161,7 +170,8 @@ class TheaService(BaseService):
                 self.logger.error("❌ Selenium not available")
                 return False
 
-            self.logger.info("🚀 Using standard Chrome (may be detected by anti-bot systems)...")
+            self.logger.info(
+                "🚀 Using standard Chrome (may be detected by anti-bot systems)...")
             options = Options()
             if self.headless:
                 options.add_argument("--headless=new")
@@ -172,8 +182,10 @@ class TheaService(BaseService):
             options.add_argument("--window-size=1920,1080")
 
             # Anti-detection
-            options.add_argument("--disable-blink-features=AutomationControlled")
-            options.add_experimental_option("excludeSwitches", ["enable-automation"])
+            options.add_argument(
+                "--disable-blink-features=AutomationControlled")
+            options.add_experimental_option(
+                "excludeSwitches", ["enable-automation"])
             options.add_experimental_option("useAutomationExtension", False)
 
             self.driver = webdriver.Chrome(options=options)
@@ -190,17 +202,20 @@ class TheaService(BaseService):
             # Use secure cookie manager validation
             is_valid = self.cookie_manager.has_valid_cookies()
             if is_valid:
-                self.logger.info("✅ Cookies are fresh and valid (secure validation)" if self.secure_cookies else "✅ Cookies are fresh (legacy validation)")
+                self.logger.info(
+                    "✅ Cookies are fresh and valid (secure validation)" if self.secure_cookies else "✅ Cookies are fresh (legacy validation)")
             else:
                 self.logger.warning("⚠️ Cookies are stale or invalid")
             return is_valid
         else:
             # Emergency fallback
-            self.logger.warning("🚨 EMERGENCY: No cookie manager - basic file check only")
+            self.logger.warning(
+                "🚨 EMERGENCY: No cookie manager - basic file check only")
             if not Path(self.cookie_file).exists():
                 self.logger.info("🍪 No cookie file found")
                 return False
-            self.logger.warning("⚠️ Using basic file existence check - INSECURE")
+            self.logger.warning(
+                "⚠️ Using basic file existence check - INSECURE")
             return True  # Assume valid if file exists (not recommended)
 
     def validate_cookies(self) -> bool:
@@ -208,22 +223,25 @@ class TheaService(BaseService):
         if not self.driver:
             if not self.start_browser():
                 return False
-        
+
         try:
             # Navigate to domain first
             self.logger.info("🔍 Validating cookies...")
             self.driver.get("https://chatgpt.com/")
             time.sleep(2)
-            
+
             # Load cookies using secure cookie manager
             if self.cookie_manager:
                 success = self.cookie_manager.load_cookies(self.driver)
                 if not success:
-                    self.logger.warning("⚠️ Cookie load failed - may need re-authentication")
+                    self.logger.warning(
+                        "⚠️ Cookie load failed - may need re-authentication")
             else:
                 # Emergency fallback - NOT RECOMMENDED
-                self.logger.warning("🚨 EMERGENCY: No cookie manager - attempting manual load (INSECURE)")
-                emergency_file = Path(str(self.cookie_file).replace('.enc', '_emergency.json'))
+                self.logger.warning(
+                    "🚨 EMERGENCY: No cookie manager - attempting manual load (INSECURE)")
+                emergency_file = Path(
+                    str(self.cookie_file).replace('.enc', '_emergency.json'))
                 if emergency_file.exists():
                     try:
                         with open(emergency_file) as f:
@@ -233,23 +251,26 @@ class TheaService(BaseService):
                                 self.driver.add_cookie(cookie)
                             except Exception as e:
                                 self.logger.debug(f"Skipped cookie: {e}")
-                        self.logger.warning("⚠️ Emergency cookie load completed - SECURITY RISK")
+                        self.logger.warning(
+                            "⚠️ Emergency cookie load completed - SECURITY RISK")
                     except Exception as e:
-                        self.logger.error(f"❌ Emergency cookie load failed: {e}")
+                        self.logger.error(
+                            f"❌ Emergency cookie load failed: {e}")
                 else:
                     self.logger.info("No emergency cookie file found")
-            
+
             # Navigate to Thea and check login
             self.driver.get(self.thea_url)
             time.sleep(3)
-            
+
             if self._is_logged_in():
                 self.logger.info("✅ Cookie validation successful")
                 return True
             else:
-                self.logger.warning("⚠️ Cookie validation failed - cookies don't work")
+                self.logger.warning(
+                    "⚠️ Cookie validation failed - cookies don't work")
                 return False
-                
+
         except Exception as e:
             self.logger.error(f"❌ Cookie validation error: {e}")
             return False
@@ -257,66 +278,76 @@ class TheaService(BaseService):
     def refresh_cookies(self) -> bool:
         """Refresh cookies by re-authenticating."""
         self.logger.info("🔄 Refreshing cookies...")
-        
+
         if not self.driver:
             if not self.start_browser():
                 return False
-        
+
         try:
             # Navigate to Thea
             self.driver.get(self.thea_url)
             time.sleep(3)
-            
+
             # Check if already logged in
             if self._is_logged_in():
                 # Save cookies using secure cookie manager
                 if self.cookie_manager:
                     success = self.cookie_manager.save_cookies(self.driver)
                     if success:
-                        self.logger.info("✅ Cookies refreshed securely" if self.secure_cookies else "✅ Cookies refreshed (legacy)")
+                        self.logger.info(
+                            "✅ Cookies refreshed securely" if self.secure_cookies else "✅ Cookies refreshed (legacy)")
                     else:
                         self.logger.error("❌ Cookie save failed")
                         return False
                 else:
                     # Emergency fallback - NOT RECOMMENDED
-                    self.logger.warning("🚨 EMERGENCY: No cookie manager - manual save (INSECURE)")
+                    self.logger.warning(
+                        "🚨 EMERGENCY: No cookie manager - manual save (INSECURE)")
                     cookies = self.driver.get_cookies()
-                    emergency_file = Path(str(self.cookie_file).replace('.enc', '_emergency.json'))
+                    emergency_file = Path(
+                        str(self.cookie_file).replace('.enc', '_emergency.json'))
                     emergency_file.parent.mkdir(parents=True, exist_ok=True)
                     with open(emergency_file, "w") as f:
                         json.dump(cookies, f, indent=2)
-                    self.logger.warning(f"⚠️ Cookies saved to emergency file: {emergency_file}")
+                    self.logger.warning(
+                        f"⚠️ Cookies saved to emergency file: {emergency_file}")
                 return True
-            
+
             # Manual login required
             self.logger.info("⚠️ Manual login required to refresh cookies")
-            self.logger.info("Please log in to ChatGPT in the browser window...")
+            self.logger.info(
+                "Please log in to ChatGPT in the browser window...")
             self.logger.info("⏳ Waiting 60 seconds for manual login...")
             time.sleep(60)
-            
+
             if self._is_logged_in():
                 # Save cookies using secure cookie manager
                 if self.cookie_manager:
                     success = self.cookie_manager.save_cookies(self.driver)
                     if success:
-                        self.logger.info("✅ Cookies refreshed securely after manual login" if self.secure_cookies else "✅ Cookies refreshed after manual login (legacy)")
+                        self.logger.info(
+                            "✅ Cookies refreshed securely after manual login" if self.secure_cookies else "✅ Cookies refreshed after manual login (legacy)")
                     else:
-                        self.logger.error("❌ Cookie save failed after manual login")
+                        self.logger.error(
+                            "❌ Cookie save failed after manual login")
                         return False
                 else:
                     # Emergency fallback - NOT RECOMMENDED
-                    self.logger.warning("🚨 EMERGENCY: No cookie manager - manual save (INSECURE)")
+                    self.logger.warning(
+                        "🚨 EMERGENCY: No cookie manager - manual save (INSECURE)")
                     cookies = self.driver.get_cookies()
-                    emergency_file = Path(str(self.cookie_file).replace('.enc', '_emergency.json'))
+                    emergency_file = Path(
+                        str(self.cookie_file).replace('.enc', '_emergency.json'))
                     emergency_file.parent.mkdir(parents=True, exist_ok=True)
                     with open(emergency_file, "w") as f:
                         json.dump(cookies, f, indent=2)
-                    self.logger.warning(f"⚠️ Cookies saved to emergency file: {emergency_file}")
+                    self.logger.warning(
+                        f"⚠️ Cookies saved to emergency file: {emergency_file}")
                 return True
-            
+
             self.logger.error("❌ Cookie refresh failed")
             return False
-            
+
         except Exception as e:
             self.logger.error(f"❌ Cookie refresh error: {e}")
             return False
@@ -335,19 +366,21 @@ class TheaService(BaseService):
                     self.logger.info("✅ Using fresh, valid cookies")
                     return True
                 else:
-                    self.logger.warning("⚠️ Cookies are fresh but invalid, refreshing...")
+                    self.logger.warning(
+                        "⚠️ Cookies are fresh but invalid, refreshing...")
                     force_refresh = True
 
             # Refresh cookies if needed
             if force_refresh or not self.are_cookies_fresh():
                 if not self.refresh_cookies():
                     return False
-                
+
                 # Validate after refresh
                 if not self.validate_cookies():
-                    self.logger.error("❌ Cookies refreshed but validation failed")
+                    self.logger.error(
+                        "❌ Cookies refreshed but validation failed")
                     return False
-            
+
             self.logger.info("✅ Login ensured with fresh cookies")
             return True
 
@@ -424,7 +457,8 @@ class TheaService(BaseService):
             self.logger.info("⏳ Waiting for response...")
 
             if not DETECTOR_AVAILABLE:
-                self.logger.warning("ResponseDetector not available - basic wait")
+                self.logger.warning(
+                    "ResponseDetector not available - basic wait")
                 time.sleep(15)
                 return self._extract_basic_response()
 
@@ -470,7 +504,8 @@ class TheaService(BaseService):
         Returns:
             dict with 'success', 'message', 'response', 'file' keys
         """
-        result = {"success": False, "message": message, "response": "", "file": ""}
+        result = {"success": False, "message": message,
+                  "response": "", "file": ""}
 
         try:
             response = self.send_message(message, wait_for_response=True)

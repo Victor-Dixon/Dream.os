@@ -13,11 +13,19 @@ V2 Compliance | Author: Agent-1 | Date: 2025-12-14
 
 from __future__ import annotations
 
-# Integration Layer
-from .vector_database_integration import LocalVectorStore
+# Optional imports for vector database functionality
+try:
+    # Integration Layer
+    from .vector_database_integration import LocalVectorStore
 
-# Service Core
-from .vector_database_service import VectorDatabaseService
+    # Service Core
+    from .vector_database_service import VectorDatabaseService
+    VECTOR_SERVICES_AVAILABLE = True
+except ImportError as e:
+    print(f"⚠️  Vector services not available: {e}")
+    LocalVectorStore = None
+    VectorDatabaseService = None
+    VECTOR_SERVICES_AVAILABLE = False
 
 # Helpers
 from .vector_database_helpers import (
