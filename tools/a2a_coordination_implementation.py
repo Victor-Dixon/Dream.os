@@ -76,8 +76,12 @@ class A2ACoordinationImplementer:
         print(f"🤝 Executing bilateral coordination between {agents[0]} and {agents[1]}")
         print(f"Task: {task}")
 
+        # Debug: check available templates
+        templates = self.load_templates()
+        print(f"Available templates: {list(templates.keys())}")
+
         # Generate coordination message
-        message = self.generate_coordination_message("bilateral task coordination",
+        message = self.generate_coordination_message("bilateral_task_coordination",
                                                    agent_x=agents[1],
                                                    task=task,
                                                    **kwargs)
