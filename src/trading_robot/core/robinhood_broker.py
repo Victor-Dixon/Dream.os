@@ -121,30 +121,76 @@ class RobinhoodBroker:
                 totp = pyotp.TOTP(self.totp_secret)
                 mfa_code = totp.now()
                 self.logger.info("Generated TOTP code for authentication")
+            else:
+                self.logger.warning("No TOTP secret provided - you may need to complete 2FA manually")
 
             # Authenticate with Robinhood
             self.logger.info(f"Authenticating as {self.username}")
-            login_result = rs.login(
-                username=self.username,
-                password=self.password,
-                mfa_code=mfa_code,
-                store_session=False  # Don't persist session for security
-            )
 
-            if login_result:
-                self.is_authenticated = True
-                self.last_auth_time = datetime.now()
-                self.logger.info("✅ Successfully authenticated with Robinhood")
+            try:
+                # Try login with provided credentials
+                login_result = rs.login(
+                    username=self.username,
+                    password=self.password,
+                    mfa_code=mfa_code,
+                    store_session=False  # Don't persist session for security
+                )
 
-                # Initialize safety tracking
-                self._initialize_safety_tracking()
-                return True
-            else:
-                self.logger.error("❌ Robinhood authentication failed")
-                return False
+                if login_result:
+                    self.is_authenticated = True
+                    self.last_auth_time = datetime.now()
+                    self.logger.info("✅ Successfully authenticated with Robinhood")
+
+                    # Initialize safety tracking
+                    self._initialize_safety_tracking()
+                    return True
+                else:
+                    self.logger.error("❌ Robinhood authentication failed - check credentials")
+                    return False
+
+            except Exception as auth_error:
+                error_msg = str(auth_error)
+                if "challenge" in error_msg.lower() or "verification" in error_msg.lower():
+                    print("\n🔐 ROBINHOOD REQUIRES MANUAL APPROVAL:")
+                    print("   Please open your Robinhood app and approve this login request.")
+                    print("   Look for a 'Device Approval' or 'Login Request' notification.")
+                    print("   Press Enter after you've approved the login in the app...")
+
+                    try:
+                        input()  # Wait for user to press Enter
+                        print("   ✅ Approval confirmed, checking login status...")
+
+                        # Wait a moment for approval to register
+                        import time
+                        time.sleep(3)
+
+                        # Check if now logged in
+                        if rs.authentication.is_logged_in():
+                            self.is_authenticated = True
+                            self.last_auth_time = datetime.now()
+                            self.logger.info("✅ Successfully authenticated with Robinhood after manual approval")
+
+                            # Initialize safety tracking
+                            self._initialize_safety_tracking()
+                            return True
+                        else:
+                            self.logger.error("❌ Still not authenticated - approval may have failed or timed out")
+                            return False
+
+                    except KeyboardInterrupt:
+                        self.logger.warning("Manual approval cancelled by user")
+                        return False
+
+                    return False
+                elif "rate limit" in error_msg.lower() or "429" in error_msg:
+                    self.logger.warning("⏱️ Rate limited by Robinhood - please wait a few minutes")
+                    return False
+                else:
+                    self.logger.error(f"❌ Authentication error: {auth_error}")
+                    return False
 
         except Exception as e:
-            self.logger.error(f"❌ Authentication error: {e}")
+            self.logger.error(f"❌ Unexpected authentication error: {e}")
             self.is_authenticated = False
             return False
 

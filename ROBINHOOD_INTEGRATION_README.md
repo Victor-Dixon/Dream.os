@@ -39,11 +39,22 @@ ROBINHOOD_MAX_DAILY_LOSS=2.0
 ROBINHOOD_MAX_POSITION_SIZE=5.0
 ```
 
-### 3. Get TOTP Secret
+### 3. Get TOTP Secret (IMPORTANT!)
+Robinhood requires 2FA for API access. You have two options:
+
+**Option A: Automatic TOTP (Recommended)**
 1. Open your authenticator app (Google Authenticator, Authy, etc.)
 2. Find your Robinhood entry
-3. Export the secret key (usually base32 encoded)
-4. Set `ROBINHOOD_TOTP_SECRET` to this value
+3. **Export the secret key** (usually base32 encoded)
+   - Google Authenticator: Settings → Export accounts → Select Robinhood
+   - Authy: Account → Settings → Show 2FA QR Code
+4. Set `ROBINHOOD_TOTP_SECRET` to this secret value
+
+**Option B: Manual 2FA (Fallback)**
+- Don't set `ROBINHOOD_TOTP_SECRET`
+- When authentication is requested, check your Robinhood app for approval
+- Or complete 2FA verification in your browser
+- Then run the command again
 
 ### 4. Test Connection
 ```bash
