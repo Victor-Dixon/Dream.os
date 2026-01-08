@@ -33,12 +33,21 @@ from datetime import datetime
 from ..core.base.base_service import BaseService
 
 # Optional vector database imports (SSOT)
-from .vector_database import (
-    get_vector_database_service,
-    search_vector_database,
-    SearchQuery,
-    VECTOR_DB_AVAILABLE,
-)
+try:
+    from .vector_database import (
+        get_vector_database_service,
+        search_vector_database,
+        SearchQuery,
+        VECTOR_DB_AVAILABLE,
+    )
+except (ImportError, ValueError) as e:
+    print(f"⚠️  Vector database not available for performance analyzer: {e}")
+    VECTOR_DB_AVAILABLE = False
+    def get_vector_database_service():
+        return None
+    def search_vector_database(query, top_k=5):
+        return []
+    SearchQuery = None
 
 
 class PerformanceAnalyzer(BaseService):

@@ -38,6 +38,13 @@ try:
         get_vector_database_service,
     )
     from .vector_database.vector_database_models import VectorDocument
+    VECTOR_DB_AVAILABLE = True
+except (ImportError, ValueError) as e:
+    print(f"⚠️  Vector database not available for work indexer: {e}")
+    VECTOR_DB_AVAILABLE = False
+    def get_vector_database_service():
+        return None
+    VectorDocument = None
     from src.services.models.vector_models import DocumentType  # SSOT
     def add_document_to_vector_db(doc: VectorDocument):
         service = get_vector_database_service()

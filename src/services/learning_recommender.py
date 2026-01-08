@@ -23,11 +23,12 @@ try:
         search_vector_database,
     )
     VECTOR_DB_AVAILABLE = True
-except ImportError:
+except (ImportError, ValueError) as e:
+    print(f"⚠️  Vector database not available: {e}")
     VECTOR_DB_AVAILABLE = False
     def get_vector_database_service():
         return None
-    def search_vector_database(query):
+    def search_vector_database(query, top_k=5):
         return []
 # Optional SearchQuery import - use SSOT
 try:
