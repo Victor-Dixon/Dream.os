@@ -26,12 +26,66 @@ class EmbeddingBuilder:
         self.config = config
 
         # Embedding configuration
-        self.model_name = config.get("model", "default")
+        self.model_name = config.get("model", "sentence-transformers")
         self.dimension = config.get("dimension", 384)
         self.max_tokens = config.get("max_tokens", 512)
 
-        # TODO: Initialize actual embedding model
-        self._embedding_model = None
+        # Initialize actual embedding model
+        self._embedding_model = self._initialize_embedding_model()
+
+    def _initialize_embedding_model(self):
+        """Initialize embedding model based on configuration."""
+        provider = self.model_name.lower()
+
+        try:
+            if provider == "sentence-transformers" or provider.startswith("sentence-transformers/"):
+                return self._initialize_sentence_transformers()
+            elif provider.startswith("openai"):
+                return self._initialize_openai_embeddings()
+            elif provider == "hash-based" or provider == "default":
+                # Keep hash-based as fallback
+                return None
+            else:
+                self.logger.warning(f"Unknown embedding provider: {provider}, using hash-based")
+                return None
+        except Exception as e:
+            self.logger.warning(f"Failed to initialize embedding model: {e}, using hash-based")
+            return None
+
+    def _initialize_sentence_transformers(self):
+        """Initialize SentenceTransformers model."""
+        try:
+            from sentence_transformers import SentenceTransformer
+
+            model_name = self.model_name
+            if model_name == "sentence-transformers":
+                model_name = "all-MiniLM-L6-v2"  # Default model
+
+            model = SentenceTransformer(model_name)
+            self.dimension = model.get_sentence_embedding_dimension()
+            self.logger.info(f"✅ SentenceTransformers model initialized: {model_name} (dim: {self.dimension})")
+            return model
+        except ImportError:
+            raise Exception("sentence-transformers package not installed")
+        except Exception as e:
+            raise Exception(f"SentenceTransformers initialization failed: {e}")
+
+    def _initialize_openai_embeddings(self):
+        """Initialize OpenAI embeddings."""
+        try:
+            import openai
+            api_key = self.config.get("api_key") or os.getenv("OPENAI_API_KEY")
+            if not api_key:
+                raise ValueError("OpenAI API key not found")
+
+            client = openai.OpenAI(api_key=api_key)
+            self.dimension = 1536  # Ada-002 dimension
+            self.logger.info("✅ OpenAI embeddings initialized")
+            return client
+        except ImportError:
+            raise Exception("OpenAI package not installed")
+        except Exception as e:
+            raise Exception(f"OpenAI embeddings initialization failed: {e}")
 
     def build_embedding(self, text: str) -> List[float]:
         """
@@ -46,9 +100,31 @@ class EmbeddingBuilder:
         if not text or not text.strip():
             return [0.0] * self.dimension
 
-        # For now, generate deterministic hash-based embeddings
-        # TODO: Replace with actual embedding model (OpenAI, SentenceTransformers, etc.)
+        # Try real embeddings first
+        if self._embedding_model:
+            try:
+                return self._real_embedding(text)
+            except Exception as e:
+                self.logger.warning(f"Real embedding failed: {e}, falling back to hash-based")
+
+        # Fallback to hash-based embeddings
         return self._hash_based_embedding(text)
+
+    def _real_embedding(self, text: str) -> List[float]:
+        """Generate real embeddings using configured model."""
+        if hasattr(self._embedding_model, 'encode'):  # SentenceTransformers
+            embedding = self._embedding_model.encode(text, convert_to_numpy=True)
+            return embedding.tolist()
+
+        elif hasattr(self._embedding_model, 'embeddings'):  # OpenAI
+            response = self._embedding_model.embeddings.create(
+                input=text,
+                model=self.model_name
+            )
+            return response.data[0].embedding
+
+        else:
+            raise ValueError(f"Unsupported embedding model type: {type(self._embedding_model)}")
 
     def build_embeddings_batch(self, texts: List[str]) -> List[List[float]]:
         """
@@ -143,11 +219,20 @@ class EmbeddingBuilder:
 
     def get_config(self) -> Dict[str, Any]:
         """Get current configuration."""
+        backend = "hash_based"
+        if self._embedding_model:
+            if hasattr(self._embedding_model, 'encode'):
+                backend = "sentence_transformers"
+            elif hasattr(self._embedding_model, 'embeddings'):
+                backend = "openai"
+            else:
+                backend = "unknown"
+
         return {
             "model": self.model_name,
             "dimension": self.dimension,
             "max_tokens": self.max_tokens,
-            "backend": "hash_based"  # TODO: Update when real model is implemented
+            "backend": backend
         }
 
     def validate_embedding(self, embedding: List[float]) -> bool:

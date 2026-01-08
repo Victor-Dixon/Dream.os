@@ -21,9 +21,19 @@ from typing import Any
 
 # V2 Integration imports
 try:
-    from ..core.coordinate_loader import get_coordinate_loader
-    from ..core.config_ssot import get_unified_config
-    from ..core.unified_logging_system import get_logger
+    from ..core.coordinate_loader import CoordinateLoader
+    from ..core.config.config_manager import UnifiedConfigManager
+    from ..core.unified_logging_system import UnifiedLoggingSystem
+
+    def get_coordinate_loader():
+        return CoordinateLoader()
+
+    def get_unified_config():
+        return UnifiedConfigManager()
+
+    def get_logger(name: str):
+        return UnifiedLoggingSystem.get_logger(name)
+
 except ImportError as e:
     logging.warning(f"V2 integration imports failed: {e}")
 
