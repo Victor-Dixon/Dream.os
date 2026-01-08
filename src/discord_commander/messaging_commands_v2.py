@@ -36,13 +36,11 @@ from .messaging_controller import DiscordMessagingController
 
 logger = logging.getLogger(__name__)
 
-class MessagingCommands(MessagingCommandBase, commands.Cog if DISCORD_AVAILABLE else object):
+class MessagingCommands(MessagingCommandBase):
     """Refactored Discord commands for agent messaging."""
 
     def __init__(self, bot, messaging_controller: DiscordMessagingController):
-        MessagingCommandBase.__init__(self, bot, messaging_controller)
-        if DISCORD_AVAILABLE:
-            commands.Cog.__init__(self)
+        super().__init__(bot, messaging_controller)
 
     @commands.command(name="message_agent", aliases=["msg"])
     async def message_agent(self, ctx: commands.Context, agent_id: str, *, message: str):

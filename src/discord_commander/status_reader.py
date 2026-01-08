@@ -18,3 +18,5 @@ Author: Agent-1 (Integration & Core Systems Specialist)
 Date: 2026-01-07
 """
 
+# Import StatusReader from v2 implementation for backward compatibility
+from .status_reader_v2 import StatusReaderCommands as StatusReader

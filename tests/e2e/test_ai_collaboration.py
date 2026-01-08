@@ -42,21 +42,26 @@ import uuid
 
 from src.services.ai_context_engine import AIContextEngine, ContextSession
 from src.services.ai_context_websocket import AIContextWebSocketServer
-from tests.integration.test_ai_context_engine import *
 
 
 class TestAICollaborationE2E:
     """End-to-end tests for AI-powered collaborative features."""
 
     @pytest.fixture
-    async def collaboration_setup(self):
-        """Set up multi-user collaboration environment."""
-        # Initialize services
-        context_engine = AIContextEngine()
-        websocket_server = AIContextWebSocketServer()
+    async def context_engine(self):
+        """Initialize AI Context Engine for testing."""
+        engine = AIContextEngine()
+        await engine.start_engine()
+        yield engine
+        await engine.stop_engine()
 
-        await context_engine.start_engine()
-        await websocket_server.start_server()
+    @pytest.fixture
+    async def websocket_server(self):
+        """Initialize WebSocket server for testing."""
+        server = AIContextWebSocketServer()
+        await server.start_server()
+        yield server
+        await server.stop_server()
 
         yield {
             'context_engine': context_engine,
@@ -130,10 +135,9 @@ class TestAICollaborationE2E:
             print(f"Message listening failed: {e}")
 
     @pytest.mark.asyncio
-    async def test_multi_user_collaboration_session(self, collaboration_setup):
+    async def test_multi_user_collaboration_session(self, context_engine, websocket_server):
         """Test end-to-end multi-user collaboration session."""
-        context_engine = collaboration_setup['context_engine']
-        port = collaboration_setup['port']
+        port = 8766  # Default websocket port
 
         websocket_uri = f"ws://localhost:{port}/ws/ai/context"
 
@@ -223,10 +227,9 @@ class TestAICollaborationE2E:
                     pass
 
     @pytest.mark.asyncio
-    async def test_real_time_context_sharing(self, collaboration_setup):
+    async def test_real_time_context_sharing(self, context_engine, websocket_server):
         """Test real-time context sharing across collaborative users."""
-        context_engine = collaboration_setup['context_engine']
-        port = collaboration_setup['port']
+        port = 8766  # Default websocket port
 
         websocket_uri = f"ws://localhost:{port}/ws/ai/context"
 
@@ -291,10 +294,9 @@ class TestAICollaborationE2E:
                     pass
 
     @pytest.mark.asyncio
-    async def test_collaborative_decision_making(self, collaboration_setup):
+    async def test_collaborative_decision_making(self, context_engine, websocket_server):
         """Test collaborative decision making with AI assistance."""
-        context_engine = collaboration_setup['context_engine']
-        port = collaboration_setup['port']
+        port = 8766  # Default websocket port
 
         websocket_uri = f"ws://localhost:{port}/ws/ai/context"
 
@@ -388,10 +390,9 @@ class TestAICollaborationE2E:
                     pass
 
     @pytest.mark.asyncio
-    async def test_cross_session_context_synchronization(self, collaboration_setup):
+    async def test_cross_session_context_synchronization(self, context_engine, websocket_server):
         """Test context synchronization across multiple collaborative sessions."""
-        context_engine = collaboration_setup['context_engine']
-        port = collaboration_setup['port']
+        port = 8766  # Default websocket port
 
         websocket_uri = f"ws://localhost:{port}/ws/ai/context"
 
@@ -485,10 +486,9 @@ class TestAICollaborationE2E:
                     pass
 
     @pytest.mark.asyncio
-    async def test_collaborative_performance_scaling(self, collaboration_setup):
+    async def test_collaborative_performance_scaling(self, context_engine, websocket_server):
         """Test collaborative features performance under scaling conditions."""
-        context_engine = collaboration_setup['context_engine']
-        port = collaboration_setup['port']
+        port = 8766  # Default websocket port
 
         websocket_uri = f"ws://localhost:{port}/ws/ai/context"
 

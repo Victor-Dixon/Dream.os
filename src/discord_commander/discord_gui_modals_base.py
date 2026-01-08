@@ -27,6 +27,33 @@ from src.services.messaging_infrastructure import ConsolidatedMessagingService
 logger = logging.getLogger(__name__)
 
 
+class BaseModal(discord.ui.Modal):
+    """
+    Base modal class for Discord UI components.
+
+    Navigation:
+    ├── Subclasses: OnboardingModalBase, BroadcastModalBase, TemplateModalBase
+    ├── Used by: Modal specializations
+    └── Related: Discord UI framework, modal lifecycle
+    """
+
+    def __init__(self, title: str, timeout: float = 300.0, custom_id: Optional[str] = None):
+        """Initialize the base modal."""
+        super().__init__(title=title, timeout=timeout, custom_id=custom_id)
+
+    async def on_error(self, interaction: discord.Interaction, error: Exception) -> None:
+        """Handle modal errors."""
+        logger.error(f"Modal error in {self.__class__.__name__}: {error}")
+        try:
+            await interaction.response.send_message(
+                f"❌ An error occurred: {str(error)}", ephemeral=True
+            )
+        except discord.InteractionResponded:
+            await interaction.followup.send(
+                f"❌ An error occurred: {str(error)}", ephemeral=True
+            )
+
+
 class BaseMessageModal(discord.ui.Modal):
     """Base modal for message composition with common functionality."""
 
