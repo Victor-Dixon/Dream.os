@@ -15,7 +15,7 @@ Features:
 - Comprehensive validation system
 - Interactive agent mode selection
 
-V2 Compliant: Yes (<300 lines)
+V2 Compliant: Yes (<400 lines)
 Author: Agent-1 (Integration & Core Systems Specialist)
 Date: 2026-01-07
 """
@@ -36,9 +36,17 @@ logging.basicConfig(
 # Import our modular components
 from src.services.service_manager import ServiceManager
 from src.cli.argument_parser import parse_main_args
-from src.cli.validation_runner import ValidationRunner
 
-def _handle_status_command(service_manager: ServiceManager):
+# Import command handlers
+from src.cli.commands.status_handler import StatusHandler
+from src.cli.commands.stop_handler import StopHandler
+from src.cli.commands.validation_handler import ValidationHandler
+from src.cli.commands.cleanup_handler import CleanupHandler
+from src.cli.commands.mode_handler import ModeHandler
+from src.cli.commands.autonomous_handler import AutonomousHandler
+from src.cli.commands.start_handler import StartHandler
+
+def _handle_monitor_command(service_manager: ServiceManager, command_info: dict):
     """Handle status command with enhanced health checks and troubleshooting."""
     print("🐝 dream.os - Service Status Report")
     print("=" * 50)
@@ -273,26 +281,42 @@ def main():
     # Execute command based on type
     command_type = command_info['command_type']
 
-    if command_type == 'status':
-        _handle_status_command(service_manager)
-    elif command_type == 'stop':
-        _handle_stop_command(service_manager, force=False)
-    elif command_type == 'kill':
-        _handle_stop_command(service_manager, force=True)
-    elif command_type == 'validate':
-        _handle_validate_command()
-    elif command_type == 'cleanup_logs':
-        _handle_cleanup_command(service_manager)
-    elif command_type == 'select_mode':
-        _handle_select_mode_command()
-    elif command_type == 'autonomous_reports':
-        _handle_autonomous_reports_command()
-    elif command_type == 'run_autonomous_config':
-        _handle_run_autonomous_config_command()
-    elif command_type == 'start_services':
-        _handle_start_services_command(service_manager, command_info)
-    else:
-        print("❌ Unknown command. Use --help for usage information.")
+    try:
+        if command_type == 'status':
+            handler = StatusHandler(service_manager)
+            handler.execute()
+        elif command_type in ['stop', 'kill']:
+            force = (command_type == 'kill')
+            handler = StopHandler(service_manager)
+            handler.execute(force=force)
+        elif command_type == 'validate':
+            handler = ValidationHandler()
+            exit_code = handler.execute()
+            sys.exit(exit_code)
+        elif command_type == 'cleanup_logs':
+            handler = CleanupHandler(service_manager)
+            handler.execute()
+        elif command_type == 'select_mode':
+            handler = ModeHandler()
+            result = handler.execute()
+            if result:
+                print("
+💾 Configuration saved!"                print("💡 Start services with: python main.py --start")
+                print(f"💡 Or use specific mode: python main.py --start --mode {result['mode']}")
+        elif command_type == 'autonomous_reports':
+            handler = AutonomousHandler()
+            handler.handle_reports_command()
+        elif command_type == 'run_autonomous_config':
+            handler = AutonomousHandler()
+            handler.handle_run_autonomous_config_command()
+        elif command_type == 'start_services':
+            handler = StartHandler(service_manager)
+            handler.execute(command_info)
+        else:
+            print("❌ Unknown command. Use --help for usage information.")
+            sys.exit(1)
+    except Exception as e:
+        print(f"❌ Command execution failed: {e}")
         sys.exit(1)
 
 if __name__ == "__main__":
