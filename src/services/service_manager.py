@@ -39,7 +39,7 @@ class ServiceManager:
         self.services = {
             'message_queue': {
                 'name': 'Message Queue Processor',
-                'script': 'src/core/message_queue_processor/core/processor.py',
+                'script': '-m src.core.message_queue_processor.core.processor',
                 'pid_file': 'message_queue.pid',
                 'log_file': 'message_queue.log',
                 'status': 'stopped',
@@ -47,7 +47,7 @@ class ServiceManager:
             },
             'twitch': {
                 'name': 'Twitch Bot',
-                'script': 'src/services/chat_presence/twitch_eventsub_server.py',
+                'script': '-m src.services.chat_presence.twitch_eventsub_server',
                 'pid_file': 'twitch_bot.pid',
                 'log_file': 'twitch_bot.log',
                 'status': 'stopped',
@@ -146,10 +146,29 @@ class ServiceManager:
         service_config = self.services[service_name]
         script_path = service_config['script']
         log_file = self._get_log_file_path(service_name)
+        use_launcher = service_config.get('use_launcher', False)
 
         try:
-            if background:
-                # Start in background
+            if use_launcher:
+                # Use launcher script - it manages its own PID file
+                import subprocess
+                logger.info(f"Starting {service_name} using launcher: {script_path}")
+                result = subprocess.run(
+                    [sys.executable, script_path],
+                    capture_output=True,
+                    text=True,
+                    cwd=os.getcwd()
+                )
+                if result.returncode == 0:
+                    logger.info(f"Launcher started {service_name} successfully")
+                    # Don't write PID - launcher does this
+                    self.services[service_name]['status'] = 'running'
+                    return True
+                else:
+                    logger.error(f"Launcher failed for {service_name}: {result.stderr}")
+                    return False
+            elif background:
+                # Start in background with PID management
                 import subprocess
                 process = subprocess.Popen(
                     [sys.executable, script_path],

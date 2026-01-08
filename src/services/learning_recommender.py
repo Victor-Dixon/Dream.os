@@ -23,12 +23,20 @@ try:
         search_vector_database,
     )
     VECTOR_DB_AVAILABLE = True
-except ImportError:
-    VECTOR_DB_AVAILABLE = False
-    def get_vector_database_service():
-        return None
-    def search_vector_database(query, top_k=5):
-        return []
+except ImportError as e:
+    # Handle ONNX Runtime issues specifically
+    if "onnxruntime" in str(e).lower():
+        VECTOR_DB_AVAILABLE = False
+        def get_vector_database_service():
+            return None
+        def search_vector_database(query, top_k=5):
+            return []
+    else:
+        VECTOR_DB_AVAILABLE = False
+        def get_vector_database_service():
+            return None
+        def search_vector_database(query, top_k=5):
+            return []
 # Optional SearchQuery import - use SSOT
 try:
     from src.services.models.vector_models import SearchQuery

@@ -540,5 +540,138 @@
     "line_count": 126,
     "status": "active",
     "tags": []
+  },
+  "ai_reasoning_engine": {
+    "name": "ai_reasoning_engine",
+    "category": "enterprise_infrastructure",
+    "description": "5-mode LLM reasoning (Analytical, Creative, Technical, Strategic, Simple)",
+    "file_path": "src/",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 0,
+    "status": "operational",
+    "tags": [
+      "/ai/reason",
+      "/ai/reason/stream"
+    ]
+  },
+  "vector_database_service": {
+    "name": "vector_database_service",
+    "category": "enterprise_infrastructure",
+    "description": "Semantic search and AI-powered vector operations",
+    "file_path": "src/",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 0,
+    "status": "operational",
+    "tags": [
+      "/ai/semantic-search"
+    ]
+  },
+  "unified_messaging_cli": {
+    "name": "unified_messaging_cli",
+    "category": "enterprise_infrastructure",
+    "description": "Agent-to-agent communication and bilateral coordination",
+    "file_path": "src/",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [
+      "message_routing",
+      "coordination_requests",
+      "task_claiming"
+    ],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 0,
+    "status": "operational",
+    "tags": []
+  },
+  "command_handlers": {
+    "name": "command_handlers",
+    "category": "enterprise_infrastructure",
+    "description": "Role-based command processing and unified error handling",
+    "file_path": "src/",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 0,
+    "status": "operational",
+    "tags": []
+  },
+  "contract_system": {
+    "name": "contract_system",
+    "category": "enterprise_infrastructure",
+    "description": "Task assignment, tracking, and cycle planning integration",
+    "file_path": "src/",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [
+      "task_assignment",
+      "progress_tracking",
+      "contract_notifications"
+    ],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 0,
+    "status": "operational",
+    "tags": []
+  },
+  "agent_management": {
+    "name": "agent_management",
+    "category": "enterprise_infrastructure",
+    "description": "Agent status tracking, work assignment, and performance monitoring",
+    "file_path": "src/",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [
+      "status_tracking",
+      "work_assignment",
+      "performance_monitoring"
+    ],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 0,
+    "status": "operational",
+    "tags": []
+  },
+  "main_service_launcher": {
+    "name": "main_service_launcher",
+    "category": "enterprise_infrastructure",
+    "description": "Complete service orchestration (Message Queue, Twitch Bot, Discord Bot, FastAPI)",
+    "file_path": "src/",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 0,
+    "status": "operational",
+    "tags": []
+  },
+  "service_manager": {
+    "name": "service_manager",
+    "category": "enterprise_infrastructure",
+    "description": "Individual service lifecycle management with health checks",
+    "file_path": "src/",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [
+      "lifecycle_management",
+      "pid_management",
+      "health_checks"
+    ],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 0,
+    "status": "operational",
+    "tags": []
   }
 }
