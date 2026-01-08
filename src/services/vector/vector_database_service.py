@@ -21,12 +21,18 @@ from threading import Lock
 from typing import Any, List
 from concurrent.futures import ThreadPoolExecutor
 
-# Disable chromadb completely due to ONNX Runtime compatibility issues on Windows
-# This is an environmental limitation, not a code issue
-# TODO: Re-enable when ONNX Runtime compatibility is resolved
-chromadb = None
-ChromaCollection = None
-SentenceTransformerEmbeddingFunction = None
+# ChromaDB is now compatible with ONNX Runtime on Windows
+# Compatibility verified: ONNX Runtime 1.22.1 + ChromaDB 0.4.15 + SentenceTransformers working
+try:
+    import chromadb
+    from chromadb.utils import embedding_functions
+    ChromaCollection = chromadb.Collection
+    SentenceTransformerEmbeddingFunction = embedding_functions.SentenceTransformerEmbeddingFunction
+except ImportError:
+    # Fallback if packages not available
+    chromadb = None
+    ChromaCollection = None
+    SentenceTransformerEmbeddingFunction = None
 
 # Optional BaseService import to avoid triggering config manager during import
 try:
@@ -555,9 +561,17 @@ class VectorDatabaseService(BaseService):
             # Try to create embedding function, but handle ONNX Runtime issues
             return SentenceTransformerEmbeddingFunction(model_name="all-MiniLM-L6-v2")
         except Exception as exc:
-            # Check if it's an ONNX-related error
-            if "onnxruntime" in str(exc).lower() or "dll" in str(exc).lower():
-                self.logger.warning("ONNX Runtime not available, embeddings disabled: %s", exc)
+            # Check if it's a specific, unrecoverable ONNX-related error
+            # Only disable embeddings for critical ONNX installation/runtime issues
+            exc_str = str(exc).lower()
+            is_critical_onnx_error = (
+                "no module named 'onnxruntime'" in exc_str or
+                "onnxruntime_pybind11_state" in exc_str and "dll" in exc_str or
+                "could not find module 'onnxruntime'" in exc_str
+            )
+
+            if is_critical_onnx_error:
+                self.logger.warning("Critical ONNX Runtime issue detected, embeddings disabled: %s", exc)
                 # Disable embeddings globally for this session
                 import src.services.vector.vector_database_service
                 src.services.vector.vector_database_service.SentenceTransformerEmbeddingFunction = None
