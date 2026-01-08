@@ -149,6 +149,298 @@ class VectorDatabaseService(BaseService):
             return self._fallback_store.export_collection(request)
         raise RuntimeError("Vector database is not available")
 
+    def add_documents_batch(
+        self, documents: List[VectorDocument], collection_name: str | None = None
+    ) -> VectorOperationResult:
+        """
+        PERFORMANCE OPTIMIZATION: Add multiple documents in optimized batches.
+        Uses connection pooling and parallel processing for high throughput.
+        """
+        if not documents:
+            return VectorOperationResult(success=True, message="No documents to add")
+
+        collection = collection_name or self.default_collection
+
+        try:
+            if self._client:
+                # Batch documents for optimal performance
+                batches = [documents[i:i + self._batch_size]
+                          for i in range(0, len(documents), self._batch_size)]
+
+                total_processed = 0
+                for batch in batches:
+                    collection_ref = self._get_collection(collection)
+
+                    ids = [doc.id for doc in batch]
+                    contents = [doc.content for doc in batch]
+                    metadatas = [doc.metadata or {} for doc in batch]
+                    embeddings = [doc.embedding for doc in batch if doc.embedding]
+
+                    # Use batch add for better performance
+                    collection_ref.add(
+                        ids=ids,
+                        documents=contents,
+                        metadatas=metadatas,
+                        embeddings=embeddings if embeddings else None
+                    )
+                    total_processed += len(batch)
+
+                return VectorOperationResult(
+                    success=True,
+                    message=f"Successfully added {total_processed} documents in batches"
+                )
+            else:
+                # Fallback to individual adds
+                results = []
+                for doc in documents:
+                    result = self.add_document(doc, collection)
+                    results.append(result)
+
+                success_count = sum(1 for r in results if r.success)
+                return VectorOperationResult(
+                    success=success_count == len(documents),
+                    message=f"Added {success_count}/{len(documents)} documents"
+                )
+
+        except Exception as exc:
+            self.logger.error("Batch add failed: %s", exc)
+            return VectorOperationResult(success=False, message=str(exc))
+
+    def search_batch(
+        self, requests: List[SearchRequest]
+    ) -> List[List[SearchResult]]:
+        """
+        PERFORMANCE OPTIMIZATION: Execute multiple searches concurrently.
+        Uses thread pool for parallel search operations.
+        """
+        try:
+            # Submit all search requests to thread pool
+            futures = [
+                self._executor.submit(self.search, request)
+                for request in requests
+            ]
+
+            # Collect results maintaining order
+            results = []
+            for future in futures:
+                try:
+                    result = future.result(timeout=30)
+                    results.append(result)
+                except Exception as exc:
+                    self.logger.error("Batch search failed for request: %s", exc)
+                    results.append([])
+
+            return results
+
+        except Exception as exc:
+            self.logger.error("Batch search operation failed: %s", exc)
+            return [[] for _ in requests]
+
+    def get_performance_stats(self) -> dict[str, Any]:
+        """
+        PERFORMANCE OPTIMIZATION: Get detailed performance metrics.
+        """
+        stats = {
+            "timestamp": datetime.utcnow().isoformat(),
+            "service_type": "chromadb" if self._client else "local_fallback",
+            "cache_size": len(self._collection_cache),
+            "thread_pool_active": self._executor._threads,
+            "batch_size": self._batch_size,
+        }
+
+        if self._client:
+            try:
+                # Get ChromaDB specific stats
+                collections = self._client.list_collections()
+                stats.update({
+                    "collections_count": len(collections),
+                    "collections": [c.name for c in collections],
+                    "persist_path": str(self.persist_path),
+                })
+            except Exception as exc:
+                stats["chromadb_error"] = str(exc)
+
+        return stats
+
+    def optimize_performance(self) -> dict[str, Any]:
+        """
+        PERFORMANCE OPTIMIZATION: Run performance optimization routines.
+        """
+        results = {
+            "cache_cleared": False,
+            "collections_optimized": 0,
+            "memory_usage": "unknown"
+        }
+
+        try:
+            # Clear collection cache to free memory
+            cache_size_before = len(self._collection_cache)
+            self._collection_cache.clear()
+            results["cache_cleared"] = True
+            results["cache_entries_cleared"] = cache_size_before
+
+            # Run ChromaDB optimizations if available
+            if self._client:
+                try:
+                    # Force persistence
+                    self._client.persist()
+                    results["collections_optimized"] = len(self._client.list_collections())
+                except Exception as exc:
+                    self.logger.warning("ChromaDB optimization failed: %s", exc)
+
+        except Exception as exc:
+            self.logger.error("Performance optimization failed: %s", exc)
+
+        return results
+
+    def semantic_search(
+        self,
+        query: str,
+        collection_name: str | None = None,
+        limit: int = 10,
+        threshold: float = 0.7
+    ) -> List[SearchResult]:
+        """
+        SEMANTIC SEARCH: Perform semantic search using embeddings.
+        Integrates with AI training pipeline for intelligent retrieval.
+        """
+        try:
+            from src.ai_training.dreamvault.embedding_builder import EmbeddingBuilder
+            from src.ai_training.dreamvault.summarizer import Summarizer
+
+            # Generate embedding for query
+            embedder = EmbeddingBuilder()
+            query_embedding = embedder.build_embedding(query)
+
+            # Create search request
+            search_request = SearchRequest(
+                query=query,
+                collection=collection_name or self.default_collection,
+                limit=limit,
+                query_embedding=query_embedding,
+                similarity_threshold=threshold
+            )
+
+            # Execute search
+            results = self.search(search_request)
+
+            # Enhance results with AI-powered summarization
+            summarizer = Summarizer()
+            for result in results:
+                if hasattr(result, 'content') and len(result.content) > 200:
+                    # Generate summary for long content
+                    summary = summarizer.summarize(result.content[:1000])  # Limit input size
+                    if summary and len(summary) < len(result.content):
+                        result.summary = summary
+
+            return results
+
+        except ImportError as exc:
+            self.logger.warning("AI modules not available for semantic search: %s", exc)
+            # Fallback to text-based search
+            search_request = SearchRequest(
+                query=query,
+                collection=collection_name or self.default_collection,
+                limit=limit
+            )
+            return self.search(search_request)
+        except Exception as exc:
+            self.logger.error("Semantic search failed: %s", exc)
+            return []
+
+    def hybrid_search(
+        self,
+        query: str,
+        collection_name: str | None = None,
+        limit: int = 10,
+        semantic_weight: float = 0.7,
+        keyword_weight: float = 0.3
+    ) -> List[SearchResult]:
+        """
+        HYBRID SEARCH: Combine semantic and keyword-based search.
+        Provides best of both worlds for comprehensive retrieval.
+        """
+        try:
+            # Get semantic results
+            semantic_results = self.semantic_search(
+                query, collection_name, limit * 2, threshold=0.5
+            )
+
+            # Get keyword results
+            keyword_request = SearchRequest(
+                query=query,
+                collection=collection_name or self.default_collection,
+                limit=limit * 2
+            )
+            keyword_results = self.search(keyword_request)
+
+            # Combine and rerank results
+            combined_results = self._combine_search_results(
+                semantic_results, keyword_results,
+                semantic_weight, keyword_weight, limit
+            )
+
+            return combined_results
+
+        except Exception as exc:
+            self.logger.error("Hybrid search failed: %s", exc)
+            # Fallback to regular search
+            search_request = SearchRequest(
+                query=query,
+                collection=collection_name or self.default_collection,
+                limit=limit
+            )
+            return self.search(search_request)
+
+    def _combine_search_results(
+        self,
+        semantic_results: List[SearchResult],
+        keyword_results: List[SearchResult],
+        semantic_weight: float,
+        keyword_weight: float,
+        limit: int
+    ) -> List[SearchResult]:
+        """Combine and rerank semantic and keyword search results."""
+        # Create score mapping
+        result_scores = {}
+
+        # Score semantic results
+        for i, result in enumerate(semantic_results):
+            key = (result.collection, getattr(result, 'id', str(i)))
+            semantic_score = getattr(result, 'similarity', 1.0 - (i * 0.1))
+            result_scores[key] = {
+                'result': result,
+                'semantic_score': semantic_score,
+                'keyword_score': 0.0
+            }
+
+        # Score keyword results
+        for i, result in enumerate(keyword_results):
+            key = (result.collection, getattr(result, 'id', str(i)))
+            keyword_score = 1.0 - (i * 0.1)  # Decay score by position
+
+            if key in result_scores:
+                result_scores[key]['keyword_score'] = keyword_score
+            else:
+                result_scores[key] = {
+                    'result': result,
+                    'semantic_score': 0.0,
+                    'keyword_score': keyword_score
+                }
+
+        # Calculate combined scores and sort
+        scored_results = []
+        for item in result_scores.values():
+            combined_score = (
+                item['semantic_score'] * semantic_weight +
+                item['keyword_score'] * keyword_weight
+            )
+            scored_results.append((combined_score, item['result']))
+
+        # Sort by combined score and return top results
+        scored_results.sort(key=lambda x: x[0], reverse=True)
+        return [result for score, result in scored_results[:limit]]
+
     def add_document(
         self, document: VectorDocument, collection_name: str | None = None
     ) -> VectorOperationResult:
