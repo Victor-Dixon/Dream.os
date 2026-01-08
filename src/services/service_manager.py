@@ -39,31 +39,35 @@ class ServiceManager:
         self.services = {
             'message_queue': {
                 'name': 'Message Queue Processor',
-                'script': 'src/message_queue_processor.py',
+                'script': 'src/core/message_queue_processor/core/processor.py',
                 'pid_file': 'message_queue.pid',
                 'log_file': 'message_queue.log',
-                'status': 'stopped'
+                'status': 'stopped',
+                'use_launcher': False
             },
             'twitch': {
                 'name': 'Twitch Bot',
-                'script': 'src/twitch_bot.py',
+                'script': 'src/services/chat_presence/twitch_eventsub_server.py',
                 'pid_file': 'twitch_bot.pid',
                 'log_file': 'twitch_bot.log',
-                'status': 'stopped'
+                'status': 'stopped',
+                'use_launcher': False
             },
             'discord': {
                 'name': 'Discord Bot',
-                'script': 'src/discord_bot.py',
-                'pid_file': 'discord_bot.pid',
+                'script': 'tools/discord_bot_launcher.py',
+                'pid_file': 'discord.pid',
                 'log_file': 'discord_bot.log',
-                'status': 'stopped'
+                'status': 'stopped',
+                'use_launcher': True  # Launcher manages its own PID file
             },
             'fastapi': {
                 'name': 'FastAPI Service',
                 'script': 'src/web/fastapi_server.py',
                 'pid_file': 'fastapi.pid',
                 'log_file': 'fastapi.log',
-                'status': 'stopped'
+                'status': 'stopped',
+                'use_launcher': False
             }
         }
         self.pid_dir = Path('pids')
