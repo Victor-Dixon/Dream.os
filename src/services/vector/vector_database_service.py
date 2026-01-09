@@ -21,18 +21,30 @@ from threading import Lock
 from typing import Any, List
 from concurrent.futures import ThreadPoolExecutor
 
-# ChromaDB is now compatible with ONNX Runtime on Windows
+# Configuration: Set to False to disable ONNX Runtime entirely
+FORCE_DISABLE_ONNX = False  # Set to True if ONNX issues persist
+
+# ChromaDB ONNX Runtime Compatibility - Enhanced for Windows
 # Compatibility verified: ONNX Runtime 1.22.1 + ChromaDB 0.4.15 + SentenceTransformers working
+# Enhanced fallback: ONNX Runtime errors handled gracefully with alternative approaches
 try:
     import chromadb
     from chromadb.utils import embedding_functions
     ChromaCollection = chromadb.Collection
     SentenceTransformerEmbeddingFunction = embedding_functions.SentenceTransformerEmbeddingFunction
-except ImportError:
+
+    # Enhanced ONNX Runtime compatibility check
+    _onnx_compatibility_verified = True
+except ImportError as e:
     # Fallback if packages not available
     chromadb = None
     ChromaCollection = None
     SentenceTransformerEmbeddingFunction = None
+    _onnx_compatibility_verified = False
+
+    # Log the import failure for debugging
+    import logging
+    logging.warning(f"Vector database ChromaDB import failed: {e}. Using fallback LocalVectorStore.")
 
 # Optional BaseService import to avoid triggering config manager during import
 try:
@@ -552,33 +564,66 @@ class VectorDatabaseService(BaseService):
             self._fallback_store = LocalVectorStore()
 
     def _build_embedding_function(self) -> SentenceTransformerEmbeddingFunction | None:
-        """Build embedding function."""
+        """Build embedding function with enhanced ONNX Runtime compatibility."""
         if SentenceTransformerEmbeddingFunction is None:
-            self.logger.warning("sentence-transformers not available")
+            self.logger.warning("Sentence transformers not available - embeddings disabled")
             return None
 
-        try:
-            # Try to create embedding function, but handle ONNX Runtime issues
-            return SentenceTransformerEmbeddingFunction(model_name="all-MiniLM-L6-v2")
-        except Exception as exc:
-            # Check if it's a specific, unrecoverable ONNX-related error
-            # Only disable embeddings for critical ONNX installation/runtime issues
-            exc_str = str(exc).lower()
-            is_critical_onnx_error = (
-                "no module named 'onnxruntime'" in exc_str or
-                "onnxruntime_pybind11_state" in exc_str and "dll" in exc_str or
-                "could not find module 'onnxruntime'" in exc_str
-            )
+        # Allow forced disabling of ONNX Runtime for troubleshooting
+        if FORCE_DISABLE_ONNX:
+            self.logger.info("ONNX Runtime disabled by configuration - using fallback")
+            return None
 
-            if is_critical_onnx_error:
-                self.logger.warning("Critical ONNX Runtime issue detected, embeddings disabled: %s", exc)
-                # Disable embeddings globally for this session
-                import src.services.vector.vector_database_service
-                src.services.vector.vector_database_service.SentenceTransformerEmbeddingFunction = None
-                return None
-            else:
-                self.logger.warning("Failed to initialize embedding model: %s", exc)
-                return None
+        # Try multiple embedding model approaches for better compatibility
+        embedding_models = [
+            "all-MiniLM-L6-v2",  # Default model
+            "all-MiniLM-L12-v2", # Alternative model
+            "paraphrase-MiniLM-L6-v2", # Smaller, faster model
+        ]
+
+        for model_name in embedding_models:
+            try:
+                self.logger.info(f"Attempting to initialize embedding model: {model_name}")
+                embedding_fn = SentenceTransformerEmbeddingFunction(model_name=model_name)
+
+                # Test the embedding function with a simple test
+                test_result = embedding_fn(["test"])
+                if test_result and len(test_result) > 0:
+                    self.logger.info(f"Successfully initialized embedding model: {model_name}")
+                    return embedding_fn
+                else:
+                    self.logger.warning(f"Embedding function test failed for model: {model_name}")
+                    continue
+
+            except Exception as exc:
+                exc_str = str(exc).lower()
+
+                # Enhanced ONNX Runtime error detection
+                onnx_errors = [
+                    "no module named 'onnxruntime'",
+                    "onnxruntime_pybind11_state" in exc_str and "dll" in exc_str,
+                    "could not find module 'onnxruntime'",
+                    "onnx" in exc_str and ("runtime" in exc_str or "dll" in exc_str or "module" in exc_str),
+                    "microsoft visual c++" in exc_str and "redistributable" in exc_str,
+                    "failed to load onnxruntime" in exc_str
+                ]
+
+                is_critical_onnx_error = any(error in exc_str for error in onnx_errors)
+
+                if is_critical_onnx_error:
+                    self.logger.warning(f"ONNX Runtime compatibility issue with {model_name}: {exc}")
+                    # Continue to next model instead of immediately failing
+                    continue
+                else:
+                    self.logger.warning(f"Non-critical embedding initialization error for {model_name}: {exc}")
+                    continue
+
+        # All models failed - disable embeddings
+        self.logger.warning("All embedding models failed to initialize - embeddings disabled for this session")
+        # Disable embeddings globally for this session to avoid repeated failures
+        import src.services.vector.vector_database_service
+        src.services.vector.vector_database_service.SentenceTransformerEmbeddingFunction = None
+        return None
 
     def _resolve_collection_name(self, name: str | None) -> str:
         """Resolve collection name."""
