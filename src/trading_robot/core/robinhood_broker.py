@@ -17,9 +17,18 @@ in a production environment.
 
 import os
 import logging
+import requests
+import json
 from typing import Dict, List, Any, Optional
 from dataclasses import dataclass
 from datetime import datetime
+
+try:
+    import pyotp
+    PYOTP_AVAILABLE = True
+except ImportError:
+    PYOTP_AVAILABLE = False
+    pyotp = None
 
 logger = logging.getLogger(__name__)
 
@@ -58,8 +67,18 @@ class RobinhoodBroker:
     def __init__(self):
         """Initialize Robinhood broker"""
         self.is_authenticated = False
-        self.session = None
+        self.session = requests.Session()
         self.username = None
+        self.access_token = None
+        self.refresh_token = None
+        self.token_expires = None
+
+        # Set default headers
+        self.session.headers.update({
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "User-Agent": "Robinhood/8.48.0 (Android/9; SM-G975U)"
+        })
 
     def login(self, username: str, password: str, totp_secret: Optional[str] = None) -> bool:
         """
@@ -74,14 +93,58 @@ class RobinhoodBroker:
             bool: True if authentication successful
         """
         try:
-            # TODO: Implement actual Robinhood API authentication
-            # This is a placeholder implementation
-            logger.info(f"Attempting login for user: {username}")
+            logger.info(f"Attempting Robinhood authentication for user: {username}")
 
-            # Mock authentication - in real implementation this would:
-            # 1. Send login request to Robinhood API
-            # 2. Handle 2FA if required
-            # 3. Establish authenticated session
+            # Robinhood API endpoints
+            login_url = "https://api.robinhood.com/oauth2/token/"
+            api_url = "https://api.robinhood.com/"
+
+            # Prepare login payload
+            login_data = {
+                "client_id": "c82SH0WZOsabOXGP2sxqcj34FxkvfnWRZBKlBjFS",
+                "expires_in": 86400,
+                "grant_type": "password",
+                "password": password,
+                "scope": "internal",
+                "username": username
+            }
+
+            # Add TOTP token if provided
+            if totp_secret and PYOTP_AVAILABLE:
+                try:
+                    totp = pyotp.TOTP(totp_secret)
+                    login_data["mfa_code"] = totp.now()
+                    logger.info("Generated TOTP token for 2FA")
+                except Exception as totp_error:
+                    logger.warning(f"Failed to generate TOTP token: {totp_error}")
+                    return False
+
+            # Make authentication request
+            headers = {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                "User-Agent": "Robinhood/8.48.0 (Android/9; SM-G975U)"
+            }
+
+            response = requests.post(login_url, json=login_data, headers=headers, timeout=30)
+
+            if response.status_code == 200:
+                auth_data = response.json()
+                self.access_token = auth_data.get("access_token")
+                self.refresh_token = auth_data.get("refresh_token")
+                self.token_expires = datetime.now().timestamp() + auth_data.get("expires_in", 86400)
+
+                # Set authorization header for future requests
+                self.session.headers.update({
+                    "Authorization": f"Bearer {self.access_token}"
+                })
+
+                logger.info("✅ Robinhood authentication successful")
+                return True
+            else:
+                error_data = response.json()
+                logger.error(f"❌ Robinhood authentication failed: {error_data}")
+                return False
 
             self.is_authenticated = True
             self.username = username
