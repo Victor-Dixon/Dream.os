@@ -74,6 +74,24 @@ class ErrorCategory(Enum):
     UNKNOWN = "unknown"
 
 
+class AuthenticationStatus(Enum):
+    """Status of authentication with Thea service."""
+    AUTHENTICATED = "authenticated"
+    REQUIRES_LOGIN = "requires_login"
+    INVALID_CREDENTIALS = "invalid_credentials"
+    NETWORK_ERROR = "network_error"
+    SERVICE_UNAVAILABLE = "service_unavailable"
+
+
+class BrowserState(Enum):
+    """State of the browser automation."""
+    NOT_STARTED = "not_started"
+    STARTING = "starting"
+    READY = "ready"
+    ERROR = "error"
+    CLOSED = "closed"
+
+
 class CircuitBreakerState(Enum):
     """States for circuit breaker pattern."""
     CLOSED = "closed"      # Normal operation
