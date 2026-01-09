@@ -66,6 +66,13 @@
   <!-- Push status: "Pushed to [branch]" or "Not pushed" -->
   [Push status]
 
+- **Duplication Audit:**
+  <!-- MANDATORY: Run duplication audit tool and review findings -->
+  <!-- Command: python tools/duplication_audit.py --agent Agent-X --scope src/ -->
+  <!-- Check for duplicated work, redundant TODOs, incomplete implementations -->
+  <!-- Add findings to master task list if needed -->
+  [Duplication audit completed — findings or 'no duplicates found']
+
 - **Website Blogging:**
   <!-- Blog post URL if published, or "Not published" if not applicable -->
   [Blog post URL or "Not published"]

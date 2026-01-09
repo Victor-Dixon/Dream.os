@@ -100,7 +100,15 @@ MANDATORY CLOSURE TASKS
    - Include exact command used OR
    - "Verified — no update required"
 
-7. Closure Improvement (CHOOSE EXACTLY ONE)
+7. Duplication Audit & Task List Update (MANDATORY)
+   - Run duplication audit tool: `python tools/duplication_audit.py --agent Agent-X --scope src/`
+   - Review findings for any work you may have duplicated
+   - Check for TODO/FIXME items that are now redundant due to your changes
+   - Audit your own work: Look for incomplete implementations, broken imports, or half-finished features
+   - Add any findings to the master task list (create new task if needed)
+   - Document: "Duplication audit completed — [findings or 'no duplicates found']"
+
+8. Closure Improvement (CHOOSE EXACTLY ONE)
    a) Create ONE small utility tool (≤150 lines)
    b) Define ONE protocol (≤10 lines)
    c) Improve documentation quality (delete, merge, deduplicate)
