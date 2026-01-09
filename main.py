@@ -314,6 +314,44 @@ def main():
             except Exception as e:
                 print(f"❌ Status integration failed: {e}")
                 sys.exit(1)
+        elif command_type == 'thea_capture_cookies':
+            print("🍪 Starting Thea Cookie Capture...")
+            try:
+                from tools.thea_cookie_capture import TheaCookieCapture
+                tool = TheaCookieCapture()
+                success = tool.capture_cookies_interactive()
+                sys.exit(0 if success else 1)
+            except Exception as e:
+                print(f"❌ Thea cookie capture failed: {e}")
+                sys.exit(1)
+        elif command_type == 'thea_test_cookies':
+            print("🧪 Testing Thea Cookies...")
+            try:
+                from tools.thea_cookie_capture import TheaCookieCapture
+                tool = TheaCookieCapture()
+                success = tool.test_cookies()
+                sys.exit(0 if success else 1)
+            except Exception as e:
+                print(f"❌ Thea cookie test failed: {e}")
+                sys.exit(1)
+        elif command_type == 'thea_scan_project':
+            print("🔍 Thea Project Scanner...")
+            try:
+                from tools.thea_cookie_capture import TheaCookieCapture
+                tool = TheaCookieCapture()
+                success = tool.scan_project_with_thea()
+                sys.exit(0 if success else 1)
+            except Exception as e:
+                print(f"❌ Thea project scan failed: {e}")
+                sys.exit(1)
+        elif command_type == 'thea_status':
+            try:
+                from tools.thea_cookie_capture import TheaCookieCapture
+                tool = TheaCookieCapture()
+                tool.show_status()
+            except Exception as e:
+                print(f"❌ Thea status check failed: {e}")
+                sys.exit(1)
         elif command_type == 'start_services':
             handler = StartHandler(service_manager)
             handler.execute(command_info)

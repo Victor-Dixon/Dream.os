@@ -217,6 +217,9 @@ class OBSCoordinator:
             else:
                 self.logger.error(f"Failed to stop streaming: {response_data}")
                 return False
+        except Exception as e:
+            self.logger.error(f"Streaming stop error: {e}")
+            return False
 
     async def _authenticate(self) -> None:
         """Authenticate with OBS WebSocket"""

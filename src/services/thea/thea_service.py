@@ -14,7 +14,7 @@ License: MIT
 
 import json
 import time
-from datetime import datetime, timedelta
+from datetime import datetime
 from pathlib import Path
 
 from src.core.base.base_service import BaseService
@@ -159,7 +159,8 @@ class TheaService(BaseService):
                 options.add_argument("--disable-blink-features=AutomationControlled")
                 options.add_argument("--disable-extensions")
                 options.add_argument("--disable-plugins")
-                options.add_argument("--disable-images")  # Speed up loading
+                # Prefer prefs over unknown flags like --disable-images
+                options.add_experimental_option("prefs", {"profile.managed_default_content_settings.images": 2})
 
                 self.driver = uc.Chrome(
                     options=options,
@@ -173,25 +174,6 @@ class TheaService(BaseService):
                 self.logger.error(f"❌ Undetected Chrome failed: {e}")
                 self.logger.error("Cannot proceed without anti-bot protection")
                 return False
-            options = Options()
-            if self.headless:
-                options.add_argument("--headless=new")
-
-            options.add_argument("--no-sandbox")
-            options.add_argument("--disable-dev-shm-usage")
-            options.add_argument("--disable-gpu")
-            options.add_argument("--window-size=1920,1080")
-
-            # Anti-detection
-            options.add_argument(
-                "--disable-blink-features=AutomationControlled")
-            options.add_experimental_option(
-                "excludeSwitches", ["enable-automation"])
-            options.add_experimental_option("useAutomationExtension", False)
-
-            self.driver = webdriver.Chrome(options=options)
-            self.logger.info("✅ Standard Chrome browser started")
-            return True
 
         except Exception as e:
             self.logger.error(f"❌ Browser start failed: {e}")
@@ -226,56 +208,89 @@ class TheaService(BaseService):
                 return False
 
         try:
-            # Go to main ChatGPT site first (where cookies are typically set)
-            chatgpt_main_url = "https://chatgpt.com"
-            self.logger.info(f"🔍 Navigating to main ChatGPT site first: {chatgpt_main_url}")
-            self.driver.get(chatgpt_main_url)
+            # Cookie load MUST happen on base domain first, then refresh, then navigate
+            self.logger.info("🔍 ===== STARTING COOKIE VALIDATION (THEA GPT) =====")
+            base_url = "https://chatgpt.com"
+            self.logger.info(f"🔍 Step 1: Navigating to base domain: {base_url}")
+            self.driver.get(base_url)
             time.sleep(3)
 
-            # Load cookies on the main site
+            # Load cookies on base domain
             if self.cookie_manager:
-                self.logger.info("🍪 Loading cookies on main ChatGPT site...")
+                self.logger.info("🍪 Step 2: Loading cookies on base domain...")
                 success = self.cookie_manager.load_cookies(self.driver)
                 if not success:
-                    self.logger.warning(
-                        "⚠️ Cookie load failed - may need re-authentication")
+                    self.logger.warning("⚠️ Step 2 result: Cookie load failed")
+                    return False
                 else:
-                    self.logger.info("✅ Cookies loaded into browser")
-
-                    # Verify cookies were actually loaded
+                    self.logger.info("✅ Step 2 result: Cookies loaded successfully")
                     current_cookies = self.driver.get_cookies()
-                    self.logger.info(f"🔍 Browser has {len(current_cookies)} cookies after loading")
+                    self.logger.info(f"🔍 Step 2 result: Browser has {len(current_cookies)} cookies after loading")
 
-            # Now navigate to Thea URL with cookies loaded
-            self.logger.info(f"🏗️ Navigating to Thea URL for validation: {self.thea_url}")
+            # Refresh to apply cookies
+            self.driver.get(base_url)
+            time.sleep(2)
+
+            # Now try Thea GPT URL (preferred)
+            self.logger.info(f"🔍 Step 3: Navigating to Thea GPT: {self.thea_url}")
             self.driver.get(self.thea_url)
-            time.sleep(5)  # Allow page to load and stabilize
+            time.sleep(3)
 
-            # Check current URL after navigation
+            # Check if Thea GPT loads properly
             current_url = self.driver.current_url
-            self.logger.info(f"📍 Current URL after Thea navigation: {current_url}")
+            page_title = self.driver.title
+            self.logger.info(f"📍 Step 4 result: Current URL = {current_url}")
+            self.logger.info(f"📍 Step 4 result: Page title = '{page_title}'")
 
             # If redirected to login/auth page, cookies failed
             if "login" in current_url.lower() or "auth" in current_url.lower():
-                self.logger.warning("⚠️ Redirected to login page - cookies may be invalid or expired")
+                self.logger.warning("⚠️ Redirected to login page - cookies invalid")
                 return False
-            else:
-                self.logger.info("✅ No redirect to login page - cookies appear valid")
 
-            # Additional login check
+            # Check if Thea GPT actually loaded (has interface elements)
+            self.logger.info("🔍 Step 5: Checking if Thea GPT interface loaded...")
             login_result = self._is_logged_in()
-            self.logger.info(f"🔍 Login check result: {login_result}")
+            self.logger.info(f"🔍 Step 5 result: Interface check = {login_result}")
 
             if login_result:
-                self.logger.info("✅ Cookie validation successful")
+                self.logger.info("✅ ===== THEA GPT VALIDATION SUCCESSFUL =====")
+                return True
+
+            # SECOND: If Thea GPT fails, try basic ChatGPT as fallback
+            self.logger.warning("⚠️ Thea GPT interface not functional, trying basic ChatGPT fallback...")
+            self.logger.info("🔍 ===== FALLBACK: BASIC CHATGPT VALIDATION =====")
+
+            chatgpt_main_url = "https://chatgpt.com"
+            self.logger.info(f"🔍 Fallback Step 1: Navigating to basic ChatGPT: {chatgpt_main_url}")
+            self.driver.get(chatgpt_main_url)
+            time.sleep(3)
+
+            # Cookies were already loaded on base domain; just ensure still not redirected
+            current_url = self.driver.current_url
+            page_title = self.driver.title
+            self.logger.info(f"📍 Fallback Step 3 result: URL = {current_url}, Title = '{page_title}'")
+
+            if "login" in current_url.lower() or "auth" in current_url.lower():
+                self.logger.warning("⚠️ Fallback failed: Still on login page")
+                return False
+
+            login_result = self._is_logged_in()
+            self.logger.info(f"🔍 Fallback Step 4 result: Basic ChatGPT interface check = {login_result}")
+
+            if login_result:
+                self.logger.info("✅ ===== BASIC CHATGPT VALIDATION SUCCESSFUL =====")
+                self.logger.warning("⚠️ NOTE: Using basic ChatGPT instead of Thea GPT (Thea GPT appears unavailable)")
+                # Update URL to basic ChatGPT for future use
+                self.thea_url = chatgpt_main_url
                 return True
             else:
-                self.logger.warning(
-                    "⚠️ Cookie validation failed - not properly logged in")
+                self.logger.error("❌ ===== ALL VALIDATION METHODS FAILED =====")
+                self.logger.error("❌ Neither Thea GPT nor basic ChatGPT interface is functional")
+                self.logger.error("❌ Cookies may be expired or anti-bot detection is active")
                 return False
 
         except Exception as e:
-            self.logger.error(f"❌ Cookie validation error: {e}")
+            self.logger.error(f"❌ ===== COOKIE VALIDATION ERROR: {e} =====")
             return False
 
     def refresh_cookies(self) -> bool:
@@ -385,31 +400,104 @@ class TheaService(BaseService):
             return False
 
     def _is_logged_in(self) -> bool:
-        """Check if logged in."""
+        """Check if logged in by verifying page has proper ChatGPT interface."""
         try:
             current_url = self.driver.current_url
+            page_title = self.driver.title
             self.logger.debug(f"🔍 Login check - URL: {current_url}")
+            self.logger.debug(f"🔍 Login check - Title: '{page_title}'")
 
-            if "auth" in current_url or "login" in current_url:
+            # Check for obvious login/auth pages
+            if "auth" in current_url.lower() or "login" in current_url.lower():
                 self.logger.debug("❌ Login check: URL contains auth/login")
                 return False
 
-            # Check for textarea (indicates logged in)
-            try:
-                elem = self.driver.find_element(By.CSS_SELECTOR, "textarea")
-                is_displayed = elem.is_displayed()
-                self.logger.debug(f"🔍 Login check - textarea found: {is_displayed}")
-                return is_displayed
-            except Exception as e:
-                self.logger.debug(f"🔍 Login check - textarea not found: {e}")
+            # Check if we're on ChatGPT domain
+            if "chatgpt.com" not in current_url:
+                self.logger.debug("❌ Login check: Not on chatgpt.com domain")
+                return False
 
-            url_check = "chatgpt.com" in current_url
-            self.logger.debug(f"🔍 Login check - URL contains chatgpt.com: {url_check}")
-            return url_check
+            # Check page title - should be "ChatGPT" or contain GPT info
+            if not page_title or "chatgpt" not in page_title.lower():
+                self.logger.debug(f"❌ Login check: Unexpected page title: '{page_title}'")
+                return False
+
+            # Check for ChatGPT-specific elements that indicate proper login
+            try:
+                # Look for multiple indicators of a working ChatGPT page
+                indicators = [
+                    "textarea",  # Input area
+                    "[contenteditable]",  # Alternative input
+                    "[data-testid]",  # React components
+                    ".composer",  # Composer area
+                    "button",  # Any buttons
+                    "form",  # Forms
+                    "[role='textbox']"  # ARIA textbox
+                ]
+
+                found_indicators = 0
+                for indicator in indicators:
+                    try:
+                        elements = self.driver.find_elements(By.CSS_SELECTOR, indicator)
+                        if elements:
+                            # Check if any are displayed and enabled
+                            visible_elements = [elem for elem in elements if elem.is_displayed()]
+                            if visible_elements:
+                                found_indicators += 1
+                                self.logger.debug(f"✅ Login check: Found {len(visible_elements)} visible {indicator} elements")
+                    except:
+                        pass
+
+                # Require at least 2 different types of indicators for a valid page
+                if found_indicators >= 2:
+                    self.logger.debug(f"✅ Login check: Found {found_indicators} indicator types - page appears functional")
+                    return True
+                else:
+                    self.logger.debug(f"❌ Login check: Only found {found_indicators} indicator types - page not fully loaded")
+                    return False
+
+            except Exception as e:
+                self.logger.debug(f"🔍 Login check - element search error: {e}")
+                return False
 
         except Exception as e:
-            self.logger.debug(f"🔍 Login check - error: {e}")
+            self.logger.debug(f"🔍 Login check - general error: {e}")
             return False
+
+    def _manual_response_extraction(self) -> str | None:
+        """Manual response extraction using the working debug approach."""
+        try:
+            from selenium.webdriver.common.by import By
+
+            # Use the same selectors and approach as the working debug code
+            response_selectors = [
+                "[data-message-author-role='assistant']",
+                "article",
+                ".markdown",
+                "[data-message-id]",
+                ".agent-turn"
+            ]
+
+            for selector in response_selectors:
+                try:
+                    elements = self.driver.find_elements(By.CSS_SELECTOR, selector)
+                    if elements:
+                        # Check the last elements (like the debug code does)
+                        for elem in elements[-2:]:  # Last 2 elements
+                            if elem and elem.is_displayed():
+                                text = elem.text.strip() if elem.text else ""
+                                if text and len(text) > 10:  # Minimum viable response
+                                    self.logger.info(f"✅ Manual extraction found response with selector '{selector}'")
+                                    return text
+                except Exception as e:
+                    self.logger.debug(f"Manual extraction selector '{selector}' failed: {e}")
+
+            self.logger.warning("❌ Manual response extraction found no valid response text")
+            return None
+
+        except Exception as e:
+            self.logger.error(f"❌ Manual response extraction error: {e}")
+            return None
 
     def _wait_for_page_ready(self, timeout: float = 15.0) -> bool:
         """Wait for page to be ready for input."""
@@ -507,9 +595,10 @@ class TheaService(BaseService):
             current_url = self.driver.current_url
             self.logger.info(f"📍 Current URL: {current_url}")
 
-            # Navigate to Thea URL if not already there
+            # Navigate to target URL (Thea GPT or basic ChatGPT) if not already there
             if self.thea_url not in current_url:
-                self.logger.info(f"🏗️ Navigating to Thea: {self.thea_url}")
+                target_desc = "Thea GPT" if "g-" in self.thea_url else "basic ChatGPT"
+                self.logger.info(f"🏗️ Navigating to {target_desc}: {self.thea_url}")
                 self.driver.get(self.thea_url)
 
                 # Wait for page to fully load and stabilize
@@ -520,14 +609,15 @@ class TheaService(BaseService):
                 new_url = self.driver.current_url
                 self.logger.info(f"📍 New URL after navigation: {new_url}")
 
-                # Check if we're actually logged in at Thea URL
+                # Check if we're actually logged in
                 if "login" in new_url.lower() or "auth" in new_url.lower():
                     self.logger.warning("⚠️ Redirected to login page - cookies may be invalid")
                     return None
 
-                self.logger.info("✅ Reached Thea URL and page is ready")
+                self.logger.info(f"✅ Reached target URL and page is ready ({target_desc})")
             else:
-                self.logger.info("✅ Already on Thea URL")
+                target_desc = "Thea GPT" if "g-" in self.thea_url else "basic ChatGPT"
+                self.logger.info(f"✅ Already on target URL ({target_desc})")
 
             # Additional check: ensure page is ready for input even if URL is correct
             if not self._wait_for_page_ready():
@@ -536,8 +626,16 @@ class TheaService(BaseService):
 
             # Additional wait for dynamic content - ChatGPT pages often load elements asynchronously
             self.logger.info("⏳ Waiting additional time for dynamic content...")
-            max_dynamic_wait = 30  # seconds
+            max_dynamic_wait = 15  # seconds - reduced to prevent session timeout
             dynamic_start = time.time()
+
+            # Check session health before starting long wait
+            try:
+                current_url_check = self.driver.current_url
+                self.logger.info(f"🔍 Session health check: URL = {current_url_check}")
+            except Exception as e:
+                self.logger.error(f"❌ Session became invalid before dynamic wait: {e}")
+                return None
 
             while time.time() - dynamic_start < max_dynamic_wait:
                 try:
@@ -655,36 +753,64 @@ class TheaService(BaseService):
                 self.logger.error(f"❌ Error debugging page: {e}")
                 return None
 
+            # Focus + clear input before sending (prevents hidden focus issues)
+            try:
+                self.logger.info("🧭 Focusing input element...")
+                textarea.click()
+                time.sleep(0.2)
+                # Clear existing content safely
+                from selenium.webdriver.common.keys import Keys
+                textarea.send_keys(Keys.CONTROL, "a")
+                textarea.send_keys(Keys.BACKSPACE)
+                time.sleep(0.2)
+            except Exception as e:
+                self.logger.warning(f"⚠️ Input focus/clear failed (continuing): {e}")
+
             # Send message via Selenium (more reliable than PyAutoGUI in server environments)
-            self.logger.info(f"📤 Sending message via Selenium: {message[:50]}...")
+            self.logger.info(f"📤 ===== SENDING MESSAGE VIA SELENIUM =====")
+            self.logger.info(f"📤 Message preview: {message[:50]}...")
+            self.logger.info(f"📤 Input element tag: {textarea.tag_name}")
+            self.logger.info(f"📤 Input element displayed: {textarea.is_displayed()}")
+            self.logger.info(f"📤 Input element enabled: {textarea.is_enabled()}")
 
             try:
                 # Use Selenium's send_keys on the contenteditable element
+                self.logger.info("📤 Step 1: Sending message text...")
                 textarea.send_keys(message)
                 time.sleep(1)  # Allow text to be entered
+                self.logger.info("📤 Step 1 result: Text sent successfully")
 
                 # Try to send Enter - different approaches for different input types
+                self.logger.info("📤 Step 2: Attempting to submit message...")
                 try:
                     from selenium.webdriver.common.keys import Keys
 
                     if textarea.tag_name.lower() == 'textarea':
+                        self.logger.info("📤 Step 2: Using textarea - sending ENTER key")
                         textarea.send_keys(Keys.ENTER)
                     else:
-                        # For contenteditable, try Ctrl+Enter or just Enter
-                        textarea.send_keys(Keys.CONTROL, Keys.ENTER)
+                        # For ChatGPT contenteditable, ENTER is typically "send"
+                        self.logger.info("📤 Step 2: Using contenteditable - sending ENTER key")
+                        textarea.send_keys(Keys.ENTER)
                         time.sleep(0.5)
                         # Fallback: look for send button
                         try:
+                            self.logger.info("📤 Step 2: Looking for send button...")
                             send_buttons = self.driver.find_elements(By.CSS_SELECTOR,
                                 "button[data-testid*='send'], button[type='submit'], [role='button']")
-                            for btn in send_buttons:
+                            self.logger.info(f"📤 Step 2: Found {len(send_buttons)} potential send buttons")
+
+                            for i, btn in enumerate(send_buttons):
                                 if btn.is_displayed() and btn.is_enabled():
+                                    btn_text = btn.text or btn.get_attribute("aria-label") or f"button-{i}"
+                                    self.logger.info(f"📤 Step 2: Clicking send button: {btn_text}")
                                     btn.click()
-                                    self.logger.info("✅ Clicked send button")
+                                    self.logger.info("✅ Step 2 result: Send button clicked successfully")
                                     break
                         except Exception as e:
-                            self.logger.warning(f"Send button click failed: {e}")
+                            self.logger.warning(f"📤 Step 2: Send button click failed: {e}")
                             # Last resort: just Enter key
+                            self.logger.info("📤 Step 2: Last resort - sending ENTER key")
                             textarea.send_keys(Keys.ENTER)
 
                 except Exception as e:
@@ -698,7 +824,7 @@ class TheaService(BaseService):
                             self.logger.info("✅ Clicked send button as fallback")
                             break
 
-                self.logger.info("✅ Message sent via Selenium")
+                self.logger.info("✅ ===== MESSAGE SENT SUCCESSFULLY VIA SELENIUM =====")
 
             except Exception as e:
                 self.logger.error(f"❌ Selenium message sending failed: {e}")
@@ -725,7 +851,17 @@ class TheaService(BaseService):
 
             # Wait for response if requested
             if wait_for_response:
-                return self.wait_for_response()
+                response = self.wait_for_response()
+                # If response extraction failed but detector says complete, use working debug approach
+                if not response and self.detector:
+                    self.logger.info("🔄 Response detector complete but extraction failed - using manual extraction...")
+                    time.sleep(2)  # Give it a moment for text to populate
+                    response = self._manual_response_extraction()
+                    if response:
+                        self.logger.info("✅ Response extracted using manual approach")
+                    else:
+                        self.logger.warning("❌ Manual response extraction also failed")
+                return response
 
             return None
 
