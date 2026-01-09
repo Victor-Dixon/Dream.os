@@ -620,11 +620,16 @@ def main():
     print("This script will consolidate agent workspaces to eliminate duplication.")
     print()
 
-    # Get confirmation
-    response = input("Do you want to proceed with Phase 1 consolidation? (y/N): ").strip().lower()
-    if response not in ['y', 'yes']:
-        print("Consolidation cancelled.")
-        return
+    # Check for auto-confirm flag
+    import sys
+    auto_confirm = '--auto-confirm' in sys.argv or '-y' in sys.argv
+
+    if not auto_confirm:
+        # Get confirmation
+        response = input("Do you want to proceed with Phase 1 consolidation? (y/N): ").strip().lower()
+        if response not in ['y', 'yes']:
+            print("Consolidation cancelled.")
+            return
 
     # Run consolidation
     consolidator = Phase1Consolidator()

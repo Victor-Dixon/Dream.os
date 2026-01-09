@@ -282,7 +282,7 @@ class TheaCommunicationService(ICommunicationService):
 
     def _send_message_via_browser(self, message: TheaMessage) -> bool:
         """
-        Send message via browser repository.
+        Send message via browser repository using robust patterns from working monolithic version.
 
         Args:
             message: Message to send
@@ -291,67 +291,227 @@ class TheaCommunicationService(ICommunicationService):
             True if sent successfully, False otherwise
         """
         try:
-            # Navigate to Thea URL if not already there
+            print(f"📤 ===== SENDING MESSAGE VIA BROWSER =====")
+            print(f"📤 Message preview: {message.content[:50]}...")
+
+            # SIMPLIFIED NAVIGATION: Always use basic ChatGPT to avoid session issues (from working monolithic)
+            target_url = self.chatgpt_url  # Use basic ChatGPT to avoid Thea GPT issues
+            target_desc = "basic ChatGPT"
+
             current_url = self.browser_repo.get_current_url()
-            if not current_url or self.thea_url not in current_url:
-                print(f"🏗️ Navigating to Thea: {self.thea_url}")
-                if not self.browser_repo.navigate_to_url(self.thea_url):
-                    return False
+            print(f"📍 Current URL: {current_url}")
 
-                # Wait for page to be ready
-                if not self.browser_repo.is_page_ready():
-                    time.sleep(3)
-                    if not self.browser_repo.is_page_ready():
+            if target_url not in (current_url or ""):
+                print(f"🏗️ Navigating to {target_desc}: {target_url}")
+                try:
+                    if not self.browser_repo.navigate_to_url(target_url):
                         return False
-
-            # Find input element
-            input_element = self.browser_repo.find_input_element("textarea")
-            if not input_element:
-                # Try alternative selectors
-                alternative_selectors = [
-                    "[contenteditable='true']",
-                    "[role='textbox']",
-                    "[data-testid*='prompt']",
-                    "[placeholder*='message' i]"
-                ]
-
-                for selector in alternative_selectors:
-                    input_element = self.browser_repo.find_input_element(selector)
-                    if input_element:
-                        break
-
-            if not input_element:
-                print("❌ No input element found")
-                return False
-
-            # Send message text
-            if not self.browser_repo.send_text_to_element(input_element, message.content):
-                return False
-
-            time.sleep(1)  # Brief pause
-
-            # Submit the message
-            # Try Enter key first
-            if not self.browser_repo.submit_form(input_element):
-                # Fallback: look for send button
-                send_selectors = [
-                    "button[data-testid*='send']",
-                    "button[type='submit']",
-                    "[role='button']"
-                ]
-
-                send_button = None
-                for selector in send_selectors:
-                    send_button = self.browser_repo.wait_for_element(selector, timeout=5)
-                    if send_button:
-                        break
-
-                if send_button and not self.browser_repo.click_element(send_button):
+                    # Brief stabilization wait
+                    time.sleep(3)
+                except Exception as nav_e:
+                    print(f"❌ Navigation failed: {nav_e}")
                     return False
 
-            print("✅ Message sent via browser")
-            return True
+                new_url = self.browser_repo.get_current_url()
+                print(f"📍 New URL after navigation: {new_url}")
+
+                # Check if we're on an error/login page
+                if any(keyword in new_url.lower() for keyword in ["login", "auth", "error"]):
+                    print("⚠️ Navigation resulted in login/error page")
+                    return False
+
+                print(f"✅ Navigation to {target_desc} completed")
+            else:
+                print(f"✅ Already on {target_desc}")
+
+            # Enhanced page readiness check (from working monolithic version)
+            if not self.browser_repo.is_page_ready():
+                print("❌ Page not ready for input")
+                return False
+
+            # Additional wait for dynamic content - ChatGPT pages often load elements asynchronously
+            print("⏳ Waiting additional time for dynamic content...")
+            max_dynamic_wait = 15  # seconds - reduced to prevent session timeout
+            dynamic_start = time.time()
+
+            # Check session health before starting long wait
+            try:
+                current_url_check = self.browser_repo.get_current_url()
+                print(f"🔍 Session health check: URL = {current_url_check}")
+            except Exception as e:
+                print(f"❌ Session became invalid before dynamic wait: {e}")
+                return False
+
+            if not self.browser_repo.wait_for_dynamic_content(max_dynamic_wait):
+                print("❌ No interactive elements found after dynamic wait")
+                return False
+
+            # Debug: Check what elements are actually on the page (from working monolithic)
+            print("🔍 Debugging page content...")
+            try:
+                # Get page source snippet
+                page_source = self.browser_repo.execute_script("return document.documentElement.outerHTML")
+                print(f"📄 Page source length: {len(page_source) if page_source else 0}")
+
+                # Check for common ChatGPT elements
+                all_elements = self.browser_repo.execute_script("return document.querySelectorAll('*').length")
+                print(f"📊 Total elements on page: {all_elements}")
+
+                # Check for form-related elements
+                forms = self.browser_repo.execute_script("return document.querySelectorAll('form').length")
+                buttons = self.browser_repo.execute_script("return document.querySelectorAll('button').length")
+                inputs = self.browser_repo.execute_script("return document.querySelectorAll('input').length")
+                textareas = self.browser_repo.execute_script("return document.querySelectorAll('textarea').length")
+
+                print(f"📋 Forms: {forms}, Buttons: {buttons}, Inputs: {inputs}, Textareas: {textareas}")
+
+                # Check for contenteditable divs specifically
+                contenteditable = self.browser_repo.execute_script("return document.querySelectorAll('[contenteditable]').length")
+                print(f"📝 Contenteditable elements: {contenteditable}")
+
+                # Check for data-testid attributes (common in React apps)
+                testids = self.browser_repo.execute_script("return document.querySelectorAll('[data-testid]').length")
+                print(f"🧪 Data-testid elements: {testids}")
+
+                # Check if this is actually a ChatGPT page
+                if "chatgpt" not in (self.browser_repo.get_current_url() or "").lower():
+                    print("❌ Not on ChatGPT page anymore!")
+                    return False
+
+            except Exception as e:
+                print(f"❌ Error debugging page: {e}")
+                return False
+
+            # CRITICAL: Test element interactability (from working monolithic version)
+            print("🔍 Testing element interactability...")
+            if not self.browser_repo.test_element_interactability():
+                print("❌ Elements exist but are not interactable - likely stale cookies or anti-bot detection")
+                return False
+
+            # Find interactive input element using comprehensive search (from working monolithic)
+            textarea = self.browser_repo.find_interactive_input_element()
+            if not textarea:
+                print("❌ No suitable input element found after exhaustive search")
+                return False
+
+            print("✅ Input element ready for interaction")
+
+            # Focus + clear input before sending (prevents hidden focus issues)
+            try:
+                print("🧭 Focusing input element...")
+                textarea.click()
+                time.sleep(0.2)
+                # Clear existing content safely
+                textarea.clear()
+                time.sleep(0.2)
+            except Exception as e:
+                print(f"⚠️ Input focus/clear failed (continuing): {e}")
+
+            # Send message via Selenium (more reliable than PyAutoGUI in server environments)
+            print("📤 Step 1: Sending message text...")
+            try:
+                # Use Selenium's send_keys on the contenteditable element
+                textarea.send_keys(message.content)
+                time.sleep(1)  # Allow text to be entered
+                print("📤 Step 1 result: Text sent successfully")
+
+                # Try to send Enter - different approaches for different input types
+                print("📤 Step 2: Attempting to submit message...")
+                try:
+                    from selenium.webdriver.common.keys import Keys
+
+                    if textarea.tag_name.lower() == 'textarea':
+                        print("📤 Step 2: Using textarea - sending ENTER key")
+                        textarea.send_keys(Keys.ENTER)
+                    else:
+                        # For ChatGPT contenteditable, ENTER is typically "send"
+                        print("📤 Step 2: Using contenteditable - sending ENTER key")
+                        textarea.send_keys(Keys.ENTER)
+                        time.sleep(0.5)
+                        # Fallback: look for send button
+                        try:
+                            print("📤 Step 2: Looking for send button...")
+                            send_buttons = self.browser_repo.execute_script("""
+                                return Array.from(document.querySelectorAll('button')).filter(btn =>
+                                    btn.textContent.toLowerCase().includes('send') ||
+                                    btn.getAttribute('data-testid')?.includes('send') ||
+                                    btn.getAttribute('aria-label')?.toLowerCase().includes('send')
+                                );
+                            """)
+                            print(f"📤 Step 2: Found {len(send_buttons) if send_buttons else 0} potential send buttons")
+
+                            if send_buttons:
+                                for i, btn in enumerate(send_buttons):
+                                    if btn.is_displayed() and btn.is_enabled():
+                                        btn_text = btn.text or btn.get_attribute("aria-label") or f"button-{i}"
+                                        print(f"📤 Step 2: Clicking send button: {btn_text}")
+                                        btn.click()
+                                        print("✅ Step 2 result: Send button clicked successfully")
+                                        break
+                        except Exception as e:
+                            print(f"📤 Step 2: Send button click failed: {e}")
+                            # Last resort: just Enter key
+                            print("📤 Step 2: Last resort - sending ENTER key")
+                            textarea.send_keys(Keys.ENTER)
+
+                except Exception as e:
+                    print(f"Enter key failed, trying send button: {e}")
+                    # Look for send button via script
+                    send_buttons = self.browser_repo.execute_script("""
+                        return Array.from(document.querySelectorAll('button, [role="button"]')).filter(btn =>
+                            btn.textContent?.toLowerCase().includes('send') ||
+                            btn.getAttribute('data-testid')?.includes('send') ||
+                            btn.getAttribute('aria-label')?.toLowerCase().includes('send')
+                        );
+                    """)
+                    if send_buttons:
+                        for btn in send_buttons:
+                            if btn.is_displayed() and btn.is_enabled():
+                                btn.click()
+                                print("✅ Clicked send button as fallback")
+                                break
+
+                print("✅ ===== MESSAGE SENT SUCCESSFULLY VIA SELENIUM =====")
+                return True
+
+            except Exception as e:
+                print(f"❌ Selenium message sending failed: {e}")
+                return self._fallback_to_pyautogui(message)
 
         except Exception as e:
             print(f"❌ Browser message sending failed: {e}")
+            return self._fallback_to_pyautogui(message)
+
+    def _fallback_to_pyautogui(self, message: TheaMessage) -> bool:
+        """
+        Fallback to PyAutoGUI when Selenium fails (from working monolithic version).
+        """
+        try:
+            print("🔄 Falling back to PyAutoGUI...")
+            # Check if PyAutoGUI is available
+            try:
+                import pyautogui
+                import pyperclip
+                PYAUTOGUI_AVAILABLE = True
+            except ImportError:
+                PYAUTOGUI_AVAILABLE = False
+
+            if not PYAUTOGUI_AVAILABLE:
+                print("❌ PyAutoGUI not available for fallback")
+                return False
+
+            try:
+                pyperclip.copy(message.content)
+                time.sleep(0.5)
+                pyautogui.hotkey("ctrl", "v")
+            except Exception as clipboard_error:
+                print(f"⚠️ Clipboard paste failed ({clipboard_error}), falling back to typing...")
+                # Fallback: type the message character by character
+                pyautogui.typewrite(message.content, interval=0.01)
+            time.sleep(0.5)
+            pyautogui.press("enter")
+            print("✅ Message sent via PyAutoGUI fallback")
+            return True
+        except Exception as e2:
+            print(f"❌ PyAutoGUI fallback also failed: {e2}")
             return False

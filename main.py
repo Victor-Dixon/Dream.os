@@ -20,6 +20,17 @@ Author: Agent-1 (Integration & Core Systems Specialist)
 Date: 2026-01-07
 """
 
+from src.services.agent_status_integration import get_agent_status_integration
+from src.cli.commands.start_handler import StartHandler
+from src.cli.commands.autonomous_handler import AutonomousHandler
+from src.cli.commands.mode_handler import ModeHandler
+from src.cli.commands.cleanup_handler import CleanupHandler
+from src.cli.commands.validation_handler import ValidationHandler
+from src.cli.commands.stop_handler import StopHandler
+from src.cli.commands.status_handler import StatusHandler
+from src.cli.argument_parser import parse_main_args
+from src.services.service_manager import ServiceManager
+import os
 import sys
 import logging
 
@@ -34,20 +45,11 @@ logging.basicConfig(
 )
 
 # Import our modular components
-from src.services.service_manager import ServiceManager
-from src.cli.argument_parser import parse_main_args
 
 # Import command handlers
-from src.cli.commands.status_handler import StatusHandler
-from src.cli.commands.stop_handler import StopHandler
-from src.cli.commands.validation_handler import ValidationHandler
-from src.cli.commands.cleanup_handler import CleanupHandler
-from src.cli.commands.mode_handler import ModeHandler
-from src.cli.commands.autonomous_handler import AutonomousHandler
-from src.cli.commands.start_handler import StartHandler
 
 # Import automated status integration
-from src.services.agent_status_integration import get_agent_status_integration
+
 
 def _handle_monitor_command(service_manager: ServiceManager, command_info: dict):
     """Handle status command with enhanced health checks and troubleshooting."""
@@ -64,7 +66,8 @@ def _handle_monitor_command(service_manager: ServiceManager, command_info: dict)
         return
 
     # Count running services
-    running_count = sum(1 for status in all_status.values() if status == "running")
+    running_count = sum(1 for status in all_status.values()
+                        if status == "running")
     total_count = len(all_status)
 
     print(f"📊 Services: {running_count}/{total_count} running")
@@ -82,7 +85,8 @@ def _handle_monitor_command(service_manager: ServiceManager, command_info: dict)
         health_icon = "💚" if health == "healthy" else "💔" if health == "unhealthy" else "🤔"
         port_info = f" (Port: {port})" if port != 'N/A' else ""
 
-        print(f"{status_icon} {service_name}: {status.upper()} {health_icon}{port_info}")
+        print(
+            f"{status_icon} {service_name}: {status.upper()} {health_icon}{port_info}")
         if pid != 'N/A':
             print(f"   └─ PID: {pid}")
 
@@ -119,6 +123,7 @@ def _handle_monitor_command(service_manager: ServiceManager, command_info: dict)
     print("   • Health check: python scripts/health_check.py")
     print("   • View logs: tail -f logs/app.log")
 
+
 def _handle_stop_command(service_manager: ServiceManager, force: bool = False):
     """Handle stop/kill commands."""
     action = "force killing" if force else "stopping"
@@ -130,11 +135,13 @@ def _handle_stop_command(service_manager: ServiceManager, force: bool = False):
     else:
         print("❌ Some services failed to stop")
 
+
 def _handle_validate_command():
     """Handle validation command."""
     handler = ValidationHandler()
     exit_code = handler.execute()
     return exit_code
+
 
 def _handle_cleanup_command(service_manager: ServiceManager):
     """Handle cleanup logs command."""
@@ -142,11 +149,13 @@ def _handle_cleanup_command(service_manager: ServiceManager):
     service_manager.cleanup_logs()
     print("✅ Log cleanup completed")
 
+
 def _handle_select_mode_command():
     """Handle select mode command."""
     print("🎯 Agent Mode Selection")
     print("This feature requires additional setup. Please use the setup wizard:")
     print("   python setup_wizard.py")
+
 
 def _handle_autonomous_reports_command():
     """Handle autonomous reports command."""
@@ -154,11 +163,13 @@ def _handle_autonomous_reports_command():
     print("This feature requires additional setup. Please use the setup wizard:")
     print("   python setup_wizard.py")
 
+
 def _handle_run_autonomous_config_command():
     """Handle run autonomous config command."""
     print("⚙️ Autonomous Configuration System")
     print("This feature requires additional setup. Please use the setup wizard:")
     print("   python setup_wizard.py")
+
 
 def _handle_start_services_command(service_manager: ServiceManager, command_info: dict):
     """Handle start services command with enhanced feedback and health checks."""
@@ -189,7 +200,8 @@ def _handle_start_services_command(service_manager: ServiceManager, command_info
             print("❌")
 
     print()
-    print(f"📊 Results: {success_count}/{len(services)} services started successfully")
+    print(
+        f"📊 Results: {success_count}/{len(services)} services started successfully")
 
     if background:
         if success_count > 0:
@@ -211,11 +223,13 @@ def _handle_start_services_command(service_manager: ServiceManager, command_info
                 import time
                 time.sleep(3)  # Give services time to start
                 all_status = service_manager.get_all_status()
-                running_now = sum(1 for status in all_status.values() if status == "running")
+                running_now = sum(
+                    1 for status in all_status.values() if status == "running")
                 if running_now == success_count:
                     print("✅ All started services are healthy!")
                 else:
-                    print(f"⚠️ {running_now}/{success_count} services are responding")
+                    print(
+                        f"⚠️ {running_now}/{success_count} services are responding")
             except Exception:
                 print("⚠️ Health check inconclusive (services may still be starting)")
 
@@ -242,11 +256,13 @@ def _handle_start_services_command(service_manager: ServiceManager, command_info
 
                 # Periodic health check
                 all_status = service_manager.get_all_status()
-                running_count = sum(1 for status in all_status.values() if status == "running")
+                running_count = sum(
+                    1 for status in all_status.values() if status == "running")
 
                 running_check_count += 1
                 if running_check_count % 6 == 0:  # Every 30 seconds
-                    print(f"📊 Health check: {running_count}/{len(services)} services running")
+                    print(
+                        f"📊 Health check: {running_count}/{len(services)} services running")
 
                 if running_count == 0:
                     print("⚠️ All services have stopped unexpectedly")
@@ -263,6 +279,7 @@ def _handle_start_services_command(service_manager: ServiceManager, command_info
         else:
             print("⚠️ Some services may not have stopped cleanly.")
             print("   Force kill if needed: python main.py --kill")
+
 
 def main():
     """Main entry point - simplified launcher using modular components."""
@@ -297,7 +314,8 @@ def main():
             if result:
                 print("\n💾 Configuration saved!")
                 print("💡 Start services with: python main.py --start")
-                print(f"💡 Or use specific mode: python main.py --start --mode {result['mode']}")
+                print(
+                    f"💡 Or use specific mode: python main.py --start --mode {result['mode']}")
         elif command_type == 'autonomous_reports':
             handler = AutonomousHandler()
             handler.handle_reports_command()
@@ -317,8 +335,8 @@ def main():
         elif command_type == 'thea_capture_cookies':
             print("🍪 Starting Thea Cookie Capture...")
             try:
-                from tools.thea_cookie_capture import TheaCookieCapture
-                tool = TheaCookieCapture()
+                from tools.thea_manual_login import TheaManualLogin
+                tool = TheaManualLogin()
                 success = tool.capture_cookies_interactive()
                 sys.exit(0 if success else 1)
             except Exception as e:
@@ -327,8 +345,8 @@ def main():
         elif command_type == 'thea_test_cookies':
             print("🧪 Testing Thea Cookies...")
             try:
-                from tools.thea_cookie_capture import TheaCookieCapture
-                tool = TheaCookieCapture()
+                from tools.thea_manual_login import TheaManualLogin
+                tool = TheaManualLogin()
                 success = tool.test_cookies()
                 sys.exit(0 if success else 1)
             except Exception as e:
@@ -337,8 +355,8 @@ def main():
         elif command_type == 'thea_scan_project':
             print("🔍 Thea Project Scanner...")
             try:
-                from tools.thea_cookie_capture import TheaCookieCapture
-                tool = TheaCookieCapture()
+                from tools.thea_manual_login import TheaManualLogin
+                tool = TheaManualLogin()
                 success = tool.scan_project_with_thea()
                 sys.exit(0 if success else 1)
             except Exception as e:
@@ -346,12 +364,28 @@ def main():
                 sys.exit(1)
         elif command_type == 'thea_status':
             try:
-                from tools.thea_cookie_capture import TheaCookieCapture
-                tool = TheaCookieCapture()
+                from tools.thea_manual_login import TheaManualLogin
+                tool = TheaManualLogin()
                 tool.show_status()
             except Exception as e:
                 print(f"❌ Thea status check failed: {e}")
                 sys.exit(1)
+        elif command_type == 'thea_login':
+            print("🔐 Starting Thea Manual Login...")
+            try:
+                from tools.thea_manual_login import TheaManualLogin
+                tool = TheaManualLogin()
+                success = tool.start_manual_login()
+                sys.exit(0 if success else 1)
+            except Exception as e:
+                print(f"❌ Thea manual login failed: {e}")
+                sys.exit(1)
+        elif command_type == 'show_help':
+            # Show help when no arguments provided
+            from src.cli.argument_parser import get_argument_parser
+            parser = get_argument_parser()
+            parser.parser.print_help()
+            sys.exit(0)
         elif command_type == 'start_services':
             handler = StartHandler(service_manager)
             handler.execute(command_info)
@@ -363,6 +397,7 @@ def main():
         import traceback
         traceback.print_exc()
         sys.exit(1)
+
 
 if __name__ == "__main__":
     main()

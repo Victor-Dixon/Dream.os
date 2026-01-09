@@ -98,9 +98,9 @@ class TheaCookieCapture:
             print("   4. Press Enter here when ready to capture cookies")
             print()
 
-            # Start browser and navigate
-            browser_service.start_browser()
-            browser_service.navigate_to_conversation()
+            # Initialize browser and navigate
+            browser_service.initialize()
+            browser_service.navigate_to(thea_config.conversation_url)
 
             # Wait for user to complete authentication
             input("Press Enter when you've completed authentication in the browser...")

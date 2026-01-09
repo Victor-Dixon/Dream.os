@@ -91,9 +91,8 @@ class AutonomousHandler:
                 print("\n✅ Configuration is valid!")
                 print("🚀 Starting autonomous operations...")
 
-                # Here you would start the autonomous operations
-                # For now, just simulate
-                self._simulate_autonomous_operations(config)
+                # Execute real autonomous operations
+                self._execute_autonomous_operations(config)
 
             else:
                 print("\n❌ Configuration validation failed:")
@@ -150,46 +149,81 @@ class AutonomousHandler:
 
         return len(errors) == 0, errors
 
-    def _simulate_autonomous_operations(self, config: Dict[str, Any]) -> None:
-        """Simulate autonomous operations (placeholder for actual implementation)."""
+    def _execute_autonomous_operations(self, config: Dict[str, Any]) -> None:
+        """Execute real autonomous operations based on configuration."""
         import time
-        import random
-
-        operations = [
-            "Health check - Message Queue",
-            "Health check - FastAPI Service",
-            "Log rotation",
-            "Cache cleanup",
-            "Performance monitoring",
-            "Resource usage analysis"
-        ]
+        import psutil
+        import requests
+        from pathlib import Path
 
         completed_operations = []
         start_time = datetime.now()
 
         print("\n🚀 Executing autonomous operations...")
+
+        # Get configured services
+        services = config.get('services', [])
+
+        operations = []
+
+        # Add service-specific operations
+        if 'message_queue' in services:
+            operations.extend([
+                "Health check - Message Queue",
+                "Message Queue cleanup",
+                "Queue monitoring"
+            ])
+
+        if 'fastapi_service' in services:
+            operations.extend([
+                "Health check - FastAPI Service",
+                "API endpoint validation",
+                "Service performance check"
+            ])
+
+        # Add common operations
+        operations.extend([
+            "Log rotation",
+            "Cache cleanup",
+            "Resource usage analysis",
+            "Disk space monitoring"
+        ])
+
         for i, operation in enumerate(operations, 1):
             print(f"   {i}/{len(operations)}: {operation}...", end=' ')
+            operation_start = time.time()
 
-            # Simulate operation time
-            time.sleep(random.uniform(0.5, 2.0))
+            try:
+                result = self._execute_single_operation(operation, config)
+                operation_duration = time.time() - operation_start
 
-            # Simulate success/failure
-            success = random.random() > 0.1  # 90% success rate
+                if result['status'] == 'success':
+                    print("✅")
+                    completed_operations.append({
+                        'operation': operation,
+                        'status': 'success',
+                        'duration': operation_duration,
+                        'timestamp': datetime.now().isoformat(),
+                        'details': result.get('details', {})
+                    })
+                else:
+                    print("❌")
+                    completed_operations.append({
+                        'operation': operation,
+                        'status': 'failed',
+                        'error': result.get('error', 'Unknown error'),
+                        'duration': operation_duration,
+                        'timestamp': datetime.now().isoformat()
+                    })
 
-            if success:
-                print("✅")
-                completed_operations.append({
-                    'operation': operation,
-                    'status': 'success',
-                    'timestamp': datetime.now().isoformat()
-                })
-            else:
+            except Exception as e:
+                operation_duration = time.time() - operation_start
                 print("❌")
                 completed_operations.append({
                     'operation': operation,
                     'status': 'failed',
-                    'error': 'Simulated failure',
+                    'error': str(e),
+                    'duration': operation_duration,
                     'timestamp': datetime.now().isoformat()
                 })
 
@@ -198,14 +232,19 @@ class AutonomousHandler:
         duration = (end_time - start_time).total_seconds()
 
         successful_ops = len([op for op in completed_operations if op['status'] == 'success'])
-        success_rate = (successful_ops / len(operations)) * 100
+        success_rate = (successful_ops / len(operations)) * 100 if operations else 0
 
         report = {
             'timestamp': start_time.isoformat(),
             'duration_seconds': duration,
             'operations': completed_operations,
             'success_rate': success_rate,
-            'config': config
+            'config': config,
+            'system_info': {
+                'cpu_percent': psutil.cpu_percent(interval=1),
+                'memory_percent': psutil.virtual_memory().percent,
+                'disk_usage': psutil.disk_usage('/').percent
+            }
         }
 
         # Save report
@@ -218,7 +257,113 @@ class AutonomousHandler:
 
             print("\n📊 Autonomous operations completed!")
             print(f"   Duration: {duration:.1f} seconds")
+            print(f"   Success Rate: {success_rate:.1f}%")
             print(f"   Report saved: {report_path}")
 
         except Exception as e:
             print(f"❌ Failed to save report: {e}")
+
+    def _execute_single_operation(self, operation: str, config: Dict[str, Any]) -> Dict[str, Any]:
+        """Execute a single autonomous operation."""
+        import requests
+        import psutil
+        from pathlib import Path
+
+        try:
+            if operation == "Health check - Message Queue":
+                # Check if message queue service is running
+                try:
+                    # Try to connect to message queue
+                    from src.services.message_queue_service import MessageQueueService
+                    mq = MessageQueueService()
+                    health = mq.health_check()
+                    return {
+                        'status': 'success' if health else 'failed',
+                        'details': {'queue_size': getattr(mq, 'queue_size', 0)}
+                    }
+                except Exception as e:
+                    return {'status': 'failed', 'error': f'Message queue check failed: {e}'}
+
+            elif operation == "Health check - FastAPI Service":
+                # Check FastAPI service health
+                try:
+                    response = requests.get("http://localhost:8000/health", timeout=5)
+                    return {
+                        'status': 'success' if response.status_code == 200 else 'failed',
+                        'details': {'status_code': response.status_code}
+                    }
+                except requests.exceptions.RequestException as e:
+                    return {'status': 'failed', 'error': f'FastAPI health check failed: {e}'}
+
+            elif operation == "Log rotation":
+                # Rotate log files older than 7 days
+                log_dir = Path("logs")
+                if log_dir.exists():
+                    rotated_count = 0
+                    for log_file in log_dir.glob("*.log"):
+                        if log_file.stat().st_mtime < (time.time() - 7*24*3600):
+                            # Compress old log file
+                            import gzip
+                            with open(log_file, 'rb') as f_in:
+                                with gzip.open(f"{log_file}.gz", 'wb') as f_out:
+                                    f_out.writelines(f_in)
+                            log_file.unlink()
+                            rotated_count += 1
+
+                    return {
+                        'status': 'success',
+                        'details': {'files_rotated': rotated_count}
+                    }
+                return {'status': 'success', 'details': {'files_rotated': 0}}
+
+            elif operation == "Cache cleanup":
+                # Clean up cache files
+                cache_dirs = ["__pycache__", ".pytest_cache", ".cache"]
+                cleaned_files = 0
+
+                for cache_dir in cache_dirs:
+                    for cache_path in Path(".").glob(f"**/{cache_dir}"):
+                        if cache_path.is_dir():
+                            import shutil
+                            shutil.rmtree(cache_path)
+                            cleaned_files += 1
+
+                return {
+                    'status': 'success',
+                    'details': {'cache_dirs_removed': cleaned_files}
+                }
+
+            elif operation == "Resource usage analysis":
+                # Analyze system resources
+                cpu = psutil.cpu_percent(interval=1)
+                memory = psutil.virtual_memory()
+                disk = psutil.disk_usage('/')
+
+                return {
+                    'status': 'success',
+                    'details': {
+                        'cpu_percent': cpu,
+                        'memory_percent': memory.percent,
+                        'disk_percent': disk.percent
+                    }
+                }
+
+            elif operation == "Disk space monitoring":
+                # Check disk space
+                disk = psutil.disk_usage('/')
+                low_space = disk.percent > 90
+
+                return {
+                    'status': 'warning' if low_space else 'success',
+                    'details': {
+                        'disk_percent': disk.percent,
+                        'free_gb': disk.free / (1024**3)
+                    }
+                }
+
+            else:
+                # Unknown operation
+                return {'status': 'failed', 'error': f'Unknown operation: {operation}'}
+
+        except Exception as e:
+            return {'status': 'failed', 'error': str(e)}

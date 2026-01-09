@@ -1,0 +1,23 @@
+{
+  "conversation_id": "a1aaffec-5545-410b-ab0b-f86f1a39301b",
+  "message": {
+    "message_id": "a478c3fa-c414-46ef-a4a3-2a96ccc38602",
+    "content": "Hello Thea, this is a test message from the fixed modular architecture!",
+    "priority": "normal",
+    "timestamp": "2026-01-09T01:09:55.543475",
+    "status": "sent",
+    "metadata": {}
+  },
+  "response": {
+    "content": "ChatGPT said:\nHey! 👋",
+    "message_id": "a478c3fa-c414-46ef-a4a3-2a96ccc38602",
+    "response_id": "491d3af5-f193-404b-b1ed-5852c60dd62a",
+    "timestamp": "2026-01-09T01:11:34.530176",
+    "confidence_score": 0.5,
+    "processing_time_seconds": 0.0,
+    "metadata": {}
+  },
+  "started_at": "2026-01-09T01:11:34.530176",
+  "completed_at": "2026-01-09T01:11:34.530176",
+  "total_duration_seconds": 0.0
+}

@@ -29,7 +29,12 @@ def is_git_repo(repo: Path) -> bool:
 
 def git_mv(src: Path, dst: Path) -> None:
     dst.parent.mkdir(parents=True, exist_ok=True)
-    run(["git", "mv", str(src), str(dst)])
+    # Check if source is an empty directory
+    if src.is_dir() and not any(src.iterdir()):
+        # Use regular move for empty directories
+        fs_mv(src, dst)
+    else:
+        run(["git", "mv", str(src), str(dst)])
 
 def fs_mv(src: Path, dst: Path) -> None:
     dst.parent.mkdir(parents=True, exist_ok=True)
@@ -45,6 +50,11 @@ def make_symlink(old: Path, new: Path) -> None:
     old.symlink_to(new, target_is_directory=new.is_dir())
 
 def main() -> int:
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--phase', type=int, help='Phase number to execute')
+    args = parser.parse_args()
+
     repo = Path.cwd()
     manifest = load_manifest(repo / "reorg" / "migration_manifest.yml")
     policy = manifest.get("policy", {})
@@ -57,14 +67,15 @@ def main() -> int:
         return 0
 
     # Check for phase filter
-    phase_filter = os.environ.get("REORG_PHASE")
+    phase_filter = args.phase or os.environ.get("REORG_PHASE")
     if phase_filter:
         try:
             phase_num = int(phase_filter)
             moves = [m for m in moves if m.get("phase", 1) == phase_num]
             print(f"Filtered to phase {phase_num}: {len(moves)} moves")
         except ValueError:
-            print(f"Invalid REORG_PHASE: {phase_filter}")
+            print(f"Invalid phase: {phase_filter}")
+            return 1
 
     # Backup tag (cheap safety)
     if is_git_repo(repo):
@@ -107,19 +118,23 @@ def main() -> int:
             raise FileExistsError(f"Destination exists: {dst_rel}")
 
         print(f"MOVE {src_rel}  ->  {dst_rel}")
-        if is_git_repo(repo):
-            git_mv(src, dst)
-        else:
-            fs_mv(src, dst)
+        try:
+            if is_git_repo(repo):
+                git_mv(src, dst)
+            else:
+                fs_mv(src, dst)
 
-        if create_links:
-            try:
-                make_symlink(repo / src_rel, repo / dst_rel)
-                print(f"  LINK {src_rel} -> {dst_rel}")
-            except Exception as e:
-                print(f"  Warning: could not symlink {src_rel}: {e}")
+            if create_links:
+                try:
+                    make_symlink(repo / src_rel, repo / dst_rel)
+                    print(f"  LINK {src_rel} -> {dst_rel}")
+                except Exception as e:
+                    print(f"  Warning: could not symlink {src_rel}: {e}")
 
-        moved += 1
+            moved += 1
+        except Exception as e:
+            print(f"  ERROR: Failed to move {src_rel}: {e}")
+            print("  Continuing with other moves...")
 
     print(f"\nDone. Moves applied: {moved}")
     print("Next: run validation ritual.")

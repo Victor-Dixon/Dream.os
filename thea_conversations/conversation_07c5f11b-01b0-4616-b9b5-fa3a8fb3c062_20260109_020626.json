@@ -1,0 +1,23 @@
+{
+  "conversation_id": "07c5f11b-01b0-4616-b9b5-fa3a8fb3c062",
+  "message": {
+    "message_id": "63d9d23a-51c7-4bac-ad04-5a1017661c5b",
+    "content": "Hello Thea, this is a real-world test. Please acknowledge with a simple response.",
+    "priority": "normal",
+    "timestamp": "2026-01-09T02:04:53.258110",
+    "status": "sent",
+    "metadata": {}
+  },
+  "response": {
+    "content": "ChatGPT said:\nHel",
+    "message_id": "63d9d23a-51c7-4bac-ad04-5a1017661c5b",
+    "response_id": "44101248-bde1-4975-b976-729bb478ba83",
+    "timestamp": "2026-01-09T02:06:26.870325",
+    "confidence_score": 0.3,
+    "processing_time_seconds": 0.0,
+    "metadata": {}
+  },
+  "started_at": "2026-01-09T02:06:26.871327",
+  "completed_at": "2026-01-09T02:06:26.871327",
+  "total_duration_seconds": 0.0
+}

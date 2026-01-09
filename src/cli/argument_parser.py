@@ -38,19 +38,21 @@ class MainArgumentParser:
         """Get the help epilog with usage examples."""
         return """
 Examples:
-  python main.py                          # Start all services (foreground)
-  python main.py --background             # Start all services in background
+  python main.py                          # Show help (no services started)
+  python main.py --start                  # Start all services (foreground)
+  python main.py --start --background     # Start all services in background
   python main.py --status                 # Check service status
   python main.py --stop                   # Stop all background services
   python main.py --kill                   # Force kill all services
-  python main.py --message-queue          # Start only message queue
-  python main.py --twitch                 # Start only Twitch bot
-  python main.py --discord                # Start only Discord bot
-  python main.py --fastapi                # Start only FastAPI service
+  python main.py --start --message-queue  # Start only message queue
+  python main.py --start --twitch         # Start only Twitch bot
+  python main.py --start --discord        # Start only Discord bot
+  python main.py --start --fastapi        # Start only FastAPI service
   python main.py --validate               # Run comprehensive validation
   python main.py --select-mode            # Select agent mode (interactive)
   python main.py --autonomous-reports     # Display autonomous config reports
   python main.py --status-integration     # Start automated agent status integration
+  python main.py --thea-login             # Manual login with automatic cookie collection
   python main.py --thea-capture-cookies   # Capture Thea cookies interactively
   python main.py --thea-test-cookies      # Test Thea cookies
   python main.py --thea-scan-project      # Scan project with Thea guidance
@@ -172,6 +174,14 @@ Unix/Mac background: python main.py --background &
             help='Show Thea integration status'
         )
 
+        # Service control
+        self.parser.add_argument(
+            '--start',
+            action='store_true',
+            help='Start all services (requires explicit flag for safety)'
+        )
+
+
         # Maintenance
         self.parser.add_argument(
             '--cleanup-logs',
@@ -230,19 +240,46 @@ Unix/Mac background: python main.py --background &
             command_info['command_type'] = 'cleanup_logs'
         elif args.validate:
             command_info['command_type'] = 'validate'
+        elif getattr(args, 'thea_capture_cookies', False):
+            command_info['command_type'] = 'thea_capture_cookies'
+        elif getattr(args, 'thea_test_cookies', False):
+            command_info['command_type'] = 'thea_test_cookies'
+        elif getattr(args, 'thea_scan_project', False):
+            command_info['command_type'] = 'thea_scan_project'
+        elif getattr(args, 'thea_status', False):
+            command_info['command_type'] = 'thea_status'
+        elif getattr(args, 'thea_login', False):
+            command_info['command_type'] = 'thea_login'
         else:
-            # Determine which services to start
-            if args.message_queue:
+            # Check if specific services are requested or --start is used
+            service_requested = False
+
+            if getattr(args, 'message_queue', False):
+                command_info['command_type'] = 'start_services'
                 command_info['services'].append('message_queue')
-            elif args.twitch:
+                service_requested = True
+            if getattr(args, 'twitch', False):
+                command_info['command_type'] = 'start_services'
                 command_info['services'].append('twitch')
-            elif args.discord:
+                service_requested = True
+            if getattr(args, 'discord', False):
+                command_info['command_type'] = 'start_services'
                 command_info['services'].append('discord')
-            elif args.fastapi:
+                service_requested = True
+            if getattr(args, 'fastapi', False):
+                command_info['command_type'] = 'start_services'
                 command_info['services'].append('fastapi')
+                service_requested = True
+
+            # If --start is specified or specific services requested, handle services
+            if getattr(args, 'start', False) or service_requested:
+                command_info['command_type'] = 'start_services'
+                # If --start is specified but no specific services, start all
+                if getattr(args, 'start', False) and not service_requested:
+                    command_info['services'] = ['message_queue', 'twitch', 'discord', 'fastapi']
             else:
-                # Start all services if no specific service selected
-                command_info['services'] = ['message_queue', 'twitch', 'discord', 'fastapi']
+                # No service-related arguments provided - show help
+                command_info['command_type'] = 'show_help'
 
         # Set options
         command_info['options'] = {

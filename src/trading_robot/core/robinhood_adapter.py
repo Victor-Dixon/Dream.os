@@ -305,7 +305,8 @@ class RobinhoodAdapter(BrokerInterface):
 
         except Exception as e:
             logger.error(f"Account info retrieval failed: {e}")
-            return {"error": str(e)}
+            return {
+                "error": str(e),
                 "currency": "USD",
                 "last_updated": datetime.now().isoformat()
             }
