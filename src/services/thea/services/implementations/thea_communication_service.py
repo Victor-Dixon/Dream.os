@@ -20,8 +20,7 @@ from __future__ import annotations
 import time
 from typing import Optional
 
-from ...domain.models import CommunicationResult, TheaMessage, TheaResponse, TheaConversation
-from ...domain.enums import MessagePriority, MessageStatus
+from ...domain.models import CommunicationResult, TheaMessage, TheaResponse, TheaConversation, MessagePriority, MessageStatus
 from ...repositories.interfaces.i_browser_repository import IBrowserRepository
 from ...repositories.interfaces.i_conversation_repository import IConversationRepository
 from ..interfaces.i_authentication_service import IAuthenticationService

@@ -37,10 +37,26 @@ async def lifespan(app: FastAPI):
     logger.info("Starting FastAPI application...")
     validate_configuration()
 
+    # Start repository monitoring
+    try:
+        from src.services.repository_monitor import start_repository_monitoring
+        await start_repository_monitoring()
+        logger.info("✅ Repository monitoring started")
+    except Exception as e:
+        logger.warning(f"Failed to start repository monitoring: {e}")
+
     yield
 
     # Shutdown
     logger.info("Shutting down FastAPI application...")
+
+    # Stop repository monitoring
+    try:
+        from src.services.repository_monitor import stop_repository_monitoring
+        await stop_repository_monitoring()
+        logger.info("🛑 Repository monitoring stopped")
+    except Exception as e:
+        logger.error(f"Error stopping repository monitoring: {e}")
 
 # Create FastAPI application with performance optimizations
 app = FastAPI(

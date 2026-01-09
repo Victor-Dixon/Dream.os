@@ -107,7 +107,7 @@ class RepositoryMonitor:
         }
 
         # Data retention
-        self.max_snapshots = self.config["retention"]["max_snapshots"]
+        self.max_snapshots = self.config.get("retention", {}).get("max_snapshots", 168)
 
     def _default_config(self) -> Dict[str, Any]:
         """Get default configuration."""

@@ -69,18 +69,12 @@ def main():
 
         # Use subprocess to run the processor in background
         # The processor is a long-running service that processes messages
-        process = subprocess.Popen(
-            [sys.executable, "-c", """
-import sys
-sys.path.insert(0, 'src')
-from core.message_queue_processor.core.processor import MessageQueueProcessor
-import asyncio
-import logging
+        env = os.environ.copy()
+        env['PYTHONPATH'] = str(Path.cwd())
 
-logging.basicConfig(level=logging.INFO)
-processor = MessageQueueProcessor()
-asyncio.run(processor.run())
-"""],
+        process = subprocess.Popen(
+            [sys.executable, "src/core/message_queue_processor/core/processor.py"],
+            env=env,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             cwd=Path.cwd()

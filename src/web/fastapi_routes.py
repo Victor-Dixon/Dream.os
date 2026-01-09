@@ -52,6 +52,11 @@ try:
 except ImportError:
     ot_router = None
 
+try:
+    from .routers.repository_monitor import router as monitor_router
+except ImportError:
+    monitor_router = None
+
 logger = logging.getLogger(__name__)
 
 # Templates
@@ -88,6 +93,10 @@ if trading_router:
 if ot_router:
     api_router.include_router(ot_router)
     logger.info("✅ Operational Transformation routes included")
+
+if monitor_router:
+    api_router.include_router(monitor_router, prefix="/monitor", tags=["Repository Monitor"])
+    logger.info("✅ Repository Monitor routes included")
 
 # Core routes (health, root pages)
 @api_router.get("/health")
