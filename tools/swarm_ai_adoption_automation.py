@@ -64,7 +64,7 @@ class SwarmAIAdoptionAutomation:
             }
 
     def deploy_ai_to_all_agents(self) -> Dict[str, Any]:
-        """Deploy AI integration to all agents in parallel"""
+        """Deploy AI integration to all agents sequentially (for compatibility)"""
         agents = self.get_all_agents()
 
         if not agents:
@@ -75,30 +75,21 @@ class SwarmAIAdoptionAutomation:
 
         results = []
 
-        # Deploy in parallel with limited workers
-        with concurrent.futures.ThreadPoolExecutor(max_workers=self.max_workers) as executor:
-            # Submit all tasks
-            future_to_agent = {
-                executor.submit(self.deploy_ai_to_agent, agent): agent
-                for agent in agents
-            }
-
-            # Collect results as they complete
-            for future in concurrent.futures.as_completed(future_to_agent):
-                agent = future_to_agent[future]
-                try:
-                    result = future.result()
-                    results.append(result)
-                    status = "✅" if result["success"] else "❌"
-                    print(f"{status} {agent}: {'Success' if result['success'] else result.get('error', 'Failed')}")
-                except Exception as e:
-                    results.append({
-                        "agent_id": agent,
-                        "success": False,
-                        "timestamp": time.time(),
-                        "error": str(e)
-                    })
-                    print(f"❌ {agent}: Exception - {e}")
+        # Deploy sequentially to avoid multiprocessing import issues
+        for agent in agents:
+            try:
+                result = self.deploy_ai_to_agent(agent)
+                results.append(result)
+                status = "✅" if result["success"] else "❌"
+                print(f"{status} {agent}: {'Success' if result['success'] else result.get('error', 'Failed')}")
+            except Exception as e:
+                results.append({
+                    "agent_id": agent,
+                    "success": False,
+                    "timestamp": time.time(),
+                    "error": str(e)
+                })
+                print(f"❌ {agent}: Exception - {e}")
 
         # Summarize results
         successful = [r for r in results if r["success"]]
