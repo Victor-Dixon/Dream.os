@@ -43,6 +43,12 @@ import websockets
 from websockets.exceptions import ConnectionClosedError, WebSocketException
 
 from src.services.ai_context_engine import ai_context_engine, ContextSuggestion
+from src.services.operational_transformation_engine import (
+    operational_transformation_engine,
+    collaborative_handler,
+    Operation,
+    OperationType
+)
 
 logger = logging.getLogger(__name__)
 
@@ -96,6 +102,9 @@ class AIContextWebSocketServer:
 
         self.running = True
         logger.info(f"🧠 Starting AI Context WebSocket Server on {self.host}:{self.port}")
+
+        # Start operational transformation engine
+        await operational_transformation_engine.start()
 
         # Start background tasks
         self.heartbeat_task = asyncio.create_task(self._heartbeat())
@@ -304,8 +313,21 @@ class AIContextWebSocketServer:
             welcome_data = {
                 "type": "welcome",
                 "endpoint": "collaboration",
-                "message": "Connected to Collaborative Context stream",
-                "features": ["shared_context", "collaborative_suggestions", "activity_sync"]
+                "message": "Connected to Collaborative Editing with Operational Transformation",
+                "features": [
+                    "real_time_collaborative_editing",
+                    "operational_transformation",
+                    "conflict_resolution",
+                    "shared_context",
+                    "activity_sync",
+                    "undo_redo_support"
+                ],
+                "capabilities": {
+                    "max_clients_per_session": 50,
+                    "operation_types": ["insert", "delete", "update", "replace"],
+                    "conflict_resolution": "transform_based",
+                    "sync_latency_target": "<100ms"
+                }
             }
             await websocket.send(json.dumps(welcome_data))
 
@@ -427,6 +449,96 @@ class AIContextWebSocketServer:
 
         if message_type == "ping":
             await websocket.send(json.dumps({"type": "pong", "timestamp": time.time()}))
+        elif message_type == "join_session":
+            session_id = data.get("session_id")
+            client_id = data.get("client_id", str(getattr(websocket, 'remote_address', 'unknown_client')))
+
+            if session_id:
+                # Create session if it doesn't exist
+                if session_id not in operational_transformation_engine.documents:
+                    operational_transformation_engine.create_document_session(session_id)
+
+                # Join the collaborative session
+                success = operational_transformation_engine.join_session(session_id, client_id)
+
+                if success:
+                    # Send current document state
+                    sync_data = await operational_transformation_engine.synchronize_client(session_id, client_id, 0)
+                    sync_data["type"] = "session_joined"
+                    await websocket.send(json.dumps(sync_data))
+
+                    # Notify other collaborators
+                    join_notification = {
+                        "type": "collaborator_joined",
+                        "session_id": session_id,
+                        "client_id": client_id,
+                        "timestamp": time.time()
+                    }
+                    await self.broadcast_to_session(session_id, join_notification)
+                else:
+                    await websocket.send(json.dumps({
+                        "type": "error",
+                        "message": f"Failed to join session {session_id}",
+                        "timestamp": time.time()
+                    }))
+
+        elif message_type == "operation":
+            # Handle operational transformation operation
+            operation_data = data.get("operation", {})
+            client_id = data.get("client_id", str(getattr(websocket, 'remote_address', 'unknown_client')))
+
+            try:
+                # Create operation object
+                operation = Operation.from_dict({
+                    **operation_data,
+                    "client_id": client_id
+                })
+
+                # Submit to operational transformation engine
+                success, error = await operational_transformation_engine.submit_operation(operation)
+
+                response = {
+                    "type": "operation_ack",
+                    "operation_id": operation.id,
+                    "success": success,
+                    "timestamp": time.time()
+                }
+
+                if not success:
+                    response["error"] = error
+
+                await websocket.send(json.dumps(response))
+
+                # Broadcast successful operations to other clients
+                if success:
+                    await self.broadcast_to_session(operation.session_id, {
+                        "type": "remote_operation",
+                        "operation": operation.to_dict(),
+                        "from_client": client_id,
+                        "timestamp": time.time()
+                    })
+
+            except Exception as e:
+                logger.error(f"Operation processing error: {e}")
+                await websocket.send(json.dumps({
+                    "type": "error",
+                    "message": str(e),
+                    "timestamp": time.time()
+                }))
+
+        elif message_type == "sync_request":
+            # Handle synchronization request
+            session_id = data.get("session_id")
+            client_id = data.get("client_id", str(getattr(websocket, 'remote_address', 'unknown_client')))
+            last_version = data.get("last_version", 0)
+
+            if session_id:
+                sync_data = await operational_transformation_engine.synchronize_client(
+                    session_id, client_id, last_version
+                )
+                sync_data["type"] = "sync_response"
+                await websocket.send(json.dumps(sync_data))
+
         elif message_type == "share_context":
             session_id = data.get("session_id")
             shared_context = data.get("context", {})
@@ -442,25 +554,22 @@ class AIContextWebSocketServer:
                 }
 
                 await self.broadcast_to_endpoint("collaboration", collaboration_update)
-        elif message_type == "join_collaboration":
+
+        elif message_type == "leave_session":
             session_id = data.get("session_id")
-            user_info = data.get("user_info", {})
+            client_id = data.get("client_id", str(getattr(websocket, 'remote_address', 'unknown_client')))
 
-            if session_id:
-                # Add to session connections
-                if session_id not in self.session_connections:
-                    self.session_connections[session_id] = set()
-                self.session_connections[session_id].add(websocket)
+            if session_id and client_id:
+                operational_transformation_engine.leave_session(session_id, client_id)
 
-                # Notify others of new collaborator
-                join_notification = {
-                    "type": "collaborator_joined",
+                # Notify others
+                leave_notification = {
+                    "type": "collaborator_left",
                     "session_id": session_id,
-                    "user_info": user_info,
+                    "client_id": client_id,
                     "timestamp": time.time()
                 }
-
-                await self.broadcast_to_session(session_id, join_notification)
+                await self.broadcast_to_session(session_id, leave_notification)
 
     def get_performance_stats(self) -> Dict[str, Any]:
         """Get current performance statistics."""

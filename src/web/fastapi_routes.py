@@ -47,6 +47,11 @@ try:
 except ImportError:
     trading_router = None
 
+try:
+    from .routers.operational_transformation import router as ot_router
+except ImportError:
+    ot_router = None
+
 logger = logging.getLogger(__name__)
 
 # Templates
@@ -79,6 +84,10 @@ if performance_router:
 if trading_router:
     api_router.include_router(trading_router, prefix="/trading", tags=["Trading"])
     logger.info("✅ Trading routes included")
+
+if ot_router:
+    api_router.include_router(ot_router)
+    logger.info("✅ Operational Transformation routes included")
 
 # Core routes (health, root pages)
 @api_router.get("/health")
