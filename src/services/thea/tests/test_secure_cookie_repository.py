@@ -159,7 +159,7 @@ class TestPlainJsonCookieRepository:
 
     def test_save_and_load_plain_cookies(self):
         """Test saving and loading plain JSON cookies."""
-        from ..repositories.implementations.secure_cookie_repository import PlainJsonCookieRepository
+        from src.services.thea.repositories.implementations.secure_cookie_repository import PlainJsonCookieRepository
 
         repo = PlainJsonCookieRepository(
             cookie_file=str(self.cookie_file)
@@ -185,7 +185,7 @@ class TestPlainJsonCookieRepository:
 
     def test_get_storage_type_plain(self):
         """Test getting storage type for plain JSON."""
-        from ..repositories.implementations.secure_cookie_repository import PlainJsonCookieRepository
+        from src.services.thea.repositories.implementations.secure_cookie_repository import PlainJsonCookieRepository
 
         repo = PlainJsonCookieRepository(
             cookie_file=str(self.cookie_file)
