@@ -18,8 +18,7 @@ License: MIT
 import pytest
 from unittest.mock import Mock, MagicMock
 
-from src.services.thea.domain.models import CommunicationResult, TheaMessage, TheaResponse
-from src.services.thea.domain.enums import MessagePriority
+from src.services.thea.domain.models import CommunicationResult, TheaMessage, TheaResponse, MessagePriority
 from src.services.thea.services.implementations.thea_communication_service import TheaCommunicationService
 
 
