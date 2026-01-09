@@ -187,16 +187,44 @@ class RobinhoodBroker:
             return {"error": "Not authenticated"}
 
         try:
-            # TODO: Implement actual balance retrieval from Robinhood API
-            # Mock data for now
-            return {
-                "cash": 1250.75,
-                "portfolio_value": 15430.25,
-                "buying_power": 8920.50,
-                "total_positions_value": 14179.50,
-                "day_change": -125.30,
-                "day_change_percent": -0.81
+            # Get account information from Robinhood API
+            accounts_url = "https://api.robinhood.com/accounts/"
+            response = self.session.get(accounts_url, timeout=30)
+
+            if response.status_code != 200:
+                logger.error(f"Failed to get accounts: {response.status_code} - {response.text}")
+                return {"error": f"API request failed: {response.status_code}"}
+
+            accounts_data = response.json()
+            if not accounts_data.get("results"):
+                return {"error": "No accounts found"}
+
+            account = accounts_data["results"][0]  # Use first account
+
+            # Get portfolio data
+            portfolio_url = f"https://api.robinhood.com/accounts/{account['account_number']}/portfolio/"
+            portfolio_response = self.session.get(portfolio_url, timeout=30)
+
+            balance_data = {
+                "cash": float(account.get("cash_available_for_withdrawal", 0)),
+                "portfolio_value": float(account.get("portfolio_cash", 0)),
+                "buying_power": float(account.get("buying_power", 0)),
+                "total_positions_value": float(account.get("equity", 0)) - float(account.get("cash", 0)),
+                "account_number": account.get("account_number"),
+                "account_type": account.get("type")
             }
+
+            # Add portfolio data if available
+            if portfolio_response.status_code == 200:
+                portfolio_data = portfolio_response.json()
+                balance_data.update({
+                    "market_value": float(portfolio_data.get("market_value", 0)),
+                    "equity": float(portfolio_data.get("equity", 0)),
+                    "extended_hours_market_value": float(portfolio_data.get("extended_hours_market_value", 0))
+                })
+
+            logger.info(f"Retrieved account balance for {self.username}")
+            return balance_data
         except Exception as e:
             logger.error(f"Failed to get balance: {e}")
             return {"error": str(e)}
@@ -212,19 +240,47 @@ class RobinhoodBroker:
             return []
 
         try:
-            # TODO: Implement actual options positions retrieval
-            # Mock data for now
-            return [
-                {
-                    "symbol": "AAPL",
-                    "type": "call",
-                    "strike": 180.0,
-                    "expiration": "2024-03-15",
-                    "quantity": 5,
-                    "avg_cost": 2.45,
-                    "current_price": 3.20,
-                    "pnl": 37.50
-                },
+            # Get options positions from Robinhood API
+            positions_url = "https://api.robinhood.com/options/positions/"
+            response = self.session.get(positions_url, timeout=30)
+
+            if response.status_code != 200:
+                logger.error(f"Failed to get options positions: {response.status_code} - {response.text}")
+                return []
+
+            positions_data = response.json()
+            positions = []
+
+            for position in positions_data.get("results", []):
+                # Skip positions with zero quantity
+                quantity = int(position.get("quantity", 0))
+                if quantity == 0:
+                    continue
+
+                # Get option instrument details
+                instrument_url = position.get("option")
+                if instrument_url:
+                    instrument_response = self.session.get(instrument_url, timeout=30)
+                    if instrument_response.status_code == 200:
+                        instrument_data = instrument_response.json()
+
+                        position_info = {
+                            "symbol": instrument_data.get("chain_symbol", ""),
+                            "type": instrument_data.get("type", "").lower(),  # call/put
+                            "strike": float(instrument_data.get("strike_price", 0)),
+                            "expiration": instrument_data.get("expiration_date", ""),
+                            "quantity": quantity,
+                            "avg_cost": float(position.get("average_price", 0)),
+                            "current_price": float(position.get("intraday_average_open_price", 0)),
+                            "market_value": float(position.get("market_value", 0)),
+                            "total_cost": float(position.get("total_cost", 0)),
+                            "pnl": float(position.get("total_cost", 0)) - (float(position.get("market_value", 0)) if quantity > 0 else 0),
+                            "instrument_url": instrument_url
+                        }
+                        positions.append(position_info)
+
+            logger.info(f"Retrieved {len(positions)} options positions for {self.username}")
+            return positions
                 {
                     "symbol": "TSLA",
                     "type": "put",
