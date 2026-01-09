@@ -13,7 +13,8 @@ from typing import Dict, List, Optional, Tuple, Any
 from dataclasses import dataclass
 from enum import Enum
 
-# from dreamscape.core.mmorpg_system import MMORPGEngine  # TODO: Use mmorpg_system after consolidation
+# Import MMORPGEngine from local core after consolidation
+from .core.mmorpg_engine import MMORPGEngine
 from .models import Skill, SkillType
 from dreamscape.core.memory import MemoryManager
 
