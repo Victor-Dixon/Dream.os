@@ -365,9 +365,29 @@ class LLMSummarizationPipeline:
             # Format template with content
             prompt = template.format(conversation_content=formatted_content[:5000])  # Limit content length
             
-            # TODO: Replace with actual LLM call
-            # For now, generate a mock summary
-            summary = self._generate_mock_summary(conversation_content, summary_type)
+            # Integrate with AdvancedReasoningEngine for real LLM summarization
+            try:
+                # Import AI reasoning engine
+                from src.ai_training.dreamvault.advanced_reasoning import AdvancedReasoningEngine, ReasoningContext, ReasoningMode, ResponseFormat
+
+                # Create AI reasoning context
+                ai_context = ReasoningContext(
+                    query=prompt,
+                    mode=ReasoningMode.ANALYTICAL if summary_type in [SummarizationType.SKILL_EXTRACTION, SummarizationType.LEARNING_INSIGHTS] else ReasoningMode.STRATEGIC,
+                    format=ResponseFormat.TEXT
+                )
+
+                # Initialize AI engine and generate summary
+                ai_engine = AdvancedReasoningEngine()
+                ai_result = ai_engine.reason(ai_context)
+
+                summary = ai_result.response
+                logger.info(f"Generated AI summary for {summary_type.value}: {len(summary)} characters")
+
+            except Exception as ai_error:
+                logger.warning(f"AI summarization failed, falling back to mock: {ai_error}")
+                # Fallback to mock summary if AI fails
+                summary = self._generate_mock_summary(conversation_content, summary_type)
             
             return summary
             
