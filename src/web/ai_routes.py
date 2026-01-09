@@ -280,8 +280,12 @@ async def reason_stream_endpoint(request: ReasoningRequest):
 async def semantic_search_endpoint(request: SemanticSearchRequest):
     """AI-powered semantic search endpoint."""
     try:
-        # Import vector database service
-        from src.services.vector.vector_database_service import VectorDatabaseService
+        # Import vector database service (lazy loading to handle onnxruntime issues)
+        try:
+            from src.services.vector.vector_database_service import VectorDatabaseService
+        except ImportError as ie:
+            logger.warning(f"Vector database service unavailable due to import error: {ie}")
+            raise HTTPException(status_code=503, detail="Vector search service unavailable - ONNX Runtime compatibility issue")
 
         # Create vector service
         vector_service = VectorDatabaseService()

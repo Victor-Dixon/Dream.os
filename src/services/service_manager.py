@@ -39,7 +39,7 @@ class ServiceManager:
         self.services = {
             'message_queue': {
                 'name': 'Message Queue Processor',
-                'script': '-m src.core.message_queue_processor.core.processor',
+                'script': 'scripts/start_message_queue.py',
                 'pid_file': 'message_queue.pid',
                 'log_file': 'message_queue.log',
                 'status': 'stopped',
@@ -47,7 +47,7 @@ class ServiceManager:
             },
             'twitch': {
                 'name': 'Twitch Bot',
-                'script': '-m src.services.chat_presence.twitch_eventsub_server',
+                'script': 'scripts/start_twitch.py',
                 'pid_file': 'twitch_bot.pid',
                 'log_file': 'twitch_bot.log',
                 'status': 'stopped',
@@ -63,7 +63,7 @@ class ServiceManager:
             },
             'fastapi': {
                 'name': 'FastAPI Service',
-                'script': 'src/web/fastapi_server.py',
+                'script': 'scripts/start_fastapi.py',
                 'pid_file': 'fastapi.pid',
                 'log_file': 'fastapi.log',
                 'status': 'stopped',
@@ -153,8 +153,9 @@ class ServiceManager:
                 # Use launcher script - it manages its own PID file
                 import subprocess
                 logger.info(f"Starting {service_name} using launcher: {script_path}")
+                cmd = [sys.executable, script_path]
                 result = subprocess.run(
-                    [sys.executable, script_path],
+                    cmd,
                     capture_output=True,
                     text=True,
                     cwd=os.getcwd()
@@ -170,8 +171,9 @@ class ServiceManager:
             elif background:
                 # Start in background with PID management
                 import subprocess
+                cmd = [sys.executable, script_path]
                 process = subprocess.Popen(
-                    [sys.executable, script_path],
+                    cmd,
                     stdout=open(log_file, 'a'),
                     stderr=subprocess.STDOUT,
                     cwd=os.getcwd()
@@ -194,10 +196,10 @@ class ServiceManager:
         """Run a service in foreground mode."""
         # Import the service module dynamically
         if service_name == 'message_queue':
-            from src.message_queue_processor import main
+            from src.core.message_queue_processor.core.processor import main
             main()
         elif service_name == 'twitch':
-            from src.twitch_bot import main
+            from src.services.chat_presence.twitch_eventsub_server import main
             main()
         elif service_name == 'discord':
             from src.discord_bot import main

@@ -108,7 +108,13 @@ class MessageQueueProcessor:
         try:
             while self.running:
                 self._maybe_trigger_output_flywheel()
-                entries = safe_dequeue(self.queue, batch_size)
+                # Dequeue up to batch_size entries
+                entries = []
+                for _ in range(batch_size):
+                    entry = safe_dequeue(self.queue)
+                    if entry is None:
+                        break
+                    entries.append(entry)
                 if not entries:
                     if max_messages is None:
                         time.sleep(interval)
@@ -340,3 +346,34 @@ class MessageQueueProcessor:
                 self.performance_metrics, delivery_start_time, use_pyautogui, content
             )
             return False
+
+
+def main():
+    """Main entry point for the message queue processor service."""
+    import signal
+    import sys
+
+    # Create processor instance
+    processor = MessageQueueProcessor()
+
+    def signal_handler(signum, frame):
+        """Handle shutdown signals."""
+        logger.info("Received shutdown signal, stopping processor...")
+        processor.running = False  # Set running to False to stop the loop
+        sys.exit(0)
+
+    # Register signal handlers
+    signal.signal(signal.SIGINT, signal_handler)
+    signal.signal(signal.SIGTERM, signal_handler)
+
+    try:
+        logger.info("Starting Message Queue Processor service...")
+        # Run the processor (this will block until stopped)
+        processor.process_queue()  # This runs the processing loop
+    except Exception as e:
+        logger.error(f"Message Queue Processor failed: {e}")
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
