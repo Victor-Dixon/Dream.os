@@ -13,7 +13,14 @@
 
 ## Status
 
-- [ ] Repos organized into this group
-- [ ] Content merged to target
+- [x] Repos organized into this group
+- [ ] Content merged to target (pending GitHub access)
 - [ ] Secondary repos archived
 - [ ] Documentation updated
+
+## Infrastructure Audit Status (Updated 2026-01-08)
+
+- **Target:** gpt_automation (NEEDS WORK - Score: 10/100)
+- **Merge:** gpt_automation duplicate (NEEDS WORK - Score: 10/100)
+- **Status:** Ready for consolidation execution
+- **Priority:** HIGH (non-website consolidation group)

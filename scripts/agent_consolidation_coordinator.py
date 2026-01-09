@@ -14,14 +14,12 @@ Author: Agent-7 (Web Development Specialist)
 Date: 2026-01-08
 """
 
-import os
 import sys
 import json
-import time
 from pathlib import Path
 from datetime import datetime
-from typing import Dict, List, Set, Tuple
-from dataclasses import dataclass, asdict
+from typing import Dict, List, Optional, Any
+from dataclasses import dataclass, asdict, field
 from enum import Enum
 
 # Add src to path for imports
@@ -53,18 +51,64 @@ class ConsolidationTask:
     status: TaskStatus
     assigned_at: str
     completed_at: str = ""
-    result: Dict = None
-    notes: List[str] = None
-
-    def __post_init__(self):
-        if self.notes is None:
-            self.notes = []
+    result: Optional[Dict[str, Any]] = None
+    notes: List[str] = field(default_factory=list)
 
     def to_dict(self):
         data = asdict(self)
         data['phase'] = self.phase.value
         data['status'] = self.status.value
         return data
+
+    @staticmethod
+    def from_dict(task_data: Dict[str, Any]) -> "ConsolidationTask":
+        """
+        Robust loader for tasks persisted as JSON.
+        Accepts both enum objects and legacy string values for phase/status.
+        """
+        phase_val = task_data.get("phase")
+        status_val = task_data.get("status")
+
+        # Normalize phase/status (strings → enums)
+        if isinstance(phase_val, str):
+            phase = ConsolidationPhase(phase_val)
+        elif isinstance(phase_val, ConsolidationPhase):
+            phase = phase_val
+        else:
+            raise ValueError(f"Invalid phase value: {phase_val!r}")
+
+        if isinstance(status_val, str):
+            status = TaskStatus(status_val)
+        elif isinstance(status_val, TaskStatus):
+            status = status_val
+        else:
+            raise ValueError(f"Invalid status value: {status_val!r}")
+
+        # Notes/result normalization
+        notes = task_data.get("notes") or []
+        if not isinstance(notes, list):
+            notes = [str(notes)]
+
+        result = task_data.get("result", None)
+        if result is not None and not isinstance(result, dict):
+            # Keep it safe: store as dict wrapper
+            result = {"value": result}
+
+        return ConsolidationTask(
+            task_id=task_data["task_id"],
+            phase=phase,
+            operation=task_data["operation"],
+            agent_id=task_data.get("agent_id", ""),
+            description=task_data["description"],
+            priority=task_data["priority"],
+            estimated_effort=task_data["estimated_effort"],
+            dependencies=task_data.get("dependencies", []),
+            status=status,
+            assigned_at=task_data.get("assigned_at", ""),
+            completed_at=task_data.get("completed_at", ""),
+            result=result,
+            notes=notes,
+        )
 
 @dataclass
 class AgentCapability:
@@ -83,6 +127,7 @@ class ConsolidationCoordinator:
         self.agent_workspaces = self.base_path / "agent_workspaces"
         self.coordination_file = self.agent_workspaces / "consolidation_coordination.json"
         self.tasks_file = self.agent_workspaces / "consolidation_tasks.json"
+        self.agent_workspaces.mkdir(parents=True, exist_ok=True)
 
         # Define agent capabilities
         self.agent_capabilities = {
@@ -114,8 +159,11 @@ class ConsolidationCoordinator:
                 with open(self.tasks_file, 'r') as f:
                     data = json.load(f)
                     for task_data in data.get('tasks', []):
-                        task = ConsolidationTask(**task_data)
-                        self.tasks[task.task_id] = task
+                        try:
+                            task = ConsolidationTask.from_dict(task_data)
+                            self.tasks[task.task_id] = task
+                        except Exception as task_err:
+                            print(f"Warning: Skipping invalid task record: {task_err}")
             except Exception as e:
                 print(f"Warning: Could not load existing tasks: {e}")
 
@@ -126,7 +174,7 @@ class ConsolidationCoordinator:
                 'timestamp': datetime.now().isoformat(),
                 'tasks': [task.to_dict() for task in self.tasks.values()]
             }
-            with open(self.tasks_file, 'w', indent=2) as f:
+            with open(self.tasks_file, 'w') as f:
                 json.dump(data, f, indent=2)
         except Exception as e:
             print(f"Error saving tasks: {e}")
@@ -333,7 +381,7 @@ class ConsolidationCoordinator:
         status_file = self.agent_workspaces / "consolidation_status.json"
 
         try:
-            with open(status_file, 'w', indent=2) as f:
+            with open(status_file, 'w') as f:
                 json.dump(status, f, indent=2)
             print(f"Status report saved to {status_file}")
         except Exception as e:

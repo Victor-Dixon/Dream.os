@@ -1009,5 +1009,8 @@
     "message_id": "9f2f9ef0-c081-43b6-86f7-1853f3925975",
     "category": "a2a",
     "recipient": "Agent-4"
-  }
+  },
+  "mission_priority": "HIGH",
+  "achievements": [],
+  "next_actions": []
 }

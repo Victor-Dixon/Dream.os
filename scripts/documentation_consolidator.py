@@ -269,8 +269,8 @@ class DocumentationConsolidator:
         # Save detailed report
         self.save_report(report)
 
-        print("
-✅ Documentation consolidation complete!"        print(f"📁 Files scanned: {report.files_scanned}")
+        print("\n✅ Documentation consolidation complete!")
+        print(f"📁 Files scanned: {report.files_scanned}")
         print(f"🔗 References updated: {report.references_updated}")
         print(f"❌ Errors: {len(report.errors)}")
 
@@ -284,7 +284,7 @@ class DocumentationConsolidator:
         report_file = reports_dir / f"documentation_consolidation_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
 
         try:
-            with open(report_file, 'w', indent=2) as f:
+            with open(report_file, 'w') as f:
                 json.dump(asdict(report), f, indent=2)
             print(f"📄 Report saved to {report_file}")
         except Exception as e:
@@ -365,14 +365,14 @@ def main():
 
     # Generate reference map
     reference_map = consolidator.generate_reference_map()
-    print("
-📋 Reference Mapping:"    for old, new in reference_map.items():
+    print("\n📋 Reference Mapping:")
+    for old, new in reference_map.items():
         print(f"  {old} → {new}")
 
-    print("
-✅ Documentation consolidation complete!"    print(f"🔄 References updated: {report.references_updated}")
+    print("\n✅ Documentation consolidation complete!")
+    print(f"🔄 References updated: {report.references_updated}")
     print(f"📄 Files processed: {report.files_scanned}")
 
 
 if __name__ == "__main__":
-    main()
+    

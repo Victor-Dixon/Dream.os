@@ -99,11 +99,12 @@ class RepositoryMonitor:
         self.last_scan_time = 0
 
         # Alert thresholds
+        alerts_config = self.config.get("alerts", {})
         self.alert_thresholds = {
-            "max_files_growth_rate": self.config["alerts"]["max_files_growth_rate"],
-            "max_size_growth_rate_mb": self.config["alerts"]["max_size_growth_rate_mb"],
-            "anomaly_score_threshold": self.config["alerts"]["anomaly_score_threshold"],
-            "large_file_threshold_mb": self.config["alerts"]["large_file_threshold_mb"]
+            "max_files_growth_rate": alerts_config.get("max_files_growth_rate", 100),
+            "max_size_growth_rate_mb": alerts_config.get("max_size_growth_rate_mb", 50),
+            "anomaly_score_threshold": alerts_config.get("anomaly_score_threshold", 2.0),
+            "large_file_threshold_mb": alerts_config.get("large_file_threshold_mb", 10)
         }
 
         # Data retention
@@ -216,7 +217,7 @@ class RepositoryMonitor:
         recent_changes = []
 
         # Walk through repository
-        ignore_patterns = set(self.config["performance"]["ignore_patterns"])
+        ignore_patterns = set(self.config.get("performance", {}).get("ignore_patterns", [".git", "__pycache__", ".ruff_cache", "node_modules"]))
 
         for root, dirs, files in os.walk(self.repository_path):
             # Skip ignored directories
@@ -225,7 +226,7 @@ class RepositoryMonitor:
             directories += 1
 
             for file in files:
-                if total_files >= self.config["performance"]["max_files_per_scan"]:
+                if total_files >= self.config.get("performance", {}).get("max_files_per_scan", 10000):
                     break
 
                 file_path = Path(root) / file
@@ -256,7 +257,7 @@ class RepositoryMonitor:
                         })
 
                     # Update checksums for change detection
-                    if self.config["performance"]["use_checksums"]:
+                    if self.config.get("performance", {}).get("use_checksums", True):
                         file_checksum = self._calculate_file_checksum(file_path)
                         old_checksum = self.file_checksums.get(str(file_path))
                         if old_checksum and old_checksum != file_checksum:
