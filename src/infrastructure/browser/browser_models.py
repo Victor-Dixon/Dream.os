@@ -32,6 +32,7 @@ warnings.warn(
 
 
 import time
+from typing import Optional
 from dataclasses import dataclass, field
 
 try:
@@ -67,6 +68,7 @@ class BrowserConfig:
 
 
 @dataclass
+@dataclass
 class TheaConfig:
     """Configuration for Thea Manager interactions with enhanced config integration."""
 
@@ -74,6 +76,8 @@ class TheaConfig:
         "https://chatgpt.com/g/g-68fd74b31d84819190eb2588b5c649f6-swarm-commander-thea"
     )
     cookie_file: str = "data/thea_cookies.json"
+    encrypted_cookie_file: Optional[str] = None
+    key_file: Optional[str] = None
     auto_save_cookies: bool = True
     rate_limit_requests_per_minute: int = 10
     rate_limit_burst_limit: int = 5

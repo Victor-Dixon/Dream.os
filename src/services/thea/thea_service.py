@@ -13,6 +13,7 @@ License: MIT
 """
 
 import json
+import os
 import time
 from datetime import datetime
 from pathlib import Path
@@ -24,6 +25,7 @@ try:
     from selenium import webdriver
     from selenium.webdriver.chrome.options import Options
     from selenium.webdriver.common.by import By
+    from selenium.webdriver.common.keys import Keys
 
     SELENIUM_AVAILABLE = True
 except ImportError:
@@ -280,9 +282,9 @@ class TheaService(BaseService):
                 if interactable_result:
                     self.logger.info(
                         "✅ ===== THEA GPT VALIDATION SUCCESSFUL =====")
-                    return True
-                else:
-                    self.logger.warning(
+                return True
+            else:
+                self.logger.warning(
                         "⚠️ Thea GPT elements exist but not interactable - likely stale cookies")
                     # Continue to fallback
 
@@ -327,21 +329,19 @@ class TheaService(BaseService):
                         "⚠️ NOTE: Using basic ChatGPT instead of Thea GPT (Thea GPT appears unavailable)")
                     # Update URL to basic ChatGPT for future use
                     self.thea_url = chatgpt_main_url
-                    return True
-                else:
-                    self.logger.warning(
-                        "⚠️ ===== STALE COOKIES DETECTED =====")
-                    self.logger.warning(
-                        "⚠️ Elements exist but are not interactable - cookies are stale")
-                    return False
+                return True
             else:
-                self.logger.error(
-                    "❌ ===== ALL VALIDATION METHODS FAILED =====")
-                self.logger.error(
-                    "❌ Neither Thea GPT nor basic ChatGPT interface is functional")
-                self.logger.error(
-                    "❌ Cookies may be expired or anti-bot detection is active")
+                self.logger.warning("⚠️ ===== STALE COOKIES DETECTED =====")
+                self.logger.warning(
+                    "⚠️ Elements exist but are not interactable - cookies are stale")
                 return False
+        except Exception as e:
+            self.logger.error(
+                "❌ ===== ALL VALIDATION METHODS FAILED =====")
+            self.logger.error(
+                "❌ Neither Thea GPT nor basic ChatGPT interface is functional")
+            self.logger.error(f"❌ Validation error: {e}")
+            return False
 
         except Exception as e:
             self.logger.error(f"❌ ===== COOKIE VALIDATION ERROR: {e} =====")
@@ -382,34 +382,100 @@ class TheaService(BaseService):
                         "🚨 CRITICAL: No secure cookie manager available - refusing to save credentials insecurely")
                     return False
 
-            # Manual login required
-            self.logger.info("⚠️ Manual login required to refresh cookies")
-            self.logger.info(
-                "Please log in to ChatGPT in the browser window...")
-            self.logger.info("⏳ Waiting 60 seconds for manual login...")
-            time.sleep(60)
-
-            if self._is_logged_in():
-                # Save cookies using secure cookie manager ONLY
+            # Attempt automated login first
+            self.logger.info("🔄 Attempting automated login...")
+            if self._attempt_automated_login():
+                self.logger.info("✅ Automated login successful!")
+                # Save cookies after successful login
                 if self.cookie_manager:
                     success = self.cookie_manager.save_cookies(self.driver)
                     if success:
+                        self.logger.info("✅ Cookies saved after automated login")
+                        return True
+                    else:
+                        self.logger.error("❌ Failed to save cookies after login")
+                        return False
+                return True
+            else:
+                self.logger.warning("❌ Automated login failed, manual login required")
+
+            # Manual login required - guide user through the process
+            self.logger.info("🔐 ===== MANUAL LOGIN REQUIRED =====")
+            self.logger.info("📋 INSTRUCTIONS:")
+            self.logger.info(
+                "   1. Browser window should be open with ChatGPT")
+            self.logger.info("   2. Click 'Log in' or 'Sign in' button")
+            self.logger.info(
+                "   3. Complete login process (email/password or Google/Apple)")
+            self.logger.info("   4. Wait for ChatGPT interface to load fully")
+            self.logger.info("   5. Return to this terminal when ready")
+            self.logger.info("")
+            self.logger.info(
+                "⏳ Waiting for you to complete login... (press Enter when done)")
+
+            # Wait for user input instead of fixed timeout
+            try:
+                input("Press Enter when login is complete...")
+                self.logger.info("✅ User indicated login is complete")
+            except KeyboardInterrupt:
+                self.logger.info("⏹️ Login process interrupted by user")
+                return False
+
+            # Give page time to fully load after login
+            self.logger.info(
+                "⏳ Allowing time for page to stabilize after login...")
+            time.sleep(5)
+
+            # Verify login was successful with comprehensive checks
+            self.logger.info("🔍 Verifying login success...")
+
+            # Check 1: Basic login detection
+            login_check = self._is_logged_in()
+            self.logger.info(f"   Basic login check: {login_check}")
+
+            if not login_check:
+                self.logger.error("❌ Basic login check failed")
+                return False
+
+            # Check 2: Element interactability (critical for stale cookie detection)
+            interactable_check = self._test_element_interactability()
+            self.logger.info(
+                f"   Element interactability check: {interactable_check}")
+
+            if not interactable_check:
+                self.logger.error(
+                    "❌ Elements not interactable - login may have failed")
+                self.logger.info(
+                    "💡 Try logging in again, or check if ChatGPT is blocking automation")
+                return False
+
+            # Check 3: Ensure we're on the right page
+            current_url = self.driver.current_url
+            if "chatgpt.com" not in current_url:
+                self.logger.error(f"❌ Not on ChatGPT page: {current_url}")
+                return False
+
+            self.logger.info("✅ All login verification checks passed")
+
+            # Save cookies using secure cookie manager ONLY
+            if self.cookie_manager:
+                    self.logger.info("💾 Saving new cookies...")
+                    success = self.cookie_manager.save_cookies(self.driver)
+                    if success:
                         self.logger.info(
-                            "✅ Cookies refreshed securely after manual login" if self.secure_cookies else "✅ Cookies refreshed after manual login (legacy)")
+                            "✅ Cookies saved securely after manual login" if self.secure_cookies else "✅ Cookies saved after manual login (legacy)")
+                        self.logger.info(
+                            "🎉 ===== LOGIN PROCESS COMPLETE =====")
                         return True
                     else:
                         self.logger.error(
                             "❌ Cookie save failed after manual login - secure storage required")
                         return False
-                else:
-                    # NO emergency fallback - fail hard for security
-                    self.logger.error(
-                        "🚨 CRITICAL: No secure cookie manager available - cannot save credentials after manual login")
-                    return False
-
-            self.logger.error(
-                "❌ Manual login validation failed - cookies not refreshed")
-            return False
+            else:
+                # NO emergency fallback - fail hard for security
+                self.logger.error(
+                    "🚨 CRITICAL: No secure cookie manager available - cannot save credentials after manual login")
+                return False
 
         except Exception as e:
             self.logger.error(f"❌ Cookie refresh error: {e}")
@@ -484,21 +550,51 @@ class TheaService(BaseService):
                     f"❌ Login check: Unexpected page title: '{page_title}'")
                 return False
 
-            # Check for ChatGPT-specific elements that indicate proper login
+            # Check for login-specific elements that indicate we're NOT logged in
             try:
-                # Look for multiple indicators of a working ChatGPT page
-                indicators = [
-                    "textarea",  # Input area
-                    "[contenteditable]",  # Alternative input
-                    "[data-testid]",  # React components
-                    ".composer",  # Composer area
-                    "button",  # Any buttons
-                    "form",  # Forms
-                    "[role='textbox']"  # ARIA textbox
+                # Look for login buttons or signup elements
+                login_indicators = [
+                    "[data-testid='login-button']",
+                    "[data-testid='signup-button']",
+                    "button:contains('Log in')",
+                    "button:contains('Sign in')",
+                    "button:contains('Sign up')",
+                    "a:contains('Log in')",
+                    "a:contains('Sign in')"
                 ]
 
-                found_indicators = 0
-                for indicator in indicators:
+                for indicator in login_indicators:
+                    try:
+                        elements = self.driver.find_elements(
+                            By.CSS_SELECTOR, indicator)
+                        if elements:
+                            visible_login_elements = [
+                                elem for elem in elements if elem.is_displayed()]
+                            if visible_login_elements:
+                                self.logger.debug(
+                                    f"❌ Login check: Found login elements ({indicator}) - user is NOT logged in")
+                                return False
+                    except:
+                        pass
+
+            except Exception as e:
+                self.logger.debug(
+                    f"🔍 Login check - login element search error: {e}")
+
+            # Check for ChatGPT-specific elements that indicate proper login
+            # Look for multiple indicators of a working ChatGPT page
+            indicators = [
+                    "textarea",  # Input area
+                    "[contenteditable]",  # Alternative input
+                    "[role='textbox']",  # ARIA textbox role
+                    ".composer",  # Composer area
+                    "[data-testid*='model']",  # Model selector
+                    "[data-testid*='new-chat']",  # New chat button
+                    "[data-testid*='regenerate']",  # Regenerate button
+                ]
+
+            found_indicators = 0
+            for indicator in indicators:
                     try:
                         elements = self.driver.find_elements(
                             By.CSS_SELECTOR, indicator)
@@ -513,22 +609,191 @@ class TheaService(BaseService):
                     except:
                         pass
 
-                # Require at least 2 different types of indicators for a valid page
-                if found_indicators >= 2:
-                    self.logger.debug(
-                        f"✅ Login check: Found {found_indicators} indicator types - page appears functional")
+            # Require at least 2 different types of indicators for a valid page
+            if found_indicators >= 2:
+                self.logger.debug(
+                    f"✅ Login check: Found {found_indicators} indicator types - testing interactability...")
+
+                # CRITICAL: Test if elements are actually interactable (not just displayed)
+                if self._test_element_interactability():
+                    self.logger.debug("✅ Elements are interactable - user is logged in")
                     return True
                 else:
-                    self.logger.debug(
-                        f"❌ Login check: Only found {found_indicators} indicator types - page not fully loaded")
+                    self.logger.debug("❌ Elements exist but not interactable - STALE COOKIES DETECTED")
                     return False
-
-            except Exception as e:
-                self.logger.debug(f"🔍 Login check - element search error: {e}")
+            else:
+                self.logger.debug(
+                    f"❌ Login check: Only found {found_indicators} indicator types - page not fully loaded or not logged in")
                 return False
 
         except Exception as e:
-            self.logger.debug(f"🔍 Login check - general error: {e}")
+            self.logger.debug(f"❌ Login check failed: {e}")
+            return False
+
+    def _attempt_automated_login(self) -> bool:
+        """Attempt automated login using stored credentials."""
+        try:
+            self.logger.info("🚀 Starting automated login process...")
+
+            # Check for login credentials in environment/config
+            email = os.getenv('CHATGPT_EMAIL') or os.getenv('OPENAI_EMAIL')
+            password = os.getenv('CHATGPT_PASSWORD') or os.getenv('OPENAI_PASSWORD')
+
+            if not email or not password:
+                self.logger.warning("⚠️ No login credentials found in environment variables")
+                self.logger.info("💡 Set CHATGPT_EMAIL and CHATGPT_PASSWORD environment variables for automated login")
+                return False
+
+            self.logger.info("🔑 Found login credentials, attempting automated login...")
+
+            # Look for login button and click it
+            login_selectors = [
+                "[data-testid='login-button']",
+                "button:contains('Log in')",
+                "button:contains('Sign in')",
+                "a:contains('Log in')",
+                "a:contains('Sign in')"
+            ]
+
+            login_button = None
+            for selector in login_selectors:
+                try:
+                    elements = self.driver.find_elements(By.CSS_SELECTOR, selector)
+                    if elements:
+                        login_button = elements[0]
+                        self.logger.info(f"✅ Found login button: {selector}")
+                        break
+                except:
+                    continue
+
+            if not login_button:
+                self.logger.warning("❌ Could not find login button")
+                return False
+
+            # Click login button
+            login_button.click()
+            time.sleep(2)
+
+            # Look for email input
+            email_selectors = [
+                "input[type='email']",
+                "input[name='email']",
+                "input[name='username']",
+                "input[placeholder*='email']",
+                "input[placeholder*='Email']"
+            ]
+
+            email_input = None
+            for selector in email_selectors:
+                try:
+                    elements = self.driver.find_elements(By.CSS_SELECTOR, selector)
+                    if elements:
+                        email_input = elements[0]
+                        self.logger.info(f"✅ Found email input: {selector}")
+                        break
+                except:
+                    continue
+
+            if not email_input:
+                self.logger.warning("❌ Could not find email input field")
+                return False
+
+            # Enter email
+            email_input.clear()
+            email_input.send_keys(email)
+            time.sleep(1)
+
+            # Look for continue/next button
+            continue_selectors = [
+                "button:contains('Continue')",
+                "button:contains('Next')",
+                "button[type='submit']",
+                "[data-testid*='continue']"
+            ]
+
+            continue_button = None
+            for selector in continue_selectors:
+                try:
+                    elements = self.driver.find_elements(By.CSS_SELECTOR, selector)
+                    if elements:
+                        continue_button = elements[0]
+                        self.logger.info(f"✅ Found continue button: {selector}")
+                        break
+                except:
+                    continue
+
+            if continue_button:
+                continue_button.click()
+                time.sleep(2)
+
+            # Look for password input
+            password_selectors = [
+                "input[type='password']",
+                "input[name='password']",
+                "input[placeholder*='password']",
+                "input[placeholder*='Password']"
+            ]
+
+            password_input = None
+            for selector in password_selectors:
+                try:
+                    elements = self.driver.find_elements(By.CSS_SELECTOR, selector)
+                    if elements:
+                        password_input = elements[0]
+                        self.logger.info(f"✅ Found password input: {selector}")
+                        break
+                except:
+                    continue
+
+            if not password_input:
+                self.logger.warning("❌ Could not find password input field")
+                return False
+
+            # Enter password
+            password_input.clear()
+            password_input.send_keys(password)
+            time.sleep(1)
+
+            # Look for submit/login button
+            submit_selectors = [
+                "button:contains('Log in')",
+                "button:contains('Sign in')",
+                "button[type='submit']",
+                "[data-testid*='login']"
+            ]
+
+            submit_button = None
+            for selector in submit_selectors:
+                try:
+                    elements = self.driver.find_elements(By.CSS_SELECTOR, selector)
+                    if elements:
+                        submit_button = elements[0]
+                        self.logger.info(f"✅ Found submit button: {selector}")
+                        break
+                except:
+                    continue
+
+            if not submit_button:
+                # Try pressing Enter on password field
+                self.logger.info("⚠️ No submit button found, trying Enter key")
+                password_input.send_keys(Keys.RETURN)
+            else:
+                submit_button.click()
+
+            # Wait for login to complete
+            self.logger.info("⏳ Waiting for login to complete...")
+            time.sleep(5)
+
+            # Check if login was successful
+            if self._is_logged_in():
+                self.logger.info("✅ Automated login successful!")
+                return True
+            else:
+                self.logger.warning("❌ Login appeared to complete but interface check failed")
+                return False
+
+        except Exception as e:
+            self.logger.error(f"❌ Automated login failed: {e}")
             return False
 
     def _test_element_interactability(self) -> bool:
@@ -982,28 +1247,32 @@ class TheaService(BaseService):
             except Exception as e:
                 self.logger.error(f"❌ Selenium message sending failed: {e}")
                 # Fallback to PyAutoGUI if available
-                if PYAUTOGUI_AVAILABLE:
+            if PYAUTOGUI_AVAILABLE:
+                try:
+                    self.logger.info("🔄 Falling back to PyAutoGUI...")
                     try:
-                        self.logger.info("🔄 Falling back to PyAutoGUI...")
-                        try:
-                            pyperclip.copy(message)
-                            time.sleep(0.5)
-                            pyautogui.hotkey("ctrl", "v")
-                        except Exception as clipboard_error:
-                            self.logger.warning(
-                                f"⚠️ Clipboard paste failed ({clipboard_error}), falling back to typing...")
-                            # Fallback: type the message character by character
-                            pyautogui.typewrite(message, interval=0.01)
+                        pyperclip.copy(message)
+                        time.sleep(0.5)
+                        pyautogui.hotkey("ctrl", "v")
                         time.sleep(0.5)
                         pyautogui.press("enter")
                         self.logger.info(
                             "✅ Message sent via PyAutoGUI fallback")
-                    except Exception as e2:
-                        self.logger.error(
-                            f"❌ PyAutoGUI fallback also failed: {e2}")
-                        return None
-                else:
+                    except Exception as clipboard_error:
+                        self.logger.warning(
+                            f"⚠️ Clipboard paste failed ({clipboard_error}), falling back to typing...")
+                        # Fallback: type the message character by character
+                        pyautogui.typewrite(message, interval=0.01)
+                        time.sleep(0.5)
+                        pyautogui.press("enter")
+                        self.logger.info(
+                            "✅ Message sent via PyAutoGUI typing fallback")
+                except Exception as e2:
+                    self.logger.error(
+                        f"❌ PyAutoGUI fallback also failed: {e2}")
                     return None
+            else:
+                return None
 
             # Wait for response if requested
             if wait_for_response:

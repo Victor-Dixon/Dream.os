@@ -455,27 +455,50 @@ class ConsolidationMonitor:
 
         return dashboard
 
-    def simulate_operation_data(self):
-        """Simulate operation data for testing"""
-        operations = [
-            ("phase1", "quickstart_deduplication", "Agent-7"),
-            ("phase1", "cache_cleanup", "Agent-3"),
-            ("phase1", "archive_consolidation", "Agent-8"),
-            ("phase1", "status_standardization", "Agent-1"),
-        ]
+    def collect_real_operation_data(self):
+        """Collect real operation data from agent workspaces and logs"""
+        # Scan agent workspaces for consolidation activity
+        agent_workspaces = self.base_path / "agent_workspaces"
+        if agent_workspaces.exists():
+            for agent_dir in agent_workspaces.iterdir():
+                if agent_dir.is_dir() and agent_dir.name.startswith("Agent-"):
+                    agent_id = agent_dir.name
 
-        import random
-        for phase, operation, agent in operations:
-            files_processed = random.randint(10, 100)
-            files_removed = random.randint(1, files_processed)
-            space_saved = random.randint(100000, 10000000)  # 0.1-10 MB
-            duration = random.uniform(1.0, 60.0)
-            errors = random.randint(0, 3)
+                    # Check for consolidation-related files
+                    consolidation_files = list(agent_dir.glob("**/consolidation_*"))
+                    if consolidation_files:
+                        # Record actual consolidation activity
+                        self.record_operation_metrics(
+                            "phase1", "consolidation_activity", agent_id,
+                            files_processed=len(consolidation_files),
+                            files_removed=0,  # Will be calculated by real operations
+                            space_saved_bytes=0,  # Will be calculated by real operations
+                            duration_seconds=0.0,
+                            error_count=0
+                        )
 
-            self.record_operation_metrics(
-                phase, operation, agent,
-                files_processed, files_removed, space_saved, duration, errors
-            )
+        # Check for recent consolidation reports
+        reports_dir = self.base_path / "reports" / "consolidation"
+        if reports_dir.exists():
+            recent_reports = list(reports_dir.glob("*.json"))
+            for report_file in recent_reports:
+                try:
+                    with open(report_file, 'r') as f:
+                        report_data = json.load(f)
+
+                    # Extract real metrics from reports
+                    if "files_processed" in report_data:
+                        self.record_operation_metrics(
+                            "phase1", report_data.get("operation", "consolidation"),
+                            report_data.get("agent", "system"),
+                            report_data.get("files_processed", 0),
+                            report_data.get("files_removed", 0),
+                            report_data.get("space_saved_bytes", 0),
+                            report_data.get("duration_seconds", 0.0),
+                            report_data.get("error_count", 0)
+                        )
+                except (json.JSONDecodeError, KeyError):
+                    continue
 
 
 def main():
@@ -486,9 +509,9 @@ def main():
 
     monitor = ConsolidationMonitor()
 
-    # For testing: simulate some operation data
-    print("🧪 Adding simulated operation data...")
-    monitor.simulate_operation_data()
+    # Collect real operation data
+    print("📊 Collecting real operation data...")
+    monitor.collect_real_operation_data()
 
     # Run monitoring cycle
     dashboard = monitor.run_monitoring_cycle()

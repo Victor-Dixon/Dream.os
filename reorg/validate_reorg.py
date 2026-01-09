@@ -80,7 +80,7 @@ def main():
 
     # 5) Websites root validation
     total_checks += 1
-    websites_check = 'python -c "from config.paths import WEBSITES_ROOT; print(f\'Websites root: {WEBSITES_ROOT}\'); import os; print(f\'Env WEBSITES_ROOT: {os.environ.get(\\\"WEBSITES_ROOT\\\", \\\"not set\\\")}\')"''
+    websites_check = 'python -c "from config.paths import WEBSITES_ROOT; print(f\'Websites root: {WEBSITES_ROOT}\'); import os; print(f\'Env WEBSITES_ROOT: {os.environ.get(\\\"WEBSITES_ROOT\\\", \\\"not set\\\")}\')"'
     if run_command(websites_check, "Websites root configuration check"):
         checks_passed += 1
 

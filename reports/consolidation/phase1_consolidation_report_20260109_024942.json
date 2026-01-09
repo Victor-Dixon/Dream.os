@@ -1,0 +1,53 @@
+{
+  "timestamp": "2026-01-09T02:49:42.845331",
+  "summary": {
+    "total_operations": 4,
+    "total_files_processed": 286,
+    "total_files_removed": 0,
+    "total_space_saved_mb": 0.0
+  },
+  "operations": [
+    {
+      "operation": "quickstart_deduplication",
+      "files_processed": 7,
+      "files_removed": 0,
+      "space_saved_bytes": 0,
+      "space_saved_mb": 0.0,
+      "status": "warning",
+      "timestamp": "2026-01-09T02:49:41.538509",
+      "details": []
+    },
+    {
+      "operation": "cache_cleanup",
+      "files_processed": 0,
+      "files_removed": 0,
+      "space_saved_bytes": 0,
+      "space_saved_mb": 0.0,
+      "status": "warning",
+      "timestamp": "2026-01-09T02:49:42.422947",
+      "details": []
+    },
+    {
+      "operation": "archive_consolidation",
+      "files_processed": 271,
+      "files_removed": 0,
+      "space_saved_bytes": 0,
+      "space_saved_mb": 0.0,
+      "status": "warning",
+      "timestamp": "2026-01-09T02:49:42.623130",
+      "details": []
+    },
+    {
+      "operation": "status_standardization",
+      "files_processed": 8,
+      "files_removed": 0,
+      "space_saved_bytes": 0,
+      "space_saved_mb": 0.0,
+      "status": "warning",
+      "timestamp": "2026-01-09T02:49:42.845331",
+      "details": []
+    }
+  ],
+  "errors": [],
+  "warnings": []
+}

@@ -1,12 +1,12 @@
 """
 """
-# AUTO-GENERATED __init__.py
-# DO NOT EDIT MANUALLY - changes may be overwritten
+# Configuration package
+# Import all configuration modules
 
-from . import ssot
+from . import paths
 
 __all__ = [
-    'ssot',
+    'paths',
 ]
 
 # <!-- SSOT Domain: config -->

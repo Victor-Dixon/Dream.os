@@ -30,6 +30,12 @@ define('ANALYTICS_CONVERSION_TRACKING', true);
 define('ANALYTICS_ENHANCED_ECOMMERCE', true);
 define('ANALYTICS_CUSTOM_EVENTS', true);
 
+
+
+
+
+
+
 // WordPress Debug Settings - ENABLED
 define('WP_DEBUG', true);
 define('WP_DEBUG_LOG', true);

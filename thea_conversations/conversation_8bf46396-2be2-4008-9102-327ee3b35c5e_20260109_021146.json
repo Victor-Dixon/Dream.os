@@ -1,0 +1,23 @@
+{
+  "conversation_id": "8bf46396-2be2-4008-9102-327ee3b35c5e",
+  "message": {
+    "message_id": "d36faa0d-d04e-4a0a-b7c6-1163cc6b3b16",
+    "content": "Test message 3 - how are you doing?",
+    "priority": "normal",
+    "timestamp": "2026-01-09T02:10:02.078271",
+    "status": "sent",
+    "metadata": {}
+  },
+  "response": {
+    "content": "Hey! I’m doing good—thanks for checking in 😊 Just cruising along an",
+    "message_id": "d36faa0d-d04e-4a0a-b7c6-1163cc6b3b16",
+    "response_id": "b69d0613-1358-4a9a-a1cb-e167276a50ac",
+    "timestamp": "2026-01-09T02:11:46.529529",
+    "confidence_score": 0.7,
+    "processing_time_seconds": 0.0,
+    "metadata": {}
+  },
+  "started_at": "2026-01-09T02:11:46.531531",
+  "completed_at": "2026-01-09T02:11:46.531531",
+  "total_duration_seconds": 0.0
+}

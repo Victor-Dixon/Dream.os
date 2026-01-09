@@ -20,7 +20,7 @@ class ValidationHandler:
         print("=" * 40)
 
         try:
-            results = self.validation_runner.run_all_validations()
+            results = self.validation_runner.run_comprehensive_validation()
             return self._display_results(results)
         except Exception as e:
             print(f"❌ Validation failed with error: {e}")
@@ -32,18 +32,40 @@ class ValidationHandler:
             print("❌ No validation results returned.")
             return 1
 
+        # Handle nested results structure from ValidationRunner
+        validations = results.get('validations', results)
+
+        # Display overall status
+        overall_status = results.get('overall_status', 'UNKNOWN')
+        print(f"\n📊 Overall Status: {overall_status}")
+
         # Categorize results
         passed = []
         failed = []
         warnings = []
+        errors = []
 
-        for check_name, check_result in results.items():
-            if check_result.get('status') == 'pass':
-                passed.append((check_name, check_result))
-            elif check_result.get('status') == 'fail':
-                failed.append((check_name, check_result))
+        for check_name, check_result in validations.items():
+            if isinstance(check_result, dict):
+                status = check_result.get('status', 'UNKNOWN')
+                if status == 'PASS':
+                    passed.append((check_name, check_result))
+                elif status == 'FAIL':
+                    failed.append((check_name, check_result))
+                elif status == 'WARN':
+                    warnings.append((check_name, check_result))
+                elif status == 'ERROR':
+                    errors.append((check_name, check_result))
+                else:
+                    warnings.append((check_name, check_result))
             else:
-                warnings.append((check_name, check_result))
+                # Handle string results
+                if 'PASS' in str(check_result).upper():
+                    passed.append((check_name, {'message': str(check_result)}))
+                elif 'FAIL' in str(check_result).upper():
+                    failed.append((check_name, {'message': str(check_result)}))
+                else:
+                    warnings.append((check_name, {'message': str(check_result)}))
 
         # Display passed checks
         if passed:

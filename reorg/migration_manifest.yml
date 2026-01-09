@@ -49,10 +49,12 @@ moves:
     to: "config/infrastructure/nginx"
     risk: "medium"
     phase: 2
+    optional: true
   - from: "ssl"
     to: "config/infrastructure/ssl"
     risk: "medium"
     phase: 2
+    optional: true
   - from: "pids"
     to: "ops/runtime/pids"
     risk: "low"
@@ -63,18 +65,22 @@ moves:
     to: "data/persistent/database"
     risk: "medium"
     phase: 2
+    optional: true
   - from: "chroma_db"
     to: "data/models/chroma_db"
     risk: "medium"
     phase: 2
+    optional: true
   - from: "swarm_brain"
     to: "data/models/swarm_brain"
     risk: "medium"
     phase: 2
+    optional: true
   - from: "cache"
     to: "data/cache"
     risk: "low"
     phase: 1
+    optional: true
 
   # --- TOOLS & SCRIPTS ---
   - from: "scripts"
@@ -109,18 +115,22 @@ moves:
     to: "ops/runtime"
     risk: "medium"
     phase: 2
+    optional: true
   - from: "logs"
     to: "ops/monitoring/logs"
     risk: "low"
     phase: 1
+    optional: true
   - from: "message_queue"
     to: "ops/messaging/message_queue"
     risk: "medium"
     phase: 2
+    optional: true
   - from: "stress_test_analysis_results"
     to: "ops/monitoring/stress_test_analysis_results"
     risk: "low"
     phase: 1
+    optional: true
 
   # --- TESTS ---
   - from: "test"

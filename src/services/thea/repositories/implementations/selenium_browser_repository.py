@@ -210,22 +210,77 @@ class SeleniumBrowserRepository(IBrowserRepository):
         except Exception:
             return None
 
-    def is_page_ready(self) -> bool:
-        """Check if the page is fully loaded and ready for interaction."""
+    def is_page_ready(self, timeout: float = 15.0) -> bool:
+        """
+        Check if the page is fully loaded and ready for interaction.
+        Uses comprehensive checks like the working monolithic version.
+        """
         try:
             if not self.driver:
                 return False
 
-            # Check document ready state
-            ready_state = self.driver.execute_script("return document.readyState")
-            if ready_state != "complete":
-                return False
+            # Wait for document ready
+            start_time = time.time()
+            while time.time() - start_time < timeout:
+                try:
+                    ready_state = self.driver.execute_script("return document.readyState")
+                    if ready_state == "complete":
+                        print("✅ Document ready state: complete")
+                        break
+                except Exception as e:
+                    print(f"Document ready check failed: {e}")
+                time.sleep(0.5)
 
-            # Check for basic interactive elements
-            body = self.driver.find_element(By.TAG_NAME, "body")
-            return body.is_displayed()
+            # Check for ChatGPT/Custom GPT specific elements (from working monolithic version)
+            ready_selectors = [
+                "textarea",  # Most common input element
+                "[contenteditable='true']",  # Contenteditable divs
+                "[role='textbox']",  # ARIA textbox role
+                "div[data-message-author-role]",  # Message containers
+                ".markdown",  # Content areas
+                "[data-testid]",  # Any test IDs
+                "button",  # Any buttons (usually present when loaded)
+            ]
 
-        except Exception:
+            print("🔍 Checking for page elements...")
+            for selector in ready_selectors:
+                try:
+                    element = WebDriverWait(self.driver, 2).until(
+                        EC.presence_of_element_located((By.CSS_SELECTOR, selector))
+                    )
+                    if element:
+                        print(f"✅ Page ready - found element: {selector}")
+                        return True
+                except Exception as e:
+                    print(f"Element {selector} not found: {e}")
+                    continue
+
+            # More permissive fallback: check if page has substantial content and no loading indicators
+            try:
+                body_text = self.driver.find_element(By.TAG_NAME, "body").text
+                page_title = self.driver.title
+
+                print(f"📄 Page title: {page_title}")
+                print(f"📏 Body text length: {len(body_text)}")
+
+                # Check for loading indicators
+                loading_indicators = ["loading", "please wait", "connecting"]
+                has_loading = any(indicator in body_text.lower() for indicator in loading_indicators)
+
+                if len(body_text) > 50 and not has_loading and "chatgpt" in page_title.lower():
+                    print("✅ Page appears ready (permissive fallback check)")
+                    return True
+                elif has_loading:
+                    print("⏳ Page still loading...")
+                    return False
+            except Exception as e:
+                print(f"Fallback check failed: {e}")
+
+            print("⚠️ Page readiness check failed - no suitable elements found")
+            return False
+
+        except Exception as e:
+            print(f"❌ Page ready check error: {e}")
             return False
 
     def find_input_element(self, selector: str) -> Optional[Any]:
@@ -465,6 +520,115 @@ class SeleniumBrowserRepository(IBrowserRepository):
         self._context.page_title = self.get_page_title()
         self._context.is_page_ready = self.is_page_ready()
         return self._context
+
+    def test_element_interactability(self) -> bool:
+        """
+        Test if ChatGPT input elements are actually interactable (not just present).
+        This is the critical method from the working monolithic version.
+        """
+        try:
+            print("🔍 Testing element interactability...")
+
+            # Find input elements (from working monolithic version)
+            input_selectors = [
+                "textarea",
+                "[contenteditable='true']",
+                "[role='textbox']"
+            ]
+
+            for selector in input_selectors:
+                try:
+                    elements = self.driver.find_elements(By.CSS_SELECTOR, selector)
+                    if elements:
+                        for element in elements:
+                            if element.is_displayed():
+                                try:
+                                    # Try to send a single character to test interactability
+                                    element.send_keys("x")
+                                    print(f"✅ Element {selector} is interactable")
+                                    # Clear the test character
+                                    element.clear()
+                                    return True
+                                except Exception as e:
+                                    print(f"⚠️ Element {selector} not interactable: {e}")
+                                    continue
+                except Exception as e:
+                    print(f"⚠️ Error checking {selector}: {e}")
+
+            print("❌ No interactable input elements found")
+            return False
+
+        except Exception as e:
+            print(f"❌ Element interactability test failed: {e}")
+            return False
+
+    def wait_for_dynamic_content(self, max_wait: int = 15) -> bool:
+        """
+        Wait for dynamic content to load (from working monolithic version).
+        ChatGPT pages often load elements asynchronously.
+        """
+        print("⏳ Waiting for dynamic content...")
+        start_time = time.time()
+
+        while time.time() - start_time < max_wait:
+            try:
+                # Check for any input-like elements that might appear dynamically
+                all_inputs = self.driver.find_elements(By.CSS_SELECTOR,
+                                                       "textarea, input, [contenteditable], [role='textbox'], [data-testid*='input'], [data-testid*='prompt']")
+
+                if all_inputs:
+                    displayed_inputs = [elem for elem in all_inputs if elem.is_displayed()]
+                    if displayed_inputs:
+                        print(f"✅ Found {len(displayed_inputs)} displayed input elements after dynamic wait")
+                        return True
+
+                # Check for buttons too
+                buttons = self.driver.find_elements(By.CSS_SELECTOR, "button, [role='button']")
+                if buttons:
+                    displayed_buttons = [btn for btn in buttons if btn.is_displayed()]
+                    if displayed_buttons:
+                        print(f"✅ Found {len(displayed_buttons)} displayed buttons after dynamic wait")
+                        return True
+
+            except Exception as e:
+                print(f"Dynamic content check failed: {e}")
+
+            time.sleep(2)  # Check every 2 seconds
+
+        print("❌ No interactive elements found after dynamic wait")
+        return False
+
+    def find_interactive_input_element(self) -> Optional[Any]:
+        """
+        Find an interactive input element using comprehensive selectors (from working monolithic version).
+        """
+        # Interactive selectors from the working monolithic version
+        interactive_selectors = [
+            "[contenteditable='true']",
+            "[role='textbox']",
+            "textarea",
+            "[data-testid*='prompt']",
+            "[data-testid*='input']",
+            ".composer textarea",
+            ".input textarea",
+            "#prompt-textarea",
+            "[placeholder*='message' i]",
+            "[placeholder*='ask' i]"
+        ]
+
+        for selector in interactive_selectors:
+            try:
+                candidates = self.driver.find_elements(By.CSS_SELECTOR, selector)
+                if candidates:
+                    for candidate in candidates:
+                        if candidate.is_displayed() and candidate.is_enabled():
+                            print(f"✅ Found input with selector: {selector}")
+                            return candidate
+            except Exception as e:
+                print(f"Selector {selector} failed: {e}")
+
+        print("❌ No suitable input element found after exhaustive search")
+        return None
 
     def is_browser_operational(self) -> bool:
         """

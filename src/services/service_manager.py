@@ -55,7 +55,7 @@ class ServiceManager:
             },
             'discord': {
                 'name': 'Discord Bot',
-                'script': 'tools/discord_bot_launcher.py',
+                'script': 'tools/utilities/discord_bot_launcher.py',
                 'pid_file': 'discord.pid',
                 'log_file': 'discord_bot.log',
                 'status': 'stopped',

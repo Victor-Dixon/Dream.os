@@ -230,22 +230,20 @@ if (defined('WP_CLI') && WP_CLI) {
 }
 
 /**
- * Admin Notice
+ * Admin Notice - Simplified to avoid syntax issues
  */
 function freerideinvestor_admin_notice() {
     if (!get_option('freerideinvestor_menu_setup_complete')) {
-        ?>
-        <div class="notice notice-info is-dismissible">
-            <h3>Welcome to FreeRideInvestor Theme!</h3>
-            <p>To set up your site's navigation menus and pages, you can:</p>
-            <ol>
-                <li>Run the setup script: <code>wp freerideinvestor setup</code> (WP-CLI)</li>
-                <li>Or manually create pages and assign them to menus in the WordPress admin</li>
-            </ol>
-            <p><strong>Required Pages:</strong> About, Services, Resources, Blog, Contact, Trading Strategies</p>
-            <p><strong>Page Templates:</strong> Available for each page type in the theme</p>
-        </div>
-        <?php
+        echo '<div class="notice notice-info is-dismissible">';
+        echo '<h3>Welcome to FreeRideInvestor Theme!</h3>';
+        echo '<p>To set up your site\'s navigation menus and pages:</p>';
+        echo '<ol>';
+        echo '<li>Run the setup script: <code>wp freerideinvestor setup</code> (WP-CLI)</li>';
+        echo '<li>Or manually create pages and assign them to menus in WordPress admin</li>';
+        echo '</ol>';
+        echo '<p><strong>Required Pages:</strong> About, Services, Resources, Blog, Contact, Trading Strategies</p>';
+        echo '<p><strong>Page Templates:</strong> Available for each page type in the theme</p>';
+        echo '</div>';
     }
 }
 add_action('admin_notices', 'freerideinvestor_admin_notice');

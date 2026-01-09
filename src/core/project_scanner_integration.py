@@ -48,7 +48,7 @@ class ProjectScannerIntegration:
         self.project_scanner = self._import_project_scanner()
 
     def _import_project_scanner(self):
-        """Import the project scanner from temp_repos."""
+        """Import the project scanner from temp_repos or use simple fallback."""
         try:
             # Try the main project scanner first
             scanner_path = self.project_root / "temp_repos" / "Auto_Blogger" / "project_scanner.py"
@@ -57,11 +57,18 @@ class ProjectScannerIntegration:
                 sys.path.insert(0, str(scanner_path.parent))
 
                 from project_scanner import ProjectScanner
-                logger.info("✅ Project scanner imported successfully")
+                logger.info("✅ Advanced project scanner imported successfully")
                 return ProjectScanner
             else:
-                logger.warning("⚠️ Project scanner not found in temp_repos")
-                return None
+                logger.warning("⚠️ Advanced project scanner not found, using simple scanner")
+
+                # Use simple scanner as fallback
+                import sys
+                sys.path.insert(0, str(self.project_root / "tools"))
+
+                from simple_project_scanner import SimpleProjectScanner
+                logger.info("✅ Simple project scanner imported successfully")
+                return SimpleProjectScanner
 
         except ImportError as e:
             logger.warning(f"⚠️ Could not import project scanner: {e}")

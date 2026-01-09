@@ -20,6 +20,9 @@
         // Mobile menu toggle
         initMobileMenu();
 
+        // Menu highlighting
+        initMenuHighlighting();
+
         // Smooth scrolling for anchor links
         initSmoothScroll();
 
@@ -37,6 +40,30 @@
 
         // Form validation
         initFormValidation();
+    }
+
+    /**
+     * Menu highlighting for active navigation items
+     */
+    function initMenuHighlighting() {
+        var currentUrl = window.location.pathname;
+        var homeUrl = freerideinvestor_ajax.home_url || '/';
+
+        $('.main-navigation a').each(function() {
+            var $link = $(this);
+            var href = $link.attr('href');
+
+            // Remove protocol, domain, and trailing slash for comparison
+            if (href) {
+                href = href.replace(/^https?:\/\/[^\/]+/, '').replace(/\/$/, '') || '/';
+            }
+
+            // Check if this link should be highlighted as active
+            if ((currentUrl === '/' && href === '/') ||
+                (currentUrl !== '/' && href !== '/' && currentUrl.includes(href) && href !== '/')) {
+                $link.addClass('current-menu-item');
+            }
+        });
     }
 
     /**
