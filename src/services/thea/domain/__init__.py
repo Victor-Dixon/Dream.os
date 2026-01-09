@@ -16,9 +16,7 @@ License: MIT
 
 from .models import (
     AuthenticationContext,
-    AuthenticationStatus,
     BrowserContext,
-    BrowserState,
     CommunicationResult,
     CookieData,
     CookieDict,
@@ -33,7 +31,9 @@ from .models import (
 )
 from .enums import (
     AuthenticationMethod,
+    AuthenticationStatus,
     BrowserAutomationType,
+    BrowserState,
     CircuitBreakerState,
     CommunicationMode,
     CookieStorageType,

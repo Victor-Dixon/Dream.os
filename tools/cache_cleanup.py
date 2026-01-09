@@ -310,30 +310,14 @@ def main():
             print(f"  • {rec['category']}: {rec['size_mb']:.1f} MB")
 
     print(f"💾 Total potential savings: {recommendations['total_potential_savings_mb']:.1f} MB")
-    # Ask for cleanup approach
-    print("\nCleanup Options:")
-    print("1. Safe cleanup only (recommended)")
-    print("2. Safe + IDE cache cleanup")
-    print("3. Full cleanup (with confirmations)")
-    print("4. Cancel")
 
-    choice = input("Select option (1-4): ").strip()
+    # Auto cleanup with safe categories only
+    categories = ["python_cache", "linting_cache", "os_temp"]
 
-    if choice == "1":
-        categories = ["python_cache", "linting_cache", "os_temp"]
-    elif choice == "2":
-        categories = ["python_cache", "linting_cache", "os_temp", "ide_cache"]
-    elif choice == "3":
-        categories = list(cleanup.cleanup_targets.keys())
-    else:
-        print("Cleanup cancelled.")
-        return
-
-    print(f"🧹 Cleaning categories: {', '.join(categories)}")
-    result = cleanup.cleanup_cache_files(categories, skip_confirmation=False)
+    print(f"🧹 Auto-cleaning safe categories: {', '.join(categories)}")
+    result = cleanup.cleanup_cache_files(categories, skip_confirmation=True)
 
     print("✅ Cleanup completed!")
-    print(f"🗑️  Removed {result['cleaned_files']} items")
     print(f"🗑️  Removed {result['cleaned_files']} items")
     print(f"💾 Space saved: {result['total_size_cleaned_mb']:.1f} MB")
 if __name__ == "__main__":

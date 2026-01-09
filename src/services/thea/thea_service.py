@@ -253,8 +253,17 @@ class TheaService(BaseService):
             self.logger.info(f"🔍 Step 5 result: Interface check = {login_result}")
 
             if login_result:
-                self.logger.info("✅ ===== THEA GPT VALIDATION SUCCESSFUL =====")
-                return True
+                # CRITICAL: Check if elements are actually interactable
+                self.logger.info("🔍 Step 6: Testing Thea GPT element interactability...")
+                interactable_result = self._test_element_interactability()
+                self.logger.info(f"🔍 Step 6 result: Thea GPT elements interactable = {interactable_result}")
+
+                if interactable_result:
+                    self.logger.info("✅ ===== THEA GPT VALIDATION SUCCESSFUL =====")
+                    return True
+                else:
+                    self.logger.warning("⚠️ Thea GPT elements exist but not interactable - likely stale cookies")
+                    # Continue to fallback
 
             # SECOND: If Thea GPT fails, try basic ChatGPT as fallback
             self.logger.warning("⚠️ Thea GPT interface not functional, trying basic ChatGPT fallback...")
@@ -278,11 +287,21 @@ class TheaService(BaseService):
             self.logger.info(f"🔍 Fallback Step 4 result: Basic ChatGPT interface check = {login_result}")
 
             if login_result:
-                self.logger.info("✅ ===== BASIC CHATGPT VALIDATION SUCCESSFUL =====")
-                self.logger.warning("⚠️ NOTE: Using basic ChatGPT instead of Thea GPT (Thea GPT appears unavailable)")
-                # Update URL to basic ChatGPT for future use
-                self.thea_url = chatgpt_main_url
-                return True
+                # CRITICAL: Check if elements are actually interactable (not just present)
+                self.logger.info("🔍 Fallback Step 5: Testing element interactability...")
+                interactable_result = self._test_element_interactability()
+                self.logger.info(f"🔍 Fallback Step 5 result: Elements interactable = {interactable_result}")
+
+                if interactable_result:
+                    self.logger.info("✅ ===== BASIC CHATGPT VALIDATION SUCCESSFUL =====")
+                    self.logger.warning("⚠️ NOTE: Using basic ChatGPT instead of Thea GPT (Thea GPT appears unavailable)")
+                    # Update URL to basic ChatGPT for future use
+                    self.thea_url = chatgpt_main_url
+                    return True
+                else:
+                    self.logger.warning("⚠️ ===== STALE COOKIES DETECTED =====")
+                    self.logger.warning("⚠️ Elements exist but are not interactable - cookies are stale")
+                    return False
             else:
                 self.logger.error("❌ ===== ALL VALIDATION METHODS FAILED =====")
                 self.logger.error("❌ Neither Thea GPT nor basic ChatGPT interface is functional")
@@ -462,6 +481,44 @@ class TheaService(BaseService):
 
         except Exception as e:
             self.logger.debug(f"🔍 Login check - general error: {e}")
+            return False
+
+    def _test_element_interactability(self) -> bool:
+        """Test if ChatGPT input elements are actually interactable (not just present)."""
+        try:
+            self.logger.debug("🔍 Testing element interactability...")
+
+            # Find input elements
+            input_selectors = [
+                "textarea",
+                "[contenteditable='true']",
+                "[role='textbox']"
+            ]
+
+            for selector in input_selectors:
+                try:
+                    elements = self.driver.find_elements(By.CSS_SELECTOR, selector)
+                    if elements:
+                        for element in elements:
+                            if element.is_displayed():
+                                try:
+                                    # Try to send a single character to test interactability
+                                    element.send_keys("x")
+                                    self.logger.debug(f"✅ Element {selector} is interactable")
+                                    # Clear the test character
+                                    element.clear()
+                                    return True
+                                except Exception as e:
+                                    self.logger.debug(f"⚠️ Element {selector} not interactable: {e}")
+                                    continue
+                except Exception as e:
+                    self.logger.debug(f"⚠️ Error checking {selector}: {e}")
+
+            self.logger.debug("❌ No interactable input elements found")
+            return False
+
+        except Exception as e:
+            self.logger.debug(f"❌ Element interactability test failed: {e}")
             return False
 
     def _manual_response_extraction(self) -> str | None:

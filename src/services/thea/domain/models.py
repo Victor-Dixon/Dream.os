@@ -33,6 +33,23 @@ class MessageStatus(Enum):
     TIMEOUT = "timeout"
 
 
+class MessagePriority(Enum):
+    """Priority levels for message delivery."""
+    LOW = "low"
+    NORMAL = "normal"
+    HIGH = "high"
+    URGENT = "urgent"
+
+
+class MessageStatus(Enum):
+    """Status of a message in the communication pipeline."""
+    PENDING = "pending"
+    SENT = "sent"
+    DELIVERED = "delivered"
+    FAILED = "failed"
+    TIMEOUT = "timeout"
+
+
 class AuthenticationStatus(Enum):
     """Status of authentication with Thea service."""
     AUTHENTICATED = "authenticated"
