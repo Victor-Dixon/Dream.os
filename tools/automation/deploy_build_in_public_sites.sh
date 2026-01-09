@@ -75,7 +75,7 @@ log "Log file: $LOG_FILE"
 # Function to deploy a single site
 deploy_site() {
     local site="$1"
-    local site_dir="$REPO_ROOT/sites/$site"
+    local site_dir="${WEBSITES_ROOT:-$REPO_ROOT/sites}/$site"
 
     info "Starting deployment for $site"
 
