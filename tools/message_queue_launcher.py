@@ -72,13 +72,17 @@ def main():
         env = os.environ.copy()
         env['PYTHONPATH'] = str(Path.cwd())
 
-        process = subprocess.Popen(
-            [sys.executable, "-m", "src.core.message_queue_processor.core.processor"],
-            env=env,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            cwd=Path.cwd()
-        )
+        # Redirect stderr to a log file so we can see any errors
+        error_log = log_dir / "message_queue_error.log"
+
+        with open(error_log, 'w') as err_file:
+            process = subprocess.Popen(
+                [sys.executable, "-m", "src.core.message_queue_processor.core.processor"],
+                env=env,
+                stdout=subprocess.DEVNULL,  # Suppress stdout to avoid clutter
+                stderr=err_file,           # Log errors to file
+                cwd=Path.cwd()
+            )
 
         # Create PID file
         create_pid_file(process.pid)

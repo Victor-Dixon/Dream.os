@@ -1,0 +1,27 @@
+{
+  "diagnostic": {
+    "site": "freerideinvestor.com",
+    "timestamp": "2026-01-09T00:13:04.060437",
+    "diagnostics": {
+      "file_integrity": {
+        "wp-config.php": true,
+        "wp-admin/index.php": false,
+        "wp-includes/version.php": false,
+        "wp-content/index.php": false,
+        "theme_directory": true,
+        "theme_functions.php": true,
+        "theme_style.css": true,
+        "theme_index.php": true,
+        "uploads_directory": false,
+        "plugins_directory": false
+      },
+      "wp_config_exists": true,
+      "wp_debug_enabled": true,
+      "wp_debug_log_enabled": true,
+      "save_queries_enabled": true,
+      "site_accessible": true,
+      "response_code": 200,
+      "javascript_errors": true
+    }
+  }
+}
