@@ -45,6 +45,71 @@ class UnifiedContractManager(BaseService):
         super().__init__("UnifiedContractManager")
         self._init_storage()
 
+    def create_default_tasks(self):
+        """Create default task templates for Phase 3 activation.
+
+        PHASE 3 ACTIVATION: Initialize contract system with enterprise optimization tasks.
+        """
+        default_tasks = [
+            {
+                "task_id": "phase3_ai_acceleration",
+                "title": "AI Infrastructure Acceleration (0%→80%)",
+                "description": "Deploy AI integration across swarm to achieve 80% utilization target",
+                "priority": "urgent",
+                "agent_id": "Agent-3",  # Infrastructure lead
+                "status": "active",
+                "created_at": datetime.now().isoformat(),
+                "requirements": ["AI integration frameworks", "Swarm deployment tools", "Validation protocols"],
+                "estimated_completion": "2026-01-08T19:00:00"
+            },
+            {
+                "task_id": "phase3_a2a_optimization",
+                "title": "A2A Coordination Excellence (60%→90%)",
+                "description": "Implement advanced coordination workflows for 90% utilization",
+                "priority": "high",
+                "agent_id": "Agent-4",  # Coordination lead
+                "status": "active",
+                "created_at": datetime.now().isoformat(),
+                "requirements": ["Workflow templates", "Coordination protocols", "Performance metrics"],
+                "estimated_completion": "2026-01-08T18:45:00"
+            },
+            {
+                "task_id": "phase3_task_automation",
+                "title": "Task Management Automation (60%→80%)",
+                "description": "Deploy automated task allocation and management workflows",
+                "priority": "high",
+                "agent_id": "Agent-6",  # Task management lead
+                "status": "pending",
+                "created_at": datetime.now().isoformat(),
+                "requirements": ["Contract system integration", "Automated workflows", "Performance monitoring"],
+                "estimated_completion": "2026-01-08T19:15:00"
+            },
+            {
+                "task_id": "phase3_enterprise_monitoring",
+                "title": "Enterprise Utilization Monitoring (69.5%→85%+)",
+                "description": "Maintain real-time utilization tracking across all 8 categories",
+                "priority": "medium",
+                "agent_id": "Agent-5",  # Analytics lead
+                "status": "active",
+                "created_at": datetime.now().isoformat(),
+                "requirements": ["Dashboard maintenance", "Performance analytics", "Utilization reporting"],
+                "estimated_completion": "2026-01-08T18:30:00"
+            }
+        ]
+
+        # Save default tasks
+        for task in default_tasks:
+            try:
+                success = self.storage.save_contract(task["agent_id"], task)
+                if success:
+                    logger.info(f"✅ Created default task: {task['title']}")
+                else:
+                    logger.warning(f"❌ Failed to create task: {task['title']}")
+            except Exception as e:
+                logger.error(f"❌ Error creating default task {task['task_id']}: {e}")
+
+        logger.info(f"🚀 Phase 3 task management activated with {len(default_tasks)} default tasks")
+
     def _init_storage(self):
         """Initialize contract storage with fallback."""
         try:
