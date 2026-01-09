@@ -94,6 +94,38 @@ The system follows **V2 Compliance Standards** (files ~400 lines guideline, clea
 - **WordPress**: Blog management and deployment
 - **Trading Systems**: Automated trading robot integration
 
+### TradingRobotPlug TSLA Morning Report
+
+The TSLA morning report pipeline produces a single-source-of-truth snapshot, renders a Discord-ready report, archives artifacts, and records recommendations for accuracy tracking.
+
+**Location**
+- `src/trading_robot/tsla_report/` (providers, features, engine, reports, publisher, ledger, cli)
+
+**Environment**
+- `ALPHA_VANTAGE_API_KEY` (required for market data)
+- `TSLA_MARKET_PROVIDER` (optional, default: `alpha_vantage`)
+- `DISCORD_WEBHOOK_URL` (required for posting; optional for `--dry-run`)
+
+**CLI Usage**
+```bash
+# Build snapshot, render report, archive artifacts, save to ledger, publish to Discord
+python -m src.trading_robot.tsla_report.cli.tsla_report_cli morning_report
+
+# Dry run (prints Discord payload instead of posting)
+python -m src.trading_robot.tsla_report.cli.tsla_report_cli morning_report --dry-run
+
+# Score recommendations for a date (YYYY-MM-DD), defaults to today
+python -m src.trading_robot.tsla_report.cli.tsla_report_cli score_recommendations --date 2026-01-05
+
+# Weekly summary from the SQLite ledger
+python -m src.trading_robot.tsla_report.cli.tsla_report_cli weekly_summary
+```
+
+**Artifacts**
+- `data/devlogs/YYYY-MM-DD/analysis_snapshot.json`
+- `data/devlogs/YYYY-MM-DD/report.md`
+- `data/devlogs/YYYY-MM-DD/discord_payload.json`
+
 ---
 
 ## 🚀 Quick Start
@@ -358,5 +390,4 @@ Built with:
 **🐝 WE. ARE. SWARM. ⚡**
 
 *For questions or issues, check agent workspaces or contact Agent-4 (Captain).*
-
 
