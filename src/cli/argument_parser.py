@@ -50,6 +50,7 @@ Examples:
   python main.py --validate               # Run comprehensive validation
   python main.py --select-mode            # Select agent mode (interactive)
   python main.py --autonomous-reports     # Display autonomous config reports
+  python main.py --status-integration     # Start automated agent status integration
 
 Background Mode:
   Services run as detached processes. Use --stop to terminate them.
@@ -115,6 +116,12 @@ Unix/Mac background: python main.py --background &
             '--kill', '-k',
             action='store_true',
             help='Force kill all services'
+        )
+
+        control_group.add_argument(
+            '--status-integration',
+            action='store_true',
+            help='Start automated agent status integration service'
         )
 
         # Configuration and setup

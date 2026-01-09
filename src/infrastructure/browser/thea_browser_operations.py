@@ -101,17 +101,30 @@ class TheaBrowserOperations:
 
         try:
             target_url = thea_url or self.thea_config.conversation_url
+
+            # CRITICAL FIX: Load cookies BEFORE navigating to target URL
+            # This ensures cookies are available when we first visit the site
+            self.browser_utils.load_cookies(self.driver, target_url)
+
             if not self.navigate_to(target_url, wait_seconds=5.0):
                 return False
 
             time.sleep(3)  # Wait for page stabilization
-            self.browser_utils.load_cookies(self.driver, target_url)
-            self.driver.refresh()
-            time.sleep(5)  # Wait for page reload
             self._wait_for_page_ready()
 
             if self._is_thea_authenticated():
                 logger.info("✅ Already authenticated to Thea (via cookies)")
+                self.browser_utils.save_cookies(self.driver)
+                return True
+
+            # Try refreshing once more with cookies loaded
+            logger.info("🔄 Refreshing page to ensure cookie authentication...")
+            self.driver.refresh()
+            time.sleep(5)
+            self._wait_for_page_ready()
+
+            if self._is_thea_authenticated():
+                logger.info("✅ Authentication successful after refresh")
                 self.browser_utils.save_cookies(self.driver)
                 return True
 

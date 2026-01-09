@@ -27,7 +27,7 @@ class StopHandler:
         # Check for running services
         running_services = [
             name for name, status in all_status.items()
-            if status.get('status') == 'running'
+            if status == 'running'
         ]
 
         if not running_services:

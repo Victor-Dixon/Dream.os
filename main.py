@@ -46,6 +46,9 @@ from src.cli.commands.mode_handler import ModeHandler
 from src.cli.commands.autonomous_handler import AutonomousHandler
 from src.cli.commands.start_handler import StartHandler
 
+# Import automated status integration
+from src.services.agent_status_integration import get_agent_status_integration
+
 def _handle_monitor_command(service_manager: ServiceManager, command_info: dict):
     """Handle status command with enhanced health checks and troubleshooting."""
     print("🐝 dream.os - Service Status Report")
@@ -301,6 +304,16 @@ def main():
         elif command_type == 'run_autonomous_config':
             handler = AutonomousHandler()
             handler.handle_run_autonomous_config_command()
+        elif command_type == 'status_integration':
+            print("🤖 Starting Automated Agent Status Integration...")
+            try:
+                import asyncio
+                asyncio.run(get_agent_status_integration().run())
+            except KeyboardInterrupt:
+                print("\n🛑 Status integration stopped")
+            except Exception as e:
+                print(f"❌ Status integration failed: {e}")
+                sys.exit(1)
         elif command_type == 'start_services':
             handler = StartHandler(service_manager)
             handler.execute(command_info)

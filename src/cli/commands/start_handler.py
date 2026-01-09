@@ -19,6 +19,9 @@ class StartHandler:
         print("🚀 dream.os - Starting Services")
         print("=" * 35)
 
+        # Extract background mode
+        background = command_info.get('background', False)
+
         # Determine which services to start
         if command_info.get('start_all'):
             services_to_start = self._get_all_services()
@@ -71,7 +74,7 @@ class StartHandler:
         for service_name in start_order:
             print(f"   Starting {service_name}...", end=' ')
             try:
-                result = self.service_manager.start_service(service_name)
+                result = self.service_manager.start_service(service_name, background=background)
 
                 if result:  # start_service returns True/False
                     print("✅")

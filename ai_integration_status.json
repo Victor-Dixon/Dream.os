@@ -5,8 +5,13 @@
       "status": "deployed",
       "last_updated": 1767912010.4853148,
       "ai_available": true
+    },
+    "Agent-4": {
+      "status": "deployed",
+      "last_updated": 1767913869.348932,
+      "ai_available": true
     }
   },
-  "last_updated": 1767912010.4853148,
-  "total_deployed": 1
+  "last_updated": 1767913869.348932,
+  "total_deployed": 2
 }

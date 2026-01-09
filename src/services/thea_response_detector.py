@@ -216,7 +216,7 @@ class ResponseDetector:
 
             for selector in selectors:
                 try:
-                    element = self.driver.find_element_by_css_selector(selector)
+                    element = self.driver.find_element(By.CSS_SELECTOR, selector)
                     if element and element.text.strip():
                         text = element.text.strip()
                         if len(text) > 10:  # Minimum viable response
