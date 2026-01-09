@@ -61,12 +61,12 @@ class StopHandler:
             print(f"   Stopping {service_name}...", end=' ')
             try:
                 result = self.service_manager.stop_service(service_name)
-                if result.get('success'):
+                if result:
                     print("✅")
                     success_count += 1
                 else:
                     print("❌")
-                    failed_services.append((service_name, result.get('message', 'Unknown error')))
+                    failed_services.append((service_name, 'Stop failed'))
             except Exception as e:
                 print("❌")
                 failed_services.append((service_name, str(e)))

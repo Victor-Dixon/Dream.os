@@ -204,26 +204,52 @@ class ResponseDetector:
             return None
 
         try:
-            # Primary selectors for ChatGPT responses
+            # Primary selectors for ChatGPT responses (updated for current DOM)
             selectors = [
+                # Most specific selectors first
+                "[data-message-author-role='assistant']:last-child",  # Working selector from debug
                 "[data-message-author-role='assistant']:last-of-type .markdown",
                 "[data-testid='conversation-turn']:last-child .markdown",
                 "[data-message-id]:last-of-type .markdown",
                 ".agent-turn:last-child .markdown",
                 "article:last-of-type .markdown",
-                "article:last-of-type"
+                "article:last-of-type",
+                # Additional selectors for current ChatGPT interface
+                "[data-testid*='message']:last-child",
+                ".markdown:last-of-type",
+                "[data-message-id]:last-child",
+                ".agent-turn:last-child"  # Another working selector
             ]
 
-            for selector in selectors:
+            logger.debug(f"🔍 Extracting response text with {len(selectors)} selectors...")
+            for i, selector in enumerate(selectors):
                 try:
-                    element = self.driver.find_element(By.CSS_SELECTOR, selector)
-                    if element and element.text.strip():
-                        text = element.text.strip()
-                        if len(text) > 10:  # Minimum viable response
-                            return text
-                except:
-                    continue
+                    # Use find_elements (plural) exactly like the working debug code
+                    elements = self.driver.find_elements(By.CSS_SELECTOR, selector)
+                    logger.debug(f"  Selector {i+1} ({selector}): found {len(elements)} elements")
 
+                    if elements:
+                        # Check the last elements first (like debug code does with [-2:])
+                        for j, element in enumerate(reversed(elements[-2:])):  # Last 2 elements, in reverse order
+                            actual_index = len(elements) - j - 1  # Convert back to actual index
+                            try:
+                                if element and element.is_displayed():
+                                    text = element.text.strip() if element.text else ""
+                                    logger.debug(f"    Element {actual_index} (from end): text length {len(text)}")
+                                    if text and len(text) > 10:  # Minimum viable response
+                                        logger.debug(f"  ✅ Using selector {i+1} ({selector}), element {actual_index} - returning response")
+                                        return text
+                                    else:
+                                        logger.debug(f"    ⚠️ Element {actual_index}: text too short or empty ('{text[:50]}...')")
+                                else:
+                                    logger.debug(f"    ⚠️ Element {actual_index}: not displayed or None")
+                            except Exception as e:
+                                logger.debug(f"    ⚠️ Element {actual_index}: error checking - {e}")
+
+                except Exception as e:
+                    logger.debug(f"  ❌ Selector {i+1} ({selector}): exception - {e}")
+
+            logger.warning("❌ No response text found with any selector")
             return None
 
         except Exception as e:

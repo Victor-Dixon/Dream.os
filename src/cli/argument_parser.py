@@ -51,6 +51,10 @@ Examples:
   python main.py --select-mode            # Select agent mode (interactive)
   python main.py --autonomous-reports     # Display autonomous config reports
   python main.py --status-integration     # Start automated agent status integration
+  python main.py --thea-capture-cookies   # Capture Thea cookies interactively
+  python main.py --thea-test-cookies      # Test Thea cookies
+  python main.py --thea-scan-project      # Scan project with Thea guidance
+  python main.py --thea-status            # Show Thea integration status
 
 Background Mode:
   Services run as detached processes. Use --stop to terminate them.
@@ -141,6 +145,31 @@ Unix/Mac background: python main.py --background &
             '--run-autonomous-config',
             action='store_true',
             help='Run autonomous configuration system'
+        )
+
+        # Thea integration
+        self.parser.add_argument(
+            '--thea-capture-cookies',
+            action='store_true',
+            help='Capture new Thea cookies interactively'
+        )
+
+        self.parser.add_argument(
+            '--thea-test-cookies',
+            action='store_true',
+            help='Test existing Thea cookies'
+        )
+
+        self.parser.add_argument(
+            '--thea-scan-project',
+            action='store_true',
+            help='Scan project with Thea guidance'
+        )
+
+        self.parser.add_argument(
+            '--thea-status',
+            action='store_true',
+            help='Show Thea integration status'
         )
 
         # Maintenance
