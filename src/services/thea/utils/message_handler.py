@@ -43,12 +43,17 @@ class MessageHandler:
             return None
 
         try:
-            # Copy message to clipboard
-            pyperclip.copy(message)
-
-            # Send paste command (Ctrl+V)
-            pyautogui.hotkey('ctrl', 'v')
-            time.sleep(0.5)
+            # Copy message to clipboard with Windows fallback
+            try:
+                pyperclip.copy(message)
+                # Send paste command (Ctrl+V)
+                pyautogui.hotkey('ctrl', 'v')
+                time.sleep(0.5)
+            except Exception as clipboard_error:
+                print(f"⚠️ Clipboard paste failed ({clipboard_error}), falling back to typing...")
+                # Fallback: type the message character by character
+                pyautogui.typewrite(message, interval=0.01)
+                time.sleep(0.5)
 
             # Send enter to submit
             pyautogui.press('enter')

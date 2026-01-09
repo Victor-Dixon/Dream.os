@@ -706,9 +706,14 @@ class TheaService(BaseService):
                 if PYAUTOGUI_AVAILABLE:
                     try:
                         self.logger.info("🔄 Falling back to PyAutoGUI...")
-                        pyperclip.copy(message)
-                        time.sleep(0.5)
-                        pyautogui.hotkey("ctrl", "v")
+                        try:
+                            pyperclip.copy(message)
+                            time.sleep(0.5)
+                            pyautogui.hotkey("ctrl", "v")
+                        except Exception as clipboard_error:
+                            self.logger.warning(f"⚠️ Clipboard paste failed ({clipboard_error}), falling back to typing...")
+                            # Fallback: type the message character by character
+                            pyautogui.typewrite(message, interval=0.01)
                         time.sleep(0.5)
                         pyautogui.press("enter")
                         self.logger.info("✅ Message sent via PyAutoGUI fallback")
