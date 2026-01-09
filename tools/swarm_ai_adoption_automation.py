@@ -44,11 +44,9 @@ class SwarmAIAdoptionAutomation:
     def deploy_ai_to_agent(self, agent_id: str) -> Dict[str, Any]:
         """Deploy AI integration to a specific agent"""
         try:
-            # Import here to avoid circular imports
-            from tools.ai_integration_deployer import AIIntegrationDeployer
-
-            deployer = AIIntegrationDeployer()
-            success = deployer.deploy_ai_integration(agent_id)
+            # Use standalone AI integration to avoid module dependency issues
+            from tools.standalone_ai_integration import deploy_to_agent_workspace
+            success = deploy_to_agent_workspace(agent_id)
 
             return {
                 "agent_id": agent_id,
@@ -134,9 +132,8 @@ class SwarmAIAdoptionAutomation:
         # Validate each agent
         for agent_id in agents:
             try:
-                from tools.ai_integration_deployer import AIIntegrationDeployer
-                deployer = AIIntegrationDeployer()
-                validation = deployer.verify_ai_integration(agent_id)
+                from tools.standalone_ai_integration import verify_ai_integration
+                validation = verify_ai_integration(agent_id)
                 validations.append(validation)
 
                 status = "✅" if validation.get("functionality_test", False) else "⚠️"
