@@ -308,7 +308,7 @@ class ConsolidationMonitor:
         """Save the current dashboard to file"""
         if self.current_dashboard:
             try:
-                with open(self.dashboard_file, 'w', indent=2) as f:
+                with open(self.dashboard_file, 'w') as f:
                     json.dump(asdict(self.current_dashboard), f, indent=2)
                 print(f"Dashboard saved to {self.dashboard_file}")
             except Exception as e:

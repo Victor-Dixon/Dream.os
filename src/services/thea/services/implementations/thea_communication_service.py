@@ -83,14 +83,25 @@ class TheaCommunicationService(ICommunicationService):
         """
         start_time = time.time()
 
-        try:
-            # Validate message content
-            if not self.validate_message_content(content):
+        # Validate message content first
+        if not self.validate_message_content(content):
+            try:
+                # Create a dummy message for the error result
+                dummy_message = TheaMessage(content="validation_failed", priority=MessagePriority.LOW)
                 return CommunicationResult(
                     success=False,
-                    message=TheaMessage(content=content, priority=MessagePriority(priority)),
+                    message=dummy_message,
                     error_message="Invalid message content"
                 )
+            except ValueError:
+                # If even the dummy message fails, something is very wrong
+                return CommunicationResult(
+                    success=False,
+                    message=None,  # type: ignore
+                    error_message="Invalid message content"
+                )
+
+        try:
 
             # Create message object
             message = TheaMessage(
@@ -155,9 +166,14 @@ class TheaCommunicationService(ICommunicationService):
         except Exception as e:
             duration = time.time() - start_time
             print(f"❌ Communication failed: {e}")
+            try:
+                message = TheaMessage(content=content, priority=MessagePriority(priority))
+            except ValueError:
+                # If message creation fails, use a dummy message for the error result
+                message = TheaMessage(content="error_message", priority=MessagePriority.LOW)
             return CommunicationResult(
                 success=False,
-                message=TheaMessage(content=content, priority=MessagePriority(priority)),
+                message=message,
                 error_message=str(e),
                 duration_seconds=duration
             )

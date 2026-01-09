@@ -73,7 +73,7 @@ def main():
         env['PYTHONPATH'] = str(Path.cwd())
 
         process = subprocess.Popen(
-            [sys.executable, "src/core/message_queue_processor/core/processor.py"],
+            [sys.executable, "-m", "src.core.message_queue_processor.core.processor"],
             env=env,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,

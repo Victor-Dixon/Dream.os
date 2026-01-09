@@ -478,7 +478,7 @@ class Phase1Consolidator:
 
                 # Write updated file
                 try:
-                    with open(status_path, 'w', indent=2) as f:
+                    with open(status_path, 'w') as f:
                         json.dump(status_data, f, indent=2)
                     files_updated += 1
                     details.append(f"Standardized status.json for {file_info['agent']}: added {len(missing_fields)} missing fields")
@@ -563,7 +563,7 @@ class Phase1Consolidator:
 
         report_file = reports_dir / f"phase1_consolidation_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
 
-        with open(report_file, 'w', indent=2) as f:
+        with open(report_file, 'w') as f:
             json.dump({
                 "timestamp": report.timestamp,
                 "summary": {
