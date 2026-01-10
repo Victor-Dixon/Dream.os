@@ -73,11 +73,11 @@ class BotLifecycleManager:
             )
             
             await self.bot.add_cog(CoreMessagingCommands(self.bot, self.bot.gui_controller))
-            await self.bot.add_cog(SystemControlCommands(self.bot, self.bot.gui_controller))
+            await self.bot.add_cog(SystemControlCommands(self.bot))
             await self.bot.add_cog(OnboardingCommands(self.bot, self.bot.gui_controller))
             await self.bot.add_cog(UtilityCommands(self.bot, self.bot.gui_controller))
             await self.bot.add_cog(AgentManagementCommands(self.bot, self.bot.gui_controller))
-            await self.bot.add_cog(ProfileCommands(self.bot, self.bot.gui_controller))
+            await self.bot.add_cog(ProfileCommands(self.bot))
             await self.bot.add_cog(PlaceholderCommands(self.bot, self.bot.gui_controller))
             await self.bot.add_cog(MessagingCommands(self.bot, self.bot.gui_controller))
             

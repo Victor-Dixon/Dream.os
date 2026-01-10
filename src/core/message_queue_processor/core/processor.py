@@ -116,10 +116,13 @@ class MessageQueueProcessor:
                         break
                     entries.append(entry)
                 if not entries:
+                    logger.debug(f"📭 No messages in queue, sleeping for {interval}s")
                     if max_messages is None:
                         time.sleep(interval)
                         continue
                     break
+
+                logger.info(f"📬 Processing {len(entries)} message(s) from queue")
 
                 for entry in entries:
                     if max_messages and processed >= max_messages:
@@ -264,6 +267,8 @@ class MessageQueueProcessor:
             message_type_str = parsed["message_type_str"]
             sender = parsed["sender"]
             priority_str = parsed["priority_str"]
+
+            logger.debug(f"📨 Processing message: {queue_id} -> {recipient} (type: {message_type_str})")
             tags_list = parsed["tags_list"]
             metadata = parsed["metadata"]
 
@@ -291,6 +296,8 @@ class MessageQueueProcessor:
                 use_pyautogui = metadata.get("use_pyautogui", True)
             elif hasattr(entry, 'metadata') and isinstance(entry.metadata, dict):
                 use_pyautogui = entry.metadata.get("use_pyautogui", True)
+
+            logger.debug(f"🎯 Delivery method for {recipient}: {'PyAutoGUI' if use_pyautogui else 'Inbox'} (use_pyautogui={use_pyautogui})")
 
             # Record performance metrics
             if self.performance_metrics and delivery_start_time:

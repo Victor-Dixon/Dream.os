@@ -315,6 +315,39 @@ class ControlPanelButtonFactory:
         return [confirm_btn, cancel_btn]
 
     @staticmethod
+    def create_message_agent_button() -> 'discord.ui.Button':
+        """Create a message agent button."""
+        return discord.ui.Button(
+            label="Message Agent",
+            style=discord.ButtonStyle.secondary,
+            emoji="📨",
+            custom_id="message_agent",
+            row=0
+        )
+
+    @staticmethod
+    def create_main_control_button() -> 'discord.ui.Button':
+        """Create a main control button."""
+        return discord.ui.Button(
+            label="Main Control",
+            style=discord.ButtonStyle.primary,
+            emoji="⚙️",
+            custom_id="main_control",
+            row=0
+        )
+
+    @staticmethod
+    def create_monitor_button() -> 'discord.ui.Button':
+        """Create a monitor button."""
+        return discord.ui.Button(
+            label="Monitor",
+            style=discord.ButtonStyle.secondary,
+            emoji="📊",
+            custom_id="monitor",
+            row=0
+        )
+
+    @staticmethod
     def create_navigation_buttons() -> List['discord.ui.Button']:
         """Create navigation buttons for paginated views."""
 

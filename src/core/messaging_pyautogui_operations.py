@@ -129,13 +129,13 @@ class PyAutoGUIOperationsService:
         
         x, y = coordinates
         
-        # Click to focus window and input field
-        logger.debug("🖱️ Clicking to focus input field")
-        self.pyautogui.click()
+        # Click to focus window and input field at coordinates
+        logger.debug(f"🖱️ Clicking to focus input field at {coordinates}")
+        self.pyautogui.click(x, y)
         time.sleep(0.5)  # Wait for initial focus
-        
+
         # Click again to ensure input field is active
-        self.pyautogui.click()
+        self.pyautogui.click(x, y)
         time.sleep(0.5)  # Wait for input field to be ready
         
         return True

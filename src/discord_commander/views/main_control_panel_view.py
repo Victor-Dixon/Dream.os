@@ -64,15 +64,11 @@ class MainControlPanelView(discord.ui.View if DISCORD_AVAILABLE else object):
         └── Related: Agent messaging, bot control
         """
         # Message agent button
-        self.msg_agent_btn = ControlPanelButtonFactory.create_message_agent_button(
-            callback=self.show_agent_selector
-        )
+        self.msg_agent_btn = ControlPanelButtonFactory.create_message_agent_button()
         self.add_item(self.msg_agent_btn)
 
         # Main control button
-        self.main_control_btn = ControlPanelButtonFactory.create_main_control_button(
-            callback=self.show_main_control
-        )
+        self.main_control_btn = ControlPanelButtonFactory.create_main_control_button()
         self.add_item(self.main_control_btn)
 
         # Status monitor button

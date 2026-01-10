@@ -93,11 +93,12 @@ def send_broadcast_message(
     message: str,
     priority: UnifiedMessagePriority,
     stalled: bool,
+    use_pyautogui: bool = True,
 ) -> int:
     """Send broadcast message and return exit code."""
     from .coordination_handlers import MessageCoordinator
     success_count = MessageCoordinator.broadcast_to_all(
-        message, priority, stalled=stalled)
+        message, priority, stalled=stalled, use_pyautogui=use_pyautogui)
     if success_count > 0:
         print(f"✅ Broadcast to {success_count} agents successful")
         return 0
@@ -113,6 +114,7 @@ def send_single_agent_message(
     stalled: bool,
     sender: str | None = None,
     category: str | None = None,
+    use_pyautogui: bool = True,
 ) -> int:
     """Send single agent message and return exit code."""
     from .coordination_handlers import MessageCoordinator
@@ -156,7 +158,7 @@ def send_single_agent_message(
         agent=agent,
         message=message,
         priority=priority,
-        use_pyautogui=True,
+        use_pyautogui=use_pyautogui,
         stalled=stalled,
         sender=sender,
         message_category=message_category,
@@ -212,10 +214,13 @@ def route_message_delivery(
         Exit code (0 for success, 1 for failure)
     """
     if args.broadcast:
-        return send_broadcast_message(args.message, priority, stalled)
+        use_pyautogui = getattr(args, 'pyautogui', True)
+        return send_broadcast_message(args.message, priority, stalled, use_pyautogui)
     elif args.agent:
         sender = getattr(args, "sender", None)
         category = getattr(args, "category", None)
+        use_pyautogui = getattr(args, 'pyautogui', True)
+        print(f"DEBUG: CLI args.pyautogui = {getattr(args, 'pyautogui', 'NOT_SET')}, use_pyautogui = {use_pyautogui}")
         return send_single_agent_message(
             args.agent,
             args.message,
@@ -223,6 +228,7 @@ def route_message_delivery(
             stalled,
             sender=sender,
             category=category,
+            use_pyautogui=use_pyautogui,
         )
     else:
         print("❌ ERROR: Either --agent or --broadcast must be specified")
