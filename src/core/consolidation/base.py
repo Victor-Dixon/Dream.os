@@ -19,17 +19,17 @@ class ConsolidationBase:
     """Reusable helpers for consolidation workflows."""
 
     def consolidate_directories(self, directories: Iterable[str]) -> int:
-        """Consolidate Python files from ``directories`` into the target layout.
+        """Consolidate Python files from directories into the target layout.
 
-        Parameters
-        ----------
-        directories:
-            Iterable of directory paths to consolidate.
+        Args:
+            directories: Iterable of directory paths to consolidate.
 
-        Returns
-        -------
-        int
+        Returns:
             Total number of files consolidated.
+
+        Examples:
+            >>> ConsolidationBase().consolidate_directories(["src", "tools"])
+            0
         """
         files_consolidated = 0
         for directory in directories:
@@ -52,9 +52,9 @@ class ConsolidationBase:
         return count
 
     def _get_consolidated_path(self, source_path: str) -> str:
-        """Map ``source_path`` to its SSOT location.
+        """Map a source path to its SSOT location.
 
-        Subclasses should override this with project‑specific mapping logic.
+        Subclasses should override this with project-specific mapping logic.
         """
         return source_path
 
