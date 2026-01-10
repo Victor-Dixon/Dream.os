@@ -289,8 +289,12 @@ runtime/
 data/
 
 # Exceptions: Keep templates and examples
+!data/
+data/*
 !data/templates/
+!data/templates/**
 !data/examples/
+!data/examples/**
 !runtime/**/*.config.json
 !runtime/**/*.template.json
 

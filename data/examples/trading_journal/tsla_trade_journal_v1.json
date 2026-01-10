@@ -1,0 +1,533 @@
+{
+  "ssot_domain": "trading_robot",
+  "meta": {
+    "version": "v1",
+    "source": "sticky_note_transcription",
+    "ticker_universe": [
+      "TSLA"
+    ],
+    "measurement": "pnl_pct",
+    "assumptions": [
+      "Each recorded % in outcomes_raw is the realized % P&L for one closed trade (one SELL).",
+      "Instrument assumed options unless you overwrite per trade."
+    ]
+  },
+  "validation": {
+    "sells_total": 19,
+    "wins_total": 12,
+    "losses_total": 7,
+    "win_rate_pct": 63.16,
+    "avg_win_pct_computed": 41.56,
+    "avg_loss_pct_computed": -28.86
+  },
+  "day_summaries": [
+    {
+      "date": "2026-01-02",
+      "actions": 4,
+      "buys": 3,
+      "sells": 1,
+      "outcomes_raw": [
+        "-36%"
+      ]
+    },
+    {
+      "date": "2026-01-04",
+      "actions": 8,
+      "buys": 5,
+      "sells": 3,
+      "outcomes_raw": [
+        "-12%",
+        "33%",
+        "10%"
+      ]
+    },
+    {
+      "date": "2026-01-05",
+      "actions": 3,
+      "buys": 1,
+      "sells": 2,
+      "outcomes_raw": [
+        "-30%",
+        "-44%"
+      ]
+    },
+    {
+      "date": "2026-01-06",
+      "actions": 7,
+      "buys": 3,
+      "sells": 4,
+      "outcomes_raw": [
+        "130%",
+        "1.8%",
+        "94%",
+        "10%"
+      ]
+    },
+    {
+      "date": "2026-01-07",
+      "actions": 6,
+      "buys": 3,
+      "sells": 3,
+      "outcomes_raw": [
+        "83%",
+        "8%",
+        "6.4%"
+      ]
+    },
+    {
+      "date": "2026-01-08",
+      "actions": 16,
+      "buys": 10,
+      "sells": 6,
+      "outcomes_raw": [
+        "-58%",
+        "5%",
+        "-10%",
+        "7.5%",
+        "-12%",
+        "110%"
+      ]
+    }
+  ],
+  "trades": [
+    {
+      "trade_id": "trade_001",
+      "date": "2026-01-02",
+      "ticker": "TSLA",
+      "instrument": "options",
+      "direction": "long",
+      "pnl_pct": -36.0,
+      "win": false,
+      "setup": "unspecified",
+      "trigger": "unspecified",
+      "stop_plan": "unspecified",
+      "take_profit_plan": "unspecified",
+      "adherence_score_0_10": 0,
+      "emotion_tags": [],
+      "notes": ""
+    },
+    {
+      "trade_id": "trade_002",
+      "date": "2026-01-04",
+      "ticker": "TSLA",
+      "instrument": "options",
+      "direction": "long",
+      "pnl_pct": -12.0,
+      "win": false,
+      "setup": "unspecified",
+      "trigger": "unspecified",
+      "stop_plan": "unspecified",
+      "take_profit_plan": "unspecified",
+      "adherence_score_0_10": 0,
+      "emotion_tags": [],
+      "notes": ""
+    },
+    {
+      "trade_id": "trade_003",
+      "date": "2026-01-04",
+      "ticker": "TSLA",
+      "instrument": "options",
+      "direction": "long",
+      "pnl_pct": 33.0,
+      "win": true,
+      "setup": "unspecified",
+      "trigger": "unspecified",
+      "stop_plan": "unspecified",
+      "take_profit_plan": "unspecified",
+      "adherence_score_0_10": 0,
+      "emotion_tags": [],
+      "notes": ""
+    },
+    {
+      "trade_id": "trade_004",
+      "date": "2026-01-04",
+      "ticker": "TSLA",
+      "instrument": "options",
+      "direction": "long",
+      "pnl_pct": 10.0,
+      "win": true,
+      "setup": "unspecified",
+      "trigger": "unspecified",
+      "stop_plan": "unspecified",
+      "take_profit_plan": "unspecified",
+      "adherence_score_0_10": 0,
+      "emotion_tags": [],
+      "notes": ""
+    },
+    {
+      "trade_id": "trade_005",
+      "date": "2026-01-05",
+      "ticker": "TSLA",
+      "instrument": "options",
+      "direction": "long",
+      "pnl_pct": -30.0,
+      "win": false,
+      "setup": "unspecified",
+      "trigger": "unspecified",
+      "stop_plan": "unspecified",
+      "take_profit_plan": "unspecified",
+      "adherence_score_0_10": 0,
+      "emotion_tags": [],
+      "notes": ""
+    },
+    {
+      "trade_id": "trade_006",
+      "date": "2026-01-05",
+      "ticker": "TSLA",
+      "instrument": "options",
+      "direction": "long",
+      "pnl_pct": -44.0,
+      "win": false,
+      "setup": "unspecified",
+      "trigger": "unspecified",
+      "stop_plan": "unspecified",
+      "take_profit_plan": "unspecified",
+      "adherence_score_0_10": 0,
+      "emotion_tags": [],
+      "notes": ""
+    },
+    {
+      "trade_id": "trade_007",
+      "date": "2026-01-06",
+      "ticker": "TSLA",
+      "instrument": "options",
+      "direction": "long",
+      "pnl_pct": 130.0,
+      "win": true,
+      "setup": "unspecified",
+      "trigger": "unspecified",
+      "stop_plan": "unspecified",
+      "take_profit_plan": "unspecified",
+      "adherence_score_0_10": 0,
+      "emotion_tags": [],
+      "notes": ""
+    },
+    {
+      "trade_id": "trade_008",
+      "date": "2026-01-06",
+      "ticker": "TSLA",
+      "instrument": "options",
+      "direction": "long",
+      "pnl_pct": 1.8,
+      "win": true,
+      "setup": "unspecified",
+      "trigger": "unspecified",
+      "stop_plan": "unspecified",
+      "take_profit_plan": "unspecified",
+      "adherence_score_0_10": 0,
+      "emotion_tags": [],
+      "notes": ""
+    },
+    {
+      "trade_id": "trade_009",
+      "date": "2026-01-06",
+      "ticker": "TSLA",
+      "instrument": "options",
+      "direction": "long",
+      "pnl_pct": 94.0,
+      "win": true,
+      "setup": "unspecified",
+      "trigger": "unspecified",
+      "stop_plan": "unspecified",
+      "take_profit_plan": "unspecified",
+      "adherence_score_0_10": 0,
+      "emotion_tags": [],
+      "notes": ""
+    },
+    {
+      "trade_id": "trade_010",
+      "date": "2026-01-06",
+      "ticker": "TSLA",
+      "instrument": "options",
+      "direction": "long",
+      "pnl_pct": 10.0,
+      "win": true,
+      "setup": "unspecified",
+      "trigger": "unspecified",
+      "stop_plan": "unspecified",
+      "take_profit_plan": "unspecified",
+      "adherence_score_0_10": 0,
+      "emotion_tags": [],
+      "notes": ""
+    },
+    {
+      "trade_id": "trade_011",
+      "date": "2026-01-07",
+      "ticker": "TSLA",
+      "instrument": "options",
+      "direction": "long",
+      "pnl_pct": 83.0,
+      "win": true,
+      "setup": "unspecified",
+      "trigger": "unspecified",
+      "stop_plan": "unspecified",
+      "take_profit_plan": "unspecified",
+      "adherence_score_0_10": 0,
+      "emotion_tags": [],
+      "notes": ""
+    },
+    {
+      "trade_id": "trade_012",
+      "date": "2026-01-07",
+      "ticker": "TSLA",
+      "instrument": "options",
+      "direction": "long",
+      "pnl_pct": 8.0,
+      "win": true,
+      "setup": "unspecified",
+      "trigger": "unspecified",
+      "stop_plan": "unspecified",
+      "take_profit_plan": "unspecified",
+      "adherence_score_0_10": 0,
+      "emotion_tags": [],
+      "notes": ""
+    },
+    {
+      "trade_id": "trade_013",
+      "date": "2026-01-07",
+      "ticker": "TSLA",
+      "instrument": "options",
+      "direction": "long",
+      "pnl_pct": 6.4,
+      "win": true,
+      "setup": "unspecified",
+      "trigger": "unspecified",
+      "stop_plan": "unspecified",
+      "take_profit_plan": "unspecified",
+      "adherence_score_0_10": 0,
+      "emotion_tags": [],
+      "notes": ""
+    },
+    {
+      "trade_id": "trade_014",
+      "date": "2026-01-08",
+      "ticker": "TSLA",
+      "instrument": "options",
+      "direction": "long",
+      "pnl_pct": -58.0,
+      "win": false,
+      "setup": "unspecified",
+      "trigger": "unspecified",
+      "stop_plan": "unspecified",
+      "take_profit_plan": "unspecified",
+      "adherence_score_0_10": 0,
+      "emotion_tags": [],
+      "notes": ""
+    },
+    {
+      "trade_id": "trade_015",
+      "date": "2026-01-08",
+      "ticker": "TSLA",
+      "instrument": "options",
+      "direction": "long",
+      "pnl_pct": 5.0,
+      "win": true,
+      "setup": "unspecified",
+      "trigger": "unspecified",
+      "stop_plan": "unspecified",
+      "take_profit_plan": "unspecified",
+      "adherence_score_0_10": 0,
+      "emotion_tags": [],
+      "notes": ""
+    },
+    {
+      "trade_id": "trade_016",
+      "date": "2026-01-08",
+      "ticker": "TSLA",
+      "instrument": "options",
+      "direction": "long",
+      "pnl_pct": -10.0,
+      "win": false,
+      "setup": "unspecified",
+      "trigger": "unspecified",
+      "stop_plan": "unspecified",
+      "take_profit_plan": "unspecified",
+      "adherence_score_0_10": 0,
+      "emotion_tags": [],
+      "notes": ""
+    },
+    {
+      "trade_id": "trade_017",
+      "date": "2026-01-08",
+      "ticker": "TSLA",
+      "instrument": "options",
+      "direction": "long",
+      "pnl_pct": 7.5,
+      "win": true,
+      "setup": "unspecified",
+      "trigger": "unspecified",
+      "stop_plan": "unspecified",
+      "take_profit_plan": "unspecified",
+      "adherence_score_0_10": 0,
+      "emotion_tags": [],
+      "notes": ""
+    },
+    {
+      "trade_id": "trade_018",
+      "date": "2026-01-08",
+      "ticker": "TSLA",
+      "instrument": "options",
+      "direction": "long",
+      "pnl_pct": -12.0,
+      "win": false,
+      "setup": "unspecified",
+      "trigger": "unspecified",
+      "stop_plan": "unspecified",
+      "take_profit_plan": "unspecified",
+      "adherence_score_0_10": 0,
+      "emotion_tags": [],
+      "notes": ""
+    },
+    {
+      "trade_id": "trade_019",
+      "date": "2026-01-08",
+      "ticker": "TSLA",
+      "instrument": "options",
+      "direction": "long",
+      "pnl_pct": 110.0,
+      "win": true,
+      "setup": "unspecified",
+      "trigger": "unspecified",
+      "stop_plan": "unspecified",
+      "take_profit_plan": "unspecified",
+      "adherence_score_0_10": 0,
+      "emotion_tags": [],
+      "notes": ""
+    }
+  ],
+  "daily_reviews": [
+    {
+      "date": "2026-01-02",
+      "actions": 4,
+      "buys": 3,
+      "sells": 1,
+      "closed_trades": [
+        "trade_001"
+      ],
+      "recap": {
+        "wins": 0,
+        "losses": 1,
+        "net_pnl_pct_sum": -36.0
+      },
+      "day_notes": {
+        "what_worked": "",
+        "what_failed": "",
+        "rule_breaks": "",
+        "one_fix_for_tomorrow": ""
+      }
+    },
+    {
+      "date": "2026-01-04",
+      "actions": 8,
+      "buys": 5,
+      "sells": 3,
+      "closed_trades": [
+        "trade_002",
+        "trade_003",
+        "trade_004"
+      ],
+      "recap": {
+        "wins": 2,
+        "losses": 1,
+        "net_pnl_pct_sum": 31.0
+      },
+      "day_notes": {
+        "what_worked": "",
+        "what_failed": "",
+        "rule_breaks": "",
+        "one_fix_for_tomorrow": ""
+      }
+    },
+    {
+      "date": "2026-01-05",
+      "actions": 3,
+      "buys": 1,
+      "sells": 2,
+      "closed_trades": [
+        "trade_005",
+        "trade_006"
+      ],
+      "recap": {
+        "wins": 0,
+        "losses": 2,
+        "net_pnl_pct_sum": -74.0
+      },
+      "day_notes": {
+        "what_worked": "",
+        "what_failed": "",
+        "rule_breaks": "",
+        "one_fix_for_tomorrow": ""
+      }
+    },
+    {
+      "date": "2026-01-06",
+      "actions": 7,
+      "buys": 3,
+      "sells": 4,
+      "closed_trades": [
+        "trade_007",
+        "trade_008",
+        "trade_009",
+        "trade_010"
+      ],
+      "recap": {
+        "wins": 4,
+        "losses": 0,
+        "net_pnl_pct_sum": 235.8
+      },
+      "day_notes": {
+        "what_worked": "",
+        "what_failed": "",
+        "rule_breaks": "",
+        "one_fix_for_tomorrow": ""
+      }
+    },
+    {
+      "date": "2026-01-07",
+      "actions": 6,
+      "buys": 3,
+      "sells": 3,
+      "closed_trades": [
+        "trade_011",
+        "trade_012",
+        "trade_013"
+      ],
+      "recap": {
+        "wins": 3,
+        "losses": 0,
+        "net_pnl_pct_sum": 97.4
+      },
+      "day_notes": {
+        "what_worked": "",
+        "what_failed": "",
+        "rule_breaks": "",
+        "one_fix_for_tomorrow": ""
+      }
+    },
+    {
+      "date": "2026-01-08",
+      "actions": 16,
+      "buys": 10,
+      "sells": 6,
+      "closed_trades": [
+        "trade_014",
+        "trade_015",
+        "trade_016",
+        "trade_017",
+        "trade_018",
+        "trade_019"
+      ],
+      "recap": {
+        "wins": 3,
+        "losses": 3,
+        "net_pnl_pct_sum": 42.5
+      },
+      "day_notes": {
+        "what_worked": "",
+        "what_failed": "",
+        "rule_breaks": "",
+        "one_fix_for_tomorrow": ""
+      }
+    }
+  ]
+}
