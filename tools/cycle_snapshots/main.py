@@ -18,15 +18,15 @@ import sys
 from pathlib import Path
 from datetime import datetime, timedelta
 
-# Add tools directory to path for imports
-tools_dir = Path(__file__).parent.parent
-sys.path.insert(0, str(tools_dir))
+# Add repository root to path for imports (needed for src/ access)
+repo_root = Path(__file__).parent.parent.parent
+sys.path.insert(0, str(repo_root))
 
-from cycle_snapshots.data_collectors.agent_status_collector import collect_all_agent_status
-from cycle_snapshots.data_collectors.task_log_collector import parse_task_log
-from cycle_snapshots.data_collectors.git_collector import analyze_git_activity
-from cycle_snapshots.aggregators.snapshot_aggregator import aggregate_snapshot
-from cycle_snapshots.core.snapshot_models import CycleSnapshot
+from tools.cycle_snapshots.data_collectors.agent_status_collector import collect_all_agent_status
+from tools.cycle_snapshots.data_collectors.task_log_collector import parse_task_log
+from tools.cycle_snapshots.data_collectors.git_collector import analyze_git_activity
+from tools.cycle_snapshots.aggregators.snapshot_aggregator import aggregate_snapshot
+from tools.cycle_snapshots.core.snapshot_models import CycleSnapshot
 
 logger = logging.getLogger(__name__)
 
