@@ -170,26 +170,30 @@ class RecoverySmokeTest:
     # ============================================================================
 
     def _test_message_queue_config(self, system_name: str, suite_config: Dict) -> Tuple[bool, str]:
-        """Test if message queue config is available."""
+        """Test if Message Queue config is available."""
+        # Message queue uses file-based storage, not Redis
+        # Check for queue directory configuration
+        optional_env_vars = [
+            'MESSAGE_QUEUE_DIR',  # Custom queue directory
+        ]
+
+        # Default queue directory is "message_queue" if not specified
+        queue_dir = os.getenv('MESSAGE_QUEUE_DIR', 'message_queue')
+
+        # Check if queue directory exists or can be created
         try:
-            # Try to import and check for basic config requirements
-            from src.utils.unified_utilities import get_project_root
-
-            # Check if required directories exist
-            project_root = get_project_root()
-            required_dirs = [
-                project_root / "message_queue",
-                project_root / "agent_workspaces"
-            ]
-
-            for dir_path in required_dirs:
-                if not dir_path.exists():
-                    return False, f"Required directory missing: {dir_path}"
-
-            return True, "Message queue directories exist"
-
+            queue_path = Path(queue_dir)
+            if queue_path.exists():
+                if queue_path.is_dir():
+                    return True, f"Queue directory exists: {queue_dir}"
+                else:
+                    return False, f"Queue path exists but is not a directory: {queue_dir}"
+            else:
+                # Try to create the directory
+                queue_path.mkdir(parents=True, exist_ok=True)
+                return True, f"Queue directory created: {queue_dir}"
         except Exception as e:
-            return False, f"Config check failed: {e}"
+            return False, f"Cannot access queue directory {queue_dir}: {e}"
 
     def _test_message_queue_dry_run(self, system_name: str, suite_config: Dict) -> Tuple[bool, str]:
         """Test message queue dry-run connectivity."""
