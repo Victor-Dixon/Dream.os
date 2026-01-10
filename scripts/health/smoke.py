@@ -168,6 +168,11 @@ class SmokeTestHarness:
     def _test_import(self, system_name: str, suite_config: Dict) -> Tuple[bool, str]:
         """Test if the module can be imported."""
         try:
+            # Ensure project root is in path for all imports
+            project_root = Path(__file__).parent.parent
+            if str(project_root) not in sys.path:
+                sys.path.insert(0, str(project_root))
+
             module_name = suite_config['module']
             importlib.import_module(module_name)
             return True, f"Import successful: {module_name}"
@@ -350,7 +355,7 @@ class SmokeTestHarness:
         """Test if FastAPI config is available."""
         try:
             # Check if required directories exist
-            from src.config.paths import get_project_root
+            from src.utils.unified_utilities import get_project_root
             project_root = get_project_root()
 
             required_dirs = [
