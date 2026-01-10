@@ -248,20 +248,38 @@ class SmokeTestHarness:
     def _test_twitch_dry_run(self, system_name: str, suite_config: Dict) -> Tuple[bool, str]:
         """Test Twitch bot dry-run connectivity."""
         try:
-            # Import the twitch eventsub server
-            import src.services.chat_presence.twitch_eventsub_server as twitch_server
+            # Import the twitch chat bridge
+            import src.services.chat_presence.twitch_chat_bridge as twitch_bridge
 
-            # Check if main function exists
-            if not hasattr(twitch_server, 'main'):
-                return False, "Missing main function"
+            # Check if TwitchChatBridge exists
+            if not hasattr(twitch_bridge, 'TwitchChatBridge'):
+                return False, "Missing TwitchChatBridge class"
 
-            # Check for required classes/functions
-            required_attrs = ['TwitchEventSubServer', 'run_server']
-            for attr in required_attrs:
-                if not hasattr(twitch_server, attr):
-                    return False, f"Missing required attribute: {attr}"
+            # Get config from environment
+            token = os.getenv('TWITCH_ACCESS_TOKEN', '')
+            channel = os.getenv('TWITCH_CHANNEL', '')
+            username = os.getenv('TWITCH_BOT_USERNAME', channel)
 
-            return True, "Twitch bot structure valid"
+            if not token or not channel:
+                return False, "Missing token or channel for dry-run test"
+
+            # Create bridge instance for validation (dry-run)
+            try:
+                bridge = twitch_bridge.TwitchChatBridge(
+                    username=username,
+                    token=token,
+                    channel=channel,
+                    message_handler=None,
+                    connection_handler=None,
+                    use_websocket=False  # Use IRC for dry-run
+                )
+
+                # Validate configuration (this will raise exception if invalid)
+                # We don't call connect() to avoid actual network connection
+                return True, "Twitch bot configuration valid for dry-run"
+
+            except Exception as config_error:
+                return False, f"Configuration validation failed: {config_error}"
 
         except Exception as e:
             return False, f"Dry-run failed: {e}"
@@ -365,4 +383,11 @@ class SmokeTestHarness:
 
 
 def main():
-    """Main en
+    """Main entry point for smoke test harness."""
+    harness = SmokeTestHarness()
+    exit_code = harness.run_all_tests()
+    sys.exit(exit_code)
+
+
+if __name__ == "__main__":
+    main()
