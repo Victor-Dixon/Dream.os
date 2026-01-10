@@ -233,10 +233,13 @@ class RecoverySmokeTest:
         if missing_vars:
             return False, f"Missing environment variables: {', '.join(missing_vars)}"
 
-        # Validate token format
+        # Validate token format (allow both oauth: prefixed and raw tokens)
         token = os.getenv('TWITCH_ACCESS_TOKEN', '')
-        if token and not token.startswith('oauth:'):
-            return False, "TWITCH_ACCESS_TOKEN should start with 'oauth:'"
+        if not token:
+            return False, "TWITCH_ACCESS_TOKEN is required"
+        # Token can be either raw or oauth: prefixed
+        if len(token) < 10:
+            return False, "TWITCH_ACCESS_TOKEN appears too short"
 
         return True, "Twitch configuration variables present"
 

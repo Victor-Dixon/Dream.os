@@ -61,19 +61,23 @@ logger = logging.getLogger(__name__)
 class UnifiedDiscordBot(commands.Bot):
     """Single unified Discord bot - backward compatibility shim."""
 
-    def __init__(self, token: str, channel_id: int | None = None):
+    def __init__(self, token: str, channel_id: int | None = None, dry_run: bool = False):
         """Initialize unified Discord bot with modular components."""
         intents = discord.Intents.default()
         intents.message_content = True
         intents.guilds = True
-        intents.members = True
+        intents.members = True  # Privileged intent - requires Discord app approval
         intents.voice_states = True
+
+        # Validate intents configuration
+        self._validate_intents(intents)
 
         super().__init__(command_prefix="!", intents=intents, help_command=None)
 
         # Store basic configuration
         self.token = token
         self.channel_id = channel_id
+        self.dry_run = dry_run
         self.logger = logging.getLogger(__name__)
 
         # Initialize core services
@@ -93,6 +97,54 @@ class UnifiedDiscordBot(commands.Bot):
         # Preserve properties for backward compatibility
         self.discord_user_map = self.config.discord_user_map
         self.thea_min_interval_minutes = self.services.thea_min_interval_minutes
+
+    def _validate_intents(self, intents: discord.Intents):
+        """Validate Discord intents configuration and warn about privileged intents."""
+        privileged_intents = []
+
+        if intents.members:
+            privileged_intents.append("members")
+        if intents.message_content:
+            privileged_intents.append("message_content")
+        if intents.guilds and intents.members:  # members intent requires guilds
+            pass  # This is expected
+
+        if privileged_intents:
+            self.logger.warning(f"⚠️  Bot is configured to use privileged intents: {', '.join(privileged_intents)}")
+            self.logger.warning("   These must be enabled in your Discord application:")
+            self.logger.warning("   https://discord.com/developers/applications/")
+            self.logger.warning("   Bot Settings → Privileged Gateway Intents")
+            self.logger.warning("   Enable: 'Server Members Intent' and 'Message Content Intent'")
+
+    async def validate_connection(self) -> bool:
+        """
+        Validate Discord connection without starting the full bot.
+        Returns True if connection test passes, False otherwise.
+        """
+        try:
+            # Test token validity by attempting a minimal connection
+            # This will fail with PrivilegedIntentsRequired if intents aren't enabled
+            await self.login(self.token)
+
+            # If login succeeds, logout immediately (dry-run success)
+            await self.close()
+            self.logger.info("✅ Discord connection validation successful (dry-run)")
+            return True
+
+        except discord.PrivilegedIntentsRequired as e:
+            self.logger.error("❌ Privileged intents required but not enabled in Discord app")
+            self.logger.error("   Required intents: members, message_content")
+            self.logger.error("   Enable at: https://discord.com/developers/applications/")
+            self.logger.error("   Bot Settings → Privileged Gateway Intents")
+            return False
+
+        except discord.LoginFailure as e:
+            self.logger.error(f"❌ Invalid Discord token: {e}")
+            return False
+
+        except Exception as e:
+            self.logger.error(f"❌ Discord connection validation failed: {e}")
+            return False
 
     # Event handler delegations
     async def on_ready(self):
