@@ -1,0 +1,15 @@
+{
+  "_ssot_domain": "config",
+  "tools": [
+    {
+      "id": "git",
+      "label": "Git operations",
+      "enabled": true
+    },
+    {
+      "id": "shell",
+      "label": "Shell execution",
+      "enabled": true
+    }
+  ]
+}

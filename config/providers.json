@@ -1,0 +1,17 @@
+{
+  "_ssot_domain": "config",
+  "providers": [
+    {
+      "id": "openai",
+      "label": "OpenAI-compatible",
+      "base_url": "https://api.openai.com/v1",
+      "supports_streaming": true
+    },
+    {
+      "id": "local",
+      "label": "Local model adapter",
+      "base_url": "http://localhost:8001",
+      "supports_streaming": true
+    }
+  ]
+}

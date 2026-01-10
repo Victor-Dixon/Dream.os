@@ -1,0 +1,86 @@
+<!doctype html>
+<!-- SSOT Domain: ui -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>swarm-console</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">swarm-console</p>
+          <h1>Multi-agent control plane</h1>
+          <p class="subtitle">Dispatch tasks, stream logs, and export patches in one unified workspace.</p>
+        </div>
+        <div class="status-pill">
+          <span class="pulse"></span>
+          <span id="apiStatus">API not connected</span>
+        </div>
+      </header>
+
+      <main class="grid">
+        <section class="panel">
+          <div class="panel-header">
+            <h2>Repo</h2>
+            <span class="chip">open_repo_path</span>
+          </div>
+          <label class="field">
+            <span>Repo path</span>
+            <input id="repoPath" placeholder="/path/to/repo" />
+          </label>
+          <button id="openRepo" class="primary">Open Repo</button>
+          <pre id="repoStatus" class="status">Waiting for repo…</pre>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header">
+            <h2>Agents</h2>
+            <span class="chip">create_agents</span>
+          </div>
+          <label class="field">
+            <span>Agent roster</span>
+            <textarea id="agentsInput" rows="7">
+[
+  {"id": "agent-1", "role": "repo-scaffold", "task": "Scaffold project"}
+]
+            </textarea>
+          </label>
+          <button id="saveAgents" class="primary">Save Agents</button>
+          <pre id="agentsStatus" class="status">Waiting for agents…</pre>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header">
+            <h2>Task Runner</h2>
+            <span class="chip">run_task</span>
+          </div>
+          <label class="field">
+            <span>Task prompt</span>
+            <textarea id="taskPrompt" rows="5" placeholder="Describe the task..."></textarea>
+          </label>
+          <div class="panel-actions">
+            <button id="runTask" class="primary">Run Task</button>
+            <button id="refreshRuns" class="ghost">Refresh Runs</button>
+          </div>
+          <pre id="taskStatus" class="status">Awaiting task…</pre>
+        </section>
+
+        <section class="panel panel-wide">
+          <div class="panel-header">
+            <h2>Runs & Logs</h2>
+            <span class="chip">evidence_bundle</span>
+          </div>
+          <div class="runs">
+            <ul id="runsList" class="runs-list"></ul>
+            <pre id="runDetail" class="status">Select a run to inspect its evidence bundle.</pre>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
