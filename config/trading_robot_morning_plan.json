@@ -1,0 +1,12 @@
+{
+  "tz": "America/Chicago",
+  "symbol": "TSLA",
+  "r_dollars": 100,
+  "daily_max_r": 2,
+  "macd": { "fast": 12, "slow": 26, "signal": 9 },
+  "timeframes": ["5m", "15m"],
+  "plan_time_local": "08:45",
+  "discord": {
+    "webhook_url": "PUT_IN_ENV_OR_HERE"
+  }
+}
