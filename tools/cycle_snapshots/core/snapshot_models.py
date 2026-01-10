@@ -8,6 +8,8 @@ Author: Agent-3 (Infrastructure & DevOps Specialist)
 Architecture: Agent-2 (Architecture & Design Specialist)
 Created: 2026-01-08
 V2 Compliant: Yes (<400 lines, classes <200 lines)
+
+<!-- SSOT Domain: tools -->
 """
 
 from dataclasses import dataclass, field
@@ -24,6 +26,7 @@ class SnapshotMetadata:
     generated_at: datetime = field(default_factory=datetime.now)
     system: str = "Cycle Snapshot System"
     purpose: str = "Central nervous system data collection for swarm coordination"
+    reset_status: Dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass
@@ -95,7 +98,8 @@ class CycleSnapshot:
                 "snapshot_version": self.metadata.snapshot_version,
                 "generated_at": self.metadata.generated_at.isoformat(),
                 "system": self.metadata.system,
-                "purpose": self.metadata.purpose
+                "purpose": self.metadata.purpose,
+                "reset_status": self.metadata.reset_status
             },
             "project_state": {
                 "active_agents": self.project_state.active_agents,
