@@ -108,14 +108,16 @@ class MessageQueueProcessor:
         try:
             while self.running:
                 self._maybe_trigger_output_flywheel()
-                # Dequeue up to batch_size entries
-                entries = []
-                for _ in range(batch_size):
-                    entry = safe_dequeue(self.queue)
-                    if entry is None:
+                # Dequeue batch of entries using MessageQueue interface
+                try:
+                    entries = self.queue.dequeue(batch_size)
+                    if not entries:
+                        if max_messages is None:
+                            time.sleep(interval)
+                            continue
                         break
-                    entries.append(entry)
-                if not entries:
+                except Exception as e:
+                    logger.error(f"Failed to dequeue messages: {e}")
                     if max_messages is None:
                         time.sleep(interval)
                         continue
@@ -345,6 +347,52 @@ class MessageQueueProcessor:
                 queue_id, e, self.queue, tracker, recipient,
                 self.performance_metrics, delivery_start_time, use_pyautogui, content
             )
+            return False
+
+    def process_message(self, message: Any) -> bool:
+        """
+        Process a single message (smoke test compatibility method).
+
+        This method provides compatibility with smoke tests that expect
+        individual message processing capability.
+        """
+        try:
+            # Create a queue entry from the message
+            entry = QueueEntry(
+                queue_id="smoke_test",
+                message={"content": message, "type": "smoke_test"},
+                priority="normal",
+                status="pending"
+            )
+
+            # Use the existing delivery logic
+            return self._deliver_entry(entry)
+        except Exception as e:
+            logger.error(f"Failed to process message: {e}")
+            return False
+
+    def enqueue_message(self, message: Any, priority: str = "normal") -> bool:
+        """
+        Enqueue a single message (smoke test compatibility method).
+
+        This method provides compatibility with smoke tests that expect
+        individual message enqueueing capability.
+        """
+        try:
+            # Create a queue entry
+            entry = QueueEntry(
+                queue_id="smoke_test",
+                message={"content": message, "type": "smoke_test"},
+                priority=priority,
+                status="pending"
+            )
+
+            # Add to queue
+            self.queue.enqueue(entry)
+            logger.info(f"Enqueued message with priority {priority}")
+            return True
+        except Exception as e:
+            logger.error(f"Failed to enqueue message: {e}")
             return False
 
 
