@@ -32,7 +32,7 @@ class TheaCommands(commands.Cog):
 
     def __init__(self, bot: "UnifiedDiscordBot", gui_controller):
         """Initialize Thea commands."""
-        commands.Cog.__init__(self)
+        super().__init__()
         self.bot = bot
         self.gui_controller = gui_controller
         self.logger = logging.getLogger(__name__)
@@ -58,21 +58,26 @@ class TheaCommands(commands.Cog):
             # Get Thea service
             thea_service = self.bot._get_thea_service(headless=True)
 
-            # Send message to Thea
-            result = thea_service.send_message(message)
+            # Send message to Thea using correct API
+            try:
+                response_content = thea_service.send_prompt_and_get_response_text(message)
 
-            if result and result.success and result.response:
-                # Success response
-                embed.description = f"**Query:** {message}\n\n**Response:** {result.response.content[:1900]}"
-                embed.color = discord.Color.green()
-                embed.set_footer(text=f"Requested by {ctx.author.display_name} | Thea Manager")
+                if response_content and len(response_content.strip()) > 0:
+                    # Success response
+                    embed.description = f"**Query:** {message}\n\n**Response:** {str(response_content)[:1900]}"
+                    embed.color = discord.Color.green()
+                    embed.set_footer(text=f"Requested by {ctx.author.display_name} | Thea Manager")
 
-                if len(result.response.content) > 1900:
-                    embed.description += "..."
-            else:
+                    if len(str(response_content)) > 1900:
+                        embed.description += "..."
+                else:
+                    # Empty response
+                    embed.description = f"**Query:** {message}\n\n**Response:** *No response from Thea Manager*"
+                    embed.color = discord.Color.yellow()
+
+            except Exception as service_error:
                 # Error response
-                error_msg = result.error_message if result else "Unknown error"
-                embed.description = f"**Query:** {message}\n\n**Error:** {error_msg}"
+                embed.description = f"**Query:** {message}\n\n**Error:** {str(service_error)}"
                 embed.color = discord.Color.red()
 
             await response_msg.edit(embed=embed)
@@ -110,8 +115,9 @@ class TheaCommands(commands.Cog):
                 )
 
                 # Try to check authentication status
-                is_authenticated = thea_service.check_authentication_status()
-                auth_status = "✅ Authenticated" if is_authenticated else "❌ Not authenticated"
+                # Note: TheaBrowserService doesn't have check_authentication_status method
+                # We'll assume it's authenticated if service is available
+                auth_status = "✅ Service Available (authentication assumed)"
                 embed.add_field(
                     name="🔐 Authentication",
                     value=auth_status,
