@@ -135,6 +135,34 @@ class BaseMessageModal(discord.ui.Modal):
             sender=sender,
         )
 
+    def _send_jet_fuel_message(
+        self,
+        target: str,
+        message: str,
+        priority: str = "urgent",
+        discord_user=None,
+    ) -> dict:
+        """Send Jet Fuel coordination message."""
+        jet_fuel_message = f"🚀 JET FUEL COORDINATION - AUTONOMOUS MODE ACTIVATED\n\n{message}"
+
+        sender = (
+            f"Discord User ({getattr(discord_user, 'name', '')})"
+            if discord_user
+            else "Discord GUI"
+        )
+        discord_user_id = str(getattr(discord_user, "id", "")) if discord_user else None
+
+        return self.messaging_service.send_message(
+            agent=target,
+            message=jet_fuel_message,
+            priority=priority,
+            use_pyautogui=True,
+            discord_user_id=discord_user_id,
+            apply_template=True,
+            message_category=MessageCategory.D2A,
+            sender=sender,
+        )
+
     def _broadcast_to_agents(
         self,
         agents: list[str],
@@ -173,6 +201,78 @@ class BaseMessageModal(discord.ui.Modal):
     def _format_error_message(self, errors: list[str], max_errors: int = 3) -> str:
         """Format error message list."""
         return "\n".join(errors[:max_errors])
+
+    async def _handle_submit(self, interaction: discord.Interaction, target: str, message_type: str):
+        """Handle modal submission for messages."""
+        try:
+            message = self.message_input.value
+            priority = getattr(self, 'priority_input', None)
+            priority = priority.value if priority else "regular"
+
+            preview = self._get_message_preview(message)
+
+            if message_type == "agent":
+                result = self._send_to_agent(target, message, priority, discord_user=interaction.user)
+                if result.get("success"):
+                    await interaction.response.send_message(
+                        f"✅ Message sent to {target}!\n📝 Preview: {preview}", ephemeral=True
+                    )
+                else:
+                    await interaction.response.send_message(
+                        f"❌ Failed to send message to {target}: {result.get('error', 'Unknown error')}",
+                        ephemeral=True
+                    )
+            elif message_type == "broadcast":
+                agents = self._get_all_agent_ids()
+                success_count, errors = self._broadcast_to_agents(agents, message, priority, discord_user=interaction.user)
+                if success_count > 0:
+                    await interaction.response.send_message(
+                        f"✅ Broadcast sent to {success_count} agents!\n📝 Preview: {preview}", ephemeral=True
+                    )
+                else:
+                    await interaction.response.send_message(
+                        f"❌ Broadcast failed: {self._format_error_message(errors)}", ephemeral=True
+                    )
+            elif message_type == "jetfuel":
+                # Jet Fuel specific handling
+                result = self._send_jet_fuel_message(target, message, priority, discord_user=interaction.user)
+                if result.get("success"):
+                    await interaction.response.send_message(
+                        f"🚀 Jet Fuel coordination sent!\n📝 Preview: {preview}", ephemeral=True
+                    )
+                else:
+                    await interaction.response.send_message(
+                        f"❌ Jet Fuel coordination failed: {result.get('error', 'Unknown error')}",
+                        ephemeral=True
+                    )
+
+        except Exception as e:
+            logger.error(f"Modal submit error: {e}")
+            await interaction.response.send_message(
+                f"❌ An error occurred: {str(e)}", ephemeral=True
+            )
+
+    async def _handle_mermaid_submit(self, interaction: discord.Interaction):
+        """Handle Mermaid diagram modal submission."""
+        try:
+            diagram_code = self.message_input.value
+
+            # Basic validation
+            if not diagram_code.strip():
+                await interaction.response.send_message("❌ Please enter Mermaid diagram code.", ephemeral=True)
+                return
+
+            # For now, just acknowledge - full Mermaid rendering would need additional setup
+            await interaction.response.send_message(
+                f"📊 Mermaid diagram submitted!\n```\n{diagram_code[:500]}{'...' if len(diagram_code) > 500 else ''}\n```",
+                ephemeral=True
+            )
+
+        except Exception as e:
+            logger.error(f"Mermaid modal error: {e}")
+            await interaction.response.send_message(
+                f"❌ Failed to process Mermaid diagram: {str(e)}", ephemeral=True
+            )
 
 
 __all__ = ["BaseMessageModal"]

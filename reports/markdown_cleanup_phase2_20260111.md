@@ -5,18 +5,18 @@
 ## Executive Summary
 
 **Duplicate Analysis:**
-- Total duplicate groups: 71
-- Files in duplicate groups: 152
-- Potential space savings: 81 files
+- Total duplicate groups: 61
+- Files in duplicate groups: 128
+- Potential space savings: 67 files
 
 **Safe Operations Identified:**
-- Symlink creation operations: 4
+- Symlink creation operations: 0
 - Archive reorganization targets: 0
 - Total files that could be processed: 0
 
 **Execution Results (Safe Operations):**
 - Symlinks created: 0
-- Symlinks that would be created: 9
+- Symlinks that would be created: 0
 - Errors encountered: 0
 - Missing files: 0
 
@@ -31,61 +31,36 @@
 - agent_workspaces\Agent-1\devlog.md
 - ... and 3 more
 
-**Group 2:** 3 files
-- agent_workspaces\Agent-3\devlog_2025-12-14_readme_update.md
-- data\models\swarm_brain\devlogs\repository_analysis\2025-12-13_agent-3_devlog_2025-12-14_readme_update.md
-- archive\data\backup_20260106_071520\agent_workspaces\Agent-3\devlog_2025-12-14_readme_update.md
-**Group 3:** 3 files
-- agent_workspaces\Agent-3\devlog_2025-12-14_final_session.md
-- data\models\swarm_brain\devlogs\agent_sessions\2025-12-14_agent-3_devlog_2025-12-14_final_session.md
-- archive\data\backup_20260106_071520\agent_workspaces\Agent-3\devlog_2025-12-14_final_session.md
-**Group 4:** 3 files
-- agent_workspaces\Agent-3\inbox\archive\2025-12-02_final_processed\DISCORD_DEVLOG_BROADCAST.md
-- agent_workspaces\consolidated_archives\Agent-3\2025-12\DISCORD_DEVLOG_BROADCAST.md
-- archive\data\backup_20260106_071520\agent_workspaces\Agent-3\inbox\archive\2025-12-02_final_processed\DISCORD_DEVLOG_BROADCAST.md
-**Group 5:** 3 files
-- agent_workspaces\Agent-1\devlogs\devlog_2025-12-14_phase6_complete.md
-- data\models\swarm_brain\devlogs\mission_reports\2025-12-14_agent-1_devlog_2025-12-14_phase6_complete.md
-- archive\data\backup_20260106_071520\agent_workspaces\Agent-1\devlogs\devlog_2025-12-14_phase6_complete.md
-**Group 6:** 2 files
+**Group 2:** 2 files
 - agent_workspaces\Agent-7\devlog_2025-12-26_tier1_completion.md
 - archive\data\backup_20260106_071520\agent_workspaces\Agent-7\devlog_2025-12-26_tier1_completion.md
-**Group 7:** 2 files
+**Group 3:** 2 files
 - agent_workspaces\Agent-7\devlog_2025-12-26_tier1_completion_short.md
 - archive\data\backup_20260106_071520\agent_workspaces\Agent-7\devlog_2025-12-26_tier1_completion_short.md
-**Group 8:** 2 files
+**Group 4:** 2 files
 - agent_workspaces\Agent-7\devlog_2025-12-26_build_in_public_phase0.md
 - archive\data\backup_20260106_071520\agent_workspaces\Agent-7\devlog_2025-12-26_build_in_public_phase0.md
-**Group 9:** 2 files
+**Group 5:** 2 files
 - agent_workspaces\Agent-7\devlog_2025-12-26_deployment_verification.md
 - archive\deployments\backup_20260106_071520\agent_workspaces\Agent-7\devlog_2025-12-26_deployment_verification.md
-**Group 10:** 2 files
+**Group 6:** 2 files
 - agent_workspaces\Agent-7\devlog_2025-12-26_deployment_attempt.md
 - archive\deployments\backup_20260106_071520\agent_workspaces\Agent-7\devlog_2025-12-26_deployment_attempt.md
+**Group 7:** 2 files
+- agent_workspaces\Agent-7\devlog_2025-12-26_build_in_public_visibility_fixes.md
+- archive\data\backup_20260106_071520\agent_workspaces\Agent-7\devlog_2025-12-26_build_in_public_visibility_fixes.md
+**Group 8:** 2 files
+- agent_workspaces\Agent-7\devlog_2025-12-26_tradingrobotplug_ui_refinement.md
+- archive\data\backup_20260106_071520\agent_workspaces\Agent-7\devlog_2025-12-26_tradingrobotplug_ui_refinement.md
+**Group 9:** 2 files
+- agent_workspaces\Agent-7\devlog_2025-12-26_session_final.md
+- archive\data\backup_20260106_071520\agent_workspaces\Agent-7\devlog_2025-12-26_session_final.md
+**Group 10:** 2 files
+- agent_workspaces\Agent-7\devlog_2025-12-28_block6_implementation.md
+- archive\data\backup_20260106_071520\agent_workspaces\Agent-7\devlog_2025-12-28_block6_implementation.md
 
 ### Safe Symlink Operations
 The following operations can be executed with minimal risk:
-**Authoritative:** agent_workspaces\Agent-3\devlog_2025-12-14_readme_update.md
-**Targets:**
-- data\models\swarm_brain\devlogs\repository_analysis\2025-12-13_agent-3_devlog_2025-12-14_readme_update.md
-- archive\data\backup_20260106_071520\agent_workspaces\Agent-3\devlog_2025-12-14_readme_update.md
-
-**Authoritative:** agent_workspaces\Agent-3\devlog_2025-12-14_final_session.md
-**Targets:**
-- data\models\swarm_brain\devlogs\agent_sessions\2025-12-14_agent-3_devlog_2025-12-14_final_session.md
-- archive\data\backup_20260106_071520\agent_workspaces\Agent-3\devlog_2025-12-14_final_session.md
-
-**Authoritative:** agent_workspaces\Agent-3\inbox\archive\2025-12-02_final_processed\DISCORD_DEVLOG_BROADCAST.md
-**Targets:**
-- agent_workspaces\Agent-3\inbox\archive\2025-12-02_final_processed\DISCORD_DEVLOG_BROADCAST.md
-- agent_workspaces\consolidated_archives\Agent-3\2025-12\DISCORD_DEVLOG_BROADCAST.md
-- archive\data\backup_20260106_071520\agent_workspaces\Agent-3\inbox\archive\2025-12-02_final_processed\DISCORD_DEVLOG_BROADCAST.md
-
-**Authoritative:** agent_workspaces\Agent-1\devlogs\devlog_2025-12-14_phase6_complete.md
-**Targets:**
-- data\models\swarm_brain\devlogs\mission_reports\2025-12-14_agent-1_devlog_2025-12-14_phase6_complete.md
-- archive\data\backup_20260106_071520\agent_workspaces\Agent-1\devlogs\devlog_2025-12-14_phase6_complete.md
-
 
 ### Archive Reorganization Opportunities
 Recent files found in archive directories that could be moved back to working areas:
