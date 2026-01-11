@@ -396,7 +396,14 @@ def send_message(
     tags: list[UnifiedMessageTag] | None = None,
     metadata: dict[str, Any] | None = None,
 ) -> bool:
-    """Send message using the SINGLE SOURCE OF TRUTH."""
+    """
+    Send message using the SINGLE SOURCE OF TRUTH.
+
+    ⚠️  DEPRECATED: Direct messaging functions are deprecated.
+    For agent-to-agent communication, use the A2A coordination protocol:
+    python -m src.services.messaging_cli --agent Agent-X --category a2a --sender Agent-Y --message "..."
+    This ensures bilateral coordination protocol compliance and swarm force multiplication.
+    """
     return messaging_core.send_message(
         content, sender, recipient, message_type, priority, tags, metadata
     )

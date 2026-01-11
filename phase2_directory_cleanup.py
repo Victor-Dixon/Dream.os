@@ -1,18 +1,40 @@
 #!/usr/bin/env python3
 """
-Phase 2 Directory Audit Cleanup Script
+Phase 2 Directory Audit Cleanup Script - AI Enhanced
 Agent-6 Coordination & Communication Specialist
-Directory Audit Phase 2 - Controlled Cleanup & Archiving
+Directory Audit Phase 2 - Controlled Cleanup & Archiving with AI Context Analysis
 
-This script executes the controlled cleanup operations for Agent-6 assigned directories
-based on the DIRECTORY_AUDIT_PHASE2_EXECUTION_PLAN.md
+This script executes controlled cleanup operations with AI-powered analysis and recommendations.
+Integrates Phase 5 AI Context Engine for intelligent directory insights and automated suggestions.
+
+Features:
+- AI-powered workspace analysis and recommendations
+- Context-aware file pattern recognition
+- Intelligent cleanup suggestions with risk assessment
+- Automated recommendation generation
+- Integration with Phase 5 AI Context patterns
+
+Based on DIRECTORY_AUDIT_PHASE2_EXECUTION_PLAN.md
+AI Integration: Phase 5 Context Engine + Directory Analysis Patterns
 """
 
 import os
 import shutil
 import json
+import sys
 from datetime import datetime, timedelta
 from pathlib import Path
+from typing import Dict, List, Any, Tuple
+
+# AI Context Engine Integration
+try:
+    sys.path.append(str(Path(__file__).parent / "src"))
+    from services.ai_context_engine.ai_context_engine import AIContextEngine
+    from services.ai_context_engine.context_processors import AnalysisContextProcessor
+    AI_AVAILABLE = True
+except ImportError:
+    AI_AVAILABLE = False
+    print("⚠️  AI Context Engine not available - running in basic mode")
 
 class DirectoryCleanup:
     def __init__(self):
@@ -30,6 +52,18 @@ class DirectoryCleanup:
             archive_dir.mkdir(parents=True, exist_ok=True)
 
         print(f"📁 Archive directories created for {self.today}")
+
+        # Initialize AI Context Engine if available
+        self.ai_engine = None
+        self.context_processor = None
+        if AI_AVAILABLE:
+            try:
+                self.ai_engine = AIContextEngine()
+                self.context_processor = AnalysisContextProcessor()
+                print("🤖 AI Context Engine initialized - intelligent analysis enabled")
+            except Exception as e:
+                print(f"⚠️  AI Context Engine initialization failed: {e}")
+                AI_AVAILABLE = False
 
     def log_operation(self, operation, details):
         """Log cleanup operations"""
@@ -87,6 +121,91 @@ class DirectoryCleanup:
 
         return archived_count
 
+    def ai_analyze_directory_patterns(self, directory_path: Path) -> Dict[str, Any]:
+        """AI-powered analysis of directory patterns and usage"""
+        if not AI_AVAILABLE or not self.ai_engine:
+            return {"ai_available": False, "recommendations": []}
+
+        try:
+            # Create analysis context
+            context_data = {
+                "directory_path": str(directory_path),
+                "directory_type": "agent_workspace" if "Agent-" in str(directory_path) else "project_directory",
+                "analysis_type": "directory_audit",
+                "timestamp": datetime.now().isoformat()
+            }
+
+            # Get AI-powered analysis
+            analysis_result = self.context_processor.analyze_directory_context(context_data)
+
+            # Generate intelligent recommendations
+            recommendations = self._generate_ai_recommendations(directory_path, analysis_result)
+
+            return {
+                "ai_available": True,
+                "analysis_result": analysis_result,
+                "recommendations": recommendations,
+                "confidence_score": analysis_result.get("confidence", 0.0)
+            }
+
+        except Exception as e:
+            self.log_operation("AI_ERROR", f"AI analysis failed for {directory_path}: {e}")
+            return {"ai_available": False, "recommendations": [], "error": str(e)}
+
+    def _generate_ai_recommendations(self, directory_path: Path, analysis_result: Dict[str, Any]) -> List[Dict[str, Any]]:
+        """Generate intelligent recommendations based on AI analysis"""
+        recommendations = []
+
+        if not analysis_result:
+            return recommendations
+
+        # Analyze file patterns
+        file_patterns = analysis_result.get("file_patterns", {})
+        activity_level = analysis_result.get("activity_level", "unknown")
+        risk_factors = analysis_result.get("risk_factors", [])
+
+        # Generate recommendations based on patterns
+        if activity_level == "inactive":
+            recommendations.append({
+                "type": "cleanup",
+                "priority": "high",
+                "action": "archive_workspace",
+                "reason": "Workspace shows no recent activity - safe for archival",
+                "confidence": 0.85
+            })
+
+        elif activity_level == "low_activity":
+            recommendations.append({
+                "type": "monitor",
+                "priority": "medium",
+                "action": "flag_for_review",
+                "reason": "Low activity detected - review for consolidation potential",
+                "confidence": 0.70
+            })
+
+        # Analyze risk factors
+        for risk in risk_factors:
+            if risk.get("type") == "large_files":
+                recommendations.append({
+                    "type": "optimization",
+                    "priority": "medium",
+                    "action": "compress_large_files",
+                    "reason": f"Large files detected: {risk.get('details', 'unknown')}",
+                    "confidence": 0.75
+                })
+
+        # Pattern-based recommendations
+        if file_patterns.get("duplicate_configs", 0) > 2:
+            recommendations.append({
+                "type": "consolidation",
+                "priority": "high",
+                "action": "consolidate_configs",
+                "reason": f"Multiple configuration files detected ({file_patterns['duplicate_configs']}) - consolidation opportunity",
+                "confidence": 0.80
+            })
+
+        return recommendations
+
     def analyze_agent_workspaces(self):
         """Analyze agent workspaces for cleanup candidates"""
         workspace_dir = self.base_dir / "agent_workspaces"
@@ -103,6 +222,15 @@ class DirectoryCleanup:
         active_workspaces = []
 
         for agent_dir in agent_dirs:
+            # AI-powered analysis for intelligent recommendations
+            ai_analysis = self.ai_analyze_directory_patterns(agent_dir)
+
+            if ai_analysis.get("ai_available", False):
+                # Log AI recommendations
+                for rec in ai_analysis.get("recommendations", []):
+                    self.log_operation("AI_RECOMMENDATION",
+                        f"{agent_dir.name}: {rec['action']} ({rec['priority']} priority, {rec['confidence']:.1%} confidence) - {rec['reason']}")
+
             # Check for status.json
             status_file = agent_dir / "status.json"
             if status_file.exists():

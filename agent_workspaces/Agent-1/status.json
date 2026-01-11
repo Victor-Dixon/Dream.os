@@ -1,7 +1,14 @@
 {
   "agent_id": "Agent-1",
-  "last_activity": "Posted devlog: 2026-01-10_agent-1_fastapi_blocker_coordination.md",
+  "last_activity": {
+    "timestamp": "2026-01-11T02:00:15.902518",
+    "message_id": "1b494909-9987-4ba6-a980-bbaa381c9278",
+    "category": "a2a",
+    "recipient": "Agent-5"
+  },
   "last_seen": "2026-01-10T11:27:49.105901+00:00",
   "status": "ACTIVE",
-  "devlog_file": "devlogs/2026-01-10_agent-1_fastapi_blocker_coordination.md"
+  "devlog_file": "devlogs/2026-01-10_agent-1_fastapi_blocker_coordination.md",
+  "last_updated": "2026-01-11T02:00:15.903520",
+  "agent_name": "Agent-1 Agent"
 }

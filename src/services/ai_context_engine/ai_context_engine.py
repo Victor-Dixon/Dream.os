@@ -50,7 +50,7 @@ from src.core.base.base_service import BaseService
 from .models import ContextSession, ContextSuggestion
 from .context_processors import (
     ContextProcessor, TradingContextProcessor, CollaborationContextProcessor,
-    AnalysisContextProcessor, RiskContextProcessor
+    AnalysisContextProcessor, RiskContextProcessor, UXContextProcessor
 )
 from .session_manager import SessionManager
 
@@ -97,7 +97,8 @@ class AIContextEngine(BaseService):
             'trading': TradingContextProcessor(),
             'collaboration': CollaborationContextProcessor(),
             'analysis': AnalysisContextProcessor(),
-            'risk': RiskContextProcessor()
+            'risk': RiskContextProcessor(),
+            'ux': UXContextProcessor()
         }
 
     def _init_performance_stats(self) -> Dict[str, Any]:

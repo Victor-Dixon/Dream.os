@@ -5,6 +5,10 @@ Messaging Module - Public API Exports
 
 <!-- SSOT Domain: integration -->
 
+⚠️  DEPRECATION NOTICE: Legacy messaging functions are deprecated.
+   Use A2A coordination protocol for all agent-to-agent communication:
+   python -m src.services.messaging_cli --agent Agent-X --category a2a --sender Agent-Y --message "..."
+
 Public API exports for messaging infrastructure.
 Extracted from messaging_infrastructure.py for V2 compliance.
 

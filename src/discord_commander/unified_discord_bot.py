@@ -63,6 +63,9 @@ class UnifiedDiscordBot(commands.Bot):
 
     def __init__(self, token: str, channel_id: int | None = None, dry_run: bool = False):
         """Initialize unified Discord bot with modular components."""
+        # Initialize logger first
+        self.logger = logging.getLogger(__name__)
+
         intents = discord.Intents.default()
         intents.message_content = True
         intents.guilds = True
@@ -78,7 +81,6 @@ class UnifiedDiscordBot(commands.Bot):
         self.token = token
         self.channel_id = channel_id
         self.dry_run = dry_run
-        self.logger = logging.getLogger(__name__)
 
         # Initialize core services
         self.messaging_service = UnifiedMessagingService()
@@ -207,9 +209,9 @@ class UnifiedDiscordBot(commands.Bot):
         return self.config.discord_user_map
 
 
-# Main entry point moved to bot_runner.py for V2 compliance
+# Main entry point moved to bot_runner_v2.py for V2 compliance
 if __name__ == "__main__":
-    from src.discord_commander.bot_runner import main
+    from src.discord_commander.bot_runner_v2 import main
     import asyncio
     import sys
     

@@ -7,8 +7,14 @@
 
 V2 Compliance: Refactored to <300 lines
 SOLID Principles: Single Responsibility, Open-Closed
+SSOT: A2A Coordination Protocol is the single source of truth for agent communication
+
+⚠️  DEPRECATION NOTICE: Legacy messaging methods are deprecated.
+   Use --category a2a --sender Agent-X for all agent-to-agent communication.
+   This ensures bilateral coordination protocol compliance and force multiplication.
 
 Author: Agent-2 - Architecture & Design Specialist (V2 Refactor)
+Updated: Agent-1 - Integration & Core Systems (A2A SSOT Implementation)
 """
 
 import logging

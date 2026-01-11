@@ -27,7 +27,7 @@ from .ai_context_engine import AIContextEngine, ai_context_engine
 from .models import ContextSession, ContextSuggestion
 from .context_processors import (
     ContextProcessor, TradingContextProcessor, CollaborationContextProcessor,
-    AnalysisContextProcessor, RiskContextProcessor
+    AnalysisContextProcessor, RiskContextProcessor, UXContextProcessor
 )
 from .session_manager import SessionManager
 from .suggestion_generators import SuggestionGenerators
@@ -42,6 +42,7 @@ __all__ = [
     'CollaborationContextProcessor',
     'AnalysisContextProcessor',
     'RiskContextProcessor',
+    'UXContextProcessor',
     'SessionManager',
     'SuggestionGenerators'
 ]

@@ -238,27 +238,93 @@ class MessageFormattingService:
         )
         
         if is_templated_message:
-            # Message already has template applied - use content as-is
-            content_to_use = message.content
-            
-            # If content has both prefix AND template header, extract template part
-            if "[HEADER]" in content_to_use and not content_to_use.startswith("[HEADER]"):
-                header_index = content_to_use.find("[HEADER]")
-                if header_index > 0:
-                    original_length = len(content_to_use)
-                    content_to_use = content_to_use[header_index:]
-                    logger.info(
-                        f"🔧 Extracted template content: removed {header_index} chars prefix, "
-                        f"template length: {len(content_to_use)} (was {original_length})"
+            # Check if message already has template header
+            if content_has_template_header:
+                # Message already has template applied - use content as-is
+                content_to_use = message.content
+
+                # If content has both prefix AND template header, extract template part
+                if "[HEADER]" in content_to_use and not content_to_use.startswith("[HEADER]"):
+                    header_index = content_to_use.find("[HEADER]")
+                    if header_index > 0:
+                        original_length = len(content_to_use)
+                        content_to_use = content_to_use[header_index:]
+                        logger.info(
+                            f"🔧 Extracted template content: removed {header_index} chars prefix, "
+                            f"template length: {len(content_to_use)} (was {original_length})"
+                        )
+
+                # Don't add any prefix - template is complete as-is
+                msg_content = content_to_use
+                logger.info(
+                    f"✅ Using pre-rendered template content "
+                    f"(category: {category_value}, has_header: {content_has_template_header}, "
+                    f"final_length: {len(msg_content)})"
+                )
+            else:
+                # Message needs template applied automatically
+                logger.info(
+                    f"🎨 Applying {category_value.upper()} template to message content "
+                    f"(length: {len(message.content)})"
+                )
+
+                try:
+                    # Import the template application function
+                    from src.services.messaging.message_formatters import _apply_template
+                    from src.core.messaging_models_core import MessageCategory
+                    import uuid
+                    from datetime import datetime
+
+                    # Convert category string to enum
+                    template_category = None
+                    if category_value == "a2a":
+                        template_category = MessageCategory.A2A
+                    elif category_value == "d2a":
+                        template_category = MessageCategory.D2A
+                    elif category_value == "c2a":
+                        template_category = MessageCategory.C2A
+                    elif category_value == "s2a":
+                        template_category = MessageCategory.S2A
+
+                    if template_category:
+                        # Apply the template
+                        msg_content = _apply_template(
+                            category=template_category,
+                            message=message.content,
+                            sender=sender,
+                            recipient=message.recipient,
+                            priority=message.priority.value,
+                            message_id=str(uuid.uuid4()),
+                            extra={
+                                "ask": message.content,
+                                "context": "",
+                                "coordination_rationale": "To leverage parallel processing and accelerate completion",
+                                "expected_contribution": "Domain expertise and parallel execution",
+                                "coordination_timeline": "ASAP - coordination needed to maintain momentum",
+                            }
+                        )
+                        logger.info(
+                            f"✅ Applied {category_value.upper()} template successfully "
+                            f"(original: {len(message.content)} chars, templated: {len(msg_content)} chars)"
+                        )
+                    else:
+                        # Fallback to prefix formatting
+                        msg_content = format_c2a_message(
+                            recipient=message.recipient,
+                            content=message.content,
+                            priority=message.priority.value,
+                            sender=sender
+                        )
+                        logger.warning(f"⚠️ Unknown template category '{category_value}', using prefix formatting")
+
+                except Exception as e:
+                    logger.error(f"❌ Template application failed: {e}, using prefix formatting")
+                    msg_content = format_c2a_message(
+                        recipient=message.recipient,
+                        content=message.content,
+                        priority=message.priority.value,
+                        sender=sender
                     )
-            
-            # Don't add any prefix - template is complete as-is
-            msg_content = content_to_use
-            logger.info(
-                f"✅ Using pre-rendered template content "
-                f"(category: {category_value}, has_header: {content_has_template_header}, "
-                f"final_length: {len(msg_content)})"
-            )
         else:
             # No template header - format with prefix
             logger.info(

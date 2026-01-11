@@ -28,11 +28,16 @@ from .cli_parser_helpers import (
 )
 
 CLI_HELP_EPILOG = """
-🐝 SWARM MESSAGING CLI - COMMAND YOUR AGENTS!
+🐝 SWARM MESSAGING CLI - A2A COORDINATION SSOT
 ==============================================
 
-EXAMPLES:
----------
+⭐ A2A COORDINATION PROTOCOL (SSOT - Recommended for all agent communication)
+--------------------------------------------------------------------------------
+python -m src.services.messaging_cli --agent Agent-X --category a2a --sender Agent-Y \\
+    --message "Your coordination request here"
+
+⚠️  LEGACY METHODS (Deprecated - migrate to A2A coordination)
+--------------------------------------------------------------------------------
 # Send message to specific agent
 python -m src.services.messaging_cli --message "Start survey" --agent Agent-1
 # Broadcast to all agents
@@ -41,7 +46,7 @@ python -m src.services.messaging_cli --message "SWARM ALERT!" --broadcast
 python -m src.services.messaging_cli --message "URGENT: Fix issue" \\
     --agent Agent-2 --priority urgent --tags bug critical
 
-# V3 Enhanced Features
+# V3 Enhanced Features (Maintenance)
 python -m src.services.messaging_cli --verify-delivery    # Check all deliveries
 python -m src.services.messaging_cli --clean-queue        # Remove system messages
 python -m src.services.messaging_cli --reset-stuck        # Reset stuck messages
@@ -49,7 +54,7 @@ python -m src.services.messaging_cli --queue-stats        # Show statistics
 python -m src.services.messaging_cli --health-check       # System health check
 python -m src.services.messaging_cli --process-workspaces # Clean all workspaces
 
-🐝 WE. ARE. SWARM - COORDINATE THROUGH PYAUTOGUI!
+🐝 WE. ARE. SWARM - COORDINATE THROUGH BILATERAL PROTOCOL!
 """
 
 
