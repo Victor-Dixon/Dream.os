@@ -4,8 +4,7 @@ WearSwarm.online Validation Script
 Validates Google Fonts loading and character rendering
 """
 
-import requests
-from bs4 import BeautifulSoup
+from .validation_utils import FontValidator, HTTPValidator
 
 def validate_weareswarm():
     """Validate weareswarm.online Google Fonts and rendering"""
@@ -14,54 +13,60 @@ def validate_weareswarm():
     print('=' * 60)
 
     try:
+        # Initialize validators
+        http_validator = HTTPValidator("https://weareswarm.online")
+        font_validator = FontValidator("https://weareswarm.online")
+
         # Check the main page
-        response = requests.get('https://weareswarm.online', timeout=10)
-        print(f'✅ Page loads: {response.status_code == 200}')
+        page_result = http_validator.check_url('/')
+        print(f'✅ Page loads: {page_result["success"]}')
 
-        if response.status_code == 200:
-            soup = BeautifulSoup(response.text, 'html.parser')
+        if page_result["success"]:
+            # Validate font loading
+            font_result = font_validator.validate_font_loading()
+            print(f'📄 Google Fonts links found: {len(font_result.get("font_families_found", []))}')
 
-            # Check for Google Fonts links
-            google_fonts_links = soup.find_all('link', href=lambda x: x and 'fonts.googleapis.com' in x)
-            print(f'📄 Google Fonts links found: {len(google_fonts_links)}')
+            if "preconnect_configured" in font_result:
+                print(f'📡 Preconnect configured: {"✅" if font_result["preconnect_configured"] else "❌"}')
 
-            for link in google_fonts_links:
-                href = link.get('href', 'N/A')
-                print(f'   - {href}')
-
-            # Check for font preconnect links
-            preconnect_links = soup.find_all('link', {'rel': 'preconnect'}, href=lambda x: x and 'fonts.gstatic.com' in x)
-            print(f'📡 Preconnect links found: {len(preconnect_links)}')
-
-            # Check for text content with 's' characters
-            body_text = soup.get_text()
-            s_count = body_text.count('s') + body_text.count('S')
+            # Validate character rendering
+            char_result = font_validator.validate_character_rendering()
+            s_count = sum(char_result.get("character_counts", {}).values())
             print(f'📝 Total s/S characters in content: {s_count}')
 
-            # Check for common words with 's' that might reveal rendering issues
-            test_words = ['swarm', 'services', 'solutions', 'systems', 'software']
-            found_words = []
-            for word in test_words:
-                if word.lower() in body_text.lower():
-                    found_words.append(word)
+            # Check for common words
+            try:
+                import requests
+                response = requests.get('https://weareswarm.online', timeout=10)
+                body_text = response.text.lower()
+                test_words = ['swarm', 'services', 'solutions', 'systems', 'software']
+                found_words = [word for word in test_words if word in body_text]
+                print(f'🔤 Words with s-characters found: {found_words}')
+            except Exception:
+                print('🔤 Could not check word content')
 
-            print(f'🔤 Words with s-characters found: {found_words}')
-
-            # Check if the site has proper meta viewport
-            viewport = soup.find('meta', {'name': 'viewport'})
-            has_viewport = viewport is not None
-            print(f'📱 Has viewport meta tag: {has_viewport}')
+            # Check viewport
+            try:
+                import requests
+                from bs4 import BeautifulSoup
+                response = requests.get('https://weareswarm.online', timeout=10)
+                soup = BeautifulSoup(response.text, 'html.parser')
+                viewport = soup.find('meta', {'name': 'viewport'})
+                has_viewport = viewport is not None
+                print(f'📱 Has viewport meta tag: {has_viewport}')
+            except Exception:
+                print('📱 Could not check viewport')
 
             # Overall assessment
-            fonts_loaded = len(google_fonts_links) > 0
-            preconnect_setup = len(preconnect_links) > 0
-            has_content = len(body_text.strip()) > 100
+            fonts_loaded = font_result.get("fonts_loaded", False)
+            preconnect_setup = font_result.get("preconnect_configured", False)
+            has_content = page_result.get("content_length", 0) > 100
 
             print('\n📊 VALIDATION RESULTS:')
             print(f'   Google Fonts loaded: {"✅" if fonts_loaded else "❌"}')
             print(f'   Preconnect configured: {"✅" if preconnect_setup else "❌"}')
             print(f'   Content loaded: {"✅" if has_content else "❌"}')
-            print(f'   Viewport configured: {"✅" if has_viewport else "❌"}')
+            print(f'   Characters render: {"✅" if char_result.get("characters_render", False) else "❌"}')
 
             if fonts_loaded and preconnect_setup and has_content:
                 print('\n🎉 WEARESWARM.ONLINE VALIDATION: PASSED')
