@@ -1,0 +1,74 @@
+[
+  {
+    "name": "crosbyultimateevents.com_health",
+    "url": "https://crosbyultimateevents.com/wp-json/wp/v2/health",
+    "method": "GET",
+    "expected_status": 200,
+    "timeout": 10,
+    "headers": {
+      "User-Agent": "Swarm-Monitoring/1.0"
+    },
+    "ssl_verify": true,
+    "follow_redirects": true
+  },
+  {
+    "name": "dadudekc.com_health",
+    "url": "https://dadudekc.com/wp-json/wp/v2/health",
+    "method": "GET",
+    "expected_status": 200,
+    "timeout": 10,
+    "headers": {
+      "User-Agent": "Swarm-Monitoring/1.0"
+    },
+    "ssl_verify": true,
+    "follow_redirects": true
+  },
+  {
+    "name": "tradingrobotplug.com_health",
+    "url": "https://tradingrobotplug.com/wp-json/wp/v2/health",
+    "method": "GET",
+    "expected_status": 200,
+    "timeout": 10,
+    "headers": {
+      "User-Agent": "Swarm-Monitoring/1.0"
+    },
+    "ssl_verify": true,
+    "follow_redirects": true
+  },
+  {
+    "name": "weareswarm.online_health",
+    "url": "https://weareswarm.online/wp-json/wp/v2/health",
+    "method": "GET",
+    "expected_status": 200,
+    "timeout": 10,
+    "headers": {
+      "User-Agent": "Swarm-Monitoring/1.0"
+    },
+    "ssl_verify": true,
+    "follow_redirects": true
+  },
+  {
+    "name": "houstonsipqueen.com_health",
+    "url": "https://houstonsipqueen.com/wp-json/wp/v2/health",
+    "method": "GET",
+    "expected_status": 200,
+    "timeout": 10,
+    "headers": {
+      "User-Agent": "Swarm-Monitoring/1.0"
+    },
+    "ssl_verify": true,
+    "follow_redirects": true
+  },
+  {
+    "name": "ariajet.site_health",
+    "url": "https://ariajet.site/wp-json/wp/v2/health",
+    "method": "GET",
+    "expected_status": 200,
+    "timeout": 10,
+    "headers": {
+      "User-Agent": "Swarm-Monitoring/1.0"
+    },
+    "ssl_verify": true,
+    "follow_redirects": true
+  }
+]

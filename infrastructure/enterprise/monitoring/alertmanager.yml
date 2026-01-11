@@ -1,0 +1,21 @@
+global:
+  smtp_auth_password: secure-password
+  smtp_auth_username: monitoring@tradingrobotplug.com
+  smtp_from: monitoring@tradingrobotplug.com
+  smtp_smarthost: smtp.gmail.com:587
+receivers:
+- email_configs:
+  - body: "\n{{ range .Alerts }}\nAlert: {{ .Annotations.summary }}\nDescription:\
+      \ {{ .Annotations.description }}\nDomain: {{ .Labels.instance }}\nSeverity:\
+      \ {{ .Labels.severity }}\n{{ end }}\n                            "
+    subject: '[ALERT] {{ .GroupLabels.alertname }} - {{ .GroupLabels.domain }}'
+    to: platform@tradingrobotplug.com
+  name: platform-team
+route:
+  group_by:
+  - alertname
+  - domain
+  group_interval: 10s
+  group_wait: 10s
+  receiver: platform-team
+  repeat_interval: 1h

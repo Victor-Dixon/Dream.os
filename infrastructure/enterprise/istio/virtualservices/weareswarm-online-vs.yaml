@@ -1,0 +1,24 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: weareswarm-online-vs
+  namespace: production
+spec:
+  gateways:
+  - migrated-sites-gateway
+  hosts:
+  - weareswarm.online
+  - www.weareswarm.online
+  http:
+  - match:
+    - uri:
+        prefix: /
+    retries:
+      attempts: 3
+      perTryTimeout: 10s
+    route:
+    - destination:
+        host: weareswarm-online-service
+        port:
+          number: 80
+    timeout: 30s

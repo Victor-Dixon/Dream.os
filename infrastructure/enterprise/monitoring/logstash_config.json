@@ -1,0 +1,52 @@
+{
+  "inputs": [
+    {
+      "type": "file",
+      "paths": [
+        "/var/log/nginx/*.log"
+      ],
+      "tags": [
+        "nginx",
+        "web"
+      ]
+    },
+    {
+      "type": "journald",
+      "tags": [
+        "system",
+        "journald"
+      ]
+    }
+  ],
+  "processors": [
+    {
+      "grok": {
+        "patterns": [
+          "%{IPORHOST:clientip} %{HTTPDUSER:ident} %{HTTPDUSER:auth} \\[%{HTTPDATE:timestamp}\\] \"(?:%{WORD:verb} %{NOTSPACE:request}(?: HTTP/%{NUMBER:httpversion})?|%{DATA:rawrequest})\" %{NUMBER:response} (?:%{NUMBER:bytes}|-) %{QS:referrer} %{QS:agent}"
+        ]
+      }
+    },
+    {
+      "geoip": {
+        "source": "clientip",
+        "target": "geoip"
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "elasticsearch": {
+        "hosts": [
+          "elasticsearch:9200"
+        ],
+        "index": "migrated-sites-%{+yyyy.MM.dd}"
+      }
+    },
+    {
+      "file": {
+        "path": "/var/log/processed_logs.json",
+        "codec": "json"
+      }
+    }
+  ]
+}

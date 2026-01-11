@@ -1,0 +1,104 @@
+{
+  "dashboard": {
+    "title": "Migrated Websites Overview",
+    "tags": [
+      "websites",
+      "production",
+      "platform"
+    ],
+    "timezone": "UTC",
+    "panels": [
+      {
+        "title": "Website Uptime",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "up{job='migrated-sites'}",
+            "legendFormat": "{{instance}}"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "mappings": [
+              {
+                "options": {
+                  "0": {
+                    "text": "DOWN",
+                    "color": "red"
+                  }
+                },
+                "value": "0"
+              },
+              {
+                "options": {
+                  "1": {
+                    "text": "UP",
+                    "color": "green"
+                  }
+                },
+                "value": "1"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "title": "Response Time (95th percentile)",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job='migrated-sites'}[5m]))",
+            "legendFormat": "{{instance}}"
+          }
+        ]
+      },
+      {
+        "title": "SSL Certificate Expiry",
+        "type": "table",
+        "targets": [
+          {
+            "expr": "ssl_certificate_expiry_days{job='migrated-sites'}",
+            "legendFormat": "{{instance}}"
+          }
+        ],
+        "fieldConfig": {
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Value"
+              },
+              "properties": [
+                {
+                  "id": "thresholds",
+                  "value": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": null
+                      },
+                      {
+                        "color": "orange",
+                        "value": 30
+                      },
+                      {
+                        "color": "red",
+                        "value": 7
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "time": {
+      "from": "now-1h",
+      "to": "now"
+    },
+    "refresh": "30s"
+  }
+}
