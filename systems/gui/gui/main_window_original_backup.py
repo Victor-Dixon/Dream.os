@@ -1270,9 +1270,32 @@ class TheaMainWindow(QMainWindow):
                 # Fallback to light if detection fails
                 is_dark = False
         elif sys.platform == "darwin":
-            # TODO: Implement macOS dark mode detection
-            # For now, fallback to light
-            is_dark = False
+            # macOS dark mode detection
+            try:
+                import subprocess
+
+                # Use defaults command to check macOS appearance
+                result = subprocess.run(
+                    ['defaults', 'read', '-g', 'AppleInterfaceStyle'],
+                    capture_output=True,
+                    text=True,
+                    timeout=5
+                )
+
+                # If command succeeds and returns "Dark", system is in dark mode
+                is_dark = result.returncode == 0 and result.stdout.strip() == "Dark"
+
+                logger.info(f"macOS dark mode detection: {'enabled' if is_dark else 'disabled'}")
+
+            except (subprocess.TimeoutExpired, subprocess.SubprocessError, FileNotFoundError) as e:
+                logger.warning(f"macOS dark mode detection failed: {e}")
+                # Fallback: try alternative method using NSAppearance if available
+                try:
+                    # This is a more advanced method that would require PyObjC
+                    # For now, fallback to light theme
+                    is_dark = False
+                except Exception:
+                    is_dark = False
         else:
             # TODO: Implement Linux/other OS dark mode detection
             # For now, fallback to light

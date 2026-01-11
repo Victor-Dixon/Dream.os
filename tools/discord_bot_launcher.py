@@ -7,6 +7,20 @@ SSOT Domain: discord
 
 Simple launcher script to start the Discord bot and manage PID files.
 
+USAGE:
+    python tools/discord_bot_launcher.py    # Start the bot
+    python check_discord_bot.py             # Check if bot is running
+    python tools/discord_bot_launcher.py stop  # Stop the bot (future feature)
+
+REQUIRED ENVIRONMENT VARIABLES:
+    DISCORD_BOT_TOKEN - Your Discord bot token from https://discord.com/developers/applications
+    DISCORD_GUILD_ID - Your Discord server ID
+
+SETUP:
+    1. Copy env.example to .env
+    2. Add your DISCORD_BOT_TOKEN and DISCORD_GUILD_ID to .env
+    3. Run: python tools/discord_bot_launcher.py
+
 Features:
 - Starts Discord bot in background
 - Creates PID file for process tracking
@@ -79,7 +93,7 @@ def main():
 
         # Use subprocess to run the bot in background
         process = subprocess.Popen(
-            [sys.executable, "-m", "src.discord_commander.bot_runner_v2"],
+            [sys.executable, "-m", "src.discord_commander.unified_discord_bot"],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             cwd=Path.cwd()
