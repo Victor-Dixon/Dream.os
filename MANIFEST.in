@@ -1,0 +1,35 @@
+# Include additional files in package distribution
+
+# Include configuration files
+include .env.example
+include pytest.ini
+
+# Include documentation
+include README.md
+include CHANGELOG.md
+include LICENSE
+
+# Include Docker files
+include Dockerfile
+include docker-compose.yml
+
+# Include scripts
+include main.py
+
+# Exclude development files
+exclude .env
+exclude .env.backup
+exclude .git*
+exclude __pycache__
+exclude *.pyc
+exclude .pytest_cache
+exclude htmlcov
+exclude .coverage
+exclude .mypy_cache
+
+# Recursive excludes
+recursive-exclude __pycache__ *
+recursive-exclude *.egg-info *
+recursive-exclude .git *
+recursive-exclude tests *.pyc
+recursive-exclude docs/_build *
