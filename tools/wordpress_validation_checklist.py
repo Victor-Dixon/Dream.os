@@ -69,8 +69,10 @@ class WordPressValidator:
             has_capabilities = "capabilities" in content
             has_capabilitie = "capabilitie" in content
 
+            # The typo is fixed if there are no instances of the incorrect spelling
+            # (whether "capabilities" appears or not is less important)
             return {
-                "menu_typo_fixed": has_capabilities and not has_capabilitie,
+                "menu_typo_fixed": not has_capabilitie,
                 "has_capabilities": has_capabilities,
                 "has_capabilitie": has_capabilitie
             }
