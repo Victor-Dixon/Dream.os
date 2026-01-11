@@ -1,0 +1,44 @@
+{
+  "agents": {
+    "Agent-1": {
+      "description": "Agent-1 workspace",
+      "chat_input_coordinates": [100, 200],
+      "onboarding_input_coords": [100, 180]
+    },
+    "Agent-2": {
+      "description": "Agent-2 workspace",
+      "chat_input_coordinates": [300, 200],
+      "onboarding_input_coords": [300, 180]
+    },
+    "Agent-3": {
+      "description": "Agent-3 workspace",
+      "chat_input_coordinates": [500, 200],
+      "onboarding_input_coords": [500, 180]
+    },
+    "Agent-4": {
+      "description": "Agent-4 workspace (Quality Assurance)",
+      "chat_input_coordinates": [-308, 1000],
+      "onboarding_input_coords": [-304, 680]
+    },
+    "Agent-5": {
+      "description": "Agent-5 workspace",
+      "chat_input_coordinates": [700, 200],
+      "onboarding_input_coords": [700, 180]
+    },
+    "Agent-6": {
+      "description": "Agent-6 workspace",
+      "chat_input_coordinates": [900, 200],
+      "onboarding_input_coords": [900, 180]
+    },
+    "Agent-7": {
+      "description": "Agent-7 workspace",
+      "chat_input_coordinates": [1100, 200],
+      "onboarding_input_coords": [1100, 180]
+    },
+    "Agent-8": {
+      "description": "Agent-8 workspace",
+      "chat_input_coordinates": [1300, 200],
+      "onboarding_input_coords": [1300, 180]
+    }
+  }
+}
