@@ -165,12 +165,56 @@ class RobinhoodBroker:
             bool: True if logout successful
         """
         try:
-            if self.session:
-                # TODO: Implement actual logout
-                logger.info("Logged out successfully")
-                self.is_authenticated = False
-                self.session = None
-                self.username = None
+            if self.is_authenticated and self.access_token:
+                # Revoke access token via Robinhood API
+                revoke_url = "https://api.robinhood.com/oauth2/revoke_token/"
+
+                revoke_data = {
+                    "client_id": "c82SH0WZOsabOXGP2sxqcj34FxkvfnWRZBKlBjFS",
+                    "token": self.access_token
+                }
+
+                headers = {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                    "User-Agent": "Robinhood/8.48.0 (Android/9; SM-G975U)"
+                }
+
+                # Attempt token revocation
+                revoke_response = requests.post(revoke_url, json=revoke_data, headers=headers, timeout=10)
+
+                if revoke_response.status_code in [200, 204]:
+                    logger.info("✅ Access token successfully revoked")
+                else:
+                    logger.warning(f"⚠️ Token revocation returned status {revoke_response.status_code}")
+
+                # Also revoke refresh token if available
+                if self.refresh_token:
+                    revoke_refresh_data = {
+                        "client_id": "c82SH0WZOsabOXGP2sxqcj34FxkvfnWRZBKlBjFS",
+                        "token": self.refresh_token
+                    }
+
+                    refresh_response = requests.post(revoke_url, json=revoke_refresh_data, headers=headers, timeout=10)
+
+                    if refresh_response.status_code in [200, 204]:
+                        logger.info("✅ Refresh token successfully revoked")
+                    else:
+                        logger.warning(f"⚠️ Refresh token revocation returned status {refresh_response.status_code}")
+
+            # Clear all authentication state regardless of API call success
+            self.is_authenticated = False
+            self.access_token = None
+            self.refresh_token = None
+            self.token_expires = None
+            self.session = None
+            self.username = None
+
+            # Clear session headers if they exist
+            if hasattr(self, 'session') and self.session and hasattr(self.session, 'headers'):
+                self.session.headers.pop('Authorization', None)
+
+            logger.info("✅ Robinhood logout completed successfully")
             return True
         except Exception as e:
             logger.error(f"Logout failed: {e}")

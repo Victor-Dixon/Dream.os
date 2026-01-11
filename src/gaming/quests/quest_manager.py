@@ -8,7 +8,9 @@ V2 Compliance: SOLID principles, comprehensive state management, validation
 """
 
 import logging
+import json
 from datetime import datetime
+from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 from .quest_generator import DynamicQuestGenerator
@@ -230,5 +232,65 @@ class QuestManager(IQuestManager):
                    f"{quest.rewards.bonus_points} bonus points, "
                    f"achievements: {quest.rewards.achievements}")
 
-        # TODO: Integrate with actual gamification system
-        # This would call the leaderboard/gamification system to update agent stats
+        # Integrate with gamification system
+        try:
+            # Import gamification system if available
+            from src.gaming.dreamos.ui_integration import GamificationSystem
+
+            gamification = GamificationSystem()
+
+            # Award XP and achievements
+            gamification.award_xp(quest.rewards.xp_reward)
+            gamification.award_achievement(quest.rewards.achievements)
+            gamification.add_points(quest.rewards.bonus_points)
+
+            # Update agent stats
+            agent_stats = gamification.get_agent_stats()
+            logger.info(f"Gamification updated - Total XP: {agent_stats.get('total_xp', 0)}, "
+                       f"Level: {agent_stats.get('level', 1)}, "
+                       f"Achievements: {len(agent_stats.get('achievements', []))}")
+
+        except ImportError:
+            # Fallback: create basic gamification data structure
+            logger.warning("GamificationSystem not available - using fallback implementation")
+
+            # Create or update agent gamification file
+            gamification_file = Path("agent_workspaces") / "gamification_stats.json"
+
+            try:
+                # Load existing stats
+                if gamification_file.exists():
+                    with open(gamification_file, 'r') as f:
+                        stats = json.load(f)
+                else:
+                    stats = {
+                        "total_xp": 0,
+                        "level": 1,
+                        "achievements": [],
+                        "bonus_points": 0,
+                        "completed_quests": []
+                    }
+
+                # Update stats
+                stats["total_xp"] += quest.rewards.xp_reward
+                stats["bonus_points"] += quest.rewards.bonus_points
+                stats["achievements"].extend(quest.rewards.achievements)
+                stats["completed_quests"].append(quest.quest_id)
+
+                # Calculate new level (simple XP-based leveling)
+                new_level = (stats["total_xp"] // 1000) + 1
+                if new_level > stats["level"]:
+                    stats["level"] = new_level
+                    logger.info(f"🎉 Level up! Reached level {new_level}")
+
+                # Save updated stats
+                with open(gamification_file, 'w') as f:
+                    json.dump(stats, f, indent=2)
+
+                logger.info(f"Gamification stats updated - Level {stats['level']}, "
+                           f"Total XP: {stats['total_xp']}")
+
+            except Exception as e:
+                logger.error(f"Failed to update gamification stats: {e}")
+        except Exception as e:
+            logger.error(f"Failed to integrate with gamification system: {e}")
