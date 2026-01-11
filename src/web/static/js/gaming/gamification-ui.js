@@ -37,6 +37,8 @@ export class GamificationUI {
         };
         
         this.refreshTimer = null;
+        this.socket = null;
+        this.realtimeEnabled = true;
     }
     
     /**
@@ -44,17 +46,22 @@ export class GamificationUI {
      */
     async initialize() {
         console.log('🎮 Initializing Gamification UI...');
-        
+
         try {
             await this.loadPlayerData();
             this.renderUI();
             this.setupEventListeners();
-            
+
             if (this.config.autoRefresh) {
                 this.startAutoRefresh();
             }
-            
-            console.log('✅ Gamification UI initialized');
+
+            // Initialize real-time WebSocket connection
+            if (this.realtimeEnabled) {
+                await this.initializeWebSocket();
+            }
+
+            console.log('✅ Gamification UI initialized with real-time support');
         } catch (error) {
             console.error('❌ Failed to initialize Gamification UI:', error);
             throw error;
@@ -68,7 +75,7 @@ export class GamificationUI {
         try {
             const response = await fetch('/api/gaming/player/status');
             const data = await response.json();
-            
+
             this.state.currentXP = data.current_xp || 0;
             this.state.currentLevel = data.level || 1;
             this.state.totalXP = data.total_xp || 0;
@@ -76,9 +83,180 @@ export class GamificationUI {
             this.state.activeQuests = data.active_quests || [];
             this.state.completedQuests = data.completed_quests || [];
             this.state.achievements = data.achievements || [];
-            
+
         } catch (error) {
             console.warn('⚠️ Failed to load player data:', error);
+        }
+    }
+
+    /**
+     * Initialize WebSocket connection for real-time updates
+     */
+    async initializeWebSocket() {
+        try {
+            // Initialize Socket.IO connection
+            if (typeof io !== 'undefined') {
+                this.socket = io('/gamification');
+
+                this.socket.on('connect', () => {
+                    console.log('🔌 Connected to gamification real-time updates');
+                    this.showConnectionStatus('connected');
+                });
+
+                this.socket.on('disconnect', () => {
+                    console.log('🔌 Disconnected from gamification real-time updates');
+                    this.showConnectionStatus('disconnected');
+                });
+
+                this.socket.on('leaderboard_update', (data) => {
+                    console.log('📊 Real-time leaderboard update received:', data);
+                    this.handleRealtimeLeaderboardUpdate(data);
+                });
+
+                this.socket.on('connect_error', (error) => {
+                    console.error('❌ WebSocket connection error:', error);
+                    this.showConnectionStatus('error');
+                    // Fallback to polling if WebSocket fails
+                    this.startAutoRefresh();
+                });
+
+            } else {
+                console.warn('⚠️ Socket.IO not available, falling back to polling');
+                this.realtimeEnabled = false;
+            }
+
+        } catch (error) {
+            console.error('❌ Failed to initialize WebSocket:', error);
+            this.realtimeEnabled = false;
+        }
+    }
+
+    /**
+     * Handle real-time leaderboard updates
+     */
+    handleRealtimeLeaderboardUpdate(data) {
+        try {
+            const { leaderboard, timestamp, agent_count, initial, forced } = data;
+
+            // Update leaderboard display
+            this.updateLeaderboardDisplay(leaderboard);
+
+            // Show update notification
+            this.showUpdateNotification(initial, forced, agent_count);
+
+            console.log(`📊 Leaderboard updated: ${agent_count} agents, ${initial ? 'initial' : 'live'} update`);
+
+        } catch (error) {
+            console.error('❌ Error handling realtime leaderboard update:', error);
+        }
+    }
+
+    /**
+     * Update the leaderboard display with new data
+     */
+    updateLeaderboardDisplay(leaderboardData) {
+        const leaderboardContainer = this.container.querySelector('.leaderboard-section');
+        if (!leaderboardContainer) return;
+
+        // Update or create leaderboard section
+        let leaderboardList = leaderboardContainer.querySelector('.leaderboard-list');
+        if (!leaderboardList) {
+            leaderboardList = document.createElement('div');
+            leaderboardList.className = 'leaderboard-list';
+            leaderboardContainer.appendChild(leaderboardList);
+        }
+
+        leaderboardList.innerHTML = leaderboardData.map(entry => `
+            <div class="leaderboard-entry rank-${entry.rank} ${entry.status.toLowerCase()}">
+                <div class="rank">#${entry.rank}</div>
+                <div class="agent-info">
+                    <div class="agent-name">${entry.agent}</div>
+                    <div class="agent-mission">${entry.mission}</div>
+                    <div class="agent-phase">${entry.phase}</div>
+                </div>
+                <div class="stats">
+                    <div class="points">${entry.points.toLocaleString()} pts</div>
+                    <div class="level">Level ${entry.level}</div>
+                </div>
+                <div class="status-indicator ${entry.status.toLowerCase()}">${entry.status}</div>
+            </div>
+        `).join('');
+    }
+
+    /**
+     * Show connection status indicator
+     */
+    showConnectionStatus(status) {
+        let statusIndicator = this.container.querySelector('.realtime-status');
+        if (!statusIndicator) {
+            statusIndicator = document.createElement('div');
+            statusIndicator.className = 'realtime-status';
+            this.container.querySelector('.gamification-header').appendChild(statusIndicator);
+        }
+
+        const statusConfig = {
+            connected: { text: '🔴 LIVE', class: 'connected' },
+            disconnected: { text: '⚫ OFFLINE', class: 'disconnected' },
+            error: { text: '❌ ERROR', class: 'error' }
+        };
+
+        const config = statusConfig[status] || statusConfig.disconnected;
+        statusIndicator.textContent = config.text;
+        statusIndicator.className = `realtime-status ${config.class}`;
+    }
+
+    /**
+     * Show update notification
+     */
+    showUpdateNotification(initial, forced, agentCount) {
+        const notification = document.createElement('div');
+        notification.className = 'update-notification';
+        notification.textContent = initial
+            ? `📊 Leaderboard loaded (${agentCount} agents)`
+            : forced
+                ? `🔄 Leaderboard updated (${agentCount} agents)`
+                : `⚡ Live update (${agentCount} agents)`;
+
+        this.container.appendChild(notification);
+
+        // Auto-remove after 3 seconds
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 3000);
+    }
+
+    /**
+     * Request manual leaderboard update
+     */
+    requestLeaderboardUpdate() {
+        if (this.socket && this.socket.connected) {
+            console.log('📡 Requesting manual leaderboard update');
+            this.socket.emit('request_leaderboard_update');
+        } else {
+            // Fallback to API call
+            this.forceLeaderboardUpdate();
+        }
+    }
+
+    /**
+     * Force leaderboard update via API
+     */
+    async forceLeaderboardUpdate() {
+        try {
+            const response = await fetch('/api/gaming/leaderboard/force-update', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            if (response.ok) {
+                console.log('✅ Forced leaderboard update requested');
+            } else {
+                console.error('❌ Failed to force leaderboard update');
+            }
+        } catch (error) {
+            console.error('❌ Error forcing leaderboard update:', error);
         }
     }
     
@@ -96,6 +274,7 @@ export class GamificationUI {
                 
                 <div class="gamification-content">
                     ${this.renderXPSection()}
+                    ${this.renderLeaderboardSection()}
                     ${this.renderSkillsSection()}
                     ${this.renderQuestsSection()}
                     ${this.renderAchievementsSection()}
@@ -108,6 +287,26 @@ export class GamificationUI {
         }
     }
     
+    /**
+     * Render Leaderboard section
+     */
+    renderLeaderboardSection() {
+        return `
+            <div class="leaderboard-section card">
+                <div class="section-header">
+                    <h3>🏆 Agent Leaderboard</h3>
+                    <button class="refresh-btn" onclick="window.gamificationUI?.requestLeaderboardUpdate()">
+                        🔄 Refresh
+                    </button>
+                </div>
+                <div class="leaderboard-loading">
+                    <div class="loading-spinner"></div>
+                    <span>Loading leaderboard...</span>
+                </div>
+            </div>
+        `;
+    }
+
     /**
      * Render XP and Level section
      */

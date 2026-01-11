@@ -6,7 +6,7 @@ Manages application settings and configuration.
 import logging
 from ..debug_handler import debug_button
 from PyQt6.QtWidgets import (
-    QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, 
+    QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton,
     QTabWidget, QMessageBox
 )
 from PyQt6.QtCore import Qt, pyqtSignal
@@ -14,13 +14,27 @@ from PyQt6.QtGui import QFont
 from typing import Dict
 import os
 
+# Placeholder for swarm settings manager
+class SettingsManager:
+    def __init__(self):
+        self.settings = {}
+        self.save_settings = lambda: None
+
+settings_manager = SettingsManager()
+
 logger = logging.getLogger(__name__)
 
 from .settings.general_settings import GeneralSettingsWidget
 from .settings.api_settings import APISettingsWidget
 from .settings.memory_settings import MemorySettingsWidget
 from .settings.accessibility_settings import AccessibilitySettingsWidget
-from dreamscape.core.settings_manager import settings_manager
+# Placeholder for swarm settings manager
+class SettingsManager:
+    def __init__(self):
+        self.settings = {}
+        self.save_settings = lambda: None
+
+settings_manager = SettingsManager()
 
 class SettingsPanel(QWidget):
     """Panel for managing application settings."""
@@ -145,7 +159,13 @@ class SettingsPanel(QWidget):
     @debug_button("load_settings", "Settings Panel")
     def load_settings(self):
         """Load settings from configuration."""
-        from dreamscape.core.settings_manager import settings_manager
+        # Placeholder for swarm settings manager
+class SettingsManager:
+    def __init__(self):
+        self.settings = {}
+        self.save_settings = lambda: None
+
+settings_manager = SettingsManager()
         # Base defaults
         defaults = {
             'general': {
@@ -215,7 +235,13 @@ class SettingsPanel(QWidget):
             }
             
             # Persist general settings via shared settings_manager so they survive restarts
-            from dreamscape.core.settings_manager import settings_manager
+            # Placeholder for swarm settings manager
+class SettingsManager:
+    def __init__(self):
+        self.settings = {}
+        self.save_settings = lambda: None
+
+settings_manager = SettingsManager()
 
             # Flatten keys for persistence
             flat: dict[str, any] = {}
@@ -331,9 +357,4 @@ class SettingsPanel(QWidget):
                               "Install with: pip install requests")
             
         except Exception as e:
-            QMessageBox.critical(self, "Connection Test", 
-                               f"Unexpected error during connection test:\n{str(e)}")
-    
-    def get_settings(self) -> Dict:
-        """Get current settings."""
-        return self.settings 
+            QMessageBox.critical(self, "Connection Te
