@@ -14,6 +14,8 @@ V2 Compliance | Author: Agent-2 | Date: 2026-01-11
 import logging
 from typing import TYPE_CHECKING
 
+from .command_base import DiscordCommandMixin, RoleDecorators
+
 if TYPE_CHECKING:
     from src.discord_commander.unified_discord_bot import UnifiedDiscordBot
 
@@ -27,30 +29,28 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 
-class TheaCommands(commands.Cog):
+class TheaCommands(commands.Cog, DiscordCommandMixin):
     """Discord commands for Thea Manager integration."""
 
     def __init__(self, bot: "UnifiedDiscordBot", gui_controller):
         """Initialize Thea commands."""
-        super().__init__()
+        commands.Cog.__init__(self)
+        DiscordCommandMixin.__init__(self)
         self.bot = bot
         self.gui_controller = gui_controller
-        self.logger = logging.getLogger(__name__)
 
     @commands.command(name="thea", description="Send a message to Thea Manager")
-    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
+    @RoleDecorators.admin_only()
     async def thea(self, ctx: commands.Context, *, message: str):
         """Send a message to Thea Manager and display the response."""
-        self.logger.info(f"Command 'thea' triggered by {ctx.author}")
+        self.log_command_trigger(ctx, "thea")
 
         try:
-            embed = discord.Embed(
-                title="🤖 Thea Manager Query",
-                description=f"**Query:** {message}\n\n*Processing...*",
-                color=discord.Color.blue(),
-                timestamp=discord.utils.utcnow(),
+            embed = self.create_base_embed(
+                "🤖 Thea Manager Query",
+                f"**Query:** {message}\n\n*Processing...*"
             )
-            embed.set_footer(text=f"Requested by {ctx.author.display_name}")
+            self.add_user_footer(embed, ctx)
 
             # Send initial response
             response_msg = await ctx.send(embed=embed)
@@ -85,27 +85,16 @@ class TheaCommands(commands.Cog):
             await response_msg.edit(embed=embed)
 
         except Exception as e:
-            self.logger.error(f"Error in thea command: {e}", exc_info=True)
-            embed = discord.Embed(
-                title="❌ Thea Manager Error",
-                description=f"Failed to process Thea query: {str(e)}",
-                color=discord.Color.red(),
-                timestamp=discord.utils.utcnow(),
-            )
-            await ctx.send(embed=embed)
+            await self.handle_command_error(ctx, e, "thea")
 
     @commands.command(name="thea-status", description="Check Thea Manager status")
-    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
+    @RoleDecorators.admin_only()
     async def thea_status(self, ctx: commands.Context):
         """Check the current status of Thea Manager integration."""
-        self.logger.info(f"Command 'thea-status' triggered by {ctx.author}")
+        self.log_command_trigger(ctx, "thea-status")
 
         try:
-            embed = discord.Embed(
-                title="📊 Thea Manager Status",
-                color=discord.Color.blue(),
-                timestamp=discord.utils.utcnow(),
-            )
+            embed = self.create_base_embed("📊 Thea Manager Status")
 
             # Check if Thea service is available
             try:
@@ -134,33 +123,24 @@ class TheaCommands(commands.Cog):
                 )
                 embed.color = discord.Color.red()
 
-            embed.set_footer(text=f"Requested by {ctx.author.display_name}")
+            self.add_user_footer(embed, ctx)
             await ctx.send(embed=embed)
 
         except Exception as e:
-            self.logger.error(
-                f"Error in thea-status command: {e}", exc_info=True)
-            embed = discord.Embed(
-                title="❌ Thea Status Error",
-                description=f"Failed to check Thea status: {str(e)}",
-                color=discord.Color.red(),
-                timestamp=discord.utils.utcnow(),
-            )
-            await ctx.send(embed=embed)
+            await self.handle_command_error(ctx, e, "thea-status")
 
     @commands.command(name="thea-auth", description="Authenticate with Thea Manager")
-    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
+    @RoleDecorators.admin_only()
     async def thea_auth(self, ctx: commands.Context):
         """Authenticate with Thea Manager."""
-        self.logger.info(f"Command 'thea-auth' triggered by {ctx.author}")
+        self.log_command_trigger(ctx, "thea-auth")
 
         try:
-            embed = discord.Embed(
-                title="🔐 Thea Manager Authentication",
-                description="*Authenticating with Thea Manager...*",
-                color=discord.Color.blue(),
-                timestamp=discord.utils.utcnow(),
+            embed = self.create_base_embed(
+                "🔐 Thea Manager Authentication",
+                "*Authenticating with Thea Manager...*"
             )
+            self.add_user_footer(embed, ctx)
 
             response_msg = await ctx.send(embed=embed)
 
@@ -176,19 +156,11 @@ class TheaCommands(commands.Cog):
                 embed.description = "❌ Authentication failed. Manual authentication may be required."
                 embed.color = discord.Color.red()
 
-            embed.set_footer(text=f"Requested by {ctx.author.display_name}")
+            self.add_user_footer(embed, ctx)
             await response_msg.edit(embed=embed)
 
         except Exception as e:
-            self.logger.error(
-                f"Error in thea-auth command: {e}", exc_info=True)
-            embed = discord.Embed(
-                title="❌ Thea Authentication Error",
-                description=f"Failed to authenticate: {str(e)}",
-                color=discord.Color.red(),
-                timestamp=discord.utils.utcnow(),
-            )
-            await ctx.send(embed=embed)
+            await self.handle_command_error(ctx, e, "thea-auth")
 
 
 async def setup(bot):
