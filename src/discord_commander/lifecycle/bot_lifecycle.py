@@ -70,6 +70,7 @@ class BotLifecycleManager:
                 ProfileCommands,
                 PlaceholderCommands,
                 MessagingCommands,
+                TheaCommands,
             )
             
             await self.bot.add_cog(CoreMessagingCommands(self.bot, self.bot.gui_controller))
@@ -80,6 +81,7 @@ class BotLifecycleManager:
             await self.bot.add_cog(ProfileCommands(self.bot, self.bot.gui_controller))
             await self.bot.add_cog(PlaceholderCommands(self.bot, self.bot.gui_controller))
             await self.bot.add_cog(MessagingCommands(self.bot, self.bot.gui_controller))
+            await self.bot.add_cog(TheaCommands(self.bot, self.bot.gui_controller))
             
             # Verify gui and control commands are registered
             gui_command = self.bot.get_command("gui")
