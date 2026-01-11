@@ -217,18 +217,18 @@ $env:FRED_API_KEY = "7e597dfc16d17cf4cac13ce7901de50d"
 $env:GEMINI_API_KEY = "AIzaSyDSQmPecOnB4nhBREv6r7WPer8rTLRCtkQ"
 $env:GITHUB_TOKEN = "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"
 
-# Account Credentials
-$env:ROBINHOOD_USERNAME = "DaDudeKC@gmail.com"
-$env:GUM_USER = "DaDudeKC@gmail.com"
-$env:GUM_PASS = "Falcons#1247"
-$env:ROBINHOOD_PASSWORD = "Falcons#1247"
+# Account Credentials (REDACTED FOR SECURITY)
+# $env:ROBINHOOD_USERNAME = "your_username_here"
+# $env:GUM_USER = "your_username_here"
+# $env:GUM_PASS = "your_password_here"
+# $env:ROBINHOOD_PASSWORD = "your_password_here"
 
-# GitHub Tokens
-$env:FG_PROFESSIONAL_DEVELOPMENT_ACCOUNT_GITHUB_TOKEN = "***REMOVED***"
-$env:GH_TOKEN = "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"
+# GitHub Tokens (REDACTED FOR SECURITY)
+# $env:FG_PROFESSIONAL_DEVELOPMENT_ACCOUNT_GITHUB_TOKEN = "your_token_here"
+# $env:GH_TOKEN = "your_token_here"
 
-# Twitch Configuration
-$env:TWITCH_ACCESS_TOKEN = "f3wjto5gdvd41m3izza7j8wbtlqsgr"
+# Twitch Configuration (REDACTED FOR SECURITY)
+# $env:TWITCH_ACCESS_TOKEN = "your_access_token_here"
 $env:TWITCH_USERNAME = "weareswarm"
 $env:TWITCH_CHANNEL = "https://www.twitch.tv/digital_dreamscape"
 

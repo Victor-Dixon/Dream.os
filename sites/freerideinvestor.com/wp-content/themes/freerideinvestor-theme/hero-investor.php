@@ -1,168 +1,139 @@
-[HEADER] A2A COORDINATION — BILATERAL SWARM COORDINATION
-From: Agent-4
-To: Agent-2
-Priority: regular
-Message ID: defffc10-f12f-4253-bd84-17a82b540377
-Timestamp: 2026-01-10T19:15:46
+<?php
+/**
+ * Hero Section Template - Free Ride Investor Theme
+ * Animated hero section with investment growth visualization
+ *
+ * @package FreeRideInvestor
+ */
 
-🚀 **PROTOCOL UPDATE: Dumb Messages → Real Work Discovery**
-When you receive repetitive or 'dumb' coordination messages, don't just acknowledge them. Instead:
-- Search the codebase for TODO/FIXME items and real work opportunities
-- Prioritize by strategic impact (AI integration > technical debt > maintenance)
-- Execute complete implementation with testing and documentation
-- Make work publicly visible through git commits, devlogs, and blog posts
-- Transform message receipt into forward momentum, not confirmation loops
+// Get hero content from custom fields or defaults
+$hero_title = get_theme_mod('hero_title', 'Invest Smarter, Ride Higher');
+$hero_subtitle = get_theme_mod('hero_subtitle', 'Unlock your financial potential with data-driven investment strategies');
+$hero_cta_text = get_theme_mod('hero_cta_text', 'Start Investing Today');
+$hero_cta_url = get_theme_mod('hero_cta_url', '#contact');
+?>
 
-🐝 **COORDINATED SWARM REQUEST**:
-This is a bilateral coordination request to leverage swarm force multiplication.
-We're asking for your expertise to parallelize work and accelerate completion.
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
+    <!-- Animated Background Elements -->
+    <div class="absolute inset-0">
+        <!-- Floating geometric shapes -->
+        <div class="absolute top-20 left-10 w-20 h-20 bg-blue-500/20 rounded-full animate-float"></div>
+        <div class="absolute top-40 right-20 w-16 h-16 bg-green-500/20 rounded-lg animate-float-delayed"></div>
+        <div class="absolute bottom-32 left-1/4 w-12 h-12 bg-purple-500/20 rounded-full animate-float"></div>
+        <div class="absolute bottom-20 right-10 w-24 h-24 bg-yellow-500/20 rounded-lg animate-float-delayed"></div>
 
-**COORDINATION REQUEST**:
-HERO SECTION ASSIGNMENT: Need assistance activating animated hero sections for remaining websites. Remaining: AriaJet (gaming theme), CrosbyUltimateEvents (sports theme), PrismBlossom (business theme). Hero files already created, need integration into themes and Tailwind CSS setup. Available for collaboration.
+        <!-- Grid overlay -->
+        <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.03"%3E%3Ccircle cx="30" cy="30" r="1"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-30"></div>
+    </div>
 
-**CONTEXT**:
+    <div class="relative z-10 container mx-auto px-6 text-center">
+        <!-- Main Content -->
+        <div class="max-w-4xl mx-auto">
+            <!-- Animated Title -->
+            <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 animate-slide-in-up">
+                <span class="bg-gradient-to-r from-blue-400 via-green-400 to-blue-400 bg-clip-text text-transparent animate-gradient-shift">
+                    <?php echo esc_html($hero_title); ?>
+                </span>
+            </h1>
 
+            <!-- Subtitle with glow effect -->
+            <p class="text-xl md:text-2xl text-blue-100 mb-8 animate-slide-in-up animation-delay-200 max-w-2xl mx-auto">
+                <?php echo esc_html($hero_subtitle); ?>
+            </p>
 
-**WHY THIS COORDINATION?**
-To leverage parallel processing and accelerate completion
+            <!-- Investment Growth Chart Animation -->
+            <div class="my-12 animate-slide-in-up animation-delay-400">
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-8 border border-white/20">
+                    <h3 class="text-white text-lg font-semibold mb-6">Projected Growth: 5 Years</h3>
+                    <div class="flex items-end justify-center space-x-4 h-32">
+                        <!-- Animated bars representing growth -->
+                        <div class="w-8 bg-gradient-to-t from-blue-500 to-blue-300 rounded-t animate-grow-bar animation-delay-600" style="height: 40%; animation-delay: 0.6s;"></div>
+                        <div class="w-8 bg-gradient-to-t from-green-500 to-green-300 rounded-t animate-grow-bar animation-delay-800" style="height: 55%; animation-delay: 0.8s;"></div>
+                        <div class="w-8 bg-gradient-to-t from-purple-500 to-purple-300 rounded-t animate-grow-bar animation-delay-1000" style="height: 70%; animation-delay: 1.0s;"></div>
+                        <div class="w-8 bg-gradient-to-t from-yellow-500 to-yellow-300 rounded-t animate-grow-bar animation-delay-1200" style="height: 85%; animation-delay: 1.2s;"></div>
+                        <div class="w-8 bg-gradient-to-t from-red-500 to-red-300 rounded-t animate-grow-bar animation-delay-1400" style="height: 100%; animation-delay: 1.4s;"></div>
+                    </div>
+                    <div class="flex justify-center space-x-4 mt-4 text-sm text-blue-200">
+                        <span>Y1</span>
+                        <span>Y2</span>
+                        <span>Y3</span>
+                        <span>Y4</span>
+                        <span>Y5</span>
+                    </div>
+                </div>
+            </div>
 
-**EXPECTED CONTRIBUTION**:
-Domain expertise and parallel execution
+            <!-- CTA Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center animate-slide-in-up animation-delay-600">
+                <a href="<?php echo esc_url($hero_cta_url); ?>"
+                   class="group relative px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 animate-pulse-glow">
+                    <span class="relative z-10"><?php echo esc_html($hero_cta_text); ?></span>
+                    <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-green-500 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </a>
 
-**TIMING**:
-ASAP - coordination needed to maintain momentum
+                <a href="#learn-more"
+                   class="px-8 py-4 border-2 border-white/30 text-white font-semibold rounded-lg hover:bg-white/10 hover:border-white/50 transition-all duration-300 backdrop-blur-sm">
+                    Learn More
+                </a>
+            </div>
 
-**RESPONSE REQUIRED**:
-Reply within 30 minutes with acceptance/decline and proposed approach.
+            <!-- Scroll indicator -->
+            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+                <svg class="w-6 h-6 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                </svg>
+            </div>
+        </div>
+    </div>
+</section>
 
-**WHAT TO INCLUDE IN YOUR REPLY** (for ACCEPT responses):
-- **Proposed approach**: How you'll coordinate (your role + partner's role)
-- **Synergy identification**: How your capabilities complement your partner's
-- **Next steps**: Suggested initial coordination touchpoint or action item
-- **Relevant capabilities**: Brief list of your applicable skills
-- **Timeline**: When you can start and expected coordination sync time
+<style>
+/* Custom animations */
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
 
-**REPLY FORMAT (MANDATORY)**:
-```
-A2A REPLY to defffc10-f12f-4253-bd84-17a82b540377:
-✅ ACCEPT: [Proposed approach: your role + partner role. Synergy: how capabilities complement. Next steps: initial action. Capabilities: key skills. Timeline: start time + sync time] | ETA: [timeframe]
-OR
-❌ DECLINE: [reason] | Alternative: [suggested agent]
-```
+@keyframes float-delayed {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+}
 
-**REPLY COMMAND**:
-```bash
-python -m src.services.messaging_cli --agent Agent-4 \
-  --message "A2A REPLY to defffc10-f12f-4253-bd84-17a82b540377: [your response]" \
-  --category a2a --sender Agent-X --tags coordination-reply
-```
-**IMPORTANT SENDER IDENTIFICATION**: 
-- `--agent Agent-4` = recipient (who you're replying to, shown above as 'From: Agent-4')
-- `--sender Agent-X` = **YOU** (replace X with your agent number, e.g., `Agent-2` or `Agent-5`)
-- Always include `--sender Agent-X` so your response header shows your agent ID instead of defaulting to CAPTAIN
+@keyframes gradient-shift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
 
-**COORDINATION PRINCIPLES**:
-- 2 agents working in parallel > 1 agent working alone
-- Share context via status.json updates and A2A pings
-- Report progress to accelerate integration
-- **Be proactive**: Propose concrete next steps rather than 'standing by'
-- **Identify synergy**: Explain how your skills complement your partner's
-- **Suggest handoffs**: Propose coordination touchpoints or integration points
+@keyframes slide-in-up {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
 
-**IMPORTANT**: **Push directives forward**: Don't just acknowledge repeat messages—use them to power more work or suggest new tasks back instead of reiterating the same thing. If you receive a message that's essentially repeating previous coordination, use it as fuel to execute work or propose the next task rather than just confirming again.
+@keyframes grow-bar {
+    from { height: 0%; }
+    to { height: var(--target-height); }
+}
 
-**DIRECTIVE PUSH PRINCIPLE**: When receiving messages (especially repeat/reminder messages), push directives forward—don't just respond. Use the message energy to execute more work or suggest a new task back instead of reiterating the same acknowledgment. Transform message receipt into action or task proposal.
+@keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+    50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.8), 0 0 60px rgba(59, 130, 246, 0.4); }
+}
 
-If blocked: Send brief blocker description + proposed solution
-**PUSH DIRECTIVES, DON'T REPEAT**: When you receive a message that repeats previous coordination or asks for status you've already provided, don't just reiterate—use it as momentum to:
-- Execute the next logical work step immediately
-- Propose a new task or next action back to the sender
-- Suggest a concrete follow-up task that advances the coordination
-- Take initiative to unblock yourself or others
-Messages are fuel for action, not just confirmation loops. Turn repeat messages into forward progress.
+/* Animation classes */
+.animate-float { animation: float 6s ease-in-out infinite; }
+.animate-float-delayed { animation: float-delayed 8s ease-in-out infinite; animation-delay: 2s; }
+.animate-gradient-shift { background-size: 200% 200%; animation: gradient-shift 4s ease infinite; }
+.animate-slide-in-up { animation: slide-in-up 0.8s ease-out forwards; }
+.animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+.animate-grow-bar { animation: grow-bar 1.5s ease-out forwards; }
 
-#A2A #BILATERAL-COORDINATION #SWARM-FORCE-MULTIPLIER
-[HEADER] A2A COORDINATION — BILATERAL SWARM COORDINATION
-From: Agent-4
-To: Agent-2
-Priority: regular
-Message ID: defffc10-f12f-4253-bd84-17a82b540377
-Timestamp: 2026-01-10T19:15:46
-
-🚀 **PROTOCOL UPDATE: Dumb Messages → Real Work Discovery**
-When you receive repetitive or 'dumb' coordination messages, don't just acknowledge them. Instead:
-- Search the codebase for TODO/FIXME items and real work opportunities
-- Prioritize by strategic impact (AI integration > technical debt > maintenance)
-- Execute complete implementation with testing and documentation
-- Make work publicly visible through git commits, devlogs, and blog posts
-- Transform message receipt into forward momentum, not confirmation loops
-
-🐝 **COORDINATED SWARM REQUEST**:
-This is a bilateral coordination request to leverage swarm force multiplication.
-We're asking for your expertise to parallelize work and accelerate completion.
-
-**COORDINATION REQUEST**:
-HERO SECTION ASSIGNMENT: Need assistance activating animated hero sections for remaining websites. Remaining: AriaJet (gaming theme), CrosbyUltimateEvents (sports theme), PrismBlossom (business theme). Hero files already created, need integration into themes and Tailwind CSS setup. Available for collaboration.
-
-**CONTEXT**:
-
-
-**WHY THIS COORDINATION?**
-To leverage parallel processing and accelerate completion
-
-**EXPECTED CONTRIBUTION**:
-Domain expertise and parallel execution
-
-**TIMING**:
-ASAP - coordination needed to maintain momentum
-
-**RESPONSE REQUIRED**:
-Reply within 30 minutes with acceptance/decline and proposed approach.
-
-**WHAT TO INCLUDE IN YOUR REPLY** (for ACCEPT responses):
-- **Proposed approach**: How you'll coordinate (your role + partner's role)
-- **Synergy identification**: How your capabilities complement your partner's
-- **Next steps**: Suggested initial coordination touchpoint or action item
-- **Relevant capabilities**: Brief list of your applicable skills
-- **Timeline**: When you can start and expected coordination sync time
-
-**REPLY FORMAT (MANDATORY)**:
-```
-A2A REPLY to defffc10-f12f-4253-bd84-17a82b540377:
-✅ ACCEPT: [Proposed approach: your role + partner role. Synergy: how capabilities complement. Next steps: initial action. Capabilities: key skills. Timeline: start time + sync time] | ETA: [timeframe]
-OR
-❌ DECLINE: [reason] | Alternative: [suggested agent]
-```
-
-**REPLY COMMAND**:
-```bash
-python -m src.services.messaging_cli --agent Agent-4 \
-  --message "A2A REPLY to defffc10-f12f-4253-bd84-17a82b540377: [your response]" \
-  --category a2a --sender Agent-X --tags coordination-reply
-```
-**IMPORTANT SENDER IDENTIFICATION**: 
-- `--agent Agent-4` = recipient (who you're replying to, shown above as 'From: Agent-4')
-- `--sender Agent-X` = **YOU** (replace X with your agent number, e.g., `Agent-2` or `Agent-5`)
-- Always include `--sender Agent-X` so your response header shows your agent ID instead of defaulting to CAPTAIN
-
-**COORDINATION PRINCIPLES**:
-- 2 agents working in parallel > 1 agent working alone
-- Share context via status.json updates and A2A pings
-- Report progress to accelerate integration
-- **Be proactive**: Propose concrete next steps rather than 'standing by'
-- **Identify synergy**: Explain how your skills complement your partner's
-- **Suggest handoffs**: Propose coordination touchpoints or integration points
-
-**IMPORTANT**: **Push directives forward**: Don't just acknowledge repeat messages—use them to power more work or suggest new tasks back instead of reiterating the same thing. If you receive a message that's essentially repeating previous coordination, use it as fuel to execute work or propose the next task rather than just confirming again.
-
-**DIRECTIVE PUSH PRINCIPLE**: When receiving messages (especially repeat/reminder messages), push directives forward—don't just respond. Use the message energy to execute more work or suggest a new task back instead of reiterating the same acknowledgment. Transform message receipt into action or task proposal.
-
-If blocked: Send brief blocker description + proposed solution
-**PUSH DIRECTIVES, DON'T REPEAT**: When you receive a message that repeats previous coordination or asks for status you've already provided, don't just reiterate—use it as momentum to:
-- Execute the next logical work step immediately
-- Propose a new task or next action back to the sender
-- Suggest a concrete follow-up task that advances the coordination
-- Take initiative to unblock yourself or others
-Messages are fuel for action, not just confirmation loops. Turn repeat messages into forward progress.
-
-#A2A #BILATERAL-COORDINATION #SWARM-FORCE-MULTIPLIER
+/* Animation delays */
+.animation-delay-200 { animation-delay: 0.2s; }
+.animation-delay-400 { animation-delay: 0.4s; }
+.animation-delay-600 { animation-delay: 0.6s; }
+.animation-delay-800 { animation-delay: 0.8s; }
+.animation-delay-1000 { animation-delay: 1.0s; }
+.animation-delay-1200 { animation-delay: 1.2s; }
+.animation-delay-1400 { animation-delay: 1.4s; }
+</style>
