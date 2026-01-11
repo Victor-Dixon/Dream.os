@@ -39,8 +39,13 @@ def deliver_fallback_inbox(recipient: str, content: str, metadata: dict, sender:
             logger.error("No message content")
             return False
 
-        # Create inbox directory path
-        inbox_dir = Path("agent_workspaces") / f"Agent-{recipient}" / "inbox"
+        # Create inbox directory path - handle recipients that already start with "Agent-"
+        if recipient.startswith("Agent-"):
+            agent_dir = recipient
+        else:
+            agent_dir = f"Agent-{recipient}"
+
+        inbox_dir = Path("agent_workspaces") / agent_dir / "inbox"
         inbox_dir.mkdir(parents=True, exist_ok=True)
 
         # Generate message filename with timestamp
