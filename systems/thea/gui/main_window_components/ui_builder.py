@@ -15,19 +15,41 @@ from PyQt6.QtWidgets import (
 from PyQt6.QtCore import Qt, pyqtSignal
 from PyQt6.QtGui import QFont, QIcon
 
-# Import panels
+# Import available panels (Phase 1 restoration - limited set)
 from ..panels.dashboard_panel import DashboardPanel
-from ..panels.conversations_panel import ConversationsPanel
 from ..panels.analytics_panel import AnalyticsPanel
-from ..panels.content_analytics_panel import ContentAnalyticsPanel
-from ..panels.enhanced_analytics_panel import EnhancedAnalyticsPanel
-from ..panels.resume_panel import ResumePanel
-from ..panels.scraper_panel import ScraperPanel
-from ..panels.task_panel import TaskPanel
-from ..panels.quest_log_panel import QuestLogPanel
-from ..panels.export_panel import ExportPanel
-from ..panels.enhanced_devlog_panel import EnhancedDevlogPanel
-from ..panels.skill_tree_panel import SkillTreePanel
+from ..panels.settings_panel import SettingsPanel
+
+# Placeholder classes for panels not yet restored
+class ConversationsPanel:
+    def __init__(self): pass
+
+class ContentAnalyticsPanel:
+    def __init__(self): pass
+
+class EnhancedAnalyticsPanel:
+    def __init__(self): pass
+
+class ResumePanel:
+    def __init__(self): pass
+
+class ScraperPanel:
+    def __init__(self): pass
+
+class TaskPanel:
+    def __init__(self): pass
+
+class QuestLogPanel:
+    def __init__(self): pass
+
+class ExportPanel:
+    def __init__(self): pass
+
+class EnhancedDevlogPanel:
+    def __init__(self): pass
+
+class SkillTreePanel:
+    def __init__(self): pass
 from ..panels.workflow_panel import WorkflowPanel
 from ..panels.gamification_panel import GamificationPanel
 from ..panels.voice_modeling_panel import VoiceModelingPanel

@@ -18,8 +18,7 @@ Author: Agent-1 (Integration & Core Systems Specialist)
 Date: 2026-01-07
 """
 
-# Re-export the main MusicCommands class for backward compatibility
-from .music_commands_v2 import MusicCommands, setup
+# MusicCommands class is defined below - no external import needed
 
 # Re-export music service for advanced usage
 from .music_service import MusicService, music_service

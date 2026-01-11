@@ -20,10 +20,10 @@ Author: Agent-1 (Integration & Core Systems Specialist)
 Date: 2026-01-07
 """
 
-# Re-export the main components for backward compatibility
+# Import the main components for backward compatibility
 from .swarm_showcase_data import SwarmShowcaseData
 from .swarm_showcase_embeds import SwarmShowcaseEmbeds
-from .swarm_showcase_commands_v2 import SwarmShowcaseCommands, setup
+# SwarmShowcaseCommands class is defined below - no external import needed
 
 
 

@@ -1,9 +1,9 @@
 """
-System Initializer Component
-============================
+System Initializer Component - Swarm Architecture Adaptation
+===========================================================
 
-Handles initialization of all core systems for the main window.
-Extracted from main_window.py for better modularity and maintainability.
+Handles initialization of core systems for the main window.
+Adapted for swarm architecture integration during Thea restoration.
 """
 
 import logging
@@ -13,16 +13,56 @@ from pathlib import Path
 
 from PyQt6.QtCore import QObject, pyqtSignal
 
-# Import core systems
-from dreamscape.core.memory import MemoryManager
-from dreamscape.core.mmorpg.mmorpg_engine import MMORPGEngine
-from dreamscape.core.legacy.resume_tracker import ResumeTracker
-from dreamscape.core.mmorpg.enhanced_skill_resume_system import EnhancedSkillResumeSystem
-from dreamscape.core.discord import DiscordManager
-from dreamscape.core.scraping_system import ScraperOrchestrator
-from dreamscape.core.dreamscape_processor import DreamscapeProcessor
-from dreamscape.core.templates.prompt_deployer import PromptDeployer
-from dreamscape.core.settings_manager import settings_manager
+# Swarm architecture compatibility imports
+# Note: These are placeholder implementations for restoration
+# Full integration will be completed in Phase 2
+
+class MemoryManager:
+    """Placeholder for swarm memory management system."""
+    def __init__(self):
+        self.initialized = True
+
+class MMORPGEngine:
+    """Placeholder for swarm MMORPG/gamification system."""
+    def __init__(self):
+        self.initialized = True
+
+class ResumeTracker:
+    """Placeholder for swarm resume tracking system."""
+    def __init__(self):
+        self.initialized = True
+
+class EnhancedSkillResumeSystem:
+    """Placeholder for swarm skill/resume enhancement system."""
+    def __init__(self):
+        self.initialized = True
+
+class DiscordManager:
+    """Placeholder for swarm Discord integration."""
+    def __init__(self):
+        self.initialized = True
+
+class ScraperOrchestrator:
+    """Placeholder for swarm scraping system."""
+    def __init__(self):
+        self.initialized = True
+
+class DreamscapeProcessor:
+    """Placeholder for swarm AI processing system."""
+    def __init__(self):
+        self.initialized = True
+
+class PromptDeployer:
+    """Placeholder for swarm template system."""
+    def __init__(self):
+        self.initialized = True
+
+class SettingsManager:
+    """Placeholder for swarm settings management."""
+    def __init__(self):
+        self.settings = {}
+
+settings_manager = SettingsManager()
 
 logger = logging.getLogger(__name__)
 

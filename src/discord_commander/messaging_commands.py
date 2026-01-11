@@ -18,8 +18,7 @@ Author: Agent-1 (Integration & Core Systems Specialist)
 Date: 2026-01-07
 """
 
-# Re-export the main MessagingCommands class for backward compatibility
-from .messaging_commands_v2 import MessagingCommands, setup
+# MessagingCommands class is defined below - no external import needed
 
 # Re-export base classes for extension
 from .command_base import BaseDiscordCommand, MessagingCommandBase, StatusCommandBase

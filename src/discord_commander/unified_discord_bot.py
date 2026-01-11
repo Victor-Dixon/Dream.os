@@ -209,15 +209,39 @@ class UnifiedDiscordBot(commands.Bot):
         return self.config.discord_user_map
 
 
-# Main entry point moved to bot_runner_v2.py for V2 compliance
-if __name__ == "__main__":
-    from src.discord_commander.bot_runner_v2 import main
-    import asyncio
-    import sys
-    
+# Main entry point for unified Discord bot
+def main():
+    """Main entry point for the unified Discord bot."""
     if not DISCORD_AVAILABLE:
         print("❌ discord.py not available. Install with: pip install discord.py")
-        sys.exit(1)
-    
-    exit_code = asyncio.run(main())
-    sys.exit(exit_code if exit_code is not None else 0)
+        return
+
+    import asyncio
+
+    async def run_bot():
+        """Run the Discord bot with proper async handling."""
+        try:
+            # Get Discord token from environment
+            token = os.getenv('DISCORD_BOT_TOKEN')
+            if not token:
+                print("❌ DISCORD_BOT_TOKEN not found in environment variables")
+                print("   Please set your Discord bot token: export DISCORD_BOT_TOKEN=your_token_here")
+                return
+
+            # Create bot instance
+            bot = UnifiedDiscordBot(token)
+
+            # Start the bot
+            print("🤖 Starting unified Discord bot...")
+            await bot.start(token)
+
+        except KeyboardInterrupt:
+            print("\n🛑 Bot shutdown requested by user")
+        except Exception as e:
+            print(f"💥 Bot crashed: {e}")
+
+    # Run the bot
+    asyncio.run(run_bot())
+
+if __name__ == "__main__":
+    main()
