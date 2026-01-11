@@ -78,8 +78,8 @@ async def get_analytics_config():
             # Mock configuration
             config = AnalyticsConfig(
                 enabled=True,
-                tracking_id="GA-XXXXXXXXXX",
-                pixel_id="XXXXXXXXXXXXXXXX"
+                tracking_id="GA-DEMO-ANALYTICS-123",
+                pixel_id="DEMO-FACEBOOK-PIXEL-456"
             )
 
         return config.dict()
