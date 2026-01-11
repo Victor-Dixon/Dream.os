@@ -20,13 +20,39 @@ from src.core.messaging_core import UnifiedMessagePriority
 from src.core.messaging_models_core import MessageCategory
 from src.utils.swarm_time import get_swarm_time_display
 
-from .broadcast_handler import broadcast_to_all as _broadcast_to_all
 from .message_formatters import (
     CONSOLIDATION_MESSAGE_TEMPLATE,
     SURVEY_MESSAGE_TEMPLATE,
 )
 from .agent_message_handler import send_to_agent as _send_to_agent
-from .multi_agent_request_handler import send_multi_agent_request as _send_multi_agent_request
+
+# A2A COORDINATION SSOT: Legacy broadcast/multi-agent functionality deprecated
+# All agent communication must use bilateral A2A coordination protocol
+# Previously: from .broadcast_handler import broadcast_to_all as _broadcast_to_all
+# Previously: from .multi_agent_request_handler import send_multi_agent_request as _send_multi_agent_request
+
+def _deprecated_broadcast_error():
+    """Raise error for deprecated broadcast functionality."""
+    raise DeprecationWarning(
+        "❌ BROADCAST MESSAGING DEPRECATED\n"
+        "Broadcast messaging violates A2A coordination SSOT principles.\n"
+        "For agent communication, use bilateral A2A coordination:\n"
+        "python -m src.services.messaging_cli --agent Agent-X --category a2a --sender Agent-Y --message '...'"
+
+    )
+
+def _deprecated_multi_agent_error():
+    """Raise error for deprecated multi-agent request functionality."""
+    raise DeprecationWarning(
+        "❌ MULTI-AGENT REQUESTS DEPRECATED\n"
+        "Multi-agent orchestration superseded by bilateral A2A coordination.\n"
+        "For complex coordination, chain A2A bilateral coordinations:\n"
+        "python -m src.services.messaging_cli --agent Agent-X --category a2a --sender Agent-Y --message '...'"
+
+    )
+
+_broadcast_to_all = _deprecated_broadcast_error
+_send_multi_agent_request = _deprecated_multi_agent_error
 
 logger = logging.getLogger(__name__)
 

@@ -27,8 +27,9 @@ Classes:
 """
 
 import time
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from datetime import datetime
+from pathlib import Path
 import logging
 
 from .models import ContextSession, ContextSuggestion
@@ -195,6 +196,174 @@ class AnalysisContextProcessor(ContextProcessor):
     ├── Depends on: PatternAnalysisEngine from core.analytics.intelligence
     └── Related: data analysis workflows, pattern recognition systems
     """
+
+    def analyze_directory_context(self, context_data: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        AI-powered analysis of directory patterns and usage for intelligent recommendations.
+
+        Args:
+            context_data: Dictionary containing directory analysis parameters
+
+        Returns:
+            Dictionary with analysis results and recommendations
+        """
+        directory_path = context_data.get("directory_path", "")
+        directory_type = context_data.get("directory_type", "unknown")
+
+        # Perform pattern analysis
+        file_patterns = self._analyze_file_patterns(directory_path)
+        activity_level = self._assess_activity_level(directory_path)
+        risk_factors = self._identify_risk_factors(directory_path)
+
+        # Generate confidence score based on data completeness
+        confidence = self._calculate_confidence_score(file_patterns, activity_level)
+
+        return {
+            "file_patterns": file_patterns,
+            "activity_level": activity_level,
+            "risk_factors": risk_factors,
+            "confidence": confidence,
+            "directory_type": directory_type,
+            "analysis_timestamp": context_data.get("timestamp", "")
+        }
+
+    def _analyze_file_patterns(self, directory_path: str) -> Dict[str, Any]:
+        """Analyze file patterns in directory"""
+        try:
+            path = Path(directory_path)
+            if not path.exists():
+                return {"error": "directory_not_found"}
+
+            files = list(path.rglob("*"))
+            total_files = len([f for f in files if f.is_file()])
+
+            # Basic pattern analysis
+            extensions = {}
+            large_files = 0
+            config_files = 0
+
+            for file in files:
+                if file.is_file():
+                    ext = file.suffix.lower()
+                    extensions[ext] = extensions.get(ext, 0) + 1
+
+                    # Check for large files (>10MB)
+                    if file.stat().st_size > 10 * 1024 * 1024:
+                        large_files += 1
+
+                    # Check for config files
+                    if file.name in ['status.json', 'config.json', '.env', 'settings.py']:
+                        config_files += 1
+
+            return {
+                "total_files": total_files,
+                "file_extensions": extensions,
+                "large_files_count": large_files,
+                "config_files_count": config_files,
+                "duplicate_configs": config_files
+            }
+        except Exception as e:
+            return {"error": str(e)}
+
+    def _assess_activity_level(self, directory_path: str) -> str:
+        """Assess activity level based on recent modifications"""
+        try:
+            path = Path(directory_path)
+            if not path.exists():
+                return "unknown"
+
+            # Check recent file modifications (last 30 days)
+            recent_modifications = 0
+            total_files = 0
+            thirty_days_ago = datetime.now().timestamp() - (30 * 24 * 60 * 60)
+
+            for file in path.rglob("*"):
+                if file.is_file():
+                    total_files += 1
+                    if file.stat().st_mtime > thirty_days_ago:
+                        recent_modifications += 1
+
+            if total_files == 0:
+                return "empty"
+
+            activity_ratio = recent_modifications / total_files
+
+            if activity_ratio > 0.5:
+                return "high_activity"
+            elif activity_ratio > 0.2:
+                return "moderate_activity"
+            elif activity_ratio > 0.05:
+                return "low_activity"
+            else:
+                return "inactive"
+
+        except Exception:
+            return "unknown"
+
+    def _identify_risk_factors(self, directory_path: str) -> List[Dict[str, Any]]:
+        """Identify potential risk factors in directory"""
+        risks = []
+
+        try:
+            path = Path(directory_path)
+            if not path.exists():
+                return risks
+
+            # Check for large files
+            large_files = []
+            for file in path.rglob("*"):
+                if file.is_file() and file.stat().st_size > 50 * 1024 * 1024:  # 50MB
+                    large_files.append(file.name)
+
+            if large_files:
+                risks.append({
+                    "type": "large_files",
+                    "severity": "medium",
+                    "details": f"Found {len(large_files)} large files: {', '.join(large_files[:3])}"
+                })
+
+            # Check for old temporary files
+            old_temp_files = []
+            thirty_days_ago = datetime.now().timestamp() - (30 * 24 * 60 * 60)
+
+            for file in path.rglob("*"):
+                if file.is_file() and file.stat().st_mtime < thirty_days_ago:
+                    if any(temp_indicator in file.name.lower() for temp_indicator in ['temp', 'tmp', 'cache', 'old']):
+                        old_temp_files.append(file.name)
+
+            if old_temp_files:
+                risks.append({
+                    "type": "old_temp_files",
+                    "severity": "low",
+                    "details": f"Found {len(old_temp_files)} old temporary files"
+                })
+
+        except Exception as e:
+            risks.append({
+                "type": "analysis_error",
+                "severity": "low",
+                "details": f"Risk analysis failed: {str(e)}"
+            })
+
+        return risks
+
+    def _calculate_confidence_score(self, file_patterns: Dict, activity_level: str) -> float:
+        """Calculate confidence score for analysis results"""
+        confidence = 0.5  # Base confidence
+
+        # Higher confidence with more data
+        if file_patterns.get("total_files", 0) > 10:
+            confidence += 0.2
+
+        # Higher confidence with clear activity patterns
+        if activity_level != "unknown":
+            confidence += 0.2
+
+        # Higher confidence with diverse file types
+        if len(file_patterns.get("file_extensions", {})) > 3:
+            confidence += 0.1
+
+        return min(confidence, 1.0)
 
     async def process(self, session: ContextSession) -> List[ContextSuggestion]:
         """

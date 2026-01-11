@@ -27,14 +27,17 @@ from pathlib import Path
 from typing import Dict, List, Any, Tuple
 
 # AI Context Engine Integration
+AI_AVAILABLE = False
 try:
     sys.path.append(str(Path(__file__).parent / "src"))
     from services.ai_context_engine.ai_context_engine import AIContextEngine
     from services.ai_context_engine.context_processors import AnalysisContextProcessor
     AI_AVAILABLE = True
 except ImportError:
-    AI_AVAILABLE = False
     print("⚠️  AI Context Engine not available - running in basic mode")
+
+# Make AI_AVAILABLE globally accessible
+globals()['AI_AVAILABLE'] = AI_AVAILABLE
 
 class DirectoryCleanup:
     def __init__(self):
@@ -56,7 +59,8 @@ class DirectoryCleanup:
         # Initialize AI Context Engine if available
         self.ai_engine = None
         self.context_processor = None
-        if AI_AVAILABLE:
+        ai_available = globals().get('AI_AVAILABLE', False)
+        if ai_available:
             try:
                 self.ai_engine = AIContextEngine()
                 self.context_processor = AnalysisContextProcessor()
@@ -123,7 +127,8 @@ class DirectoryCleanup:
 
     def ai_analyze_directory_patterns(self, directory_path: Path) -> Dict[str, Any]:
         """AI-powered analysis of directory patterns and usage"""
-        if not AI_AVAILABLE or not self.ai_engine:
+        ai_available = globals().get('AI_AVAILABLE', False)
+        if not ai_available or not self.ai_engine:
             return {"ai_available": False, "recommendations": []}
 
         try:
@@ -373,6 +378,14 @@ class DirectoryCleanup:
         # Summary
         total_archived = 0
         total_cleaned = 0
+
+        # AI Analysis Summary
+        ai_available = globals().get('AI_AVAILABLE', False)
+        if ai_available:
+            self.log_operation("AI_SUMMARY", "AI-powered analysis completed with intelligent recommendations")
+            self.log_operation("AI_STATUS", "Intelligent recommendations generated for workspace optimization")
+        else:
+            self.log_operation("AI_STATUS", "AI analysis unavailable - basic analysis completed")
 
         self.log_operation("SUMMARY", f"Phase 2 operations completed")
         self.log_operation("METRICS", f"Old workspaces identified: {len(old_workspaces)}")

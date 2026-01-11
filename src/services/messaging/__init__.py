@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Messaging Module - Public API Exports
+A2A Coordination Protocol - Single Source of Truth
 ======================================
 
 <!-- SSOT Domain: integration -->
@@ -9,10 +9,12 @@ Messaging Module - Public API Exports
    Use A2A coordination protocol for all agent-to-agent communication:
    python -m src.services.messaging_cli --agent Agent-X --category a2a --sender Agent-Y --message "..."
 
-Public API exports for messaging infrastructure.
-Extracted from messaging_infrastructure.py for V2 compliance.
+📋 A2A COORDINATION ONLY:
+This module now contains ONLY A2A coordination protocol components.
+Legacy messaging systems archived to: archive/legacy_messaging_systems/
 
 V2 Compliance | Author: Agent-1 | Date: 2025-12-14
+Updated: Agent-1 | A2A SSOT Consolidation | Date: 2026-01-11
 """
 
 from __future__ import annotations
@@ -42,12 +44,12 @@ from .coordination_handlers import (
     MessageCoordinator,
 )
 
-# Service Adapters
-from .service_adapters import (
-    ConsolidatedMessagingService,
-    send_discord_message,
-    broadcast_discord_message,
-)
+# Service Adapters - ARCHIVED to archive/legacy_messaging_systems/
+# from .service_adapters import (
+#     ConsolidatedMessagingService,
+#     send_discord_message,
+#     broadcast_discord_message,
+# )
 
 # CLI Handlers
 from .cli_handlers import (
@@ -79,10 +81,10 @@ __all__ = [
     "send_message_to_onboarding_coords",
     # Coordination Handlers
     "MessageCoordinator",
-    # Service Adapters
-    "ConsolidatedMessagingService",
-    "send_discord_message",
-    "broadcast_discord_message",
+    # Service Adapters - ARCHIVED
+    # "ConsolidatedMessagingService",
+    # "send_discord_message",
+    # "broadcast_discord_message",
     # CLI Handlers
     "handle_cycle_v2_message",
     "handle_delivery_status",

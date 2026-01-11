@@ -64,7 +64,7 @@ class ServiceManager:
             },
             'discord': {
                 'name': 'Discord Bot',
-                'script': 'tools/discord_bot_launcher.py',
+                'script': 'src/discord_commander/unified_discord_bot.py',
                 'pid_file': 'discord.pid',
                 'log_file': 'discord_bot.log',
                 'status': 'stopped',
@@ -211,7 +211,7 @@ class ServiceManager:
             from src.services.chat_presence.twitch_eventsub_server import main
             main()
         elif service_name == 'discord':
-            from src.discord_bot import main
+            from src.discord_commander.unified_discord_bot import main
             main()
         elif service_name == 'fastapi':
             # Import from local FastAPI application
