@@ -196,10 +196,12 @@ def send_via_fallback(
     priority: Any,
     message_type: Any,
     metadata: Dict[str, Any],
-) -> Any:
+) -> Dict[str, Any]:
     """Send message via fallback (direct send) and return result."""
     from src.core.messaging_core import send_message, UnifiedMessageTag
-    return send_message(
+
+    # Send the message directly
+    result = send_message(
         content=formatted_message,
         sender=sender,
         recipient=agent,
@@ -208,6 +210,12 @@ def send_via_fallback(
         tags=[UnifiedMessageTag.SYSTEM],
         metadata=metadata,
     )
+
+    # Return a dict indicating this was a direct send, not queued
+    if result:
+        return {"success": True, "direct_send": True, "agent": agent}
+    else:
+        return {"success": False, "direct_send": True, "agent": agent}
 
 
 def handle_blocked_message(block_result: Dict[str, Any], agent: str) -> None:

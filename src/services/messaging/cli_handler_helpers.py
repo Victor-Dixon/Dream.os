@@ -179,7 +179,8 @@ def send_single_agent_message(
 
         success, msg = handle_message_result(result, agent)
 
-        # Check if message was queued but not delivered (fallback trigger)
+        # Only trigger fallback for actual queue failures, not for intentional direct sends
+        # The MessageCoordinator already handles fallback to direct sending when queue fails
         if success and "queued for" in msg.lower() and "awaiting delivery" in msg.lower():
             logger.info("Message queued but not delivered - triggering direct fallback")
             try:
@@ -276,20 +277,27 @@ def send_single_agent_message(
 
 
 def handle_message_result(result: Any, agent: str) -> tuple[bool, str]:
-    """Handle message queue result and return (success, message)."""
+    """Handle message result and return (success, message)."""
     if isinstance(result, dict):
         if result.get("success"):
-            return True, f"📋 Message queued for {agent} - awaiting delivery"
+            if result.get("direct_send"):
+                return True, f"📤 Message sent directly to {agent}"
+            else:
+                return True, f"📋 Message queued for {agent} - awaiting delivery"
         elif result.get("blocked"):
             error_msg = result.get(
                 "error_message", "Pending request details unavailable")
             return False, f"❌ MESSAGE BLOCKED - Pending Multi-Agent Request\n\n{error_msg}"
         else:
-            return False, f"❌ Failed to queue message for {agent}"
+            if result.get("direct_send"):
+                return False, f"❌ Failed to send message directly to {agent}"
+            else:
+                return False, f"❌ Failed to queue message for {agent}"
     elif result:
-        return True, f"📋 Message queued for {agent} - awaiting delivery"
+        # Legacy bool result - assume direct send
+        return True, f"📤 Message sent directly to {agent}"
     else:
-        return False, f"❌ Failed to queue message for {agent}"
+        return False, f"❌ Failed to send message to {agent}"
 
 
 def route_message_delivery(
