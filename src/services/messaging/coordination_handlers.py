@@ -85,6 +85,53 @@ class MessageCoordinator:
         return cls._queue_repository
 
     @staticmethod
+    def send_message(agent: str, message: str, priority: str = "regular",
+                    use_pyautogui: bool = True, wait_for_delivery: bool = False,
+                    timeout: float = 30.0, discord_user_id: str = None,
+                    stalled: bool = False, apply_template: bool = False,
+                    message_category=None, sender: str = None):
+        """
+        Compatibility method for send_message calls.
+        Maps parameters to send_to_agent method.
+        """
+        from src.core.messaging_models_core import UnifiedMessagePriority, MessageCategory
+
+        # Map string priority to enum
+        priority_enum = UnifiedMessagePriority.REGULAR
+        if priority.lower() == "urgent":
+            priority_enum = UnifiedMessagePriority.URGENT
+        elif priority.lower() == "normal":
+            priority_enum = UnifiedMessagePriority.NORMAL
+
+        # Map string category to enum if provided
+        category_enum = None
+        if message_category:
+            try:
+                category_enum = MessageCategory(message_category)
+            except:
+                category_enum = MessageCategory.AGENT_TO_AGENT
+
+        # Prepare metadata
+        metadata = {
+            'timeout': timeout,
+            'wait_for_delivery': wait_for_delivery,
+            'discord_user_id': discord_user_id,
+            'stalled': stalled,
+            'apply_template': apply_template
+        }
+
+        return MessageCoordinator.send_to_agent(
+            agent=agent,
+            message=message,
+            priority=priority_enum,
+            use_pyautogui=use_pyautogui,
+            stalled=stalled,
+            sender=sender,
+            message_category=category_enum,
+            message_metadata=metadata
+        )
+
+    @staticmethod
     def send_to_agent(
         agent: str,
         message,
