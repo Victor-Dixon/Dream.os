@@ -38,29 +38,20 @@ class WordPressPageCreator:
             raise ValueError(f"❌ No configuration found for site: {site_key}")
 
     def _load_site_config(self) -> Optional[Dict]:
-        """Load site configuration from environment or credentials file"""
-        # Try environment variables first (Hostinger)
-        host = os.getenv("HOSTINGER_HOST")
-        username = os.getenv("HOSTINGER_USER")
-        password = os.getenv("HOSTINGER_PASS")
-        port = int(os.getenv("HOSTINGER_PORT", "65002"))
-
-        if all([host, username, password]):
-            return {
-                "host": host,
-                "username": username,
-                "password": password,
-                "port": port,
-                "wp_path": "/public_html"
-            }
-
-        # Try credentials file
+        """Load site configuration from credentials file"""
         creds_file = repo_root / ".deploy_credentials" / "sites.json"
         if creds_file.exists():
             try:
                 with open(creds_file, 'r') as f:
                     creds_data = json.load(f)
-                    return creds_data.get(self.site_key)
+                    config = creds_data.get(self.site_key)
+                    if config:
+                        # Ensure wp_path is set correctly
+                        if "remote_path" in config and "wp_path" not in config:
+                            config["wp_path"] = config["remote_path"]
+                        elif "wp_path" not in config:
+                            config["wp_path"] = "/public_html"  # fallback
+                        return config
             except Exception as e:
                 print(f"⚠️ Failed to load credentials: {e}")
 

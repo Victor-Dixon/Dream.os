@@ -597,6 +597,228 @@
 }
 
 /* ================================
+   QUEST SYSTEM STYLES
+   ================================ */
+
+.active-quests-section,
+.available-quests-section {
+    position: relative;
+}
+
+.quests-loading,
+.available-quests-loading {
+    text-align: center;
+    padding: 40px;
+    color: #888;
+}
+
+.quests-list,
+.available-quests-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.quest-card,
+.available-quest-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.3s ease;
+}
+
+.quest-card:hover,
+.available-quest-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-2px);
+}
+
+.quest-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.quest-header h4 {
+    margin: 0;
+    font-size: 1.2em;
+    color: #00d4ff;
+}
+
+.quest-badges {
+    display: flex;
+    gap: 8px;
+}
+
+.badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.badge.type-collaboration { background: rgba(0, 212, 255, 0.2); color: #00d4ff; }
+.badge.type-performance { background: rgba(0, 255, 136, 0.2); color: #00ff88; }
+.badge.type-innovation { background: rgba(255, 136, 255, 0.2); color: #ff88ff; }
+.badge.type-development { background: rgba(255, 212, 0, 0.2); color: #ffd400; }
+
+.badge.difficulty-easy { background: rgba(0, 255, 136, 0.2); color: #00ff88; }
+.badge.difficulty-medium { background: rgba(255, 212, 0, 0.2); color: #ffd400; }
+.badge.difficulty-hard { background: rgba(255, 136, 0, 0.2); color: #ff8800; }
+.badge.difficulty-epic { background: rgba(255, 0, 136, 0.2); color: #ff0088; }
+.badge.difficulty-legendary { background: rgba(136, 0, 255, 0.2); color: #8800ff; }
+
+.badge.status-active { background: rgba(0, 255, 136, 0.2); color: #00ff88; }
+.badge.status-available { background: rgba(255, 212, 0, 0.2); color: #ffd400; }
+.badge.status-completed { background: rgba(0, 212, 255, 0.2); color: #00d4ff; }
+
+.quest-description {
+    color: #ccc;
+    margin-bottom: 16px;
+    line-height: 1.4;
+}
+
+.quest-progress {
+    margin-bottom: 16px;
+}
+
+.progress-bar {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    height: 8px;
+    margin-bottom: 8px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    background: linear-gradient(90deg, #00d4ff, #00ff88);
+    height: 100%;
+    border-radius: 8px;
+    transition: width 0.5s ease;
+}
+
+.progress-text {
+    font-size: 0.9em;
+    color: #888;
+    text-align: center;
+}
+
+.quest-objectives {
+    margin-bottom: 16px;
+}
+
+.objective {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.objective:last-child {
+    border-bottom: none;
+}
+
+.objective.completed {
+    opacity: 0.7;
+}
+
+.objective-check {
+    margin-right: 12px;
+    font-size: 1.1em;
+}
+
+.objective-text {
+    flex: 1;
+    font-size: 0.9em;
+}
+
+.objective-progress {
+    font-size: 0.9em;
+    color: #888;
+    font-weight: bold;
+}
+
+.quest-rewards,
+.quest-rewards-preview {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.reward-item {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.9em;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.start-quest-btn,
+.accept-quest-btn {
+    background: linear-gradient(45deg, #00d4ff, #00ff88);
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.start-quest-btn:hover,
+.accept-quest-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+}
+
+.no-quests {
+    text-align: center;
+    padding: 40px;
+    color: #888;
+    font-style: italic;
+}
+
+/* ================================
+   NOTIFICATION SYSTEM
+   ================================ */
+
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    z-index: 1000;
+    animation: slideInRight 0.3s ease-out;
+    max-width: 300px;
+}
+
+.notification.success {
+    background: rgba(0, 255, 136, 0.9);
+    color: white;
+    border: 1px solid rgba(0, 255, 136, 0.3);
+}
+
+.notification.error {
+    background: rgba(255, 136, 136, 0.9);
+    color: white;
+    border: 1px solid rgba(255, 136, 136, 0.3);
+}
+
+.notification.info {
+    background: rgba(0, 212, 255, 0.9);
+    color: white;
+    border: 1px solid rgba(0, 212, 255, 0.3);
+}
+
+/* ================================
    ANIMATIONS
    ================================ */
 

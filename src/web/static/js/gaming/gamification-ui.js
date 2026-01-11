@@ -61,7 +61,11 @@ export class GamificationUI {
                 await this.initializeWebSocket();
             }
 
-            console.log('✅ Gamification UI initialized with real-time support');
+            // Load quests data
+            await this.loadActiveQuests();
+            await this.loadAvailableQuests();
+
+            console.log('✅ Gamification UI initialized with real-time support and quest system');
         } catch (error) {
             console.error('❌ Failed to initialize Gamification UI:', error);
             throw error;
@@ -275,6 +279,7 @@ export class GamificationUI {
                 <div class="gamification-content">
                     ${this.renderXPSection()}
                     ${this.renderLeaderboardSection()}
+                    ${this.renderActiveQuestsSection()}
                     ${this.renderSkillsSection()}
                     ${this.renderQuestsSection()}
                     ${this.renderAchievementsSection()}
@@ -287,6 +292,126 @@ export class GamificationUI {
         }
     }
     
+    /**
+     * Render Active Quests section
+     */
+    renderActiveQuestsSection() {
+        return `
+            <div class="active-quests-section card">
+                <div class="section-header">
+                    <h3>🎯 Active Quests</h3>
+                    <button class="refresh-btn" onclick="window.gamificationUI?.loadActiveQuests()">
+                        🔄 Refresh
+                    </button>
+                </div>
+                <div class="quests-loading">
+                    <div class="loading-spinner"></div>
+                    <span>Loading active quests...</span>
+                </div>
+            </div>
+        `;
+    }
+
+    /**
+     * Render Available Quests section
+     */
+    renderAvailableQuestsSection() {
+        return `
+            <div class="available-quests-section card">
+                <div class="section-header">
+                    <h3>📋 Available Quests</h3>
+                    <button class="refresh-btn" onclick="window.gamificationUI?.loadAvailableQuests()">
+                        🔄 Load New Quests
+                    </button>
+                </div>
+                <div class="available-quests-loading">
+                    <div class="loading-spinner"></div>
+                    <span>Loading available quests...</span>
+                </div>
+            </div>
+        `;
+    }
+
+    /**
+     * Load available quests
+     */
+    async loadAvailableQuests() {
+        try {
+            const response = await fetch('/api/gaming/quests/Agent-6/available');
+            const data = await response.json();
+
+            this.updateAvailableQuestsDisplay(data.available_quests);
+        } catch (error) {
+            console.error('❌ Error loading available quests:', error);
+        }
+    }
+
+    /**
+     * Update the available quests display
+     */
+    updateAvailableQuestsDisplay(quests) {
+        const questsContainer = this.container.querySelector('.available-quests-section');
+        if (!questsContainer) return;
+
+        let questsList = questsContainer.querySelector('.available-quests-list');
+        if (!questsList) {
+            questsList = document.createElement('div');
+            questsList.className = 'available-quests-list';
+            questsContainer.appendChild(questsList);
+        }
+
+        if (quests.length === 0) {
+            questsList.innerHTML = '<div class="no-quests">No quests available at this time.</div>';
+            return;
+        }
+
+        questsList.innerHTML = quests.map(quest => `
+            <div class="available-quest-card ${quest.difficulty}">
+                <div class="quest-header">
+                    <h4>${quest.title}</h4>
+                    <div class="quest-badges">
+                        <span class="badge type-${quest.quest_type}">${quest.quest_type}</span>
+                        <span class="badge difficulty-${quest.difficulty}">${quest.difficulty}</span>
+                    </div>
+                </div>
+                <div class="quest-description">${quest.description}</div>
+                <div class="quest-rewards-preview">
+                    <div class="reward-item">🎖️ ${quest.rewards.xp_reward} XP</div>
+                    ${quest.rewards.achievements.length > 0 ?
+                        `<div class="reward-item">🏆 Achievement</div>` : ''}
+                </div>
+                <button class="accept-quest-btn" onclick="window.gamificationUI?.acceptQuest('${quest.quest_id}')">
+                    ✅ Accept Quest
+                </button>
+            </div>
+        `).join('');
+    }
+
+    /**
+     * Accept a quest (creates it for the agent)
+     */
+    async acceptQuest(questId) {
+        try {
+            const response = await fetch(`/api/gaming/quests/Agent-6/create?type=collaboration&difficulty=medium`, {
+                method: 'POST'
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log(`✅ Quest accepted: ${data.quest.title}`);
+                this.loadActiveQuests(); // Refresh active quests
+                this.loadAvailableQuests(); // Refresh available quests
+                this.showNotification(`Quest "${data.quest.title}" accepted!`, 'success');
+            } else {
+                console.error('❌ Failed to accept quest');
+                this.showNotification('Failed to accept quest', 'error');
+            }
+        } catch (error) {
+            console.error('❌ Error accepting quest:', error);
+            this.showNotification('Error accepting quest', 'error');
+        }
+    }
+
     /**
      * Render Leaderboard section
      */
@@ -305,6 +430,118 @@ export class GamificationUI {
                 </div>
             </div>
         `;
+    }
+
+    /**
+     * Load active quests for the current agent
+     */
+    async loadActiveQuests() {
+        try {
+            const response = await fetch('/api/gaming/quests/Agent-6');
+            const data = await response.json();
+
+            this.updateActiveQuestsDisplay(data.quests);
+        } catch (error) {
+            console.error('❌ Error loading active quests:', error);
+        }
+    }
+
+    /**
+     * Update the active quests display
+     */
+    updateActiveQuestsDisplay(quests) {
+        const questsContainer = this.container.querySelector('.active-quests-section');
+        if (!questsContainer) return;
+
+        let questsList = questsContainer.querySelector('.quests-list');
+        if (!questsList) {
+            questsList = document.createElement('div');
+            questsList.className = 'quests-list';
+            questsContainer.appendChild(questsList);
+        }
+
+        if (quests.length === 0) {
+            questsList.innerHTML = '<div class="no-quests">No active quests. Check available quests below!</div>';
+            return;
+        }
+
+        questsList.innerHTML = quests.map(quest => `
+            <div class="quest-card ${quest.status} ${quest.difficulty}">
+                <div class="quest-header">
+                    <h4>${quest.title}</h4>
+                    <div class="quest-badges">
+                        <span class="badge type-${quest.quest_type}">${quest.quest_type}</span>
+                        <span class="badge difficulty-${quest.difficulty}">${quest.difficulty}</span>
+                        <span class="badge status-${quest.status}">${quest.status}</span>
+                    </div>
+                </div>
+                <div class="quest-description">${quest.description}</div>
+                <div class="quest-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${quest.progress_percentage}%"></div>
+                    </div>
+                    <span class="progress-text">${Math.round(quest.progress_percentage)}% Complete</span>
+                </div>
+                <div class="quest-objectives">
+                    ${quest.objectives.map(obj => `
+                        <div class="objective ${obj.completed ? 'completed' : 'pending'}">
+                            <span class="objective-check">${obj.completed ? '✅' : '⏳'}</span>
+                            <span class="objective-text">${obj.description}</span>
+                            <span class="objective-progress">${obj.current_value}/${obj.target_value}</span>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="quest-rewards">
+                    <div class="reward-item">🎖️ ${quest.rewards.xp_reward} XP</div>
+                    ${quest.rewards.achievements.length > 0 ?
+                        `<div class="reward-item">🏆 ${quest.rewards.achievements.join(', ')}</div>` : ''}
+                </div>
+                ${quest.status === 'available' ?
+                    `<button class="start-quest-btn" onclick="window.gamificationUI?.startQuest('${quest.quest_id}')">
+                        🚀 Start Quest
+                    </button>` : ''}
+            </div>
+        `).join('');
+    }
+
+    /**
+     * Start a quest
+     */
+    async startQuest(questId) {
+        try {
+            const response = await fetch(`/api/gaming/quests/${questId}/start`, {
+                method: 'POST'
+            });
+
+            if (response.ok) {
+                console.log(`✅ Quest ${questId} started`);
+                this.loadActiveQuests(); // Refresh the display
+                this.showNotification('Quest started successfully!', 'success');
+            } else {
+                console.error('❌ Failed to start quest');
+                this.showNotification('Failed to start quest', 'error');
+            }
+        } catch (error) {
+            console.error('❌ Error starting quest:', error);
+            this.showNotification('Error starting quest', 'error');
+        }
+    }
+
+    /**
+     * Show notification
+     */
+    showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.textContent = message;
+
+        this.container.appendChild(notification);
+
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 3000);
     }
 
     /**

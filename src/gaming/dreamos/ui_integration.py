@@ -725,6 +725,317 @@ def force_leaderboard_update():
         }), 500
 
 
+# ================================
+# QUEST API ENDPOINTS
+# ================================
+
+@gamification_bp.route("/quests/<agent_id>", methods=["GET"])
+def get_agent_quests(agent_id: str):
+    """
+    Get all quests for a specific agent.
+
+    Args:
+        agent_id: Agent identifier
+
+    Returns:
+        List of quest data
+    """
+    try:
+        quest_manager = get_quest_manager()
+        quests = quest_manager.get_agent_quests(agent_id)
+
+        return jsonify({
+            "agent_id": agent_id,
+            "quests": [quest.to_dict() for quest in quests],
+            "total_quests": len(quests),
+            "active_quests": len([q for q in quests if q.status.value == "active"]),
+            "completed_quests": len([q for q in quests if q.status.value == "completed"])
+        })
+
+    except Exception as e:
+        logger.error(f"Error getting quests for agent {agent_id}: {e}")
+        return jsonify({
+            "error": str(e),
+            "agent_id": agent_id,
+            "quests": []
+        }), 500
+
+
+@gamification_bp.route("/quests/<agent_id>/available", methods=["GET"])
+def get_available_quests(agent_id: str):
+    """
+    Get available quests that can be started by an agent.
+
+    Args:
+        agent_id: Agent identifier
+
+    Returns:
+        List of available quests
+    """
+    try:
+        quest_manager = get_quest_manager()
+        available_quests = quest_manager.get_available_quests(agent_id, limit=5)
+
+        return jsonify({
+            "agent_id": agent_id,
+            "available_quests": [quest.to_dict() for quest in available_quests],
+            "count": len(available_quests)
+        })
+
+    except Exception as e:
+        logger.error(f"Error getting available quests for agent {agent_id}: {e}")
+        return jsonify({
+            "error": str(e),
+            "agent_id": agent_id,
+            "available_quests": []
+        }), 500
+
+
+@gamification_bp.route("/quests/<agent_id>/create", methods=["POST"])
+def create_agent_quest(agent_id: str):
+    """
+    Create a new quest for an agent.
+
+    Args:
+        agent_id: Agent identifier
+
+    Query Parameters:
+        type: Quest type (collaboration, performance, innovation, etc.)
+        difficulty: Quest difficulty (easy, medium, hard, epic, legendary)
+
+    Returns:
+        Created quest data
+    """
+    try:
+        from flask import request
+
+        # Get parameters from query string or JSON body
+        quest_type_str = request.args.get('type', 'collaboration')
+        difficulty_str = request.args.get('difficulty', 'medium')
+
+        # Validate and convert parameters
+        try:
+            quest_type = QuestType(quest_type_str)
+        except ValueError:
+            return jsonify({
+                "error": f"Invalid quest type: {quest_type_str}",
+                "valid_types": [t.value for t in QuestType]
+            }), 400
+
+        try:
+            difficulty = QuestDifficulty(difficulty_str)
+        except ValueError:
+            return jsonify({
+                "error": f"Invalid difficulty: {difficulty_str}",
+                "valid_difficulties": [d.value for d in QuestDifficulty]
+            }), 400
+
+        quest_manager = get_quest_manager()
+        quest = quest_manager.create_quest(agent_id, quest_type, difficulty)
+
+        if quest:
+            return jsonify({
+                "success": True,
+                "quest": quest.to_dict(),
+                "message": f"Quest '{quest.title}' created for agent {agent_id}"
+            })
+        else:
+            return jsonify({
+                "success": False,
+                "error": "Failed to create quest"
+            }), 500
+
+    except Exception as e:
+        logger.error(f"Error creating quest for agent {agent_id}: {e}")
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        }), 500
+
+
+@gamification_bp.route("/quests/<quest_id>/start", methods=["POST"])
+def start_quest(quest_id: str):
+    """
+    Start a quest.
+
+    Args:
+        quest_id: Quest identifier
+
+    Returns:
+        Success status
+    """
+    try:
+        quest_manager = get_quest_manager()
+        success = quest_manager.start_quest(quest_id)
+
+        if success:
+            quest = quest_manager.get_quest(quest_id)
+            return jsonify({
+                "success": True,
+                "quest_id": quest_id,
+                "message": f"Quest started successfully",
+                "started_at": quest.started_at.isoformat() if quest and quest.started_at else None
+            })
+        else:
+            return jsonify({
+                "success": False,
+                "error": "Failed to start quest (may already be active or not found)"
+            }), 400
+
+    except Exception as e:
+        logger.error(f"Error starting quest {quest_id}: {e}")
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        }), 500
+
+
+@gamification_bp.route("/quests/<quest_id>/progress", methods=["POST"])
+def update_quest_progress(quest_id: str):
+    """
+    Update progress for a quest objective.
+
+    Args:
+        quest_id: Quest identifier
+
+    Query Parameters:
+        objective_id: Objective identifier
+        increment: Progress increment (default: 1)
+
+    Returns:
+        Updated progress data
+    """
+    try:
+        from flask import request
+
+        objective_id = request.args.get('objective_id')
+        increment = int(request.args.get('increment', 1))
+
+        if not objective_id:
+            return jsonify({
+                "success": False,
+                "error": "objective_id parameter is required"
+            }), 400
+
+        quest_manager = get_quest_manager()
+        success = quest_manager.update_quest_progress(quest_id, objective_id, increment)
+
+        if success:
+            quest = quest_manager.get_quest(quest_id)
+            if quest:
+                return jsonify({
+                    "success": True,
+                    "quest_id": quest_id,
+                    "objective_id": objective_id,
+                    "progress_increment": increment,
+                    "overall_progress": quest.progress_percentage,
+                    "completed": quest.status.value == "completed"
+                })
+            else:
+                return jsonify({
+                    "success": False,
+                    "error": "Quest not found after update"
+                }), 404
+        else:
+            return jsonify({
+                "success": False,
+                "error": "Failed to update quest progress"
+            }), 400
+
+    except Exception as e:
+        logger.error(f"Error updating quest progress: {e}")
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        }), 500
+
+
+@gamification_bp.route("/quests/<quest_id>/complete", methods=["POST"])
+def complete_quest(quest_id: str):
+    """
+    Mark a quest as completed.
+
+    Args:
+        quest_id: Quest identifier
+
+    Returns:
+        Completion status and rewards
+    """
+    try:
+        quest_manager = get_quest_manager()
+        success = quest_manager.complete_quest(quest_id)
+
+        if success:
+            quest = quest_manager.get_quest(quest_id)
+            if quest:
+                return jsonify({
+                    "success": True,
+                    "quest_id": quest_id,
+                    "message": f"Quest '{quest.title}' completed!",
+                    "rewards": {
+                        "xp_reward": quest.rewards.xp_reward,
+                        "bonus_points": quest.rewards.bonus_points,
+                        "achievements": quest.rewards.achievements,
+                        "special_unlocks": quest.rewards.special_unlocks
+                    },
+                    "completed_at": quest.completed_at.isoformat() if quest.completed_at else None
+                })
+            else:
+                return jsonify({
+                    "success": False,
+                    "error": "Quest not found after completion"
+                }), 404
+        else:
+            return jsonify({
+                "success": False,
+                "error": "Failed to complete quest"
+            }), 400
+
+    except Exception as e:
+        logger.error(f"Error completing quest {quest_id}: {e}")
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        }), 500
+
+
+@gamification_bp.route("/quests/stats/<agent_id>", methods=["GET"])
+def get_quest_stats(agent_id: str):
+    """
+    Get quest statistics for an agent.
+
+    Args:
+        agent_id: Agent identifier
+
+    Returns:
+        Quest statistics
+    """
+    try:
+        quest_manager = get_quest_manager()
+
+        active_count = quest_manager.get_active_quests_count(agent_id)
+        completed_count = quest_manager.get_completed_quests_count(agent_id)
+
+        return jsonify({
+            "agent_id": agent_id,
+            "active_quests": active_count,
+            "completed_quests": completed_count,
+            "total_quests": active_count + completed_count,
+            "completion_rate": (completed_count / (active_count + completed_count)) * 100 if (active_count + completed_count) > 0 else 0
+        })
+
+    except Exception as e:
+        logger.error(f"Error getting quest stats for agent {agent_id}: {e}")
+        return jsonify({
+            "error": str(e),
+            "agent_id": agent_id,
+            "active_quests": 0,
+            "completed_quests": 0,
+            "total_quests": 0,
+            "completion_rate": 0
+        }), 500
+
+
 def register_gamification_blueprint(app):
     """
     Register gamification blueprint with Flask app.
@@ -738,4 +1049,15 @@ def register_gamification_blueprint(app):
     broadcaster = get_leaderboard_broadcaster()
     broadcaster.start_broadcasting()
 
-    logger.info
+    logger.info("🎯 Gamification blueprint registered with real-time leaderboard and quest system support")
+
+
+def initialize_socketio(app):
+    """
+    Initialize SocketIO with the Flask app.
+
+    Args:
+        app: Flask application instance
+    """
+    socketio.init_app(app, cors_allowed_origins="*")
+    logger.info("🔌 SocketIO initialized for gamification real-time features")

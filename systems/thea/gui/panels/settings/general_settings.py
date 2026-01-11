@@ -16,7 +16,7 @@ from PyQt6.QtWidgets import (
     QCheckBox, QSpinBox, QComboBox
 )
 from PyQt6.QtCore import pyqtSignal
-from dreamscape.core.settings_manager import settings_manager
+# Using swarm settings manager placeholder from parent module
 
 class GeneralSettingsWidget(QWidget):
     """Widget for general application settings."""

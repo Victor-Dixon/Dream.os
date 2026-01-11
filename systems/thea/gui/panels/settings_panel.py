@@ -28,14 +28,6 @@ from .settings.general_settings import GeneralSettingsWidget
 from .settings.api_settings import APISettingsWidget
 from .settings.memory_settings import MemorySettingsWidget
 from .settings.accessibility_settings import AccessibilitySettingsWidget
-# Placeholder for swarm settings manager
-class SettingsManager:
-    def __init__(self):
-        self.settings = {}
-        self.save_settings = lambda: None
-
-settings_manager = SettingsManager()
-
 class SettingsPanel(QWidget):
     """Panel for managing application settings."""
     
@@ -159,13 +151,6 @@ class SettingsPanel(QWidget):
     @debug_button("load_settings", "Settings Panel")
     def load_settings(self):
         """Load settings from configuration."""
-        # Placeholder for swarm settings manager
-class SettingsManager:
-    def __init__(self):
-        self.settings = {}
-        self.save_settings = lambda: None
-
-settings_manager = SettingsManager()
         # Base defaults
         defaults = {
             'general': {
@@ -235,13 +220,6 @@ settings_manager = SettingsManager()
             }
             
             # Persist general settings via shared settings_manager so they survive restarts
-            # Placeholder for swarm settings manager
-class SettingsManager:
-    def __init__(self):
-        self.settings = {}
-        self.save_settings = lambda: None
-
-settings_manager = SettingsManager()
 
             # Flatten keys for persistence
             flat: dict[str, any] = {}
@@ -357,4 +335,9 @@ settings_manager = SettingsManager()
                               "Install with: pip install requests")
             
         except Exception as e:
-            QMessageBox.critical(self, "Connection Te
+            QMessageBox.critical(self, "Connection Test", 
+                               f"Unexpected error during connection test:\n{str(e)}")
+    
+    def get_settings(self) -> Dict:
+        """Get current settings."""
+        return self.settings 
