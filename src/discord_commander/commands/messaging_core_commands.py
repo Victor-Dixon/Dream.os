@@ -34,7 +34,7 @@ class MessagingCoreCommands(commands.Cog):
 
     def __init__(self, bot: "UnifiedDiscordBot", gui_controller: "DiscordGUIController"):
         """Initialize core messaging commands."""
-        commands.Cog.__init__(self)
+        super().__init__()
         self.bot = bot
         self.gui_controller = gui_controller
         self.logger = logging.getLogger(__name__)

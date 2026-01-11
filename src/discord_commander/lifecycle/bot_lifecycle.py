@@ -61,7 +61,7 @@ class BotLifecycleManager:
     async def _load_messaging_commands(self) -> None:
         """Load messaging commands cogs (V2 compliant modules)."""
         try:
-            from src.discord_commander.commands import (
+            from src.discord_commander.commands import             (
                 CoreMessagingCommands,
                 SystemControlCommands,
                 OnboardingCommands,
@@ -69,6 +69,7 @@ class BotLifecycleManager:
                 AgentManagementCommands,
                 ProfileCommands,
                 PlaceholderCommands,
+                ControlPanelCommands,
                 MessagingCommands,
                 TheaCommands,
             )
@@ -80,6 +81,7 @@ class BotLifecycleManager:
             await self.bot.add_cog(AgentManagementCommands(self.bot, self.bot.gui_controller))
             await self.bot.add_cog(ProfileCommands(self.bot, self.bot.gui_controller))
             await self.bot.add_cog(PlaceholderCommands(self.bot, self.bot.gui_controller))
+            await self.bot.add_cog(ControlPanelCommands(self.bot, self.bot.gui_controller))
             await self.bot.add_cog(MessagingCommands(self.bot, self.bot.gui_controller))
             await self.bot.add_cog(TheaCommands(self.bot, self.bot.gui_controller))
             

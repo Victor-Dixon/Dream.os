@@ -27,7 +27,7 @@ class TechnicalDebtCoreCommands(commands.Cog, TechnicalDebtBase):
     def __init__(self, bot):
         """Initialize technical debt core commands."""
         TechnicalDebtBase.__init__(self)
-        commands.Cog.__init__(self)
+        super().__init__()
         self.bot = bot
 
     @commands.command(name="technical_debt", aliases=["debt", "tech_debt"])

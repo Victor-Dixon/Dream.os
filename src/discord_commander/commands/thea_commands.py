@@ -60,13 +60,15 @@ class TheaCommands(commands.Cog):
 
             # Send message to Thea using correct API
             try:
-                response_content = thea_service.send_prompt_and_get_response_text(message)
+                response_content = thea_service.send_prompt_and_get_response_text(
+                    message)
 
                 if response_content and len(response_content.strip()) > 0:
                     # Success response
                     embed.description = f"**Query:** {message}\n\n**Response:** {str(response_content)[:1900]}"
                     embed.color = discord.Color.green()
-                    embed.set_footer(text=f"Requested by {ctx.author.display_name} | Thea Manager")
+                    embed.set_footer(
+                        text=f"Requested by {ctx.author.display_name} | Thea Manager")
 
                     if len(str(response_content)) > 1900:
                         embed.description += "..."
@@ -136,7 +138,8 @@ class TheaCommands(commands.Cog):
             await ctx.send(embed=embed)
 
         except Exception as e:
-            self.logger.error(f"Error in thea-status command: {e}", exc_info=True)
+            self.logger.error(
+                f"Error in thea-status command: {e}", exc_info=True)
             embed = discord.Embed(
                 title="❌ Thea Status Error",
                 description=f"Failed to check Thea status: {str(e)}",
@@ -163,7 +166,8 @@ class TheaCommands(commands.Cog):
 
             # Get Thea service and attempt authentication
             thea_service = self.bot._get_thea_service(headless=True)
-            success = thea_service.ensure_thea_authenticated(allow_manual=False)
+            success = thea_service.ensure_thea_authenticated(
+                allow_manual=False)
 
             if success:
                 embed.description = "✅ Successfully authenticated with Thea Manager"
@@ -176,7 +180,8 @@ class TheaCommands(commands.Cog):
             await response_msg.edit(embed=embed)
 
         except Exception as e:
-            self.logger.error(f"Error in thea-auth command: {e}", exc_info=True)
+            self.logger.error(
+                f"Error in thea-auth command: {e}", exc_info=True)
             embed = discord.Embed(
                 title="❌ Thea Authentication Error",
                 description=f"Failed to authenticate: {str(e)}",

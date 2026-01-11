@@ -12,8 +12,12 @@ Date: 2025-01-27
 """
 
 import logging
+import warnings
 from pathlib import Path
 from typing import Optional
+
+# Suppress the audioop deprecation warning from discord.py
+warnings.filterwarnings("ignore", message="'audioop' is deprecated", category=DeprecationWarning)
 
 import discord
 from discord.ext import commands

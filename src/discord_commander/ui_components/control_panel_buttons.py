@@ -336,6 +336,66 @@ class ControlPanelButtonFactory:
 
         return [prev_btn, next_btn]
 
+    @staticmethod
+    def create_message_agent_button(callback: Optional[Callable] = None) -> 'discord.ui.Button':
+        """Create a message agent button."""
+        return discord.ui.Button(
+            label="Message Agent",
+            style=discord.ButtonStyle.primary,
+            emoji="💬",
+            custom_id="message_agent",
+            row=0,
+            callback=callback,
+        )
+
+    @staticmethod
+    def create_main_control_button(callback: Optional[Callable] = None) -> 'discord.ui.Button':
+        """Create a main control button."""
+        return discord.ui.Button(
+            label="Main Control",
+            style=discord.ButtonStyle.primary,
+            emoji="🎛️",
+            custom_id="main_control",
+            row=0,
+            callback=callback,
+        )
+
+    @staticmethod
+    def create_monitor_button(callback: Optional[Callable] = None) -> 'discord.ui.Button':
+        """Create a monitor button."""
+        return discord.ui.Button(
+            label="Monitor",
+            style=discord.ButtonStyle.secondary,
+            emoji="📊",
+            custom_id="monitor",
+            row=0,
+            callback=callback,
+        )
+
+    @staticmethod
+    def create_status_button(callback: Optional[Callable] = None) -> 'discord.ui.Button':
+        """Create a status button."""
+        return discord.ui.Button(
+            label="Status",
+            style=discord.ButtonStyle.secondary,
+            emoji="📈",
+            custom_id="status",
+            row=0,
+            callback=callback,
+        )
+
+    @staticmethod
+    def create_agent_status_button(callback: Optional[Callable] = None) -> 'discord.ui.Button':
+        """Create an agent status button."""
+        return discord.ui.Button(
+            label="Agent Status",
+            style=discord.ButtonStyle.primary,
+            emoji="👥",
+            custom_id="agent_status",
+            row=0,
+            callback=callback,
+        )
+
 
 class ButtonCallbackManager:
     """

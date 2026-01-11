@@ -35,6 +35,10 @@ except ImportError:
     print("⚠️  Continuing without .env support...")
 
 # Discord imports
+import warnings
+# Suppress the audioop deprecation warning from discord.py
+warnings.filterwarnings("ignore", message="'audioop' is deprecated", category=DeprecationWarning)
+
 try:
     import discord
     from discord.ext import commands

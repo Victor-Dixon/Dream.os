@@ -33,7 +33,7 @@ class MessagingMonitorCommands(commands.Cog):
 
     def __init__(self, bot: "UnifiedDiscordBot"):
         """Initialize monitor commands."""
-        commands.Cog.__init__(self)
+        super().__init__()
         self.bot = bot
         self.logger = logging.getLogger(__name__)
 

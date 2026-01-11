@@ -34,10 +34,11 @@ logger = logging.getLogger(__name__)
 class SystemControlCommands(commands.Cog):
     """System control commands for bot shutdown and restart."""
 
-    def __init__(self, bot: "UnifiedDiscordBot"):
+    def __init__(self, bot: "UnifiedDiscordBot", gui_controller):
         """Initialize system control commands."""
-        commands.Cog.__init__(self)
+        super().__init__()
         self.bot = bot
+        self.gui_controller = gui_controller
         self.logger = logging.getLogger(__name__)
 
     @commands.command(name="shutdown", description="Gracefully shutdown the bot")

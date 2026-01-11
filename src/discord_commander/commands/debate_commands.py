@@ -29,7 +29,7 @@ class DebateCommands(commands.Cog, DebateBase):
     def __init__(self, bot):
         """Initialize debate commands."""
         DebateBase.__init__(self)
-        commands.Cog.__init__(self)
+        super().__init__()
         self.bot = bot
 
     @commands.command(name="debate", aliases=["create_debate"])

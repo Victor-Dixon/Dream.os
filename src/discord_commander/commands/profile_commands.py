@@ -29,7 +29,7 @@ class ProfileCommands(commands.Cog):
 
     def __init__(self, bot):
         """Initialize profile commands."""
-        commands.Cog.__init__(self)
+        super().__init__()
         self.bot = bot
         self.logger = logging.getLogger(__name__)
 
