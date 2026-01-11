@@ -22,6 +22,21 @@ from .control_panel_commands import ControlPanelCommands
 from .thea_commands import TheaCommands
 from .bot_messaging_commands import MessagingCommands
 
+# Auto-register cogs with the registry for reduced boilerplate
+from .command_base import command_registry
+
+# Register all command cogs for automatic instantiation
+command_registry.register_cog_class(CoreMessagingCommands)
+command_registry.register_cog_class(SystemControlCommands)
+command_registry.register_cog_class(OnboardingCommands)
+command_registry.register_cog_class(UtilityCommands)
+command_registry.register_cog_class(AgentManagementCommands)
+command_registry.register_cog_class(ProfileCommands)
+command_registry.register_cog_class(PlaceholderCommands)
+command_registry.register_cog_class(ControlPanelCommands)
+command_registry.register_cog_class(MessagingCommands)
+command_registry.register_cog_class(TheaCommands)
+
 __all__ = [
     "CoreMessagingCommands",
     "SystemControlCommands",
@@ -33,5 +48,6 @@ __all__ = [
     "ControlPanelCommands",
     "TheaCommands",
     "MessagingCommands",
+    "command_registry",
 ]
 

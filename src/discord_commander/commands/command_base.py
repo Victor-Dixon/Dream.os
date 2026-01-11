@@ -122,41 +122,49 @@ def register_cog(cog_class):
     return cog_class
 
 
-def command_template(error_handling: bool = True, log_command: bool = True):
-    """
-    Decorator template for Discord commands that eliminates repetitive code.
+# Define command_template conditionally based on discord availability
+if DISCORD_AVAILABLE:
+    def command_template(error_handling: bool = True, log_command: bool = True):
+        """
+        Decorator template for Discord commands that eliminates repetitive code.
 
-    Args:
-        error_handling: Whether to wrap command in try/catch
-        log_command: Whether to log command execution
-    """
-    def decorator(func):
-        @functools.wraps(func)
-        async def wrapper(self, ctx: commands.Context, *args, **kwargs):
-            command_name = func.__name__
+        Args:
+            error_handling: Whether to wrap command in try/catch
+            log_command: Whether to log command execution
+        """
+        def decorator(func):
+            @functools.wraps(func)
+            async def wrapper(self, ctx: commands.Context, *args, **kwargs):
+                command_name = func.__name__
 
-            # Log command if enabled
-            if log_command:
-                extra_info = ""
-                if args:
-                    extra_info += f"args={args}"
-                if kwargs:
-                    if extra_info:
-                        extra_info += ", "
-                    extra_info += f"kwargs={kwargs}"
-                self.log_command(ctx, command_name, extra_info)
+                # Log command if enabled
+                if log_command:
+                    extra_info = ""
+                    if args:
+                        extra_info += f"args={args}"
+                    if kwargs:
+                        if extra_info:
+                            extra_info += ", "
+                        extra_info += f"kwargs={kwargs}"
+                    self.log_command(ctx, command_name, extra_info)
 
-            # Execute with error handling if enabled
-            if error_handling:
-                try:
+                # Execute with error handling if enabled
+                if error_handling:
+                    try:
+                        return await func(self, ctx, *args, **kwargs)
+                    except Exception as e:
+                        await self.handle_command_error(ctx, e, command_name)
+                else:
                     return await func(self, ctx, *args, **kwargs)
-                except Exception as e:
-                    await self.handle_command_error(ctx, e, command_name)
-            else:
-                return await func(self, ctx, *args, **kwargs)
 
-        return wrapper
-    return decorator
+            return wrapper
+        return decorator
+else:
+    # Stub decorator when discord is not available
+    def command_template(error_handling: bool = True, log_command: bool = True):
+        def decorator(func):
+            return func
+        return decorator
 
 
 # Only define EmbedBuilder if discord is available

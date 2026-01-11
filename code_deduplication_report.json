@@ -1,0 +1,133 @@
+{
+  "timestamp": "1768169352.0",
+  "directories_analyzed": [
+    "src/discord_commander/commands",
+    "src/services",
+    "src/core",
+    "tools"
+  ],
+  "summary": {
+    "total_directories": 4,
+    "total_files_analyzed": 108,
+    "total_duplications_found": 515,
+    "recommendations_count": 12
+  },
+  "detailed_results": {
+    "src/discord_commander/commands": {
+      "directory": "src/discord_commander/commands",
+      "files_analyzed": 14,
+      "patterns_found": {
+        "logger_initialization": {
+          "self.logger = logging.getLogger(__name__)": 10
+        },
+        "error_handling": {
+          "standard_error_handler": 21
+        },
+        "embed_creation": {
+          "discord_embed": 40
+        },
+        "command_logging": {
+          "standard_command_log": 15
+        },
+        "role_decorators": {
+          "@commands.has_any_role(\"Admin\", \"Captain\", \"Swarm Commander\")": 22
+        }
+      },
+      "total_duplications": 108,
+      "recommendations": [
+        "\ud83d\udd27 Create logger mixin - 10 repetitive logger initializations found",
+        "\ud83d\udd27 Create error handling decorator - 21 repetitive error handlers found",
+        "\ud83d\udd27 Create embed builder utility - 40 repetitive embed creations found",
+        "\ud83d\udd27 Create command logging decorator - 15 repetitive command logs found",
+        "\ud83d\udd27 Consolidate role decorators - 22 repetitive role checks found"
+      ]
+    },
+    "src/services": {
+      "directory": "src/services",
+      "files_analyzed": 29,
+      "patterns_found": {
+        "error_handling": {
+          "standard_error_handler": 98
+        },
+        "imports": {
+          "total_imports": 22
+        },
+        "logger_initialization": {
+          "self.logger = logging.getLogger(__name__)": 1,
+          "self.logger = logging.getLogger(logger_name or __name__)": 1,
+          "self.logger = logging.getLogger(\"ChatConfigManager\")": 1,
+          "self.logger = logging.getLogger(\"TwitchCoordinator\")": 1,
+          "self.logger = logging.getLogger(\"AgentCoordinator\")": 1,
+          "self.logger = logging.getLogger(\"OBSCoordinator\")": 1
+        }
+      },
+      "total_duplications": 126,
+      "recommendations": [
+        "\ud83d\udd27 Create logger mixin - 6 repetitive logger initializations found",
+        "\ud83d\udd27 Create error handling decorator - 98 repetitive error handlers found",
+        "\ud83d\udd27 Create import utility - 22 imports in single file"
+      ]
+    },
+    "src/core": {
+      "directory": "src/core",
+      "files_analyzed": 60,
+      "patterns_found": {
+        "logger_initialization": {
+          "self.logger = logging.getLogger(__name__)": 12,
+          "self.logger = logging.getLogger(self.__class__.__name__)": 2,
+          "self.logger = logging.getLogger(component_name)": 1,
+          "self.logger = logging.getLogger(f\"orchestrator.{name}\")": 1,
+          "self.logger = logging.getLogger(f\"orchestrator.{orchestrator_name}.components\")": 1,
+          "self.logger = logging.getLogger(f\"orchestrator.{orchestrator_name}.events\")": 1,
+          "self.logger = logging.getLogger(logger_name or __name__)": 1,
+          "self.logger = logging.getLogger(self.name)": 1
+        },
+        "error_handling": {
+          "standard_error_handler": 171
+        },
+        "imports": {
+          "total_imports": 39
+        }
+      },
+      "total_duplications": 230,
+      "recommendations": [
+        "\ud83d\udd27 Create logger mixin - 20 repetitive logger initializations found",
+        "\ud83d\udd27 Create error handling decorator - 171 repetitive error handlers found",
+        "\ud83d\udd27 Create import utility - 39 imports in single file"
+      ]
+    },
+    "tools": {
+      "directory": "tools",
+      "files_analyzed": 5,
+      "patterns_found": {
+        "imports": {
+          "total_imports": 47
+        },
+        "logger_initialization": {
+          "self.logger = logging.getLogger(__name__)": 1
+        },
+        "error_handling": {
+          "standard_error_handler": 3
+        }
+      },
+      "total_duplications": 51,
+      "recommendations": [
+        "\ud83d\udd27 Create import utility - 47 imports in single file"
+      ]
+    }
+  },
+  "overall_recommendations": [
+    "\ud83d\udd27 Create logger mixin - 10 repetitive logger initializations found",
+    "\ud83d\udd27 Create error handling decorator - 21 repetitive error handlers found",
+    "\ud83d\udd27 Create embed builder utility - 40 repetitive embed creations found",
+    "\ud83d\udd27 Create command logging decorator - 15 repetitive command logs found",
+    "\ud83d\udd27 Consolidate role decorators - 22 repetitive role checks found",
+    "\ud83d\udd27 Create logger mixin - 6 repetitive logger initializations found",
+    "\ud83d\udd27 Create error handling decorator - 98 repetitive error handlers found",
+    "\ud83d\udd27 Create import utility - 22 imports in single file",
+    "\ud83d\udd27 Create logger mixin - 20 repetitive logger initializations found",
+    "\ud83d\udd27 Create error handling decorator - 171 repetitive error handlers found",
+    "\ud83d\udd27 Create import utility - 39 imports in single file",
+    "\ud83d\udd27 Create import utility - 47 imports in single file"
+  ]
+}

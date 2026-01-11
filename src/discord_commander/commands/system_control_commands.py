@@ -24,22 +24,17 @@ if TYPE_CHECKING:
 try:
     import discord
     from discord.ext import commands
+    from .command_base import BaseDiscordCog
 except ImportError:
     discord = None
     commands = None
+    BaseDiscordCog = None
 
 logger = logging.getLogger(__name__)
 
 
-class SystemControlCommands(commands.Cog):
+class SystemControlCommands(BaseDiscordCog, commands.Cog):
     """System control commands for bot shutdown and restart."""
-
-    def __init__(self, bot: "UnifiedDiscordBot", gui_controller):
-        """Initialize system control commands."""
-        super().__init__()
-        self.bot = bot
-        self.gui_controller = gui_controller
-        self.logger = logging.getLogger(__name__)
 
     @commands.command(name="shutdown", description="Gracefully shutdown the bot")
     @commands.has_any_role("Admin", "Captain", "Swarm Commander")

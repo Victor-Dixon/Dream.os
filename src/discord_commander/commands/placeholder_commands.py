@@ -1,13 +1,13 @@
 """
 <!-- SSOT Domain: discord -->
 
-Placeholder Commands
-====================
+Placeholder Commands - Deduplicated
+===================================
 
-Placeholder commands extracted from unified_discord_bot.py for V2 compliance.
+Placeholder commands using new base class to eliminate code repetition.
 Handles: Placeholder features and utility guides.
 
-V2 Compliance: <300 lines, <5 classes, <10 functions
+V2 Compliance: <300 lines, <5 classes, <10 functions, DRY principle
 """
 
 import logging
@@ -18,59 +18,45 @@ from pathlib import Path
 import discord
 from discord.ext import commands
 
+from .command_base import BaseDiscordCog, RoleDecorators, command_template
+
 logger = logging.getLogger(__name__)
 
 
-class PlaceholderCommands(commands.Cog):
-    """Placeholder commands for features in development."""
-
-    def __init__(self, bot, gui_controller):
-        """Initialize placeholder commands."""
-        self.bot = bot
-        self.gui_controller = gui_controller
-        self.logger = logging.getLogger(__name__)
+class PlaceholderCommands(BaseDiscordCog):
+    """Placeholder commands for features in development using deduplicated patterns."""
 
     @commands.command(name="obs", description="View observations")
     @commands.has_any_role("Admin", "Captain", "Swarm Commander")
+    @command_template()
     async def obs(self, ctx: commands.Context):
-        """View observations."""
-        self.logger.info(f"Command 'obs' triggered by {ctx.author}")
-        try:
-            embed = discord.Embed(
-                title="👁️ Observations",
-                description="**Observations feature**\n\nThis command is being implemented.",
-                color=discord.Color.blue(),
-            )
-            embed.add_field(
-                name="Status",
-                value="Feature in development",
-                inline=False,
-            )
-            await ctx.send(embed=embed)
-        except Exception as e:
-            self.logger.error(f"Error in obs command: {e}", exc_info=True)
-            await ctx.send(f"❌ Error: {e}")
+        """View observations using deduplicated embed creation."""
+        embed = self.create_info_embed(
+            "Observations",
+            "**Observations feature**\n\nThis command is being implemented."
+        )
+        embed.add_field(
+            name="Status",
+            value="Feature in development",
+            inline=False,
+        )
+        await ctx.send(embed=embed)
 
     @commands.command(name="pieces", description="View pieces")
     @commands.has_any_role("Admin", "Captain", "Swarm Commander")
+    @command_template()
     async def pieces(self, ctx: commands.Context):
-        """View pieces."""
-        self.logger.info(f"Command 'pieces' triggered by {ctx.author}")
-        try:
-            embed = discord.Embed(
-                title="🧩 Pieces",
-                description="**Pieces feature**\n\nThis command is being implemented.",
-                color=discord.Color.blue(),
-            )
-            embed.add_field(
-                name="Status",
-                value="Feature in development",
-                inline=False,
-            )
-            await ctx.send(embed=embed)
-        except Exception as e:
-            self.logger.error(f"Error in pieces command: {e}", exc_info=True)
-            await ctx.send(f"❌ Error: {e}")
+        """View pieces using deduplicated embed creation."""
+        embed = self.create_info_embed(
+            "Pieces",
+            "**Pieces feature**\n\nThis command is being implemented."
+        )
+        embed.add_field(
+            name="Status",
+            value="Feature in development",
+            inline=False,
+        )
+        await ctx.send(embed=embed)
 
     @commands.command(name="sftp", aliases=["sftp_creds", "ftp"], description="Get SFTP credentials guide")
     @commands.has_any_role("Admin", "Captain", "Swarm Commander")

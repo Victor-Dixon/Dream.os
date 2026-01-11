@@ -6,7 +6,7 @@ Handles task system commands for messaging CLI.
 Implements --get-next-task, --list-tasks, --task-status, --complete-task.
 
 V2 Compliance: < 300 lines, single responsibility
-Migrated to BaseService for consolidated initialization and error handling.
+Migrated to UnifiedHandler for consolidated initialization and error handling.
 
 <!-- SSOT Domain: integration -->
 
@@ -18,12 +18,12 @@ import os
 from datetime import datetime
 from pathlib import Path
 
-from ...core.base.base_service import BaseService
+from ...core.base.unified_handler import UnifiedHandler
 
 logger = logging.getLogger(__name__)
 
 
-class TaskHandler(BaseService):
+class TaskHandler(UnifiedHandler):
     """Handles task system commands for messaging CLI."""
 
     def __init__(self):
@@ -52,6 +52,17 @@ class TaskHandler(BaseService):
 
     def handle(self, args) -> bool:
         """Handle task system commands."""
+        # Determine command type for tracking
+        command_type = self._get_command_type(args)
+
+        # Use unified tracking and error handling
+        result = self.execute_with_tracking(command_type, args)
+        return result.get('success', False)
+
+    async def _execute_command(self, command: str, args) -> dict:
+        """Execute the actual command logic (required by UnifiedHandler)."""
+        # For now, delegate to the original handle method pattern
+        # TODO: Refactor individual handlers to return dict results
         try:
             # Import lightweight task repository (avoids heavy infrastructure dependencies)
             from ..helpers.task_repo_loader import SimpleTaskRepository
@@ -63,26 +74,35 @@ class TaskHandler(BaseService):
             current_agent = self._get_current_agent(args)
 
             # Route to appropriate handler
-            if args.get_next_task:
-                return self._handle_get_next_task(args, repo, current_agent)
-            elif args.list_tasks:
-                return self._handle_list_tasks(args, repo)
-            elif args.task_status:
-                return self._handle_task_status(args, repo)
-            elif args.complete_task:
-                return self._handle_complete_task(args, repo, current_agent)
+            if command == "get_next_task":
+                success = self._handle_get_next_task_sync(args, repo, current_agent)
+            elif command == "list_tasks":
+                success = self._handle_list_tasks_sync(args, repo)
+            elif command == "task_status":
+                success = self._handle_task_status_sync(args, repo)
+            elif command == "complete_task":
+                success = self._handle_complete_task_sync(args, repo, current_agent)
+            else:
+                raise ValueError(f"Unknown command: {command}")
 
-            return True
+            return {'success': success, 'command': command}
 
-        except ImportError as e:
-            logger.error(f"❌ Task system not available: {e}")
-            logger.info("💡 Task system requires domain/infrastructure modules")
-            self.exit_code = 1
-            return True
         except Exception as e:
-            logger.error(f"❌ Task handling error: {e}")
-            self.exit_code = 1
-            return True
+            logger.error(f"Error executing {command}: {e}")
+            return {'success': False, 'error': str(e), 'command': command}
+
+    def _get_command_type(self, args) -> str:
+        """Get command type string for tracking."""
+        if hasattr(args, "get_next_task") and args.get_next_task:
+            return "get_next_task"
+        elif hasattr(args, "list_tasks") and args.list_tasks:
+            return "list_tasks"
+        elif hasattr(args, "task_status") and args.task_status:
+            return "task_status"
+        elif hasattr(args, "complete_task") and args.complete_task:
+            return "complete_task"
+        else:
+            return "unknown"
 
     def _get_current_agent(self, args) -> str:
         """Get current agent ID from args or environment."""
@@ -99,7 +119,7 @@ class TaskHandler(BaseService):
         logger.warning("⚠️ No agent ID specified, using Agent-1 as default")
         return "Agent-1"
 
-    def _handle_get_next_task(self, args, repo, agent_id: str) -> bool:
+    def _handle_get_next_task_sync(self, args, repo, agent_id: str) -> bool:
         """Handle --get-next-task command."""
         logger.info(f"🎯 Getting next task for {agent_id}...")
 
@@ -178,7 +198,7 @@ class TaskHandler(BaseService):
             self.exit_code = 1
             return True
 
-    def _handle_list_tasks(self, args, repo) -> bool:
+    def _handle_list_tasks_sync(self, args, repo) -> bool:
         """Handle --list-tasks command."""
         logger.info("📋 Listing all tasks...")
 
@@ -236,7 +256,7 @@ class TaskHandler(BaseService):
             self.exit_code = 1
             return True
 
-    def _handle_task_status(self, args, repo) -> bool:
+    def _handle_task_status_sync(self, args, repo) -> bool:
         """Handle --task-status command."""
         task_id = args.task_status
         logger.info(f"📊 Checking status of task {task_id}...")
@@ -275,7 +295,7 @@ class TaskHandler(BaseService):
             self.exit_code = 1
             return True
 
-    def _handle_complete_task(self, args, repo, agent_id: str) -> bool:
+    def _handle_complete_task_sync(self, args, repo, agent_id: str) -> bool:
         """Handle --complete-task command."""
         task_id = args.complete_task
         logger.info(f"✅ Completing task {task_id}...")

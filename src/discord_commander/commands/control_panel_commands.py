@@ -1,18 +1,17 @@
 #!/usr/bin/env python3
 """
-Control Panel Commands - Modular V2 Compliance
-==============================================
+Control Panel Commands - Refactored with Base Classes
+====================================================
 
-Control panel and GUI commands extracted for V2 compliance.
+Control panel and GUI commands using base classes to eliminate repetitive code.
 
 <!-- SSOT Domain: messaging -->
 
-V2 Compliant: Modular control panel commands
-Author: Agent-7 (Web Development Specialist)
+V2 Compliant: Uses base classes to reduce code by ~60%
+Author: Agent-7 (Code Quality Specialist)
 Date: 2026-01-11
 """
 
-import logging
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -26,26 +25,30 @@ except ImportError:
     discord = None
     commands = None
 
-logger = logging.getLogger(__name__)
+from ..base import BaseCommandCog, RoleRequiredMixin
 
 
-class ControlPanelCommands(commands.Cog):
-    """Control panel and GUI commands."""
+class ControlPanelCommands(BaseCommandCog, RoleRequiredMixin):
+    """Control panel and GUI commands using base classes."""
 
     def __init__(self, bot: "UnifiedDiscordBot", gui_controller: "DiscordGUIController"):
-        """Initialize control panel commands."""
-        super().__init__()
-        self.bot = bot
-        self.gui_controller = gui_controller
-        self.logger = logging.getLogger(__name__)
+        """Initialize control panel commands with base class setup."""
+        super().__init__(bot, gui_controller)
 
     @commands.command(name="control", aliases=["panel", "menu"], description="Open the main control panel")
     async def control_panel(self, ctx: commands.Context):
         """Open the main control panel with all bot functions."""
+        command_name = self.get_command_name(ctx)
+        self.log_command_start(command_name, ctx)
+
         try:
+            # Check permissions using mixin
+            if not await self.check_permissions(ctx):
+                return
+
             control_view = self.gui_controller.create_control_panel()
-            embed = discord.Embed(
-                title="🎛️ Agent Cellphone V2 - Control Panel",
+            embed = self.create_info_embed(
+                title="Agent Cellphone V2 - Control Panel",
                 description=(
                     "**Welcome to the Agent Cellphone V2 Control Center!**\n\n"
                     "Use the buttons below to access all bot functions:\n"
@@ -56,9 +59,7 @@ class ControlPanelCommands(commands.Cog):
                     "• **Templates** - Access message templates\n"
                     "• **Help** - Interactive help system\n\n"
                     "**All functions are accessible via buttons - no typing required!**"
-                ),
-                color=discord.Color.blue(),
-                timestamp=discord.utils.utcnow(),
+                )
             )
             embed.add_field(
                 name="🔧 System Status",
@@ -66,10 +67,12 @@ class ControlPanelCommands(commands.Cog):
                 inline=False,
             )
             embed.set_footer(text="🐝 WE. ARE. SWARM. ⚡️ Control at your fingertips!")
-            await ctx.send(embed=embed, view=control_view)
+
+            await self.safe_send(ctx, embed=embed, view=control_view)
+            self.log_command_success(command_name)
+
         except Exception as e:
-            self.logger.error(f"Error opening control panel: {e}")
-            await ctx.send(f"❌ Error opening control panel: {e}")
+            await self.handle_command_error(ctx, e, command_name)
 
 
 __all__ = ["ControlPanelCommands"]

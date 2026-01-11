@@ -61,30 +61,18 @@ class BotLifecycleManager:
     async def _load_messaging_commands(self) -> None:
         """Load messaging commands cogs (V2 compliant modules)."""
         try:
-            from src.discord_commander.commands import             (
-                CoreMessagingCommands,
-                SystemControlCommands,
-                OnboardingCommands,
-                UtilityCommands,
-                AgentManagementCommands,
-                ProfileCommands,
-                PlaceholderCommands,
-                ControlPanelCommands,
-                MessagingCommands,
-                TheaCommands,
-            )
-            
-            await self.bot.add_cog(CoreMessagingCommands(self.bot, self.bot.gui_controller))
-            await self.bot.add_cog(SystemControlCommands(self.bot, self.bot.gui_controller))
-            await self.bot.add_cog(OnboardingCommands(self.bot, self.bot.gui_controller))
-            await self.bot.add_cog(UtilityCommands(self.bot, self.bot.gui_controller))
-            await self.bot.add_cog(AgentManagementCommands(self.bot, self.bot.gui_controller))
-            await self.bot.add_cog(ProfileCommands(self.bot, self.bot.gui_controller))
-            await self.bot.add_cog(PlaceholderCommands(self.bot, self.bot.gui_controller))
-            await self.bot.add_cog(ControlPanelCommands(self.bot, self.bot.gui_controller))
-            await self.bot.add_cog(MessagingCommands(self.bot, self.bot.gui_controller))
-            await self.bot.add_cog(TheaCommands(self.bot, self.bot.gui_controller))
-            
+            from ..base import CommandRegistry
+
+            # Use command registry for automatic discovery and registration
+            registry = CommandRegistry(self.bot, self.bot.gui_controller)
+            registration_results = await registry.discover_and_register_all()
+
+            # Log registration results
+            successful_registrations = sum(1 for success in registration_results.values() if success)
+            total_registrations = len(registration_results)
+
+            self.logger.info(f"✅ Command registration complete: {successful_registrations}/{total_registrations} modules registered")
+
             # Verify gui and control commands are registered
             gui_command = self.bot.get_command("gui")
             if gui_command:
