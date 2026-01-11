@@ -77,7 +77,7 @@ def main():
 
         with open(error_log, 'w') as err_file:
             process = subprocess.Popen(
-                [sys.executable, "-m", "src.core.message_queue_processor.core.processor"],
+                [sys.executable, "-c", "from src.core.message_queue_processor.core.processor import main; main()"],
                 env=env,
                 stdout=subprocess.DEVNULL,  # Suppress stdout to avoid clutter
                 stderr=err_file,           # Log errors to file

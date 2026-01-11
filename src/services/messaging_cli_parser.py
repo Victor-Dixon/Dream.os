@@ -21,6 +21,14 @@ python -m src.services.messaging_cli --message "SWARM ALERT!" --broadcast
 python -m src.services.messaging_cli --message "URGENT: Fix issue" \\
     --agent Agent-2 --priority urgent --tags bug critical
 
+# V3 Enhanced Features
+python -m src.services.messaging_cli --verify-delivery    # Check all deliveries
+python -m src.services.messaging_cli --clean-queue        # Remove system messages
+python -m src.services.messaging_cli --reset-stuck        # Reset stuck messages
+python -m src.services.messaging_cli --queue-stats        # Show statistics
+python -m src.services.messaging_cli --health-check       # System health check
+python -m src.services.messaging_cli --process-workspaces # Clean all workspaces
+
 🐝 WE. ARE. SWARM - COORDINATE THROUGH PYAUTOGUI!
 """
 
@@ -93,6 +101,50 @@ def create_messaging_parser() -> argparse.ArgumentParser:
         type=int,
         metavar="N",
         help="Start agents (1-8, e.g., --start 1 2 3) - sends to onboarding coordinates",
+    )
+
+    # V3 Enhanced Features
+    parser.add_argument(
+        "--verify-delivery",
+        action="store_true",
+        help="Verify delivery status for all agents (V3)",
+    )
+
+    parser.add_argument(
+        "--clean-queue",
+        action="store_true",
+        help="Clean system messages from queue (V3)",
+    )
+
+    parser.add_argument(
+        "--reset-stuck",
+        action="store_true",
+        help="Reset stuck messages to PENDING (V3)",
+    )
+
+    parser.add_argument(
+        "--queue-stats",
+        action="store_true",
+        help="Show comprehensive queue statistics (V3)",
+    )
+
+    parser.add_argument(
+        "--health-check",
+        action="store_true",
+        help="Perform full messaging system health check (V3)",
+    )
+
+    parser.add_argument(
+        "--process-workspaces",
+        action="store_true",
+        help="Process all agent workspaces for cleanup (V3)",
+    )
+
+    parser.add_argument(
+        "--archive-old",
+        type=int,
+        metavar="DAYS",
+        help="Archive messages older than DAYS (default: 30)",
     )
 
     parser.add_argument(

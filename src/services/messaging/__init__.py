@@ -48,6 +48,7 @@ from .service_adapters import (
 # CLI Handlers
 from .cli_handlers import (
     handle_cycle_v2_message,
+    handle_delivery_status,
     handle_message,
     handle_survey,
     handle_consolidation,
@@ -80,6 +81,7 @@ __all__ = [
     "broadcast_discord_message",
     # CLI Handlers
     "handle_cycle_v2_message",
+    "handle_delivery_status",
     "handle_message",
     "handle_survey",
     "handle_consolidation",

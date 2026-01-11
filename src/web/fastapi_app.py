@@ -14,6 +14,7 @@ Date: 2026-01-07
 """
 
 import logging
+import time
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
@@ -86,6 +87,54 @@ async def performance_health():
 async def performance_ping():
     """Ultra-fast ping endpoint for load balancer health checks."""
     return "pong"
+
+@app.get("/perf/metrics")
+async def performance_metrics():
+    """Comprehensive performance metrics endpoint."""
+    from .fastapi_performance import get_performance_metrics
+    return get_performance_metrics()
+
+@app.get("/perf/reset")
+async def reset_performance_metrics():
+    """Reset performance metrics (admin only)."""
+    from .fastapi_performance import reset_performance_metrics
+    reset_performance_metrics()
+    return {"status": "reset", "message": "Performance metrics reset successfully"}
+
+@app.get("/cache/stats")
+async def cache_stats():
+    """Get cache statistics."""
+    from .fastapi_caching import get_cache
+    cache = get_cache()
+    return cache.get_stats()
+
+@app.post("/cache/clear")
+async def clear_cache():
+    """Clear all cache entries (admin only)."""
+    from .fastapi_caching import get_cache
+    cache = get_cache()
+    success = cache.clear()
+    return {"status": "cleared" if success else "failed", "message": "Cache cleared successfully" if success else "Cache clear failed"}
+
+@app.delete("/cache/{pattern}")
+async def invalidate_cache_pattern(pattern: str):
+    """Invalidate cache keys matching a pattern (admin only)."""
+    from .fastapi_caching import invalidate_cache_pattern
+    deleted_count = invalidate_cache_pattern(pattern)
+    return {"status": "invalidated", "keys_deleted": deleted_count}
+
+@app.get("/ratelimit/status")
+async def rate_limit_status():
+    """Get rate limiting status and configuration."""
+    from .fastapi_rate_limiting import get_rate_limit_status
+    return get_rate_limit_status()
+
+@app.post("/ratelimit/config")
+async def configure_rate_limit(endpoint: str, limit: str):
+    """Configure rate limit for an endpoint (admin only)."""
+    from .fastapi_rate_limiting import endpoint_rate_limit
+    endpoint_rate_limit(endpoint, limit)
+    return {"status": "configured", "endpoint": endpoint, "limit": limit}
 
 # Static files (if templates directory exists)
 static_dir = os.path.join(os.path.dirname(__file__), "static")

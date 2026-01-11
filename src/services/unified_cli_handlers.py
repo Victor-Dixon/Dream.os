@@ -100,10 +100,13 @@ class UnifiedTaskHandler(BaseService):
             manager = UnifiedContractManager()
             contracts = manager.get_agent_contracts(agent_id)
 
-            if contracts.get("success") and contracts.get("contracts"):
+            if contracts.get("success"):
+                # Successfully retrieved contracts (may be empty)
+                all_contracts = contracts.get("contracts", [])
+
                 # Get the first pending/active contract
                 pending_contracts = [
-                    c for c in contracts["contracts"]
+                    c for c in all_contracts
                     if c.get("status") in ["pending", "active"]
                 ]
 

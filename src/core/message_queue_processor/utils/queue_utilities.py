@@ -58,21 +58,26 @@ def get_activity_tracker() -> ActivityTracker:
     return _activity_tracker
 
 
-def mark_agent_delivering(agent_id: str) -> None:
+def mark_agent_delivering(tracker, agent_id: str, queue_id: str) -> None:
     """
     Mark an agent as actively delivering messages.
 
     Args:
+        tracker: Activity tracker instance
         agent_id: ID of the agent
+        queue_id: Queue ID of the message being delivered
     """
+    # Note: tracker parameter is for future use, currently using global tracker
     _activity_tracker.mark_active(agent_id)
 
 
-def mark_agent_inactive(agent_id: str) -> None:
+def mark_agent_inactive(tracker, agent_id: str) -> None:
     """
     Mark an agent as inactive (not delivering).
 
     Args:
+        tracker: Activity tracker instance
         agent_id: ID of the agent
     """
+    # Note: tracker parameter is for future use, currently using global tracker
     _activity_tracker.mark_inactive(agent_id)

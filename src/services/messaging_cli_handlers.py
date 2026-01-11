@@ -35,6 +35,14 @@ from .messaging_cli_formatters import (
 
 from src.core.constants.agent_constants import AGENT_LIST as SWARM_AGENTS
 
+# Import V3 enhanced messaging features
+try:
+    from .messaging.v3 import MessagingV3Processor
+    V3_AVAILABLE = True
+except ImportError:
+    MessagingV3Processor = None
+    V3_AVAILABLE = False
+
 logger = logging.getLogger(__name__)
 
 
@@ -255,3 +263,217 @@ def handle_leaderboard():
     for score in leaderboard:
         print(f"#{score.rank} {score.agent_name}: {score.total_points} pts")
     return 0
+
+
+# V3 Enhanced Messaging Features
+def handle_verify_delivery(args):
+    """Handle delivery verification command."""
+    if not V3_AVAILABLE:
+        logger.error("❌ V3 messaging features not available")
+        return 1
+
+    try:
+        processor = MessagingV3Processor()
+        results = processor.verify_all_deliveries()
+
+        print("🔍 DELIVERY VERIFICATION RESULTS")
+        print("=" * 50)
+        print(f"Agents verified: {len(results['verified_agents'])}")
+        print(f"Total messages checked: {results['total_verified']}")
+        print(f"Queue/inbox mismatches: {len(results['queue_inbox_mismatches'])}")
+        print(f"Stuck messages: {sum(msg['count'] for msg in results['stuck_messages'])}")
+
+        if results['queue_inbox_mismatches']:
+            print("\n⚠️ Agents with mismatches:")
+            for agent in results['queue_inbox_mismatches']:
+                print(f"  - {agent}")
+
+        if results['stuck_messages']:
+            print("\n⚠️ Agents with stuck messages:")
+            for msg in results['stuck_messages']:
+                print(f"  - {msg['agent_id']}: {msg['count']} stuck")
+
+        return 0
+
+    except Exception as e:
+        logger.error(f"❌ Delivery verification failed: {e}")
+        return 1
+
+
+def handle_clean_queue(args):
+    """Handle queue cleaning command."""
+    if not V3_AVAILABLE:
+        logger.error("❌ V3 messaging features not available")
+        return 1
+
+    try:
+        processor = MessagingV3Processor()
+        results = processor.clean_system_messages()
+
+        print("🧹 QUEUE CLEANUP RESULTS")
+        print("=" * 50)
+        print(f"Status: {results.get('status', 'unknown')}")
+        print(f"Original messages: {results.get('original_count', 0)}")
+        print(f"System messages removed: {results.get('removed_count', 0)}")
+        print(f"Messages remaining: {results.get('remaining_count', 0)}")
+
+        if results.get('message'):
+            print(f"Message: {results['message']}")
+
+        return 0
+
+    except Exception as e:
+        logger.error(f"❌ Queue cleanup failed: {e}")
+        return 1
+
+
+def handle_reset_stuck(args):
+    """Handle stuck message reset command."""
+    if not V3_AVAILABLE:
+        logger.error("❌ V3 messaging features not available")
+        return 1
+
+    try:
+        processor = MessagingV3Processor()
+        results = processor.reset_stuck_messages()
+
+        print("🔄 STUCK MESSAGE RESET RESULTS")
+        print("=" * 50)
+        print(f"Status: {results.get('status', 'unknown')}")
+        print(f"Messages reset: {results.get('reset_count', 0)}")
+
+        if results.get('message'):
+            print(f"Message: {results['message']}")
+
+        return 0
+
+    except Exception as e:
+        logger.error(f"❌ Stuck message reset failed: {e}")
+        return 1
+
+
+def handle_queue_stats(args):
+    """Handle queue statistics command."""
+    if not V3_AVAILABLE:
+        logger.error("❌ V3 messaging features not available")
+        return 1
+
+    try:
+        processor = MessagingV3Processor()
+        stats = processor.get_system_stats()
+
+        print("📊 QUEUE STATISTICS")
+        print("=" * 50)
+
+        queue_stats = stats.get('queue_stats', {})
+        print(f"Total messages: {queue_stats.get('total_messages', 0)}")
+        print("Status breakdown:")
+        for status, count in queue_stats.get('status_breakdown', {}).items():
+            print(f"  {status}: {count}")
+
+        delivery_stats = stats.get('delivery_stats', {})
+        print(f"Delivery success rate: {delivery_stats.get('delivery_success_rate', 0):.2%}")
+
+        return 0
+
+    except Exception as e:
+        logger.error(f"❌ Queue stats failed: {e}")
+        return 1
+
+
+def handle_health_check(args):
+    """Handle health check command."""
+    if not V3_AVAILABLE:
+        logger.error("❌ V3 messaging features not available")
+        return 1
+
+    try:
+        processor = MessagingV3Processor()
+        health = processor.perform_health_check()
+
+        print("🏥 MESSAGING SYSTEM HEALTH CHECK")
+        print("=" * 50)
+        print(f"Overall status: {health.get('overall_status', 'unknown').upper()}")
+        print(f"Timestamp: {health.get('timestamp', 'unknown')}")
+
+        print("\nComponent Status:")
+        for component, check in health.get('checks', {}).items():
+            status = check.get('status', 'unknown')
+            message = check.get('message', '')
+            status_icon = "✅" if status == "healthy" else "⚠️" if status == "warning" else "❌"
+            print(f"  {status_icon} {component}: {message}")
+
+        if health.get('recommendations'):
+            print("\n💡 Recommendations:")
+            for rec in health['recommendations']:
+                print(f"  • {rec}")
+
+        return 0
+
+    except Exception as e:
+        logger.error(f"❌ Health check failed: {e}")
+        return 1
+
+
+def handle_process_workspaces(args):
+    """Handle workspace processing command."""
+    if not V3_AVAILABLE:
+        logger.error("❌ V3 messaging features not available")
+        return 1
+
+    try:
+        processor = MessagingV3Processor()
+        results = processor.process_all_workspaces()
+
+        print("🧹 WORKSPACE PROCESSING RESULTS")
+        print("=" * 50)
+        print(f"Agents processed: {len(results.get('agents_processed', []))}")
+        print(f"Total messages processed: {results.get('total_processed', 0)}")
+        print(f"Errors: {len(results.get('errors', []))}")
+
+        for agent_result in results.get('agents_processed', []):
+            agent_id = agent_result.get('agent_id')
+            result = agent_result.get('result', {})
+            processed = result.get('processed', 0)
+            archived = result.get('archived', 0)
+            print(f"  {agent_id}: {processed} processed, {archived} archived")
+
+        if results.get('errors'):
+            print("\n❌ Errors:")
+            for error in results['errors']:
+                print(f"  • {error}")
+
+        return 0
+
+    except Exception as e:
+        logger.error(f"❌ Workspace processing failed: {e}")
+        return 1
+
+
+def handle_archive_old(args):
+    """Handle old message archiving command."""
+    if not V3_AVAILABLE:
+        logger.error("❌ V3 messaging features not available")
+        return 1
+
+    days = args.archive_old or 30
+
+    try:
+        from .messaging.v3.archival_service import ArchivalService
+        from pathlib import Path
+
+        archival = ArchivalService(Path(__file__).resolve().parent.parent.parent.parent)
+        results = archival.rotate_archives(days_to_keep=days)
+
+        print(f"🗂️ ARCHIVE ROTATION RESULTS (>{days} days)")
+        print("=" * 50)
+        print(f"Files processed: {results.get('processed', 0)}")
+        print(f"Files deleted: {results.get('deleted', 0)}")
+        print(f"Space freed: {results.get('total_space_freed', 0)} bytes")
+        print(f"Errors: {results.get('errors', 0)}")
+
+        return 0
+
+    except Exception as e:
+        logger.error(f"❌ Archive rotation failed: {e}")
+        return 1

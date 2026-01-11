@@ -36,6 +36,14 @@ class ContractStorage:
     def save_contract(self, contract: Contract) ->bool:
         """Save contract to storage."""
         try:
+            # Prevent saving placeholder/default contracts
+            contract_data = contract.to_dict() if hasattr(contract, 'to_dict') else contract
+            contract_title = contract_data.get('title', '') if isinstance(contract_data, dict) else getattr(contract, 'title', '')
+
+            if 'Default Contract' in contract_title:
+                logger.warning(f"🚫 Rejected attempt to save placeholder contract: {contract_title}")
+                return False
+
             contracts = self.load_all_contracts()
             contracts[contract.contract_id] = contract.to_dict()
             self._write_json(self.contracts_file, contracts)

@@ -17,7 +17,7 @@ from typing import Dict, Any
 logger = logging.getLogger(__name__)
 
 
-def aggregate_snapshot(all_data: Dict[str, Dict]) -> Dict[str, Any]:
+def aggregate_snapshot(all_data: Dict[str, Dict], cycle_num: int = 1) -> Dict[str, Any]:
     """
     Aggregate all collected data into unified snapshot.
 
@@ -27,7 +27,7 @@ def aggregate_snapshot(all_data: Dict[str, Dict]) -> Dict[str, Any]:
     Returns:
         Unified snapshot dictionary
     """
-    snapshot_metadata = generate_snapshot_metadata(1)  # Cycle number would be passed in
+    snapshot_metadata = generate_snapshot_metadata(cycle_num)
 
     project_state = generate_project_state(all_data.get("metrics", {}))
 

@@ -27,6 +27,21 @@ from src.services.messaging import (
     handle_survey,
 )
 
+# V3 Enhanced imports
+try:
+    from src.services.messaging_cli_handlers import (
+        handle_verify_delivery,
+        handle_clean_queue,
+        handle_reset_stuck,
+        handle_queue_stats,
+        handle_health_check,
+        handle_process_workspaces,
+        handle_archive_old,
+    )
+    V3_HANDLERS_AVAILABLE = True
+except ImportError:
+    V3_HANDLERS_AVAILABLE = False
+
 # Import task handler with guard to handle missing dependencies gracefully
 try:
     from .unified_cli_handlers import TaskHandler
@@ -90,6 +105,42 @@ class MessagingCLI:
         )
         logger.info(f"✅ Sent onboarding message to {agent_id} via lite pathway")
         return 0
+
+    def _ensure_queue_processor_running(self) -> None:
+        """Ensure the message queue processor is running, start it if not."""
+        try:
+            # Check if processor is already running
+            import subprocess
+            result = subprocess.run(['python', '-c', 'import psutil; print("available")'],
+                                  capture_output=True, timeout=2, text=True)
+            psutil_available = result.returncode == 0
+
+            if psutil_available:
+                import psutil
+                processor_running = any('message_queue_processor' in ' '.join(proc.info.get('cmdline', []))
+                                      for proc in psutil.process_iter(['cmdline']))
+
+                if not processor_running:
+                    print("🔄 Queue processor not running - starting automatically...")
+                    # Start processor in background
+                    import os
+                    if os.name == 'nt':  # Windows
+                        subprocess.Popen(['python', '-c',
+                                        'from src.core.message_queue_processor.core.processor import main; main()'],
+                                       creationflags=subprocess.CREATE_NO_WINDOW)
+                    else:  # Unix-like
+                        subprocess.Popen(['python', '-c',
+                                        'from src.core.message_queue_processor.core.processor import main; main()'],
+                                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+                    print("✅ Queue processor started in background")
+                else:
+                    logger.debug("Queue processor already running")
+            else:
+                logger.debug("Cannot check processor status (psutil not available)")
+
+        except Exception as e:
+            logger.warning(f"Could not check/start queue processor: {e}")
 
     def _handle_soft_onboard_lite(self, agent_id: str) -> int:
         """Handle --soft-onboard-lite flag: send template-based soft onboarding message."""
@@ -187,6 +238,8 @@ class MessagingCLI:
                 self.task_handler.handle(parsed_args)
                 return self.task_handler.exit_code
             elif parsed_args.message or parsed_args.broadcast:
+                # Check if queue processor is running and start it if needed
+                self._ensure_queue_processor_running()
                 return handle_message(parsed_args, self.parser)
             elif parsed_args.survey_coordination:
                 return handle_survey()
@@ -194,6 +247,8 @@ class MessagingCLI:
                 return handle_consolidation(parsed_args)
             elif parsed_args.coordinates:
                 return handle_coordinates()
+            elif parsed_args.delivery_status:
+                return handle_delivery_status(parsed_args, self.parser)
             elif parsed_args.start:
                 return handle_start_agents(parsed_args)
             elif parsed_args.save:
@@ -250,6 +305,21 @@ class MessagingCLI:
                     print(f"\n✅ Work resume saved to: {output_file}")
                 
                 return 0
+            # V3 Enhanced Messaging Features
+            elif parsed_args.verify_delivery:
+                return handle_verify_delivery(parsed_args)
+            elif parsed_args.clean_queue:
+                return handle_clean_queue(parsed_args)
+            elif parsed_args.reset_stuck:
+                return handle_reset_stuck(parsed_args)
+            elif parsed_args.queue_stats:
+                return handle_queue_stats(parsed_args)
+            elif parsed_args.health_check:
+                return handle_health_check(parsed_args)
+            elif parsed_args.process_workspaces:
+                return handle_process_workspaces(parsed_args)
+            elif parsed_args.archive_old:
+                return handle_archive_old(parsed_args)
             else:
                 self.parser.print_help()
                 return 0

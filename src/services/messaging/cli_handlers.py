@@ -160,6 +160,119 @@ def handle_consolidation(args) -> int:
         return 1
 
 
+def handle_delivery_status(args, parser) -> int:
+    """Handle delivery status checking."""
+    try:
+        from pathlib import Path
+        import json
+        from datetime import datetime, timedelta
+
+        queue_file = Path("message_queue/queue.json")
+        if not queue_file.exists():
+            print("📋 No message queue found - no messages to check")
+            return 0
+
+        with open(queue_file, 'r') as f:
+            queue = json.load(f)
+
+        if not queue:
+            print("📋 Message queue is empty")
+            return 0
+
+        print("📋 MESSAGE DELIVERY STATUS")
+        print("=" * 50)
+
+        # Count by status
+        status_counts = {}
+        recent_messages = []
+        failed_messages = []
+
+        for msg in queue:
+            status = msg.get('status', 'unknown')
+            status_counts[status] = status_counts.get(status, 0) + 1
+
+            # Check for recent messages (last 5 minutes)
+            created_at = msg.get('created_at')
+            if created_at:
+                try:
+                    created_time = datetime.fromisoformat(created_at.replace('Z', '+00:00'))
+                    if datetime.now(created_time.tzinfo) - created_time < timedelta(minutes=5):
+                        recent_messages.append(msg)
+                except:
+                    pass
+
+            # Check for failed messages with error info
+            if status == 'FAILED':
+                failed_messages.append(msg)
+
+        # Display summary
+        print(f"Total messages in queue: {len(queue)}")
+        print()
+
+        for status, count in status_counts.items():
+            status_icon = {
+                'PENDING': '⏳',
+                'PROCESSING': '🔄',
+                'COMPLETED': '✅',
+                'FAILED': '❌'
+            }.get(status, '❓')
+            print(f"{status_icon} {status}: {count} messages")
+
+        print()
+
+        # Show recent messages
+        if recent_messages:
+            print("🕐 RECENT MESSAGES (last 5 minutes):")
+            for msg in recent_messages[:5]:  # Show up to 5
+                msg_data = msg.get('message', {})
+                recipient = msg_data.get('recipient', 'unknown')
+                status = msg.get('status', 'unknown')
+                created = msg.get('created_at', 'unknown')[:19]  # Truncate timestamp
+                print(f"  • {recipient} ({status}) - {created}")
+            print()
+
+        # Show failed messages with details
+        if failed_messages:
+            print("❌ FAILED MESSAGES:")
+            for msg in failed_messages[:3]:  # Show up to 3
+                msg_data = msg.get('message', {})
+                recipient = msg_data.get('recipient', 'unknown')
+                queue_id = msg.get('queue_id', 'unknown')
+                error_msg = msg.get('metadata', {}).get('error_message', 'Unknown error')
+                print(f"  • {recipient} (ID: {queue_id[:8]}...)")
+                print(f"    Error: {error_msg}")
+            print()
+
+        # Check if queue processor is running
+        import subprocess
+        try:
+            result = subprocess.run(['python', '-c', 'import psutil; print("psutil available")'],
+                                  capture_output=True, timeout=2)
+            psutil_available = result.returncode == 0
+        except:
+            psutil_available = False
+
+        if psutil_available:
+            try:
+                import psutil
+                processor_running = any('message_queue_processor' in proc.info['cmdline'] or [] for proc in psutil.process_iter(['cmdline']))
+                if processor_running:
+                    print("✅ Queue processor is running")
+                else:
+                    print("❌ Queue processor is NOT running - messages will not be delivered!")
+                    print("   Run: python -c \"from src.core.message_queue_processor.core.processor import main; main()\"")
+            except:
+                print("⚠️ Could not check processor status")
+        else:
+            print("⚠️ Cannot check processor status (psutil not available)")
+
+        return 0
+
+    except Exception as e:
+        print(f"❌ Error checking delivery status: {e}")
+        return 1
+
+
 def handle_coordinates() -> int:
     """Display agent coordinates."""
     try:

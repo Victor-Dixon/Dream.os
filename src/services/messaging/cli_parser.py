@@ -41,6 +41,14 @@ python -m src.services.messaging_cli --message "SWARM ALERT!" --broadcast
 python -m src.services.messaging_cli --message "URGENT: Fix issue" \\
     --agent Agent-2 --priority urgent --tags bug critical
 
+# V3 Enhanced Features
+python -m src.services.messaging_cli --verify-delivery    # Check all deliveries
+python -m src.services.messaging_cli --clean-queue        # Remove system messages
+python -m src.services.messaging_cli --reset-stuck        # Reset stuck messages
+python -m src.services.messaging_cli --queue-stats        # Show statistics
+python -m src.services.messaging_cli --health-check       # System health check
+python -m src.services.messaging_cli --process-workspaces # Clean all workspaces
+
 🐝 WE. ARE. SWARM - COORDINATE THROUGH PYAUTOGUI!
 """
 

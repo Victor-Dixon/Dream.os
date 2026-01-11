@@ -13,6 +13,7 @@ V2 Compliance | Author: Agent-1 | Date: 2025-12-14
 
 from __future__ import annotations
 
+import logging
 import time
 from datetime import datetime
 from typing import Any
@@ -20,6 +21,8 @@ from typing import Any
 from src.core.messaging_core import UnifiedMessagePriority
 
 from .message_formatters import MessageCategory, MESSAGE_TEMPLATES
+
+logger = logging.getLogger(__name__)
 
 
 def normalize_priority(priority: str) -> UnifiedMessagePriority:
@@ -152,47 +155,141 @@ def send_single_agent_message(
         # Use validated sender
         sender = validated_sender
 
-    result = MessageCoordinator.send_to_agent(
-        agent=agent,
-        message=message,
-        priority=priority,
-        use_pyautogui=True,
-        stalled=stalled,
-        sender=sender,
-        message_category=message_category,
-    )
-    
-    # Log agent activity for tracking (tied to status monitoring)
-    if result and isinstance(result, dict) and result.get("success"):
-        final_sender = sender or detected_sender or "SYSTEM"
-        if message_category:
-            log_agent_activity(
-                sender=final_sender,
+    try:
+        result = MessageCoordinator.send_to_agent(
+            agent=agent,
+            message=message,
+            priority=priority,
+            use_pyautogui=True,
+            stalled=stalled,
+            sender=sender,
+            message_category=message_category,
+        )
+
+        # Log agent activity for tracking (tied to status monitoring)
+        if result and isinstance(result, dict) and result.get("success"):
+            final_sender = sender or detected_sender or "SYSTEM"
+            if message_category:
+                log_agent_activity(
+                    sender=final_sender,
+                    recipient=agent,
+                    category=message_category,
+                    message_id=result.get("queue_id"),
+                )
+
+        success, msg = handle_message_result(result, agent)
+
+        # Check if message was queued but not delivered (fallback trigger)
+        if success and "queued for" in msg.lower() and "awaiting delivery" in msg.lower():
+            logger.info("Message queued but not delivered - triggering direct fallback")
+            try:
+                from src.core.messaging_core import send_message, UnifiedMessageType, UnifiedMessagePriority, UnifiedMessageTag
+
+                # Convert CLI category to message type
+                if message_category == MessageCategory.A2A:
+                    msg_type = UnifiedMessageType.AGENT_TO_AGENT
+                elif message_category == MessageCategory.S2A:
+                    msg_type = UnifiedMessageType.SYSTEM_TO_AGENT
+                elif message_category == MessageCategory.C2A:
+                    msg_type = UnifiedMessageType.CAPTAIN_TO_AGENT
+                else:
+                    msg_type = UnifiedMessageType.TEXT
+
+                # Convert priority
+                if priority == UnifiedMessagePriority.URGENT:
+                    msg_priority = UnifiedMessagePriority.URGENT
+                else:
+                    msg_priority = UnifiedMessagePriority.REGULAR
+
+                # Send directly with category preserved in metadata
+                metadata = {}
+                if message_category:
+                    metadata['message_category'] = message_category.value
+
+                direct_result = send_message(
+                    content=message,
+                    sender=sender or "Agent-7",
+                    recipient=agent,
+                    message_type=msg_type,
+                    priority=msg_priority,
+                    tags=[UnifiedMessageTag.COORDINATION] if message_category == MessageCategory.A2A else [],
+                    metadata=metadata
+                )
+
+                if direct_result:
+                    print(f"✅ Message delivered directly to {agent} (fallback)")
+                    return 0
+                else:
+                    print(f"❌ Direct delivery fallback failed for {agent}")
+                    return 1
+
+            except Exception as direct_e:
+                logger.error(f"Direct delivery fallback failed: {direct_e}")
+                print(f"❌ Fallback delivery failed for {agent}")
+
+        print(msg)
+        return 0 if success else 1
+
+    except Exception as e:
+        logger.warning(f"Queue delivery failed, falling back to direct delivery: {e}")
+        # Fallback to direct delivery using messaging core
+        try:
+            from src.core.messaging_core import send_message, UnifiedMessageType, UnifiedMessagePriority, UnifiedMessageTag
+
+            # Convert CLI category to message type
+            if message_category == MessageCategory.A2A:
+                msg_type = UnifiedMessageType.AGENT_TO_AGENT
+            elif message_category == MessageCategory.S2A:
+                msg_type = UnifiedMessageType.SYSTEM_TO_AGENT
+            elif message_category == MessageCategory.C2A:
+                msg_type = UnifiedMessageType.CAPTAIN_TO_AGENT
+            else:
+                msg_type = UnifiedMessageType.TEXT
+
+            # Convert priority
+            if priority == UnifiedMessagePriority.URGENT:
+                msg_priority = UnifiedMessagePriority.URGENT
+            else:
+                msg_priority = UnifiedMessagePriority.REGULAR
+
+            # Send directly
+            direct_result = send_message(
+                content=message,
+                sender=sender or "Agent-7",
                 recipient=agent,
-                category=message_category,
-                message_id=result.get("queue_id"),
+                message_type=msg_type,
+                priority=msg_priority,
+                tags=[UnifiedMessageTag.COORDINATION] if message_category == MessageCategory.A2A else []
             )
-    
-    success, msg = handle_message_result(result, agent)
-    print(msg)
-    return 0 if success else 1
+
+            if direct_result:
+                print(f"✅ Message delivered directly to {agent}")
+                return 0
+            else:
+                print(f"❌ Direct delivery also failed for {agent}")
+                return 1
+
+        except Exception as direct_e:
+            logger.error(f"Direct delivery fallback also failed: {direct_e}")
+            print(f"❌ All delivery methods failed for {agent}")
+            return 1
 
 
 def handle_message_result(result: Any, agent: str) -> tuple[bool, str]:
-    """Handle message send result and return (success, message)."""
+    """Handle message queue result and return (success, message)."""
     if isinstance(result, dict):
         if result.get("success"):
-            return True, f"✅ Message sent to {agent}"
+            return True, f"📋 Message queued for {agent} - awaiting delivery"
         elif result.get("blocked"):
             error_msg = result.get(
                 "error_message", "Pending request details unavailable")
             return False, f"❌ MESSAGE BLOCKED - Pending Multi-Agent Request\n\n{error_msg}"
         else:
-            return False, f"❌ Failed to send message to {agent}"
+            return False, f"❌ Failed to queue message for {agent}"
     elif result:
-        return True, f"✅ Message sent to {agent}"
+        return True, f"📋 Message queued for {agent} - awaiting delivery"
     else:
-        return False, f"❌ Failed to send message to {agent}"
+        return False, f"❌ Failed to queue message for {agent}"
 
 
 def route_message_delivery(

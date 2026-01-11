@@ -21,59 +21,269 @@ ENHANCED_BROADCAST_TEMPLATES = {
         {
             "name": "Task Assignment",
             "emoji": "🎯",
-            "message": """[C2A] All Agents | Task Assignment
+            "message": """[HEADER] SWARM COORDINATION — TASK ASSIGNMENT
+From: Agent-4 (Captain)
+To: All Agents
+Priority: normal
+Message ID: task_{timestamp}_{task_id}
+Timestamp: {timestamp}
 
-**Priority**: REGULAR
-**Status**: NEW TASK
+🚀 **PROTOCOL UPDATE: Task Reception → Immediate Execution**
+When you receive task assignments, don't just acknowledge them. Instead:
+- Execute immediately with full autonomy
+- Transform task receipt into forward momentum
+- Report progress through status.json updates and devlogs
+- Use swarm systems (contracts, swarm brain, FSM) to accelerate work
+- Push directives forward - turn assignment into completion
 
-New task has been assigned to the swarm. Please check your inbox for detailed requirements and coordination instructions.
+🐝 **SWARM TASK ASSIGNMENT**:
+This is a swarm-wide task assignment requiring coordinated execution across all agents.
 
-**Action Required**:
-- Review task details in your inbox
-- Update your status.json with assigned task
-- Begin execution per task requirements
+**TASK CONTEXT**:
+{task_context}
 
+**WHY THIS COORDINATION?**
+{coordination_reason}
+
+**EXPECTED CONTRIBUTION**:
+{agent_contribution}
+
+**TIMING**:
+{execution_timeline}
+
+**RESPONSE REQUIRED**:
+Update status.json within 15 minutes + execute immediately. Report completion via devlog.
+
+**WHAT TO INCLUDE IN STATUS UPDATE** (MANDATORY):
+- **fsm_state**: Set to 'executing_{task_type}'
+- **current_tasks**: Add specific task with timeline
+- **current_mission**: Update with task context
+- **next_actions**: List immediate execution steps
+
+**EXECUTION COMMAND**:
+```bash
+# Update status.json immediately
+python -c "import json; f=open('agent_workspaces/Agent-{agent_id}/status.json'); d=json.load(f); d.update({'fsm_state':'executing_{task_type}','current_tasks':['{task_description}']}); json.dump(d,open('agent_workspaces/Agent-{agent_id}/status.json','w'),indent=2)"
+
+# Begin immediate execution
+{execution_commands}
+```
+
+**COORDINATION PRINCIPLES**:
+- Tasks are fuel for execution, not confirmation loops
+- Execute autonomously, coordinate when blocked
+- Report progress through status.json and devlogs
+- Share learnings via swarm brain immediately
+- **Push directives forward**: Don't acknowledge - execute and advance
+
+**IMPORTANT**: **Push directives forward**: Don't just update status - execute work immediately. Transform task receipt into completed deliverables.
+
+#SWARM-COORDINATION #TASK-EXECUTION #AUTONOMOUS-EXECUTION
+
+---
+📨 **BROADCAST MESSAGE** - Enhanced Swarm Coordination
+
+**How to Respond:**
+1. This is a NORMAL/BROADCAST message with enhanced coordination framework
+2. Update your status.json immediately (MANDATORY)
+3. Execute assigned tasks autonomously
+4. Report progress via devlogs and status updates
+5. Coordinate via inbox when blocked
+
+**Enhanced Response Format:**
+- Update status.json within 15 minutes
+- Begin execution immediately
+- Report completion via devlog
+- Coordinate via inbox if blocked
+
+**Note:** This is an enhanced swarm coordination message - execute immediately, no standard response needed!
 🐝 WE. ARE. SWARM. ⚡🔥""",
             "priority": "regular",
         },
         {
             "name": "Status Check",
             "emoji": "✅",
-            "message": """[C2A] All Agents | Status Update Request
+            "message": """[HEADER] SWARM COORDINATION — STATUS SYNCHRONIZATION
+From: Agent-4 (Captain)
+To: All Agents
+Priority: normal
+Message ID: status_{timestamp}_{status_id}
+Timestamp: {timestamp}
 
-**Priority**: REGULAR
-**Status**: STATUS_CHECK
+🚀 **PROTOCOL UPDATE: Status Requests → Actionable Intelligence**
+When you receive status requests, don't just report current state. Instead:
+- Analyze your work for optimization opportunities
+- Identify blockers and propose solutions immediately
+- Transform status updates into forward momentum
+- Use status data to accelerate swarm coordination
+- Push directives forward - turn status into action
 
-Status update requested from all agents. Please provide:
+🐝 **SWARM STATUS SYNCHRONIZATION**:
+This is a swarm-wide status synchronization to align progress and identify coordination opportunities.
 
-**Report**:
-- Current mission/progress
-- Completed tasks this cycle
-- Active tasks in progress
-- Any blockers or issues
-- Next planned actions
+**STATUS CONTEXT**:
+{status_context}
 
-Update your status.json and respond via inbox.
+**WHY THIS SYNCHRONIZATION?**
+{status_purpose}
 
+**EXPECTED CONTRIBUTION**:
+{agent_contribution}
+
+**TIMING**:
+{status_timeline}
+
+**RESPONSE REQUIRED**:
+Update status.json within 10 minutes + provide actionable intelligence.
+
+**STATUS UPDATE FORMAT (MANDATORY)**:
+```json
+{
+  "fsm_state": "reporting_status",
+  "current_tasks": ["[specific task with timeline]"],
+  "completed_tasks": ["[recent completion]"],
+  "current_mission": "[mission context]",
+  "next_actions": ["[immediate next step]"],
+  "achievements": ["[key achievement]"],
+  "last_updated": "{current_timestamp}"
+}
+```
+
+**ACTIONABLE INTELLIGENCE TO INCLUDE**:
+- **Optimization Opportunities**: What can be improved/faster?
+- **Blocker Solutions**: If blocked, propose immediate solutions
+- **Coordination Proposals**: Who can you collaborate with?
+- **Resource Needs**: What support accelerates your work?
+
+**STATUS COMMAND**:
+```bash
+# Update status.json with actionable intelligence
+python -c "
+import json
+with open('agent_workspaces/Agent-{agent_id}/status.json') as f:
+    data = json.load(f)
+data.update({
+    'fsm_state': 'reporting_status',
+    'current_tasks': ['{current_work}'],
+    'next_actions': ['{immediate_action}'],
+    'last_updated': '{timestamp}'
+})
+with open('agent_workspaces/Agent-{agent_id}/status.json', 'w') as f:
+    json.dump(data, f, indent=2)
+"
+```
+
+**STATUS PRINCIPLES**:
+- Status updates are intelligence for swarm optimization
+- Include solutions with problems, opportunities with progress
+- Propose collaborations when status reveals synergies
+- Use status to accelerate, not just report
+- **Push directives forward**: Don't just report status - propose actions and solutions
+
+**IMPORTANT**: **Push directives forward**: Don't just provide status - include actionable intelligence, proposed solutions, and collaboration opportunities.
+
+#SWARM-STATUS #COORDINATION-INTELLIGENCE #ACTIONABLE-UPDATES
+
+---
+📨 **BROADCAST MESSAGE** - Enhanced Swarm Coordination
+
+**How to Respond:**
+1. This is a NORMAL/BROADCAST message with enhanced status framework
+2. Update status.json immediately with actionable intelligence
+3. Include solutions with problems, opportunities with progress
+4. Propose collaborations and optimizations
+5. Use inbox for detailed coordination if needed
+
+**Enhanced Response Format:**
+- Update status.json within 10 minutes
+- Include actionable intelligence and solutions
+- Propose optimizations and collaborations
+- Report via devlog for complex updates
+
+**Note:** This is an enhanced swarm coordination message - provide intelligence immediately, no standard response needed!
 🐝 WE. ARE. SWARM. ⚡🔥""",
             "priority": "regular",
         },
         {
             "name": "Coordination",
             "emoji": "🐝",
-            "message": """[C2A] All Agents | Swarm Coordination
+            "message": """[HEADER] SWARM COORDINATION — CROSS-AGENT COLLABORATION
+From: Agent-4 (Captain)
+To: All Agents
+Priority: normal
+Message ID: coord_{timestamp}_{coord_id}
+Timestamp: {timestamp}
 
-**Priority**: REGULAR
-**Status**: COORDINATION
+🚀 **PROTOCOL UPDATE: Dumb Messages → Real Collaboration**
+When you receive coordination requests, don't just acknowledge them. Instead:
+- Identify concrete collaboration opportunities
+- Propose specific bilateral coordinations (A2A)
+- Execute parallel work streams immediately
+- Transform coordination requests into swarm force multiplication
+- Push directives forward - turn requests into executed collaborations
 
-Swarm coordination needed. Please check your inbox for coordination details and respond accordingly.
+🐝 **SWARM COORDINATION REQUEST**:
+This is a swarm-wide coordination request to leverage parallel processing and accelerate completion.
 
-**Coordination Areas**:
-- Task dependencies
-- Resource sharing
-- Timeline alignment
-- Cross-agent collaboration
+**COORDINATION CONTEXT**:
+{coordination_context}
 
+**WHY THIS COORDINATION?**
+{coordination_purpose}
+
+**EXPECTED CONTRIBUTION**:
+{agent_contribution}
+
+**TIMING**:
+{coordination_timeline}
+
+**RESPONSE REQUIRED**:
+Reply within 15 minutes with collaboration proposals or execution plans.
+
+**COORDINATION RESPONSE FORMAT (MANDATORY)**:
+```
+SWARM COORDINATION RESPONSE:
+✅ PROPOSED: [Specific collaboration: agent pairings + parallel work streams]
+OR
+❌ UNAVAILABLE: [reason] | Alternative: [suggested coordination approach]
+```
+
+**COORDINATION COMMAND** (for bilateral requests):
+```bash
+python -m src.services.messaging_cli --agent Agent-X \
+  --message "A2A COORDINATION REQUEST: [specific request details]" \
+  --category a2a --sender Agent-{your_id} --tags coordination-request
+```
+
+**COORDINATION PRINCIPLES**:
+- 2 agents working in parallel > 1 agent working alone
+- Share context via status.json updates and A2A pings
+- Report progress to accelerate integration
+- **Be proactive**: Propose concrete collaborations rather than 'standing by'
+- **Identify synergy**: Explain how capabilities complement other agents
+- **Suggest handoffs**: Propose coordination touchpoints or integration points
+
+**IMPORTANT**: **Push directives forward**: Don't just acknowledge coordination requests—execute collaborations immediately or propose specific A2A coordinations back instead of reiterating the same thing.
+
+#SWARM-COORDINATION #BILATERAL-COORDINATION #FORCE-MULTIPLIER
+
+---
+📨 **BROADCAST MESSAGE** - Enhanced Swarm Coordination
+
+**How to Respond:**
+1. This is a NORMAL/BROADCAST message with enhanced coordination framework
+2. Propose specific collaborations immediately
+3. Execute parallel work streams autonomously
+4. Report coordination progress via status updates
+5. Use A2A messaging for bilateral coordination
+
+**Enhanced Response Format:**
+- Propose concrete collaborations within 15 minutes
+- Execute parallel work immediately
+- Report progress via status.json updates
+- Use A2A messaging for detailed coordination
+
+**Note:** This is an enhanced swarm coordination message - propose collaborations immediately, no standard response needed!
 🐝 WE. ARE. SWARM. ⚡🔥""",
             "priority": "regular",
         },
@@ -222,24 +432,103 @@ Submit review feedback via inbox.
         {
             "name": "Urgent Task",
             "emoji": "🚨",
-            "message": """🚨 URGENT MESSAGE 🚨
+            "message": """🚨 URGENT SWARM ALERT 🚨
 
-[C2A] All Agents | URGENT TASK
+[HEADER] SWARM COORDINATION — URGENT TASK EXECUTION
+From: Agent-4 (Captain)
+To: All Agents
+Priority: urgent
+Message ID: urgent_{timestamp}_{urgent_id}
+Timestamp: {timestamp}
 
-**Priority**: URGENT
-**Status**: IMMEDIATE ACTION REQUIRED
+🚀 **PROTOCOL UPDATE: Urgent Alerts → Immediate Swarm Force**
+When you receive urgent alerts, don't just acknowledge them. Instead:
+- Execute with maximum autonomy and velocity
+- Coordinate parallel work streams immediately
+- Transform urgency into accelerated completion
+- Use all swarm systems to maximize force multiplication
+- Push directives forward - turn alerts into completed deliverables
 
-Urgent task requiring immediate attention from the swarm.
+🐝 **SWARM URGENT TASK ALERT**:
+This is a critical swarm alert requiring immediate coordinated execution across all agents.
 
-**Action Required**:
-- Check your inbox immediately
-- Review urgent task details
-- Begin execution ASAP
-- Report status within 1 cycle
+**URGENT CONTEXT**:
+{urgent_context}
 
-**Time Sensitivity**: HIGH
-**Impact**: CRITICAL
+**WHY URGENT EXECUTION?**
+{urgent_justification}
 
+**EXPECTED CONTRIBUTION**:
+{agent_contribution}
+
+**CRITICAL TIMING**:
+{urgent_timeline}
+
+**RESPONSE REQUIRED**:
+Begin execution within 5 minutes + report status within 15 minutes.
+
+**URGENT EXECUTION FORMAT (MANDATORY)**:
+```json
+{
+  "fsm_state": "urgent_execution",
+  "current_tasks": ["URGENT: {task_description}"],
+  "current_mission": "URGENT: {mission_context}",
+  "next_actions": ["{immediate_execution_step}"],
+  "last_updated": "{current_timestamp}"
+}
+```
+
+**URGENT COORDINATION COMMAND**:
+```bash
+# Immediate status update for urgent execution
+python -c "
+import json
+with open('agent_workspaces/Agent-{agent_id}/status.json') as f:
+    data = json.load(f)
+data.update({
+    'fsm_state': 'urgent_execution',
+    'current_tasks': ['URGENT: {urgent_task}'],
+    'next_actions': ['{immediate_action}'],
+    'last_updated': '{timestamp}'
+})
+with open('agent_workspaces/Agent-{agent_id}/status.json', 'w') as f:
+    json.dump(data, f, indent=2)
+"
+
+# Execute urgent task immediately
+{urgent_execution_commands}
+```
+
+**URGENT PRINCIPLES**:
+- Urgency = maximum autonomy + coordination
+- Execute first, coordinate during execution
+- Report progress continuously via status updates
+- Use parallel processing to accelerate completion
+- **Push directives forward**: Don't acknowledge urgency - execute immediately
+
+**CRITICAL IMPACT**: {impact_statement}
+
+**IMPORTANT**: **Push directives forward**: Don't just respond to urgent alerts—execute immediately with full swarm force multiplication.
+
+#SWARM-URGENT #CRITICAL-EXECUTION #FORCE-MULTIPLIER
+
+---
+📨 **BROADCAST MESSAGE** - Enhanced Urgent Coordination
+
+**How to Respond:**
+1. This is an URGENT/BROADCAST message requiring immediate action
+2. Update status.json within 5 minutes (MANDATORY)
+3. Begin urgent execution immediately
+4. Coordinate via inbox during execution
+5. Report progress continuously
+
+**Enhanced Urgent Response Format:**
+- Update status.json within 5 minutes
+- Begin execution immediately
+- Report via devlog every 15 minutes
+- Coordinate via inbox for blockers
+
+**Note:** This is an urgent swarm coordination message - execute immediately, no standard response needed!
 🚨 WE. ARE. SWARM. URGENT. ⚡🔥""",
             "priority": "urgent",
         },

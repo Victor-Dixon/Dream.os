@@ -235,6 +235,50 @@ class UnifiedMessagingCore:
     def send_message_object(self, message: UnifiedMessage) -> bool:
         """Send a UnifiedMessage object."""
         try:
+            # Apply A2A bilateral coordination template if needed
+            if (message.category and
+                message.category.name == 'A2A' and
+                isinstance(message.content, str)):
+                try:
+                    from .messaging_template_texts import MESSAGE_TEMPLATES
+                    from .messaging_models_core import MessageCategory
+                    import uuid
+                    from datetime import datetime
+
+                    template = MESSAGE_TEMPLATES.get(MessageCategory.A2A)
+                    if template:
+                        # Populate template with message data
+                        extra_meta = {
+                            "ask": message.content,
+                            "context": "",
+                        }
+
+                        now = datetime.now().isoformat(timespec="seconds")
+                        templated_content = template.format(
+                            sender=message.sender,
+                            recipient=message.recipient,
+                            priority=message.priority.value if hasattr(message.priority, 'value') else str(message.priority),
+                            message_id=str(uuid.uuid4()),
+                            timestamp=now,
+                            agent_id=message.recipient,
+                            ask=extra_meta.get("ask", message.content),
+                            context=extra_meta.get("context", ""),
+                            coordination_rationale=extra_meta.get("coordination_rationale", "To leverage parallel processing and accelerate completion"),
+                            expected_contribution=extra_meta.get("expected_contribution", "Domain expertise and parallel execution"),
+                            coordination_timeline=extra_meta.get("coordination_timeline", "ASAP - coordination needed to maintain momentum"),
+                            next_step=extra_meta.get(
+                                "next_step",
+                                "Reply via messaging_cli with ACCEPT/DECLINE, ETA, and a 2–3 bullet plan, "
+                                "then update status.json and MASTER_TASK_LOG.md.",
+                            ),
+                            fallback=extra_meta.get(
+                                "fallback", "If blocked: send blocker + proposed fix + owner."),
+                        )
+                        message.content = templated_content
+                except Exception as e:
+                    # Template application failed, use original content
+                    pass
+
             # Phase 2C: Template resolution using service
             if isinstance(message.metadata, dict):
                 self.template_service.apply_template_to_message(message.metadata)

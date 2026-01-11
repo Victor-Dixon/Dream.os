@@ -227,45 +227,33 @@ class ComprehensiveSmokeTest:
     # ============================================================================
 
     def _test_message_queue_config(self, system_name: str, suite_config: Dict) -> SystemTestResult:
-        """Test if Message Queue config is available."""
-        required_env_vars = [
-            'REDIS_HOST',
-            'REDIS_PORT',
-        ]
+        """Test if Message Queue config is available (file-based storage)."""
+        # Message queue uses file-based persistence, not Redis
+        queue_dir = os.getenv('MESSAGE_QUEUE_DIR', 'message_queue')
 
-        optional_env_vars = [
-            'REDIS_PASSWORD',
-            'REDIS_DB',
-        ]
-
-        missing_required = []
-        for var in required_env_vars:
-            if not os.getenv(var):
-                missing_required.append(var)
-
-        if missing_required:
-            return SystemTestResult(system_name, "config", False,
-                                  f"Missing required env vars: {', '.join(missing_required)}")
-
-        # Check if Redis connection config is valid
         try:
-            import redis
-            host = os.getenv('REDIS_HOST')
-            port = int(os.getenv('REDIS_PORT', '6379'))
-            password = os.getenv('REDIS_PASSWORD')
-            db = int(os.getenv('REDIS_DB', '0'))
+            from src.utils.unified_utilities import get_project_root
+            project_root = get_project_root()
+            queue_path = project_root / queue_dir
 
-            # Test config validity (don't actually connect)
-            if host and port > 0:
-                return SystemTestResult(system_name, "config", True,
-                                      f"Redis config valid: {host}:{port} (db={db})")
+            # Check if queue directory exists or can be created
+            if queue_path.exists():
+                if queue_path.is_dir():
+                    return SystemTestResult(system_name, "config", True,
+                                          f"Message queue directory exists: {queue_path}")
+                else:
+                    return SystemTestResult(system_name, "config", False,
+                                          f"Message queue path exists but is not a directory: {queue_path}")
             else:
-                return SystemTestResult(system_name, "config", False,
-                                      "Invalid Redis configuration")
+                # Try to create the directory
+                try:
+                    queue_path.mkdir(parents=True, exist_ok=True)
+                    return SystemTestResult(system_name, "config", True,
+                                          f"Message queue directory created: {queue_path}")
+                except Exception as e:
+                    return SystemTestResult(system_name, "config", False,
+                                          f"Cannot create message queue directory: {e}", str(e))
 
-        except ImportError:
-            return SystemTestResult(system_name, "config", False,
-                                  "Redis library not available")
         except Exception as e:
             return SystemTestResult(system_name, "config", False,
                                   f"Config validation error: {e}", str(e))
@@ -450,25 +438,28 @@ class ComprehensiveSmokeTest:
     def _test_twitch_dry_run(self, system_name: str, suite_config: Dict) -> SystemTestResult:
         """Test Twitch bot dry-run connectivity."""
         try:
-            # Import twitch-related modules
-            importlib.import_module('src.services.chat_presence.twitch_bridge')
-
-            # Check if we can import the eventsub server
+            # Import the eventsub server module
             eventsub_module = importlib.import_module(suite_config['module'])
 
-            # Check if main classes exist
-            required_classes = ['TwitchEventSubServer']
-            missing_classes = []
-            for cls in required_classes:
-                if not hasattr(eventsub_module, cls):
-                    missing_classes.append(cls)
+            # Check if required functions exist
+            required_functions = ['main', 'on_redemption_callback']
+            missing_functions = []
+            for func in required_functions:
+                if not hasattr(eventsub_module, func):
+                    missing_functions.append(func)
 
-            if missing_classes:
+            if missing_functions:
                 return SystemTestResult(system_name, "dry_run", False,
-                                      f"Missing required classes: {', '.join(missing_classes)}")
+                                      f"Missing required functions: {', '.join(missing_functions)}")
 
-            return SystemTestResult(system_name, "dry_run", True,
-                                  "Twitch EventSub server structure validation passed")
+            # Check if Flask app creation function exists
+            try:
+                from src.services.chat_presence.twitch_eventsub_handler import create_eventsub_flask_app
+                return SystemTestResult(system_name, "dry_run", True,
+                                      "Twitch EventSub server structure validation passed")
+            except ImportError:
+                return SystemTestResult(system_name, "dry_run", False,
+                                      "Missing twitch_eventsub_handler module")
 
         except ImportError as e:
             return SystemTestResult(system_name, "dry_run", False,
@@ -544,12 +535,12 @@ class ComprehensiveSmokeTest:
             # Check for routes module
             try:
                 routes_module = importlib.import_module('src.web.fastapi_routes')
-                if hasattr(routes_module, 'router'):
+                if hasattr(routes_module, 'api_router'):
                     return SystemTestResult(system_name, "structure", True,
                                           "FastAPI app and routes structure validation passed")
                 else:
                     return SystemTestResult(system_name, "structure", False,
-                                          "Routes module missing router instance")
+                                          "Routes module missing api_router instance")
             except ImportError:
                 return SystemTestResult(system_name, "structure", True,
                                       "FastAPI app structure valid (routes module not found but app exists)")

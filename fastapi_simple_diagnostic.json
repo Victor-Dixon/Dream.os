@@ -1,39 +1,25 @@
 {
-  "timestamp": "2026-01-07T17:49:55.969810",
+  "timestamp": "2026-01-10T05:24:09.938172",
   "health_test_results": {
     "http://localhost:8000/health": {
       "status": "error",
-      "error": "HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /health (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001AE29DDE110>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "error": "HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /health (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E73D97E810>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
       "response_time": null
     },
     "http://localhost:8001/health": {
       "status": "error",
-      "error": "HTTPConnectionPool(host='localhost', port=8001): Max retries exceeded with url: /health (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001AE29DE8850>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "error": "HTTPConnectionPool(host='localhost', port=8001): Max retries exceeded with url: /health (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E73D988ED0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
       "response_time": null
     },
     "http://localhost:5000/health": {
-      "status": "success",
-      "response_time": 10.484,
-      "status_code": 503,
-      "threshold": 2.0,
-      "within_threshold": false
+      "status": "error",
+      "error": "HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /health (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E73D98B690>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "response_time": null
     }
   },
   "alert_analysis": {
-    "fastapi_alerts_count": 14,
+    "fastapi_alerts_count": 15,
     "recent_fastapi_alerts": [
-      {
-        "level": "warning",
-        "title": "FastAPI Slow Response",
-        "message": "Endpoint /health took 5.03s (threshold: 2.0s)",
-        "source": "fastapi_performance_monitor",
-        "timestamp": "2026-01-07T06:58:20.313553",
-        "metadata": {
-          "endpoint": "/health",
-          "duration": 5.027127981185913,
-          "threshold": 2.0
-        }
-      },
       {
         "level": "warning",
         "title": "FastAPI Slow Response",
@@ -81,6 +67,18 @@
           "duration": 7.276522159576416,
           "threshold": 2.0
         }
+      },
+      {
+        "level": "warning",
+        "title": "FastAPI Slow Response",
+        "message": "Endpoint /health took 5.92s (threshold: 2.0s)",
+        "source": "fastapi_performance_monitor",
+        "timestamp": "2026-01-08T10:50:53.613303",
+        "metadata": {
+          "endpoint": "/health",
+          "duration": 5.923714876174927,
+          "threshold": 2.0
+        }
       }
     ],
     "other_alerts": [
@@ -106,6 +104,6 @@
       }
     ]
   },
-  "working_endpoints": 1,
-  "slow_endpoints": 1
+  "working_endpoints": 0,
+  "slow_endpoints": 0
 }

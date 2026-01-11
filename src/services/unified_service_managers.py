@@ -206,6 +206,15 @@ class UnifiedContractManager(BaseService):
                 for c in contracts
             ]
 
+            # Log when agents have no contracts (for monitoring)
+            if not contracts_data:
+                logger.info(f"ℹ️ Agent {agent_id} has no contracts (this is normal)")
+            else:
+                # Check for any placeholder contracts
+                placeholder_count = sum(1 for c in contracts_data if 'Default Contract' in c.get('title', ''))
+                if placeholder_count > 0:
+                    logger.warning(f"🚨 Found {placeholder_count} placeholder contracts for {agent_id}")
+
             return {
                 "success": True,
                 "agent_id": agent_id,

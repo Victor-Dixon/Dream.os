@@ -37,8 +37,17 @@ class ServiceManager:
 
     def __init__(self):
         self.services = {
+            'messaging_v3': {
+                'name': 'Messaging V3 Processor',
+                'script': 'messaging_v3/processor.py',
+                'pid_file': 'messaging_v3.pid',
+                'log_file': 'messaging_v3.log',
+                'status': 'stopped',
+                'use_launcher': False
+            },
+            # Legacy messaging (deprecated - use messaging_v3)
             'message_queue': {
-                'name': 'Message Queue Processor',
+                'name': 'Legacy Message Queue (Deprecated)',
                 'script': 'scripts/start_message_queue.py',
                 'pid_file': 'message_queue.pid',
                 'log_file': 'message_queue.log',

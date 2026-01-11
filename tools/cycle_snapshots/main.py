@@ -26,7 +26,7 @@ from tools.cycle_snapshots.data_collectors.agent_status_collector import collect
 from tools.cycle_snapshots.data_collectors.task_log_collector import parse_task_log
 from tools.cycle_snapshots.data_collectors.git_collector import analyze_git_activity
 from tools.cycle_snapshots.aggregators.snapshot_aggregator import aggregate_snapshot
-from tools.cycle_snapshots.core.snapshot_models import CycleSnapshot
+from tools.cycle_snapshots.core.snapshot_models import CycleSnapshot, SnapshotMetadata, ProjectState, TaskMetrics, GitMetrics
 
 logger = logging.getLogger(__name__)
 
@@ -75,15 +75,19 @@ def main():
             }
         }
 
-        snapshot_dict = aggregate_snapshot(all_data)
+        snapshot_dict = aggregate_snapshot(all_data, cycle_num=args.cycle)
 
         # Create snapshot object
+        metadata_dict = snapshot_dict["snapshot_metadata"]
+        # Convert generated_at string back to datetime
+        metadata_dict["generated_at"] = datetime.fromisoformat(metadata_dict["generated_at"])
+
         snapshot = CycleSnapshot(
-            metadata=snapshot_dict["snapshot_metadata"],
-            project_state=snapshot_dict["project_state"],
+            metadata=SnapshotMetadata(**metadata_dict),
+            project_state=ProjectState(**snapshot_dict["project_state"]),
             agent_status={},  # Would be populated from agent_status_data
-            task_metrics=snapshot_dict.get("task_metrics", {}),
-            git_metrics=snapshot_dict.get("git_activity", {}).get("metrics", {}),
+            task_metrics=TaskMetrics(),
+            git_metrics=GitMetrics(),
             mcp_data=snapshot_dict.get("mcp_data", {})
         )
 

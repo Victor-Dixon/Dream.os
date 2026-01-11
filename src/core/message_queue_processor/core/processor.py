@@ -23,7 +23,7 @@ from systems.output_flywheel.integration.status_json_integration import (
 )
 from ..processing.message_parser import parse_message_data
 from ..processing.message_validator import validate_message_data
-from ..processing.message_router import route_message_delivery
+from ...message_queue.processing.message_router import route_message_delivery
 from ..processing.delivery_inbox import deliver_fallback_inbox
 from ..processing.delivery_core import deliver_via_core
 from ..handlers.error_handler import handle_delivery_error
@@ -112,10 +112,23 @@ class MessageQueueProcessor:
                 try:
                     entries = self.queue.dequeue(batch_size)
                     if not entries:
-                        if max_messages is None:
-                            time.sleep(interval)
-                            continue
-                        break
+                        # Fallback: try to load directly from persistence if queue interface fails
+                        try:
+                            all_entries = self.queue.persistence.load_entries()
+                            pending_entries = [e for e in all_entries if getattr(e, 'status', '') == 'PENDING']
+                            if pending_entries:
+                                # Sort by priority (highest first) and take batch
+                                pending_entries.sort(key=lambda x: getattr(x, 'priority_score', 0.5), reverse=True)
+                                entries = pending_entries[:batch_size]
+                                logger.info(f"Fallback dequeue: found {len(entries)} pending entries")
+                        except Exception as fallback_e:
+                            logger.warning(f"Fallback dequeue also failed: {fallback_e}")
+
+                        if not entries:
+                            if max_messages is None:
+                                time.sleep(interval)
+                                continue
+                            break
                 except Exception as e:
                     logger.error(f"Failed to dequeue messages: {e}")
                     if max_messages is None:
@@ -137,41 +150,16 @@ class MessageQueueProcessor:
                     is_broadcast = message_type == 'broadcast'
                     delay_seconds = INTER_AGENT_DELAY_BROADCAST if is_broadcast else (INTER_AGENT_DELAY_SUCCESS if ok else INTER_AGENT_DELAY_FAILURE)
 
-                    # #region agent log
-                    import json
-                    from pathlib import Path
-                    log_path = Path("d:\\Agent_Cellphone_V2_Repository\\.cursor\\debug.log")
-                    delay_start = time.time()
-                    try:
-                        with open(log_path, 'a', encoding='utf-8') as f:
-                            f.write(json.dumps({"sessionId": "debug-session", "runId": "run1", "hypothesisId": "A", "location": "processor.py:107", "message": "Before inter-agent delay", "data": {"recipient": recipient, "success": ok, "is_broadcast": is_broadcast, "delay_seconds": delay_seconds}, "timestamp": int(time.time() * 1000)}) + "\n")
-                    except: pass
-                    # #endregion
-
                     if ok:
                         # Extended pause after successful delivery to prevent routing race conditions
                         # Use broadcast delay for broadcast messages, otherwise use standard delay
                         time.sleep(delay_seconds)
-                        # #region agent log
-                        delay_end = time.time()
-                        actual_delay = delay_end - delay_start
-                        try:
-                            with open(log_path, 'a', encoding='utf-8') as f:
-                                f.write(json.dumps({"sessionId": "debug-session", "runId": "run1", "hypothesisId": "A", "location": "processor.py:121", "message": "After inter-agent delay (success)", "data": {"recipient": recipient, "is_broadcast": is_broadcast, "expected_delay": delay_seconds, "actual_delay": round(actual_delay, 2)}, "timestamp": int(time.time() * 1000)}) + "\n")
-                        except: pass
-                        # #endregion
+                        # Production: Debug logging removed for performance
                         logger.debug(
                             f"✅ Delivery complete for {recipient}, waiting {delay_seconds}s before next agent{' (BROADCAST)' if is_broadcast else ''}")
                     else:
                         time.sleep(delay_seconds)  # Extended pause after failed delivery
-                        # #region agent log
-                        delay_end = time.time()
-                        actual_delay = delay_end - delay_start
-                        try:
-                            with open(log_path, 'a', encoding='utf-8') as f:
-                                f.write(json.dumps({"sessionId": "debug-session", "runId": "run1", "hypothesisId": "B", "location": "processor.py:133", "message": "After inter-agent delay (failure)", "data": {"recipient": recipient, "is_broadcast": is_broadcast, "expected_delay": delay_seconds, "actual_delay": round(actual_delay, 2)}, "timestamp": int(time.time() * 1000)}) + "\n")
-                        except: pass
-                        # #endregion
+                        # Production: Debug logging removed for performance
                         logger.debug(
                             f"⚠️ Delivery failed, waiting {delay_seconds}s for recovery before next agent{' (BROADCAST)' if is_broadcast else ''}")
 
@@ -270,8 +258,7 @@ class MessageQueueProcessor:
             metadata = parsed["metadata"]
 
             # Validate message data
-            is_valid, error_msg = validate_message_data(
-                queue_id, recipient, content, tracker)
+            is_valid, error_msg = validate_message_data(parsed)
             if not is_valid:
                 self.queue.mark_failed(queue_id, error_msg)
                 return False
@@ -283,7 +270,7 @@ class MessageQueueProcessor:
             success = route_message_delivery(
                 recipient, content, metadata, message_type_str, sender, priority_str, tags_list,
                 lambda r, c, m, mt, s, p, t: deliver_via_core(
-                    r, c, m, mt, s, p, t, self.messaging_core),
+                    r, c, m, mt, s, p, t),
                 deliver_fallback_inbox,
             )
 
@@ -342,6 +329,23 @@ class MessageQueueProcessor:
                 metadata = parsed.get("metadata", {})
                 if isinstance(metadata, dict):
                     use_pyautogui = metadata.get("use_pyautogui", True)
+
+            # Enhanced error handling with specific error messages
+            error_details = {
+                'KeyError': 'Missing required message field (likely message_type_str)',
+                'AttributeError': 'Agent coordinate or window issue',
+                'TimeoutError': 'PyAutoGUI operation timed out',
+                'Exception': f'General delivery error: {str(e)}'
+            }.get(type(e).__name__, f'Unexpected error: {str(e)}')
+
+            # Update metadata with error details
+            entry_metadata = getattr(entry, 'metadata', {})
+            entry_metadata.update({
+                'error_message': error_details,
+                'error_type': type(e).__name__,
+                'delivery_attempt': entry_metadata.get('delivery_attempts', 0) + 1,
+                'last_error_time': time.time()
+            })
 
             handle_delivery_error(
                 queue_id, e, self.queue, tracker, recipient,

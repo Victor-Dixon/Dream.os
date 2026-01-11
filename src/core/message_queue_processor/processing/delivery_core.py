@@ -12,73 +12,46 @@ from typing import Dict, Any, Tuple, Optional
 logger = logging.getLogger(__name__)
 
 
-def deliver_via_core(message: Dict[str, Any]) -> Tuple[bool, Optional[str]]:
+def deliver_via_core(recipient: str, content: str, metadata: dict, message_type_str: str, sender: str, priority_str: str, tags_list: list) -> bool:
     """
-    Deliver message via core messaging system.
+    Deliver message via core messaging system (direct PyAutoGUI delivery).
 
     Args:
-        message: Message data to deliver
+        recipient: Target agent ID
+        content: Message content
+        metadata: Message metadata
+        message_type_str: Message type string
+        sender: Sender identifier
+        priority_str: Priority string
+        tags_list: Tags list
 
     Returns:
-        Tuple of (success, error_message)
+        True if delivery successful, False otherwise
     """
     try:
-        # Extract delivery information
-        recipient = message.get("recipient", message.get("to"))
-        sender = message.get("sender", message.get("from", "system"))
-        content = message.get("content", message.get("message", ""))
-        message_type = message.get("type", "text")
-        priority = message.get("priority", "normal")
+        # Direct PyAutoGUI delivery - no CLI, no fallback simulation
+        from src.core.messaging_pyautogui import send_message_pyautogui
 
-        if not recipient:
-            return False, "No recipient specified"
+        # Check if PyAutoGUI delivery is requested
+        use_pyautogui = True
+        if isinstance(metadata, dict):
+            use_pyautogui = metadata.get("use_pyautogui", True)
 
-        if not content:
-            return False, "No message content"
+        if not use_pyautogui:
+            # Fall back to inbox delivery
+            from .delivery_inbox import deliver_fallback_inbox
+            return deliver_fallback_inbox(recipient, content, metadata, message_type_str, sender, priority_str, tags_list)
 
-        # Import messaging CLI for delivery
-        import sys
-        import os
-        sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..', '..'))
+        # Direct PyAutoGUI delivery
+        success = send_message_pyautogui(recipient, content)
 
-        try:
-            from src.services.messaging_cli import UnifiedMessagingCLI
+        if success:
+            logger.info(f"✅ Message delivered via PyAutoGUI to {recipient}")
+            return True
+        else:
+            logger.error(f"❌ PyAutoGUI delivery failed for {recipient}")
+            return False
 
-            # Create messaging CLI instance
-            cli = UnifiedMessagingCLI()
-
-            # Prepare delivery parameters
-            delivery_params = {
-                "agent": recipient,
-                "message": content,
-                "sender": sender,
-                "type": message_type,
-                "priority": priority
-            }
-
-            # Add optional parameters
-            if "tags" in message:
-                delivery_params["tags"] = message["tags"]
-            if "category" in message:
-                delivery_params["category"] = message["category"]
-
-            # Execute delivery
-            success = cli.send_message(**delivery_params)
-
-            if success:
-                logger.info(f"Message delivered via core to {recipient}")
-                return True, None
-            else:
-                return False, "Core messaging delivery failed"
-
-        except ImportError as e:
-            logger.warning(f"Could not import messaging CLI: {e}")
-            # Fallback to basic delivery simulation
-            logger.info(f"Message would be delivered via core to {recipient}: {content[:100]}...")
-            return True, None
-
-        except Exception as e:
-            logger.error(f"Core delivery error: {e}")
-            return False, f"Core delivery error: {str(e)}"
     except Exception as e:
-        return False, f"Core delivery failed: {str(e)}"
+        logger.error(f"❌ Core delivery error: {e}")
+        return False

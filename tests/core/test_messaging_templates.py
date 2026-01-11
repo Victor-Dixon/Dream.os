@@ -36,7 +36,7 @@ def test_s2a_control_renders_with_defaults():
 def test_s2a_onboarding_tag_routes_to_hard_onboarding():
     msg = _basic_msg(tags=[UnifiedMessageTag.ONBOARDING])
     rendered = render_message(msg)
-    assert "[HEADER] S2A HARD ONBOARDING" in rendered
+    assert "[HEADER] S2A ONBOARDING (HARD)" in rendered
 
 
 def test_d2a_defaults_include_policies():

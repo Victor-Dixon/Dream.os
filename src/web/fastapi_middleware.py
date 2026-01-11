@@ -233,6 +233,12 @@ def setup_all_middleware(app) -> None:
     # PERFORMANCE OPTIMIZATION: GZip compression middleware
     app.add_middleware(GZipMiddleware, minimum_size=1000)
 
+    # RATE LIMITING: Apply rate limiting middleware
+    from .fastapi_rate_limiting import create_rate_limit_middleware
+    rate_limit_middleware = create_rate_limit_middleware()
+    if rate_limit_middleware:
+        app.add_middleware(rate_limit_middleware)
+
     # CORS middleware
     app.add_middleware(
         CORSMiddleware,
@@ -249,11 +255,13 @@ def setup_all_middleware(app) -> None:
             allowed_hosts=["your-domain.com", "*.your-domain.com"]
         )
 
-    # PERFORMANCE OPTIMIZATION: Response caching middleware (applied first)
-    app.middleware("http")(response_caching_middleware)
+    # PERFORMANCE OPTIMIZATION: Redis-based response caching middleware (applied first)
+    from .fastapi_caching import cache_response_middleware
+    app.middleware("http")(cache_response_middleware(ttl=300))  # 5 minute TTL
 
     # PERFORMANCE OPTIMIZATION: Enhanced performance monitoring
-    app.middleware("http")(performance_monitoring_middleware)
+    from .fastapi_performance import get_performance_middleware
+    app.middleware("http")(get_performance_middleware())
 
     # Request logging middleware (applied last to capture all processing)
     app.middleware("http")(request_logging_middleware)
