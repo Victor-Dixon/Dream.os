@@ -34,7 +34,7 @@ from datetime import datetime
 from typing import Any, Dict, List, Optional, Type, Union
 
 from src.core.messaging_core import UnifiedMessagePriority, UnifiedMessageType
-from src.core.messaging_models_core import MessageCategory, MESSAGE_TEMPLATES
+from src.core.messaging_models_core import MessageCategory, MESSAGE_TEMPLATES, format_d2a_payload
 
 logger = logging.getLogger(__name__)
 
@@ -183,6 +183,9 @@ class D2AFormatter(BaseMessageFormatter):
         """Format D2A message with Discord-specific formatting."""
         template_vars = self.get_template_vars(message, sender, recipient, priority, message_id, extra)
 
+        # D2A template uses 'content' instead of 'message'
+        template_vars['content'] = message
+
         # Add D2A-specific variables
         template_vars.update({
             'discord_sender': sender,
@@ -191,15 +194,9 @@ class D2AFormatter(BaseMessageFormatter):
             'is_private': extra.get('is_private', False) if extra else False,
         })
 
-        # Apply interpretation and actions if provided
-        if extra:
-            interpretation = extra.get('interpretation')
-            if interpretation:
-                template_vars['interpretation'] = interpretation
-
-            actions = extra.get('actions')
-            if actions:
-                template_vars['actions'] = actions
+        # Apply D2A payload formatting with defaults
+        d2a_payload = format_d2a_payload(extra or {})
+        template_vars.update(d2a_payload)
 
         return self.apply_template(template_vars)
 
@@ -338,7 +335,7 @@ class UnifiedMessageFormatter:
         self.logger.info(f"Registered formatter for category: {category}")
 
     def format_message(self, category: MessageCategory, message: str, sender: str,
-                      recipient: str, priority: UnifiedMessagePriority = UnifiedMessagePriority.NORMAL,
+                      recipient: str, priority: UnifiedMessagePriority = UnifiedMessagePriority.REGULAR,
                       message_id: Optional[str] = None, extra: Optional[Dict[str, Any]] = None) -> str:
         """
         Format a message using the appropriate formatter for its category.
@@ -412,22 +409,22 @@ class UnifiedMessageFormatter:
                           message_id: Optional[str] = None, extra: Optional[Dict[str, Any]] = None) -> str:
         """Format a Discord-to-Agent message."""
         return self.format_message(MessageCategory.D2A, message, sender, recipient,
-                                 UnifiedMessagePriority.NORMAL, message_id, extra)
+                                 UnifiedMessagePriority.REGULAR, message_id, extra)
 
     def format_a2a_message(self, message: str, sender: str, recipient: str,
                           message_id: Optional[str] = None, extra: Optional[Dict[str, Any]] = None) -> str:
         """Format an Agent-to-Agent message."""
         return self.format_message(MessageCategory.A2A, message, sender, recipient,
-                                 UnifiedMessagePriority.NORMAL, message_id, extra)
+                                 UnifiedMessagePriority.REGULAR, message_id, extra)
 
     def format_s2a_message(self, message: str, sender: str, recipient: str,
                           message_id: Optional[str] = None, extra: Optional[Dict[str, Any]] = None) -> str:
         """Format a System-to-Agent message."""
         return self.format_message(MessageCategory.S2A, message, sender, recipient,
-                                 UnifiedMessagePriority.NORMAL, message_id, extra)
+                                 UnifiedMessagePriority.REGULAR, message_id, extra)
 
     def format_c2a_message(self, message: str, sender: str, recipient: str,
                           message_id: Optional[str] = None, extra: Optional[Dict[str, Any]] = None) -> str:
         """Format a Client-to-Agent message."""
         return self.format_message(MessageCategory.C2A, message, sender, recipient,
-                                 UnifiedMessagePriority.NORMAL, message_id, extra)
+                                 UnifiedMessagePriority.REGULAR, message_id, extra)

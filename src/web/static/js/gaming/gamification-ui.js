@@ -65,7 +65,10 @@ export class GamificationUI {
             await this.loadActiveQuests();
             await this.loadAvailableQuests();
 
-            console.log('✅ Gamification UI initialized with real-time support and quest system');
+            // Load social data
+            await this.loadSocialData();
+
+            console.log('✅ Gamification UI initialized with real-time support, quest system, and social features');
         } catch (error) {
             console.error('❌ Failed to initialize Gamification UI:', error);
             throw error;
@@ -279,6 +282,7 @@ export class GamificationUI {
                 <div class="gamification-content">
                     ${this.renderXPSection()}
                     ${this.renderLeaderboardSection()}
+                    ${this.renderSocialSection()}
                     ${this.renderActiveQuestsSection()}
                     ${this.renderSkillsSection()}
                     ${this.renderQuestsSection()}
@@ -409,6 +413,137 @@ export class GamificationUI {
         } catch (error) {
             console.error('❌ Error accepting quest:', error);
             this.showNotification('Error accepting quest', 'error');
+        }
+    }
+
+    /**
+     * Render Social section
+     */
+    renderSocialSection() {
+        return `
+            <div class="social-section card">
+                <div class="section-header">
+                    <h3>🤝 Agent Social Network</h3>
+                    <button class="refresh-btn" onclick="window.gamificationUI?.loadSocialData()">
+                        🔄 Refresh
+                    </button>
+                </div>
+                <div class="social-content">
+                    <div class="social-stats">
+                        <div class="social-loading">
+                            <div class="loading-spinner"></div>
+                            <span>Loading social data...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    /**
+     * Load social data for current agent
+     */
+    async loadSocialData() {
+        try {
+            const [profileResponse, leaderboardResponse] = await Promise.all([
+                fetch('/api/gaming/social/profile/Agent-6'),
+                fetch('/api/gaming/social/leaderboard?limit=5')
+            ]);
+
+            const profileData = await profileResponse.json();
+            const leaderboardData = await leaderboardResponse.json();
+
+            this.updateSocialDisplay(profileData, leaderboardData);
+        } catch (error) {
+            console.error('❌ Error loading social data:', error);
+        }
+    }
+
+    /**
+     * Update social section display
+     */
+    updateSocialDisplay(profileData, leaderboardData) {
+        const socialSection = this.container.querySelector('.social-section .social-content');
+        if (!socialSection) return;
+
+        const profile = profileData.profile;
+        const leaderboard = leaderboardData.leaderboard;
+
+        socialSection.innerHTML = `
+            <div class="social-stats">
+                <div class="stat-item">
+                    <span class="stat-label">Social Score</span>
+                    <span class="stat-value">${Math.round(profile.social_score)}</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Reputation</span>
+                    <span class="stat-value">${Math.round(profile.reputation_score)}</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Relationships</span>
+                    <span class="stat-value">${profileData.active_relationships}</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Interactions</span>
+                    <span class="stat-value">${profileData.total_interactions}</span>
+                </div>
+            </div>
+
+            <div class="social-achievements">
+                <h4>🏆 Social Achievements</h4>
+                <div class="achievements-list">
+                    ${profile.social_achievements.length > 0
+                        ? profile.social_achievements.map(achievement =>
+                            `<span class="achievement-badge">${achievement.replace('_', ' ')}</span>`
+                          ).join('')
+                        : '<span class="no-achievements">No achievements yet</span>'
+                    }
+                </div>
+            </div>
+
+            <div class="social-leaderboard">
+                <h4>🌟 Social Leaders</h4>
+                <div class="social-leaderboard-list">
+                    ${leaderboard.map((agent, index) => `
+                        <div class="social-leaderboard-entry ${agent.agent_id === 'Agent-6' ? 'current-agent' : ''}">
+                            <span class="rank">#${index + 1}</span>
+                            <span class="agent-name">${agent.agent_id}</span>
+                            <span class="social-score">${Math.round(agent.social_score)}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+
+    /**
+     * Record a social interaction
+     */
+    async recordSocialInteraction(toAgent, interactionType, context, impactScore = 0.5) {
+        try {
+            const response = await fetch('/api/gaming/social/interaction', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    from_agent: 'Agent-6',
+                    to_agent: toAgent,
+                    interaction_type: interactionType,
+                    context: context,
+                    impact_score: impactScore
+                })
+            });
+
+            if (response.ok) {
+                console.log(`✅ Social interaction recorded with ${toAgent}`);
+                this.loadSocialData(); // Refresh social data
+                this.showNotification('Social interaction recorded!', 'success');
+            } else {
+                console.error('❌ Failed to record social interaction');
+                this.showNotification('Failed to record interaction', 'error');
+            }
+        } catch (error) {
+            console.error('❌ Error recording social interaction:', error);
+            this.showNotification('Error recording interaction', 'error');
         }
     }
 

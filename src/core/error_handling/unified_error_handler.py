@@ -302,7 +302,7 @@ def log_operation(operation_name: str = None, log_start: bool = True,
                 logger.info(f"Starting operation: {op_name}")
 
             try:
-                result = await func(*args, **kwargs)
+                result = func(*args, **kwargs)
 
                 if log_end:
                     duration = time.time() - start_time

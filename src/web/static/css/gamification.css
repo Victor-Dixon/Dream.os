@@ -597,6 +597,136 @@
 }
 
 /* ================================
+   SOCIAL FEATURES STYLES
+   ================================ */
+
+.social-section {
+    position: relative;
+}
+
+.social-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.social-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 15px;
+}
+
+.stat-item {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-2px);
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.9em;
+    color: #888;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-value {
+    display: block;
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #00d4ff;
+}
+
+.social-achievements h4,
+.social-leaderboard h4 {
+    margin: 0 0 15px 0;
+    color: #00ff88;
+    font-size: 1.1em;
+}
+
+.achievements-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.achievement-badge {
+    background: linear-gradient(45deg, #ff6b6b, #ffa500);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: bold;
+    text-transform: capitalize;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.no-achievements {
+    color: #888;
+    font-style: italic;
+    padding: 20px;
+    text-align: center;
+}
+
+.social-leaderboard-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.social-leaderboard-entry {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.3s ease;
+}
+
+.social-leaderboard-entry:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.social-leaderboard-entry.current-agent {
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(0, 255, 136, 0.1) 100%);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+}
+
+.social-leaderboard-entry .rank {
+    font-weight: bold;
+    margin-right: 15px;
+    min-width: 35px;
+    color: #00d4ff;
+}
+
+.social-leaderboard-entry .agent-name {
+    flex: 1;
+    font-weight: 500;
+}
+
+.social-leaderboard-entry .social-score {
+    font-weight: bold;
+    color: #00ff88;
+    margin-left: auto;
+}
+
+.social-loading {
+    text-align: center;
+    padding: 40px;
+    color: #888;
+}
+
+/* ================================
    QUEST SYSTEM STYLES
    ================================ */
 

@@ -13,6 +13,7 @@ import logging
 import os
 import threading
 import time
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
@@ -722,6 +723,289 @@ def force_leaderboard_update():
         return jsonify({
             "status": "error",
             "message": str(e)
+        }), 500
+
+
+# ================================
+# SOCIAL API ENDPOINTS
+# ================================
+
+@gamification_bp.route("/social/profile/<agent_id>", methods=["GET"])
+def get_social_profile(agent_id: str):
+    """
+    Get social profile for an agent.
+
+    Args:
+        agent_id: Agent identifier
+
+    Returns:
+        Social profile data
+    """
+    try:
+        from ..social.social_profile_manager import SocialProfileManager
+
+        profile_manager = SocialProfileManager()
+        profile = profile_manager.get_or_create_profile(agent_id)
+
+        return jsonify({
+            "agent_id": agent_id,
+            "profile": profile.to_dict(),
+            "social_score": profile.get_social_score(),
+            "active_relationships": len(profile.get_active_relationships()),
+            "total_interactions": len(profile.interaction_history)
+        })
+
+    except Exception as e:
+        logger.error(f"Error getting social profile for {agent_id}: {e}")
+        return jsonify({
+            "error": str(e),
+            "agent_id": agent_id
+        }), 500
+
+
+@gamification_bp.route("/social/leaderboard", methods=["GET"])
+def get_social_leaderboard():
+    """
+    Get social leaderboard ranked by social engagement.
+
+    Query Parameters:
+        limit: Maximum number of results (default: 10)
+
+    Returns:
+        Social leaderboard
+    """
+    try:
+        from ..social.social_profile_manager import SocialProfileManager
+
+        limit = int(request.args.get('limit', 10))
+        profile_manager = SocialProfileManager()
+        leaderboard = profile_manager.get_social_leaderboard(limit)
+
+        return jsonify({
+            "leaderboard": leaderboard,
+            "limit": limit,
+            "total_agents": len(leaderboard)
+        })
+
+    except Exception as e:
+        logger.error(f"Error getting social leaderboard: {e}")
+        return jsonify({
+            "error": str(e),
+            "leaderboard": []
+        }), 500
+
+
+@gamification_bp.route("/social/interaction", methods=["POST"])
+def record_social_interaction():
+    """
+    Record a social interaction between agents.
+
+    Expected JSON payload:
+    {
+        "from_agent": "Agent-1",
+        "to_agent": "Agent-2",
+        "interaction_type": "collaboration",
+        "context": "Brief description",
+        "impact_score": 0.5
+    }
+
+    Returns:
+        Success status
+    """
+    try:
+        from ..social.social_profile_manager import SocialProfileManager
+        from ..models.social_models import SocialInteraction, InteractionType
+
+        data = request.get_json()
+        if not data:
+            return jsonify({"error": "No JSON data provided"}), 400
+
+        # Validate required fields
+        required_fields = ["from_agent", "to_agent", "interaction_type", "context"]
+        for field in required_fields:
+            if field not in data:
+                return jsonify({"error": f"Missing required field: {field}"}), 400
+
+        # Create interaction
+        interaction = SocialInteraction(
+            interaction_id="",
+            from_agent=data["from_agent"],
+            to_agent=data["to_agent"],
+            interaction_type=InteractionType(data["interaction_type"]),
+            timestamp=datetime.now(),
+            context=data["context"],
+            impact_score=data.get("impact_score", 0.0),
+            metadata=data.get("metadata", {})
+        )
+
+        # Record interaction
+        profile_manager = SocialProfileManager()
+        success = profile_manager.record_interaction(interaction)
+
+        if success:
+            return jsonify({
+                "success": True,
+                "interaction_id": interaction.interaction_id,
+                "message": f"Social interaction recorded: {data['from_agent']} -> {data['to_agent']}"
+            })
+        else:
+            return jsonify({
+                "success": False,
+                "error": "Failed to record interaction"
+            }), 500
+
+    except Exception as e:
+        logger.error(f"Error recording social interaction: {e}")
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        }), 500
+
+
+@gamification_bp.route("/social/network", methods=["GET"])
+def get_social_network():
+    """
+    Get social network data for visualization.
+
+    Returns:
+        Network data with nodes and links
+    """
+    try:
+        from ..social.social_profile_manager import SocialProfileManager
+
+        profile_manager = SocialProfileManager()
+        network_data = profile_manager.get_collaboration_network()
+
+        return jsonify(network_data)
+
+    except Exception as e:
+        logger.error(f"Error getting social network: {e}")
+        return jsonify({
+            "error": str(e),
+            "nodes": [],
+            "links": []
+        }), 500
+
+
+@gamification_bp.route("/social/relationships/<agent_id>", methods=["GET"])
+def get_agent_relationships(agent_id: str):
+    """
+    Get relationships for a specific agent.
+
+    Args:
+        agent_id: Agent identifier
+
+    Returns:
+        Agent relationships
+    """
+    try:
+        from ..social.social_profile_manager import SocialProfileManager
+
+        profile_manager = SocialProfileManager()
+        profile = profile_manager.get_profile(agent_id)
+
+        if not profile:
+            return jsonify({
+                "agent_id": agent_id,
+                "relationships": [],
+                "message": "No social profile found"
+            })
+
+        relationships = profile.get_active_relationships()
+
+        return jsonify({
+            "agent_id": agent_id,
+            "relationships": [rel.to_dict() for rel in relationships],
+            "total_relationships": len(relationships),
+            "active_relationships": len([r for r in relationships if r.is_active()])
+        })
+
+    except Exception as e:
+        logger.error(f"Error getting relationships for {agent_id}: {e}")
+        return jsonify({
+            "error": str(e),
+            "agent_id": agent_id,
+            "relationships": []
+        }), 500
+
+
+@gamification_bp.route("/social/insights/<agent_id>", methods=["GET"])
+def get_social_insights(agent_id: str):
+    """
+    Get social insights and recommendations for an agent.
+
+    Args:
+        agent_id: Agent identifier
+
+    Returns:
+        Social insights and recommendations
+    """
+    try:
+        from ..social.social_integration_service import SocialIntegrationService
+
+        integration_service = SocialIntegrationService()
+        insights = integration_service.get_agent_social_insights(agent_id)
+
+        return jsonify(insights)
+
+    except Exception as e:
+        logger.error(f"Error getting social insights for {agent_id}: {e}")
+        return jsonify({
+            "error": str(e),
+            "agent_id": agent_id,
+            "insights": "Error retrieving insights"
+        }), 500
+
+
+@gamification_bp.route("/social/activity", methods=["POST"])
+def record_agent_activity():
+    """
+    Record agent activity for automatic social interaction detection.
+
+    Expected JSON payload:
+    {
+        "agent_id": "Agent-1",
+        "activity_type": "message_sent",
+        "metadata": {
+            "recipients": ["Agent-2", "Agent-3"],
+            "category": "a2a",
+            "context": "Coordination message"
+        }
+    }
+
+    Returns:
+        Success status
+    """
+    try:
+        from ..social.social_integration_service import SocialIntegrationService
+
+        data = request.get_json()
+        if not data:
+            return jsonify({"error": "No JSON data provided"}), 400
+
+        agent_id = data.get("agent_id")
+        activity_type = data.get("activity_type")
+        metadata = data.get("metadata", {})
+
+        if not agent_id or not activity_type:
+            return jsonify({"error": "agent_id and activity_type are required"}), 400
+
+        integration_service = SocialIntegrationService()
+        integration_service.analyze_agent_activity(agent_id, {
+            "type": activity_type,
+            "metadata": metadata
+        })
+
+        return jsonify({
+            "success": True,
+            "message": f"Activity recorded for {agent_id}: {activity_type}"
+        })
+
+    except Exception as e:
+        logger.error(f"Error recording agent activity: {e}")
+        return jsonify({
+            "success": False,
+            "error": str(e)
         }), 500
 
 

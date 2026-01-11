@@ -38,7 +38,7 @@ except ImportError:
     commands = None
 
 
-class UnifiedCommand(BaseCommandCog, ABC):
+class UnifiedCommand(BaseCommandCog):
     """
     Unified base class for all Discord command cogs.
 
