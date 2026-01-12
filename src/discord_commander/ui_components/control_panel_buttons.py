@@ -24,8 +24,7 @@ Phase: V2 Compliance Refactoring
 """
 
 import logging
-from typing import Optional, Callable, Any, Dict, List
-from dataclasses import dataclass
+from typing import Optional, Any, Dict, List
 
 try:
     import discord
@@ -36,19 +35,6 @@ except ImportError:
     discord = None
 
 logger = logging.getLogger(__name__)
-
-
-@dataclass
-class ButtonConfig:
-    """Configuration for a Discord UI button."""
-    label: str
-    style: 'discord.ButtonStyle'
-    emoji: str
-    custom_id: str
-    row: int
-    callback: Optional[Callable] = None
-    disabled: bool = False
-    url: Optional[str] = None
 
 
 class ControlPanelButtonFactory:
@@ -337,7 +323,7 @@ class ControlPanelButtonFactory:
         return [prev_btn, next_btn]
 
     @staticmethod
-    def create_message_agent_button(callback: Optional[Callable] = None) -> 'discord.ui.Button':
+    def create_message_agent_button() -> 'discord.ui.Button':
         """Create a message agent button."""
         return discord.ui.Button(
             label="Message Agent",
@@ -345,11 +331,10 @@ class ControlPanelButtonFactory:
             emoji="💬",
             custom_id="message_agent",
             row=0,
-            callback=callback,
         )
 
     @staticmethod
-    def create_main_control_button(callback: Optional[Callable] = None) -> 'discord.ui.Button':
+    def create_main_control_button() -> 'discord.ui.Button':
         """Create a main control button."""
         return discord.ui.Button(
             label="Main Control",
@@ -357,11 +342,10 @@ class ControlPanelButtonFactory:
             emoji="🎛️",
             custom_id="main_control",
             row=0,
-            callback=callback,
         )
 
     @staticmethod
-    def create_monitor_button(callback: Optional[Callable] = None) -> 'discord.ui.Button':
+    def create_monitor_button() -> 'discord.ui.Button':
         """Create a monitor button."""
         return discord.ui.Button(
             label="Monitor",
@@ -369,11 +353,10 @@ class ControlPanelButtonFactory:
             emoji="📊",
             custom_id="monitor",
             row=0,
-            callback=callback,
         )
 
     @staticmethod
-    def create_status_button(callback: Optional[Callable] = None) -> 'discord.ui.Button':
+    def create_status_button() -> 'discord.ui.Button':
         """Create a status button."""
         return discord.ui.Button(
             label="Status",
@@ -381,11 +364,10 @@ class ControlPanelButtonFactory:
             emoji="📈",
             custom_id="status",
             row=0,
-            callback=callback,
         )
 
     @staticmethod
-    def create_agent_status_button(callback: Optional[Callable] = None) -> 'discord.ui.Button':
+    def create_agent_status_button() -> 'discord.ui.Button':
         """Create an agent status button."""
         return discord.ui.Button(
             label="Agent Status",
@@ -393,7 +375,6 @@ class ControlPanelButtonFactory:
             emoji="👥",
             custom_id="agent_status",
             row=0,
-            callback=callback,
         )
 
 

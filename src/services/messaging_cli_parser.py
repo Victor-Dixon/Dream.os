@@ -211,4 +211,109 @@ def create_messaging_parser() -> argparse.ArgumentParser:
         help="Dry run mode - show what would be done without executing",
     )
 
+    # SWARM INTELLIGENCE COMMANDS
+    parser.add_argument(
+        "--swarm-vote",
+        action="store_true",
+        help="Initiate swarm consensus voting on a topic",
+    )
+
+    parser.add_argument(
+        "--topic",
+        type=str,
+        help="Consensus topic for swarm voting",
+    )
+
+    parser.add_argument(
+        "--options",
+        type=str,
+        help="Comma-separated voting options for consensus",
+    )
+
+    parser.add_argument(
+        "--deadline",
+        type=int,
+        default=30,
+        help="Consensus deadline in minutes (default: 30)",
+    )
+
+    parser.add_argument(
+        "--swarm-conflict",
+        action="store_true",
+        help="Initiate swarm conflict resolution protocol",
+    )
+
+    parser.add_argument(
+        "--description",
+        type=str,
+        help="Description of the conflict to resolve",
+    )
+
+    parser.add_argument(
+        "--severity",
+        type=str,
+        choices=["low", "medium", "high", "critical"],
+        default="medium",
+        help="Conflict severity level (default: medium)",
+    )
+
+    parser.add_argument(
+        "--swarm-profile",
+        action="store_true",
+        help="Request performance profiling from agents",
+    )
+
+    parser.add_argument(
+        "--swarm-prove",
+        action="store_true",
+        help="Initiate swarm validation and proof protocol",
+    )
+
+    parser.add_argument(
+        "--claim",
+        type=str,
+        help="Claim to validate through swarm proof protocol",
+    )
+
+    parser.add_argument(
+        "--level",
+        type=str,
+        choices=["basic", "standard", "comprehensive"],
+        default="standard",
+        help="Validation level for proof protocol (default: standard)",
+    )
+
+    parser.add_argument(
+        "--evidence",
+        type=str,
+        help="Type of evidence required for validation",
+    )
+
+    parser.add_argument(
+        "--swarm-patterns",
+        action="store_true",
+        help="Initiate swarm pattern analysis and intelligence gathering",
+    )
+
+    parser.add_argument(
+        "--type",
+        type=str,
+        choices=["comprehensive", "behavioral", "performance", "communication"],
+        default="comprehensive",
+        help="Type of pattern analysis to perform (default: comprehensive)",
+    )
+
+    parser.add_argument(
+        "--window",
+        type=str,
+        default="24 hours",
+        help="Time window for pattern analysis (default: 24 hours)",
+    )
+
+    parser.add_argument(
+        "--focus",
+        type=str,
+        help="Specific focus areas for pattern analysis",
+    )
+
     return parser

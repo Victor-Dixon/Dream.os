@@ -43,7 +43,7 @@ class BatchMessageHandler(BaseService):
             and args.batch
         )
 
-    def handle(self, args) -> bool:
+    def handle(self, args) -> dict:
         """Handle batch message commands."""
         try:
             from src.core.messaging_core import (
@@ -63,38 +63,86 @@ class BatchMessageHandler(BaseService):
 
             # Handle simplified batch (--batch)
             if args.batch:
-                return self._handle_simplified_batch(args, service, sender, recipient)
+                success = self._handle_simplified_batch(args, service, sender, recipient)
+                return {
+                    'success': success,
+                    'command': 'batch',
+                    'sender': sender,
+                    'recipient': recipient
+                }
 
             # Handle batch-start
             if args.batch_start:
-                return self._handle_batch_start(args, service, sender, recipient)
+                success = self._handle_batch_start(args, service, sender, recipient)
+                return {
+                    'success': success,
+                    'command': 'batch_start',
+                    'sender': sender,
+                    'recipient': recipient
+                }
 
             # Handle batch-add
             if args.batch_add:
-                return self._handle_batch_add(args, service, sender, recipient)
+                success = self._handle_batch_add(args, service, sender, recipient)
+                return {
+                    'success': success,
+                    'command': 'batch_add',
+                    'sender': sender,
+                    'recipient': recipient
+                }
 
             # Handle batch-send
             if args.batch_send:
-                return self._handle_batch_send(args, service, sender, recipient)
+                success = self._handle_batch_send(args, service, sender, recipient)
+                return {
+                    'success': success,
+                    'command': 'batch_send',
+                    'sender': sender,
+                    'recipient': recipient
+                }
 
             # Handle batch-status
             if args.batch_status:
-                return self._handle_batch_status(args, service, sender, recipient)
+                success = self._handle_batch_status(args, service, sender, recipient)
+                return {
+                    'success': success,
+                    'command': 'batch_status',
+                    'sender': sender,
+                    'recipient': recipient
+                }
 
             # Handle batch-cancel
             if args.batch_cancel:
-                return self._handle_batch_cancel(args, service, sender, recipient)
+                success = self._handle_batch_cancel(args, service, sender, recipient)
+                return {
+                    'success': success,
+                    'command': 'batch_cancel',
+                    'sender': sender,
+                    'recipient': recipient
+                }
 
-            return True
+            return {
+                'success': False,
+                'error': 'No valid batch command specified',
+                'command': 'unknown'
+            }
 
         except ImportError as e:
             logger.error(f"❌ Message batching service not available: {e}")
             self.exit_code = 1
-            return True
+            return {
+                'success': False,
+                'error': f'Message batching service not available: {e}',
+                'command': getattr(args, 'command', 'batch')
+            }
         except Exception as e:
             logger.error(f"❌ Batch handling error: {e}")
             self.exit_code = 1
-            return True
+            return {
+                'success': False,
+                'error': str(e),
+                'command': getattr(args, 'command', 'batch')
+            }
 
     def _handle_simplified_batch(self, args, service, sender, recipient) -> bool:
         """Handle simplified batch (all in one command)."""

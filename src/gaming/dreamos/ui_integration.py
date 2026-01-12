@@ -1010,6 +1010,226 @@ def record_agent_activity():
 
 
 # ================================
+# ANALYTICS API ENDPOINTS
+# ================================
+
+@gamification_bp.route("/analytics/metrics/<metric_name>", methods=["GET"])
+def get_metric_data(metric_name: str):
+    """
+    Get performance metric data and statistics.
+
+    Args:
+        metric_name: Name of the metric to retrieve
+
+    Query Parameters:
+        hours: Time range in hours (default: 24)
+
+    Returns:
+        Metric data and statistics
+    """
+    try:
+        from ..analytics.performance_analytics import PerformanceAnalytics
+
+        hours = int(request.args.get('hours', 24))
+        analytics = PerformanceAnalytics()
+
+        # Get metric statistics
+        stats = analytics.calculate_metric_stats(metric_name, hours)
+
+        # Get recent history
+        history = analytics.get_metric_history(metric_name, hours)
+
+        return jsonify({
+            "metric_name": metric_name,
+            "time_range_hours": hours,
+            "statistics": stats,
+            "history": history[-50:],  # Last 50 data points
+            "data_points": len(history)
+        })
+
+    except Exception as e:
+        logger.error(f"Error getting metric data for {metric_name}: {e}")
+        return jsonify({
+            "error": str(e),
+            "metric_name": metric_name
+        }), 500
+
+
+@gamification_bp.route("/analytics/health", methods=["GET"])
+def get_system_health():
+    """
+    Get overall system health score and component breakdown.
+
+    Returns:
+        System health assessment
+    """
+    try:
+        from ..analytics.performance_analytics import PerformanceAnalytics
+
+        analytics = PerformanceAnalytics()
+        health_score = analytics.get_system_health_score()
+
+        return jsonify(health_score)
+
+    except Exception as e:
+        logger.error(f"Error getting system health: {e}")
+        return jsonify({
+            "error": str(e),
+            "overall_score": 0,
+            "health_status": "error"
+        }), 500
+
+
+@gamification_bp.route("/analytics/report", methods=["GET"])
+def get_performance_report():
+    """
+    Get comprehensive performance report.
+
+    Query Parameters:
+        hours: Time range in hours (default: 24)
+
+    Returns:
+        Complete performance report
+    """
+    try:
+        from ..analytics.performance_analytics import PerformanceAnalytics
+
+        hours = int(request.args.get('hours', 24))
+        analytics = PerformanceAnalytics()
+
+        report = analytics.generate_performance_report(hours)
+
+        return jsonify(report)
+
+    except Exception as e:
+        logger.error(f"Error generating performance report: {e}")
+        return jsonify({
+            "error": str(e),
+            "generated_at": datetime.now().isoformat(),
+            "status": "error"
+        }), 500
+
+
+@gamification_bp.route("/analytics/metrics", methods=["POST"])
+def record_performance_metric():
+    """
+    Record a performance metric.
+
+    Expected JSON payload:
+    {
+        "metric_name": "response_time",
+        "value": 150.5,
+        "metadata": {
+            "source": "api_endpoint",
+            "user_agent": "Agent-6"
+        }
+    }
+
+    Returns:
+        Success status
+    """
+    try:
+        from ..analytics.performance_analytics import PerformanceAnalytics
+
+        data = request.get_json()
+        if not data:
+            return jsonify({"error": "No JSON data provided"}), 400
+
+        metric_name = data.get("metric_name")
+        value = data.get("value")
+        metadata = data.get("metadata", {})
+
+        if not metric_name or value is None:
+            return jsonify({"error": "metric_name and value are required"}), 400
+
+        analytics = PerformanceAnalytics()
+        analytics.record_metric(metric_name, value, metadata=metadata)
+
+        return jsonify({
+            "success": True,
+            "message": f"Metric '{metric_name}' recorded: {value}",
+            "timestamp": datetime.now().isoformat()
+        })
+
+    except Exception as e:
+        logger.error(f"Error recording performance metric: {e}")
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        }), 500
+
+
+@gamification_bp.route("/analytics/baseline/<metric_name>", methods=["POST"])
+def set_metric_baseline(metric_name: str):
+    """
+    Set baseline value for a performance metric.
+
+    Expected JSON payload:
+    {
+        "baseline_value": 100.0,
+        "description": "Expected response time baseline"
+    }
+
+    Returns:
+        Success status
+    """
+    try:
+        from ..analytics.performance_analytics import PerformanceAnalytics
+
+        data = request.get_json()
+        if not data:
+            return jsonify({"error": "No JSON data provided"}), 400
+
+        baseline_value = data.get("baseline_value")
+        if baseline_value is None:
+            return jsonify({"error": "baseline_value is required"}), 400
+
+        analytics = PerformanceAnalytics()
+        analytics.set_baseline(metric_name, baseline_value)
+
+        return jsonify({
+            "success": True,
+            "metric_name": metric_name,
+            "baseline_value": baseline_value,
+            "message": f"Baseline set for {metric_name}: {baseline_value}"
+        })
+
+    except Exception as e:
+        logger.error(f"Error setting baseline for {metric_name}: {e}")
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        }), 500
+
+
+@gamification_bp.route("/analytics/baseline/<metric_name>", methods=["GET"])
+def get_metric_baseline(metric_name: str):
+    """
+    Get baseline comparison for a performance metric.
+
+    Returns:
+        Baseline comparison data
+    """
+    try:
+        from ..analytics.performance_analytics import PerformanceAnalytics
+
+        analytics = PerformanceAnalytics()
+        comparison = analytics.get_baseline_comparison(metric_name)
+
+        return jsonify({
+            "metric_name": metric_name,
+            "comparison": comparison
+        })
+
+    except Exception as e:
+        logger.error(f"Error getting baseline comparison for {metric_name}: {e}")
+        return jsonify({
+            "error": str(e),
+            "metric_name": metric_name
+        }), 500
+
+
+# ================================
 # QUEST API ENDPOINTS
 # ================================
 

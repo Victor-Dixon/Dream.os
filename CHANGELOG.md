@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [2.1.0] - 2026-01-11
 ### Added
 - Shared `load_simple_config` helper for agent vector integration modules.
 - Centralized prediction analytics utility `BasePredictionAnalyzer` for shared

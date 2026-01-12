@@ -140,7 +140,7 @@ class UnifiedMessagingCore:
         from .messaging_template_resolution import TemplateResolutionService
         from .messaging_history import MessageHistoryService
         from .messaging_delivery_orchestration import MessageDeliveryOrchestrationService
-        
+
         self.validation_service = MessageValidationService()
         self.template_service = TemplateResolutionService()
         self.history_service = MessageHistoryService(self.message_repository)
@@ -150,7 +150,7 @@ class UnifiedMessagingCore:
 
         # Initialize subsystems
         self._initialize_subsystems()
-        
+
         # Update delivery orchestration service with initialized delivery service
         self.delivery_orchestration_service.delivery_service = self.delivery_service
 
@@ -202,10 +202,10 @@ class UnifiedMessagingCore:
             content=content,
             metadata=metadata_dict
         )
-        
+
         if not can_send:
             return False
-        
+
         metadata_dict = updated_metadata or {}
 
         # Extract category from metadata if present (for template detection)
@@ -238,7 +238,7 @@ class UnifiedMessagingCore:
             # Apply A2A bilateral coordination template if needed
             if (message.category and
                 message.category.name == 'A2A' and
-                isinstance(message.content, str)):
+                    isinstance(message.content, str)):
                 try:
                     from .messaging_template_texts import MESSAGE_TEMPLATES
                     from .messaging_models_core import MessageCategory
@@ -257,15 +257,19 @@ class UnifiedMessagingCore:
                         templated_content = template.format(
                             sender=message.sender,
                             recipient=message.recipient,
-                            priority=message.priority.value if hasattr(message.priority, 'value') else str(message.priority),
+                            priority=message.priority.value if hasattr(
+                                message.priority, 'value') else str(message.priority),
                             message_id=str(uuid.uuid4()),
                             timestamp=now,
                             agent_id=message.recipient,
                             ask=extra_meta.get("ask", message.content),
                             context=extra_meta.get("context", ""),
-                            coordination_rationale=extra_meta.get("coordination_rationale", "To leverage parallel processing and accelerate completion"),
-                            expected_contribution=extra_meta.get("expected_contribution", "Domain expertise and parallel execution"),
-                            coordination_timeline=extra_meta.get("coordination_timeline", "ASAP - coordination needed to maintain momentum"),
+                            coordination_rationale=extra_meta.get(
+                                "coordination_rationale", "To leverage parallel processing and accelerate completion"),
+                            expected_contribution=extra_meta.get(
+                                "expected_contribution", "Domain expertise and parallel execution"),
+                            coordination_timeline=extra_meta.get(
+                                "coordination_timeline", "ASAP - coordination needed to maintain momentum"),
                             next_step=extra_meta.get(
                                 "next_step",
                                 "Reply via messaging_cli with ACCEPT/DECLINE, ETA, and a 2–3 bullet plan, "
@@ -281,20 +285,23 @@ class UnifiedMessagingCore:
 
             # Phase 2C: Template resolution using service
             if isinstance(message.metadata, dict):
-                self.template_service.apply_template_to_message(message.metadata)
+                self.template_service.apply_template_to_message(
+                    message.metadata)
 
             # Phase 2C: Log message to history using service
             self.history_service.log_message(message, status="sent")
 
             # Phase 2C: Orchestrate delivery using service
-            success = self.delivery_orchestration_service.orchestrate_delivery(message)
-            
+            success = self.delivery_orchestration_service.orchestrate_delivery(
+                message)
+
             # Log delivery status if successful
             if success:
-                self.history_service.log_delivery_status(message, status="delivered")
-            
+                self.history_service.log_delivery_status(
+                    message, status="delivered")
+
             return success
-            
+
         except Exception as e:
             self.logger.error(f"Failed to send message: {e}")
             # Phase 2C: Log failure using service
@@ -397,12 +404,38 @@ def send_message(
     metadata: dict[str, Any] | None = None,
 ) -> bool:
     """
-    Send message using the SINGLE SOURCE OF TRUTH.
+    Send a message using the unified messaging core system.
 
-    ⚠️  DEPRECATED: Direct messaging functions are deprecated.
-    For agent-to-agent communication, use the A2A coordination protocol:
-    python -m src.services.messaging_cli --agent Agent-X --category a2a --sender Agent-Y --message "..."
-    This ensures bilateral coordination protocol compliance and swarm force multiplication.
+    This is the primary interface for sending messages between agents and systems.
+    The function handles message validation, routing, and delivery orchestration.
+
+    Args:
+        content: The message content to send
+        sender: Identifier of the message sender (e.g., "Agent-1", "CAPTAIN")
+        recipient: Identifier of the message recipient (e.g., "Agent-2", "all")
+        message_type: Type of message being sent (text, command, status, etc.)
+        priority: Message delivery priority (regular, high, urgent)
+        tags: Optional list of tags for message categorization
+        metadata: Optional additional metadata for message processing
+
+    Returns:
+        bool: True if message was successfully queued for delivery, False otherwise
+
+    Note:
+        ⚠️  DEPRECATED: Direct messaging functions are deprecated.
+        For agent-to-agent communication, use the A2A coordination protocol:
+        python -m src.services.messaging_cli --agent Agent-X --category a2a --sender Agent-Y --message "..."
+        This ensures bilateral coordination protocol compliance and swarm force multiplication.
+
+    Example:
+        >>> send_message(
+        ...     content="Task completed successfully",
+        ...     sender="Agent-1",
+        ...     recipient="Agent-2",
+        ...     message_type=UnifiedMessageType.TEXT,
+        ...     priority=UnifiedMessagePriority.REGULAR
+        ... )
+        True
     """
     return messaging_core.send_message(
         content, sender, recipient, message_type, priority, tags, metadata
@@ -410,29 +443,103 @@ def send_message(
 
 
 def send_message_object(message: UnifiedMessage) -> bool:
-    """Send UnifiedMessage using the SINGLE SOURCE OF TRUTH."""
+    """
+    Send a UnifiedMessage object using the messaging core system.
+
+    This function provides an object-oriented interface for sending messages,
+    accepting a fully constructed UnifiedMessage instance instead of individual parameters.
+
+    Args:
+        message: A UnifiedMessage instance containing all message details
+
+    Returns:
+        bool: True if message was successfully queued for delivery, False otherwise
+
+    Example:
+        >>> from src.core.messaging_models import UnifiedMessage, UnifiedMessageType
+        >>> msg = UnifiedMessage(
+        ...     content="Hello World",
+        ...     sender="Agent-1",
+        ...     recipient="Agent-2",
+        ...     message_type=UnifiedMessageType.TEXT
+        ... )
+        >>> send_message_object(msg)
+        True
+    """
     return messaging_core.send_message_object(message)
 
 
 def broadcast_message(
     content: str, sender: str, priority: UnifiedMessagePriority = UnifiedMessagePriority.REGULAR
 ) -> bool:
-    """Broadcast message using the SINGLE SOURCE OF TRUTH."""
+    """
+    Broadcast a message to all agents in the swarm.
+
+    This function sends a message to every active agent in the system simultaneously.
+    Useful for system-wide announcements, alerts, and coordination signals.
+
+    Args:
+        content: The broadcast message content
+        sender: Identifier of the broadcast sender (e.g., "CAPTAIN", "SYSTEM")
+        priority: Broadcast priority level (regular, high, urgent)
+
+    Returns:
+        bool: True if broadcast was successfully queued for all agents, False otherwise
+
+    Note:
+        Broadcast messages are sent to all agents regardless of their current status.
+        Use with caution for high-priority broadcasts to avoid overwhelming the system.
+
+    Example:
+        >>> broadcast_message(
+        ...     content="🐝 SWARM ALERT: System maintenance in 5 minutes",
+        ...     sender="CAPTAIN",
+        ...     priority=UnifiedMessagePriority.URGENT
+        ... )
+        True
+    """
     return messaging_core.broadcast_message(content, sender, priority)
 
 
 def generate_onboarding_message(agent_id: str, style: str = "standard") -> str:
-    """Generate onboarding message using the SINGLE SOURCE OF TRUTH."""
+    """
+    Generate a standardized onboarding message for an agent.
+
+    Creates formatted onboarding content based on the specified style and agent ID.
+    Used during agent initialization and soft/hard onboarding processes.
+
+    Args:
+        agent_id: The agent identifier (e.g., "Agent-1", "Agent-2")
+        style: Message style to use ("standard", "detailed", "minimal")
+
+    Returns:
+        str: Formatted onboarding message content
+
+    Example:
+        >>> msg = generate_onboarding_message("Agent-1", "standard")
+        >>> print(msg[:50])
+        AGENT-1 ONBOARDING PROTOCOL
+    """
     return messaging_core.generate_onboarding_message(agent_id, style)
 
 
 def show_message_history():
-    """Show message history using the SINGLE SOURCE OF TRUTH."""
+    """
+    Display the message history for debugging and monitoring.
+
+    Prints a formatted view of recent messages, their status, and delivery information.
+    Useful for troubleshooting messaging issues and monitoring system activity.
+    """
     messaging_core.show_message_history()
 
 
 def list_agents():
-    """List agents using the SINGLE SOURCE OF TRUTH."""
+    """
+    Display a list of all registered agents and their current status.
+
+    Shows agent identifiers, workspace status, and activity information.
+    Useful for system monitoring and agent management.
+    """
     messaging_core.list_agents()
 
 
@@ -467,7 +574,23 @@ __all__ = [
 
 # VALIDATION AND HEALTH CHECKS
 def validate_messaging_system() -> bool:
-    """Validate the messaging system is properly configured."""
+    """
+    Validate that the messaging system is properly configured and functional.
+
+    Performs comprehensive checks on the messaging core, dependencies, and basic
+    functionality to ensure the system is ready for operation.
+
+    Returns:
+        bool: True if all validation checks pass, False otherwise
+
+    Note:
+        This function is called automatically during system initialization.
+        Manual validation can be performed for troubleshooting purposes.
+
+    Example:
+        >>> validate_messaging_system()
+        True
+    """
     try:
         core = get_messaging_core()
         if not core:
@@ -492,7 +615,23 @@ def validate_messaging_system() -> bool:
 
 # AUTO-INITIALIZATION
 def initialize_messaging_system() -> None:
-    """Initialize the messaging system."""
+    """
+    Initialize the unified messaging system and establish the Single Source of Truth.
+
+    This function performs system validation, sets up core components, and ensures
+    all messaging infrastructure is ready for operation. Called automatically on import.
+
+    Raises:
+        ValueError: If messaging system validation fails and system cannot be initialized
+
+    Note:
+        This function is called automatically when the module is imported.
+        Manual initialization is not typically required.
+
+    Example:
+        >>> initialize_messaging_system()
+        # Logs: "✅ Messaging system ready - SSOT established"
+    """
     logger.info("🔧 Initializing SINGLE SOURCE OF TRUTH Messaging System")
 
     if validate_messaging_system():

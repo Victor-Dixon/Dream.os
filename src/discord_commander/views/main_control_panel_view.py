@@ -25,7 +25,6 @@ Classes:
 import discord
 from typing import Optional, Dict, Any, List
 
-from ..ui_components.control_panel_buttons import ControlPanelButtonFactory
 from ..ui_components.control_panel_embeds import ControlPanelEmbedFactory
 
 try:
@@ -34,6 +33,101 @@ try:
 except ImportError:
     DISCORD_AVAILABLE = False
     discord = None
+
+
+class MessageAgentButton(discord.ui.Button if DISCORD_AVAILABLE else object):
+    """Custom button for messaging agents."""
+
+    def __init__(self, view_instance):
+        super().__init__(
+            label="Message Agent",
+            style=discord.ButtonStyle.primary,
+            emoji="💬",
+            custom_id="message_agent",
+            row=0,
+        ) if DISCORD_AVAILABLE else super().__init__()
+        self.view_instance = view_instance
+
+    async def callback(self, interaction: discord.Interaction):
+        """Handle button click."""
+        if hasattr(self.view_instance, 'show_agent_selector'):
+            await self.view_instance.show_agent_selector(interaction)
+
+
+class MainControlButton(discord.ui.Button if DISCORD_AVAILABLE else object):
+    """Custom button for main control panel."""
+
+    def __init__(self, view_instance):
+        super().__init__(
+            label="Main Control",
+            style=discord.ButtonStyle.primary,
+            emoji="🎛️",
+            custom_id="main_control",
+            row=0,
+        ) if DISCORD_AVAILABLE else super().__init__()
+        self.view_instance = view_instance
+
+    async def callback(self, interaction: discord.Interaction):
+        """Handle button click."""
+        if hasattr(self.view_instance, 'show_main_control'):
+            await self.view_instance.show_main_control(interaction)
+
+
+class MonitorButton(discord.ui.Button if DISCORD_AVAILABLE else object):
+    """Custom button for monitoring."""
+
+    def __init__(self, view_instance):
+        super().__init__(
+            label="Monitor",
+            style=discord.ButtonStyle.secondary,
+            emoji="📊",
+            custom_id="monitor",
+            row=0,
+        ) if DISCORD_AVAILABLE else super().__init__()
+        self.view_instance = view_instance
+
+    async def callback(self, interaction: discord.Interaction):
+        """Handle button click."""
+        if hasattr(self.view_instance, 'toggle_monitor'):
+            await self.view_instance.toggle_monitor(interaction)
+
+
+class StatusButton(discord.ui.Button if DISCORD_AVAILABLE else object):
+    """Custom button for system status."""
+
+    def __init__(self, view_instance):
+        super().__init__(
+            label="Status",
+            style=discord.ButtonStyle.secondary,
+            emoji="📈",
+            custom_id="status",
+            row=0,
+        ) if DISCORD_AVAILABLE else super().__init__()
+        self.view_instance = view_instance
+
+    async def callback(self, interaction: discord.Interaction):
+        """Handle button click."""
+        if hasattr(self.view_instance, 'show_system_status'):
+            await self.view_instance.show_system_status(interaction)
+
+
+class AgentStatusButton(discord.ui.Button if DISCORD_AVAILABLE else object):
+    """Custom button for agent status."""
+
+    def __init__(self, view_instance):
+        super().__init__(
+            label="Agent Status",
+            style=discord.ButtonStyle.primary,
+            emoji="👥",
+            custom_id="agent_status",
+            row=0,
+        ) if DISCORD_AVAILABLE else super().__init__()
+        self.view_instance = view_instance
+
+    async def callback(self, interaction: discord.Interaction):
+        """Handle button click."""
+        if hasattr(self.view_instance, 'show_agent_status'):
+            await self.view_instance.show_agent_status(interaction)
 
 
 class MainControlPanelView(discord.ui.View if DISCORD_AVAILABLE else object):
@@ -57,48 +151,38 @@ class MainControlPanelView(discord.ui.View if DISCORD_AVAILABLE else object):
 
     def _setup_control_buttons(self):
         """
-        Setup control buttons using factory.
+        Setup control buttons using custom button classes.
 
         Navigation:
-        ├── Uses: ControlPanelButtonFactory
+        ├── Uses: Custom button classes
         └── Related: Agent messaging, bot control
         """
         # Message agent button
-        self.msg_agent_btn = ControlPanelButtonFactory.create_message_agent_button(
-            callback=self.show_agent_selector
-        )
+        self.msg_agent_btn = MessageAgentButton(self)
         self.add_item(self.msg_agent_btn)
 
         # Main control button
-        self.main_control_btn = ControlPanelButtonFactory.create_main_control_button(
-            callback=self.show_main_control
-        )
+        self.main_control_btn = MainControlButton(self)
         self.add_item(self.main_control_btn)
 
         # Status monitor button
-        self.monitor_btn = ControlPanelButtonFactory.create_monitor_button(
-            callback=self.toggle_monitor
-        )
+        self.monitor_btn = MonitorButton(self)
         self.add_item(self.monitor_btn)
 
     def _setup_monitoring_buttons(self):
         """
-        Setup monitoring buttons using factory.
+        Setup monitoring buttons using custom button classes.
 
         Navigation:
-        ├── Uses: ControlPanelButtonFactory
+        ├── Uses: Custom button classes
         └── Related: System monitoring, status display
         """
         # System status button
-        self.status_btn = ControlPanelButtonFactory.create_status_button(
-            callback=self.show_system_status
-        )
+        self.status_btn = StatusButton(self)
         self.add_item(self.status_btn)
 
         # Agent status button
-        self.agent_status_btn = ControlPanelButtonFactory.create_agent_status_button(
-            callback=self.show_agent_status
-        )
+        self.agent_status_btn = AgentStatusButton(self)
         self.add_item(self.agent_status_btn)
 
     async def show_agent_selector(self, interaction: discord.Interaction):

@@ -68,7 +68,10 @@ export class GamificationUI {
             // Load social data
             await this.loadSocialData();
 
-            console.log('✅ Gamification UI initialized with real-time support, quest system, and social features');
+            // Load analytics data
+            await this.loadAnalyticsData();
+
+            console.log('✅ Gamification UI initialized with real-time support, quest system, social features, and analytics');
         } catch (error) {
             console.error('❌ Failed to initialize Gamification UI:', error);
             throw error;
@@ -283,6 +286,7 @@ export class GamificationUI {
                     ${this.renderXPSection()}
                     ${this.renderLeaderboardSection()}
                     ${this.renderSocialSection()}
+                    ${this.renderAnalyticsSection()}
                     ${this.renderActiveQuestsSection()}
                     ${this.renderSkillsSection()}
                     ${this.renderQuestsSection()}
@@ -544,6 +548,161 @@ export class GamificationUI {
         } catch (error) {
             console.error('❌ Error recording social interaction:', error);
             this.showNotification('Error recording interaction', 'error');
+        }
+    }
+
+    /**
+     * Render Analytics section
+     */
+    renderAnalyticsSection() {
+        return `
+            <div class="analytics-section card">
+                <div class="section-header">
+                    <h3>📊 Performance Analytics</h3>
+                    <button class="refresh-btn" onclick="window.gamificationUI?.loadAnalyticsData()">
+                        🔄 Refresh
+                    </button>
+                </div>
+                <div class="analytics-content">
+                    <div class="analytics-loading">
+                        <div class="loading-spinner"></div>
+                        <span>Loading analytics...</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    /**
+     * Load analytics data
+     */
+    async loadAnalyticsData() {
+        try {
+            const [healthResponse, reportResponse] = await Promise.all([
+                fetch('/api/gaming/analytics/health'),
+                fetch('/api/gaming/analytics/report?hours=1')
+            ]);
+
+            const healthData = await healthResponse.json();
+            const reportData = await reportResponse.json();
+
+            this.updateAnalyticsDisplay(healthData, reportData);
+        } catch (error) {
+            console.error('❌ Error loading analytics data:', error);
+        }
+    }
+
+    /**
+     * Update analytics section display
+     */
+    updateAnalyticsDisplay(healthData, reportData) {
+        const analyticsSection = this.container.querySelector('.analytics-section .analytics-content');
+        if (!analyticsSection) return;
+
+        const overallScore = healthData.overall_score || 0;
+        const healthStatus = healthData.health_status || 'unknown';
+        const components = healthData.components || {};
+        const insights = reportData.insights || [];
+
+        analyticsSection.innerHTML = `
+            <div class="health-overview">
+                <div class="health-score">
+                    <div class="score-circle ${healthStatus}">
+                        <span class="score-number">${overallScore}</span>
+                        <span class="score-label">Health</span>
+                    </div>
+                    <div class="health-status ${healthStatus}">
+                        ${healthStatus.toUpperCase()}
+                    </div>
+                </div>
+
+                <div class="health-components">
+                    ${Object.entries(components).map(([metric, data]) => `
+                        <div class="component-metric ${data.assessment || 'unknown'}">
+                            <div class="metric-name">${metric.replace('_', ' ')}</div>
+                            <div class="metric-value">${data.current ? Math.round(data.current) : 'N/A'}</div>
+                            <div class="metric-status">${data.assessment || 'unknown'}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+
+            <div class="performance-insights">
+                <h4>💡 Key Insights</h4>
+                <div class="insights-list">
+                    ${insights.length > 0
+                        ? insights.map(insight => `<div class="insight-item">${insight}</div>`).join('')
+                        : '<div class="no-insights">No insights available</div>'
+                    }
+                </div>
+            </div>
+
+            <div class="performance-metrics">
+                <h4>📈 Recent Metrics</h4>
+                <div class="metrics-grid">
+                    ${this.renderKeyMetrics(reportData.metrics_summary || {})}
+                </div>
+            </div>
+        `;
+    }
+
+    /**
+     * Render key performance metrics
+     */
+    renderKeyMetrics(metricsSummary) {
+        const keyMetrics = ['response_time', 'engagement_rate', 'completion_rate', 'social_interaction_rate'];
+
+        return keyMetrics.map(metric => {
+            const data = metricsSummary[metric];
+            if (!data || data.status === 'no_data') {
+                return `
+                    <div class="metric-card">
+                        <div class="metric-title">${metric.replace('_', ' ')}</div>
+                        <div class="metric-value">No Data</div>
+                        <div class="metric-trend">—</div>
+                    </div>
+                `;
+            }
+
+            const value = data.current;
+            const trend = data.trend || 'stable';
+            const assessment = data.assessment || 'unknown';
+
+            return `
+                <div class="metric-card ${assessment}">
+                    <div class="metric-title">${metric.replace('_', ' ')}</div>
+                    <div class="metric-value">${typeof value === 'number' ? Math.round(value) : value}</div>
+                    <div class="metric-trend ${trend}">
+                        ${trend === 'increasing' ? '📈' : trend === 'decreasing' ? '📉' : '➡️'} ${trend}
+                    </div>
+                    <div class="metric-status">${assessment}</div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    /**
+     * Record a performance metric
+     */
+    async recordPerformanceMetric(metricName, value, metadata = {}) {
+        try {
+            const response = await fetch('/api/gaming/analytics/metrics', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    metric_name: metricName,
+                    value: value,
+                    metadata: metadata
+                })
+            });
+
+            if (response.ok) {
+                console.log(`✅ Performance metric recorded: ${metricName} = ${value}`);
+            } else {
+                console.error('❌ Failed to record performance metric');
+            }
+        } catch (error) {
+            console.error('❌ Error recording performance metric:', error);
         }
     }
 

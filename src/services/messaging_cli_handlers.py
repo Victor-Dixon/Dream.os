@@ -477,3 +477,233 @@ def handle_archive_old(args):
     except Exception as e:
         logger.error(f"❌ Archive rotation failed: {e}")
         return 1
+
+
+# SWARM INTELLIGENCE CLI COMMANDS
+def handle_swarm_vote(args):
+    """Handle swarm consensus voting commands."""
+    try:
+        if not args.topic:
+            print("❌ Error: --topic is required for swarm voting")
+            return 1
+
+        if not args.options:
+            print("❌ Error: --options is required for swarm voting")
+            return 1
+
+        options_list = [opt.strip() for opt in args.options.split(',')]
+
+        if len(options_list) < 2:
+            print("❌ Error: At least 2 voting options required")
+            return 1
+
+        # Import consensus engine
+        from examples.consensus_demo import ConsensusEngine
+
+        engine = ConsensusEngine()
+        consensus_id = engine.initiate_consensus_process(
+            args.topic,
+            options_list,
+            deadline_minutes=getattr(args, 'deadline', 30)
+        )
+
+        if consensus_id:
+            print(f"🐝 SWARM CONSENSUS INITIATED")
+            print(f"Consensus ID: {consensus_id}")
+            print(f"Topic: {args.topic}")
+            print(f"Options: {', '.join(options_list)}")
+            print(f"Deadline: {getattr(args, 'deadline', 30)} minutes")
+            print("\n📊 Agents will vote through the messaging system")
+            return 0
+        else:
+            print("❌ Failed to initiate swarm consensus")
+            return 1
+
+    except Exception as e:
+        logger.error(f"Error in swarm voting: {e}")
+        print(f"❌ Error in swarm voting: {e}")
+        return 1
+
+
+def handle_swarm_conflict(args):
+    """Handle swarm conflict resolution commands."""
+    try:
+        if not args.description:
+            print("❌ Error: --description is required for conflict resolution")
+            return 1
+
+        conflict_message = f"""🐝 SWARM CONFLICT DETECTED
+
+Description: {args.description}
+Severity: {getattr(args, 'severity', 'medium')}
+Agents Involved: {getattr(args, 'agents', 'All agents')}
+
+CONFLICT RESOLUTION PROTOCOL ACTIVATED:
+1. All agents acknowledge the conflict
+2. Technical analysis phase begins
+3. Consensus-driven resolution
+4. Implementation of agreed solution
+
+🐝 WE. ARE. SWARM. Conflict resolution in progress."""
+
+        # Broadcast conflict to all agents
+        success = send_message(
+            content=conflict_message,
+            sender="SYSTEM",
+            recipient="all",
+            message_type=UnifiedMessageType.TEXT,
+            priority=UnifiedMessagePriority.URGENT
+        )
+
+        if success:
+            print("🚨 SWARM CONFLICT RESOLUTION INITIATED")
+            print(f"Description: {args.description}")
+            print("All agents notified - resolution protocol active")
+            return 0
+        else:
+            print("❌ Failed to initiate conflict resolution")
+            return 1
+
+    except Exception as e:
+        logger.error(f"Error in conflict resolution: {e}")
+        print(f"❌ Error in conflict resolution: {e}")
+        return 1
+
+
+def handle_swarm_profile(args):
+    """Handle swarm profiling and performance analysis."""
+    try:
+        if args.agent:
+            # Profile specific agent
+            agents_to_profile = [args.agent]
+        else:
+            # Profile all agents
+            from src.core.constants.agent_constants import AGENT_LIST
+            agents_to_profile = AGENT_LIST
+
+        print(f"📊 PROFILING {len(agents_to_profile)} AGENT(S)")
+
+        for agent in agents_to_profile:
+            profile_message = f"""SYSTEM: Performance profile analysis requested for {agent}.
+
+PROFILING METRICS REQUESTED:
+- Response time analysis
+- Task completion rate
+- Error frequency
+- Collaboration effectiveness
+- Resource utilization
+
+Please provide current performance metrics."""
+
+            success = send_message(
+                content=profile_message,
+                sender="SYSTEM",
+                recipient=agent,
+                message_type=UnifiedMessageType.TEXT,
+                priority=UnifiedMessagePriority.HIGH
+            )
+
+            if success:
+                print(f"✅ Profile request sent to {agent}")
+            else:
+                print(f"❌ Failed to profile {agent}")
+
+        print(f"\n📈 Swarm profiling initiated for {len(agents_to_profile)} agent(s)")
+        return 0
+
+    except Exception as e:
+        logger.error(f"Error in swarm profiling: {e}")
+        print(f"❌ Error in swarm profiling: {e}")
+        return 1
+
+
+def handle_swarm_prove(args):
+    """Handle swarm validation and proof requests."""
+    try:
+        if not args.claim:
+            print("❌ Error: --claim is required for proof validation")
+            return 1
+
+        proof_message = f"""🐝 SWARM VALIDATION REQUEST
+
+Claim to validate: {args.claim}
+Validation Level: {getattr(args, 'level', 'standard')}
+Evidence Required: {getattr(args, 'evidence', 'Technical analysis and testing')}
+
+VALIDATION PROTOCOL:
+1. Independent verification by multiple agents
+2. Cross-validation of results
+3. Consensus on validation outcome
+4. Documentation of proof
+
+🐝 WE. ARE. SWARM. Validation in progress."""
+
+        # Send to all agents or specific agent
+        recipient = args.agent if args.agent else "all"
+        priority = UnifiedMessagePriority.URGENT if not args.agent else UnifiedMessagePriority.HIGH
+
+        success = send_message(
+            content=proof_message,
+            sender="SYSTEM",
+            recipient=recipient,
+            message_type=UnifiedMessageType.TEXT,
+            priority=priority
+        )
+
+        if success:
+            print("🔍 SWARM VALIDATION INITIATED")
+            print(f"Claim: {args.claim}")
+            print(f"Target: {recipient}")
+            print("Multi-agent validation protocol active")
+            return 0
+        else:
+            print("❌ Failed to initiate validation")
+            return 1
+
+    except Exception as e:
+        logger.error(f"Error in swarm proof validation: {e}")
+        print(f"❌ Error in swarm proof validation: {e}")
+        return 1
+
+
+def handle_swarm_patterns(args):
+    """Handle swarm pattern analysis and intelligence gathering."""
+    try:
+        pattern_message = f"""🐝 SWARM PATTERN ANALYSIS ACTIVATED
+
+Analysis Type: {getattr(args, 'type', 'comprehensive')}
+Time Window: {getattr(args, 'window', '24 hours')}
+Focus Areas: {getattr(args, 'focus', 'All patterns')}
+
+PATTERN ANALYSIS PROTOCOL:
+1. Data collection from all agents
+2. Pattern identification algorithms
+3. Correlation analysis
+4. Predictive modeling
+5. Intelligence report generation
+
+🐝 WE. ARE. SWARM. Pattern recognition active."""
+
+        # Send to all agents for pattern contribution
+        success = send_message(
+            content=pattern_message,
+            sender="SYSTEM",
+            recipient="all",
+            message_type=UnifiedMessageType.TEXT,
+            priority=UnifiedMessagePriority.HIGH
+        )
+
+        if success:
+            print("🔬 SWARM PATTERN ANALYSIS INITIATED")
+            print(f"Type: {getattr(args, 'type', 'comprehensive')}")
+            print(f"Window: {getattr(args, 'window', '24 hours')}")
+            print("All agents engaged in pattern analysis")
+            return 0
+        else:
+            print("❌ Failed to initiate pattern analysis")
+            return 1
+
+    except Exception as e:
+        logger.error(f"Error in swarm pattern analysis: {e}")
+        print(f"❌ Error in swarm pattern analysis: {e}")
+        return 1

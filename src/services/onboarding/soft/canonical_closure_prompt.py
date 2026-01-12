@@ -82,10 +82,21 @@ MANDATORY CLOSURE TASKS
    - Validation fails if these artifacts are absent when triggers matched
 
 5. Publish Devlog (Internal / Discord)
-   - Post to Discord using: `python tools/devlog_poster.py --agent Agent-X --file <devlog_path>`
+   - Post to Discord using: `python tools/devlog_poster.py --agent {AGENT_ID} --file <devlog_path>`
+   - HARD REQUIREMENT: Fails loudly if `DISCORD_WEBHOOK_AGENT_{N}` env var missing (where N is agent number)
+   - Command automatically routes to agent's dedicated `#agent-{n}-devlogs` channel
    - This represents the internal build record and public-facing update
 
-5. Blog to Website (CONDITIONAL BUT ENFORCED)
+5.5. Cycle Accomplishment Integration (MANDATORY)
+   - Run: `python tools/cycle_accomplishment_integrator.py --agent {AGENT_ID} --closure-run-id "{AGENT_ID}:{GIT_SHA}:{UTC_TS}" --tasks-completed <int> --issues-found <int> --consolidation-opportunities <int> --closure-complete`
+   - HARD REQUIREMENTS:
+     - Idempotent: same closure-run-id must NO-OP (no duplicate points/posts)
+     - Atomic status.json update with crash safety
+     - Fails loudly if `DISCORD_WEBHOOK_CYCLE_ACCOMPLISHMENTS` missing
+     - Uses configurable points from `config/cycle_points.json`
+   - Required output: "Cycle accomplishment logged — tasks=X, issues=Y, consolidations=Z, points=P"
+
+6. Blog to Website (CONDITIONAL BUT ENFORCED)
    - REQUIRED if work affected:
      - User-facing behavior
      - Dashboards
@@ -96,23 +107,50 @@ MANDATORY CLOSURE TASKS
    - If not applicable:
      - Explicitly state: "No website blogging required — internal-only change"
 
-6. Update Swarm Brain Database
+7. Update Swarm Brain Database
    - Include exact command used OR
    - "Verified — no update required"
 
-7. Duplication Audit & Task List Update (MANDATORY)
-   - Run duplication audit tool: `python tools/duplication_audit.py --agent Agent-X --scope src/`
-   - Review findings for any work you may have duplicated
-   - Check for TODO/FIXME items that are now redundant due to your changes
-   - Audit your own work: Look for incomplete implementations, broken imports, or half-finished features
-   - Add any findings to the master task list (create new task if needed)
-   - Document: "Duplication audit completed — [findings or 'no duplicates found']"
+8. Code Quality & Health Check (MANDATORY)
+   - Run automated quality audit: `python tools/closure_quality_audit.py --agent Agent-X --audit`
+   - Review audit results for linting errors, import issues, and CLI tool problems
+   - Validate your changes don't break existing functionality
+   - Check for new dependency issues introduced by your changes
+   - Use audit tool output to identify issues requiring master task list entries
+   - Required: "Code health check completed — [X issues found and documented]"
 
-8. Closure Improvement (CHOOSE EXACTLY ONE)
-   a) Create ONE small utility tool (≤150 lines)
-   b) Define ONE protocol (≤10 lines)
-   c) Improve documentation quality (delete, merge, deduplicate)
-   d) Explicitly skip with: "Skipped — no actionable gap identified"
+9. Functionality Consolidation Audit (MANDATORY)
+   - Use quality audit tool results: Review consolidation opportunities flagged by the automated audit
+   - Manually verify consolidation suggestions: Check if similar functionality can be merged
+   - Review tool architecture: Ensure new tools integrate well with existing systems
+   - Identify code reuse opportunities: Look for common patterns that could be extracted
+   - Document consolidation candidates: Add detailed refactoring tasks to master task list
+   - Required: "Consolidation audit completed — [X consolidation opportunities identified]"
+
+10. Issue Documentation & Task List Updates (MANDATORY)
+   - Add ALL identified issues to master task list: Code quality issues, CLI warnings, consolidation opportunities
+   - Even if you won't fix them now, document for future agents: "Added X tasks to master task list"
+   - Include severity levels and estimated effort for each issue
+   - Verify task list is updated: Check that new tasks appear in MASTER_TASK_LIST.md
+   - Required: "Issue documentation completed — [X tasks added to master task list]"
+
+11. Automatic Workspace Cleanup (SAFE & AGENT-SCOPED)
+    - ⚠️ **SAFETY FIRST**: Only clean agent-owned directories (`agent_workspaces/Agent-X/`, `tools/agent_workspaces/Agent-X/`)
+    - **NEVER touch shared directories** (src/, tools/, docs/, etc.)
+    - **NEVER delete - move to archive instead**: `mv file /path/to/archive/`
+    - Clean up session artifacts:
+      - Remove temporary test files (`test_*.py` you created)
+      - Archive working drafts and devlog drafts
+      - Clean cache files in agent workspace
+      - Remove session-specific screenshots/logs
+    - Verification required: List files before/after, confirm only agent-owned files affected
+    - If no cleanup needed: "Agent workspace cleanup completed — no artifacts to clean"
+
+12. Closure Improvement (CHOOSE EXACTLY ONE)
+    a) Create ONE small utility tool (≤150 lines)
+    b) Define ONE protocol (≤10 lines)
+    c) Improve documentation quality (delete, merge, deduplicate)
+    d) Explicitly skip with: "Skipped — no actionable gap identified"
 
 ────────────────────────────────────────
 HARD RULES (NON-NEGOTIABLE)
@@ -126,6 +164,13 @@ HARD RULES (NON-NEGOTIABLE)
 - git clean -fd
 - git restore .
 - rm -rf on repo paths
+
+❌ WORKSPACE CLEANUP SAFETY (MANDATORY)
+- NEVER delete files - move to archive directories instead
+- NEVER clean shared directories (src/, tools/, docs/, root files)
+- ONLY clean agent-owned workspaces (`agent_workspaces/Agent-X/`)
+- VERIFY ownership before any cleanup operation
+- If unsure about file ownership → Status MUST be 🟡 Blocked
 
 When in doubt, choose NON-DESTRUCTIVE verification over cleanup.
 ────────────────────────────────────────
@@ -172,6 +217,9 @@ OUTPUT CONTRACT (STRICT - A++ FORMAT)
 - **Website Blogging:**
   [Blog post URL if published, or "Not published" if not applicable]
 
+- **Workspace Cleanup:**
+  [Cleanup status: "Agent workspace cleanup completed — X files archived" or "No cleanup needed"]
+
 - **Status:**
   ✅ Ready
   OR
@@ -203,7 +251,7 @@ Do NOT:
 
 Until:
 - Status = ✅ Ready
-- All mandatory tasks are verified
+- All 12 mandatory tasks are verified
 - Public Build Signal is present
 
 This closure must stand alone.

@@ -241,8 +241,16 @@ class MessagingCLI:
                 and self.task_handler
                 and self.task_handler.can_handle(parsed_args)
             ):
-                self.task_handler.handle(parsed_args)
-                return self.task_handler.exit_code
+                result = self.task_handler.handle(parsed_args)
+                if isinstance(result, dict):
+                    # New dict-based response format
+                    if not result.get('success', False):
+                        logger.error(f"❌ Task handler failed: {result.get('error', 'Unknown error')}")
+                        return 1
+                    return 0
+                else:
+                    # Legacy bool response (for backward compatibility)
+                    return self.task_handler.exit_code
             elif parsed_args.message or parsed_args.broadcast:
                 # Check if queue processor is running and start it if needed
                 self._ensure_queue_processor_running()

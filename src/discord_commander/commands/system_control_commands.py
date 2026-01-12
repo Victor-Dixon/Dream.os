@@ -21,14 +21,9 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from src.discord_commander.unified_discord_bot import UnifiedDiscordBot
 
-try:
-    import discord
-    from discord.ext import commands
-    from .command_base import BaseDiscordCog
-except ImportError:
-    discord = None
-    commands = None
-    BaseDiscordCog = None
+import discord
+from discord.ext import commands
+from .command_base import BaseDiscordCog
 
 logger = logging.getLogger(__name__)
 

@@ -188,8 +188,8 @@ class DiscordManager:
             'DISCORD_A2A_COORDINATION_CHANNEL_ID': self.channels.get('a2a_coordination', ''),
         }
 
-        # Add agent webhooks
-        for i in range(1, 5):  # First 4 agents as requested
+        # Add agent webhooks (agents 1-8 for full swarm support)
+        for i in range(1, 9):
             agent_key = f'agent{i}'
             webhook_url = self.webhooks.get(agent_key, '')
             config[f'DISCORD_AGENT{i}_WEBHOOK_URL'] = webhook_url

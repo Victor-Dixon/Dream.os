@@ -100,7 +100,10 @@ class UnifiedContractManager(BaseService):
         # Save default tasks
         for task in default_tasks:
             try:
-                success = self.storage.save_contract(task["agent_id"], task)
+                # Create Contract object from task data
+                from src.services.contract_system.models import Contract
+                contract = Contract(**task)
+                success = self.storage.save_contract(contract)
                 if success:
                     logger.info(f"✅ Created default task: {task['title']}")
                 else:

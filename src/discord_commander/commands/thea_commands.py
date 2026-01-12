@@ -26,18 +26,14 @@ logger = logging.getLogger(__name__)
 
 
 class TheaCommands(commands.Cog, DiscordCommandMixin):
-    """Discord commands for Thea Manager integration.
-
-    Provides a clean interface between Discord commands and Thea Manager,
-    with proper error handling and status reporting.
-    """
+    """Discord commands for Thea Manager integration."""
 
     def __init__(self, bot: "UnifiedDiscordBot", gui_controller):
-        """Initialize Thea commands with bot and GUI controller."""
-        super().__init__()
+        """Initialize Thea commands."""
+        commands.Cog.__init__(self)
+        DiscordCommandMixin.__init__(self)
         self.bot = bot
         self.gui_controller = gui_controller
-        self._thea_service = None  # Lazy-loaded Thea service
 
     @commands.command(name="thea", description="Send a message to Thea Manager")
     @RoleDecorators.admin_only()

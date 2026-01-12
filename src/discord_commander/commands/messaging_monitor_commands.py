@@ -18,12 +18,8 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from src.discord_commander.unified_discord_bot import UnifiedDiscordBot
 
-try:
-    import discord
-    from discord.ext import commands
-except ImportError:
-    discord = None
-    commands = None
+import discord
+from discord.ext import commands
 
 logger = logging.getLogger(__name__)
 

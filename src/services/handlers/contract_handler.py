@@ -33,7 +33,7 @@ class ContractHandler(BaseService):
             ) and args.get_next_task or hasattr(args, 'check_contracts'
             ) and args.check_contracts
 
-    def handle(self, args) ->bool:
+    def handle(self, args) -> dict:
         """Handle the command."""
         return self.handle_contract_commands(args)
 
@@ -47,58 +47,50 @@ class ContractHandler(BaseService):
             self.manager = None
         self._initialize_default_tasks()
 
-    def handle_contract_commands(self, args) ->bool:
+    def handle_contract_commands(self, args) -> dict:
         """Handle contract-related commands."""
         try:
             if args.get_next_task:
                 if not args.agent:
-                    logger.info('❌ Error: --agent required for --get-next-task'
-                        )
-                    return True
-                logger.info(f'📋 Getting next task for {args.agent}...')
+                    return {
+                        'success': False,
+                        'error': '--agent required for --get-next-task',
+                        'command': 'get_next_task'
+                    }
                 task = self.manager.get_next_task(args.agent)
                 if task:
-                    logger.info(f"✅ Task assigned: {task['title']}")
-                    logger.info(f"📝 Description: {task['description']}")
-                    logger.info(f"🎯 Type: {task['task_type']}")
-                    logger.info(f"⚡ Priority: {task['priority']}")
-                    logger.info(f"⏱️ Duration: {task['estimated_duration']}")
-                    logger.info(f"🆔 Task ID: {task['task_id']}")
+                    return {
+                        'success': True,
+                        'command': 'get_next_task',
+                        'agent': args.agent,
+                        'task': task
+                    }
                 else:
-                    logger.info('❌ No available tasks for this agent')
-                return True
+                    return {
+                        'success': True,
+                        'command': 'get_next_task',
+                        'agent': args.agent,
+                        'task': None,
+                        'message': 'No available tasks for this agent'
+                    }
             if args.check_contracts:
-                logger.info('📊 Contract Status:')
-                logger.info('=' * 40)
                 status = self.manager.get_system_status()
-                logger.info(
-                    f"📈 Total Contracts: {status.get('total_contracts', 0)}")
-                logger.info(
-                    f"🔄 Active Contracts: {status.get('active_contracts', 0)}")
-                logger.info(
-                    f"✅ Completed Contracts: {status.get('completed_contracts', 0)}"
-                    )
-                logger.info(f"📋 Total Tasks: {status.get('total_tasks', 0)}")
-                logger.info(
-                    f"✅ Completed Tasks: {status.get('completed_tasks', 0)}")
-                logger.info(
-                    f"📊 Completion Rate: {status.get('completion_rate', 0)}%")
-                logger.info(f"🎯 Total Points: {status.get('total_points', 0)}")
-                logger.info(
-                    f"✅ Completed Points: {status.get('completed_points', 0)}")
-                agent_summaries = status.get('agent_summaries', {})
-                if agent_summaries:
-                    logger.info('\n👥 Agent Status:')
-                    logger.info('-' * 30)
-                    for agent_id, summary in agent_summaries.items():
-                        logger.info(
-                            f"{agent_id}: {summary.get('completion_rate', 0)}% complete ({summary.get('completed_points', 0)}/{summary.get('total_points', 0)} pts)"
-                            )
-                return True
+                return {
+                    'success': True,
+                    'command': 'check_contracts',
+                    'status': status
+                }
         except Exception as e:
-            logger.info(f'❌ Error handling contract command: {e}')
-            return False
-        return False
+            return {
+                'success': False,
+                'error': str(e),
+                'command': getattr(args, 'command', 'unknown')
+            }
+        return {
+            'success': False,
+            'error': 'No valid command specified',
+            'command': 'unknown'
+        }
 
     def get_next_task(self, agent_id: str) ->(dict[str, Any] | None):
         """Get next available task for agent."""

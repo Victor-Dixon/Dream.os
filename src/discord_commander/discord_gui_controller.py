@@ -61,7 +61,7 @@ class DiscordGUIController:
 
     def create_control_panel(self) -> MainControlPanelView:
         """Create main control panel view."""
-        return MainControlPanelView(self.messaging_service)
+        return MainControlPanelView()
 
     def create_agent_message_modal(self, agent_id: str) -> AgentMessageModal:
         """Create modal for messaging specific agent."""

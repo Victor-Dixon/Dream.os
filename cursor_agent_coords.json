@@ -1,44 +1,103 @@
 {
   "agents": {
     "Agent-1": {
-      "description": "Agent-1 workspace",
-      "chat_input_coordinates": [100, 200],
-      "onboarding_input_coords": [100, 180]
+      "chat_input_coordinates": [
+        -1269,
+        481
+      ],
+      "onboarding_input_coords": [
+        -1221,
+        145
+      ],
+      "description": "Integration & Core Systems Specialist"
     },
     "Agent-2": {
-      "description": "Agent-2 workspace",
-      "chat_input_coordinates": [300, 200],
-      "onboarding_input_coords": [300, 180]
+      "chat_input_coordinates": [
+        -308,
+        480
+      ],
+      "onboarding_input_coords": [
+        -269,
+        145
+      ],
+      "description": "Architecture & Design Specialist"
     },
     "Agent-3": {
-      "description": "Agent-3 workspace",
-      "chat_input_coordinates": [500, 200],
-      "onboarding_input_coords": [500, 180]
+      "chat_input_coordinates": [
+        -1269,
+        1001
+      ],
+      "onboarding_input_coords": [
+        -1251,
+        671
+      ],
+      "description": "Infrastructure & DevOps Specialist"
     },
     "Agent-4": {
-      "description": "Agent-4 workspace (Quality Assurance)",
-      "chat_input_coordinates": [-308, 1000],
-      "onboarding_input_coords": [-304, 680]
+      "chat_input_coordinates": [
+        -308,
+        1000
+      ],
+      "onboarding_input_coords": [
+        -304,
+        680
+      ],
+      "description": "Captain (Strategic Oversight)"
     },
     "Agent-5": {
-      "description": "Agent-5 workspace",
-      "chat_input_coordinates": [700, 200],
-      "onboarding_input_coords": [700, 180]
+      "chat_input_coordinates": [
+        652,
+        421
+      ],
+      "onboarding_input_coords": [
+        747,
+        89
+      ],
+      "description": "Business Intelligence Specialist"
     },
     "Agent-6": {
-      "description": "Agent-6 workspace",
-      "chat_input_coordinates": [900, 200],
-      "onboarding_input_coords": [900, 180]
+      "chat_input_coordinates": [
+        1619,
+        420
+      ],
+      "onboarding_input_coords": [
+        1651,
+        90
+      ],
+      "description": "Coordination & Communication Specialist"
     },
     "Agent-7": {
-      "description": "Agent-7 workspace",
-      "chat_input_coordinates": [1100, 200],
-      "onboarding_input_coords": [1100, 180]
+      "chat_input_coordinates": [
+        653,
+        940
+      ],
+      "onboarding_input_coords": [
+        684,
+        607
+      ],
+      "description": "Web Development Specialist"
     },
     "Agent-8": {
-      "description": "Agent-8 workspace",
-      "chat_input_coordinates": [1300, 200],
-      "onboarding_input_coords": [1300, 180]
+      "chat_input_coordinates": [
+        1611,
+        941
+      ],
+      "onboarding_input_coords": [
+        1704,
+        616
+      ],
+      "description": "SSOT & System Integration Specialist"
+    },
+    "Discord": {
+      "chat_input_coordinates": [
+        0,
+        0
+      ],
+      "onboarding_input_coords": [
+        0,
+        0
+      ],
+      "description": "Discord channel (fallback to inbox delivery)"
     }
   }
 }

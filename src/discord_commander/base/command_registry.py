@@ -114,12 +114,18 @@ class CommandRegistry:
 
     def _find_command_cogs(self, module) -> List[Type]:
         """Find all command cog classes in a module."""
+        try:
+            import discord
+            from discord.ext import commands
+        except ImportError:
+            return []
+
         cog_classes = []
 
         for name, obj in inspect.getmembers(module):
             if (inspect.isclass(obj) and
                 hasattr(obj, '__bases__') and
-                any('commands.Cog' in str(base) for base in obj.__bases__) and
+                issubclass(obj, commands.Cog) and
                 not name.startswith('_')):
                 cog_classes.append(obj)
 
