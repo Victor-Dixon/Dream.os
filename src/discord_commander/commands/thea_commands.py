@@ -14,30 +14,30 @@ V2 Compliance | Author: Agent-2 | Date: 2026-01-11
 import logging
 from typing import TYPE_CHECKING
 
-from .command_base import DiscordCommandMixin, RoleDecorators
-
 if TYPE_CHECKING:
     from src.discord_commander.unified_discord_bot import UnifiedDiscordBot
 
-try:
-    import discord
-    from discord.ext import commands
-except ImportError:
-    discord = None
-    commands = None
+import discord
+from discord.ext import commands
+
+from .command_base import DiscordCommandMixin, RoleDecorators
 
 logger = logging.getLogger(__name__)
 
 
 class TheaCommands(commands.Cog, DiscordCommandMixin):
-    """Discord commands for Thea Manager integration."""
+    """Discord commands for Thea Manager integration.
+
+    Provides a clean interface between Discord commands and Thea Manager,
+    with proper error handling and status reporting.
+    """
 
     def __init__(self, bot: "UnifiedDiscordBot", gui_controller):
-        """Initialize Thea commands."""
-        commands.Cog.__init__(self)
-        DiscordCommandMixin.__init__(self)
+        """Initialize Thea commands with bot and GUI controller."""
+        super().__init__()
         self.bot = bot
         self.gui_controller = gui_controller
+        self._thea_service = None  # Lazy-loaded Thea service
 
     @commands.command(name="thea", description="Send a message to Thea Manager")
     @RoleDecorators.admin_only()
