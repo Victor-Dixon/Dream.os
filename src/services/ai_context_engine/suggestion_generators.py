@@ -248,7 +248,7 @@ class SuggestionGenerators:
     async def generate_trading_suggestions(self, context: Dict[str, Any],
                                          session_id: str) -> List[ContextSuggestion]:
         """
-        Generate trading-specific suggestions.
+        Generate trading-specific suggestions with enhanced error handling and validation.
 
         Navigation:
         ├── Used by: TradingContextProcessor.process()
@@ -257,22 +257,179 @@ class SuggestionGenerators:
         """
         suggestions = []
 
-        # Market timing suggestions based on volatility
-        volatility = context.get('market_volatility', 0)
-        if volatility > 0.25:  # High volatility
-            timing_suggestion = ContextSuggestion(
-                suggestion_id=f"timing_{int(time.time())}",
-                session_id=session_id,
-                suggestion_type="action",
-                confidence_score=0.75,
-                content={
-                    "action": "review_market_timing",
-                    "volatility": volatility,
-                    "suggestion": "High market volatility detected - consider defensive positioning"
-                },
-                reasoning=f"Market volatility at {volatility:.1%} suggests caution",
-                timestamp=datetime.now()
-            )
-            suggestions.append(timing_suggestion)
+        try:
+            # Validate inputs
+            if not session_id or not isinstance(session_id, str):
+                logger.warning("Invalid session_id for trading suggestions")
+                return suggestions
+
+            if not isinstance(context, dict):
+                logger.warning("Invalid context format for trading suggestions")
+                context = {}
+
+            # Market timing suggestions based on volatility
+            volatility = context.get('market_volatility', 0)
+            if volatility is not None:
+                try:
+                    volatility = float(volatility)
+                    if volatility > 0.25:  # High volatility threshold
+                        timing_suggestion = ContextSuggestion(
+                            suggestion_id=f"timing_{session_id}_{int(time.time())}",
+                            session_id=session_id,
+                            suggestion_type="action",
+                            confidence_score=0.75,
+                            content={
+                                "action": "review_market_timing",
+                                "volatility": volatility,
+                                "suggestion": "High market volatility detected - consider defensive positioning"
+                            },
+                            reasoning=f"Market volatility at {volatility:.1%} suggests caution",
+                            timestamp=datetime.now()
+                        )
+                        if self._validate_suggestion(timing_suggestion):
+                            suggestions.append(timing_suggestion)
+                            logger.info(f"Generated market timing suggestion for session {session_id}")
+                except (ValueError, TypeError) as e:
+                    logger.warning(f"Error processing volatility data: {e}")
+
+            # Position sizing suggestions
+            try:
+                position_suggestions = await self._generate_position_suggestions(context, session_id)
+                for suggestion in position_suggestions:
+                    if self._validate_suggestion(suggestion):
+                        suggestions.append(suggestion)
+            except Exception as e:
+                logger.error(f"Error generating position suggestions: {e}")
+
+            # Market condition analysis
+            try:
+                market_suggestions = await self._generate_market_condition_suggestions(context, session_id)
+                for suggestion in market_suggestions:
+                    if self._validate_suggestion(suggestion):
+                        suggestions.append(suggestion)
+            except Exception as e:
+                logger.error(f"Error generating market condition suggestions: {e}")
+
+        except Exception as e:
+            logger.error(f"Error in trading suggestion generation: {e}")
+
+        logger.info(f"Generated {len(suggestions)} trading suggestions for session {session_id}")
+        return suggestions
+
+    async def _generate_position_suggestions(self, context: Dict[str, Any],
+                                          session_id: str) -> List[ContextSuggestion]:
+        """
+        Generate position sizing and risk management suggestions.
+
+        Args:
+            context: Trading context
+            session_id: Session identifier
+
+        Returns:
+            List of position-related suggestions
+        """
+        suggestions = []
+
+        try:
+            positions = context.get('positions', [])
+            if not isinstance(positions, list):
+                positions = []
+
+            # Check for over-concentration
+            if len(positions) > 0:
+                # Calculate position concentrations
+                total_value = sum(p.get('market_value', 0) for p in positions if isinstance(p, dict))
+                if total_value > 0:
+                    for position in positions:
+                        if isinstance(position, dict):
+                            market_value = position.get('market_value', 0)
+                            concentration = market_value / total_value if market_value > 0 else 0
+
+                            if concentration > 0.3:  # 30% concentration threshold
+                                concentration_suggestion = ContextSuggestion(
+                                    suggestion_id=f"concentration_{session_id}_{int(time.time())}",
+                                    session_id=session_id,
+                                    suggestion_type="risk_management",
+                                    confidence_score=0.80,
+                                    content={
+                                        "action": "diversify_portfolio",
+                                        "concentration": concentration,
+                                        "symbol": position.get('symbol', 'Unknown'),
+                                        "suggestion": "Position represents significant portfolio concentration - consider diversification"
+                                    },
+                                    reasoning=f"Position concentration of {concentration:.1%} exceeds diversification threshold",
+                                    timestamp=datetime.now()
+                                )
+                                if self._validate_suggestion(concentration_suggestion):
+                                    suggestions.append(concentration_suggestion)
+
+        except Exception as e:
+            logger.error(f"Error in position suggestions: {e}")
+
+        return suggestions
+
+    async def _generate_market_condition_suggestions(self, context: Dict[str, Any],
+                                                   session_id: str) -> List[ContextSuggestion]:
+        """
+        Generate suggestions based on market conditions.
+
+        Args:
+            context: Trading context
+            session_id: Session identifier
+
+        Returns:
+            List of market condition suggestions
+        """
+        suggestions = []
+
+        try:
+            # Trend analysis suggestions
+            trend = context.get('market_trend', '')
+            if trend and isinstance(trend, str):
+                if trend.lower() in ['bullish', 'bearish']:
+                    trend_suggestion = ContextSuggestion(
+                        suggestion_id=f"trend_{session_id}_{int(time.time())}",
+                        session_id=session_id,
+                        suggestion_type="strategy",
+                        confidence_score=0.70,
+                        content={
+                            "action": "align_with_trend",
+                            "trend": trend,
+                            "suggestion": f"Market showing {trend} trend - consider trend-following strategies"
+                        },
+                        reasoning=f"Market trend analysis indicates {trend} conditions",
+                        timestamp=datetime.now()
+                    )
+                    if self._validate_suggestion(trend_suggestion):
+                        suggestions.append(trend_suggestion)
+
+            # Volume analysis
+            volume = context.get('trading_volume', 0)
+            if volume is not None:
+                try:
+                    volume = float(volume)
+                    avg_volume = context.get('avg_volume', 0)
+                    if avg_volume and volume > avg_volume * 2:  # 2x average volume
+                        volume_suggestion = ContextSuggestion(
+                            suggestion_id=f"volume_{session_id}_{int(time.time())}",
+                            session_id=session_id,
+                            suggestion_type="opportunity",
+                            confidence_score=0.65,
+                            content={
+                                "action": "monitor_volume_spike",
+                                "current_volume": volume,
+                                "avg_volume": avg_volume,
+                                "suggestion": "Unusual trading volume detected - monitor for significant moves"
+                            },
+                            reasoning=f"Trading volume {volume:.0f} exceeds 2x average volume",
+                            timestamp=datetime.now()
+                        )
+                        if self._validate_suggestion(volume_suggestion):
+                            suggestions.append(volume_suggestion)
+                except (ValueError, TypeError):
+                    pass
+
+        except Exception as e:
+            logger.error(f"Error in market condition suggestions: {e}")
 
         return suggestions
