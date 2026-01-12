@@ -60,6 +60,48 @@ class ContractStorage:
             logger.info(f'ERROR: Error saving contract: {e}')
             return False
 
+    # IContractStorage interface implementation
+    def save_contract_data(self, agent_id: str, contract_data: dict[str, Any]) -> bool:
+        """Interface-compliant method for saving contract data."""
+        try:
+            # Prevent saving placeholder/default contracts
+            contract_title = contract_data.get('title', '')
+            if 'Default Contract' in contract_title:
+                logger.warning(f"🚫 Rejected attempt to save placeholder contract: {contract_title}")
+                return False
+
+            contracts = self.load_all_contracts()
+            contract_id = contract_data.get('contract_id', f"{agent_id}_{len(contracts)}")
+            contract_data['contract_id'] = contract_id
+            contracts[contract_id] = contract_data
+            self._write_json(self.contracts_file, contracts)
+
+            # Save to agent-specific file
+            agent_file = self.agent_contracts_dir / f'{agent_id}_contracts.json'
+            agent_contracts = self.load_agent_contracts(agent_id)
+            agent_contracts[contract_id] = contract_data
+            self._write_json(agent_file, agent_contracts)
+
+            logger.info(f"✅ Contract saved for agent {agent_id}: {contract_title}")
+            return True
+        except Exception as e:
+            logger.error(f"❌ Error saving contract data for agent {agent_id}: {e}")
+            return False
+
+    def load_contract_data(self, agent_id: str) -> dict[str, Any] | None:
+        """Interface-compliant method for loading contract data."""
+        try:
+            agent_contracts = self.load_agent_contracts(agent_id)
+            if agent_contracts:
+                # Return the most recent contract for the agent
+                latest_contract_id = max(agent_contracts.keys(),
+                                       key=lambda x: agent_contracts[x].get('last_updated', ''))
+                return agent_contracts[latest_contract_id]
+            return None
+        except Exception as e:
+            logger.error(f"❌ Error loading contract data for agent {agent_id}: {e}")
+            return None
+
     def load_contract(self, contract_id: str) ->(Contract | None):
         """Load specific contract."""
         try:
@@ -93,6 +135,14 @@ class ContractStorage:
         except Exception as e:
             logger.info(f'ERROR: Error getting all contracts: {e}')
             return []
+
+    def list_contracts(self) -> dict[str, dict[str, Any]]:
+        """Interface-compliant method to list all contracts."""
+        try:
+            return self.load_all_contracts()
+        except Exception as e:
+            logger.error(f"❌ Error listing contracts: {e}")
+            return {}
 
     def load_agent_contracts(self, agent_id: str) ->dict[str, dict[str, Any]]:
         """Load contracts for specific agent."""
