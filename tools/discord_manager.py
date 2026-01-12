@@ -257,6 +257,128 @@ class DiscordManager:
         if missing_webhooks:
             print(f"⚠️ MISSING WEBHOOKS: {', '.join(missing_webhooks)}")
 
+    def display_guild_info(self):
+        """Display Discord server (guild) information"""
+        if not self.guild:
+            print("❌ No guild information available. Run --setup or --view-channels first.")
+            return
+
+        print("\n🏰 DISCORD SERVER INFORMATION")
+        print("=" * 50)
+        print(f"📊 Server Name: {self.guild.name}")
+        print(f"🆔 Server ID: {self.guild.id}")
+        print(f"👑 Owner: {self.guild.owner}")
+        print(f"👥 Member Count: {self.guild.member_count}")
+        print(f"📅 Created: {self.guild.created_at.strftime('%Y-%m-%d %H:%M:%S UTC')}")
+        print(f"🌍 Region: {getattr(self.guild, 'preferred_locale', 'Unknown')}")
+        print(f"🔒 Verification Level: {self.guild.verification_level}")
+        print(f"🎭 Content Filter: {self.guild.explicit_content_filter}")
+
+        # Channel counts
+        text_channels = len([c for c in self.guild.channels if isinstance(c, discord.TextChannel)])
+        voice_channels = len([c for c in self.guild.channels if isinstance(c, discord.VoiceChannel)])
+        categories = len([c for c in self.guild.channels if isinstance(c, discord.CategoryChannel)])
+
+        print(f"\n📺 Channels: {text_channels} text, {voice_channels} voice, {categories} categories")
+
+        # Role count
+        print(f"👤 Roles: {len(self.guild.roles)}")
+
+        # Emoji count
+        print(f"😀 Emojis: {len(self.guild.emojis)}")
+
+    def display_channel_structure(self):
+        """Display the current channel structure of the Discord server"""
+        if not self.guild:
+            print("❌ No guild information available. Run --setup or --view-channels first.")
+            return
+
+        print("\n🏗️ DISCORD CHANNEL STRUCTURE")
+        print("=" * 60)
+
+        # Group channels by category
+        channels_by_category = {}
+        uncategorized = []
+
+        for channel in self.guild.channels:
+            if isinstance(channel, discord.CategoryChannel):
+                channels_by_category[channel] = []
+            elif hasattr(channel, 'category') and channel.category:
+                if channel.category not in channels_by_category:
+                    channels_by_category[channel.category] = []
+                channels_by_category[channel.category].append(channel)
+            else:
+                uncategorized.append(channel)
+
+        # Display categorized channels
+        for category, channels in channels_by_category.items():
+            print(f"\n📁 {category.name} (ID: {category.id})")
+            print("-" * 40)
+
+            for channel in sorted(channels, key=lambda c: c.position):
+                channel_type = "💬" if isinstance(channel, discord.TextChannel) else "🔊" if isinstance(channel, discord.VoiceChannel) else "❓"
+                topic = f" - {channel.topic[:50]}..." if hasattr(channel, 'topic') and channel.topic else ""
+                print(f"  {channel_type} {channel.name} (ID: {channel.id}){topic}")
+
+        # Display uncategorized channels
+        if uncategorized:
+            print(f"\n📂 UNCATEGORIZED CHANNELS")
+            print("-" * 40)
+            for channel in sorted(uncategorized, key=lambda c: c.position):
+                channel_type = "💬" if isinstance(channel, discord.TextChannel) else "🔊" if isinstance(channel, discord.VoiceChannel) else "❓"
+                topic = f" - {channel.topic[:50]}..." if hasattr(channel, 'topic') and channel.topic else ""
+                print(f"  {channel_type} {channel.name} (ID: {channel.id}){topic}")
+
+        # Summary
+        total_channels = len([c for c in self.guild.channels if not isinstance(c, discord.CategoryChannel)])
+        categories_count = len([c for c in self.guild.channels if isinstance(c, discord.CategoryChannel)])
+
+        print(f"\n📊 SUMMARY")
+        print("-" * 40)
+        print(f"📁 Categories: {categories_count}")
+        print(f"💬 Total Channels: {total_channels}")
+        print(f"🤖 Agent Channels: {len([c for c in self.guild.channels if isinstance(c, discord.TextChannel) and 'agent' in c.name.lower()])}")
+        print(f"🏗️ Infrastructure Channels: {len([c for c in self.guild.channels if isinstance(c, discord.TextChannel) and any(word in c.name.lower() for word in ['infra', 'infrastructure', 'deploy', 'deployment'])])}")
+
+    async def view_channels_only(self) -> bool:
+        """View current Discord channel structure without making changes"""
+        print("👀 DISCORD CHANNEL VIEWER")
+        print("=" * 50)
+
+        if not self.token:
+            print("❌ ERROR: No Discord token found.")
+            print("Set DISCORD_TOKEN or DISCORD_BOT_TOKEN environment variable.")
+            return False
+
+        print("🔗 Connecting to Discord...")
+        success = False
+
+        try:
+            # Create bot with necessary intents
+            intents = discord.Intents.default()
+            intents.guilds = True
+            intents.messages = True
+            intents.message_content = True
+
+            self.bot = commands.Bot(command_prefix='!', intents=intents)
+
+            @self.bot.event
+            async def on_ready():
+                nonlocal success
+                logger.info(f"✅ Discord bot connected as {self.bot.user}")
+                await self._gather_guild_info()
+                self.display_guild_info()
+                self.display_channel_structure()
+                await self.bot.close()
+                success = True
+
+            await self.bot.start(self.token)
+            return success
+
+        except Exception as e:
+            logger.error(f"❌ Failed to connect to Discord: {e}")
+            return False
+
     async def setup_discord_integration(self) -> bool:
         """Complete Discord integration setup"""
         print("🚀 DISCORD MANAGER - AUTOMATED SETUP")
@@ -311,6 +433,8 @@ def main():
     parser.add_argument("--setup", action="store_true", help="Run automated setup")
     parser.add_argument("--config-only", action="store_true", help="Generate config without connecting")
     parser.add_argument("--check-token", action="store_true", help="Check current token status")
+    parser.add_argument("--view-channels", action="store_true", help="View current Discord server channel structure")
+    parser.add_argument("--view-guild", action="store_true", help="View Discord server information")
 
     args = parser.parse_args()
 
@@ -341,6 +465,18 @@ def main():
             print("2. Add to .env file: DISCORD_BOT_TOKEN=your_token")
             print("3. Command line: --token YOUR_TOKEN")
 
+    elif args.view_channels:
+        # View current channel structure
+        asyncio.run(manager.view_channels_only())
+
+    elif args.view_guild:
+        # View guild information and channels
+        print("🏰 VIEWING DISCORD GUILD INFORMATION")
+        print("=" * 50)
+        success = asyncio.run(manager.view_channels_only())
+        if not success:
+            print("❌ Failed to retrieve guild information")
+
     elif args.setup:
         # Run automated setup
         asyncio.run(manager.setup_discord_integration())
@@ -352,6 +488,8 @@ def main():
         print("Usage:")
         print("  python discord_manager.py --setup                    # Automated setup")
         print("  python discord_manager.py --check-token             # Check token status")
+        print("  python discord_manager.py --view-channels           # View channel structure")
+        print("  python discord_manager.py --view-guild              # View server info + channels")
         print("  python discord_manager.py --token YOUR_TOKEN --setup # Setup with specific token")
         print("\nEnsure your bot token has these permissions:")
         print("  • Manage Channels")
