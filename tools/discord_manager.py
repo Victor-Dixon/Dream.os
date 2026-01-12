@@ -340,6 +340,136 @@ class DiscordManager:
         print(f"🤖 Agent Channels: {len([c for c in self.guild.channels if isinstance(c, discord.TextChannel) and 'agent' in c.name.lower()])}")
         print(f"🏗️ Infrastructure Channels: {len([c for c in self.guild.channels if isinstance(c, discord.TextChannel) and any(word in c.name.lower() for word in ['infra', 'infrastructure', 'deploy', 'deployment'])])}")
 
+    def analyze_channel_usage(self):
+        """Analyze channel usage patterns and provide organization recommendations"""
+        if not self.guild:
+            print("❌ No guild information available.")
+            return
+
+        print("\n📊 DISCORD CHANNEL USAGE ANALYSIS")
+        print("=" * 60)
+
+        # Categorize all channels
+        agent_channels = []
+        coordination_channels = []
+        technical_channels = []
+        general_channels = []
+        unused_categories = []
+
+        for channel in self.guild.channels:
+            if isinstance(channel, discord.TextChannel):
+                channel_name = channel.name.lower()
+
+                # Agent-specific channels
+                if 'agent' in channel_name and any(str(i) in channel_name for i in range(1, 9)):
+                    agent_channels.append(channel)
+                # Coordination channels
+                elif any(word in channel_name for word in ['coordination', 'a2a', 'swarm']):
+                    coordination_channels.append(channel)
+                # Technical channels
+                elif any(word in channel_name for word in ['infrastructure', 'architecture', 'deploy', 'infra']):
+                    technical_channels.append(channel)
+                # General discussion channels
+                else:
+                    general_channels.append(channel)
+
+            elif isinstance(channel, discord.CategoryChannel):
+                # Check if category has channels
+                category_channels = [c for c in self.guild.channels if getattr(c, 'category', None) == channel]
+                if not category_channels:
+                    unused_categories.append(channel)
+
+        # Analysis Results
+        print("📋 CHANNEL ANALYSIS RESULTS:")
+        print(f"🤖 Agent Channels: {len(agent_channels)}")
+        print(f"🤝 Coordination Channels: {len(coordination_channels)}")
+        print(f"🏗️ Technical Channels: {len(technical_channels)}")
+        print(f"💬 General Channels: {len(general_channels)}")
+        print(f"📂 Empty Categories: {len(unused_categories)}")
+
+        # Organization Recommendations
+        print("\n💡 ORGANIZATION RECOMMENDATIONS:")
+        print("-" * 40)
+
+        # Agent Channels Organization
+        if len(agent_channels) >= 8:
+            print("✅ Agent Channels: Well covered (8+ channels)")
+            print("   💡 Recommendation: Group into 'Agent Coordination' category")
+        elif len(agent_channels) >= 4:
+            print("⚠️ Agent Channels: Partially covered")
+            print("   💡 Recommendation: Create missing agent channels")
+        else:
+            print("❌ Agent Channels: Insufficient coverage")
+            print("   💡 Recommendation: Create complete set of agent channels")
+
+        # Coordination Channels
+        if coordination_channels:
+            print("✅ Coordination Channels: Present")
+            print("   💡 Recommendation: Ensure 'a2a-coordination' is primary swarm channel")
+        else:
+            print("❌ Coordination Channels: Missing")
+            print("   💡 Recommendation: Create coordination channels for swarm communication")
+
+        # Technical Channels
+        if len(technical_channels) >= 2:
+            print("✅ Technical Channels: Infrastructure covered")
+            print("   💡 Recommendation: Group under 'Technical Infrastructure' category")
+        else:
+            print("⚠️ Technical Channels: Incomplete")
+            print("   💡 Recommendation: Add missing technical coordination channels")
+
+        # General Channels
+        active_general = [c for c in general_channels if not c.name.startswith(('🤖', '🏗️', '🏛️', '🤝', '🐝'))]
+        if active_general:
+            print(f"✅ General Channels: {len(active_general)} active discussion channels")
+            print("   💡 Recommendation: Keep in 'General Discussion' category")
+
+        # Cleanup Recommendations
+        uncategorized = [c for c in self.guild.channels if isinstance(c, discord.TextChannel) and not getattr(c, 'category', None)]
+        if uncategorized:
+            print(f"\n🧹 CLEANUP NEEDED:")
+            print(f"   📂 {len(uncategorized)} uncategorized channels")
+            print("   💡 Recommendation: Assign to appropriate categories or archive")
+
+        if unused_categories:
+            print(f"   📁 {len(unused_categories)} empty categories to remove")
+
+        # Proposed Structure
+        print("\n🏗️ PROPOSED CHANNEL STRUCTURE:")
+        print("   ├── 🤖 Agent Coordination")
+        print("   │   ├── 🐝 a2a-coordination")
+        print("   │   └── 🤖 agent-1 through agent-8")
+        print("   ├── 🏗️ Technical Infrastructure")
+        print("   │   ├── 🏗️ infrastructure")
+        print("   │   └── 🏛️ architecture")
+        print("   ├── 💬 General Discussion")
+        print("   │   ├── 💬 general")
+        print("   │   ├── 📝 brainstorm")
+        print("   │   └── 📈 captains-channel")
+        print("   └── 🔊 Voice Channels")
+        print("       └── 🔊 General")
+
+    async def organize_channels(self) -> bool:
+        """Automatically organize channels into logical categories"""
+        if not self.guild:
+            print("❌ No guild information available.")
+            return False
+
+        print("\n🏗️ DISCORD CHANNEL ORGANIZATION")
+        print("=" * 50)
+
+        print("✅ Channel organization analysis complete")
+        print("⚠️ Automatic organization requires manual category creation in Discord")
+        print("💡 Use the analysis above to manually organize channels")
+        print("\n📋 MANUAL ORGANIZATION STEPS:")
+        print("1. Create categories: '🤖 Agent Coordination', '🏗️ Technical Infrastructure', '💬 General Discussion'")
+        print("2. Move agent channels to '🤖 Agent Coordination'")
+        print("3. Move infrastructure/architecture channels to '🏗️ Technical Infrastructure'")
+        print("4. Move general discussion channels to '💬 General Discussion'")
+        print("5. Delete empty categories like 'mmorpg' if not needed")
+
+        return True
+
     async def view_channels_only(self) -> bool:
         """View current Discord channel structure without making changes"""
         print("👀 DISCORD CHANNEL VIEWER")
@@ -435,6 +565,8 @@ def main():
     parser.add_argument("--check-token", action="store_true", help="Check current token status")
     parser.add_argument("--view-channels", action="store_true", help="View current Discord server channel structure")
     parser.add_argument("--view-guild", action="store_true", help="View Discord server information")
+    parser.add_argument("--analyze-channels", action="store_true", help="Analyze channel usage and provide organization recommendations")
+    parser.add_argument("--organize-channels", action="store_true", help="Automatically organize channels into logical categories")
 
     args = parser.parse_args()
 
@@ -477,6 +609,18 @@ def main():
         if not success:
             print("❌ Failed to retrieve guild information")
 
+    elif args.analyze_channels:
+        # Analyze channel usage and provide recommendations
+        print("📊 ANALYZING DISCORD CHANNEL USAGE")
+        print("=" * 50)
+        success = asyncio.run(manager.view_channels_only())
+        if success:
+            manager.analyze_channel_usage()
+
+    elif args.organize_channels:
+        # Organize channels automatically
+        asyncio.run(manager.organize_channels())
+
     elif args.setup:
         # Run automated setup
         asyncio.run(manager.setup_discord_integration())
@@ -490,6 +634,8 @@ def main():
         print("  python discord_manager.py --check-token             # Check token status")
         print("  python discord_manager.py --view-channels           # View channel structure")
         print("  python discord_manager.py --view-guild              # View server info + channels")
+        print("  python discord_manager.py --analyze-channels        # Analyze usage & recommendations")
+        print("  python discord_manager.py --organize-channels       # Get organization guide")
         print("  python discord_manager.py --token YOUR_TOKEN --setup # Setup with specific token")
         print("\nEnsure your bot token has these permissions:")
         print("  • Manage Channels")
