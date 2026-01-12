@@ -325,19 +325,9 @@ class RobinhoodBroker:
 
             logger.info(f"Retrieved {len(positions)} options positions for {self.username}")
             return positions
-                {
-                    "symbol": "TSLA",
-                    "type": "put",
-                    "strike": 220.0,
-                    "expiration": "2024-03-22",
-                    "quantity": 3,
-                    "avg_cost": 4.15,
-                    "current_price": 2.80,
-                    "pnl": -40.35
-                }
-            ]
         except Exception as e:
             logger.error(f"Failed to get options positions: {e}")
+            return []
             return []
 
 
@@ -402,4 +392,4 @@ Trading Activity:
    Average Trade Size: ${stats.avg_trade_size:,.2f}
    Total Commissions: ${stats.total_commissions:,.2f}
    Trading Days: {stats.total_days_trading}
-   Average Daily P&L: ${stats.avg_daily_pnl:,.2f}
+   Average Daily P&L: ${stats.avg_daily_pnl:,.2f}"""

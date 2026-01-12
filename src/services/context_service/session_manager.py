@@ -528,11 +528,11 @@ class SessionManager:
                 FROM context_sessions
             """)
 
-        return {
-            **self.stats,
-            **dict(db_stats) if db_stats else {},
-            "timestamp": datetime.now().isoformat()
-        }
+        stats_dict = self.stats.copy()
+        if db_stats:
+            stats_dict.update(dict(db_stats))
+        stats_dict["timestamp"] = datetime.now().isoformat()
+        return stats_dict
 
     # Private helper methods
 
