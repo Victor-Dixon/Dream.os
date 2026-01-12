@@ -62,35 +62,97 @@ class TaskHandler(UnifiedHandler):
     async def _execute_command(self, command: str, args) -> dict:
         """Execute the actual command logic (required by UnifiedHandler)."""
         # Individual handlers now return dict results for consistency
+        # Enhanced error handling with categorization and recovery suggestions
         try:
             # Import lightweight task repository (avoids heavy infrastructure dependencies)
             from ..helpers.task_repo_loader import SimpleTaskRepository
 
-            # Initialize repository
-            repo = SimpleTaskRepository()
+            # Initialize repository with error handling
+            try:
+                repo = SimpleTaskRepository()
+            except Exception as repo_error:
+                logger.error(f"Failed to initialize task repository: {repo_error}")
+                return self._create_error_result(
+                    command,
+                    "repository_initialization_failed",
+                    str(repo_error),
+                    "Check database connectivity and task repository configuration"
+                )
 
             # Get current agent ID (from args or environment)
-            current_agent = self._get_current_agent(args)
+            try:
+                current_agent = self._get_current_agent(args)
+            except Exception as agent_error:
+                logger.error(f"Failed to determine agent ID: {agent_error}")
+                return self._create_error_result(
+                    command,
+                    "agent_identification_failed",
+                    str(agent_error),
+                    "Set AGENT_ID environment variable or pass --agent flag"
+                )
 
             # Route to appropriate handler (now returns dict results)
-            if command == "get_next_task":
-                result = self._handle_get_next_task_sync(args, repo, current_agent)
-            elif command == "list_tasks":
-                result = self._handle_list_tasks_sync(args, repo)
-            elif command == "task_status":
-                result = self._handle_task_status_sync(args, repo)
-            elif command == "complete_task":
-                result = self._handle_complete_task_sync(args, repo, current_agent)
-            else:
-                raise ValueError(f"Unknown command: {command}")
+            try:
+                if command == "get_next_task":
+                    result = self._handle_get_next_task_sync(args, repo, current_agent)
+                elif command == "list_tasks":
+                    result = self._handle_list_tasks_sync(args, repo)
+                elif command == "task_status":
+                    result = self._handle_task_status_sync(args, repo)
+                elif command == "complete_task":
+                    result = self._handle_complete_task_sync(args, repo, current_agent)
+                else:
+                    return self._create_error_result(
+                        command,
+                        "unknown_command",
+                        f"Unknown command: {command}",
+                        f"Supported commands: get_next_task, list_tasks, task_status, complete_task"
+                    )
+            except ValueError as validation_error:
+                logger.error(f"Validation error in {command}: {validation_error}")
+                return self._create_error_result(
+                    command,
+                    "validation_error",
+                    str(validation_error),
+                    "Check command arguments and parameters"
+                )
+            except PermissionError as permission_error:
+                logger.error(f"Permission error in {command}: {permission_error}")
+                return self._create_error_result(
+                    command,
+                    "permission_denied",
+                    str(permission_error),
+                    "Check agent permissions for task operations"
+                )
+            except ConnectionError as connection_error:
+                logger.error(f"Connection error in {command}: {connection_error}")
+                return self._create_error_result(
+                    command,
+                    "connection_failed",
+                    str(connection_error),
+                    "Check database and service connectivity"
+                )
+            except Exception as handler_error:
+                logger.error(f"Handler error in {command}: {handler_error}")
+                return self._create_error_result(
+                    command,
+                    "handler_execution_failed",
+                    str(handler_error),
+                    "Check handler implementation and dependencies"
+                )
 
             # Ensure result includes command type
             result['command'] = command
             return result
 
         except Exception as e:
-            logger.error(f"Error executing {command}: {e}")
-            return {'success': False, 'error': str(e), 'command': command}
+            logger.error(f"Unexpected error executing {command}: {e}")
+            return self._create_error_result(
+                command,
+                "unexpected_error",
+                str(e),
+                "Contact system administrator - unexpected error occurred"
+            )
 
     def _get_command_type(self, args) -> str:
         """Get command type string for tracking."""
@@ -106,19 +168,41 @@ class TaskHandler(UnifiedHandler):
             return "unknown"
 
     def _get_current_agent(self, args) -> str:
-        """Get current agent ID from args or environment."""
+        """Get current agent ID from args or environment with validation."""
         # Check if --agent flag was passed
         if hasattr(args, "agent") and args.agent:
-            return args.agent
+            agent_id = args.agent
+        else:
+            # Check environment variable
+            agent_id = os.getenv("AGENT_ID")
 
-        # Check environment variable
-        agent_id = os.getenv("AGENT_ID")
+        # Validate agent ID format
         if agent_id:
+            # Basic validation - should start with "Agent-" and have a number
+            if not (agent_id.startswith("Agent-") and len(agent_id) > 6):
+                logger.warning(f"⚠️ Agent ID format may be invalid: {agent_id}")
             return agent_id
 
         # Default to Agent-1 for testing
         logger.warning("⚠️ No agent ID specified, using Agent-1 as default")
         return "Agent-1"
+
+    def _validate_task_id(self, task_id: str) -> bool:
+        """Validate task ID format.
+
+        Args:
+            task_id: Task ID to validate
+
+        Returns:
+            True if valid, False otherwise
+        """
+        if not task_id or not isinstance(task_id, str):
+            return False
+
+        # Task IDs should be non-empty strings, typically UUIDs or simple identifiers
+        # For now, just check it's not empty and contains valid characters
+        import re
+        return bool(re.match(r'^[a-zA-Z0-9_-]+$', task_id))
 
     def _handle_get_next_task_sync(self, args, repo, agent_id: str) -> dict:
         """Handle --get-next-task command."""
@@ -311,17 +395,28 @@ class TaskHandler(UnifiedHandler):
         task_id = args.task_status
         logger.info(f"📊 Checking status of task {task_id}...")
 
+        # Validate task ID format
+        if not self._validate_task_id(task_id):
+            logger.error(f"❌ Invalid task ID format: {task_id}")
+            return self._create_error_result(
+                "task_status",
+                "invalid_task_id",
+                f"Invalid task ID format: {task_id}",
+                "Task IDs should contain only alphanumeric characters, hyphens, and underscores"
+            )
+
         try:
             task = repo.get(task_id)
 
             if not task:
                 logger.error(f"❌ Task {task_id} not found")
                 self.exit_code = 1
-                return {
-                    'success': False,
-                    'error': f'Task {task_id} not found',
-                    'task_id': task_id
-                }
+                return self._create_error_result(
+                    "task_status",
+                    "task_not_found",
+                    f'Task {task_id} not found',
+                    "Verify the task ID is correct and the task exists"
+                )
 
             # Display task status
             print("\n" + "=" * 60)
@@ -370,29 +465,40 @@ class TaskHandler(UnifiedHandler):
         task_id = args.complete_task
         logger.info(f"✅ Completing task {task_id}...")
 
+        # Validate task ID format
+        if not self._validate_task_id(task_id):
+            logger.error(f"❌ Invalid task ID format: {task_id}")
+            return self._create_error_result(
+                "complete_task",
+                "invalid_task_id",
+                f"Invalid task ID format: {task_id}",
+                "Task IDs should contain only alphanumeric characters, hyphens, and underscores"
+            )
+
         try:
             task = repo.get(task_id)
 
             if not task:
                 logger.error(f"❌ Task {task_id} not found")
                 self.exit_code = 1
-                return {
-                    'success': False,
-                    'error': f'Task {task_id} not found',
-                    'task_id': task_id
-                }
+                return self._create_error_result(
+                    "complete_task",
+                    "task_not_found",
+                    f'Task {task_id} not found',
+                    "Verify the task ID is correct and the task exists"
+                )
 
             # Verify task is assigned to this agent
             if task.assigned_agent_id != agent_id:
                 logger.error(f"❌ Task {task_id} is not assigned to {agent_id}")
                 logger.info(f"💡 Task is assigned to: {task.assigned_agent_id}")
                 self.exit_code = 1
-                return {
-                    'success': False,
-                    'error': f'Task {task_id} is not assigned to {agent_id}',
-                    'task_id': task_id,
-                    'assigned_to': task.assigned_agent_id
-                }
+                return self._create_error_result(
+                    "complete_task",
+                    "task_not_assigned_to_agent",
+                    f'Task {task_id} is not assigned to {agent_id}',
+                    f"Task is assigned to {task.assigned_agent_id}. Only the assigned agent can complete it."
+                )
 
             # Complete the task
             task.complete()
@@ -513,3 +619,27 @@ class TaskHandler(UnifiedHandler):
             return "🔄 In Progress"
         else:
             return "🆕 Pending"
+
+    def _create_error_result(self, command: str, error_type: str, error_message: str,
+                           recovery_suggestion: str) -> dict:
+        """Create a standardized error result dict with categorization and recovery guidance.
+
+        Args:
+            command: The command that failed
+            error_type: Categorized error type (e.g., 'validation_error', 'permission_denied')
+            error_message: Detailed error message
+            recovery_suggestion: User-friendly recovery guidance
+
+        Returns:
+            Standardized error result dictionary
+        """
+        return {
+            'success': False,
+            'command': command,
+            'error': {
+                'type': error_type,
+                'message': error_message,
+                'recovery_suggestion': recovery_suggestion,
+                'timestamp': datetime.now().isoformat()
+            }
+        }

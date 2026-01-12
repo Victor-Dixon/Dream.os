@@ -92,14 +92,29 @@ class AIContextEngine(BaseService):
         logger.info("🧠 AI Context Engine initialized (V2 Compliant)")
 
     def _init_context_processors(self) -> Dict[str, ContextProcessor]:
-        """Initialize context processors."""
-        return {
-            'trading': TradingContextProcessor(),
-            'collaboration': CollaborationContextProcessor(),
-            'analysis': AnalysisContextProcessor(),
-            'risk': RiskContextProcessor(),
-            'ux': UXContextProcessor()
+        """Initialize context processors with error handling."""
+        processors = {}
+        processor_classes = {
+            'trading': TradingContextProcessor,
+            'collaboration': CollaborationContextProcessor,
+            'analysis': AnalysisContextProcessor,
+            'risk': RiskContextProcessor,
+            'ux': UXContextProcessor
         }
+
+        for name, processor_class in processor_classes.items():
+            try:
+                processors[name] = processor_class()
+                logger.debug(f"✅ Initialized context processor: {name}")
+            except Exception as e:
+                logger.error(f"❌ Failed to initialize context processor {name}: {e}")
+                # Continue with other processors even if one fails
+                continue
+
+        if not processors:
+            logger.warning("⚠️ No context processors could be initialized")
+
+        return processors
 
     def _init_performance_stats(self) -> Dict[str, Any]:
         """Initialize performance tracking statistics."""
@@ -163,7 +178,7 @@ class AIContextEngine(BaseService):
     async def update_session_context(self, session_id: str,
                                    context_updates: Dict[str, Any]) -> Dict[str, Any]:
         """
-        Update context data for an active session.
+        Update context data for an active session with enhanced validation and error handling.
 
         Navigation:
         ├── Uses: SessionManager for session access, ContextProcessor for suggestions
@@ -177,37 +192,97 @@ class AIContextEngine(BaseService):
         Returns:
             Updated context data and any new suggestions
         """
-        session = self.session_manager.get_session(session_id)
-        if not session:
-            raise ValueError(f"Session {session_id} not found")
+        try:
+            # Validate inputs
+            if not session_id or not isinstance(session_id, str):
+                raise ValueError("Invalid session_id: must be non-empty string")
 
-        await self.session_manager.update_session_activity(session_id)
+            if not isinstance(context_updates, dict):
+                raise ValueError("Invalid context_updates: must be dictionary")
 
-        # Update context data
-        session.context_data.update(context_updates)
+            # Get session with error handling
+            session = self.session_manager.get_session(session_id)
+            if not session:
+                logger.warning(f"Session {session_id} not found for context update")
+                return {
+                    'error': 'Session not found',
+                    'session_id': session_id
+                }
 
-        # Process context and generate suggestions
-        start_time = time.time()
-        suggestions = await self._process_context(session)
-        processing_time = time.time() - start_time
+            # Validate session state
+            if session.status != 'active':
+                logger.warning(f"Attempted to update inactive session {session_id}")
+                return {
+                    'error': f'Session is {session.status}',
+                    'session_id': session_id
+                }
 
-        # Update performance metrics
-        session.performance_metrics['last_processing_time'] = processing_time
-        self.performance_stats['processing_time_avg'] = (
-            (self.performance_stats['processing_time_avg'] * 0.9) + (processing_time * 0.1)
-        )
+            # Update session activity
+            await self.session_manager.update_session_activity(session_id)
 
-        # Add suggestions to session
-        for suggestion in suggestions:
-            session.ai_suggestions.append(asdict(suggestion))
-            self.performance_stats['suggestions_generated'] += 1
+            # Validate and sanitize context updates
+            validated_updates = self._validate_context_updates(context_updates)
+            if not validated_updates:
+                logger.warning(f"No valid context updates provided for session {session_id}")
+                return {
+                    'session_id': session_id,
+                    'updated_context': session.context_data,
+                    'new_suggestions': [],
+                    'processing_time': 0.0
+                }
 
-        return {
-            'session_id': session_id,
-            'updated_context': session.context_data,
-            'new_suggestions': [asdict(s) for s in suggestions],
-            'processing_time': processing_time
-        }
+            # Update context data
+            session.context_data.update(validated_updates)
+
+            # Process context and generate suggestions with timeout protection
+            start_time = time.time()
+            try:
+                suggestions = await asyncio.wait_for(
+                    self._process_context(session),
+                    timeout=30.0  # 30 second timeout for context processing
+                )
+            except asyncio.TimeoutError:
+                logger.error(f"Context processing timeout for session {session_id}")
+                suggestions = []
+            except Exception as e:
+                logger.error(f"Context processing error for session {session_id}: {e}")
+                suggestions = []
+
+            processing_time = time.time() - start_time
+
+            # Update performance metrics
+            session.performance_metrics['last_processing_time'] = processing_time
+            self.performance_stats['processing_time_avg'] = (
+                (self.performance_stats['processing_time_avg'] * 0.9) + (processing_time * 0.1)
+            )
+
+            # Add suggestions to session with validation
+            valid_suggestions = []
+            for suggestion in suggestions:
+                try:
+                    if self._validate_suggestion(suggestion):
+                        session.ai_suggestions.append(asdict(suggestion))
+                        valid_suggestions.append(asdict(suggestion))
+                        self.performance_stats['suggestions_generated'] += 1
+                except Exception as e:
+                    logger.error(f"Invalid suggestion format: {e}")
+                    continue
+
+            logger.info(f"✅ Updated context for session {session_id}: {len(validated_updates)} updates, {len(valid_suggestions)} suggestions")
+
+            return {
+                'session_id': session_id,
+                'updated_context': session.context_data,
+                'new_suggestions': valid_suggestions,
+                'processing_time': processing_time
+            }
+
+        except Exception as e:
+            logger.error(f"Failed to update session context {session_id}: {e}")
+            return {
+                'error': str(e),
+                'session_id': session_id
+            }
 
     async def get_session_context(self, session_id: str) -> Optional[Dict[str, Any]]:
         """
@@ -257,9 +332,67 @@ class AIContextEngine(BaseService):
         self.performance_stats['active_sessions'] -= 1
         return session_summary
 
+    def _validate_context_updates(self, updates: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Validate and sanitize context updates.
+
+        Args:
+            updates: Raw context updates
+
+        Returns:
+            Validated and sanitized updates
+        """
+        validated = {}
+
+        for key, value in updates.items():
+            # Basic validation - ensure keys are strings and values are serializable
+            if not isinstance(key, str) or not key:
+                logger.warning(f"Skipping invalid context key: {key}")
+                continue
+
+            try:
+                # Test JSON serializability
+                import json
+                json.dumps({key: value})
+                validated[key] = value
+            except (TypeError, ValueError) as e:
+                logger.warning(f"Skipping non-serializable context value for key {key}: {e}")
+                continue
+
+        return validated
+
+    def _validate_suggestion(self, suggestion: ContextSuggestion) -> bool:
+        """
+        Validate suggestion format and content.
+
+        Args:
+            suggestion: Suggestion to validate
+
+        Returns:
+            True if suggestion is valid
+        """
+        required_fields = ['suggestion_id', 'type', 'content', 'confidence']
+        if not hasattr(suggestion, '__dict__'):
+            return False
+
+        suggestion_dict = suggestion.__dict__ if hasattr(suggestion, '__dict__') else suggestion
+
+        for field in required_fields:
+            if field not in suggestion_dict:
+                logger.warning(f"Suggestion missing required field: {field}")
+                return False
+
+        # Validate confidence is between 0 and 1
+        confidence = suggestion_dict.get('confidence', 0)
+        if not isinstance(confidence, (int, float)) or not (0 <= confidence <= 1):
+            logger.warning(f"Invalid suggestion confidence: {confidence}")
+            return False
+
+        return True
+
     async def _process_context(self, session: ContextSession) -> List[ContextSuggestion]:
         """
-        Process context and generate AI suggestions.
+        Process context and generate AI suggestions with error handling.
 
         Navigation:
         ├── Uses: ContextProcessor subclasses from context_processors module
@@ -272,8 +405,23 @@ class AIContextEngine(BaseService):
             logger.warning(f"Unknown context type: {context_type}")
             return []
 
-        processor = self.context_processors[context_type]
-        return await processor.process(session)
+        try:
+            processor = self.context_processors[context_type]
+            suggestions = await processor.process(session)
+
+            # Validate all suggestions
+            valid_suggestions = []
+            for suggestion in suggestions:
+                if self._validate_suggestion(suggestion):
+                    valid_suggestions.append(suggestion)
+                else:
+                    logger.warning(f"Filtered out invalid suggestion from {context_type} processor")
+
+            return valid_suggestions
+
+        except Exception as e:
+            logger.error(f"Context processing failed for {context_type}: {e}")
+            return []
 
 
     def get_performance_stats(self) -> Dict[str, Any]:

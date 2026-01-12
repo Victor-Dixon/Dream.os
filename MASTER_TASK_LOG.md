@@ -10,7 +10,7 @@
 ## INBOX
 ### New Tasks (Unclaimed)
 
-- [ ] **HIGH** (100 pts): [WEB] nextend-facebook-connect - Fix empty index.html file (critical plugin directory issue). Source: Website discovery scan. Justification: File exists but empty, site non-functional. Proof: runtime/task_discovery/websites_findings.json. [UNCLAIMED]
+- [x] **HIGH** (100 pts): [WEB] nextend-facebook-connect - Fix empty index.html file (critical plugin directory issue). Source: Website discovery scan. Justification: File exists but empty, site non-functional. Proof: runtime/task_discovery/websites_findings.json. [COMPLETED by Agent-2]
 
 - [ ] **MEDIUM** (75 pts): [WEB] ariajet.site - Add SEO metadata (missing meta description). Source: Website discovery scan. Justification: Quick SEO win, improves discoverability. Proof: runtime/task_discovery/websites_findings.json. [UNCLAIMED]
 
