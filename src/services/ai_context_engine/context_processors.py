@@ -32,6 +32,12 @@ from datetime import datetime
 from pathlib import Path
 import logging
 
+try:
+    import numpy as np
+except ImportError:
+    np = None
+    logging.warning("NumPy not available, risk calculations may be limited")
+
 from .models import ContextSession, ContextSuggestion
 from .suggestion_generators import SuggestionGenerators
 from src.services.risk_analytics.risk_calculator_service import RiskCalculatorService
@@ -83,7 +89,7 @@ class TradingContextProcessor(ContextProcessor):
 
     async def process(self, session: ContextSession) -> List[ContextSuggestion]:
         """
-        Process trading context with risk integration.
+        Process trading context with risk integration and enhanced error handling.
 
         Navigation:
         ├── Calls: RiskCalculatorService.calculate_comprehensive_risk_metrics()
@@ -92,36 +98,73 @@ class TradingContextProcessor(ContextProcessor):
         """
         suggestions = []
 
-        # Extract trading data
-        context = session.context_data
-        positions = context.get('positions', [])
+        try:
+            # Validate session data
+            if not session or not hasattr(session, 'context_data'):
+                logger.warning("Invalid session provided to TradingContextProcessor")
+                return suggestions
 
-        # Calculate risk metrics if we have position data
-        if positions:
+            # Extract and validate trading data
+            context = session.context_data or {}
+            positions = context.get('positions', [])
+
+            # Validate positions data
+            if positions and not isinstance(positions, list):
+                logger.warning("Invalid positions data format in trading context")
+                positions = []
+
+            # Calculate risk metrics if we have sufficient position data
+            if positions and len(positions) > 0:
+                try:
+                    # Convert positions to returns for risk calculation
+                    returns = self._extract_returns_from_positions(positions)
+                    if len(returns) >= 30:
+                        # Validate equity values
+                        equity_values = []
+                        for p in positions:
+                            equity = p.get('equity', 10000)
+                            if isinstance(equity, (int, float)) and equity > 0:
+                                equity_values.append(equity)
+
+                        if equity_values:
+                            risk_metrics = self.risk_calculator.calculate_comprehensive_risk_metrics(
+                                np.array(returns),
+                                np.array(equity_values)
+                            )
+                            session.risk_metrics = risk_metrics
+
+                            # Generate risk-based suggestions with error handling
+                            try:
+                                risk_suggestions = await self.suggestion_generators.generate_risk_suggestions(
+                                    risk_metrics, context, session.session_id)
+                                if risk_suggestions and isinstance(risk_suggestions, list):
+                                    suggestions.extend(risk_suggestions)
+                            except Exception as e:
+                                logger.error(f"Risk suggestions generation failed: {e}")
+
+                except Exception as e:
+                    logger.error(f"Risk calculation error: {e}")
+
+            # Generate trading-specific suggestions with error handling
             try:
-                # Convert positions to returns for risk calculation
-                returns = self._extract_returns_from_positions(positions)
-                if len(returns) >= 30:
-                    risk_metrics = self.risk_calculator.calculate_comprehensive_risk_metrics(
-                        np.array(returns),
-                        np.array([p.get('equity', 10000) for p in positions])
-                    )
-                    session.risk_metrics = risk_metrics
-
-                    # Generate risk-based suggestions
-                    risk_suggestions = await self.suggestion_generators.generate_risk_suggestions(
-                        risk_metrics, context, session.session_id)
-                    suggestions.extend(risk_suggestions)
-
+                trading_suggestions = await self.suggestion_generators.generate_trading_suggestions(
+                    context, session.session_id)
+                if trading_suggestions and isinstance(trading_suggestions, list):
+                    suggestions.extend(trading_suggestions)
             except Exception as e:
-                logger.error(f"Risk calculation error: {e}")
+                logger.error(f"Trading suggestions generation failed: {e}")
 
-        # Generate trading-specific suggestions
-        trading_suggestions = await self.suggestion_generators.generate_trading_suggestions(
-            context, session.session_id)
-        suggestions.extend(trading_suggestions)
+        except Exception as e:
+            logger.error(f"Trading context processing failed: {e}")
 
-        return suggestions
+        # Validate all suggestions before returning
+        valid_suggestions = []
+        for suggestion in suggestions:
+            if self._validate_suggestion(suggestion):
+                valid_suggestions.append(suggestion)
+
+        logger.info(f"TradingContextProcessor generated {len(valid_suggestions)} valid suggestions")
+        return valid_suggestions
 
     def _extract_returns_from_positions(self, positions: List[Dict[str, Any]]) -> List[float]:
         """
@@ -142,6 +185,35 @@ class TradingContextProcessor(ContextProcessor):
 
         return returns if returns else [0.0]
 
+    def _validate_suggestion(self, suggestion: Any) -> bool:
+        """
+        Validate suggestion format and content.
+
+        Args:
+            suggestion: Suggestion to validate
+
+        Returns:
+            True if suggestion is valid
+        """
+        if not suggestion:
+            return False
+
+        required_attrs = ['suggestion_id', 'type', 'content', 'confidence']
+        if not hasattr(suggestion, '__dict__'):
+            return False
+
+        suggestion_dict = suggestion.__dict__
+        for attr in required_attrs:
+            if attr not in suggestion_dict:
+                return False
+
+        # Validate confidence
+        confidence = suggestion_dict.get('confidence', 0)
+        if not isinstance(confidence, (int, float)) or not (0 <= confidence <= 1):
+            return False
+
+        return True
+
 
 class CollaborationContextProcessor(ContextProcessor):
     """
@@ -155,36 +227,105 @@ class CollaborationContextProcessor(ContextProcessor):
 
     async def process(self, session: ContextSession) -> List[ContextSuggestion]:
         """
-        Process collaborative context for real-time collaboration.
+        Process collaborative context for real-time collaboration with enhanced error handling.
 
         Navigation:
         ├── Related: ai_context_websocket.py collaboration features
         └── Uses: session collaborators data, current activity tracking
         """
-        context = session.context_data
-        collaborators = context.get('collaborators', [])
-        current_activity = context.get('current_activity', '')
-
         suggestions = []
 
-        # Generate collaboration suggestions
-        if len(collaborators) > 1:
-            collab_suggestion = ContextSuggestion(
-                suggestion_id=f"collab_{session.session_id}_{int(time.time())}",
-                session_id=session.session_id,
-                suggestion_type="collaboration",
-                confidence_score=0.85,
-                content={
-                    "action": "suggest_collaborative_action",
-                    "collaborators": collaborators,
-                    "suggestion": f"Consider coordinating with {len(collaborators)} other collaborators on {current_activity}"
-                },
-                reasoning="Multiple collaborators detected - suggesting coordination opportunities",
-                timestamp=datetime.now()
-            )
-            suggestions.append(collab_suggestion)
+        try:
+            # Validate session data
+            if not session or not hasattr(session, 'context_data'):
+                logger.warning("Invalid session provided to CollaborationContextProcessor")
+                return suggestions
 
+            # Extract and validate collaborative data
+            context = session.context_data or {}
+            collaborators = context.get('collaborators', [])
+            current_activity = context.get('current_activity', '')
+
+            # Validate collaborators data
+            if collaborators and not isinstance(collaborators, list):
+                logger.warning("Invalid collaborators data format in collaboration context")
+                collaborators = []
+
+            # Validate current activity
+            if current_activity and not isinstance(current_activity, str):
+                logger.warning("Invalid current_activity format in collaboration context")
+                current_activity = ""
+
+            # Generate collaboration suggestions with validation
+            if len(collaborators) > 1 and current_activity:
+                try:
+                    collab_suggestion = ContextSuggestion(
+                        suggestion_id=f"collab_{session.session_id}_{int(time.time())}",
+                        session_id=session.session_id,
+                        suggestion_type="collaboration",
+                        confidence_score=0.85,
+                        content={
+                            "action": "suggest_collaborative_action",
+                            "collaborators": collaborators,
+                            "suggestion": f"Consider coordinating with {len(collaborators)} other collaborators on {current_activity}"
+                        },
+                        reasoning="Multiple collaborators detected - suggesting coordination opportunities",
+                        timestamp=datetime.now()
+                    )
+
+                    if self._validate_suggestion(collab_suggestion):
+                        suggestions.append(collab_suggestion)
+                        logger.info(f"Generated collaboration suggestion for {len(collaborators)} collaborators")
+
+                except Exception as e:
+                    logger.error(f"Failed to create collaboration suggestion: {e}")
+
+            # Generate additional collaboration insights
+            try:
+                if len(collaborators) > 0:
+                    activity_suggestions = await self.suggestion_generators.generate_collaboration_suggestions(
+                        context, session.session_id)
+                    if activity_suggestions and isinstance(activity_suggestions, list):
+                        for suggestion in activity_suggestions:
+                            if self._validate_suggestion(suggestion):
+                                suggestions.append(suggestion)
+            except Exception as e:
+                logger.error(f"Collaboration suggestions generation failed: {e}")
+
+        except Exception as e:
+            logger.error(f"Collaboration context processing failed: {e}")
+
+        logger.info(f"CollaborationContextProcessor generated {len(suggestions)} valid suggestions")
         return suggestions
+
+    def _validate_suggestion(self, suggestion: Any) -> bool:
+        """
+        Validate suggestion format and content.
+
+        Args:
+            suggestion: Suggestion to validate
+
+        Returns:
+            True if suggestion is valid
+        """
+        if not suggestion:
+            return False
+
+        required_attrs = ['suggestion_id', 'type', 'content', 'confidence']
+        if not hasattr(suggestion, '__dict__'):
+            return False
+
+        suggestion_dict = suggestion.__dict__
+        for attr in required_attrs:
+            if attr not in suggestion_dict:
+                return False
+
+        # Validate confidence
+        confidence = suggestion_dict.get('confidence', 0)
+        if not isinstance(confidence, (int, float)) or not (0 <= confidence <= 1):
+            return False
+
+        return True
 
 
 class AnalysisContextProcessor(ContextProcessor):
