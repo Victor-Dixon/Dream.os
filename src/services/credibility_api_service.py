@@ -187,7 +187,7 @@ app = FastAPI(
 # CORS middleware for WordPress integration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, restrict to your domain
+    allow_origins=["https://tradingrobotplug.com", "https://www.tradingrobotplug.com"],  # Production domains only
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE"],
     allow_headers=["*"],

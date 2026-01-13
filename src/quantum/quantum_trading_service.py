@@ -136,9 +136,9 @@ app = FastAPI(
 # Add CORS middleware for web integration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Configure for production
+    allow_origins=["https://tradingrobotplug.com", "https://www.tradingrobotplug.com"],  # Production domains only
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],
 )
 
