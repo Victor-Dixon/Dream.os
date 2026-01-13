@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
 <<<<<<< HEAD
+<<<<<<< HEAD
 Discord Messaging Commands - Agent Cellphone V2
 ==============================================
 
@@ -58,21 +59,30 @@ except ImportError:
     from .test_utils import get_mock_discord
 =======
 <!-- SSOT Domain: messaging -->
+=======
+Discord Messaging Commands - Agent Cellphone V2
+==============================================
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
-Discord Messaging Commands
-===========================
+SSOT Domain: messaging
 
-Enhanced Discord commands for agent messaging using the messaging controller.
-Provides easy-to-use slash commands with Discord views.
+Refactored entry point for Discord messaging commands.
+All core logic has been extracted into base classes and focused implementations.
 
-V2 Compliance: ≤400 lines, ≤5 classes, ≤10 functions
+Features:
+- Messaging command implementations (messaging_commands_v2.py)
+- Command base classes (command_base.py)
+- Messaging controller integration (messaging_controller.py)
+
+V2 Compliant: Yes (<300 lines)
+Author: Agent-1 (Integration & Core Systems Specialist)
+Date: 2026-01-07
 """
 
-import logging
-import os
-from types import SimpleNamespace
-from datetime import datetime
+# Re-export the main MessagingCommands class for backward compatibility
+from .messaging_commands_v2 import MessagingCommands, setup
 
+<<<<<<< HEAD
 # Discord imports with error handling
 try:
     import discord
@@ -686,3 +696,7 @@ def setup(bot, messaging_controller: DiscordMessagingController):
     """Setup the messaging commands cog."""
     bot.add_cog(MessagingCommands(bot, messaging_controller))
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+# Re-export base classes for extension
+from .command_base import BaseDiscordCommand, MessagingCommandBase, StatusCommandBase
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1

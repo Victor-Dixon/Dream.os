@@ -3,10 +3,14 @@
 # DO NOT EDIT MANUALLY - changes may be overwritten
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 from .change_detector import ChangeDetector
 from .color_analyzer import ColorAnalyzer
 from .edge_analyzer import EdgeAnalyzer
 from .ui_detector import UIDetector
+<<<<<<< HEAD
 
 __all__ = [
     'ChangeDetector',
@@ -25,4 +29,12 @@ __all__ = [
     'edge_analyzer',
     'ui_detector',
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+
+__all__ = [
+    'ChangeDetector',
+    'ColorAnalyzer',
+    'EdgeAnalyzer',
+    'UIDetector',
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 ]

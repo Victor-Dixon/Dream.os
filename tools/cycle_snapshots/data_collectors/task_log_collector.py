@@ -1,168 +1,138 @@
 """
-Task Log Collector
-==================
+Task Log Collector for Cycle Snapshot System
+===========================================
 
 Parses MASTER_TASK_LOG.md and extracts task metrics.
 
 Author: Agent-3 (Infrastructure & DevOps Specialist)
 Architecture: Agent-2 (Architecture & Design Specialist)
-Created: 2025-12-31
+Created: 2026-01-08
 V2 Compliant: Yes (<400 lines, functions <30 lines)
-
-<!-- SSOT Domain: tools -->
 """
 
-import re
 import logging
+import re
 from pathlib import Path
-from typing import Dict, Any, Optional
+from typing import Dict, Any
 
 logger = logging.getLogger(__name__)
 
 
+def parse_task_log(workspace_root: Path) -> Dict[str, Any]:
+    """
+    Parse MASTER_TASK_LOG.md and extract task data.
+
+    Args:
+        workspace_root: Path to workspace root directory
+
+    Returns:
+        Dict containing parsed task log data
+    """
+    task_log_file = workspace_root / "MASTER_TASK_LOG.md"
+
+    if not task_log_file.exists():
+        return {"error": "MASTER_TASK_LOG.md not found"}
+
+    try:
+        content = task_log_file.read_text(encoding='utf-8')
+        return extract_task_metrics(content)
+    except Exception as e:
+        logger.error(f"Task log parsing failed: {e}")
+        return {"error": str(e)}
+
+
 def extract_task_metrics(task_log_content: str) -> Dict[str, Any]:
     """
-    Extract task metrics from MASTER_TASK_LOG.md content.
-    
+    Extract metrics from task log content.
+
     Args:
-        task_log_content: Content of MASTER_TASK_LOG.md
-    
+        task_log_content: Raw content of MASTER_TASK_LOG.md
+
     Returns:
-        Dict with task metrics
+        Dict with task metrics and statistics
     """
     metrics = {
-        "inbox_count": 0,
-        "this_week_count": 0,
-        "waiting_on_count": 0,
-        "parked_count": 0,
-        "by_priority": {"HIGH": 0, "MEDIUM": 0, "LOW": 0},
-        "by_initiative": {},
-        "blockers": [],
-        "completed_count": 0,
+        "total_tasks": 0,
+        "completed_tasks": 0,
+        "in_progress_tasks": 0,
+        "pending_tasks": 0,
+        "blocked_tasks": 0,
+        "high_priority_tasks": 0,
+        "agent_assignments": {},
+        "completion_rate": 0.0
     }
-    
-    # Count tasks in each section
-    sections = {
-        "INBOX": r"## 📥 INBOX",
-        "THIS WEEK": r"## 📋 THIS WEEK",
-        "WAITING ON": r"## ⏸️ WAITING ON",
-        "PARKED": r"## 🅿️ PARKED",
-    }
-    
-    current_section = None
-    lines = task_log_content.split("\n")
-    
-    for i, line in enumerate(lines):
-        # Detect section headers
-        for section_name, pattern in sections.items():
-            if re.search(pattern, line, re.IGNORECASE):
-                current_section = section_name
-                break
-        
-        # Count tasks in current section
-        if current_section and line.strip().startswith("- ["):
-            if current_section == "INBOX":
-                metrics["inbox_count"] += 1
-            elif current_section == "THIS WEEK":
-                metrics["this_week_count"] += 1
-            elif current_section == "WAITING ON":
-                metrics["waiting_on_count"] += 1
-            elif current_section == "PARKED":
-                metrics["parked_count"] += 1
-            
-            # Extract priority
-            priority_match = re.search(r"\*\*(HIGH|MEDIUM|LOW)\*\*", line)
-            if priority_match:
-                priority = priority_match.group(1)
-                metrics["by_priority"][priority] = metrics["by_priority"].get(priority, 0) + 1
-            
-            # Extract initiative (if present)
-            initiative_match = re.search(r"\[([^\]]+)\]", line)
-            if initiative_match:
-                initiative = initiative_match.group(1)
-                metrics["by_initiative"][initiative] = metrics["by_initiative"].get(initiative, 0) + 1
-            
-            # Check for blockers
-            if "blocker" in line.lower() or "⏸️" in line:
-                metrics["blockers"].append(line.strip())
-        
-        # Count completed tasks
-        if line.strip().startswith("- [x]"):
-            metrics["completed_count"] += 1
-    
+
+    # Count tasks by status
+    completed_pattern = r'-\s*\[x\]'
+    in_progress_pattern = r'-\s*\[ \]'
+    pending_pattern = r'-\s*\[ \]'
+    blocked_pattern = r'blocked|BLOCKED'
+
+    metrics["completed_tasks"] = len(re.findall(completed_pattern, task_log_content))
+    metrics["in_progress_tasks"] = len(re.findall(r'IN PROGRESS|in progress', task_log_content))
+    metrics["blocked_tasks"] = len(re.findall(blocked_pattern, task_log_content))
+
+    # Count total tasks (all bullet points that look like tasks)
+    task_lines = [line for line in task_log_content.split('\n')
+                  if line.strip().startswith('-') and ('pts)' in line or 'HIGH' in line or 'MEDIUM' in line or 'LOW' in line)]
+    metrics["total_tasks"] = len(task_lines)
+
+    # Count high priority tasks
+    high_priority_pattern = r'HIGH.*pts|pts.*HIGH'
+    metrics["high_priority_tasks"] = len(re.findall(high_priority_pattern, task_log_content))
+
+    # Calculate completion rate
+    if metrics["total_tasks"] > 0:
+        metrics["completion_rate"] = (metrics["completed_tasks"] / metrics["total_tasks"]) * 100
+
+    # Extract agent assignments
+    agent_pattern = r'\[([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)\]'
+    agent_matches = re.findall(agent_pattern, task_log_content)
+    for agent in agent_matches:
+        if agent in metrics["agent_assignments"]:
+            metrics["agent_assignments"][agent] += 1
+        else:
+            metrics["agent_assignments"][agent] = 1
+
     return metrics
 
 
-def compare_with_previous_snapshot(
-    current: Dict[str, Any],
-    previous: Optional[Dict[str, Any]]
-) -> Dict[str, Any]:
+def compare_with_previous_snapshot(current: Dict, previous: Dict) -> Dict[str, Any]:
     """
-    Compare current task metrics with previous snapshot.
-    
+    Compare current metrics with previous snapshot.
+
     Args:
         current: Current task metrics
-        previous: Previous snapshot task metrics (optional)
-    
+        previous: Previous task metrics
+
     Returns:
         Dict with comparison results
     """
-    if not previous:
-        return {
-            "new_tasks": current.get("inbox_count", 0),
-            "completed_since_last": 0,
-            "priority_changes": {},
-        }
-    
     comparison = {
-        "new_tasks": current.get("inbox_count", 0) - previous.get("inbox_count", 0),
-        "completed_since_last": current.get("completed_count", 0) - previous.get("completed_count", 0),
-        "priority_changes": {},
+        "tasks_completed_since_last": 0,
+        "completion_rate_change": 0.0,
+        "new_assignments": {},
+        "velocity_trend": "stable"
     }
-    
-    # Compare priority counts
-    for priority in ["HIGH", "MEDIUM", "LOW"]:
-        current_count = current.get("by_priority", {}).get(priority, 0)
-        previous_count = previous.get("by_priority", {}).get(priority, 0)
-        if current_count != previous_count:
-            comparison["priority_changes"][priority] = current_count - previous_count
-    
+
+    if "completed_tasks" in current and "completed_tasks" in previous:
+        comparison["tasks_completed_since_last"] = current["completed_tasks"] - previous["completed_tasks"]
+
+    if "completion_rate" in current and "completion_rate" in previous:
+        comparison["completion_rate_change"] = current["completion_rate"] - previous["completion_rate"]
+
+        if comparison["completion_rate_change"] > 5:
+            comparison["velocity_trend"] = "accelerating"
+        elif comparison["completion_rate_change"] < -5:
+            comparison["velocity_trend"] = "slowing"
+
+    # Compare agent assignments
+    current_assignments = current.get("agent_assignments", {})
+    previous_assignments = previous.get("agent_assignments", {})
+
+    for agent, count in current_assignments.items():
+        prev_count = previous_assignments.get(agent, 0)
+        if count > prev_count:
+            comparison["new_assignments"][agent] = count - prev_count
+
     return comparison
-
-
-def parse_task_log(workspace_root: Path) -> Dict[str, Any]:
-    """
-    Parse MASTER_TASK_LOG.md and extract task metrics.
-    
-    Args:
-        workspace_root: Root workspace path
-    
-    Returns:
-        Dict with task log data
-    """
-    task_log_file = workspace_root / "MASTER_TASK_LOG.md"
-    
-    if not task_log_file.exists():
-        logger.warning(f"MASTER_TASK_LOG.md not found: {task_log_file}")
-        return {
-            "error": "MASTER_TASK_LOG.md not found",
-            "metrics": {},
-        }
-    
-    try:
-        content = task_log_file.read_text(encoding="utf-8")
-        metrics = extract_task_metrics(content)
-        
-        return {
-            "file_path": str(task_log_file),
-            "metrics": metrics,
-            "timestamp": task_log_file.stat().st_mtime,
-        }
-    
-    except Exception as e:
-        logger.error(f"Error parsing MASTER_TASK_LOG.md: {e}")
-        return {
-            "error": str(e),
-            "metrics": {},
-        }
-

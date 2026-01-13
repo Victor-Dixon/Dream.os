@@ -3,10 +3,15 @@ Status Monitor Embed Factory
 ============================
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 <!-- SSOT Domain: discord -->
 
 =======
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+<!-- SSOT Domain: discord -->
+
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 Helper module for creating Discord embeds for the Status Monitor.
 Extracted from status_change_monitor.py for V2 compliance.
 """

@@ -14,7 +14,10 @@ Date: 2026-01-07
 """
 
 import logging
+<<<<<<< HEAD
 import time
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
@@ -33,9 +36,15 @@ templates = Jinja2Templates(directory=os.path.join(os.path.dirname(__file__), "t
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+<<<<<<< HEAD
     """Application lifespan manager with AI-powered monitoring."""
     # Startup
     logger.info("🚀 Starting FastAPI application with AI-powered coordination...")
+=======
+    """Application lifespan manager."""
+    # Startup
+    logger.info("Starting FastAPI application...")
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     validate_configuration()
 
     # Start repository monitoring
@@ -46,6 +55,7 @@ async def lifespan(app: FastAPI):
     except Exception as e:
         logger.warning(f"Failed to start repository monitoring: {e}")
 
+<<<<<<< HEAD
     # Start AI-powered monitoring (Phase 5 AI Context Integration)
     try:
         from .fastapi_monitoring import start_ai_monitoring
@@ -66,6 +76,12 @@ async def lifespan(app: FastAPI):
         logger.info("🛑 AI-powered monitoring stopped")
     except Exception as e:
         logger.error(f"Error stopping AI monitoring: {e}")
+=======
+    yield
+
+    # Shutdown
+    logger.info("Shutting down FastAPI application...")
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
     # Stop repository monitoring
     try:
@@ -104,6 +120,7 @@ async def performance_ping():
     """Ultra-fast ping endpoint for load balancer health checks."""
     return "pong"
 
+<<<<<<< HEAD
 @app.get("/perf/metrics")
 async def performance_metrics():
     """Comprehensive performance metrics endpoint."""
@@ -224,6 +241,8 @@ async def ai_health_predictions():
         "monitoring_status": "operational"
     }
 
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 # Static files (if templates directory exists)
 static_dir = os.path.join(os.path.dirname(__file__), "static")
 if os.path.exists(static_dir):

@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 #!/usr/bin/env python3
 """
 Bot Runner - Agent Cellphone V2
@@ -19,6 +22,7 @@ V2 Compliant: Yes (<300 lines)
 Author: Agent-1 (Integration & Core Systems Specialist)
 Date: 2026-01-07
 """
+<<<<<<< HEAD
 
 import os
 import sys
@@ -368,3 +372,5 @@ if __name__ == "__main__":
     sys.exit(exit_code if exit_code is not None else 0)
 
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1

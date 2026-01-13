@@ -23,12 +23,20 @@ Classes:
 
 import asyncio
 import logging
+<<<<<<< HEAD
 from typing import Dict, Any, Optional, List
 from datetime import datetime, timedelta
 from dataclasses import asdict
 import json
 
 from .models import ContextSession, validate_session_data
+=======
+from typing import Dict, Any, Optional
+from datetime import datetime, timedelta
+from dataclasses import asdict
+
+from .models import ContextSession
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
 logger = logging.getLogger(__name__)
 
@@ -45,7 +53,11 @@ class SessionManager:
 
     def __init__(self, session_timeout_hours: int = 2, max_sessions: int = 1000):
         """
+<<<<<<< HEAD
         Initialize session manager with enhanced configuration.
+=======
+        Initialize session manager.
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
         Navigation:
         ├── Configures: session_timeout, max_sessions limits
@@ -59,6 +71,7 @@ class SessionManager:
         self.cleanup_task: Optional[asyncio.Task] = None
         self.performance_monitor_task: Optional[asyncio.Task] = None
 
+<<<<<<< HEAD
         # Statistics and monitoring
         self.stats = {
             'total_sessions_created': 0,
@@ -71,6 +84,8 @@ class SessionManager:
 
         logger.info(f"SessionManager initialized with timeout={session_timeout_hours}h, max_sessions={max_sessions}")
 
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     async def start_background_tasks(self):
         """
         Start background tasks for session management.
@@ -98,13 +113,18 @@ class SessionManager:
     async def create_session(self, user_id: str, context_type: str,
                            initial_context: Dict[str, Any]) -> str:
         """
+<<<<<<< HEAD
         Create a new context processing session with validation and error handling.
+=======
+        Create a new context processing session.
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
         Navigation:
         ├── Used by: AIContextEngine.create_session()
         ├── Creates: ContextSession instance
         └── Related: session limit enforcement, ID generation
         """
+<<<<<<< HEAD
         try:
             # Validate inputs
             if not user_id or not isinstance(user_id, str):
@@ -160,6 +180,25 @@ class SessionManager:
             self.stats['errors_encountered'] += 1
             logger.error(f"Failed to create session for user {user_id}: {e}")
             raise
+=======
+        session_id = f"{user_id}_{context_type}_{int(time.time())}"
+
+        session = ContextSession(
+            session_id=session_id,
+            user_id=user_id,
+            context_type=context_type,
+            start_time=datetime.now(),
+            last_activity=datetime.now(),
+            context_data=initial_context.copy()
+        )
+
+        # Enforce session limit
+        if len(self.active_sessions) >= self.max_sessions:
+            await self._cleanup_expired_sessions(force=True)
+
+        self.active_sessions[session_id] = session
+        return session_id
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
     async def update_session_activity(self, session_id: str):
         """
@@ -182,6 +221,7 @@ class SessionManager:
         """
         return self.active_sessions.get(session_id)
 
+<<<<<<< HEAD
     async def end_session(self, session_id: str) -> Optional[Dict[str, Any]]:
         """
         End a session and return final statistics.
@@ -214,12 +254,18 @@ class SessionManager:
     def get_session_context(self, session_id: str) -> Optional[Dict[str, Any]]:
         """
         Get context data for a session with enhanced error handling.
+=======
+    def get_session_context(self, session_id: str) -> Optional[Dict[str, Any]]:
+        """
+        Get context data for a session.
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
         Navigation:
         ├── Used by: AIContextEngine.get_session_context()
         ├── Returns: formatted context data with risk metrics and suggestions
         └── Related: ContextSession data serialization
         """
+<<<<<<< HEAD
         try:
             session = self.get_session(session_id)
             if not session:
@@ -297,6 +343,16 @@ class SessionManager:
             'uptime_seconds': (current_time - datetime.fromtimestamp(asyncio.get_event_loop().time())).total_seconds() if hasattr(asyncio, 'get_event_loop') else 0,
             'timestamp': current_time.isoformat()
         }
+=======
+        session = self.get_session(session_id)
+        if not session:
+            return None
+
+        return {
+            'session_id': session.session_id,
+            'context_data': session.context_data,
+            'risk_metrics': asdict(session.risk_metrics) if session.risk_metrics else None,
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
             'ai_suggestions': session.ai_suggestions,
             'performance_metrics': session.performance_metrics
         }
@@ -385,6 +441,7 @@ class SessionManager:
         if expired_sessions:
             logger.info(f"🧹 Cleaned up {len(expired_sessions)} expired sessions")
 
+<<<<<<< HEAD
     def get_performance_stats(self) -> Dict[str, Any]:
         """
         Get detailed performance statistics.
@@ -434,6 +491,8 @@ class SessionManager:
         logger.info(f"🧹 Force cleaned up {cleaned_count} sessions")
         return cleaned_count
 
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     async def _performance_monitor_loop(self):
         """
         Background task to monitor and log performance.
@@ -447,7 +506,11 @@ class SessionManager:
             try:
                 # Log current performance stats
                 stats = self.get_performance_stats()
+<<<<<<< HEAD
                 logger.info(f"📊 Session Manager Performance: active={stats['active_sessions']}, suggestions={stats['total_suggestions']}")
+=======
+                logger.info(f"📊 Session Manager Performance: {stats}")
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
                 await asyncio.sleep(3600)  # Log every hour
             except Exception as e:

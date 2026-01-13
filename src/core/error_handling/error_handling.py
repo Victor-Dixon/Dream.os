@@ -4,10 +4,15 @@ Comprehensive Error Handling and Logging Framework
 ===================================================
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 <!-- SSOT Domain: error_handling -->
 
 =======
 >>>>>>> origin/codex/build-tsla-morning-report-system
+=======
+<!-- SSOT Domain: error_handling -->
+
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 V2 Compliance: Centralized error handling with proper logging, recovery, and monitoring.
 
 Features:

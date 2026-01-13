@@ -9,6 +9,9 @@ Provides local LLM capabilities for our custom agents
 """
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 import os
 import platform
 import subprocess
@@ -18,14 +21,20 @@ import logging
 from typing import List, Dict, Any, Optional, Tuple
 from pathlib import Path
 from dataclasses import dataclass
+<<<<<<< HEAD
 =======
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
 logger = logging.getLogger(__name__)
 
 
 @dataclass
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 class OllamaDiscoveryResult:
     """Result of Ollama discovery attempt"""
 
@@ -175,8 +184,11 @@ class OllamaDiscovery:
 
 
 @dataclass
+<<<<<<< HEAD
 =======
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 class OllamaResponse:
     """Response from Ollama API"""
 
@@ -196,6 +208,9 @@ class OllamaClient:
     """Client for interacting with Ollama API"""
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     def __init__(self, base_url: Optional[str] = None, auto_discover: bool = True):
         """
         Initialize Ollama client with dynamic discovery
@@ -226,16 +241,20 @@ class OllamaClient:
             self.base_url = "http://localhost:11434"
             self.discovery_result = None
 
+<<<<<<< HEAD
 =======
     def __init__(self, base_url: str = "http://localhost:11434"):
         self.base_url = base_url
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         self.session = requests.Session()
         self.logger = logging.getLogger("OllamaClient")
 
     def is_available(self) -> bool:
         """Check if Ollama is running and available"""
         try:
+<<<<<<< HEAD
 <<<<<<< HEAD
             response = self.session.get(f"{self.base_url}/api/tags", timeout=5)
             return response.status_code == 200
@@ -247,6 +266,12 @@ class OllamaClient:
         except Exception as e:
             self.get_logger(__name__).warning(f"Ollama not available: {e}")
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+            response = self.session.get(f"{self.base_url}/api/tags", timeout=5)
+            return response.status_code == 200
+        except Exception as e:
+            logger.warning(f"Ollama not available at {self.base_url}: {e}")
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
             return False
 
     def get_models(self) -> List[Dict[str, Any]]:

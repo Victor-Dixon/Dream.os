@@ -146,7 +146,11 @@ class RobinhoodAdapter(BrokerInterface):
                 "password": self.password,
                 "grant_type": "password",
                 "scope": "read",  # Read-only scope only
+<<<<<<< HEAD
                 "client_id": "<REDACTED_ROBINHOOD_CLIENT_ID>",
+=======
+                "client_id": "c82SH0WZOsabOXGP2sxqcj34FxkvfnWRZBKlBjFS",
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
                 "expires_in": 86400  # 24 hours
             }
 
@@ -306,7 +310,10 @@ class RobinhoodAdapter(BrokerInterface):
         except Exception as e:
             logger.error(f"Account info retrieval failed: {e}")
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
             return {
                 "error": str(e),
                 "currency": "USD",
@@ -318,7 +325,10 @@ class RobinhoodAdapter(BrokerInterface):
 
         except Exception as e:
             logger.error(f"Account info retrieval failed: {e}")
+<<<<<<< HEAD
 >>>>>>> rescue/dreamos-down-
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
             return {"error": str(e)}
 
     def get_options_positions(self) -> List[Dict[str, Any]]:

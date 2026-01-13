@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 Message Router for Message Queue Processing
 ===========================================
 
@@ -36,6 +39,7 @@ def route_message_delivery(validated_message: Dict[str, Any]) -> str:
         return "inbox"
 
     except Exception as e:
+<<<<<<< HEAD
         return "error"
 =======
 <!-- SSOT Domain: core -->
@@ -134,3 +138,6 @@ def route_message_delivery(
             logger.error(f"Inbox fallback also failed: {fallback_error}")
             return False
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+        return "error"
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1

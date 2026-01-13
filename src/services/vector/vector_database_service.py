@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 #!/usr/bin/env python3
 """
 Vector Database Service Module
@@ -654,6 +657,7 @@ def get_vector_database_service() -> VectorDatabaseService:
                 _SERVICE_INSTANCE = VectorDatabaseService()
     return _SERVICE_INSTANCE
 
+<<<<<<< HEAD
 =======
 #!/usr/bin/env python3
 """
@@ -869,3 +873,5 @@ def get_vector_database_service() -> VectorDatabaseService:
     return _SERVICE_INSTANCE
 
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1

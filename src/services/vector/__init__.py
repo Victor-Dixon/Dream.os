@@ -14,6 +14,7 @@ V2 Compliance | Author: Agent-1 | Date: 2025-12-14
 from __future__ import annotations
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Lazy imports for vector database functionality to prevent system initialization
 import importlib
 
@@ -62,6 +63,49 @@ from .vector_database_integration import LocalVectorStore
 # Service Core
 from .vector_database_service import VectorDatabaseService
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+# Lazy imports for vector database functionality to prevent system initialization
+import importlib
+
+VECTOR_SERVICES_AVAILABLE = False
+LocalVectorStore = None
+VectorDatabaseService = None
+
+def _lazy_import_vector_services():
+    """Lazy import vector services."""
+    global VECTOR_SERVICES_AVAILABLE, LocalVectorStore, VectorDatabaseService
+
+    if VECTOR_SERVICES_AVAILABLE:
+        return
+
+    try:
+        from .vector_database_integration import LocalVectorStore as _LocalVectorStore
+        LocalVectorStore = _LocalVectorStore
+
+        # Try to import VectorDatabaseService, but handle chromadb/ONNX issues
+        try:
+            from .vector_database_service import VectorDatabaseService as _VectorDatabaseService
+            VectorDatabaseService = _VectorDatabaseService
+        except ImportError as e:
+            if "onnxruntime" in str(e).lower():
+                print(f"⚠️  Vector database service unavailable (ONNX Runtime issue): {e}")
+                VectorDatabaseService = None
+            else:
+                print(f"⚠️  Vector database service unavailable: {e}")
+                VectorDatabaseService = None
+
+        VECTOR_SERVICES_AVAILABLE = True
+    except ImportError as e:
+        print(f"⚠️  Vector services not available: {e}")
+        VECTOR_SERVICES_AVAILABLE = False
+
+def get_vector_database_service():
+    """Get vector database service with lazy loading."""
+    _lazy_import_vector_services()
+    if VectorDatabaseService:
+        return VectorDatabaseService()
+    return None
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
 # Helpers
 from .vector_database_helpers import (

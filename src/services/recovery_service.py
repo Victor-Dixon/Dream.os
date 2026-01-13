@@ -54,6 +54,9 @@ class RecoveryService(BaseService):
     def handle_failure(self, error_context: Dict[str, Any]) -> Dict[str, Any]:
         """
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         Main entry point for autonomous self-healing recovery.
 
         Navigation References:
@@ -85,10 +88,13 @@ class RecoveryService(BaseService):
         - Maintains service availability during failures
         - Provides self-healing capabilities for production systems
 
+<<<<<<< HEAD
 =======
         Main entry point for recovery.
         
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         Args:
             error_context: Dict containing 'error', 'file_path', 'test_path', etc.
         """

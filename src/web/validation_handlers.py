@@ -19,6 +19,7 @@ from flask import jsonify, request
 from src.core.base.base_handler import BaseHandler
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Import validation runner
 from src.cli.validation_runner import ValidationRunner
 =======
@@ -28,6 +29,10 @@ project_root = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(project_root))
 from tools.unified_validator import UnifiedValidator
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+# Import validation runner
+from src.cli.validation_runner import ValidationRunner
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
 
 class ValidationHandlers(BaseHandler):
@@ -36,6 +41,7 @@ class ValidationHandlers(BaseHandler):
     def __init__(self):
         """Initialize validation handlers."""
         super().__init__("ValidationHandlers")
+<<<<<<< HEAD
 <<<<<<< HEAD
         self.validator = ValidationRunner()
 
@@ -48,13 +54,17 @@ class ValidationHandlers(BaseHandler):
             "output_file": "path/to/output.json" (optional)
 =======
         self.validator = UnifiedValidator()
+=======
+        self.validator = ValidationRunner()
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
     def handle_validate(self, request) -> tuple:
         """
-        Handle validation request by category.
-        
+        Handle comprehensive validation request.
+
         Expected JSON body:
         {
+<<<<<<< HEAD
             "category": "ssot_config|imports|code_docs|queue|session|refactor|tracker",
             "file": "path/to/file" (optional),
             "dir": "path/to/dir" (optional),
@@ -62,16 +72,23 @@ class ValidationHandlers(BaseHandler):
             "doc_files": ["path1", "path2"] (for code_docs),
             "agent": "Agent-1" (for session)
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+            "output_file": "path/to/output.json" (optional)
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         }
         """
         try:
             data = request.get_json() or {}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
             output_file = data.get("output_file", "validation_results.json")
 
             # Run comprehensive validation
             result = self.validator.run_comprehensive_validation(output_file)
 
+<<<<<<< HEAD
             from flask import jsonify
             return jsonify(self.format_response({
                 "validation": result,
@@ -117,6 +134,12 @@ class ValidationHandlers(BaseHandler):
                 "category": category,
                 "validation": result
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+            from flask import jsonify
+            return jsonify(self.format_response({
+                "validation": result,
+                "output_file": output_file
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
             })), 200
         except Exception as e:
             error_response = self.handle_error(e, "Validation failed")
@@ -125,6 +148,9 @@ class ValidationHandlers(BaseHandler):
 
     def handle_get_categories(self, request) -> tuple:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         """List available validation capabilities."""
         capabilities = [
             "comprehensive_validation",
@@ -133,6 +159,7 @@ class ValidationHandlers(BaseHandler):
             "integration_status",
             "service_readiness",
             "code_quality"
+<<<<<<< HEAD
         ]
         from flask import jsonify
         return jsonify(self.format_response({
@@ -155,6 +182,13 @@ class ValidationHandlers(BaseHandler):
             "categories": categories,
             "count": len(categories)
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+        ]
+        from flask import jsonify
+        return jsonify(self.format_response({
+            "capabilities": capabilities,
+            "count": len(capabilities)
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         })), 200
 
     def handle_full_validation(self, request) -> tuple:

@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
 """
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 Main Control Panel View - Discord GUI Components
 ===============================================
 
 Main control panel view for Discord bot interface.
 
+<<<<<<< HEAD
 <!-- SSOT Domain: discord -->
 
 Navigation References:
@@ -32,36 +36,44 @@ from ..ui_components.control_panel_embeds import ControlPanelEmbedFactory
 try:
     import discord
 =======
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 <!-- SSOT Domain: discord -->
 
-Main Control Panel View - V2 Compliance Refactor
-==================================================
+Navigation References:
+├── Related Files:
+│   ├── GUI Controller → discord_gui_controller.py
+│   ├── UI Components → ui_components/
+│   ├── Views Package → __init__.py
+│   └── Discord Service → discord_service.py
+├── Documentation:
+│   └── Discord GUI → README_DISCORD_GUI.md
+└── Testing:
+    └── View Tests → tests/discord/test_discord_views.py
 
-Extracted from discord_gui_views.py for V2 compliance.
-
-V2 Compliance:
-- File: <400 lines (currently 455 - acceptable for main control panel)
-- Class: <200 lines ✅
-- Functions: <30 lines ✅
-
-Author: Agent-2 (Architecture & Design Specialist)
-Date: 2025-01-27
-License: MIT
+Classes:
+- MainControlPanelView: Main control interface for Discord bot
 """
 
-import logging
-from pathlib import Path
-import json
+import discord
+from typing import Optional, Dict, Any, List
+
+from ..ui_components.control_panel_buttons import ControlPanelButtonFactory
+from ..ui_components.control_panel_embeds import ControlPanelEmbedFactory
 
 try:
     import discord
+<<<<<<< HEAD
     from discord.ext import commands
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     DISCORD_AVAILABLE = True
 except ImportError:
     DISCORD_AVAILABLE = False
     discord = None
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 class MainControlPanelView(discord.ui.View if DISCORD_AVAILABLE else object):
@@ -193,458 +205,141 @@ class MainControlPanelView(discord.ui.View if DISCORD_AVAILABLE else object):
             await interaction.followup.send(embed=embed, ephemeral=True)
 =======
 from src.services.messaging_infrastructure import ConsolidatedMessagingService
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
-logger = logging.getLogger(__name__)
+class MainControlPanelView(discord.ui.View if DISCORD_AVAILABLE else object):
+    """
+    Main control panel view for Discord bot interface.
 
+    Navigation:
+    ├── Uses: ControlPanelButtonFactory, ControlPanelEmbedFactory
+    ├── Manages: Bot control, agent messaging, monitoring
+    └── Related: Discord GUI controller, status monitoring
+    """
 
-class MonitorControlView(discord.ui.View):
-    """Simple view with monitor start/stop buttons."""
+    def __init__(self, bot=None, timeout: float = 300.0):
+        """Initialize the main control panel view."""
+        super().__init__(timeout=timeout) if DISCORD_AVAILABLE else super().__init__()
+        self.bot = bot
 
-    def __init__(self):
-        from src.core.config.timeout_constants import TimeoutConstants
-        super().__init__(timeout=TimeoutConstants.HTTP_EXTENDED)
+        # Initialize UI components using factories
+        self._setup_control_buttons()
+        self._setup_monitoring_buttons()
 
-        # Start Monitor button
-        self.start_btn = discord.ui.Button(
-            label="Start Monitor",
-            style=discord.ButtonStyle.success,
-            emoji="▶️",
-            row=0,
+    def _setup_control_buttons(self):
+        """
+        Setup control buttons using factory.
+
+        Navigation:
+        ├── Uses: ControlPanelButtonFactory
+        └── Related: Agent messaging, bot control
+        """
+        # Message agent button
+        self.msg_agent_btn = ControlPanelButtonFactory.create_message_agent_button(
+            callback=self.show_agent_selector
         )
-        self.start_btn.callback = self.on_start
-        self.add_item(self.start_btn)
-
-        # Stop Monitor button
-        self.stop_btn = discord.ui.Button(
-            label="Stop Monitor",
-            style=discord.ButtonStyle.danger,
-            emoji="⏸️",
-            row=0,
-        )
-        self.stop_btn.callback = self.on_stop
-        self.add_item(self.stop_btn)
-
-        # Refresh button
-        self.refresh_btn = discord.ui.Button(
-            label="Refresh Status",
-            style=discord.ButtonStyle.secondary,
-            emoji="🔄",
-            row=0,
-        )
-        self.refresh_btn.callback = self.on_refresh
-        self.add_item(self.refresh_btn)
-
-    async def on_start(self, interaction: discord.Interaction):
-        """Start the status monitor."""
-        try:
-            bot = interaction.client
-            if hasattr(bot, "status_monitor"):
-                bot.status_monitor.start_monitoring()
-                embed = discord.Embed(
-                    title="📊 Monitor Started",
-                    description="✅ Status monitor started! Checking every 15 seconds.",
-                    color=discord.Color.green(),
-                )
-                await interaction.response.send_message(embed=embed, ephemeral=True)
-            else:
-                embed = discord.Embed(
-                    title="📊 Monitor Error",
-                    description="⚠️ Status monitor not initialized yet.",
-                    color=discord.Color.red(),
-                )
-                await interaction.response.send_message(embed=embed, ephemeral=True)
-        except Exception as e:
-            logger.error(f"Error starting monitor: {e}", exc_info=True)
-            await interaction.response.send_message(f"❌ Error: {e}", ephemeral=True)
-
-    async def on_stop(self, interaction: discord.Interaction):
-        """Stop the status monitor."""
-        try:
-            bot = interaction.client
-            if hasattr(bot, "status_monitor"):
-                bot.status_monitor.stop_monitoring()
-                embed = discord.Embed(
-                    title="📊 Monitor Stopped",
-                    description="🛑 Status monitor stopped.",
-                    color=discord.Color.orange(),
-                )
-                await interaction.response.send_message(embed=embed, ephemeral=True)
-            else:
-                embed = discord.Embed(
-                    title="📊 Monitor Error",
-                    description="⚠️ Status monitor not initialized.",
-                    color=discord.Color.red(),
-                )
-                await interaction.response.send_message(embed=embed, ephemeral=True)
-        except Exception as e:
-            logger.error(f"Error stopping monitor: {e}", exc_info=True)
-            await interaction.response.send_message(f"❌ Error: {e}", ephemeral=True)
-
-    async def on_refresh(self, interaction: discord.Interaction):
-        """Refresh monitor status display."""
-        try:
-            bot = interaction.client
-
-            if not hasattr(bot, 'status_monitor'):
-                embed = discord.Embed(
-                    title="📊 Monitor Error",
-                    description="❌ Status monitor not initialized.",
-                    color=discord.Color.red(),
-                )
-                await interaction.response.send_message(embed=embed, ephemeral=True)
-                return
-
-            status_monitor = bot.status_monitor
-            is_running = False
-            interval = 15
-
-            if hasattr(status_monitor, 'monitor_status_changes'):
-                is_running = status_monitor.monitor_status_changes.is_running()
-                if hasattr(status_monitor, 'check_interval'):
-                    interval = status_monitor.check_interval
-
-            status_text = "🟢 RUNNING" if is_running else "🔴 STOPPED"
-            status_color = discord.Color.green() if is_running else discord.Color.red()
-
-            embed = discord.Embed(
-                title="📊 Status Change Monitor",
-                description=f"**Status:** {status_text}\n**Check Interval:** {interval} seconds\n\nUse buttons below to start/stop the monitor.",
-                color=status_color,
-            )
-
-            await interaction.response.edit_message(embed=embed, view=self)
-        except Exception as e:
-            logger.error(
-                f"Error refreshing monitor status: {e}", exc_info=True)
-            await interaction.response.send_message(f"❌ Error: {e}", ephemeral=True)
-
-
-class MainControlPanelView(discord.ui.View):
-    """Main interactive control panel - GUI-driven interface."""
-
-    def __init__(self, messaging_service: ConsolidatedMessagingService):
-        super().__init__(timeout=None)  # No timeout for main panel
-        self.messaging_service = messaging_service
-        self._setup_buttons()
-
-    def _setup_buttons(self):
-        """Setup control panel buttons."""
-        # Row 0: Main action buttons
-        self.msg_agent_btn = discord.ui.Button(
-            label="Message Agent",
-            style=discord.ButtonStyle.primary,
-            emoji="📨",
-            custom_id="control_message_agent",
-            row=0,
-        )
-        self.msg_agent_btn.callback = self.show_agent_selector
         self.add_item(self.msg_agent_btn)
 
-        self.broadcast_btn = discord.ui.Button(
-            label="Broadcast",
-            style=discord.ButtonStyle.primary,
-            emoji="📢",
-            custom_id="control_broadcast",
-            row=0,
+        # Main control button
+        self.main_control_btn = ControlPanelButtonFactory.create_main_control_button(
+            callback=self.show_main_control
         )
-        self.broadcast_btn.callback = self.show_broadcast_modal
-        self.add_item(self.broadcast_btn)
+        self.add_item(self.main_control_btn)
 
-        self.status_btn = discord.ui.Button(
-            label="Swarm Status",
-            style=discord.ButtonStyle.secondary,
-            emoji="📊",
-            custom_id="control_status",
-            row=0,
+        # Status monitor button
+        self.monitor_btn = ControlPanelButtonFactory.create_monitor_button(
+            callback=self.toggle_monitor
         )
-        self.status_btn.callback = self.show_status
-        self.add_item(self.status_btn)
-
-        # Row 1: Secondary actions
-        self.swarm_tasks_btn = discord.ui.Button(
-            label="Tasks",
-            style=discord.ButtonStyle.primary,
-            emoji="🐝",
-            custom_id="control_swarm_tasks",
-            row=1,
-        )
-        self.swarm_tasks_btn.callback = self.show_swarm_tasks
-        self.add_item(self.swarm_tasks_btn)
-
-        self.github_book_btn = discord.ui.Button(
-            label="GitHub Book",
-            style=discord.ButtonStyle.primary,
-            emoji="📚",
-            custom_id="control_github_book",
-            row=1,
-        )
-        self.github_book_btn.callback = self.show_github_book
-        self.add_item(self.github_book_btn)
-
-        self.roadmap_btn = discord.ui.Button(
-            label="Roadmap",
-            style=discord.ButtonStyle.primary,
-            emoji="🗺️",
-            custom_id="control_roadmap",
-            row=1,
-        )
-        self.roadmap_btn.callback = self.show_roadmap
-        self.add_item(self.roadmap_btn)
-
-        self.excellence_btn = discord.ui.Button(
-            label="Excellence",
-            style=discord.ButtonStyle.primary,
-            emoji="🏆",
-            custom_id="control_excellence",
-            row=1,
-        )
-        self.excellence_btn.callback = self.show_excellence
-        self.add_item(self.excellence_btn)
-
-        self.help_btn = discord.ui.Button(
-            label="Help",
-            style=discord.ButtonStyle.secondary,
-            emoji="❓",
-            custom_id="control_help",
-            row=1,
-        )
-        self.help_btn.callback = self.show_help
-        self.add_item(self.help_btn)
-
-        # Row 2: System management buttons (moved "All Commands" here to fix row 1 overflow)
-        self.restart_btn = discord.ui.Button(
-            label="Restart Bot",
-            style=discord.ButtonStyle.danger,
-            emoji="🔄",
-            custom_id="control_restart",
-            row=2,
-        )
-        self.restart_btn.callback = self.show_restart_confirm
-        self.add_item(self.restart_btn)
-
-        self.shutdown_btn = discord.ui.Button(
-            label="Shutdown Bot",
-            style=discord.ButtonStyle.danger,
-            emoji="🛑",
-            custom_id="control_shutdown",
-            row=2,
-        )
-        self.shutdown_btn.callback = self.show_shutdown_confirm
-        self.add_item(self.shutdown_btn)
-
-        self.unstall_btn = discord.ui.Button(
-            label="Unstall Agent",
-            style=discord.ButtonStyle.danger,
-            emoji="🚨",
-            custom_id="control_unstall",
-            row=2,
-        )
-        self.unstall_btn.callback = self.show_unstall_selector
-        self.add_item(self.unstall_btn)
-
-        self.bump_btn = discord.ui.Button(
-            label="Bump Agents",
-            style=discord.ButtonStyle.secondary,
-            emoji="👆",
-            custom_id="control_bump",
-            row=2,
-        )
-        self.bump_btn.callback = self.show_bump_selector
-        self.add_item(self.bump_btn)
-
-        self.commands_btn = discord.ui.Button(
-            label="All Commands",
-            style=discord.ButtonStyle.secondary,
-            emoji="📋",
-            custom_id="control_commands",
-            row=2,
-        )
-        self.commands_btn.callback = self.show_all_commands
-        self.add_item(self.commands_btn)
-
-        # Row 3: Onboarding and additional showcase buttons
-        self.soft_onboard_btn = discord.ui.Button(
-            label="Soft Onboard",
-            style=discord.ButtonStyle.success,
-            emoji="🚀",
-            custom_id="control_soft_onboard",
-            row=3,
-        )
-        self.soft_onboard_btn.callback = self.show_soft_onboard_modal
-        self.add_item(self.soft_onboard_btn)
-
-        self.hard_onboard_btn = discord.ui.Button(
-            label="Hard Onboard",
-            style=discord.ButtonStyle.success,
-            emoji="🐝",
-            custom_id="control_hard_onboard",
-            row=3,
-        )
-        self.hard_onboard_btn.callback = self.show_hard_onboard_modal
-        self.add_item(self.hard_onboard_btn)
-
-        self.overview_btn = discord.ui.Button(
-            label="Overview",
-            style=discord.ButtonStyle.secondary,
-            emoji="📊",
-            custom_id="control_overview",
-            row=3,
-        )
-        self.overview_btn.callback = self.show_overview
-        self.add_item(self.overview_btn)
-
-        self.goldmines_btn = discord.ui.Button(
-            label="Goldmines",
-            style=discord.ButtonStyle.primary,
-            emoji="💎",
-            custom_id="control_goldmines",
-            row=3,
-        )
-        self.goldmines_btn.callback = self.show_goldmines
-        self.add_item(self.goldmines_btn)
-
-        # Row 4: Additional tools and utilities
-        self.templates_btn = discord.ui.Button(
-            label="Templates",
-            style=discord.ButtonStyle.primary,
-            emoji="📝",
-            custom_id="control_templates",
-            row=4,
-        )
-        self.templates_btn.callback = self.show_templates
-        self.add_item(self.templates_btn)
-
-        self.mermaid_btn = discord.ui.Button(
-            label="Mermaid",
-            style=discord.ButtonStyle.primary,
-            emoji="🌊",
-            custom_id="control_mermaid",
-            row=4,
-        )
-        self.mermaid_btn.callback = self.show_mermaid_modal
-        self.add_item(self.mermaid_btn)
-
-        self.monitor_btn = discord.ui.Button(
-            label="Monitor",
-            style=discord.ButtonStyle.secondary,
-            emoji="📊",
-            custom_id="control_monitor",
-            row=4,
-        )
-        self.monitor_btn.callback = self.show_monitor_control
         self.add_item(self.monitor_btn)
 
-        # Move buttons to row 4 (Discord only allows rows 0-4, row 5 is invalid)
-        self.obs_btn = discord.ui.Button(
-            label="Observations",
-            style=discord.ButtonStyle.secondary,
-            emoji="👁️",
-            custom_id="control_obs",
-            row=4,
-        )
-        self.obs_btn.callback = self.show_obs
-        self.add_item(self.obs_btn)
+    def _setup_monitoring_buttons(self):
+        """
+        Setup monitoring buttons using factory.
 
-        self.pieces_btn = discord.ui.Button(
-            label="Pieces",
-            style=discord.ButtonStyle.secondary,
-            emoji="🧩",
-            custom_id="control_pieces",
-            row=4,
+        Navigation:
+        ├── Uses: ControlPanelButtonFactory
+        └── Related: System monitoring, status display
+        """
+        # System status button
+        self.status_btn = ControlPanelButtonFactory.create_status_button(
+            callback=self.show_system_status
         )
-        self.pieces_btn.callback = self.show_pieces
-        self.add_item(self.pieces_btn)
+        self.add_item(self.status_btn)
+
+        # Agent status button
+        self.agent_status_btn = ControlPanelButtonFactory.create_agent_status_button(
+            callback=self.show_agent_status
+        )
+        self.add_item(self.agent_status_btn)
 
     async def show_agent_selector(self, interaction: discord.Interaction):
-        """Show agent selector menu."""
+        """
+        Show agent selection interface.
+
+        Navigation:
+        ├── Uses: ControlPanelEmbedFactory
+        └── Related: Agent messaging workflow
+        """
+        embed = ControlPanelEmbedFactory.create_agent_selector_embed()
+        await interaction.response.send_message(embed=embed, ephemeral=True)
+
+    async def show_main_control(self, interaction: discord.Interaction):
+        """
+        Show main control interface.
+
+        Navigation:
+        ├── Uses: ControlPanelEmbedFactory
+        └── Related: Bot management, system control
+        """
+        embed = ControlPanelEmbedFactory.create_main_control_embed()
+        await interaction.response.send_message(embed=embed, ephemeral=True)
+
+    async def toggle_monitor(self, interaction: discord.Interaction):
+        """
+        Toggle monitoring status.
+
+        Navigation:
+        ├── Uses: ControlPanelEmbedFactory
+        └── Related: Status monitoring, system health
+        """
+        embed = ControlPanelEmbedFactory.create_monitor_started_embed()
+        await interaction.response.send_message(embed=embed, ephemeral=True)
+
+    async def show_system_status(self, interaction: discord.Interaction):
+        """
+        Show system status information.
+
+        Navigation:
+        ├── Uses: ControlPanelEmbedFactory
+        └── Related: System monitoring, health checks
+        """
+        embed = ControlPanelEmbedFactory.create_system_status_embed()
+        await interaction.response.send_message(embed=embed, ephemeral=True)
+
+    async def show_agent_status(self, interaction: discord.Interaction):
+        """
+        Show agent status information.
+
+        Navigation:
+        ├── Uses: ControlPanelEmbedFactory
+        └── Related: Agent monitoring, swarm status
+        """
+        embed = ControlPanelEmbedFactory.create_agent_status_embed()
+        await interaction.response.send_message(embed=embed, ephemeral=True)
+
+    async def on_error(self, interaction: discord.Interaction, error: Exception, item):
+        """
+        Handle view interaction errors.
+
+        Navigation:
+        ├── Related: Error handling, user feedback
+        └── Uses: Discord interaction error handling
+        """
+        embed = ControlPanelEmbedFactory.create_error_embed(str(error))
         try:
-            from ..controllers.messaging_controller_view import MessagingControllerView
-
-            view = MessagingControllerView(self.messaging_service)
-            embed = view.create_messaging_embed()
-
-            await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
-        except Exception as e:
-            logger.error(f"Error showing agent selector: {e}", exc_info=True)
-            await self._handle_error(interaction, e, "opening agent selector")
-
-    async def show_broadcast_modal(self, interaction: discord.Interaction):
-        """Show broadcast message modal."""
-        try:
-            from ..controllers.broadcast_controller_view import BroadcastControllerView
-
-            view = BroadcastControllerView(self.messaging_service)
-            embed = view.create_broadcast_embed()
-
-            await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
-        except Exception as e:
-            logger.error(f"Error showing broadcast modal: {e}", exc_info=True)
-            await self._handle_error(interaction, e, "opening broadcast")
-
-    async def show_status(self, interaction: discord.Interaction):
-        """Show swarm status."""
-        try:
-            from ..controllers.status_controller_view import StatusControllerView
-
-            view = StatusControllerView(self.messaging_service)
-            embed = view._create_status_embed()
-
-            await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
-        except Exception as e:
-            logger.error(f"Error showing status: {e}", exc_info=True)
-            await self._handle_error(interaction, e, "loading status")
-
-    async def show_swarm_tasks(self, interaction: discord.Interaction):
-        """Show swarm tasks dashboard with interactive menu."""
-        try:
-            # Import the controller view to open interactive menu directly
-            from ..controllers.swarm_tasks_controller_view import SwarmTasksControllerView
-
-            # Create the interactive controller view
-            view = SwarmTasksControllerView(
-                messaging_service=self.messaging_service)
-            embed = view.create_initial_embed()
-
-            # Send the interactive dashboard directly (not ephemeral so it's interactive)
-            await interaction.response.send_message(embed=embed, view=view)
-        except Exception as e:
-            logger.error(f"Error showing swarm tasks: {e}", exc_info=True)
-            # Fallback to simple message if controller fails
-            try:
-                embed = discord.Embed(
-                    title="🐝 Swarm Tasks Dashboard",
-                    description=f"**Error loading interactive dashboard**\n\nYou can use command: `!swarm_tasks`",
-                    color=discord.Color.orange(),
-                )
-                await interaction.response.send_message(embed=embed, ephemeral=True)
-            except Exception as fallback_error:
-                logger.error(
-                    f"Fallback also failed: {fallback_error}", exc_info=True)
-                await self._handle_error(interaction, e, "loading swarm tasks")
-
-    async def show_github_book(self, interaction: discord.Interaction):
-        """Show GitHub book viewer directly."""
-        try:
-            from ..github_book_viewer import GitHubBookData, GitHubBookNavigator
-
-            book_data = GitHubBookData()
-            navigator = GitHubBookNavigator(book_data, start_repo=1)
-            embed = navigator._create_toc_embed()
-
-            await interaction.response.send_message(embed=embed, view=navigator)
-        except Exception as e:
-            logger.error(f"Error showing GitHub book: {e}")
-            embed = discord.Embed(
-                title="📚 GitHub Book Viewer",
-                description="**Interactive book navigation with chapters**\n\nUse command: `!github_book [chapter]`",
-                color=discord.Color.blue(),
-            )
-            embed.add_field(
-                name="Quick Access",
-                value="Type `!github_book 1` to start reading, or `!github_book` for navigation menu.",
-                inline=False,
-            )
             await interaction.response.send_message(embed=embed, ephemeral=True)
+<<<<<<< HEAD
 
     async def show_help(self, interaction: discord.Interaction):
         """Show interactive help menu."""
@@ -1041,3 +736,7 @@ class MainControlPanelView(discord.ui.View):
             logger.error(
                 f"Error sending error message: {followup_error}", exc_info=True)
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+        except discord.InteractionResponded:
+            await interaction.followup.send(embed=embed, ephemeral=True)
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1

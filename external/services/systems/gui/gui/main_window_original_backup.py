@@ -1270,6 +1270,7 @@ class TheaMainWindow(QMainWindow):
                 # Fallback to light if detection fails
                 is_dark = False
         elif sys.platform == "darwin":
+<<<<<<< HEAD
             # macOS dark mode detection
             try:
                 import subprocess
@@ -1296,6 +1297,11 @@ class TheaMainWindow(QMainWindow):
                     is_dark = False
                 except Exception:
                     is_dark = False
+=======
+            # TODO: Implement macOS dark mode detection
+            # For now, fallback to light
+            is_dark = False
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         else:
             # TODO: Implement Linux/other OS dark mode detection
             # For now, fallback to light

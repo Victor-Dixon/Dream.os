@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
 <<<<<<< HEAD
+<<<<<<< HEAD
 Swarm Showcase Commands - Agent Cellphone V2
 ===========================================
 
@@ -50,24 +51,29 @@ Date: 2026-01-07
 
 import logging
 =======
+=======
+Swarm Showcase Commands - Agent Cellphone V2
+===========================================
+
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 <!-- SSOT Domain: discord -->
 
-Swarm Showcase Commands - Beautiful Discord Display System
-===========================================================
+SSOT Domain: discord
 
-Professional Discord embeds showcasing swarm capabilities:
-- Tasks & Directives Dashboard
-- Roadmap Visualization
-- Mission Progress Tracking
-- Agent Excellence Display
+Refactored entry point for swarm showcase functionality.
+All core logic has been extracted into modular components for V2 compliance.
 
-Every agent is the face of the swarm - present excellence professionally.
+Features:
+- Modular data loading (swarm_showcase_data.py)
+- Professional embed factory (swarm_showcase_embeds.py)
+- Focused command handling (swarm_showcase_commands_v2.py)
 
-Author: Agent-2 - Architecture & Design Specialist
-Date: 2025-10-15
-Mission: Discord Swarm Showcase System
+V2 Compliant: Yes (<300 lines)
+Author: Agent-1 (Integration & Core Systems Specialist)
+Date: 2026-01-07
 """
 
+<<<<<<< HEAD
 from __future__ import annotations
 
 import json
@@ -791,5 +797,11 @@ async def setup(bot):
         logger.info("✅ SwarmShowcaseCommands cog loaded")
     else:
         logger.warning("⚠️ Discord not available - SwarmShowcaseCommands not loaded")
+=======
+# Re-export the main components for backward compatibility
+from .swarm_showcase_data import SwarmShowcaseData
+from .swarm_showcase_embeds import SwarmShowcaseEmbeds
+from .swarm_showcase_commands_v2 import SwarmShowcaseCommands, setup
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console

@@ -39,6 +39,9 @@ logger = logging.getLogger(__name__)
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 def handle_robinhood_stats() -> int:
     """Handle Robinhood statistics command."""
     try:
@@ -82,8 +85,11 @@ def handle_robinhood_stats() -> int:
         return 1
 
 
+<<<<<<< HEAD
 =======
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 def handle_cycle_v2_message(args, parser) -> int:
     """Handle CYCLE_V2 message sending with template."""
     try:

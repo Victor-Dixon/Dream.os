@@ -247,15 +247,25 @@ app = FastAPI(
 # Middleware
 app.add_middleware(
     CORSMiddleware,
+<<<<<<< HEAD
     allow_origins=["https://tradingrobotplug.com", "https://www.tradingrobotplug.com"],  # Production domains only
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+=======
+    allow_origins=["*"],  # Configure appropriately for production
+    allow_credentials=True,
+    allow_methods=["*"],
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     allow_headers=["*"],
 )
 
 app.add_middleware(
     TrustedHostMiddleware,
+<<<<<<< HEAD
     allowed_hosts=["tradingrobotplug.com", "www.tradingrobotplug.com"]  # Production hosts only
+=======
+    allowed_hosts=["*"]  # Configure appropriately for production
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 )
 
 

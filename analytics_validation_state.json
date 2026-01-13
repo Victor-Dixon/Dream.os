@@ -1,0 +1,66 @@
+{
+  "timestamp": "2026-01-07T05:42:22.231354",
+  "sites": {
+    "freerideinvestor.com": {
+      "site_name": "freerideinvestor.com",
+      "ga4_measurement_id": null,
+      "facebook_pixel_id": null,
+      "ga4_configured": false,
+      "pixel_configured": false,
+      "tracking_verified": false,
+      "last_checked": "2026-01-07T05:42:19.150010",
+      "status": "configured",
+      "issues": [
+        "GA4 Measurement ID not configured or invalid",
+        "Facebook Pixel ID not configured or invalid"
+      ]
+    },
+    "tradingrobotplug.com": {
+      "site_name": "tradingrobotplug.com",
+      "ga4_measurement_id": null,
+      "facebook_pixel_id": null,
+      "ga4_configured": false,
+      "pixel_configured": false,
+      "tracking_verified": false,
+      "last_checked": "2026-01-07T05:42:19.982264",
+      "status": "configured",
+      "issues": [
+        "GA4 Measurement ID not configured or invalid",
+        "Facebook Pixel ID not configured or invalid"
+      ]
+    },
+    "dadudekc.com": {
+      "site_name": "dadudekc.com",
+      "ga4_measurement_id": null,
+      "facebook_pixel_id": null,
+      "ga4_configured": false,
+      "pixel_configured": false,
+      "tracking_verified": false,
+      "last_checked": "2026-01-07T05:42:20.707924",
+      "status": "error",
+      "issues": [
+        "Configuration check error: Live site check failed: 500 Server Error: Internal Server Error for url: https://dadudekc.com/"
+      ]
+    },
+    "crosbyultimateevents.com": {
+      "site_name": "crosbyultimateevents.com",
+      "ga4_measurement_id": null,
+      "facebook_pixel_id": null,
+      "ga4_configured": false,
+      "pixel_configured": false,
+      "tracking_verified": false,
+      "last_checked": "2026-01-07T05:42:21.434587",
+      "status": "error",
+      "issues": [
+        "Configuration check error: Live site check failed: 500 Server Error: Internal Server Error for url: https://crosbyultimateevents.com/"
+      ]
+    }
+  },
+  "summary": {
+    "ready": 0,
+    "configured": 2,
+    "missing": 0,
+    "error": 2,
+    "total": 4
+  }
+}

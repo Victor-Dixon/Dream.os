@@ -33,9 +33,13 @@ from src.services.messaging import (
     handle_leaderboard,
     handle_message,
 <<<<<<< HEAD
+<<<<<<< HEAD
     handle_robinhood_stats,
 =======
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+    handle_robinhood_stats,
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     handle_save,
     handle_start_agents,
     handle_survey,
@@ -69,7 +73,7 @@ try:
 =======
 # Import task handler with guard to handle missing dependencies gracefully
 try:
-    from .handlers.task_handler import TaskHandler
+    from .unified_cli_handlers import TaskHandler
 
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     TASK_HANDLER_AVAILABLE = True
@@ -82,10 +86,14 @@ except ImportError:
 # Import hard onboarding handler
 try:
 <<<<<<< HEAD
+<<<<<<< HEAD
     from src.services.unified_onboarding_handlers import HardOnboardingHandler
 =======
     from src.services.handlers.hard_onboarding_handler import HardOnboardingHandler
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+    from src.services.unified_onboarding_handlers import HardOnboardingHandler
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
     HARD_ONBOARDING_HANDLER_AVAILABLE = True
 except ImportError:
@@ -95,10 +103,14 @@ except ImportError:
 # Import soft onboarding handler
 try:
 <<<<<<< HEAD
+<<<<<<< HEAD
     from src.services.unified_onboarding_handlers import SoftOnboardingHandler
 =======
     from src.services.handlers.soft_onboarding_handler import SoftOnboardingHandler
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+    from src.services.unified_onboarding_handlers import SoftOnboardingHandler
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
     SOFT_ONBOARDING_HANDLER_AVAILABLE = True
 except ImportError:
@@ -310,11 +322,17 @@ class MessagingCLI:
             elif parsed_args.leaderboard:
                 return handle_leaderboard()
 <<<<<<< HEAD
+<<<<<<< HEAD
             elif parsed_args.robinhood_stats:
                 # Handle Robinhood statistics command
                 return handle_robinhood_stats()
 =======
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+            elif parsed_args.robinhood_stats:
+                # Handle Robinhood statistics command
+                return handle_robinhood_stats()
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
             elif parsed_args.resend_failed:
                 # Handle resend failed messages
                 from src.core.message_queue import MessageQueue

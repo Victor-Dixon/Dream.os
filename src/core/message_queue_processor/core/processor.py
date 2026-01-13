@@ -12,10 +12,14 @@ V2 Compliance: <200 lines (orchestrator only)
 """
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 import logging
 import os
 import time
 from typing import Any, Optional
+<<<<<<< HEAD
 
 from ....core.message_queue import MessageQueue, QueueConfig
 from ....core.message_queue_persistence import QueueEntry
@@ -34,6 +38,14 @@ from systems.output_flywheel.integration.status_json_integration import (
     StatusJsonIntegration,
 )
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+
+from ....core.message_queue import MessageQueue, QueueConfig
+from ....core.message_queue_persistence import QueueEntry
+from systems.output_flywheel.integration.status_json_integration import (
+    StatusJsonIntegration,
+)
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 from ..processing.message_parser import parse_message_data
 from ..processing.message_validator import validate_message_data
 from ..processing.message_router import route_message_delivery
@@ -88,6 +100,9 @@ class MessageQueueProcessor:
         self.queue = queue or MessageQueue(config=self.config)
         self.message_repository = message_repository
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         self.messaging_core = messaging_core
         self.running = False
         self.output_flywheel_integration = self._init_output_flywheel_integration()
@@ -99,6 +114,7 @@ class MessageQueueProcessor:
             if self.output_flywheel_integration
             else None
         )
+<<<<<<< HEAD
 =======
         self.messaging_core = messaging_core
         self.running = False
@@ -112,6 +128,8 @@ class MessageQueueProcessor:
             else None
         )
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
         # Initialize performance metrics collector
         try:
@@ -134,6 +152,9 @@ class MessageQueueProcessor:
 
         try:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
             while self.running:
                 self._maybe_trigger_output_flywheel()
                 # Dequeue up to batch_size entries
@@ -144,6 +165,7 @@ class MessageQueueProcessor:
                         break
                     entries.append(entry)
                 if not entries:
+<<<<<<< HEAD
                     logger.debug(f"📭 No messages in queue, sleeping for {interval}s")
                     if max_messages is None:
                         time.sleep(interval)
@@ -160,6 +182,11 @@ class MessageQueueProcessor:
                     if max_messages is None:
                         time.sleep(interval)
                         continue
+=======
+                    if max_messages is None:
+                        time.sleep(interval)
+                        continue
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
                     break
 
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
@@ -232,6 +259,9 @@ class MessageQueueProcessor:
             logger.info(f"✅ Queue processor complete: {processed} delivered")
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         return processed
 
     def _init_output_flywheel_integration(self) -> Optional[StatusJsonIntegration]:
@@ -269,6 +299,7 @@ class MessageQueueProcessor:
             )
         finally:
             self.next_output_flywheel_check = now + self.output_flywheel_check_interval
+<<<<<<< HEAD
 =======
         return processed
 
@@ -308,6 +339,8 @@ class MessageQueueProcessor:
         finally:
             self.next_output_flywheel_check = now + self.output_flywheel_check_interval
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
     def _deliver_entry(self, entry: Any) -> bool:
         """Deliver queue entry using extracted modules."""
@@ -439,6 +472,9 @@ class MessageQueueProcessor:
             )
             return False
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
 
 def main():
@@ -469,6 +505,10 @@ def main():
 
 
 if __name__ == "__main__":
+<<<<<<< HEAD
     main()
 =======
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+    main()
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1

@@ -74,12 +74,16 @@ class StartHandler:
         for service_name in start_order:
             print(f"   Starting {service_name}...", end=' ')
             try:
+<<<<<<< HEAD
                 # Long-running services should always run in background mode
                 # to prevent blocking the startup process
                 long_running_services = ['message_queue', 'twitch', 'fastapi']
                 service_background = background or (service_name in long_running_services)
 
                 result = self.service_manager.start_service(service_name, background=service_background)
+=======
+                result = self.service_manager.start_service(service_name, background=background)
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
                 if result:  # start_service returns True/False
                     print("✅")
@@ -121,6 +125,7 @@ class StartHandler:
             print("   • Check .env file for required configuration")
             print("   • Try starting services individually")
         else:
+<<<<<<< HEAD
             # Check if we're in foreground mode (not background)
             if not background:
                 print("\n✅ All services started successfully!")
@@ -161,6 +166,10 @@ class StartHandler:
                 print("\n✅ All services started successfully!")
                 print("💡 Services running in background")
                 print("💡 Check status with: python main.py --status")
+=======
+            print("\n✅ All services started successfully!")
+            print("💡 Check status with: python main.py --status")
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
     def _get_all_services(self) -> List[str]:
         """Get list of all configured services."""
@@ -188,6 +197,10 @@ class StartHandler:
 
     def _verify_service_started(self, service_name: str, timeout: int = 10) -> bool:
         """Verify that a service actually started and is healthy."""
+<<<<<<< HEAD
+=======
+        import time
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
         try:
             for attempt in range(timeout):

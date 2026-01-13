@@ -15,10 +15,14 @@ from flask import jsonify, request
 
 from src.core.base.base_handler import BaseHandler
 <<<<<<< HEAD
+<<<<<<< HEAD
 from src.services.unified_service_managers import UnifiedContractManager
 =======
 from src.services.contract_system.manager import ContractManager
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+from src.services.unified_service_managers import UnifiedContractManager
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
 
 class ContractHandlers(BaseHandler):
@@ -40,10 +44,14 @@ class ContractHandlers(BaseHandler):
         """
         try:
 <<<<<<< HEAD
+<<<<<<< HEAD
             manager = UnifiedContractManager()
 =======
             manager = ContractManager()
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+            manager = UnifiedContractManager()
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
             status = manager.get_system_status()
 
             if "error" in status:
@@ -70,10 +78,14 @@ class ContractHandlers(BaseHandler):
         """
         try:
 <<<<<<< HEAD
+<<<<<<< HEAD
             manager = UnifiedContractManager()
 =======
             manager = ContractManager()
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+            manager = UnifiedContractManager()
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
             status = manager.get_agent_status(agent_id)
 
             if "error" in status:
@@ -106,10 +118,14 @@ class ContractHandlers(BaseHandler):
                 return jsonify(error_response), 400
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             manager = UnifiedContractManager()
 =======
             manager = ContractManager()
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+            manager = UnifiedContractManager()
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
             task = manager.get_next_task(agent_id)
 
             if "error" in task:

@@ -28,6 +28,9 @@ logger = logging.getLogger(__name__)
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 class BaseModal(discord.ui.Modal):
     """
     Base modal class for Discord UI components.
@@ -55,8 +58,11 @@ class BaseModal(discord.ui.Modal):
             )
 
 
+<<<<<<< HEAD
 =======
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 class BaseMessageModal(discord.ui.Modal):
     """Base modal for message composition with common functionality."""
 

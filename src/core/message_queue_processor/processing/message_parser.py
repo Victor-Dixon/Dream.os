@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 Message Parser for Message Queue Processing
 ===========================================
 
@@ -15,6 +18,7 @@ def parse_message_data(message_data: Dict[str, Any]) -> Dict[str, Any]:
     Parse message data for processing.
 
     Args:
+<<<<<<< HEAD
         message_data: Raw message data dictionary from queue
 
     Returns:
@@ -124,3 +128,24 @@ def parse_message_data(message: Any) -> dict[str, Any]:
             "metadata": getattr(message, "metadata", {}),
         }
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+        message_data: Raw message data dictionary
+
+    Returns:
+        Parsed message data
+    """
+    try:
+        # Basic parsing - in real implementation this would validate and transform message data
+        parsed = {
+            "message_id": message_data.get("message_id"),
+            "sender": message_data.get("sender"),
+            "recipient": message_data.get("recipient"),
+            "content": message_data.get("content", {}),
+            "timestamp": message_data.get("timestamp"),
+            "priority": message_data.get("priority", "normal"),
+            "parsed": True
+        }
+        return parsed
+    except Exception as e:
+        return {"error": f"Failed to parse message: {str(e)}", "parsed": False}
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1

@@ -230,10 +230,46 @@ class WorkResumeGenerator:
 {items}"""
     
     def _get_recent_commits(self, days_back: int) -> List[Dict[str, Any]]:
-        """Get recent git commits (placeholder - would need git integration)."""
-        # TODO: Integrate with git to get recent commits
-        # This would use something like: git log --since="{days_back} days ago" --pretty=format:"%H|%an|%ad|%s"
-        return []
+        """Get recent git commits with actual git integration."""
+        import subprocess
+        import re
+        from datetime import datetime, timedelta
+
+        try:
+            # Get git log with detailed format
+            since_date = (datetime.now() - timedelta(days=days_back)).strftime("%Y-%m-%d")
+            cmd = [
+                "git", "log",
+                f"--since={since_date}",
+                "--pretty=format:%H|%an|%ad|%s",
+                "--date=short",
+                "--no-merges"  # Exclude merge commits for cleaner output
+            ]
+
+            result = subprocess.run(cmd, capture_output=True, text=True, cwd=self.repo_root)
+            if result.returncode != 0:
+                logger.warning(f"Git log failed: {result.stderr}")
+                return []
+
+            commits = []
+            for line in result.stdout.strip().split('\n'):
+                if not line.strip():
+                    continue
+
+                parts = line.split('|', 3)
+                if len(parts) >= 4:
+                    commits.append({
+                        "hash": parts[0],
+                        "author": parts[1],
+                        "date": parts[2],
+                        "message": parts[3]
+                    })
+
+            return commits[:20]  # Limit to 20 most recent commits
+
+        except Exception as e:
+            logger.error(f"Error getting git commits: {e}")
+            return []
     
     def _generate_commits_section(self, commits: List[Dict[str, Any]], agent_id: str) -> str:
         """Generate commits section."""
@@ -250,9 +286,66 @@ class WorkResumeGenerator:
 {chr(10).join(items)}"""
     
     def _get_coordination_activity(self, agent_id: str, days_back: int) -> List[Dict[str, Any]]:
-        """Get recent coordination activity (placeholder - would need message queue/log integration)."""
-        # TODO: Integrate with message queue/log to get recent A2A messages
-        return []
+        """Get recent coordination activity with actual log integration."""
+        import json
+        from datetime import datetime, timedelta
+        from pathlib import Path
+
+        activities = []
+        cutoff_date = datetime.now() - timedelta(days=days_back)
+
+        try:
+            # Check coordination cache
+            cache_file = Path("coordination_cache.json")
+            if cache_file.exists():
+                with open(cache_file, 'r', encoding='utf-8') as f:
+                    cache_data = json.load(f)
+
+                for entry in cache_data.get("coordinations", []):
+                    # Check if entry is recent enough
+                    if isinstance(entry.get("timestamp"), str):
+                        try:
+                            entry_date = datetime.fromisoformat(entry["timestamp"].replace('Z', '+00:00'))
+                            if entry_date >= cutoff_date:
+                                activities.append({
+                                    "type": "coordination",
+                                    "timestamp": entry_date.isoformat(),
+                                    "description": entry.get("description", "Coordination activity"),
+                                    "participants": entry.get("participants", []),
+                                    "status": entry.get("status", "completed")
+                                })
+                        except (ValueError, AttributeError):
+                            continue
+
+            # Check A2A coordination status
+            status_file = Path("a2a_coordination_status.json")
+            if status_file.exists():
+                with open(status_file, 'r', encoding='utf-8') as f:
+                    status_data = json.load(f)
+
+                for coord_id, coord_data in status_data.items():
+                    if isinstance(coord_data.get("timestamp"), str):
+                        try:
+                            coord_date = datetime.fromisoformat(coord_data["timestamp"].replace('Z', '+00:00'))
+                            if coord_date >= cutoff_date:
+                                activities.append({
+                                    "type": "a2a_coordination",
+                                    "timestamp": coord_date.isoformat(),
+                                    "description": coord_data.get("description", f"A2A coordination {coord_id}"),
+                                    "participants": coord_data.get("participants", []),
+                                    "status": coord_data.get("status", "active")
+                                })
+                        except (ValueError, AttributeError):
+                            continue
+
+            # Sort by timestamp (most recent first)
+            activities.sort(key=lambda x: x["timestamp"], reverse=True)
+
+            return activities[:15]  # Limit to 15 most recent activities
+
+        except Exception as e:
+            logger.error(f"Error getting coordination activity: {e}")
+            return []
     
     def _generate_coordination_section(self, coord: List[Dict[str, Any]]) -> str:
         """Generate coordination activity section."""

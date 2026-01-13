@@ -22,6 +22,7 @@ Classes:
 - ContextSuggestion: AI-generated context-aware suggestion
 """
 
+<<<<<<< HEAD
 from dataclasses import dataclass, field
 from typing import Dict, List, Any, Optional
 from datetime import datetime
@@ -29,12 +30,21 @@ import uuid
 import logging
 
 logger = logging.getLogger(__name__)
+=======
+from dataclasses import dataclass
+from typing import Dict, List, Any, Optional
+from datetime import datetime
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
 
 @dataclass
 class ContextSession:
     """
+<<<<<<< HEAD
     Represents an active context processing session with enhanced validation and methods.
+=======
+    Represents an active context processing session.
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
     Navigation:
     ├── Used by: SessionManager, ContextProcessors, AIContextEngine
@@ -46,6 +56,7 @@ class ContextSession:
     context_type: str  # 'trading', 'collaboration', 'analysis', 'risk'
     start_time: datetime
     last_activity: datetime
+<<<<<<< HEAD
     context_data: Dict[str, Any] = field(default_factory=dict)
     risk_metrics: Optional[Any] = None  # RiskMetrics from risk_calculator_service.py
     ai_suggestions: List[Dict[str, Any]] = field(default_factory=list)
@@ -170,12 +181,29 @@ class ContextSession:
         """Check if the session has expired due to inactivity."""
         age = (datetime.now() - self.last_activity).total_seconds()
         return age > max_age_seconds
+=======
+    context_data: Dict[str, Any]
+    risk_metrics: Optional[Any] = None  # RiskMetrics from risk_calculator_service.py
+    ai_suggestions: List[Dict[str, Any]] = None
+    performance_metrics: Dict[str, float] = None
+
+    def __post_init__(self):
+        """Initialize default values."""
+        if self.ai_suggestions is None:
+            self.ai_suggestions = []
+        if self.performance_metrics is None:
+            self.performance_metrics = {}
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
 
 @dataclass
 class ContextSuggestion:
     """
+<<<<<<< HEAD
     AI-generated context-aware suggestion with enhanced validation and methods.
+=======
+    AI-generated context-aware suggestion.
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
     Navigation:
     ├── Used by: SuggestionGenerators, ContextProcessors, AIContextEngine
@@ -189,6 +217,7 @@ class ContextSuggestion:
     content: Dict[str, Any]
     reasoning: str
     timestamp: datetime
+<<<<<<< HEAD
     applied: bool = False
     priority: str = "normal"  # 'low', 'normal', 'high', 'urgent'
     category: str = "general"  # 'risk', 'trading', 'collaboration', 'analysis'
@@ -428,3 +457,6 @@ def validate_suggestion_data(suggestion: ContextSuggestion) -> List[str]:
         errors.append("Reasoning is required")
 
     return errors
+=======
+    applied: bool = False
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1

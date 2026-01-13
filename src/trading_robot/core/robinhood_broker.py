@@ -102,10 +102,14 @@ class RobinhoodBroker:
             # Prepare login payload
             login_data = {
 <<<<<<< HEAD
+<<<<<<< HEAD
                 "client_id": "<REDACTED_ROBINHOOD_CLIENT_ID>",
 =======
                 "client_id": "c82SH0WZOsabOXGP2sxqcj34FxkvfnWRZBKlBjFS",
 >>>>>>> rescue/dreamos-down-
+=======
+                "client_id": "c82SH0WZOsabOXGP2sxqcj34FxkvfnWRZBKlBjFS",
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
                 "expires_in": 86400,
                 "grant_type": "password",
                 "password": password,
@@ -170,6 +174,7 @@ class RobinhoodBroker:
         """
         try:
 <<<<<<< HEAD
+<<<<<<< HEAD
             if self.is_authenticated and self.access_token:
                 # Revoke access token via Robinhood API
                 revoke_url = "https://api.robinhood.com/oauth2/revoke_token/"
@@ -221,13 +226,18 @@ class RobinhoodBroker:
 
             logger.info("✅ Robinhood logout completed successfully")
 =======
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
             if self.session:
                 # TODO: Implement actual logout
                 logger.info("Logged out successfully")
                 self.is_authenticated = False
                 self.session = None
                 self.username = None
+<<<<<<< HEAD
 >>>>>>> rescue/dreamos-down-
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
             return True
         except Exception as e:
             logger.error(f"Logout failed: {e}")
@@ -342,9 +352,12 @@ class RobinhoodBroker:
             logger.error(f"Failed to get options positions: {e}")
             return []
 <<<<<<< HEAD
+<<<<<<< HEAD
             return []
 =======
 >>>>>>> rescue/dreamos-down-
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
 
 def format_balance(balance: Dict[str, Any]) -> str:
@@ -409,8 +422,13 @@ Trading Activity:
    Total Commissions: ${stats.total_commissions:,.2f}
    Trading Days: {stats.total_days_trading}
 <<<<<<< HEAD
+<<<<<<< HEAD
    Average Daily P&L: ${stats.avg_daily_pnl:,.2f}"""
 =======
    Average Daily P&L: ${stats.avg_daily_pnl:,.2f}
 """
 >>>>>>> rescue/dreamos-down-
+=======
+   Average Daily P&L: ${stats.avg_daily_pnl:,.2f}
+"""
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1

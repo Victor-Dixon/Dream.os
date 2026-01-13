@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
 """
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 Error Handler for Message Queue Processing
 ==========================================
 
 Handles delivery errors and logging.
+<<<<<<< HEAD
 =======
 <!-- SSOT Domain: core -->
 
@@ -13,14 +17,20 @@ Error Handler - Handle Message Delivery Errors
 
 Handles errors during message delivery processing.
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 """
 
 import logging
 from typing import Any, Optional
 <<<<<<< HEAD
+<<<<<<< HEAD
 import time
 =======
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+import time
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
 logger = logging.getLogger(__name__)
 
@@ -30,6 +40,9 @@ def handle_delivery_error(
     error: Exception,
     queue: Any,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     tracker: Any,
     recipient: str,
     performance_metrics: Any,
@@ -84,6 +97,7 @@ def handle_delivery_error(
             tracker.mark_inactive(recipient)
             logger.info(f"   Marked agent {recipient} as inactive due to delivery failure")
         except Exception as tracker_error:
+<<<<<<< HEAD
             logger.warning(f"Failed to mark agent inactive: {tracker_error}")
 =======
     tracker: Optional[Any] = None,
@@ -138,3 +152,6 @@ def handle_delivery_error(
         except Exception:
             pass  # Non-critical tracking failure
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+            logger.warning(f"Failed to mark agent inactive: {tracker_error}")
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1

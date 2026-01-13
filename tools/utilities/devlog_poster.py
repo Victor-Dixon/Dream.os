@@ -44,6 +44,7 @@ from datetime import datetime, timezone
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
+<<<<<<< HEAD
 # Load environment variables from .env and .env.discord files
 try:
     from dotenv import load_dotenv
@@ -56,12 +57,19 @@ except ImportError:
     print("   Install with: pip install python-dotenv")
 
 def split_content_into_pages(content: str, max_length: int = 1678) -> list[str]:
+=======
+def split_content_into_pages(content: str, max_length: int = 1900) -> list[str]:
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     """
     Split content into pages that fit within Discord's message limits.
 
     Args:
         content: The full content to split
+<<<<<<< HEAD
         max_length: Maximum characters per page (default 1678 to account for D2A template overhead ~322 chars)
+=======
+        max_length: Maximum characters per page (default 1900 for safety)
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
     Returns:
         List of content pages
@@ -277,7 +285,10 @@ def post_devlog_to_discord(agent_id: str, devlog_path: str, is_status_update: bo
         webhook_url = os.getenv(webhook_env_var)
         if not webhook_url:
             print(f"ℹ️ Discord webhook not configured for {agent_id} - devlog saved for monitoring and website")
+<<<<<<< HEAD
             print(f"   💡 To enable Discord posting, set: {webhook_env_var}=<agent_channel_webhook_url>")
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
             return True  # Status/website updates succeeded even if Discord failed
 
         # Post to Discord webhook with pagination
@@ -288,6 +299,7 @@ def post_devlog_to_discord(agent_id: str, devlog_path: str, is_status_update: bo
         success_count = 0
 
         for page_num, page_content in enumerate(pages, 1):
+<<<<<<< HEAD
             # Create D2A formatted message with proper template wrapping
             timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
 
@@ -316,6 +328,20 @@ def post_devlog_to_discord(agent_id: str, devlog_path: str, is_status_update: bo
             payload = {
                 "username": f"{agent_id} Devlog (D2A)",
                 "content": full_content
+=======
+            # Create pagination header
+            if total_pages == 1:
+                header = f"**{agent_id} Devlog Update**"
+            else:
+                header = f"**{agent_id} Devlog Update** (Page {page_num}/{total_pages})"
+                # Add continuation marker for multi-page
+                if page_num > 1:
+                    header += " *(continued)*"
+
+            payload = {
+                "username": f"{agent_id} Devlog",
+                "content": f"{header}\n\n{page_content}"
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
             }
 
             # Add small delay between pages to avoid rate limiting
@@ -329,9 +355,12 @@ def post_devlog_to_discord(agent_id: str, devlog_path: str, is_status_update: bo
                 print(f"✅ Posted page {page_num}/{total_pages} to {agent_id} Discord channel")
             else:
                 print(f"❌ Failed to post page {page_num}/{total_pages}: HTTP {response.status_code}")
+<<<<<<< HEAD
                 if response.text:
                     print(f"   Error details: {response.text[:200]}")
                 print(f"   Message length: {len(full_content)} characters")
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
                 return False
 
         if success_count == total_pages:

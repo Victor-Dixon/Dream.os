@@ -19,10 +19,14 @@ from typing import Any, Dict
 # Lazy import to avoid circular dependencies
 def _get_swarm_intelligence_manager(agent_id: str = "Agent-7"):
 <<<<<<< HEAD
+<<<<<<< HEAD
     from src.services.unified_service_managers import SwarmIntelligenceManager
 =======
     from src.services.swarm_intelligence_manager import SwarmIntelligenceManager
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+    from src.services.unified_service_managers import SwarmIntelligenceManager
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     return SwarmIntelligenceManager(agent_id)
 
 # Create blueprint

@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 #!/usr/bin/env python3
 """
 Utility Commands - Modular V2 Compliance
@@ -20,31 +21,47 @@ if TYPE_CHECKING:
     from src.discord_commander.unified_discord_bot import UnifiedDiscordBot
     from src.discord_commander.discord_gui_controller import DiscordGUIController
 =======
+=======
+#!/usr/bin/env python3
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 """
-<!-- SSOT Domain: discord -->
+Utility Commands - Modular V2 Compliance
+========================================
 
-Utility Commands
-================
+Utility commands (mermaid, help, commands) extracted from bot_messaging_commands.py.
 
-Utility commands extracted from unified_discord_bot.py for V2 compliance.
-Handles: Git operations, agent management, help, and utility functions.
+<!-- SSOT Domain: messaging -->
 
-V2 Compliance: <300 lines, <5 classes, <10 functions
+V2 Compliant: Modular utility commands
+Author: Agent-7 (Web Development Specialist)
+Date: 2026-01-08
 """
 
-import json
 import logging
+<<<<<<< HEAD
 import subprocess
 from pathlib import Path
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+from typing import TYPE_CHECKING
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
-import discord
-from discord.ext import commands
+if TYPE_CHECKING:
+    from src.discord_commander.unified_discord_bot import UnifiedDiscordBot
+    from src.discord_commander.discord_gui_controller import DiscordGUIController
+
+try:
+    import discord
+    from discord.ext import commands
+except ImportError:
+    discord = None
+    commands = None
 
 logger = logging.getLogger(__name__)
 
 
 class UtilityCommands(commands.Cog):
+<<<<<<< HEAD
 <<<<<<< HEAD
     """Utility commands for various bot functions."""
 
@@ -53,15 +70,23 @@ class UtilityCommands(commands.Cog):
         super().__init__()
 =======
     """Utility commands for bot operations."""
+=======
+    """Utility commands for various bot functions."""
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
-    def __init__(self, bot, gui_controller):
+    def __init__(self, bot: "UnifiedDiscordBot", gui_controller: "DiscordGUIController"):
         """Initialize utility commands."""
+<<<<<<< HEAD
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+        commands.Cog.__init__(self)
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         self.bot = bot
         self.gui_controller = gui_controller
         self.logger = logging.getLogger(__name__)
 
     @commands.command(name="mermaid", description="Render Mermaid diagram")
+<<<<<<< HEAD
 <<<<<<< HEAD
     async def mermaid(self, ctx: commands.Context, *, diagram_code: str):
         """Render Mermaid diagram code."""
@@ -69,13 +94,12 @@ class UtilityCommands(commands.Cog):
             diagram_code = self._clean_mermaid_code(diagram_code)
 =======
     @commands.has_any_role("Admin", "Captain", "Swarm Commander")
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     async def mermaid(self, ctx: commands.Context, *, diagram_code: str):
-        """Render Mermaid diagram code.
-
-        Usage: !mermaid graph TD; A-->B; B-->C;
-        """
-        self.logger.info(f"Command 'mermaid' triggered by {ctx.author}")
+        """Render Mermaid diagram code."""
         try:
+<<<<<<< HEAD
             # Remove code block markers if present
             diagram_code = diagram_code.strip()
             if diagram_code.startswith("```mermaid"):
@@ -88,11 +112,15 @@ class UtilityCommands(commands.Cog):
 
             # Create embed with mermaid code
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+            diagram_code = self._clean_mermaid_code(diagram_code)
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
             embed = discord.Embed(
                 title="📊 Mermaid Diagram",
                 description="Mermaid diagram code:",
                 color=discord.Color.blue(),
             )
+<<<<<<< HEAD
 <<<<<<< HEAD
             mermaid_block = f"```mermaid\n{diagram_code}\n```"
 
@@ -104,10 +132,15 @@ class UtilityCommands(commands.Cog):
 
             # Discord has a 2000 character limit per message
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+            mermaid_block = f"```mermaid\n{diagram_code}\n```"
+
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
             if len(mermaid_block) > 1900:
                 await ctx.send("❌ Mermaid diagram too long. Please shorten it.")
                 return
 
+<<<<<<< HEAD
 <<<<<<< HEAD
             embed.add_field(name="Diagram Code", value=mermaid_block, inline=False)
             embed.set_footer(text="💡 Tip: Copy this code to a Mermaid editor or use Discord's code block rendering")
@@ -126,11 +159,19 @@ class UtilityCommands(commands.Cog):
             await ctx.send(embed=embed)
 
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+            embed.add_field(name="Diagram Code", value=mermaid_block, inline=False)
+            embed.set_footer(text="💡 Tip: Copy this code to a Mermaid editor or use Discord's code block rendering")
+            await ctx.send(embed=embed)
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         except Exception as e:
             self.logger.error(f"Error rendering mermaid: {e}")
             await ctx.send(f"❌ Error rendering mermaid diagram: {e}")
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     def _clean_mermaid_code(self, diagram_code: str) -> str:
         """Clean mermaid code block markers."""
         diagram_code = diagram_code.strip()
@@ -142,6 +183,7 @@ class UtilityCommands(commands.Cog):
             diagram_code = diagram_code[:-3]
         return diagram_code.strip()
 
+<<<<<<< HEAD
     @commands.command(name="help", description="Show help information")
     async def help_cmd(self, ctx: commands.Context):
         """Show interactive help menu with navigation buttons."""
@@ -150,23 +192,26 @@ class UtilityCommands(commands.Cog):
             view = HelpGUIView()
             embed = view._create_main_embed()
 =======
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     @commands.command(name="help", description="Show help information")
-    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def help_cmd(self, ctx: commands.Context):
         """Show interactive help menu with navigation buttons."""
-        self.logger.info(f"Command 'help' triggered by {ctx.author}")
         try:
-            from ..views import HelpGUIView
-
+            from src.discord_commander.views import HelpGUIView
             view = HelpGUIView()
             embed = view._create_main_embed()
+<<<<<<< HEAD
 
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
             await ctx.send(embed=embed, view=view)
         except Exception as e:
             self.logger.error(f"Error showing help: {e}")
             await ctx.send(f"❌ Error: {e}")
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     @commands.command(name="commands", description="List all registered commands")
     async def list_commands(self, ctx: commands.Context):
@@ -175,12 +220,17 @@ class UtilityCommands(commands.Cog):
 =======
     @commands.command(name="commands", description="List all registered commands (use Control Panel buttons instead!)")
     @commands.has_any_role("Admin", "Captain", "Swarm Commander")
+=======
+    @commands.command(name="commands", description="List all registered commands")
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     async def list_commands(self, ctx: commands.Context):
         """List all registered bot commands - redirects to Control Panel button view."""
-        self.logger.info(f"Command 'commands' triggered by {ctx.author}")
         try:
+<<<<<<< HEAD
             # Instead of listing commands, open Control Panel which has all buttons
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
             control_view = self.gui_controller.create_control_panel()
             embed = discord.Embed(
                 title="📋 All Commands - Use Control Panel Buttons!",
@@ -204,14 +254,18 @@ class UtilityCommands(commands.Cog):
                 color=discord.Color.blue(),
             )
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
             embed.add_field(
                 name="💡 Quick Access",
                 value="Type `!control` (or `!panel`, `!menu`) to open Control Panel anytime!",
                 inline=False,
             )
+<<<<<<< HEAD
 <<<<<<< HEAD
             embed.set_footer(text="🐝 WE. ARE. SWARM. ⚡ Buttons > Commands!")
 =======
@@ -221,11 +275,15 @@ class UtilityCommands(commands.Cog):
             )
 
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+            embed.set_footer(text="🐝 WE. ARE. SWARM. ⚡ Buttons > Commands!")
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
             await ctx.send(embed=embed, view=control_view)
         except Exception as e:
             self.logger.error(f"Error listing commands: {e}")
             await ctx.send(f"❌ Error: {e}")
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 __all__ = ["UtilityCommands"]
@@ -460,3 +518,7 @@ Agent, you appear stalled. CONTINUE AUTONOMOUSLY NOW.
             await ctx.send(f"❌ Error: {e}")
 
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+
+__all__ = ["UtilityCommands"]
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
 <<<<<<< HEAD
+<<<<<<< HEAD
 Systems Inventory Commands - Agent Cellphone V2
 ==============================================
 
@@ -46,19 +47,27 @@ import logging
 from typing import Optional
 =======
 <!-- SSOT Domain: discord -->
+=======
+Systems Inventory Commands - Agent Cellphone V2
+==============================================
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
-Systems Inventory Discord Commands
-==================================
+SSOT Domain: discord
 
-Discord commands for viewing the complete systems inventory:
-- !systems_inventory - View complete systems inventory
-- !systems_list - List all systems with descriptions
-- !tools_list - List all tools
-- !services_list - List all services
+Refactored entry point for Discord systems inventory commands.
+All core logic has been extracted into service architecture for V2 compliance.
 
-Author: Agent-4 (Captain)
-Date: 2025-12-06
+Features:
+- Complete systems inventory display
+- Tools and services listing
+- Inventory statistics and summaries
+- Formatted Discord embeds (systems_inventory_commands_v2.py)
+
+V2 Compliant: Yes (<300 lines)
+Author: Agent-1 (Integration & Core Systems Specialist)
+Date: 2026-01-07
 """
+<<<<<<< HEAD
 
 from __future__ import annotations
 
@@ -651,3 +660,5 @@ def setup(bot):
         logger.warning("⚠️ Discord not available - SystemsInventoryCommands not loaded")
 
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1

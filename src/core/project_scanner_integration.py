@@ -4,10 +4,15 @@ Project Scanner Integration
 ===========================
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 <!-- SSOT Domain: core -->
 
 =======
 >>>>>>> origin/codex/build-tsla-morning-report-system
+=======
+<!-- SSOT Domain: core -->
+
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 Integrates the universal project scanner into the agent operating cycle.
 
 Features:
@@ -52,10 +57,14 @@ class ProjectScannerIntegration:
 
     def _import_project_scanner(self):
 <<<<<<< HEAD
+<<<<<<< HEAD
         """Import the project scanner from temp_repos or use simple fallback."""
 =======
         """Import the project scanner from temp_repos."""
 >>>>>>> origin/codex/build-tsla-morning-report-system
+=======
+        """Import the project scanner from temp_repos or use simple fallback."""
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         try:
             # Try the main project scanner first
             scanner_path = self.project_root / "temp_repos" / "Auto_Blogger" / "project_scanner.py"
@@ -64,6 +73,7 @@ class ProjectScannerIntegration:
                 sys.path.insert(0, str(scanner_path.parent))
 
                 from project_scanner import ProjectScanner
+<<<<<<< HEAD
 <<<<<<< HEAD
                 logger.info("✅ Advanced project scanner imported successfully")
                 return ProjectScanner
@@ -84,6 +94,20 @@ class ProjectScannerIntegration:
                 logger.warning("⚠️ Project scanner not found in temp_repos")
                 return None
 >>>>>>> origin/codex/build-tsla-morning-report-system
+=======
+                logger.info("✅ Advanced project scanner imported successfully")
+                return ProjectScanner
+            else:
+                logger.warning("⚠️ Advanced project scanner not found, using simple scanner")
+
+                # Use simple scanner as fallback
+                import sys
+                sys.path.insert(0, str(self.project_root / "tools"))
+
+                from simple_project_scanner import SimpleProjectScanner
+                logger.info("✅ Simple project scanner imported successfully")
+                return SimpleProjectScanner
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
         except ImportError as e:
             logger.warning(f"⚠️ Could not import project scanner: {e}")
@@ -315,6 +339,7 @@ class ProjectScannerIntegration:
             }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             logger.info("📝 Getting Thea guidance from project scan")
 
             # Implement actual Thea integration
@@ -334,6 +359,21 @@ class ProjectScannerIntegration:
             # TODO: Replace with actual Thea integration
             # This would send the prompt to Thea and get real guidance
 >>>>>>> origin/codex/build-tsla-morning-report-system
+=======
+            logger.info("📝 Getting Thea guidance from project scan")
+
+            # Implement actual Thea integration
+            thea_guidance = self._get_thea_guidance_sync(scan_results)
+
+            # Merge Thea guidance with fallback recommendations
+            if thea_guidance and "recommendations" in thea_guidance:
+                guidance["thea_recommendations"] = thea_guidance["recommendations"]
+                guidance["guidance_source"] = "thea_integrated"
+                logger.info("✅ Integrated Thea guidance with project scan results")
+            else:
+                guidance["guidance_source"] = "fallback_generated"
+                logger.warning("⚠️ Thea guidance unavailable, using fallback recommendations")
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
             return guidance
 
@@ -342,6 +382,9 @@ class ProjectScannerIntegration:
             return {"error": str(e), "status": "guidance_failed"}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     def _get_thea_guidance_sync(self, scan_results: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         """Get Thea guidance for project scan results (synchronous version)."""
         try:
@@ -478,8 +521,11 @@ class ProjectScannerIntegration:
 
         return prompt.strip()
 
+<<<<<<< HEAD
 =======
 >>>>>>> origin/codex/build-tsla-morning-report-system
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     def _get_cached_scan_results(self, project_path: Path) -> Optional[Dict[str, Any]]:
         """Get cached scan results if they exist and are recent."""
         try:

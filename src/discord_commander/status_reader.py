@@ -1,5 +1,6 @@
 """
 <<<<<<< HEAD
+<<<<<<< HEAD
 Status Reader - Agent Cellphone V2
 ==================================
 
@@ -117,23 +118,28 @@ class StatusReaderCommands(commands.Cog if DISCORD_AVAILABLE else object):
 StatusReader = StatusReaderCommands
 =======
 <!-- SSOT Domain: discord -->
+=======
+Status Reader - Agent Cellphone V2
+==================================
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
-Discord Status Reader
-=====================
+SSOT Domain: discord
 
-Reads and parses agent status.json files for Discord display.
+Refactored entry point for Discord status reading commands.
+All core logic has been extracted into service architecture for V2 compliance.
 
 Features:
-- Read all agent status files
-- Cache with TTL (30 seconds)
-- Normalize data structure
-- Handle missing/malformed files
+- Async/sync status reading with caching
+- Discord embed formatting
+- Error handling and fallbacks
+- Command-based interface (status_reader_v2.py)
 
-Author: Agent-5
-Created: 2025-10-11
-License: MIT
+V2 Compliant: Yes (<300 lines)
+Author: Agent-1 (Integration & Core Systems Specialist)
+Date: 2026-01-07
 """
 
+<<<<<<< HEAD
 import json
 import logging
 import asyncio
@@ -427,3 +433,7 @@ class StatusReader:
             "newest_cache": max(self.cache_timestamps.values()) if self.cache_timestamps else None,
         }
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+# Import StatusReader from v2 implementation for backward compatibility
+from .status_reader_v2 import StatusReaderCommands as StatusReader
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1

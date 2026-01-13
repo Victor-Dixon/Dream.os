@@ -34,10 +34,26 @@ from . import trading_bi_orchestrator
 
 # Import orchestrator directly to avoid circular import issues
 try:
-    from .trading_bi_orchestrator import TradingBiAnalyticsOrchestrator
+    from .trading_bi_orchestrator import TradingBiAnalyticsOrchestrator, create_trading_bi_analytics_orchestrator
 except ImportError:
     TradingBiAnalyticsOrchestrator = None
+<<<<<<< HEAD
 >>>>>>> origin/codex/build-tsla-morning-report-system
+=======
+    create_trading_bi_analytics_orchestrator = None
+
+# Import specific classes that other modules need
+from .trading_bi_models import (
+    MarketTrend,
+    TrendAnalysisConfig,
+    PerformanceConfig,
+    PerformanceMetrics,
+    PnLResult,
+    RiskLevel,
+    RiskMetrics,
+    RiskAssessmentConfig
+)
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
 __all__ = [
     'market_trend_engine',
@@ -56,10 +72,13 @@ __all__ = [
     'RiskLevel',
     'RiskMetrics',
     'RiskAssessmentConfig',
+<<<<<<< HEAD
 =======
     'trading_bi_orchestrator',
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 =======
     'TradingBiAnalyticsOrchestrator',
 >>>>>>> origin/codex/build-tsla-morning-report-system
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 ]

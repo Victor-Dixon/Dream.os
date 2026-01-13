@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # 📚 Agent Cellphone V2 Documentation
 
 **Single Source of Truth for Agent Cellphone V2 Project**
@@ -72,6 +73,11 @@
 **🐺 WE ARE SWARM** - Documentation consolidation in progress. Ready for bilateral execution!
 =======
 # Agent Cellphone V2 Documentation
+=======
+<!-- SSOT Domain: documentation -->
+
+# dream.os Documentation
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
 **Last Updated:** 2025-12-25
 

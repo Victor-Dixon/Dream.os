@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
 <<<<<<< HEAD
+<<<<<<< HEAD
 GitHub Book Viewer - Agent Cellphone V2
 ======================================
 
@@ -45,27 +46,27 @@ __all__ = [
 ]
 =======
 <!-- SSOT Domain: git -->
+=======
+GitHub Book Viewer - Agent Cellphone V2
+======================================
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
-GitHub Book Viewer - WOW FACTOR Discord Display
-================================================
+SSOT Domain: git
 
-Interactive, beautiful Discord display for 75-repo comprehensive analysis.
+Refactored entry point for GitHub book display functionality.
+All core logic has been extracted into modular components for V2 compliance.
 
 Features:
-- 📖 Interactive chapter navigation (Next/Prev/Jump)
-- 💎 Goldmine showcase (15+ discoveries)
-- 🔍 Search and filter by category
-- 📊 Beautiful embeds with full repo details
-- 🎨 Visual excellence - professional presentation
-- 🏆 Agent performance highlights
+- Modular data loading (github_book_data.py)
+- Shared UI components (discord_ui_components.py)
+- Focused command handling (github_book_commands.py)
 
-LEGENDARY SESSION GOAL: Create Discord WOW factor!
-
-Author: Agent-2 - Architecture & Design Specialist
-Date: 2025-10-15
-Mission: Make Commander's GitHub book spectacular in Discord
+V2 Compliant: Yes (<300 lines)
+Author: Agent-1 (Integration & Core Systems Specialist)
+Date: 2026-01-07
 """
 
+<<<<<<< HEAD
 from __future__ import annotations
 
 import logging
@@ -1209,3 +1210,29 @@ async def setup(bot):
         logger.warning(
             "⚠️ Discord not available - GitHubBookCommands not loaded")
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+# Re-export the main components for backward compatibility
+from .github_book_data import GitHubBookData
+from .discord_ui_components import *
+from .github_book_commands import GitHubBookCommands, setup
+
+# Legacy alias for backward compatibility
+GitHubBookNavigator = None  # Removed - functionality moved to discord_ui_components
+
+__all__ = [
+    "GitHubBookData",
+    "GitHubBookCommands",
+    "setup",
+    # Re-export UI components
+    "EmbedFormatter",
+    "ModalHandler",
+    "BaseNavigationView",
+    "NavigationButton",
+    "PreviousButton",
+    "NextButton",
+    "JumpButton",
+    "SearchButton",
+    "BackButton",
+    "GoldmineButton"
+]
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1

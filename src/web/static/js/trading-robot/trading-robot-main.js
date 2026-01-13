@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 /**
  * Trading Robot Main - V2 Compliant Trading Robot Frontend Entry Point
  * Main entry point for Trading Robot frontend application
@@ -247,6 +250,7 @@ if (document.readyState === 'loading') {
 } else {
     initializeGlobalTradingRobot();
 }
+<<<<<<< HEAD
 =======
 /**
  * Trading Robot Main - V2 Compliant Trading Robot Frontend Entry Point
@@ -497,3 +501,5 @@ if (document.readyState === 'loading') {
     initializeGlobalTradingRobot();
 }
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1

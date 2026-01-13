@@ -13,6 +13,9 @@ S2A_TEMPLATES_MISC: dict[str, str] = {
         "Message ID: {message_id}\n"
         "Timestamp: {timestamp}\n\n"
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         "🚀 **PROTOCOL UPDATE: Dumb Messages → Real Work Discovery**\n"
         "When you receive repetitive or 'dumb' coordination messages, don't just acknowledge them. Instead:\n"
         "- Search the codebase for TODO/FIXME items and real work opportunities\n"
@@ -20,8 +23,11 @@ S2A_TEMPLATES_MISC: dict[str, str] = {
         "- Execute complete implementation with testing and documentation\n"
         "- Make work publicly visible through git commits, devlogs, and blog posts\n"
         "- Transform message receipt into forward momentum, not confirmation loops\n\n"
+<<<<<<< HEAD
 =======
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         "What changed:\n{context}\n\n"
         "Your next slice:\n{actions}\n\n"
         "{operating_cycle}\n"
@@ -35,6 +41,9 @@ S2A_TEMPLATES_MISC: dict[str, str] = {
         "Message ID: {message_id}\n"
         "Timestamp: {timestamp}\n\n"
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         "🚀 **PROTOCOL UPDATE: Dumb Messages → Real Work Discovery**\n"
         "When you receive repetitive or 'dumb' coordination messages, don't just acknowledge them. Instead:\n"
         "- Search the codebase for TODO/FIXME items and real work opportunities\n"
@@ -42,8 +51,11 @@ S2A_TEMPLATES_MISC: dict[str, str] = {
         "- Execute complete implementation with testing and documentation\n"
         "- Make work publicly visible through git commits, devlogs, and blog posts\n"
         "- Transform message receipt into forward momentum, not confirmation loops\n\n"
+<<<<<<< HEAD
 =======
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         "Chain Context:\n{context}\n\n"
         "Your move:\n{actions}\n\n"
         "Rules:\n"
@@ -60,6 +72,9 @@ S2A_TEMPLATES_MISC: dict[str, str] = {
         "Message ID: {message_id}\n"
         "Timestamp: {timestamp}\n\n"
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         "🚀 **PROTOCOL UPDATE: Dumb Messages → Real Work Discovery**\n"
         "When you receive repetitive or 'dumb' coordination messages, don't just acknowledge them. Instead:\n"
         "- Search the codebase for TODO/FIXME items and real work opportunities\n"
@@ -67,8 +82,11 @@ S2A_TEMPLATES_MISC: dict[str, str] = {
         "- Execute complete implementation with testing and documentation\n"
         "- Make work publicly visible through git commits, devlogs, and blog posts\n"
         "- Transform message receipt into forward momentum, not confirmation loops\n\n"
+<<<<<<< HEAD
 =======
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         "Cycle Objective:\n{context}\n\n"
         "Assigned Slice:\n{actions}\n\n"
         "{operating_cycle}\n"
@@ -82,6 +100,9 @@ S2A_TEMPLATES_MISC: dict[str, str] = {
         "Message ID: {message_id}\n"
         "Timestamp: {timestamp}\n\n"
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         "🚀 **PROTOCOL UPDATE: Dumb Messages → Real Work Discovery**\n"
         "When you receive repetitive or 'dumb' coordination messages, don't just acknowledge them. Instead:\n"
         "- Search the codebase for TODO/FIXME items and real work opportunities\n"
@@ -89,8 +110,11 @@ S2A_TEMPLATES_MISC: dict[str, str] = {
         "- Execute complete implementation with testing and documentation\n"
         "- Make work publicly visible through git commits, devlogs, and blog posts\n"
         "- Transform message receipt into forward momentum, not confirmation loops\n\n"
+<<<<<<< HEAD
 =======
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         "State Change:\n{context}\n\n"
         "Required Behavior:\n{actions}\n\n"
         "{operating_cycle}\n"
@@ -104,6 +128,9 @@ S2A_TEMPLATES_MISC: dict[str, str] = {
         "Message ID: {message_id}\n"
         "Timestamp: {timestamp}\n\n"
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         "🚀 **PROTOCOL UPDATE: Dumb Messages → Real Work Discovery**\n"
         "When you receive repetitive or 'dumb' coordination messages, don't just acknowledge them. Instead:\n"
         "- Search the codebase for TODO/FIXME items and real work opportunities\n"
@@ -111,8 +138,11 @@ S2A_TEMPLATES_MISC: dict[str, str] = {
         "- Execute complete implementation with testing and documentation\n"
         "- Make work publicly visible through git commits, devlogs, and blog posts\n"
         "- Transform message receipt into forward momentum, not confirmation loops\n\n"
+<<<<<<< HEAD
 =======
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         "Debate Topic:\n{topic}\n\n"
         "Role/Position:\n{role}\n\n"
         "Context:\n{context}\n\n"
@@ -130,6 +160,9 @@ S2A_TEMPLATES_MISC: dict[str, str] = {
         "Message ID: {message_id}\n"
         "Timestamp: {timestamp}\n\n"
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         "🚀 **PROTOCOL UPDATE: Dumb Messages → Real Work Discovery**\n"
         "When you receive repetitive or 'dumb' coordination messages, don't just acknowledge them. Instead:\n"
         "- Search the codebase for TODO/FIXME items and real work opportunities\n"
@@ -137,8 +170,11 @@ S2A_TEMPLATES_MISC: dict[str, str] = {
         "- Execute complete implementation with testing and documentation\n"
         "- Make work publicly visible through git commits, devlogs, and blog posts\n"
         "- Transform message receipt into forward momentum, not confirmation loops\n\n"
+<<<<<<< HEAD
 =======
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
         "MISSION\n"
         "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"

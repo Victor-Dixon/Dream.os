@@ -19,6 +19,7 @@ from .agent_management_commands import AgentManagementCommands
 from .profile_commands import ProfileCommands
 from .placeholder_commands import PlaceholderCommands
 <<<<<<< HEAD
+<<<<<<< HEAD
 from .control_panel_commands import ControlPanelCommands
 from .thea_commands import TheaCommands
 from .bot_messaging_commands import MessagingCommands
@@ -39,6 +40,9 @@ command_registry.register_cog_class(MessagingCommands)
 command_registry.register_cog_class(TheaCommands)
 =======
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+from .bot_messaging_commands import MessagingCommands
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
 __all__ = [
     "CoreMessagingCommands",
@@ -49,11 +53,15 @@ __all__ = [
     "ProfileCommands",
     "PlaceholderCommands",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "ControlPanelCommands",
     "TheaCommands",
     "MessagingCommands",
     "command_registry",
 =======
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+    "MessagingCommands",
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 ]
 

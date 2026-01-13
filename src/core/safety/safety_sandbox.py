@@ -3,10 +3,15 @@ Safety Sandbox - AGI-17
 ========================
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 <!-- SSOT Domain: safety -->
 
 =======
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+<!-- SSOT Domain: safety -->
+
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 Isolated execution environment for autonomous operations.
 All autonomous code runs in a restricted sandbox before production.
 

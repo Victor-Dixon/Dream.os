@@ -82,6 +82,7 @@ def add_utility_flags(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--leaderboard", action="store_true",
                         help="Display the autonomous competition leaderboard")
 <<<<<<< HEAD
+<<<<<<< HEAD
     parser.add_argument("--delivery-status", action="store_true",
                         help="Check delivery status of queued messages")
     parser.add_argument("--robinhood-stats", action="store_true",
@@ -104,6 +105,10 @@ def add_utility_flags(parser: argparse.ArgumentParser) -> None:
                         help="Archive messages older than DAYS (default: 30) (V3)")
 =======
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+    parser.add_argument("--robinhood-stats", action="store_true",
+                        help="Get 2026 Robinhood options statistics and balance (real data)")
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
 
 def add_task_system_flags(parser: argparse.ArgumentParser) -> None:

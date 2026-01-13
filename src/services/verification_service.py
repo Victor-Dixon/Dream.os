@@ -34,12 +34,18 @@ import logging
 import requests
 import subprocess
 <<<<<<< HEAD
+<<<<<<< HEAD
 import json
 import yaml
 from typing import Dict, Any, List, Optional, Callable
 =======
 from typing import Dict, Any, List, Optional
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+import json
+import yaml
+from typing import Dict, Any, List, Optional, Callable
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 from pathlib import Path
 from src.core.base.base_service import BaseService
 
@@ -49,6 +55,9 @@ class VerificationService(BaseService):
     """
     Automated verification harness for validating system claims.
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
     Enhanced with 'existence vs functionality' testing methodology.
     """
@@ -126,8 +135,11 @@ class VerificationService(BaseService):
         return (has_html or has_doctype) and (has_body or has_closing_tags)
     """
     Automated verification harness for validating system claims.
+<<<<<<< HEAD
 =======
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     """
 
     def __init__(self):
@@ -135,10 +147,14 @@ class VerificationService(BaseService):
 
     def verify_url_status(self, url: str, expected_status: int = 200, timeout: int = 10) -> Dict[str, Any]:
 <<<<<<< HEAD
+<<<<<<< HEAD
         """Verify a URL returns the expected status code (legacy method - use verify_url_functional for comprehensive checks)."""
 =======
         """Verify a URL returns the expected status code."""
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+        """Verify a URL returns the expected status code (legacy method - use verify_url_functional for comprehensive checks)."""
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         try:
             response = requests.get(url, timeout=timeout)
             success = response.status_code == expected_status
@@ -158,6 +174,9 @@ class VerificationService(BaseService):
             }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     def verify_url_functional(self, url: str, expected_status: int = 200, timeout: int = 10,
                              check_content=True, min_content_length=100) -> Dict[str, Any]:
         """
@@ -238,8 +257,11 @@ class VerificationService(BaseService):
             result["error"] = f"Verification failed: {e}"
             return result
 
+<<<<<<< HEAD
 =======
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     def verify_text_in_page(self, url: str, text: str, timeout: int = 10) -> Dict[str, Any]:
         """Verify specific text exists in the page content."""
         try:
@@ -283,6 +305,7 @@ class VerificationService(BaseService):
             return {"success": False, "path": test_path, "error": str(e)}
 
     def verify_file_exists(self, path: str) -> Dict[str, Any]:
+<<<<<<< HEAD
 <<<<<<< HEAD
         """Verify a local file exists (legacy method - use verify_file_functional for comprehensive checks)."""
         exists = Path(path).exists()
@@ -493,16 +516,216 @@ class VerificationService(BaseService):
         return result
 =======
         """Verify a local file exists."""
+=======
+        """Verify a local file exists (legacy method - use verify_file_functional for comprehensive checks)."""
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         exists = Path(path).exists()
         return {"success": exists, "path": path}
 
-    def run_lighthouse_audit(self, url: str) -> Dict[str, Any]:
-        """Run lighthouse audit (stub)."""
-        # TODO: Implement actual lighthouse integration
-        # Requires 'npm install -g lighthouse' and subprocess call
-        return {
-            "success": False, 
-            "url": url, 
-            "error": "Lighthouse integration not yet implemented. Requires 'npm install -g lighthouse'."
+    def verify_file_smart(self, path: str, require_writable=False, auto_validate=True) -> Dict[str, Any]:
+        """
+        Smart file verification that automatically detects file type and applies appropriate validation.
+
+        Args:
+            path: File path to verify
+            require_writable: Whether file must be writable
+            auto_validate: Whether to auto-detect and validate content based on file extension
+
+        Returns:
+            Dict with comprehensive verification results
+        """
+        file_path = Path(path)
+        file_extension = file_path.suffix.lstrip('.')
+
+        # Get appropriate validator
+        content_validator = None
+        if auto_validate and file_extension:
+            content_validator = self.get_content_validator(file_extension)
+
+        return self.verify_file_functional(path, content_validator, require_writable)
+
+    def verify_file_functional(self, path: str, content_validator=None, require_writable=False) -> Dict[str, Any]:
+        """
+        Verify file exists AND is actually functional (readable, optionally writable, and valid content).
+
+        Args:
+            path: File path to verify
+            content_validator: Optional function to validate content (takes content string, returns bool)
+            require_writable: Whether file must be writable
+
+        Returns:
+            Dict with comprehensive verification results
+        """
+        result = {
+            "success": False,
+            "path": path,
+            "exists": False,
+            "readable": False,
+            "writable": False,
+            "content_valid": None,  # None = no validator provided
+            "error": None
         }
+<<<<<<< HEAD
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+
+        try:
+            file_path = Path(path)
+
+            # Check 1: Existence
+            result["exists"] = file_path.exists()
+            if not result["exists"]:
+                result["error"] = "File does not exist"
+                return result
+
+            # Check 2: Readability
+            try:
+                # Try to actually open and read the file
+                with open(path, 'r', encoding='utf-8') as f:
+                    f.read(1)  # Just read one character to test
+                result["readable"] = True
+            except (PermissionError, OSError) as e:
+                result["readable"] = False
+                result["error"] = f"File exists but is not readable: {e}"
+                return result
+            except Exception as e:
+                # For other errors (like encoding issues), we'll still consider it readable
+                # but mark content validation as potentially failing
+                result["readable"] = True
+
+            # Check 3: Writability (if required)
+            if require_writable:
+                result["writable"] = os.access(path, os.W_OK)
+                if not result["writable"]:
+                    result["error"] = "File exists and is readable but not writable"
+                    return result
+
+            # Check 4: Content validity (if validator provided)
+            if content_validator:
+                try:
+                    with open(path, 'r', encoding='utf-8') as f:
+                        content = f.read()
+                    result["content_valid"] = content_validator(content)
+                    if not result["content_valid"]:
+                        result["error"] = "File exists, is readable, but contains invalid content"
+                        return result
+                except Exception as e:
+                    result["content_valid"] = False
+                    result["error"] = f"File exists but content validation failed: {e}"
+                    return result
+            else:
+                result["content_valid"] = None  # No validator = assume valid
+
+            # All checks passed
+            result["success"] = True
+            result["error"] = None
+            return result
+
+        except Exception as e:
+            result["error"] = f"Verification failed: {e}"
+            return result
+
+    def run_lighthouse_audit(self, url: str) -> Dict[str, Any]:
+        """
+        Run comprehensive Lighthouse audit on a website.
+        Provides performance, accessibility, SEO, and best practices scoring.
+        """
+        import subprocess
+        import json
+        import tempfile
+        import os
+        from datetime import datetime
+
+        result = {
+            "success": False,
+            "url": url,
+            "timestamp": datetime.now().isoformat(),
+            "categories": {},
+            "error": None
+        }
+
+        try:
+            # Check if lighthouse is available
+            try:
+                subprocess.run(['lighthouse', '--version'],
+                             capture_output=True, check=True, timeout=10)
+            except (subprocess.CalledProcessError, FileNotFoundError):
+                result["error"] = "Lighthouse not installed. Install with: npm install -g lighthouse"
+                return result
+
+            # Create temporary file for results
+            with tempfile.NamedTemporaryFile(mode='w+', suffix='.json', delete=False) as tmp_file:
+                tmp_path = tmp_file.name
+
+            try:
+                # Run lighthouse audit with comprehensive categories
+                cmd = [
+                    'lighthouse',
+                    url,
+                    '--output=json',
+                    f'--output-path={tmp_path}',
+                    '--chrome-flags=--headless --no-sandbox --disable-dev-shm-usage',
+                    '--only-categories=performance,accessibility,best-practices,seo',
+                    '--quiet'
+                ]
+
+                # Execute lighthouse
+                process = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
+
+                if process.returncode == 0:
+                    # Read and parse results
+                    with open(tmp_path, 'r') as f:
+                        lighthouse_data = json.load(f)
+
+                    result["success"] = True
+
+                    # Extract category scores
+                    categories = lighthouse_data.get('categories', {})
+                    for category_name, category_data in categories.items():
+                        score = category_data.get('score', 0) * 100  # Convert to percentage
+                        result["categories"][category_name] = {
+                            "score": score,
+                            "title": category_data.get('title', category_name),
+                            "description": category_data.get('description', '')
+                        }
+
+                    # Add overall performance insights
+                    result["insights"] = {
+                        "performance_score": result["categories"].get("performance", {}).get("score", 0),
+                        "accessibility_score": result["categories"].get("accessibility", {}).get("score", 0),
+                        "seo_score": result["categories"].get("seo", {}).get("score", 0),
+                        "best_practices_score": result["categories"].get("best-practices", {}).get("score", 0)
+                    }
+
+                    # Add recommendations based on scores
+                    recommendations = []
+                    if result["insights"]["performance_score"] < 70:
+                        recommendations.append("Performance score below 70 - optimize images, minify resources, enable compression")
+                    if result["insights"]["accessibility_score"] < 80:
+                        recommendations.append("Accessibility score below 80 - add alt text, improve color contrast, fix keyboard navigation")
+                    if result["insights"]["seo_score"] < 80:
+                        recommendations.append("SEO score below 80 - add meta descriptions, improve page titles, fix crawl errors")
+                    if result["insights"]["best_practices_score"] < 80:
+                        recommendations.append("Best practices score below 80 - fix deprecated APIs, enable HTTPS, remove unused code")
+
+                    result["recommendations"] = recommendations
+
+                else:
+                    result["error"] = f"Lighthouse audit failed: {process.stderr}"
+
+            finally:
+                # Clean up temporary file
+                try:
+                    os.unlink(tmp_path)
+                except:
+                    pass
+
+        except subprocess.TimeoutExpired:
+            result["error"] = "Lighthouse audit timed out after 120 seconds"
+        except json.JSONDecodeError as e:
+            result["error"] = f"Failed to parse Lighthouse results: {e}"
+        except Exception as e:
+            result["error"] = f"Unexpected error during Lighthouse audit: {e}"
+
+        return result
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1

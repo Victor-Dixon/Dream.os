@@ -1,8 +1,13 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 <!-- SSOT Domain: documentation -->
 
 =======
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+<!-- SSOT Domain: documentation -->
+
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 # Point System Integration Guide
 
 **Version:** 1.0  

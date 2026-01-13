@@ -100,6 +100,7 @@ class UnifiedTaskHandler(BaseService):
             manager = UnifiedContractManager()
             contracts = manager.get_agent_contracts(agent_id)
 
+<<<<<<< HEAD
             if contracts.get("success"):
                 # Successfully retrieved contracts (may be empty)
                 all_contracts = contracts.get("contracts", [])
@@ -107,6 +108,12 @@ class UnifiedTaskHandler(BaseService):
                 # Get the first pending/active contract
                 pending_contracts = [
                     c for c in all_contracts
+=======
+            if contracts.get("success") and contracts.get("contracts"):
+                # Get the first pending/active contract
+                pending_contracts = [
+                    c for c in contracts["contracts"]
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
                     if c.get("status") in ["pending", "active"]
                 ]
 

@@ -29,12 +29,19 @@ from datetime import datetime
 from typing import Any, Optional
 
 from ..core.base.base_service import BaseService
+<<<<<<< HEAD
 from ..core.logging_mixin import LoggingMixin
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
 logger = logging.getLogger(__name__)
 
 
+<<<<<<< HEAD
 class UnifiedContractManager(BaseService, LoggingMixin):
+=======
+class UnifiedContractManager(BaseService):
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     """Unified contract manager for contract operations and task assignments.
 
     PHASE 4 CONSOLIDATION: Migrated from contract_system/manager.py
@@ -101,10 +108,14 @@ class UnifiedContractManager(BaseService, LoggingMixin):
         # Save default tasks
         for task in default_tasks:
             try:
+<<<<<<< HEAD
                 # Create Contract object from task data
                 from src.services.contract_system.models import Contract
                 contract = Contract(**task)
                 success = self.storage.save_contract(contract)
+=======
+                success = self.storage.save_contract(task["agent_id"], task)
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
                 if success:
                     logger.info(f"✅ Created default task: {task['title']}")
                 else:
@@ -210,6 +221,7 @@ class UnifiedContractManager(BaseService, LoggingMixin):
                 for c in contracts
             ]
 
+<<<<<<< HEAD
             # Log when agents have no contracts (for monitoring)
             if not contracts_data:
                 logger.info(f"ℹ️ Agent {agent_id} has no contracts (this is normal)")
@@ -219,6 +231,8 @@ class UnifiedContractManager(BaseService, LoggingMixin):
                 if placeholder_count > 0:
                     logger.warning(f"🚨 Found {placeholder_count} placeholder contracts for {agent_id}")
 
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
             return {
                 "success": True,
                 "agent_id": agent_id,

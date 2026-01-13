@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 /**
  * Trading Dashboard - V2 Compliant Trading Robot Frontend
  * Real-time trading dashboard with live metrics and portfolio management
@@ -451,6 +454,7 @@ export function createTradingDashboard() {
  * Default export for backward compatibility
  */
 export default TradingDashboard;
+<<<<<<< HEAD
 =======
 /**
  * Trading Dashboard - V2 Compliant Trading Robot Frontend
@@ -905,3 +909,5 @@ export function createTradingDashboard() {
  */
 export default TradingDashboard;
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1

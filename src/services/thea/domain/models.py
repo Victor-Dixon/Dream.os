@@ -42,6 +42,7 @@ class MessagePriority(Enum):
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 class MessageStatus(Enum):
     """Status of a message in the communication pipeline."""
     PENDING = "pending"
@@ -53,6 +54,8 @@ class MessageStatus(Enum):
 
 =======
 >>>>>>> rescue/dreamos-down-
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 class AuthenticationStatus(Enum):
     """Status of authentication with Thea service."""
     AUTHENTICATED = "authenticated"

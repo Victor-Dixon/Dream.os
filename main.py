@@ -344,99 +344,58 @@ Unified entry point to start and manage all critical services:
 - Message Queue Processor
 - Twitch Bot
 - Discord Bot
+- FastAPI Service
 
 Features:
-- Interactive agent mode selection (4-agent, 5-agent, 6-agent, 8-agent)
-- Service status monitoring
-- Individual service control
+- Service status monitoring and control
+- Background/foreground execution modes
+- Comprehensive validation system
+- Interactive agent mode selection
 
-Usage:
-    python main.py                    # Start all services (foreground)
-    python main.py --background       # Start all services in background
-    python main.py --status            # Check service status
-    python main.py --stop             # Stop all background services
-    python main.py --kill             # Force kill all services
-    python main.py --select-mode       # Select agent mode (interactive)
-    python main.py --message-queue    # Start only message queue
-    python main.py --twitch           # Start only Twitch bot
-    python main.py --discord          # Start only Discord bot
-    python main.py --autonomous-reports # Display autonomous config reports
-    python main.py --run-autonomous-config # Run autonomous config system
-    python main.py --help             # Show help
-
-Background Mode:
-    With --background, services run as detached processes and main.py exits.
-    Services continue running after the terminal closes.
-    
-    To run main.py itself in background (Windows):
-        start /B python main.py --background
-    
-    To run main.py itself in background (Unix/Mac):
-        python main.py --background &
-        nohup python main.py --background &
-
-Author: Agent-2
-V2 Compliant: <300 lines
+V2 Compliant: Yes (<400 lines)
+Author: Agent-1 (Integration & Core Systems Specialist)
+Date: 2026-01-07
 """
 
-from dotenv import load_dotenv
-import argparse
+from src.services.agent_status_integration import get_agent_status_integration
+from src.cli.commands.start_handler import StartHandler
+from src.cli.commands.autonomous_handler import AutonomousHandler
+from src.cli.commands.mode_handler import ModeHandler
+from src.cli.commands.cleanup_handler import CleanupHandler
+from src.cli.commands.validation_handler import ValidationHandler
+from src.cli.commands.stop_handler import StopHandler
+from src.cli.commands.status_handler import StatusHandler
+from src.cli.argument_parser import parse_main_args
+from src.services.service_manager import ServiceManager
 import os
 import sys
-import subprocess
-import time
-import psutil
-import platform
-from pathlib import Path
-from threading import Thread
-from typing import Optional
+import logging
 
-project_root = Path(__file__).parent
-sys.path.insert(0, str(project_root))
-sys.path.insert(0, str(project_root / "systems"))  # Add systems directory for Wave C extracted components
-
+# Load environment variables
+from dotenv import load_dotenv
 load_dotenv()
 
+# Setup logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s | %(levelname)s | %(name)s | %(message)s'
+)
 
-class ServiceManager:
-    """Manages all critical services."""
+# Import our modular components
 
-    def __init__(self, background_mode: bool = False):
-        self.project_root = project_root
-        self.processes = {}
-        self.pid_dir = self.project_root / "pids"
-        self.pid_dir.mkdir(exist_ok=True)
-        self.log_dir = self.project_root / "runtime" / "logs"
-        self.log_dir.mkdir(parents=True, exist_ok=True)
-        self.agent_mode_manager: Optional[object] = None
-        self.background_mode = background_mode
-        self.auto_gas_system: Optional[object] = None
+# Import command handlers
 
-    def setup_agent_mode_manager(self):
-        """Setup agent mode manager."""
-        try:
-            sys.path.insert(0, str(self.project_root / "src"))
-            from src.core.agent_mode_manager import get_mode_manager
-            self.agent_mode_manager = get_mode_manager()
-            return True
-        except ImportError as e:
-            print(f"   ⚠️  Warning: Could not import agent mode manager: {e}")
-            return False
+# Import automated status integration
 
-    def select_agent_mode(self):
-        """Interactive agent mode selection."""
-        if not self.agent_mode_manager:
-            if not self.setup_agent_mode_manager():
-                print(
-                    "   ⚠️  Agent mode manager not available, using default 4-agent mode")
-                return
 
-        print("\n🔧 AGENT MODE SELECTION")
-        print("=" * 40)
+def _handle_monitor_command(service_manager: ServiceManager, command_info: dict):
+    """Handle status command with enhanced health checks and troubleshooting."""
+    print("🐝 dream.os - Service Status Report")
+    print("=" * 50)
 
-        current_mode = self.agent_mode_manager.get_current_mode()
-        available_modes = self.agent_mode_manager.get_available_modes()
+    all_status = service_manager.get_all_status()
 
+<<<<<<< HEAD
         print(f"Current mode: {current_mode}")
         print(f"Available modes: {', '.join(available_modes)}")
         print()
@@ -1128,73 +1087,233 @@ def show_autonomous_reports():
 
     if not reports_dir.exists():
         print("❌ Autonomous config reports directory not found")
+=======
+    if not all_status:
+        print("❌ No services configured or found.")
+        print("\n💡 Quick Fix:")
+        print("   1. Run setup: python setup.py")
+        print("   2. Check config: python setup_wizard.py --validate")
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         return
 
-    # Display master report
-    master_report = reports_dir / "autonomous_master_report.md"
-    if master_report.exists():
-        print("📋 MASTER REPORT:")
-        print("-" * 30)
-        try:
-            with open(master_report, 'r', encoding='utf-8') as f:
-                content = f.read()
-                # Show first 2000 characters to avoid overwhelming output
-                if len(content) > 2000:
-                    print(content[:2000] + "\n... (truncated)")
-                else:
-                    print(content)
-        except Exception as e:
-            print(f"❌ Error reading master report: {e}")
+    # Count running services
+    running_count = sum(1 for status in all_status.values()
+                        if status == "running")
+    total_count = len(all_status)
+
+    print(f"📊 Services: {running_count}/{total_count} running")
+    print()
+
+    # Display each service with enhanced info
+    for service_name, status in all_status.items():
+        status_icon = "🟢" if status == "running" else "🔴"
+        info = service_manager.get_service_info(service_name)
+        pid = info.get('pid', 'N/A')
+        port = info.get('port', 'N/A')
+        health = info.get('health', 'unknown')
+
+        # Enhanced status display
+        health_icon = "💚" if health == "healthy" else "💔" if health == "unhealthy" else "🤔"
+        port_info = f" (Port: {port})" if port != 'N/A' else ""
+
+        print(
+            f"{status_icon} {service_name}: {status.upper()} {health_icon}{port_info}")
+        if pid != 'N/A':
+            print(f"   └─ PID: {pid}")
+
+    print()
+
+    # Overall health assessment
+    if running_count == total_count:
+        print("🎉 All systems operational!")
+        print("\n🚀 Ready to use:")
+        print("   • Web Dashboard: http://localhost:5000")
+        print("   • API Docs: http://localhost:8001/docs")
+        print("   • Discord Bot: Ready for commands")
+    elif running_count > 0:
+        print("⚠️ Partial system operational")
+        print("   Some services are running, but not all.")
     else:
-        print("❌ Master report not found")
+        print("❌ System offline")
+        print("   No services are currently running.")
 
-    # List available reports
-    print("\n📁 AVAILABLE REPORTS:")
-    print("-" * 30)
-    for report_file in sorted(reports_dir.glob("*.md")):
-        print(f"📄 {report_file.name}")
+    # Troubleshooting section
+    if running_count < total_count:
+        print("\n🔧 Troubleshooting:")
+        if running_count == 0:
+            print("   • Start services: python main.py --background")
+            print("   • Check setup: python setup.py --validate")
+        else:
+            print("   • Check logs: tail -f logs/app.log")
+            print("   • Restart failed services individually")
+            print("   • Run health check: python scripts/health_check.py")
 
-    print("\n💡 Use individual report files for detailed analysis")
-    print("📂 Location: autonomous_config_reports/")
+    print("\n💡 Commands:")
+    print("   • Start all: python main.py --background")
+    print("   • Stop all: python main.py --stop")
+    print("   • Health check: python scripts/health_check.py")
+    print("   • View logs: tail -f logs/app.log")
 
 
-def run_autonomous_config_system():
-    """Run the autonomous configuration system."""
-    print("🤖 AUTONOMOUS CONFIG SYSTEM - EXECUTION")
-    print("=" * 60)
+def _handle_stop_command(service_manager: ServiceManager, force: bool = False):
+    """Handle stop/kill commands."""
+    action = "force killing" if force else "stopping"
+    print(f"🛑 {action.title()} all services...")
 
-    try:
-        # Import the autonomous config orchestrator
-        from src.utils.autonomous_config_orchestrator import AutonomousConfigOrchestrator
+    success = service_manager.stop_all_services(force=force)
+    if success:
+        print("✅ All services stopped successfully")
+    else:
+        print("❌ Some services failed to stop")
 
-        # Run autonomous configuration (dry run by default)
-        root_dir = Path("src")
-        orchestrator = AutonomousConfigOrchestrator(root_dir=root_dir, auto_apply=False)
 
-        print("🔍 Running autonomous configuration analysis...")
-        results = orchestrator.run_autonomous_consolidation()
+def _handle_validate_command():
+    """Handle validation command."""
+    handler = ValidationHandler()
+    exit_code = handler.execute()
+    return exit_code
 
-        print("✅ Autonomous configuration analysis complete!")
-        print("\n📊 SUMMARY:")
-        print(f"   Patterns Found: {results.get('patterns_found', 0)}")
-        print(f"   Files Processed: {results.get('files_processed', 0)}")
-        print(f"   Issues Detected: {results.get('issues_detected', 0)}")
 
-        print("\n📋 REPORTS GENERATED:")
-        print("   - autonomous_config_reports/autonomous_master_report.md")
-        print("   - autonomous_config_reports/autonomous_consolidation_report.md")
-        print("   - autonomous_config_reports/autonomous_migration_report.md")
-        print("   - autonomous_config_reports/autonomous_remediation_report.md")
+def _handle_cleanup_command(service_manager: ServiceManager):
+    """Handle cleanup logs command."""
+    print("🧹 Cleaning up old log files...")
+    service_manager.cleanup_logs()
+    print("✅ Log cleanup completed")
 
-        print("\n💡 Run 'python main.py --autonomous-reports' to view results")
-    except ImportError as e:
-        print(f"❌ Autonomous config system not available: {e}")
-        print("💡 The autonomous config orchestrator may need to be implemented")
-    except Exception as e:
-        print(f"❌ Error running autonomous config system: {e}")
+
+def _handle_select_mode_command():
+    """Handle select mode command."""
+    print("🎯 Agent Mode Selection")
+    print("This feature requires additional setup. Please use the setup wizard:")
+    print("   python setup_wizard.py")
+
+
+def _handle_autonomous_reports_command():
+    """Handle autonomous reports command."""
+    print("📋 Autonomous Configuration Reports")
+    print("This feature requires additional setup. Please use the setup wizard:")
+    print("   python setup_wizard.py")
+
+
+def _handle_run_autonomous_config_command():
+    """Handle run autonomous config command."""
+    print("⚙️ Autonomous Configuration System")
+    print("This feature requires additional setup. Please use the setup wizard:")
+    print("   python setup_wizard.py")
+
+
+def _handle_start_services_command(service_manager: ServiceManager, command_info: dict):
+    """Handle start services command with enhanced feedback and health checks."""
+    services = command_info['services']
+    background = command_info['background']
+
+    if not services:
+        print("❌ No services specified")
+        print("💡 Try: python main.py --background  # Start all services")
+        return
+
+    mode = "background" if background else "foreground"
+    print(f"🐝 dream.os - Starting Services")
+    print("=" * 40)
+    print(f"🚀 Launching {len(services)} service(s) in {mode} mode...")
+    print()
+
+    success_count = 0
+    failed_services = []
+
+    for service_name in services:
+        print(f"   Starting {service_name}...", end=" ")
+        if service_manager.start_service(service_name, background=background):
+            success_count += 1
+            print("✅")
+        else:
+            failed_services.append(service_name)
+            print("❌")
+
+    print()
+    print(
+        f"📊 Results: {success_count}/{len(services)} services started successfully")
+
+    if background:
+        if success_count > 0:
+            print("\n🎉 Services are running in the background!")
+            print("\n🌐 Access Points:")
+            print("   • Web Dashboard: http://localhost:5000")
+            print("   • API Documentation: http://localhost:8001/docs")
+            print("   • Discord Bot: Ready for !commands")
+
+            print("\n🛠️ Management Commands:")
+            print("   • Check status: python main.py --status")
+            print("   • Stop services: python main.py --stop")
+            print("   • View logs: tail -f logs/app.log")
+            print("   • Health check: python scripts/health_check.py")
+
+            # Quick health verification
+            print("\n🔍 Performing quick health check...")
+            try:
+                import time
+                time.sleep(3)  # Give services time to start
+                all_status = service_manager.get_all_status()
+                running_now = sum(
+                    1 for status in all_status.values() if status == "running")
+                if running_now == success_count:
+                    print("✅ All started services are healthy!")
+                else:
+                    print(
+                        f"⚠️ {running_now}/{success_count} services are responding")
+            except Exception:
+                print("⚠️ Health check inconclusive (services may still be starting)")
+
+        if failed_services:
+            print(f"\n❌ Failed to start: {', '.join(failed_services)}")
+            print("\n🔧 Troubleshooting:")
+            print("   • Check logs: tail -f logs/app.log")
+            print("   • Verify configuration: python setup_wizard.py --validate")
+            print("   • Check port conflicts: netstat -tulpn | grep :5000")
+            print("   • Restart failed services individually")
+
+        else:
+            # Foreground mode
+            print("\n💡 Services running in foreground mode")
+            print("   Press Ctrl+C to stop all services")
+            print()
+
+        try:
+            import time
+            running_check_count = 0
+
+            while True:
+                time.sleep(5)  # Check every 5 seconds
+
+                # Periodic health check
+                all_status = service_manager.get_all_status()
+                running_count = sum(
+                    1 for status in all_status.values() if status == "running")
+
+                running_check_count += 1
+                if running_check_count % 6 == 0:  # Every 30 seconds
+                    print(
+                        f"📊 Health check: {running_count}/{len(services)} services running")
+
+                if running_count == 0:
+                    print("⚠️ All services have stopped unexpectedly")
+                    break
+
+        except KeyboardInterrupt:
+            print("\n🛑 Received shutdown signal...")
+            print("👋 Stopping all services gracefully...")
+
+        # Always attempt clean shutdown
+        shutdown_success = service_manager.stop_all_services(force=False)
+        if shutdown_success:
+            print("✅ All services stopped successfully. Goodbye! 👋")
+        else:
+            print("⚠️ Some services may not have stopped cleanly.")
+            print("   Force kill if needed: python main.py --kill")
 
 
 def main():
+<<<<<<< HEAD
     """Main entry point."""
 <<<<<<< HEAD
     parser = argparse.ArgumentParser(description="Agent Cellphone V2")
@@ -1401,167 +1520,132 @@ def main():
         action='store_true',
         help='Run autonomous configuration system (dry run by default)'
     )
+=======
+    """Main entry point - simplified launcher using modular components."""
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
-    args = parser.parse_args()
+    # Parse command line arguments
+    parsed_args, command_info = parse_main_args()
 
-    manager = ServiceManager(background_mode=args.background)
+    # Initialize service manager
+    service_manager = ServiceManager()
 
-    # Setup agent mode manager
-    manager.setup_agent_mode_manager()
+    # Execute command based on type
+    command_type = command_info['command_type']
 
-    # Agent mode selection mode
-    if args.select_mode:
-        manager.select_agent_mode()
-        return
-
-    # Status check mode
-    if args.status:
-        manager.check_status()
-        return
-
-    # Stop services mode
-    if args.stop or args.kill:
-        manager.stop_all_services(force=args.kill)
-        return
-
-    # Start specific services
-    if args.message_queue:
-        manager.start_message_queue()
-        if args.background:
-            print("\n✅ Service started in background")
-            print("   To check status: python main.py --status")
-            return
-        print("\n💡 Press Ctrl+C to stop")
-        try:
-            while True:
-                time.sleep(1)
-        except KeyboardInterrupt:
-            manager.stop_all()
-    elif args.twitch:
-        manager.start_twitch_bot()
-        if args.background:
-            print("\n✅ Service started in background")
-            print("   To check status: python main.py --status")
-            return
-        print("\n💡 Press Ctrl+C to stop")
-        try:
-            while True:
-                time.sleep(1)
-        except KeyboardInterrupt:
-            manager.stop_all()
-    elif args.discord:
-        manager.start_discord_bot()
-        if args.background:
-            print("\n✅ Service started in background")
-            print("   To check status: python main.py --status")
-            return
-        print("\n💡 Press Ctrl+C to stop")
-        try:
-            while True:
-                time.sleep(1)
-        except KeyboardInterrupt:
-            manager.stop_all()
-    elif args.autonomous_reports:
-        # Display autonomous configuration reports
-        show_autonomous_reports()
-        return
-    elif args.run_autonomous_config:
-        # Run autonomous configuration system
-        run_autonomous_config_system()
-        return
-    else:
-        # Start all services
-        print("🚀 AGENT CELLPHONE V2 - SERVICE LAUNCHER")
-        print("=" * 60)
-
-        # Show current agent mode
-        if manager.agent_mode_manager:
-            current_mode = manager.agent_mode_manager.get_current_mode()
-            active_agents = manager.agent_mode_manager.get_active_agents()
-            monitor_setup = manager.agent_mode_manager.get_monitor_setup()
-            print(
-                f"Agent Mode: {current_mode} ({len(active_agents)} agents, {monitor_setup} monitor)")
-            print(f"Active Agents: {', '.join(active_agents)}")
-        print()
-
-        success_count = 0
-        if manager.start_message_queue():
-            success_count += 1
-        time.sleep(1)
-
-        if manager.start_twitch_bot():
-            success_count += 1
-        time.sleep(1)
-
-        if manager.start_discord_bot():
-            success_count += 1
-        time.sleep(1)
-
-        # Start Auto-Gas Pipeline if requested
-        if args.auto_gas:
-            jet_fuel_enabled = not args.no_jet_fuel
-            if manager.start_auto_gas_pipeline(jet_fuel=jet_fuel_enabled):
-                success_count += 1
-                print("⛽ Auto-Gas Pipeline: ACTIVE")
-            else:
-                print("⛽ Auto-Gas Pipeline: FAILED")
-
-        # Scan project if requested
-        if args.scan_project:
-            project_path = Path(args.scan_project).resolve()
-            send_to_thea = not args.scan_no_thea
-
-            if manager.scan_project(project_path, send_to_thea):
-                print("🔍 Project Scan: COMPLETED")
-                if send_to_thea:
-                    print("🤖 Thea Guidance: REQUESTED")
-                else:
-                    print("🤖 Thea Guidance: SKIPPED")
-            else:
-                print("🔍 Project Scan: FAILED")
-
-        print()
-        print("=" * 60)
-        base_services = 3
-        total_services = base_services + (1 if args.auto_gas else 0)
-        print(f"✅ Started {success_count}/{total_services} services")
-        if args.auto_gas:
-            print("   Including: Auto-Gas Pipeline (perpetual fuel delivery)")
-        print()
-        
-        if args.background:
-            print("✅ All services started in background")
-            print("   To check status: python main.py --status")
-            print("   To stop services: python main.py --stop")
-            print("   To force kill: python main.py --kill")
-            print("   To change agent mode: python main.py --select-mode")
-            print("   PIDs saved to: pids/ directory")
-            print("   Logs saved to: runtime/logs/ directory")
-            return
-
-        print("💡 All services running. Press Ctrl+C to stop all services.")
-        print("   To check status: python main.py --status")
-        print("   To change agent mode: python main.py --select-mode")
-        print()
-
-        try:
-            while True:
-                time.sleep(1)
-                # Check if any process died
-                for name, process in list(manager.processes.items()):
-                    if process.poll() is not None:
-                        print(
-                            f"⚠️  {name} process exited (code: {process.returncode})")
-                        del manager.processes[name]
-        except KeyboardInterrupt:
-            print("\n\n📦 Shutting down all services...")
+    try:
+        if command_type == 'status':
+            handler = StatusHandler(service_manager)
+            handler.execute()
+        elif command_type in ['stop', 'kill']:
+            force = (command_type == 'kill')
+            handler = StopHandler(service_manager)
+            handler.execute(force=force)
+        elif command_type == 'validate':
+            handler = ValidationHandler()
+            exit_code = handler.execute()
+            sys.exit(exit_code)
+        elif command_type == 'cleanup_logs':
+            handler = CleanupHandler(service_manager)
+            handler.execute()
+        elif command_type == 'select_mode':
+            handler = ModeHandler()
+            result = handler.execute()
+            if result:
+                print("\n💾 Configuration saved!")
+                print("💡 Start services with: python main.py --start")
+                print(
+                    f"💡 Or use specific mode: python main.py --start --mode {result['mode']}")
+        elif command_type == 'autonomous_reports':
+            handler = AutonomousHandler()
+            handler.handle_reports_command()
+        elif command_type == 'run_autonomous_config':
+            handler = AutonomousHandler()
+            handler.handle_run_autonomous_config_command()
+        elif command_type == 'status_integration':
+            print("🤖 Starting Automated Agent Status Integration...")
             try:
+<<<<<<< HEAD
                 manager.stop_all()
             except (Exception, KeyboardInterrupt):
                 # Force cleanup on second interrupt
                 pass
             print("\n👋 All services stopped. Goodbye!")
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+                import asyncio
+                asyncio.run(get_agent_status_integration().run())
+            except KeyboardInterrupt:
+                print("\n🛑 Status integration stopped")
+            except Exception as e:
+                print(f"❌ Status integration failed: {e}")
+                sys.exit(1)
+        elif command_type == 'thea_capture_cookies':
+            print("🍪 Starting Thea Cookie Capture...")
+            try:
+                from tools.thea_manual_login import TheaManualLogin
+                tool = TheaManualLogin()
+                success = tool.capture_cookies_interactive()
+                sys.exit(0 if success else 1)
+            except Exception as e:
+                print(f"❌ Thea cookie capture failed: {e}")
+                sys.exit(1)
+        elif command_type == 'thea_test_cookies':
+            print("🧪 Testing Thea Cookies...")
+            try:
+                from tools.thea_manual_login import TheaManualLogin
+                tool = TheaManualLogin()
+                success = tool.test_cookies()
+                sys.exit(0 if success else 1)
+            except Exception as e:
+                print(f"❌ Thea cookie test failed: {e}")
+                sys.exit(1)
+        elif command_type == 'thea_scan_project':
+            print("🔍 Thea Project Scanner...")
+            try:
+                from tools.thea_manual_login import TheaManualLogin
+                tool = TheaManualLogin()
+                success = tool.scan_project_with_thea()
+                sys.exit(0 if success else 1)
+            except Exception as e:
+                print(f"❌ Thea project scan failed: {e}")
+                sys.exit(1)
+        elif command_type == 'thea_status':
+            try:
+                from tools.thea_manual_login import TheaManualLogin
+                tool = TheaManualLogin()
+                tool.show_status()
+            except Exception as e:
+                print(f"❌ Thea status check failed: {e}")
+                sys.exit(1)
+        elif command_type == 'thea_login':
+            print("🔐 Starting Thea Manual Login...")
+            try:
+                from tools.thea_manual_login import TheaManualLogin
+                tool = TheaManualLogin()
+                success = tool.start_manual_login()
+                sys.exit(0 if success else 1)
+            except Exception as e:
+                print(f"❌ Thea manual login failed: {e}")
+                sys.exit(1)
+        elif command_type == 'show_help':
+            # Show help when no arguments provided
+            from src.cli.argument_parser import get_argument_parser
+            parser = get_argument_parser()
+            parser.parser.print_help()
+            sys.exit(0)
+        elif command_type == 'start_services':
+            handler = StartHandler(service_manager)
+            handler.execute(command_info)
+        else:
+            print("❌ Unknown command. Use --help for usage information.")
+            sys.exit(1)
+    except Exception as e:
+        print(f"❌ Command execution failed: {e}")
+        import traceback
+        traceback.print_exc()
+        sys.exit(1)
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
 
 if __name__ == "__main__":

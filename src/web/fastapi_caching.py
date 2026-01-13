@@ -1,4 +1,5 @@
 """
+<<<<<<< HEAD
 FastAPI Redis Caching Module
 =============================
 
@@ -280,3 +281,22 @@ def warm_cache(endpoint_func, *args, **kwargs):
         logger.info(f"Cache warmed for {endpoint_func.__name__}")
     except Exception as e:
         logger.warning(f"Cache warming failed: {e}")
+=======
+FastAPI Caching Module
+V2 Compliant - <100 lines
+"""
+
+from fastapi import Request, Response
+from cachetools import TTLCache
+
+# Cache instance
+cache = TTLCache(maxsize=100, ttl=300)
+
+def get_cache():
+    """Get caching instance"""
+    return cache
+
+def cache_response():
+    """Cache response decorator"""
+    pass
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1

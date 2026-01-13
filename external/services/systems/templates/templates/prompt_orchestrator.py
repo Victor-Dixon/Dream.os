@@ -132,6 +132,7 @@ class PromptOrchestrator:
         if not templates:
             return None
 
+<<<<<<< HEAD
         # Implement sophisticated template selection algorithm
         scored_templates = []
 
@@ -181,6 +182,11 @@ class PromptOrchestrator:
                    f"based on: {', '.join(scored_templates[0]['reasons'])}")
 
         return best_template
+=======
+        # TODO: Implement more sophisticated template selection
+        # For now, return the template with highest success rate
+        return max(templates, key=lambda t: t.success_rate)
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
     def _prepare_variables(self, base_variables: Dict, formatted_context: str, template: PromptTemplate) -> Dict:
         """Prepare variables for template rendering, incorporating formatted context."""
@@ -194,6 +200,7 @@ class PromptOrchestrator:
 
         return variables
 
+<<<<<<< HEAD
     def _calculate_goal_similarity(self, goal: str, template: PromptTemplate) -> float:
         """Calculate similarity between goal and template based on keywords and categories."""
         goal_lower = goal.lower()
@@ -264,6 +271,8 @@ class PromptOrchestrator:
         else:
             return 0.3
 
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     def record_success(self, template_id: str, context_ids: List[str], success: bool) -> None:
         """Record success/failure for template and update context relevance."""
         # Update template success rate

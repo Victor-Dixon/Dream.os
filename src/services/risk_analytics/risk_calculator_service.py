@@ -256,8 +256,13 @@ class RiskCalculatorService:
         benchmark_returns: Optional[np.ndarray] = None
     ) -> RiskMetrics:
 <<<<<<< HEAD
+<<<<<<< HEAD
         """
         Calculate all comprehensive risk metrics with enhanced validation and error handling.
+=======
+        """
+        Calculate all comprehensive risk metrics.
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
         Navigation References:
         ├── Risk Metrics → See RiskMetrics dataclass above for output structure
@@ -276,6 +281,7 @@ class RiskCalculatorService:
         6. Calmar ratio combining return and drawdown
         7. Information ratio vs benchmark (if provided)
         """
+<<<<<<< HEAD
         try:
             # Validate inputs
             validation_errors = self._validate_calculation_inputs(returns, equity_curve, benchmark_returns)
@@ -390,6 +396,8 @@ class RiskCalculatorService:
         return errors
 =======
         """Calculate all comprehensive risk metrics."""
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         if len(returns) < 30:
             logger.warning(f"Insufficient data for risk calculations: {len(returns)} returns")
             return self._create_empty_metrics()

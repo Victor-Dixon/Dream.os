@@ -1,0 +1,132 @@
+{
+  "dashboard": {
+    "id": null,
+    "title": "Phase 5 Infrastructure Overview",
+    "tags": ["infrastructure", "phase5", "enterprise"],
+    "timezone": "browser",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Service Health Status",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "up",
+            "legendFormat": "{{job}}"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "mappings": [
+              {
+                "options": {
+                  "0": {
+                    "text": "DOWN",
+                    "color": "red"
+                  },
+                  "1": {
+                    "text": "UP",
+                    "color": "green"
+                  }
+                },
+                "type": "value"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 2,
+        "title": "CPU Usage by Service",
+        "type": "bargauge",
+        "targets": [
+          {
+            "expr": "rate(process_cpu_user_seconds_total[5m]) * 100",
+            "legendFormat": "{{job}}"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Memory Usage by Service",
+        "type": "bargauge",
+        "targets": [
+          {
+            "expr": "process_resident_memory_bytes / 1024 / 1024",
+            "legendFormat": "{{job}} Memory (MB)"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Database Connections",
+        "type": "gauge",
+        "targets": [
+          {
+            "expr": "pg_stat_activity_count{state=\"active\"}",
+            "legendFormat": "Active Connections"
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Redis Memory Usage",
+        "type": "gauge",
+        "targets": [
+          {
+            "expr": "redis_memory_used_bytes / 1024 / 1024",
+            "legendFormat": "Redis Memory (MB)"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "title": "HTTP Response Times (95th percentile)",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m]))",
+            "legendFormat": "95th percentile"
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "title": "Circuit Breaker Status",
+        "type": "table",
+        "targets": [
+          {
+            "expr": "nginx_http_requests_total{status=\"503\"}",
+            "legendFormat": "Circuit Breaker 503s"
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "title": "CDN Cache Hit Rate",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "rate(nginx_http_requests_total{status=\"200\"}[5m]) / rate(nginx_http_requests_total[5m]) * 100",
+            "legendFormat": "Cache Hit Rate %"
+          }
+        ]
+      }
+    ],
+    "time": {
+      "from": "now-1h",
+      "to": "now"
+    },
+    "timepicker": {},
+    "templating": {
+      "list": []
+    },
+    "annotations": {
+      "list": []
+    },
+    "refresh": "30s",
+    "schemaVersion": 27,
+    "version": 0,
+    "links": []
+  }
+}

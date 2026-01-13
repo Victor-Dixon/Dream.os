@@ -8,6 +8,9 @@ import logging
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 class UnifiedLoggingSystem:
     """Unified logging system for trading robot components."""
 
@@ -20,6 +23,7 @@ class UnifiedLoggingSystem:
         return logging.getLogger(name)
 
 
+<<<<<<< HEAD
 def get_logger(name: str = __name__) -> logging.Logger:
     """Legacy function for backward compatibility."""
     return logging.getLogger(name)
@@ -27,12 +31,19 @@ def get_logger(name: str = __name__) -> logging.Logger:
 
 __all__ = ["UnifiedLoggingSystem", "get_logger"]
 =======
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 def get_logger(name: str = __name__) -> logging.Logger:
+    """Legacy function for backward compatibility."""
     return logging.getLogger(name)
 
 
+<<<<<<< HEAD
 __all__ = ["get_logger"]
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+__all__ = ["UnifiedLoggingSystem", "get_logger"]
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
 
 

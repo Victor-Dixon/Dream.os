@@ -1,0 +1,4936 @@
+{
+  "generated_at": "2026-01-07T04:41:28.375734",
+  "total_tools": 45,
+  "total_functions": 456,
+  "total_classes": 70,
+  "domains": {
+    "analytics": [
+      "test_deployment_staging",
+      "verify_deployment_integration",
+      "discord_health_monitor",
+      "system_health_dashboard",
+      "automated_p0_analytics_validation",
+      "parse_validation_report",
+      "discord_bot_health_check",
+      "execute_phase3_final_validation",
+      "phase3_validation_readiness",
+      "verify_fastapi_deployment",
+      "validation_result_integration_pipeline",
+      "monitor_fastapi_deployment",
+      "validation_completion_signal_handler",
+      "check_validation_integration_status",
+      "check_fastapi_deployment_status",
+      "validation_integration_monitor",
+      "execute_fastapi_validation_pipeline",
+      "monitor_fastapi_health_endpoint",
+      "unified_validation_tools_manager",
+      "unified_deployment_manager",
+      "phase5_health_check",
+      "phase5_deployment_validator",
+      "phase5_load_test_orchestrator",
+      "phase5_monitoring_dashboard",
+      "infrastructure_status_dashboard",
+      "phase6_compliance_checker",
+      "deploy_ga4_pixel_analytics",
+      "deploy_ga4_pixel_remote",
+      "website_health_monitor",
+      "analytics_live_verification",
+      "enterprise_analytics_compliance_validator",
+      "analytics_deployment_orchestrator",
+      "analytics_deployment_dashboard",
+      "analytics_deployment_automation",
+      "analytics_operations_center",
+      "analytics_ecosystem_health_scorer",
+      "analytics_service",
+      "analytics_deployment_monitor",
+      "verification_service",
+      "sender_validation",
+      "message_validation_service"
+    ],
+    "tools": [
+      "populate_validation_report",
+      "verify_final_validation_readiness",
+      "execute_final_validation_workflow"
+    ],
+    "\\s*(.+)', content, re.IGNORECASE)": [
+      "analytics_ecosystem_documentation_generator"
+    ]
+  },
+  "tools": {
+    "test_deployment_staging": {
+      "name": "test_deployment_staging",
+      "path": "tools\\test_deployment_staging.py",
+      "description": "Test Deployment Staging & Rollback Functionality",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "test_snapshot_creation",
+          "signature": "def test_snapshot_creation():",
+          "docstring": "Test snapshot creation functionality.",
+          "is_async": false,
+          "line_number": 40
+        },
+        {
+          "name": "test_snapshot_listing",
+          "signature": "def test_snapshot_listing(snapshot_id):",
+          "docstring": "Test snapshot listing functionality.",
+          "is_async": false,
+          "line_number": 71
+        },
+        {
+          "name": "test_snapshot_deletion",
+          "signature": "def test_snapshot_deletion(snapshot_id):",
+          "docstring": "Test snapshot deletion functionality.",
+          "is_async": false,
+          "line_number": 102
+        },
+        {
+          "name": "test_staging_deployment",
+          "signature": "def test_staging_deployment():",
+          "docstring": "Test staging deployment functionality.",
+          "is_async": false,
+          "line_number": 125
+        },
+        {
+          "name": "test_rollback_functionality",
+          "signature": "def test_rollback_functionality(snapshot_id):",
+          "docstring": "Test rollback functionality.",
+          "is_async": false,
+          "line_number": 166
+        },
+        {
+          "name": "cleanup_test_data",
+          "signature": "def cleanup_test_data():",
+          "docstring": "Clean up test data.",
+          "is_async": false,
+          "line_number": 187
+        },
+        {
+          "name": "main",
+          "signature": "def main():",
+          "docstring": "Run all staging/rollback tests.",
+          "is_async": false,
+          "line_number": 215
+        }
+      ],
+      "classes": [],
+      "dependencies": [
+        "import sys",
+        "import os",
+        "import json",
+        "from pathlib import Path",
+        "import sys",
+        "import os",
+        "from deployment_server import (",
+        "import shutil"
+      ],
+      "last_modified": "2025-12-30T13:05:48"
+    },
+    "verify_deployment_integration": {
+      "name": "verify_deployment_integration",
+      "path": "tools\\verify_deployment_integration.py",
+      "description": "Deployment Integration Verification (legacy CLI)",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "__init__",
+          "signature": "def __init__(self) -> None:",
+          "docstring": "Build a REST URL safely.\n\n        `urljoin` treats a leading '/' as an absolute path (dropping prior path),\n        so we normalize segments before joining.",
+          "is_async": false,
+          "line_number": 45
+        },
+        {
+          "name": "_build_api_url",
+          "signature": "def _build_api_url(base_url: str, api_base: str, endpoint: str) -> str:",
+          "docstring": "Build a REST URL safely.\n\n        `urljoin` treats a leading '/' as an absolute path (dropping prior path),\n        so we normalize segments before joining.",
+          "is_async": false,
+          "line_number": 50
+        },
+        {
+          "name": "_get",
+          "signature": "def _get(self, url: str) -> requests.Response:",
+          "docstring": "",
+          "is_async": false,
+          "line_number": 67
+        },
+        {
+          "name": "check_accessibility",
+          "signature": "def check_accessibility(self, url: str) -> Dict[str, Any]:",
+          "docstring": "",
+          "is_async": false,
+          "line_number": 75
+        },
+        {
+          "name": "check_wp_api",
+          "signature": "def check_wp_api(self, base_url: str, wp_api_path: str = \"/wp-json/\") -> Dict[str, Any]:",
+          "docstring": "",
+          "is_async": false,
+          "line_number": 86
+        },
+        {
+          "name": "check_rest_endpoint",
+          "signature": "def check_rest_endpoint(self, url: str) -> Dict[str, Any]:",
+          "docstring": "",
+          "is_async": false,
+          "line_number": 99
+        },
+        {
+          "name": "verify_site",
+          "signature": "def verify_site(self, site_name: str, cfg: Dict[str, Any]) -> Dict[str, Any]:",
+          "docstring": "",
+          "is_async": false,
+          "line_number": 111
+        },
+        {
+          "name": "run",
+          "signature": "def run(self, sites: Optional[dict[str, dict[str, Any]]] = None) -> Dict[str, Any]:",
+          "docstring": "",
+          "is_async": false,
+          "line_number": 141
+        },
+        {
+          "name": "_write_outputs",
+          "signature": "def _write_outputs(payload: Dict[str, Any]) -> tuple[Path, Path]:",
+          "docstring": "",
+          "is_async": false,
+          "line_number": 157
+        },
+        {
+          "name": "main",
+          "signature": "def main() -> int:",
+          "docstring": "",
+          "is_async": false,
+          "line_number": 188
+        }
+      ],
+      "classes": [
+        {
+          "name": "DeploymentVerifier",
+          "docstring": "Build a REST URL safely.\n\n        `urljoin` treats a leading '/' as an absolute path (dropping prior path),\n        so we normalize segments before joining.",
+          "methods": [
+            "check_accessibility",
+            "check_wp_api",
+            "check_rest_endpoint",
+            "verify_site",
+            "run",
+            "main"
+          ],
+          "line_number": 41
+        }
+      ],
+      "dependencies": [
+        "from __future__ import annotations",
+        "import json",
+        "from dataclasses import dataclass",
+        "from datetime import datetime",
+        "from pathlib import Path",
+        "from typing import Any, Dict, List, Optional",
+        "from urllib.parse import urljoin",
+        "import requests"
+      ],
+      "last_modified": "2025-12-29T14:44:34"
+    },
+    "discord_health_monitor": {
+      "name": "discord_health_monitor",
+      "path": "tools\\discord_health_monitor.py",
+      "description": "Discord Health Monitor",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "__init__",
+          "signature": "def __init__(self, bot_pid: int, check_interval: int = 30):",
+          "docstring": "Start the health monitoring thread.",
+          "is_async": false,
+          "line_number": 25
+        },
+        {
+          "name": "start_monitoring",
+          "signature": "def start_monitoring(self):",
+          "docstring": "Start the health monitoring thread.",
+          "is_async": false,
+          "line_number": 33
+        },
+        {
+          "name": "stop_monitoring",
+          "signature": "def stop_monitoring(self):",
+          "docstring": "Stop the health monitoring.",
+          "is_async": false,
+          "line_number": 43
+        },
+        {
+          "name": "update_heartbeat",
+          "signature": "def update_heartbeat(self):",
+          "docstring": "Update the last heartbeat timestamp.",
+          "is_async": false,
+          "line_number": 50
+        },
+        {
+          "name": "_monitor_loop",
+          "signature": "def _monitor_loop(self):",
+          "docstring": "Main monitoring loop.",
+          "is_async": false,
+          "line_number": 54
+        },
+        {
+          "name": "_handle_timeout",
+          "signature": "def _handle_timeout(self) -> None:",
+          "docstring": "Handle heartbeat timeout.",
+          "is_async": false,
+          "line_number": 81
+        },
+        {
+          "name": "_restart_heartbeat",
+          "signature": "def _restart_heartbeat(self) -> bool:",
+          "docstring": "Attempt to restart the Discord heartbeat.",
+          "is_async": false,
+          "line_number": 94
+        },
+        {
+          "name": "_attempt_graceful_restart",
+          "signature": "def _attempt_graceful_restart(self) -> bool:",
+          "docstring": "Attempt to gracefully restart the Discord bot.",
+          "is_async": false,
+          "line_number": 105
+        },
+        {
+          "name": "_trigger_shutdown",
+          "signature": "def _trigger_shutdown(self) -> None:",
+          "docstring": "Trigger system shutdown due to unrecoverable error.",
+          "is_async": false,
+          "line_number": 115
+        },
+        {
+          "name": "_check_bot_responsiveness",
+          "signature": "def _check_bot_responsiveness(self) -> None:",
+          "docstring": "Check if the Discord bot is responsive.",
+          "is_async": false,
+          "line_number": 120
+        },
+        {
+          "name": "get_health_status",
+          "signature": "def get_health_status(self) -> Dict[str, Any]:",
+          "docstring": "Get current health status.",
+          "is_async": false,
+          "line_number": 137
+        },
+        {
+          "name": "main",
+          "signature": "def main():",
+          "docstring": "CLI interface for Discord health monitoring.",
+          "is_async": false,
+          "line_number": 148
+        }
+      ],
+      "classes": [
+        {
+          "name": "DiscordHealthMonitor",
+          "docstring": "Monitors Discord bot health and prevents timeout shutdowns.",
+          "methods": [
+            "start_monitoring",
+            "stop_monitoring",
+            "update_heartbeat",
+            "get_health_status",
+            "main"
+          ],
+          "line_number": 22
+        }
+      ],
+      "dependencies": [
+        "import asyncio",
+        "import time",
+        "import threading",
+        "import psutil",
+        "from typing import Dict, Any, Optional",
+        "import logging",
+        "import argparse"
+      ],
+      "last_modified": "2025-12-31T11:06:48"
+    },
+    "system_health_dashboard": {
+      "name": "system_health_dashboard",
+      "path": "tools\\system_health_dashboard.py",
+      "description": "System Health Dashboard",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "__init__",
+          "signature": "def __init__(self) -> None:",
+          "docstring": "Start the health monitoring.",
+          "is_async": false,
+          "line_number": 28
+        },
+        {
+          "name": "start_monitoring",
+          "signature": "def start_monitoring(self) -> None:",
+          "docstring": "Start the health monitoring.",
+          "is_async": false,
+          "line_number": 39
+        },
+        {
+          "name": "stop_monitoring",
+          "signature": "def stop_monitoring(self) -> None:",
+          "docstring": "Stop the health monitoring.",
+          "is_async": false,
+          "line_number": 51
+        },
+        {
+          "name": "update_service_pid",
+          "signature": "def update_service_pid(self, service_name: str, pid: int) -> None:",
+          "docstring": "Update the PID for a service.",
+          "is_async": false,
+          "line_number": 56
+        },
+        {
+          "name": "_monitor_loop",
+          "signature": "def _monitor_loop(self) -> None:",
+          "docstring": "Main monitoring loop.",
+          "is_async": false,
+          "line_number": 63
+        },
+        {
+          "name": "_check_all_services",
+          "signature": "def _check_all_services(self) -> None:",
+          "docstring": "Check the health of all services.",
+          "is_async": false,
+          "line_number": 78
+        },
+        {
+          "name": "_check_system_resources",
+          "signature": "def _check_system_resources(self) -> None:",
+          "docstring": "Check overall system resources.",
+          "is_async": false,
+          "line_number": 116
+        },
+        {
+          "name": "_check_agent_coordinates",
+          "signature": "def _check_agent_coordinates(self) -> None:",
+          "docstring": "Check if agent coordinates are still valid.",
+          "is_async": false,
+          "line_number": 135
+        },
+        {
+          "name": "_add_alert",
+          "signature": "def _add_alert(self, message: str, level: str) -> None:",
+          "docstring": "Add an alert to the dashboard.",
+          "is_async": false,
+          "line_number": 168
+        },
+        {
+          "name": "_cleanup_old_alerts",
+          "signature": "def _cleanup_old_alerts(self) -> None:",
+          "docstring": "Clean up old alerts (older than 1 hour).",
+          "is_async": false,
+          "line_number": 180
+        },
+        {
+          "name": "get_dashboard_data",
+          "signature": "def get_dashboard_data(self) -> Dict[str, Any]:",
+          "docstring": "Get complete dashboard data.",
+          "is_async": false,
+          "line_number": 185
+        },
+        {
+          "name": "_get_system_info",
+          "signature": "def _get_system_info(self) -> Dict[str, Any]:",
+          "docstring": "Get basic system information.",
+          "is_async": false,
+          "line_number": 195
+        },
+        {
+          "name": "_get_summary",
+          "signature": "def _get_summary(self) -> Dict[str, Any]:",
+          "docstring": "Get dashboard summary.",
+          "is_async": false,
+          "line_number": 208
+        },
+        {
+          "name": "print_dashboard",
+          "signature": "def print_dashboard(self) -> None:",
+          "docstring": "Print the current dashboard to console.",
+          "is_async": false,
+          "line_number": 224
+        },
+        {
+          "name": "main",
+          "signature": "def main():",
+          "docstring": "CLI interface for system health dashboard.",
+          "is_async": false,
+          "line_number": 290
+        }
+      ],
+      "classes": [
+        {
+          "name": "SystemHealthDashboard",
+          "docstring": "Comprehensive system health monitoring dashboard.",
+          "methods": [
+            "start_monitoring",
+            "stop_monitoring",
+            "update_service_pid",
+            "get_dashboard_data",
+            "print_dashboard",
+            "main"
+          ],
+          "line_number": 25
+        }
+      ],
+      "dependencies": [
+        "import json",
+        "import sys",
+        "import time",
+        "import psutil",
+        "import threading",
+        "from pathlib import Path",
+        "from typing import Dict, List, Any, Optional",
+        "from datetime import datetime, timedelta",
+        "import logging",
+        "import pyautogui",
+        "import argparse"
+      ],
+      "last_modified": "2025-12-31T11:06:48"
+    },
+    "automated_p0_analytics_validation": {
+      "name": "automated_p0_analytics_validation",
+      "path": "tools\\automated_p0_analytics_validation.py",
+      "description": "Automated P0 Analytics Validation Tool",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "__init__",
+          "signature": "def __init__(self):",
+          "docstring": "Initialize the validator.",
+          "is_async": false,
+          "line_number": 59
+        },
+        {
+          "name": "check_wp_config",
+          "signature": "def check_wp_config(self, site_name: str) -> Dict[str, Optional[str]]:",
+          "docstring": "Check wp-config.php for analytics constants (local or remote).",
+          "is_async": false,
+          "line_number": 64
+        },
+        {
+          "name": "check_live_tracking",
+          "signature": "def check_live_tracking(self, site_name: str, ga4_id: Optional[str], pixel_id: Optional[str]) -> bool:",
+          "docstring": "Check if analytics tracking is present on live site.",
+          "is_async": false,
+          "line_number": 143
+        },
+        {
+          "name": "validate_site",
+          "signature": "def validate_site(self, site_name: str, validate_ready_only: bool = False) -> AnalyticsValidation:",
+          "docstring": "Validate analytics configuration for a site.",
+          "is_async": false,
+          "line_number": 176
+        },
+        {
+          "name": "validate_all_sites",
+          "signature": "def validate_all_sites(self, validate_ready_only: bool = False) -> List[AnalyticsValidation]:",
+          "docstring": "Validate analytics for all P0 sites.",
+          "is_async": false,
+          "line_number": 249
+        },
+        {
+          "name": "generate_report",
+          "signature": "def generate_report(self, results: List[AnalyticsValidation]) -> str:",
+          "docstring": "Generate validation report.",
+          "is_async": false,
+          "line_number": 257
+        },
+        {
+          "name": "save_report",
+          "signature": "def save_report(self, report: str, output_file: Optional[str] = None) -> Path:",
+          "docstring": "Save report to file.",
+          "is_async": false,
+          "line_number": 311
+        },
+        {
+          "name": "main",
+          "signature": "def main():",
+          "docstring": "Main CLI entry point.",
+          "is_async": false,
+          "line_number": 326
+        }
+      ],
+      "classes": [
+        {
+          "name": "AnalyticsValidation",
+          "docstring": "Analytics validation result for a site.",
+          "methods": [],
+          "line_number": 44
+        },
+        {
+          "name": "AutomatedP0AnalyticsValidator",
+          "docstring": "Validates analytics configuration for P0 sites.",
+          "methods": [
+            "check_wp_config",
+            "check_live_tracking",
+            "validate_site",
+            "validate_all_sites",
+            "generate_report",
+            "save_report",
+            "main"
+          ],
+          "line_number": 56
+        }
+      ],
+      "dependencies": [
+        "import argparse",
+        "import json",
+        "import re",
+        "import requests",
+        "from pathlib import Path",
+        "from typing import Dict, List, Any, Optional",
+        "from dataclasses import dataclass",
+        "from datetime import datetime"
+      ],
+      "last_modified": "2025-12-30T04:48:26"
+    },
+    "parse_validation_report": {
+      "name": "parse_validation_report",
+      "path": "tools\\parse_validation_report.py",
+      "description": "Parse SSOT validation checkpoint report and extract key statistics.",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "main",
+          "signature": "def main():",
+          "docstring": "",
+          "is_async": false,
+          "line_number": 6
+        }
+      ],
+      "classes": [],
+      "dependencies": [
+        "import json",
+        "import sys"
+      ],
+      "last_modified": "2025-12-30T17:17:12"
+    },
+    "discord_bot_health_check": {
+      "name": "discord_bot_health_check",
+      "path": "tools\\discord_bot_health_check.py",
+      "description": "Discord Bot Health Check Utility",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "check_bot_process",
+          "signature": "def check_bot_process():",
+          "docstring": "Check if Discord bot process is running.",
+          "is_async": false,
+          "line_number": 17
+        },
+        {
+          "name": "check_env_config",
+          "signature": "def check_env_config():",
+          "docstring": "Check if DISCORD_BOT_TOKEN is configured.",
+          "is_async": false,
+          "line_number": 39
+        },
+        {
+          "name": "main",
+          "signature": "def main():",
+          "docstring": "Run health check.",
+          "is_async": false,
+          "line_number": 59
+        }
+      ],
+      "classes": [],
+      "dependencies": [
+        "import os",
+        "import sys",
+        "from pathlib import Path",
+        "import subprocess"
+      ],
+      "last_modified": "2025-12-30T17:09:48"
+    },
+    "populate_validation_report": {
+      "name": "populate_validation_report",
+      "path": "tools\\populate_validation_report.py",
+      "description": "Populate Final Phase 3 Validation Report from JSON Results",
+      "author": "Agent-3",
+      "domain": "tools",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "load_json_report",
+          "signature": "def load_json_report(json_path):",
+          "docstring": "Load validation report JSON.",
+          "is_async": false,
+          "line_number": 23
+        },
+        {
+          "name": "load_template",
+          "signature": "def load_template(template_path):",
+          "docstring": "Load validation report template.",
+          "is_async": false,
+          "line_number": 28
+        },
+        {
+          "name": "calculate_metrics",
+          "signature": "def calculate_metrics(report):",
+          "docstring": "Calculate validation metrics from report.",
+          "is_async": false,
+          "line_number": 33
+        },
+        {
+          "name": "calculate_domain_compliance",
+          "signature": "def calculate_domain_compliance(report):",
+          "docstring": "Calculate domain-by-domain compliance.",
+          "is_async": false,
+          "line_number": 68
+        },
+        {
+          "name": "populate_template",
+          "signature": "def populate_template(template, metrics, domain_compliance, validation_date):",
+          "docstring": "Populate template with calculated metrics.",
+          "is_async": false,
+          "line_number": 92
+        },
+        {
+          "name": "main",
+          "signature": "def main():",
+          "docstring": "",
+          "is_async": false,
+          "line_number": 138
+        }
+      ],
+      "classes": [],
+      "dependencies": [
+        "import json",
+        "import argparse",
+        "from pathlib import Path",
+        "from datetime import datetime",
+        "from collections import defaultdict"
+      ],
+      "last_modified": "2025-12-30T21:51:24"
+    },
+    "execute_phase3_final_validation": {
+      "name": "execute_phase3_final_validation",
+      "path": "tools\\execute_phase3_final_validation.py",
+      "description": "Phase 3 Final Validation Execution Script",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "run_validation",
+          "signature": "def run_validation():",
+          "docstring": "Run comprehensive validation and find the generated JSON report.",
+          "is_async": false,
+          "line_number": 36
+        },
+        {
+          "name": "parse_validation_results",
+          "signature": "def parse_validation_results(data):",
+          "docstring": "Parse validation JSON data to extract key metrics.",
+          "is_async": false,
+          "line_number": 76
+        },
+        {
+          "name": "generate_report",
+          "signature": "def generate_report(metrics):",
+          "docstring": "Generate formatted markdown report from metrics.",
+          "is_async": false,
+          "line_number": 91
+        },
+        {
+          "name": "main",
+          "signature": "def main():",
+          "docstring": "Main execution flow.",
+          "is_async": false,
+          "line_number": 163
+        }
+      ],
+      "classes": [],
+      "dependencies": [
+        "import json",
+        "import subprocess",
+        "import sys",
+        "from pathlib import Path",
+        "from datetime import datetime",
+        "import shutil"
+      ],
+      "last_modified": "2025-12-31T11:08:56"
+    },
+    "verify_final_validation_readiness": {
+      "name": "verify_final_validation_readiness",
+      "path": "tools\\verify_final_validation_readiness.py",
+      "description": "Final Validation Readiness Verification Script",
+      "author": "Agent-3",
+      "domain": "tools",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "check_phase3_completion",
+          "signature": "def check_phase3_completion() -> Tuple[bool, List[str]]:",
+          "docstring": "Check if Phase 3 remediation is complete.",
+          "is_async": false,
+          "line_number": 24
+        },
+        {
+          "name": "check_validation_tool",
+          "signature": "def check_validation_tool() -> Tuple[bool, List[str]]:",
+          "docstring": "Check if validation tool is ready.",
+          "is_async": false,
+          "line_number": 59
+        },
+        {
+          "name": "check_report_script",
+          "signature": "def check_report_script() -> Tuple[bool, List[str]]:",
+          "docstring": "Check if report population script is ready.",
+          "is_async": false,
+          "line_number": 76
+        },
+        {
+          "name": "check_documentation_templates",
+          "signature": "def check_documentation_templates() -> Tuple[bool, List[str]]:",
+          "docstring": "Check if documentation templates are ready.",
+          "is_async": false,
+          "line_number": 93
+        },
+        {
+          "name": "check_output_directories",
+          "signature": "def check_output_directories() -> Tuple[bool, List[str]]:",
+          "docstring": "Check if output directories exist and are writable.",
+          "is_async": false,
+          "line_number": 113
+        },
+        {
+          "name": "main",
+          "signature": "def main():",
+          "docstring": "Main verification function.",
+          "is_async": false,
+          "line_number": 129
+        }
+      ],
+      "classes": [],
+      "dependencies": [
+        "import json",
+        "import os",
+        "import sys",
+        "from pathlib import Path",
+        "from typing import Dict, List, Tuple",
+        "import re"
+      ],
+      "last_modified": "2025-12-30T23:53:58"
+    },
+    "phase3_validation_readiness": {
+      "name": "phase3_validation_readiness",
+      "path": "tools\\phase3_validation_readiness.py",
+      "description": "Phase 3 SSOT Validation Readiness Checker",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "__init__",
+          "signature": "def __init__(self, repo_root: Path):",
+          "docstring": "Load Phase 3 file lists from JSON.",
+          "is_async": false,
+          "line_number": 47
+        },
+        {
+          "name": "load_phase3_files",
+          "signature": "def load_phase3_files(self) -> Dict[str, List[Dict[str, Any]]]:",
+          "docstring": "Load Phase 3 file lists from JSON.",
+          "is_async": false,
+          "line_number": 52
+        },
+        {
+          "name": "check_file_readiness",
+          "signature": "def check_file_readiness(self, file_info: Dict[str, Any]) -> ValidationReadiness:",
+          "docstring": "Check if a single file is ready for validation.",
+          "is_async": false,
+          "line_number": 61
+        },
+        {
+          "name": "check_readiness",
+          "signature": "def check_readiness(self, priority: Optional[int] = None) -> List[ValidationReadiness]:",
+          "docstring": "Check readiness for all Phase 3 files.",
+          "is_async": false,
+          "line_number": 113
+        },
+        {
+          "name": "generate_report",
+          "signature": "def generate_report(self, results: List[ValidationReadiness], output_path: Optional[Path] = None) -> str:",
+          "docstring": "Generate validation readiness report.",
+          "is_async": false,
+          "line_number": 127
+        },
+        {
+          "name": "main",
+          "signature": "def main():",
+          "docstring": "Main CLI entry point.",
+          "is_async": false,
+          "line_number": 213
+        }
+      ],
+      "classes": [
+        {
+          "name": "ValidationReadiness",
+          "docstring": "Readiness status for a file.",
+          "methods": [],
+          "line_number": 34
+        },
+        {
+          "name": "Phase3ValidationReadinessChecker",
+          "docstring": "Checks Phase 3 SSOT remediation validation readiness.",
+          "methods": [
+            "load_phase3_files",
+            "check_file_readiness",
+            "check_readiness",
+            "generate_report",
+            "main"
+          ],
+          "line_number": 44
+        }
+      ],
+      "dependencies": [
+        "import argparse",
+        "import json",
+        "from pathlib import Path",
+        "from typing import Dict, List, Any, Optional",
+        "from dataclasses import dataclass, asdict",
+        "from datetime import datetime",
+        "import subprocess"
+      ],
+      "last_modified": "2025-12-31T11:08:32"
+    },
+    "execute_final_validation_workflow": {
+      "name": "execute_final_validation_workflow",
+      "path": "tools\\execute_final_validation_workflow.py",
+      "description": "Final Validation Workflow Automation Script",
+      "author": "Agent-3",
+      "domain": "tools",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "run_command",
+          "signature": "def run_command(cmd: list, description: str) -> bool:",
+          "docstring": "Run a command and return success status.",
+          "is_async": false,
+          "line_number": 28
+        },
+        {
+          "name": "verify_readiness",
+          "signature": "def verify_readiness() -> bool:",
+          "docstring": "Run readiness verification script.",
+          "is_async": false,
+          "line_number": 55
+        },
+        {
+          "name": "execute_validation",
+          "signature": "def execute_validation() -> bool:",
+          "docstring": "Execute final validation.",
+          "is_async": false,
+          "line_number": 64
+        },
+        {
+          "name": "populate_report",
+          "signature": "def populate_report() -> bool:",
+          "docstring": "Populate validation report from JSON results.",
+          "is_async": false,
+          "line_number": 76
+        },
+        {
+          "name": "generate_milestone_template",
+          "signature": "def generate_milestone_template() -> bool:",
+          "docstring": "Generate completion milestone template with timestamp.",
+          "is_async": false,
+          "line_number": 95
+        },
+        {
+          "name": "main",
+          "signature": "def main():",
+          "docstring": "Main workflow execution.",
+          "is_async": false,
+          "line_number": 120
+        }
+      ],
+      "classes": [],
+      "dependencies": [
+        "import argparse",
+        "import json",
+        "import subprocess",
+        "import sys",
+        "from pathlib import Path",
+        "from datetime import datetime"
+      ],
+      "last_modified": "2025-12-31T00:14:14"
+    },
+    "verify_fastapi_deployment": {
+      "name": "verify_fastapi_deployment",
+      "path": "tools\\verify_fastapi_deployment.py",
+      "description": "Verify FastAPI deployment status for TradingRobotPlug Phase 3.",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "check_fastapi_health",
+          "signature": "def check_fastapi_health(base_url=\"http://localhost:8001\"):",
+          "docstring": "Check if FastAPI server is running.",
+          "is_async": false,
+          "line_number": 12
+        },
+        {
+          "name": "check_websocket_endpoint",
+          "signature": "def check_websocket_endpoint(base_url=\"ws://localhost:8001\"):",
+          "docstring": "Check WebSocket endpoint availability.",
+          "is_async": false,
+          "line_number": 29
+        },
+        {
+          "name": "main",
+          "signature": "def main():",
+          "docstring": "Check FastAPI deployment status.",
+          "is_async": false,
+          "line_number": 42
+        }
+      ],
+      "classes": [],
+      "dependencies": [
+        "import requests",
+        "import sys",
+        "from pathlib import Path",
+        "import websocket"
+      ],
+      "last_modified": "2025-12-31T14:39:02"
+    },
+    "validation_result_integration_pipeline": {
+      "name": "validation_result_integration_pipeline",
+      "path": "tools\\validation_result_integration_pipeline.py",
+      "description": "Validation Result Integration Pipeline",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "load_validation_results",
+          "signature": "def load_validation_results(report_path: Path) -> Dict:",
+          "docstring": "Load validation results from JSON report.",
+          "is_async": false,
+          "line_number": 41
+        },
+        {
+          "name": "extract_validation_metrics",
+          "signature": "def extract_validation_metrics(results: Dict) -> Dict:",
+          "docstring": "Extract key metrics from validation results.",
+          "is_async": false,
+          "line_number": 50
+        },
+        {
+          "name": "populate_milestone_template",
+          "signature": "def populate_milestone_template(template_path: Path, metrics: Dict) -> str:",
+          "docstring": "Populate milestone template with validation metrics.",
+          "is_async": false,
+          "line_number": 84
+        },
+        {
+          "name": "update_master_task_log",
+          "signature": "def update_master_task_log(task_log_path: Path, metrics: Dict) -> str:",
+          "docstring": "Update MASTER_TASK_LOG with Phase 3 completion metrics.",
+          "is_async": false,
+          "line_number": 119
+        },
+        {
+          "name": "main",
+          "signature": "def main():",
+          "docstring": "Main execution function.",
+          "is_async": false,
+          "line_number": 187
+        }
+      ],
+      "classes": [],
+      "dependencies": [
+        "import json",
+        "import re",
+        "import sys",
+        "from pathlib import Path",
+        "from datetime import datetime",
+        "from typing import Dict, List, Tuple"
+      ],
+      "last_modified": "2025-12-31T04:02:40"
+    },
+    "monitor_fastapi_deployment": {
+      "name": "monitor_fastapi_deployment",
+      "path": "tools\\monitor_fastapi_deployment.py",
+      "description": "Monitor FastAPI deployment and verify endpoints when service becomes available.",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "check_fastapi_health",
+          "signature": "def check_fastapi_health() -> Tuple[bool, str]:",
+          "docstring": "Check if FastAPI service is running.",
+          "is_async": false,
+          "line_number": 16
+        },
+        {
+          "name": "verify_endpoint",
+          "signature": "def verify_endpoint(endpoint: str) -> Tuple[int, dict]:",
+          "docstring": "Verify a WordPress endpoint.",
+          "is_async": false,
+          "line_number": 28
+        },
+        {
+          "name": "main",
+          "signature": "def main():",
+          "docstring": "Monitor FastAPI deployment and verify endpoints.",
+          "is_async": false,
+          "line_number": 46
+        }
+      ],
+      "classes": [],
+      "dependencies": [
+        "import requests",
+        "import time",
+        "import sys",
+        "from typing import Tuple"
+      ],
+      "last_modified": "2025-12-31T14:39:02"
+    },
+    "validation_completion_signal_handler": {
+      "name": "validation_completion_signal_handler",
+      "path": "tools\\validation_completion_signal_handler.py",
+      "description": "Validation Completion Signal Handler",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "verify_validation_complete",
+          "signature": "def verify_validation_complete(report_path: Path) -> bool:",
+          "docstring": "Verify validation report exists and contains results.",
+          "is_async": false,
+          "line_number": 28
+        },
+        {
+          "name": "execute_integration_pipeline",
+          "signature": "def execute_integration_pipeline(report_path: Path) -> bool:",
+          "docstring": "Execute the integration pipeline.",
+          "is_async": false,
+          "line_number": 44
+        },
+        {
+          "name": "main",
+          "signature": "def main():",
+          "docstring": "Main execution function.",
+          "is_async": false,
+          "line_number": 62
+        }
+      ],
+      "classes": [],
+      "dependencies": [
+        "import sys",
+        "import subprocess",
+        "from pathlib import Path",
+        "from datetime import datetime",
+        "import json"
+      ],
+      "last_modified": "2025-12-31T04:02:40"
+    },
+    "check_validation_integration_status": {
+      "name": "check_validation_integration_status",
+      "path": "tools\\check_validation_integration_status.py",
+      "description": "Validation Integration Status Checker",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "check_validation_report",
+          "signature": "def check_validation_report():",
+          "docstring": "Check if validation report exists and is valid.",
+          "is_async": false,
+          "line_number": 23
+        },
+        {
+          "name": "check_milestone_generated",
+          "signature": "def check_milestone_generated():",
+          "docstring": "Check if milestone document was generated.",
+          "is_async": false,
+          "line_number": 40
+        },
+        {
+          "name": "check_task_log_updated",
+          "signature": "def check_task_log_updated():",
+          "docstring": "Check if MASTER_TASK_LOG was updated with Phase 3 completion.",
+          "is_async": false,
+          "line_number": 53
+        },
+        {
+          "name": "main",
+          "signature": "def main():",
+          "docstring": "Main status check.",
+          "is_async": false,
+          "line_number": 75
+        }
+      ],
+      "classes": [],
+      "dependencies": [
+        "import json",
+        "from pathlib import Path",
+        "from datetime import datetime"
+      ],
+      "last_modified": "2025-12-31T04:22:18"
+    },
+    "check_fastapi_deployment_status": {
+      "name": "check_fastapi_deployment_status",
+      "path": "tools\\check_fastapi_deployment_status.py",
+      "description": "FastAPI Deployment Status Checker",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "check_deployment_status",
+          "signature": "def check_deployment_status():",
+          "docstring": "Check FastAPI deployment status on server.",
+          "is_async": false,
+          "line_number": 22
+        }
+      ],
+      "classes": [],
+      "dependencies": [
+        "import sys",
+        "from pathlib import Path",
+        "from simple_wordpress_deployer import SimpleWordPressDeployer, load_site_configs"
+      ],
+      "last_modified": "2025-12-31T04:52:52"
+    },
+    "validation_integration_monitor": {
+      "name": "validation_integration_monitor",
+      "path": "tools\\validation_integration_monitor.py",
+      "description": "Validation Integration Monitor",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "check_validation_report",
+          "signature": "def check_validation_report() -> tuple[bool, str]:",
+          "docstring": "Check if validation report exists and is valid.",
+          "is_async": false,
+          "line_number": 35
+        },
+        {
+          "name": "check_milestone",
+          "signature": "def check_milestone() -> tuple[bool, str]:",
+          "docstring": "Check if milestone document was generated.",
+          "is_async": false,
+          "line_number": 59
+        },
+        {
+          "name": "check_task_log",
+          "signature": "def check_task_log() -> tuple[bool, str]:",
+          "docstring": "Check if MASTER_TASK_LOG was updated.",
+          "is_async": false,
+          "line_number": 71
+        },
+        {
+          "name": "check_integration_tools",
+          "signature": "def check_integration_tools() -> tuple[bool, str]:",
+          "docstring": "Check if integration tools exist.",
+          "is_async": false,
+          "line_number": 92
+        },
+        {
+          "name": "log_event",
+          "signature": "def log_event(event_type: str, message: str, log_file: Optional[Path] = None):",
+          "docstring": "Log integration event.",
+          "is_async": false,
+          "line_number": 112
+        },
+        {
+          "name": "monitor_integration",
+          "signature": "def monitor_integration(watch: bool = False, log_file: Optional[Path] = None):",
+          "docstring": "Monitor integration pipeline status.",
+          "is_async": false,
+          "line_number": 124
+        },
+        {
+          "name": "main",
+          "signature": "def main():",
+          "docstring": "Main execution function.",
+          "is_async": false,
+          "line_number": 196
+        }
+      ],
+      "classes": [],
+      "dependencies": [
+        "import json",
+        "import sys",
+        "import time",
+        "from pathlib import Path",
+        "from datetime import datetime",
+        "from typing import Dict, Optional"
+      ],
+      "last_modified": "2025-12-31T05:03:20"
+    },
+    "execute_fastapi_validation_pipeline": {
+      "name": "execute_fastapi_validation_pipeline",
+      "path": "tools\\execute_fastapi_validation_pipeline.py",
+      "description": "FastAPI Validation Pipeline - Complete End-to-End Automation",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "run_command",
+          "signature": "def run_command(cmd: list, description: str) -> tuple[bool, str]:",
+          "docstring": "Run a command and return success status and output.",
+          "is_async": false,
+          "line_number": 25
+        },
+        {
+          "name": "execute_pipeline",
+          "signature": "def execute_pipeline(endpoint: str = \"http://localhost:8001\", skip_verify: bool = False):",
+          "docstring": "Execute complete validation pipeline.",
+          "is_async": false,
+          "line_number": 56
+        },
+        {
+          "name": "main",
+          "signature": "def main():",
+          "docstring": "Complete automation workflow:\n  1. Verify FastAPI service is ready\n  2. Execute integration tests\n  3. Format results for coordination handoff\n  \nAll steps are automated. Results are saved and formatted for Agent-4/Agent-7 coordination.",
+          "is_async": false,
+          "line_number": 136
+        }
+      ],
+      "classes": [],
+      "dependencies": [
+        "import sys",
+        "import subprocess",
+        "import argparse",
+        "from pathlib import Path",
+        "from datetime import datetime"
+      ],
+      "last_modified": "2025-12-31T10:58:48"
+    },
+    "monitor_fastapi_health_endpoint": {
+      "name": "monitor_fastapi_health_endpoint",
+      "path": "tools\\monitor_fastapi_health_endpoint.py",
+      "description": "FastAPI Health Endpoint Monitor",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "check_health_endpoint",
+          "signature": "def check_health_endpoint(endpoint: str) -> tuple[bool, str]:",
+          "docstring": "Check if FastAPI health endpoint is responding.",
+          "is_async": false,
+          "line_number": 22
+        },
+        {
+          "name": "monitor_and_execute",
+          "signature": "def monitor_and_execute(endpoint: str = \"http://localhost:8001\",",
+          "docstring": "Monitor health endpoint and execute pipeline when available.",
+          "is_async": false,
+          "line_number": 41
+        },
+        {
+          "name": "main",
+          "signature": "def main():",
+          "docstring": "",
+          "is_async": false,
+          "line_number": 122
+        }
+      ],
+      "classes": [],
+      "dependencies": [
+        "import time",
+        "import sys",
+        "import argparse",
+        "import subprocess",
+        "from pathlib import Path",
+        "from datetime import datetime, timedelta",
+        "import requests"
+      ],
+      "last_modified": "2025-12-31T10:58:48"
+    },
+    "unified_validation_tools_manager": {
+      "name": "unified_validation_tools_manager",
+      "path": "tools\\unified_validation_tools_manager.py",
+      "description": "Unified Validation Tools Manager",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "__init__",
+          "signature": "def __init__(self):",
+          "docstring": "Validate SSOT compliance for files or directories.\n        Consolidates: validate_all_ssot_files.py, validate_ssot_config functions",
+          "is_async": false,
+          "line_number": 66
+        },
+        {
+          "name": "validate_ssot_compliance",
+          "signature": "def validate_ssot_compliance(self, file_path: Optional[str] = None,",
+          "docstring": "Validate SSOT compliance for files or directories.\n        Consolidates: validate_all_ssot_files.py, validate_ssot_config functions",
+          "is_async": false,
+          "line_number": 71
+        },
+        {
+          "name": "_find_ssot_files",
+          "signature": "def _find_ssot_files(self, search_dir: Optional[Path] = None) -> List[Path]:",
+          "docstring": "Find all files with SSOT tags.",
+          "is_async": false,
+          "line_number": 128
+        },
+        {
+          "name": "_validate_single_file_ssot",
+          "signature": "def _validate_single_file_ssot(self, file_path: Path) -> Dict[str, Any]:",
+          "docstring": "Validate SSOT compliance for a single file.",
+          "is_async": false,
+          "line_number": 153
+        },
+        {
+          "name": "_extract_ssot_domain",
+          "signature": "def _extract_ssot_domain(self, content: str) -> Tuple[str, bool]:",
+          "docstring": "Extract SSOT domain from content.",
+          "is_async": false,
+          "line_number": 190
+        },
+        {
+          "name": "_validate_tag_format",
+          "signature": "def _validate_tag_format(self, content: str) -> Tuple[bool, str]:",
+          "docstring": "Validate SSOT tag format.",
+          "is_async": false,
+          "line_number": 198
+        },
+        {
+          "name": "_validate_domain_registry",
+          "signature": "def _validate_domain_registry(self, domain: str) -> Tuple[bool, str]:",
+          "docstring": "Validate domain matches registry.",
+          "is_async": false,
+          "line_number": 205
+        },
+        {
+          "name": "_validate_tag_placement",
+          "signature": "def _validate_tag_placement(self, content: str, file_path: Path) -> Tuple[bool, str]:",
+          "docstring": "Validate tag placement in docstrings/headers.",
+          "is_async": false,
+          "line_number": 211
+        },
+        {
+          "name": "_validate_compilation",
+          "signature": "def _validate_compilation(self, file_path: Path) -> Tuple[bool, str]:",
+          "docstring": "Validate Python file compiles.",
+          "is_async": false,
+          "line_number": 224
+        },
+        {
+          "name": "validate_service_readiness",
+          "signature": "def validate_service_readiness(self, service_type: str = \"fastapi\",",
+          "docstring": "Validate service readiness and health.\n        Consolidates: verify_fastapi_service_ready.py, verify_endpoint_status.py, etc.",
+          "is_async": false,
+          "line_number": 245
+        },
+        {
+          "name": "_validate_fastapi_service",
+          "signature": "def _validate_fastapi_service(self, endpoint: str) -> Dict[str, Any]:",
+          "docstring": "Validate FastAPI service health.",
+          "is_async": false,
+          "line_number": 281
+        },
+        {
+          "name": "_validate_endpoint_status",
+          "signature": "def _validate_endpoint_status(self) -> Dict[str, Any]:",
+          "docstring": "Validate endpoint accessibility.",
+          "is_async": false,
+          "line_number": 333
+        },
+        {
+          "name": "_validate_coordination_messages",
+          "signature": "def _validate_coordination_messages(self) -> Dict[str, Any]:",
+          "docstring": "Validate A2A coordination message formats.",
+          "is_async": false,
+          "line_number": 339
+        },
+        {
+          "name": "validate_code_quality",
+          "signature": "def validate_code_quality(self, file_path: Optional[str] = None,",
+          "docstring": "Validate code quality and standards.\n        Consolidates: validate_closure_format.py, validate_php_syntax_mcp.py, compilation checks",
+          "is_async": false,
+          "line_number": 345
+        },
+        {
+          "name": "_validate_single_file_code",
+          "signature": "def _validate_single_file_code(self, file_path: Path) -> Dict[str, Any]:",
+          "docstring": "Validate code quality for a single file.",
+          "is_async": false,
+          "line_number": 398
+        },
+        {
+          "name": "_validate_import_syntax",
+          "signature": "def _validate_import_syntax(self, import_line: str) -> bool:",
+          "docstring": "Validate import statement syntax.",
+          "is_async": false,
+          "line_number": 431
+        },
+        {
+          "name": "validate_integration_status",
+          "signature": "def validate_integration_status(self) -> Dict[str, Any]:",
+          "docstring": "Validate system integration and dependencies.\n        Consolidates: check_validation_integration_status.py, verify_deployment_integration.py",
+          "is_async": false,
+          "line_number": 436
+        },
+        {
+          "name": "_check_messaging_integration",
+          "signature": "def _check_messaging_integration(self) -> Dict[str, Any]:",
+          "docstring": "Check messaging system integration.",
+          "is_async": false,
+          "line_number": 470
+        },
+        {
+          "name": "_check_database_integration",
+          "signature": "def _check_database_integration(self) -> Dict[str, Any]:",
+          "docstring": "Check database integration.",
+          "is_async": false,
+          "line_number": 484
+        },
+        {
+          "name": "_check_deployment_integration",
+          "signature": "def _check_deployment_integration(self) -> Dict[str, Any]:",
+          "docstring": "Check deployment integration.",
+          "is_async": false,
+          "line_number": 498
+        },
+        {
+          "name": "_check_coordination_integration",
+          "signature": "def _check_coordination_integration(self) -> Dict[str, Any]:",
+          "docstring": "Check coordination integration.",
+          "is_async": false,
+          "line_number": 512
+        },
+        {
+          "name": "validate_compliance_status",
+          "signature": "def validate_compliance_status(self, compliance_type: str = \"v2\") -> Dict[str, Any]:",
+          "docstring": "Validate compliance with standards and requirements.\n        Consolidates: V2 compliance checks, protocol validation",
+          "is_async": false,
+          "line_number": 521
+        },
+        {
+          "name": "_validate_v2_compliance",
+          "signature": "def _validate_v2_compliance(self) -> Dict[str, Any]:",
+          "docstring": "Validate V2 compliance standards.",
+          "is_async": false,
+          "line_number": 553
+        },
+        {
+          "name": "_validate_protocol_compliance",
+          "signature": "def _validate_protocol_compliance(self) -> Dict[str, Any]:",
+          "docstring": "Validate protocol compliance.",
+          "is_async": false,
+          "line_number": 586
+        },
+        {
+          "name": "get_comprehensive_status",
+          "signature": "def get_comprehensive_status(self) -> Dict[str, Any]:",
+          "docstring": "Get comprehensive validation status across all domains.\n        Consolidates: All validation status checks",
+          "is_async": false,
+          "line_number": 591
+        },
+        {
+          "name": "main",
+          "signature": "def main():",
+          "docstring": "Main CLI interface.",
+          "is_async": false,
+          "line_number": 640
+        }
+      ],
+      "classes": [
+        {
+          "name": "UnifiedValidationToolsManager",
+          "docstring": "Unified manager for all validation operations.",
+          "methods": [
+            "validate_ssot_compliance",
+            "validate_service_readiness",
+            "validate_code_quality",
+            "validate_integration_status",
+            "validate_compliance_status",
+            "get_comprehensive_status",
+            "main"
+          ],
+          "line_number": 63
+        }
+      ],
+      "dependencies": [
+        "import sys",
+        "import re",
+        "import json",
+        "import subprocess",
+        "import requests",
+        "import argparse",
+        "from pathlib import Path",
+        "from datetime import datetime",
+        "from typing import Dict, List, Tuple, Optional, Any",
+        "from collections import defaultdict",
+        "import traceback"
+      ],
+      "last_modified": "2026-01-06T23:24:00"
+    },
+    "unified_deployment_manager": {
+      "name": "unified_deployment_manager",
+      "path": "tools\\unified_deployment_manager.py",
+      "description": "Unified Deployment Manager",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "__init__",
+          "signature": "def __init__(self):",
+          "docstring": "Run the unified deployment manager.",
+          "is_async": false,
+          "line_number": 77
+        },
+        {
+          "name": "run",
+          "signature": "def run(self, args: List[str]) -> int:",
+          "docstring": "Run the unified deployment manager.",
+          "is_async": false,
+          "line_number": 92
+        },
+        {
+          "name": "deploy_icp",
+          "signature": "def deploy_icp(self, subcommands: List[str], dry_run: bool = False) -> int:",
+          "docstring": "Deploy ICP (Ideal Customer Profile) content.",
+          "is_async": false,
+          "line_number": 138
+        },
+        {
+          "name": "deploy_offers",
+          "signature": "def deploy_offers(self, subcommands: List[str], dry_run: bool = False) -> int:",
+          "docstring": "Deploy offer ladder content.",
+          "is_async": false,
+          "line_number": 163
+        },
+        {
+          "name": "deploy_tier3",
+          "signature": "def deploy_tier3(self, subcommands: List[str], dry_run: bool = False) -> int:",
+          "docstring": "Deploy tier 3 content.",
+          "is_async": false,
+          "line_number": 188
+        },
+        {
+          "name": "deploy_plugins",
+          "signature": "def deploy_plugins(self, subcommands: List[str], dry_run: bool = False) -> int:",
+          "docstring": "Deploy WordPress plugins.",
+          "is_async": false,
+          "line_number": 206
+        },
+        {
+          "name": "deploy_weareswarm",
+          "signature": "def deploy_weareswarm(self, subcommands: List[str], dry_run: bool = False) -> int:",
+          "docstring": "Deploy WeAreswarm customizations.",
+          "is_async": false,
+          "line_number": 224
+        },
+        {
+          "name": "deploy_tradingrobotplug",
+          "signature": "def deploy_tradingrobotplug(self, subcommands: List[str], dry_run: bool = False) -> int:",
+          "docstring": "Deploy TradingRobotPlug components.",
+          "is_async": false,
+          "line_number": 249
+        },
+        {
+          "name": "deploy_fastapi",
+          "signature": "def deploy_fastapi(self, subcommands: List[str], dry_run: bool = False) -> int:",
+          "docstring": "Deploy FastAPI services.",
+          "is_async": false,
+          "line_number": 283
+        },
+        {
+          "name": "verify_deployment",
+          "signature": "def verify_deployment(self, subcommands: List[str], dry_run: bool = False) -> int:",
+          "docstring": "Verify deployment status (14 verification tools consolidated).",
+          "is_async": false,
+          "line_number": 301
+        },
+        {
+          "name": "monitor_deployment",
+          "signature": "def monitor_deployment(self, subcommands: List[str], dry_run: bool = False) -> int:",
+          "docstring": "Monitor deployment health (3 monitoring tools consolidated).",
+          "is_async": false,
+          "line_number": 391
+        },
+        {
+          "name": "test_deployment",
+          "signature": "def test_deployment(self, subcommands: List[str], dry_run: bool = False) -> int:",
+          "docstring": "Test deployment staging (9 testing tools consolidated).",
+          "is_async": false,
+          "line_number": 420
+        },
+        {
+          "name": "get_status",
+          "signature": "def get_status(self, subcommands: List[str], dry_run: bool = False) -> int:",
+          "docstring": "Get comprehensive deployment status.",
+          "is_async": false,
+          "line_number": 486
+        },
+        {
+          "name": "_deploy_icp_definitions",
+          "signature": "def _deploy_icp_definitions(self):",
+          "docstring": "Deploy ICP definitions.",
+          "is_async": false,
+          "line_number": 512
+        },
+        {
+          "name": "_deploy_icp_post_types",
+          "signature": "def _deploy_icp_post_types(self):",
+          "docstring": "Deploy ICP post types.",
+          "is_async": false,
+          "line_number": 516
+        },
+        {
+          "name": "_deploy_offer_ladders",
+          "signature": "def _deploy_offer_ladders(self):",
+          "docstring": "Deploy offer ladders.",
+          "is_async": false,
+          "line_number": 520
+        },
+        {
+          "name": "_deploy_offer_ladder_post_types",
+          "signature": "def _deploy_offer_ladder_post_types(self):",
+          "docstring": "Deploy offer ladder post types.",
+          "is_async": false,
+          "line_number": 524
+        },
+        {
+          "name": "_deploy_tier3_lead_magnets",
+          "signature": "def _deploy_tier3_lead_magnets(self):",
+          "docstring": "Deploy tier 3 lead magnets.",
+          "is_async": false,
+          "line_number": 528
+        },
+        {
+          "name": "_deploy_swarm_chronicle_plugin",
+          "signature": "def _deploy_swarm_chronicle_plugin(self):",
+          "docstring": "Deploy Swarm Chronicle plugin.",
+          "is_async": false,
+          "line_number": 532
+        },
+        {
+          "name": "_deploy_weareswarm_font_fix",
+          "signature": "def _deploy_weareswarm_font_fix(self):",
+          "docstring": "Deploy WeAreswarm font fixes.",
+          "is_async": false,
+          "line_number": 536
+        },
+        {
+          "name": "_deploy_weareswarm_feed_system",
+          "signature": "def _deploy_weareswarm_feed_system(self):",
+          "docstring": "Deploy WeAreswarm feed system.",
+          "is_async": false,
+          "line_number": 540
+        },
+        {
+          "name": "_deploy_tradingrobotplug_plugin",
+          "signature": "def _deploy_tradingrobotplug_plugin(self):",
+          "docstring": "Deploy TradingRobotPlug plugin.",
+          "is_async": false,
+          "line_number": 544
+        },
+        {
+          "name": "_deploy_tradingrobotplug_plugin_phase3",
+          "signature": "def _deploy_tradingrobotplug_plugin_phase3(self):",
+          "docstring": "Deploy TradingRobotPlug plugin phase 3.",
+          "is_async": false,
+          "line_number": 548
+        },
+        {
+          "name": "_deploy_tradingrobotplug_font_fix",
+          "signature": "def _deploy_tradingrobotplug_font_fix(self):",
+          "docstring": "Deploy TradingRobotPlug font fixes.",
+          "is_async": false,
+          "line_number": 552
+        },
+        {
+          "name": "_deploy_tradingrobotplug_now",
+          "signature": "def _deploy_tradingrobotplug_now(self):",
+          "docstring": "Deploy TradingRobotPlug immediately.",
+          "is_async": false,
+          "line_number": 556
+        },
+        {
+          "name": "_deploy_fastapi_tradingrobotplug",
+          "signature": "def _deploy_fastapi_tradingrobotplug(self):",
+          "docstring": "Deploy FastAPI TradingRobotPlug.",
+          "is_async": false,
+          "line_number": 560
+        },
+        {
+          "name": "_verify_deployment_status",
+          "signature": "def _verify_deployment_status(self):",
+          "docstring": "Verify deployment status.",
+          "is_async": false,
+          "line_number": 564
+        },
+        {
+          "name": "_verify_deployment_integration",
+          "signature": "def _verify_deployment_integration(self):",
+          "docstring": "Verify deployment integration.",
+          "is_async": false,
+          "line_number": 568
+        },
+        {
+          "name": "_monitor_deployment_health",
+          "signature": "def _monitor_deployment_health(self):",
+          "docstring": "Monitor deployment health.",
+          "is_async": false,
+          "line_number": 572
+        },
+        {
+          "name": "_test_deployment_staging",
+          "signature": "def _test_deployment_staging(self):",
+          "docstring": "Test deployment staging.",
+          "is_async": false,
+          "line_number": 576
+        },
+        {
+          "name": "_verify_coordination_message",
+          "signature": "def _verify_coordination_message(self):",
+          "docstring": "Verify coordination message.",
+          "is_async": false,
+          "line_number": 581
+        },
+        {
+          "name": "_verify_endpoint_status",
+          "signature": "def _verify_endpoint_status(self):",
+          "docstring": "Verify endpoint status.",
+          "is_async": false,
+          "line_number": 585
+        },
+        {
+          "name": "_verify_fastapi_config",
+          "signature": "def _verify_fastapi_config(self):",
+          "docstring": "Verify FastAPI configuration.",
+          "is_async": false,
+          "line_number": 589
+        },
+        {
+          "name": "_verify_fastapi_deployment",
+          "signature": "def _verify_fastapi_deployment(self):",
+          "docstring": "Verify FastAPI deployment.",
+          "is_async": false,
+          "line_number": 593
+        },
+        {
+          "name": "_verify_fastapi_service_ready",
+          "signature": "def _verify_fastapi_service_ready(self):",
+          "docstring": "Verify FastAPI service readiness.",
+          "is_async": false,
+          "line_number": 597
+        },
+        {
+          "name": "_verify_fastapi_service_remote",
+          "signature": "def _verify_fastapi_service_remote(self):",
+          "docstring": "Verify FastAPI service remote.",
+          "is_async": false,
+          "line_number": 601
+        },
+        {
+          "name": "_verify_final_validation_readiness",
+          "signature": "def _verify_final_validation_readiness(self):",
+          "docstring": "Verify final validation readiness.",
+          "is_async": false,
+          "line_number": 605
+        },
+        {
+          "name": "_verify_mcp_server_protocol",
+          "signature": "def _verify_mcp_server_protocol(self):",
+          "docstring": "Verify MCP server protocol.",
+          "is_async": false,
+          "line_number": 609
+        },
+        {
+          "name": "_verify_plugin_activation",
+          "signature": "def _verify_plugin_activation(self):",
+          "docstring": "Verify plugin activation.",
+          "is_async": false,
+          "line_number": 613
+        },
+        {
+          "name": "_verify_stock_api_endpoint",
+          "signature": "def _verify_stock_api_endpoint(self):",
+          "docstring": "Verify stock API endpoint.",
+          "is_async": false,
+          "line_number": 617
+        },
+        {
+          "name": "_verify_task_completion_status",
+          "signature": "def _verify_task_completion_status(self):",
+          "docstring": "Verify task completion status.",
+          "is_async": false,
+          "line_number": 621
+        },
+        {
+          "name": "_verify_tradingrobotplug_endpoints",
+          "signature": "def _verify_tradingrobotplug_endpoints(self):",
+          "docstring": "Verify TradingRobotPlug endpoints.",
+          "is_async": false,
+          "line_number": 625
+        },
+        {
+          "name": "_verify_wordpress_rest_routes",
+          "signature": "def _verify_wordpress_rest_routes(self):",
+          "docstring": "Verify WordPress REST routes.",
+          "is_async": false,
+          "line_number": 629
+        },
+        {
+          "name": "_monitor_fastapi_health_endpoint",
+          "signature": "def _monitor_fastapi_health_endpoint(self):",
+          "docstring": "Monitor FastAPI health endpoint.",
+          "is_async": false,
+          "line_number": 634
+        },
+        {
+          "name": "_monitor_fastapi_service_ready",
+          "signature": "def _monitor_fastapi_service_ready(self):",
+          "docstring": "Monitor FastAPI service readiness.",
+          "is_async": false,
+          "line_number": 638
+        },
+        {
+          "name": "_test_bi_tools",
+          "signature": "def _test_bi_tools(self):",
+          "docstring": "Test BI tools.",
+          "is_async": false,
+          "line_number": 643
+        },
+        {
+          "name": "_test_mcp_server_connectivity",
+          "signature": "def _test_mcp_server_connectivity(self):",
+          "docstring": "Test MCP server connectivity.",
+          "is_async": false,
+          "line_number": 647
+        },
+        {
+          "name": "_test_risk_websocket",
+          "signature": "def _test_risk_websocket(self):",
+          "docstring": "Test risk websocket.",
+          "is_async": false,
+          "line_number": 651
+        },
+        {
+          "name": "_test_stock_api_endpoint",
+          "signature": "def _test_stock_api_endpoint(self):",
+          "docstring": "Test stock API endpoint.",
+          "is_async": false,
+          "line_number": 655
+        },
+        {
+          "name": "_test_toolbelt_basic",
+          "signature": "def _test_toolbelt_basic(self):",
+          "docstring": "Test toolbelt basic functionality.",
+          "is_async": false,
+          "line_number": 659
+        },
+        {
+          "name": "_test_tradingrobotplug_integration",
+          "signature": "def _test_tradingrobotplug_integration(self):",
+          "docstring": "Test TradingRobotPlug integration.",
+          "is_async": false,
+          "line_number": 663
+        },
+        {
+          "name": "_test_twitch_config",
+          "signature": "def _test_twitch_config(self):",
+          "docstring": "Test Twitch configuration.",
+          "is_async": false,
+          "line_number": 667
+        },
+        {
+          "name": "_test_unified_tool_registry_mcp",
+          "signature": "def _test_unified_tool_registry_mcp(self):",
+          "docstring": "Test unified tool registry MCP.",
+          "is_async": false,
+          "line_number": 671
+        },
+        {
+          "name": "main",
+          "signature": "def main():",
+          "docstring": "Main entry point.",
+          "is_async": false,
+          "line_number": 676
+        }
+      ],
+      "classes": [
+        {
+          "name": "UnifiedDeploymentManager",
+          "docstring": "Unified deployment manager consolidating 19+ deployment tools.",
+          "methods": [
+            "run",
+            "deploy_icp",
+            "deploy_offers",
+            "deploy_tier3",
+            "deploy_plugins",
+            "deploy_weareswarm",
+            "deploy_tradingrobotplug",
+            "deploy_fastapi",
+            "verify_deployment",
+            "monitor_deployment",
+            "test_deployment",
+            "get_status",
+            "main"
+          ],
+          "line_number": 74
+        }
+      ],
+      "dependencies": [
+        "import sys",
+        "import argparse",
+        "import logging",
+        "from pathlib import Path",
+        "from typing import Dict, List, Optional"
+      ],
+      "last_modified": "2026-01-06T23:27:46"
+    },
+    "phase5_health_check": {
+      "name": "phase5_health_check",
+      "path": "tools\\phase5_health_check.py",
+      "description": "Phase 5 Infrastructure Health Check Tool",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "__init__",
+          "signature": "def __init__(self):",
+          "docstring": "Check HTTP service health",
+          "is_async": false,
+          "line_number": 32
+        },
+        {
+          "name": "check_service_health",
+          "signature": "async def check_service_health(self, service_name: str, url: str, timeout: int = 10) -> HealthCheckResult:",
+          "docstring": "Check HTTP service health",
+          "is_async": true,
+          "line_number": 37
+        },
+        {
+          "name": "check_postgresql_health",
+          "signature": "def check_postgresql_health(self) -> HealthCheckResult:",
+          "docstring": "Check PostgreSQL database health",
+          "is_async": false,
+          "line_number": 72
+        },
+        {
+          "name": "check_redis_health",
+          "signature": "def check_redis_health(self) -> HealthCheckResult:",
+          "docstring": "Check Redis cache health",
+          "is_async": false,
+          "line_number": 117
+        },
+        {
+          "name": "check_ssl_certificates",
+          "signature": "def check_ssl_certificates(self) -> HealthCheckResult:",
+          "docstring": "Check SSL certificate validity",
+          "is_async": false,
+          "line_number": 150
+        },
+        {
+          "name": "run_comprehensive_check",
+          "signature": "async def run_comprehensive_check(self) -> Dict:",
+          "docstring": "Run comprehensive health check of all Phase 5 components",
+          "is_async": true,
+          "line_number": 191
+        },
+        {
+          "name": "analyze_trends",
+          "signature": "def analyze_trends(self) -> Dict:",
+          "docstring": "Analyze health trends across multiple runs",
+          "is_async": false,
+          "line_number": 251
+        },
+        {
+          "name": "save_trend_data",
+          "signature": "def save_trend_data(self, data: Dict):",
+          "docstring": "Save current results for trend analysis",
+          "is_async": false,
+          "line_number": 283
+        },
+        {
+          "name": "print_report",
+          "signature": "def print_report(self, data: Dict):",
+          "docstring": "Print comprehensive health check report",
+          "is_async": false,
+          "line_number": 297
+        },
+        {
+          "name": "save_report",
+          "signature": "def save_report(self, data: Dict, filename: str = None):",
+          "docstring": "Save health check report to JSON file",
+          "is_async": false,
+          "line_number": 355
+        },
+        {
+          "name": "main",
+          "signature": "async def main():",
+          "docstring": "Main execution function",
+          "is_async": true,
+          "line_number": 366
+        }
+      ],
+      "classes": [
+        {
+          "name": "HealthCheckResult",
+          "docstring": "Check HTTP service health",
+          "methods": [],
+          "line_number": 24
+        },
+        {
+          "name": "Phase5HealthChecker",
+          "docstring": "Check HTTP service health",
+          "methods": [
+            "check_service_health",
+            "check_postgresql_health",
+            "check_redis_health",
+            "check_ssl_certificates",
+            "run_comprehensive_check",
+            "analyze_trends",
+            "save_trend_data",
+            "print_report",
+            "save_report",
+            "main"
+          ],
+          "line_number": 31
+        }
+      ],
+      "dependencies": [
+        "import asyncio",
+        "import aiohttp",
+        "import psycopg2",
+        "import redis",
+        "import json",
+        "import sys",
+        "from datetime import datetime",
+        "from typing import Dict, List, Tuple",
+        "from dataclasses import dataclass, asdict",
+        "from concurrent.futures import ThreadPoolExecutor",
+        "import logging",
+        "import ssl",
+        "import socket",
+        "import datetime"
+      ],
+      "last_modified": "2026-01-07T01:52:22"
+    },
+    "phase5_deployment_validator": {
+      "name": "phase5_deployment_validator",
+      "path": "tools\\phase5_deployment_validator.py",
+      "description": "Phase 5 Infrastructure Deployment Validator",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "__init__",
+          "signature": "def __init__(self):",
+          "docstring": "Validate that a required file exists",
+          "is_async": false,
+          "line_number": 30
+        },
+        {
+          "name": "validate_file_exists",
+          "signature": "def validate_file_exists(self, file_path: str, component: str) -> ValidationResult:",
+          "docstring": "Validate that a required file exists",
+          "is_async": false,
+          "line_number": 34
+        },
+        {
+          "name": "validate_docker_compose_config",
+          "signature": "def validate_docker_compose_config(self) -> ValidationResult:",
+          "docstring": "Validate Docker Compose configuration",
+          "is_async": false,
+          "line_number": 55
+        },
+        {
+          "name": "validate_nginx_config",
+          "signature": "def validate_nginx_config(self) -> ValidationResult:",
+          "docstring": "Validate Nginx configuration",
+          "is_async": false,
+          "line_number": 116
+        },
+        {
+          "name": "validate_ssl_configuration",
+          "signature": "def validate_ssl_configuration(self) -> ValidationResult:",
+          "docstring": "Validate SSL certificate configuration",
+          "is_async": false,
+          "line_number": 186
+        },
+        {
+          "name": "validate_monitoring_config",
+          "signature": "def validate_monitoring_config(self) -> ValidationResult:",
+          "docstring": "Validate monitoring configuration",
+          "is_async": false,
+          "line_number": 259
+        },
+        {
+          "name": "validate_database_config",
+          "signature": "def validate_database_config(self) -> ValidationResult:",
+          "docstring": "Validate database configuration",
+          "is_async": false,
+          "line_number": 320
+        },
+        {
+          "name": "run_comprehensive_validation",
+          "signature": "def run_comprehensive_validation(self) -> Dict:",
+          "docstring": "Run comprehensive deployment validation",
+          "is_async": false,
+          "line_number": 403
+        },
+        {
+          "name": "_calculate_deployment_readiness",
+          "signature": "def _calculate_deployment_readiness(self, results: List[ValidationResult]) -> str:",
+          "docstring": "Calculate overall deployment readiness",
+          "is_async": false,
+          "line_number": 467
+        },
+        {
+          "name": "print_report",
+          "signature": "def print_report(self, data: Dict):",
+          "docstring": "Print comprehensive validation report",
+          "is_async": false,
+          "line_number": 485
+        },
+        {
+          "name": "save_report",
+          "signature": "def save_report(self, data: Dict, filename: str = None):",
+          "docstring": "Save validation report to JSON file",
+          "is_async": false,
+          "line_number": 523
+        },
+        {
+          "name": "main",
+          "signature": "def main():",
+          "docstring": "Main execution function",
+          "is_async": false,
+          "line_number": 534
+        }
+      ],
+      "classes": [
+        {
+          "name": "ValidationResult",
+          "docstring": "Validate that a required file exists",
+          "methods": [],
+          "line_number": 22
+        },
+        {
+          "name": "Phase5DeploymentValidator",
+          "docstring": "Validate that a required file exists",
+          "methods": [
+            "validate_file_exists",
+            "validate_docker_compose_config",
+            "validate_nginx_config",
+            "validate_ssl_configuration",
+            "validate_monitoring_config",
+            "validate_database_config",
+            "run_comprehensive_validation",
+            "print_report",
+            "save_report",
+            "main"
+          ],
+          "line_number": 29
+        }
+      ],
+      "dependencies": [
+        "import os",
+        "import json",
+        "import yaml",
+        "import subprocess",
+        "import sys",
+        "from datetime import datetime",
+        "from typing import Dict, List, Tuple",
+        "from dataclasses import dataclass, asdict",
+        "import logging",
+        "import argparse"
+      ],
+      "last_modified": "2026-01-07T01:17:12"
+    },
+    "phase5_load_test_orchestrator": {
+      "name": "phase5_load_test_orchestrator",
+      "path": "tools\\phase5_load_test_orchestrator.py",
+      "description": "Phase 5 Load Test Orchestrator",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "__init__",
+          "signature": "def __init__(self):",
+          "docstring": "Define comprehensive load test scenarios",
+          "is_async": false,
+          "line_number": 49
+        },
+        {
+          "name": "_define_test_scenarios",
+          "signature": "def _define_test_scenarios(self) -> List[LoadTestScenario]:",
+          "docstring": "Define comprehensive load test scenarios",
+          "is_async": false,
+          "line_number": 53
+        },
+        {
+          "name": "run_load_test_scenario",
+          "signature": "async def run_load_test_scenario(self, scenario: LoadTestScenario) -> LoadTestResult:",
+          "docstring": "Run a single load test scenario using the performance benchmark tool",
+          "is_async": true,
+          "line_number": 158
+        },
+        {
+          "name": "run_comprehensive_load_test_suite",
+          "signature": "async def run_comprehensive_load_test_suite(self) -> Dict:",
+          "docstring": "Run all load test scenarios",
+          "is_async": true,
+          "line_number": 276
+        },
+        {
+          "name": "_calculate_load_test_rating",
+          "signature": "def _calculate_load_test_rating(self, results: List[LoadTestResult]) -> str:",
+          "docstring": "Calculate overall load test rating",
+          "is_async": false,
+          "line_number": 324
+        },
+        {
+          "name": "print_report",
+          "signature": "def print_report(self, data: Dict):",
+          "docstring": "Print comprehensive load test report",
+          "is_async": false,
+          "line_number": 347
+        },
+        {
+          "name": "save_report",
+          "signature": "def save_report(self, data: Dict, filename: str = None):",
+          "docstring": "Save load test report to JSON file",
+          "is_async": false,
+          "line_number": 388
+        },
+        {
+          "name": "main",
+          "signature": "async def main():",
+          "docstring": "Main execution function",
+          "is_async": true,
+          "line_number": 399
+        }
+      ],
+      "classes": [
+        {
+          "name": "LoadTestScenario",
+          "docstring": "Define comprehensive load test scenarios",
+          "methods": [],
+          "line_number": 23
+        },
+        {
+          "name": "LoadTestResult",
+          "docstring": "Define comprehensive load test scenarios",
+          "methods": [],
+          "line_number": 33
+        },
+        {
+          "name": "Phase5LoadTestOrchestrator",
+          "docstring": "Define comprehensive load test scenarios",
+          "methods": [
+            "run_load_test_scenario",
+            "run_comprehensive_load_test_suite",
+            "print_report",
+            "save_report",
+            "main"
+          ],
+          "line_number": 48
+        }
+      ],
+      "dependencies": [
+        "import asyncio",
+        "import json",
+        "import time",
+        "import subprocess",
+        "from datetime import datetime",
+        "from typing import Dict, List, Tuple, Optional",
+        "from dataclasses import dataclass, asdict",
+        "import logging",
+        "import argparse",
+        "import sys"
+      ],
+      "last_modified": "2026-01-07T01:21:26"
+    },
+    "phase5_monitoring_dashboard": {
+      "name": "phase5_monitoring_dashboard",
+      "path": "tools\\phase5_monitoring_dashboard.py",
+      "description": "Phase 5 Infrastructure Monitoring Dashboard",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "__init__",
+          "signature": "def __init__(self, interval: int = 30):",
+          "docstring": "Collect comprehensive system metrics",
+          "is_async": false,
+          "line_number": 55
+        },
+        {
+          "name": "collect_system_metrics",
+          "signature": "async def collect_system_metrics(self) -> List[MonitoringMetric]:",
+          "docstring": "Collect comprehensive system metrics",
+          "is_async": true,
+          "line_number": 62
+        },
+        {
+          "name": "collect_service_metrics",
+          "signature": "async def collect_service_metrics(self) -> List[MonitoringMetric]:",
+          "docstring": "Collect service-specific metrics",
+          "is_async": true,
+          "line_number": 156
+        },
+        {
+          "name": "collect_database_metrics",
+          "signature": "def collect_database_metrics(self) -> List[MonitoringMetric]:",
+          "docstring": "Collect database performance metrics",
+          "is_async": false,
+          "line_number": 247
+        },
+        {
+          "name": "check_alerts",
+          "signature": "def check_alerts(self, metrics: List[MonitoringMetric]):",
+          "docstring": "Check metrics against thresholds and generate alerts",
+          "is_async": false,
+          "line_number": 330
+        },
+        {
+          "name": "get_system_status_summary",
+          "signature": "def get_system_status_summary(self) -> Dict:",
+          "docstring": "Get comprehensive system status summary",
+          "is_async": false,
+          "line_number": 346
+        },
+        {
+          "name": "display_dashboard",
+          "signature": "def display_dashboard(self):",
+          "docstring": "Display real-time monitoring dashboard",
+          "is_async": false,
+          "line_number": 375
+        },
+        {
+          "name": "run_monitoring_loop",
+          "signature": "async def run_monitoring_loop(self):",
+          "docstring": "Run continuous monitoring loop",
+          "is_async": true,
+          "line_number": 441
+        },
+        {
+          "name": "save_snapshot",
+          "signature": "def save_snapshot(self, filename: str = None):",
+          "docstring": "Save current monitoring snapshot",
+          "is_async": false,
+          "line_number": 471
+        },
+        {
+          "name": "main",
+          "signature": "async def main():",
+          "docstring": "Main execution function",
+          "is_async": true,
+          "line_number": 490
+        }
+      ],
+      "classes": [
+        {
+          "name": "MonitoringMetric",
+          "docstring": "Collect comprehensive system metrics",
+          "methods": [],
+          "line_number": 27
+        },
+        {
+          "name": "ServiceHealth",
+          "docstring": "Collect comprehensive system metrics",
+          "methods": [],
+          "line_number": 37
+        },
+        {
+          "name": "Alert",
+          "docstring": "Collect comprehensive system metrics",
+          "methods": [],
+          "line_number": 46
+        },
+        {
+          "name": "Phase5MonitoringDashboard",
+          "docstring": "Collect comprehensive system metrics",
+          "methods": [
+            "collect_system_metrics",
+            "collect_service_metrics",
+            "collect_database_metrics",
+            "check_alerts",
+            "get_system_status_summary",
+            "display_dashboard",
+            "run_monitoring_loop",
+            "save_snapshot",
+            "main"
+          ],
+          "line_number": 54
+        }
+      ],
+      "dependencies": [
+        "import asyncio",
+        "import aiohttp",
+        "import json",
+        "import time",
+        "import psycopg2",
+        "import redis",
+        "import subprocess",
+        "from datetime import datetime, timedelta",
+        "from typing import Dict, List, Optional, Tuple",
+        "from dataclasses import dataclass, asdict",
+        "import logging",
+        "import argparse",
+        "import sys",
+        "from collections import deque"
+      ],
+      "last_modified": "2026-01-07T01:21:26"
+    },
+    "infrastructure_status_dashboard": {
+      "name": "infrastructure_status_dashboard",
+      "path": "tools\\infrastructure_status_dashboard.py",
+      "description": "Infrastructure Status Dashboard",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "__init__",
+          "signature": "def __init__(self):",
+          "docstring": "Check health of all infrastructure components",
+          "is_async": false,
+          "line_number": 62
+        },
+        {
+          "name": "check_all_components",
+          "signature": "async def check_all_components(self) -> List[InfrastructureStatus]:",
+          "docstring": "Check health of all infrastructure components",
+          "is_async": true,
+          "line_number": 69
+        },
+        {
+          "name": "_check_application_services",
+          "signature": "async def _check_application_services(self) -> List[InfrastructureStatus]:",
+          "docstring": "Check application service health",
+          "is_async": true,
+          "line_number": 91
+        },
+        {
+          "name": "_check_infrastructure_services",
+          "signature": "async def _check_infrastructure_services(self) -> List[InfrastructureStatus]:",
+          "docstring": "Check infrastructure service health",
+          "is_async": true,
+          "line_number": 164
+        },
+        {
+          "name": "_check_database_services",
+          "signature": "def _check_database_services(self) -> List[InfrastructureStatus]:",
+          "docstring": "Check database service health",
+          "is_async": false,
+          "line_number": 233
+        },
+        {
+          "name": "_check_system_resources",
+          "signature": "def _check_system_resources(self) -> InfrastructureStatus:",
+          "docstring": "Check system resource health",
+          "is_async": false,
+          "line_number": 345
+        },
+        {
+          "name": "get_system_metrics",
+          "signature": "def get_system_metrics(self) -> SystemMetrics:",
+          "docstring": "Get current system metrics",
+          "is_async": false,
+          "line_number": 418
+        },
+        {
+          "name": "get_phase_completion_status",
+          "signature": "def get_phase_completion_status(self) -> Dict[str, Any]:",
+          "docstring": "Get status of all infrastructure phases",
+          "is_async": false,
+          "line_number": 473
+        },
+        {
+          "name": "calculate_overall_health",
+          "signature": "def calculate_overall_health(self, components: List[InfrastructureStatus]) -> Tuple[int, str]:",
+          "docstring": "Calculate overall system health",
+          "is_async": false,
+          "line_number": 498
+        },
+        {
+          "name": "generate_recent_events",
+          "signature": "def generate_recent_events(self) -> List[Dict]:",
+          "docstring": "Generate recent system events",
+          "is_async": false,
+          "line_number": 520
+        },
+        {
+          "name": "generate_active_alerts",
+          "signature": "def generate_active_alerts(self, components: List[InfrastructureStatus]) -> List[Dict]:",
+          "docstring": "Generate active alerts based on component status",
+          "is_async": false,
+          "line_number": 544
+        },
+        {
+          "name": "generate_dashboard",
+          "signature": "async def generate_dashboard(self) -> InfrastructureDashboard:",
+          "docstring": "Generate comprehensive infrastructure dashboard",
+          "is_async": true,
+          "line_number": 568
+        },
+        {
+          "name": "display_dashboard",
+          "signature": "def display_dashboard(self, dashboard: InfrastructureDashboard):",
+          "docstring": "Display the infrastructure dashboard",
+          "is_async": false,
+          "line_number": 607
+        },
+        {
+          "name": "save_dashboard_snapshot",
+          "signature": "def save_dashboard_snapshot(self, dashboard: InfrastructureDashboard, filename: str = None):",
+          "docstring": "Save dashboard snapshot to JSON file",
+          "is_async": false,
+          "line_number": 689
+        },
+        {
+          "name": "run_dashboard_monitoring",
+          "signature": "async def run_dashboard_monitoring(self, interval: int = 30):",
+          "docstring": "Run continuous dashboard monitoring",
+          "is_async": true,
+          "line_number": 700
+        },
+        {
+          "name": "main",
+          "signature": "async def main():",
+          "docstring": "Main execution function",
+          "is_async": true,
+          "line_number": 721
+        }
+      ],
+      "classes": [
+        {
+          "name": "InfrastructureStatus",
+          "docstring": "Check health of all infrastructure components",
+          "methods": [],
+          "line_number": 27
+        },
+        {
+          "name": "SystemMetrics",
+          "docstring": "Check health of all infrastructure components",
+          "methods": [],
+          "line_number": 38
+        },
+        {
+          "name": "InfrastructureDashboard",
+          "docstring": "Check health of all infrastructure components",
+          "methods": [],
+          "line_number": 50
+        },
+        {
+          "name": "InfrastructureStatusDashboard",
+          "docstring": "Check health of all infrastructure components",
+          "methods": [
+            "check_all_components",
+            "get_system_metrics",
+            "get_phase_completion_status",
+            "calculate_overall_health",
+            "generate_recent_events",
+            "generate_active_alerts",
+            "generate_dashboard",
+            "display_dashboard",
+            "save_dashboard_snapshot",
+            "run_dashboard_monitoring",
+            "main"
+          ],
+          "line_number": 61
+        }
+      ],
+      "dependencies": [
+        "import asyncio",
+        "import aiohttp",
+        "import json",
+        "import time",
+        "import psycopg2",
+        "import redis",
+        "import subprocess",
+        "from datetime import datetime, timedelta",
+        "from typing import Dict, List, Optional, Tuple, Any",
+        "from dataclasses import dataclass, asdict",
+        "import logging",
+        "import argparse",
+        "import sys",
+        "from pathlib import Path"
+      ],
+      "last_modified": "2026-01-07T01:46:06"
+    },
+    "phase6_compliance_checker": {
+      "name": "phase6_compliance_checker",
+      "path": "tools\\phase6_compliance_checker.py",
+      "description": "Phase 6 Compliance Checker",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "__init__",
+          "signature": "def __init__(self):",
+          "docstring": "Load V2 compliance rules",
+          "is_async": false,
+          "line_number": 53
+        },
+        {
+          "name": "_load_v2_rules",
+          "signature": "def _load_v2_rules(self) -> Dict[str, Any]:",
+          "docstring": "Load V2 compliance rules",
+          "is_async": false,
+          "line_number": 57
+        },
+        {
+          "name": "check_v2_compliance",
+          "signature": "def check_v2_compliance(self, file_path: Path) -> List[ComplianceFinding]:",
+          "docstring": "Check V2 compliance for a Python file",
+          "is_async": false,
+          "line_number": 83
+        },
+        {
+          "name": "check_security_compliance",
+          "signature": "def check_security_compliance(self, file_path: Path) -> List[ComplianceFinding]:",
+          "docstring": "Check security compliance",
+          "is_async": false,
+          "line_number": 214
+        },
+        {
+          "name": "check_architecture_compliance",
+          "signature": "def check_architecture_compliance(self) -> List[ComplianceFinding]:",
+          "docstring": "Check architecture compliance",
+          "is_async": false,
+          "line_number": 299
+        },
+        {
+          "name": "run_comprehensive_check",
+          "signature": "def run_comprehensive_check(self, target_path: str = \".\") -> ComplianceReport:",
+          "docstring": "Run comprehensive compliance check",
+          "is_async": false,
+          "line_number": 359
+        },
+        {
+          "name": "print_compliance_report",
+          "signature": "def print_compliance_report(self, report: ComplianceReport):",
+          "docstring": "Print comprehensive compliance report",
+          "is_async": false,
+          "line_number": 446
+        },
+        {
+          "name": "save_compliance_report",
+          "signature": "def save_compliance_report(self, report: ComplianceReport, filename: str = None):",
+          "docstring": "Save compliance report to JSON file",
+          "is_async": false,
+          "line_number": 495
+        },
+        {
+          "name": "main",
+          "signature": "def main():",
+          "docstring": "Main execution function",
+          "is_async": false,
+          "line_number": 510
+        }
+      ],
+      "classes": [
+        {
+          "name": "ComplianceFinding",
+          "docstring": "Compliance finding data structure",
+          "methods": [],
+          "line_number": 25
+        },
+        {
+          "name": "ComplianceReport",
+          "docstring": "Comprehensive compliance report",
+          "methods": [],
+          "line_number": 38
+        },
+        {
+          "name": "Phase6ComplianceChecker",
+          "docstring": "Enterprise compliance checker for Phase 6 standards",
+          "methods": [
+            "check_v2_compliance",
+            "check_security_compliance",
+            "check_architecture_compliance",
+            "run_comprehensive_check",
+            "print_compliance_report",
+            "save_compliance_report",
+            "main"
+          ],
+          "line_number": 50
+        }
+      ],
+      "dependencies": [
+        "import json",
+        "import logging",
+        "from datetime import datetime",
+        "from typing import Dict, List, Optional, Any",
+        "from dataclasses import dataclass, asdict",
+        "import argparse",
+        "import sys",
+        "from pathlib import Path",
+        "import re",
+        "import ast"
+      ],
+      "last_modified": "2026-01-07T01:52:22"
+    },
+    "deploy_ga4_pixel_analytics": {
+      "name": "deploy_ga4_pixel_analytics",
+      "path": "tools\\deploy_ga4_pixel_analytics.py",
+      "description": "GA4 and Facebook Pixel Analytics Deployment Tool",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "__init__",
+          "signature": "def __init__(self):",
+          "docstring": "Validate analytics configuration template.",
+          "is_async": false,
+          "line_number": 86
+        },
+        {
+          "name": "validate_template",
+          "signature": "def validate_template(self, template_path: str) -> Tuple[bool, str]:",
+          "docstring": "Validate analytics configuration template.",
+          "is_async": false,
+          "line_number": 90
+        },
+        {
+          "name": "create_backup",
+          "signature": "def create_backup(self, wp_config_path: str, site_name: str) -> Tuple[bool, str]:",
+          "docstring": "Create backup of wp-config.php.",
+          "is_async": false,
+          "line_number": 133
+        },
+        {
+          "name": "deploy_local",
+          "signature": "def deploy_local(self, site_name: str, template_path: str, wp_config_path: str) -> DeploymentResult:",
+          "docstring": "Deploy analytics configuration locally.",
+          "is_async": false,
+          "line_number": 150
+        },
+        {
+          "name": "deploy_remote",
+          "signature": "def deploy_remote(self, site_config: Dict[str, str]) -> DeploymentResult:",
+          "docstring": "Deploy analytics configuration remotely via SSH/WP-CLI.",
+          "is_async": false,
+          "line_number": 220
+        },
+        {
+          "name": "validate_deployment",
+          "signature": "def validate_deployment(self, site_name: str, wp_config_path: str = None) -> bool:",
+          "docstring": "Validate deployment by checking if site loads and analytics are configured.",
+          "is_async": false,
+          "line_number": 282
+        },
+        {
+          "name": "deploy_site",
+          "signature": "def deploy_site(self, site_name: str, remote: bool = False, validate_only: bool = False) -> DeploymentResult:",
+          "docstring": "Deploy analytics to a specific site.",
+          "is_async": false,
+          "line_number": 300
+        },
+        {
+          "name": "deploy_all_sites",
+          "signature": "def deploy_all_sites(self, remote: bool = False, validate_only: bool = False) -> List[DeploymentResult]:",
+          "docstring": "Deploy analytics to all P0 sites.",
+          "is_async": false,
+          "line_number": 337
+        },
+        {
+          "name": "print_results",
+          "signature": "def print_results(self, results: List[DeploymentResult]):",
+          "docstring": "Print deployment results.",
+          "is_async": false,
+          "line_number": 346
+        },
+        {
+          "name": "main",
+          "signature": "def main():",
+          "docstring": "Main CLI interface.",
+          "is_async": false,
+          "line_number": 391
+        }
+      ],
+      "classes": [
+        {
+          "name": "DeploymentResult",
+          "docstring": "Result of a deployment operation.",
+          "methods": [],
+          "line_number": 73
+        },
+        {
+          "name": "AnalyticsDeploymentTool",
+          "docstring": "GA4 and Facebook Pixel deployment tool.",
+          "methods": [
+            "validate_template",
+            "create_backup",
+            "deploy_local",
+            "deploy_remote",
+            "validate_deployment",
+            "deploy_site",
+            "deploy_all_sites",
+            "print_results",
+            "main"
+          ],
+          "line_number": 83
+        }
+      ],
+      "dependencies": [
+        "import argparse",
+        "import json",
+        "import os",
+        "import re",
+        "import shutil",
+        "import subprocess",
+        "import sys",
+        "from pathlib import Path",
+        "from typing import Dict, List, Any, Optional, Tuple",
+        "from dataclasses import dataclass",
+        "from datetime import datetime"
+      ],
+      "last_modified": "2026-01-07T02:30:48"
+    },
+    "deploy_ga4_pixel_remote": {
+      "name": "deploy_ga4_pixel_remote",
+      "path": "tools\\deploy_ga4_pixel_remote.py",
+      "description": "GA4 and Facebook Pixel Remote Deployment Tool",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "__init__",
+          "signature": "def __init__(self):",
+          "docstring": "Execute command via SSH.",
+          "is_async": false,
+          "line_number": 89
+        },
+        {
+          "name": "run_ssh_command",
+          "signature": "def run_ssh_command(self, host: str, user: str, command: str, key_path: str = None) -> Tuple[bool, str, str]:",
+          "docstring": "Execute command via SSH.",
+          "is_async": false,
+          "line_number": 93
+        },
+        {
+          "name": "validate_wp_cli",
+          "signature": "def validate_wp_cli(self, site_config: Dict[str, str]) -> bool:",
+          "docstring": "Validate WP-CLI availability on remote server.",
+          "is_async": false,
+          "line_number": 110
+        },
+        {
+          "name": "create_remote_backup",
+          "signature": "def create_remote_backup(self, site_config: Dict[str, str]) -> Tuple[bool, str]:",
+          "docstring": "Create backup of remote wp-config.php.",
+          "is_async": false,
+          "line_number": 124
+        },
+        {
+          "name": "deploy_analytics_via_wp_cli",
+          "signature": "def deploy_analytics_via_wp_cli(self, site_config: Dict[str, str], ga4_id: str, pixel_id: str) -> RemoteDeploymentResult:",
+          "docstring": "Deploy analytics configuration using WP-CLI.",
+          "is_async": false,
+          "line_number": 147
+        },
+        {
+          "name": "rollback_deployment",
+          "signature": "def rollback_deployment(self, site_config: Dict[str, str]) -> bool:",
+          "docstring": "Rollback deployment using backup.",
+          "is_async": false,
+          "line_number": 220
+        },
+        {
+          "name": "validate_remote_deployment",
+          "signature": "def validate_remote_deployment(self, site_config: Dict[str, str]) -> bool:",
+          "docstring": "Validate remote deployment by checking configurations.",
+          "is_async": false,
+          "line_number": 243
+        },
+        {
+          "name": "deploy_to_site",
+          "signature": "def deploy_to_site(self, site_name: str, ga4_id: str = None, pixel_id: str = None,",
+          "docstring": "Deploy analytics to a specific remote site.",
+          "is_async": false,
+          "line_number": 263
+        },
+        {
+          "name": "deploy_batch",
+          "signature": "def deploy_batch(self, sites_config: Dict[str, Dict[str, str]]) -> List[RemoteDeploymentResult]:",
+          "docstring": "Deploy analytics to multiple sites from configuration.",
+          "is_async": false,
+          "line_number": 318
+        },
+        {
+          "name": "load_analytics_ids",
+          "signature": "def load_analytics_ids(self, config_file: str) -> Dict[str, Dict[str, str]]:",
+          "docstring": "Load analytics IDs from JSON configuration file.",
+          "is_async": false,
+          "line_number": 343
+        },
+        {
+          "name": "print_results",
+          "signature": "def print_results(self, results: List[RemoteDeploymentResult]):",
+          "docstring": "Print deployment results.",
+          "is_async": false,
+          "line_number": 362
+        },
+        {
+          "name": "main",
+          "signature": "def main():",
+          "docstring": "Main CLI interface.",
+          "is_async": false,
+          "line_number": 407
+        }
+      ],
+      "classes": [
+        {
+          "name": "RemoteDeploymentResult",
+          "docstring": "Result of a remote deployment operation.",
+          "methods": [],
+          "line_number": 75
+        },
+        {
+          "name": "RemoteAnalyticsDeploymentTool",
+          "docstring": "Remote GA4 and Facebook Pixel deployment tool using SSH/WP-CLI.",
+          "methods": [
+            "run_ssh_command",
+            "validate_wp_cli",
+            "create_remote_backup",
+            "deploy_analytics_via_wp_cli",
+            "rollback_deployment",
+            "validate_remote_deployment",
+            "deploy_to_site",
+            "deploy_batch",
+            "load_analytics_ids",
+            "print_results",
+            "main"
+          ],
+          "line_number": 86
+        }
+      ],
+      "dependencies": [
+        "import argparse",
+        "import json",
+        "import os",
+        "import re",
+        "import subprocess",
+        "import sys",
+        "from pathlib import Path",
+        "from typing import Dict, List, Any, Optional, Tuple",
+        "from dataclasses import dataclass",
+        "from datetime import datetime"
+      ],
+      "last_modified": "2026-01-07T02:23:12"
+    },
+    "website_health_monitor": {
+      "name": "website_health_monitor",
+      "path": "tools\\website_health_monitor.py",
+      "description": "Website Health Monitor",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "to_dict",
+          "signature": "def to_dict(self) -> Dict[str, Any]:",
+          "docstring": "Monitors website health and provides diagnostics.",
+          "is_async": false,
+          "line_number": 53
+        },
+        {
+          "name": "__init__",
+          "signature": "def __init__(self):",
+          "docstring": "Perform comprehensive health check on a website.",
+          "is_async": false,
+          "line_number": 59
+        },
+        {
+          "name": "__aenter__",
+          "signature": "async def __aenter__(self):",
+          "docstring": "Perform comprehensive health check on a website.",
+          "is_async": true,
+          "line_number": 63
+        },
+        {
+          "name": "__aexit__",
+          "signature": "async def __aexit__(self, exc_type, exc_val, exc_tb):",
+          "docstring": "Perform comprehensive health check on a website.",
+          "is_async": true,
+          "line_number": 67
+        },
+        {
+          "name": "check_website_health",
+          "signature": "async def check_website_health(self, url: str) -> WebsiteHealthCheck:",
+          "docstring": "Perform comprehensive health check on a website.",
+          "is_async": true,
+          "line_number": 71
+        },
+        {
+          "name": "_check_ssl_certificate",
+          "signature": "async def _check_ssl_certificate(self, hostname: str) -> Tuple[bool, Optional[int]]:",
+          "docstring": "Check SSL certificate validity and expiry.",
+          "is_async": true,
+          "line_number": 159
+        },
+        {
+          "name": "_check_wordpress_indicators",
+          "signature": "async def _check_wordpress_indicators(self, response: aiohttp.ClientResponse) -> bool:",
+          "docstring": "Check for WordPress-specific indicators.",
+          "is_async": true,
+          "line_number": 183
+        },
+        {
+          "name": "monitor_sites",
+          "signature": "async def monitor_sites(self, urls: List[str]) -> List[WebsiteHealthCheck]:",
+          "docstring": "Monitor multiple websites concurrently.",
+          "is_async": true,
+          "line_number": 202
+        },
+        {
+          "name": "generate_report",
+          "signature": "def generate_report(self, results: List[WebsiteHealthCheck]) -> Dict[str, Any]:",
+          "docstring": "Generate comprehensive health report.",
+          "is_async": false,
+          "line_number": 217
+        },
+        {
+          "name": "main",
+          "signature": "async def main():",
+          "docstring": "Main CLI interface.",
+          "is_async": true,
+          "line_number": 259
+        },
+        {
+          "name": "generate_html_report",
+          "signature": "async def generate_html_report(report: Dict[str, Any]) -> None:",
+          "docstring": "Generate HTML report from health check results.",
+          "is_async": true,
+          "line_number": 362
+        }
+      ],
+      "classes": [
+        {
+          "name": "WebsiteHealthCheck",
+          "docstring": "Comprehensive website health check result.",
+          "methods": [
+            "to_dict"
+          ],
+          "line_number": 40
+        },
+        {
+          "name": "WebsiteHealthMonitor",
+          "docstring": "Monitors website health and provides diagnostics.",
+          "methods": [
+            "check_website_health",
+            "monitor_sites",
+            "generate_report",
+            "main",
+            "generate_html_report"
+          ],
+          "line_number": 56
+        }
+      ],
+      "dependencies": [
+        "import asyncio",
+        "import aiohttp",
+        "import ssl",
+        "import socket",
+        "import time",
+        "import json",
+        "import sys",
+        "import argparse",
+        "from datetime import datetime, timedelta",
+        "from typing import Dict, List, Optional, Tuple, Any",
+        "from dataclasses import dataclass, asdict",
+        "from urllib.parse import urlparse",
+        "import logging"
+      ],
+      "last_modified": "2026-01-07T02:37:02"
+    },
+    "analytics_live_verification": {
+      "name": "analytics_live_verification",
+      "path": "tools\\analytics_live_verification.py",
+      "description": "Analytics Live Verification Tool",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "__init__",
+          "signature": "def __init__(self):",
+          "docstring": "Verify that analytics are working live on a website.",
+          "is_async": false,
+          "line_number": 68
+        },
+        {
+          "name": "__aenter__",
+          "signature": "async def __aenter__(self):",
+          "docstring": "Verify that analytics are working live on a website.",
+          "is_async": true,
+          "line_number": 73
+        },
+        {
+          "name": "__aexit__",
+          "signature": "async def __aexit__(self, exc_type, exc_val, exc_tb):",
+          "docstring": "Verify that analytics are working live on a website.",
+          "is_async": true,
+          "line_number": 77
+        },
+        {
+          "name": "verify_analytics_live",
+          "signature": "async def verify_analytics_live(self, site_name: str) -> AnalyticsVerificationResult:",
+          "docstring": "Verify that analytics are working live on a website.",
+          "is_async": true,
+          "line_number": 81
+        },
+        {
+          "name": "_analyze_ga4_presence",
+          "signature": "def _analyze_ga4_presence(self, content: str) -> Dict[str, Any]:",
+          "docstring": "Analyze page content for GA4 tracking presence.",
+          "is_async": false,
+          "line_number": 154
+        },
+        {
+          "name": "_analyze_pixel_presence",
+          "signature": "def _analyze_pixel_presence(self, content: str) -> Dict[str, Any]:",
+          "docstring": "Analyze page content for Facebook Pixel presence.",
+          "is_async": false,
+          "line_number": 179
+        },
+        {
+          "name": "_perform_live_tracking_test",
+          "signature": "async def _perform_live_tracking_test(self, site_name: str, content: str) -> Dict[str, int]:",
+          "docstring": "Perform live tracking test by simulating user interactions.",
+          "is_async": true,
+          "line_number": 199
+        },
+        {
+          "name": "_test_ga4_tracking",
+          "signature": "async def _test_ga4_tracking(self, measurement_id: str, site_name: str) -> bool:",
+          "docstring": "Test GA4 tracking by sending a test event.",
+          "is_async": true,
+          "line_number": 231
+        },
+        {
+          "name": "_test_pixel_tracking",
+          "signature": "async def _test_pixel_tracking(self, pixel_id: str, site_name: str) -> bool:",
+          "docstring": "Test Facebook Pixel tracking (simulated - actual verification would require FB API).",
+          "is_async": true,
+          "line_number": 261
+        },
+        {
+          "name": "verify_all_sites",
+          "signature": "async def verify_all_sites(self, sites: List[str]) -> List[AnalyticsVerificationResult]:",
+          "docstring": "Verify analytics on multiple sites.",
+          "is_async": true,
+          "line_number": 283
+        },
+        {
+          "name": "generate_verification_report",
+          "signature": "def generate_verification_report(self, results: List[AnalyticsVerificationResult]) -> Dict[str, Any]:",
+          "docstring": "Generate comprehensive verification report.",
+          "is_async": false,
+          "line_number": 292
+        },
+        {
+          "name": "main",
+          "signature": "async def main():",
+          "docstring": "Main CLI interface for analytics live verification.",
+          "is_async": true,
+          "line_number": 340
+        },
+        {
+          "name": "generate_html_report",
+          "signature": "async def generate_html_report(report: Dict[str, Any]) -> None:",
+          "docstring": "Generate HTML verification report.",
+          "is_async": true,
+          "line_number": 454
+        }
+      ],
+      "classes": [
+        {
+          "name": "AnalyticsVerificationResult",
+          "docstring": "Result of live analytics verification.",
+          "methods": [],
+          "line_number": 40
+        },
+        {
+          "name": "LiveAnalyticsTest",
+          "docstring": "Live analytics test session.",
+          "methods": [],
+          "line_number": 56
+        },
+        {
+          "name": "AnalyticsLiveVerificationTool",
+          "docstring": "Tool for verifying live analytics functionality.",
+          "methods": [
+            "verify_analytics_live",
+            "verify_all_sites",
+            "generate_verification_report",
+            "main",
+            "generate_html_report"
+          ],
+          "line_number": 65
+        }
+      ],
+      "dependencies": [
+        "import asyncio",
+        "import aiohttp",
+        "import json",
+        "import time",
+        "import re",
+        "import uuid",
+        "import hashlib",
+        "import base64",
+        "from datetime import datetime, timedelta",
+        "from typing import Dict, List, Optional, Tuple, Any",
+        "from dataclasses import dataclass, asdict",
+        "from urllib.parse import urlparse, parse_qs",
+        "import logging",
+        "import argparse"
+      ],
+      "last_modified": "2026-01-07T02:55:14"
+    },
+    "enterprise_analytics_compliance_validator": {
+      "name": "enterprise_analytics_compliance_validator",
+      "path": "tools\\enterprise_analytics_compliance_validator.py",
+      "description": "Enterprise Analytics Compliance & Integration Validator",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "__init__",
+          "signature": "def __init__(self):",
+          "docstring": "Perform comprehensive enterprise analytics audit.",
+          "is_async": false,
+          "line_number": 84
+        },
+        {
+          "name": "__aenter__",
+          "signature": "async def __aenter__(self):",
+          "docstring": "Perform comprehensive enterprise analytics audit.",
+          "is_async": true,
+          "line_number": 88
+        },
+        {
+          "name": "__aexit__",
+          "signature": "async def __aexit__(self, exc_type, exc_val, exc_tb):",
+          "docstring": "Perform comprehensive enterprise analytics audit.",
+          "is_async": true,
+          "line_number": 92
+        },
+        {
+          "name": "audit_enterprise_analytics",
+          "signature": "async def audit_enterprise_analytics(self, site_name: str) -> EnterpriseAnalyticsAudit:",
+          "docstring": "Perform comprehensive enterprise analytics audit.",
+          "is_async": true,
+          "line_number": 96
+        },
+        {
+          "name": "_fetch_site_content",
+          "signature": "async def _fetch_site_content(self, url: str) -> Tuple[str, int]:",
+          "docstring": "Fetch site content for analysis.",
+          "is_async": true,
+          "line_number": 147
+        },
+        {
+          "name": "_check_gdpr_compliance",
+          "signature": "async def _check_gdpr_compliance(self, content: str, site_name: str) -> List[GDPRComplianceCheck]:",
+          "docstring": "Check GDPR compliance requirements.",
+          "is_async": true,
+          "line_number": 157
+        },
+        {
+          "name": "_validate_conversion_tracking",
+          "signature": "def _validate_conversion_tracking(self, content: str) -> List[ConversionTrackingValidation]:",
+          "docstring": "Validate conversion tracking implementation.",
+          "is_async": false,
+          "line_number": 289
+        },
+        {
+          "name": "_check_ecommerce_integration",
+          "signature": "def _check_ecommerce_integration(self, content: str) -> List[EcommerceIntegrationCheck]:",
+          "docstring": "Check enhanced ecommerce integration.",
+          "is_async": false,
+          "line_number": 398
+        },
+        {
+          "name": "_calculate_compliance_score",
+          "signature": "def _calculate_compliance_score(self, gdpr_checks: List[GDPRComplianceCheck]) -> int:",
+          "docstring": "Calculate overall GDPR compliance score.",
+          "is_async": false,
+          "line_number": 491
+        },
+        {
+          "name": "_calculate_integration_score",
+          "signature": "def _calculate_integration_score(self, conversion_checks: List[ConversionTrackingValidation],",
+          "docstring": "Calculate overall integration score.",
+          "is_async": false,
+          "line_number": 499
+        },
+        {
+          "name": "_generate_audit_findings",
+          "signature": "def _generate_audit_findings(self, audit: EnterpriseAnalyticsAudit) -> Tuple[List[str], List[str]]:",
+          "docstring": "Generate critical issues and recommended actions from audit.",
+          "is_async": false,
+          "line_number": 510
+        },
+        {
+          "name": "_create_audit_summary",
+          "signature": "def _create_audit_summary(self, audit: EnterpriseAnalyticsAudit) -> Dict[str, Any]:",
+          "docstring": "Create audit summary statistics.",
+          "is_async": false,
+          "line_number": 542
+        },
+        {
+          "name": "audit_multiple_sites",
+          "signature": "async def audit_multiple_sites(self, sites: List[str]) -> List[EnterpriseAnalyticsAudit]:",
+          "docstring": "Audit multiple sites concurrently.",
+          "is_async": true,
+          "line_number": 559
+        },
+        {
+          "name": "generate_compliance_report",
+          "signature": "def generate_compliance_report(self, audits: List[EnterpriseAnalyticsAudit]) -> Dict[str, Any]:",
+          "docstring": "Generate comprehensive compliance report.",
+          "is_async": false,
+          "line_number": 568
+        },
+        {
+          "name": "main",
+          "signature": "async def main():",
+          "docstring": "Main CLI interface for enterprise analytics compliance validation.",
+          "is_async": true,
+          "line_number": 614
+        },
+        {
+          "name": "generate_html_report",
+          "signature": "async def generate_html_report(report: Dict[str, Any]) -> None:",
+          "docstring": "Generate HTML compliance report.",
+          "is_async": true,
+          "line_number": 727
+        }
+      ],
+      "classes": [
+        {
+          "name": "GDPRComplianceCheck",
+          "docstring": "GDPR compliance validation result.",
+          "methods": [],
+          "line_number": 38
+        },
+        {
+          "name": "ConversionTrackingValidation",
+          "docstring": "Conversion tracking validation result.",
+          "methods": [],
+          "line_number": 48
+        },
+        {
+          "name": "EcommerceIntegrationCheck",
+          "docstring": "Enhanced ecommerce integration validation.",
+          "methods": [],
+          "line_number": 58
+        },
+        {
+          "name": "EnterpriseAnalyticsAudit",
+          "docstring": "Comprehensive enterprise analytics audit result.",
+          "methods": [],
+          "line_number": 68
+        },
+        {
+          "name": "EnterpriseAnalyticsComplianceValidator",
+          "docstring": "Comprehensive enterprise analytics compliance and integration validator.",
+          "methods": [
+            "audit_enterprise_analytics",
+            "audit_multiple_sites",
+            "generate_compliance_report",
+            "main",
+            "generate_html_report"
+          ],
+          "line_number": 81
+        }
+      ],
+      "dependencies": [
+        "import asyncio",
+        "import aiohttp",
+        "import json",
+        "import re",
+        "import time",
+        "from datetime import datetime, timedelta",
+        "from typing import Dict, List, Optional, Tuple, Any",
+        "from dataclasses import dataclass, asdict",
+        "from pathlib import Path",
+        "from urllib.parse import urlparse",
+        "import logging",
+        "import argparse"
+      ],
+      "last_modified": "2026-01-07T02:59:52"
+    },
+    "analytics_deployment_orchestrator": {
+      "name": "analytics_deployment_orchestrator",
+      "path": "tools\\analytics_deployment_orchestrator.py",
+      "description": "Analytics Deployment Orchestrator",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "__init__",
+          "signature": "def __init__(self, sites: List[str]):",
+          "docstring": "Log orchestration activity.",
+          "is_async": false,
+          "line_number": 98
+        },
+        {
+          "name": "_log",
+          "signature": "def _log(self, message: str):",
+          "docstring": "Log orchestration activity.",
+          "is_async": false,
+          "line_number": 127
+        },
+        {
+          "name": "orchestrate_deployment",
+          "signature": "async def orchestrate_deployment(self) -> AnalyticsDeploymentOrchestration:",
+          "docstring": "Orchestrate the complete analytics deployment pipeline.",
+          "is_async": true,
+          "line_number": 134
+        },
+        {
+          "name": "_execute_configuration_validation",
+          "signature": "async def _execute_configuration_validation(self):",
+          "docstring": "Execute configuration validation stage.",
+          "is_async": true,
+          "line_number": 178
+        },
+        {
+          "name": "_execute_compliance_assessment",
+          "signature": "async def _execute_compliance_assessment(self):",
+          "docstring": "Execute compliance assessment stage.",
+          "is_async": true,
+          "line_number": 193
+        },
+        {
+          "name": "_execute_live_deployment",
+          "signature": "async def _execute_live_deployment(self):",
+          "docstring": "Execute live deployment stage.",
+          "is_async": true,
+          "line_number": 209
+        },
+        {
+          "name": "_execute_post_deployment_verification",
+          "signature": "async def _execute_post_deployment_verification(self):",
+          "docstring": "Execute post-deployment verification stage.",
+          "is_async": true,
+          "line_number": 225
+        },
+        {
+          "name": "_execute_compliance_validation",
+          "signature": "async def _execute_compliance_validation(self):",
+          "docstring": "Execute compliance validation stage.",
+          "is_async": true,
+          "line_number": 241
+        },
+        {
+          "name": "_execute_monitoring_setup",
+          "signature": "async def _execute_monitoring_setup(self):",
+          "docstring": "Execute monitoring setup stage.",
+          "is_async": true,
+          "line_number": 257
+        },
+        {
+          "name": "_execute_final_validation",
+          "signature": "async def _execute_final_validation(self):",
+          "docstring": "Execute final validation stage.",
+          "is_async": true,
+          "line_number": 273
+        },
+        {
+          "name": "_validate_site_configuration",
+          "signature": "async def _validate_site_configuration(self, site: str) -> DeploymentResult:",
+          "docstring": "Validate site analytics configuration.",
+          "is_async": true,
+          "line_number": 290
+        },
+        {
+          "name": "_assess_site_compliance",
+          "signature": "async def _assess_site_compliance(self, site: str) -> DeploymentResult:",
+          "docstring": "Assess site compliance.",
+          "is_async": true,
+          "line_number": 336
+        },
+        {
+          "name": "_deploy_to_live_site",
+          "signature": "async def _deploy_to_live_site(self, site: str) -> DeploymentResult:",
+          "docstring": "Deploy analytics to live site.",
+          "is_async": true,
+          "line_number": 389
+        },
+        {
+          "name": "_verify_post_deployment",
+          "signature": "async def _verify_post_deployment(self, site: str) -> DeploymentResult:",
+          "docstring": "Verify post-deployment functionality.",
+          "is_async": true,
+          "line_number": 434
+        },
+        {
+          "name": "_validate_compliance",
+          "signature": "async def _validate_compliance(self, site: str) -> DeploymentResult:",
+          "docstring": "Validate post-deployment compliance.",
+          "is_async": true,
+          "line_number": 483
+        },
+        {
+          "name": "_setup_monitoring",
+          "signature": "async def _setup_monitoring(self, site: str) -> DeploymentResult:",
+          "docstring": "Setup monitoring for deployed analytics.",
+          "is_async": true,
+          "line_number": 488
+        },
+        {
+          "name": "_final_validation",
+          "signature": "async def _final_validation(self, site: str) -> DeploymentResult:",
+          "docstring": "Execute final validation of complete deployment.",
+          "is_async": true,
+          "line_number": 534
+        },
+        {
+          "name": "_update_completion_percentage",
+          "signature": "def _update_completion_percentage(self):",
+          "docstring": "Update overall completion percentage.",
+          "is_async": false,
+          "line_number": 588
+        },
+        {
+          "name": "_create_orchestration_result",
+          "signature": "def _create_orchestration_result(self) -> AnalyticsDeploymentOrchestration:",
+          "docstring": "Create the final orchestration result.",
+          "is_async": false,
+          "line_number": 594
+        },
+        {
+          "name": "get_orchestration_status",
+          "signature": "def get_orchestration_status(self) -> Dict[str, Any]:",
+          "docstring": "Get current orchestration status.",
+          "is_async": false,
+          "line_number": 609
+        },
+        {
+          "name": "main",
+          "signature": "async def main():",
+          "docstring": "Main CLI interface for analytics deployment orchestration.",
+          "is_async": true,
+          "line_number": 630
+        }
+      ],
+      "classes": [
+        {
+          "name": "DeploymentStage",
+          "docstring": "Analytics deployment pipeline stages.",
+          "methods": [],
+          "line_number": 38
+        },
+        {
+          "name": "DeploymentStatus",
+          "docstring": "Deployment status states.",
+          "methods": [],
+          "line_number": 48
+        },
+        {
+          "name": "DeploymentResult",
+          "docstring": "Result of a deployment stage.",
+          "methods": [],
+          "line_number": 57
+        },
+        {
+          "name": "SiteDeploymentStatus",
+          "docstring": "Overall deployment status for a site.",
+          "methods": [],
+          "line_number": 69
+        },
+        {
+          "name": "AnalyticsDeploymentOrchestration",
+          "docstring": "Complete analytics deployment orchestration session.",
+          "methods": [],
+          "line_number": 82
+        },
+        {
+          "name": "AnalyticsDeploymentOrchestrator",
+          "docstring": "Orchestrates complete analytics deployment pipeline.",
+          "methods": [
+            "orchestrate_deployment",
+            "get_orchestration_status",
+            "main"
+          ],
+          "line_number": 95
+        }
+      ],
+      "dependencies": [
+        "import asyncio",
+        "import json",
+        "import time",
+        "import subprocess",
+        "import sys",
+        "from datetime import datetime, timedelta",
+        "from typing import Dict, List, Optional, Tuple, Any",
+        "from dataclasses import dataclass, asdict",
+        "from pathlib import Path",
+        "from enum import Enum",
+        "import logging",
+        "import argparse"
+      ],
+      "last_modified": "2026-01-07T03:05:16"
+    },
+    "analytics_deployment_dashboard": {
+      "name": "analytics_deployment_dashboard",
+      "path": "tools\\analytics_deployment_dashboard.py",
+      "description": "Analytics Deployment Dashboard",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "__init__",
+          "signature": "def __init__(self):",
+          "docstring": "Generate comprehensive analytics deployment dashboard.",
+          "is_async": false,
+          "line_number": 77
+        },
+        {
+          "name": "generate_dashboard",
+          "signature": "async def generate_dashboard(self) -> AnalyticsDeploymentDashboard:",
+          "docstring": "Generate comprehensive analytics deployment dashboard.",
+          "is_async": true,
+          "line_number": 86
+        },
+        {
+          "name": "_gather_configuration_status",
+          "signature": "async def _gather_configuration_status(self, dashboard: AnalyticsDeploymentDashboard):",
+          "docstring": "Gather configuration validation status from all sites.",
+          "is_async": true,
+          "line_number": 112
+        },
+        {
+          "name": "_gather_compliance_status",
+          "signature": "async def _gather_compliance_status(self, dashboard: AnalyticsDeploymentDashboard):",
+          "docstring": "Gather compliance assessment status from all sites.",
+          "is_async": true,
+          "line_number": 147
+        },
+        {
+          "name": "_gather_verification_status",
+          "signature": "async def _gather_verification_status(self, dashboard: AnalyticsDeploymentDashboard):",
+          "docstring": "Gather live verification status from all sites.",
+          "is_async": true,
+          "line_number": 183
+        },
+        {
+          "name": "_gather_orchestration_status",
+          "signature": "async def _gather_orchestration_status(self, dashboard: AnalyticsDeploymentDashboard):",
+          "docstring": "Gather orchestration pipeline status.",
+          "is_async": true,
+          "line_number": 210
+        },
+        {
+          "name": "_run_tool_command",
+          "signature": "async def _run_tool_command(self, *args) -> Dict[str, Any]:",
+          "docstring": "Run a tool command and return results.",
+          "is_async": true,
+          "line_number": 250
+        },
+        {
+          "name": "_calculate_kpis",
+          "signature": "def _calculate_kpis(self, dashboard: AnalyticsDeploymentDashboard):",
+          "docstring": "Calculate key performance indicators.",
+          "is_async": false,
+          "line_number": 272
+        },
+        {
+          "name": "_assess_ecosystem_health",
+          "signature": "def _assess_ecosystem_health(self, dashboard: AnalyticsDeploymentDashboard):",
+          "docstring": "Assess overall ecosystem health.",
+          "is_async": false,
+          "line_number": 299
+        },
+        {
+          "name": "_generate_alerts_and_recommendations",
+          "signature": "def _generate_alerts_and_recommendations(self, dashboard: AnalyticsDeploymentDashboard):",
+          "docstring": "Generate alerts and enterprise recommendations.",
+          "is_async": false,
+          "line_number": 346
+        },
+        {
+          "name": "print_dashboard",
+          "signature": "def print_dashboard(self, dashboard: AnalyticsDeploymentDashboard):",
+          "docstring": "Print formatted dashboard to console.",
+          "is_async": false,
+          "line_number": 395
+        },
+        {
+          "name": "main",
+          "signature": "async def main():",
+          "docstring": "Main CLI interface for analytics deployment dashboard.",
+          "is_async": true,
+          "line_number": 459
+        }
+      ],
+      "classes": [
+        {
+          "name": "DashboardKPIs",
+          "docstring": "Key performance indicators for analytics deployment dashboard.",
+          "methods": [],
+          "line_number": 38
+        },
+        {
+          "name": "SiteAnalyticsStatus",
+          "docstring": "Comprehensive analytics status for a single site.",
+          "methods": [],
+          "line_number": 50
+        },
+        {
+          "name": "AnalyticsDeploymentDashboard",
+          "docstring": "Complete analytics deployment dashboard.",
+          "methods": [],
+          "line_number": 63
+        },
+        {
+          "name": "AnalyticsDeploymentDashboardService",
+          "docstring": "Service for generating comprehensive analytics deployment dashboards.",
+          "methods": [
+            "generate_dashboard",
+            "print_dashboard",
+            "main"
+          ],
+          "line_number": 74
+        }
+      ],
+      "dependencies": [
+        "import asyncio",
+        "import json",
+        "import time",
+        "import subprocess",
+        "import sys",
+        "from datetime import datetime, timedelta",
+        "from typing import Dict, List, Optional, Tuple, Any",
+        "from dataclasses import dataclass, asdict",
+        "from pathlib import Path",
+        "import logging",
+        "import argparse"
+      ],
+      "last_modified": "2026-01-07T03:09:04"
+    },
+    "analytics_deployment_automation": {
+      "name": "analytics_deployment_automation",
+      "path": "tools\\analytics_deployment_automation.py",
+      "description": "Analytics Deployment Automation",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "__init__",
+          "signature": "def __init__(self):",
+          "docstring": "Execute automated analytics deployment across all targets.",
+          "is_async": false,
+          "line_number": 82
+        },
+        {
+          "name": "execute_automated_deployment",
+          "signature": "async def execute_automated_deployment(self) -> DeploymentExecution:",
+          "docstring": "Execute automated analytics deployment across all targets.",
+          "is_async": true,
+          "line_number": 91
+        },
+        {
+          "name": "_log",
+          "signature": "def _log(self, execution: DeploymentExecution, message: str):",
+          "docstring": "Log execution activity.",
+          "is_async": false,
+          "line_number": 148
+        },
+        {
+          "name": "_update_progress",
+          "signature": "def _update_progress(self, execution: DeploymentExecution, percentage: float):",
+          "docstring": "Update execution progress.",
+          "is_async": false,
+          "line_number": 155
+        },
+        {
+          "name": "_execute_pre_deployment_checks",
+          "signature": "async def _execute_pre_deployment_checks(self, execution: DeploymentExecution):",
+          "docstring": "Execute pre-deployment health and accessibility checks.",
+          "is_async": true,
+          "line_number": 160
+        },
+        {
+          "name": "_execute_configuration_validation",
+          "signature": "async def _execute_configuration_validation(self, execution: DeploymentExecution):",
+          "docstring": "Execute configuration validation for all sites.",
+          "is_async": true,
+          "line_number": 186
+        },
+        {
+          "name": "_execute_deployment",
+          "signature": "async def _execute_deployment(self, execution: DeploymentExecution):",
+          "docstring": "Execute actual deployment for eligible sites.",
+          "is_async": true,
+          "line_number": 212
+        },
+        {
+          "name": "_execute_verification",
+          "signature": "async def _execute_verification(self, execution: DeploymentExecution):",
+          "docstring": "Execute post-deployment verification.",
+          "is_async": true,
+          "line_number": 244
+        },
+        {
+          "name": "_generate_final_report",
+          "signature": "async def _generate_final_report(self, execution: DeploymentExecution):",
+          "docstring": "Generate comprehensive final deployment report.",
+          "is_async": true,
+          "line_number": 266
+        },
+        {
+          "name": "_check_site_accessibility",
+          "signature": "async def _check_site_accessibility(self, site_name: str) -> bool:",
+          "docstring": "Check if site is accessible for deployment.",
+          "is_async": true,
+          "line_number": 309
+        },
+        {
+          "name": "_validate_analytics_configuration",
+          "signature": "async def _validate_analytics_configuration(self, site_name: str) -> bool:",
+          "docstring": "Validate analytics configuration for deployment.",
+          "is_async": true,
+          "line_number": 328
+        },
+        {
+          "name": "_deploy_analytics_to_site",
+          "signature": "async def _deploy_analytics_to_site(self, site_name: str) -> bool:",
+          "docstring": "Deploy analytics to a specific site.",
+          "is_async": true,
+          "line_number": 345
+        },
+        {
+          "name": "_verify_deployment_success",
+          "signature": "async def _verify_deployment_success(self, site_name: str) -> bool:",
+          "docstring": "Verify that deployment was successful.",
+          "is_async": true,
+          "line_number": 363
+        },
+        {
+          "name": "print_execution_summary",
+          "signature": "def print_execution_summary(self, execution: DeploymentExecution):",
+          "docstring": "Print comprehensive execution summary.",
+          "is_async": false,
+          "line_number": 381
+        },
+        {
+          "name": "main",
+          "signature": "async def main():",
+          "docstring": "Main CLI interface for analytics deployment automation.",
+          "is_async": true,
+          "line_number": 418
+        }
+      ],
+      "classes": [
+        {
+          "name": "DeploymentPhase",
+          "docstring": "Deployment automation phases.",
+          "methods": [],
+          "line_number": 38
+        },
+        {
+          "name": "DeploymentStatus",
+          "docstring": "Deployment execution status.",
+          "methods": [],
+          "line_number": 47
+        },
+        {
+          "name": "DeploymentTarget",
+          "docstring": "Target site for analytics deployment.",
+          "methods": [],
+          "line_number": 56
+        },
+        {
+          "name": "DeploymentExecution",
+          "docstring": "Complete deployment execution session.",
+          "methods": [],
+          "line_number": 66
+        },
+        {
+          "name": "AnalyticsDeploymentAutomation",
+          "docstring": "Automated analytics deployment system.",
+          "methods": [
+            "execute_automated_deployment",
+            "print_execution_summary",
+            "main"
+          ],
+          "line_number": 79
+        }
+      ],
+      "dependencies": [
+        "import asyncio",
+        "import json",
+        "import time",
+        "import subprocess",
+        "import sys",
+        "from datetime import datetime, timedelta",
+        "from typing import Dict, List, Optional, Tuple, Any",
+        "from dataclasses import dataclass, asdict",
+        "from pathlib import Path",
+        "from enum import Enum",
+        "import logging",
+        "import argparse"
+      ],
+      "last_modified": "2026-01-07T03:12:44"
+    },
+    "analytics_operations_center": {
+      "name": "analytics_operations_center",
+      "path": "tools\\analytics_operations_center.py",
+      "description": "Analytics Operations Center",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "__init__",
+          "signature": "def __init__(self):",
+          "docstring": "Scan for available analytics tools.",
+          "is_async": false,
+          "line_number": 48
+        },
+        {
+          "name": "_scan_available_tools",
+          "signature": "def _scan_available_tools(self):",
+          "docstring": "Scan for available analytics tools.",
+          "is_async": false,
+          "line_number": 58
+        },
+        {
+          "name": "get_ecosystem_status",
+          "signature": "async def get_ecosystem_status(self) -> Dict[str, Any]:",
+          "docstring": "Get comprehensive ecosystem status.",
+          "is_async": true,
+          "line_number": 74
+        },
+        {
+          "name": "execute_operation",
+          "signature": "async def execute_operation(self, operation: str, **kwargs) -> Dict[str, Any]:",
+          "docstring": "Execute a specific analytics operation.",
+          "is_async": true,
+          "line_number": 112
+        },
+        {
+          "name": "_execute_health_check",
+          "signature": "async def _execute_health_check(self, params: Dict[str, Any]) -> Dict[str, Any]:",
+          "docstring": "Execute comprehensive health check.",
+          "is_async": true,
+          "line_number": 156
+        },
+        {
+          "name": "_execute_compliance_audit",
+          "signature": "async def _execute_compliance_audit(self, params: Dict[str, Any]) -> Dict[str, Any]:",
+          "docstring": "Execute enterprise compliance audit.",
+          "is_async": true,
+          "line_number": 182
+        },
+        {
+          "name": "_execute_deployment_status",
+          "signature": "async def _execute_deployment_status(self, params: Dict[str, Any]) -> Dict[str, Any]:",
+          "docstring": "Execute deployment status check.",
+          "is_async": true,
+          "line_number": 208
+        },
+        {
+          "name": "_execute_live_verification",
+          "signature": "async def _execute_live_verification(self, params: Dict[str, Any]) -> Dict[str, Any]:",
+          "docstring": "Execute live verification check.",
+          "is_async": true,
+          "line_number": 239
+        },
+        {
+          "name": "_execute_automated_deployment",
+          "signature": "async def _execute_automated_deployment(self, params: Dict[str, Any]) -> Dict[str, Any]:",
+          "docstring": "Execute automated deployment.",
+          "is_async": true,
+          "line_number": 265
+        },
+        {
+          "name": "_execute_orchestrated_deployment",
+          "signature": "async def _execute_orchestrated_deployment(self, params: Dict[str, Any]) -> Dict[str, Any]:",
+          "docstring": "Execute orchestrated deployment.",
+          "is_async": true,
+          "line_number": 287
+        },
+        {
+          "name": "_run_tool_command",
+          "signature": "async def _run_tool_command(self, *args) -> Dict[str, Any]:",
+          "docstring": "Run a tool command and return results.",
+          "is_async": true,
+          "line_number": 310
+        },
+        {
+          "name": "print_operations_center_status",
+          "signature": "def print_operations_center_status(self):",
+          "docstring": "Print comprehensive operations center status.",
+          "is_async": false,
+          "line_number": 332
+        },
+        {
+          "name": "main",
+          "signature": "async def main():",
+          "docstring": "Main CLI interface for Analytics Operations Center.",
+          "is_async": true,
+          "line_number": 385
+        }
+      ],
+      "classes": [
+        {
+          "name": "AnalyticsOperationsCenter",
+          "docstring": "Unified analytics operations center.",
+          "methods": [],
+          "line_number": 37
+        },
+        {
+          "name": "AnalyticsOperationsCommand",
+          "docstring": "Command interface for analytics operations.",
+          "methods": [
+            "get_ecosystem_status",
+            "execute_operation",
+            "print_operations_center_status",
+            "main"
+          ],
+          "line_number": 45
+        }
+      ],
+      "dependencies": [
+        "import asyncio",
+        "import json",
+        "import time",
+        "import subprocess",
+        "import sys",
+        "from datetime import datetime, timedelta",
+        "from typing import Dict, List, Optional, Tuple, Any",
+        "from dataclasses import dataclass, asdict",
+        "from pathlib import Path",
+        "import logging",
+        "import argparse"
+      ],
+      "last_modified": "2026-01-07T03:17:24"
+    },
+    "analytics_ecosystem_health_scorer": {
+      "name": "analytics_ecosystem_health_scorer",
+      "path": "tools\\analytics_ecosystem_health_scorer.py",
+      "description": "Analytics Ecosystem Health Scoring System",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "__init__",
+          "signature": "def __init__(self, sites: List[Dict[str, str]]):",
+          "docstring": "Calculate comprehensive ecosystem health score.\n\n        Returns:\n            Complete health assessment with scores, risks, and recommendations",
+          "is_async": false,
+          "line_number": 66
+        },
+        {
+          "name": "calculate_ecosystem_health",
+          "signature": "async def calculate_ecosystem_health(self) -> EcosystemHealthScore:",
+          "docstring": "Calculate comprehensive ecosystem health score.\n\n        Returns:\n            Complete health assessment with scores, risks, and recommendations",
+          "is_async": true,
+          "line_number": 81
+        },
+        {
+          "name": "_assess_infrastructure_health",
+          "signature": "async def _assess_infrastructure_health(self) -> Tuple[HealthComponent, Dict[str, Any]]:",
+          "docstring": "Assess infrastructure health across all sites.",
+          "is_async": true,
+          "line_number": 154
+        },
+        {
+          "name": "_assess_deployment_health",
+          "signature": "async def _assess_deployment_health(self) -> Tuple[HealthComponent, Dict[str, Any]]:",
+          "docstring": "Assess analytics deployment health.",
+          "is_async": true,
+          "line_number": 218
+        },
+        {
+          "name": "_assess_compliance_health",
+          "signature": "async def _assess_compliance_health(self) -> Tuple[HealthComponent, Dict[str, Any]]:",
+          "docstring": "Assess compliance and security health.",
+          "is_async": true,
+          "line_number": 286
+        },
+        {
+          "name": "_assess_performance_health",
+          "signature": "async def _assess_performance_health(self) -> Tuple[HealthComponent, Dict[str, Any]]:",
+          "docstring": "Assess performance and monitoring health.",
+          "is_async": true,
+          "line_number": 356
+        },
+        {
+          "name": "_calculate_risk_level",
+          "signature": "def _calculate_risk_level(self, overall_score: float, components: Dict[str, HealthComponent]) -> str:",
+          "docstring": "Calculate risk level based on score and critical components.",
+          "is_async": false,
+          "line_number": 424
+        },
+        {
+          "name": "_generate_recommendations",
+          "signature": "def _generate_recommendations(self, components: Dict[str, HealthComponent]) -> List[str]:",
+          "docstring": "Generate prioritized recommendations based on component health.",
+          "is_async": false,
+          "line_number": 443
+        },
+        {
+          "name": "_generate_next_steps",
+          "signature": "def _generate_next_steps(self, risk_level: str, components: Dict[str, HealthComponent]) -> List[str]:",
+          "docstring": "Generate prioritized next steps based on risk level.",
+          "is_async": false,
+          "line_number": 469
+        },
+        {
+          "name": "main",
+          "signature": "async def main():",
+          "docstring": "Command-line interface for health scoring.",
+          "is_async": true,
+          "line_number": 508
+        }
+      ],
+      "classes": [
+        {
+          "name": "HealthComponent",
+          "docstring": "Individual health component with scoring.",
+          "methods": [],
+          "line_number": 32
+        },
+        {
+          "name": "EcosystemHealthScore",
+          "docstring": "Complete ecosystem health assessment.",
+          "methods": [],
+          "line_number": 44
+        },
+        {
+          "name": "AnalyticsEcosystemHealthScorer",
+          "docstring": "Comprehensive health scoring system for enterprise analytics ecosystems.\n\n    Evaluates multiple dimensions:\n    - Infrastructure Health (40% weight)\n    - Analytics Deployment (30% weight)\n    - Compliance & Security (20% weight)\n    - Performance & Monitoring (10% weight)",
+          "methods": [
+            "calculate_ecosystem_health",
+            "main"
+          ],
+          "line_number": 55
+        }
+      ],
+      "dependencies": [
+        "from __future__ import annotations",
+        "import asyncio",
+        "import json",
+        "import logging",
+        "from datetime import datetime",
+        "from typing import Dict, List, Optional, Any, Tuple",
+        "from dataclasses import dataclass, asdict",
+        "from tools.website_health_monitor import WebsiteHealthMonitor",
+        "from tools.enterprise_analytics_compliance_validator import EnterpriseAnalyticsComplianceValidator",
+        "from tools.analytics_deployment_monitor import AnalyticsDeploymentMonitor",
+        "from tools.analytics_live_verification import AnalyticsLiveVerification",
+        "import argparse"
+      ],
+      "last_modified": "2026-01-07T04:40:32"
+    },
+    "analytics_ecosystem_documentation_generator": {
+      "name": "analytics_ecosystem_documentation_generator",
+      "path": "tools\\analytics_ecosystem_documentation_generator.py",
+      "description": "Automated Analytics Ecosystem Documentation Generator",
+      "author": "\\s*(.+)', content, re.IGNORECASE)",
+      "domain": "\\s*(.+)', content, re.IGNORECASE)",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "__init__",
+          "signature": "def __init__(self):",
+          "docstring": "Generate complete documentation for the analytics ecosystem.\n\n        Returns:\n            Comprehensive documentation object",
+          "is_async": false,
+          "line_number": 72
+        },
+        {
+          "name": "generate_full_documentation",
+          "signature": "async def generate_full_documentation(self) -> EcosystemDocumentation:",
+          "docstring": "Generate complete documentation for the analytics ecosystem.\n\n        Returns:\n            Comprehensive documentation object",
+          "is_async": true,
+          "line_number": 77
+        },
+        {
+          "name": "_discover_analytics_tools",
+          "signature": "async def _discover_analytics_tools(self) -> List[Path]:",
+          "docstring": "Discover all analytics-related tools in the ecosystem.",
+          "is_async": true,
+          "line_number": 129
+        },
+        {
+          "name": "_is_analytics_tool",
+          "signature": "def _is_analytics_tool(self, file_path: Path) -> bool:",
+          "docstring": "Check if a tool file is analytics-related.",
+          "is_async": false,
+          "line_number": 147
+        },
+        {
+          "name": "_is_analytics_service",
+          "signature": "def _is_analytics_service(self, file_path: Path) -> bool:",
+          "docstring": "Check if a service file is analytics-related.",
+          "is_async": false,
+          "line_number": 158
+        },
+        {
+          "name": "_extract_tool_metadata",
+          "signature": "async def _extract_tool_metadata(self, tool_path: Path) -> Optional[ToolMetadata]:",
+          "docstring": "Extract comprehensive metadata from a tool file.",
+          "is_async": true,
+          "line_number": 166
+        },
+        {
+          "name": "_extract_description",
+          "signature": "def _extract_description(self, content: str) -> str:",
+          "docstring": "Extract tool description from docstring or comments.",
+          "is_async": false,
+          "line_number": 207
+        },
+        {
+          "name": "_extract_author",
+          "signature": "def _extract_author(self, content: str) -> str:",
+          "docstring": "Extract author information.",
+          "is_async": false,
+          "line_number": 225
+        },
+        {
+          "name": "_extract_domain",
+          "signature": "def _extract_domain(self, content: str) -> str:",
+          "docstring": "Extract SSOT domain.",
+          "is_async": false,
+          "line_number": 232
+        },
+        {
+          "name": "_extract_version",
+          "signature": "def _extract_version(self, content: str) -> str:",
+          "docstring": "Extract version information.",
+          "is_async": false,
+          "line_number": 239
+        },
+        {
+          "name": "_extract_functions",
+          "signature": "def _extract_functions(self, content: str) -> List[Dict[str, Any]]:",
+          "docstring": "Extract function definitions and metadata.",
+          "is_async": false,
+          "line_number": 246
+        },
+        {
+          "name": "_extract_classes",
+          "signature": "def _extract_classes(self, content: str) -> List[Dict[str, Any]]:",
+          "docstring": "Extract class definitions and metadata.",
+          "is_async": false,
+          "line_number": 277
+        },
+        {
+          "name": "_extract_dependencies",
+          "signature": "def _extract_dependencies(self, content: str) -> List[str]:",
+          "docstring": "Extract import statements.",
+          "is_async": false,
+          "line_number": 304
+        },
+        {
+          "name": "_extract_function_signature",
+          "signature": "def _extract_function_signature(self, content: str, start_pos: int) -> str:",
+          "docstring": "Extract complete function signature.",
+          "is_async": false,
+          "line_number": 320
+        },
+        {
+          "name": "_extract_function_docstring",
+          "signature": "def _extract_function_docstring(self, content: str, start_pos: int) -> str:",
+          "docstring": "Extract function docstring.",
+          "is_async": false,
+          "line_number": 330
+        },
+        {
+          "name": "_extract_class_docstring",
+          "signature": "def _extract_class_docstring(self, content: str, start_pos: int) -> str:",
+          "docstring": "Extract class docstring.",
+          "is_async": false,
+          "line_number": 339
+        },
+        {
+          "name": "_extract_class_methods",
+          "signature": "def _extract_class_methods(self, content: str, start_pos: int) -> List[str]:",
+          "docstring": "Extract class methods (simplified).",
+          "is_async": false,
+          "line_number": 347
+        },
+        {
+          "name": "_group_tools_by_domain",
+          "signature": "def _group_tools_by_domain(self, tool_metadata: Dict[str, ToolMetadata]) -> Dict[str, List[str]]:",
+          "docstring": "Group tools by their SSOT domain.",
+          "is_async": false,
+          "line_number": 370
+        },
+        {
+          "name": "_generate_architecture_overview",
+          "signature": "def _generate_architecture_overview(self, tool_metadata: Dict[str, ToolMetadata],",
+          "docstring": "Generate architecture overview.",
+          "is_async": false,
+          "line_number": 382
+        },
+        {
+          "name": "_identify_integration_patterns",
+          "signature": "def _identify_integration_patterns(self, tool_metadata: Dict[str, ToolMetadata]) -> List[str]:",
+          "docstring": "Identify common integration patterns.",
+          "is_async": false,
+          "line_number": 450
+        },
+        {
+          "name": "_generate_maintenance_guide",
+          "signature": "def _generate_maintenance_guide(self, tool_metadata: Dict[str, ToolMetadata]) -> str:",
+          "docstring": "Generate maintenance and operations guide.",
+          "is_async": false,
+          "line_number": 481
+        },
+        {
+          "name": "generate_documentation_files",
+          "signature": "async def generate_documentation_files(doc_generator: AnalyticsEcosystemDocumentationGenerator,",
+          "docstring": "Generate documentation files from the ecosystem documentation.",
+          "is_async": true,
+          "line_number": 562
+        },
+        {
+          "name": "main",
+          "signature": "async def main():",
+          "docstring": "Command-line interface for documentation generation.",
+          "is_async": true,
+          "line_number": 617
+        }
+      ],
+      "classes": [
+        {
+          "name": "ToolMetadata",
+          "docstring": "Metadata extracted from an analytics tool.",
+          "methods": [],
+          "line_number": 32
+        },
+        {
+          "name": "EcosystemDocumentation",
+          "docstring": "Complete ecosystem documentation.",
+          "methods": [],
+          "line_number": 47
+        },
+        {
+          "name": "AnalyticsEcosystemDocumentationGenerator",
+          "docstring": "Automatically generates comprehensive documentation for the analytics ecosystem.\n\n    Scans all tools in the analytics ecosystem and creates:\n    - Tool inventories and metadata\n    - Function and class documentation\n    - Architecture diagrams\n    - Integration patterns\n    - Maintenance procedures",
+          "methods": [
+            "generate_full_documentation",
+            "generate_documentation_files",
+            "main"
+          ],
+          "line_number": 60
+        }
+      ],
+      "dependencies": [
+        "from __future__ import annotations",
+        "import asyncio",
+        "import importlib",
+        "import inspect",
+        "import json",
+        "import logging",
+        "import os",
+        "import re",
+        "from datetime import datetime",
+        "from pathlib import Path",
+        "from typing import Dict, List, Optional, Any, Tuple",
+        "from dataclasses import dataclass, asdict",
+        "import argparse"
+      ],
+      "last_modified": "2026-01-07T04:41:04"
+    },
+    "analytics_service": {
+      "name": "analytics_service",
+      "path": "src\\infrastructure\\analytics_service.py",
+      "description": "Analytics Service - GA4 & Facebook Pixel Integration",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "__init__",
+          "signature": "def __init__(self, config_path: Optional[Path] = None):",
+          "docstring": "Initialize analytics service.\n\n        Args:\n            config_path: Path to analytics configuration file",
+          "is_async": false,
+          "line_number": 26
+        },
+        {
+          "name": "_load_config",
+          "signature": "def _load_config(self) -> Dict[str, Any]:",
+          "docstring": "Load analytics configuration.",
+          "is_async": false,
+          "line_number": 37
+        },
+        {
+          "name": "_get_default_config",
+          "signature": "def _get_default_config(self) -> Dict[str, Any]:",
+          "docstring": "Get default analytics configuration.",
+          "is_async": false,
+          "line_number": 50
+        },
+        {
+          "name": "is_ga4_enabled",
+          "signature": "def is_ga4_enabled(self) -> bool:",
+          "docstring": "Check if GA4 is enabled.",
+          "is_async": false,
+          "line_number": 69
+        },
+        {
+          "name": "is_pixel_enabled",
+          "signature": "def is_pixel_enabled(self) -> bool:",
+          "docstring": "Check if Facebook Pixel is enabled.",
+          "is_async": false,
+          "line_number": 76
+        },
+        {
+          "name": "track_event",
+          "signature": "def track_event(self, event_name: str, parameters: Optional[Dict[str, Any]] = None) -> bool:",
+          "docstring": "Track an analytics event.\n\n        Args:\n            event_name: Name of the event\n            parameters: Event parameters\n\n        Returns:\n            True if event was tracked successfully",
+          "is_async": false,
+          "line_number": 83
+        },
+        {
+          "name": "_track_ga4_event",
+          "signature": "def _track_ga4_event(self, event_name: str, parameters: Dict[str, Any]) -> None:",
+          "docstring": "Track event in Google Analytics 4.",
+          "is_async": false,
+          "line_number": 128
+        },
+        {
+          "name": "_track_pixel_event",
+          "signature": "def _track_pixel_event(self, event_name: str, parameters: Dict[str, Any]) -> None:",
+          "docstring": "Track event in Facebook Pixel.",
+          "is_async": false,
+          "line_number": 145
+        },
+        {
+          "name": "track_infrastructure_event",
+          "signature": "def track_infrastructure_event(self, event_type: str, details: Optional[Dict[str, Any]] = None) -> bool:",
+          "docstring": "Track infrastructure-specific events.\n\n        Args:\n            event_type: Type of infrastructure event\n            details: Additional event details\n\n        Returns:\n            True if event was tracked",
+          "is_async": false,
+          "line_number": 161
+        },
+        {
+          "name": "track_coordination_event",
+          "signature": "def track_coordination_event(self, coordination_type: str, agents: List[str], details: Optional[Dict[str, Any]] = None) -> bool:",
+          "docstring": "Track agent coordination events.\n\n        Args:\n            coordination_type: Type of coordination\n            agents: List of participating agents\n            details: Additional coordination details\n\n        Returns:\n            True if event was tracked",
+          "is_async": false,
+          "line_number": 184
+        },
+        {
+          "name": "get_analytics_config",
+          "signature": "def get_analytics_config(self) -> Dict[str, Any]:",
+          "docstring": "Get current analytics configuration.",
+          "is_async": false,
+          "line_number": 208
+        },
+        {
+          "name": "get_events_summary",
+          "signature": "def get_events_summary(self) -> Dict[str, Any]:",
+          "docstring": "Get summary of tracked events.",
+          "is_async": false,
+          "line_number": 218
+        },
+        {
+          "name": "get_analytics_service",
+          "signature": "def get_analytics_service() -> AnalyticsService:",
+          "docstring": "Get global analytics service instance.",
+          "is_async": false,
+          "line_number": 236
+        },
+        {
+          "name": "track_infrastructure_deployment",
+          "signature": "def track_infrastructure_deployment(service_name: str, status: str) -> bool:",
+          "docstring": "Track infrastructure deployment event.\n\n    Args:\n        service_name: Name of the service being deployed\n        status: Deployment status\n\n    Returns:\n        True if event was tracked",
+          "is_async": false,
+          "line_number": 244
+        },
+        {
+          "name": "track_coordination_completion",
+          "signature": "def track_coordination_completion(coordination_id: str, agents: List[str]) -> bool:",
+          "docstring": "Track coordination completion event.\n\n    Args:\n        coordination_id: Unique coordination identifier\n        agents: List of participating agents\n\n    Returns:\n        True if event was tracked",
+          "is_async": false,
+          "line_number": 263
+        }
+      ],
+      "classes": [
+        {
+          "name": "AnalyticsService",
+          "docstring": "Analytics service for GA4 and Facebook Pixel integration.",
+          "methods": [
+            "is_ga4_enabled",
+            "is_pixel_enabled",
+            "track_event",
+            "track_infrastructure_event",
+            "track_coordination_event",
+            "get_analytics_config",
+            "get_events_summary",
+            "get_analytics_service",
+            "track_infrastructure_deployment",
+            "track_coordination_completion"
+          ],
+          "line_number": 23
+        }
+      ],
+      "dependencies": [
+        "import json",
+        "import logging",
+        "from pathlib import Path",
+        "from typing import Dict, Any, Optional, List",
+        "from datetime import datetime",
+        "import argparse"
+      ],
+      "last_modified": "2026-01-06T12:08:22"
+    },
+    "analytics_deployment_monitor": {
+      "name": "analytics_deployment_monitor",
+      "path": "src\\infrastructure\\analytics_deployment_monitor.py",
+      "description": "Analytics Deployment Monitor",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "to_dict",
+          "signature": "def to_dict(self) -> Dict[str, Any]:",
+          "docstring": "Service for monitoring analytics deployment health.",
+          "is_async": false,
+          "line_number": 55
+        },
+        {
+          "name": "__init__",
+          "signature": "def __init__(self):",
+          "docstring": "Check analytics deployment status for a specific site.",
+          "is_async": false,
+          "line_number": 66
+        },
+        {
+          "name": "__aenter__",
+          "signature": "async def __aenter__(self):",
+          "docstring": "Check analytics deployment status for a specific site.",
+          "is_async": true,
+          "line_number": 80
+        },
+        {
+          "name": "__aexit__",
+          "signature": "async def __aexit__(self, exc_type, exc_val, exc_tb):",
+          "docstring": "Check analytics deployment status for a specific site.",
+          "is_async": true,
+          "line_number": 84
+        },
+        {
+          "name": "check_analytics_deployment",
+          "signature": "async def check_analytics_deployment(self, site_name: str) -> AnalyticsDeploymentStatus:",
+          "docstring": "Check analytics deployment status for a specific site.",
+          "is_async": true,
+          "line_number": 88
+        },
+        {
+          "name": "check_all_sites",
+          "signature": "async def check_all_sites(self) -> AnalyticsDeploymentMonitor:",
+          "docstring": "Check analytics deployment status for all monitored sites.",
+          "is_async": true,
+          "line_number": 170
+        },
+        {
+          "name": "validate_live_deployment",
+          "signature": "async def validate_live_deployment(self, site_name: str) -> Dict[str, Any]:",
+          "docstring": "Validate that analytics are actually working on the live site.",
+          "is_async": true,
+          "line_number": 208
+        },
+        {
+          "name": "get_deployment_summary",
+          "signature": "def get_deployment_summary(self) -> Dict[str, Any]:",
+          "docstring": "Get a summary of analytics deployment status.",
+          "is_async": false,
+          "line_number": 253
+        },
+        {
+          "name": "get_analytics_deployment_health",
+          "signature": "def get_analytics_deployment_health() -> Dict[str, Any]:",
+          "docstring": "Get analytics deployment health for integration with system health checks.",
+          "is_async": false,
+          "line_number": 287
+        },
+        {
+          "name": "main",
+          "signature": "async def main():",
+          "docstring": "Main CLI interface for analytics deployment monitoring.",
+          "is_async": true,
+          "line_number": 308
+        }
+      ],
+      "classes": [
+        {
+          "name": "AnalyticsDeploymentStatus",
+          "docstring": "Status of analytics deployment on a specific site.",
+          "methods": [],
+          "line_number": 34
+        },
+        {
+          "name": "AnalyticsDeploymentMonitor",
+          "docstring": "Monitor for analytics deployment across multiple sites.",
+          "methods": [
+            "to_dict"
+          ],
+          "line_number": 48
+        },
+        {
+          "name": "AnalyticsDeploymentMonitorService",
+          "docstring": "Service for monitoring analytics deployment health.",
+          "methods": [
+            "check_analytics_deployment",
+            "check_all_sites",
+            "validate_live_deployment",
+            "get_deployment_summary",
+            "get_analytics_deployment_health",
+            "main"
+          ],
+          "line_number": 63
+        }
+      ],
+      "dependencies": [
+        "import asyncio",
+        "import aiohttp",
+        "import json",
+        "import time",
+        "import re",
+        "import logging",
+        "from datetime import datetime, timedelta",
+        "from typing import Dict, List, Optional, Tuple, Any",
+        "from dataclasses import dataclass, asdict",
+        "from pathlib import Path",
+        "import argparse"
+      ],
+      "last_modified": "2026-01-07T02:38:00"
+    },
+    "verification_service": {
+      "name": "verification_service",
+      "path": "src\\services\\verification_service.py",
+      "description": "Verification Service - Automated Harness",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "__init__",
+          "signature": "def __init__(self):",
+          "docstring": "Verify a URL returns the expected status code.",
+          "is_async": false,
+          "line_number": 47
+        },
+        {
+          "name": "verify_url_status",
+          "signature": "def verify_url_status(self, url: str, expected_status: int = 200, timeout: int = 10) -> Dict[str, Any]:",
+          "docstring": "Verify a URL returns the expected status code.",
+          "is_async": false,
+          "line_number": 50
+        },
+        {
+          "name": "verify_text_in_page",
+          "signature": "def verify_text_in_page(self, url: str, text: str, timeout: int = 10) -> Dict[str, Any]:",
+          "docstring": "Verify specific text exists in the page content.",
+          "is_async": false,
+          "line_number": 70
+        },
+        {
+          "name": "run_unit_tests",
+          "signature": "def run_unit_tests(self, test_path: str) -> Dict[str, Any]:",
+          "docstring": "Run pytest on a specific path.",
+          "is_async": false,
+          "line_number": 88
+        },
+        {
+          "name": "verify_file_exists",
+          "signature": "def verify_file_exists(self, path: str) -> Dict[str, Any]:",
+          "docstring": "Verify a local file exists.",
+          "is_async": false,
+          "line_number": 112
+        },
+        {
+          "name": "run_lighthouse_audit",
+          "signature": "def run_lighthouse_audit(self, url: str) -> Dict[str, Any]:",
+          "docstring": "Run comprehensive Lighthouse audit on a website.\n        Provides performance, accessibility, SEO, and best practices scoring.",
+          "is_async": false,
+          "line_number": 117
+        }
+      ],
+      "classes": [
+        {
+          "name": "VerificationService",
+          "docstring": "Automated verification harness for validating system claims.",
+          "methods": [
+            "verify_url_status",
+            "verify_text_in_page",
+            "run_unit_tests",
+            "verify_file_exists",
+            "run_lighthouse_audit"
+          ],
+          "line_number": 42
+        }
+      ],
+      "dependencies": [
+        "import logging",
+        "import requests",
+        "import subprocess",
+        "from typing import Dict, Any, List, Optional",
+        "from pathlib import Path",
+        "from src.core.base.base_service import BaseService",
+        "import subprocess",
+        "import json",
+        "import tempfile",
+        "import os",
+        "from datetime import datetime"
+      ],
+      "last_modified": "2026-01-07T04:39:16"
+    },
+    "sender_validation": {
+      "name": "sender_validation",
+      "path": "src\\services\\messaging\\sender_validation.py",
+      "description": "Sender Validation Module - Messaging Infrastructure",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "validate_sender_format",
+          "signature": "def validate_sender_format(sender: str) -> Tuple[bool, Optional[str]]:",
+          "docstring": "Validate sender format matches expected agent ID pattern.\n    \n    Args:\n        sender: Sender identifier to validate\n        \n    Returns:\n        Tuple of (is_valid, error_message)",
+          "is_async": false,
+          "line_number": 29
+        },
+        {
+          "name": "validate_a2a_sender_identification",
+          "signature": "def validate_a2a_sender_identification(",
+          "docstring": "Validate that A2A messages have proper sender identification.\n    \n    For A2A messages, we require explicit sender identification to ensure\n    proper routing and tracking. This prevents messages from defaulting to CAPTAIN.\n    \n    Args:\n        sender: Explicit sender provided via CLI (--sender flag)\n        category: Message category (A2A messages require explicit sender)\n        detected_sender: Auto-detected sender from environment/context\n        \n    Returns:\n        Tuple of (is_valid, normalized_sender, error_message)\n        - is_valid: True if sender is properly identified\n        - normalized_sender: The sender to use (validated and normalized)\n        - error_message: Error message if validation fails, None if valid",
+          "is_async": false,
+          "line_number": 72
+        },
+        {
+          "name": "log_agent_activity",
+          "signature": "async def log_agent_activity(",
+          "docstring": "Log agent activity for status tracking and monitoring.\n    \n    This allows the system to track which agents performed which actions,\n    which can be tied to status.json updates and agent monitoring.\n    \n    Args:\n        sender: Sender agent ID\n        recipient: Recipient agent ID\n        category: Message category\n        message_id: Optional message ID for tracking",
+          "is_async": true,
+          "line_number": 134
+        },
+        {
+          "name": "_update_agent_status",
+          "signature": "async def _update_agent_status(sender: str, message_id: Optional[str],",
+          "docstring": "Update agent's status.json with last activity information.\n\n    Args:\n        sender: Agent ID that sent the message\n        message_id: Unique message identifier\n        category: Message category (A2A, C2A, etc.)\n        recipient: Agent ID that received the message",
+          "is_async": true,
+          "line_number": 173
+        },
+        {
+          "name": "_write_central_activity_log",
+          "signature": "async def _write_central_activity_log(sender: str, recipient: str,",
+          "docstring": "Write message activity to central activity log.\n\n    Args:\n        sender: Agent ID that sent the message\n        recipient: Agent ID that received the message\n        category: Message category\n        message_id: Unique message identifier",
+          "is_async": true,
+          "line_number": 230
+        }
+      ],
+      "classes": [],
+      "dependencies": [
+        "from __future__ import annotations",
+        "import logging",
+        "import re",
+        "from typing import Optional, Tuple",
+        "from src.core.constants.agent_constants import AGENT_LIST",
+        "from src.core.messaging_models_core import MessageCategory",
+        "import json",
+        "import os",
+        "from datetime import datetime",
+        "import json",
+        "import os",
+        "from datetime import datetime"
+      ],
+      "last_modified": "2026-01-07T04:40:36"
+    },
+    "message_validation_service": {
+      "name": "message_validation_service",
+      "path": "src\\services\\messaging\\services\\message_validation_service.py",
+      "description": "Message Validation Service - Service Layer Pattern",
+      "author": "Agent-3",
+      "domain": "analytics",
+      "version": "V2",
+      "functions": [
+        {
+          "name": "validate_message",
+          "signature": "def validate_message(",
+          "docstring": "Validate message and return blocking result if needed.\n\n        Args:\n            sender: Message sender\n            recipient: Message recipient\n            message: Message content\n            category: Message category\n\n        Returns:\n            Tuple of (block_result, metadata) - both None if valid",
+          "is_async": false,
+          "line_number": 32
+        },
+        {
+          "name": "validate_a2a_category",
+          "signature": "def validate_a2a_category(",
+          "docstring": "Validate A2A message category consistency.\n\n        Args:\n            message: Message content\n            category: Current message category\n            sender: Message sender\n            recipient: Message recipient\n\n        Returns:\n            Tuple of (is_valid, block_result) - block_result is None if valid",
+          "is_async": false,
+          "line_number": 73
+        }
+      ],
+      "classes": [
+        {
+          "name": "MessageValidationService",
+          "docstring": "Service for validating messages before delivery.",
+          "methods": [
+            "validate_message",
+            "validate_a2a_category"
+          ],
+          "line_number": 29
+        }
+      ],
+      "dependencies": [
+        "from __future__ import annotations",
+        "import logging",
+        "from typing import Any, Dict, Optional, Tuple",
+        "from src.core.messaging_models_core import MessageCategory",
+        "from ..agent_message_helpers import ("
+      ],
+      "last_modified": "2025-12-29T14:28:42"
+    }
+  },
+  "architecture_overview": "\n# Enterprise Analytics Ecosystem Architecture\n\n## Overview\nThe enterprise analytics ecosystem consists of 45 specialized tools organized across 3 domains.\n\n## Domain Structure\n\n### Analytics Domain (41 tools)\n-   - test_deployment_staging\n  - verify_deployment_integration\n  - discord_health_monitor\n  - system_health_dashboard\n  - automated_p0_analytics_validation\n  - parse_validation_report\n  - discord_bot_health_check\n  - execute_phase3_final_validation\n  - phase3_validation_readiness\n  - verify_fastapi_deployment\n  - validation_result_integration_pipeline\n  - monitor_fastapi_deployment\n  - validation_completion_signal_handler\n  - check_validation_integration_status\n  - check_fastapi_deployment_status\n  - validation_integration_monitor\n  - execute_fastapi_validation_pipeline\n  - monitor_fastapi_health_endpoint\n  - unified_validation_tools_manager\n  - unified_deployment_manager\n  - phase5_health_check\n  - phase5_deployment_validator\n  - phase5_load_test_orchestrator\n  - phase5_monitoring_dashboard\n  - infrastructure_status_dashboard\n  - phase6_compliance_checker\n  - deploy_ga4_pixel_analytics\n  - deploy_ga4_pixel_remote\n  - website_health_monitor\n  - analytics_live_verification\n  - enterprise_analytics_compliance_validator\n  - analytics_deployment_orchestrator\n  - analytics_deployment_dashboard\n  - analytics_deployment_automation\n  - analytics_operations_center\n  - analytics_ecosystem_health_scorer\n  - analytics_service\n  - analytics_deployment_monitor\n  - verification_service\n  - sender_validation\n  - message_validation_service\n\n### Tools Domain (3 tools)\n-   - populate_validation_report\n  - verify_final_validation_readiness\n  - execute_final_validation_workflow\n\n### \\S*(.+)', Content, Re.Ignorecase) Domain (1 tools)\n-   - analytics_ecosystem_documentation_generator\n\n\n## Key Architectural Components\n\n### Infrastructure Layer\n- Website Health Monitoring\n- Server Error Diagnostics\n- Analytics Deployment Monitoring\n\n### Business Logic Layer\n- Compliance Validation\n- Live Verification\n- Deployment Orchestration\n\n### Presentation Layer\n- Executive Dashboards\n- Operations Center\n- Health Scoring System\n\n### Integration Layer\n- Automated Deployment\n- Remote Deployment Tools\n- Configuration Management\n\n## Data Flow Architecture\n\n```\n\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510    \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510    \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502   Monitoring    \u2502\u2500\u2500\u2500\u25b6\u2502   Validation    \u2502\u2500\u2500\u2500\u25b6\u2502   Deployment    \u2502\n\u2502   & Health      \u2502    \u2502   & Compliance  \u2502    \u2502   & Execution   \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518    \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518    \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n         \u2502                       \u2502                       \u2502\n         \u25bc                       \u25bc                       \u25bc\n\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510    \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510    \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502   Alerting      \u2502    \u2502   Reporting     \u2502    \u2502   Operations    \u2502\n\u2502   & Response    \u2502    \u2502   & Analytics  \u2502    \u2502   & Maintenance \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518    \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518    \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n```\n\n## Quality Assurance\n- Automated testing frameworks\n- Health scoring algorithms\n- Compliance validation pipelines\n- Performance monitoring systems\n\nLast updated: 2026-01-07 04:41:28\n",
+  "integration_patterns": [
+    "Asynchronous Operations: Tools use async/await for non-blocking operations",
+    "Observer Pattern: Monitoring tools observe system state and report changes",
+    "Strategy Pattern: Validation tools implement different validation strategies",
+    "Pipeline Pattern: Deployment tools implement multi-stage execution pipelines",
+    "Factory Pattern: Tool instantiation through configuration-based factories",
+    "Repository Pattern: Data access abstracted through repository interfaces",
+    "Command Pattern: Operations encapsulated as executable commands"
+  ],
+  "maintenance_guide": "\n# Enterprise Analytics Ecosystem Maintenance Guide\n\n## System Overview\nThis guide covers maintenance procedures for the 45 analytics ecosystem tools.\n\n## Daily Operations\n\n### Health Monitoring\n- Run `analytics_ecosystem_health_scorer.py` daily\n- Review health scores and risk levels\n- Address critical and high-risk issues immediately\n\n### Log Review\n- Check application logs for errors\n- Review analytics data collection\n- Monitor deployment status\n\n## Weekly Maintenance\n\n### Tool Updates\n- Review tool versions and dependencies\n- Update documentation as needed\n- Test tool integrations\n\n### Performance Optimization\n- Analyze system performance metrics\n- Optimize slow-running operations\n- Review and optimize database queries\n\n## Monthly Procedures\n\n### Compliance Review\n- Run full compliance audits\n- Review GDPR and privacy compliance\n- Update compliance documentation\n\n### Security Assessment\n- Review access controls\n- Update security configurations\n- Audit user permissions\n\n## Troubleshooting\n\n### Common Issues\n- **Tool failures**: Check dependencies and configuration\n- **Network timeouts**: Review network connectivity and timeouts\n- **Data inconsistencies**: Validate data sources and transformations\n\n### Diagnostic Tools\n- `analytics_ecosystem_health_scorer.py` - Overall system health\n- `website_health_monitor.py` - Infrastructure diagnostics\n- `server_error_diagnostic.py` - Error analysis\n\n## Emergency Procedures\n\n### System Down\n1. Check infrastructure health\n2. Review recent deployments\n3. Contact on-call engineer\n4. Implement rollback if necessary\n\n### Data Loss\n1. Check backup systems\n2. Review recovery procedures\n3. Restore from last known good state\n4. Validate data integrity\n\n## Contact Information\n- Primary: Agent-3 (Infrastructure & DevOps)\n- Secondary: Agent-4 (Captain - Strategic Oversight)\n- Emergency: System administrators\n\nLast updated: 2026-01-07 04:41:28\n"
+}

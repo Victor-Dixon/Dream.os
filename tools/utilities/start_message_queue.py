@@ -3,6 +3,7 @@
 Message Queue Service Launcher
 ===============================
 
+<<<<<<< HEAD
 Launcher script for the message queue processor that runs as a background daemon.
 """
 
@@ -57,3 +58,20 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
+=======
+Simple launcher script for the message queue processor.
+"""
+
+import sys
+import os
+
+# Add the project root to Python path
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+try:
+    from src.core.message_queue_processor.core.processor import main
+    main()
+except Exception as e:
+    print(f"Failed to start message queue: {e}")
+    sys.exit(1)
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1

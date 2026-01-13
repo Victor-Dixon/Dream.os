@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
 <<<<<<< HEAD
+<<<<<<< HEAD
 Webhook Commands - Agent Cellphone V2
 =====================================
 
@@ -374,16 +375,27 @@ async def setup(bot):
     await bot.add_cog(WebhookCommands(bot))
 =======
 <!-- SSOT Domain: discord -->
+=======
+Webhook Commands - Agent Cellphone V2
+=====================================
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
-Discord Webhook Management Commands
-===================================
+SSOT Domain: discord
 
-Bot commands for creating and managing Discord webhooks programmatically.
-Enables agents to fully control Discord server webhook infrastructure.
+Refactored entry point for Discord webhook management commands.
+All core logic has been extracted into service architecture for V2 compliance.
 
-Author: Agent-7 (Web Development Specialist)
-License: MIT
+Features:
+- Webhook creation, deletion, testing, and information
+- Interactive confirmation dialogs
+- Configuration persistence
+- Error handling and validation (webhook_commands_v2.py)
+
+V2 Compliant: Yes (<300 lines)
+Author: Agent-1 (Integration & Core Systems Specialist)
+Date: 2026-01-07
 """
+<<<<<<< HEAD
 
 import json
 import logging
@@ -783,3 +795,5 @@ async def setup(bot: commands.Bot):
     """Setup function for loading as extension."""
     await bot.add_cog(WebhookCommands(bot))
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1

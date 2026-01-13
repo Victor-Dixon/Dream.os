@@ -339,12 +339,17 @@ class ActivitySourceCheckers:
 
         try:
 <<<<<<< HEAD
+<<<<<<< HEAD
             from src.services.unified_service_managers import UnifiedContractManager
             manager = UnifiedContractManager()
 =======
             from src.services.contract_system.manager import ContractManager
             manager = ContractManager()
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+            from src.services.unified_service_managers import UnifiedContractManager
+            manager = UnifiedContractManager()
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
             agent_status = manager.get_agent_status(agent_id)
 
             contracts = agent_status.get("contracts", [])

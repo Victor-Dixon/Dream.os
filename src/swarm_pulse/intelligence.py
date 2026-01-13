@@ -1,5 +1,6 @@
 """
 <<<<<<< HEAD
+<<<<<<< HEAD
 Intelligence - Agent Cellphone V2
 ==================================
 
@@ -26,21 +27,31 @@ from .intelligence_v2 import *
 from .intelligence_service import IntelligenceService, intelligence_service
 =======
 <!-- SSOT Domain: swarm_brain -->
+=======
+Intelligence - Agent Cellphone V2
+==================================
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
-Single Source of Truth (SSOT) for Swarm Intelligence Core
-Domain: intelligence
-Owner: Agent-2 (Architecture & Design)
-Last Updated: 2025-12-08
-Related SSOT: src/swarm_pulse/intelligence_models.py, src/swarm_pulse/intelligence_scoring.py
-Phase: Vector Pulse Phase 2A - Partnership suggestions, hybrid routing, collaboration pattern detection
+SSOT Domain: swarm_brain
 
-Original: 596 lines - MAJOR V2 violation (4 lines from immediate refactor!)
-Refactored by: Agent-7 (V2 compliance: 596L → 3 modules)
+Refactored entry point for swarm intelligence operations.
+All core logic has been extracted into service architecture for V2 compliance.
+
+Features:
+- Partnership suggestion algorithms
+- Intelligent routing and coordination
+- Collaboration pattern detection
+- Coordination efficiency analysis (intelligence_v2.py)
+
+V2 Compliant: Yes (<300 lines)
+Author: Agent-1 (Integration & Core Systems Specialist)
+Date: 2026-01-07
 """
-from __future__ import annotations
 
-from typing import Dict, List
+# Re-export all functions for backward compatibility
+from .intelligence_v2 import *
 
+<<<<<<< HEAD
 from .intelligence_models import (
     INTELLIGENCE_CONFIG,
     CollaborationPattern,
@@ -366,3 +377,7 @@ __all__ = [
     "INTELLIGENCE_CONFIG",
 ]
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+# Re-export intelligence service for advanced usage
+from .intelligence_service import IntelligenceService, intelligence_service
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1

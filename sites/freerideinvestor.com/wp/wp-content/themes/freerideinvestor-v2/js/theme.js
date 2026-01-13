@@ -21,11 +21,17 @@
         initMobileMenu();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         // Menu highlighting
         initMenuHighlighting();
 
 =======
 >>>>>>> origin/codex/build-tsla-morning-report-system
+=======
+        // Menu highlighting
+        initMenuHighlighting();
+
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         // Smooth scrolling for anchor links
         initSmoothScroll();
 
@@ -47,6 +53,9 @@
 
     /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
      * Menu highlighting for active navigation items
      */
     function initMenuHighlighting() {
@@ -71,8 +80,11 @@
     }
 
     /**
+<<<<<<< HEAD
 =======
 >>>>>>> origin/codex/build-tsla-morning-report-system
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
      * Mobile menu functionality
      */
     function initMobileMenu() {

@@ -20,6 +20,7 @@ try:
     from src.services.chat_presence.chat_presence_orchestrator import ChatPresenceOrchestrator
     CHAT_PRESENCE_AVAILABLE = True
 <<<<<<< HEAD
+<<<<<<< HEAD
 except (ImportError, NameError):
     CHAT_PRESENCE_AVAILABLE = False
     ChatPresenceOrchestrator = None
@@ -27,6 +28,11 @@ except (ImportError, NameError):
 except ImportError:
     CHAT_PRESENCE_AVAILABLE = False
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+except (ImportError, NameError):
+    CHAT_PRESENCE_AVAILABLE = False
+    ChatPresenceOrchestrator = None
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
 
 class ChatPresenceHandlers(BaseHandler, AvailabilityMixin):
@@ -37,6 +43,7 @@ class ChatPresenceHandlers(BaseHandler, AvailabilityMixin):
         super().__init__("ChatPresenceHandlers")
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     def _get_orchestrator(self):
         """Get chat presence orchestrator instance."""
         if not CHAT_PRESENCE_AVAILABLE or ChatPresenceOrchestrator is None:
@@ -45,6 +52,12 @@ class ChatPresenceHandlers(BaseHandler, AvailabilityMixin):
     def _get_orchestrator(self) -> ChatPresenceOrchestrator:
         """Get chat presence orchestrator instance."""
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+    def _get_orchestrator(self):
+        """Get chat presence orchestrator instance."""
+        if not CHAT_PRESENCE_AVAILABLE or ChatPresenceOrchestrator is None:
+            raise ImportError("ChatPresenceOrchestrator not available")
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         # Initialize with optional configs from request or environment
         return ChatPresenceOrchestrator()
 

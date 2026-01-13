@@ -33,6 +33,7 @@ from datetime import datetime
 from ..core.base.base_service import BaseService
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Optional vector database imports - import directly to avoid services __init__ chain
 try:
     from .vector.vector_database_service import VectorDatabaseService
@@ -53,10 +54,23 @@ try:
     from src.services.models.vector_models import DocumentType  # SSOT
     def add_document_to_vector_db(doc: VectorDocument):
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+# Optional vector database imports - import directly to avoid services __init__ chain
+try:
+    from .vector.vector_database_service import VectorDatabaseService
+    from .vector.vector_database_models import VectorDocument
+    VECTOR_DB_AVAILABLE = True
+
+    def get_vector_database_service():
+        return VectorDatabaseService()
+
+    def add_document_to_vector_db(doc):
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         service = get_vector_database_service()
         if service:
             return service.add_document(doc)
         return False
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 except (ImportError, ValueError, AttributeError) as e:
@@ -65,17 +79,26 @@ except (ImportError, ValueError, AttributeError) as e:
     VECTOR_DB_AVAILABLE = True
 except ImportError:
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+
+except (ImportError, ValueError, AttributeError) as e:
+    print(f"⚠️  Vector database not available for work indexer: {e}")
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     VECTOR_DB_AVAILABLE = False
     def get_vector_database_service():
         return None
     def add_document_to_vector_db(doc):
         return False
 <<<<<<< HEAD
+<<<<<<< HEAD
     # Fallback VectorDocument class
 =======
     # SSOT: Import DocumentType from SSOT instead of defining locally
     from src.services.models.vector_models import DocumentType
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+    # Fallback VectorDocument class
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     from dataclasses import dataclass
     @dataclass
     class VectorDocument:
@@ -107,6 +130,9 @@ class WorkIndexer(BaseService):
         Index agent's completed work to vector database.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         Navigation References:
         ├── Vector Database → src/services/vector/vector_database_service.py::add_document_to_vector_db()
         ├── Document Types → src/services/vector/vector_document_types.py::DocumentType
@@ -132,8 +158,11 @@ class WorkIndexer(BaseService):
         - Supports swarm learning through work pattern analysis
         - Maintains searchable knowledge base of agent contributions
 
+<<<<<<< HEAD
 =======
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         Args:
             file_path: Path to the file to index
             work_type: Type of work (code, documentation, test, etc.)

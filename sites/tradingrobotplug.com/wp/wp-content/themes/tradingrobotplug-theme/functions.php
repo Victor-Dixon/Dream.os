@@ -264,13 +264,14 @@ add_filter('template_include', function ($template) {
  */
 function add_analytics_tracking_codes() {
     // Google Analytics 4 (GA4)
+    if (defined('GA4_MEASUREMENT_ID') && GA4_MEASUREMENT_ID) {
         echo '<!-- Google Analytics 4 (GA4) -->\n';
-        echo '<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>\n';
+        echo '<script async src="https://www.googletagmanager.com/gtag/js?id=' . GA4_MEASUREMENT_ID . '"></script>\n';
         echo '<script>\n';
         echo 'window.dataLayer = window.dataLayer || [];\n';
         echo 'function gtag(){dataLayer.push(arguments);}\n';
         echo 'gtag(\'js\', new Date());\n';
-        echo 'gtag(\'config\', \'G-XXXXXXXXXX\', {\n';
+        echo 'gtag(\'config\', \'' . GA4_MEASUREMENT_ID . '\', {\n';
         echo '\'page_path\': window.location.pathname,\n';
         echo '\'page_title\': document.title,\n';
         echo '});\n';
@@ -287,8 +288,10 @@ function add_analytics_tracking_codes() {
         echo '});\n';
         echo '</script>\n';
         echo '<!-- End GA4 -->\n';
-    
+    }
+
     // Facebook Pixel
+    if (defined('FACEBOOK_PIXEL_ID') && FACEBOOK_PIXEL_ID) {
         echo '<!-- Facebook Pixel Code -->\n';
         echo '<script>\n';
         echo '!function(f,b,e,v,n,t,s)\n';
@@ -299,14 +302,15 @@ function add_analytics_tracking_codes() {
         echo 't.src=v;s=b.getElementsByTagName(e)[0];\n';
         echo 's.parentNode.insertBefore(t,s)}}(window, document,\'script\',\n';
         echo '\'https://connect.facebook.net/en_US/fbevents.js\');\n';
-        echo 'fbq(\'init\', \'YOUR_PIXEL_ID\');\n';
+        echo 'fbq(\'init\', \'' . FACEBOOK_PIXEL_ID . '\');\n';
         echo 'fbq(\'track\', \'PageView\');\n';
         echo '</script>\n';
         echo '<noscript>\n';
         echo '<img height="1" width="1" style="display:none"\n';
-        echo 'src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>\n';
+        echo 'src="https://www.facebook.com/tr?id=' . FACEBOOK_PIXEL_ID . '&ev=PageView&noscript=1"/>\n';
         echo '</noscript>\n';
         echo '<!-- End Facebook Pixel Code -->\n';
+    }
 }
 add_action('wp_head', 'add_analytics_tracking_codes', 99);
 
@@ -390,6 +394,65 @@ add_filter('template_include', function ($template) {
     
     return $template;
 }, 999);
+
+/**
+ * Handle contact form submission (WEB-04)
+ * Processes email submissions and redirects appropriately
+ */
+function handle_contact_form() {
+    // Verify nonce for security
+    if (!isset($_POST['contact_nonce']) || !wp_verify_nonce($_POST['contact_nonce'], 'contact_form')) {
+        wp_die('Security check failed');
+    }
+
+    // Sanitize and validate email
+    $email = sanitize_email($_POST['email']);
+    if (!is_email($email)) {
+        wp_redirect(add_query_arg('contact_error', 'invalid_email', wp_get_referer()));
+        exit;
+    }
+
+    // Store email in database for waitlist
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'trading_robot_waitlist';
+
+    // Create table if it doesn't exist
+    $charset_collate = $wpdb->get_charset_collate();
+    $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+        id int(11) NOT NULL AUTO_INCREMENT,
+        email varchar(255) NOT NULL,
+        signup_date datetime DEFAULT CURRENT_TIMESTAMP,
+        status enum('active','inactive') DEFAULT 'active',
+        PRIMARY KEY (id),
+        UNIQUE KEY email (email)
+    ) $charset_collate;";
+
+    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+    dbDelta($sql);
+
+    // Insert or update email
+    $wpdb->replace(
+        $table_name,
+        array(
+            'email' => $email,
+            'status' => 'active'
+        ),
+        array('%s', '%s')
+    );
+
+    // Send confirmation email (optional - could integrate with email service)
+    $subject = 'Welcome to TradingRobotPlug Waitlist!';
+    $message = "Thank you for joining our waitlist!\n\nWe'll notify you when our trading robots are ready and give you priority access.\n\nBest regards,\nTradingRobotPlug Team";
+    $headers = array('Content-Type: text/plain; charset=UTF-8');
+
+    wp_mail($email, $subject, $message, $headers);
+
+    // Redirect back with success message
+    wp_redirect(add_query_arg('contact_success', '1', wp_get_referer()));
+    exit;
+}
+add_action('admin_post_handle_contact_form', 'handle_contact_form');
+add_action('admin_post_nopriv_handle_contact_form', 'handle_contact_form');
 
 /**
  * Clear cache when theme is activated or updated

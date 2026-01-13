@@ -1,3 +1,5 @@
+<!-- SSOT Domain: architecture -->
+
 # Cycle Snapshot System → Blog Integration Brainstorm
 
 **Date:** 2025-12-31  

@@ -8,10 +8,15 @@
  */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 // <!-- SSOT Domain: web -->
 
 =======
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+// <!-- SSOT Domain: web -->
+
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 // ================================
 // PATTERN COORDINATION METHODS
 // ================================

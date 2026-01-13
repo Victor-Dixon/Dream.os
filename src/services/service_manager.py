@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 """
 Service Manager - Agent Cellphone V2
 ===================================
@@ -311,6 +312,8 @@ class ServiceManager:
         })
 
 =======
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 """
 Service Manager - Agent Cellphone V2
 ===================================
@@ -462,11 +465,15 @@ class ServiceManager:
         use_launcher = service_config.get('use_launcher', False)
 
         try:
+<<<<<<< HEAD
             # Always use launcher for services configured with use_launcher=True
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
             if use_launcher:
                 # Use launcher script - it manages its own PID file
                 import subprocess
                 logger.info(f"Starting {service_name} using launcher: {script_path}")
+<<<<<<< HEAD
 
                 # For services that run indefinitely (like message processors), use Popen
                 long_running_services = ['message_queue', 'twitch', 'fastapi']
@@ -507,6 +514,23 @@ class ServiceManager:
                     else:
                         logger.error(f"Launcher failed for {service_name}: {result.stderr}")
                         return False
+=======
+                cmd = [sys.executable, script_path]
+                result = subprocess.run(
+                    cmd,
+                    capture_output=True,
+                    text=True,
+                    cwd=os.getcwd()
+                )
+                if result.returncode == 0:
+                    logger.info(f"Launcher started {service_name} successfully")
+                    # Don't write PID - launcher does this
+                    self.services[service_name]['status'] = 'running'
+                    return True
+                else:
+                    logger.error(f"Launcher failed for {service_name}: {result.stderr}")
+                    return False
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
             elif background:
                 # Start in background with PID management
                 import subprocess
@@ -532,6 +556,7 @@ class ServiceManager:
             return False
 
     def _run_service_foreground(self, service_name: str):
+<<<<<<< HEAD
         """Run a service in foreground mode using threads for long-running services."""
         import threading
 
@@ -571,6 +596,31 @@ class ServiceManager:
         time.sleep(2)
 
         logger.info(f"✅ {service_name} started in foreground thread")
+=======
+        """Run a service in foreground mode."""
+        # Import the service module dynamically
+        if service_name == 'message_queue':
+            from src.core.message_queue_processor.core.processor import main
+            main()
+        elif service_name == 'twitch':
+            from src.services.chat_presence.twitch_eventsub_server import main
+            main()
+        elif service_name == 'discord':
+            from src.discord_bot import main
+            main()
+        elif service_name == 'fastapi':
+            # Import from local FastAPI application
+            try:
+                from src.web.fastapi_app import app
+                import uvicorn
+                uvicorn.run(app, host="0.0.0.0", port=8001)
+            except ImportError as e:
+                logger.error(f"FastAPI service failed to import from local web module: {e}")
+                logger.error("Ensure FastAPI components are properly configured")
+                raise
+        else:
+            raise ValueError(f"Unknown service: {service_name}")
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
     def stop_service(self, service_name: str, force: bool = False) -> bool:
         """Stop a specific service."""
@@ -655,5 +705,8 @@ class ServiceManager:
             'pid_file': str(self._get_pid_file_path(service_name))
         })
 
+<<<<<<< HEAD
 >>>>>>> rescue/dreamos-down-
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         return info

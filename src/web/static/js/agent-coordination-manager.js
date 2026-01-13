@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 /**
  * Agent Coordination Manager - V2 Compliant Agent Coordination
  * Manages agent coordination and communication
@@ -160,6 +163,7 @@ export function createAgentCoordinationManager() {
         }
     };
 }
+<<<<<<< HEAD
 =======
 /**
  * Agent Coordination Manager - V2 Compliant Agent Coordination
@@ -321,3 +325,5 @@ export function createAgentCoordinationManager() {
     };
 }
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1

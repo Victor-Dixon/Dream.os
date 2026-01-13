@@ -1,16 +1,8 @@
 """
-Cycle Snapshot System
-====================
+Cycle Snapshot System - Central Nervous System of the Swarm
 
-Central hub system for capturing complete project state at cycle boundaries.
-
-Author: Agent-3 (Infrastructure & DevOps Specialist)
-Architecture: Agent-2 (Architecture & Design Specialist)
-Created: 2025-12-31
-License: MIT
-
-<!-- SSOT Domain: tools -->
+This system collects data from 30+ systems, aggregates it into complete
+project state, resets agent status.json files, and distributes to all systems.
 """
 
 __version__ = "0.1.0"
-

@@ -1,113 +1,122 @@
 """
-Agent Status Collector
-======================
+Agent Status Collector for Cycle Snapshot System
+===============================================
 
-Collects agent status.json files safely.
+Collects agent status.json files safely for cycle snapshots.
 
 Author: Agent-3 (Infrastructure & DevOps Specialist)
 Architecture: Agent-2 (Architecture & Design Specialist)
-Created: 2025-12-31
+Created: 2026-01-08
 V2 Compliant: Yes (<400 lines, functions <30 lines)
-
-<!-- SSOT Domain: tools -->
 """
 
-import json
 import logging
 from pathlib import Path
-from typing import Dict, Optional, Any, List
+from typing import Dict, Optional, Any
+
+from src.core.agent_status.reader import AgentStatusReader
 
 logger = logging.getLogger(__name__)
 
 
-def validate_status_json(status: Dict[str, Any]) -> bool:
+def collect_all_agent_status(workspace_root: Path) -> Dict[str, Dict]:
     """
-    Validate status.json structure and content.
-    
+    Collect status.json files from all agents safely.
+
     Args:
-        status: Status dictionary to validate
-    
-    Returns:
-        True if valid, False otherwise
-    """
-    required_fields = ["agent_id", "agent_name", "status"]
-    
-    for field in required_fields:
-        if field not in status:
-            logger.warning(f"Missing required field in status.json: {field}")
-            return False
-    
-    # Validate JSON is serializable
-    try:
-        json.dumps(status)
-    except (TypeError, ValueError) as e:
-        logger.error(f"Status JSON not serializable: {e}")
-        return False
-    
-    return True
+        workspace_root: Path to workspace root directory
 
-
-def collect_agent_status(
-    agent_id: str,
-    workspace_root: Path
-) -> Optional[Dict[str, Any]]:
-    """
-    Collect status for a specific agent.
-    
-    Args:
-        agent_id: Agent ID (e.g., "Agent-1", "Agent-2")
-        workspace_root: Root workspace path
-    
-    Returns:
-        Agent status dict or None if not found/invalid
-    """
-    status_file = workspace_root / "agent_workspaces" / agent_id / "status.json"
-    
-    if not status_file.exists():
-        logger.debug(f"Status file not found for {agent_id}: {status_file}")
-        return None
-    
-    try:
-        with open(status_file, 'r', encoding='utf-8') as f:
-            status = json.load(f)
-        
-        if not validate_status_json(status):
-            logger.warning(f"Invalid status.json for {agent_id}")
-            return None
-        
-        return status
-    
-    except json.JSONDecodeError as e:
-        logger.error(f"JSON decode error for {agent_id}: {e}")
-        return None
-    except Exception as e:
-        logger.error(f"Error reading status for {agent_id}: {e}")
-        return None
-
-
-def collect_all_agent_status(
-    workspace_root: Path,
-    agent_ids: Optional[List[str]] = None
-) -> Dict[str, Dict[str, Any]]:
-    """
-    Collect status from all active agents.
-    
-    Args:
-        workspace_root: Root workspace path
-        agent_ids: List of agent IDs to collect (defaults to Agent-1 through Agent-8)
-    
     Returns:
         Dict mapping agent_id to status data
     """
-    if agent_ids is None:
-        agent_ids = [f"Agent-{i}" for i in range(1, 9)]
-    
-    agents = {}
-    
-    for agent_id in agent_ids:
+    reader = AgentStatusReader(workspace_root)
+    all_status = {}
+
+    # Agent mapping from architecture constants
+    agents = {
+        "Agent-1": "Integration & Core Systems",
+        "Agent-2": "Architecture & Design",
+        "Agent-3": "Infrastructure & DevOps",
+        "Agent-4": "Captain (Strategic Oversight)",
+        "Agent-5": "Business Intelligence",
+        "Agent-6": "Coordination & Communication",
+        "Agent-7": "Web Development",
+        "Agent-8": "SSOT & System Integration"
+    }
+
+    for agent_id in agents.keys():
         status = collect_agent_status(agent_id, workspace_root)
         if status:
-            agents[agent_id] = status
-    
-    return agents
+            all_status[agent_id] = status
+        else:
+            logger.warning(f"Failed to collect status for {agent_id}")
+            all_status[agent_id] = {"error": f"Failed to collect status for {agent_id}"}
 
+    return all_status
+
+
+def collect_agent_status(agent_id: str, workspace_root: Path) -> Optional[Dict]:
+    """
+    Collect status.json for a specific agent.
+
+    Args:
+        agent_id: Agent identifier (e.g., 'Agent-3')
+        workspace_root: Path to workspace root directory
+
+    Returns:
+        Status data dict or None if collection failed
+    """
+    reader = AgentStatusReader(workspace_root)
+
+    try:
+        status = reader.read_status(agent_id)
+        if status:
+            return status
+        else:
+            logger.warning(f"No status file found for {agent_id}")
+            return None
+    except Exception as e:
+        logger.error(f"Error collecting status for {agent_id}: {e}")
+        return None
+
+
+def validate_status_json(status: Dict) -> bool:
+    """
+    Validate status.json structure and required fields.
+
+    Args:
+        status: Status data to validate
+
+    Returns:
+        True if valid, False otherwise
+    """
+    required_fields = ["agent_id", "agent_name", "status", "fsm_state", "current_phase"]
+
+    try:
+        # Check required fields exist
+        for field in required_fields:
+            if field not in status:
+                logger.error(f"Missing required field '{field}' in status.json")
+                return False
+
+        # Validate agent_id format
+        agent_id = status.get("agent_id", "")
+        if not agent_id.startswith("Agent-") or not agent_id[6:].isdigit():
+            logger.error(f"Invalid agent_id format: {agent_id}")
+            return False
+
+        # Validate status field
+        valid_statuses = ["ACTIVE_AGENT_MODE", "IDLE", "ERROR"]
+        if status.get("status") not in valid_statuses:
+            logger.warning(f"Unexpected status value: {status.get('status')}")
+
+        # Validate FSM state
+        valid_fsm_states = ["ACTIVE", "IDLE", "ERROR", "UNKNOWN"]
+        if status.get("fsm_state") not in valid_fsm_states:
+            logger.warning(f"Unexpected FSM state: {status.get('fsm_state')}")
+
+        return True
+
+    except Exception as e:
+        logger.error(f"Status validation error: {e}")
+        return False

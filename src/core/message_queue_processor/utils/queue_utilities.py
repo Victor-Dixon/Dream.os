@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 Queue Utilities for Message Queue Processing
 ============================================
 
@@ -59,11 +62,16 @@ def get_activity_tracker() -> ActivityTracker:
     return _activity_tracker
 
 
+<<<<<<< HEAD
 def mark_agent_delivering(tracker, agent_id: str, queue_id: str) -> None:
+=======
+def mark_agent_delivering(agent_id: str) -> None:
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     """
     Mark an agent as actively delivering messages.
 
     Args:
+<<<<<<< HEAD
         tracker: Activity tracker instance
         agent_id: ID of the agent
         queue_id: Queue ID of the message being delivered
@@ -73,10 +81,19 @@ def mark_agent_delivering(tracker, agent_id: str, queue_id: str) -> None:
 
 
 def mark_agent_inactive(tracker, agent_id: str) -> None:
+=======
+        agent_id: ID of the agent
+    """
+    _activity_tracker.mark_active(agent_id)
+
+
+def mark_agent_inactive(agent_id: str) -> None:
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     """
     Mark an agent as inactive (not delivering).
 
     Args:
+<<<<<<< HEAD
         tracker: Activity tracker instance
         agent_id: ID of the agent
     """
@@ -166,3 +183,8 @@ def mark_agent_inactive(
         except Exception:
             pass  # Non-critical tracking failure
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+        agent_id: ID of the agent
+    """
+    _activity_tracker.mark_inactive(agent_id)
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1

@@ -1,4 +1,5 @@
 """
+<<<<<<< HEAD
 FastAPI Performance Monitoring Module
 =====================================
 
@@ -173,3 +174,15 @@ def reset_performance_metrics():
 def get_performance_middleware():
     """Get the performance monitoring middleware function."""
     return performance_monitoring_middleware
+=======
+FastAPI Performance Module
+V2 Compliant - <100 lines
+"""
+
+import time
+from fastapi import Request, Response
+
+def performance_middleware():
+    """Performance monitoring middleware"""
+    pass
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1

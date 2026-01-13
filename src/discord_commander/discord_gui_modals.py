@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
 <<<<<<< HEAD
+<<<<<<< HEAD
 Discord GUI Modals - Agent Cellphone V2
 ======================================
 
@@ -25,19 +26,27 @@ from pathlib import Path
 import subprocess
 =======
 <!-- SSOT Domain: discord -->
+=======
+Discord GUI Modals - Agent Cellphone V2
+======================================
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
-Discord GUI Modals - Agent Messaging Modals
-============================================
+SSOT Domain: discord
 
-Discord UI Modals for message composition.
+Refactored entry point for Discord modal functionality.
+All core logic has been extracted into specialized base classes and focused implementations.
 
-V2 Compliance: Refactored to use base classes (762L → <300L target)
+Features:
+- Agent messaging modals (discord_gui_modals_v2.py)
+- Specialized modal base classes (modal_specializations.py)
+- Common modal utilities (discord_gui_modals_base.py)
 
-Author: Agent-6 (Coordination & Communication Specialist) - V2 Compliance Refactor
-Original: Agent-7 (Repository Cloning Specialist)
-License: MIT
+V2 Compliant: Yes (<300 lines)
+Author: Agent-1 (Integration & Core Systems Specialist)
+Date: 2026-01-07
 """
 
+<<<<<<< HEAD
 import logging
 from src.core.config.timeout_constants import TimeoutConstants
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
@@ -749,6 +758,27 @@ class HardOnboardModal(discord.ui.Modal):
 
 __all__ = [
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+# Re-export all modal classes for backward compatibility
+from .discord_gui_modals_v2 import (
+    AgentMessageModal,
+    BroadcastMessageModal,
+    JetFuelMessageModal,
+    SelectiveBroadcastModal,
+    JetFuelBroadcastModal,
+    TemplateBroadcastModal,
+    SoftOnboardModal,
+    MermaidModal,
+    HardOnboardModal,
+)
+
+# Re-export base classes
+from .discord_gui_modals_base import BaseMessageModal
+from .modal_specializations import OnboardingModalBase, BroadcastModalBase, TemplateModalBase
+
+__all__ = [
+    # Modal classes
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     "AgentMessageModal",
     "BroadcastMessageModal",
     "JetFuelMessageModal",
@@ -757,6 +787,9 @@ __all__ = [
     "TemplateBroadcastModal",
     "SoftOnboardModal",
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     "MermaidModal",
     "HardOnboardModal",
     # Base classes
@@ -764,7 +797,10 @@ __all__ = [
     "OnboardingModalBase",
     "BroadcastModalBase",
     "TemplateModalBase",
+<<<<<<< HEAD
 =======
     "HardOnboardModal",
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 ]

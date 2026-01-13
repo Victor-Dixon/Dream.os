@@ -139,9 +139,13 @@ warnings.warn(
 
 import time
 <<<<<<< HEAD
+<<<<<<< HEAD
 from typing import Optional
 =======
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+from typing import Optional
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 from dataclasses import dataclass, field
 
 try:
@@ -178,9 +182,13 @@ class BrowserConfig:
 
 @dataclass
 <<<<<<< HEAD
+<<<<<<< HEAD
 @dataclass
 =======
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+@dataclass
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 class TheaConfig:
     """Configuration for Thea Manager interactions with enhanced config integration."""
 
@@ -189,10 +197,15 @@ class TheaConfig:
     )
     cookie_file: str = "data/thea_cookies.json"
 <<<<<<< HEAD
+<<<<<<< HEAD
     encrypted_cookie_file: Optional[str] = None
     key_file: Optional[str] = None
 =======
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+    encrypted_cookie_file: Optional[str] = None
+    key_file: Optional[str] = None
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     auto_save_cookies: bool = True
     rate_limit_requests_per_minute: int = 10
     rate_limit_burst_limit: int = 5

@@ -5,10 +5,15 @@ logger = logging.getLogger(__name__)
 """
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 <!-- SSOT Domain: core -->
 
 =======
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+<!-- SSOT Domain: core -->
+
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 Configuration Consolidator - V2 Compliance Module
 ================================================
 

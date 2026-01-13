@@ -57,6 +57,7 @@ try:
 except ImportError:
     monitor_router = None
 
+<<<<<<< HEAD
 # Add agent-tools to path for swarm command tools
 import sys
 import os
@@ -82,6 +83,8 @@ except ImportError as e:
     logger.warning(f"Could not import intelligence aggregator routes: {e}")
     intelligence_router = None
 
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 logger = logging.getLogger(__name__)
 
 # Templates
@@ -123,6 +126,7 @@ if monitor_router:
     api_router.include_router(monitor_router, prefix="/monitor", tags=["Repository Monitor"])
     logger.info("✅ Repository Monitor routes included")
 
+<<<<<<< HEAD
 if swarm_router:
     api_router.include_router(swarm_router)
     logger.info("✅ Swarm Command Dashboard routes included")
@@ -135,6 +139,8 @@ if intelligence_router:
     api_router.include_router(intelligence_router)
     logger.info("✅ Swarm Intelligence Aggregator routes included")
 
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 # Core routes (health, root pages)
 @api_router.get("/health")
 async def health_check():

@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 Message Validator for Message Queue Processing
 ==============================================
 
@@ -35,6 +38,7 @@ def validate_message_data(parsed_message: Dict[str, Any]) -> Tuple[bool, Optiona
         return True, None
 
     except Exception as e:
+<<<<<<< HEAD
         return False, f"Validation error: {str(e)}"
 =======
 <!-- SSOT Domain: core -->
@@ -91,3 +95,6 @@ def validate_message_data(
     
     return True, None
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+        return False, f"Validation error: {str(e)}"
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1

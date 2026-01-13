@@ -1,0 +1,11 @@
+{
+  "log_level": "WARNING",
+  "web": {
+    "debug": false,
+    "port": 8000,
+    "cors_origins": ["https://yourdomain.com"]
+  },
+  "database": {
+    "ssl_mode": "require"
+  }
+}

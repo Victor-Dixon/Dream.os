@@ -33,16 +33,26 @@ get_header(); ?>
 
                 <!-- Low-Friction Contact Form - Tier 1 Quick Win WEB-04 -->
                 <section class="contact-form-section" style="max-width: 600px; margin: 2rem auto;">
+                    <?php
+                    // Display success/error messages
+                    if (isset($_GET['contact_success'])) {
+                        echo '<div class="contact-message success" style="background: #d4edda; color: #155724; padding: 1rem; margin-bottom: 1rem; border-radius: 4px; border: 1px solid #c3e6cb;">Thank you! You\'ve been added to our waitlist. We\'ll notify you when our trading robots are ready.</div>';
+                    }
+                    if (isset($_GET['contact_error'])) {
+                        $error_msg = isset($_GET['contact_error']) && $_GET['contact_error'] === 'invalid_email' ? 'Please enter a valid email address.' : 'An error occurred. Please try again.';
+                        echo '<div class="contact-message error" style="background: #f8d7da; color: #721c24; padding: 1rem; margin-bottom: 1rem; border-radius: 4px; border: 1px solid #f5c6cb;">' . esc_html($error_msg) . '</div>';
+                    }
+                    ?>
                     <div class="subscription-form low-friction">
                         <p class="subscription-intro">Get started with our trading platform. Join our waitlist for early access.</p>
                         <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="POST" class="subscription-form-simple" aria-label="Contact Form">
                             <?php wp_nonce_field('contact_form', 'contact_nonce'); ?>
                             <input type="hidden" name="action" value="handle_contact_form">
-                            <input 
-                                type="email" 
-                                name="email" 
-                                class="email-only-input" 
-                                placeholder="Enter your email address" 
+                            <input
+                                type="email"
+                                name="email"
+                                class="email-only-input"
+                                placeholder="Enter your email address"
                                 required
                                 aria-label="Email address"
                             >

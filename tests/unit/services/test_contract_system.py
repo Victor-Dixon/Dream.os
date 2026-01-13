@@ -381,12 +381,17 @@ class TestContractManager:
             mock_storage.return_value = ContractStorage(base_path=self.temp_dir)
             
 <<<<<<< HEAD
+<<<<<<< HEAD
             from src.services.unified_service_managers import UnifiedContractManager
             self.manager = UnifiedContractManager()
 =======
             from src.services.contract_system.manager import ContractManager
             self.manager = ContractManager()
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+            from src.services.unified_service_managers import UnifiedContractManager
+            self.manager = UnifiedContractManager()
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
             self.manager.storage = ContractStorage(base_path=self.temp_dir)
 
     def teardown_method(self):

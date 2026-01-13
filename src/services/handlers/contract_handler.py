@@ -25,7 +25,7 @@ from ..contract_system.storage import ContractStorage
 class ContractHandler(CommonHandlerBase):
 =======
 from ...core.base.base_service import BaseService
-from ..contract_system.manager import ContractManager
+from ..unified_service_managers import UnifiedContractManager
 from ..contract_system.storage import ContractStorage
 
 
@@ -60,9 +60,14 @@ class ContractHandler(BaseService):
 =======
         super().__init__("ContractHandler")
         try:
+<<<<<<< HEAD
             from ..contract_system.manager import ContractManager
             self.manager = ContractManager()
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+            from ..unified_service_managers import UnifiedContractManager
+            self.manager = UnifiedContractManager()
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         except ImportError:
             self.manager = None
         self._initialize_default_tasks()
@@ -209,10 +214,14 @@ class ContractHandler(BaseService):
         os.makedirs(contracts_dir, exist_ok=True)
         self.storage = ContractStorage()
 <<<<<<< HEAD
+<<<<<<< HEAD
         self.manager = UnifiedContractManager()
 =======
         self.manager = ContractManager(self.storage)
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+        self.manager = UnifiedContractManager()
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         self._initialize_default_tasks()
 
     def get_contract_status(self) ->dict[str, Any]:

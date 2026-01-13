@@ -3,6 +3,7 @@
 <!-- SSOT Domain: messaging -->
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 Bot Messaging Commands - Main Delegate (Modular V2 Compliance)
 ============================================================
 
@@ -18,22 +19,29 @@ import logging
 =======
 Bot Messaging Commands
 ======================
+=======
+Bot Messaging Commands - Main Delegate (Modular V2 Compliance)
+============================================================
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
-Discord commands for agent messaging (extracted from unified_discord_bot.py).
+Main entry point for bot messaging commands.
+Uses modular command handlers for maintainability and V2 compliance.
 
-This module contains the MessagingCommands Cog that was previously embedded
-in unified_discord_bot.py. Extracted for V2 compliance.
-
-V2 Compliance | Author: Agent-1 | Date: 2025-12-14
+V2 Compliant: <100 lines, modular architecture
+Author: Agent-7 (Web Development Specialist)
+Date: 2026-01-08
 """
 
 import logging
+<<<<<<< HEAD
 import os
 import subprocess
 import sys
 from datetime import datetime
 from pathlib import Path
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -57,15 +65,25 @@ except ImportError:
     discord = None
     commands = None
 
+<<<<<<< HEAD
 from src.core.config.timeout_constants import TimeoutConstants
 from src.discord_commander.discord_gui_controller import DiscordGUIController
 from src.discord_commander.views import ConfirmShutdownView, ConfirmRestartView
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+# Import modular command handlers
+from .messaging_monitor_commands import MessagingMonitorCommands
+from .messaging_core_commands import MessagingCoreCommands
+from .profile_commands import ProfileCommands
+from .utility_commands import UtilityCommands
+from .system_control_commands import SystemControlCommands
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
 logger = logging.getLogger(__name__)
 
 
 class MessagingCommands(commands.Cog):
+<<<<<<< HEAD
 <<<<<<< HEAD
     """Main messaging commands cog that includes all modular handlers."""
 
@@ -78,17 +96,28 @@ class MessagingCommands(commands.Cog):
     def __init__(self, bot: "UnifiedDiscordBot", gui_controller: DiscordGUIController):
         """Initialize messaging commands."""
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+    """Main messaging commands cog that includes all modular handlers."""
+
+    def __init__(self, bot: "UnifiedDiscordBot", gui_controller):
+        """Initialize messaging commands with modular handlers."""
+        commands.Cog.__init__(self)
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         self.bot = bot
         self.gui_controller = gui_controller
         self.logger = logging.getLogger(__name__)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         # Initialize modular command handlers
         self.monitor_commands = MessagingMonitorCommands(bot)
         self.core_commands = MessagingCoreCommands(bot, gui_controller)
         self.profile_commands = ProfileCommands(bot)
         self.utility_commands = UtilityCommands(bot, gui_controller)
         self.system_commands = SystemControlCommands(bot)
+<<<<<<< HEAD
 
         self.logger.info("✅ Messaging Commands initialized with modular architecture")
 
@@ -113,79 +142,16 @@ class MessagingCommands(commands.Cog):
             await ctx.send("✅ Thea session is healthy (cookies saved).")
         else:
             await ctx.send("❌ Thea session failed. Try again to trigger interactive login.")
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
-    @commands.command(name="control", aliases=["panel", "menu"], description="Open main control panel")
-    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
-    async def control_panel(self, ctx: commands.Context):
-        """Open main interactive control panel."""
-        self.logger.info(f"Command 'control_panel' triggered by {ctx.author}")
-        try:
-            control_view = self.gui_controller.create_control_panel()
-            embed = discord.Embed(
-                title="🎛️ SWARM CONTROL PANEL",
-                description="**Complete Interactive Control Interface**\n\nUse buttons below to access all features:",
-                color=discord.Color.blue(),
-            )
-            embed.add_field(name="📨 Messaging", value="Message individual agents or broadcast to all", inline=True)
-            embed.add_field(name="📊 Monitoring", value="View swarm status and task dashboards", inline=True)
-            embed.add_field(name="📚 Content", value="Access GitHub book and documentation", inline=True)
-            embed.set_footer(text="🐝 WE. ARE. SWARM. ⚡ Interactive GUI-Driven Control")
-            await ctx.send(embed=embed, view=control_view)
-        except Exception as e:
-            self.logger.error(f"Error opening control panel: {e}")
-            await ctx.send(f"❌ Error: {e}")
+        self.logger.info("✅ Messaging Commands initialized with modular architecture")
 
-    @commands.command(name="gui", description="Open messaging GUI")
-    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
-    async def gui(self, ctx: commands.Context):
-        """Open interactive messaging GUI."""
-        self.logger.info(f"Command 'gui' triggered by {ctx.author}")
-        try:
-            embed = discord.Embed(
-                title="🤖 Agent Messaging Control Panel",
-                description="Use the controls below to interact with the swarm",
-                color=discord.Color.blue(),
-                timestamp=discord.utils.utcnow(),
-            )
-            embed.add_field(
-                name="📋 Instructions",
-                value=(
-                    "1. Select an agent from dropdown to send message\n"
-                    "2. Click 'Broadcast' to message all agents\n"
-                    "3. Click 'Status' to view swarm status\n"
-                    "4. Click 'Refresh' to reload agent list"
-                ),
-                inline=False,
-            )
-            view = self.gui_controller.create_main_gui()
-            await ctx.send(embed=embed, view=view)
-        except Exception as e:
-            self.logger.error(f"Error opening GUI: {e}")
-            await ctx.send(f"❌ Error: {e}")
-
-    @commands.command(name="status", description="View swarm status")
-    async def status(self, ctx: commands.Context, *, args: str = ""):
-        """View swarm status. Use '!status refresh' to force update."""
-        try:
-            if args.lower() == "refresh":
-                from src.discord_commander.status_reader import StatusReader
-                status_reader = StatusReader()
-                status_reader.clear_cache()
-                await ctx.send("🔄 Status cache cleared - refreshing...", delete_after=3)
-
-            view = self.gui_controller.create_status_gui()
-            from src.discord_commander.status_reader import StatusReader
-            status_reader = StatusReader()
-            main_view = self.gui_controller.create_main_gui()
-            embed = await main_view._create_status_embed(status_reader)
-            await ctx.send(embed=embed, view=view)
-        except Exception as e:
-            self.logger.error(f"Error showing status: {e}")
-            await ctx.send(f"❌ Error: {e}")
-
+    # Delegate commands to modular handlers
     @commands.command(name="monitor", description="Control status change monitor")
     @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def monitor(self, ctx: commands.Context, action: str = "status"):
+<<<<<<< HEAD
         """Control status change monitor."""
         self.logger.info(f"Command 'monitor' triggered by {ctx.author} with action={action}")
         try:
@@ -256,10 +222,15 @@ class MessagingCommands(commands.Cog):
         else:
             await ctx.send("⚠️ Status monitor not initialized.")
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+        """Delegate to monitor commands."""
+        await self.monitor_commands.monitor(ctx, action)
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
     @commands.command(name="message", description="Send message to agent")
     @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def message(self, ctx: commands.Context, agent_id: str, *, message: str):
+<<<<<<< HEAD
 <<<<<<< HEAD
         """Delegate to core commands."""
         await self.core_commands.message(ctx, agent_id, message)
@@ -331,10 +302,15 @@ class MessagingCommands(commands.Cog):
             diagram_code = diagram_code[:-3]
         return diagram_code.strip()
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+        """Delegate to core commands."""
+        await self.core_commands.message(ctx, agent_id, message)
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
     @commands.command(name="broadcast", description="Broadcast to all agents")
     @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def broadcast(self, ctx: commands.Context, *, message: str):
+<<<<<<< HEAD
 <<<<<<< HEAD
         """Delegate to core commands."""
         await self.core_commands.broadcast(ctx, message)
@@ -372,68 +348,24 @@ class MessagingCommands(commands.Cog):
                 priority="regular",
                 discord_user=ctx.author,
             )
+=======
+        """Delegate to core commands."""
+        await self.core_commands.broadcast(ctx, message)
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
-            if success:
-                embed = discord.Embed(
-                    title="✅ Broadcast Sent",
-                    description="Delivered to all agents",
-                    color=discord.Color.green(),
-                )
-                from src.discord_commander.utils.message_chunking import chunk_field_value
-                message_chunks = chunk_field_value(message)
-                embed.add_field(name="Message", value=message_chunks[0], inline=False)
-                if len(message_chunks) > 1:
-                    for i, chunk in enumerate(message_chunks[1:], 2):
-                        embed.add_field(
-                            name=f"Message (continued {i}/{len(message_chunks)})",
-                            value=chunk,
-                            inline=False
-                        )
-                await ctx.send(embed=embed)
-            else:
-                await ctx.send("❌ Failed to broadcast message")
-        except Exception as e:
-            self.logger.error(f"Error broadcasting: {e}")
-            await ctx.send(f"❌ Error: {e}")
+    @commands.command(name="mermaid", description="Render Mermaid diagram")
+    async def mermaid(self, ctx: commands.Context, *, diagram_code: str):
+        """Delegate to utility commands."""
+        await self.utility_commands.mermaid(ctx, diagram_code)
 
     @commands.command(name="help", description="Show help information")
     async def help_cmd(self, ctx: commands.Context):
-        """Show interactive help menu with navigation buttons."""
-        try:
-            from src.discord_commander.views import HelpGUIView
-            view = HelpGUIView()
-            embed = view._create_main_embed()
-            await ctx.send(embed=embed, view=view)
-        except Exception as e:
-            self.logger.error(f"Error showing help: {e}")
-            await ctx.send(f"❌ Error: {e}")
-
-    @commands.command(name="aria", description="✨ View Aria's interactive profile!")
-    async def aria_profile(self, ctx: commands.Context):
-        """Display Aria's interactive profile with buttons!"""
-        try:
-            from src.discord_commander.views.aria_profile_view import AriaProfileView
-            view = AriaProfileView()
-            embed = view._create_main_embed()
-            await ctx.send(embed=embed, view=view)
-        except Exception as e:
-            self.logger.error(f"Error in !aria command: {e}", exc_info=True)
-            await ctx.send(f"❌ Oops! Something went wrong: {e}")
-
-    @commands.command(name="carmyn", aliases=["carymn"], description="🌟 Display Carmyn's awesome profile!")
-    async def carmyn_profile(self, ctx: commands.Context):
-        """Display Carmyn's interactive profile with buttons!"""
-        try:
-            from src.discord_commander.views.carmyn_profile_view import CarmynProfileView
-            view = CarmynProfileView()
-            embed = view._create_main_embed()
-            await ctx.send(embed=embed, view=view)
-        except Exception as e:
-            self.logger.error(f"Error in !carmyn command: {e}", exc_info=True)
-            await ctx.send(f"❌ Oops! Something went wrong: {e}")
+        """Delegate to utility commands."""
+        await self.utility_commands.help_cmd(ctx)
 
     @commands.command(name="commands", description="List all registered commands")
     async def list_commands(self, ctx: commands.Context):
+<<<<<<< HEAD
         """List all registered bot commands - redirects to Control Panel button view."""
         try:
             control_view = self.gui_controller.create_control_panel()
@@ -469,10 +401,25 @@ class MessagingCommands(commands.Cog):
             self.logger.error(f"Error listing commands: {e}")
             await ctx.send(f"❌ Error: {e}")
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+        """Delegate to utility commands."""
+        await self.utility_commands.list_commands(ctx)
+
+    @commands.command(name="aria", description="✨ View Aria's interactive profile!")
+    async def aria_profile(self, ctx: commands.Context):
+        """Delegate to profile commands."""
+        await self.profile_commands.aria_profile(ctx)
+
+    @commands.command(name="carmyn", aliases=["carymn"], description="🌟 Display Carmyn's awesome profile!")
+    async def carmyn_profile(self, ctx: commands.Context):
+        """Delegate to profile commands."""
+        await self.profile_commands.carmyn_profile(ctx)
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
     @commands.command(name="shutdown", description="Gracefully shutdown the bot")
     @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def shutdown_cmd(self, ctx: commands.Context):
+<<<<<<< HEAD
 <<<<<<< HEAD
         """Delegate to system commands."""
         await self.system_commands.shutdown_cmd(ctx)
@@ -504,10 +451,15 @@ class MessagingCommands(commands.Cog):
             self.logger.error(f"Error in shutdown command: {e}")
             await ctx.send(f"❌ Error: {e}")
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+        """Delegate to system commands."""
+        await self.system_commands.shutdown_cmd(ctx)
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
     @commands.command(name="restart", description="Restart the Discord bot")
     @commands.has_any_role("Admin", "Captain", "Swarm Commander")
     async def restart_cmd(self, ctx: commands.Context):
+<<<<<<< HEAD
 <<<<<<< HEAD
         """Delegate to system commands."""
         await self.system_commands.restart_cmd(ctx)
@@ -533,62 +485,14 @@ __all__ = ["MessagingCommands"]
             view = ConfirmRestartView()
             message = await ctx.send(embed=embed, view=view)
             await view.wait()
+=======
+        """Delegate to system commands."""
+        await self.system_commands.restart_cmd(ctx)
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
-            if view.confirmed:
-                restart_embed = discord.Embed(
-                    title="🔄 Bot Restarting (True Restart)",
-                    description=(
-                        "Performing true restart...\n"
-                        "• Terminating current process\n"
-                        "• Starting fresh bot + queue processor\n"
-                        "• All modules reloaded from disk\n"
-                        "• Will be back in 5-10 seconds!"
-                    ),
-                    color=discord.Color.blue(),
-                )
-                await ctx.send(embed=restart_embed)
-                self.logger.info("🔄 True restart command received - killing process and starting fresh")
-                self._perform_true_restart()
-                await self.bot.close()
-            else:
-                await message.edit(content="❌ Restart cancelled", embed=None, view=None)
-        except Exception as e:
-            self.logger.error(f"Error in restart command: {e}", exc_info=True)
-            await ctx.send(f"❌ Error: {e}")
 
-    def _perform_true_restart(self) -> bool:
-        """Perform true restart: spawn fresh process for bot + queue processor."""
-        try:
-            project_root = Path(__file__).parent.parent.parent.parent
-            start_script = project_root / "tools" / "start_discord_system.py"
-
-            if not start_script.exists():
-                self.logger.error(f"Start script not found: {start_script}")
-                return False
-
-            if sys.platform == 'win32':
-                subprocess.Popen(
-                    [sys.executable, str(start_script)],
-                    cwd=str(project_root),
-                    creationflags=subprocess.CREATE_NEW_CONSOLE,
-                    stdout=subprocess.DEVNULL,
-                    stderr=subprocess.DEVNULL
-                )
-            else:
-                subprocess.Popen(
-                    [sys.executable, str(start_script)],
-                    cwd=str(project_root),
-                    stdout=subprocess.DEVNULL,
-                    stderr=subprocess.DEVNULL,
-                    start_new_session=True
-                )
-
-            import time
-            time.sleep(2)
-            self.logger.info("✅ New bot + queue processor processes spawned - current process will exit")
-            return True
-        except Exception as e:
-            self.logger.error(f"Error performing true restart: {e}", exc_info=True)
-            return False
-
+<<<<<<< HEAD
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+__all__ = ["MessagingCommands"]
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1

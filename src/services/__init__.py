@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 # <!-- SSOT Domain: integration -->
 # LAZY IMPORTS: Services are imported only when needed to prevent automatic system initialization
 
@@ -56,6 +59,7 @@ __all__ = [
     'PERFORMANCE_ANALYZER_AVAILABLE',
     'RECOMMENDATION_ENGINE_AVAILABLE',
     'WORK_INDEXER_AVAILABLE',
+<<<<<<< HEAD
 ]
 =======
 # <!-- SSOT Domain: integration -->
@@ -136,3 +140,6 @@ __all__ = [
     'work_indexer',
 ]
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+]
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1

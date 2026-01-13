@@ -315,6 +315,7 @@ class ControlPanelButtonFactory:
         return [confirm_btn, cancel_btn]
 
     @staticmethod
+<<<<<<< HEAD
     def create_message_agent_button() -> 'discord.ui.Button':
         """Create a message agent button."""
         return discord.ui.Button(
@@ -348,6 +349,8 @@ class ControlPanelButtonFactory:
         )
 
     @staticmethod
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     def create_navigation_buttons() -> List['discord.ui.Button']:
         """Create navigation buttons for paginated views."""
 

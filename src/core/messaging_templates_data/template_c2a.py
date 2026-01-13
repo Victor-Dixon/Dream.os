@@ -12,6 +12,9 @@ C2A_TEMPLATE = (
     "Message ID: {message_id}\n"
     "Timestamp: {timestamp}\n\n"
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     "🚀 **PROTOCOL UPDATE: Dumb Messages → Real Work Discovery**\n"
     "When you receive repetitive or 'dumb' coordination messages, don't just acknowledge them. Instead:\n"
     "- Search the codebase for TODO/FIXME items and real work opportunities\n"
@@ -19,8 +22,11 @@ C2A_TEMPLATE = (
     "- Execute complete implementation with testing and documentation\n"
     "- Make work publicly visible through git commits, devlogs, and blog posts\n"
     "- Transform message receipt into forward momentum, not confirmation loops\n\n"
+<<<<<<< HEAD
 =======
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     "Identity:\n"
     "You are {recipient}. Act as this agent for this directive.\n"
     "If you are not {recipient}, do NOT reply; forward to {recipient}.\n\n"
