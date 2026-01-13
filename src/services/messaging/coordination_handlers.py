@@ -20,13 +20,47 @@ from src.core.messaging_core import UnifiedMessagePriority
 from src.core.messaging_models_core import MessageCategory
 from src.utils.swarm_time import get_swarm_time_display
 
+<<<<<<< HEAD
+=======
 from .broadcast_handler import broadcast_to_all as _broadcast_to_all
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 from .message_formatters import (
     CONSOLIDATION_MESSAGE_TEMPLATE,
     SURVEY_MESSAGE_TEMPLATE,
 )
 from .agent_message_handler import send_to_agent as _send_to_agent
+<<<<<<< HEAD
+
+# A2A COORDINATION SSOT: Legacy broadcast/multi-agent functionality deprecated
+# All agent communication must use bilateral A2A coordination protocol
+# Previously: from .broadcast_handler import broadcast_to_all as _broadcast_to_all
+# Previously: from .multi_agent_request_handler import send_multi_agent_request as _send_multi_agent_request
+
+def _deprecated_broadcast_error():
+    """Raise error for deprecated broadcast functionality."""
+    raise DeprecationWarning(
+        "❌ BROADCAST MESSAGING DEPRECATED\n"
+        "Broadcast messaging violates A2A coordination SSOT principles.\n"
+        "For agent communication, use bilateral A2A coordination:\n"
+        "python -m src.services.messaging_cli --agent Agent-X --category a2a --sender Agent-Y --message '...'"
+
+    )
+
+def _deprecated_multi_agent_error():
+    """Raise error for deprecated multi-agent request functionality."""
+    raise DeprecationWarning(
+        "❌ MULTI-AGENT REQUESTS DEPRECATED\n"
+        "Multi-agent orchestration superseded by bilateral A2A coordination.\n"
+        "For complex coordination, chain A2A bilateral coordinations:\n"
+        "python -m src.services.messaging_cli --agent Agent-X --category a2a --sender Agent-Y --message '...'"
+
+    )
+
+_broadcast_to_all = _deprecated_broadcast_error
+_send_multi_agent_request = _deprecated_multi_agent_error
+=======
 from .multi_agent_request_handler import send_multi_agent_request as _send_multi_agent_request
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
 logger = logging.getLogger(__name__)
 
@@ -59,6 +93,56 @@ class MessageCoordinator:
         return cls._queue_repository
 
     @staticmethod
+<<<<<<< HEAD
+    def send_message(agent: str, message: str, priority: str = "regular",
+                    use_pyautogui: bool = True, wait_for_delivery: bool = False,
+                    timeout: float = 30.0, discord_user_id: str = None,
+                    stalled: bool = False, apply_template: bool = False,
+                    message_category=None, sender: str = None):
+        """
+        Compatibility method for send_message calls.
+        Maps parameters to send_to_agent method.
+        """
+        from src.core.messaging_models_core import UnifiedMessagePriority, MessageCategory
+
+        # Map string priority to enum
+        priority_enum = UnifiedMessagePriority.REGULAR
+        if priority.lower() == "urgent":
+            priority_enum = UnifiedMessagePriority.URGENT
+        elif priority.lower() == "normal":
+            priority_enum = UnifiedMessagePriority.NORMAL
+
+        # Map string category to enum if provided
+        category_enum = None
+        if message_category:
+            try:
+                category_enum = MessageCategory(message_category)
+            except:
+                category_enum = MessageCategory.AGENT_TO_AGENT
+
+        # Prepare metadata
+        metadata = {
+            'timeout': timeout,
+            'wait_for_delivery': wait_for_delivery,
+            'discord_user_id': discord_user_id,
+            'stalled': stalled,
+            'apply_template': apply_template
+        }
+
+        return MessageCoordinator.send_to_agent(
+            agent=agent,
+            message=message,
+            priority=priority_enum,
+            use_pyautogui=use_pyautogui,
+            stalled=stalled,
+            sender=sender,
+            message_category=category_enum,
+            message_metadata=metadata
+        )
+
+    @staticmethod
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     def send_to_agent(
         agent: str,
         message,
@@ -73,23 +157,70 @@ class MessageCoordinator:
         """
         Send message to agent via message queue (prevents race conditions).
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         Navigation References:
         ├── Message Queue → src/core/message_queue/message_queue_impl.py::enqueue_message()
         ├── Agent Handler → src/services/messaging/agent_message_handler.py::send_to_agent()
         ├── Coordination Throttler → src/services/coordination/coordination_throttler.py
         ├── Message Templates → src/core/messaging/messaging_template_texts.py
         ├── Queue Processor → src/core/message_queue/message_queue_processor.py
+        ├── External Docs → docs/architecture/MESSAGING_ARCHITECTURE.md
+        ├── A2A Protocol → docs/A2A_COORDINATION_PROTOCOL.md
         └── Testing → tests/integration/test_messaging_coordination.py
+<<<<<<< HEAD
 
         Complex coordination pipeline:
         1. A2A throttling check (prevents spam between agents)
+           └── See: coordination_throttler.py::can_send_coordination()
         2. Queue repository initialization (lazy loading pattern)
+           └── See: queue_repository.py::QueueRepository()
         3. Message enqueueing with metadata preservation
+           └── See: message_queue_impl.py::enqueue_message()
         4. Priority-based routing and delivery scheduling
+           └── See: UnifiedMessagePriority enum in messaging_core.py
         5. Fallback to direct send if queue unavailable
+           └── See: agent_message_handler.py fallback logic
         6. Coordination metrics and logging
+           └── See: Swarm Brain Database for coordination analytics
+
+        Strategic Business Impact:
+        - Prevents race conditions in multi-agent coordination
+        - Enables reliable message delivery across distributed agents
+        - Supports swarm intelligence through coordinated communication
+        - Maintains message integrity and prevents lost coordination signals
 
         Includes coordination throttling for A2A messages to prevent spam.
+=======
+        Includes coordination throttling for A2A messages to prevent spam.
+
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+
+        Complex coordination pipeline:
+        1. A2A throttling check (prevents spam between agents)
+           └── See: coordination_throttler.py::can_send_coordination()
+        2. Queue repository initialization (lazy loading pattern)
+           └── See: queue_repository.py::QueueRepository()
+        3. Message enqueueing with metadata preservation
+           └── See: message_queue_impl.py::enqueue_message()
+        4. Priority-based routing and delivery scheduling
+           └── See: UnifiedMessagePriority enum in messaging_core.py
+        5. Fallback to direct send if queue unavailable
+           └── See: agent_message_handler.py fallback logic
+        6. Coordination metrics and logging
+           └── See: Swarm Brain Database for coordination analytics
+
+        Strategic Business Impact:
+        - Prevents race conditions in multi-agent coordination
+        - Enables reliable message delivery across distributed agents
+        - Supports swarm intelligence through coordinated communication
+        - Maintains message integrity and prevents lost coordination signals
+
+        Includes coordination throttling for A2A messages to prevent spam.
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         Delegates to agent_message_handler for V2 compliance.
         """
         # Check coordination throttling for A2A messages
@@ -165,7 +296,11 @@ class MessageCoordinator:
 
     @staticmethod
     def broadcast_to_all(
+<<<<<<< HEAD
+        message: str, priority=UnifiedMessagePriority.REGULAR, stalled: bool = False, use_pyautogui: bool = True
+=======
         message: str, priority=UnifiedMessagePriority.REGULAR, stalled: bool = False
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     ):
         """
         Broadcast message to all agents via message queue.
@@ -178,6 +313,10 @@ class MessageCoordinator:
             priority=priority,
             stalled=stalled,
             queue_repository=queue_repository,
+<<<<<<< HEAD
+            use_pyautogui=use_pyautogui,
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
         )
 
     @staticmethod

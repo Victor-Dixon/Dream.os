@@ -1,0 +1,9 @@
+{
+  "webhooks": {},
+  "version": "2.0",
+<<<<<<< HEAD
+  "last_updated": "2026-01-11 22:58:51.995086+00:00"
+=======
+  "last_updated": "2026-01-08 13:41:32.142673+00:00"
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
+}

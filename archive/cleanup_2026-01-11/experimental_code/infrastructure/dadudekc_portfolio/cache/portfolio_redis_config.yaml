@@ -1,0 +1,53 @@
+# Dadudekc.com Portfolio - Redis Cache Configuration
+# Generated: 2026-01-10 20:05:02
+
+# Portfolio-specific cache keys
+portfolio_cache_keys:
+  - pattern: "portfolio:projects:*"
+    ttl: 3600  # 1 hour
+    description: "Portfolio project data cache"
+
+  - pattern: "portfolio:contact:*"
+    ttl: 1800  # 30 minutes
+    description: "Contact form cache"
+
+  - pattern: "portfolio:views:*"
+    ttl: 300   # 5 minutes
+    description: "Page view counters"
+
+  - pattern: "portfolio:seo:*"
+    ttl: 86400 # 24 hours
+    description: "SEO metadata cache"
+
+# Redis cluster configuration for portfolio
+redis_cluster:
+  masters: 3
+  replicas: 3
+  hash_slots: 16384
+
+  # Portfolio-specific settings
+  databases: 16
+  maxmemory: 2gb
+  maxmemory_policy: allkeys-lru
+
+  # Persistence
+  appendonly: yes
+  appendfsync: everysec
+
+# Cache warming for portfolio
+cache_warming:
+  endpoints:
+    - "/portfolio/projects"
+    - "/portfolio/contact"
+    - "/portfolio/about"
+
+  schedule: "0 */4 * * *"  # Every 4 hours
+
+# Cache invalidation rules
+cache_invalidation:
+  on_content_update:
+    - pattern: "portfolio:projects:*"
+    - pattern: "portfolio:seo:*"
+
+  on_plugin_update:
+    - pattern: "portfolio:*"

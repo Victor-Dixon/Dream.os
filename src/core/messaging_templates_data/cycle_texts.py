@@ -28,6 +28,13 @@ CYCLE_CHECKLIST_TEXT = (
     "- Check Swarm Brain (use MCP: search_swarm_knowledge) for relevant patterns/solutions (advisory only - see docs/governance/SWARM_BRAIN_POLICY.md)\n"
     "- Check MASTER_TASK_LOG.md (use MCP: get_tasks) for assigned tasks\n"
     "- 🔍 **FORCE MULTIPLIER ASSESSMENT (MANDATORY FIRST STEP)**:\n"
+<<<<<<< HEAD
+    "  - 🤖 **AI ORCHESTRATION CONSULTATION** (MANDATORY):\n"
+    "    - Run: python scripts/ai_orchestrate_simple.py --analyze-task \"[task description]\"\n"
+    "    - Get AI recommendations for task allocation and coordination strategy\n"
+    "    - Factor AI insights into force multiplier decisions\n"
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     "  - Will this task take >1 cycle? → STOP, delegate parts to swarm\n"
     "  - Does this touch 2+ domains? → STOP, coordinate with domain experts\n"
     "  - Is another agent better suited? → STOP, message them to take over\n"

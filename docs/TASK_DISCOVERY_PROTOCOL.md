@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
 <!-- SSOT Domain: documentation -->
 
 # Task Discovery Protocol
@@ -5,6 +7,22 @@
 **Version:** 1.0
 **Last Updated:** 2025-12-22
 **Author:** Agent-4 (Captain)
+=======
+# Task Discovery Protocol
+
+**Version:** 1.0  
+**Last Updated:** 2025-12-22  
+**Author:** Agent-4 (Captain)  
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+<!-- SSOT Domain: documentation -->
+
+# Task Discovery Protocol
+
+**Version:** 1.0
+**Last Updated:** 2025-12-22
+**Author:** Agent-4 (Captain)
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 **Status:** ACTIVE PROTOCOL
 
 ---

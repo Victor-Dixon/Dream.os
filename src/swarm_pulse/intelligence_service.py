@@ -2,6 +2,14 @@
 Intelligence Service - Agent Cellphone V2
 ==========================================
 
+<<<<<<< HEAD
+V2 Consolidated: Uses SSOT base classes for standardized patterns
+Author: Agent-1 (Integration & Core Systems Specialist)
+SSOT Migration: Agent-8 (System Integration)
+Date: 2026-01-12
+
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 SSOT Domain: swarm_brain
 
 Core service for swarm intelligence operations and analysis.
@@ -14,12 +22,20 @@ Features:
 - Vector-based similarity matching
 
 V2 Compliant: Yes (<300 lines)
+<<<<<<< HEAD
+Date: 2026-01-07
+"""
+
+# SSOT Import Standardization - eliminates redundant typing imports
+from src.core.base.import_standardization import logging, Dict, List, Optional, Any
+=======
 Author: Agent-1 (Integration & Core Systems Specialist)
 Date: 2026-01-07
 """
 
 import logging
 from typing import Dict, List, Optional, Any
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
 from .intelligence_models import (
     INTELLIGENCE_CONFIG,

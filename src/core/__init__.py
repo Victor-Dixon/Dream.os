@@ -48,10 +48,24 @@ from .coordinate_loader import (
     CoordinateLoader,
 )
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/build-tsla-morning-report-system
 # Message Queue (Used - 3+ imports) - Registry pattern available
 # Import from message_queue_registry as needed to avoid circular imports
 MessageQueue = None
 IMessageQueue = None
+<<<<<<< HEAD
+=======
+# Message Queue (Used - 3+ imports)
+from .message_queue import (
+    MessageQueue,
+    IMessageQueue,
+)
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/build-tsla-morning-report-system
 
 # Agent Activity Tracker (Used - 2+ imports)
 from .agent_activity_tracker import (

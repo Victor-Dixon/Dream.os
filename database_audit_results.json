@@ -1,0 +1,62 @@
+{
+  "timestamp": "2026-01-13T05:40:02.560654",
+  "audit_type": "simple_filesystem_audit",
+  "databases": {
+    "unified": {
+      "path": "D:\\Agent_Cellphone_V2_Repository\\data\\unified.db",
+      "exists": true,
+      "size_bytes": 40960,
+      "size_mb": 0.04,
+      "modified": "2026-01-13T04:48:24",
+      "days_since_modified": 0,
+      "tables": [
+        "agents",
+        "tasks",
+        "coordination_events",
+        "sqlite_sequence"
+      ],
+      "table_count": 4,
+      "estimated_total_rows": 6,
+      "integrity_check": "ok"
+    },
+    "trader_replay": {
+      "path": "D:\\Agent_Cellphone_V2_Repository\\src\\services\\trader_replay\\trader_replay.db",
+      "exists": true,
+      "size_bytes": 77824,
+      "size_mb": 0.07,
+      "modified": "2026-01-13T04:48:24",
+      "days_since_modified": 0,
+      "tables": [
+        "symbols",
+        "sqlite_sequence",
+        "sessions",
+        "candles",
+        "paper_trades",
+        "journal_entries",
+        "scores",
+        "session_summaries"
+      ],
+      "table_count": 8,
+      "estimated_total_rows": 15,
+      "integrity_check": "ok"
+    }
+  },
+  "issues": [
+    {
+      "type": "missing_coordination_cache",
+      "details": "Coordination cache file not found",
+      "severity": "medium"
+    }
+  ],
+  "recommendations": [
+    "⚠️ Review and resolve medium-priority database issues"
+  ],
+  "summary": {
+    "total_databases_checked": 2,
+    "total_issues": 1,
+    "high_priority_issues": 0,
+    "medium_priority_issues": 1,
+    "low_priority_issues": 0,
+    "overall_status": "healthy"
+  }
+}

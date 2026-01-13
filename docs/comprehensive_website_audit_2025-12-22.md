@@ -1,8 +1,22 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
 <!-- SSOT Domain: documentation -->
 
 # Comprehensive Website Audit Report
 **Date**: 2025-12-22
 **Auditor**: Agent-7 (Web Development Specialist)
+=======
+# Comprehensive Website Audit Report
+**Date**: 2025-12-22  
+**Auditor**: Agent-7 (Web Development Specialist)  
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+<!-- SSOT Domain: documentation -->
+
+# Comprehensive Website Audit Report
+**Date**: 2025-12-22
+**Auditor**: Agent-7 (Web Development Specialist)
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 **Websites Audited**: 5
 
 ---

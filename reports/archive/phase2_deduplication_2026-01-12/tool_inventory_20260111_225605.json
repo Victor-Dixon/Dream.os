@@ -1,0 +1,543 @@
+{
+  "scan_timestamp": "2026-01-11T22:56:05.615869",
+  "total_tools": 5,
+  "inventory": {
+    "tools/devlog_poster.py": {
+      "file_path": "tools\\devlog_poster.py",
+      "file_size": 12605,
+      "line_count": 343,
+      "last_modified": "2026-01-09T19:39:58",
+      "functions": [
+        {
+          "name": "split_content_into_pages",
+          "args": 2,
+          "line_start": 47,
+          "complexity": 6
+        },
+        {
+          "name": "update_agent_status",
+          "args": 3,
+          "line_start": 84,
+          "complexity": 3
+        },
+        {
+          "name": "save_devlog_for_website",
+          "args": 2,
+          "line_start": 125,
+          "complexity": 4
+        },
+        {
+          "name": "post_agent_heartbeat",
+          "args": 2,
+          "line_start": 169,
+          "complexity": 5
+        },
+        {
+          "name": "post_devlog_to_discord",
+          "args": 3,
+          "line_start": 223,
+          "complexity": 10
+        },
+        {
+          "name": "main",
+          "args": 0,
+          "line_start": 317,
+          "complexity": 6
+        }
+      ],
+      "classes": [],
+      "imports": [
+        "argparse",
+        "os",
+        "sys",
+        "json",
+        "pathlib.Path",
+        "typing.Optional",
+        "datetime.datetime",
+        "datetime.timezone",
+        "dotenv.load_dotenv",
+        "requests",
+        "dotenv.load_dotenv",
+        "requests",
+        "time"
+      ],
+      "dependencies": [
+        "dotenv",
+        "requests",
+        "time"
+      ],
+      "capabilities": [
+        "remote_operations",
+        "content_management",
+        "validation",
+        "http_validation",
+        "system_management"
+      ],
+      "complexity_score": 52,
+      "duplication_risk": "low"
+    },
+    "tools/security_audit_runner.py": {
+      "file_path": "tools\\security_audit_runner.py",
+      "file_size": 7847,
+      "line_count": 204,
+      "last_modified": "2026-01-11T22:22:24",
+      "functions": [
+        {
+          "name": "main",
+          "args": 0,
+          "line_start": 171,
+          "complexity": 3
+        },
+        {
+          "name": "__init__",
+          "args": 1,
+          "line_start": 61,
+          "complexity": 1
+        },
+        {
+          "name": "list_audits",
+          "args": 1,
+          "line_start": 65,
+          "complexity": 2
+        },
+        {
+          "name": "run_audit",
+          "args": 4,
+          "line_start": 76,
+          "complexity": 2
+        },
+        {
+          "name": "_load_context",
+          "args": 3,
+          "line_start": 100,
+          "complexity": 9
+        },
+        {
+          "name": "_generate_audit_prompt",
+          "args": 3,
+          "line_start": 124,
+          "complexity": 1
+        },
+        {
+          "name": "_simulate_audit_response",
+          "args": 3,
+          "line_start": 130,
+          "complexity": 1
+        },
+        {
+          "name": "_save_audit_results",
+          "args": 3,
+          "line_start": 159,
+          "complexity": 2
+        }
+      ],
+      "classes": [
+        {
+          "name": "SecurityAuditRunner",
+          "methods": 7,
+          "line_start": 25
+        }
+      ],
+      "imports": [
+        "json",
+        "argparse",
+        "os",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.List",
+        "typing.Any",
+        "subprocess"
+      ],
+      "dependencies": [],
+      "capabilities": [
+        "system_management",
+        "reporting",
+        "validation"
+      ],
+      "complexity_score": 46,
+      "duplication_risk": "low"
+    },
+    "tools/agent_onboarding_system.py": {
+      "file_path": "tools\\agent_onboarding_system.py",
+      "file_size": 8122,
+      "line_count": 217,
+      "last_modified": "2026-01-11T22:53:10",
+      "functions": [
+        {
+          "name": "main",
+          "args": 0,
+          "line_start": 179,
+          "complexity": 5
+        },
+        {
+          "name": "__init__",
+          "args": 1,
+          "line_start": 16,
+          "complexity": 1
+        },
+        {
+          "name": "get_all_agents",
+          "args": 1,
+          "line_start": 21,
+          "complexity": 6
+        },
+        {
+          "name": "validate_agent_workspace",
+          "args": 2,
+          "line_start": 30,
+          "complexity": 8
+        },
+        {
+          "name": "create_standard_agent_status",
+          "args": 2,
+          "line_start": 72,
+          "complexity": 1
+        },
+        {
+          "name": "onboard_agent",
+          "args": 2,
+          "line_start": 94,
+          "complexity": 6
+        },
+        {
+          "name": "onboard_all_agents",
+          "args": 1,
+          "line_start": 133,
+          "complexity": 2
+        },
+        {
+          "name": "validate_all_agents",
+          "args": 1,
+          "line_start": 161,
+          "complexity": 3
+        }
+      ],
+      "classes": [
+        {
+          "name": "AgentOnboardingSystem",
+          "methods": 7,
+          "line_start": 13
+        }
+      ],
+      "imports": [
+        "json",
+        "os",
+        "pathlib.Path",
+        "datetime.datetime",
+        "typing.Dict",
+        "typing.List",
+        "typing.Any",
+        "typing.Optional",
+        "shutil"
+      ],
+      "dependencies": [
+        "shutil"
+      ],
+      "capabilities": [
+        "content_management",
+        "system_management",
+        "validation"
+      ],
+      "complexity_score": 57,
+      "duplication_risk": "low"
+    },
+    "tools/cycle_accomplishments_report.py": {
+      "file_path": "tools\\cycle_accomplishments_report.py",
+      "file_size": 12137,
+      "line_count": 281,
+      "last_modified": "2026-01-11T22:53:10",
+      "functions": [
+        {
+          "name": "main",
+          "args": 0,
+          "line_start": 264,
+          "complexity": 1
+        },
+        {
+          "name": "__init__",
+          "args": 1,
+          "line_start": 16,
+          "complexity": 1
+        },
+        {
+          "name": "get_agent_status_data",
+          "args": 2,
+          "line_start": 21,
+          "complexity": 3
+        },
+        {
+          "name": "collect_all_accomplishments",
+          "args": 1,
+          "line_start": 32,
+          "complexity": 18
+        },
+        {
+          "name": "get_devlog_summaries",
+          "args": 1,
+          "line_start": 108,
+          "complexity": 10
+        },
+        {
+          "name": "generate_cycle_report",
+          "args": 1,
+          "line_start": 140,
+          "complexity": 12
+        },
+        {
+          "name": "save_report",
+          "args": 2,
+          "line_start": 250,
+          "complexity": 3
+        }
+      ],
+      "classes": [
+        {
+          "name": "CycleAccomplishmentsReport",
+          "methods": 6,
+          "line_start": 13
+        }
+      ],
+      "imports": [
+        "json",
+        "os",
+        "pathlib.Path",
+        "datetime.datetime",
+        "typing.Dict",
+        "typing.List",
+        "typing.Any",
+        "typing.Optional"
+      ],
+      "dependencies": [],
+      "capabilities": [
+        "content_management",
+        "system_management",
+        "reporting",
+        "validation"
+      ],
+      "complexity_score": 72,
+      "duplication_risk": "low"
+    },
+    "tools/tool_inventory_system.py": {
+      "file_path": "tools\\tool_inventory_system.py",
+      "file_size": 15802,
+      "line_count": 415,
+      "last_modified": "2026-01-11T22:54:52",
+      "functions": [
+        {
+          "name": "main",
+          "args": 0,
+          "line_start": 371,
+          "complexity": 4
+        },
+        {
+          "name": "__init__",
+          "args": 1,
+          "line_start": 19,
+          "complexity": 1
+        },
+        {
+          "name": "scan_tools_directory",
+          "args": 1,
+          "line_start": 26,
+          "complexity": 5
+        },
+        {
+          "name": "analyze_tool_file",
+          "args": 2,
+          "line_start": 45,
+          "complexity": 8
+        },
+        {
+          "name": "_analyze_capabilities",
+          "args": 3,
+          "line_start": 109,
+          "complexity": 10
+        },
+        {
+          "name": "_calculate_complexity",
+          "args": 2,
+          "line_start": 147,
+          "complexity": 4
+        },
+        {
+          "name": "_calculate_file_complexity",
+          "args": 2,
+          "line_start": 159,
+          "complexity": 2
+        },
+        {
+          "name": "_assess_duplication_risk",
+          "args": 2,
+          "line_start": 174,
+          "complexity": 7
+        },
+        {
+          "name": "_extract_dependencies",
+          "args": 2,
+          "line_start": 208,
+          "complexity": 10
+        },
+        {
+          "name": "analyze_dependencies",
+          "args": 2,
+          "line_start": 237,
+          "complexity": 11
+        },
+        {
+          "name": "generate_inventory_report",
+          "args": 1,
+          "line_start": 302,
+          "complexity": 1
+        },
+        {
+          "name": "_generate_recommendations",
+          "args": 3,
+          "line_start": 326,
+          "complexity": 5
+        },
+        {
+          "name": "save_inventory_report",
+          "args": 2,
+          "line_start": 357,
+          "complexity": 3
+        }
+      ],
+      "classes": [
+        {
+          "name": "ToolInventorySystem",
+          "methods": 12,
+          "line_start": 16
+        }
+      ],
+      "imports": [
+        "json",
+        "os",
+        "ast",
+        "inspect",
+        "pathlib.Path",
+        "datetime.datetime",
+        "typing.Dict",
+        "typing.List",
+        "typing.Any",
+        "typing.Optional",
+        "typing.Set",
+        "re"
+      ],
+      "dependencies": [
+        "ast",
+        "inspect"
+      ],
+      "capabilities": [
+        "reporting",
+        "remote_operations",
+        "content_management",
+        "validation",
+        "http_validation",
+        "system_management",
+        "wordpress_management"
+      ],
+      "complexity_score": 110,
+      "duplication_risk": "medium"
+    }
+  },
+  "dependency_analysis": {
+    "shared_dependencies": {},
+    "tool_clusters": {},
+    "dependency_graph": {},
+    "consolidation_opportunities": [
+      {
+        "type": "capability_consolidation",
+        "capability": "content_management",
+        "tools": [
+          "devlog_poster",
+          "agent_onboarding_system",
+          "cycle_accomplishments_report",
+          "tool_inventory_system"
+        ],
+        "recommendation": "Consolidate 4 tools with content_management capability"
+      },
+      {
+        "type": "capability_consolidation",
+        "capability": "validation",
+        "tools": [
+          "devlog_poster",
+          "security_audit_runner",
+          "agent_onboarding_system",
+          "cycle_accomplishments_report",
+          "tool_inventory_system"
+        ],
+        "recommendation": "Consolidate 5 tools with validation capability"
+      },
+      {
+        "type": "capability_consolidation",
+        "capability": "system_management",
+        "tools": [
+          "devlog_poster",
+          "security_audit_runner",
+          "agent_onboarding_system",
+          "cycle_accomplishments_report",
+          "tool_inventory_system"
+        ],
+        "recommendation": "Consolidate 5 tools with system_management capability"
+      },
+      {
+        "type": "capability_consolidation",
+        "capability": "reporting",
+        "tools": [
+          "security_audit_runner",
+          "cycle_accomplishments_report",
+          "tool_inventory_system"
+        ],
+        "recommendation": "Consolidate 3 tools with reporting capability"
+      }
+    ],
+    "capability_clusters": {
+      "remote_operations": [
+        "devlog_poster",
+        "tool_inventory_system"
+      ],
+      "content_management": [
+        "devlog_poster",
+        "agent_onboarding_system",
+        "cycle_accomplishments_report",
+        "tool_inventory_system"
+      ],
+      "validation": [
+        "devlog_poster",
+        "security_audit_runner",
+        "agent_onboarding_system",
+        "cycle_accomplishments_report",
+        "tool_inventory_system"
+      ],
+      "http_validation": [
+        "devlog_poster",
+        "tool_inventory_system"
+      ],
+      "system_management": [
+        "devlog_poster",
+        "security_audit_runner",
+        "agent_onboarding_system",
+        "cycle_accomplishments_report",
+        "tool_inventory_system"
+      ],
+      "reporting": [
+        "security_audit_runner",
+        "cycle_accomplishments_report",
+        "tool_inventory_system"
+      ],
+      "wordpress_management": [
+        "tool_inventory_system"
+      ]
+    }
+  },
+  "consolidation_metrics": {
+    "high_duplication_risk": 0,
+    "shared_dependencies_count": 0,
+    "consolidation_opportunities": 4,
+    "total_capabilities": 7
+  },
+  "recommendations": [
+    "\ud83d\udfe1 CONSOLIDATE: 4 capability areas need consolidation",
+    "\ud83d\udfe0 REFACTOR: Top complex tools: tools/tool_inventory_system.py, tools/cycle_accomplishments_report.py, tools/agent_onboarding_system.py"
+  ]
+}

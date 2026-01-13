@@ -1,0 +1,2897 @@
+{
+  "summary": {
+    "total_tools": 29,
+    "total_dependencies": 244,
+    "unique_external_libs": 0,
+    "average_complexity": 296.1034482758621
+  },
+  "tools": {
+    "devlog_poster": {
+      "name": "devlog_poster",
+      "path": "tools\\devlog_poster.py",
+      "size": 14238,
+      "imports": [
+        "dotenv.load_dotenv",
+        "datetime.timezone",
+        "sys",
+        "datetime.datetime",
+        "time",
+        "pathlib.Path",
+        "requests",
+        "typing.Optional",
+        "os",
+        "argparse",
+        "json"
+      ],
+      "external_imports": [
+        "dotenv.load_dotenv",
+        "datetime.timezone",
+        "sys",
+        "datetime.datetime",
+        "pathlib.Path",
+        "requests",
+        "typing.Optional",
+        "os",
+        "argparse",
+        "json"
+      ],
+      "internal_imports": [
+        "time"
+      ],
+      "functions": [
+        "split_content_into_pages",
+        "update_agent_status",
+        "save_devlog_for_website",
+        "post_agent_heartbeat",
+        "post_devlog_to_discord",
+        "main"
+      ],
+      "classes": [],
+      "complexity_score": 380
+    },
+    "security_audit_runner": {
+      "name": "security_audit_runner",
+      "path": "tools\\security_audit_runner.py",
+      "size": 8078,
+      "imports": [
+        "typing.List",
+        "typing.Any",
+        "pathlib.Path",
+        "typing.Dict",
+        "os",
+        "subprocess",
+        "argparse",
+        "json"
+      ],
+      "external_imports": [
+        "typing.List",
+        "typing.Any",
+        "pathlib.Path",
+        "typing.Dict",
+        "os",
+        "subprocess",
+        "argparse",
+        "json"
+      ],
+      "internal_imports": [],
+      "functions": [
+        "main",
+        "__init__",
+        "list_audits",
+        "run_audit",
+        "_load_context",
+        "_generate_audit_prompt",
+        "_simulate_audit_response",
+        "_save_audit_results"
+      ],
+      "classes": [
+        "SecurityAuditRunner"
+      ],
+      "complexity_score": 213
+    },
+    "agent_onboarding_system": {
+      "name": "agent_onboarding_system",
+      "path": "tools\\agent_onboarding_system.py",
+      "size": 8396,
+      "imports": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "os",
+        "shutil",
+        "json"
+      ],
+      "external_imports": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "os",
+        "json"
+      ],
+      "internal_imports": [
+        "shutil"
+      ],
+      "functions": [
+        "main",
+        "__init__",
+        "get_all_agents",
+        "validate_agent_workspace",
+        "create_standard_agent_status",
+        "onboard_agent",
+        "onboard_all_agents",
+        "validate_all_agents"
+      ],
+      "classes": [
+        "AgentOnboardingSystem"
+      ],
+      "complexity_score": 226
+    },
+    "cycle_accomplishments_report": {
+      "name": "cycle_accomplishments_report",
+      "path": "tools\\cycle_accomplishments_report.py",
+      "size": 12474,
+      "imports": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "os",
+        "json"
+      ],
+      "external_imports": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "os",
+        "json"
+      ],
+      "internal_imports": [],
+      "functions": [
+        "main",
+        "__init__",
+        "get_agent_status_data",
+        "collect_all_accomplishments",
+        "get_devlog_summaries",
+        "generate_cycle_report",
+        "save_report"
+      ],
+      "classes": [
+        "CycleAccomplishmentsReport"
+      ],
+      "complexity_score": 289
+    },
+    "tool_inventory_system": {
+      "name": "tool_inventory_system",
+      "path": "tools\\tool_inventory_system.py",
+      "size": 16306,
+      "imports": [
+        "typing.Set",
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "inspect",
+        "os",
+        "typing.Optional",
+        "re",
+        "ast",
+        "json"
+      ],
+      "external_imports": [
+        "typing.Set",
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "os",
+        "ast",
+        "json"
+      ],
+      "internal_imports": [
+        "inspect",
+        "re"
+      ],
+      "functions": [
+        "main",
+        "__init__",
+        "scan_tools_directory",
+        "analyze_tool_file",
+        "_analyze_capabilities",
+        "_calculate_complexity",
+        "_calculate_file_complexity",
+        "_assess_duplication_risk",
+        "_extract_dependencies",
+        "analyze_dependencies",
+        "generate_inventory_report",
+        "_generate_recommendations",
+        "save_inventory_report"
+      ],
+      "classes": [
+        "ToolInventorySystem"
+      ],
+      "complexity_score": 429
+    },
+    "consolidation_tracking_system": {
+      "name": "consolidation_tracking_system",
+      "path": "tools\\consolidation_tracking_system.py",
+      "size": 17659,
+      "imports": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "os",
+        "datetime.timedelta",
+        "json",
+        "enum.Enum"
+      ],
+      "external_imports": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "os",
+        "datetime.timedelta",
+        "json",
+        "enum.Enum"
+      ],
+      "internal_imports": [],
+      "functions": [
+        "main",
+        "__init__",
+        "load_tracking_data",
+        "create_initial_tracking_structure",
+        "update_task_status",
+        "update_phase_status",
+        "add_risk",
+        "add_blocker",
+        "update_metrics",
+        "log_communication",
+        "save_tracking_data",
+        "generate_progress_report",
+        "display_progress_dashboard"
+      ],
+      "classes": [
+        "ConsolidationPhase",
+        "TaskStatus",
+        "ConsolidationTracker"
+      ],
+      "complexity_score": 429
+    },
+    "security_health_check": {
+      "name": "security_health_check",
+      "path": "tools\\security_health_check.py",
+      "size": 4319,
+      "imports": [],
+      "external_imports": [],
+      "internal_imports": [],
+      "functions": [],
+      "classes": [],
+      "complexity_score": 0,
+      "error": "unterminated string literal (detected at line 122) (security_health_check.py, line 122)"
+    },
+    "coordination_status_checker": {
+      "name": "coordination_status_checker",
+      "path": "tools\\coordination_status_checker.py",
+      "size": 3492,
+      "imports": [
+        "typing.List",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "os",
+        "json"
+      ],
+      "external_imports": [
+        "typing.List",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "os",
+        "json"
+      ],
+      "internal_imports": [],
+      "functions": [
+        "main",
+        "__init__",
+        "check_passdown_status",
+        "check_pending_tasks",
+        "get_coordination_summary"
+      ],
+      "classes": [
+        "CoordinationStatusChecker"
+      ],
+      "complexity_score": 107
+    },
+    "discord_manager": {
+      "name": "discord_manager",
+      "path": "tools\\discord_manager.py",
+      "size": 35443,
+      "imports": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "discord",
+        "pathlib.Path",
+        "asyncio",
+        "typing.Dict",
+        "discord.ext.commands",
+        "os",
+        "typing.Optional",
+        "argparse",
+        "json",
+        "logging"
+      ],
+      "external_imports": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "discord",
+        "pathlib.Path",
+        "typing.Dict",
+        "discord.ext.commands",
+        "os",
+        "typing.Optional",
+        "argparse",
+        "json",
+        "logging"
+      ],
+      "internal_imports": [
+        "asyncio"
+      ],
+      "functions": [
+        "main",
+        "__init__",
+        "_load_token_from_env",
+        "generate_env_config",
+        "save_env_file",
+        "display_configuration",
+        "display_guild_info",
+        "display_channel_structure",
+        "analyze_channel_usage",
+        "generate_devlog_env_config"
+      ],
+      "classes": [
+        "DiscordManager"
+      ],
+      "complexity_score": 774
+    },
+    "plugin_security_scanner": {
+      "name": "plugin_security_scanner",
+      "path": "tools\\plugin_security_scanner.py",
+      "size": 2524,
+      "imports": [
+        "os",
+        "argparse",
+        "pathlib.Path"
+      ],
+      "external_imports": [
+        "os",
+        "argparse",
+        "pathlib.Path"
+      ],
+      "internal_imports": [],
+      "functions": [
+        "main",
+        "__init__",
+        "scan_directory",
+        "_create_secure_index",
+        "get_summary"
+      ],
+      "classes": [
+        "PluginSecurityScanner"
+      ],
+      "complexity_score": 87
+    },
+    "phase3_semantic_deduplication": {
+      "name": "phase3_semantic_deduplication",
+      "path": "tools\\phase3_semantic_deduplication.py",
+      "size": 13010,
+      "imports": [
+        "typing.Set",
+        "typing.List",
+        "hashlib",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Tuple",
+        "os",
+        "collections.Counter",
+        "difflib.SequenceMatcher",
+        "re",
+        "json",
+        "collections.defaultdict"
+      ],
+      "external_imports": [
+        "typing.Set",
+        "typing.List",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Tuple",
+        "os",
+        "collections.Counter",
+        "difflib.SequenceMatcher",
+        "json",
+        "collections.defaultdict"
+      ],
+      "internal_imports": [
+        "hashlib",
+        "re"
+      ],
+      "functions": [
+        "main",
+        "__init__",
+        "load_sample_content",
+        "extract_semantic_features",
+        "calculate_semantic_similarity",
+        "_calculate_list_similarity",
+        "find_semantic_duplicates",
+        "generate_deduplication_recommendations"
+      ],
+      "classes": [
+        "SemanticDeduplicator"
+      ],
+      "complexity_score": 330
+    },
+    "integrated_website_audit_workflow": {
+      "name": "integrated_website_audit_workflow",
+      "path": "tools\\integrated_website_audit_workflow.py",
+      "size": 17193,
+      "imports": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "asyncio",
+        "tools.hero_activation_verification.verify_hero_activations",
+        "typing.Optional",
+        "tools.website_audit_ollama.WebsiteAuditOllama",
+        "mcp_servers.website_audit_server.WebsiteAuditServer",
+        "json",
+        "logging"
+      ],
+      "external_imports": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "tools.website_audit_ollama.WebsiteAuditOllama",
+        "tools.hero_activation_verification.verify_hero_activations",
+        "typing.Optional",
+        "mcp_servers.website_audit_server.WebsiteAuditServer",
+        "json",
+        "logging"
+      ],
+      "internal_imports": [
+        "asyncio"
+      ],
+      "functions": [
+        "__init__",
+        "_correlate_with_cleanup",
+        "_assess_audit_quality",
+        "_analyze_correlations",
+        "_generate_quality_assessment",
+        "_generate_recommendations"
+      ],
+      "classes": [
+        "IntegratedWebsiteAuditWorkflow"
+      ],
+      "complexity_score": 428
+    },
+    "ollama_website_audit_agent_report": {
+      "name": "ollama_website_audit_agent_report",
+      "path": "tools\\ollama_website_audit_agent_report.py",
+      "size": 27136,
+      "imports": [
+        "bs4.BeautifulSoup",
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "urllib.parse.urlparse",
+        "pathlib.Path",
+        "requests",
+        "typing.Dict",
+        "asyncio",
+        "typing.Optional",
+        "urllib.parse.urljoin",
+        "argparse",
+        "json",
+        "logging"
+      ],
+      "external_imports": [
+        "bs4.BeautifulSoup",
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "urllib.parse.urlparse",
+        "pathlib.Path",
+        "requests",
+        "typing.Dict",
+        "typing.Optional",
+        "urllib.parse.urljoin",
+        "argparse",
+        "json",
+        "logging"
+      ],
+      "internal_imports": [
+        "asyncio"
+      ],
+      "functions": [
+        "__init__",
+        "audit_website",
+        "_audit_connectivity",
+        "_audit_seo",
+        "_audit_technical",
+        "_audit_content",
+        "_audit_security",
+        "_audit_accessibility",
+        "_generate_agent_actions",
+        "_generate_overall_assessment"
+      ],
+      "classes": [
+        "WebsiteAuditorAgent"
+      ],
+      "complexity_score": 684
+    },
+    "audit_harness": {
+      "name": "audit_harness",
+      "path": "tools\\audit_harness.py",
+      "size": 39448,
+      "imports": [],
+      "external_imports": [],
+      "internal_imports": [],
+      "functions": [],
+      "classes": [],
+      "complexity_score": 0,
+      "error": "expected 'except' or 'finally' block (audit_harness.py, line 911)"
+    },
+    "ssot_migration_tool": {
+      "name": "ssot_migration_tool",
+      "path": "tools\\ssot_migration_tool.py",
+      "size": 12229,
+      "imports": [
+        "typing.Set",
+        "src.core.base.service_base.BaseService",
+        "dataclasses.field",
+        "typing.List",
+        "typing.Any",
+        "sys",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "src.core.base.import_standardization.ImportManager",
+        "re",
+        "dataclasses.dataclass",
+        "src.core.base.error_handling.ErrorHandler",
+        "argparse",
+        "json",
+        "logging"
+      ],
+      "external_imports": [
+        "typing.Set",
+        "src.core.base.service_base.BaseService",
+        "dataclasses.field",
+        "typing.List",
+        "typing.Any",
+        "sys",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "src.core.base.import_standardization.ImportManager",
+        "dataclasses.dataclass",
+        "src.core.base.error_handling.ErrorHandler",
+        "argparse",
+        "json",
+        "logging"
+      ],
+      "internal_imports": [
+        "re"
+      ],
+      "functions": [
+        "main",
+        "__init__",
+        "_load_migration_patterns",
+        "_consolidate_typing_imports",
+        "validate_config",
+        "health_check",
+        "migrate_file",
+        "migrate_batch",
+        "find_migration_candidates"
+      ],
+      "classes": [
+        "MigrationResult",
+        "SSOTMigrationTool"
+      ],
+      "complexity_score": 347
+    },
+    "ssot_ci_thresholds": {
+      "name": "ssot_ci_thresholds",
+      "path": "tools\\ssot_ci_thresholds.py",
+      "size": 13081,
+      "imports": [
+        "typing.List",
+        "typing.Any",
+        "sys",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Tuple",
+        "dataclasses.dataclass",
+        "subprocess",
+        "argparse",
+        "json"
+      ],
+      "external_imports": [
+        "typing.List",
+        "typing.Any",
+        "sys",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Tuple",
+        "dataclasses.dataclass",
+        "subprocess",
+        "argparse",
+        "json"
+      ],
+      "internal_imports": [],
+      "functions": [
+        "main",
+        "__post_init__",
+        "__init__",
+        "run_duplication_check",
+        "run_ssot_compliance_check",
+        "run_import_standardization_check",
+        "run_all_checks",
+        "_print_result",
+        "_print_summary"
+      ],
+      "classes": [
+        "ThresholdResult",
+        "SSOTCIThresholds"
+      ],
+      "complexity_score": 354
+    },
+    "comprehensive_migration_sweep": {
+      "name": "comprehensive_migration_sweep",
+      "path": "tools\\comprehensive_migration_sweep.py",
+      "size": 11659,
+      "imports": [
+        "typing.Set",
+        "argparse",
+        "typing.List",
+        "sys",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Tuple",
+        "os",
+        "re",
+        "dataclasses.dataclass",
+        "dataclasses.field"
+      ],
+      "external_imports": [
+        "typing.Set",
+        "argparse",
+        "typing.List",
+        "sys",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Tuple",
+        "os",
+        "dataclasses.dataclass",
+        "dataclasses.field"
+      ],
+      "internal_imports": [
+        "re"
+      ],
+      "functions": [
+        "main",
+        "__init__",
+        "_consolidate_typing_imports",
+        "_add_ssot_header",
+        "find_migration_candidates",
+        "migrate_file",
+        "execute_migration_sweep",
+        "_print_summary",
+        "replacement_func"
+      ],
+      "classes": [
+        "MigrationStats",
+        "ComprehensiveMigrationSweep"
+      ],
+      "complexity_score": 333
+    },
+    "analyze_docstrings": {
+      "name": "analyze_docstrings",
+      "path": "tools\\analyze_docstrings.py",
+      "size": 4309,
+      "imports": [
+        "typing.List",
+        "pathlib.Path",
+        "typing.Dict",
+        "os",
+        "ast"
+      ],
+      "external_imports": [
+        "typing.List",
+        "pathlib.Path",
+        "typing.Dict",
+        "os",
+        "ast"
+      ],
+      "internal_imports": [],
+      "functions": [
+        "analyze_docstring_coverage",
+        "main"
+      ],
+      "classes": [],
+      "complexity_score": 113
+    },
+    "unified_analyzer": {
+      "name": "unified_analyzer",
+      "path": "tools\\unified_analyzer.py",
+      "size": 19093,
+      "imports": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "os",
+        "typing.Tuple",
+        "json",
+        "logging"
+      ],
+      "external_imports": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "os",
+        "typing.Tuple",
+        "json",
+        "logging"
+      ],
+      "internal_imports": [],
+      "functions": [
+        "__init__",
+        "run_full_analysis",
+        "analyze_project_structure",
+        "analyze_file",
+        "analyze_repository",
+        "detect_consolidation_opportunities",
+        "analyze_overlaps",
+        "_is_text_file",
+        "_extract_python_imports",
+        "_extract_python_classes",
+        "_extract_python_functions",
+        "_analyze_git_repository",
+        "_analyze_repo_structure",
+        "_generate_consolidation_recommendations",
+        "_repos_have_similar_structure",
+        "_count_file_types"
+      ],
+      "classes": [
+        "UnifiedAnalyzer"
+      ],
+      "complexity_score": 518
+    },
+    "pypi_verification": {
+      "name": "pypi_verification",
+      "path": "tools\\pypi_verification.py",
+      "size": 5890,
+      "imports": [
+        "typing.Any",
+        "sys",
+        "time",
+        "typing.Dict",
+        "urllib.request",
+        "urllib.error",
+        "typing.Optional",
+        "argparse",
+        "json"
+      ],
+      "external_imports": [
+        "typing.Any",
+        "sys",
+        "typing.Dict",
+        "urllib.request",
+        "urllib.error",
+        "typing.Optional",
+        "argparse",
+        "json"
+      ],
+      "internal_imports": [
+        "time"
+      ],
+      "functions": [
+        "main",
+        "__init__",
+        "verify_package_exists",
+        "wait_for_publishing",
+        "generate_verification_report"
+      ],
+      "classes": [
+        "PyPIVerificationTool"
+      ],
+      "complexity_score": 185
+    },
+    "announcement_coordinator": {
+      "name": "announcement_coordinator",
+      "path": "tools\\announcement_coordinator.py",
+      "size": 12284,
+      "imports": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "os",
+        "argparse",
+        "json"
+      ],
+      "external_imports": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "os",
+        "argparse",
+        "json"
+      ],
+      "internal_imports": [],
+      "functions": [
+        "main",
+        "__init__",
+        "generate_announcement_content",
+        "_generate_email_announcement",
+        "create_announcement_workflow",
+        "save_workflow",
+        "display_workflow_summary"
+      ],
+      "classes": [
+        "AnnouncementCoordinator"
+      ],
+      "complexity_score": 333
+    },
+    "final_coordination_handoff": {
+      "name": "final_coordination_handoff",
+      "path": "tools\\final_coordination_handoff.py",
+      "size": 9002,
+      "imports": [
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "os",
+        "argparse",
+        "json"
+      ],
+      "external_imports": [
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "os",
+        "argparse",
+        "json"
+      ],
+      "internal_imports": [],
+      "functions": [
+        "trigger_announcement_cascade",
+        "main",
+        "__init__",
+        "load_announcement_workflow",
+        "create_handoff_summary",
+        "save_handoff_summary",
+        "display_handoff_summary"
+      ],
+      "classes": [
+        "FinalCoordinationHandoff"
+      ],
+      "complexity_score": 224
+    },
+    "post_launch_website_audit": {
+      "name": "post_launch_website_audit",
+      "path": "tools\\post_launch_website_audit.py",
+      "size": 4725,
+      "imports": [
+        "typing.List",
+        "time",
+        "pathlib.Path",
+        "requests",
+        "typing.Dict",
+        "urllib.parse.urljoin",
+        "json"
+      ],
+      "external_imports": [
+        "typing.List",
+        "pathlib.Path",
+        "typing.Dict",
+        "requests",
+        "urllib.parse.urljoin",
+        "json"
+      ],
+      "internal_imports": [
+        "time"
+      ],
+      "functions": [
+        "main",
+        "__init__",
+        "audit_website",
+        "run_full_audit"
+      ],
+      "classes": [
+        "PostLaunchWebsiteAudit"
+      ],
+      "complexity_score": 149
+    },
+    "analytics_site_health_checker": {
+      "name": "analytics_site_health_checker",
+      "path": "tools\\analytics_site_health_checker.py",
+      "size": 22577,
+      "imports": [
+        "bs4.BeautifulSoup",
+        "typing.List",
+        "sys",
+        "pathlib.Path",
+        "typing.Dict",
+        "requests",
+        "typing.Optional",
+        "typing.Tuple",
+        "urllib.parse.urljoin",
+        "argparse",
+        "json",
+        "logging"
+      ],
+      "external_imports": [
+        "bs4.BeautifulSoup",
+        "typing.List",
+        "sys",
+        "pathlib.Path",
+        "typing.Dict",
+        "requests",
+        "typing.Optional",
+        "typing.Tuple",
+        "urllib.parse.urljoin",
+        "argparse",
+        "json",
+        "logging"
+      ],
+      "internal_imports": [],
+      "functions": [
+        "main",
+        "__init__",
+        "check_server_health",
+        "check_tracking_codes",
+        "check_analytics_api",
+        "check_security_headers",
+        "check_vulnerable_content",
+        "check_https_enforcement",
+        "check_site_comprehensive",
+        "generate_recommendations",
+        "check_all_sites",
+        "export_results"
+      ],
+      "classes": [
+        "AnalyticsSiteHealthChecker"
+      ],
+      "complexity_score": 620
+    },
+    "agent4_coordination_dashboard": {
+      "name": "agent4_coordination_dashboard",
+      "path": "tools\\agent4_coordination_dashboard.py",
+      "size": 13852,
+      "imports": [
+        "typing.List",
+        "datetime.datetime",
+        "time",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "typing.Tuple",
+        "datetime.timedelta",
+        "json"
+      ],
+      "external_imports": [
+        "typing.List",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "typing.Tuple",
+        "datetime.timedelta",
+        "json"
+      ],
+      "internal_imports": [
+        "time"
+      ],
+      "functions": [
+        "main",
+        "__init__",
+        "_load_coordination_cache",
+        "_load_task_assignments",
+        "_get_default_assignments",
+        "get_swarm_status",
+        "_get_agent_status",
+        "_analyze_communication_patterns",
+        "_calculate_efficiency_score",
+        "_calculate_task_completion",
+        "_estimate_completion_time",
+        "_identify_bottlenecks",
+        "_generate_recommendations",
+        "display_dashboard"
+      ],
+      "classes": [
+        "SwarmCoordinator"
+      ],
+      "complexity_score": 332
+    },
+    "swarm_task_tracker": {
+      "name": "swarm_task_tracker",
+      "path": "tools\\swarm_task_tracker.py",
+      "size": 14030,
+      "imports": [],
+      "external_imports": [],
+      "internal_imports": [],
+      "functions": [],
+      "classes": [],
+      "complexity_score": 0,
+      "error": "invalid syntax. Perhaps you forgot a comma? (swarm_task_tracker.py, line 283)"
+    },
+    "intelligent_message_router": {
+      "name": "intelligent_message_router",
+      "path": "tools\\intelligent_message_router.py",
+      "size": 16385,
+      "imports": [
+        "typing.Set",
+        "typing.List",
+        "hashlib",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "typing.Tuple",
+        "datetime.timedelta",
+        "json",
+        "collections.defaultdict"
+      ],
+      "external_imports": [
+        "typing.Set",
+        "typing.List",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "typing.Tuple",
+        "datetime.timedelta",
+        "json",
+        "collections.defaultdict"
+      ],
+      "internal_imports": [
+        "hashlib"
+      ],
+      "functions": [
+        "main",
+        "__init__",
+        "_load_coordination_cache",
+        "_load_message_history",
+        "classify_message",
+        "check_duplicate",
+        "_generate_message_hash",
+        "_calculate_similarity",
+        "route_message",
+        "_determine_routing_action",
+        "_generate_processing_recommendations",
+        "_cache_message",
+        "_save_message_cache",
+        "get_routing_analytics",
+        "_calculate_routing_efficiency",
+        "optimize_routing"
+      ],
+      "classes": [
+        "IntelligentMessageRouter"
+      ],
+      "complexity_score": 429
+    },
+    "dependency_analyzer": {
+      "name": "dependency_analyzer",
+      "path": "tools\\dependency_analyzer.py",
+      "size": 11180,
+      "imports": [
+        "typing.Set",
+        "typing.List",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Tuple",
+        "os",
+        "collections.Counter",
+        "re",
+        "ast",
+        "json",
+        "collections.defaultdict"
+      ],
+      "external_imports": [
+        "typing.Set",
+        "typing.List",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Tuple",
+        "os",
+        "collections.Counter",
+        "ast",
+        "json",
+        "collections.defaultdict"
+      ],
+      "internal_imports": [
+        "re"
+      ],
+      "functions": [
+        "main",
+        "__init__",
+        "analyze_tool",
+        "_is_external_import",
+        "analyze_all_tools",
+        "generate_analysis_report",
+        "_identify_dependency_clusters",
+        "_identify_consolidation_opportunities",
+        "_calculate_migration_priorities",
+        "save_report",
+        "_make_json_serializable"
+      ],
+      "classes": [
+        "ToolsDependencyAnalyzer"
+      ],
+      "complexity_score": 274
+    },
+    "system_adoption_tracker": {
+      "name": "system_adoption_tracker",
+      "path": "tools\\metrics\\system_adoption_tracker.py",
+      "size": 17006,
+      "imports": [],
+      "external_imports": [],
+      "internal_imports": [],
+      "functions": [],
+      "classes": [],
+      "complexity_score": 0,
+      "error": "unterminated string literal (detected at line 315) (system_adoption_tracker.py, line 315)"
+    }
+  },
+  "dependency_clusters": {
+    "dotenv.load_dotenv": [
+      "devlog_poster"
+    ],
+    "pathlib.Path": [
+      "security_audit_runner",
+      "plugin_security_scanner",
+      "analyze_docstrings"
+    ],
+    "datetime.datetime": [
+      "agent_onboarding_system",
+      "cycle_accomplishments_report",
+      "tool_inventory_system",
+      "unified_analyzer",
+      "announcement_coordinator",
+      "final_coordination_handoff"
+    ],
+    "datetime.timedelta": [
+      "consolidation_tracking_system",
+      "agent4_coordination_dashboard"
+    ],
+    "typing.Optional": [
+      "coordination_status_checker",
+      "pypi_verification"
+    ],
+    "discord.ext.commands": [
+      "discord_manager"
+    ],
+    "difflib.SequenceMatcher": [
+      "phase3_semantic_deduplication"
+    ],
+    "tools.hero_activation_verification.verify_hero_activations": [
+      "integrated_website_audit_workflow"
+    ],
+    "urllib.parse.urlparse": [
+      "ollama_website_audit_agent_report"
+    ],
+    "src.core.base.import_standardization.ImportManager": [
+      "ssot_migration_tool"
+    ],
+    "dataclasses.dataclass": [
+      "ssot_ci_thresholds",
+      "comprehensive_migration_sweep"
+    ],
+    "urllib.parse.urljoin": [
+      "post_launch_website_audit",
+      "analytics_site_health_checker"
+    ],
+    "collections.defaultdict": [
+      "intelligent_message_router",
+      "dependency_analyzer"
+    ]
+  },
+  "consolidation_opportunities": [
+    {
+      "tool1": "security_audit_runner",
+      "tool2": "agent_onboarding_system",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "pathlib.Path",
+        "typing.Dict",
+        "os",
+        "json"
+      ],
+      "similarity_score": 0.75,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "security_audit_runner",
+      "tool2": "cycle_accomplishments_report",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "pathlib.Path",
+        "typing.Dict",
+        "os",
+        "json"
+      ],
+      "similarity_score": 0.75,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "security_audit_runner",
+      "tool2": "tool_inventory_system",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "pathlib.Path",
+        "typing.Dict",
+        "os",
+        "json"
+      ],
+      "similarity_score": 0.6,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "security_audit_runner",
+      "tool2": "consolidation_tracking_system",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "pathlib.Path",
+        "typing.Dict",
+        "os",
+        "json"
+      ],
+      "similarity_score": 0.6,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "security_audit_runner",
+      "tool2": "coordination_status_checker",
+      "shared_deps": [
+        "typing.List",
+        "pathlib.Path",
+        "typing.Dict",
+        "os",
+        "json"
+      ],
+      "similarity_score": 0.62,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "security_audit_runner",
+      "tool2": "discord_manager",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "pathlib.Path",
+        "typing.Dict",
+        "os",
+        "argparse",
+        "json"
+      ],
+      "similarity_score": 0.58,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "security_audit_runner",
+      "tool2": "ssot_ci_thresholds",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "pathlib.Path",
+        "typing.Dict",
+        "subprocess",
+        "argparse",
+        "json"
+      ],
+      "similarity_score": 0.7,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "security_audit_runner",
+      "tool2": "unified_analyzer",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "pathlib.Path",
+        "typing.Dict",
+        "os",
+        "json"
+      ],
+      "similarity_score": 0.6,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "security_audit_runner",
+      "tool2": "announcement_coordinator",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "pathlib.Path",
+        "typing.Dict",
+        "os",
+        "argparse",
+        "json"
+      ],
+      "similarity_score": 0.88,
+      "consolidation_potential": "HIGH"
+    },
+    {
+      "tool1": "security_audit_runner",
+      "tool2": "final_coordination_handoff",
+      "shared_deps": [
+        "typing.Any",
+        "pathlib.Path",
+        "typing.Dict",
+        "os",
+        "argparse",
+        "json"
+      ],
+      "similarity_score": 0.75,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "agent_onboarding_system",
+      "tool2": "cycle_accomplishments_report",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "os",
+        "json"
+      ],
+      "similarity_score": 1.0,
+      "consolidation_potential": "HIGH"
+    },
+    {
+      "tool1": "agent_onboarding_system",
+      "tool2": "tool_inventory_system",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "os",
+        "json"
+      ],
+      "similarity_score": 0.8,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "agent_onboarding_system",
+      "tool2": "consolidation_tracking_system",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "os",
+        "json"
+      ],
+      "similarity_score": 0.8,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "agent_onboarding_system",
+      "tool2": "coordination_status_checker",
+      "shared_deps": [
+        "typing.List",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "os",
+        "json"
+      ],
+      "similarity_score": 0.75,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "agent_onboarding_system",
+      "tool2": "discord_manager",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "os",
+        "json"
+      ],
+      "similarity_score": 0.67,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "agent_onboarding_system",
+      "tool2": "integrated_website_audit_workflow",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "json"
+      ],
+      "similarity_score": 0.64,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "agent_onboarding_system",
+      "tool2": "ollama_website_audit_agent_report",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "json"
+      ],
+      "similarity_score": 0.54,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "agent_onboarding_system",
+      "tool2": "unified_analyzer",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "os",
+        "json"
+      ],
+      "similarity_score": 0.8,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "agent_onboarding_system",
+      "tool2": "announcement_coordinator",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "os",
+        "json"
+      ],
+      "similarity_score": 0.88,
+      "consolidation_potential": "HIGH"
+    },
+    {
+      "tool1": "agent_onboarding_system",
+      "tool2": "final_coordination_handoff",
+      "shared_deps": [
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "os",
+        "json"
+      ],
+      "similarity_score": 0.75,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "agent_onboarding_system",
+      "tool2": "agent4_coordination_dashboard",
+      "shared_deps": [
+        "typing.List",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "json"
+      ],
+      "similarity_score": 0.75,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "agent_onboarding_system",
+      "tool2": "intelligent_message_router",
+      "shared_deps": [
+        "typing.List",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "json"
+      ],
+      "similarity_score": 0.6,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "cycle_accomplishments_report",
+      "tool2": "tool_inventory_system",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "os",
+        "json"
+      ],
+      "similarity_score": 0.8,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "cycle_accomplishments_report",
+      "tool2": "consolidation_tracking_system",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "os",
+        "json"
+      ],
+      "similarity_score": 0.8,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "cycle_accomplishments_report",
+      "tool2": "coordination_status_checker",
+      "shared_deps": [
+        "typing.List",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "os",
+        "json"
+      ],
+      "similarity_score": 0.75,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "cycle_accomplishments_report",
+      "tool2": "discord_manager",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "os",
+        "json"
+      ],
+      "similarity_score": 0.67,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "cycle_accomplishments_report",
+      "tool2": "integrated_website_audit_workflow",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "json"
+      ],
+      "similarity_score": 0.64,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "cycle_accomplishments_report",
+      "tool2": "ollama_website_audit_agent_report",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "json"
+      ],
+      "similarity_score": 0.54,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "cycle_accomplishments_report",
+      "tool2": "unified_analyzer",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "os",
+        "json"
+      ],
+      "similarity_score": 0.8,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "cycle_accomplishments_report",
+      "tool2": "announcement_coordinator",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "os",
+        "json"
+      ],
+      "similarity_score": 0.88,
+      "consolidation_potential": "HIGH"
+    },
+    {
+      "tool1": "cycle_accomplishments_report",
+      "tool2": "final_coordination_handoff",
+      "shared_deps": [
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "os",
+        "json"
+      ],
+      "similarity_score": 0.75,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "cycle_accomplishments_report",
+      "tool2": "agent4_coordination_dashboard",
+      "shared_deps": [
+        "typing.List",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "json"
+      ],
+      "similarity_score": 0.75,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "cycle_accomplishments_report",
+      "tool2": "intelligent_message_router",
+      "shared_deps": [
+        "typing.List",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "json"
+      ],
+      "similarity_score": 0.6,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "tool_inventory_system",
+      "tool2": "consolidation_tracking_system",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "os",
+        "json"
+      ],
+      "similarity_score": 0.8,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "tool_inventory_system",
+      "tool2": "coordination_status_checker",
+      "shared_deps": [
+        "typing.List",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "os",
+        "json"
+      ],
+      "similarity_score": 0.6,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "tool_inventory_system",
+      "tool2": "discord_manager",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "os",
+        "json"
+      ],
+      "similarity_score": 0.67,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "tool_inventory_system",
+      "tool2": "phase3_semantic_deduplication",
+      "shared_deps": [
+        "typing.Set",
+        "typing.List",
+        "pathlib.Path",
+        "typing.Dict",
+        "os",
+        "json"
+      ],
+      "similarity_score": 0.6,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "tool_inventory_system",
+      "tool2": "integrated_website_audit_workflow",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "json"
+      ],
+      "similarity_score": 0.64,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "tool_inventory_system",
+      "tool2": "ollama_website_audit_agent_report",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "json"
+      ],
+      "similarity_score": 0.54,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "tool_inventory_system",
+      "tool2": "unified_analyzer",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "os",
+        "json"
+      ],
+      "similarity_score": 0.8,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "tool_inventory_system",
+      "tool2": "announcement_coordinator",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "os",
+        "json"
+      ],
+      "similarity_score": 0.7,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "tool_inventory_system",
+      "tool2": "final_coordination_handoff",
+      "shared_deps": [
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "os",
+        "json"
+      ],
+      "similarity_score": 0.6,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "tool_inventory_system",
+      "tool2": "agent4_coordination_dashboard",
+      "shared_deps": [
+        "typing.List",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "json"
+      ],
+      "similarity_score": 0.6,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "tool_inventory_system",
+      "tool2": "intelligent_message_router",
+      "shared_deps": [
+        "typing.Set",
+        "typing.List",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "json"
+      ],
+      "similarity_score": 0.7,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "tool_inventory_system",
+      "tool2": "dependency_analyzer",
+      "shared_deps": [
+        "typing.Set",
+        "typing.List",
+        "pathlib.Path",
+        "typing.Dict",
+        "os",
+        "ast",
+        "json"
+      ],
+      "similarity_score": 0.7,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "consolidation_tracking_system",
+      "tool2": "coordination_status_checker",
+      "shared_deps": [
+        "typing.List",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "os",
+        "json"
+      ],
+      "similarity_score": 0.6,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "consolidation_tracking_system",
+      "tool2": "discord_manager",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "os",
+        "json"
+      ],
+      "similarity_score": 0.67,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "consolidation_tracking_system",
+      "tool2": "integrated_website_audit_workflow",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "json"
+      ],
+      "similarity_score": 0.64,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "consolidation_tracking_system",
+      "tool2": "ollama_website_audit_agent_report",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "json"
+      ],
+      "similarity_score": 0.54,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "consolidation_tracking_system",
+      "tool2": "unified_analyzer",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "os",
+        "json"
+      ],
+      "similarity_score": 0.8,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "consolidation_tracking_system",
+      "tool2": "announcement_coordinator",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "os",
+        "json"
+      ],
+      "similarity_score": 0.7,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "consolidation_tracking_system",
+      "tool2": "final_coordination_handoff",
+      "shared_deps": [
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "os",
+        "json"
+      ],
+      "similarity_score": 0.6,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "consolidation_tracking_system",
+      "tool2": "agent4_coordination_dashboard",
+      "shared_deps": [
+        "typing.List",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "datetime.timedelta",
+        "json"
+      ],
+      "similarity_score": 0.7,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "consolidation_tracking_system",
+      "tool2": "intelligent_message_router",
+      "shared_deps": [
+        "typing.List",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "datetime.timedelta",
+        "json"
+      ],
+      "similarity_score": 0.7,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "coordination_status_checker",
+      "tool2": "analyze_docstrings",
+      "shared_deps": [
+        "os",
+        "typing.List",
+        "typing.Dict",
+        "pathlib.Path"
+      ],
+      "similarity_score": 0.67,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "coordination_status_checker",
+      "tool2": "unified_analyzer",
+      "shared_deps": [
+        "typing.List",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "os",
+        "json"
+      ],
+      "similarity_score": 0.6,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "coordination_status_checker",
+      "tool2": "announcement_coordinator",
+      "shared_deps": [
+        "typing.List",
+        "pathlib.Path",
+        "typing.Dict",
+        "os",
+        "json"
+      ],
+      "similarity_score": 0.62,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "coordination_status_checker",
+      "tool2": "final_coordination_handoff",
+      "shared_deps": [
+        "os",
+        "pathlib.Path",
+        "typing.Dict",
+        "json"
+      ],
+      "similarity_score": 0.57,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "coordination_status_checker",
+      "tool2": "post_launch_website_audit",
+      "shared_deps": [
+        "json",
+        "typing.List",
+        "typing.Dict",
+        "pathlib.Path"
+      ],
+      "similarity_score": 0.67,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "coordination_status_checker",
+      "tool2": "agent4_coordination_dashboard",
+      "shared_deps": [
+        "typing.List",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "json"
+      ],
+      "similarity_score": 0.62,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "discord_manager",
+      "tool2": "integrated_website_audit_workflow",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "json",
+        "logging"
+      ],
+      "similarity_score": 0.67,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "discord_manager",
+      "tool2": "ollama_website_audit_agent_report",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "argparse",
+        "json",
+        "logging"
+      ],
+      "similarity_score": 0.69,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "discord_manager",
+      "tool2": "ssot_migration_tool",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "argparse",
+        "json",
+        "logging"
+      ],
+      "similarity_score": 0.53,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "discord_manager",
+      "tool2": "unified_analyzer",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "os",
+        "json",
+        "logging"
+      ],
+      "similarity_score": 0.75,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "discord_manager",
+      "tool2": "announcement_coordinator",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "os",
+        "argparse",
+        "json"
+      ],
+      "similarity_score": 0.67,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "discord_manager",
+      "tool2": "final_coordination_handoff",
+      "shared_deps": [
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "os",
+        "argparse",
+        "json"
+      ],
+      "similarity_score": 0.58,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "discord_manager",
+      "tool2": "analytics_site_health_checker",
+      "shared_deps": [
+        "typing.List",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "argparse",
+        "json",
+        "logging"
+      ],
+      "similarity_score": 0.58,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "phase3_semantic_deduplication",
+      "tool2": "comprehensive_migration_sweep",
+      "shared_deps": [
+        "typing.Set",
+        "typing.List",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Tuple",
+        "os"
+      ],
+      "similarity_score": 0.6,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "phase3_semantic_deduplication",
+      "tool2": "unified_analyzer",
+      "shared_deps": [
+        "typing.List",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Tuple",
+        "os",
+        "json"
+      ],
+      "similarity_score": 0.6,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "phase3_semantic_deduplication",
+      "tool2": "intelligent_message_router",
+      "shared_deps": [
+        "typing.Set",
+        "typing.List",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Tuple",
+        "json",
+        "collections.defaultdict"
+      ],
+      "similarity_score": 0.7,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "phase3_semantic_deduplication",
+      "tool2": "dependency_analyzer",
+      "shared_deps": [
+        "typing.Set",
+        "typing.List",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Tuple",
+        "os",
+        "collections.Counter",
+        "json",
+        "collections.defaultdict"
+      ],
+      "similarity_score": 0.9,
+      "consolidation_potential": "HIGH"
+    },
+    {
+      "tool1": "integrated_website_audit_workflow",
+      "tool2": "ollama_website_audit_agent_report",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "json",
+        "logging"
+      ],
+      "similarity_score": 0.62,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "integrated_website_audit_workflow",
+      "tool2": "unified_analyzer",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "json",
+        "logging"
+      ],
+      "similarity_score": 0.73,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "integrated_website_audit_workflow",
+      "tool2": "announcement_coordinator",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "json"
+      ],
+      "similarity_score": 0.55,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "integrated_website_audit_workflow",
+      "tool2": "agent4_coordination_dashboard",
+      "shared_deps": [
+        "typing.List",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "json"
+      ],
+      "similarity_score": 0.55,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "integrated_website_audit_workflow",
+      "tool2": "intelligent_message_router",
+      "shared_deps": [
+        "typing.List",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "json"
+      ],
+      "similarity_score": 0.55,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "ollama_website_audit_agent_report",
+      "tool2": "ssot_migration_tool",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "argparse",
+        "json",
+        "logging"
+      ],
+      "similarity_score": 0.53,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "ollama_website_audit_agent_report",
+      "tool2": "unified_analyzer",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "json",
+        "logging"
+      ],
+      "similarity_score": 0.62,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "ollama_website_audit_agent_report",
+      "tool2": "announcement_coordinator",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "argparse",
+        "json"
+      ],
+      "similarity_score": 0.54,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "ollama_website_audit_agent_report",
+      "tool2": "analytics_site_health_checker",
+      "shared_deps": [
+        "bs4.BeautifulSoup",
+        "typing.List",
+        "pathlib.Path",
+        "requests",
+        "typing.Dict",
+        "typing.Optional",
+        "urllib.parse.urljoin",
+        "argparse",
+        "json",
+        "logging"
+      ],
+      "similarity_score": 0.77,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "ssot_migration_tool",
+      "tool2": "ssot_ci_thresholds",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "sys",
+        "pathlib.Path",
+        "typing.Dict",
+        "dataclasses.dataclass",
+        "argparse",
+        "json"
+      ],
+      "similarity_score": 0.53,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "ssot_migration_tool",
+      "tool2": "comprehensive_migration_sweep",
+      "shared_deps": [
+        "typing.Set",
+        "dataclasses.field",
+        "typing.List",
+        "sys",
+        "pathlib.Path",
+        "typing.Dict",
+        "dataclasses.dataclass",
+        "argparse"
+      ],
+      "similarity_score": 0.53,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "ssot_migration_tool",
+      "tool2": "analytics_site_health_checker",
+      "shared_deps": [
+        "typing.List",
+        "sys",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "argparse",
+        "json",
+        "logging"
+      ],
+      "similarity_score": 0.53,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "ssot_ci_thresholds",
+      "tool2": "comprehensive_migration_sweep",
+      "shared_deps": [
+        "typing.List",
+        "sys",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Tuple",
+        "dataclasses.dataclass",
+        "argparse"
+      ],
+      "similarity_score": 0.7,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "ssot_ci_thresholds",
+      "tool2": "unified_analyzer",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Tuple",
+        "json"
+      ],
+      "similarity_score": 0.6,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "ssot_ci_thresholds",
+      "tool2": "announcement_coordinator",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "pathlib.Path",
+        "typing.Dict",
+        "argparse",
+        "json"
+      ],
+      "similarity_score": 0.6,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "ssot_ci_thresholds",
+      "tool2": "analytics_site_health_checker",
+      "shared_deps": [
+        "typing.List",
+        "sys",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Tuple",
+        "argparse",
+        "json"
+      ],
+      "similarity_score": 0.58,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "comprehensive_migration_sweep",
+      "tool2": "dependency_analyzer",
+      "shared_deps": [
+        "typing.Set",
+        "typing.List",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Tuple",
+        "os"
+      ],
+      "similarity_score": 0.6,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "unified_analyzer",
+      "tool2": "announcement_coordinator",
+      "shared_deps": [
+        "typing.List",
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "os",
+        "json"
+      ],
+      "similarity_score": 0.7,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "unified_analyzer",
+      "tool2": "final_coordination_handoff",
+      "shared_deps": [
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "os",
+        "json"
+      ],
+      "similarity_score": 0.6,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "unified_analyzer",
+      "tool2": "analytics_site_health_checker",
+      "shared_deps": [
+        "typing.List",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "typing.Tuple",
+        "json",
+        "logging"
+      ],
+      "similarity_score": 0.58,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "unified_analyzer",
+      "tool2": "agent4_coordination_dashboard",
+      "shared_deps": [
+        "typing.List",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "typing.Tuple",
+        "json"
+      ],
+      "similarity_score": 0.7,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "unified_analyzer",
+      "tool2": "intelligent_message_router",
+      "shared_deps": [
+        "typing.List",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "typing.Tuple",
+        "json"
+      ],
+      "similarity_score": 0.7,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "unified_analyzer",
+      "tool2": "dependency_analyzer",
+      "shared_deps": [
+        "typing.List",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Tuple",
+        "os",
+        "json"
+      ],
+      "similarity_score": 0.6,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "announcement_coordinator",
+      "tool2": "final_coordination_handoff",
+      "shared_deps": [
+        "typing.Any",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "os",
+        "argparse",
+        "json"
+      ],
+      "similarity_score": 0.88,
+      "consolidation_potential": "HIGH"
+    },
+    {
+      "tool1": "announcement_coordinator",
+      "tool2": "agent4_coordination_dashboard",
+      "shared_deps": [
+        "typing.List",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "json"
+      ],
+      "similarity_score": 0.62,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "agent4_coordination_dashboard",
+      "tool2": "intelligent_message_router",
+      "shared_deps": [
+        "typing.List",
+        "datetime.datetime",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Optional",
+        "typing.Tuple",
+        "datetime.timedelta",
+        "json"
+      ],
+      "similarity_score": 0.8,
+      "consolidation_potential": "MEDIUM"
+    },
+    {
+      "tool1": "intelligent_message_router",
+      "tool2": "dependency_analyzer",
+      "shared_deps": [
+        "typing.Set",
+        "typing.List",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Tuple",
+        "json",
+        "collections.defaultdict"
+      ],
+      "similarity_score": 0.7,
+      "consolidation_potential": "MEDIUM"
+    }
+  ],
+  "migration_priorities": [
+    {
+      "tool": "security_health_check",
+      "complexity_score": 0,
+      "dependency_count": 0,
+      "priority_score": 0.0,
+      "migration_order": "HIGH"
+    },
+    {
+      "tool": "audit_harness",
+      "complexity_score": 0,
+      "dependency_count": 0,
+      "priority_score": 0.0,
+      "migration_order": "HIGH"
+    },
+    {
+      "tool": "swarm_task_tracker",
+      "complexity_score": 0,
+      "dependency_count": 0,
+      "priority_score": 0.0,
+      "migration_order": "HIGH"
+    },
+    {
+      "tool": "system_adoption_tracker",
+      "complexity_score": 0,
+      "dependency_count": 0,
+      "priority_score": 0.0,
+      "migration_order": "HIGH"
+    },
+    {
+      "tool": "plugin_security_scanner",
+      "complexity_score": 87,
+      "dependency_count": 3,
+      "priority_score": 36.6,
+      "migration_order": "HIGH"
+    },
+    {
+      "tool": "coordination_status_checker",
+      "complexity_score": 107,
+      "dependency_count": 6,
+      "priority_score": 46.4,
+      "migration_order": "HIGH"
+    },
+    {
+      "tool": "analyze_docstrings",
+      "complexity_score": 113,
+      "dependency_count": 5,
+      "priority_score": 48.2,
+      "migration_order": "HIGH"
+    },
+    {
+      "tool": "post_launch_website_audit",
+      "complexity_score": 149,
+      "dependency_count": 6,
+      "priority_score": 63.2,
+      "migration_order": "HIGH"
+    },
+    {
+      "tool": "pypi_verification",
+      "complexity_score": 185,
+      "dependency_count": 8,
+      "priority_score": 78.8,
+      "migration_order": "HIGH"
+    },
+    {
+      "tool": "security_audit_runner",
+      "complexity_score": 213,
+      "dependency_count": 8,
+      "priority_score": 90.0,
+      "migration_order": "HIGH"
+    },
+    {
+      "tool": "final_coordination_handoff",
+      "complexity_score": 224,
+      "dependency_count": 7,
+      "priority_score": 93.8,
+      "migration_order": "HIGH"
+    },
+    {
+      "tool": "agent_onboarding_system",
+      "complexity_score": 226,
+      "dependency_count": 8,
+      "priority_score": 95.2,
+      "migration_order": "HIGH"
+    },
+    {
+      "tool": "dependency_analyzer",
+      "complexity_score": 274,
+      "dependency_count": 10,
+      "priority_score": 115.6,
+      "migration_order": "MEDIUM"
+    },
+    {
+      "tool": "cycle_accomplishments_report",
+      "complexity_score": 289,
+      "dependency_count": 8,
+      "priority_score": 120.4,
+      "migration_order": "MEDIUM"
+    },
+    {
+      "tool": "agent4_coordination_dashboard",
+      "complexity_score": 332,
+      "dependency_count": 8,
+      "priority_score": 137.6,
+      "migration_order": "MEDIUM"
+    },
+    {
+      "tool": "phase3_semantic_deduplication",
+      "complexity_score": 330,
+      "dependency_count": 10,
+      "priority_score": 138.0,
+      "migration_order": "MEDIUM"
+    },
+    {
+      "tool": "announcement_coordinator",
+      "complexity_score": 333,
+      "dependency_count": 8,
+      "priority_score": 138.0,
+      "migration_order": "MEDIUM"
+    },
+    {
+      "tool": "comprehensive_migration_sweep",
+      "complexity_score": 333,
+      "dependency_count": 10,
+      "priority_score": 139.2,
+      "migration_order": "MEDIUM"
+    },
+    {
+      "tool": "ssot_ci_thresholds",
+      "complexity_score": 354,
+      "dependency_count": 10,
+      "priority_score": 147.6,
+      "migration_order": "MEDIUM"
+    },
+    {
+      "tool": "ssot_migration_tool",
+      "complexity_score": 347,
+      "dependency_count": 15,
+      "priority_score": 147.8,
+      "migration_order": "MEDIUM"
+    },
+    {
+      "tool": "devlog_poster",
+      "complexity_score": 380,
+      "dependency_count": 10,
+      "priority_score": 158.0,
+      "migration_order": "MEDIUM"
+    },
+    {
+      "tool": "tool_inventory_system",
+      "complexity_score": 429,
+      "dependency_count": 10,
+      "priority_score": 177.6,
+      "migration_order": "MEDIUM"
+    },
+    {
+      "tool": "consolidation_tracking_system",
+      "complexity_score": 429,
+      "dependency_count": 10,
+      "priority_score": 177.6,
+      "migration_order": "MEDIUM"
+    },
+    {
+      "tool": "intelligent_message_router",
+      "complexity_score": 429,
+      "dependency_count": 10,
+      "priority_score": 177.6,
+      "migration_order": "MEDIUM"
+    },
+    {
+      "tool": "integrated_website_audit_workflow",
+      "complexity_score": 428,
+      "dependency_count": 11,
+      "priority_score": 177.8,
+      "migration_order": "MEDIUM"
+    },
+    {
+      "tool": "unified_analyzer",
+      "complexity_score": 518,
+      "dependency_count": 10,
+      "priority_score": 213.2,
+      "migration_order": "LOW"
+    },
+    {
+      "tool": "analytics_site_health_checker",
+      "complexity_score": 620,
+      "dependency_count": 12,
+      "priority_score": 255.2,
+      "migration_order": "LOW"
+    },
+    {
+      "tool": "ollama_website_audit_agent_report",
+      "complexity_score": 684,
+      "dependency_count": 13,
+      "priority_score": 281.4,
+      "migration_order": "LOW"
+    },
+    {
+      "tool": "discord_manager",
+      "complexity_score": 774,
+      "dependency_count": 12,
+      "priority_score": 316.8,
+      "migration_order": "LOW"
+    }
+  ]
+}

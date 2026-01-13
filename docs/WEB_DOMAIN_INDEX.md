@@ -2,8 +2,13 @@
 
 <!-- SSOT Domain: web -->
 
+<<<<<<< HEAD
+**Owner:** Agent-7 (Web Development Specialist) / Agent-5 (Business Intelligence)
+**Last Updated:** 2026-01-10
+=======
 **Owner:** Agent-7 (Web Development Specialist)  
 **Last Updated:** 2025-12-27  
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 **Purpose:** Quick navigation reference for all web domain files and documentation
 
 ---
@@ -83,11 +88,28 @@
 
 | Tool | Path | Purpose |
 |------|------|---------|
+<<<<<<< HEAD
+<<<<<<< HEAD
 | Website Deployer | `mcp_servers/deployment_server.py` | Deploy files to WordPress sites |
 | Theme Activator | `mcp_servers/wp_cli_manager_server.py` | Activate themes via WP-CLI |
 | Unified Manager | `mcp_servers/wp_cli_manager_server.py` | Full WordPress management |
 | Devlog Poster | `tools/devlog_poster.py` | Post devlogs to Discord |
 | Grade Card Auditor | `tools/audit_websites_grade_cards.py` | Website quality audits |
+| **Analytics Validator** | `tools/automated_p0_analytics_validation.py` | GA4/Pixel deployment validation |
+| **WordPress Health Check** | `mcp_servers/validation_audit_server.py` | Site health and SEO validation |
+| **GA4/Pixel Deployer** | `tools/deploy_ga4_pixel_analytics.py` | Analytics configuration deployment |
+=======
+| Website Deployer | `tools/simple_wordpress_deployer.py` | Deploy files to WordPress sites |
+| Theme Activator | `tools/activate_theme_ssh.py` | Activate themes via SSH |
+| Unified Manager | `tools/unified_wordpress_manager.py` | Full WordPress management |
+=======
+| Website Deployer | `mcp_servers/deployment_server.py` | Deploy files to WordPress sites |
+| Theme Activator | `mcp_servers/wp_cli_manager_server.py` | Activate themes via WP-CLI |
+| Unified Manager | `mcp_servers/wp_cli_manager_server.py` | Full WordPress management |
+>>>>>>> origin/codex/build-tsla-morning-report-system
+| Devlog Poster | `tools/devlog_poster.py` | Post devlogs to Discord |
+| Grade Card Auditor | `tools/audit_websites_grade_cards.py` | Website quality audits |
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
 ---
 
@@ -105,12 +127,49 @@
 
 ### Site Configuration
 
+<<<<<<< HEAD
+| Site | Positioning | ICP | Analytics Status |
+|------|-------------|-----|------------------|
+| freerideinvestor.com | `POSITIONING_STATEMENT.md` | `ICP_DEFINITION.md` | ✅ Ready (GA4: G-XYZ789GHI5, Pixel: 876543210987654) |
+| tradingrobotplug.com | `websites/tradingrobotplug.com/docs/` | - | ✅ Ready (GA4: G-ABC123DEF4, Pixel: 987654321098765) |
+| dadudekc.com | `websites/dadudekc.com/POSITIONING_STATEMENT.md` | `ICP_DEFINITION.md` | ❌ Blocked (HTTP 500 Server Error) |
+| crosbyultimateevents.com | `websites/crosbyultimateevents.com/POSITIONING_STATEMENT.md` | `ICP_DEFINITION.md` | ❌ Blocked (HTTP 500 Server Error) |
+
+---
+
+## 📊 Analytics Deployment Status
+
+### Current Status (as of 2026-01-10)
+- **Sites Ready for Deployment:** 2/4 (freerideinvestor.com, tradingrobotplug.com)
+- **Sites Blocked:** 2/4 (dadudekc.com, crosbyultimateevents.com - HTTP 500 errors)
+- **GA4/Pixel Configuration:** Placeholder IDs deployed, awaiting real production IDs
+- **Validation Tools:** Available via `tools/automated_p0_analytics_validation.py`
+
+### Deployment Requirements
+- **Real GA4 Measurement IDs:** Required from Google Analytics for production deployment
+- **Real Facebook Pixel IDs:** Required from Facebook Business Manager
+- **Site Health:** HTTP 500 errors must be resolved before analytics deployment
+- **Configuration Files:** Templates ready at `sites/{site}/wp-config-analytics.php`
+
+### Validation Commands
+```bash
+# Validate all P0 sites
+python tools/automated_p0_analytics_validation.py --validate-ready
+
+# Generate comprehensive report
+python tools/automated_p0_analytics_validation.py --generate-report
+
+# WordPress health check via MCP
+# (Available through validation-audit MCP server)
+```
+=======
 | Site | Positioning | ICP |
 |------|-------------|-----|
 | freerideinvestor.com | `POSITIONING_STATEMENT.md` | `ICP_DEFINITION.md` |
 | tradingrobotplug.com | `websites/tradingrobotplug.com/docs/` | - |
 | dadudekc.com | `websites/dadudekc.com/POSITIONING_STATEMENT.md` | `ICP_DEFINITION.md` |
 | crosbyultimateevents.com | `websites/crosbyultimateevents.com/POSITIONING_STATEMENT.md` | `ICP_DEFINITION.md` |
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
 ---
 
@@ -122,7 +181,15 @@
 git add <files> && git commit -m "message"
 
 # Manual deploy (if needed)
+<<<<<<< HEAD
+<<<<<<< HEAD
 python mcp_servers/deployment_server.py --site <sitename>
+=======
+python tools/simple_wordpress_deployer.py --site <sitename>
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+python mcp_servers/deployment_server.py --site <sitename>
+>>>>>>> origin/codex/build-tsla-morning-report-system
 ```
 
 ### Post Devlog

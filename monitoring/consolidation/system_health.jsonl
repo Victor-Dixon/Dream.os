@@ -1,0 +1,4 @@
+{"timestamp": "2026-01-09T00:06:24.390042", "cpu_percent": 96.9, "memory_percent": 84.9, "disk_usage_percent": 34.8, "network_io": {"bytes_sent": 143331251, "bytes_recv": 652093289}, "active_processes": 890, "consolidation_impact": "high"}
+{"timestamp": "2026-01-09T01:32:20.475934", "cpu_percent": 82.0, "memory_percent": 63.4, "disk_usage_percent": 35.1, "network_io": {"bytes_sent": 272838870, "bytes_recv": 971950785}, "active_processes": 559, "consolidation_impact": "high"}
+{"timestamp": "2026-01-09T02:48:18.783032", "cpu_percent": 61.6, "memory_percent": 66.2, "disk_usage_percent": 35.2, "network_io": {"bytes_sent": 361445342, "bytes_recv": 1307903438}, "active_processes": 545, "consolidation_impact": "medium"}
+{"timestamp": "2026-01-09T02:52:43.908811", "cpu_percent": 70.0, "memory_percent": 70.9, "disk_usage_percent": 35.2, "network_io": {"bytes_sent": 371881567, "bytes_recv": 1341456496}, "active_processes": 557, "consolidation_impact": "medium"}

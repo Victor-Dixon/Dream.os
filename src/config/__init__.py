@@ -1,12 +1,31 @@
 """
 """
-# AUTO-GENERATED __init__.py
-# DO NOT EDIT MANUALLY - changes may be overwritten
+<<<<<<< HEAD
+<<<<<<< HEAD
+# Configuration package
+# Import all configuration modules
 
-from . import ssot
+from . import paths
 
 __all__ = [
+    'paths',
+=======
+# AUTO-GENERATED __init__.py
+# DO NOT EDIT MANUALLY - changes may be overwritten
+=======
+# Configuration package
+# Import all configuration modules
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
+
+from . import paths
+
+__all__ = [
+<<<<<<< HEAD
     'ssot',
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+    'paths',
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 ]
 
 # <!-- SSOT Domain: config -->

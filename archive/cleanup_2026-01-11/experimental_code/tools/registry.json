@@ -1,0 +1,677 @@
+{
+  "fastapi_performance_diagnostic": {
+    "name": "fastapi_performance_diagnostic",
+    "category": "testing",
+    "description": "FastAPI Performance Diagnostic Tool",
+    "file_path": "tools\\fastapi_performance_diagnostic.py",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [
+      "from __future__ import annotations",
+      "import asyncio",
+      "import json",
+      "import logging",
+      "import time"
+    ],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 422,
+    "status": "active",
+    "tags": []
+  },
+  "fastapi_simple_diagnostic": {
+    "name": "fastapi_simple_diagnostic",
+    "category": "testing",
+    "description": "Simple FastAPI Performance Diagnostic",
+    "file_path": "tools\\fastapi_simple_diagnostic.py",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [
+      "import json",
+      "import time",
+      "import requests",
+      "from datetime import datetime"
+    ],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 159,
+    "status": "active",
+    "tags": []
+  },
+  "project_inventory_catalog": {
+    "name": "project_inventory_catalog",
+    "category": "analysis",
+    "description": "Project Inventory Catalog System",
+    "file_path": "tools\\project_inventory_catalog.py",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [
+      "from __future__ import annotations",
+      "import json",
+      "import os",
+      "import re",
+      "from datetime import datetime"
+    ],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 600,
+    "status": "active",
+    "tags": []
+  },
+  "simple_inventory": {
+    "name": "simple_inventory",
+    "category": "analysis",
+    "description": "Simple Project Inventory",
+    "file_path": "tools\\simple_inventory.py",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [
+      "import json",
+      "import os",
+      "from datetime import datetime",
+      "from pathlib import Path"
+    ],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 162,
+    "status": "active",
+    "tags": []
+  },
+  "directory_audit_helper": {
+    "name": "directory_audit_helper",
+    "category": "analysis",
+    "description": "Directory Audit Helper Tool",
+    "file_path": "tools\\directory_audit_helper.py",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [
+      "import os",
+      "import sys",
+      "from pathlib import Path",
+      "from collections import defaultdict",
+      "import argparse"
+    ],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 161,
+    "status": "active",
+    "tags": []
+  },
+  "deploy_analytics_remote": {
+    "name": "deploy_analytics_remote",
+    "category": "infrastructure",
+    "description": "Remote Analytics Deployment Tool",
+    "file_path": "tools\\deploy_analytics_remote.py",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [
+      "import os",
+      "import sys",
+      "import json",
+      "import argparse",
+      "from pathlib import Path"
+    ],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 175,
+    "status": "active",
+    "tags": []
+  },
+  "robinhood_stats_2026": {
+    "name": "robinhood_stats_2026",
+    "category": "trading",
+    "description": "Robinhood 2026 Options Statistics Tool",
+    "file_path": "tools\\robinhood_stats_2026.py",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [
+      "import os",
+      "import sys",
+      "import logging",
+      "from pathlib import Path",
+      "import sys"
+    ],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 190,
+    "status": "active",
+    "tags": []
+  },
+  "infrastructure_tools": {
+    "name": "infrastructure_tools",
+    "category": "infrastructure",
+    "description": "Unified Infrastructure Tools - Phase 4 Consolidation",
+    "file_path": "tools\\infrastructure_tools.py",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [
+      "import os",
+      "import json",
+      "import logging",
+      "import time",
+      "from pathlib import Path"
+    ],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 965,
+    "status": "active",
+    "tags": []
+  },
+  "a2a_coordination_tracker": {
+    "name": "a2a_coordination_tracker",
+    "category": "coordination",
+    "description": "A2A Coordination Tracker - Utility Tool",
+    "file_path": "tools\\a2a_coordination_tracker.py",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [
+      "import json",
+      "import os",
+      "from datetime import datetime",
+      "from pathlib import Path",
+      "from typing import Dict, List, Optional"
+    ],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 173,
+    "status": "active",
+    "tags": []
+  },
+  "robinhood_auth_test": {
+    "name": "robinhood_auth_test",
+    "category": "testing",
+    "description": "Robinhood Authentication Test Tool",
+    "file_path": "tools\\robinhood_auth_test.py",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [
+      "import os",
+      "import sys",
+      "import time",
+      "from pathlib import Path"
+    ],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 102,
+    "status": "active",
+    "tags": []
+  },
+  "robinhood_demo_stats": {
+    "name": "robinhood_demo_stats",
+    "category": "trading",
+    "description": "Robinhood 2026 Options Statistics - Demo Version",
+    "file_path": "tools\\robinhood_demo_stats.py",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [
+      "import sys",
+      "from pathlib import Path"
+    ],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 80,
+    "status": "active",
+    "tags": []
+  },
+  "verify_revenue_engine_deployment": {
+    "name": "verify_revenue_engine_deployment",
+    "category": "infrastructure",
+    "description": "Revenue Engine Production Deployment Verification",
+    "file_path": "tools\\verify_revenue_engine_deployment.py",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [
+      "import requests",
+      "import time",
+      "import json",
+      "import logging",
+      "from typing import Dict, List, Tuple, Optional, Any"
+    ],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 379,
+    "status": "active",
+    "tags": []
+  },
+  "robinhood_debug_auth": {
+    "name": "robinhood_debug_auth",
+    "category": "trading",
+    "description": "Robinhood Authentication Debug Tool",
+    "file_path": "tools\\robinhood_debug_auth.py",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [
+      "import os",
+      "import sys",
+      "import time",
+      "from pathlib import Path",
+      "import robin_stocks.robinhood as rs"
+    ],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 160,
+    "status": "active",
+    "tags": []
+  },
+  "discord_bot_launcher": {
+    "name": "discord_bot_launcher",
+    "category": "communication",
+    "description": "Unified Discord Bot Launcher (Consolidated)",
+    "file_path": "src\\discord_commander\\unified_discord_bot.py",
+    "version": "2.0.0",
+    "author": "Agent-4",
+    "dependencies": [
+      "import asyncio",
+      "import os",
+      "import subprocess",
+      "import sys",
+      "from pathlib import Path"
+    ],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 103,
+    "status": "consolidated",
+    "tags": []
+  },
+  "unified_analyzer": {
+    "name": "unified_analyzer",
+    "category": "utility",
+    "description": "Unified Analyzer",
+    "file_path": "tools\\unified_analyzer.py",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [
+      "import json",
+      "import os",
+      "from pathlib import Path",
+      "from typing import Dict, List, Any, Optional, Tuple",
+      "from datetime import datetime"
+    ],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 501,
+    "status": "active",
+    "tags": []
+  },
+  "__init__": {
+    "name": "__init__",
+    "category": "utility",
+    "description": "Tools Package",
+    "file_path": "tools\\__init__.py",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 20,
+    "status": "active",
+    "tags": []
+  },
+  "runtime_error_integration_tester": {
+    "name": "runtime_error_integration_tester",
+    "category": "testing",
+    "description": "Runtime Error Integration Tester",
+    "file_path": "tools\\runtime_error_integration_tester.py",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [
+      "import argparse",
+      "import requests",
+      "import json",
+      "import time",
+      "from datetime import datetime"
+    ],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 216,
+    "status": "active",
+    "tags": []
+  },
+  "validate_deployment_credentials": {
+    "name": "validate_deployment_credentials",
+    "category": "infrastructure",
+    "description": "Deployment Credentials Validation Tool",
+    "file_path": "tools\\validate_deployment_credentials.py",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [
+      "import os",
+      "import json",
+      "from pathlib import Path",
+      "from typing import Dict, List, Tuple"
+    ],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 170,
+    "status": "active",
+    "tags": []
+  },
+  "infrastructure_health_check": {
+    "name": "infrastructure_health_check",
+    "category": "infrastructure",
+    "description": "Infrastructure Health Check Tool",
+    "file_path": "tools\\infrastructure_health_check.py",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [
+      "import sys",
+      "import os",
+      "from pathlib import Path"
+    ],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 115,
+    "status": "active",
+    "tags": []
+  },
+  "ai_integration_status_checker": {
+    "name": "ai_integration_status_checker",
+    "category": "ai",
+    "description": "AI Integration Status Checker",
+    "file_path": "tools\\ai_integration_status_checker.py",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [
+      "import argparse",
+      "import importlib",
+      "import sys",
+      "from typing import Dict, List, Optional",
+      "import onnxruntime"
+    ],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 241,
+    "status": "active",
+    "tags": []
+  },
+  "a2a_coordination_status_checker": {
+    "name": "a2a_coordination_status_checker",
+    "category": "coordination",
+    "description": "A2A Coordination Status Checker - Utility Tool",
+    "file_path": "tools\\a2a_coordination_status_checker.py",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [
+      "import json",
+      "import os",
+      "from pathlib import Path",
+      "from datetime import datetime",
+      "from typing import List, Dict, Any"
+    ],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 133,
+    "status": "active",
+    "tags": []
+  },
+  "devlog_poster": {
+    "name": "devlog_poster",
+    "category": "communication",
+    "description": "Devlog Poster Tool - Agent Cellphone V2",
+    "file_path": "tools\\devlog_poster.py",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [
+      "import argparse",
+      "import os",
+      "import sys",
+      "import json",
+      "from pathlib import Path"
+    ],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 343,
+    "status": "active",
+    "tags": []
+  },
+  "a2a_coordination_health_check": {
+    "name": "a2a_coordination_health_check",
+    "category": "coordination",
+    "description": "A2A Coordination Health Check Tool",
+    "file_path": "tools\\a2a_coordination_health_check.py",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [
+      "import sys",
+      "import os",
+      "from pathlib import Path",
+      "import requests"
+    ],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 104,
+    "status": "active",
+    "tags": []
+  },
+  "ga4_pixel_validation_tester": {
+    "name": "ga4_pixel_validation_tester",
+    "category": "testing",
+    "description": "GA4/Pixel Configuration Validation Tester",
+    "file_path": "tools\\ga4_pixel_validation_tester.py",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [
+      "import argparse",
+      "import requests",
+      "import json",
+      "import time",
+      "from datetime import datetime"
+    ],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 330,
+    "status": "active",
+    "tags": []
+  },
+  "a2a_coordination_analyzer": {
+    "name": "a2a_coordination_analyzer",
+    "category": "coordination",
+    "description": "A2A Coordination Analyzer",
+    "file_path": "tools\\a2a_coordination_analyzer.py",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [
+      "import argparse",
+      "import os",
+      "import re",
+      "from pathlib import Path",
+      "from typing import Dict, List, Optional"
+    ],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 264,
+    "status": "active",
+    "tags": []
+  },
+  "v2_compliance_checker": {
+    "name": "v2_compliance_checker",
+    "category": "quality",
+    "description": "V2 Compliance Checker Tool - Agent-7",
+    "file_path": "tools\\v2_compliance_checker.py",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [
+      "import sys",
+      "import os",
+      "from pathlib import Path"
+    ],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 107,
+    "status": "active",
+    "tags": []
+  },
+  "vector_db_troubleshooter": {
+    "name": "vector_db_troubleshooter",
+    "category": "ai",
+    "description": "Vector Database Troubleshooter",
+    "file_path": "tools\\vector_db_troubleshooter.py",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [
+      "import sys",
+      "import os",
+      "import subprocess",
+      "import importlib",
+      "from pathlib import Path"
+    ],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 317,
+    "status": "active",
+    "tags": []
+  },
+  "import_path_fix": {
+    "name": "import_path_fix",
+    "category": "utility",
+    "description": "Import Path Fix Utility",
+    "file_path": "tools\\import_path_fix.py",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [
+      "import sys",
+      "import os",
+      "from pathlib import Path",
+      "import src",
+      "import sys"
+    ],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 126,
+    "status": "active",
+    "tags": []
+  },
+  "ai_reasoning_engine": {
+    "name": "ai_reasoning_engine",
+    "category": "enterprise_infrastructure",
+    "description": "5-mode LLM reasoning (Analytical, Creative, Technical, Strategic, Simple)",
+    "file_path": "src/",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 0,
+    "status": "operational",
+    "tags": [
+      "/ai/reason",
+      "/ai/reason/stream"
+    ]
+  },
+  "vector_database_service": {
+    "name": "vector_database_service",
+    "category": "enterprise_infrastructure",
+    "description": "Semantic search and AI-powered vector operations",
+    "file_path": "src/",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 0,
+    "status": "operational",
+    "tags": [
+      "/ai/semantic-search"
+    ]
+  },
+  "unified_messaging_cli": {
+    "name": "unified_messaging_cli",
+    "category": "enterprise_infrastructure",
+    "description": "Agent-to-agent communication and bilateral coordination",
+    "file_path": "src/",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [
+      "message_routing",
+      "coordination_requests",
+      "task_claiming"
+    ],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 0,
+    "status": "operational",
+    "tags": []
+  },
+  "command_handlers": {
+    "name": "command_handlers",
+    "category": "enterprise_infrastructure",
+    "description": "Role-based command processing and unified error handling",
+    "file_path": "src/",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 0,
+    "status": "operational",
+    "tags": []
+  },
+  "contract_system": {
+    "name": "contract_system",
+    "category": "enterprise_infrastructure",
+    "description": "Task assignment, tracking, and cycle planning integration",
+    "file_path": "src/",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [
+      "task_assignment",
+      "progress_tracking",
+      "contract_notifications"
+    ],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 0,
+    "status": "operational",
+    "tags": []
+  },
+  "agent_management": {
+    "name": "agent_management",
+    "category": "enterprise_infrastructure",
+    "description": "Agent status tracking, work assignment, and performance monitoring",
+    "file_path": "src/",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [
+      "status_tracking",
+      "work_assignment",
+      "performance_monitoring"
+    ],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 0,
+    "status": "operational",
+    "tags": []
+  },
+  "main_service_launcher": {
+    "name": "main_service_launcher",
+    "category": "enterprise_infrastructure",
+    "description": "Complete service orchestration (Message Queue, Twitch Bot, Discord Bot, FastAPI)",
+    "file_path": "src/",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 0,
+    "status": "operational",
+    "tags": []
+  },
+  "service_manager": {
+    "name": "service_manager",
+    "category": "enterprise_infrastructure",
+    "description": "Individual service lifecycle management with health checks",
+    "file_path": "src/",
+    "version": "1.0.0",
+    "author": "Agent-4",
+    "dependencies": [
+      "lifecycle_management",
+      "pid_management",
+      "health_checks"
+    ],
+    "python_version": ">=3.8",
+    "last_updated": "2026-01-08",
+    "line_count": 0,
+    "status": "operational",
+    "tags": []
+  }
+}

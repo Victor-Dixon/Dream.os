@@ -21,6 +21,24 @@ python -m src.services.messaging_cli --message "SWARM ALERT!" --broadcast
 python -m src.services.messaging_cli --message "URGENT: Fix issue" \\
     --agent Agent-2 --priority urgent --tags bug critical
 
+<<<<<<< HEAD
+# V3 Enhanced Features
+python -m src.services.messaging_cli --verify-delivery    # Check all deliveries
+python -m src.services.messaging_cli --clean-queue        # Remove system messages
+python -m src.services.messaging_cli --reset-stuck        # Reset stuck messages
+python -m src.services.messaging_cli --queue-stats        # Show statistics
+python -m src.services.messaging_cli --health-check       # System health check
+python -m src.services.messaging_cli --process-workspaces # Clean all workspaces
+
+# Swarm Intelligence Features
+python -m src.services.messaging_cli --swarm-vote --topic "Next sprint focus" --options "AI integration,Technical debt,New features"
+python -m src.services.messaging_cli --swarm-conflict --agent Agent-1 --agent Agent-2 --issue "Architecture disagreement"
+python -m src.services.messaging_cli --swarm-profile --agent Agent-3 --duration "1 hour"
+python -m src.services.messaging_cli --swarm-prove --claim "SSOT compliance achieved" --level comprehensive
+python -m src.services.messaging_cli --swarm-patterns --type communication --window "7 days"
+
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 🐝 WE. ARE. SWARM - COORDINATE THROUGH PYAUTOGUI!
 """
 
@@ -95,6 +113,53 @@ def create_messaging_parser() -> argparse.ArgumentParser:
         help="Start agents (1-8, e.g., --start 1 2 3) - sends to onboarding coordinates",
     )
 
+<<<<<<< HEAD
+    # V3 Enhanced Features
+    parser.add_argument(
+        "--verify-delivery",
+        action="store_true",
+        help="Verify delivery status for all agents (V3)",
+    )
+
+    parser.add_argument(
+        "--clean-queue",
+        action="store_true",
+        help="Clean system messages from queue (V3)",
+    )
+
+    parser.add_argument(
+        "--reset-stuck",
+        action="store_true",
+        help="Reset stuck messages to PENDING (V3)",
+    )
+
+    parser.add_argument(
+        "--queue-stats",
+        action="store_true",
+        help="Show comprehensive queue statistics (V3)",
+    )
+
+    parser.add_argument(
+        "--health-check",
+        action="store_true",
+        help="Perform full messaging system health check (V3)",
+    )
+
+    parser.add_argument(
+        "--process-workspaces",
+        action="store_true",
+        help="Process all agent workspaces for cleanup (V3)",
+    )
+
+    parser.add_argument(
+        "--archive-old",
+        type=int,
+        metavar="DAYS",
+        help="Archive messages older than DAYS (default: 30)",
+    )
+
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     parser.add_argument(
         "--save",
         action="store_true",
@@ -159,4 +224,112 @@ def create_messaging_parser() -> argparse.ArgumentParser:
         help="Dry run mode - show what would be done without executing",
     )
 
+<<<<<<< HEAD
+    # SWARM INTELLIGENCE COMMANDS
+    parser.add_argument(
+        "--swarm-vote",
+        action="store_true",
+        help="Initiate swarm consensus voting on a topic",
+    )
+
+    parser.add_argument(
+        "--topic",
+        type=str,
+        help="Consensus topic for swarm voting",
+    )
+
+    parser.add_argument(
+        "--options",
+        type=str,
+        help="Comma-separated voting options for consensus",
+    )
+
+    parser.add_argument(
+        "--deadline",
+        type=int,
+        default=30,
+        help="Consensus deadline in minutes (default: 30)",
+    )
+
+    parser.add_argument(
+        "--swarm-conflict",
+        action="store_true",
+        help="Initiate swarm conflict resolution protocol",
+    )
+
+    parser.add_argument(
+        "--description",
+        type=str,
+        help="Description of the conflict to resolve",
+    )
+
+    parser.add_argument(
+        "--severity",
+        type=str,
+        choices=["low", "medium", "high", "critical"],
+        default="medium",
+        help="Conflict severity level (default: medium)",
+    )
+
+    parser.add_argument(
+        "--swarm-profile",
+        action="store_true",
+        help="Request performance profiling from agents",
+    )
+
+    parser.add_argument(
+        "--swarm-prove",
+        action="store_true",
+        help="Initiate swarm validation and proof protocol",
+    )
+
+    parser.add_argument(
+        "--claim",
+        type=str,
+        help="Claim to validate through swarm proof protocol",
+    )
+
+    parser.add_argument(
+        "--level",
+        type=str,
+        choices=["basic", "standard", "comprehensive"],
+        default="standard",
+        help="Validation level for proof protocol (default: standard)",
+    )
+
+    parser.add_argument(
+        "--evidence",
+        type=str,
+        help="Type of evidence required for validation",
+    )
+
+    parser.add_argument(
+        "--swarm-patterns",
+        action="store_true",
+        help="Initiate swarm pattern analysis and intelligence gathering",
+    )
+
+    parser.add_argument(
+        "--type",
+        type=str,
+        choices=["comprehensive", "behavioral", "performance", "communication"],
+        default="comprehensive",
+        help="Type of pattern analysis to perform (default: comprehensive)",
+    )
+
+    parser.add_argument(
+        "--window",
+        type=str,
+        default="24 hours",
+        help="Time window for pattern analysis (default: 24 hours)",
+    )
+
+    parser.add_argument(
+        "--focus",
+        type=str,
+        help="Specific focus areas for pattern analysis",
+    )
+
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     return parser

@@ -7,8 +7,19 @@
 
 V2 Compliance: Refactored to <300 lines
 SOLID Principles: Single Responsibility, Open-Closed
+<<<<<<< HEAD
+SSOT: A2A Coordination Protocol is the single source of truth for agent communication
+
+⚠️  DEPRECATION NOTICE: Legacy messaging methods are deprecated.
+   Use --category a2a --sender Agent-X for all agent-to-agent communication.
+   This ensures bilateral coordination protocol compliance and force multiplication.
 
 Author: Agent-2 - Architecture & Design Specialist (V2 Refactor)
+Updated: Agent-1 - Integration & Core Systems (A2A SSOT Implementation)
+=======
+
+Author: Agent-2 - Architecture & Design Specialist (V2 Refactor)
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 """
 
 import logging
@@ -21,16 +32,50 @@ from src.services.messaging import (
     handle_coordinates,
     handle_leaderboard,
     handle_message,
+<<<<<<< HEAD
+<<<<<<< HEAD
     handle_robinhood_stats,
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+    handle_robinhood_stats,
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     handle_save,
     handle_start_agents,
     handle_survey,
 )
 
+<<<<<<< HEAD
+# V3 Enhanced imports
+try:
+    from src.services.messaging_cli_handlers import (
+        handle_verify_delivery,
+        handle_clean_queue,
+        handle_reset_stuck,
+        handle_queue_stats,
+        handle_health_check,
+        handle_process_workspaces,
+        handle_archive_old,
+        handle_swarm_vote,
+        handle_swarm_conflict,
+        handle_swarm_profile,
+        handle_swarm_prove,
+        handle_swarm_patterns,
+    )
+    V3_HANDLERS_AVAILABLE = True
+except ImportError:
+    V3_HANDLERS_AVAILABLE = False
+
 # Import task handler with guard to handle missing dependencies gracefully
 try:
     from .unified_cli_handlers import TaskHandler
 
+=======
+# Import task handler with guard to handle missing dependencies gracefully
+try:
+    from .unified_cli_handlers import TaskHandler
+
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     TASK_HANDLER_AVAILABLE = True
 except ImportError:
     # Task handler has dependencies that may not be available
@@ -40,7 +85,15 @@ except ImportError:
 
 # Import hard onboarding handler
 try:
+<<<<<<< HEAD
+<<<<<<< HEAD
     from src.services.unified_onboarding_handlers import HardOnboardingHandler
+=======
+    from src.services.handlers.hard_onboarding_handler import HardOnboardingHandler
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+    from src.services.unified_onboarding_handlers import HardOnboardingHandler
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
     HARD_ONBOARDING_HANDLER_AVAILABLE = True
 except ImportError:
@@ -49,7 +102,15 @@ except ImportError:
 
 # Import soft onboarding handler
 try:
+<<<<<<< HEAD
+<<<<<<< HEAD
     from src.services.unified_onboarding_handlers import SoftOnboardingHandler
+=======
+    from src.services.handlers.soft_onboarding_handler import SoftOnboardingHandler
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+    from src.services.unified_onboarding_handlers import SoftOnboardingHandler
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
     SOFT_ONBOARDING_HANDLER_AVAILABLE = True
 except ImportError:
@@ -91,6 +152,45 @@ class MessagingCLI:
         logger.info(f"✅ Sent onboarding message to {agent_id} via lite pathway")
         return 0
 
+<<<<<<< HEAD
+    def _ensure_queue_processor_running(self) -> None:
+        """Ensure the message queue processor is running, start it if not."""
+        try:
+            # Check if processor is already running
+            import subprocess
+            result = subprocess.run(['python', '-c', 'import psutil; print("available")'],
+                                  capture_output=True, timeout=2, text=True)
+            psutil_available = result.returncode == 0
+
+            if psutil_available:
+                import psutil
+                processor_running = any('message_queue_processor' in ' '.join(proc.info.get('cmdline', []))
+                                      for proc in psutil.process_iter(['cmdline']))
+
+                if not processor_running:
+                    print("🔄 Queue processor not running - starting automatically...")
+                    # Start processor in background
+                    import os
+                    if os.name == 'nt':  # Windows
+                        subprocess.Popen(['python', '-c',
+                                        'from src.core.message_queue_processor.core.processor import main; main()'],
+                                       creationflags=subprocess.CREATE_NO_WINDOW)
+                    else:  # Unix-like
+                        subprocess.Popen(['python', '-c',
+                                        'from src.core.message_queue_processor.core.processor import main; main()'],
+                                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+                    print("✅ Queue processor started in background")
+                else:
+                    logger.debug("Queue processor already running")
+            else:
+                logger.debug("Cannot check processor status (psutil not available)")
+
+        except Exception as e:
+            logger.warning(f"Could not check/start queue processor: {e}")
+
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     def _handle_soft_onboard_lite(self, agent_id: str) -> int:
         """Handle --soft-onboard-lite flag: send template-based soft onboarding message."""
         from uuid import uuid4
@@ -184,9 +284,25 @@ class MessagingCLI:
                 and self.task_handler
                 and self.task_handler.can_handle(parsed_args)
             ):
+<<<<<<< HEAD
+                result = self.task_handler.handle(parsed_args)
+                if isinstance(result, dict):
+                    # New dict-based response format
+                    if not result.get('success', False):
+                        logger.error(f"❌ Task handler failed: {result.get('error', 'Unknown error')}")
+                        return 1
+                    return 0
+                else:
+                    # Legacy bool response (for backward compatibility)
+                    return self.task_handler.exit_code
+            elif parsed_args.message or parsed_args.broadcast:
+                # Check if queue processor is running and start it if needed
+                self._ensure_queue_processor_running()
+=======
                 self.task_handler.handle(parsed_args)
                 return self.task_handler.exit_code
             elif parsed_args.message or parsed_args.broadcast:
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
                 return handle_message(parsed_args, self.parser)
             elif parsed_args.survey_coordination:
                 return handle_survey()
@@ -194,15 +310,29 @@ class MessagingCLI:
                 return handle_consolidation(parsed_args)
             elif parsed_args.coordinates:
                 return handle_coordinates()
+<<<<<<< HEAD
+            elif parsed_args.delivery_status:
+                return handle_delivery_status(parsed_args, self.parser)
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
             elif parsed_args.start:
                 return handle_start_agents(parsed_args)
             elif parsed_args.save:
                 return handle_save(parsed_args, self.parser)
             elif parsed_args.leaderboard:
                 return handle_leaderboard()
+<<<<<<< HEAD
+<<<<<<< HEAD
             elif parsed_args.robinhood_stats:
                 # Handle Robinhood statistics command
                 return handle_robinhood_stats()
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+            elif parsed_args.robinhood_stats:
+                # Handle Robinhood statistics command
+                return handle_robinhood_stats()
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
             elif parsed_args.resend_failed:
                 # Handle resend failed messages
                 from src.core.message_queue import MessageQueue
@@ -250,6 +380,37 @@ class MessagingCLI:
                     print(f"\n✅ Work resume saved to: {output_file}")
                 
                 return 0
+<<<<<<< HEAD
+            # V3 Enhanced Messaging Features
+            elif parsed_args.verify_delivery:
+                return handle_verify_delivery(parsed_args)
+            elif parsed_args.clean_queue:
+                return handle_clean_queue(parsed_args)
+            elif parsed_args.reset_stuck:
+                return handle_reset_stuck(parsed_args)
+            elif parsed_args.queue_stats:
+                return handle_queue_stats(parsed_args)
+            elif parsed_args.health_check:
+                return handle_health_check(parsed_args)
+            elif parsed_args.process_workspaces:
+                return handle_process_workspaces(parsed_args)
+            elif parsed_args.archive_old:
+                return handle_archive_old(parsed_args)
+
+            # SWARM INTELLIGENCE COMMANDS
+            elif parsed_args.swarm_vote:
+                return handle_swarm_vote(parsed_args)
+            elif parsed_args.swarm_conflict:
+                return handle_swarm_conflict(parsed_args)
+            elif parsed_args.swarm_profile:
+                return handle_swarm_profile(parsed_args)
+            elif parsed_args.swarm_prove:
+                return handle_swarm_prove(parsed_args)
+            elif parsed_args.swarm_patterns:
+                return handle_swarm_patterns(parsed_args)
+
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
             else:
                 self.parser.print_help()
                 return 0

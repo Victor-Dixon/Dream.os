@@ -15,21 +15,41 @@ import logging
 
 import discord
 from discord.ext import commands
+<<<<<<< HEAD
+from .command_base import RoleDecorators
+from .command_base import command_template
+from .command_base import BaseDiscordCog
+
+
+
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
 logger = logging.getLogger(__name__)
 
 
+<<<<<<< HEAD
+class AgentManagementCommands(BaseDiscordCog):
+=======
 class AgentManagementCommands(commands.Cog):
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     """Agent management commands for system health."""
 
     def __init__(self, bot, gui_controller):
         """Initialize agent management commands."""
         self.bot = bot
         self.gui_controller = gui_controller
+<<<<<<< HEAD
+        
+
+    @commands.command(name="heal", aliases=["self_heal", "healing"], description="Self-healing system commands")
+    @RoleDecorators.admin_or_captain()
+=======
         self.logger = logging.getLogger(__name__)
 
     @commands.command(name="heal", aliases=["self_heal", "healing"], description="Self-healing system commands")
     @commands.has_any_role("Admin", "Captain", "Swarm Commander")
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     async def heal(self, ctx: commands.Context, action: str = "status", agent_id: str = None):
         """
         Self-healing system commands.
@@ -41,6 +61,8 @@ class AgentManagementCommands(commands.Cog):
         !heal cancel_count [Agent-X] - Show terminal cancellation count today
         """
         self.logger.info(f"Command 'heal' triggered by {ctx.author} with args: action={action}, agent_id={agent_id}")
+<<<<<<< HEAD
+=======
         try:
             from src.core.agent_self_healing_system import (
                 get_self_healing_system,
@@ -207,5 +229,6 @@ class AgentManagementCommands(commands.Cog):
         except Exception as e:
             self.logger.error(f"Error in heal command: {e}", exc_info=True)
             await ctx.send(f"❌ Error: {e}")
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
 

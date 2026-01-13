@@ -23,22 +23,47 @@ from src.core.messaging_models_core import MessageCategory
 logger = logging.getLogger(__name__)
 
 # Regex pattern for valid agent IDs (Agent-1 through Agent-8, CAPTAIN, SYSTEM, etc.)
+<<<<<<< HEAD
+<<<<<<< HEAD
 AGENT_ID_PATTERN = re.compile(
     r"^Agent-[1-8]$|^CAPTAIN$|^SYSTEM$|^DISCORD$", re.IGNORECASE)
+=======
+AGENT_ID_PATTERN = re.compile(r"^Agent-[1-8]$|^CAPTAIN$|^SYSTEM$|^DISCORD$", re.IGNORECASE)
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+AGENT_ID_PATTERN = re.compile(
+    r"^Agent-[1-8]$|^CAPTAIN$|^SYSTEM$|^DISCORD$", re.IGNORECASE)
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
 
 def validate_sender_format(sender: str) -> Tuple[bool, Optional[str]]:
     """
     Validate sender format matches expected agent ID pattern.
+<<<<<<< HEAD
+<<<<<<< HEAD
 
     Args:
         sender: Sender identifier to validate
 
+=======
+    
+    Args:
+        sender: Sender identifier to validate
+        
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+
+    Args:
+        sender: Sender identifier to validate
+
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     Returns:
         Tuple of (is_valid, error_message)
     """
     if not sender:
         return False, "Sender cannot be empty"
+<<<<<<< HEAD
+<<<<<<< HEAD
 
     if not isinstance(sender, str):
         return False, f"Sender must be a string, got {type(sender).__name__}"
@@ -53,10 +78,35 @@ def validate_sender_format(sender: str) -> Tuple[bool, Optional[str]]:
     if sender in AGENT_LIST:
         return True, None
 
+=======
+    
+=======
+
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
+    if not isinstance(sender, str):
+        return False, f"Sender must be a string, got {type(sender).__name__}"
+
+    sender_upper = sender.upper()
+
+    # Check if it matches the agent ID pattern
+    if AGENT_ID_PATTERN.match(sender):
+        return True, None
+
+    # Check if it's in the AGENT_LIST (case-insensitive)
+    if sender in AGENT_LIST:
+        return True, None
+<<<<<<< HEAD
+    
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     # Check case-insensitive match
     for agent_id in AGENT_LIST:
         if sender_upper == agent_id.upper():
             return True, None
+<<<<<<< HEAD
+<<<<<<< HEAD
 
     # Special cases that are valid
     valid_senders = ["CAPTAIN", "SYSTEM",
@@ -64,6 +114,22 @@ def validate_sender_format(sender: str) -> Tuple[bool, Optional[str]]:
     if sender_upper in [s.upper() for s in valid_senders]:
         return True, None
 
+=======
+    
+=======
+
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
+    # Special cases that are valid
+    valid_senders = ["CAPTAIN", "SYSTEM",
+                     "DISCORD", "AGENT-4"]  # Agent-4 is CAPTAIN
+    if sender_upper in [s.upper() for s in valid_senders]:
+        return True, None
+<<<<<<< HEAD
+    
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     return False, (
         f"Invalid sender format: '{sender}'. "
         f"Expected format: Agent-1 through Agent-8, CAPTAIN, SYSTEM, or DISCORD. "
@@ -78,15 +144,37 @@ def validate_a2a_sender_identification(
 ) -> Tuple[bool, Optional[str], Optional[str]]:
     """
     Validate that A2A messages have proper sender identification.
+<<<<<<< HEAD
+<<<<<<< HEAD
 
     For A2A messages, we require explicit sender identification to ensure
     proper routing and tracking. This prevents messages from defaulting to CAPTAIN.
 
+=======
+    
+    For A2A messages, we require explicit sender identification to ensure
+    proper routing and tracking. This prevents messages from defaulting to CAPTAIN.
+    
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+
+    For A2A messages, we require explicit sender identification to ensure
+    proper routing and tracking. This prevents messages from defaulting to CAPTAIN.
+
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     Args:
         sender: Explicit sender provided via CLI (--sender flag)
         category: Message category (A2A messages require explicit sender)
         detected_sender: Auto-detected sender from environment/context
+<<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     Returns:
         Tuple of (is_valid, normalized_sender, error_message)
         - is_valid: True if sender is properly identified
@@ -101,7 +189,15 @@ def validate_a2a_sender_identification(
         if not is_valid:
             return False, None, error_msg
         return True, final_sender, None
+<<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     # For A2A messages, require explicit sender identification
     if not sender:
         detected_str = f" (detected: {detected_sender})" if detected_sender else ""
@@ -111,25 +207,57 @@ def validate_a2a_sender_identification(
             f"This ensures proper routing and allows tracking which agents performed which actions."
         )
         return False, None, error_msg
+<<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     # Validate the sender format
     is_valid, format_error = validate_sender_format(sender)
     if not is_valid:
         return False, None, format_error
+<<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     # Normalize sender (use case from AGENT_LIST if available)
     normalized = sender
     for agent_id in AGENT_LIST:
         if sender.upper() == agent_id.upper():
             normalized = agent_id
             break
+<<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     # Special case: Agent-4 is CAPTAIN
     if normalized.upper() == "AGENT-4":
         normalized = "CAPTAIN"
     elif normalized.upper() == "CAPTAIN":
         normalized = "CAPTAIN"
+<<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     return True, normalized, None
 
 
@@ -141,10 +269,24 @@ def log_agent_activity(
 ) -> None:
     """
     Log agent activity for status tracking and monitoring.
+<<<<<<< HEAD
+<<<<<<< HEAD
 
     This allows the system to track which agents performed which actions,
     which can be tied to status.json updates and agent monitoring.
 
+=======
+    
+    This allows the system to track which agents performed which actions,
+    which can be tied to status.json updates and agent monitoring.
+    
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+
+    This allows the system to track which agents performed which actions,
+    which can be tied to status.json updates and agent monitoring.
+
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     Args:
         sender: Sender agent ID
         recipient: Recipient agent ID
@@ -155,15 +297,32 @@ def log_agent_activity(
         # Validate sender before logging
         is_valid, error_msg = validate_sender_format(sender)
         if not is_valid:
+<<<<<<< HEAD
+<<<<<<< HEAD
             logger.warning(
                 f"⚠️ Cannot log activity for invalid sender '{sender}': {error_msg}")
             return
 
+=======
+            logger.warning(f"⚠️ Cannot log activity for invalid sender '{sender}': {error_msg}")
+            return
+        
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+            logger.warning(
+                f"⚠️ Cannot log activity for invalid sender '{sender}': {error_msg}")
+            return
+
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         # Log the activity (could be extended to write to status.json or tracking system)
         logger.info(
             f"📊 Agent Activity: {sender} → {recipient} "
             f"(category={category.value}, message_id={message_id or 'N/A'})"
         )
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
         # Extended activity tracking implementation
         import asyncio
@@ -180,10 +339,25 @@ def log_agent_activity(
             loop.create_task(_write_central_activity_log(
                 sender, recipient, category, message_id))
 
+<<<<<<< HEAD
+=======
+        
+        # TODO: Could extend this to:
+        # - Update agent_workspaces/{sender}/status.json with last_activity
+        # - Write to a central activity log
+        # - Update agent monitoring dashboard
+        
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     except Exception as e:
         logger.warning(f"⚠️ Failed to log agent activity: {e}", exc_info=True)
 
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 async def _update_agent_status(sender: str, message_id: Optional[str],
                                category: MessageCategory, recipient: str) -> None:
     """
@@ -284,3 +458,8 @@ async def _write_central_activity_log(sender: str, recipient: str,
 
     except Exception as e:
         logger.warning(f"⚠️ Failed to write central activity log: {e}")
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1

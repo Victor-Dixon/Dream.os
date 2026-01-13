@@ -1,0 +1,316 @@
+{
+  "timestamp": "2026-01-09T01:30:57.175023",
+  "files_scanned": 1887,
+  "references_found": 7612,
+  "references_updated": 34,
+  "broken_links_fixed": 0,
+  "errors": [],
+  "updates": [
+    {
+      "file_path": "D:\\Agent_Cellphone_V2_Repository\\agent_workspaces\\Agent-7\\devlog_2026-01-09_consolidation_automation_system.md",
+      "old_reference": "agent_workspaces/Agent-2/QUICK_START.md",
+      "new_reference": "agent_workspaces/Agent-7/QUICK_START.md",
+      "line_number": 95,
+      "context": "agent_workspaces/Agent-2/QUICK_START.md \u2192 agent_workspaces/Agent-7/QUICK_START.md",
+      "updated": true,
+      "timestamp": "2026-01-09T01:30:48.564832"
+    },
+    {
+      "file_path": "D:\\Agent_Cellphone_V2_Repository\\agent_workspaces\\Agent-7\\devlog_2026-01-09_consolidation_automation_system.md",
+      "old_reference": "agent_workspaces/Agent-3/archive/",
+      "new_reference": "agent_workspaces/consolidated_archives/Agent-3/",
+      "line_number": 96,
+      "context": "agent_workspaces/Agent-3/archive/ \u2192 agent_workspaces/consolidated_archives/Agent-3/",
+      "updated": true,
+      "timestamp": "2026-01-09T01:30:48.564832"
+    },
+    {
+      "file_path": "D:\\Agent_Cellphone_V2_Repository\\reports\\consolidation\\documentation_consolidation_report_20260109_002209.json",
+      "old_reference": "agent_workspaces/Agent-4/QUICK_START.md`",
+      "new_reference": "agent_workspaces/Agent-7/QUICK_START.md`",
+      "line_number": 11,
+      "context": "\"old_reference\": \"agent_workspaces/Agent-4/QUICK_START.md`\",",
+      "updated": true,
+      "timestamp": "2026-01-09T01:30:53.970622"
+    },
+    {
+      "file_path": "D:\\Agent_Cellphone_V2_Repository\\reports\\consolidation\\documentation_consolidation_report_20260109_002209.json",
+      "old_reference": "agent_workspaces/Agent-4/QUICK_START.md`",
+      "new_reference": "agent_workspaces/Agent-7/QUICK_START.md`",
+      "line_number": 14,
+      "context": "\"context\": \"* This Guide: `agent_workspaces/Agent-4/QUICK_START.md`\",",
+      "updated": true,
+      "timestamp": "2026-01-09T01:30:53.970622"
+    },
+    {
+      "file_path": "D:\\Agent_Cellphone_V2_Repository\\reports\\consolidation\\documentation_consolidation_report_20260109_002209.json",
+      "old_reference": "agent_workspaces/Agent-3/QUICK_START.md`**",
+      "new_reference": "agent_workspaces/Agent-7/QUICK_START.md`**",
+      "line_number": 20,
+      "context": "\"old_reference\": \"agent_workspaces/Agent-3/QUICK_START.md`**\",",
+      "updated": true,
+      "timestamp": "2026-01-09T01:30:53.970622"
+    },
+    {
+      "file_path": "D:\\Agent_Cellphone_V2_Repository\\reports\\consolidation\\documentation_consolidation_report_20260109_002209.json",
+      "old_reference": "agent_workspaces/Agent-3/QUICK_START.md`**",
+      "new_reference": "agent_workspaces/Agent-7/QUICK_START.md`**",
+      "line_number": 23,
+      "context": "\"context\": \"* **`agent_workspaces/Agent-3/QUICK_START.md`** - This file\",",
+      "updated": true,
+      "timestamp": "2026-01-09T01:30:53.970622"
+    },
+    {
+      "file_path": "D:\\Agent_Cellphone_V2_Repository\\reports\\consolidation\\documentation_consolidation_report_20260109_002209.json",
+      "old_reference": "agent_workspaces/Agent-3/QUICK_START.md`",
+      "new_reference": "agent_workspaces/Agent-7/QUICK_START.md`",
+      "line_number": 29,
+      "context": "\"old_reference\": \"agent_workspaces/Agent-3/QUICK_START.md`\",",
+      "updated": true,
+      "timestamp": "2026-01-09T01:30:53.970622"
+    },
+    {
+      "file_path": "D:\\Agent_Cellphone_V2_Repository\\reports\\consolidation\\documentation_consolidation_report_20260109_002209.json",
+      "old_reference": "agent_workspaces/Agent-3/QUICK_START.md`",
+      "new_reference": "agent_workspaces/Agent-7/QUICK_START.md`",
+      "line_number": 32,
+      "context": "\"context\": \"* This Guide: `agent_workspaces/Agent-3/QUICK_START.md`\",",
+      "updated": true,
+      "timestamp": "2026-01-09T01:30:53.970622"
+    },
+    {
+      "file_path": "D:\\Agent_Cellphone_V2_Repository\\reports\\consolidation\\documentation_consolidation_report_20260109_002209.json",
+      "old_reference": "agent_workspaces/Agent-2/QUICK_START.md`**",
+      "new_reference": "agent_workspaces/Agent-7/QUICK_START.md`**",
+      "line_number": 38,
+      "context": "\"old_reference\": \"agent_workspaces/Agent-2/QUICK_START.md`**\",",
+      "updated": true,
+      "timestamp": "2026-01-09T01:30:53.970622"
+    },
+    {
+      "file_path": "D:\\Agent_Cellphone_V2_Repository\\reports\\consolidation\\documentation_consolidation_report_20260109_002209.json",
+      "old_reference": "agent_workspaces/Agent-2/QUICK_START.md`**",
+      "new_reference": "agent_workspaces/Agent-7/QUICK_START.md`**",
+      "line_number": 41,
+      "context": "\"context\": \"* **`agent_workspaces/Agent-2/QUICK_START.md`** - This file\",",
+      "updated": true,
+      "timestamp": "2026-01-09T01:30:53.970622"
+    },
+    {
+      "file_path": "D:\\Agent_Cellphone_V2_Repository\\reports\\consolidation\\documentation_consolidation_report_20260109_002209.json",
+      "old_reference": "agent_workspaces/Agent-2/QUICK_START.md`",
+      "new_reference": "agent_workspaces/Agent-7/QUICK_START.md`",
+      "line_number": 47,
+      "context": "\"old_reference\": \"agent_workspaces/Agent-2/QUICK_START.md`\",",
+      "updated": true,
+      "timestamp": "2026-01-09T01:30:53.970622"
+    },
+    {
+      "file_path": "D:\\Agent_Cellphone_V2_Repository\\reports\\consolidation\\documentation_consolidation_report_20260109_002209.json",
+      "old_reference": "agent_workspaces/Agent-2/QUICK_START.md`",
+      "new_reference": "agent_workspaces/Agent-7/QUICK_START.md`",
+      "line_number": 50,
+      "context": "\"context\": \"* This Guide: `agent_workspaces/Agent-2/QUICK_START.md`\",",
+      "updated": true,
+      "timestamp": "2026-01-09T01:30:53.971622"
+    },
+    {
+      "file_path": "D:\\Agent_Cellphone_V2_Repository\\reports\\consolidation\\documentation_consolidation_report_20260109_002209.json",
+      "old_reference": "agent_workspaces/Agent-5/QUICK_START.md`**",
+      "new_reference": "agent_workspaces/Agent-7/QUICK_START.md`**",
+      "line_number": 56,
+      "context": "\"old_reference\": \"agent_workspaces/Agent-5/QUICK_START.md`**\",",
+      "updated": true,
+      "timestamp": "2026-01-09T01:30:53.971622"
+    },
+    {
+      "file_path": "D:\\Agent_Cellphone_V2_Repository\\reports\\consolidation\\documentation_consolidation_report_20260109_002209.json",
+      "old_reference": "agent_workspaces/Agent-5/QUICK_START.md`**",
+      "new_reference": "agent_workspaces/Agent-7/QUICK_START.md`**",
+      "line_number": 59,
+      "context": "\"context\": \"* **`agent_workspaces/Agent-5/QUICK_START.md`** - This file\",",
+      "updated": true,
+      "timestamp": "2026-01-09T01:30:53.971622"
+    },
+    {
+      "file_path": "D:\\Agent_Cellphone_V2_Repository\\reports\\consolidation\\documentation_consolidation_report_20260109_002209.json",
+      "old_reference": "agent_workspaces/Agent-5/QUICK_START.md`",
+      "new_reference": "agent_workspaces/Agent-7/QUICK_START.md`",
+      "line_number": 65,
+      "context": "\"old_reference\": \"agent_workspaces/Agent-5/QUICK_START.md`\",",
+      "updated": true,
+      "timestamp": "2026-01-09T01:30:53.971622"
+    },
+    {
+      "file_path": "D:\\Agent_Cellphone_V2_Repository\\reports\\consolidation\\documentation_consolidation_report_20260109_002209.json",
+      "old_reference": "agent_workspaces/Agent-5/QUICK_START.md`",
+      "new_reference": "agent_workspaces/Agent-7/QUICK_START.md`",
+      "line_number": 68,
+      "context": "\"context\": \"* This Guide: `agent_workspaces/Agent-5/QUICK_START.md`\",",
+      "updated": true,
+      "timestamp": "2026-01-09T01:30:53.971622"
+    },
+    {
+      "file_path": "D:\\Agent_Cellphone_V2_Repository\\reports\\consolidation\\documentation_consolidation_report_20260109_002209.json",
+      "old_reference": "agent_workspaces/Agent-6/QUICK_START.md`**",
+      "new_reference": "agent_workspaces/Agent-7/QUICK_START.md`**",
+      "line_number": 74,
+      "context": "\"old_reference\": \"agent_workspaces/Agent-6/QUICK_START.md`**\",",
+      "updated": true,
+      "timestamp": "2026-01-09T01:30:53.971622"
+    },
+    {
+      "file_path": "D:\\Agent_Cellphone_V2_Repository\\reports\\consolidation\\documentation_consolidation_report_20260109_002209.json",
+      "old_reference": "agent_workspaces/Agent-6/QUICK_START.md`**",
+      "new_reference": "agent_workspaces/Agent-7/QUICK_START.md`**",
+      "line_number": 77,
+      "context": "\"context\": \"* **`agent_workspaces/Agent-6/QUICK_START.md`** - This file\",",
+      "updated": true,
+      "timestamp": "2026-01-09T01:30:53.971622"
+    },
+    {
+      "file_path": "D:\\Agent_Cellphone_V2_Repository\\reports\\consolidation\\documentation_consolidation_report_20260109_002209.json",
+      "old_reference": "agent_workspaces/Agent-6/QUICK_START.md`",
+      "new_reference": "agent_workspaces/Agent-7/QUICK_START.md`",
+      "line_number": 83,
+      "context": "\"old_reference\": \"agent_workspaces/Agent-6/QUICK_START.md`\",",
+      "updated": true,
+      "timestamp": "2026-01-09T01:30:53.971622"
+    },
+    {
+      "file_path": "D:\\Agent_Cellphone_V2_Repository\\reports\\consolidation\\documentation_consolidation_report_20260109_002209.json",
+      "old_reference": "agent_workspaces/Agent-6/QUICK_START.md`",
+      "new_reference": "agent_workspaces/Agent-7/QUICK_START.md`",
+      "line_number": 86,
+      "context": "\"context\": \"* This Guide: `agent_workspaces/Agent-6/QUICK_START.md`\",",
+      "updated": true,
+      "timestamp": "2026-01-09T01:30:53.971622"
+    },
+    {
+      "file_path": "D:\\Agent_Cellphone_V2_Repository\\reports\\consolidation\\documentation_consolidation_report_20260109_002209.json",
+      "old_reference": "agent_workspaces/Agent-4/QUICK_START.md`",
+      "new_reference": "agent_workspaces/Agent-7/QUICK_START.md`",
+      "line_number": 92,
+      "context": "\"old_reference\": \"agent_workspaces/Agent-4/QUICK_START.md`\",",
+      "updated": true,
+      "timestamp": "2026-01-09T01:30:53.971622"
+    },
+    {
+      "file_path": "D:\\Agent_Cellphone_V2_Repository\\reports\\consolidation\\documentation_consolidation_report_20260109_002209.json",
+      "old_reference": "agent_workspaces/Agent-4/QUICK_START.md`",
+      "new_reference": "agent_workspaces/Agent-7/QUICK_START.md`",
+      "line_number": 95,
+      "context": "\"context\": \"* This Guide: `agent_workspaces/Agent-4/QUICK_START.md`\",",
+      "updated": true,
+      "timestamp": "2026-01-09T01:30:53.971622"
+    },
+    {
+      "file_path": "D:\\Agent_Cellphone_V2_Repository\\reports\\consolidation\\documentation_consolidation_report_20260109_002209.json",
+      "old_reference": "agent_workspaces/Agent-8/QUICK_START.md`**",
+      "new_reference": "agent_workspaces/Agent-7/QUICK_START.md`**",
+      "line_number": 101,
+      "context": "\"old_reference\": \"agent_workspaces/Agent-8/QUICK_START.md`**\",",
+      "updated": true,
+      "timestamp": "2026-01-09T01:30:53.971622"
+    },
+    {
+      "file_path": "D:\\Agent_Cellphone_V2_Repository\\reports\\consolidation\\documentation_consolidation_report_20260109_002209.json",
+      "old_reference": "agent_workspaces/Agent-8/QUICK_START.md`**",
+      "new_reference": "agent_workspaces/Agent-7/QUICK_START.md`**",
+      "line_number": 104,
+      "context": "\"context\": \"* **`agent_workspaces/Agent-8/QUICK_START.md`** - This file\",",
+      "updated": true,
+      "timestamp": "2026-01-09T01:30:53.971622"
+    },
+    {
+      "file_path": "D:\\Agent_Cellphone_V2_Repository\\reports\\consolidation\\documentation_consolidation_report_20260109_002209.json",
+      "old_reference": "agent_workspaces/Agent-8/QUICK_START.md`",
+      "new_reference": "agent_workspaces/Agent-7/QUICK_START.md`",
+      "line_number": 110,
+      "context": "\"old_reference\": \"agent_workspaces/Agent-8/QUICK_START.md`\",",
+      "updated": true,
+      "timestamp": "2026-01-09T01:30:53.971622"
+    },
+    {
+      "file_path": "D:\\Agent_Cellphone_V2_Repository\\reports\\consolidation\\documentation_consolidation_report_20260109_002209.json",
+      "old_reference": "agent_workspaces/Agent-8/QUICK_START.md`",
+      "new_reference": "agent_workspaces/Agent-7/QUICK_START.md`",
+      "line_number": 113,
+      "context": "\"context\": \"* This Guide: `agent_workspaces/Agent-8/QUICK_START.md`\",",
+      "updated": true,
+      "timestamp": "2026-01-09T01:30:53.971622"
+    },
+    {
+      "file_path": "D:\\Agent_Cellphone_V2_Repository\\archive\\data\\backup_20260106_071520\\agent_workspaces\\Agent-2\\QUICK_START.md",
+      "old_reference": "agent_workspaces/Agent-2/QUICK_START.md`**",
+      "new_reference": "agent_workspaces/Agent-7/QUICK_START.md`**",
+      "line_number": 193,
+      "context": "* **`agent_workspaces/Agent-2/QUICK_START.md`** - This file",
+      "updated": true,
+      "timestamp": "2026-01-09T01:30:54.244389"
+    },
+    {
+      "file_path": "D:\\Agent_Cellphone_V2_Repository\\archive\\data\\backup_20260106_071520\\agent_workspaces\\Agent-2\\QUICK_START.md",
+      "old_reference": "agent_workspaces/Agent-2/QUICK_START.md`",
+      "new_reference": "agent_workspaces/Agent-7/QUICK_START.md`",
+      "line_number": 298,
+      "context": "* This Guide: `agent_workspaces/Agent-2/QUICK_START.md`",
+      "updated": true,
+      "timestamp": "2026-01-09T01:30:54.244389"
+    },
+    {
+      "file_path": "D:\\Agent_Cellphone_V2_Repository\\archive\\data\\backup_20260106_071520\\agent_workspaces\\Agent-3\\QUICK_START.md",
+      "old_reference": "agent_workspaces/Agent-3/QUICK_START.md`**",
+      "new_reference": "agent_workspaces/Agent-7/QUICK_START.md`**",
+      "line_number": 193,
+      "context": "* **`agent_workspaces/Agent-3/QUICK_START.md`** - This file",
+      "updated": true,
+      "timestamp": "2026-01-09T01:30:54.607233"
+    },
+    {
+      "file_path": "D:\\Agent_Cellphone_V2_Repository\\archive\\data\\backup_20260106_071520\\agent_workspaces\\Agent-3\\QUICK_START.md",
+      "old_reference": "agent_workspaces/Agent-3/QUICK_START.md`",
+      "new_reference": "agent_workspaces/Agent-7/QUICK_START.md`",
+      "line_number": 298,
+      "context": "* This Guide: `agent_workspaces/Agent-3/QUICK_START.md`",
+      "updated": true,
+      "timestamp": "2026-01-09T01:30:54.608234"
+    },
+    {
+      "file_path": "D:\\Agent_Cellphone_V2_Repository\\archive\\data\\backup_20260106_071520\\agent_workspaces\\Agent-5\\QUICK_START.md",
+      "old_reference": "agent_workspaces/Agent-5/QUICK_START.md`**",
+      "new_reference": "agent_workspaces/Agent-7/QUICK_START.md`**",
+      "line_number": 193,
+      "context": "* **`agent_workspaces/Agent-5/QUICK_START.md`** - This file",
+      "updated": true,
+      "timestamp": "2026-01-09T01:30:55.099718"
+    },
+    {
+      "file_path": "D:\\Agent_Cellphone_V2_Repository\\archive\\data\\backup_20260106_071520\\agent_workspaces\\Agent-5\\QUICK_START.md",
+      "old_reference": "agent_workspaces/Agent-5/QUICK_START.md`",
+      "new_reference": "agent_workspaces/Agent-7/QUICK_START.md`",
+      "line_number": 298,
+      "context": "* This Guide: `agent_workspaces/Agent-5/QUICK_START.md`",
+      "updated": true,
+      "timestamp": "2026-01-09T01:30:55.099718"
+    },
+    {
+      "file_path": "D:\\Agent_Cellphone_V2_Repository\\archive\\data\\backup_20260106_071520\\agent_workspaces\\Agent-6\\QUICK_START.md",
+      "old_reference": "agent_workspaces/Agent-6/QUICK_START.md`**",
+      "new_reference": "agent_workspaces/Agent-7/QUICK_START.md`**",
+      "line_number": 193,
+      "context": "* **`agent_workspaces/Agent-6/QUICK_START.md`** - This file",
+      "updated": true,
+      "timestamp": "2026-01-09T01:30:56.643229"
+    },
+    {
+      "file_path": "D:\\Agent_Cellphone_V2_Repository\\archive\\data\\backup_20260106_071520\\agent_workspaces\\Agent-6\\QUICK_START.md",
+      "old_reference": "agent_workspaces/Agent-6/QUICK_START.md`",
+      "new_reference": "agent_workspaces/Agent-7/QUICK_START.md`",
+      "line_number": 298,
+      "context": "* This Guide: `agent_workspaces/Agent-6/QUICK_START.md`",
+      "updated": true,
+      "timestamp": "2026-01-09T01:30:56.643229"
+    }
+  ]
+}

@@ -1,0 +1,259 @@
+{
+  "status": "no_swarm_status",
+  "deployments": [
+    {
+      "total_agents": 9,
+      "successful_deployments": 0,
+      "failed_deployments": 9,
+      "success_rate": "0/9 (0.0%)",
+      "timestamp": 1767918547.2294743,
+      "deployments": [
+        {
+          "agent_id": "Agent-1",
+          "success": false,
+          "timestamp": 1767918546.0594606,
+          "error": "No module named 'src'"
+        },
+        {
+          "agent_id": "Agent-5",
+          "success": false,
+          "timestamp": 1767918546.2025905,
+          "error": "No module named 'src'"
+        },
+        {
+          "agent_id": "Agent-6",
+          "success": false,
+          "timestamp": 1767918546.3757527,
+          "error": "No module named 'src'"
+        },
+        {
+          "agent_id": "Agent-7",
+          "success": false,
+          "timestamp": 1767918546.5335574,
+          "error": "No module named 'src'"
+        },
+        {
+          "agent_id": "Agent-8",
+          "success": false,
+          "timestamp": 1767918546.6356497,
+          "error": "No module named 'src'"
+        },
+        {
+          "agent_id": "Agent-8_original",
+          "success": false,
+          "timestamp": 1767918546.771148,
+          "error": "No module named 'src'"
+        },
+        {
+          "agent_id": "Agent-3",
+          "success": false,
+          "timestamp": 1767918546.9102738,
+          "error": "No module named 'src'"
+        },
+        {
+          "agent_id": "Agent-2",
+          "success": false,
+          "timestamp": 1767918547.0507753,
+          "error": "No module named 'src'"
+        },
+        {
+          "agent_id": "Agent-4",
+          "success": false,
+          "timestamp": 1767918547.2294743,
+          "error": "No module named 'src'"
+        }
+      ]
+    },
+    {
+      "total_agents": 9,
+      "successful_deployments": 0,
+      "failed_deployments": 9,
+      "success_rate": "0/9 (0.0%)",
+      "timestamp": 1767918987.6410391,
+      "deployments": [
+        {
+          "agent_id": "Agent-1",
+          "success": false,
+          "timestamp": 1767918987.4778924,
+          "error": "No module named 'src'"
+        },
+        {
+          "agent_id": "Agent-5",
+          "success": false,
+          "timestamp": 1767918987.488901,
+          "error": "No module named 'src'"
+        },
+        {
+          "agent_id": "Agent-6",
+          "success": false,
+          "timestamp": 1767918987.5039148,
+          "error": "No module named 'src'"
+        },
+        {
+          "agent_id": "Agent-7",
+          "success": false,
+          "timestamp": 1767918987.5209303,
+          "error": "No module named 'src'"
+        },
+        {
+          "agent_id": "Agent-8",
+          "success": false,
+          "timestamp": 1767918987.5499566,
+          "error": "No module named 'src'"
+        },
+        {
+          "agent_id": "Agent-8_original",
+          "success": false,
+          "timestamp": 1767918987.555962,
+          "error": "No module named 'src'"
+        },
+        {
+          "agent_id": "Agent-4",
+          "success": false,
+          "timestamp": 1767918987.5729842,
+          "error": "No module named 'src'"
+        },
+        {
+          "agent_id": "Agent-2",
+          "success": false,
+          "timestamp": 1767918987.5839872,
+          "error": "No module named 'src'"
+        },
+        {
+          "agent_id": "Agent-3",
+          "success": false,
+          "timestamp": 1767918987.6400385,
+          "error": "No module named 'src'"
+        }
+      ]
+    },
+    {
+      "total_agents": 9,
+      "successful_deployments": 0,
+      "failed_deployments": 9,
+      "success_rate": "0/9 (0.0%)",
+      "timestamp": 1767919540.7108877,
+      "deployments": [
+        {
+          "agent_id": "Agent-1",
+          "success": false,
+          "timestamp": 1767919540.5412207,
+          "error": "No module named 'src'"
+        },
+        {
+          "agent_id": "Agent-2",
+          "success": false,
+          "timestamp": 1767919540.559235,
+          "error": "No module named 'src'"
+        },
+        {
+          "agent_id": "Agent-3",
+          "success": false,
+          "timestamp": 1767919540.577767,
+          "error": "No module named 'src'"
+        },
+        {
+          "agent_id": "Agent-4",
+          "success": false,
+          "timestamp": 1767919540.640824,
+          "error": "No module named 'src'"
+        },
+        {
+          "agent_id": "Agent-5",
+          "success": false,
+          "timestamp": 1767919540.6618426,
+          "error": "No module named 'src'"
+        },
+        {
+          "agent_id": "Agent-6",
+          "success": false,
+          "timestamp": 1767919540.6718526,
+          "error": "No module named 'src'"
+        },
+        {
+          "agent_id": "Agent-7",
+          "success": false,
+          "timestamp": 1767919540.6828618,
+          "error": "No module named 'src'"
+        },
+        {
+          "agent_id": "Agent-8",
+          "success": false,
+          "timestamp": 1767919540.6948738,
+          "error": "No module named 'src'"
+        },
+        {
+          "agent_id": "Agent-8_original",
+          "success": false,
+          "timestamp": 1767919540.7108877,
+          "error": "No module named 'src'"
+        }
+      ]
+    }
+  ],
+  "validations": [],
+  "last_deployment": {
+    "total_agents": 9,
+    "successful_deployments": 0,
+    "failed_deployments": 9,
+    "success_rate": "0/9 (0.0%)",
+    "timestamp": 1767919540.7108877,
+    "deployments": [
+      {
+        "agent_id": "Agent-1",
+        "success": false,
+        "timestamp": 1767919540.5412207,
+        "error": "No module named 'src'"
+      },
+      {
+        "agent_id": "Agent-2",
+        "success": false,
+        "timestamp": 1767919540.559235,
+        "error": "No module named 'src'"
+      },
+      {
+        "agent_id": "Agent-3",
+        "success": false,
+        "timestamp": 1767919540.577767,
+        "error": "No module named 'src'"
+      },
+      {
+        "agent_id": "Agent-4",
+        "success": false,
+        "timestamp": 1767919540.640824,
+        "error": "No module named 'src'"
+      },
+      {
+        "agent_id": "Agent-5",
+        "success": false,
+        "timestamp": 1767919540.6618426,
+        "error": "No module named 'src'"
+      },
+      {
+        "agent_id": "Agent-6",
+        "success": false,
+        "timestamp": 1767919540.6718526,
+        "error": "No module named 'src'"
+      },
+      {
+        "agent_id": "Agent-7",
+        "success": false,
+        "timestamp": 1767919540.6828618,
+        "error": "No module named 'src'"
+      },
+      {
+        "agent_id": "Agent-8",
+        "success": false,
+        "timestamp": 1767919540.6948738,
+        "error": "No module named 'src'"
+      },
+      {
+        "agent_id": "Agent-8_original",
+        "success": false,
+        "timestamp": 1767919540.7108877,
+        "error": "No module named 'src'"
+      }
+    ]
+  },
+  "last_updated": 1767919540.7128894
+}

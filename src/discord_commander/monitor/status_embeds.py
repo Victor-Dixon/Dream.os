@@ -2,8 +2,16 @@
 Status Monitor Embed Factory
 ============================
 
+<<<<<<< HEAD
+<<<<<<< HEAD
 <!-- SSOT Domain: discord -->
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+<!-- SSOT Domain: discord -->
+
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 Helper module for creating Discord embeds for the Status Monitor.
 Extracted from status_change_monitor.py for V2 compliance.
 """
@@ -20,6 +28,10 @@ class StatusEmbedFactory:
     @staticmethod
     def create_status_update_embed(agent_id: str, status: dict, changes: dict) -> discord.Embed:
         """Create Discord embed for status update."""
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/build-tsla-morning-report-system
         # Ensure status is a dict
         if status is None:
             status = {}
@@ -28,6 +40,11 @@ class StatusEmbedFactory:
         if changes is None:
             changes = {}
 
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/build-tsla-morning-report-system
         # Status emoji
         status_val = status.get("status", "UNKNOWN")
         if "ACTIVE" in status_val.upper():
@@ -51,10 +68,15 @@ class StatusEmbedFactory:
         )
 
         # Add change details
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/build-tsla-morning-report-system
         if "status" in changes and isinstance(changes["status"], dict):
             status_change = changes["status"]
             old_val = status_change.get("old", "Unknown")
             new_val = status_change.get("new", "Unknown")
+<<<<<<< HEAD
             embed.add_field(
                 name="Status Change",
                 value=f"`{old_val}` → `{new_val}`",
@@ -78,10 +100,46 @@ class StatusEmbedFactory:
             embed.add_field(
                 name="Mission Change",
                 value=f"`{old_val}` → `{new_val}`",
+=======
+        if "status" in changes:
+=======
+>>>>>>> origin/codex/build-tsla-morning-report-system
+            embed.add_field(
+                name="Status Change",
+                value=f"`{old_val}` → `{new_val}`",
+                inline=False
+            )
+
+        if "phase" in changes and isinstance(changes["phase"], dict):
+            phase_change = changes["phase"]
+            old_val = str(phase_change.get("old", "Unknown"))[:50]
+            new_val = str(phase_change.get("new", "Unknown"))[:50]
+            embed.add_field(
+                name="Phase Change",
+                value=f"`{old_val}` → `{new_val}`",
+                inline=False
+            )
+
+        if "mission" in changes and isinstance(changes["mission"], dict):
+            mission_change = changes["mission"]
+            old_val = str(mission_change.get("old", "Unknown"))[:50]
+            new_val = str(mission_change.get("new", "Unknown"))[:50]
+            embed.add_field(
+                name="Mission Change",
+<<<<<<< HEAD
+                value=f"`{changes['mission']['old'][:50]}` → `{changes['mission']['new'][:50]}`",
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+                value=f"`{old_val}` → `{new_val}`",
+>>>>>>> origin/codex/build-tsla-morning-report-system
                 inline=False
             )
 
         if "completed_tasks" in changes:
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/build-tsla-morning-report-system
             completed_tasks = changes.get("completed_tasks", [])
             if completed_tasks and isinstance(completed_tasks, list):
                 tasks_list = "\n".join(
@@ -93,6 +151,7 @@ class StatusEmbedFactory:
                     value=tasks_list or "None",
                     inline=False
                 )
+<<<<<<< HEAD
 
         if "points_earned" in changes:
             points_change = changes["points_earned"]
@@ -109,6 +168,42 @@ class StatusEmbedFactory:
                 )
             except (ValueError, TypeError):
                 pass  # Skip if not a valid number
+=======
+            tasks_list = "\n".join(
+                [f"✅ {task[:80]}" for task in changes["completed_tasks"][:5]])
+            if len(changes["completed_tasks"]) > 5:
+                tasks_list += f"\n... and {len(changes['completed_tasks']) - 5} more"
+            embed.add_field(
+                name="Tasks Completed",
+                value=tasks_list or "None",
+                inline=False
+            )
+
+        if "points_earned" in changes:
+            embed.add_field(
+                name="Points Earned",
+                value=f"+{changes['points_earned']} points",
+                inline=True
+            )
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+
+        if "points_earned" in changes:
+            points_change = changes["points_earned"]
+            if isinstance(points_change, dict):
+                points_val = points_change.get("new", points_change.get("old", 0))
+            else:
+                points_val = points_change
+            try:
+                points_int = int(points_val)
+                embed.add_field(
+                    name="Points Earned",
+                    value=f"+{points_int} points",
+                    inline=True
+                )
+            except (ValueError, TypeError):
+                pass  # Skip if not a valid number
+>>>>>>> origin/codex/build-tsla-morning-report-system
 
         # Current status summary
         current_phase = status.get("current_phase", "N/A")

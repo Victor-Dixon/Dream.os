@@ -11,6 +11,10 @@ A2A_TEMPLATE = (
     "Priority: {priority}\n"
     "Message ID: {message_id}\n"
     "Timestamp: {timestamp}\n\n"
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     "🚀 **PROTOCOL UPDATE: Dumb Messages → Real Work Discovery**\n"
     "When you receive repetitive or 'dumb' coordination messages, don't just acknowledge them. Instead:\n"
     "- Search the codebase for TODO/FIXME items and real work opportunities\n"
@@ -18,6 +22,11 @@ A2A_TEMPLATE = (
     "- Execute complete implementation with testing and documentation\n"
     "- Make work publicly visible through git commits, devlogs, and blog posts\n"
     "- Transform message receipt into forward momentum, not confirmation loops\n\n"
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     "🐝 **COORDINATED SWARM REQUEST**:\n"
     "This is a bilateral coordination request to leverage swarm force multiplication.\n"
     "We're asking for your expertise to parallelize work and accelerate completion.\n\n"

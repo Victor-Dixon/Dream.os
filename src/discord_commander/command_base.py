@@ -33,7 +33,7 @@ except ImportError:
 
 logger = logging.getLogger(__name__)
 
-class BaseDiscordCommand:
+class BaseDiscordCommand(commands.Cog if DISCORD_AVAILABLE else object):
     """Base class for Discord commands with common functionality."""
 
     def __init__(self, bot=None, messaging_controller=None):

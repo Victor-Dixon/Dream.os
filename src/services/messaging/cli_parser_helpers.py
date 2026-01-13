@@ -81,8 +81,34 @@ def add_utility_flags(parser: argparse.ArgumentParser) -> None:
     )
     parser.add_argument("--leaderboard", action="store_true",
                         help="Display the autonomous competition leaderboard")
+<<<<<<< HEAD
+<<<<<<< HEAD
+    parser.add_argument("--delivery-status", action="store_true",
+                        help="Check delivery status of queued messages")
     parser.add_argument("--robinhood-stats", action="store_true",
                         help="Get 2026 Robinhood options statistics and balance (real data)")
+
+    # V3 Enhanced Messaging Features
+    parser.add_argument("--verify-delivery", action="store_true",
+                        help="Verify delivery status for all agents (V3)")
+    parser.add_argument("--clean-queue", action="store_true",
+                        help="Clean system messages from queue (V3)")
+    parser.add_argument("--reset-stuck", action="store_true",
+                        help="Reset stuck messages to PENDING (V3)")
+    parser.add_argument("--queue-stats", action="store_true",
+                        help="Show comprehensive queue statistics (V3)")
+    parser.add_argument("--health-check", action="store_true",
+                        help="Perform full messaging system health check (V3)")
+    parser.add_argument("--process-workspaces", action="store_true",
+                        help="Process all agent workspaces for cleanup (V3)")
+    parser.add_argument("--archive-old", type=int, metavar="DAYS",
+                        help="Archive messages older than DAYS (default: 30) (V3)")
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+    parser.add_argument("--robinhood-stats", action="store_true",
+                        help="Get 2026 Robinhood options statistics and balance (real data)")
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
 
 def add_task_system_flags(parser: argparse.ArgumentParser) -> None:

@@ -1,0 +1,48 @@
+{
+  "report_metadata": {
+    "generated_at": "2025-11-29T23:24:12.459235",
+    "analyzer_version": "1.0.0",
+    "report_type": "full_analysis"
+  },
+  "executive_summary": {
+    "test_performance": {
+      "overall_status": "good",
+      "p99_latency_ms": 0,
+      "throughput_msg_per_sec": 0,
+      "failure_rate_percent": 0
+    },
+    "critical_issues": 0,
+    "optimization_opportunities": 0,
+    "top_priority": "No critical issues identified"
+  },
+  "latency_analysis": {},
+  "bottleneck_analysis": {
+    "bottlenecks": [],
+    "severity_breakdown": {
+      "high": {
+        "count": 0,
+        "bottlenecks": []
+      },
+      "medium": {
+        "count": 0,
+        "bottlenecks": []
+      },
+      "low": {
+        "count": 0,
+        "bottlenecks": []
+      }
+    }
+  },
+  "optimization_opportunities": [],
+  "performance_recommendations": [],
+  "dashboard_visualization": {},
+  "key_findings": [
+    {
+      "category": "throughput",
+      "severity": "high",
+      "finding": "Throughput (0.00 msg/sec) below expected capacity",
+      "impact": "System may struggle under high load"
+    }
+  ],
+  "action_items": []
+}

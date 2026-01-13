@@ -12,6 +12,14 @@
 !.env.example
 !.env.template
 
+<<<<<<< HEAD
+# Environment setup scripts with secrets
+set_env_vars.bat
+set_env_vars.ps1
+set_env_variables.ps1
+
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 # Python
 __pycache__/
 *.py[cod]
@@ -50,6 +58,20 @@ venv.bak/
 *.swo
 *~
 
+<<<<<<< HEAD
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/settings.json
+.vscode/launch.json
+
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 # OS
 .DS_Store
 .DS_Store?
@@ -58,6 +80,20 @@ venv.bak/
 .Trashes
 ehthumbs.db
 Thumbs.db
+<<<<<<< HEAD
+.fseventsd/
+.DocumentRevisions-V100/
+.TemporaryItems/
+.AppleDouble/
+.LSOverride/
+Icon
+.Spotlight-V100
+.Trashes
+*.swp
+*.swo
+*~
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
 # Logs
 logs/

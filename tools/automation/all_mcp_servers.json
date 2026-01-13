@@ -1,0 +1,26 @@
+{
+  "mcpServers": {
+    "validation-audit": {
+      "command": "python",
+      "args": ["-m", "mcp_servers.validation_audit_server"],
+      "env": {
+        "PYTHONPATH": "D:\\Agent_Cellphone_V2_Repository"
+      }
+    },
+    "wp-cli-manager": {
+      "command": "python",
+      "args": ["-m", "mcp_servers.wp_cli_manager_server"],
+      "env": {
+        "PYTHONPATH": "D:\\Agent_Cellphone_V2_Repository"
+      }
+    },
+    "website-audit": {
+      "command": "python",
+      "args": ["-m", "mcp_servers.website_audit_server"],
+      "env": {
+        "PYTHONPATH": "D:\\Agent_Cellphone_V2_Repository",
+        "OLLAMA_HOST": "http://localhost:11434"
+      }
+    }
+  }
+}

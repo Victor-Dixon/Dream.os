@@ -32,6 +32,36 @@ from datetime import datetime
 
 from ..core.base.base_service import BaseService
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
+# Optional vector database imports - import directly to avoid services __init__ chain
+try:
+    from .vector.vector_database_service import VectorDatabaseService
+    from .vector.vector_database_helpers import DEFAULT_COLLECTION, SearchQuery
+    VECTOR_DB_AVAILABLE = True
+
+    def get_vector_database_service():
+        return VectorDatabaseService()
+
+    def search_vector_database(query, top_k=5):
+        service = get_vector_database_service()
+        if service:
+            request = SearchQuery(query=query, collection=DEFAULT_COLLECTION, limit=top_k)
+            return service.search(request)
+        return []
+
+except (ImportError, ValueError, AttributeError) as e:
+    print(f"⚠️  Vector database not available for performance analyzer: {e}")
+    VECTOR_DB_AVAILABLE = False
+    def get_vector_database_service():
+        return None
+    def search_vector_database(query, top_k=5):
+        return []
+    SearchQuery = None
+<<<<<<< HEAD
+=======
 # Optional vector database imports (SSOT)
 from .vector_database import (
     get_vector_database_service,
@@ -39,6 +69,9 @@ from .vector_database import (
     SearchQuery,
     VECTOR_DB_AVAILABLE,
 )
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
 
 class PerformanceAnalyzer(BaseService):

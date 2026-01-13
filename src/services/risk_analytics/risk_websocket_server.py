@@ -121,6 +121,10 @@ class RiskWebSocketServer:
                 await asyncio.sleep(self.heartbeat_interval)
 
     async def _stream_risk_updates(self):
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         """
         Stream live risk metric updates to connected clients.
 
@@ -139,6 +143,12 @@ class RiskWebSocketServer:
         4. Stream to /ws/risk/dashboard endpoint subscribers
         5. Handle connection cleanup and error recovery
         """
+<<<<<<< HEAD
+=======
+        """Stream live risk metric updates to connected clients."""
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         while self.running:
             try:
                 # Generate mock real-time risk data (in production, this would come from live trading data)

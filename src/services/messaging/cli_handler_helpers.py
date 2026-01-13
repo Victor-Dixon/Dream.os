@@ -93,11 +93,19 @@ def send_broadcast_message(
     message: str,
     priority: UnifiedMessagePriority,
     stalled: bool,
+<<<<<<< HEAD
+    use_pyautogui: bool = True,
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 ) -> int:
     """Send broadcast message and return exit code."""
     from .coordination_handlers import MessageCoordinator
     success_count = MessageCoordinator.broadcast_to_all(
+<<<<<<< HEAD
+        message, priority, stalled=stalled, use_pyautogui=use_pyautogui)
+=======
         message, priority, stalled=stalled)
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     if success_count > 0:
         print(f"✅ Broadcast to {success_count} agents successful")
         return 0
@@ -113,6 +121,10 @@ def send_single_agent_message(
     stalled: bool,
     sender: str | None = None,
     category: str | None = None,
+<<<<<<< HEAD
+    use_pyautogui: bool = True,
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 ) -> int:
     """Send single agent message and return exit code."""
     from .coordination_handlers import MessageCoordinator
@@ -156,7 +168,11 @@ def send_single_agent_message(
         agent=agent,
         message=message,
         priority=priority,
+<<<<<<< HEAD
+        use_pyautogui=use_pyautogui,
+=======
         use_pyautogui=True,
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
         stalled=stalled,
         sender=sender,
         message_category=message_category,
@@ -212,10 +228,20 @@ def route_message_delivery(
         Exit code (0 for success, 1 for failure)
     """
     if args.broadcast:
+<<<<<<< HEAD
+        use_pyautogui = getattr(args, 'pyautogui', True)
+        return send_broadcast_message(args.message, priority, stalled, use_pyautogui)
+    elif args.agent:
+        sender = getattr(args, "sender", None)
+        category = getattr(args, "category", None)
+        use_pyautogui = getattr(args, 'pyautogui', True)
+        print(f"DEBUG: CLI args.pyautogui = {getattr(args, 'pyautogui', 'NOT_SET')}, use_pyautogui = {use_pyautogui}")
+=======
         return send_broadcast_message(args.message, priority, stalled)
     elif args.agent:
         sender = getattr(args, "sender", None)
         category = getattr(args, "category", None)
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
         return send_single_agent_message(
             args.agent,
             args.message,
@@ -223,6 +249,10 @@ def route_message_delivery(
             stalled,
             sender=sender,
             category=category,
+<<<<<<< HEAD
+            use_pyautogui=use_pyautogui,
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
         )
     else:
         print("❌ ERROR: Either --agent or --broadcast must be specified")

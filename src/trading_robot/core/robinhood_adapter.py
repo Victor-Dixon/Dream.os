@@ -146,7 +146,11 @@ class RobinhoodAdapter(BrokerInterface):
                 "password": self.password,
                 "grant_type": "password",
                 "scope": "read",  # Read-only scope only
+<<<<<<< HEAD
+                "client_id": "<REDACTED_ROBINHOOD_CLIENT_ID>",
+=======
                 "client_id": "c82SH0WZOsabOXGP2sxqcj34FxkvfnWRZBKlBjFS",
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
                 "expires_in": 86400  # 24 hours
             }
 
@@ -242,10 +246,35 @@ class RobinhoodAdapter(BrokerInterface):
 
     def get_account_info(self) -> Dict[str, Any]:
         """
-        Get comprehensive account information including balance.
+        Get comprehensive account information including balance (PHASE 4 CONSOLIDATION).
+
+        DEPRECATED: This method now delegates to RobinhoodBroker.get_account_info()
+        for unified balance retrieval. Maintained for backward compatibility.
 
         Returns:
             Dict containing balance, margin, buying power, and account details
+        """
+        # PHASE 4 CONSOLIDATION: Delegate to unified balance retrieval
+        # This eliminates duplication between RobinhoodAdapter and RobinhoodBroker
+        try:
+            # Try to get balance from the broker if available
+            if hasattr(self, '_broker') and self._broker:
+                return self._broker.get_account_info()
+
+            # Fallback to legacy implementation (for now)
+            return self._get_legacy_account_info()
+
+        except Exception as e:
+            logger.error(f"Consolidated balance retrieval failed: {e}")
+            return {"error": f"Balance consolidation error: {e}"}
+
+    def _get_legacy_account_info(self) -> Dict[str, Any]:
+        """
+        LEGACY account info retrieval - kept for backward compatibility.
+        Will be removed in future Phase 4 iterations.
+
+        Returns:
+            Dict containing account details (legacy format)
         """
         try:
             self._check_emergency_disconnect()
@@ -258,7 +287,7 @@ class RobinhoodAdapter(BrokerInterface):
                 if not self._fetch_account_info():
                     return {"error": "Failed to fetch account info"}
 
-            # Format account data safely
+            # Format account data safely (legacy format)
             account_data = {
                 "account_number": self.account_info.get('account_number', 'N/A'),
                 "balance": float(self.account_info.get('cash', 0)),
@@ -271,6 +300,23 @@ class RobinhoodAdapter(BrokerInterface):
                 "account_type": self.account_info.get('type', 'N/A'),
                 "status": "active" if self.account_info.get('active', False) else "inactive",
                 "currency": "USD",
+                "last_updated": datetime.now().isoformat(),
+                "data_source": "robinhood_adapter_legacy"  # Marks as legacy implementation
+            }
+
+            logger.info(f"Account balance retrieved: ${account_data['balance']:.2f}")
+            return account_data
+
+        except Exception as e:
+            logger.error(f"Account info retrieval failed: {e}")
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
+            return {
+                "error": str(e),
+                "currency": "USD",
                 "last_updated": datetime.now().isoformat()
             }
 
@@ -279,6 +325,10 @@ class RobinhoodAdapter(BrokerInterface):
 
         except Exception as e:
             logger.error(f"Account info retrieval failed: {e}")
+<<<<<<< HEAD
+>>>>>>> rescue/dreamos-down-
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
             return {"error": str(e)}
 
     def get_options_positions(self) -> List[Dict[str, Any]]:

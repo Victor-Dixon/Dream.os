@@ -45,6 +45,16 @@ def format_d2a_payload(payload: dict[str, Any]) -> dict[str, Any]:
     )
     payload.setdefault("discord_response_policy", D2A_RESPONSE_POLICY_TEXT)
     payload.setdefault("d2a_report_format", D2A_REPORT_FORMAT_TEXT)
+<<<<<<< HEAD
+    payload.setdefault("devlog_command",
+        "python tools/devlog_poster.py --agent {recipient} --file <devlog_path>\n"
+        "Examples:\n"
+        "  python tools/devlog_poster.py --agent Agent-1 --file agent_workspaces/Agent-1/devlogs/status.md\n"
+        "  python tools/devlog_poster.py --agent Agent-7 --file devlogs/2025-12-26_status.md\n"
+        "  python tools/devlog_poster.py --agent Agent-8 --file agent_workspaces/Agent-8/devlogs/DEVLOG_2025-12-26.md"
+    )
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     return payload
 
 

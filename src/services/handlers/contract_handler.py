@@ -16,12 +16,21 @@ Author: Agent-4 - Strategic Oversight & Emergency Intervention Manager
 License: MIT
 """
 from typing import Any
+<<<<<<< HEAD
+from ...core.base.common_command_base import CommonHandlerBase
+from ..unified_service_managers import UnifiedContractManager
+from ..contract_system.storage import ContractStorage
+
+
+class ContractHandler(CommonHandlerBase):
+=======
 from ...core.base.base_service import BaseService
 from ..unified_service_managers import UnifiedContractManager
 from ..contract_system.storage import ContractStorage
 
 
 class ContractHandler(BaseService):
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     """Handles contract-related commands for messaging CLI.
 
     Manages contract operations like task assignment and status checking.
@@ -33,25 +42,86 @@ class ContractHandler(BaseService):
             ) and args.get_next_task or hasattr(args, 'check_contracts'
             ) and args.check_contracts
 
+<<<<<<< HEAD
+    def handle(self, args) -> dict:
+=======
     def handle(self, args) ->bool:
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
         """Handle the command."""
         return self.handle_contract_commands(args)
 
     def __init__(self):
         """Initialize contract handler."""
-        super().__init__("ContractHandler")
+<<<<<<< HEAD
+        super().__init__("ContractHandler")  # Uses CommonHandlerBase for standardized initialization
         try:
             from ..unified_service_managers import UnifiedContractManager
             self.manager = UnifiedContractManager()
+=======
+        super().__init__("ContractHandler")
+        try:
+<<<<<<< HEAD
+            from ..contract_system.manager import ContractManager
+            self.manager = ContractManager()
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+            from ..unified_service_managers import UnifiedContractManager
+            self.manager = UnifiedContractManager()
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         except ImportError:
             self.manager = None
         self._initialize_default_tasks()
 
+<<<<<<< HEAD
+    def handle_contract_commands(self, args) -> dict:
+=======
     def handle_contract_commands(self, args) ->bool:
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
         """Handle contract-related commands."""
         try:
             if args.get_next_task:
                 if not args.agent:
+<<<<<<< HEAD
+                    return {
+                        'success': False,
+                        'error': '--agent required for --get-next-task',
+                        'command': 'get_next_task'
+                    }
+                task = self.manager.get_next_task(args.agent)
+                if task:
+                    return {
+                        'success': True,
+                        'command': 'get_next_task',
+                        'agent': args.agent,
+                        'task': task
+                    }
+                else:
+                    return {
+                        'success': True,
+                        'command': 'get_next_task',
+                        'agent': args.agent,
+                        'task': None,
+                        'message': 'No available tasks for this agent'
+                    }
+            if args.check_contracts:
+                status = self.manager.get_system_status()
+                return {
+                    'success': True,
+                    'command': 'check_contracts',
+                    'status': status
+                }
+        except Exception as e:
+            return {
+                'success': False,
+                'error': str(e),
+                'command': getattr(args, 'command', 'unknown')
+            }
+        return {
+            'success': False,
+            'error': 'No valid command specified',
+            'command': 'unknown'
+        }
+=======
                     logger.info('❌ Error: --agent required for --get-next-task'
                         )
                     return True
@@ -99,6 +169,7 @@ class ContractHandler(BaseService):
             logger.info(f'❌ Error handling contract command: {e}')
             return False
         return False
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
     def get_next_task(self, agent_id: str) ->(dict[str, Any] | None):
         """Get next available task for agent."""
@@ -142,7 +213,15 @@ class ContractHandler(BaseService):
             shutil.rmtree(contracts_dir)
         os.makedirs(contracts_dir, exist_ok=True)
         self.storage = ContractStorage()
+<<<<<<< HEAD
+<<<<<<< HEAD
         self.manager = UnifiedContractManager()
+=======
+        self.manager = ContractManager(self.storage)
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+        self.manager = UnifiedContractManager()
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         self._initialize_default_tasks()
 
     def get_contract_status(self) ->dict[str, Any]:

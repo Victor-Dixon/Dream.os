@@ -108,8 +108,16 @@ class MessageQueueProcessor:
         try:
             while self.running:
                 self._maybe_trigger_output_flywheel()
-                entries = safe_dequeue(self.queue, batch_size)
-                if not entries:
+                # Dequeue batch of entries using MessageQueue interface
+                try:
+                    entries = self.queue.dequeue(batch_size)
+                    if not entries:
+                        if max_messages is None:
+                            time.sleep(interval)
+                            continue
+                        break
+                except Exception as e:
+                    logger.error(f"Failed to dequeue messages: {e}")
                     if max_messages is None:
                         time.sleep(interval)
                         continue
@@ -340,3 +348,80 @@ class MessageQueueProcessor:
                 self.performance_metrics, delivery_start_time, use_pyautogui, content
             )
             return False
+
+    def process_message(self, message: Any) -> bool:
+        """
+        Process a single message (smoke test compatibility method).
+
+        This method provides compatibility with smoke tests that expect
+        individual message processing capability.
+        """
+        try:
+            # Create a queue entry from the message
+            entry = QueueEntry(
+                queue_id="smoke_test",
+                message={"content": message, "type": "smoke_test"},
+                priority="normal",
+                status="pending"
+            )
+
+            # Use the existing delivery logic
+            return self._deliver_entry(entry)
+        except Exception as e:
+            logger.error(f"Failed to process message: {e}")
+            return False
+
+    def enqueue_message(self, message: Any, priority: str = "normal") -> bool:
+        """
+        Enqueue a single message (smoke test compatibility method).
+
+        This method provides compatibility with smoke tests that expect
+        individual message enqueueing capability.
+        """
+        try:
+            # Create a queue entry
+            entry = QueueEntry(
+                queue_id="smoke_test",
+                message={"content": message, "type": "smoke_test"},
+                priority=priority,
+                status="pending"
+            )
+
+            # Add to queue
+            self.queue.enqueue(entry)
+            logger.info(f"Enqueued message with priority {priority}")
+            return True
+        except Exception as e:
+            logger.error(f"Failed to enqueue message: {e}")
+            return False
+
+
+def main():
+    """Main entry point for the message queue processor service."""
+    import signal
+    import sys
+
+    # Create processor instance
+    processor = MessageQueueProcessor()
+
+    def signal_handler(signum, frame):
+        """Handle shutdown signals."""
+        logger.info("Received shutdown signal, stopping processor...")
+        processor.running = False  # Set running to False to stop the loop
+        sys.exit(0)
+
+    # Register signal handlers
+    signal.signal(signal.SIGINT, signal_handler)
+    signal.signal(signal.SIGTERM, signal_handler)
+
+    try:
+        logger.info("Starting Message Queue Processor service...")
+        # Run the processor (this will block until stopped)
+        processor.process_queue()  # This runs the processing loop
+    except Exception as e:
+        logger.error(f"Message Queue Processor failed: {e}")
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()

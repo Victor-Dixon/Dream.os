@@ -1,5 +1,13 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
 <!-- SSOT Domain: documentation -->
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+<!-- SSOT Domain: documentation -->
+
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 # Documentation Index
 
 **Generated:** 2025-12-27 02:50:03
@@ -109,8 +117,13 @@ _Uncategorized documentation_
 - [agent_8_swarm_pulse_evaluation_2025-12-22.md](docs/agent_8_swarm_pulse_evaluation_2025-12-22.md)
 - [DOCUMENTATION_INDEX.md](docs/DOCUMENTATION_INDEX.md)
 - [README.md](docs/README.md)
+- [index.md](docs/index.md)
+- [architecture.md](docs/architecture.md)
+- [protocols.md](docs/protocols.md)
+- [api/index.rst](docs/api/index.rst)
+- [conf.py](docs/conf.py)
+- [requirements.txt](docs/requirements.txt)
 - [agent_8_work_distribution_2025-12-26.md](docs/agent_8_work_distribution_2025-12-26.md)
 - [SSOT_DOMAIN_MAPPING.md](docs/SSOT_DOMAIN_MAPPING.md)
 - [devlog_poster_method_clarification_2025-12-26.md](docs/devlog_poster_method_clarification_2025-12-26.md)
 - ... and 28 more files
-

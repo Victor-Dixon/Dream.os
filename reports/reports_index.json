@@ -1,0 +1,1016 @@
+{
+  "last_updated": "2026-01-08T23:54:10.246065",
+  "consolidation_version": "1.0",
+  "analysis": {
+    "total_files": 153,
+    "total_size_mb": 7.449566841125488,
+    "file_types": {
+      ".json": 41,
+      ".md": 103,
+      ".txt": 6,
+      ".html": 2,
+      "no_extension": 1
+    },
+    "categories": {
+      "general": [
+        "canon_extraction.json",
+        "configuration_sync_20251227_073930.md",
+        "documentation_reorganization_plan.json",
+        "configuration_sync_report_20251228_033834.md",
+        "blog_preview.html",
+        "configuration_sync_report_20251228_203449.md",
+        "tool_classification_signal_noise.json",
+        "tool_classification_signal_noise_summary.md",
+        "configuration_sync_report_20251230_042417.md",
+        "tool_classification_review.json",
+        "tool_classification_final.json",
+        "tool_classification_final_summary.md",
+        "SYSTEMS_INTEGRATION_REPORT.md",
+        "ADDITIONAL_SYSTEMS_INTEGRATION_REPORT.md",
+        "dup_scan.json",
+        "dup_scan.md",
+        "ci_duplication_report.md",
+        "debt_baseline.json",
+        "debt_scan.json",
+        "debt_scan.md",
+        "phase2_completion_report.md",
+        "final_debt_baseline.json",
+        "phase3_completion_report.md",
+        "configuration_sync_report_20260107_054014.md",
+        "runtime_error_integration_baseline_2026-01-08.md",
+        "ai_integration_baseline_2026-01-08.md",
+        "ai_integration_post_vector_db_completion_2026-01-08.md",
+        "vector_db_troubleshooter_diagnosis_2026-01-08.md",
+        "phase2_implementation_report.md",
+        "JOINT_ENTERPRISE_UTILIZATION_ACCELERATION_COMPLETION_REPORT.md",
+        "v2_compliance\\mcp_and_orchestrators_ci_summary.json",
+        "violations\\v2_violations_analysis.json",
+        "violations\\v2_violations_categorized.json",
+        "violations\\V2_VIOLATIONS_INSPECTION_REPORT.json",
+        "data\\coordination\\coordination_cache.json",
+        "technical_debt\\debt_report_20260101_195707.md",
+        "technical_debt\\debt_report_20260101_200319.md",
+        "cycle_snapshots\\cycle_snapshot_60_20260104_102255.json",
+        "cycle_snapshots\\cycle_snapshot_60_20260104_102255.md",
+        "archive\\daily_reports\\cycle_accomplishments_20251226_062947.md",
+        "archive\\daily_reports\\cycle_accomplishments_20251227_022742.md",
+        "archive\\daily_reports\\cycle_accomplishments_20251228_080239.md",
+        "archive\\daily_reports\\cycle_accomplishments_20251228_141320.md",
+        "archive\\daily_reports\\cycle_accomplishments_20251228_141956.md",
+        "archive\\daily_reports\\cycle_accomplishments_20251228_142029.md",
+        "archive\\daily_reports\\cycle_accomplishments_20251228_142040.md",
+        "archive\\daily_reports\\cycle_accomplishments_20251228_143736.md",
+        "archive\\daily_reports\\cycle_accomplishments_20251228_143928.md",
+        "archive\\daily_reports\\cycle_accomplishments_20251228_144351.md",
+        "archive\\daily_reports\\cycle_accomplishments_20251228_165147.md",
+        "archive\\daily_reports\\cycle_accomplishments_20251228_172843.md",
+        "archive\\daily_reports\\cycle_accomplishments_20251228_181711.md",
+        "archive\\daily_reports\\cycle_accomplishments_20251228_182002.md",
+        "archive\\daily_reports\\cycle_accomplishments_20251229_041525.md",
+        "archive\\daily_reports\\cycle_accomplishments_20251229_172623.md",
+        "archive\\daily_reports\\cycle_accomplishments_20251230_024114.md",
+        "archive\\daily_reports\\cycle_accomplishments_20251230_024558.md",
+        "archive\\daily_reports\\cycle_accomplishments_20251230_025416.md",
+        "archive\\daily_reports\\cycle_accomplishments_20251230_030045.md",
+        "archive\\daily_reports\\cycle_accomplishments_20251230_030522.md",
+        "archive\\daily_reports\\cycle_accomplishments_20251230_041410.md",
+        "archive\\daily_reports\\cycle_accomplishments_20251230_050913.md",
+        "consolidated\\weekly_cycle_summary_2025-W52.md"
+      ],
+      "development": [
+        "consolidated_imports_fix_report.json",
+        "consolidated_imports_fix_report.md",
+        "duplicate_documentation_consolidation_plan.json",
+        "duplicate_documentation_consolidation_report.md",
+        "tag_analysis_src_followup.md",
+        "tag_analysis_post_agent8_batch4.md",
+        "tag_analysis_tools_final.md",
+        "tag_analysis_latest_agent8_sync.md",
+        "tag_analysis_batch5_complete.md",
+        "wave_b_analysis.json",
+        "wave_b_consolidation_plan.json",
+        "wave_b_consolidation_plan.md",
+        "wave_c_temp_repos_analysis.md",
+        "wave_c_completion_report.md",
+        "archive\\consolidation_report_20260108.md",
+        "archive\\analytics_reports\\tag_analysis_report_20251228_045751.md",
+        "archive\\analytics_reports\\tag_analysis_report_20251228_052159.md",
+        "archive\\analytics_reports\\tag_analysis_report_20251228_052554.md",
+        "archive\\analytics_reports\\tag_analysis_report_20251230_055723.md",
+        "archive\\analytics_reports\\tag_analysis_report_20251230_235020.md",
+        "archive\\analytics_reports\\tag_analysis_report_agent8_20251228_0532.md",
+        "archive\\analytics_reports\\tag_analysis_report_agent8_pulse_20251228_0600.md",
+        "archive\\analytics_reports\\tag_analysis_report_agent8_pulse_20251228_0700.md",
+        "archive\\analytics_reports\\tag_analysis_report_agent8_sync_20251228_1506.md",
+        "archive\\analytics_reports\\tag_analysis_report_agent8_sync_20251228_1529.md",
+        "consolidated\\consolidated_tag_analysis_reports_20260108.md"
+      ],
+      "compliance": [
+        "grade_cards_audit_20251222_083158.json",
+        "import_audit_report.json",
+        "import_audit_report.md",
+        "security_audit_20251222_083246.json",
+        "security_audit_20251222_083830.json",
+        "grade_cards_audit_20251225_102228.json",
+        "comprehensive_grade_card_audit_20251225_102621.json",
+        "comprehensive_grade_card_audit_20251225_103231.json",
+        "documentation_sprawl_audit.json",
+        "documentation_sprawl_audit_summary.md",
+        "enhanced_grade_card_audit_20251225_184058.json",
+        "unified_website_audit_20251225_185011.json",
+        "ssot_validation_batches_2_8_20251227_022603.json",
+        "ssot_validation_batches_2_8_20251227_022603.md",
+        "ssot_validation_batches_2_8_20251227_022930.json",
+        "ssot_validation_batches_2_8_20251227_023819.md",
+        "tradingrobotplug_contact_verification_2025-12-27_0852.txt",
+        "deployment_integration_verification_2025-12-27_0856.txt",
+        "deployment_integration_verification_2025-12-27_0903.txt",
+        "tradingrobotplug_contact_verification_2025-12-27_0903.txt",
+        "configuration_sync_initial_audit.md",
+        "tag_analysis_full_repo_audit.md",
+        "tag_analysis_src_audit.md",
+        "comprehensive_tool_audit.json",
+        "audits",
+        "tag_analysis_batch2_validation.md",
+        "phase3_validation_readiness_20251230_231749.md",
+        "phase1_ai_integration_validation_report.md",
+        "ssot\\ssot_batch_assignments.json",
+        "ssot\\ssot_batch_assignments.md",
+        "ssot\\ssot_batch_assignments_latest.md",
+        "data\\ssot\\ssot_validation_results.json"
+      ],
+      "analytics": [
+        "ga4_pixel_deployment_20251225_183321.json",
+        "ga4_pixel_configuration_status_2025-12-27_0712.txt",
+        "tier1_analytics_validation_20251228_2030.md",
+        "analytics_domain_ssot_validation.md",
+        "tag_analysis_spotcheck_agent8_analytics_core_20251229.md",
+        "analytics_health_check_20260107_053640.md",
+        "analytics_health_check_20260107_054222.md",
+        "ga4_pixel_baseline_pre_config_2026-01-08.md",
+        "technical_debt\\metrics_20260101_195707.json",
+        "technical_debt\\metrics_20260101_200319.json",
+        "archive\\2025\\compliance_dashboard_20251010_014228.html",
+        "archive\\analytics_reports\\p0_analytics_validation_20251226_112754.md",
+        "archive\\analytics_reports\\p0_analytics_validation_20251227_015552.md",
+        "archive\\analytics_reports\\p0_analytics_validation_20251227_084254.md",
+        "archive\\analytics_reports\\p0_analytics_validation_20251227_112513.md",
+        "archive\\analytics_reports\\p0_analytics_validation_20251230_043017.md",
+        "archive\\analytics_reports\\p0_analytics_validation_20251230_043327.md",
+        "archive\\analytics_reports\\p0_analytics_validation_20251230_052117.md",
+        "archive\\analytics_reports\\p0_analytics_validation_20260107_013508.md",
+        "archive\\analytics_reports\\p0_analytics_validation_20260107_021138.md",
+        "archive\\analytics_reports\\p0_analytics_validation_20260107_053518.md",
+        "archive\\analytics_reports\\p0_analytics_validation_20260107_053902.md",
+        "archive\\analytics_reports\\p0_analytics_validation_20260107_053933.md",
+        "archive\\analytics_reports\\p0_analytics_validation_20260107_054109.md",
+        "consolidated\\consolidated_p0_analytics_reports_20260108.md"
+      ],
+      "deployment": [
+        "build_in_public_phase0_deployment_plan.json",
+        "tradingrobotplug_theme_deployment_plan.json",
+        "website_optimization_deployment_summary.json",
+        "codex_deployment_status.md"
+      ],
+      "monitoring": [
+        "phase0_page_checks_2025-12-27_0903.txt",
+        "coordination_status.json",
+        "coordination_status_report.md"
+      ]
+    },
+    "duplicates": [
+      {
+        "duplicate": "ai_integration_post_vector_db_completion_2026-01-08.md",
+        "original": "ai_integration_baseline_2026-01-08.md",
+        "hash": "8de7e11bfc0d7d30ff49fa937b1bd354"
+      }
+    ],
+    "old_files": [
+      "archive\\2025\\compliance_dashboard_20251010_014228.html"
+    ],
+    "large_files": [
+      {
+        "path": "tag_analysis_full_repo_audit.md",
+        "size_mb": 3.087282180786133
+      }
+    ]
+  },
+  "moved_files": [
+    {
+      "from": "canon_extraction.json",
+      "to": "consolidated\\general\\canon_extraction.json",
+      "category": "general"
+    },
+    {
+      "from": "configuration_sync_20251227_073930.md",
+      "to": "consolidated\\general\\configuration_sync_20251227_073930.md",
+      "category": "general"
+    },
+    {
+      "from": "documentation_reorganization_plan.json",
+      "to": "consolidated\\general\\documentation_reorganization_plan.json",
+      "category": "general"
+    },
+    {
+      "from": "configuration_sync_report_20251228_033834.md",
+      "to": "consolidated\\general\\configuration_sync_report_20251228_033834.md",
+      "category": "general"
+    },
+    {
+      "from": "blog_preview.html",
+      "to": "consolidated\\general\\blog_preview.html",
+      "category": "general"
+    },
+    {
+      "from": "configuration_sync_report_20251228_203449.md",
+      "to": "consolidated\\general\\configuration_sync_report_20251228_203449.md",
+      "category": "general"
+    },
+    {
+      "from": "tool_classification_signal_noise.json",
+      "to": "consolidated\\general\\tool_classification_signal_noise.json",
+      "category": "general"
+    },
+    {
+      "from": "tool_classification_signal_noise_summary.md",
+      "to": "consolidated\\general\\tool_classification_signal_noise_summary.md",
+      "category": "general"
+    },
+    {
+      "from": "configuration_sync_report_20251230_042417.md",
+      "to": "consolidated\\general\\configuration_sync_report_20251230_042417.md",
+      "category": "general"
+    },
+    {
+      "from": "tool_classification_review.json",
+      "to": "consolidated\\general\\tool_classification_review.json",
+      "category": "general"
+    },
+    {
+      "from": "tool_classification_final.json",
+      "to": "consolidated\\general\\tool_classification_final.json",
+      "category": "general"
+    },
+    {
+      "from": "tool_classification_final_summary.md",
+      "to": "consolidated\\general\\tool_classification_final_summary.md",
+      "category": "general"
+    },
+    {
+      "from": "SYSTEMS_INTEGRATION_REPORT.md",
+      "to": "consolidated\\general\\SYSTEMS_INTEGRATION_REPORT.md",
+      "category": "general"
+    },
+    {
+      "from": "ADDITIONAL_SYSTEMS_INTEGRATION_REPORT.md",
+      "to": "consolidated\\general\\ADDITIONAL_SYSTEMS_INTEGRATION_REPORT.md",
+      "category": "general"
+    },
+    {
+      "from": "dup_scan.json",
+      "to": "consolidated\\general\\dup_scan.json",
+      "category": "general"
+    },
+    {
+      "from": "dup_scan.md",
+      "to": "consolidated\\general\\dup_scan.md",
+      "category": "general"
+    },
+    {
+      "from": "ci_duplication_report.md",
+      "to": "consolidated\\general\\ci_duplication_report.md",
+      "category": "general"
+    },
+    {
+      "from": "debt_baseline.json",
+      "to": "consolidated\\general\\debt_baseline.json",
+      "category": "general"
+    },
+    {
+      "from": "debt_scan.json",
+      "to": "consolidated\\general\\debt_scan.json",
+      "category": "general"
+    },
+    {
+      "from": "debt_scan.md",
+      "to": "consolidated\\general\\debt_scan.md",
+      "category": "general"
+    },
+    {
+      "from": "phase2_completion_report.md",
+      "to": "consolidated\\general\\phase2_completion_report.md",
+      "category": "general"
+    },
+    {
+      "from": "final_debt_baseline.json",
+      "to": "consolidated\\general\\final_debt_baseline.json",
+      "category": "general"
+    },
+    {
+      "from": "phase3_completion_report.md",
+      "to": "consolidated\\general\\phase3_completion_report.md",
+      "category": "general"
+    },
+    {
+      "from": "configuration_sync_report_20260107_054014.md",
+      "to": "consolidated\\general\\configuration_sync_report_20260107_054014.md",
+      "category": "general"
+    },
+    {
+      "from": "runtime_error_integration_baseline_2026-01-08.md",
+      "to": "consolidated\\general\\runtime_error_integration_baseline_2026-01-08.md",
+      "category": "general"
+    },
+    {
+      "from": "ai_integration_baseline_2026-01-08.md",
+      "to": "consolidated\\general\\ai_integration_baseline_2026-01-08.md",
+      "category": "general"
+    },
+    {
+      "from": "ai_integration_post_vector_db_completion_2026-01-08.md",
+      "to": "consolidated\\general\\ai_integration_post_vector_db_completion_2026-01-08.md",
+      "category": "general"
+    },
+    {
+      "from": "vector_db_troubleshooter_diagnosis_2026-01-08.md",
+      "to": "consolidated\\general\\vector_db_troubleshooter_diagnosis_2026-01-08.md",
+      "category": "general"
+    },
+    {
+      "from": "phase2_implementation_report.md",
+      "to": "consolidated\\general\\phase2_implementation_report.md",
+      "category": "general"
+    },
+    {
+      "from": "JOINT_ENTERPRISE_UTILIZATION_ACCELERATION_COMPLETION_REPORT.md",
+      "to": "consolidated\\general\\JOINT_ENTERPRISE_UTILIZATION_ACCELERATION_COMPLETION_REPORT.md",
+      "category": "general"
+    },
+    {
+      "from": "v2_compliance\\mcp_and_orchestrators_ci_summary.json",
+      "to": "consolidated\\general\\v2_compliance\\mcp_and_orchestrators_ci_summary.json",
+      "category": "general"
+    },
+    {
+      "from": "violations\\v2_violations_analysis.json",
+      "to": "consolidated\\general\\violations\\v2_violations_analysis.json",
+      "category": "general"
+    },
+    {
+      "from": "violations\\v2_violations_categorized.json",
+      "to": "consolidated\\general\\violations\\v2_violations_categorized.json",
+      "category": "general"
+    },
+    {
+      "from": "violations\\V2_VIOLATIONS_INSPECTION_REPORT.json",
+      "to": "consolidated\\general\\violations\\V2_VIOLATIONS_INSPECTION_REPORT.json",
+      "category": "general"
+    },
+    {
+      "from": "data\\coordination\\coordination_cache.json",
+      "to": "consolidated\\general\\data\\coordination\\coordination_cache.json",
+      "category": "general"
+    },
+    {
+      "from": "technical_debt\\debt_report_20260101_195707.md",
+      "to": "consolidated\\general\\technical_debt\\debt_report_20260101_195707.md",
+      "category": "general"
+    },
+    {
+      "from": "technical_debt\\debt_report_20260101_200319.md",
+      "to": "consolidated\\general\\technical_debt\\debt_report_20260101_200319.md",
+      "category": "general"
+    },
+    {
+      "from": "cycle_snapshots\\cycle_snapshot_60_20260104_102255.json",
+      "to": "consolidated\\general\\cycle_snapshots\\cycle_snapshot_60_20260104_102255.json",
+      "category": "general"
+    },
+    {
+      "from": "cycle_snapshots\\cycle_snapshot_60_20260104_102255.md",
+      "to": "consolidated\\general\\cycle_snapshots\\cycle_snapshot_60_20260104_102255.md",
+      "category": "general"
+    },
+    {
+      "from": "archive\\daily_reports\\cycle_accomplishments_20251226_062947.md",
+      "to": "consolidated\\general\\archive\\daily_reports\\cycle_accomplishments_20251226_062947.md",
+      "category": "general"
+    },
+    {
+      "from": "archive\\daily_reports\\cycle_accomplishments_20251227_022742.md",
+      "to": "consolidated\\general\\archive\\daily_reports\\cycle_accomplishments_20251227_022742.md",
+      "category": "general"
+    },
+    {
+      "from": "archive\\daily_reports\\cycle_accomplishments_20251228_080239.md",
+      "to": "consolidated\\general\\archive\\daily_reports\\cycle_accomplishments_20251228_080239.md",
+      "category": "general"
+    },
+    {
+      "from": "archive\\daily_reports\\cycle_accomplishments_20251228_141320.md",
+      "to": "consolidated\\general\\archive\\daily_reports\\cycle_accomplishments_20251228_141320.md",
+      "category": "general"
+    },
+    {
+      "from": "archive\\daily_reports\\cycle_accomplishments_20251228_141956.md",
+      "to": "consolidated\\general\\archive\\daily_reports\\cycle_accomplishments_20251228_141956.md",
+      "category": "general"
+    },
+    {
+      "from": "archive\\daily_reports\\cycle_accomplishments_20251228_142029.md",
+      "to": "consolidated\\general\\archive\\daily_reports\\cycle_accomplishments_20251228_142029.md",
+      "category": "general"
+    },
+    {
+      "from": "archive\\daily_reports\\cycle_accomplishments_20251228_142040.md",
+      "to": "consolidated\\general\\archive\\daily_reports\\cycle_accomplishments_20251228_142040.md",
+      "category": "general"
+    },
+    {
+      "from": "archive\\daily_reports\\cycle_accomplishments_20251228_143736.md",
+      "to": "consolidated\\general\\archive\\daily_reports\\cycle_accomplishments_20251228_143736.md",
+      "category": "general"
+    },
+    {
+      "from": "archive\\daily_reports\\cycle_accomplishments_20251228_143928.md",
+      "to": "consolidated\\general\\archive\\daily_reports\\cycle_accomplishments_20251228_143928.md",
+      "category": "general"
+    },
+    {
+      "from": "archive\\daily_reports\\cycle_accomplishments_20251228_144351.md",
+      "to": "consolidated\\general\\archive\\daily_reports\\cycle_accomplishments_20251228_144351.md",
+      "category": "general"
+    },
+    {
+      "from": "archive\\daily_reports\\cycle_accomplishments_20251228_165147.md",
+      "to": "consolidated\\general\\archive\\daily_reports\\cycle_accomplishments_20251228_165147.md",
+      "category": "general"
+    },
+    {
+      "from": "archive\\daily_reports\\cycle_accomplishments_20251228_172843.md",
+      "to": "consolidated\\general\\archive\\daily_reports\\cycle_accomplishments_20251228_172843.md",
+      "category": "general"
+    },
+    {
+      "from": "archive\\daily_reports\\cycle_accomplishments_20251228_181711.md",
+      "to": "consolidated\\general\\archive\\daily_reports\\cycle_accomplishments_20251228_181711.md",
+      "category": "general"
+    },
+    {
+      "from": "archive\\daily_reports\\cycle_accomplishments_20251228_182002.md",
+      "to": "consolidated\\general\\archive\\daily_reports\\cycle_accomplishments_20251228_182002.md",
+      "category": "general"
+    },
+    {
+      "from": "archive\\daily_reports\\cycle_accomplishments_20251229_041525.md",
+      "to": "consolidated\\general\\archive\\daily_reports\\cycle_accomplishments_20251229_041525.md",
+      "category": "general"
+    },
+    {
+      "from": "archive\\daily_reports\\cycle_accomplishments_20251229_172623.md",
+      "to": "consolidated\\general\\archive\\daily_reports\\cycle_accomplishments_20251229_172623.md",
+      "category": "general"
+    },
+    {
+      "from": "archive\\daily_reports\\cycle_accomplishments_20251230_024114.md",
+      "to": "consolidated\\general\\archive\\daily_reports\\cycle_accomplishments_20251230_024114.md",
+      "category": "general"
+    },
+    {
+      "from": "archive\\daily_reports\\cycle_accomplishments_20251230_024558.md",
+      "to": "consolidated\\general\\archive\\daily_reports\\cycle_accomplishments_20251230_024558.md",
+      "category": "general"
+    },
+    {
+      "from": "archive\\daily_reports\\cycle_accomplishments_20251230_025416.md",
+      "to": "consolidated\\general\\archive\\daily_reports\\cycle_accomplishments_20251230_025416.md",
+      "category": "general"
+    },
+    {
+      "from": "archive\\daily_reports\\cycle_accomplishments_20251230_030045.md",
+      "to": "consolidated\\general\\archive\\daily_reports\\cycle_accomplishments_20251230_030045.md",
+      "category": "general"
+    },
+    {
+      "from": "archive\\daily_reports\\cycle_accomplishments_20251230_030522.md",
+      "to": "consolidated\\general\\archive\\daily_reports\\cycle_accomplishments_20251230_030522.md",
+      "category": "general"
+    },
+    {
+      "from": "archive\\daily_reports\\cycle_accomplishments_20251230_041410.md",
+      "to": "consolidated\\general\\archive\\daily_reports\\cycle_accomplishments_20251230_041410.md",
+      "category": "general"
+    },
+    {
+      "from": "archive\\daily_reports\\cycle_accomplishments_20251230_050913.md",
+      "to": "consolidated\\general\\archive\\daily_reports\\cycle_accomplishments_20251230_050913.md",
+      "category": "general"
+    },
+    {
+      "from": "consolidated\\weekly_cycle_summary_2025-W52.md",
+      "to": "consolidated\\general\\consolidated\\weekly_cycle_summary_2025-W52.md",
+      "category": "general"
+    },
+    {
+      "from": "consolidated_imports_fix_report.json",
+      "to": "consolidated\\development\\consolidated_imports_fix_report.json",
+      "category": "development"
+    },
+    {
+      "from": "consolidated_imports_fix_report.md",
+      "to": "consolidated\\development\\consolidated_imports_fix_report.md",
+      "category": "development"
+    },
+    {
+      "from": "duplicate_documentation_consolidation_plan.json",
+      "to": "consolidated\\development\\duplicate_documentation_consolidation_plan.json",
+      "category": "development"
+    },
+    {
+      "from": "duplicate_documentation_consolidation_report.md",
+      "to": "consolidated\\development\\duplicate_documentation_consolidation_report.md",
+      "category": "development"
+    },
+    {
+      "from": "tag_analysis_src_followup.md",
+      "to": "consolidated\\development\\tag_analysis_src_followup.md",
+      "category": "development"
+    },
+    {
+      "from": "tag_analysis_post_agent8_batch4.md",
+      "to": "consolidated\\development\\tag_analysis_post_agent8_batch4.md",
+      "category": "development"
+    },
+    {
+      "from": "tag_analysis_tools_final.md",
+      "to": "consolidated\\development\\tag_analysis_tools_final.md",
+      "category": "development"
+    },
+    {
+      "from": "tag_analysis_latest_agent8_sync.md",
+      "to": "consolidated\\development\\tag_analysis_latest_agent8_sync.md",
+      "category": "development"
+    },
+    {
+      "from": "tag_analysis_batch5_complete.md",
+      "to": "consolidated\\development\\tag_analysis_batch5_complete.md",
+      "category": "development"
+    },
+    {
+      "from": "wave_b_analysis.json",
+      "to": "consolidated\\development\\wave_b_analysis.json",
+      "category": "development"
+    },
+    {
+      "from": "wave_b_consolidation_plan.json",
+      "to": "consolidated\\development\\wave_b_consolidation_plan.json",
+      "category": "development"
+    },
+    {
+      "from": "wave_b_consolidation_plan.md",
+      "to": "consolidated\\development\\wave_b_consolidation_plan.md",
+      "category": "development"
+    },
+    {
+      "from": "wave_c_temp_repos_analysis.md",
+      "to": "consolidated\\development\\wave_c_temp_repos_analysis.md",
+      "category": "development"
+    },
+    {
+      "from": "wave_c_completion_report.md",
+      "to": "consolidated\\development\\wave_c_completion_report.md",
+      "category": "development"
+    },
+    {
+      "from": "archive\\consolidation_report_20260108.md",
+      "to": "consolidated\\development\\archive\\consolidation_report_20260108.md",
+      "category": "development"
+    },
+    {
+      "from": "archive\\analytics_reports\\tag_analysis_report_20251228_045751.md",
+      "to": "consolidated\\development\\archive\\analytics_reports\\tag_analysis_report_20251228_045751.md",
+      "category": "development"
+    },
+    {
+      "from": "archive\\analytics_reports\\tag_analysis_report_20251228_052159.md",
+      "to": "consolidated\\development\\archive\\analytics_reports\\tag_analysis_report_20251228_052159.md",
+      "category": "development"
+    },
+    {
+      "from": "archive\\analytics_reports\\tag_analysis_report_20251228_052554.md",
+      "to": "consolidated\\development\\archive\\analytics_reports\\tag_analysis_report_20251228_052554.md",
+      "category": "development"
+    },
+    {
+      "from": "archive\\analytics_reports\\tag_analysis_report_20251230_055723.md",
+      "to": "consolidated\\development\\archive\\analytics_reports\\tag_analysis_report_20251230_055723.md",
+      "category": "development"
+    },
+    {
+      "from": "archive\\analytics_reports\\tag_analysis_report_20251230_235020.md",
+      "to": "consolidated\\development\\archive\\analytics_reports\\tag_analysis_report_20251230_235020.md",
+      "category": "development"
+    },
+    {
+      "from": "archive\\analytics_reports\\tag_analysis_report_agent8_20251228_0532.md",
+      "to": "consolidated\\development\\archive\\analytics_reports\\tag_analysis_report_agent8_20251228_0532.md",
+      "category": "development"
+    },
+    {
+      "from": "archive\\analytics_reports\\tag_analysis_report_agent8_pulse_20251228_0600.md",
+      "to": "consolidated\\development\\archive\\analytics_reports\\tag_analysis_report_agent8_pulse_20251228_0600.md",
+      "category": "development"
+    },
+    {
+      "from": "archive\\analytics_reports\\tag_analysis_report_agent8_pulse_20251228_0700.md",
+      "to": "consolidated\\development\\archive\\analytics_reports\\tag_analysis_report_agent8_pulse_20251228_0700.md",
+      "category": "development"
+    },
+    {
+      "from": "archive\\analytics_reports\\tag_analysis_report_agent8_sync_20251228_1506.md",
+      "to": "consolidated\\development\\archive\\analytics_reports\\tag_analysis_report_agent8_sync_20251228_1506.md",
+      "category": "development"
+    },
+    {
+      "from": "archive\\analytics_reports\\tag_analysis_report_agent8_sync_20251228_1529.md",
+      "to": "consolidated\\development\\archive\\analytics_reports\\tag_analysis_report_agent8_sync_20251228_1529.md",
+      "category": "development"
+    },
+    {
+      "from": "consolidated\\consolidated_tag_analysis_reports_20260108.md",
+      "to": "consolidated\\development\\consolidated\\consolidated_tag_analysis_reports_20260108.md",
+      "category": "development"
+    },
+    {
+      "from": "grade_cards_audit_20251222_083158.json",
+      "to": "consolidated\\compliance\\grade_cards_audit_20251222_083158.json",
+      "category": "compliance"
+    },
+    {
+      "from": "import_audit_report.json",
+      "to": "consolidated\\compliance\\import_audit_report.json",
+      "category": "compliance"
+    },
+    {
+      "from": "import_audit_report.md",
+      "to": "consolidated\\compliance\\import_audit_report.md",
+      "category": "compliance"
+    },
+    {
+      "from": "security_audit_20251222_083246.json",
+      "to": "consolidated\\compliance\\security_audit_20251222_083246.json",
+      "category": "compliance"
+    },
+    {
+      "from": "security_audit_20251222_083830.json",
+      "to": "consolidated\\compliance\\security_audit_20251222_083830.json",
+      "category": "compliance"
+    },
+    {
+      "from": "grade_cards_audit_20251225_102228.json",
+      "to": "consolidated\\compliance\\grade_cards_audit_20251225_102228.json",
+      "category": "compliance"
+    },
+    {
+      "from": "comprehensive_grade_card_audit_20251225_102621.json",
+      "to": "consolidated\\compliance\\comprehensive_grade_card_audit_20251225_102621.json",
+      "category": "compliance"
+    },
+    {
+      "from": "comprehensive_grade_card_audit_20251225_103231.json",
+      "to": "consolidated\\compliance\\comprehensive_grade_card_audit_20251225_103231.json",
+      "category": "compliance"
+    },
+    {
+      "from": "documentation_sprawl_audit.json",
+      "to": "consolidated\\compliance\\documentation_sprawl_audit.json",
+      "category": "compliance"
+    },
+    {
+      "from": "documentation_sprawl_audit_summary.md",
+      "to": "consolidated\\compliance\\documentation_sprawl_audit_summary.md",
+      "category": "compliance"
+    },
+    {
+      "from": "enhanced_grade_card_audit_20251225_184058.json",
+      "to": "consolidated\\compliance\\enhanced_grade_card_audit_20251225_184058.json",
+      "category": "compliance"
+    },
+    {
+      "from": "unified_website_audit_20251225_185011.json",
+      "to": "consolidated\\compliance\\unified_website_audit_20251225_185011.json",
+      "category": "compliance"
+    },
+    {
+      "from": "ssot_validation_batches_2_8_20251227_022603.json",
+      "to": "consolidated\\compliance\\ssot_validation_batches_2_8_20251227_022603.json",
+      "category": "compliance"
+    },
+    {
+      "from": "ssot_validation_batches_2_8_20251227_022603.md",
+      "to": "consolidated\\compliance\\ssot_validation_batches_2_8_20251227_022603.md",
+      "category": "compliance"
+    },
+    {
+      "from": "ssot_validation_batches_2_8_20251227_022930.json",
+      "to": "consolidated\\compliance\\ssot_validation_batches_2_8_20251227_022930.json",
+      "category": "compliance"
+    },
+    {
+      "from": "ssot_validation_batches_2_8_20251227_023819.md",
+      "to": "consolidated\\compliance\\ssot_validation_batches_2_8_20251227_023819.md",
+      "category": "compliance"
+    },
+    {
+      "from": "tradingrobotplug_contact_verification_2025-12-27_0852.txt",
+      "to": "consolidated\\compliance\\tradingrobotplug_contact_verification_2025-12-27_0852.txt",
+      "category": "compliance"
+    },
+    {
+      "from": "deployment_integration_verification_2025-12-27_0856.txt",
+      "to": "consolidated\\compliance\\deployment_integration_verification_2025-12-27_0856.txt",
+      "category": "compliance"
+    },
+    {
+      "from": "deployment_integration_verification_2025-12-27_0903.txt",
+      "to": "consolidated\\compliance\\deployment_integration_verification_2025-12-27_0903.txt",
+      "category": "compliance"
+    },
+    {
+      "from": "tradingrobotplug_contact_verification_2025-12-27_0903.txt",
+      "to": "consolidated\\compliance\\tradingrobotplug_contact_verification_2025-12-27_0903.txt",
+      "category": "compliance"
+    },
+    {
+      "from": "configuration_sync_initial_audit.md",
+      "to": "consolidated\\compliance\\configuration_sync_initial_audit.md",
+      "category": "compliance"
+    },
+    {
+      "from": "tag_analysis_full_repo_audit.md",
+      "to": "consolidated\\compliance\\tag_analysis_full_repo_audit.md",
+      "category": "compliance"
+    },
+    {
+      "from": "tag_analysis_src_audit.md",
+      "to": "consolidated\\compliance\\tag_analysis_src_audit.md",
+      "category": "compliance"
+    },
+    {
+      "from": "comprehensive_tool_audit.json",
+      "to": "consolidated\\compliance\\comprehensive_tool_audit.json",
+      "category": "compliance"
+    },
+    {
+      "from": "audits",
+      "to": "consolidated\\compliance\\audits",
+      "category": "compliance"
+    },
+    {
+      "from": "tag_analysis_batch2_validation.md",
+      "to": "consolidated\\compliance\\tag_analysis_batch2_validation.md",
+      "category": "compliance"
+    },
+    {
+      "from": "phase3_validation_readiness_20251230_231749.md",
+      "to": "consolidated\\compliance\\phase3_validation_readiness_20251230_231749.md",
+      "category": "compliance"
+    },
+    {
+      "from": "phase1_ai_integration_validation_report.md",
+      "to": "consolidated\\compliance\\phase1_ai_integration_validation_report.md",
+      "category": "compliance"
+    },
+    {
+      "from": "ssot\\ssot_batch_assignments.json",
+      "to": "consolidated\\compliance\\ssot\\ssot_batch_assignments.json",
+      "category": "compliance"
+    },
+    {
+      "from": "ssot\\ssot_batch_assignments.md",
+      "to": "consolidated\\compliance\\ssot\\ssot_batch_assignments.md",
+      "category": "compliance"
+    },
+    {
+      "from": "ssot\\ssot_batch_assignments_latest.md",
+      "to": "consolidated\\compliance\\ssot\\ssot_batch_assignments_latest.md",
+      "category": "compliance"
+    },
+    {
+      "from": "data\\ssot\\ssot_validation_results.json",
+      "to": "consolidated\\compliance\\data\\ssot\\ssot_validation_results.json",
+      "category": "compliance"
+    },
+    {
+      "from": "ga4_pixel_deployment_20251225_183321.json",
+      "to": "consolidated\\analytics\\ga4_pixel_deployment_20251225_183321.json",
+      "category": "analytics"
+    },
+    {
+      "from": "ga4_pixel_configuration_status_2025-12-27_0712.txt",
+      "to": "consolidated\\analytics\\ga4_pixel_configuration_status_2025-12-27_0712.txt",
+      "category": "analytics"
+    },
+    {
+      "from": "tier1_analytics_validation_20251228_2030.md",
+      "to": "consolidated\\analytics\\tier1_analytics_validation_20251228_2030.md",
+      "category": "analytics"
+    },
+    {
+      "from": "analytics_domain_ssot_validation.md",
+      "to": "consolidated\\analytics\\analytics_domain_ssot_validation.md",
+      "category": "analytics"
+    },
+    {
+      "from": "tag_analysis_spotcheck_agent8_analytics_core_20251229.md",
+      "to": "consolidated\\analytics\\tag_analysis_spotcheck_agent8_analytics_core_20251229.md",
+      "category": "analytics"
+    },
+    {
+      "from": "analytics_health_check_20260107_053640.md",
+      "to": "consolidated\\analytics\\analytics_health_check_20260107_053640.md",
+      "category": "analytics"
+    },
+    {
+      "from": "analytics_health_check_20260107_054222.md",
+      "to": "consolidated\\analytics\\analytics_health_check_20260107_054222.md",
+      "category": "analytics"
+    },
+    {
+      "from": "ga4_pixel_baseline_pre_config_2026-01-08.md",
+      "to": "consolidated\\analytics\\ga4_pixel_baseline_pre_config_2026-01-08.md",
+      "category": "analytics"
+    },
+    {
+      "from": "technical_debt\\metrics_20260101_195707.json",
+      "to": "consolidated\\analytics\\technical_debt\\metrics_20260101_195707.json",
+      "category": "analytics"
+    },
+    {
+      "from": "technical_debt\\metrics_20260101_200319.json",
+      "to": "consolidated\\analytics\\technical_debt\\metrics_20260101_200319.json",
+      "category": "analytics"
+    },
+    {
+      "from": "archive\\2025\\compliance_dashboard_20251010_014228.html",
+      "to": "consolidated\\analytics\\archive\\2025\\compliance_dashboard_20251010_014228.html",
+      "category": "analytics"
+    },
+    {
+      "from": "archive\\analytics_reports\\p0_analytics_validation_20251226_112754.md",
+      "to": "consolidated\\analytics\\archive\\analytics_reports\\p0_analytics_validation_20251226_112754.md",
+      "category": "analytics"
+    },
+    {
+      "from": "archive\\analytics_reports\\p0_analytics_validation_20251227_015552.md",
+      "to": "consolidated\\analytics\\archive\\analytics_reports\\p0_analytics_validation_20251227_015552.md",
+      "category": "analytics"
+    },
+    {
+      "from": "archive\\analytics_reports\\p0_analytics_validation_20251227_084254.md",
+      "to": "consolidated\\analytics\\archive\\analytics_reports\\p0_analytics_validation_20251227_084254.md",
+      "category": "analytics"
+    },
+    {
+      "from": "archive\\analytics_reports\\p0_analytics_validation_20251227_112513.md",
+      "to": "consolidated\\analytics\\archive\\analytics_reports\\p0_analytics_validation_20251227_112513.md",
+      "category": "analytics"
+    },
+    {
+      "from": "archive\\analytics_reports\\p0_analytics_validation_20251230_043017.md",
+      "to": "consolidated\\analytics\\archive\\analytics_reports\\p0_analytics_validation_20251230_043017.md",
+      "category": "analytics"
+    },
+    {
+      "from": "archive\\analytics_reports\\p0_analytics_validation_20251230_043327.md",
+      "to": "consolidated\\analytics\\archive\\analytics_reports\\p0_analytics_validation_20251230_043327.md",
+      "category": "analytics"
+    },
+    {
+      "from": "archive\\analytics_reports\\p0_analytics_validation_20251230_052117.md",
+      "to": "consolidated\\analytics\\archive\\analytics_reports\\p0_analytics_validation_20251230_052117.md",
+      "category": "analytics"
+    },
+    {
+      "from": "archive\\analytics_reports\\p0_analytics_validation_20260107_013508.md",
+      "to": "consolidated\\analytics\\archive\\analytics_reports\\p0_analytics_validation_20260107_013508.md",
+      "category": "analytics"
+    },
+    {
+      "from": "archive\\analytics_reports\\p0_analytics_validation_20260107_021138.md",
+      "to": "consolidated\\analytics\\archive\\analytics_reports\\p0_analytics_validation_20260107_021138.md",
+      "category": "analytics"
+    },
+    {
+      "from": "archive\\analytics_reports\\p0_analytics_validation_20260107_053518.md",
+      "to": "consolidated\\analytics\\archive\\analytics_reports\\p0_analytics_validation_20260107_053518.md",
+      "category": "analytics"
+    },
+    {
+      "from": "archive\\analytics_reports\\p0_analytics_validation_20260107_053902.md",
+      "to": "consolidated\\analytics\\archive\\analytics_reports\\p0_analytics_validation_20260107_053902.md",
+      "category": "analytics"
+    },
+    {
+      "from": "archive\\analytics_reports\\p0_analytics_validation_20260107_053933.md",
+      "to": "consolidated\\analytics\\archive\\analytics_reports\\p0_analytics_validation_20260107_053933.md",
+      "category": "analytics"
+    },
+    {
+      "from": "archive\\analytics_reports\\p0_analytics_validation_20260107_054109.md",
+      "to": "consolidated\\analytics\\archive\\analytics_reports\\p0_analytics_validation_20260107_054109.md",
+      "category": "analytics"
+    },
+    {
+      "from": "consolidated\\consolidated_p0_analytics_reports_20260108.md",
+      "to": "consolidated\\analytics\\consolidated\\consolidated_p0_analytics_reports_20260108.md",
+      "category": "analytics"
+    },
+    {
+      "from": "build_in_public_phase0_deployment_plan.json",
+      "to": "consolidated\\deployment\\build_in_public_phase0_deployment_plan.json",
+      "category": "deployment"
+    },
+    {
+      "from": "tradingrobotplug_theme_deployment_plan.json",
+      "to": "consolidated\\deployment\\tradingrobotplug_theme_deployment_plan.json",
+      "category": "deployment"
+    },
+    {
+      "from": "website_optimization_deployment_summary.json",
+      "to": "consolidated\\deployment\\website_optimization_deployment_summary.json",
+      "category": "deployment"
+    },
+    {
+      "from": "codex_deployment_status.md",
+      "to": "consolidated\\deployment\\codex_deployment_status.md",
+      "category": "deployment"
+    },
+    {
+      "from": "phase0_page_checks_2025-12-27_0903.txt",
+      "to": "consolidated\\monitoring\\phase0_page_checks_2025-12-27_0903.txt",
+      "category": "monitoring"
+    },
+    {
+      "from": "coordination_status.json",
+      "to": "consolidated\\monitoring\\coordination_status.json",
+      "category": "monitoring"
+    },
+    {
+      "from": "coordination_status_report.md",
+      "to": "consolidated\\monitoring\\coordination_status_report.md",
+      "category": "monitoring"
+    }
+  ],
+  "duplicate_actions": [],
+  "archived_files": [],
+  "categories": {
+    "analytics": [
+      "analytics",
+      "dashboard",
+      "tier1",
+      "p0_analytics",
+      "ga4",
+      "pixel",
+      "tracking",
+      "metrics"
+    ],
+    "compliance": [
+      "compliance",
+      "v2_compliance",
+      "ssot",
+      "validation",
+      "verification",
+      "audit",
+      "grade_card"
+    ],
+    "deployment": [
+      "deployment",
+      "infrastructure",
+      "docker",
+      "nginx",
+      "wp-config",
+      "wordpress",
+      "freerideinvestor"
+    ],
+    "monitoring": [
+      "health",
+      "status",
+      "monitor",
+      "check",
+      "diagnostic",
+      "performance",
+      "stress_test"
+    ],
+    "development": [
+      "tag_analysis",
+      "import",
+      "duplicate",
+      "consolidation",
+      "wave_",
+      "codex",
+      "canonical"
+    ]
+  },
+  "archive_threshold_days": 30
+}

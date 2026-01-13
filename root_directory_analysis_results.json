@@ -1,0 +1,276 @@
+{
+  "timestamp": "2026-01-13T05:43:09.280299",
+  "total_files": 125,
+  "total_dirs": 32,
+  "categories": {
+    "standard_project_dirs": [
+      "src",
+      "docs",
+      "message_queue",
+      "data",
+      "agent_workspaces",
+      "scripts",
+      "config",
+      "assets",
+      "tools",
+      "website_data",
+      "cache",
+      "fsm_data",
+      "logs",
+      "migrations",
+      "validation_results",
+      "reports",
+      "runtime",
+      "tests"
+    ],
+    "core_files": [
+      ".gitignore",
+      "CHANGELOG.md",
+      "README.md",
+      "Dockerfile",
+      "main.py",
+      "setup.py",
+      "MANIFEST.in"
+    ],
+    "uncategorized": [
+      "soft_onboard_all_agents.py",
+      "Untitled",
+      ".eslintrc.cjs",
+      ".pre-commit-config-optimized.yaml",
+      ".pre-commit-config-windows.yaml",
+      ".pre-commit-config.yaml",
+      "set_env_vars.ps1",
+      "set_env_vars.bat",
+      ".discord_bot_restart",
+      "swarm_coordination_dashboard.py",
+      "env.example",
+      "demo_ai_orchestration.py",
+      "database_qa_integration.py",
+      "root_directory_analysis_2026-01-13.py",
+      "demo_agent_workflow.py"
+    ],
+    "development_build": [
+      ".git",
+      ".github",
+      ".pytest_cache",
+      "__pycache__",
+      ".cursor"
+    ],
+    "configuration": [
+      "phase1_cleanup_results.json",
+      "pyproject.toml",
+      ".env.example",
+      "docker-compose.yml",
+      "database_audit_results.json",
+      "post_launch_audit_results.json",
+      "qa_automation_config.json",
+      "root_directory_analysis_results.json",
+      "collaborative_cleanup_proposal_2026-01-13.json"
+    ],
+    "other_directories": [
+      "audit_outputs",
+      "devlogs",
+      "alerts",
+      "examples",
+      ".benchmarks",
+      "mcp_servers",
+      "Agent_Cellphone_V2_Repository"
+    ],
+    "development_logs": [
+      ".auditignore",
+      "cleanup_execution_phase1.py",
+      "docstring_coverage_report.txt",
+      "database_structure_validation.py",
+      "simple_database_audit.py"
+    ],
+    "logs_temp": [
+      "discord_debug.log",
+      "discord_bot_output.log",
+      "requirements.txt",
+      "discord_bot_debug.log",
+      "temp_removed_unified_verifier"
+    ],
+    "documentation": [
+      "BLOG_DADUDEKC.md",
+      "BLOG_WEARESWARM.md",
+      "BLOG_DREAMSCAPE.md",
+      "AUDIT_REPORT_CAPTAIN_AGENT.md",
+      "thea_deployment_coordination_plan.md",
+      "CODEBASE_AUDIT_REPORT.md",
+      "CAPTAIN_AGENT_AUDIT_SUMMARY.md",
+      "MASTER_TASK_LOG.md",
+      "tools_consolidation_master_plan.md",
+      "COMPREHENSIVE_CODE_AUDIT_REPORT.md",
+      "consolidation_risk_assessment.md",
+      "CAPTAIN_APPROVAL_CHECKLIST.md",
+      "closure_improvement.md",
+      "DOCUMENTATION_CLEANUP_AUDIT.md",
+      "project_structure_consolidation_strategy.md",
+      "root_directory_cleanup_plan.md",
+      "CAPTAIN_APPROVED_EXECUTION_ORDER.md",
+      "AUDIT_RUNBOOK.md",
+      "comprehensive_codebase_audit_report.md",
+      "PHASE_0_COMPLETION_REPORT.md",
+      "unified_audit_synthesis_agent5_agent3.md",
+      "DISCORD_BOT_MISSION_BRIEFING.md",
+      "agent5_daily_accomplishments_2026-01-12.md",
+      "final_status_update_agent5_2026-01-12.md",
+      "PHASE_1_EVIDENCE_ANALYSIS_REPORT.md",
+      "immediate_action_items_pre_captain_approval.md",
+      "phase05_validation_checklist.md",
+      "phase05_validation_report_agent5.md",
+      "today_complete_summary_agent5.md",
+      "package_publishing_readiness_report.md",
+      "final_publishing_checklist.md",
+      "final_p0_verification_report.md",
+      "SWARM_INTELLIGENCE_REVOLUTION_COMPLETE.md",
+      "SWARM_INTELLIGENCE_REVOLUTION_LAUNCH_ANNOUNCEMENT.md",
+      "SWARM_INTELLIGENCE_REVOLUTION_ANNOUNCEMENT.md",
+      "SWARM_INTELLIGENCE_REVOLUTION_VICTORY.md",
+      "FINAL_SWARM_INTELLIGENCE_REVOLUTION_CELEBRATION.md",
+      "ABSOLUTE_FINAL_VICTORY_SWARM_INTELLIGENCE_REVOLUTION.md",
+      "phase2_coordination_finalization_plan_20260113.md",
+      "devlog_pypi_publishing_milestone_2026-01-12.md",
+      "PYPI_PACKAGE_README.md",
+      "devlog_ai_integration_enhancement_2026-01-13.md",
+      "coordination_audit_summary_20260113.md",
+      "devlog_ai_context_processors_integration_2026-01-13.md",
+      "swarm_intelligence_revolution_complete_20260113.md",
+      "phase3_community_outreach_plan.md",
+      "phase1_infrastructure_consolidation_status_2026-01-13.md",
+      "agent6_coordination_completion_report.md",
+      "parallel_processing_workstreams_20260113.md",
+      "quarterback_coordination_protocol_20260113.md",
+      "comprehensive_cleanup_strategy_2026-01-13.md",
+      "swarm_command_tools_assessment_20260113.md",
+      "swarm_task_distribution_matrix_20260113.md",
+      "swarm_command_tools_deployment_report_20260113.md",
+      "phase3_ecosystem_expansion_roadmap.md",
+      "plugin_architecture_specification.md"
+    ],
+    "scripts_utilities": [
+      "test_dlq.py",
+      "test_contract_api.py",
+      "test_discord_messaging.py",
+      "test_discord_env.py",
+      "audit_cleanup_helper.py",
+      "discord_diagnostics.py",
+      "check_env_file.py",
+      "test_discord_commands.py",
+      "check_bot_status.py",
+      "test_discord_config.py",
+      "check_discord_env.py",
+      "load_and_test_discord.py",
+      "discord_bot_test.py",
+      "merge_discord_env.py",
+      "test_agent7_webhook.py",
+      "audit_harness_standalone.py",
+      "test_discord_webhook_integration.py",
+      "temp_removed_debug_discord_bot.py",
+      "stop_discord_bots.py",
+      "generate_orphan_imports.py",
+      "generate_archive_manifest.py",
+      "temp_removed_test_logging_quick.py",
+      "debug_discord_message.py",
+      "debug_webhook_env.py",
+      "test_devlog_posting.py",
+      "test_page2.py",
+      "deploy_to_pypi.py"
+    ],
+    "archives": [
+      "root_cleanup_archive_2026-01-12",
+      "archive"
+    ],
+    "build_cache": [
+      ".coveragerc"
+    ]
+  },
+  "issues": [
+    {
+      "type": "excessive_root_files",
+      "severity": "high",
+      "description": "Too many files in root directory: 125 (target: <40)",
+      "impact": "Poor navigation, maintenance difficulty"
+    },
+    {
+      "type": "configuration_scatter",
+      "severity": "medium",
+      "description": "Too many configuration files: 9 (target: 2-3)",
+      "impact": "Hard to manage configuration"
+    },
+    {
+      "type": "documentation_clutter",
+      "severity": "medium",
+      "description": "Too many documentation files in root: 56 (target: 2)",
+      "impact": "Hard to find important documentation"
+    },
+    {
+      "type": "script_pollution",
+      "severity": "medium",
+      "description": "Too many utility scripts in root: 27 (target: <5)",
+      "impact": "Cluttered root directory"
+    },
+    {
+      "type": "log_files_in_root",
+      "severity": "low",
+      "description": "Log files in root directory: 5",
+      "impact": "Should be in logs/ directory or ignored"
+    }
+  ],
+  "recommendations": [
+    "Create proper directory structure following Python project conventions",
+    "Move configuration files to config/ directory",
+    "Relocate documentation to docs/ subdirectories",
+    "Organize scripts into scripts/ subdirectories",
+    "Archive development logs to docs/devlogs/",
+    "Remove or ignore log files and cache directories",
+    "Consolidate 9 configuration files into 2-3 organized configs",
+    "Move 27 utility scripts to appropriate scripts/ subdirectories",
+    "Archive 5 development logs to docs/devlogs/"
+  ],
+  "cleanup_plan": {
+    "phase_1_config_consolidation": {
+      "priority": "HIGH",
+      "description": "Consolidate configuration files",
+      "actions": [
+        "Create config/agent_config.json from agent_mode_config.json, cursor_agent_coords.json",
+        "Create config/coordination_config.json from coordination_cache.json",
+        "Keep only .env.example in root, archive others",
+        "Consolidate pre-commit configs to single platform-specific version"
+      ],
+      "estimated_files": 6
+    },
+    "phase_2_documentation_relocation": {
+      "priority": "MEDIUM",
+      "description": "Move documentation to docs/ subdirectories",
+      "actions": [
+        "Move CONTRIBUTING.md and guides to docs/contributing/",
+        "Move project documentation to docs/guides/",
+        "Keep only README.md and CHANGELOG.md in root"
+      ],
+      "estimated_files": 54
+    },
+    "phase_3_script_organization": {
+      "priority": "MEDIUM",
+      "description": "Organize scripts into subdirectories",
+      "actions": [
+        "Create scripts/tests/ for test utilities",
+        "Create scripts/discord/ for Discord-related scripts",
+        "Create scripts/utilities/ for general utilities",
+        "Move main.py and core scripts appropriately"
+      ],
+      "estimated_files": 24
+    },
+    "phase_4_log_archive": {
+      "priority": "LOW",
+      "description": "Archive development logs and clean temporary files",
+      "actions": [
+        "Create docs/devlogs/ directory",
+        "Move all devlog files to docs/devlogs/",
+        "Create reports/archive/ for historical reports",
+        "Remove temporary log files"
+      ],
+      "estimated_files": 5
+    }
+  }
+}

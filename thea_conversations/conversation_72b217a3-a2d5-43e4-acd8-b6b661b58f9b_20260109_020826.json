@@ -1,0 +1,23 @@
+{
+  "conversation_id": "72b217a3-a2d5-43e4-acd8-b6b661b58f9b",
+  "message": {
+    "message_id": "4c88a39f-84da-4e66-94b6-7760c8e677a2",
+    "content": "Test message 2 - please respond briefly",
+    "priority": "normal",
+    "timestamp": "2026-01-09T02:07:56.933051",
+    "status": "sent",
+    "metadata": {}
+  },
+  "response": {
+    "content": "Got it 👍 Brief response received and acknowledged.",
+    "message_id": "4c88a39f-84da-4e66-94b6-7760c8e677a2",
+    "response_id": "1655303a-2d1a-4c5b-9285-63e7515b025b",
+    "timestamp": "2026-01-09T02:08:26.342611",
+    "confidence_score": 0.5,
+    "processing_time_seconds": 0.0,
+    "metadata": {}
+  },
+  "started_at": "2026-01-09T02:08:26.342611",
+  "completed_at": "2026-01-09T02:08:26.342611",
+  "total_duration_seconds": 0.0
+}

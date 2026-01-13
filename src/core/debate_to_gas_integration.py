@@ -7,6 +7,25 @@ When debate concludes:
 Decision stored → S2A debate-cycle messages generated → GAS delivery → Execution tracked
 
 <!-- SSOT Domain: integration -->
+<<<<<<< HEAD
+V2 Consolidated: Uses SSOT base classes for logger setup and error handling
+Author: Agent-8 (SSOT & System Integration)
+SSOT Migration: Agent-8 (System Integration)
+Date: 2026-01-12
+"""
+from __future__ import annotations
+
+# SSOT Import Standardization - eliminates redundant typing imports
+from src.core.base.import_standardization import (
+    Any, Dict, List, Optional, datetime, timezone, Path, json
+)
+from src.core.base.service_base import BaseService
+from src.core.base.error_handling import (
+    ErrorHandler, error_context, BusinessLogicError, ErrorContext
+)
+
+# Initialize standardized logger through SSOT base
+=======
 """
 from __future__ import annotations
 from datetime import datetime
@@ -18,6 +37,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 logger = logging.getLogger(__name__)
 
 

@@ -219,6 +219,10 @@ class MessageQueue(IMessageQueue):
         # Prevents routing issues when messages come from different sources
         normalized_message = self._normalize_message(message)
         
+        # Merge delivery callback with existing message metadata
+        message_metadata = normalized_message.get("metadata", {})
+        merged_metadata = {**message_metadata, "delivery_callback": delivery_callback is not None}
+
         return QueueEntry(
             message=normalized_message,
             queue_id=queue_id,
@@ -226,7 +230,7 @@ class MessageQueue(IMessageQueue):
             status="PENDING",
             created_at=now,
             updated_at=now,
-            metadata={"delivery_callback": delivery_callback is not None},
+            metadata=merged_metadata,
         )
     
     def _normalize_message(self, message: Any) -> dict:

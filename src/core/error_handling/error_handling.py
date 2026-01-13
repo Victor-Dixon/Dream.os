@@ -33,6 +33,13 @@ import json
 import threading
 from enum import Enum
 
+# Get project root for absolute log path
+project_root = Path(__file__).parent.parent.parent
+log_file_path = project_root / "logs" / "agent_cellphone.log"
+
+# Ensure logs directory exists
+log_file_path.parent.mkdir(exist_ok=True)
+
 # Configure basic logging
 logging.basicConfig(
     level=logging.INFO,
@@ -40,7 +47,7 @@ logging.basicConfig(
     handlers=[
         logging.StreamHandler(sys.stdout),
         logging.handlers.RotatingFileHandler(
-            'logs/agent_cellphone.log',
+            str(log_file_path),
             maxBytes=10*1024*1024,  # 10MB
             backupCount=5
         )

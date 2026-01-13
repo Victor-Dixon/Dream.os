@@ -1,7 +1,15 @@
 """
 
+<<<<<<< HEAD
+<<<<<<< HEAD
 <!-- SSOT Domain: orchestrators -->
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+<!-- SSOT Domain: orchestrators -->
+
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 Monitor State Management
 ========================
 

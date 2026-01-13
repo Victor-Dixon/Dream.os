@@ -1,5 +1,13 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
 <!-- SSOT Domain: documentation -->
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+<!-- SSOT Domain: documentation -->
+
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 # Git Repository Sync Audit Report
 
 **Date:** 2025-12-22  

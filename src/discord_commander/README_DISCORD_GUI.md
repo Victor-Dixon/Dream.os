@@ -1,3 +1,29 @@
+<<<<<<< HEAD
+
+## 🤖 CONSOLIDATION COMPLETE
+
+**All Discord bots have been consolidated into a single, unified Discord bot system.**
+
+### What Was Consolidated:
+- ✅ Removed 8 duplicate v2 Discord component files
+- ✅ Merged all Discord functionality into unified_discord_bot.py
+- ✅ Eliminated fragmented messaging and command systems
+- ✅ Established single SSOT for Discord functionality
+
+### Current Architecture:
+- **Single Bot Instance**: `unified_discord_bot.py`
+- **Consolidated Commands**: All commands merged into modular system
+- **Unified Entry Point**: `consolidated_discord_bot.py`
+- **Service Management**: Updated to use consolidated bot
+
+### Migration Complete:
+- **Before**: Multiple Discord services and v2/v1 duplications
+- **After**: One unified, consolidated Discord bot system
+
+---
+
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 <!-- SSOT Domain: discord -->
 # 🤖 Discord GUI Controller - Complete Documentation
 

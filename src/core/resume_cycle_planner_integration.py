@@ -28,11 +28,27 @@ class ResumeCyclePlannerIntegration:
     def __init__(self):
         """Initialize resume cycle planner integration."""
         try:
+<<<<<<< HEAD
+<<<<<<< HEAD
             from src.services.unified_service_managers import UnifiedContractManager
             from src.services.contract_system.cycle_planner_integration import (
                 CyclePlannerIntegration
             )
             self.contract_manager = UnifiedContractManager()
+=======
+            from src.services.contract_system.manager import ContractManager
+            from src.services.contract_system.cycle_planner_integration import (
+                CyclePlannerIntegration
+            )
+            self.contract_manager = ContractManager()
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+            from src.services.unified_service_managers import UnifiedContractManager
+            from src.services.contract_system.cycle_planner_integration import (
+                CyclePlannerIntegration
+            )
+            self.contract_manager = UnifiedContractManager()
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
             self.cycle_planner = CyclePlannerIntegration()
             self._initialized = True
         except ImportError as e:

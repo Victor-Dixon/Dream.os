@@ -1,0 +1,59 @@
+{
+  "https://tradingrobotplug.com": {
+    "url": "https://tradingrobotplug.com",
+    "status": "\u2705 OK",
+    "response_time": 2.87,
+    "status_code": 200,
+    "content_length": 52249,
+    "has_title": true,
+    "has_navigation": true,
+    "mobile_friendly": true,
+    "errors": []
+  },
+  "https://weareswarm.online": {
+    "url": "https://weareswarm.online",
+    "status": "\u2705 OK",
+    "response_time": 3.02,
+    "status_code": 200,
+    "content_length": 40905,
+    "has_title": true,
+    "has_navigation": true,
+    "mobile_friendly": true,
+    "errors": []
+  },
+  "https://ariajet.site": {
+    "url": "https://ariajet.site",
+    "status": "\u274c ERROR (500)",
+    "response_time": 1.68,
+    "status_code": 500,
+    "content_length": 0,
+    "has_title": false,
+    "has_navigation": false,
+    "mobile_friendly": false,
+    "errors": [
+      "HTTP 500"
+    ]
+  },
+  "https://crosbyultimateevents.com": {
+    "url": "https://crosbyultimateevents.com",
+    "status": "\u2705 OK",
+    "response_time": 1.53,
+    "status_code": 200,
+    "content_length": 31269,
+    "has_title": true,
+    "has_navigation": true,
+    "mobile_friendly": true,
+    "errors": []
+  },
+  "https://dadudekc.com": {
+    "url": "https://dadudekc.com",
+    "status": "\u2705 OK",
+    "response_time": 2.11,
+    "status_code": 200,
+    "content_length": 33245,
+    "has_title": true,
+    "has_navigation": true,
+    "mobile_friendly": true,
+    "errors": []
+  }
+}

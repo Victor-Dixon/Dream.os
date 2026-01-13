@@ -140,9 +140,108 @@ class BlastRadiusLimiter:
         }
     
     def _load_configuration(self):
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
+        """Load custom limits from configuration files or environment variables."""
+        self._load_from_environment_variables()
+        self._load_from_config_file()
+
+    def _load_from_environment_variables(self):
+        """Load blast radius limits from environment variables."""
+        env_mappings = self._get_env_mappings()
+        self._process_env_variables(env_mappings)
+
+    def _get_env_mappings(self):
+        """Get environment variable to limit mappings."""
+        return {
+            'BLAST_RADIUS_COST_MAX_ACTION': (ResourceType.COST, 'max_per_action'),
+            'BLAST_RADIUS_COST_MAX_HOUR': (ResourceType.COST, 'max_per_hour'),
+            'BLAST_RADIUS_COST_MAX_DAY': (ResourceType.COST, 'max_per_day'),
+            'BLAST_RADIUS_FILES_MAX_ACTION': (ResourceType.FILES, 'max_per_action'),
+            'BLAST_RADIUS_FILES_MAX_HOUR': (ResourceType.FILES, 'max_per_hour'),
+            'BLAST_RADIUS_FILES_MAX_DAY': (ResourceType.FILES, 'max_per_day'),
+            'BLAST_RADIUS_API_MAX_ACTION': (ResourceType.API_CALLS, 'max_per_action'),
+            'BLAST_RADIUS_API_MAX_HOUR': (ResourceType.API_CALLS, 'max_per_hour'),
+            'BLAST_RADIUS_API_MAX_DAY': (ResourceType.API_CALLS, 'max_per_day'),
+        }
+
+    def _process_env_variables(self, env_mappings):
+        """Process environment variables and apply limits."""
+        import os
+        for env_var, (resource_type, limit_attr) in env_mappings.items():
+            value = os.getenv(env_var)
+            if value is not None:
+                try:
+                    numeric_value = float(value) if resource_type == ResourceType.COST else int(value)
+                    if resource_type in self.limits:
+                        setattr(self.limits[resource_type], limit_attr, numeric_value)
+                        logger.info(f"Loaded {env_var}={numeric_value} from environment")
+                except (ValueError, TypeError) as e:
+                    logger.warning(f"Invalid value for {env_var}: {value} ({e})")
+
+    def _load_from_config_file(self):
+        """Load blast radius limits from configuration file."""
+        config_paths = self._get_config_paths()
+        self._try_load_from_config_paths(config_paths)
+
+    def _get_config_paths(self):
+        """Get list of possible configuration file paths."""
+        import os
+        from pathlib import Path
+
+        return [
+            Path.home() / '.blast_radius_config.json',
+            Path.cwd() / 'blast_radius_config.json',
+            Path(os.getenv('BLAST_RADIUS_CONFIG', '')) if os.getenv('BLAST_RADIUS_CONFIG') else None,
+        ]
+
+    def _try_load_from_config_paths(self, config_paths):
+        """Try to load configuration from the provided paths."""
+        for config_path in config_paths:
+            if config_path and config_path.exists() and self._load_config_file(config_path):
+                break
+
+    def _load_config_file(self, config_path):
+        """Load and apply configuration from a specific file."""
+        import json
+
+        try:
+            with open(config_path, 'r') as f:
+                config = json.load(f)
+
+            if 'limits' in config:
+                self._apply_config_limits(config['limits'], config_path)
+
+            logger.info(f"Loaded blast radius configuration from {config_path}")
+            return True
+
+        except (json.JSONDecodeError, IOError) as e:
+            logger.warning(f"Failed to load config from {config_path}: {e}")
+            return False
+
+    def _apply_config_limits(self, limits_config, config_path):
+        """Apply limits configuration from loaded config."""
+        for resource_name, limit_config in limits_config.items():
+            try:
+                resource_type = ResourceType(resource_name)
+                if resource_type in self.limits:
+                    for attr, value in limit_config.items():
+                        if hasattr(self.limits[resource_type], attr):
+                            setattr(self.limits[resource_type], attr, value)
+                            logger.info(f"Loaded {resource_name}.{attr}={value} from {config_path}")
+
+            except (ValueError, TypeError) as e:
+                logger.warning(f"Invalid resource type in config: {resource_name} ({e})")
+<<<<<<< HEAD
+=======
         """Load custom limits from configuration."""
         # TODO: Load from config file or environment variables
         pass
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     
     def check_limit(
         self,
