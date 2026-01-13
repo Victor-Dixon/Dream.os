@@ -10,34 +10,23 @@ Author: Agent-3 (Infrastructure & DevOps Specialist)
 Architecture: Agent-2 (Architecture & Design Specialist)
 Created: 2026-01-08
 V2 Compliant: Yes (<400 lines)
-
-<!-- SSOT Domain: tools -->
 """
 
 import json
 import logging
 import sys
-from dataclasses import fields
 from pathlib import Path
 from datetime import datetime, timedelta
 
-# Add tools directory to path for imports
-tools_dir = Path(__file__).parent.parent
-sys.path.insert(0, str(tools_dir))
+# Add repository root to path for imports (needed for src/ access)
+repo_root = Path(__file__).parent.parent.parent
+sys.path.insert(0, str(repo_root))
 
-from cycle_snapshots.data_collectors.agent_status_collector import collect_all_agent_status
-from cycle_snapshots.data_collectors.task_log_collector import parse_task_log
-from cycle_snapshots.data_collectors.git_collector import analyze_git_activity
-from cycle_snapshots.aggregators.snapshot_aggregator import aggregate_snapshot
-from cycle_snapshots.core.snapshot_models import (
-    CycleSnapshot,
-    SnapshotMetadata,
-    ProjectState,
-    TaskMetrics,
-    GitMetrics,
-)
-from cycle_snapshots.processors.report_generator import generate_markdown_report
-from cycle_snapshots.processors.status_resetter import reset_all_agent_status
+from tools.cycle_snapshots.data_collectors.agent_status_collector import collect_all_agent_status
+from tools.cycle_snapshots.data_collectors.task_log_collector import parse_task_log
+from tools.cycle_snapshots.data_collectors.git_collector import analyze_git_activity
+from tools.cycle_snapshots.aggregators.snapshot_aggregator import aggregate_snapshot
+from tools.cycle_snapshots.core.snapshot_models import CycleSnapshot
 
 logger = logging.getLogger(__name__)
 
@@ -51,8 +40,6 @@ def main():
     parser.add_argument("--output", type=str, help="Output file path (default: stdout)")
     parser.add_argument("--workspace", type=str, default=".", help="Workspace root directory")
     parser.add_argument("--since-days", type=int, default=7, help="Days to analyze git activity for")
-    parser.add_argument("--report-output", type=str, help="Write markdown report to this path")
-    parser.add_argument("--reset-status", action="store_true", help="Reset agent status.json files after snapshot")
     parser.add_argument("--verbose", action="store_true", help="Enable verbose logging")
 
     args = parser.parse_args()
@@ -88,25 +75,15 @@ def main():
             }
         }
 
-        snapshot_dict = aggregate_snapshot(all_data, cycle_num=args.cycle)
-
-        if args.reset_status:
-            print("🧹 Resetting agent status files...")
-            reset_all_agent_status(snapshot_dict, workspace_root, datetime.now())
+        snapshot_dict = aggregate_snapshot(all_data)
 
         # Create snapshot object
-        def coerce_dataclass(cls, data):
-            if not isinstance(data, dict):
-                return cls()
-            allowed = {field.name for field in fields(cls)}
-            return cls(**{key: value for key, value in data.items() if key in allowed})
-
         snapshot = CycleSnapshot(
-            metadata=coerce_dataclass(SnapshotMetadata, snapshot_dict["snapshot_metadata"]),
-            project_state=coerce_dataclass(ProjectState, snapshot_dict["project_state"]),
-            agent_status=agent_status_data,
-            task_metrics=coerce_dataclass(TaskMetrics, snapshot_dict.get("task_metrics", {})),
-            git_metrics=coerce_dataclass(GitMetrics, snapshot_dict.get("git_activity", {}).get("metrics", {})),
+            metadata=snapshot_dict["snapshot_metadata"],
+            project_state=snapshot_dict["project_state"],
+            agent_status={},  # Would be populated from agent_status_data
+            task_metrics=snapshot_dict.get("task_metrics", {}),
+            git_metrics=snapshot_dict.get("git_activity", {}).get("metrics", {}),
             mcp_data=snapshot_dict.get("mcp_data", {})
         )
 
@@ -121,12 +98,6 @@ def main():
             print(f"✅ Snapshot saved to {output_file}")
         else:
             print(json.dumps(snapshot.to_dict(), indent=2, ensure_ascii=False))
-
-        if args.report_output:
-            report_file = Path(args.report_output)
-            report_file.parent.mkdir(parents=True, exist_ok=True)
-            report_file.write_text(generate_markdown_report(snapshot_dict), encoding="utf-8")
-            print(f"📝 Report saved to {report_file}")
 
     except Exception as e:
         logger.error(f"Snapshot generation failed: {e}")

@@ -41,8 +41,6 @@ class MessagePriority(Enum):
     URGENT = "urgent"
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 class MessageStatus(Enum):
     """Status of a message in the communication pipeline."""
     PENDING = "pending"
@@ -52,10 +50,6 @@ class MessageStatus(Enum):
     TIMEOUT = "timeout"
 
 
-=======
->>>>>>> rescue/dreamos-down-
-=======
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 class AuthenticationStatus(Enum):
     """Status of authentication with Thea service."""
     AUTHENTICATED = "authenticated"
@@ -74,35 +68,12 @@ class BrowserState(Enum):
     CLOSED = "closed"
 
 
-@dataclass
-class AuthenticationContext:
-    """
-    Context information for authentication operations.
-    """
-    target_url: str
-    current_status: AuthenticationStatus = AuthenticationStatus.REQUIRES_LOGIN
-    last_attempt: Optional[datetime] = None
-    attempt_count: int = 0
-    error_message: Optional[str] = None
-
-    def record_attempt(self, success: bool, error: Optional[str] = None) -> None:
-        """Record an authentication attempt."""
-        self.last_attempt = datetime.now()
-        self.attempt_count += 1
-
-        if success:
-            self.current_status = AuthenticationStatus.AUTHENTICATED
-            self.error_message = None
-        else:
-            self.current_status = AuthenticationStatus.INVALID_CREDENTIALS
-            self.error_message = error or "Authentication failed"
-
-    def should_retry(self, max_attempts: int = 3) -> bool:
-        """Check if authentication should be retried."""
-        return (
-            self.attempt_count < max_attempts
-            and self.current_status != AuthenticationStatus.AUTHENTICATED
-        )
+class MessagePriority(Enum):
+    """Priority levels for message delivery."""
+    LOW = "low"
+    NORMAL = "normal"
+    HIGH = "high"
+    URGENT = "urgent"
 
 
 @dataclass
@@ -245,6 +216,37 @@ class CookieData:
     def is_valid(self) -> bool:
         """Check if cookies are valid and not expired."""
         return not self.is_expired() and bool(self.cookies)
+
+
+@dataclass
+class AuthenticationContext:
+    """
+    Context information for authentication operations.
+    """
+    target_url: str
+    current_status: AuthenticationStatus = AuthenticationStatus.REQUIRES_LOGIN
+    last_attempt: Optional[datetime] = None
+    attempt_count: int = 0
+    error_message: Optional[str] = None
+
+    def record_attempt(self, success: bool, error: Optional[str] = None) -> None:
+        """Record an authentication attempt."""
+        self.last_attempt = datetime.now()
+        self.attempt_count += 1
+
+        if success:
+            self.current_status = AuthenticationStatus.AUTHENTICATED
+            self.error_message = None
+        else:
+            self.current_status = AuthenticationStatus.INVALID_CREDENTIALS
+            self.error_message = error or "Authentication failed"
+
+    def should_retry(self, max_attempts: int = 3) -> bool:
+        """Check if authentication should be retried."""
+        return (
+            self.attempt_count < max_attempts
+            and self.current_status != AuthenticationStatus.AUTHENTICATED
+        )
 
 
 @dataclass

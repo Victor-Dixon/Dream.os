@@ -3,16 +3,8 @@
 Comprehensive Error Handling and Logging Framework
 ===================================================
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 <!-- SSOT Domain: error_handling -->
 
-=======
->>>>>>> origin/codex/build-tsla-morning-report-system
-=======
-<!-- SSOT Domain: error_handling -->
-
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 V2 Compliance: Centralized error handling with proper logging, recovery, and monitoring.
 
 Features:
@@ -41,7 +33,6 @@ import json
 import threading
 from enum import Enum
 
-<<<<<<< HEAD
 # Get project root for absolute log path
 project_root = Path(__file__).parent.parent.parent
 log_file_path = project_root / "logs" / "agent_cellphone.log"
@@ -49,8 +40,6 @@ log_file_path = project_root / "logs" / "agent_cellphone.log"
 # Ensure logs directory exists
 log_file_path.parent.mkdir(exist_ok=True)
 
-=======
->>>>>>> origin/codex/build-tsla-morning-report-system
 # Configure basic logging
 logging.basicConfig(
     level=logging.INFO,
@@ -58,11 +47,7 @@ logging.basicConfig(
     handlers=[
         logging.StreamHandler(sys.stdout),
         logging.handlers.RotatingFileHandler(
-<<<<<<< HEAD
             str(log_file_path),
-=======
-            'logs/agent_cellphone.log',
->>>>>>> origin/codex/build-tsla-morning-report-system
             maxBytes=10*1024*1024,  # 10MB
             backupCount=5
         )
