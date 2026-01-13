@@ -1,0 +1,38 @@
+# ⚠️ DEPRECATED - Swarm Code of Conduct
+
+> **STATUS**: This document is DEPRECATED and archived for historical reference only.
+> 
+> **Effective Date**: 2025-12-26
+> 
+> **Migration Path**: 
+> - For enforceable messaging requirements, see `.cursor/rules/messaging-contracts.mdc` (LAW)
+> - For governance structure, see `docs/governance/GOVERNANCE_MAP.md`
+> - For advisory patterns, see Swarm Brain (non-canonical, advisory only)
+
+---
+
+# Agent Messaging Code of Conduct
+
+**⚠️ NOTE: This content is preserved for historical reference only. It has been superseded by enforceable LAW in `.cursor/rules/messaging-contracts.mdc`.**
+
+- ✅ **Check your inbox first.** Before acting or replying, read all new messages in `agent_workspaces/{Agent-X}/inbox/` so you always act on the latest instructions.
+- ✅ **Use the unified messaging CLI for A2A and A2C communication:**
+  - Agent-to-Agent (A2A) reply:
+    ```bash
+    python -m src.services.messaging_cli --message "<your message>" --agent <TARGET_AGENT> --type text --category a2a
+    ```
+  - Agent-to-Captain (A2C) status / completion / blocker update:
+    ```bash
+    python -m src.services.messaging_cli --message "<status / completion / blockers>" --agent Agent-4 --type text --category a2c
+    ```
+- ✅ **Follow the shared templates.** Do not hand-craft headers like `[A2A]` or `[CAPTAIN]` in raw Markdown. Rely on the templates in `src/core/messaging_template_texts.py` (they already include `From/To/Priority/Message ID/Timestamp` and "How to respond" guidance).
+- ✅ **Every reply must contain substance:**
+  - What you did (or will do next)
+  - What changed (links / evidence)
+  - Any blockers and your proposed next steps
+- ❌ **Do not create new ad-hoc `send_*` messaging scripts.** If you need automation, wrap the official CLI or call `src.core.messaging_core.send_message` with the standard templates.
+
+---
+
+**See `docs/governance/GOVERNANCE_MAP.md` for current governance structure (LAW vs MEMORY).**
+

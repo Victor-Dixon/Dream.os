@@ -1,0 +1,107 @@
+{
+  "consolidation_date": "2025-12-27T02:43:39.097660",
+  "total_pairs": 20,
+  "planned_consolidations": 20,
+  "plan": [
+    {
+      "keep": "agent_workspaces\\Agent-7\\QUICK_START.md",
+      "remove": "agent_workspaces\\Agent-8\\QUICK_START.md",
+      "reason": "Duplicate content detected"
+    },
+    {
+      "keep": "agent_workspaces\\Agent-7\\QUICK_START.md",
+      "remove": "agent_workspaces\\Agent-3\\QUICK_START.md",
+      "reason": "Duplicate content detected"
+    },
+    {
+      "keep": "agent_workspaces\\Agent-7\\QUICK_START.md",
+      "remove": "agent_workspaces\\Agent-2\\QUICK_START.md",
+      "reason": "Duplicate content detected"
+    },
+    {
+      "keep": "agent_workspaces\\Agent-7\\QUICK_START.md",
+      "remove": "agent_workspaces\\Agent-1\\QUICK_START.md",
+      "reason": "Duplicate content detected"
+    },
+    {
+      "keep": "agent_workspaces\\Agent-7\\QUICK_START.md",
+      "remove": "agent_workspaces\\Agent-5\\QUICK_START.md",
+      "reason": "Duplicate content detected"
+    },
+    {
+      "keep": "agent_workspaces\\Agent-7\\QUICK_START.md",
+      "remove": "agent_workspaces\\Agent-6\\QUICK_START.md",
+      "reason": "Duplicate content detected"
+    },
+    {
+      "keep": "agent_workspaces\\Agent-3\\QUICK_START.md",
+      "remove": "agent_workspaces\\Agent-8\\QUICK_START.md",
+      "reason": "Duplicate content detected"
+    },
+    {
+      "keep": "agent_workspaces\\Agent-2\\QUICK_START.md",
+      "remove": "agent_workspaces\\Agent-8\\QUICK_START.md",
+      "reason": "Duplicate content detected"
+    },
+    {
+      "keep": "agent_workspaces\\Agent-8\\QUICK_START.md",
+      "remove": "agent_workspaces\\Agent-1\\QUICK_START.md",
+      "reason": "Duplicate content detected"
+    },
+    {
+      "keep": "agent_workspaces\\Agent-5\\QUICK_START.md",
+      "remove": "agent_workspaces\\Agent-8\\QUICK_START.md",
+      "reason": "Duplicate content detected"
+    },
+    {
+      "keep": "agent_workspaces\\Agent-8\\QUICK_START.md",
+      "remove": "agent_workspaces\\Agent-6\\QUICK_START.md",
+      "reason": "Duplicate content detected"
+    },
+    {
+      "keep": "agent_workspaces\\Agent-2\\QUICK_START.md",
+      "remove": "agent_workspaces\\Agent-3\\QUICK_START.md",
+      "reason": "Duplicate content detected"
+    },
+    {
+      "keep": "agent_workspaces\\Agent-3\\QUICK_START.md",
+      "remove": "agent_workspaces\\Agent-1\\QUICK_START.md",
+      "reason": "Duplicate content detected"
+    },
+    {
+      "keep": "agent_workspaces\\Agent-5\\QUICK_START.md",
+      "remove": "agent_workspaces\\Agent-3\\QUICK_START.md",
+      "reason": "Duplicate content detected"
+    },
+    {
+      "keep": "agent_workspaces\\Agent-3\\QUICK_START.md",
+      "remove": "agent_workspaces\\Agent-6\\QUICK_START.md",
+      "reason": "Duplicate content detected"
+    },
+    {
+      "keep": "agent_workspaces\\Agent-2\\QUICK_START.md",
+      "remove": "agent_workspaces\\Agent-1\\QUICK_START.md",
+      "reason": "Duplicate content detected"
+    },
+    {
+      "keep": "agent_workspaces\\Agent-2\\QUICK_START.md",
+      "remove": "agent_workspaces\\Agent-5\\QUICK_START.md",
+      "reason": "Duplicate content detected"
+    },
+    {
+      "keep": "agent_workspaces\\Agent-2\\QUICK_START.md",
+      "remove": "agent_workspaces\\Agent-6\\QUICK_START.md",
+      "reason": "Duplicate content detected"
+    },
+    {
+      "keep": "agent_workspaces\\Agent-5\\QUICK_START.md",
+      "remove": "agent_workspaces\\Agent-1\\QUICK_START.md",
+      "reason": "Duplicate content detected"
+    },
+    {
+      "keep": "agent_workspaces\\Agent-1\\QUICK_START.md",
+      "remove": "agent_workspaces\\Agent-6\\QUICK_START.md",
+      "reason": "Duplicate content detected"
+    }
+  ]
+}

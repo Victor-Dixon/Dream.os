@@ -1,0 +1,19 @@
+[tool:pytest]
+testpaths = tests
+python_files = test_*.py *_test.py
+python_classes = Test*
+python_functions = test_*
+addopts =
+    --verbose
+    --tb=short
+    --strict-markers
+    --disable-warnings
+    --cov=src/agent_cellphone_v2
+    --cov-report=html:htmlcov
+    --cov-report=term-missing
+    --cov-fail-under=85
+markers =
+    unit: Unit tests
+    integration: Integration tests
+    slow: Slow running tests
+    skip_ci: Skip in CI environment

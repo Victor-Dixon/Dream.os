@@ -1,0 +1,254 @@
+﻿[
+    {
+        "name":  "ariajet.site",
+        "path":  "D:\\websites\\sites\\production\\websites\\ariajet.site",
+        "type":  "static",
+        "entrypoints":  "index.html",
+        "scripts":  null
+    },
+    {
+        "name":  "freerideinvestor.com",
+        "path":  "D:\\websites\\sites\\production\\websites\\freerideinvestor.com",
+        "type":  "wordpress",
+        "entrypoints":  "wp-config.php",
+        "scripts":  null
+    },
+    {
+        "name":  "prismblossom.online",
+        "path":  "D:\\websites\\sites\\production\\websites\\prismblossom.online",
+        "type":  "wordpress",
+        "entrypoints":  "wp-config.php",
+        "scripts":  null
+    },
+    {
+        "name":  "southwestsecret.com",
+        "path":  "D:\\websites\\sites\\production\\websites\\southwestsecret.com",
+        "type":  "static",
+        "entrypoints":  "index.html",
+        "scripts":  null
+    },
+    {
+        "name":  "games",
+        "path":  "D:\\websites\\sites\\production\\websites\\ariajet.site\\games",
+        "type":  "static",
+        "entrypoints":  "index.html",
+        "scripts":  null
+    },
+    {
+        "name":  "wp",
+        "path":  "D:\\websites\\sites\\production\\websites\\digitaldreamscape.site\\wp",
+        "type":  "wordpress",
+        "entrypoints":  "wp-config.php",
+        "scripts":  null
+    },
+    {
+        "name":  "wp",
+        "path":  "D:\\websites\\sites\\sites\\freerideinvestor.com\\wp",
+        "type":  "wordpress",
+        "entrypoints":  "wp-config.php",
+        "scripts":  null
+    },
+    {
+        "name":  "hostinger-easy-onboarding",
+        "path":  "D:\\websites\\archive\\FreeRideInvestor\\plugins\\hostinger-easy-onboarding",
+        "type":  "node",
+        "entrypoints":  "package.json",
+        "scripts":  "auth:gcp=gcloud auth application-default login; auth:gca=npx google-artifactregistry-auth; dev=npm run development; development=cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --config=node_modules/laravel-mix/setup/webpack.config.js; prod=npm run production; watch=npm run development -- --watch; production=cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --config=node_modules/laravel-mix/setup/webpack.config.js"
+    },
+    {
+        "name":  "hostinger",
+        "path":  "D:\\websites\\archive\\FreeRideInvestor\\plugins\\hostinger",
+        "type":  "node",
+        "entrypoints":  "package.json",
+        "scripts":  "auth:gcp=gcloud auth application-default login; auth:gca=npx google-artifactregistry-auth; dev=npm run development; development=cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --config=node_modules/laravel-mix/setup/webpack.config.js; prod=npm run production; watch=npm run development -- --watch; production=cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --config=node_modules/laravel-mix/setup/webpack.config.js"
+    },
+    {
+        "name":  "litespeed-cache",
+        "path":  "D:\\websites\\archive\\FreeRideInvestor\\plugins\\litespeed-cache",
+        "type":  "node",
+        "entrypoints":  "package.json",
+        "scripts":  "format=prettier --write . \u0027**/*.php\u0027; format-check=prettier --check . \u0027**/*.php\u0027"
+    },
+    {
+        "name":  "nextend-facebook-connect",
+        "path":  "D:\\websites\\archive\\FreeRideInvestor\\plugins\\nextend-facebook-connect",
+        "type":  "static",
+        "entrypoints":  "index.html",
+        "scripts":  null
+    },
+    {
+        "name":  "vue-frontend",
+        "path":  "D:\\websites\\archive\\FreeRideInvestor\\plugins\\hostinger\\vue-frontend",
+        "type":  "node",
+        "entrypoints":  "package.json",
+        "scripts":  "build=webpack --mode production; dev=webpack --mode development --watch; lint=eslint . --ext .vue,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
+    },
+    {
+        "name":  "frontend",
+        "path":  "D:\\websites\\archive\\FreeRideInvestor\\plugins\\trader-replay\\frontend",
+        "type":  "cra",
+        "entrypoints":  "package.json",
+        "scripts":  "start=react-scripts start; build=react-scripts build; test=react-scripts test; eject=react-scripts eject"
+    },
+    {
+        "name":  "crosbyultimateevents.com",
+        "path":  "D:\\websites\\websites\\crosbyultimateevents.com",
+        "type":  "wordpress",
+        "entrypoints":  "wp-config.php",
+        "scripts":  null
+    },
+    {
+        "name":  "dadudekc.com",
+        "path":  "D:\\websites\\websites\\dadudekc.com",
+        "type":  "wordpress",
+        "entrypoints":  "wp-config.php",
+        "scripts":  null
+    },
+    {
+        "name":  "ariajet.site",
+        "path":  "D:\\websites\\websites\\ariajet.site",
+        "type":  "wordpress",
+        "entrypoints":  "wp-config.php",
+        "scripts":  null
+    },
+    {
+        "name":  "houstonsipqueen.com",
+        "path":  "D:\\websites\\websites\\houstonsipqueen.com",
+        "type":  "wordpress",
+        "entrypoints":  "wp-config.php",
+        "scripts":  null
+    },
+    {
+        "name":  "prismblossom.online",
+        "path":  "D:\\websites\\websites\\prismblossom.online",
+        "type":  "wordpress",
+        "entrypoints":  "wp-config.php",
+        "scripts":  null
+    },
+    {
+        "name":  "southwestsecret.com",
+        "path":  "D:\\websites\\websites\\southwestsecret.com",
+        "type":  "wordpress",
+        "entrypoints":  "wp-config.php",
+        "scripts":  null
+    },
+    {
+        "name":  "weareswarm.online",
+        "path":  "D:\\websites\\websites\\weareswarm.online",
+        "type":  "wordpress",
+        "entrypoints":  "wp-config.php",
+        "scripts":  null
+    },
+    {
+        "name":  "weareswarm.site",
+        "path":  "D:\\websites\\websites\\weareswarm.site",
+        "type":  "wordpress",
+        "entrypoints":  "wp-config.php",
+        "scripts":  null
+    },
+    {
+        "name":  "wp",
+        "path":  "D:\\websites\\websites\\tradingrobotplug.com\\wp",
+        "type":  "wordpress",
+        "entrypoints":  "wp-config.php",
+        "scripts":  null
+    },
+    {
+        "name":  "wp",
+        "path":  "D:\\websites\\websites\\freerideinvestor.com\\wp",
+        "type":  "wordpress",
+        "entrypoints":  "wp-config.php",
+        "scripts":  null
+    },
+    {
+        "name":  "twentytwentyfive",
+        "path":  "D:\\websites\\websites\\freerideinvestor.com\\wp\\wp-content\\themes\\twentytwentyfive",
+        "type":  "node",
+        "entrypoints":  "package.json",
+        "scripts":  "build=postcss style.css --use cssnano -o style.min.css --no-map; watch=postcss style.css --use cssnano -o style.min.css --no-map --watch"
+    },
+    {
+        "name":  "templates",
+        "path":  "D:\\websites\\websites\\freerideinvestor.com\\wp\\wp-content\\themes\\twentytwentyfive\\templates",
+        "type":  "static",
+        "entrypoints":  "index.html",
+        "scripts":  null
+    },
+    {
+        "name":  "templates",
+        "path":  "D:\\websites\\websites\\freerideinvestor.com\\wp\\wp-content\\themes\\twentytwentyfour\\templates",
+        "type":  "static",
+        "entrypoints":  "index.html",
+        "scripts":  null
+    },
+    {
+        "name":  "templates",
+        "path":  "D:\\websites\\websites\\freerideinvestor.com\\wp\\wp-content\\themes\\twentytwentythree\\templates",
+        "type":  "static",
+        "entrypoints":  "index.html",
+        "scripts":  null
+    },
+    {
+        "name":  "trading-robot-plugin",
+        "path":  "D:\\websites\\packages\\trading-robot-plugin",
+        "type":  "node",
+        "entrypoints":  "package.json",
+        "scripts":  "build=echo \u0027Building trading robot plugin...\u0027; test=echo \u0027Running tests...\u0027; deploy=powershell ../deployment/package-deploy.ps1 -Package trading-robot-plugin"
+    },
+    {
+        "name":  "dadudekc-theme",
+        "path":  "D:\\websites\\packages\\dadudekc-theme",
+        "type":  "node",
+        "entrypoints":  "package.json",
+        "scripts":  null
+    },
+    {
+        "name":  "swarm-theme",
+        "path":  "D:\\websites\\packages\\swarm-theme",
+        "type":  "node",
+        "entrypoints":  "package.json",
+        "scripts":  null
+    },
+    {
+        "name":  "swarm-online-theme",
+        "path":  "D:\\websites\\packages\\swarm-online-theme",
+        "type":  "node",
+        "entrypoints":  "package.json",
+        "scripts":  null
+    },
+    {
+        "name":  "hostinger-reach-online-plugin",
+        "path":  "D:\\websites\\packages\\hostinger-reach-online-plugin",
+        "type":  "node",
+        "entrypoints":  "package.json",
+        "scripts":  null
+    },
+    {
+        "name":  "ariajet-theme",
+        "path":  "D:\\websites\\packages\\ariajet-theme",
+        "type":  "node",
+        "entrypoints":  "package.json",
+        "scripts":  null
+    },
+    {
+        "name":  "houston-sip-theme",
+        "path":  "D:\\websites\\packages\\houston-sip-theme",
+        "type":  "node",
+        "entrypoints":  "package.json",
+        "scripts":  null
+    },
+    {
+        "name":  "swarm-core-theme",
+        "path":  "D:\\websites\\packages\\swarm-core-theme",
+        "type":  "node",
+        "entrypoints":  "package.json",
+        "scripts":  null
+    },
+    {
+        "name":  "event-services-theme",
+        "path":  "D:\\websites\\packages\\event-services-theme",
+        "type":  "node",
+        "entrypoints":  "package.json",
+        "scripts":  null
+    }
+]

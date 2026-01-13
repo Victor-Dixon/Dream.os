@@ -1,0 +1,14 @@
+{
+  "timestamp": "2026-01-01T19:57:07.286376",
+  "total_files": 9718,
+  "total_lines": 1510256,
+  "duplicate_files": 2,
+  "duplicate_groups": 1,
+  "ssot_violations": 3,
+  "syntax_errors": 4,
+  "test_coverage": 2.1,
+  "error_rate_24h": 5.94,
+  "largest_file_kb": 128,
+  "avg_file_size_kb": 6.8,
+  "technical_debt_score": 45
+}

@@ -1,0 +1,124 @@
+# Kong API Gateway declarative configuration
+# Phase 3A: API Gateway implementation for enterprise scaling
+
+_format_version: "3.0"
+
+# Services configuration
+services:
+  - name: flask-service
+    url: http://flask-service:5000
+    routes:
+      - name: flask-api-route
+        paths:
+          - /api/v1
+        methods:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+        plugins:
+          - name: rate-limiting
+            config:
+              minute: 100
+              policy: local
+          - name: cors
+            config:
+              origins:
+                - https://tradingrobotplug.com
+                - http://localhost:3000
+          - name: request-transformer
+            config:
+              add:
+                headers:
+                  - "X-Service:flask"
+                  - "X-API-Version:v1"
+
+  - name: fastapi-service
+    url: http://fastapi-service:8001
+    routes:
+      - name: fastapi-analytics-route
+        paths:
+          - /analytics
+        methods:
+          - GET
+          - POST
+        plugins:
+          - name: key-auth
+            config: {}
+          - name: rate-limiting
+            config:
+              minute: 200
+              policy: local
+          - name: cors
+            config:
+              origins:
+                - https://tradingrobotplug.com
+                - http://localhost:3000
+          - name: request-transformer
+            config:
+              add:
+                headers:
+                  - "X-Service:fastapi"
+                  - "X-API-Version:v1"
+
+  - name: reverse-proxy-health
+    url: http://reverse-proxy:80
+    routes:
+      - name: health-route
+        paths:
+          - /health
+        methods:
+          - GET
+        plugins:
+          - name: cors
+            config:
+              origins:
+                - "*"
+
+# Consumers for authentication
+consumers:
+  - username: admin-user
+    custom_id: admin-001
+  - username: api-user
+    custom_id: api-001
+
+# API Keys for authentication
+keyauth_credentials:
+  - consumer: admin-user
+    key: admin-key-2024-secure
+  - consumer: api-user
+    key: api-key-2024-analytics
+
+# Plugins configuration
+plugins:
+  - name: cors
+    config:
+      origins:
+        - https://tradingrobotplug.com
+        - http://localhost:3000
+      credentials: true
+      methods:
+        - GET
+        - POST
+        - PUT
+        - DELETE
+        - OPTIONS
+      headers:
+        - Accept
+        - Accept-Version
+        - Content-Length
+        - Content-MD5
+        - Content-Type
+        - Date
+        - X-Auth-Token
+  - name: rate-limiting
+    config:
+      minute: 100
+      hour: 1000
+      day: 10000
+      policy: local
+  - name: key-auth
+    config:
+      key_names:
+        - apikey
+        - X-API-Key

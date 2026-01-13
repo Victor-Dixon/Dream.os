@@ -1,0 +1,12 @@
+{
+  "level": "warning",
+  "title": "FastAPI Slow Response",
+  "message": "Endpoint /health took 5.04s (threshold: 2.0s)",
+  "source": "fastapi_performance_monitor",
+  "timestamp": "2026-01-07T06:57:51.004716",
+  "metadata": {
+    "endpoint": "/health",
+    "duration": 5.036656618118286,
+    "threshold": 2.0
+  }
+}

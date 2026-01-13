@@ -1,0 +1,86 @@
+# Project Devlog Template
+# For: WeAreSwarm.online
+# Input: project_devlog payload with project details, implementation, impact
+# <!-- SSOT Domain: web -->
+
+template_name: project_devlog
+target_brand: weareswarm
+input_requirements:
+  required:
+    - project_name: "Name of the project"
+    - implementation_details: "How it was built/implemented"
+    - publication_value: "Must document DreamOS or agent tools"
+  optional:
+    - project_date: "Project date (ISO8601)"
+    - technologies: "Technologies used"
+    - challenges: "Challenges faced"
+    - impact: "Impact/outcomes"
+
+structure:
+  - section: hook
+    purpose: "Engage with project outcome or problem solved"
+    word_count: 100-150
+    required: true
+
+  - section: project_overview
+    purpose: "Describe the project, its purpose, and context"
+    word_count: 300-400
+    required: true
+    content_sources:
+      - project_name
+      - publication_value
+
+  - section: implementation
+    purpose: "Detail how the project was built (DreamOS/agent tools focus)"
+    word_count: 400-600
+    required: true
+    content_sources:
+      - implementation_details
+      - technologies
+
+  - section: technical_details
+    purpose: "Deep dive into technical architecture, tools, and systems"
+    word_count: 400-600
+    required: true
+    content_sources:
+      - implementation_details
+      - challenges
+
+  - section: impact
+    purpose: "Describe outcomes, learnings, and how it enables other work"
+    word_count: 300-400
+    required: true
+    content_sources:
+      - impact
+      - publication_value
+
+  - section: cta
+    purpose: "Call to action (join swarm, contribute, explore)"
+    word_count: 100-150
+    required: true
+    default_cta: "Join the Swarm and explore DreamOS + agent tools"
+
+voice_guidelines:
+  tone: "Technical, builder-focused, enabling"
+  style: "Document what was built, how it works, and how it enables others"
+  avoid: "Overly promotional, hiding technical details, vague descriptions"
+  include: "Concrete technical details, architecture decisions, enabling capabilities"
+
+validation:
+  - must_document_dreamos_or_agents: "Must focus on DreamOS or agent tools"
+  - must_cite_data: "All claims must cite provided project data"
+  - no_invented_facts: "Do not invent project details not in input"
+  - must_include_implementation: "Implementation section is mandatory"
+
+promo_snippets:
+  twitter:
+    focus: "Project outcome + enabling capability"
+    format: "Built {project_name} using {tech}. Enables: {capability}. {link}"
+  linkedin:
+    focus: "Technical achievement and impact"
+    format: "Project devlog: {project_name}. Technical deep dive on {tech}. Impact: {impact}. {link}"
+  discord:
+    focus: "Casual share of project + technical highlights"
+    format: "Just shipped {project_name}. Built with {tech}. Here's how: {link}"
+
+

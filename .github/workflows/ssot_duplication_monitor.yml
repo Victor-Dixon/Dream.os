@@ -1,0 +1,194 @@
+name: SSOT Duplication Monitor
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  duplication-check:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install jscpd radon vulture
+
+    - name: Run duplication analysis
+      run: |
+        echo "🔍 Running code duplication analysis..."
+        # Use jscpd for duplication detection
+        npx jscpd --min-lines 10 --min-tokens 50 --format "python" --output "duplication-report.json" src/ || true
+
+        # Check if duplication report exists and analyze
+        if [ -f "duplication-report.json" ]; then
+          # Extract duplication statistics
+          total_duplicates=$(jq '.statistics.total' duplication-report.json 2>/dev/null || echo "0")
+          duplication_percentage=$(jq '.statistics.percentage' duplication-report.json 2>/dev/null || echo "0")
+
+          echo "📊 Duplication Statistics:"
+          echo "Total duplicates: $total_duplicates"
+          echo "Duplication percentage: $duplication_percentage%"
+
+          # SSOT Thresholds - Evidence-based from audit findings
+          MAX_DUPLICATES=50  # Allow some duplication for practical reasons
+          MAX_PERCENTAGE=5   # 5% duplication threshold
+
+          if [ "$total_duplicates" -gt "$MAX_DUPLICATES" ] || $(echo "$duplication_percentage > $MAX_PERCENTAGE" | bc -l 2>/dev/null); then
+            echo "❌ Duplication thresholds exceeded!"
+            echo "Found $total_duplicates duplicates ($duplication_percentage%)"
+            echo "Maximum allowed: $MAX_DUPLICATES duplicates or $MAX_PERCENTAGE%"
+            echo ""
+            echo "🔧 SSOT Consolidation Required:"
+            echo "- Run: python audit_harness_standalone.py dup --roots src tools scripts"
+            echo "- Apply SSOT base classes to hotspot files"
+            echo "- Use: python tools/ssot_migration_tool.py --action migrate"
+            exit 1
+          else
+            echo "✅ Duplication levels within acceptable thresholds"
+          fi
+        else
+          echo "⚠️ Could not generate duplication report"
+        fi
+
+    - name: Run complexity analysis
+      run: |
+        echo "🧠 Running code complexity analysis..."
+        radon cc src/ --min C --show-closures --total-average > complexity-report.txt || true
+
+        # Check for highly complex functions (SSOT candidates)
+        complex_functions=$(grep -c "C (" complexity-report.txt || echo "0")
+        very_complex_functions=$(grep -c "D (" complexity-report.txt || echo "0")
+
+        echo "📊 Complexity Statistics:"
+        echo "Complex functions (C+): $complex_functions"
+        echo "Very complex functions (D+): $very_complex_functions"
+
+        # SSOT Thresholds for complexity
+        MAX_COMPLEX_FUNCTIONS=20
+        MAX_VERY_COMPLEX_FUNCTIONS=5
+
+        if [ "$complex_functions" -gt "$MAX_COMPLEX_FUNCTIONS" ] || [ "$very_complex_functions" -gt "$MAX_VERY_COMPLEX_FUNCTIONS" ]; then
+          echo "⚠️ High complexity detected - consider SSOT refactoring"
+          echo "Complex functions: $complex_functions (max: $MAX_COMPLEX_FUNCTIONS)"
+          echo "Very complex functions: $very_complex_functions (max: $MAX_VERY_COMPLEX_FUNCTIONS)"
+        fi
+
+    - name: Run dead code analysis
+      run: |
+        echo "💀 Running dead code analysis..."
+        vulture src/ > dead-code-report.txt 2>&1 || true
+
+        # Count dead code instances
+        dead_code_lines=$(wc -l < dead-code-report.txt 2>/dev/null || echo "0")
+
+        echo "📊 Dead Code Statistics:"
+        echo "Dead code candidates: $dead_code_lines"
+
+        # SSOT Threshold for dead code
+        MAX_DEAD_CODE_LINES=100
+
+        if [ "$dead_code_lines" -gt "$MAX_DEAD_CODE_LINES" ]; then
+          echo "⚠️ Significant dead code detected - consider cleanup"
+          echo "Dead code lines: $dead_code_lines (threshold: $MAX_DEAD_CODE_LINES)"
+        fi
+
+    - name: Generate SSOT compliance report
+      run: |
+        echo "📋 Generating SSOT compliance report..."
+
+        # Count SSOT migrations
+        ssot_files=$(find src -name "*.py" -exec grep -l "SSOT Migration:" {} \; | wc -l)
+        total_python_files=$(find src -name "*.py" | wc -l)
+
+        ssot_percentage=$(( ssot_files * 100 / total_python_files ))
+
+        echo "📊 SSOT Compliance Statistics:"
+        echo "Files with SSOT patterns: $ssot_files"
+        echo "Total Python files: $total_python_files"
+        echo "SSOT compliance: ${ssot_percentage}%"
+
+        # SSOT Target compliance
+        MIN_SSOT_COMPLIANCE=80  # 80% of files should use SSOT patterns
+
+        if [ "$ssot_percentage" -lt "$MIN_SSOT_COMPLIANCE" ]; then
+          echo "⚠️ SSOT compliance below target"
+          echo "Current: ${ssot_percentage}% (target: ${MIN_SSOT_COMPLIANCE}%)"
+          echo ""
+          echo "🔧 To improve SSOT compliance:"
+          echo "- Run: python tools/ssot_migration_tool.py --action find"
+          echo "- Apply: python tools/ssot_migration_tool.py --action migrate"
+        else
+          echo "✅ SSOT compliance within acceptable range"
+        fi
+
+    - name: Upload reports
+      uses: actions/upload-artifact@v3
+      with:
+        name: ssot-audit-reports
+        path: |
+          duplication-report.json
+          complexity-report.txt
+          dead-code-report.txt
+
+  import-standardization-check:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Check import standardization
+      run: |
+        echo "🔧 Checking import standardization compliance..."
+
+        # Count files with redundant typing imports
+        redundant_imports=0
+        total_files=0
+
+        while IFS= read -r -d '' file; do
+          total_files=$((total_files + 1))
+
+          # Check for multiple typing imports
+          typing_import_count=$(grep -c "from typing import" "$file" || echo "0")
+
+          if [ "$typing_import_count" -gt 1 ]; then
+            echo "⚠️ Redundant typing imports in: $file"
+            redundant_imports=$((redundant_imports + 1))
+          fi
+        done < <(find src -name "*.py" -print0)
+
+        echo "📊 Import Standardization Statistics:"
+        echo "Files with redundant typing imports: $redundant_imports"
+        echo "Total Python files checked: $total_files"
+
+        # SSOT Threshold for import redundancy
+        MAX_REDUNDANT_IMPORTS=5  # Allow small number for edge cases
+
+        if [ "$redundant_imports" -gt "$MAX_REDUNDANT_IMPORTS" ]; then
+          echo "❌ Import standardization threshold exceeded!"
+          echo "Found $redundant_imports files with redundant typing imports"
+          echo "Maximum allowed: $MAX_REDUNDANT_IMPORTS"
+          echo ""
+          echo "🔧 SSOT Import Consolidation Required:"
+          echo "- Run: python audit_harness_standalone.py dup --roots src"
+          echo "- Apply: SSOT import standardization patterns"
+          exit 1
+        else
+          echo "✅ Import standardization within acceptable thresholds"
+        fi

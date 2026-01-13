@@ -1,0 +1,323 @@
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+.env.local
+.env.development
+.env.test
+.env.production
+.env.*.local
+*.env
+*.env.*
+!.env.example
+!.env.template
+
+# Environment setup scripts with secrets
+set_env_vars.bat
+set_env_vars.ps1
+set_env_variables.ps1
+
+# Python
+__pycache__/
+*.py[cod]
+*.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+*.egg
+MANIFEST
+
+# Virtual environments
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/settings.json
+.vscode/launch.json
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.fseventsd/
+.DocumentRevisions-V100/
+.TemporaryItems/
+.AppleDouble/
+.LSOverride/
+Icon
+.Spotlight-V100
+.Trashes
+*.swp
+*.swo
+*~
+
+# Logs
+logs/
+*.log
+*.log.*
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Temporary files
+*.tmp
+*.temp
+temp/
+tmp/
+
+# Vector database data
+data/vector_db/
+vector_db/
+*.vectordb
+
+# Backup files
+*.bak
+*.backup
+backup_*/
+backups/
+runtime/reports/*.old
+devlogs/archive/
+
+# Test outputs
+.coverage
+.pytest_cache/
+.tox/
+.nox/
+
+# Coverage
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# Project-specific
+devlog_knowledge.db
+security.db
+compliance.db
+health_reports/
+health_charts/
+reporting_archive/*
+!reporting_archive/archive_config.py
+!reporting_archive/file_importer.py
+!reporting_archive/data_consolidator.py
+!reporting_archive/report_exporter.py
+!reporting_archive/report_generator_service.py
+
+# Audit heavy artifacts (keep diffs slim)
+reports/metrics/
+
+# Tool state files (local runtime artifacts)
+tools/.analytics_validation_scheduler_state.json
+
+# Message system runtime data (sensitive - do not commit)
+data/message_history.json
+message_queue/*.json
+message_queue/*.txt
+message_queue/*.lock
+runtime/*.json
+*.queue.json
+
+# Runtime data directories
+data/agent_activity.json
+data/checkins/
+data/knowledge/*.jsonl
+
+# Vector database data (already has data/vector_db/ but be explicit)
+data/vector_db/
+*.vectordb
+chroma.sqlite3
+
+# Temporary runtime files
+*.lock
+*_lock.json
+*_incoming.txt
+
+# Import/export JSONs with sensitive data
+*-import.json
+*-export.json
+*_import.json
+*_export.json
+
+# Corrupted/unreadable files
+src/web/static/js/framework/system-integration-test-core.js
+
+# Sensitive data files - CRITICAL: Never commit these
+# Cookies and session data
+*_cookies.json
+thea_cookies.json
+**/thea_cookies.json
+*.cookies.json
+cookies.json
+session.json
+*.session.json
+
+# API keys and tokens
+*_token.txt
+*_token.json
+*_key.txt
+*_key.json
+*_secret.txt
+*_secret.json
+*_credentials.json
+*_credentials.txt
+credentials.json
+credentials.txt
+api_keys.json
+api_keys.txt
+secrets.json
+secrets.txt
+config/github_token.txt
+config/discord_token.txt
+config/*_token.txt
+config/*_key.txt
+config/*_secret.txt
+
+# Deployment credentials (FTP/SFTP passwords and usernames)
+# Exclude all files in .deploy_credentials/
+.deploy_credentials/*
+# But allow example files and README (safe to commit)
+!.deploy_credentials/*.example.json
+!.deploy_credentials/*.example.*
+!.deploy_credentials/README.md
+# Explicitly exclude actual credential files (redundant but clear)
+.deploy_credentials/blogging_api.json
+.deploy_credentials/sites.json
+*.deploy_credentials.json
+sites.json
+
+# Discord tokens and webhooks
+discord_token.json
+discord_token.txt
+discord_webhook.json
+discord_webhook.txt
+discord_config.json
+discord_channels.json
+!config/discord_channels_template.json
+
+# GitHub tokens
+github_token.json
+github_token.txt
+github_token.py
+.github_token
+
+# Database files with sensitive data
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm
+
+# Backup files that might contain secrets
+*.bak
+*.backup
+*_backup.json
+*_backup.txt
+backup_*.json
+backup_*.txt
+
+# Temporary files that might contain secrets
+*.tmp
+*.temp
+temp_*.json
+temp_*.txt
+*_temp.json
+*_temp.txt
+
+# Log files that might contain sensitive data
+*.log
+*.log.*
+logs/**/*.log
+**/logs/*.log
+
+# Runtime data that might contain secrets
+runtime/**/*.json
+runtime/**/*.txt
+!runtime/**/*.config.json
+!runtime/**/*.template.json
+
+# Message history and queue data (may contain sensitive info)
+message_queue/**/*.json
+message_queue/**/*.txt
+message_queue/**/*.lock
+data/message_history.json
+data/message_history_archive/
+data/agent_activity.json
+data/agent_activity_history.json
+data/metrics_history.json
+
+# Vector database (may contain sensitive embeddings)
+data/vector_db/
+vector_db/
+*.vectordb
+chroma.sqlite3
+*.chroma.db
+
+# Check for accidentally tracked sensitive files
+# Run: git ls-files | grep -E "\.env|secret|key|token|password|credential"
+# ============================================================================
+# INTERNAL COORDINATION ARTIFACTS (Not for professional repository)
+# ============================================================================
+# These directories contain internal swarm coordination artifacts and should
+# NOT be included in professional GitHub repository migration.
+
+# Agent coordination artifacts
+devlogs/
+agent_workspaces/
+swarm_brain/
+docs/organization/
+artifacts/
+
+# Runtime data (exceptions below)
+runtime/
+data/
+
+# Exceptions: Keep templates and examples
+!data/templates/
+!data/examples/
+!runtime/**/*.config.json
+!runtime/**/*.template.json
+

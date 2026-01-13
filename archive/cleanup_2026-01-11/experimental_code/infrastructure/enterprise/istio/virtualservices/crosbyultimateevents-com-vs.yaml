@@ -1,0 +1,24 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: crosbyultimateevents-com-vs
+  namespace: production
+spec:
+  gateways:
+  - migrated-sites-gateway
+  hosts:
+  - crosbyultimateevents.com
+  - www.crosbyultimateevents.com
+  http:
+  - match:
+    - uri:
+        prefix: /
+    retries:
+      attempts: 3
+      perTryTimeout: 10s
+    route:
+    - destination:
+        host: crosbyultimateevents-com-service
+        port:
+          number: 80
+    timeout: 30s

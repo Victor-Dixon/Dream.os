@@ -1,0 +1,272 @@
+{
+  "version": "1.0.0",
+  "created": "2025-12-10T03:32:21.881195",
+  "last_updated": "2025-12-15T11:25:42.773356",
+  "insights": [
+    {
+      "id": 1,
+      "timestamp": "2025-12-10T03:32:21.881195",
+      "agent": "Agent-7",
+      "content": "Hostinger WP single-file deploys need explicit remote paths; use wordpress_manager --remote-path to land assets (e.g., js/theme.js) and verify endpoints post-upload, then cache flush + permalinks Save.",
+      "tags": [
+        "wordpress",
+        "hostinger",
+        "deployment",
+        "freerideinvestor",
+        "automation"
+      ],
+      "category": "insight"
+    },
+    {
+      "id": 2,
+      "timestamp": "2025-12-10T05:13:42.648741",
+      "agent": "Agent-2",
+      "content": "Personal trading journal homepage design requires Today's Plan block, Performance snapshot, and Rules/Risk Framework sections to differentiate from generic blog. Dark trading aesthetic with dashboard-style cards creates professional command center feel.",
+      "tags": [],
+      "category": "insight"
+    },
+    {
+      "id": 3,
+      "timestamp": "2025-12-10T23:59:59",
+      "agent": "Agent-7",
+      "content": "Thea headless operations are stable when using undetected_chromedriver only, DOM-based textarea/button selection, and cookie save/load. Requires one interactive login via setup_thea_cookies.py, then thea_keepalive.py can refresh headlessly; Discord bot can call ensure_thea_session/!thea to self-throttle refresh.",
+      "tags": [
+        "thea",
+        "headless",
+        "cookies",
+        "undetected_chromedriver",
+        "discord-bot"
+      ],
+      "category": "insight"
+    },
+    {
+      "id": 4,
+      "timestamp": "2025-12-10T23:59:59",
+      "agent": "Agent-5",
+      "content": "Thea headless flow remains stable with uc-only driver, DOM textarea/button selection, and cookie save/load. Run setup_thea_cookies.py once non-headless, then thea_keepalive.py keeps Discord bot sessions authenticated headlessly with THEA_AUTO_REFRESH enabled.",
+      "tags": [
+        "thea",
+        "headless",
+        "cookies",
+        "undetected_chromedriver",
+        "discord-bot"
+      ],
+      "category": "insight"
+    },
+    {
+      "id": 5,
+      "timestamp": "2025-12-10T06:38:22.788027",
+      "agent": "Agent-1",
+      "content": "Queue system prevents operation loss during rate limits - operations queued automatically and retried when limits reset",
+      "tags": [
+        "github",
+        "queue",
+        "resilience",
+        "automation"
+      ],
+      "category": "insight"
+    },
+    {
+      "id": 6,
+      "timestamp": "2025-12-10T23:59:59",
+      "agent": "Agent-7",
+      "content": "Site control-plane needs a registry-first SSOT with versioned schema, seeded domains, and a NoOp-backed adapter loader to prevent crashes during gradual adoption. Capabilities (blog/deploy/cache) stay disabled by default and credentials remain outside the registry.",
+      "tags": [
+        "control-plane",
+        "registry",
+        "adapters",
+        "hostinger",
+        "safety"
+      ],
+      "category": "insight"
+    },
+    {
+      "id": 7,
+      "timestamp": "2025-12-10T08:12:50.071916",
+      "agent": "Agent-1",
+      "content": "Workspace validation must be enforced at creation time to prevent invalid directory proliferation - validate Agent-1 through Agent-8 only",
+      "tags": [
+        "workspace",
+        "validation",
+        "architecture",
+        "infrastructure"
+      ],
+      "category": "insight"
+    },
+    {
+      "id": 8,
+      "timestamp": "2025-12-11T06:15:00.000000",
+      "agent": "Agent-1",
+      "content": "Twitch bot disconnects traced to invalid oauth_token value in config/chat_presence.json; token must be a real oauth: token string (no shell commands/quotes) and should be validated before connecting.",
+      "tags": [
+        "twitch",
+        "oauth",
+        "chatbot",
+        "incident"
+      ],
+      "category": "insight"
+    },
+    {
+      "id": 9,
+      "timestamp": "2025-12-15T11:25:42.773356",
+      "agent": "Agent-3",
+      "content": "Batch 4 onboarding now protected by infra-grade tests for lock semantics and GUI-vs-messaging fallbacks.",
+      "tags": [
+        "onboarding",
+        "infra",
+        "testing",
+        "lock-patterns",
+        "ci"
+      ],
+      "category": "insight"
+    }
+  ],
+  "lessons": [
+    {
+      "id": 1,
+      "timestamp": "2025-12-10T06:38:32.117698",
+      "agent": "Agent-1",
+      "category": "github",
+      "content": "Draft PRs cannot be merged via GitHub API - requires manual UI intervention for 'Ready for review' transition",
+      "tags": [
+        "github",
+        "api-limitations",
+        "draft-prs"
+      ],
+      "type": "lesson"
+    },
+    {
+      "id": 2,
+      "timestamp": "2025-12-15T11:25:42.773356",
+      "agent": "Agent-3",
+      "category": "general",
+      "content": "Treat onboarding unit tests as the behavioural contract before refactoring hard/soft onboarding services.",
+      "tags": [
+        "onboarding",
+        "infra",
+        "testing",
+        "lock-patterns",
+        "ci"
+      ],
+      "type": "lesson"
+    }
+  ],
+  "recommendations": [
+    {
+      "id": 1,
+      "timestamp": "2025-12-10T03:32:21.881195",
+      "agent": "Agent-7",
+      "priority": "normal",
+      "content": "Schedule tsla_daily_plan_poster.py with WP app password once wp-admin perms ready to keep Daily Plan content fresh.",
+      "tags": [
+        "wordpress",
+        "hostinger",
+        "deployment",
+        "freerideinvestor",
+        "automation"
+      ],
+      "status": "open",
+      "type": "recommendation"
+    },
+    {
+      "id": 2,
+      "timestamp": "2025-12-10T23:59:59",
+      "agent": "Agent-7",
+      "priority": "high",
+      "content": "After capturing fresh Thea cookies interactively, enable THEA_AUTO_REFRESH and THEA_MIN_INTERVAL_MINUTES on the Discord bot and wire thea_keepalive.py to run on startup so headless send/receive stays authenticated.",
+      "tags": [
+        "thea",
+        "headless",
+        "discord-bot",
+        "operations"
+      ],
+      "status": "open",
+      "type": "recommendation"
+    },
+    {
+      "id": 3,
+      "timestamp": "2025-12-10T23:59:59",
+      "agent": "Agent-5",
+      "priority": "normal",
+      "content": "Use tools/thea/send_prompt_file.py to send long prompts (e.g., trading reports) from files with saved cookies; pair with thea_keepalive.py and setup_thea_cookies.py to maintain Thea auth.",
+      "tags": [
+        "thea",
+        "headless",
+        "automation",
+        "cookies"
+      ],
+      "status": "open",
+      "type": "recommendation"
+    },
+    {
+      "id": 4,
+      "timestamp": "2025-12-10T06:38:37.016389",
+      "agent": "Agent-1",
+      "priority": "high",
+      "content": "Set up GitHub Apps for production automation - provides 5,000 requests/hour per installation, highest rate limit available",
+      "tags": [
+        "github",
+        "automation",
+        "production",
+        "rate-limits"
+      ],
+      "status": "open",
+      "type": "recommendation"
+    },
+    {
+      "id": 5,
+      "timestamp": "2025-12-10T23:59:59",
+      "agent": "Agent-7",
+      "priority": "normal",
+      "content": "Adopt the sites registry as SSOT: keep credentials in .deploy_credentials/.env, enable capabilities per-site only after review, add a read-only /sites aggregator, and use NoOp adapters for unknown keys to avoid runtime breaks during rollout.",
+      "tags": [
+        "control-plane",
+        "registry",
+        "adapters",
+        "hostinger",
+        "governance"
+      ],
+      "status": "open",
+      "type": "recommendation"
+    },
+    {
+      "id": 6,
+      "timestamp": "2025-12-15T11:25:42.773356",
+      "agent": "Agent-3",
+      "priority": "normal",
+      "content": "Add a dedicated onboarding test runner tool and keep headless CI paths (messaging fallbacks) green during future GUI refactors.",
+      "tags": [
+        "onboarding",
+        "infra",
+        "testing",
+        "lock-patterns",
+        "ci"
+      ],
+      "status": "open",
+      "type": "recommendation"
+    }
+  ],
+  "patterns": [
+    {
+      "id": 1,
+      "timestamp": "2025-12-10T06:38:39.520395",
+      "agent": "Agent-1",
+      "name": "Intelligent API Auto-Switching",
+      "description": "Check rate limits for all APIs (REST, GraphQL, CLI), select best based on remaining limits and operation type, queue when all exhausted",
+      "success_rate": "100%",
+      "tags": [
+        "github",
+        "pattern",
+        "api-selection",
+        "architecture"
+      ],
+      "type": "pattern"
+    }
+  ],
+  "statistics": {
+    "total_insights": 9,
+    "total_lessons": 2,
+    "total_recommendations": 6,
+    "total_patterns": 1
+  }
+}

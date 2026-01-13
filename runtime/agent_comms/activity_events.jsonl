@@ -1,0 +1,4 @@
+{"ts": "2025-12-08T23:16:21.076684+00:00", "agent": "SYSTEM", "type": "TOOL_RUN", "source": "project_metrics_spreadsheet", "summary": "project_metrics_to_spreadsheet run", "artifact": {"report_path": "dashboard.csv"}, "tier": "TIER_2"}
+{"ts": "2025-12-08T23:21:28.663700+00:00", "agent": "SYSTEM", "type": "TOOL_RUN", "source": "project_metrics_spreadsheet", "summary": "project_metrics_to_spreadsheet run", "artifact": {"report_path": "dashboard.csv"}, "tier": "TIER_2"}
+{"ts": "2025-12-09T15:38:38.875299+00:00", "agent": "SYSTEM", "type": "TOOL_RUN", "source": "project_metrics_spreadsheet", "summary": "project_metrics_to_spreadsheet run", "artifact": {"report_path": "project_dashboard.csv"}, "tier": "TIER_2"}
+{"ts": "2025-12-09T15:39:08.766000+00:00", "agent": "SYSTEM", "type": "TOOL_RUN", "source": "project_metrics_spreadsheet", "summary": "project_metrics_to_spreadsheet run", "artifact": {"report_path": "project_dashboard.csv"}, "tier": "TIER_2"}

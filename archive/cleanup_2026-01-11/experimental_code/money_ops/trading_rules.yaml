@@ -1,0 +1,94 @@
+# Trading Rules Engine v1.0
+# Master configuration for options trading discipline
+
+version: "1.0"
+last_updated: "2025-12-01"
+owner: "Victor"
+
+# Valid Trading Setups
+# Only trade these vetted setups - no impulsive trades outside this list
+only_trade_setups:
+  - name: "TBOW"
+    description: "TBOW pattern - Victor's trusted setup"
+    confidence_level: "A+"
+    notes: "Primary trading setup"
+  
+  - name: "specific_A_plus_patterns"
+    description: "Other A+ patterns Victor trusts"
+    confidence_level: "A+"
+    notes: "Additional vetted patterns"
+
+# Daily Trading Limits
+max_trades_per_day: 3
+max_daily_loss_percent: 2  # Configurable percentage of account
+
+# Position Sizing Rules
+position_size_rule:
+  method: "fixed_fraction"  # or "tiered"
+  fixed_fraction: 0.05  # 5% of account per trade (configurable)
+  
+  # Alternative: tiered sizing
+  # tiered:
+  #   - account_tier: "0-5000"
+  #     fraction: 0.03
+  #   - account_tier: "5000-10000"
+  #     fraction: 0.05
+  #   - account_tier: "10000+"
+  #     fraction: 0.07
+
+# Stop Loss Behavior Rules
+stop_loss_behavior:
+  - rule: "no_widening_stops"
+    description: "Never widen stops - only tighten"
+    strict: true
+  
+  - rule: "move_to_breakeven"
+    description: "Only move to breakeven / in-profit as per playbook"
+    strict: true
+    playbook_reference: "trading_playbook"
+
+# Journal Requirements
+journal_required: true
+journal_fields:
+  - setup_type
+  - entry_price
+  - stop_loss
+  - target_price
+  - rationale
+  - outcome
+  - lessons_learned
+
+# Allowed Instruments
+allowed_instruments:
+  - "SPY"  # S&P 500 ETF
+  - "QQQ"  # Nasdaq ETF
+  # Add other allowed instruments here
+
+# Risk Management
+risk_management:
+  max_position_size_dollars: null  # Optional: hard dollar limit
+  max_drawdown_percent: 10  # Monthly max drawdown
+  recovery_protocol:
+    - "Reduce position size by 50% after 3 consecutive losses"
+    - "Take 1 day break after 5% daily loss"
+
+# Validation Rules (used by validator script)
+validation_rules:
+  - check_setup_is_vetted: true
+  - check_daily_trade_count: true
+  - check_daily_loss_limit: true
+  - check_position_size: true
+  - check_stop_loss_behavior: true
+  - check_journal_completed: true
+
+# Review Cycle
+review_cycle:
+  frequency: "weekly"
+  focus:
+    - "rule_compliance"
+    - "setup_performance"
+    - "P&L_trends"
+
+
+
+

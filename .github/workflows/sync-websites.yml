@@ -1,0 +1,71 @@
+name: Sync to Websites Repository
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - 'src/web/**'
+      - 'src/discord_commander/web/**'
+      - 'docs/websites/**'
+      - 'docs/deployment/**'
+      - 'tools/website_*.py'
+      - 'tools/deploy_*.py'
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  sync-websites:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout Main Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install Dependencies
+        run: |
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          else
+            echo "requirements.txt not found, skipping dependency installation"
+          fi
+      
+      - name: Checkout Websites Repository
+        uses: actions/checkout@v4
+        with:
+          repository: Victor-Dixon/Websites
+          path: websites
+          token: ${{ secrets.WEBSITES_REPO_TOKEN }}
+      
+      - name: Sync Changes
+        run: |
+          python tools/sync_websites_repo.py --all --websites-path websites
+        env:
+          WEBSITES_REPO_PATH: websites
+      
+      - name: Commit and Push to Websites Repo
+        run: |
+          cd websites
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          
+          if [ -n "$(git status --porcelain)" ]; then
+            git add -A
+            git commit -m "Auto-sync from main project - ${{ github.sha }}"
+            git push origin master
+          else
+            echo "No changes to sync"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.WEBSITES_REPO_TOKEN }}
+

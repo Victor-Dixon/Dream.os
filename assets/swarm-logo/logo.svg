@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="swarmGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="swarmElectric" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00ff88;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00d4ff;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="95" fill="#0a0e27" stroke="url(#swarmGradient)" stroke-width="3"/>
+  
+  <!-- Bee body -->
+  <ellipse cx="100" cy="100" rx="45" ry="30" fill="url(#swarmElectric)"/>
+  
+  <!-- Bee stripes -->
+  <line x1="85" y1="100" x2="115" y2="100" stroke="#0a0e27" stroke-width="4" stroke-linecap="round"/>
+  <line x1="90" y1="100" x2="110" y2="100" stroke="#0a0e27" stroke-width="3" stroke-linecap="round"/>
+  
+  <!-- Bee wings -->
+  <ellipse cx="85" cy="85" rx="15" ry="20" fill="url(#swarmGradient)" opacity="0.6"/>
+  <ellipse cx="115" cy="85" rx="15" ry="20" fill="url(#swarmGradient)" opacity="0.6"/>
+  
+  <!-- Bee antennae -->
+  <line x1="95" y1="75" x2="90" y2="65" stroke="url(#swarmGradient)" stroke-width="2" stroke-linecap="round"/>
+  <line x1="105" y1="75" x2="110" y2="65" stroke="url(#swarmGradient)" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="90" cy="65" r="3" fill="#00ff88"/>
+  <circle cx="110" cy="65" r="3" fill="#00ff88"/>
+  
+  <!-- Bee eyes -->
+  <circle cx="92" cy="95" r="4" fill="#0a0e27"/>
+  <circle cx="108" cy="95" r="4" fill="#0a0e27"/>
+  
+  <!-- Swarm text (optional, can be hidden for icon-only use) -->
+  <text x="100" y="165" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="url(#swarmGradient)" text-anchor="middle" opacity="0">SWARM</text>
+</svg>
+

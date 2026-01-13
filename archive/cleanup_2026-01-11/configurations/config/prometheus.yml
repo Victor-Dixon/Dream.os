@@ -1,0 +1,55 @@
+# Prometheus configuration for Phase 3A monitoring stack
+# Infrastructure scaling requirements - monitoring foundation
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  - "alert_rules.yml"
+
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Flask service monitoring
+  - job_name: 'flask-service'
+    static_configs:
+      - targets: ['flask-service:5000']
+    scrape_interval: 10s
+    metrics_path: '/metrics'
+    params:
+      format: ['prometheus']
+
+  # FastAPI service monitoring
+  - job_name: 'fastapi-service'
+    static_configs:
+      - targets: ['fastapi-service:8001']
+    scrape_interval: 10s
+    metrics_path: '/metrics'
+
+  # NGINX reverse proxy monitoring
+  - job_name: 'nginx'
+    static_configs:
+      - targets: ['reverse-proxy:80']
+    scrape_interval: 30s
+
+  # Redis monitoring
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis:6379']
+    scrape_interval: 30s
+
+  # PostgreSQL monitoring
+  - job_name: 'postgres'
+    static_configs:
+      - targets: ['postgres:5432']
+    scrape_interval: 30s
+
+  # Node exporter for system metrics (if running)
+  - job_name: 'node'
+    static_configs:
+      - targets: ['host.docker.internal:9100']
+    scrape_interval: 30s

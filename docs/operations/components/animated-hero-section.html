@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Hero Section - Tailwind CSS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @keyframes pulse-glow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+            }
+
+            50% {
+                box-shadow: 0 0 40px rgba(59, 130, 246, 0.8), 0 0 60px rgba(59, 130, 246, 0.4);
+            }
+        }
+
+        @keyframes gradient-shift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes slide-in-left {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slide-in-right {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fade-in-up {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes typewriter {
+            from {
+                width: 0;
+            }
+
+            to {
+                width: 100%;
+            }
+        }
+
+        @keyframes blink {
+            50% {
+                border-color: transparent;
+            }
+        }
+
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        .gradient-shift {
+            animation: gradient-shift 8s ease infinite;
+        }
+
+        .slide-in-left {
+            animation: slide-in-left 1s ease-out;
+        }
+
+        .slide-in-right {
+            animation: slide-in-right 1s ease-out 0.3s both;
+        }
+
+        .fade-in-up {
+            animation: fade-in-up 1s ease-out 0.6s both;
+        }
+
+        .typewriter {
+            animation: typewriter 3s steps(40, end) 1s both;
+        }
+
+        .blink {
+            animation: blink 1s infinite;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-900 text-white overflow-hidden">
+
+    <!-- Animated Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <!-- Animated Background -->
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 gradient-shift">
+            <!-- Floating Particles -->
+            <div class="absolute top-20 left-20 w-4 h-4 bg-blue-400 rounded-full opacity-60 float-animation"></div>
+            <div class="absolute top-40 right-32 w-6 h-6 bg-purple-400 rounded-full opacity-40 float-animation"
+                style="animation-delay: 2s;"></div>
+            <div class="absolute bottom-32 left-40 w-3 h-3 bg-pink-400 rounded-full opacity-50 float-animation"
+                style="animation-delay: 4s;"></div>
+            <div class="absolute bottom-40 right-20 w-5 h-5 bg-green-400 rounded-full opacity-45 float-animation"
+                style="animation-delay: 1s;"></div>
+            <div class="absolute top-60 left-60 w-2 h-2 bg-yellow-400 rounded-full opacity-70 float-animation"
+                style="animation-delay: 3s;"></div>
+
+            <!-- Geometric Shapes -->
+            <div class="absolute top-16 right-16 w-32 h-32 border-2 border-blue-400/30 rounded-full animate-spin"
+                style="animation-duration: 20s;"></div>
+            <div
+                class="absolute bottom-16 left-16 w-24 h-24 border-2 border-purple-400/30 transform rotate-45 animate-pulse">
+            </div>
+            <div class="absolute top-1/2 left-1/4 w-16 h-16 bg-gradient-to-r from-pink-500 to-purple-500 rounded-lg transform rotate-12 float-animation"
+                style="animation-delay: 5s;"></div>
+        </div>
+
+        <!-- Content Container -->
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+
+            <!-- Main Headline -->
+            <div class="mb-8">
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold mb-6">
+                    <span
+                        class="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+                        Welcome to
+                    </span>
+                    <br>
+                    <span class="relative inline-block">
+                        <span class="typewriter overflow-hidden whitespace-nowrap border-r-4 border-blue-400">
+                            the Future
+                        </span>
+                    </span>
+                </h1>
+
+                <p
+                    class="text-xl md:text-2xl lg:text-3xl text-gray-300 mb-8 fade-in-up max-w-4xl mx-auto leading-relaxed">
+                    Experience innovation like never before with our cutting-edge platform that redefines possibilities.
+                </p>
+            </div>
+
+            <!-- CTA Buttons -->
+            <div class="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16 fade-in-up">
+                <button
+                    class="group relative px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl pulse-glow">
+                    <span class="relative z-10">Get Started Now</span>
+                    <div
+                        class="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    </div>
+                </button>
+
+                <button
+                    class="px-8 py-4 border-2 border-white/30 rounded-full font-semibold text-lg hover:bg-white/10 hover:border-white/60 transition-all duration-300 transform hover:scale-105">
+                    Learn More
+                </button>
+            </div>
+
+            <!-- Feature Highlights -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div
+                    class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 transform hover:scale-105 transition-all duration-300 slide-in-left">
+                    <div
+                        class="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg mb-4 mx-auto flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Lightning Fast</h3>
+                    <p class="text-gray-400">Experience blazing-fast performance with our optimized infrastructure.</p>
+                </div>
+
+                <div
+                    class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 transform hover:scale-105 transition-all duration-300 fade-in-up">
+                    <div
+                        class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg mb-4 mx-auto flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Secure & Reliable</h3>
+                    <p class="text-gray-400">Your data is protected with enterprise-grade security measures.</p>
+                </div>
+
+                <div
+                    class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 transform hover:scale-105 transition-all duration-300 slide-in-right">
+                    <div
+                        class="w-12 h-12 bg-gradient-to-r from-pink-500 to-red-500 rounded-lg mb-4 mx-auto flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">User Friendly</h3>
+                    <p class="text-gray-400">Intuitive design that makes complex tasks feel effortless.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <svg class="w-6 h-6 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3">
+                </path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Additional Sections for Context -->
+    <section class="py-20 bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
+                    Why Choose Us?
+                </h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Discover the features that make our platform the perfect choice for your needs.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div
+                        class="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <span class="text-2xl font-bold text-white">1</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-2">Advanced AI</h3>
+                    <p class="text-gray-400">Cutting-edge artificial intelligence powers every feature.</p>
+                </div>
+
+                <div class="text-center">
+                    <div
+                        class="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <span class="text-2xl font-bold text-white">2</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-2">Cloud Native</h3>
+                    <p class="text-gray-400">Built for the cloud with scalability and reliability in mind.</p>
+                </div>
+
+                <div class="text-center">
+                    <div
+                        class="w-16 h-16 bg-gradient-to-r from-pink-500 to-red-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <span class="text-2xl font-bold text-white">3</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-2">24/7 Support</h3>
+                    <p class="text-gray-400">Round-the-clock expert support whenever you need it.</p>
+                </div>
+
+                <div class="text-center">
+                    <div
+                        class="w-16 h-16 bg-gradient-to-r from-red-500 to-orange-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <span class="text-2xl font-bold text-white">4</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-2">Enterprise Ready</h3>
+                    <p class="text-gray-400">Enterprise-grade security and compliance built-in.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+
+</html>

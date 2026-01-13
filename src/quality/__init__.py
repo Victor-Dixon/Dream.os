@@ -1,0 +1,9 @@
+# <!-- SSOT Domain: core -->
+# AUTO-GENERATED __init__.py
+# DO NOT EDIT MANUALLY - changes may be overwritten
+
+from . import proof_ledger
+
+__all__ = [
+    'proof_ledger',
+]

@@ -1,0 +1,330 @@
+{
+  "audit_run_timestamp": "2026-01-12T15:21:21.880262",
+  "websites_audited": 2,
+  "tool_used": "ollama_website_audit_agent_report",
+  "results": {
+    "https://dadudekc.com": {
+      "audit_timestamp": "2026-01-12T15:21:21.880262",
+      "website_url": "https://dadudekc.com",
+      "domain": "dadudekc.com",
+      "audit_status": "completed",
+      "sections": {
+        "connectivity": {
+          "status": "healthy",
+          "response_time_ms": 2035.1680000000001,
+          "status_code": 200,
+          "redirects": [],
+          "is_https": true,
+          "issues": [],
+          "recommendations": []
+        },
+        "seo": {
+          "title_tag": {
+            "present": true,
+            "length": 12,
+            "content": "dadudekc.com"
+          },
+          "meta_description": {
+            "present": false,
+            "length": 0,
+            "content": ""
+          },
+          "h1_tags": {
+            "count": 1,
+            "content": [
+              "Victor builds ambitious systems, ships experiments, and documents the path."
+            ]
+          },
+          "canonical_url": {
+            "present": true,
+            "url": "https://dadudekc.com/"
+          },
+          "robots_txt": {
+            "present": true,
+            "accessible": true
+          },
+          "sitemap": {
+            "present": false,
+            "accessible": false
+          },
+          "issues": [],
+          "recommendations": []
+        },
+        "technical": {
+          "page_size_kb": 32.4658203125,
+          "has_compression": true,
+          "response_headers": {
+            "Connection": "Keep-Alive",
+            "Keep-Alive": "timeout=5, max=100",
+            "X-Powered-By": "PHP/8.2.28",
+            "Content-Type": "text/html; charset=UTF-8",
+            "Link": "<https://dadudekc.com/wp-json/>; rel=\"https://api.w.org/\", <https://dadudekc.com/wp-json/wp/v2/pages/5>; rel=\"alternate\"; title=\"JSON\"; type=\"application/json\", <https://dadudekc.com/>; rel=shortlink",
+            "X-LiteSpeed-Cache-Control": "public,max-age=604800",
+            "X-LiteSpeed-Tag": "5d0_front,5d0_URL.6666cd76f96956469e7be39d750cc7d9,5d0_F,5d0_Po.5,5d0_PGS,5d0_",
+            "Etag": "\"5459-1768252885;br\"",
+            "X-Litespeed-Cache": "miss",
+            "Transfer-Encoding": "chunked",
+            "Content-Encoding": "br",
+            "Vary": "Accept-Encoding",
+            "Date": "Mon, 12 Jan 2026 21:21:25 GMT",
+            "Server": "LiteSpeed",
+            "platform": "hostinger",
+            "panel": "hpanel",
+            "Content-Security-Policy": "upgrade-insecure-requests"
+          },
+          "issues": [
+            "Missing cache headers"
+          ],
+          "recommendations": [
+            "Add appropriate cache headers"
+          ]
+        },
+        "content": {
+          "word_count": 446,
+          "image_count": 0,
+          "images_with_alt": 0,
+          "link_count": 23,
+          "internal_links": 21,
+          "external_links": 2,
+          "issues": [],
+          "recommendations": []
+        },
+        "security": {
+          "has_ssl": true,
+          "ssl_expiry_days": null,
+          "has_security_headers": true,
+          "security_headers": {
+            "content-security-policy": "upgrade-insecure-requests"
+          },
+          "issues": [
+            "Missing security headers: strict-transport-security, x-content-type-options, x-frame-options"
+          ],
+          "recommendations": [
+            "Add essential security headers (HSTS, CSP, X-Frame-Options)"
+          ]
+        },
+        "accessibility": {
+          "has_viewport_meta": true,
+          "has_lang_attribute": "en-US",
+          "form_labels_present": 2,
+          "forms_without_labels": 0,
+          "issues": [],
+          "recommendations": []
+        }
+      },
+      "agent_action_items": [
+        {
+          "priority": "high",
+          "category": "technical",
+          "issue": "Missing cache headers",
+          "action_required": true,
+          "estimated_effort": "medium",
+          "assignee": "web_development_agent"
+        },
+        {
+          "priority": "high",
+          "category": "security",
+          "issue": "Missing security headers: strict-transport-security, x-content-type-options, x-frame-options",
+          "action_required": true,
+          "estimated_effort": "medium",
+          "assignee": "web_development_agent"
+        },
+        {
+          "priority": "medium",
+          "category": "technical",
+          "recommendation": "Add appropriate cache headers",
+          "action_required": true,
+          "estimated_effort": "low",
+          "assignee": "web_development_agent"
+        },
+        {
+          "priority": "medium",
+          "category": "security",
+          "recommendation": "Add essential security headers (HSTS, CSP, X-Frame-Options)",
+          "action_required": true,
+          "estimated_effort": "low",
+          "assignee": "web_development_agent"
+        }
+      ],
+      "overall_assessment": {
+        "overall_score": 87.5,
+        "grade": "B",
+        "strengths": [
+          "Good connectivity and performance",
+          "Has title tag",
+          "Proper H1 structure",
+          "Has canonical URL",
+          "Good content depth",
+          "Uses HTTPS"
+        ],
+        "critical_issues": [],
+        "summary": "Good website (Grade B, 87.5%). Generally well-structured with minor improvements needed."
+      }
+    },
+    "https://crosbyultimateevents.com": {
+      "audit_timestamp": "2026-01-12T15:21:26.334826",
+      "website_url": "https://crosbyultimateevents.com",
+      "domain": "crosbyultimateevents.com",
+      "audit_status": "completed",
+      "sections": {
+        "connectivity": {
+          "status": "healthy",
+          "response_time_ms": 2283.203,
+          "status_code": 200,
+          "redirects": [],
+          "is_https": true,
+          "issues": [],
+          "recommendations": []
+        },
+        "seo": {
+          "title_tag": {
+            "present": true,
+            "length": 24,
+            "content": "crosbyultimateevents.com"
+          },
+          "meta_description": {
+            "present": false,
+            "length": 0,
+            "content": ""
+          },
+          "h1_tags": {
+            "count": 2,
+            "content": [
+              "crosbyultimateevents.com",
+              "Create Unforgettable Events That Your Guests Will Talk About For Years"
+            ]
+          },
+          "canonical_url": {
+            "present": false,
+            "url": ""
+          },
+          "robots_txt": {
+            "present": true,
+            "accessible": true
+          },
+          "sitemap": {
+            "present": false,
+            "accessible": false
+          },
+          "issues": [
+            "Multiple H1 tags found"
+          ],
+          "recommendations": [
+            "Use only one H1 tag per page"
+          ]
+        },
+        "technical": {
+          "page_size_kb": 30.5361328125,
+          "has_compression": true,
+          "response_headers": {
+            "Connection": "Keep-Alive",
+            "Keep-Alive": "timeout=5, max=100",
+            "X-Powered-By": "PHP/8.3.19",
+            "Content-Type": "text/html; charset=UTF-8",
+            "Link": "<https://crosbyultimateevents.com/wp-json/>; rel=\"https://api.w.org/\"",
+            "Cache-Control": "public, max-age=604800",
+            "Expires": "Mon, 19 Jan 2026 05:20:26 GMT",
+            "Etag": "\"5370-1768195226;br\"",
+            "X-LiteSpeed-Cache": "hit",
+            "Transfer-Encoding": "chunked",
+            "Content-Encoding": "br",
+            "Vary": "Accept-Encoding",
+            "Date": "Mon, 12 Jan 2026 21:21:28 GMT",
+            "Server": "LiteSpeed",
+            "platform": "hostinger",
+            "panel": "hpanel",
+            "Content-Security-Policy": "upgrade-insecure-requests"
+          },
+          "issues": [],
+          "recommendations": []
+        },
+        "content": {
+          "word_count": 398,
+          "image_count": 0,
+          "images_with_alt": 0,
+          "link_count": 14,
+          "internal_links": 14,
+          "external_links": 0,
+          "issues": [],
+          "recommendations": []
+        },
+        "security": {
+          "has_ssl": true,
+          "ssl_expiry_days": null,
+          "has_security_headers": true,
+          "security_headers": {
+            "content-security-policy": "upgrade-insecure-requests"
+          },
+          "issues": [
+            "Missing security headers: strict-transport-security, x-content-type-options, x-frame-options"
+          ],
+          "recommendations": [
+            "Add essential security headers (HSTS, CSP, X-Frame-Options)"
+          ]
+        },
+        "accessibility": {
+          "has_viewport_meta": true,
+          "has_lang_attribute": "en-US",
+          "form_labels_present": 1,
+          "forms_without_labels": 0,
+          "issues": [],
+          "recommendations": []
+        }
+      },
+      "agent_action_items": [
+        {
+          "priority": "high",
+          "category": "seo",
+          "issue": "Multiple H1 tags found",
+          "action_required": true,
+          "estimated_effort": "medium",
+          "assignee": "web_development_agent"
+        },
+        {
+          "priority": "high",
+          "category": "security",
+          "issue": "Missing security headers: strict-transport-security, x-content-type-options, x-frame-options",
+          "action_required": true,
+          "estimated_effort": "medium",
+          "assignee": "web_development_agent"
+        },
+        {
+          "priority": "medium",
+          "category": "seo",
+          "recommendation": "Use only one H1 tag per page",
+          "action_required": true,
+          "estimated_effort": "low",
+          "assignee": "web_development_agent"
+        },
+        {
+          "priority": "medium",
+          "category": "security",
+          "recommendation": "Add essential security headers (HSTS, CSP, X-Frame-Options)",
+          "action_required": true,
+          "estimated_effort": "low",
+          "assignee": "web_development_agent"
+        }
+      ],
+      "overall_assessment": {
+        "overall_score": 87.5,
+        "grade": "B",
+        "strengths": [
+          "Good connectivity and performance",
+          "Has title tag",
+          "Good technical performance",
+          "Good content depth",
+          "Uses HTTPS"
+        ],
+        "critical_issues": [],
+        "summary": "Good website (Grade B, 87.5%). Generally well-structured with minor improvements needed."
+      }
+    }
+  },
+  "summary": {
+    "total_websites": 2,
+    "successful_audits": 2,
+    "failed_audits": 0,
+    "success_rate": 1.0,
+    "generated_at": "2026-01-12T15:21:29.072987"
+  }
+}

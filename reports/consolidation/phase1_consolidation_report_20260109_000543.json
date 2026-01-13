@@ -1,0 +1,56 @@
+{
+  "timestamp": "2026-01-09T00:05:43.822568",
+  "summary": {
+    "total_operations": 4,
+    "total_files_processed": 491,
+    "total_files_removed": 0,
+    "total_space_saved_mb": 0.0
+  },
+  "operations": [
+    {
+      "operation": "quickstart_deduplication",
+      "files_processed": 7,
+      "files_removed": 0,
+      "space_saved_bytes": 0,
+      "space_saved_mb": 0.0,
+      "status": "warning",
+      "timestamp": "2026-01-09T00:05:37.572704",
+      "details": []
+    },
+    {
+      "operation": "cache_cleanup",
+      "files_processed": 0,
+      "files_removed": 0,
+      "space_saved_bytes": 0,
+      "space_saved_mb": 0.0,
+      "status": "warning",
+      "timestamp": "2026-01-09T00:05:40.690850",
+      "details": []
+    },
+    {
+      "operation": "archive_consolidation",
+      "files_processed": 476,
+      "files_removed": 0,
+      "space_saved_bytes": 0,
+      "space_saved_mb": 0.0,
+      "status": "warning",
+      "timestamp": "2026-01-09T00:05:43.605827",
+      "details": []
+    },
+    {
+      "operation": "status_standardization",
+      "files_processed": 8,
+      "files_removed": 0,
+      "space_saved_bytes": 0,
+      "space_saved_mb": 0.0,
+      "status": "success",
+      "timestamp": "2026-01-09T00:05:43.817564",
+      "details": [
+        "Standardized status.json for Agent-1: added 3 missing fields",
+        "Standardized status.json for Agent-4: added 4 missing fields"
+      ]
+    }
+  ],
+  "errors": [],
+  "warnings": []
+}

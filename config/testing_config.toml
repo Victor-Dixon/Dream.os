@@ -1,0 +1,129 @@
+# Consolidated Testing Configuration
+# Created: 2026-01-13
+# Source: pytest.ini + audit_plan.yaml
+
+[tool.pytest.ini_options]
+[tool:pytest]
+testpaths = tests
+python_files = test_*.py *_test.py
+python_classes = Test*
+python_functions = test_*
+addopts =
+    --verbose
+    --tb=short
+    --strict-markers
+    --disable-warnings
+    --cov=src/agent_cellphone_v2
+    --cov-report=html:htmlcov
+    --cov-report=term-missing
+    --cov-fail-under=85
+markers =
+    unit: Unit tests
+    integration: Integration tests
+    slow: Slow running tests
+    skip_ci: Skip in CI environment
+
+[audit_plan]
+# Converted from audit_plan.yaml
+plan_data = {
+  "audit": {
+    "objective": "Verified duplication/dead/orphan audit + ranked refactor plan",
+    "deliverables": [
+      "audit_outputs/manifest.json",
+      "audit_outputs/duplication_jscpd.json",
+      "audit_outputs/archive_age_report.csv",
+      "audit_outputs/CAPTAIN_AUDIT_REPORT.md"
+    ],
+    "acceptance_criteria": [
+      "All counts include exact commands + output refs",
+      "Top 10 duplication hotspots include file paths + duplicated blocks",
+      "Dead code list includes 'why' and is labeled 'candidate'",
+      "Archive recommendations include retention buckets + policy proposal",
+      "Evidence files are present and verifiable"
+    ],
+    "risks": [
+      "False positives (dead code + orphan detection)",
+      "Archive contains needed historical references",
+      "Large-scale refactoring impacts system stability"
+    ],
+    "captain_decisions_required": [
+      "Retention policy (archive): keep/compress/cold-store thresholds",
+      "Refactor freeze scope (domains affected)",
+      "Adopt CI gates: duplication threshold + vulture threshold",
+      "Resource allocation: developers for refactor batches",
+      "Timeline: sprint boundaries for implementation"
+    ],
+    "refactor_batches": [
+      {
+        "name": "Logging mixin + standardized logger acquisition",
+        "scope": "src/services/*",
+        "safety": "no behavior changes; tests required",
+        "effort": "1 week",
+        "risk": "LOW",
+        "files_affected": "~492 files",
+        "test_strategy": "Logger output verification + integration tests"
+      },
+      {
+        "name": "Base init extraction (common __init__ signature)",
+        "scope": "commands/controllers with identical init",
+        "safety": "mechanical refactor; type checks",
+        "effort": "1 week",
+        "risk": "MEDIUM",
+        "files_affected": "~200 files",
+        "test_strategy": "Full service integration tests + type checking"
+      },
+      {
+        "name": "Error handling normalization",
+        "scope": "cli + service layer",
+        "safety": "golden-path smoke tests",
+        "effort": "1 week",
+        "risk": "LOW",
+        "files_affected": "~50 files",
+        "test_strategy": "Error scenario testing + regression tests"
+      },
+      {
+        "name": "Import consolidation and standardization",
+        "scope": "all Python files with typing imports",
+        "safety": "mechanical change; import resolution verification",
+        "effort": "2 days",
+        "risk": "LOW",
+        "files_affected": "~844 files",
+        "test_strategy": "Import resolution verification + syntax checking"
+      },
+      {
+        "name": "Archive cleanup and retention policy",
+        "scope": "archive/ directory",
+        "safety": "file operations with backup verification",
+        "effort": "3 days",
+        "risk": "MEDIUM",
+        "files_affected": "~3,726 files",
+        "test_strategy": "Backup integrity + system startup verification"
+      }
+    ],
+    "success_metrics": [
+      "Duplication patterns reduced by 70%",
+      "Archive size reduced by 60%",
+      "CI duplication checks implemented",
+      "Base class adoption in 80% of services",
+      "Import consistency across all modules"
+    ],
+    "monitoring_setup": [
+      "Duplication threshold: >10 patterns per file triggers warning",
+      "Archive growth monitoring: monthly reports",
+      "Import consistency checks in CI pipeline",
+      "Base class adoption metrics"
+    ],
+    "rollback_strategy": [
+      "Git revert capability for each batch",
+      "Database backups before schema changes",
+      "Configuration snapshots before refactoring",
+      "Staged rollout with feature flags where possible"
+    ],
+    "communication_plan": [
+      "Daily standups during active refactoring",
+      "Weekly Captain updates on progress",
+      "Stakeholder notifications for major changes",
+      "Post-implementation audit report"
+    ]
+  }
+}

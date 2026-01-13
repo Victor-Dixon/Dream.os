@@ -1,0 +1,138 @@
+[
+  {
+    "site": "https://tradingrobotplug.com",
+    "status": "WARNING",
+    "health_score": 70,
+    "server": {
+      "healthy": true,
+      "status": "OK",
+      "response_time_ms": 1330.41
+    },
+    "analytics": {
+      "ga4_configured": false,
+      "pixel_configured": false,
+      "tracking_details": "GA4: Not found; Pixel: Not found"
+    },
+    "api": {
+      "endpoints_available": false,
+      "endpoint_details": "\u274c /wp-json/tradingrobotplug/v1/analytics/performance: HTTP 404\n\u274c /wp-json/tradingrobotplug/v1/analytics/events: HTTP 404\n\u274c /wp-json/tradingrobotplug/v1/analytics/dashboard: HTTP 404"
+    },
+    "security": {
+      "security_headers_score": 10,
+      "vulnerability_score": 20,
+      "https_score": 20,
+      "security_details": "Present Security Headers:\n\u2705 Content-Security-Policy: upgrade-insecure-requests\n\nMissing Security Headers:\n\u274c X-Frame-Options: Missing\n\u274c X-Content-Type-Options: Missing\n\u274c X-XSS-Protection: Missing\n\u274c Strict-Transport-Security: Missing\n\u274c Referrer-Policy: Missing",
+      "vulnerability_details": "\u2705 No obvious security vulnerabilities detected in content",
+      "https_details": "\u2705 URL uses HTTPS; \u26a0\ufe0f  HSTS header missing"
+    },
+    "recommendations": [
+      "\ud83d\udfe1 HIGH: Deploy GA4 tracking code to enable analytics collection",
+      "\ud83d\udfe1 HIGH: Deploy Facebook Pixel for conversion tracking",
+      "\ud83d\udfe1 MEDIUM: Verify analytics API endpoints are properly configured",
+      "\ud83d\udfe1 HIGH: Implement security headers (CSP, HSTS, X-Frame-Options, etc.)",
+      "\ud83d\udfe1 HIGH: Implement HTTPS and HSTS for secure communications"
+    ]
+  },
+  {
+    "site": "https://freerideinvestor.com",
+    "status": "WARNING",
+    "health_score": 70,
+    "server": {
+      "healthy": true,
+      "status": "OK",
+      "response_time_ms": 1353.4
+    },
+    "analytics": {
+      "ga4_configured": false,
+      "pixel_configured": false,
+      "tracking_details": "GA4: Not found; Pixel: Not found"
+    },
+    "api": {
+      "endpoints_available": false,
+      "endpoint_details": "\u274c /wp-json/tradingrobotplug/v1/analytics/performance: HTTP 500\n\u274c /wp-json/tradingrobotplug/v1/analytics/events: HTTP 500\n\u274c /wp-json/tradingrobotplug/v1/analytics/dashboard: HTTP 500"
+    },
+    "security": {
+      "security_headers_score": 10,
+      "vulnerability_score": 20,
+      "https_score": 20,
+      "security_details": "Present Security Headers:\n\u2705 Content-Security-Policy: upgrade-insecure-requests\n\nMissing Security Headers:\n\u274c X-Frame-Options: Missing\n\u274c X-Content-Type-Options: Missing\n\u274c X-XSS-Protection: Missing\n\u274c Strict-Transport-Security: Missing\n\u274c Referrer-Policy: Missing",
+      "vulnerability_details": "\u2705 No obvious security vulnerabilities detected in content",
+      "https_details": "\u2705 URL uses HTTPS; \u26a0\ufe0f  HSTS header missing"
+    },
+    "recommendations": [
+      "\ud83d\udfe1 HIGH: Deploy GA4 tracking code to enable analytics collection",
+      "\ud83d\udfe1 HIGH: Deploy Facebook Pixel for conversion tracking",
+      "\ud83d\udfe1 MEDIUM: Verify analytics API endpoints are properly configured",
+      "\ud83d\udfe1 HIGH: Implement security headers (CSP, HSTS, X-Frame-Options, etc.)",
+      "\ud83d\udfe1 HIGH: Implement HTTPS and HSTS for secure communications"
+    ]
+  },
+  {
+    "site": "https://dadudekc.com",
+    "status": "WARNING",
+    "health_score": 70,
+    "server": {
+      "healthy": true,
+      "status": "OK",
+      "response_time_ms": 1335.93
+    },
+    "analytics": {
+      "ga4_configured": false,
+      "pixel_configured": false,
+      "tracking_details": "GA4: Not found; Pixel: Not found"
+    },
+    "api": {
+      "endpoints_available": false,
+      "endpoint_details": "\u274c /wp-json/tradingrobotplug/v1/analytics/performance: HTTP 404\n\u274c /wp-json/tradingrobotplug/v1/analytics/events: HTTP 404\n\u274c /wp-json/tradingrobotplug/v1/analytics/dashboard: HTTP 404"
+    },
+    "security": {
+      "security_headers_score": 10,
+      "vulnerability_score": 20,
+      "https_score": 20,
+      "security_details": "Present Security Headers:\n\u2705 Content-Security-Policy: upgrade-insecure-requests\n\nMissing Security Headers:\n\u274c X-Frame-Options: Missing\n\u274c X-Content-Type-Options: Missing\n\u274c X-XSS-Protection: Missing\n\u274c Strict-Transport-Security: Missing\n\u274c Referrer-Policy: Missing",
+      "vulnerability_details": "\u2705 No obvious security vulnerabilities detected in content",
+      "https_details": "\u2705 URL uses HTTPS; \u26a0\ufe0f  HSTS header missing"
+    },
+    "recommendations": [
+      "\ud83d\udfe1 HIGH: Deploy GA4 tracking code to enable analytics collection",
+      "\ud83d\udfe1 HIGH: Deploy Facebook Pixel for conversion tracking",
+      "\ud83d\udfe1 MEDIUM: Verify analytics API endpoints are properly configured",
+      "\ud83d\udfe1 HIGH: Implement security headers (CSP, HSTS, X-Frame-Options, etc.)",
+      "\ud83d\udfe1 HIGH: Implement HTTPS and HSTS for secure communications"
+    ]
+  },
+  {
+    "site": "https://crosbyultimateevents.com",
+    "status": "WARNING",
+    "health_score": 70,
+    "server": {
+      "healthy": true,
+      "status": "OK",
+      "response_time_ms": 1079.41
+    },
+    "analytics": {
+      "ga4_configured": false,
+      "pixel_configured": false,
+      "tracking_details": "GA4: Not found; Pixel: Not found"
+    },
+    "api": {
+      "endpoints_available": false,
+      "endpoint_details": "\u274c /wp-json/tradingrobotplug/v1/analytics/performance: HTTP 404\n\u274c /wp-json/tradingrobotplug/v1/analytics/events: HTTP 404\n\u274c /wp-json/tradingrobotplug/v1/analytics/dashboard: HTTP 404"
+    },
+    "security": {
+      "security_headers_score": 10,
+      "vulnerability_score": 20,
+      "https_score": 20,
+      "security_details": "Present Security Headers:\n\u2705 Content-Security-Policy: upgrade-insecure-requests\n\nMissing Security Headers:\n\u274c X-Frame-Options: Missing\n\u274c X-Content-Type-Options: Missing\n\u274c X-XSS-Protection: Missing\n\u274c Strict-Transport-Security: Missing\n\u274c Referrer-Policy: Missing",
+      "vulnerability_details": "\u2705 No obvious security vulnerabilities detected in content",
+      "https_details": "\u2705 URL uses HTTPS; \u26a0\ufe0f  HSTS header missing"
+    },
+    "recommendations": [
+      "\ud83d\udfe1 HIGH: Deploy GA4 tracking code to enable analytics collection",
+      "\ud83d\udfe1 HIGH: Deploy Facebook Pixel for conversion tracking",
+      "\ud83d\udfe1 MEDIUM: Verify analytics API endpoints are properly configured",
+      "\ud83d\udfe1 HIGH: Implement security headers (CSP, HSTS, X-Frame-Options, etc.)",
+      "\ud83d\udfe1 HIGH: Implement HTTPS and HSTS for secure communications"
+    ]
+  }
+]

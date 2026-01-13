@@ -1,0 +1,29 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: migrated-sites-gateway
+  namespace: production
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - hosts:
+    - crosbyultimateevents.com
+    - dadudekc.com
+    - tradingrobotplug.com
+    - weareswarm.online
+    - houstonsipqueen.com
+    - ariajet.site
+    - www.crosbyultimateevents.com
+    - www.dadudekc.com
+    - www.tradingrobotplug.com
+    - www.weareswarm.online
+    - www.houstonsipqueen.com
+    - www.ariajet.site
+    port:
+      name: https
+      number: 443
+      protocol: HTTPS
+    tls:
+      credentialName: migrated-sites-tls
+      mode: SIMPLE

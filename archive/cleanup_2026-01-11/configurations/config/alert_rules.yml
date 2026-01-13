@@ -1,0 +1,122 @@
+# Phase 5 Alert Rules - Enterprise Infrastructure Monitoring
+# Advanced alerting for production-grade infrastructure
+
+groups:
+  - name: service_availability
+    rules:
+      - alert: ServiceDown
+        expr: up == 0
+        for: 5m
+        labels:
+          severity: critical
+          category: availability
+        annotations:
+          summary: "Service {{ $labels.job }} is down"
+          description: "Service {{ $labels.job }} has been down for more than 5 minutes."
+
+      - alert: ServiceFlapping
+        expr: changes(up[10m]) > 5
+        labels:
+          severity: warning
+          category: availability
+        annotations:
+          summary: "Service {{ $labels.job }} is flapping"
+          description: "Service {{ $labels.job }} has restarted more than 5 times in the last 10 minutes."
+
+  - name: performance_alerts
+    rules:
+      - alert: HighCPUUsage
+        expr: rate(process_cpu_user_seconds_total[5m]) > 0.8
+        for: 3m
+        labels:
+          severity: warning
+          category: performance
+        annotations:
+          summary: "High CPU usage on {{ $labels.job }}"
+          description: "CPU usage is above 80% for {{ $labels.job }}"
+
+      - alert: HighMemoryUsage
+        expr: process_resident_memory_bytes / process_virtual_memory_max_bytes > 0.9
+        for: 2m
+        labels:
+          severity: warning
+          category: performance
+        annotations:
+          summary: "High memory usage on {{ $labels.job }}"
+          description: "Memory usage is above 90% for {{ $labels.job }}"
+
+      - alert: SlowResponseTime
+        expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m])) > 2
+        for: 3m
+        labels:
+          severity: warning
+          category: performance
+        annotations:
+          summary: "Slow response time on {{ $labels.job }}"
+          description: "95th percentile response time is above 2 seconds for {{ $labels.job }}"
+
+  - name: database_alerts
+    rules:
+      - alert: DatabaseConnectionPoolExhausted
+        expr: pg_stat_activity_count{state="active"} / pg_settings_max_connections > 0.8
+        for: 2m
+        labels:
+          severity: critical
+          category: database
+        annotations:
+          summary: "PostgreSQL connection pool nearly exhausted"
+          description: "Active database connections are above 80% of maximum connections"
+
+      - alert: RedisMemoryHigh
+        expr: redis_memory_used_bytes / redis_memory_max_bytes > 0.9
+        for: 2m
+        labels:
+          severity: warning
+          category: database
+        annotations:
+          summary: "Redis memory usage high"
+          description: "Redis memory usage is above 90% of maximum memory"
+
+  - name: infrastructure_alerts
+    rules:
+      - alert: DiskSpaceLow
+        expr: (1 - node_filesystem_avail_bytes / node_filesystem_size_bytes) > 0.85
+        for: 5m
+        labels:
+          severity: warning
+          category: infrastructure
+        annotations:
+          summary: "Disk space low on {{ $labels.device }}"
+          description: "Disk space usage is above 85% on {{ $labels.device }}"
+
+      - alert: NetworkErrors
+        expr: rate(node_network_receive_errs_total[5m]) > 10
+        for: 3m
+        labels:
+          severity: warning
+          category: infrastructure
+        annotations:
+          summary: "High network errors on {{ $labels.device }}"
+          description: "Network receive errors are above threshold on {{ $labels.device }}"
+
+  - name: circuit_breaker_alerts
+    rules:
+      - alert: CircuitBreakerActivated
+        expr: nginx_http_requests_total{status="503"} > 10
+        for: 1m
+        labels:
+          severity: critical
+          category: circuit_breaker
+        annotations:
+          summary: "Circuit breaker activated"
+          description: "Circuit breaker has been activated - returning 503 responses"
+
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) / rate(http_requests_total[5m]) > 0.1
+        for: 2m
+        labels:
+          severity: critical
+          category: circuit_breaker
+        annotations:
+          summary: "High error rate detected"
+          description: "Error rate is above 10% for the last 5 minutes"

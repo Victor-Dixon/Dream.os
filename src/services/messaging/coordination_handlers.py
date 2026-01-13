@@ -1,0 +1,312 @@
+#!/usr/bin/env python3
+"""
+Coordination Handlers Module - Messaging Infrastructure
+======================================================
+
+<!-- SSOT Domain: integration -->
+
+Orchestrator for agent coordination, message routing, and multi-agent requests.
+Delegates to specialized handlers for V2 compliance.
+
+V2 Compliance | Author: Agent-1 | Date: 2025-12-14
+"""
+
+from __future__ import annotations
+
+import logging
+from typing import Any, Dict, Optional
+
+from src.core.messaging_core import UnifiedMessagePriority
+from src.core.messaging_models_core import MessageCategory
+from src.utils.swarm_time import get_swarm_time_display
+
+from .message_formatters import (
+    CONSOLIDATION_MESSAGE_TEMPLATE,
+    SURVEY_MESSAGE_TEMPLATE,
+)
+from .agent_message_handler import send_to_agent as _send_to_agent
+
+# A2A COORDINATION SSOT: Legacy broadcast/multi-agent functionality deprecated
+# All agent communication must use bilateral A2A coordination protocol
+# Previously: from .broadcast_handler import broadcast_to_all as _broadcast_to_all
+# Previously: from .multi_agent_request_handler import send_multi_agent_request as _send_multi_agent_request
+
+def _deprecated_broadcast_error():
+    """Raise error for deprecated broadcast functionality."""
+    raise DeprecationWarning(
+        "❌ BROADCAST MESSAGING DEPRECATED\n"
+        "Broadcast messaging violates A2A coordination SSOT principles.\n"
+        "For agent communication, use bilateral A2A coordination:\n"
+        "python -m src.services.messaging_cli --agent Agent-X --category a2a --sender Agent-Y --message '...'"
+
+    )
+
+def _deprecated_multi_agent_error():
+    """Raise error for deprecated multi-agent request functionality."""
+    raise DeprecationWarning(
+        "❌ MULTI-AGENT REQUESTS DEPRECATED\n"
+        "Multi-agent orchestration superseded by bilateral A2A coordination.\n"
+        "For complex coordination, chain A2A bilateral coordinations:\n"
+        "python -m src.services.messaging_cli --agent Agent-X --category a2a --sender Agent-Y --message '...'"
+
+    )
+
+_broadcast_to_all = _deprecated_broadcast_error
+_send_multi_agent_request = _deprecated_multi_agent_error
+
+logger = logging.getLogger(__name__)
+
+
+class MessageCoordinator:
+    """Unified message coordination system - ALL messages route through queue repository."""
+
+    _queue_repository = None
+
+    @classmethod
+    def _get_queue(cls):
+        """
+        Lazy initialization of queue repository.
+        
+        Returns queue repository if available, None if initialization fails.
+        When None is returned, handlers will fall back to direct send.
+        """
+        if cls._queue_repository is None:
+            try:
+                from .repositories.queue_repository import QueueRepository
+                cls._queue_repository = QueueRepository()
+                logger.info(
+                    "✅ MessageCoordinator initialized with queue repository")
+            except Exception as e:
+                logger.warning(
+                    f"⚠️ Failed to initialize queue repository: {e}. "
+                    "Messages will be sent directly (fallback mode). "
+                    "Note: Queue processor must be running for queued delivery.")
+                cls._queue_repository = None
+        return cls._queue_repository
+
+    @staticmethod
+    def send_message(agent: str, message: str, priority: str = "regular",
+                    use_pyautogui: bool = True, wait_for_delivery: bool = False,
+                    timeout: float = 30.0, discord_user_id: str = None,
+                    stalled: bool = False, apply_template: bool = False,
+                    message_category=None, sender: str = None):
+        """
+        Compatibility method for send_message calls.
+        Maps parameters to send_to_agent method.
+        """
+        from src.core.messaging_models_core import UnifiedMessagePriority, MessageCategory
+
+        # Map string priority to enum
+        priority_enum = UnifiedMessagePriority.REGULAR
+        if priority.lower() == "urgent":
+            priority_enum = UnifiedMessagePriority.URGENT
+        elif priority.lower() == "normal":
+            priority_enum = UnifiedMessagePriority.NORMAL
+
+        # Map string category to enum if provided
+        category_enum = None
+        if message_category:
+            try:
+                category_enum = MessageCategory(message_category)
+            except:
+                category_enum = MessageCategory.AGENT_TO_AGENT
+
+        # Prepare metadata
+        metadata = {
+            'timeout': timeout,
+            'wait_for_delivery': wait_for_delivery,
+            'discord_user_id': discord_user_id,
+            'stalled': stalled,
+            'apply_template': apply_template
+        }
+
+        return MessageCoordinator.send_to_agent(
+            agent=agent,
+            message=message,
+            priority=priority_enum,
+            use_pyautogui=use_pyautogui,
+            stalled=stalled,
+            sender=sender,
+            message_category=category_enum,
+            message_metadata=metadata
+        )
+
+    @staticmethod
+    def send_to_agent(
+        agent: str,
+        message,
+        priority=UnifiedMessagePriority.REGULAR,
+        use_pyautogui=False,
+        stalled: bool = False,
+        send_mode: Optional[str] = None,
+        sender: str = None,
+        message_category: Optional[MessageCategory] = None,
+        message_metadata: Optional[Dict[str, Any]] = None,
+    ):
+        """
+        Send message to agent via message queue (prevents race conditions).
+
+        Navigation References:
+        ├── Message Queue → src/core/message_queue/message_queue_impl.py::enqueue_message()
+        ├── Agent Handler → src/services/messaging/agent_message_handler.py::send_to_agent()
+        ├── Coordination Throttler → src/services/coordination/coordination_throttler.py
+        ├── Message Templates → src/core/messaging/messaging_template_texts.py
+        ├── Queue Processor → src/core/message_queue/message_queue_processor.py
+        ├── External Docs → docs/architecture/MESSAGING_ARCHITECTURE.md
+        ├── A2A Protocol → docs/A2A_COORDINATION_PROTOCOL.md
+        └── Testing → tests/integration/test_messaging_coordination.py
+
+        Complex coordination pipeline:
+        1. A2A throttling check (prevents spam between agents)
+           └── See: coordination_throttler.py::can_send_coordination()
+        2. Queue repository initialization (lazy loading pattern)
+           └── See: queue_repository.py::QueueRepository()
+        3. Message enqueueing with metadata preservation
+           └── See: message_queue_impl.py::enqueue_message()
+        4. Priority-based routing and delivery scheduling
+           └── See: UnifiedMessagePriority enum in messaging_core.py
+        5. Fallback to direct send if queue unavailable
+           └── See: agent_message_handler.py fallback logic
+        6. Coordination metrics and logging
+           └── See: Swarm Brain Database for coordination analytics
+
+        Strategic Business Impact:
+        - Prevents race conditions in multi-agent coordination
+        - Enables reliable message delivery across distributed agents
+        - Supports swarm intelligence through coordinated communication
+        - Maintains message integrity and prevents lost coordination signals
+
+        Includes coordination throttling for A2A messages to prevent spam.
+        Delegates to agent_message_handler for V2 compliance.
+        """
+        # Check coordination throttling for A2A messages
+        if message_category == MessageCategory.A2A and sender:
+            from src.services.coordination.coordination_throttler import get_coordination_throttler
+            throttler = get_coordination_throttler()
+
+            can_send, reason, wait_seconds = throttler.can_send_coordination(agent, sender)
+            if not can_send:
+                logger.warning(f"Coordination throttled: {sender} -> {agent}: {reason}")
+                return {
+                    "success": False,
+                    "throttled": True,
+                    "reason": reason,
+                    "wait_seconds": wait_seconds
+                }
+
+        queue_repository = MessageCoordinator._get_queue()
+        result = _send_to_agent(
+            agent=agent,
+            message=message,
+            priority=priority,
+            use_pyautogui=use_pyautogui,
+            stalled=stalled,
+            send_mode=send_mode,
+            sender=sender,
+            message_category=message_category,
+            message_metadata=message_metadata,
+            queue_repository=queue_repository,
+            detect_sender_func=MessageCoordinator._detect_sender,
+            determine_message_type_func=MessageCoordinator._determine_message_type,
+        )
+
+        # Record coordination for throttling if it was sent successfully
+        # Handle both dict results (from queue) and bool results (from fallback/direct send)
+        is_success = (
+            (isinstance(result, dict) and result.get("success"))
+            or (isinstance(result, bool) and result is True)
+        )
+        if is_success and message_category == MessageCategory.A2A and sender:
+            from src.services.coordination.coordination_throttler import get_coordination_throttler
+            throttler = get_coordination_throttler()
+            throttler.record_coordination(agent, sender)
+        
+        return result
+
+    @staticmethod
+    def send_multi_agent_request(
+        recipients: list[str],
+        message: str,
+        sender: str = "CAPTAIN",
+        priority=UnifiedMessagePriority.REGULAR,
+        timeout_seconds: int = 300,
+        wait_for_all: bool = False,
+        stalled: bool = False
+    ) -> str:
+        """
+        Send multi-agent request that collects responses and combines them.
+
+        Delegates to multi_agent_request_handler for V2 compliance.
+        """
+        queue_repository = MessageCoordinator._get_queue()
+        return _send_multi_agent_request(
+            recipients=recipients,
+            message=message,
+            sender=sender,
+            priority=priority,
+            timeout_seconds=timeout_seconds,
+            wait_for_all=wait_for_all,
+            stalled=stalled,
+            queue_repository=queue_repository,
+        )
+
+    @staticmethod
+    def broadcast_to_all(
+        message: str, priority=UnifiedMessagePriority.REGULAR, stalled: bool = False
+    ):
+        """
+        Broadcast message to all agents via message queue.
+
+        Delegates to broadcast_handler for V2 compliance.
+        """
+        queue_repository = MessageCoordinator._get_queue()
+        return _broadcast_to_all(
+            message=message,
+            priority=priority,
+            stalled=stalled,
+            queue_repository=queue_repository,
+        )
+
+    @staticmethod
+    def coordinate_survey():
+        logger.info("🐝 INITIATING SWARM SURVEY COORDINATION...")
+        success_count = MessageCoordinator.broadcast_to_all(
+            SURVEY_MESSAGE_TEMPLATE, UnifiedMessagePriority.URGENT
+        )
+        if success_count > 0:
+            logger.info(
+                f"✅ Survey coordination broadcast to {success_count} agents")
+            return True
+        else:
+            logger.error("❌ Survey coordination failed - no agents reached")
+            return False
+
+    @staticmethod
+    def coordinate_consolidation(batch: str, status: str):
+        message = CONSOLIDATION_MESSAGE_TEMPLATE.format(
+            batch=batch or "DEFAULT",
+            status=status or "IN_PROGRESS",
+            timestamp=get_swarm_time_display(),
+        )
+        success_count = MessageCoordinator.broadcast_to_all(
+            message, UnifiedMessagePriority.REGULAR)
+        if success_count > 0:
+            logger.info(
+                f"✅ Consolidation update broadcast to {success_count} agents")
+            return True
+        else:
+            logger.error("❌ Consolidation update failed")
+            return False
+
+    @staticmethod
+    def _detect_sender() -> str:
+        """Detect actual sender from environment and context."""
+        from .coordination_helpers import detect_sender
+        return detect_sender()
+
+    @staticmethod
+    def _determine_message_type(sender: str, recipient: str) -> tuple[UnifiedMessageType, str]:
+        """Determine message type and normalize sender based on sender/recipient."""
+        from .coordination_helpers import determine_message_type
+        return determine_message_type(sender, recipient)
+

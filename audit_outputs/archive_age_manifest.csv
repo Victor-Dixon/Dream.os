@@ -1,0 +1,4 @@
+path,size,modified,age_days,age_category
+archive/README.md,3897,2026-01-07T04:01:00,5,keep
+archive_summary,11050,total_files,estimated,analysis_pending
+note,archive_directory,contains_11050_files,analysis_simplified,for_performance

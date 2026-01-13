@@ -1,0 +1,21 @@
+{
+  "total_files": 275,
+  "domains": {
+    "architecture": 1,
+    "documentation": 13,
+    "web": 19,
+    "integration": 2,
+    "onboarding": 1,
+    "seo": 4,
+    "security": 1,
+    "infrastructure": 1
+  },
+  "tags": {
+    "trading-robot": 1,
+    "api": 1,
+    "documentation": 1,
+    "operations": 1
+  },
+  "missing_tags_count": 111,
+  "missing_metadata_count": 31
+}

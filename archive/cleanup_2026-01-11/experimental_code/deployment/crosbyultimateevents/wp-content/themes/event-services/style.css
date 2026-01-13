@@ -1,0 +1,81 @@
+/*
+Theme Name: Event Services Theme
+Description: Professional theme for event planning and catering services
+Author: Agent-3 Infrastructure & DevOps
+Version: 1.0.0
+Text Domain: event-services
+*/
+
+/* Event Services Theme Styles */
+body {
+    font-family: 'Georgia', serif;
+    color: #2c3e50;
+    background-color: #f8f9fa;
+}
+
+.site-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem 0;
+}
+
+.hero-section {
+    background: url('images/event-hero.jpg') center/cover;
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 3rem 0;
+}
+
+.service-card {
+    background: white;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+}
+
+.cta-button {
+    background: #e74c3c;
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.cta-button:hover {
+    background: #c0392b;
+}
+
+.event-showcase {
+    background: #f8f9fa;
+    padding: 3rem 0;
+}
+
+.testimonials {
+    background: white;
+    padding: 3rem 0;
+}
+
+.footer {
+    background: #2c3e50;
+    color: white;
+    padding: 2rem 0;
+    text-align: center;
+}

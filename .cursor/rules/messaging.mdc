@@ -1,0 +1,125 @@
+---
+description: Messaging system standards and protocols
+globs:
+  - "src/services/messaging*.py"
+  - "src/services/models/messaging_models.py"
+  - "**/messaging*.py"
+alwaysApply: true
+---
+
+## **📋 MESSAGE TYPES, PRIORITIES & TAGS**
+
+### **Message Types** (use UnifiedMessageType enum):
+```python
+class UnifiedMessageType(Enum):
+    TEXT = "text"            # Standard one-to-one or one-to-many text messages
+    BROADCAST = "broadcast"  # Bulk delivery to all agents simultaneously
+    ONBOARDING = "onboarding" # Special type used during initialization
+```
+- **TEXT** → Used for day-to-day communication, instructions, and feedback loops
+- **BROADCAST** → Efficient for mass announcements or synchronized commands across the swarm
+- **ONBOARDING** → Special initialization flow; ensures agents are ready before normal operations
+
+### **Message Priorities** (use UnifiedMessagePriority enum):
+```python
+class UnifiedMessagePriority(Enum):
+    NORMAL = "normal"      # Default for non-critical communication
+    URGENT = "urgent"      # Reserved for onboarding or crisis events
+```
+
+### **Message Tags** (use UnifiedMessageTag enum):
+```python
+class UnifiedMessageTag(Enum):
+    CAPTAIN = "captain"    # Marks origin as Agent-4 (the supervisory entity)
+    ONBOARDING = "onboarding" # Provides scoping context for bootstrapping messages
+    WRAPUP = "wrapup"      # Signals system closure or end-of-cycle summaries
+```
+
+## **🚀 DELIVERY MODE FLAGS**
+
+### **Core Delivery Modes**:
+- `mode="pyautogui"` → Default, using coordinate-based GUI automation
+- `mode="inbox"` → File-based messaging (writes JSON or text directly to inbox directories)
+
+### **PyAutoGUI-Specific Options**:
+- `use_paste=True` → Fast clipboard pasting (default)
+- `use_paste=False` → Falls back to keystroke-by-keystroke delivery
+- `new_tab_method="ctrl_t"` → Opens new browser tab (default)
+- `new_tab_method="ctrl_n"` → Opens a new browser window, useful for agent isolation
+
+### **Timing & Delay Parameters**:
+- **Agent order** → Hardcoded with Agent-4 (Captain) always last
+- **Inter-agent delay** → 1 second pause ensures focus switching stability
+- **Tab creation wait** → 1.0s buffer after spawning tab/window
+- **Paste wait** → 1.0s before pasting ensures clipboard propagation
+
+## **⚙️ CLI COMMAND-LINE FLAGS**
+
+### **Message Content Flags**:
+- `--message/-m` → Required. Defines the content
+- `--sender/-s` → Sets origin (default: "Captain Agent-4")
+
+### **Recipient Flags**:
+- `--agent/-a` → Directs message to specific agent
+- `--bulk` → Overrides to send to all agents
+
+### **Message Property Flags**:
+- `--type/-t` → Message type (text, broadcast, onboarding)
+- `--priority/-p` → Sets priority (normal, urgent)
+- `--high-priority` → Hard override; forces urgent regardless of other flags
+
+### **Delivery Control Flags**:
+- `--mode` → Selects between pyautogui and inbox
+- `--no-paste` → Forces typing rather than clipboard paste
+- `--new-tab-method` → Chooses between `ctrl_t` or `ctrl_n`
+
+### **Special Workflow Flags**:
+- `--onboarding` → Bulk initialization
+- `--onboard` → Single-agent initialization
+- `--onboarding-style` → Friendly vs. Professional tone
+- `--wrapup` → Send end-of-cycle system closure message
+- `--list-agents` → Enumerates available agents
+- `--coordinates` → Displays PyAutoGUI coordinate map
+- `--history` → Shows prior delivery log
+- `--get-next-task` → Queries assigned task for an agent
+- `--check-status` → Collects current status from swarm
+
+## **🔄 ORDER OF OPERATIONS (CRITICAL)**
+
+### **1. CLI Argument Resolution**:
+```
+Parse Flags → Validate Inputs → Configure Message Properties →
+Select Delivery Mode → Set PyAutoGUI Parameters → Execute Delivery
+```
+
+### **2. Message Construction**:
+```
+Instantiate UnifiedMessage → Assign Type/Priority/Tags →
+Attach Metadata (IDs, timestamps) → Persist to History
+```
+
+### **3. Execution Sequence**:
+```
+Focus Target Window → Clear Input → Open Tab/Window →
+Insert Content (paste or type) → Confirm Delivery
+```
+
+### **4. Agent Processing Flow** (must be maintained):
+```
+Agent-1 → Agent-2 → Agent-3 → Agent-5 → Agent-6 → Agent-7 → Agent-8 → Agent-4
+```
+**⚠️ Agent-4 (Captain) is ALWAYS processed LAST for supervisory closure**
+
+## **🎯 PYAUTOGUI OPERATION SEQUENCE**
+
+1. **Navigation** → `moveTo` & `click` to focus target window
+2. **Content Clearing** → `ctrl+a` → delete to clear existing input
+3. **Environment Setup** → Spawn new tab/window with hotkey
+4. **Content Delivery** → Paste from clipboard or type character-by-character
+5. **Execution** → Press enter to finalize message delivery
+
+## **📋 Related Rules**
+
+- Messaging contracts: `.cursor/rules/messaging-contracts.mdc`
+- CLI flag validation: `.cursor/rules/messaging/cli-flags.mdc`
+- PyAutoGUI operations: `.cursor/rules/messaging/pyautogui-operations.mdc`

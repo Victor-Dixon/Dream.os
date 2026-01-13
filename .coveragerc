@@ -1,0 +1,46 @@
+[run]
+source = src
+omit =
+    */tests/*
+    */test_*.py
+    */__pycache__/*
+    */venv/*
+    */.venv/*
+    */temp_repos/*
+    */archive/*
+    */dream/*
+    */mcp_servers/*
+    */tools_v2/*
+    */prompts/*
+    */quarantine/*
+    */repo_consolidation_groups/*
+    */reports/*
+    */schemas/*
+    */swarm_proposals/*
+    */systems/*
+    */thea_responses/*
+    */trading_robot/*
+    */extensions/*
+    */money_ops/*
+
+[report]
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    raise AssertionError
+    raise NotImplementedError
+    if __name__ == .__main__.:
+    if TYPE_CHECKING:
+    @abstractmethod
+    @abstractproperty
+    class .*\bProtocol\):
+    @(abc\.)?abstractmethod
+
+precision = 2
+show_missing = True
+skip_covered = False
+
+[html]
+directory = htmlcov
+
+

@@ -1,0 +1,110 @@
+[
+  {
+    "id": "640332dd-fcb3-4ccd-be93-a1448bba4f34",
+    "sender": "Agent-7",
+    "recipient": "Agent-6",
+    "content": "[HEADER] A2A COORDINATION \u2014 BILATERAL SWARM COORDINATION\nFrom: Agent-7\nTo: Agent-6\nPriority: regular\nMessage ID: 64d804ab-ee86-4dc1-951c-f1d9563c3971\nTimestamp: 2026-01-10T05:06:49\n\n\ud83d\ude80 **PROTOCOL UPDATE: Swarm Coordination**\nBILATERAL SWARM COORDINATION request for parallel processing acceleration.\n\n\ud83d\udc1d **COORDINATED SWARM REQUEST**:\nMESSAGING V3 ADVANCED FEATURES TEST: A2A coordination with full swarm protocol!\n\n**COORDINATION REQUEST**:\nMESSAGING V3 ADVANCED FEATURES TEST: A2A coordination with full swarm protocol!\n\n**WHY THIS COORDINATION?**\nTo leverage parallel processing and accelerate completion\n\n**EXPECTED CONTRIBUTION**:\nDomain expertise and parallel execution\n\n**TIMING**:\nASAP - coordination needed to maintain momentum\n\n**RESPONSE REQUIRED**:\nReply within 30 minutes with acceptance/decline and proposed approach.\n\n**REPLY FORMAT (MANDATORY)**:\n```\nA2A REPLY to [message_id]:\n\u2705 ACCEPT: [Proposed approach: your role + partner role. Synergy: how capabilities complement. Next steps: initial action. Capabilities: key skills. Timeline: start time + sync time] | ETA: [timeframe]\nOR\n\u274c DECLINE: [reason] | Alternative: [suggested agent]\n```\n\n**REPLY COMMAND**:\n```bash\npython messaging_v3/cli.py --agent Agent-7 --message \"A2A REPLY to [message_id]: [your response]\" --category a2a --sender Agent-6\n```\n\n**COORDINATION PRINCIPLES**:\n- 2 agents working in parallel > 1 agent working alone\n- Share context via status updates and A2A pings\n- Report progress to accelerate integration\n- Be proactive: Propose concrete next steps rather than 'standing by'\n\n#A2A #BILATERAL-SWARM-COORDINATION #SWARM-FORCE-MULTIPLIER\n",
+    "priority": "regular",
+    "message_type": "agent_to_agent",
+    "category": "a2a",
+    "metadata": {},
+    "created_at": "2026-01-10T05:06:49.748637",
+    "delivered_at": null
+  },
+  {
+    "id": "e6aae27c-cbc6-468d-afb7-40cd352c0a41",
+    "sender": "Agent-7",
+    "recipient": "Agent-6",
+    "content": "[HEADER] A2A COORDINATION \u2014 BILATERAL SWARM COORDINATION\nFrom: Agent-7\nTo: Agent-6\nPriority: regular\nMessage ID: 443f7ce8-7402-44c9-9685-4d0aebddaec2\nTimestamp: 2026-01-10T05:11:22\n\n\ud83d\ude80 **PROTOCOL UPDATE: Swarm Coordination**\nBILATERAL SWARM COORDINATION request for parallel processing acceleration.\n\n\ud83d\udc1d **COORDINATED SWARM REQUEST**:\nTEST: A2A coordination via agent API\n\n**COORDINATION REQUEST**:\nTEST: A2A coordination via agent API\n\n**WHY THIS COORDINATION?**\nTo leverage parallel processing and accelerate completion\n\n**EXPECTED CONTRIBUTION**:\nDomain expertise and parallel execution\n\n**TIMING**:\nASAP - coordination needed to maintain momentum\n\n**RESPONSE REQUIRED**:\nReply within 30 minutes with acceptance/decline and proposed approach.\n\n**REPLY FORMAT (MANDATORY)**:\n```\nA2A REPLY to [message_id]:\n\u2705 ACCEPT: [Proposed approach: your role + partner role. Synergy: how capabilities complement. Next steps: initial action. Capabilities: key skills. Timeline: start time + sync time] | ETA: [timeframe]\nOR\n\u274c DECLINE: [reason] | Alternative: [suggested agent]\n```\n\n**REPLY COMMAND**:\n```bash\npython messaging_v3/cli.py --agent Agent-7 --message \"A2A REPLY to [message_id]: [your response]\" --category a2a --sender Agent-6\n```\n\n**COORDINATION PRINCIPLES**:\n- 2 agents working in parallel > 1 agent working alone\n- Share context via status updates and A2A pings\n- Report progress to accelerate integration\n- Be proactive: Propose concrete next steps rather than 'standing by'\n\n#A2A #BILATERAL-SWARM-COORDINATION #SWARM-FORCE-MULTIPLIER\n",
+    "priority": "regular",
+    "message_type": "agent_to_agent",
+    "category": "a2a",
+    "metadata": {},
+    "created_at": "2026-01-10T05:11:22.485824",
+    "delivered_at": null
+  },
+  {
+    "id": "2baf1db2-52dc-48dd-9e86-dc7c8dffdfdc",
+    "sender": "Unknown-Agent",
+    "recipient": "Agent-1",
+    "content": "[HEADER] BROADCAST MESSAGE\nFrom: Unknown-Agent\nTo: ALL AGENTS\nPriority: Agent-7\nMessage ID: c359d6ba-6f4a-4ed3-ba6d-27656c6b2e92\nTimestamp: 2026-01-10T05:11:26\n\n\ud83d\udce2 **BROADCAST ANNOUNCEMENT**\n\nTEST: Broadcast via agent API working!\n\n---\n*Broadcast delivered via Unified Messaging V3*\n",
+    "priority": "Agent-7",
+    "message_type": "broadcast",
+    "category": "broadcast",
+    "metadata": {},
+    "created_at": "2026-01-10T05:11:26.845143",
+    "delivered_at": null
+  },
+  {
+    "id": "768276f1-10ac-46b9-8510-0ff25776b224",
+    "sender": "Unknown-Agent",
+    "recipient": "Agent-2",
+    "content": "[HEADER] BROADCAST MESSAGE\nFrom: Unknown-Agent\nTo: ALL AGENTS\nPriority: Agent-7\nMessage ID: c359d6ba-6f4a-4ed3-ba6d-27656c6b2e92\nTimestamp: 2026-01-10T05:11:26\n\n\ud83d\udce2 **BROADCAST ANNOUNCEMENT**\n\nTEST: Broadcast via agent API working!\n\n---\n*Broadcast delivered via Unified Messaging V3*\n",
+    "priority": "Agent-7",
+    "message_type": "broadcast",
+    "category": "broadcast",
+    "metadata": {},
+    "created_at": "2026-01-10T05:11:31.154785",
+    "delivered_at": null
+  },
+  {
+    "id": "b62369ed-ee56-4cc5-b7d9-c3580cd6b1af",
+    "sender": "Unknown-Agent",
+    "recipient": "Agent-3",
+    "content": "[HEADER] BROADCAST MESSAGE\nFrom: Unknown-Agent\nTo: ALL AGENTS\nPriority: Agent-7\nMessage ID: c359d6ba-6f4a-4ed3-ba6d-27656c6b2e92\nTimestamp: 2026-01-10T05:11:26\n\n\ud83d\udce2 **BROADCAST ANNOUNCEMENT**\n\nTEST: Broadcast via agent API working!\n\n---\n*Broadcast delivered via Unified Messaging V3*\n",
+    "priority": "Agent-7",
+    "message_type": "broadcast",
+    "category": "broadcast",
+    "metadata": {},
+    "created_at": "2026-01-10T05:11:35.614481",
+    "delivered_at": null
+  },
+  {
+    "id": "74f884d4-cd98-4f78-ba4d-e748cb516ef7",
+    "sender": "Unknown-Agent",
+    "recipient": "Agent-5",
+    "content": "[HEADER] BROADCAST MESSAGE\nFrom: Unknown-Agent\nTo: ALL AGENTS\nPriority: Agent-7\nMessage ID: c359d6ba-6f4a-4ed3-ba6d-27656c6b2e92\nTimestamp: 2026-01-10T05:11:26\n\n\ud83d\udce2 **BROADCAST ANNOUNCEMENT**\n\nTEST: Broadcast via agent API working!\n\n---\n*Broadcast delivered via Unified Messaging V3*\n",
+    "priority": "Agent-7",
+    "message_type": "broadcast",
+    "category": "broadcast",
+    "metadata": {},
+    "created_at": "2026-01-10T05:11:40.089223",
+    "delivered_at": null
+  },
+  {
+    "id": "c08f7eff-cc3b-4f81-9552-ace95f87fae4",
+    "sender": "Unknown-Agent",
+    "recipient": "Agent-6",
+    "content": "[HEADER] BROADCAST MESSAGE\nFrom: Unknown-Agent\nTo: ALL AGENTS\nPriority: Agent-7\nMessage ID: c359d6ba-6f4a-4ed3-ba6d-27656c6b2e92\nTimestamp: 2026-01-10T05:11:26\n\n\ud83d\udce2 **BROADCAST ANNOUNCEMENT**\n\nTEST: Broadcast via agent API working!\n\n---\n*Broadcast delivered via Unified Messaging V3*\n",
+    "priority": "Agent-7",
+    "message_type": "broadcast",
+    "category": "broadcast",
+    "metadata": {},
+    "created_at": "2026-01-10T05:11:44.692371",
+    "delivered_at": null
+  },
+  {
+    "id": "6144b46b-3bb8-4f6e-bee9-928341ea6731",
+    "sender": "Unknown-Agent",
+    "recipient": "Agent-7",
+    "content": "[HEADER] BROADCAST MESSAGE\nFrom: Unknown-Agent\nTo: ALL AGENTS\nPriority: Agent-7\nMessage ID: c359d6ba-6f4a-4ed3-ba6d-27656c6b2e92\nTimestamp: 2026-01-10T05:11:26\n\n\ud83d\udce2 **BROADCAST ANNOUNCEMENT**\n\nTEST: Broadcast via agent API working!\n\n---\n*Broadcast delivered via Unified Messaging V3*\n",
+    "priority": "Agent-7",
+    "message_type": "broadcast",
+    "category": "broadcast",
+    "metadata": {},
+    "created_at": "2026-01-10T05:11:50.965363",
+    "delivered_at": null
+  },
+  {
+    "id": "e6fad122-49ff-45d8-bc74-416eb319b22f",
+    "sender": "Unknown-Agent",
+    "recipient": "Agent-8",
+    "content": "[HEADER] BROADCAST MESSAGE\nFrom: Unknown-Agent\nTo: ALL AGENTS\nPriority: Agent-7\nMessage ID: c359d6ba-6f4a-4ed3-ba6d-27656c6b2e92\nTimestamp: 2026-01-10T05:11:26\n\n\ud83d\udce2 **BROADCAST ANNOUNCEMENT**\n\nTEST: Broadcast via agent API working!\n\n---\n*Broadcast delivered via Unified Messaging V3*\n",
+    "priority": "Agent-7",
+    "message_type": "broadcast",
+    "category": "broadcast",
+    "metadata": {},
+    "created_at": "2026-01-10T05:11:55.905734",
+    "delivered_at": null
+  }
+]

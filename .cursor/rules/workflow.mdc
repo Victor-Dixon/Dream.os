@@ -1,0 +1,9 @@
+---
+description: Git workflow and collaboration standards
+globs:
+  - "**"
+alwaysApply: true
+---
+
+## **🔄 GIT WORKFLOW**
+For detailed git hygiene requirements, see `.cursor/rules/git-hygiene.mdc`.
