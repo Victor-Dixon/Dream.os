@@ -72,9 +72,7 @@ class MainControlPanelView(discord.ui.View if DISCORD_AVAILABLE else object):
         self.add_item(self.main_control_btn)
 
         # Status monitor button
-        self.monitor_btn = ControlPanelButtonFactory.create_monitor_button(
-            callback=self.toggle_monitor
-        )
+        self.monitor_btn = ControlPanelButtonFactory.create_monitor_button()
         self.add_item(self.monitor_btn)
 
     def _setup_monitoring_buttons(self):

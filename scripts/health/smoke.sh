@@ -1,53 +1,49 @@
-#!/bin/bash
-#
-# Smoke Test Wrapper - Agent Cellphone V2
-# =======================================
+# Smoke Test Wrapper - Agent Cellphone V2 (PowerShell)
+# ===================================================
 #
 # Runs the Python smoke test harness for all core systems.
 # Exit codes match the Python script (0=success, 1=failure).
 #
-# Usage: ./scripts/health/smoke.sh
+# Usage: .\scripts\health\smoke.ps1
 #
 # Author: Agent-2 (Architecture & Design Specialist)
 # Date: 2026-01-09
 #
 
-set -e  # Exit on any error
-
 # Get the directory where this script is located
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+$ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$ProjectRoot = Split-Path -Parent (Split-Path -Parent $ScriptDir)
 
 # Change to project root
-cd "$PROJECT_ROOT"
+Set-Location $ProjectRoot
 
-echo "🔥 Dream.OS Smoke Test Suite"
-echo "============================"
-echo "Project Root: $PROJECT_ROOT"
-echo "Timestamp: $(date)"
-echo ""
+Write-Host "🔥 Dream.OS Smoke Test Suite" -ForegroundColor Yellow
+Write-Host "============================" -ForegroundColor Yellow
+Write-Host "Project Root: $ProjectRoot"
+Write-Host "Timestamp: $(Get-Date)"
+Write-Host ""
 
 # Set PYTHONPATH to include the project root
-export PYTHONPATH="$PROJECT_ROOT:$PYTHONPATH"
+$env:PYTHONPATH = "$ProjectRoot;$env:PYTHONPATH"
 
 # Run the smoke test
-echo "🚀 Executing smoke tests..."
-python scripts/health/smoke.py
+Write-Host "🚀 Executing smoke tests..." -ForegroundColor Green
+& python scripts/health/smoke.py
 
 # Capture exit code
-EXIT_CODE=$?
+$ExitCode = $LASTEXITCODE
 
-echo ""
-echo "============================"
+Write-Host ""
+Write-Host "============================" -ForegroundColor Yellow
 
-if [ $EXIT_CODE -eq 0 ]; then
-    echo "🎉 ALL SYSTEMS OPERATIONAL"
-else
-    echo "💥 SYSTEMS REQUIRE ATTENTION"
-    echo "Check the output above for failed subsystems."
-fi
+if ($ExitCode -eq 0) {
+    Write-Host "🎉 ALL SYSTEMS OPERATIONAL" -ForegroundColor Green
+} else {
+    Write-Host "💥 SYSTEMS REQUIRE ATTENTION" -ForegroundColor Red
+    Write-Host "Check the output above for failed subsystems."
+}
 
-echo "Exit Code: $EXIT_CODE"
-echo "============================"
+Write-Host "Exit Code: $ExitCode" -ForegroundColor Yellow
+Write-Host "============================" -ForegroundColor Yellow
 
-exit $EXIT_CODE
+exit $ExitCode

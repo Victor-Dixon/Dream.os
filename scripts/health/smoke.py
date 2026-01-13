@@ -23,6 +23,12 @@ import logging
 from typing import Dict, List, Tuple, Callable
 from pathlib import Path
 
+# Add project root to path
+import sys
+from pathlib import Path
+project_root = Path(__file__).parent.parent
+sys.path.insert(0, str(project_root))
+
 # Load environment variables
 from dotenv import load_dotenv
 load_dotenv()
@@ -65,7 +71,7 @@ class SmokeTestHarness:
             },
             'discord_bot': {
                 'name': 'Discord Bot',
-                'module': 'src.discord_bot',
+                'module': 'src.discord_commander.unified_discord_bot',
                 'tests': [
                     self._test_import,
                     self._test_discord_config,
@@ -162,6 +168,11 @@ class SmokeTestHarness:
     def _test_import(self, system_name: str, suite_config: Dict) -> Tuple[bool, str]:
         """Test if the module can be imported."""
         try:
+            # Ensure project root is in path for all imports
+            project_root = Path(__file__).parent.parent
+            if str(project_root) not in sys.path:
+                sys.path.insert(0, str(project_root))
+
             module_name = suite_config['module']
             importlib.import_module(module_name)
             return True, f"Import successful: {module_name}"
@@ -178,7 +189,7 @@ class SmokeTestHarness:
         """Test if message queue config can be loaded."""
         try:
             # Try to import and check for basic config requirements
-            from src.config.paths import get_project_root
+            from src.utils.unified_utilities import get_project_root
 
             # Check if required directories exist
             project_root = get_project_root()
@@ -248,20 +259,38 @@ class SmokeTestHarness:
     def _test_twitch_dry_run(self, system_name: str, suite_config: Dict) -> Tuple[bool, str]:
         """Test Twitch bot dry-run connectivity."""
         try:
-            # Import the twitch eventsub server
-            import src.services.chat_presence.twitch_eventsub_server as twitch_server
+            # Import the twitch chat bridge
+            import src.services.chat_presence.twitch_chat_bridge as twitch_bridge
 
-            # Check if main function exists
-            if not hasattr(twitch_server, 'main'):
-                return False, "Missing main function"
+            # Check if TwitchChatBridge exists
+            if not hasattr(twitch_bridge, 'TwitchChatBridge'):
+                return False, "Missing TwitchChatBridge class"
 
-            # Check for required classes/functions
-            required_attrs = ['TwitchEventSubServer', 'run_server']
-            for attr in required_attrs:
-                if not hasattr(twitch_server, attr):
-                    return False, f"Missing required attribute: {attr}"
+            # Get config from environment
+            token = os.getenv('TWITCH_ACCESS_TOKEN', '')
+            channel = os.getenv('TWITCH_CHANNEL', '')
+            username = os.getenv('TWITCH_BOT_USERNAME', channel)
 
-            return True, "Twitch bot structure valid"
+            if not token or not channel:
+                return False, "Missing token or channel for dry-run test"
+
+            # Create bridge instance for validation (dry-run)
+            try:
+                bridge = twitch_bridge.TwitchChatBridge(
+                    username=username,
+                    token=token,
+                    channel=channel,
+                    message_handler=None,
+                    connection_handler=None,
+                    use_websocket=False  # Use IRC for dry-run
+                )
+
+                # Validate configuration (this will raise exception if invalid)
+                # We don't call connect() to avoid actual network connection
+                return True, "Twitch bot configuration valid for dry-run"
+
+            except Exception as config_error:
+                return False, f"Configuration validation failed: {config_error}"
 
         except Exception as e:
             return False, f"Dry-run failed: {e}"
@@ -273,7 +302,7 @@ class SmokeTestHarness:
     def _test_discord_config(self, system_name: str, suite_config: Dict) -> Tuple[bool, str]:
         """Test if Discord bot config is available."""
         required_env_vars = [
-            'DISCORD_TOKEN',
+            'DISCORD_BOT_TOKEN',
             'DISCORD_GUILD_ID'
         ]
 
@@ -291,15 +320,11 @@ class SmokeTestHarness:
         """Test Discord bot dry-run connectivity."""
         try:
             # Import the discord bot
-            import src.discord_bot as discord_bot
+            import src.discord_commander.unified_discord_bot as discord_bot
 
-            # Check if main function exists
-            if not hasattr(discord_bot, 'main'):
-                return False, "Missing main function"
-
-            # Check for DiscordBot class
-            if not hasattr(discord_bot, 'DiscordBot'):
-                return False, "Missing DiscordBot class"
+            # Check for UnifiedDiscordBot class
+            if not hasattr(discord_bot, 'UnifiedDiscordBot'):
+                return False, "Missing UnifiedDiscordBot class"
 
             # Try to import discord.py to ensure it's available
             try:
@@ -307,7 +332,17 @@ class SmokeTestHarness:
             except ImportError:
                 return False, "discord.py library not available"
 
-            return True, "Discord bot structure valid"
+            # Check if token is available for dry-run
+            token = os.getenv('DISCORD_BOT_TOKEN')
+            if not token:
+                return False, "DISCORD_BOT_TOKEN not available for dry-run"
+
+            # Test basic bot instantiation (dry-run - no actual connection)
+            try:
+                bot = discord_bot.UnifiedDiscordBot(token=token)
+                return True, "Discord bot instantiation successful (dry-run)"
+            except Exception as e:
+                return False, f"Bot instantiation failed: {e}"
 
         except Exception as e:
             return False, f"Dry-run failed: {e}"
@@ -320,7 +355,7 @@ class SmokeTestHarness:
         """Test if FastAPI config is available."""
         try:
             # Check if required directories exist
-            from src.config.paths import get_project_root
+            from src.utils.unified_utilities import get_project_root
             project_root = get_project_root()
 
             required_dirs = [
@@ -365,4 +400,11 @@ class SmokeTestHarness:
 
 
 def main():
-    """Main en
+    """Main entry point for smoke test harness."""
+    harness = SmokeTestHarness()
+    exit_code = harness.run_all_tests()
+    sys.exit(exit_code)
+
+
+if __name__ == "__main__":
+    main()
