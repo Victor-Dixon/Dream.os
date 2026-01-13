@@ -57,6 +57,31 @@ try:
 except ImportError:
     monitor_router = None
 
+# Add agent-tools to path for swarm command tools
+import sys
+import os
+agent_tools_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), '..', 'agent-tools')
+if agent_tools_path not in sys.path:
+    sys.path.insert(0, agent_tools_path)
+
+try:
+    from swarm_command_tools.swarm_command_routes import router as swarm_router
+except ImportError as e:
+    logger.warning(f"Could not import swarm command routes: {e}")
+    swarm_router = None
+
+try:
+    from swarm_command_tools.task_distributor_routes import router as distributor_router
+except ImportError as e:
+    logger.warning(f"Could not import task distributor routes: {e}")
+    distributor_router = None
+
+try:
+    from swarm_command_tools.intelligence_aggregator_routes import router as intelligence_router
+except ImportError as e:
+    logger.warning(f"Could not import intelligence aggregator routes: {e}")
+    intelligence_router = None
+
 logger = logging.getLogger(__name__)
 
 # Templates
@@ -97,6 +122,18 @@ if ot_router:
 if monitor_router:
     api_router.include_router(monitor_router, prefix="/monitor", tags=["Repository Monitor"])
     logger.info("✅ Repository Monitor routes included")
+
+if swarm_router:
+    api_router.include_router(swarm_router)
+    logger.info("✅ Swarm Command Dashboard routes included")
+
+if distributor_router:
+    api_router.include_router(distributor_router)
+    logger.info("✅ Automated Task Distributor routes included")
+
+if intelligence_router:
+    api_router.include_router(intelligence_router)
+    logger.info("✅ Swarm Intelligence Aggregator routes included")
 
 # Core routes (health, root pages)
 @api_router.get("/health")
