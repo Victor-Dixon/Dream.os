@@ -46,7 +46,7 @@ async def demo_phase3_plugin_system():
         # 3. Load Analytics Plugin
         print("\n📊 Step 3: Loading Analytics Plugin...")
         analytics_config = PluginConfig(
-            plugin_id="analytics-plugin",
+            plugin_id="analytics_plugin",
             version="1.0.0",
             enabled=True,
             settings={
@@ -56,7 +56,7 @@ async def demo_phase3_plugin_system():
             }
         )
 
-        success = await loader.load_plugin("analytics-plugin", analytics_config)
+        success = await loader.load_plugin("analytics_plugin", analytics_config)
         if success:
             print("✅ Analytics plugin loaded successfully")
         else:

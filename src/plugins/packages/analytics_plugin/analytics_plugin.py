@@ -72,7 +72,7 @@ class AnalyticsPlugin(IAnalyticsProvider):
     @property
     def plugin_id(self) -> str:
         """Unique plugin identifier."""
-        return "analytics-plugin"
+        return "analytics_plugin"
 
     @property
     def version(self) -> str:

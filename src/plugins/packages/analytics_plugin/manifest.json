@@ -1,5 +1,5 @@
 {
-  "plugin_id": "analytics-plugin",
+  "plugin_id": "analytics_plugin",
   "name": "Ecosystem Analytics Plugin",
   "version": "1.0.0",
   "author": "Agent-6 (Phase 3 Lead)",
