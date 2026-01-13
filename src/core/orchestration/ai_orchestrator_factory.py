@@ -94,9 +94,11 @@ class AIOrchestratorFactory:
 
         # AI enhancement threshold
         if ai_score > 0.6:
-            logger.info(".2f"            return OrchestratorType.AI_ENHANCED
+            logger.info(f"🤖 AI enhancement selected (score: {ai_score:.2f})")
+            return OrchestratorType.AI_ENHANCED
         else:
-            logger.info(".2f"            return OrchestratorType.STANDARD
+            logger.info(f"📋 Standard orchestration selected (score: {ai_score:.2f})")
+            return OrchestratorType.STANDARD
 
     def _assess_task_complexity(self, tasks: list) -> float:
         """Assess average task complexity (0.0 to 1.0)."""
@@ -185,9 +187,13 @@ class AIOrchestratorFactory:
         }
 
         if isinstance(orchestrator, AIEnhancedOrchestrator):
+            context_processors_available = len(orchestrator.context_processors)
             info.update({
                 'reasoning_engine_available': orchestrator.reasoning_engine is not None,
                 'context_engine_available': orchestrator.context_engine is not None,
+                'context_processors_available': context_processors_available,
+                'context_processors_initialized': list(orchestrator.context_processors.keys()),
+                'risk_analytics_available': orchestrator.risk_calculator is not None,
                 'decision_history_count': len(orchestrator.decision_history),
                 'metrics_tracked': len(orchestrator.metrics.coordination_patterns)
             })

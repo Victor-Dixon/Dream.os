@@ -175,5 +175,7 @@ exclude_lines = [
     "def __repr__",
     "raise AssertionError",
     "raise NotImplementedError",
-]</content>
-</xai:function_call<parameter name="path">D:\Agent_Cellphone_V2_Repository\pyproject.toml
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+    "@abstractmethod",
+]

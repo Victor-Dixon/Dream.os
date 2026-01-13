@@ -1,0 +1,15 @@
+{
+  "current_mode": "8-agent",
+  "modes": {
+    "4-agent": {
+      "active_agents": ["Agent-1", "Agent-2", "Agent-3", "Agent-4"],
+      "processing_order": ["Agent-1", "Agent-2", "Agent-3", "Agent-4"],
+      "monitor_setup": "single"
+    },
+    "8-agent": {
+      "active_agents": ["Agent-1", "Agent-2", "Agent-3", "Agent-4", "Agent-5", "Agent-6", "Agent-7", "Agent-8"],
+      "processing_order": ["Agent-1", "Agent-2", "Agent-3", "Agent-4", "Agent-5", "Agent-6", "Agent-7", "Agent-8"],
+      "monitor_setup": "dual"
+    }
+  }
+}

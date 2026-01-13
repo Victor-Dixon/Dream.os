@@ -22,6 +22,7 @@ from datetime import datetime
 
 from src.operational_transformation.ot_engine import OTEngine, Operation, OperationType
 from src.operational_transformation.sync_protocol import SyncProtocol, SyncMessage, SyncMessageType
+from src.core.infrastructure.phase2_coordination_events import get_phase2_coordination
 
 logger = logging.getLogger(__name__)
 
@@ -45,13 +46,16 @@ class CollaborativeMessagingService:
         self.ot_engine = OTEngine(site_id=site_id)
         self.sync_protocol = SyncProtocol(site_id, self.ot_engine)
 
+        # Event coordination integration
+        self.event_coordinator = get_phase2_coordination()
+
         # Active collaborative sessions
         self.active_sessions: Dict[str, Dict[str, Any]] = {}
 
         # Message composition state
         self.composition_state: Dict[str, str] = {}
 
-        logger.info(f"CollaborativeMessagingService initialized for site {site_id}")
+        logger.info(f"CollaborativeMessagingService initialized with event coordination for site {site_id}")
 
     async def start_collaborative_session(self, session_id: str, initial_content: str = "") -> bool:
         """
@@ -77,6 +81,23 @@ class CollaborativeMessagingService:
         }
 
         self.composition_state[session_id] = initial_content
+
+        # Publish collaborative session start event
+        try:
+            await self.event_coordinator.coordinate_agents(
+                coordinating_agent=f"Agent-{self.site_id}",
+                target_agents=["all_agents"],  # Broadcast to all agents
+                action=f"start_collaborative_session_{session_id}",
+                details={
+                    "session_id": session_id,
+                    "initial_content_length": len(initial_content),
+                    "site_id": self.site_id,
+                    "session_type": "collaborative_messaging"
+                }
+            )
+        except Exception as e:
+            logger.warning(f"Failed to publish collaborative session start event: {e}")
+
         logger.info(f"Started collaborative session: {session_id}")
         return True
 

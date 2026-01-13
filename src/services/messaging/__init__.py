@@ -47,9 +47,9 @@ from .coordination_handlers import (
     MessageCoordinator,
 )
 
-# Service Adapters - Minimal implementation for backward compatibility
+# Service Adapters - Define locally to avoid circular imports
 class ConsolidatedMessagingService:
-    """Minimal ConsolidatedMessagingService for backward compatibility."""
+    """Consolidated messaging service for backward compatibility."""
 
     def __init__(self):
         """Initialize consolidated messaging service."""
@@ -60,7 +60,7 @@ class ConsolidatedMessagingService:
                     timeout: float = 30.0, discord_user_id: str = None,
                     stalled: bool = False, apply_template: bool = False,
                     message_category=None, sender: str = None):
-        """Send message to agent (minimal implementation)."""
+        """Send message to agent."""
         try:
             from .coordination_handlers import MessageCoordinator
             coordinator = MessageCoordinator()
@@ -82,7 +82,7 @@ class ConsolidatedMessagingService:
             return {"success": False, "error": str(e)}
 
     def broadcast_message(self, message: str, priority: str = "regular"):
-        """Broadcast message to all agents (minimal implementation)."""
+        """Broadcast message to all agents."""
         try:
             from .coordination_handlers import MessageCoordinator
             coordinator = MessageCoordinator()
@@ -111,9 +111,6 @@ def broadcast_discord_message(message: str, priority: str = "regular") -> dict[s
         return {"success": True, "message": "Discord broadcast sent (placeholder)"}
     except Exception as e:
         return {"success": False, "error": str(e)}
-
-# Export for backward compatibility
-ConsolidatedMessagingService = ConsolidatedMessagingService
 
 # CLI Handlers
 from .cli_handlers import (

@@ -125,5 +125,3 @@ setup(
         "pytest>=7.0.0",
         "pytest-cov>=4.0.0",
     ],
-)</content>
-</xai:function_call<parameter name="path">D:\Agent_Cellphone_V2_Repository\setup.py

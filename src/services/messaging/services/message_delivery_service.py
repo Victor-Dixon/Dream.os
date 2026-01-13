@@ -18,6 +18,7 @@ from typing import Any, Dict, Optional
 
 from src.core.messaging_core import UnifiedMessagePriority, UnifiedMessageType
 from src.core.messaging_models_core import MessageCategory
+from src.core.infrastructure.phase2_coordination_events import get_phase2_coordination
 
 from ..agent_message_helpers import (
     send_message_with_fallback,
@@ -54,6 +55,9 @@ class MessageDeliveryService:
         self.validation_service = validation_service or MessageValidationService()
         self.routing_service = routing_service or MessageRoutingService()
         self.formatting_service = formatting_service or MessageFormattingService()
+
+        # Event coordination integration
+        self.event_coordinator = get_phase2_coordination()
 
     def deliver_message(
         self,
@@ -137,6 +141,39 @@ class MessageDeliveryService:
 
         # Step 8: Update last inbound category
         update_last_inbound_category(recipient, final_category)
+
+        # Step 9: Publish delivery event for swarm coordination
+        try:
+            success = result.get("success", False)
+            task_description = f"Message delivery to {recipient}"
+            if success:
+                # Publish successful delivery as progress update
+                await self.event_coordinator.publish_phase2_progress(
+                    agent_id=sender_final,
+                    task=task_description,
+                    progress=1.0,  # 100% complete
+                    status="delivered",
+                    details={
+                        "recipient": recipient,
+                        "message_type": str(message_type),
+                        "priority": str(priority),
+                        "category": str(final_category) if final_category else None
+                    }
+                )
+            else:
+                # Publish failed delivery as completion with failure
+                await self.event_coordinator.publish_completion(
+                    agent_id=sender_final,
+                    task=task_description,
+                    success=False,
+                    details={
+                        "recipient": recipient,
+                        "error": result.get("error", "Unknown delivery error"),
+                        "message_type": str(message_type)
+                    }
+                )
+        except Exception as e:
+            logger.warning(f"Failed to publish delivery event: {e}")
 
         return result
 

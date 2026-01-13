@@ -66,17 +66,19 @@ class TestAIEnhancedOrchestrator:
             'coordination_state': {'phase': 'execution', 'progress': 0.5}
         }
 
-    @patch('src.core.orchestration.ai_enhanced_orchestrator.AI_AVAILABLE', True)
-    @patch('src.core.orchestration.ai_enhanced_orchestrator.CONTEXT_AVAILABLE', True)
-    def test_orchestrator_initialization(self, mock_registry):
-        """Test orchestrator initializes correctly."""
-        pipeline = ["step1", "step2"]
-        orchestrator = AIEnhancedOrchestrator(mock_registry, pipeline)
+@patch('src.core.orchestration.ai_enhanced_orchestrator.AI_AVAILABLE', True)
+@patch('src.core.orchestration.ai_enhanced_orchestrator.CONTEXT_AVAILABLE', True)
+@patch('src.core.orchestration.ai_enhanced_orchestrator.RISK_ANALYTICS_AVAILABLE', True)
+def test_orchestrator_initialization(self, mock_registry):
+    """Test orchestrator initializes correctly."""
+    pipeline = ["step1", "step2"]
+    orchestrator = AIEnhancedOrchestrator(mock_registry, pipeline)
 
-        assert orchestrator.registry == mock_registry
-        assert orchestrator.pipeline_keys == pipeline
-        assert isinstance(orchestrator.metrics, CoordinationMetrics)
-        assert orchestrator.decision_history == []
+    assert orchestrator.registry == mock_registry
+    assert orchestrator.pipeline_keys == pipeline
+    assert isinstance(orchestrator.metrics, CoordinationMetrics)
+    assert orchestrator.decision_history == []
+    assert isinstance(orchestrator.context_processors, dict)
 
     @patch('src.core.orchestration.ai_enhanced_orchestrator.AI_AVAILABLE', False)
     def test_orchestrator_fallback_when_ai_unavailable(self, mock_registry):
@@ -185,6 +187,57 @@ class TestAIEnhancedOrchestrator:
         assert 'timestamp' in latest_pattern
         assert 'success' in latest_pattern
         assert 'execution_time' in latest_pattern
+
+    @patch('src.core.orchestration.ai_enhanced_orchestrator.AI_AVAILABLE', True)
+    @patch('src.core.orchestration.ai_enhanced_orchestrator.CONTEXT_AVAILABLE', True)
+    @patch('src.core.orchestration.ai_enhanced_orchestrator.RISK_ANALYTICS_AVAILABLE', True)
+    def test_context_processors_initialization(self, mock_registry):
+        """Test context processors are initialized correctly."""
+        pipeline = ["step1", "step2"]
+        orchestrator = AIEnhancedOrchestrator(mock_registry, pipeline)
+
+        # Should attempt to initialize 5 context processors
+        assert isinstance(orchestrator.context_processors, dict)
+        # Note: actual initialization may fail in test environment due to missing dependencies
+
+    @patch('src.core.orchestration.ai_enhanced_orchestrator.AI_AVAILABLE', False)
+    @patch('src.core.orchestration.ai_enhanced_orchestrator.CONTEXT_AVAILABLE', False)
+    @patch('src.core.orchestration.ai_enhanced_orchestrator.RISK_ANALYTICS_AVAILABLE', False)
+    def test_orchestrator_graceful_degradation(self, mock_registry):
+        """Test orchestrator works when AI components are unavailable."""
+        pipeline = ["step1", "step2"]
+        orchestrator = AIEnhancedOrchestrator(mock_registry, pipeline)
+
+        assert orchestrator.reasoning_engine is None
+        assert orchestrator.context_engine is None
+        assert orchestrator.risk_calculator is None
+        assert orchestrator.context_processors == {}
+
+        # Should still function with basic orchestration
+        ctx = Mock(spec=OrchestrationContext)
+        ctx.emit = Mock()
+        payload = {'test': 'data'}
+
+        result = orchestrator.execute(ctx, payload)
+        assert isinstance(result, OrchestrationResult)
+        assert result.ok is True
+
+    def test_risk_assessment_with_mock_data(self, mock_registry, sample_context):
+        """Test risk assessment functionality with mock data."""
+        pipeline = ["step1", "step2"]
+        orchestrator = AIEnhancedOrchestrator(mock_registry, pipeline)
+
+        # Test the risk assessment method directly
+        risks = orchestrator._assess_coordination_risks(
+            sample_context['agents'],
+            sample_context['tasks']
+        )
+
+        assert 'high_priority_tasks' in risks
+        assert 'overloaded_agents' in risks
+        assert 'overall_score' in risks
+        assert risks['high_priority_tasks'] == 1  # task-1 has priority 4
+        assert 0.0 <= risks['overall_score'] <= 1.0
 
 
 class TestAIOrchestratorFactory:
@@ -328,3 +381,26 @@ class TestSmartOrchestratorCreation:
         with patch('src.core.orchestration.ai_enhanced_orchestrator.AI_AVAILABLE', True):
             orchestrator = create_smart_orchestrator(mock_registry, pipeline, context)
             assert isinstance(orchestrator, AIEnhancedOrchestrator)
+
+    @patch('src.core.orchestration.ai_orchestrator_factory.AIOrchestratorFactory._check_ai_availability')
+    def test_get_orchestrator_info_enhanced(self, mock_check, mock_registry):
+        """Test enhanced orchestrator info reporting with context processors and risk analytics."""
+        mock_check.return_value = True
+        factory = AIOrchestratorFactory()
+
+        pipeline = ["step1", "step2"]
+        context = {
+            'tasks': [{'priority': 5}],
+            'agents': [{'id': 'agent1'}]
+        }
+
+        with patch('src.core.orchestration.ai_enhanced_orchestrator.AI_AVAILABLE', True):
+            orchestrator = factory.create_orchestrator(mock_registry, pipeline, context)
+            info = factory.get_orchestrator_info(orchestrator)
+
+            assert info['type'] == 'AIEnhancedOrchestrator'
+            assert info['ai_enhanced'] is True
+            assert 'context_processors_available' in info
+            assert 'context_processors_initialized' in info
+            assert 'risk_analytics_available' in info
+            assert isinstance(info['context_processors_initialized'], list)

@@ -51,9 +51,22 @@ except ImportError:
 
 try:
     from src.services.ai_context_engine.ai_context_engine import AIContextEngine
+    from src.services.ai_context_engine.context_processors import (
+        TradingContextProcessor,
+        CollaborationContextProcessor,
+        AnalysisContextProcessor,
+        RiskContextProcessor,
+        UXContextProcessor
+    )
     CONTEXT_AVAILABLE = True
 except ImportError:
     CONTEXT_AVAILABLE = False
+
+try:
+    from src.services.risk_analytics.risk_calculator_service import RiskCalculatorService
+    RISK_ANALYTICS_AVAILABLE = True
+except ImportError:
+    RISK_ANALYTICS_AVAILABLE = False
 
 logger = logging.getLogger(__name__)
 
@@ -93,6 +106,8 @@ class AIEnhancedOrchestrator(Orchestrator):
         super().__init__(registry, pipeline)
         self.reasoning_engine = None
         self.context_engine = None
+        self.context_processors = {}
+        self.risk_calculator = None
         self.metrics = CoordinationMetrics()
         self.decision_history: List[AIDecision] = []
 
@@ -100,7 +115,7 @@ class AIEnhancedOrchestrator(Orchestrator):
         self._initialize_ai_components()
 
     def _initialize_ai_components(self) -> None:
-        """Initialize AI reasoning and context engines."""
+        """Initialize AI reasoning and context engines with processors."""
         if AI_AVAILABLE:
             try:
                 self.reasoning_engine = AdvancedReasoningEngine()
@@ -112,18 +127,55 @@ class AIEnhancedOrchestrator(Orchestrator):
             try:
                 self.context_engine = AIContextEngine()
                 logger.info("✅ AI context engine initialized for orchestration")
+
+                # Initialize individual context processors
+                self._initialize_context_processors()
+
             except Exception as e:
                 logger.warning(f"Failed to initialize context engine: {e}")
 
+        if RISK_ANALYTICS_AVAILABLE:
+            try:
+                self.risk_calculator = RiskCalculatorService()
+                logger.info("✅ Risk calculator service initialized for orchestration")
+            except Exception as e:
+                logger.warning(f"Failed to initialize risk calculator: {e}")
+
+    def _initialize_context_processors(self) -> None:
+        """Initialize the 5 AI context processors for orchestration."""
+        processor_classes = {
+            'trading': TradingContextProcessor,
+            'collaboration': CollaborationContextProcessor,
+            'analysis': AnalysisContextProcessor,
+            'risk': RiskContextProcessor,
+            'ux': UXContextProcessor
+        }
+
+        initialized_count = 0
+        for name, processor_class in processor_classes.items():
+            try:
+                processor = processor_class()
+                self.context_processors[name] = processor
+                initialized_count += 1
+                logger.debug(f"✅ Initialized context processor: {name}")
+            except Exception as e:
+                logger.warning(f"Failed to initialize {name} context processor: {e}")
+                continue
+
+        if initialized_count > 0:
+            logger.info(f"🧠 Initialized {initialized_count}/5 context processors for orchestration")
+        else:
+            logger.warning("⚠️ No context processors available for AI orchestration")
+
     async def analyze_coordination_context(self, payload: Dict[str, Any]) -> Dict[str, Any]:
         """
-        Use AI to analyze the coordination context and provide insights.
+        Use AI context processors and reasoning to analyze coordination context.
 
         Args:
             payload: Orchestration payload with tasks, agents, and context
 
         Returns:
-            Enhanced context with AI insights
+            Enhanced context with multi-dimensional AI insights
         """
         if not self.reasoning_engine:
             return payload
@@ -134,15 +186,23 @@ class AIEnhancedOrchestrator(Orchestrator):
             tasks = payload.get('tasks', [])
             current_state = payload.get('coordination_state', {})
 
-            # Build reasoning context
+            # Get insights from all 5 context processors
+            context_insights = await self._gather_context_processor_insights(agents, tasks, current_state)
+
+            # Get risk analytics if available
+            risk_insights = await self._gather_risk_analytics_insights(agents, tasks, current_state)
+
+            # Build comprehensive reasoning context
             context = ReasoningContext(
-                query=f"Analyze coordination context: {len(agents)} agents, {len(tasks)} tasks",
+                query=f"Analyze coordination context: {len(agents)} agents, {len(tasks)} tasks with multi-dimensional AI insights",
                 mode=ReasoningMode.STRATEGIC,
                 format=ResponseFormat.STRUCTURED,
                 context={
                     'agents': agents,
                     'tasks': tasks,
                     'current_state': current_state,
+                    'context_insights': context_insights,
+                    'risk_insights': risk_insights,
                     'historical_metrics': self.metrics.__dict__,
                     'recent_decisions': [d.__dict__ for d in self.decision_history[-5:]]
                 }
@@ -151,25 +211,130 @@ class AIEnhancedOrchestrator(Orchestrator):
             # Get AI analysis
             analysis = await self.reasoning_engine.reason(context)
 
-            # Extract insights
+            # Extract comprehensive insights
             insights = {
                 'workload_distribution': self._analyze_workload_distribution(agents, tasks),
                 'task_priorities': self._optimize_priorities(tasks, current_state),
                 'coordination_strategy': self._recommend_strategy(agents, tasks, analysis),
                 'risk_assessment': self._assess_coordination_risks(agents, tasks),
+                'context_processor_insights': context_insights,
+                'risk_analytics_insights': risk_insights,
                 'ai_confidence': analysis.get('confidence_score', 0.5)
             }
 
-            # Update payload with AI insights
+            # Update payload with comprehensive AI insights
             payload['ai_insights'] = insights
             payload['ai_analysis'] = analysis
 
-            logger.info(f"🤖 AI coordination analysis complete (confidence: {insights['ai_confidence']:.2f})")
+            logger.info(f"🤖 Multi-dimensional AI coordination analysis complete (confidence: {insights['ai_confidence']:.2f})")
             return payload
 
         except Exception as e:
             logger.warning(f"AI coordination analysis failed: {e}")
             return payload
+
+    async def _gather_context_processor_insights(self, agents: List[Dict], tasks: List[Dict], state: Dict) -> Dict[str, Any]:
+        """Gather insights from all 5 context processors."""
+        insights = {}
+
+        for processor_name, processor in self.context_processors.items():
+            try:
+                # Create context session data for the processor
+                session_data = {
+                    'agents': agents,
+                    'tasks': tasks,
+                    'coordination_state': state,
+                    'timestamp': time.time()
+                }
+
+                # Get processor-specific insights
+                processor_insights = await processor.process_context(session_data)
+                insights[processor_name] = processor_insights
+
+                logger.debug(f"✅ {processor_name} context processor provided insights")
+
+            except Exception as e:
+                logger.warning(f"Failed to get insights from {processor_name} processor: {e}")
+                insights[processor_name] = {'error': str(e)}
+
+        return insights
+
+    async def _gather_risk_analytics_insights(self, agents: List[Dict], tasks: List[Dict], state: Dict) -> Dict[str, Any]:
+        """Gather risk analytics insights for coordination decisions."""
+        if not self.risk_calculator:
+            return {'available': False}
+
+        try:
+            # Calculate coordination risk metrics
+            agent_risks = []
+            for agent in agents:
+                agent_id = agent.get('id', agent.get('agent_id', 'unknown'))
+                # Assess agent risk based on workload and capabilities
+                workload_score = len([t for t in tasks if t.get('assigned_to') == agent_id])
+                capability_score = len(agent.get('specialties', []))
+
+                agent_risk = {
+                    'agent_id': agent_id,
+                    'workload_risk': min(1.0, workload_score / 5.0),  # Risk increases with workload
+                    'capability_risk': max(0.0, 1.0 - capability_score / 3.0),  # Risk decreases with capabilities
+                    'overall_risk': 0.0
+                }
+                agent_risk['overall_risk'] = (agent_risk['workload_risk'] + agent_risk['capability_risk']) / 2.0
+                agent_risks.append(agent_risk)
+
+            # Calculate task risk metrics
+            task_risks = []
+            for task in tasks:
+                task_id = task.get('id', task.get('task_id', 'unknown'))
+                priority = task.get('priority', 3)
+                dependencies = task.get('dependencies', [])
+
+                task_risk = {
+                    'task_id': task_id,
+                    'priority_risk': max(0.0, (priority - 3) / 2.0),  # Higher priority = higher risk
+                    'dependency_risk': min(1.0, len(dependencies) / 3.0),  # More dependencies = higher risk
+                    'overall_risk': 0.0
+                }
+                task_risk['overall_risk'] = (task_risk['priority_risk'] + task_risk['dependency_risk']) / 2.0
+                task_risks.append(task_risk)
+
+            # Overall coordination risk assessment
+            coordination_risk = {
+                'agent_risks': agent_risks,
+                'task_risks': task_risks,
+                'coordination_complexity': len(tasks) * len(agents),
+                'high_risk_agents': len([r for r in agent_risks if r['overall_risk'] > 0.7]),
+                'high_risk_tasks': len([r for r in task_risks if r['overall_risk'] > 0.7]),
+                'overall_coordination_risk': sum(r['overall_risk'] for r in agent_risks + task_risks) / max(1, len(agent_risks + task_risks))
+            }
+
+            return {
+                'available': True,
+                'coordination_risk_assessment': coordination_risk,
+                'recommendations': self._generate_risk_based_recommendations(coordination_risk)
+            }
+
+        except Exception as e:
+            logger.warning(f"Risk analytics insights failed: {e}")
+            return {'available': False, 'error': str(e)}
+
+    def _generate_risk_based_recommendations(self, risk_assessment: Dict[str, Any]) -> List[str]:
+        """Generate risk-based coordination recommendations."""
+        recommendations = []
+
+        if risk_assessment['high_risk_agents'] > 0:
+            recommendations.append(f"Redistribute workload from {risk_assessment['high_risk_agents']} overloaded agents")
+
+        if risk_assessment['high_risk_tasks'] > 0:
+            recommendations.append(f"Prioritize completion of {risk_assessment['high_risk_tasks']} high-risk tasks first")
+
+        if risk_assessment['overall_coordination_risk'] > 0.6:
+            recommendations.append("Consider breaking down coordination into smaller, lower-risk phases")
+
+        if risk_assessment['coordination_complexity'] > 50:
+            recommendations.append("High coordination complexity detected - consider hierarchical coordination approach")
+
+        return recommendations if recommendations else ["Coordination risk within acceptable parameters"]
 
     def _analyze_workload_distribution(self, agents: List[Dict], tasks: List[Dict]) -> Dict[str, Any]:
         """Analyze current workload distribution across agents."""

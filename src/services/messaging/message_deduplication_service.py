@@ -24,6 +24,7 @@ from pathlib import Path
 from typing import Dict, Optional, Set
 
 from src.core.base.base_service import BaseService
+from src.core.infrastructure.phase2_coordination_events import get_phase2_coordination
 
 logger = logging.getLogger(__name__)
 
@@ -54,6 +55,9 @@ class MessageDeduplicationService(BaseService):
         self.retention_seconds = retention_hours * 3600
         self.max_entries = max_entries
 
+        # Event coordination integration
+        self.event_coordinator = get_phase2_coordination()
+
         # In-memory cache for fast lookups
         self._seen_messages: Dict[str, float] = {}
         self._last_cleanup = time.time()
@@ -77,6 +81,14 @@ class MessageDeduplicationService(BaseService):
         # Check if message ID exists
         if message_id in self._seen_messages:
             logger.info(f"🚫 Duplicate message detected: {message_id}")
+
+            # Publish duplicate detection event for swarm coordination
+            try:
+                import asyncio
+                asyncio.create_task(self._publish_duplicate_event(message_id))
+            except Exception as e:
+                logger.warning(f"Failed to schedule duplicate event: {e}")
+
             return True
 
         # Mark as seen
@@ -84,6 +96,29 @@ class MessageDeduplicationService(BaseService):
         self._save_seen_messages()
 
         return False
+
+    async def _publish_duplicate_event(self, message_id: str) -> None:
+        """
+        Publish duplicate message detection event for swarm coordination.
+
+        Args:
+            message_id: The duplicate message ID
+        """
+        try:
+            # Publish as validation event to notify swarm of coordination loops
+            await self.event_coordinator.publish_validation_result(
+                agent_id="MessageDeduplicationService",
+                validation_type="duplicate_detection",
+                result="duplicate_detected",
+                details={
+                    "message_id": message_id,
+                    "timestamp": time.time(),
+                    "service": "deduplication",
+                    "action_required": "investigate_coordination_loops"
+                }
+            )
+        except Exception as e:
+            logger.warning(f"Failed to publish duplicate event: {e}")
 
     def mark_seen(self, message_id: str) -> None:
         """

@@ -27,7 +27,7 @@ from datetime import datetime
 
 from .event_models import Event, create_event
 from .event_bus import get_event_bus
-from ..discord_commander.discord_event_bridge import get_discord_event_bridge
+from ...discord_commander.discord_event_bridge import get_discord_event_bridge
 
 logger = logging.getLogger(__name__)
 
