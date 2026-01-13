@@ -1,0 +1,352 @@
+{
+  "proposal_metadata": {
+    "created": "2026-01-13T05:00:00",
+    "agent": "Agent-1",
+    "purpose": "Collaborative root directory cleanup based on scanner analysis",
+    "current_files": 124,
+    "target_files": 35,
+    "reduction_percentage": 71.8,
+    "status": "PROPOSAL_READY_FOR_REVIEW"
+  },
+  "scanner_data_summary": {
+    "total_files": 124,
+    "total_dirs": 32,
+    "categories": {
+      "standard_project_dirs": 18,
+      "core_files": 7,
+      "configuration": 18,
+      "documentation": 48,
+      "scripts_utilities": 27,
+      "development_logs": 4,
+      "logs_temp": 5,
+      "uncategorized": 14,
+      "archives": 2,
+      "build_cache": 1,
+      "development_build": 5,
+      "other_directories": 7
+    },
+    "issues": [
+      "124 files in root (target: <40)",
+      "18 config files (target: 2-3)",
+      "48 documentation files (target: 2)",
+      "27 utility scripts (target: <5)",
+      "5 log files in root"
+    ]
+  },
+  "proposed_actions": {
+    "phase_1_config_consolidation": {
+      "priority": "CRITICAL",
+      "description": "Consolidate 18 config files → 3 organized files",
+      "estimated_reduction": 15,
+      "actions": {
+        "env_files": {
+          "move_to": "config/archives/",
+          "files": [".env", ".env.backup", ".env.discord"],
+          "keep": ".env.example"
+        },
+        "agent_configs": {
+          "merge_into": "config/agent_config.json",
+          "source_files": ["agent_mode_config.json", "cursor_agent_coords.json"],
+          "action": "MERGE_AND_ARCHIVE_ORIGINALS"
+        },
+        "coordination_configs": {
+          "merge_into": "config/coordination_config.json",
+          "source_files": ["coordination_cache.json", "swarm_synchronization_20260113.json"],
+          "action": "MERGE_AND_ARCHIVE_ORIGINALS"
+        },
+        "test_configs": {
+          "merge_into": "config/testing_config.toml",
+          "source_files": ["pytest.ini", "audit_plan.yaml"],
+          "action": "CONSOLIDATE_AND_ARCHIVE"
+        },
+        "result_archives": {
+          "move_to": "reports/archives/",
+          "files": [
+            "database_audit_results.json",
+            "database_qa_integration_results.json",
+            "database_validation_results.json",
+            "integration_test_results.json"
+          ]
+        }
+      }
+    },
+    "phase_2_documentation_relocation": {
+      "priority": "HIGH",
+      "description": "Move 48 docs → organized subdirs, keep 2 core files",
+      "estimated_reduction": 46,
+      "actions": {
+        "core_docs_keep": ["README.md", "CHANGELOG.md"],
+        "devlogs": {
+          "move_to": "docs/devlogs/",
+          "files": [
+            "database_structure_validation.py",
+            "simple_database_audit.py",
+            ".auditignore",
+            "docstring_coverage_report.txt"
+          ]
+        },
+        "guides_and_docs": {
+          "move_to": "docs/guides/",
+          "files": [
+            "DISCORD_BOT_MISSION_BRIEFING.md",
+            "AUDIT_RUNBOOK.md",
+            "thea_deployment_coordination_plan.md",
+            "tools_consolidation_master_plan.md",
+            "project_structure_consolidation_strategy.md",
+            "PYPI_PACKAGE_README.md",
+            "phase05_validation_checklist.md",
+            "final_publishing_checklist.md"
+          ]
+        },
+        "contributing": {
+          "move_to": "docs/contributing/",
+          "files": ["CONTRIBUTING.md"]
+        },
+        "operations_reports": {
+          "move_to": "docs/operations/",
+          "files": [
+            "AUDIT_REPORT_CAPTAIN_AGENT.md",
+            "CAPTAIN_AGENT_AUDIT_SUMMARY.md",
+            "CODEBASE_AUDIT_REPORT.md",
+            "COMPREHENSIVE_CODE_AUDIT_REPORT.md",
+            "DOCUMENTATION_CLEANUP_AUDIT.md",
+            "PHASE_0_COMPLETION_REPORT.md",
+            "PHASE_1_EVIDENCE_ANALYSIS_REPORT.md",
+            "package_publishing_readiness_report.md",
+            "final_p0_verification_report.md",
+            "coordination_audit_summary_20260113.md",
+            "agent6_coordination_completion_report.md"
+          ]
+        },
+        "historical_archive": {
+          "move_to": "docs/archive/",
+          "files": [
+            "BLOG_DADUDEKC.md",
+            "BLOG_DREAMSCAPE.md",
+            "BLOG_WEARESWARM.md",
+            "SWARM_INTELLIGENCE_REVOLUTION_COMPLETE.md",
+            "SWARM_INTELLIGENCE_REVOLUTION_LAUNCH_ANNOUNCEMENT.md",
+            "SWARM_INTELLIGENCE_REVOLUTION_ANNOUNCEMENT.md",
+            "SWARM_INTELLIGENCE_REVOLUTION_VICTORY.md",
+            "FINAL_SWARM_INTELLIGENCE_REVOLUTION_CELEBRATION.md",
+            "ABSOLUTE_FINAL_VICTORY_SWARM_INTELLIGENCE_REVOLUTION.md",
+            "agent5_daily_accomplishments_2026-01-12.md",
+            "final_status_update_agent5_2026-01-12.md",
+            "today_complete_summary_agent5.md",
+            "unified_audit_synthesis_agent5_agent3.md",
+            "MASTER_TASK_LOG.md",
+            "consolidation_risk_assessment.md",
+            "CAPTAIN_APPROVAL_CHECKLIST.md",
+            "closure_improvement.md",
+            "root_directory_cleanup_plan.md",
+            "CAPTAIN_APPROVED_EXECUTION_ORDER.md",
+            "comprehensive_codebase_audit_report.md",
+            "immediate_action_items_pre_captain_approval.md",
+            "phase05_validation_report_agent5.md",
+            "parallel_processing_workstreams_20260113.md",
+            "devlog_pypi_publishing_milestone_2026-01-12.md",
+            "devlog_ai_integration_enhancement_2026-01-13.md",
+            "devlog_ai_context_processors_integration_2026-01-13.md",
+            "swarm_intelligence_revolution_complete_20260113.md",
+            "phase2_coordination_finalization_plan_20260113.md",
+            "quarterback_coordination_protocol_20260113.md"
+          ]
+        }
+      }
+    },
+    "phase_3_script_organization": {
+      "priority": "HIGH",
+      "description": "Move 27 scripts → organized subdirs, keep 3 core",
+      "estimated_reduction": 24,
+      "actions": {
+        "core_scripts_keep": ["main.py"],
+        "dashboard_scripts": ["swarm_coordination_dashboard.py"],
+        "demo_scripts": {
+          "move_to": "scripts/demos/",
+          "files": ["demo_ai_orchestration.py"]
+        },
+        "test_scripts": {
+          "move_to": "scripts/tests/",
+          "files": [
+            "test_dlq.py",
+            "test_contract_api.py",
+            "test_discord_messaging.py",
+            "test_discord_env.py",
+            "test_discord_commands.py",
+            "test_discord_config.py",
+            "check_discord_env.py",
+            "test_discord_webhook_integration.py",
+            "test_agent7_webhook.py",
+            "test_devlog_posting.py",
+            "test_page2.py"
+          ]
+        },
+        "discord_scripts": {
+          "move_to": "scripts/discord/",
+          "files": [
+            "discord_diagnostics.py",
+            "load_and_test_discord.py",
+            "discord_bot_test.py",
+            "merge_discord_env.py",
+            "stop_discord_bots.py",
+            "temp_removed_debug_discord_bot.py",
+            "debug_discord_message.py",
+            "debug_webhook_env.py"
+          ]
+        },
+        "utility_scripts": {
+          "move_to": "scripts/utilities/",
+          "files": [
+            "audit_cleanup_helper.py",
+            "check_env_file.py",
+            "check_bot_status.py",
+            "audit_harness_standalone.py",
+            "generate_orphan_imports.py",
+            "generate_archive_manifest.py",
+            "temp_removed_test_logging_quick.py",
+            "deploy_to_pypi.py"
+          ]
+        },
+        "database_scripts": {
+          "move_to": "scripts/database/",
+          "files": [
+            "database_qa_integration.py",
+            "root_directory_analysis_2026-01-13.py"
+          ]
+        }
+      }
+    },
+    "phase_4_log_cleanup": {
+      "priority": "MEDIUM",
+      "description": "Clean up 5 log/temp files",
+      "estimated_reduction": 5,
+      "actions": {
+        "log_files": {
+          "move_to": "logs/archive/",
+          "files": [
+            "discord_debug.log",
+            "discord_bot_debug.log",
+            "discord_bot_output.log"
+          ]
+        },
+        "temp_files": {
+          "delete": ["temp_removed_unified_verifier"]
+        }
+      }
+    },
+    "phase_5_uncategorized": {
+      "priority": "MEDIUM",
+      "description": "Classify and move 14 uncategorized files",
+      "estimated_reduction": 12,
+      "actions": {
+        "onboarding_scripts": {
+          "move_to": "scripts/onboarding/",
+          "files": ["soft_onboard_all_agents.py"]
+        },
+        "config_files": {
+          "move_to": "config/",
+          "files": [".eslintrc.cjs", "env.example"]
+        },
+        "precommit_configs": {
+          "keep": ".pre-commit-config.yaml",
+          "archive_others": [".pre-commit-config-optimized.yaml", ".pre-commit-config-windows.yaml"]
+        },
+        "misc_files": {
+          "delete": ["Untitled"],
+          "move": {
+            "set_env_vars.ps1": "scripts/utilities/",
+            "set_env_vars.bat": "scripts/utilities/",
+            ".discord_bot_restart": "scripts/discord/"
+          }
+        }
+      }
+    }
+  },
+  "target_directory_structure": {
+    "after_cleanup": {
+      "root_level": [
+        "README.md",
+        "CHANGELOG.md",
+        "setup.py",
+        "main.py",
+        "swarm_coordination_dashboard.py",
+        "pyproject.toml",
+        "docker-compose.yml",
+        ".gitignore",
+        "pytest.ini",
+        ".env.example",
+        "MANIFEST.in",
+        "Dockerfile"
+      ],
+      "new_directories": [
+        "config/agent_config.json",
+        "config/coordination_config.json",
+        "config/testing_config.toml",
+        "config/archives/",
+        "scripts/tests/",
+        "scripts/discord/",
+        "scripts/utilities/",
+        "scripts/database/",
+        "scripts/demos/",
+        "scripts/onboarding/",
+        "docs/devlogs/",
+        "docs/guides/",
+        "docs/contributing/",
+        "docs/operations/",
+        "docs/archive/",
+        "reports/archives/"
+      ]
+    }
+  },
+  "risk_assessment": {
+    "overall_risk": "LOW",
+    "risk_factors": [
+      "File moves only - no content changes",
+      "Clear backup strategy available",
+      "Well-planned directory structure",
+      "Following Python project conventions"
+    ],
+    "mitigation_strategy": [
+      "Create backup before any moves",
+      "Move files in small batches",
+      "Test core functionality after each phase",
+      "Update any hardcoded paths as needed"
+    ]
+  },
+  "execution_checklist": {
+    "pre_execution": [
+      "✅ Create comprehensive backup of root directory",
+      "✅ Create all target subdirectories",
+      "✅ Update .gitignore for new archive locations",
+      "❓ Get user approval for proposed moves"
+    ],
+    "execution_phases": [
+      "Phase 1: Configuration consolidation (15 files)",
+      "Phase 2: Documentation relocation (46 files)",
+      "Phase 3: Script organization (24 files)",
+      "Phase 4: Log cleanup (5 files)",
+      "Phase 5: Uncategorized resolution (12 files)"
+    ],
+    "post_execution": [
+      "Verify no broken imports",
+      "Test core functionality",
+      "Update documentation links",
+      "Remove temporary analysis files"
+    ]
+  },
+  "user_approval_request": {
+    "status": "APPROVED_BY_USER",
+    "approved_at": "2026-01-13T05:35:00",
+    "approval_notes": "User approved cleanup plan for 72% root directory reduction as part of Phase 1 infrastructure consolidation",
+    "execution_status": "STARTING_PHASE_1",
+    "integration_context": "Part of Agent-4 coordination for infrastructure consolidation (Phase 1 Lead)",
+    "key_decisions_approved": [
+      "✅ Phase 1 config consolidation (merge 18 configs → 3)",
+      "✅ Phase 2 documentation moves (48 docs → organized subdirs)",
+      "✅ Phase 3 script reorganization (27 scripts → categorized subdirs)",
+      "✅ Target directory structure approved"
+    ],
+    "timeline": "2-3 days execution time, low risk (file moves only)",
+    "rollback_plan": "Complete backup available, can restore any moved files"
+  }
+}

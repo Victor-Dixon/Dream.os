@@ -88,13 +88,14 @@ class DiscordEventHandlers:
                             f"❌ Error ensuring Thea session: {e}", exc_info=True)
                         # Continue startup even if Thea session fails
 
-                # Initialize event bridge
+                # Initialize event bridge (optional - Redis dependent)
                 try:
                     await self.event_bridge.initialize()
                     self.logger.info("✅ Discord event bridge initialized")
                 except Exception as e:
-                    self.logger.error(
-                        f"❌ Error initializing event bridge: {e}", exc_info=True)
+                    self.logger.warning(
+                        f"⚠️ Event bridge initialization failed (Redis unavailable): {e}")
+                    self.logger.info("🔄 Bot will continue without event bridge - limited functionality")
                     # Continue startup even if event bridge fails
 
                 # Send startup message with control panel (only once)
