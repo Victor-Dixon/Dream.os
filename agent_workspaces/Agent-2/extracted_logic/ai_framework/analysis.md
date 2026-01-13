@@ -1,0 +1,72 @@
+# AI Framework Logic Analysis
+
+**Files Extracted**: 127
+- Models: 64
+- Conversation: 63
+- NLP: 0
+
+**Classes**: 238
+- model_evaluator.py:EvaluationTest:
+- model_evaluator.py:EvaluationResult:
+- model_evaluator.py:BenchmarkResult:
+- model_evaluator.py:ModelEvaluator:
+- model_evaluator.py:DemoModelPredictor:
+- mmorpg_models.py:QuestType
+- mmorpg_models.py:SkillType
+- mmorpg_models.py:Quest:
+- mmorpg_models.py:Skill:
+- mmorpg_models.py:ArchitectTier:
+- mmorpg_models.py:Guild:
+- mmorpg_models.py:GameState:
+- mmorpg_models.py:Player:
+- models.py:Conversation
+- models.py:Message
+- models.py:Tag
+- models.py:ConversationTag
+- models.py:AnalysisResult
+- models.py:Template
+- models.py:Setting
+- models.py:DSUpdate:
+- model_router.py:ModelRouter:
+- voice_modeling_system.py:VoiceProfile:
+- voice_modeling_system.py:VoiceTrainingConfig:
+- voice_modeling_system.py:VoiceAnalyzer:
+- voice_modeling_system.py:VoiceModelingSystem:
+- analytics_models.py:AnalyticsReport:
+- analytics_models.py:AnalyticsDashboard:
+- analytics_models.py:AnalyticsWidget:
+- analytics_models.py:TrendAnalysis:
+- ... and 208 more
+
+**Functions**: 967
+- model_evaluator.py:run_single_test
+- model_evaluator.py:run_benchmark_suite
+- model_evaluator.py:run_comprehensive_evaluation
+- model_evaluator.py:get_evaluation_history
+- model_evaluator.py:get_benchmark_history
+- model_evaluator.py:generate_evaluation_report
+- model_evaluator.py:demo_model_evaluator
+- model_evaluator.py:predict
+- mmorpg_models.py:get_next_level_xp
+- models.py:get_metadata
+- models.py:set_metadata
+- models.py:get_tag_ids
+- models.py:set_tag_ids
+- models.py:add_tag
+- models.py:remove_tag
+- models.py:get_metadata
+- models.py:set_metadata
+- models.py:calculate_word_count
+- models.py:estimate_tokens
+- models.py:get_result_data
+- models.py:set_result_data
+- models.py:get_value_as_bool
+- models.py:get_value_as_int
+- models.py:get_value_as_float
+- models.py:create_database_session
+- models.py:get_db_session
+- model_router.py:get_model_url
+- model_router.py:get_agent_url
+- model_router.py:route_task
+- model_router.py:list_agents
+- ... and 937 more

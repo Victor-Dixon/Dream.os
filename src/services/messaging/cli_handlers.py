@@ -38,6 +38,7 @@ from .delivery_handlers import send_message_to_onboarding_coords
 logger = logging.getLogger(__name__)
 
 
+<<<<<<< HEAD
 def handle_robinhood_stats() -> int:
     """Handle Robinhood statistics command."""
     try:
@@ -81,6 +82,8 @@ def handle_robinhood_stats() -> int:
         return 1
 
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 def handle_cycle_v2_message(args, parser) -> int:
     """Handle CYCLE_V2 message sending with template."""
     try:
@@ -160,6 +163,7 @@ def handle_consolidation(args) -> int:
         return 1
 
 
+<<<<<<< HEAD
 def handle_delivery_status(args, parser) -> int:
     """Handle delivery status checking."""
     try:
@@ -273,6 +277,8 @@ def handle_delivery_status(args, parser) -> int:
         return 1
 
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 def handle_coordinates() -> int:
     """Display agent coordinates."""
     try:

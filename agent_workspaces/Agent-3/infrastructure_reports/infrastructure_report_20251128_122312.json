@@ -1,0 +1,100 @@
+{
+  "timestamp": "2025-11-28T12:23:00.339220",
+  "test_coverage": {
+    "status": "warning",
+    "output": "\n",
+    "timestamp": "2025-11-28T12:23:12.083722"
+  },
+  "ci_cd_status": {
+    "workflows_found": 8,
+    "workflows": [
+      {
+        "name": "ci-cd.yml",
+        "exists": true,
+        "size": 13190
+      },
+      {
+        "name": "ci-optimized.yml",
+        "exists": true,
+        "size": 4989
+      },
+      {
+        "name": "ci.yml",
+        "exists": true,
+        "size": 1139
+      },
+      {
+        "name": "cleanup-audit.yml",
+        "exists": true,
+        "size": 926
+      },
+      {
+        "name": "code-quality.yml",
+        "exists": true,
+        "size": 379
+      },
+      {
+        "name": "config_testing.yml",
+        "exists": true,
+        "size": 1072
+      },
+      {
+        "name": "dashboard_testing.yml",
+        "exists": true,
+        "size": 1194
+      },
+      {
+        "name": "integration-validation.yml",
+        "exists": true,
+        "size": 1490
+      }
+    ],
+    "timestamp": "2025-11-28T12:23:12.083722"
+  },
+  "system_health": {
+    "timestamp": "2025-11-28T12:23:12.084723",
+    "checks": {
+      "src": {
+        "exists": true,
+        "is_directory": true
+      },
+      "tests": {
+        "exists": true,
+        "is_directory": true
+      },
+      "tools": {
+        "exists": true,
+        "is_directory": true
+      },
+      "agent_workspaces": {
+        "exists": true,
+        "is_directory": true
+      },
+      ".github": {
+        "exists": true,
+        "is_directory": true
+      }
+    },
+    "overall_status": "healthy"
+  },
+  "tool_availability": {
+    "timestamp": "2025-11-28T12:23:12.085724",
+    "tools": {
+      "integration_health_checker.py": {
+        "exists": true,
+        "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\integration_health_checker.py"
+      },
+      "infrastructure_health_dashboard.py": {
+        "exists": true,
+        "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\infrastructure_health_dashboard.py"
+      },
+      "check_integration_issues.py": {
+        "exists": true,
+        "path": "D:\\Agent_Cellphone_V2_Repository\\tools\\check_integration_issues.py"
+      }
+    },
+    "total_available": 3,
+    "total_required": 3,
+    "coverage_percent": 100.0
+  }
+}

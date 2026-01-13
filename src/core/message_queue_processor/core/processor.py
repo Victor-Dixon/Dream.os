@@ -11,6 +11,7 @@ Uses extracted modules for parsing, validation, routing, error handling, and ret
 V2 Compliance: <200 lines (orchestrator only)
 """
 
+<<<<<<< HEAD
 import logging
 import os
 import time
@@ -21,6 +22,18 @@ from ....core.message_queue_persistence import QueueEntry
 from systems.output_flywheel.integration.status_json_integration import (
     StatusJsonIntegration,
 )
+=======
+import logging
+import os
+import time
+from typing import Any, Optional
+
+from ....core.message_queue import MessageQueue, QueueConfig
+from ....core.message_queue_persistence import QueueEntry
+from systems.output_flywheel.integration.status_json_integration import (
+    StatusJsonIntegration,
+)
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 from ..processing.message_parser import parse_message_data
 from ..processing.message_validator import validate_message_data
 from ..processing.message_router import route_message_delivery
@@ -74,6 +87,7 @@ class MessageQueueProcessor:
         self.config = config or QueueConfig()
         self.queue = queue or MessageQueue(config=self.config)
         self.message_repository = message_repository
+<<<<<<< HEAD
         self.messaging_core = messaging_core
         self.running = False
         self.output_flywheel_integration = self._init_output_flywheel_integration()
@@ -85,6 +99,19 @@ class MessageQueueProcessor:
             if self.output_flywheel_integration
             else None
         )
+=======
+        self.messaging_core = messaging_core
+        self.running = False
+        self.output_flywheel_integration = self._init_output_flywheel_integration()
+        self.output_flywheel_check_interval = float(
+            os.getenv("OUTPUT_FLYWHEEL_STATUS_INTERVAL", "60")
+        )
+        self.next_output_flywheel_check = (
+            time.time() + self.output_flywheel_check_interval
+            if self.output_flywheel_integration
+            else None
+        )
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
         # Initialize performance metrics collector
         try:
@@ -106,6 +133,7 @@ class MessageQueueProcessor:
         processed = 0
 
         try:
+<<<<<<< HEAD
             while self.running:
                 self._maybe_trigger_output_flywheel()
                 # Dequeue up to batch_size entries
@@ -124,6 +152,17 @@ class MessageQueueProcessor:
 
                 logger.info(f"📬 Processing {len(entries)} message(s) from queue")
 
+=======
+            while self.running:
+                self._maybe_trigger_output_flywheel()
+                entries = safe_dequeue(self.queue, batch_size)
+                if not entries:
+                    if max_messages is None:
+                        time.sleep(interval)
+                        continue
+                    break
+
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
                 for entry in entries:
                     if max_messages and processed >= max_messages:
                         break
@@ -192,6 +231,7 @@ class MessageQueueProcessor:
 
             logger.info(f"✅ Queue processor complete: {processed} delivered")
 
+<<<<<<< HEAD
         return processed
 
     def _init_output_flywheel_integration(self) -> Optional[StatusJsonIntegration]:
@@ -229,6 +269,45 @@ class MessageQueueProcessor:
             )
         finally:
             self.next_output_flywheel_check = now + self.output_flywheel_check_interval
+=======
+        return processed
+
+    def _init_output_flywheel_integration(self) -> Optional[StatusJsonIntegration]:
+        agent_id = os.getenv("OUTPUT_FLYWHEEL_AGENT_ID")
+        if not agent_id:
+            return None
+        logger.info(
+            "🔄 Output Flywheel integration enabled for %s",
+            agent_id,
+        )
+        return StatusJsonIntegration(agent_id)
+
+    def _maybe_trigger_output_flywheel(self) -> None:
+        if not self.output_flywheel_integration:
+            return
+
+        now = time.time()
+        if self.next_output_flywheel_check is None or now < self.next_output_flywheel_check:
+            return
+
+        try:
+            session = self.output_flywheel_integration.check_and_trigger()
+            if session and isinstance(session, dict):
+                artifacts = session.get("artifacts", {})
+                session_id = session.get("session_id")
+                if artifacts:
+                    self.output_flywheel_integration.update_status_with_artifacts(
+                        artifacts,
+                        session_id,
+                    )
+        except Exception as exc:
+            logger.warning(
+                "Output Flywheel integration check failed: %s",
+                exc,
+            )
+        finally:
+            self.next_output_flywheel_check = now + self.output_flywheel_check_interval
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
     def _deliver_entry(self, entry: Any) -> bool:
         """Deliver queue entry using extracted modules."""
@@ -267,8 +346,11 @@ class MessageQueueProcessor:
             message_type_str = parsed["message_type_str"]
             sender = parsed["sender"]
             priority_str = parsed["priority_str"]
+<<<<<<< HEAD
 
             logger.debug(f"📨 Processing message: {queue_id} -> {recipient} (type: {message_type_str})")
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
             tags_list = parsed["tags_list"]
             metadata = parsed["metadata"]
 
@@ -297,8 +379,11 @@ class MessageQueueProcessor:
             elif hasattr(entry, 'metadata') and isinstance(entry.metadata, dict):
                 use_pyautogui = entry.metadata.get("use_pyautogui", True)
 
+<<<<<<< HEAD
             logger.debug(f"🎯 Delivery method for {recipient}: {'PyAutoGUI' if use_pyautogui else 'Inbox'} (use_pyautogui={use_pyautogui})")
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
             # Record performance metrics
             if self.performance_metrics and delivery_start_time:
                 delivery_method = 'pyautogui' if use_pyautogui else 'inbox'
@@ -353,6 +438,7 @@ class MessageQueueProcessor:
                 self.performance_metrics, delivery_start_time, use_pyautogui, content
             )
             return False
+<<<<<<< HEAD
 
 
 def main():
@@ -384,3 +470,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console

@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 <!-- SSOT Domain: onboarding -->
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 [HEADER] S2A ONBOARDING (SOFT)
 From: SYSTEM
 To: {{AGENT}}

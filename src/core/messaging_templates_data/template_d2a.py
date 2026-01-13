@@ -11,6 +11,7 @@ D2A_TEMPLATE = (
     "Priority: {priority}\n"
     "Message ID: {message_id}\n"
     "Timestamp: {timestamp}\n\n"
+<<<<<<< HEAD
     "🚀 **PROTOCOL UPDATE: Dumb Messages → Real Work Discovery**\n"
     "When you receive repetitive or 'dumb' coordination messages, don't just acknowledge them. Instead:\n"
     "- Search the codebase for TODO/FIXME items and real work opportunities\n"
@@ -18,6 +19,8 @@ D2A_TEMPLATE = (
     "- Execute complete implementation with testing and documentation\n"
     "- Make work publicly visible through git commits, devlogs, and blog posts\n"
     "- Transform message receipt into forward momentum, not confirmation loops\n\n"
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     "Origin:\n"
     "- Discord → Agent intake\n\n"
     "User Message:\n"
@@ -33,7 +36,15 @@ D2A_TEMPLATE = (
     "{discord_response_policy}\n"
     "{d2a_report_format}\n"
     "Devlog Command (for recipient):\n"
+<<<<<<< HEAD
     "{devlog_command}\n"
+=======
+    "python tools/devlog_poster.py --agent {recipient} --file <devlog_path>\n"
+    "Examples:\n"
+    "  python tools/devlog_poster.py --agent Agent-1 --file agent_workspaces/Agent-1/devlogs/status.md\n"
+    "  python tools/devlog_poster.py --agent Agent-7 --file devlogs/2025-12-26_status.md\n"
+    "  python tools/devlog_poster.py --agent Agent-8 --file agent_workspaces/Agent-8/devlogs/DEVLOG_2025-12-26.md\n"
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     "Note: Tool automatically truncates content >1900 chars for Discord. Full devlog saved in workspace.\n\n"
     "If clarification needed:\n"
     "{fallback}\n"

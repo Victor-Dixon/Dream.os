@@ -1,0 +1,97 @@
+{
+  "name": "wp-cli-manager",
+  "version": "1.0.0",
+  "description": "WP-CLI Manager MCP Server - Remote WordPress operations via WP-CLI over SSH",
+  "author": "Agent-1 (Integration & Core Systems Specialist)",
+  "created": "2025-12-28",
+  "tools": [
+    {
+      "name": "wp_core_info",
+      "description": "Get WordPress core version and information"
+    },
+    {
+      "name": "wp_plugin_list",
+      "description": "List all plugins with their status"
+    },
+    {
+      "name": "wp_plugin_activate",
+      "description": "Activate a WordPress plugin"
+    },
+    {
+      "name": "wp_plugin_deactivate",
+      "description": "Deactivate a WordPress plugin"
+    },
+    {
+      "name": "wp_plugin_install",
+      "description": "Install a WordPress plugin"
+    },
+    {
+      "name": "wp_plugin_update",
+      "description": "Update WordPress plugin(s)"
+    },
+    {
+      "name": "wp_theme_list",
+      "description": "List all themes with their status"
+    },
+    {
+      "name": "wp_theme_activate",
+      "description": "Activate a WordPress theme"
+    },
+    {
+      "name": "wp_theme_install",
+      "description": "Install a WordPress theme"
+    },
+    {
+      "name": "wp_option_get",
+      "description": "Get a WordPress option value"
+    },
+    {
+      "name": "wp_option_update",
+      "description": "Update a WordPress option value"
+    },
+    {
+      "name": "wp_cache_flush",
+      "description": "Flush WordPress cache"
+    },
+    {
+      "name": "wp_transient_delete",
+      "description": "Delete WordPress transients"
+    },
+    {
+      "name": "wp_db_check",
+      "description": "Check database health"
+    },
+    {
+      "name": "wp_db_optimize",
+      "description": "Optimize database tables"
+    },
+    {
+      "name": "wp_search_replace",
+      "description": "Search and replace in database"
+    },
+    {
+      "name": "wp_user_list",
+      "description": "List WordPress users"
+    },
+    {
+      "name": "wp_rewrite_flush",
+      "description": "Flush WordPress rewrite rules"
+    },
+    {
+      "name": "wp_cron_event_list",
+      "description": "List WordPress cron events"
+    },
+    {
+      "name": "wp_health_check",
+      "description": "Perform comprehensive WordPress health check"
+    }
+  ],
+  "dependencies": {
+    "paramiko": "Required for SSH connections"
+  },
+  "configuration": {
+    "site_configs_path": "D:/websites/configs/site_configs.json",
+    "required_fields": ["ssh.host", "ssh.username", "ssh.password OR ssh.key_path"]
+  }
+}
+

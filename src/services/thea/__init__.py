@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #!/usr/bin/env python3
 """
 Thea Service Module - V2 Compliant Modular Architecture
@@ -61,3 +62,14 @@ __all__ = [
     "TheaServiceCoordinator",
     "TheaDIContainer",
 ]
+=======
+# <!-- SSOT Domain: integration -->
+# AUTO-GENERATED __init__.py
+# DO NOT EDIT MANUALLY - changes may be overwritten
+
+from . import thea_service
+
+__all__ = [
+    'thea_service',
+]
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console

@@ -56,11 +56,15 @@ STATUS_EMBEDDINGS_FILE = UNIFIED_VECTOR_DB_DIR / "status_embeddings.json"
 
 def get_agent_workspace(agent_id: str) -> Path:
     """Get agent workspace directory path."""
+<<<<<<< HEAD
     if agent_id.startswith("Agent-"):
         agent_dir = agent_id
     else:
         agent_dir = f"Agent-{agent_id}"
     return AGENT_WORKSPACES_DIR / agent_dir
+=======
+    return AGENT_WORKSPACES_DIR / f"Agent-{agent_id}"
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
 
 def get_agent_inbox(agent_id: str) -> Path:

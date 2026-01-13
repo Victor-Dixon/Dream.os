@@ -20,6 +20,7 @@ from difflib import SequenceMatcher
 from pathlib import Path
 from typing import Any, Iterable
 
+<<<<<<< HEAD
 # Optional logging import to avoid triggering config manager during import
 try:
     from src.core.unified_logging_system import get_logger
@@ -28,6 +29,9 @@ except ImportError:
     import logging
     get_logger = logging.getLogger
     _logger_available = False
+=======
+from src.core.unified_logging_system import get_logger
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 from src.services.models.vector_models import VectorDocument
 from src.services.vector.vector_database_helpers import (
     DEFAULT_COLLECTION,

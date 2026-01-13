@@ -7,6 +7,7 @@ When debate concludes:
 Decision stored → S2A debate-cycle messages generated → GAS delivery → Execution tracked
 
 <!-- SSOT Domain: integration -->
+<<<<<<< HEAD
 V2 Consolidated: Uses SSOT base classes for logger setup and error handling
 Author: Agent-8 (SSOT & System Integration)
 SSOT Migration: Agent-8 (System Integration)
@@ -24,6 +25,19 @@ from src.core.base.error_handling import (
 )
 
 # Initialize standardized logger through SSOT base
+=======
+"""
+from __future__ import annotations
+from datetime import datetime
+from typing import Dict, List, Optional
+
+import json
+import logging
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 logger = logging.getLogger(__name__)
 
 

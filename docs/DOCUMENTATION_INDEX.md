@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 <!-- SSOT Domain: documentation -->
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 # Documentation Index
 
 **Generated:** 2025-12-27 02:50:03

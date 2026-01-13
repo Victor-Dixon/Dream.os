@@ -2,8 +2,11 @@
 Status Monitor Embed Factory
 ============================
 
+<<<<<<< HEAD
 <!-- SSOT Domain: discord -->
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 Helper module for creating Discord embeds for the Status Monitor.
 Extracted from status_change_monitor.py for V2 compliance.
 """
@@ -20,6 +23,7 @@ class StatusEmbedFactory:
     @staticmethod
     def create_status_update_embed(agent_id: str, status: dict, changes: dict) -> discord.Embed:
         """Create Discord embed for status update."""
+<<<<<<< HEAD
         # Ensure status is a dict
         if status is None:
             status = {}
@@ -28,6 +32,8 @@ class StatusEmbedFactory:
         if changes is None:
             changes = {}
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
         # Status emoji
         status_val = status.get("status", "UNKNOWN")
         if "ACTIVE" in status_val.upper():
@@ -51,6 +57,7 @@ class StatusEmbedFactory:
         )
 
         # Add change details
+<<<<<<< HEAD
         if "status" in changes and isinstance(changes["status"], dict):
             status_change = changes["status"]
             old_val = status_change.get("old", "Unknown")
@@ -78,10 +85,31 @@ class StatusEmbedFactory:
             embed.add_field(
                 name="Mission Change",
                 value=f"`{old_val}` → `{new_val}`",
+=======
+        if "status" in changes:
+            embed.add_field(
+                name="Status Change",
+                value=f"`{changes['status']['old']}` → `{changes['status']['new']}`",
+                inline=False
+            )
+
+        if "phase" in changes:
+            embed.add_field(
+                name="Phase Change",
+                value=f"`{changes['phase']['old'][:50]}` → `{changes['phase']['new'][:50]}`",
+                inline=False
+            )
+
+        if "mission" in changes:
+            embed.add_field(
+                name="Mission Change",
+                value=f"`{changes['mission']['old'][:50]}` → `{changes['mission']['new'][:50]}`",
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
                 inline=False
             )
 
         if "completed_tasks" in changes:
+<<<<<<< HEAD
             completed_tasks = changes.get("completed_tasks", [])
             if completed_tasks and isinstance(completed_tasks, list):
                 tasks_list = "\n".join(
@@ -109,6 +137,24 @@ class StatusEmbedFactory:
                 )
             except (ValueError, TypeError):
                 pass  # Skip if not a valid number
+=======
+            tasks_list = "\n".join(
+                [f"✅ {task[:80]}" for task in changes["completed_tasks"][:5]])
+            if len(changes["completed_tasks"]) > 5:
+                tasks_list += f"\n... and {len(changes['completed_tasks']) - 5} more"
+            embed.add_field(
+                name="Tasks Completed",
+                value=tasks_list or "None",
+                inline=False
+            )
+
+        if "points_earned" in changes:
+            embed.add_field(
+                name="Points Earned",
+                value=f"+{changes['points_earned']} points",
+                inline=True
+            )
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
         # Current status summary
         current_phase = status.get("current_phase", "N/A")

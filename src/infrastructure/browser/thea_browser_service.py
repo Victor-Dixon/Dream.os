@@ -86,6 +86,7 @@ class TheaBrowserService:
         """Get browser driver instance."""
         return self.core.get_driver()
 
+<<<<<<< HEAD
     # ========== Delegate to Utils ==========
 
     def save_cookies(self) -> bool:
@@ -102,6 +103,8 @@ class TheaBrowserService:
             logger.error(f"Failed to save cookies: {e}")
             return False
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     # ========== Delegate to Operations ==========
 
     def navigate_to(self, url: str, wait_seconds: float = 2.0) -> bool:

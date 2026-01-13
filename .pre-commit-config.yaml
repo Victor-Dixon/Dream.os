@@ -3,6 +3,7 @@
 # Run manually: pre-commit run --all-files
 
 repos:
+<<<<<<< HEAD
   # Python formatting
   - repo: https://github.com/psf/black
     rev: 23.12.1
@@ -12,10 +13,24 @@ repos:
         args: [--line-length=100]
 
   # Python import sorting
+=======
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: v0.6.9
+    hooks:
+      - id: ruff
+        args: [--fix]
+      - id: ruff-format
+  - repo: https://github.com/psf/black
+    rev: 24.8.0
+    hooks:
+      - id: black
+        language_version: python3.11
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
   - repo: https://github.com/pycqa/isort
     rev: 5.13.2
     hooks:
       - id: isort
+<<<<<<< HEAD
         args: [--profile=black, --line-length=100]
 
   # Python linting
@@ -61,3 +76,27 @@ repos:
       - id: check-merge-conflict
       - id: debug-statements
       - id: check-docstring-first
+=======
+        args: [--profile, black]
+  - repo: local
+    hooks:
+      - id: v2-violations
+        name: v2-violations
+        entry: python tools/analysis_cli.py --ci-gate
+        language: system
+        pass_filenames: false
+      - id: v2-compliance-checker
+        name: V2 Compliance Checker (Quality Gate)
+        entry: python tools/v2_compliance_checker.py --fail-on-major
+        language: system
+        types: [python]
+        pass_filenames: false
+        stages: [commit]
+      - id: file-size-cap-enforcer
+        name: File Size Cap Enforcer (Lean Excellence Framework)
+        entry: python tools/check_file_size.py
+        language: system
+        types: [python]
+        pass_filenames: true
+        stages: [commit]
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console

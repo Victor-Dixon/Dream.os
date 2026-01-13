@@ -140,7 +140,11 @@ class UnifiedMessagingCore:
         from .messaging_template_resolution import TemplateResolutionService
         from .messaging_history import MessageHistoryService
         from .messaging_delivery_orchestration import MessageDeliveryOrchestrationService
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
         self.validation_service = MessageValidationService()
         self.template_service = TemplateResolutionService()
         self.history_service = MessageHistoryService(self.message_repository)
@@ -150,7 +154,11 @@ class UnifiedMessagingCore:
 
         # Initialize subsystems
         self._initialize_subsystems()
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
         # Update delivery orchestration service with initialized delivery service
         self.delivery_orchestration_service.delivery_service = self.delivery_service
 
@@ -202,10 +210,17 @@ class UnifiedMessagingCore:
             content=content,
             metadata=metadata_dict
         )
+<<<<<<< HEAD
 
         if not can_send:
             return False
 
+=======
+        
+        if not can_send:
+            return False
+        
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
         metadata_dict = updated_metadata or {}
 
         # Extract category from metadata if present (for template detection)
@@ -235,6 +250,7 @@ class UnifiedMessagingCore:
     def send_message_object(self, message: UnifiedMessage) -> bool:
         """Send a UnifiedMessage object."""
         try:
+<<<<<<< HEAD
             # Apply A2A bilateral coordination template if needed
             if (message.category and
                 message.category.name == 'A2A' and
@@ -287,11 +303,17 @@ class UnifiedMessagingCore:
             if isinstance(message.metadata, dict):
                 self.template_service.apply_template_to_message(
                     message.metadata)
+=======
+            # Phase 2C: Template resolution using service
+            if isinstance(message.metadata, dict):
+                self.template_service.apply_template_to_message(message.metadata)
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
             # Phase 2C: Log message to history using service
             self.history_service.log_message(message, status="sent")
 
             # Phase 2C: Orchestrate delivery using service
+<<<<<<< HEAD
             success = self.delivery_orchestration_service.orchestrate_delivery(
                 message)
 
@@ -302,6 +324,16 @@ class UnifiedMessagingCore:
 
             return success
 
+=======
+            success = self.delivery_orchestration_service.orchestrate_delivery(message)
+            
+            # Log delivery status if successful
+            if success:
+                self.history_service.log_delivery_status(message, status="delivered")
+            
+            return success
+            
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
         except Exception as e:
             self.logger.error(f"Failed to send message: {e}")
             # Phase 2C: Log failure using service
@@ -403,6 +435,7 @@ def send_message(
     tags: list[UnifiedMessageTag] | None = None,
     metadata: dict[str, Any] | None = None,
 ) -> bool:
+<<<<<<< HEAD
     """
     Send a message using the unified messaging core system.
 
@@ -437,12 +470,16 @@ def send_message(
         ... )
         True
     """
+=======
+    """Send message using the SINGLE SOURCE OF TRUTH."""
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     return messaging_core.send_message(
         content, sender, recipient, message_type, priority, tags, metadata
     )
 
 
 def send_message_object(message: UnifiedMessage) -> bool:
+<<<<<<< HEAD
     """
     Send a UnifiedMessage object using the messaging core system.
 
@@ -466,12 +503,16 @@ def send_message_object(message: UnifiedMessage) -> bool:
         >>> send_message_object(msg)
         True
     """
+=======
+    """Send UnifiedMessage using the SINGLE SOURCE OF TRUTH."""
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     return messaging_core.send_message_object(message)
 
 
 def broadcast_message(
     content: str, sender: str, priority: UnifiedMessagePriority = UnifiedMessagePriority.REGULAR
 ) -> bool:
+<<<<<<< HEAD
     """
     Broadcast a message to all agents in the swarm.
 
@@ -498,10 +539,14 @@ def broadcast_message(
         ... )
         True
     """
+=======
+    """Broadcast message using the SINGLE SOURCE OF TRUTH."""
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     return messaging_core.broadcast_message(content, sender, priority)
 
 
 def generate_onboarding_message(agent_id: str, style: str = "standard") -> str:
+<<<<<<< HEAD
     """
     Generate a standardized onboarding message for an agent.
 
@@ -520,26 +565,37 @@ def generate_onboarding_message(agent_id: str, style: str = "standard") -> str:
         >>> print(msg[:50])
         AGENT-1 ONBOARDING PROTOCOL
     """
+=======
+    """Generate onboarding message using the SINGLE SOURCE OF TRUTH."""
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     return messaging_core.generate_onboarding_message(agent_id, style)
 
 
 def show_message_history():
+<<<<<<< HEAD
     """
     Display the message history for debugging and monitoring.
 
     Prints a formatted view of recent messages, their status, and delivery information.
     Useful for troubleshooting messaging issues and monitoring system activity.
     """
+=======
+    """Show message history using the SINGLE SOURCE OF TRUTH."""
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     messaging_core.show_message_history()
 
 
 def list_agents():
+<<<<<<< HEAD
     """
     Display a list of all registered agents and their current status.
 
     Shows agent identifiers, workspace status, and activity information.
     Useful for system monitoring and agent management.
     """
+=======
+    """List agents using the SINGLE SOURCE OF TRUTH."""
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     messaging_core.list_agents()
 
 
@@ -574,6 +630,7 @@ __all__ = [
 
 # VALIDATION AND HEALTH CHECKS
 def validate_messaging_system() -> bool:
+<<<<<<< HEAD
     """
     Validate that the messaging system is properly configured and functional.
 
@@ -591,6 +648,9 @@ def validate_messaging_system() -> bool:
         >>> validate_messaging_system()
         True
     """
+=======
+    """Validate the messaging system is properly configured."""
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     try:
         core = get_messaging_core()
         if not core:
@@ -615,6 +675,7 @@ def validate_messaging_system() -> bool:
 
 # AUTO-INITIALIZATION
 def initialize_messaging_system() -> None:
+<<<<<<< HEAD
     """
     Initialize the unified messaging system and establish the Single Source of Truth.
 
@@ -632,6 +693,9 @@ def initialize_messaging_system() -> None:
         >>> initialize_messaging_system()
         # Logs: "✅ Messaging system ready - SSOT established"
     """
+=======
+    """Initialize the messaging system."""
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     logger.info("🔧 Initializing SINGLE SOURCE OF TRUTH Messaging System")
 
     if validate_messaging_system():
@@ -647,4 +711,7 @@ try:
 except Exception as e:
     logger.error(f"Failed to initialize messaging system: {e}")
     # Don't raise exception during import - allow system to continue
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console

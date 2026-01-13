@@ -1,0 +1,95 @@
+# Backtest Report Template
+# For: TradingRobotPlug
+# Input: backtest_report payload with backtest data, preset/script, iteration log, learnings
+# <!-- SSOT Domain: web -->
+
+template_name: backtest_report
+target_brand: tradingrobotplug
+input_requirements:
+  required:
+    - backtest_data: "Backtest results (metrics, performance)"
+    - preset_or_script: "Preset name or script reference"
+    - iteration_log: "Iteration log entry (mandatory per DoD)"
+    - learnings: "Learnings/insights from backtest"
+  optional:
+    - backtest_date: "Backtest date (ISO8601)"
+    - symbols: "Trading symbols tested"
+    - timeframe: "Timeframe tested"
+    - parameters: "Strategy parameters"
+
+structure:
+  - section: hook
+    purpose: "Engage with backtest outcome or key finding"
+    word_count: 50-100
+    required: true
+
+  - section: backtest_setup
+    purpose: "Describe the strategy, preset/script, and test parameters"
+    word_count: 200-300
+    required: true
+    content_sources:
+      - preset_or_script
+      - parameters
+      - symbols
+      - timeframe
+
+  - section: results
+    purpose: "Present backtest results (metrics, performance, charts)"
+    word_count: 200-300
+    required: true
+    content_sources:
+      - backtest_data
+
+  - section: analysis
+    purpose: "Analyze results, identify patterns, and interpret findings"
+    word_count: 200-300
+    required: true
+    content_sources:
+      - backtest_data
+      - learnings
+
+  - section: iteration_notes
+    purpose: "Document iteration log entry (mandatory per DoD)"
+    word_count: 200-300
+    required: true
+    content_sources:
+      - iteration_log
+
+  - section: next_steps
+    purpose: "Describe planned improvements, next iterations, or refinements"
+    word_count: 100-200
+    required: true
+    content_sources:
+      - learnings
+      - iteration_log
+
+  - section: cta
+    purpose: "Call to action (get the plug, try preset, etc.)"
+    word_count: 50-100
+    required: true
+    default_cta: "Get the Plug and automate your strategy"
+
+voice_guidelines:
+  tone: "Technical, data-driven, iterative"
+  style: "Focus on backtest methodology, results interpretation, and iteration"
+  avoid: "Overly promotional, hiding poor results, skipping iteration notes"
+  include: "Real metrics, honest analysis, iteration commitment"
+
+validation:
+  - must_have_iteration_log: "Iteration log entry is mandatory (DoD requirement)"
+  - must_cite_data: "All claims must cite provided backtest data"
+  - no_invented_facts: "Do not invent backtest results not in input"
+  - must_include_learnings: "Learnings section is mandatory"
+
+promo_snippets:
+  twitter:
+    focus: "Backtest outcome + key metric"
+    format: "Backtested {preset}. Result: {metric}. Iteration: {iteration}. {link}"
+  linkedin:
+    focus: "Technical backtest analysis"
+    format: "Backtest report: {preset}. Results: {summary}. Analysis: {insight}. Iteration log: {link}"
+  discord:
+    focus: "Casual share of backtest + iteration"
+    format: "Just backtested {preset}. Got {result}. Iteration {n}: {note}. Full report: {link}"
+
+

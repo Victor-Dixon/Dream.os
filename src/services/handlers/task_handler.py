@@ -6,7 +6,11 @@ Handles task system commands for messaging CLI.
 Implements --get-next-task, --list-tasks, --task-status, --complete-task.
 
 V2 Compliance: < 300 lines, single responsibility
+<<<<<<< HEAD
 Migrated to UnifiedHandler for consolidated initialization and error handling.
+=======
+Migrated to BaseService for consolidated initialization and error handling.
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
 <!-- SSOT Domain: integration -->
 
@@ -18,17 +22,30 @@ import os
 from datetime import datetime
 from pathlib import Path
 
+<<<<<<< HEAD
 from ...core.base.common_command_base import CommonHandlerBase
+=======
+from ...core.base.base_service import BaseService
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
 logger = logging.getLogger(__name__)
 
 
+<<<<<<< HEAD
 class TaskHandler(CommonHandlerBase):
+=======
+class TaskHandler(BaseService):
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     """Handles task system commands for messaging CLI."""
 
     def __init__(self):
         """Initialize task handler."""
+<<<<<<< HEAD
         super().__init__("TaskHandler")  # Uses CommonHandlerBase for standardized initialization
+=======
+        super().__init__("TaskHandler")
+        self.exit_code = 0
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
         self._ensure_data_dir()
 
     def _ensure_data_dir(self) -> None:
@@ -49,6 +66,7 @@ class TaskHandler(CommonHandlerBase):
             and args.complete_task
         )
 
+<<<<<<< HEAD
     def handle(self, args) -> dict:
         """Handle task system commands."""
         # Determine command type for tracking
@@ -62,10 +80,15 @@ class TaskHandler(CommonHandlerBase):
         """Execute the actual command logic (required by UnifiedHandler)."""
         # Individual handlers now return dict results for consistency
         # Enhanced error handling with categorization and recovery suggestions
+=======
+    def handle(self, args) -> bool:
+        """Handle task system commands."""
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
         try:
             # Import lightweight task repository (avoids heavy infrastructure dependencies)
             from ..helpers.task_repo_loader import SimpleTaskRepository
 
+<<<<<<< HEAD
             # Initialize repository with error handling
             try:
                 repo = SimpleTaskRepository()
@@ -180,12 +203,52 @@ class TaskHandler(CommonHandlerBase):
             # Basic validation - should start with "Agent-" and have a number
             if not (agent_id.startswith("Agent-") and len(agent_id) > 6):
                 logger.warning(f"⚠️ Agent ID format may be invalid: {agent_id}")
+=======
+            # Initialize repository
+            repo = SimpleTaskRepository()
+
+            # Get current agent ID (from args or environment)
+            current_agent = self._get_current_agent(args)
+
+            # Route to appropriate handler
+            if args.get_next_task:
+                return self._handle_get_next_task(args, repo, current_agent)
+            elif args.list_tasks:
+                return self._handle_list_tasks(args, repo)
+            elif args.task_status:
+                return self._handle_task_status(args, repo)
+            elif args.complete_task:
+                return self._handle_complete_task(args, repo, current_agent)
+
+            return True
+
+        except ImportError as e:
+            logger.error(f"❌ Task system not available: {e}")
+            logger.info("💡 Task system requires domain/infrastructure modules")
+            self.exit_code = 1
+            return True
+        except Exception as e:
+            logger.error(f"❌ Task handling error: {e}")
+            self.exit_code = 1
+            return True
+
+    def _get_current_agent(self, args) -> str:
+        """Get current agent ID from args or environment."""
+        # Check if --agent flag was passed
+        if hasattr(args, "agent") and args.agent:
+            return args.agent
+
+        # Check environment variable
+        agent_id = os.getenv("AGENT_ID")
+        if agent_id:
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
             return agent_id
 
         # Default to Agent-1 for testing
         logger.warning("⚠️ No agent ID specified, using Agent-1 as default")
         return "Agent-1"
 
+<<<<<<< HEAD
     def _validate_task_id(self, task_id: str) -> bool:
         """Validate task ID format.
 
@@ -204,6 +267,9 @@ class TaskHandler(CommonHandlerBase):
         return bool(re.match(r'^[a-zA-Z0-9_-]+$', task_id))
 
     def _handle_get_next_task_sync(self, args, repo, agent_id: str) -> dict:
+=======
+    def _handle_get_next_task(self, args, repo, agent_id: str) -> bool:
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
         """Handle --get-next-task command."""
         logger.info(f"🎯 Getting next task for {agent_id}...")
 
@@ -214,11 +280,19 @@ class TaskHandler(CommonHandlerBase):
                 contract_handler = ContractHandler()
                 if contract_handler.manager:
                     task_result = contract_handler.manager.get_next_task(agent_id)
+<<<<<<< HEAD
 
                     if task_result and task_result.get("task"):
                         task = task_result["task"]
                         source = task_result.get("source", "contract_system")
 
+=======
+                    
+                    if task_result and task_result.get("task"):
+                        task = task_result["task"]
+                        source = task_result.get("source", "contract_system")
+                        
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
                         logger.info(f"✅ Task found from {source}")
                         print("\n" + "=" * 60)
                         print("📋 TASK ASSIGNED")
@@ -233,6 +307,7 @@ class TaskHandler(CommonHandlerBase):
                             print(f"Estimated Time: {task.get('estimated_time')}")
                         print("=" * 60)
                         print("\n🐝 WE. ARE. SWARM. ⚡⚡")
+<<<<<<< HEAD
                         return {
                             'success': True,
                             'task_found': True,
@@ -248,6 +323,12 @@ class TaskHandler(CommonHandlerBase):
             except Exception as e:
                 logger.debug(f"Contract system check failed: {e}, trying task repository...")
 
+=======
+                        return True
+            except Exception as e:
+                logger.debug(f"Contract system check failed: {e}, trying task repository...")
+            
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
             # Fall back to task repository
             pending_tasks = list(repo.get_pending(limit=1))
 
@@ -260,12 +341,16 @@ class TaskHandler(CommonHandlerBase):
                 print("Action: Check back later or create new tasks")
                 print("=" * 60 + "\n")
                 self.exit_code = 0
+<<<<<<< HEAD
                 return {
                     'success': True,
                     'task_found': False,
                     'reason': 'no_tasks_available',
                     'message': 'Queue is empty'
                 }
+=======
+                return True
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
             # Get the highest priority task
             task = pending_tasks[0]
@@ -291,6 +376,7 @@ class TaskHandler(CommonHandlerBase):
 
             logger.info(f"✅ Task {task.id} claimed by {agent_id}")
             self.exit_code = 0
+<<<<<<< HEAD
             return {
                 'success': True,
                 'task_found': True,
@@ -304,10 +390,14 @@ class TaskHandler(CommonHandlerBase):
                     'claimed_at': datetime.now().isoformat()
                 }
             }
+=======
+            return True
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
         except Exception as e:
             logger.error(f"❌ Failed to get next task: {e}")
             self.exit_code = 1
+<<<<<<< HEAD
             return {
                 'success': False,
                 'error': str(e),
@@ -315,6 +405,11 @@ class TaskHandler(CommonHandlerBase):
             }
 
     def _handle_list_tasks_sync(self, args, repo) -> dict:
+=======
+            return True
+
+    def _handle_list_tasks(self, args, repo) -> bool:
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
         """Handle --list-tasks command."""
         logger.info("📋 Listing all tasks...")
 
@@ -324,11 +419,15 @@ class TaskHandler(CommonHandlerBase):
             if not tasks:
                 print("\n📭 No tasks in system\n")
                 self.exit_code = 0
+<<<<<<< HEAD
                 return {
                     'success': True,
                     'total_tasks': 0,
                     'message': 'No tasks in system'
                 }
+=======
+                return True
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
             # Categorize tasks
             pending = [t for t in tasks if t.is_pending]
@@ -369,6 +468,7 @@ class TaskHandler(CommonHandlerBase):
             print("=" * 60 + "\n")
 
             self.exit_code = 0
+<<<<<<< HEAD
             return {
                 'success': True,
                 'total_tasks': len(tasks),
@@ -379,10 +479,14 @@ class TaskHandler(CommonHandlerBase):
                 'assigned_tasks': [{'id': t.id, 'title': t.title, 'assigned_to': t.assigned_agent_id, 'priority': self._priority_name(t.priority)} for t in assigned],
                 'completed_tasks': [{'id': t.id, 'title': t.title, 'completed_by': t.assigned_agent_id} for t in completed[:5]]
             }
+=======
+            return True
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
         except Exception as e:
             logger.error(f"❌ Failed to list tasks: {e}")
             self.exit_code = 1
+<<<<<<< HEAD
             return {
                 'success': False,
                 'error': str(e),
@@ -390,10 +494,16 @@ class TaskHandler(CommonHandlerBase):
             }
 
     def _handle_task_status_sync(self, args, repo) -> dict:
+=======
+            return True
+
+    def _handle_task_status(self, args, repo) -> bool:
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
         """Handle --task-status command."""
         task_id = args.task_status
         logger.info(f"📊 Checking status of task {task_id}...")
 
+<<<<<<< HEAD
         # Validate task ID format
         if not self._validate_task_id(task_id):
             logger.error(f"❌ Invalid task ID format: {task_id}")
@@ -404,18 +514,24 @@ class TaskHandler(CommonHandlerBase):
                 "Task IDs should contain only alphanumeric characters, hyphens, and underscores"
             )
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
         try:
             task = repo.get(task_id)
 
             if not task:
                 logger.error(f"❌ Task {task_id} not found")
                 self.exit_code = 1
+<<<<<<< HEAD
                 return self._create_error_result(
                     "task_status",
                     "task_not_found",
                     f'Task {task_id} not found',
                     "Verify the task ID is correct and the task exists"
                 )
+=======
+                return True
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
             # Display task status
             print("\n" + "=" * 60)
@@ -436,6 +552,7 @@ class TaskHandler(CommonHandlerBase):
             print("=" * 60 + "\n")
 
             self.exit_code = 0
+<<<<<<< HEAD
             return {
                 'success': True,
                 'task_id': task.id,
@@ -448,10 +565,14 @@ class TaskHandler(CommonHandlerBase):
                 'completed_at': task.completed_at.isoformat() if task.completed_at else None,
                 'created_at': task.created_at.isoformat()
             }
+=======
+            return True
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
         except Exception as e:
             logger.error(f"❌ Failed to check task status: {e}")
             self.exit_code = 1
+<<<<<<< HEAD
             return {
                 'success': False,
                 'error': str(e),
@@ -460,10 +581,16 @@ class TaskHandler(CommonHandlerBase):
             }
 
     def _handle_complete_task_sync(self, args, repo, agent_id: str) -> dict:
+=======
+            return True
+
+    def _handle_complete_task(self, args, repo, agent_id: str) -> bool:
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
         """Handle --complete-task command."""
         task_id = args.complete_task
         logger.info(f"✅ Completing task {task_id}...")
 
+<<<<<<< HEAD
         # Validate task ID format
         if not self._validate_task_id(task_id):
             logger.error(f"❌ Invalid task ID format: {task_id}")
@@ -474,30 +601,40 @@ class TaskHandler(CommonHandlerBase):
                 "Task IDs should contain only alphanumeric characters, hyphens, and underscores"
             )
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
         try:
             task = repo.get(task_id)
 
             if not task:
                 logger.error(f"❌ Task {task_id} not found")
                 self.exit_code = 1
+<<<<<<< HEAD
                 return self._create_error_result(
                     "complete_task",
                     "task_not_found",
                     f'Task {task_id} not found',
                     "Verify the task ID is correct and the task exists"
                 )
+=======
+                return True
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
             # Verify task is assigned to this agent
             if task.assigned_agent_id != agent_id:
                 logger.error(f"❌ Task {task_id} is not assigned to {agent_id}")
                 logger.info(f"💡 Task is assigned to: {task.assigned_agent_id}")
                 self.exit_code = 1
+<<<<<<< HEAD
                 return self._create_error_result(
                     "complete_task",
                     "task_not_assigned_to_agent",
                     f'Task {task_id} is not assigned to {agent_id}',
                     f"Task is assigned to {task.assigned_agent_id}. Only the assigned agent can complete it."
                 )
+=======
+                return True
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
             # Complete the task
             task.complete()
@@ -512,6 +649,7 @@ class TaskHandler(CommonHandlerBase):
             print(f"Completed at: {task.completed_at.strftime('%Y-%m-%d %H:%M:%S')}")
             print("=" * 60 + "\n")
 
+<<<<<<< HEAD
             result = {
                 'success': True,
                 'task_id': task.id,
@@ -593,10 +731,16 @@ class TaskHandler(CommonHandlerBase):
             logger.info(f"✅ Task {task_id} completed by {agent_id}")
             self.exit_code = 0
             return result
+=======
+            logger.info(f"✅ Task {task_id} completed by {agent_id}")
+            self.exit_code = 0
+            return True
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
         except Exception as e:
             logger.error(f"❌ Failed to complete task: {e}")
             self.exit_code = 1
+<<<<<<< HEAD
             return {
                 'success': False,
                 'error': str(e),
@@ -604,6 +748,9 @@ class TaskHandler(CommonHandlerBase):
                 'agent_id': agent_id,
                 'operation': 'complete_task'
             }
+=======
+            return True
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
     def _priority_name(self, priority: int) -> str:
         """Convert priority number to name."""
@@ -618,6 +765,7 @@ class TaskHandler(CommonHandlerBase):
             return "🔄 In Progress"
         else:
             return "🆕 Pending"
+<<<<<<< HEAD
 
     def _create_error_result(self, command: str, error_type: str, error_message: str,
                            recovery_suggestion: str) -> dict:
@@ -642,3 +790,5 @@ class TaskHandler(CommonHandlerBase):
                 'timestamp': datetime.now().isoformat()
             }
         }
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console

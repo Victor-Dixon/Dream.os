@@ -1,0 +1,38 @@
+{
+  "site": "tradingrobotplug.com",
+  "theme": "tradingrobotplug-theme",
+  "timestamp": "2025-12-27T02:44:20.933772",
+  "deployment_type": "remote",
+  "files_to_deploy": [
+    "functions.php",
+    "front-page.php",
+    "style.css",
+    "header.php",
+    "footer.php",
+    "index.php",
+    "inc/template-helpers.php",
+    "inc/forms.php",
+    "inc/analytics.php",
+    "inc/rest-api.php",
+    "inc/dashboard-api.php",
+    "inc/asset-enqueue.php",
+    "inc/theme-setup.php",
+    "assets/css/custom.css",
+    "assets/js/main.js"
+  ],
+  "total_files": 15,
+  "deployment_methods": [
+    "SFTP/File Manager (recommended)",
+    "WordPress Admin Theme Editor",
+    "SSH + rsync/scp",
+    "Git deployment (if configured)"
+  ],
+  "verification_steps": [
+    "Verify theme active in WordPress Admin",
+    "Check front-page.php loads correctly",
+    "Verify hero section visible",
+    "Verify waitlist form functional",
+    "Clear all caches",
+    "Test form submission"
+  ]
+}

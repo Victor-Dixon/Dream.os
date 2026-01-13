@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 <!-- SSOT Domain: documentation -->
 
 # Architectural Health Fixes - dream.os
+=======
+# Architectural Health Fixes - Agent Cellphone V2
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 ## Critical Issues Analysis & Resolution Plan
 
 **Date:** 2025-12-28

@@ -36,6 +36,7 @@ class ContractStorage:
     def save_contract(self, contract: Contract) ->bool:
         """Save contract to storage."""
         try:
+<<<<<<< HEAD
             # Prevent saving placeholder/default contracts
             contract_data = contract.to_dict() if hasattr(contract, 'to_dict') else contract
             contract_title = contract_data.get('title', '') if isinstance(contract_data, dict) else getattr(contract, 'title', '')
@@ -44,6 +45,8 @@ class ContractStorage:
                 logger.warning(f"🚫 Rejected attempt to save placeholder contract: {contract_title}")
                 return False
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
             contracts = self.load_all_contracts()
             contracts[contract.contract_id] = contract.to_dict()
             self._write_json(self.contracts_file, contracts)
@@ -60,6 +63,7 @@ class ContractStorage:
             logger.info(f'ERROR: Error saving contract: {e}')
             return False
 
+<<<<<<< HEAD
     # IContractStorage interface implementation
     def save_contract_data(self, agent_id: str, contract_data: dict[str, Any]) -> bool:
         """Interface-compliant method for saving contract data."""
@@ -102,6 +106,8 @@ class ContractStorage:
             logger.error(f"❌ Error loading contract data for agent {agent_id}: {e}")
             return None
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     def load_contract(self, contract_id: str) ->(Contract | None):
         """Load specific contract."""
         try:
@@ -136,6 +142,7 @@ class ContractStorage:
             logger.info(f'ERROR: Error getting all contracts: {e}')
             return []
 
+<<<<<<< HEAD
     def list_contracts(self) -> dict[str, dict[str, Any]]:
         """Interface-compliant method to list all contracts."""
         try:
@@ -144,6 +151,8 @@ class ContractStorage:
             logger.error(f"❌ Error listing contracts: {e}")
             return {}
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     def load_agent_contracts(self, agent_id: str) ->dict[str, dict[str, Any]]:
         """Load contracts for specific agent."""
         try:

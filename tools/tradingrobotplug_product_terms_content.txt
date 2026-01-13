@@ -1,0 +1,182 @@
+# Product Terms & Risk Disclosure
+
+**Last Updated:** December 30, 2025
+
+## CRITICAL RISK DISCLOSURE
+
+**WARNING:** Trading financial instruments involves substantial risk of loss. You may lose some or all of your invested capital. TradingRobotPlug makes **NO PROMISES OR GUARANTEES** of profits, returns, or successful trades. Past performance does not guarantee future results.
+
+## Financial Product Disclaimer
+
+TradingRobotPlug provides automated trading tools and signals. **We are NOT a registered investment advisor, broker-dealer, or financial planner.** Our services are for informational and educational purposes only. We do not provide personalized investment advice.
+
+### Regulatory Compliance
+- Our tools are designed for use by experienced traders
+- We do not guarantee compliance with all regulatory requirements in all jurisdictions
+- Users are responsible for ensuring their use complies with local regulations
+- We are not licensed to provide investment advice in all jurisdictions
+
+## Product Terms
+
+### Automated Trading Tools
+
+**What We Provide:**
+- Automated trading algorithms and strategies
+- Backtesting capabilities
+- Trading signals and alerts
+- Performance monitoring tools
+
+**What We Do NOT Provide:**
+- Investment advice
+- Guaranteed profits or returns
+- Risk-free trading
+- Personalized trading recommendations
+- Brokerage services
+
+### Service Limitations
+
+1. **No Guarantees:** We make no warranties about the accuracy, reliability, or profitability of our trading tools.
+
+2. **System Failures:** Automated systems can fail due to:
+   - Technical malfunctions
+   - Internet connectivity issues
+   - Broker platform outages
+   - Software bugs or errors
+   - Market volatility
+
+3. **Market Conditions:** Trading results vary based on:
+   - Market volatility
+   - Economic conditions
+   - Regulatory changes
+   - Unforeseen events
+
+4. **No Liability for Losses:** We are not responsible for any trading losses you may incur while using our services.
+
+## Risk Disclosure
+
+### Trading Risks
+
+**HIGH RISK WARNING:** Trading financial instruments, including stocks, options, futures, forex, and cryptocurrencies, carries a high level of risk and may not be suitable for all investors.
+
+#### Specific Risks Include:
+
+1. **Market Risk:** Prices can move against you, resulting in losses.
+
+2. **Leverage Risk:** Using leverage can amplify both gains and losses. You may lose more than your initial investment.
+
+3. **Liquidity Risk:** Some markets may have limited liquidity, making it difficult to enter or exit positions.
+
+4. **Technology Risk:** 
+   - System failures can prevent trade execution
+   - Delays in signal delivery can result in missed opportunities
+   - Software bugs may cause unintended trades
+
+5. **Regulatory Risk:** Changes in regulations can affect trading strategies and profitability.
+
+6. **Counterparty Risk:** Broker failures or insolvency can result in loss of funds.
+
+7. **Operational Risk:** Human error, system errors, or fraud can result in losses.
+
+### Risk of Loss
+
+- **You may lose your entire investment**
+- **Past performance does not guarantee future results**
+- **No trading system is 100% accurate**
+- **Markets can move against you at any time**
+
+## Suitability Requirements
+
+Our services are suitable ONLY for:
+- Experienced traders who understand trading risks
+- Individuals who can afford to lose their entire investment
+- Users who have read and understood this Risk Disclosure
+- Traders who comply with all applicable laws and regulations
+
+**NOT suitable for:**
+- Individuals seeking guaranteed returns
+- Traders who cannot afford to lose money
+- Users who do not understand trading risks
+- Individuals in jurisdictions where automated trading is prohibited
+
+## Performance Disclaimers
+
+### Past Performance
+- Past performance is not indicative of future results
+- Historical backtests may not reflect actual trading conditions
+- Simulated results may differ from live trading results
+- Market conditions change, affecting strategy performance
+
+### No Guarantees
+- **We do NOT guarantee profits**
+- **We do NOT guarantee successful trades**
+- **We do NOT guarantee minimum returns**
+- **We do NOT guarantee risk-free trading**
+
+## User Responsibilities
+
+By using our services, you acknowledge and agree that:
+
+1. **You understand the risks** of trading financial instruments
+2. **You are solely responsible** for your trading decisions
+3. **You will not hold TradingRobotPlug liable** for any trading losses
+4. **You have sufficient knowledge** and experience to trade
+5. **You comply with all applicable laws** and regulations
+6. **You use our services at your own risk**
+
+## Broker Relationships
+
+- TradingRobotPlug is **NOT a broker**
+- We do **NOT hold your funds**
+- We do **NOT execute trades** on your behalf
+- You must use a **separate broker** to execute trades
+- We are **NOT responsible** for broker actions or failures
+
+## Regulatory Notices
+
+### United States
+- TradingRobotPlug is not registered with the SEC or CFTC
+- Our services are for informational purposes only
+- We do not provide investment advice as defined by U.S. securities laws
+
+### European Union
+- TradingRobotPlug complies with GDPR for data protection
+- Users are responsible for compliance with MiFID II if applicable
+- Our services may not be available in all EU jurisdictions
+
+### Other Jurisdictions
+- Users are responsible for compliance with local regulations
+- Our services may not be available in all jurisdictions
+- Some jurisdictions may prohibit automated trading
+
+## Limitation of Liability
+
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, TRADINGROBOTPLUG SHALL NOT BE LIABLE FOR:
+
+- Any trading losses you incur
+- Loss of profits or opportunities
+- System failures or malfunctions
+- Inaccurate signals or data
+- Broker failures or insolvency
+- Regulatory actions or penalties
+- Any indirect, incidental, or consequential damages
+
+## Acknowledgment
+
+By using TradingRobotPlug services, you acknowledge that:
+
+- **You have read and understood this Risk Disclosure**
+- **You understand the risks of trading**
+- **You accept full responsibility for your trading decisions**
+- **You will not hold TradingRobotPlug liable for losses**
+- **You are using our services at your own risk**
+
+## Contact for Questions
+
+If you have questions about risks or our services, contact us:
+
+**Email:** support@tradingrobotplug.com  
+**Website:** https://tradingrobotplug.com/contact
+
+**DO NOT TRADE WITH MONEY YOU CANNOT AFFORD TO LOSE.**
+
+

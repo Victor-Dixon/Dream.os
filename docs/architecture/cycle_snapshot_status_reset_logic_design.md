@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 <!-- SSOT Domain: architecture -->
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 # Cycle Snapshot System - Status Reset Logic Design
 
 **Date:** 2025-12-31  

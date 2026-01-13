@@ -61,7 +61,11 @@ class DiscordGUIController:
 
     def create_control_panel(self) -> MainControlPanelView:
         """Create main control panel view."""
+<<<<<<< HEAD
         return MainControlPanelView()
+=======
+        return MainControlPanelView(self.messaging_service)
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
     def create_agent_message_modal(self, agent_id: str) -> AgentMessageModal:
         """Create modal for messaging specific agent."""

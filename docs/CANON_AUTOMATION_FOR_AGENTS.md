@@ -1,9 +1,16 @@
+<<<<<<< HEAD
 <!-- SSOT Domain: documentation -->
 
 # Canon Automation: For Agents
 
 **Version**: 1.0
 **Date**: 2025-12-22
+=======
+# Canon Automation: For Agents
+
+**Version**: 1.0  
+**Date**: 2025-12-22  
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 **Audience**: All Swarm Members (Agent-1 through Agent-8)
 
 ---

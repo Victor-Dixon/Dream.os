@@ -332,3 +332,11 @@ def detect_command_completion(output: str) -> Tuple[bool, Optional[str]]:
 
 
 
+<<<<<<< HEAD
+=======
+  return detector.detect_output_completion(output)
+
+
+
+
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console

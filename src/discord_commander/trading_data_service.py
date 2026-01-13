@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 """
+<<<<<<< HEAD
 V2 Consolidated: Uses SSOT base classes for standardized patterns
 Author: Agent-1 (Integration & Core Systems Specialist)
 SSOT Migration: Agent-8 (System Integration)
 Date: 2026-01-12
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 <!-- SSOT Domain: discord -->
 
 Trading Data Service - Real Market Data Integration
@@ -15,6 +18,7 @@ Service for fetching real market data from multiple sources:
 - Yahoo Finance (fallback)
 - Trading robot strategies integration
 
+<<<<<<< HEAD
 Date: 2025-11-26
 """
 
@@ -22,6 +26,17 @@ Date: 2025-11-26
 from src.core.base.import_standardization import (
     logging, datetime, timedelta, Path, Any, Dict, List, Optional, sys
 )
+=======
+Author: Agent-1 (Integration & Core Systems Specialist)
+Date: 2025-11-26
+"""
+
+import logging
+from datetime import datetime, timedelta
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+import sys
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
 # Add trading_robot to path
 project_root = Path(__file__).resolve().parent.parent.parent
@@ -29,7 +44,10 @@ trading_robot_path = project_root / "trading_robot"
 sys.path.insert(0, str(trading_robot_path))
 sys.path.insert(0, str(project_root))
 
+<<<<<<< HEAD
 # Initialize standardized logger through SSOT base
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 logger = logging.getLogger(__name__)
 
 # Try to import market data sources

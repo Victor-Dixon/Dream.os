@@ -18,6 +18,7 @@ SWARM_COORDINATION_TEXT = (
     "✅ Multiple agents have relevant expertise\n"
     "✅ Parallelization will speed up completion (4-8x faster)\n\n"
     "**FORCE MULTIPLIER WORKFLOW**:\n"
+<<<<<<< HEAD
     "1. **AI Orchestration Analysis** (MANDATORY FIRST STEP):\n"
     "   ```bash\n"
     "   python scripts/ai_orchestrate_simple.py --analyze-task \"[your task description]\"\n"
@@ -27,6 +28,9 @@ SWARM_COORDINATION_TEXT = (
     "   - Receive risk assessments and mitigation strategies\n"
     "   - Generate coordination message templates\n\n"
     "2. **Task Analysis** (using AI insights):\n"
+=======
+    "1. **Task Analysis** (FIRST - before starting work):\n"
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     "   - Break task into parallelizable components\n"
     "   - Map components to agent expertise domains\n"
     "   - Identify dependencies and sequencing needs\n"
@@ -57,10 +61,13 @@ SWARM_COORDINATION_TEXT = (
     "   - Monitor via status.json and coordination messages\n\n"
     "5. **Coordination Commands** (USE THESE):\n"
     "   ```bash\n"
+<<<<<<< HEAD
     "   # 🤖 AI-POWERED COORDINATION (RECOMMENDED FIRST)\n"
     "   python scripts/ai_orchestrate_simple.py --analyze-task \"[your task description]\"\n"
     "   python scripts/ai_orchestrate_simple.py --generate-message --task \"[task]\" --agents \"1,7\"\n"
     "   \n"
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     "   # Assign task to specific agent (DO THIS)\n"
     "   python -m src.services.messaging_cli --agent Agent-X --message \"[Task description with context]\" --priority normal\n"
     "   \n"
@@ -73,7 +80,11 @@ SWARM_COORDINATION_TEXT = (
     "   # Check agent status for coordination\n"
     "   python -m src.services.messaging_cli --check-status\n"
     "   ```\n"
+<<<<<<< HEAD
     "   **Remember**: AI orchestration analysis IS progress. Use AI insights for all coordination decisions.\n\n"
+=======
+    "   **Remember**: Sending assignment messages IS progress. Commit them.\n\n"
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     "5. **Integration & Validation**:\n"
     "   - Collect results from all assigned agents\n"
     "   - Integrate outputs and validate completeness\n"

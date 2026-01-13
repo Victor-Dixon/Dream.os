@@ -32,6 +32,7 @@ from collections import Counter
 
 from ..core.base.base_service import BaseService
 
+<<<<<<< HEAD
 # Optional vector database imports - import directly to avoid services __init__ chain
 try:
     from .vector.vector_database_service import VectorDatabaseService
@@ -56,6 +57,15 @@ except (ImportError, ValueError, AttributeError) as e:
     def search_vector_database(query, top_k=5):
         return []
     SearchQuery = None
+=======
+# Optional vector database imports (SSOT)
+from .vector_database import (
+    get_vector_database_service,
+    search_vector_database,
+    SearchQuery,
+    VECTOR_DB_AVAILABLE,
+)
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
 
 class RecommendationEngine(BaseService):

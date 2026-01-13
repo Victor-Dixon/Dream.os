@@ -1,0 +1,14 @@
+{"ts": 1760455505.0488727, "topic": "aggressive-consolidation", "voter": "Agent-7", "choice": "yes"}
+{"ts": 1763987938.733878, "topic": "Rank Toolbelt Tools - Which tool is the best?", "voter": "Agent-6", "choice": "mission-control", "category": "CRITICAL", "reasoning": "Critical tools are the foundation. Mission Control enables autonomous operations at scale. Without critical tools, monitoring, automation, analysis, and quality are meaningless."}
+{"ts": 1763989017.961342, "topic": "Rank Toolbelt Tools - Which tool is the best?", "voter": "Agent-6", "choice": "mission-control", "category": "Best Overall Tool (Most Useful)"}
+{"ts": 1763989017.964347, "topic": "Rank Toolbelt Tools - Which tool is the best?", "voter": "Agent-6", "choice": "workspace-health", "category": "Best Monitoring Tool"}
+{"ts": 1763989017.9823613, "topic": "Rank Toolbelt Tools - Which tool is the best?", "voter": "Agent-6", "choice": "orchestrate", "category": "Best Automation Tool"}
+{"ts": 1763989017.9833622, "topic": "Rank Toolbelt Tools - Which tool is the best?", "voter": "Agent-6", "choice": "scan", "category": "Best Analysis Tool"}
+{"ts": 1763989017.9923706, "topic": "Rank Toolbelt Tools - Which tool is the best?", "voter": "Agent-6", "choice": "v2-check", "category": "Best Quality Tool"}
+{"ts": 1763989017.9963748, "topic": "Rank Toolbelt Tools - Which tool is the best?", "voter": "Agent-6", "choice": "mission-control", "category": "Most Critical Tool"}
+{"ts": 1763992481.8608677, "topic": "Rank Tools in Consolidated Tools Directory - Which is the Best Tool on the Toolbelt?", "voter": "Agent-6", "choice": "mission-control", "category": "Best Overall Tool (Most Useful)", "debate_id": "debate_20251124_054724"}
+{"ts": 1763992481.864869, "topic": "Rank Tools in Consolidated Tools Directory - Which is the Best Tool on the Toolbelt?", "voter": "Agent-6", "choice": "workspace-health", "category": "Best Monitoring Tool", "debate_id": "debate_20251124_054724"}
+{"ts": 1763992481.875884, "topic": "Rank Tools in Consolidated Tools Directory - Which is the Best Tool on the Toolbelt?", "voter": "Agent-6", "choice": "orchestrate", "category": "Best Automation Tool", "debate_id": "debate_20251124_054724"}
+{"ts": 1763992481.883889, "topic": "Rank Tools in Consolidated Tools Directory - Which is the Best Tool on the Toolbelt?", "voter": "Agent-6", "choice": "scan", "category": "Best Analysis Tool", "debate_id": "debate_20251124_054724"}
+{"ts": 1763992481.8928943, "topic": "Rank Tools in Consolidated Tools Directory - Which is the Best Tool on the Toolbelt?", "voter": "Agent-6", "choice": "v2-check", "category": "Best Quality Tool", "debate_id": "debate_20251124_054724"}
+{"ts": 1763992481.8978999, "topic": "Rank Tools in Consolidated Tools Directory - Which is the Best Tool on the Toolbelt?", "voter": "Agent-6", "choice": "mission-control", "category": "Most Critical Tool", "debate_id": "debate_20251124_054724"}

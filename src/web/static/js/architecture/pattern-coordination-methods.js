@@ -7,8 +7,11 @@
  * @license MIT
  */
 
+<<<<<<< HEAD
 // <!-- SSOT Domain: web -->
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 // ================================
 // PATTERN COORDINATION METHODS
 // ================================

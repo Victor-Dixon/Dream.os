@@ -8,6 +8,7 @@ Ollama Integration for Local Agents
 Provides local LLM capabilities for our custom agents
 """
 
+<<<<<<< HEAD
 import os
 import platform
 import subprocess
@@ -17,11 +18,14 @@ import logging
 from typing import List, Dict, Any, Optional, Tuple
 from pathlib import Path
 from dataclasses import dataclass
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
 logger = logging.getLogger(__name__)
 
 
 @dataclass
+<<<<<<< HEAD
 class OllamaDiscoveryResult:
     """Result of Ollama discovery attempt"""
 
@@ -171,6 +175,8 @@ class OllamaDiscovery:
 
 
 @dataclass
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 class OllamaResponse:
     """Response from Ollama API"""
 
@@ -189,6 +195,7 @@ class OllamaResponse:
 class OllamaClient:
     """Client for interacting with Ollama API"""
 
+<<<<<<< HEAD
     def __init__(self, base_url: Optional[str] = None, auto_discover: bool = True):
         """
         Initialize Ollama client with dynamic discovery
@@ -219,16 +226,27 @@ class OllamaClient:
             self.base_url = "http://localhost:11434"
             self.discovery_result = None
 
+=======
+    def __init__(self, base_url: str = "http://localhost:11434"):
+        self.base_url = base_url
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
         self.session = requests.Session()
         self.logger = logging.getLogger("OllamaClient")
 
     def is_available(self) -> bool:
         """Check if Ollama is running and available"""
         try:
+<<<<<<< HEAD
             response = self.session.get(f"{self.base_url}/api/tags", timeout=5)
             return response.status_code == 200
         except Exception as e:
             logger.warning(f"Ollama not available at {self.base_url}: {e}")
+=======
+            response = self.session.get(f"{self.base_url}/api/tags")
+            return response.status_code == 200
+        except Exception as e:
+            self.get_logger(__name__).warning(f"Ollama not available: {e}")
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
             return False
 
     def get_models(self) -> List[Dict[str, Any]]:

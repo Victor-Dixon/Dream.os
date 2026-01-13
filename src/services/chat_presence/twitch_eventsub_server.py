@@ -49,9 +49,15 @@ def on_redemption_callback(user_name: str, event_data: dict) -> None:
 
 def main():
     """Run EventSub webhook server."""
+<<<<<<< HEAD
     # Get webhook secret from environment, use default for development
     webhook_secret = os.getenv("TWITCH_EVENTSUB_WEBHOOK_SECRET", "dev-webhook-secret-12345")
 
+=======
+    # Get webhook secret from environment
+    webhook_secret = os.getenv("TWITCH_EVENTSUB_WEBHOOK_SECRET")
+    
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     if not webhook_secret:
         logger.error(
             "❌ TWITCH_EVENTSUB_WEBHOOK_SECRET environment variable not set!\n"

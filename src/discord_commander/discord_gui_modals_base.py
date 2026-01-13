@@ -27,6 +27,7 @@ from src.services.messaging_infrastructure import ConsolidatedMessagingService
 logger = logging.getLogger(__name__)
 
 
+<<<<<<< HEAD
 class BaseModal(discord.ui.Modal):
     """
     Base modal class for Discord UI components.
@@ -54,6 +55,8 @@ class BaseModal(discord.ui.Modal):
             )
 
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 class BaseMessageModal(discord.ui.Modal):
     """Base modal for message composition with common functionality."""
 
@@ -135,6 +138,7 @@ class BaseMessageModal(discord.ui.Modal):
             sender=sender,
         )
 
+<<<<<<< HEAD
     def _send_jet_fuel_message(
         self,
         target: str,
@@ -163,6 +167,8 @@ class BaseMessageModal(discord.ui.Modal):
             sender=sender,
         )
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     def _broadcast_to_agents(
         self,
         agents: list[str],
@@ -202,6 +208,7 @@ class BaseMessageModal(discord.ui.Modal):
         """Format error message list."""
         return "\n".join(errors[:max_errors])
 
+<<<<<<< HEAD
     async def _handle_submit(self, interaction: discord.Interaction, target: str, message_type: str):
         """Handle modal submission for messages."""
         try:
@@ -274,6 +281,8 @@ class BaseMessageModal(discord.ui.Modal):
                 f"❌ Failed to process Mermaid diagram: {str(e)}", ephemeral=True
             )
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
 __all__ = ["BaseMessageModal"]
 

@@ -101,15 +101,24 @@ class TheaBrowserOperations:
 
         try:
             target_url = thea_url or self.thea_config.conversation_url
+<<<<<<< HEAD
 
             # CRITICAL FIX: Load cookies BEFORE navigating to target URL
             # This ensures cookies are available when we first visit the site
             self.browser_utils.load_cookies(self.driver, target_url)
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
             if not self.navigate_to(target_url, wait_seconds=5.0):
                 return False
 
             time.sleep(3)  # Wait for page stabilization
+<<<<<<< HEAD
+=======
+            self.browser_utils.load_cookies(self.driver, target_url)
+            self.driver.refresh()
+            time.sleep(5)  # Wait for page reload
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
             self._wait_for_page_ready()
 
             if self._is_thea_authenticated():
@@ -117,6 +126,7 @@ class TheaBrowserOperations:
                 self.browser_utils.save_cookies(self.driver)
                 return True
 
+<<<<<<< HEAD
             # Try refreshing once more with cookies loaded
             logger.info("🔄 Refreshing page to ensure cookie authentication...")
             self.driver.refresh()
@@ -128,6 +138,8 @@ class TheaBrowserOperations:
                 self.browser_utils.save_cookies(self.driver)
                 return True
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
             if allow_manual:
                 logger.info("⚠️  Manual authentication required - waiting 45 seconds...")
                 time.sleep(45)

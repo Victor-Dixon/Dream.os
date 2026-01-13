@@ -18,6 +18,7 @@ from .utility_commands import UtilityCommands
 from .agent_management_commands import AgentManagementCommands
 from .profile_commands import ProfileCommands
 from .placeholder_commands import PlaceholderCommands
+<<<<<<< HEAD
 from .control_panel_commands import ControlPanelCommands
 from .thea_commands import TheaCommands
 from .bot_messaging_commands import MessagingCommands
@@ -36,6 +37,8 @@ command_registry.register_cog_class(PlaceholderCommands)
 command_registry.register_cog_class(ControlPanelCommands)
 command_registry.register_cog_class(MessagingCommands)
 command_registry.register_cog_class(TheaCommands)
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
 __all__ = [
     "CoreMessagingCommands",
@@ -45,9 +48,12 @@ __all__ = [
     "AgentManagementCommands",
     "ProfileCommands",
     "PlaceholderCommands",
+<<<<<<< HEAD
     "ControlPanelCommands",
     "TheaCommands",
     "MessagingCommands",
     "command_registry",
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 ]
 

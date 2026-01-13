@@ -6,6 +6,7 @@ Message Queue Persistence - V2 Compliance Module
 
 Handles queue persistence operations following SRP.
 
+<<<<<<< HEAD
 V2 Consolidated: Uses SSOT base classes for standardized patterns
 Author: Agent-1 (System Recovery Specialist)
 SSOT Migration: Agent-8 (System Integration)
@@ -20,6 +21,19 @@ from src.core.base.import_standardization import (
 from .message_queue_interfaces import IQueuePersistence, IQueueEntry
 from src.core.base.service_base import BaseService
 from src.core.base.error_handling import ErrorHandler, error_context
+=======
+Author: Agent-1 (System Recovery Specialist)
+License: MIT
+"""
+
+import json
+import time
+import shutil
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Callable
+
+from .message_queue_interfaces import IQueuePersistence, IQueueEntry
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
 
 class FileQueuePersistence(IQueuePersistence):

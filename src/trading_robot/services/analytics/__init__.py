@@ -6,6 +6,7 @@ from . import market_trend_engine
 from . import performance_metrics_engine
 from . import risk_analysis_engine
 from . import trading_bi_models
+<<<<<<< HEAD
 
 # Import orchestrator directly to avoid circular import issues
 try:
@@ -25,12 +26,16 @@ from .trading_bi_models import (
     RiskMetrics,
     RiskAssessmentConfig
 )
+=======
+from . import trading_bi_orchestrator
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
 __all__ = [
     'market_trend_engine',
     'performance_metrics_engine',
     'risk_analysis_engine',
     'trading_bi_models',
+<<<<<<< HEAD
     'TradingBiAnalyticsOrchestrator',
     'create_trading_bi_analytics_orchestrator',
     'MarketTrend',
@@ -41,4 +46,7 @@ __all__ = [
     'RiskLevel',
     'RiskMetrics',
     'RiskAssessmentConfig',
+=======
+    'trading_bi_orchestrator',
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 ]

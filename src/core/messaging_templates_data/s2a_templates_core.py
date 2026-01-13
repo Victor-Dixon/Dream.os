@@ -15,6 +15,7 @@ S2A_TEMPLATES_CORE: dict[str, str] = {
         "Priority: {priority}\n"
         "Message ID: {message_id}\n"
         "Timestamp: {timestamp}\n\n"
+<<<<<<< HEAD
         "🚀 **PROTOCOL UPDATE: Dumb Messages → Real Work Discovery**\n"
         "When you receive repetitive or 'dumb' coordination messages, don't just acknowledge them. Instead:\n"
         "- Search the codebase for TODO/FIXME items and real work opportunities\n"
@@ -22,6 +23,8 @@ S2A_TEMPLATES_CORE: dict[str, str] = {
         "- Execute complete implementation with testing and documentation\n"
         "- Make work publicly visible through git commits, devlogs, and blog posts\n"
         "- Transform message receipt into forward momentum, not confirmation loops\n\n"
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
         "Context:\n{context}\n\n"
         "Architecture & Swarm Brain Check (BEFORE DOING ANYTHING):\n"
         "- Search existing architecture / SSOT docs for this domain (designs, patterns, contracts).\n"

@@ -151,6 +151,7 @@ export class RiskDashboardIntegration {
 
     /**
      * Handle incoming WebSocket messages
+<<<<<<< HEAD
      *
      * Navigation References:
      * ├── WebSocket Server → src/services/risk_analytics/risk_websocket_server.py::_handle_live_connection()
@@ -168,6 +169,10 @@ export class RiskDashboardIntegration {
      * 5. Notify all dashboard subscribers
      * 6. Trigger UI updates and chart refreshes
      */
+=======
+     */
+    handleMessage(data) {
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
         try {
             const message = JSON.parse(data);
 

@@ -14,7 +14,11 @@ Consolidated: Uses BaseHandler (30% code reduction).
 from flask import jsonify, request
 
 from src.core.base.base_handler import BaseHandler
+<<<<<<< HEAD
 from src.services.unified_service_managers import UnifiedContractManager
+=======
+from src.services.contract_system.manager import ContractManager
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
 
 class ContractHandlers(BaseHandler):
@@ -35,7 +39,11 @@ class ContractHandlers(BaseHandler):
             Tuple of (response_data, status_code)
         """
         try:
+<<<<<<< HEAD
             manager = UnifiedContractManager()
+=======
+            manager = ContractManager()
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
             status = manager.get_system_status()
 
             if "error" in status:
@@ -61,7 +69,11 @@ class ContractHandlers(BaseHandler):
             Tuple of (response_data, status_code)
         """
         try:
+<<<<<<< HEAD
             manager = UnifiedContractManager()
+=======
+            manager = ContractManager()
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
             status = manager.get_agent_status(agent_id)
 
             if "error" in status:
@@ -93,7 +105,11 @@ class ContractHandlers(BaseHandler):
                 error_response = self.format_response(None, success=False, error="agent_id is required")
                 return jsonify(error_response), 400
 
+<<<<<<< HEAD
             manager = UnifiedContractManager()
+=======
+            manager = ContractManager()
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
             task = manager.get_next_task(agent_id)
 
             if "error" in task:

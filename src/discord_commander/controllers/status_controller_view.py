@@ -15,18 +15,27 @@ WOW FACTOR Features:
 - Status filters
 - Detailed agent views
 
+<<<<<<< HEAD
 V2 Consolidated: Uses SSOT base classes for standardized patterns
 Author: Agent-6 (Coordination & Communication Specialist)
 SSOT Migration: Agent-8 (System Integration)
 Date: 2026-01-12
+=======
+Author: Agent-6 (Coordination & Communication Specialist)
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 Created: 2025-01-27
 Status: ✅ WOW FACTOR CONTROLLER
 """
 
+<<<<<<< HEAD
 # SSOT Import Standardization - eliminates redundant typing imports
 from src.core.base.import_standardization import logging, Any
 from src.core.base.service_base import BaseService
 from src.core.base.error_handling import ErrorHandler, error_context
+=======
+import logging
+from typing import Any
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
 try:
     import discord

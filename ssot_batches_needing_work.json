@@ -1,0 +1,2909 @@
+{
+  "batches_needing_work": [],
+  "batches_complete": [
+    {
+      "batch_id": "core_batch_1",
+      "domain": "core",
+      "total_files": 15,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/commandresult.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/agent_registry.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/discord_commander/commands/core_messaging_commands.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/ai_automation/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/ai_automation/utils/filesystem.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/ai_automation/utils/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/ai_training/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/ai_training/dreamvault/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/ai_training/dreamvault/database.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/ai_training/dreamvault/runner.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/ai_training/dreamvault/scrapers/browser_manager.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/ai_training/dreamvault/scrapers/scraper_conversation_methods.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/ai_training/dreamvault/scrapers/scraper_extraction.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/ai_training/dreamvault/scrapers/scraper_progress.py",
+          "domain": "core"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 15
+    },
+    {
+      "batch_id": "core_batch_2",
+      "domain": "core",
+      "total_files": 15,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/ai_training/dreamvault/scrapers/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/application/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/application/use_cases/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/application/use_cases/assign_task_uc.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/application/use_cases/complete_task_uc.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/automation/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/automation/ui_onboarding.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/test_categories_config.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/unified_logging_system.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/vector_integration_analytics.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/unified_data_processing_system.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/stress_test_analysis_report.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/stress_test_metrics.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/stress_test_metrics_analyzer.py",
+          "domain": "core"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 15
+    },
+    {
+      "batch_id": "core_batch_3",
+      "domain": "core",
+      "total_files": 15,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/core/stress_test_metrics_integration.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/task_completion_detector.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/auto_gas_pipeline_system.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/gasline_integrations.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/hardened_activity_detector.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/smart_assignment_optimizer.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/stress_test_runner.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/synthetic_github.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/unified_import_system.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/workspace_agent_registry.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/analytics/coordinators/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/analytics/engines/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/analytics/intelligence/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/analytics/intelligence/pattern_analysis/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/analytics/models/__init__.py",
+          "domain": "core"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 15
+    },
+    {
+      "batch_id": "core_batch_4",
+      "domain": "core",
+      "total_files": 15,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/core/analytics/orchestrators/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/analytics/prediction/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/analytics/processors/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/analytics/processors/prediction/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/consolidation/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/consolidation/base.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/consolidation/utility_consolidation/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/consolidation/utility_consolidation/utility_consolidation_engine.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/consolidation/utility_consolidation/utility_consolidation_orchestrator.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/consolidation/utility_consolidation/utility_consolidation_models.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/constants/fsm.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/constants/fsm_constants.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/constants/fsm_enums.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/constants/fsm_models.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/constants/fsm_utilities.py",
+          "domain": "core"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 15
+    },
+    {
+      "batch_id": "core_batch_5",
+      "domain": "core",
+      "total_files": 15,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/core/constants/paths.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/constants/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/constants/decision.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/constants/manager.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/constants/fsm/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/constants/fsm/configuration_models.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/constants/fsm/state_models.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/constants/fsm/transition_models.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/coordination/agent_strategies.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/coordination/swarm/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/coordination/swarm/coordination_models.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/coordination/swarm/engines/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/coordination/swarm/engines/performance_monitoring_engine.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/coordination/swarm/engines/task_coordination_engine.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/coordination/swarm/orchestrators/__init__.py",
+          "domain": "core"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 15
+    },
+    {
+      "batch_id": "core_batch_6",
+      "domain": "core",
+      "total_files": 15,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/core/coordination/swarm/orchestrators/swarm_coordination_orchestrator.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/engines/analysis_core_engine.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/engines/data_core_engine.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/engines/integration_core_engine.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/engines/ml_core_engine.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/engines/monitoring_core_engine.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/engines/orchestration_core_engine.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/engines/performance_core_engine.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/engines/processing_core_engine.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/engines/security_core_engine.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/engines/storage_core_engine.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/engines/utility_core_engine.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/engines/validation_core_engine.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/engines/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/error_handling/CONSOLIDATION_C055-3.md",
+          "domain": "core"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 15
+    },
+    {
+      "batch_id": "core_batch_7",
+      "domain": "core",
+      "total_files": 15,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/core/error_handling/REFACTORING_REPORT_COORDINATION_ERROR_HANDLER.md",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/error_handling/coordination_strategies.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/error_handling/error_exceptions.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/error_handling/error_handling_models.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/error_handling/error_models_enums.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/error_handling/error_reporting_reporter.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/error_handling/error_reporting_utilities.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/error_handling/error_enums.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/error_handling/error_utilities_core.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/error_handling/component_management.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/error_handling/coordination_decorator.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/error_handling/error_classification.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/error_handling/error_config.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/error_handling/error_context_models.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/error_handling/error_decision_models.py",
+          "domain": "core"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 15
+    },
+    {
+      "batch_id": "core_batch_8",
+      "domain": "core",
+      "total_files": 15,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/core/error_handling/error_execution.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/error_handling/error_intelligence.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/error_handling/recovery_strategies.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/error_handling/retry_mechanisms.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/error_handling/retry_safety_engine.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/error_handling/circuit_breaker/core.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/error_handling/metrics/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/error_handling/metrics/error_alerts.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/error_handling/metrics/error_metrics.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/file_locking/file_locking_engine_platform.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/file_locking/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/file_locking/file_locking_engine_base.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/file_locking/file_locking_engine_operations.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/file_locking/file_locking_orchestrator.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/file_locking/operations/__init__.py",
+          "domain": "core"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 15
+    },
+    {
+      "batch_id": "core_batch_9",
+      "domain": "core",
+      "total_files": 15,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/core/file_locking/operations/lock_queries.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/gamification/achievements.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/gamification/autonomous_competition_system.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/gamification/competition_storage.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/gamification/system_core.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/gamification/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/gamification/leaderboard.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/import_system/import_core.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/import_system/import_mixins_registry.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/import_system/import_mixins_utils.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/import_system/import_registry.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/import_system/import_utilities.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/import_system/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/import_system/import_mixins_core.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/intelligent_context/analysis_models.py",
+          "domain": "core"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 15
+    },
+    {
+      "batch_id": "core_batch_10",
+      "domain": "core",
+      "total_files": 15,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/core/intelligent_context/emergency_models.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/intelligent_context/intelligent_context_emergency.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/intelligent_context/intelligent_context_orchestrator.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/intelligent_context/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/intelligent_context/agent_models.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/intelligent_context/core_models.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/intelligent_context/intelligent_context_engine.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/intelligent_context/intelligent_context_models.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/intelligent_context/intelligent_context_optimization_models.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/intelligent_context/intelligent_context_search.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/intelligent_context/metrics.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/intelligent_context/metrics_models.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/intelligent_context/mission_models.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/intelligent_context/core/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/intelligent_context/core/context_core.py",
+          "domain": "core"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 15
+    },
+    {
+      "batch_id": "core_batch_11",
+      "domain": "core",
+      "total_files": 15,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/core/intelligent_context/engines/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/intelligent_context/engines/agent_assignment_engine.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/intelligent_context/engines/risk_assessment_engine.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/intelligent_context/unified_intelligent_context/search_base.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/intelligent_context/unified_intelligent_context/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/intelligent_context/unified_intelligent_context/search_operations.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/base_manager_helpers.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/config_defaults.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/core_execution_manager.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/core_recovery_manager.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/core_resource_manager.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/core_results_manager.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/core_service_coordinator.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/manager_lifecycle.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/manager_metrics.py",
+          "domain": "core"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 15
+    },
+    {
+      "batch_id": "core_batch_12",
+      "domain": "core",
+      "total_files": 15,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/core/managers/manager_operations.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/manager_state.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/registry.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/resource_context_operations.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/resource_crud_operations.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/resource_file_operations.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/resource_lock_operations.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/base_manager.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/contracts.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/core_onboarding_manager.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/adapters/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/execution/execution_coordinator.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/execution/execution_runner.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/execution/protocol_manager.py",
+          "domain": "core"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 15
+    },
+    {
+      "batch_id": "core_batch_13",
+      "domain": "core",
+      "total_files": 15,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/core/managers/execution/task_executor.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/execution/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/execution/base_execution_manager.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/execution/execution_operations.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/monitoring/alert_manager.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/monitoring/alert_operations.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/monitoring/base_monitoring_manager.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/monitoring/metric_manager.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/monitoring/metrics_manager.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/monitoring/monitoring_crud.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/monitoring/monitoring_query.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/monitoring/monitoring_rules.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/monitoring/monitoring_state.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/monitoring/widget_manager.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/monitoring/__init__.py",
+          "domain": "core"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 15
+    },
+    {
+      "batch_id": "core_batch_14",
+      "domain": "core",
+      "total_files": 15,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/core/managers/monitoring/monitoring_lifecycle.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/results/analysis_results_processor.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/results/base_results_manager.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/results/results_processing.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/results/results_query_helpers.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/results/results_validation.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/results/validation_results_processor.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/results/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/domains/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/domains/execution_domain_manager.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/domains/lifecycle_domain_manager.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/domains/resource_domain_manager.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/managers/domains/results_domain_manager.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/orchestration/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/orchestration/contracts.py",
+          "domain": "core"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 15
+    },
+    {
+      "batch_id": "core_batch_15",
+      "domain": "core",
+      "total_files": 15,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/core/orchestration/adapters/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/pattern_analysis/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/pattern_analysis/pattern_analysis_orchestrator.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/pattern_analysis/pattern_analysis_models.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/performance/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/performance/performance_dashboard.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/performance/performance_decorators.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/performance/performance_cli.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/performance/metrics/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/performance/metrics/types.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/performance/unified_dashboard/metric_manager.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/performance/unified_dashboard/widget_manager.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/performance/unified_dashboard/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/performance/unified_dashboard/engine.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/performance/unified_dashboard/models.py",
+          "domain": "core"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 15
+    },
+    {
+      "batch_id": "core_batch_16",
+      "domain": "core",
+      "total_files": 15,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/core/performance/unified_dashboard/reporter.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/refactoring/analysis_tools.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/refactoring/analysis_tools_core.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/refactoring/extraction_helpers.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/refactoring/toolkit.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/refactoring/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/refactoring/optimization_helpers.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/refactoring/analysis_tools_models.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/refactoring/duplicate_analysis.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/refactoring/extraction_tools.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/refactoring/file_analysis.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/refactoring/pattern_detection.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/refactoring/refactor_tools.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/refactoring/metrics/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/refactoring/metrics/definitions.py",
+          "domain": "core"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 15
+    },
+    {
+      "batch_id": "core_batch_17",
+      "domain": "core",
+      "total_files": 15,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/core/refactoring/tools/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/refactoring/tools/extraction_tools.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/refactoring/tools/optimization_tools.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/session/base_session_manager.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/session/rate_limited_session_manager.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/session/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/ssot/DEPRECATION_NOTICE.md",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/ssot/NAMING_CONVENTIONS.md",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/ssot/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/ssot/ssot_models.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/ssot/unified_ssot/enums.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/ssot/unified_ssot/models.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/ssot/unified_ssot/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/ssot/unified_ssot/execution/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/ssot/unified_ssot/execution/execution_manager.py",
+          "domain": "core"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 15
+    },
+    {
+      "batch_id": "core_batch_18",
+      "domain": "core",
+      "total_files": 15,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/core/ssot/unified_ssot/execution/task_executor.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/ssot/unified_ssot/validators/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/ssot/unified_ssot/validators/basic_validator.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/ssot/unified_ssot/validators/standard_validator.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/ssot/unified_ssot/validators/strict_validator.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/utilities/base_utilities.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/utilities/handler_utilities.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/utilities/processing_utilities.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/utilities/standardized_logging.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/utilities/validation_utilities.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/utilities/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/utilities/cleanup_utilities.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/utilities/config_utilities.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/utilities/error_utilities.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/utilities/init_utilities.py",
+          "domain": "core"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 15
+    },
+    {
+      "batch_id": "core_batch_19",
+      "domain": "core",
+      "total_files": 15,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/core/utilities/logging_utilities.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/utilities/result_utilities.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/utilities/status_utilities.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/utils/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/utils/agent_matching.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/utils/coordination_utils.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/utils/message_queue_utils.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/utils/simple_utils.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/utils/v2_integration_utils.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/validation/README.md",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/validation/unified_validation_orchestrator.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/validation/unified_validation_system.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/validation/validation_coordinator.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/validation/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/validation/coordination_validator.py",
+          "domain": "core"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 15
+    },
+    {
+      "batch_id": "core_batch_20",
+      "domain": "core",
+      "total_files": 15,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/core/vector_strategic_oversight/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/vector_strategic_oversight/simple_oversight.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/vector_strategic_oversight/unified_strategic_oversight/engine_core_metrics.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/vector_strategic_oversight/unified_strategic_oversight/engine_core_missions.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/vector_strategic_oversight/unified_strategic_oversight/engine_core_recommendations.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/vector_strategic_oversight/unified_strategic_oversight/analyzer_core.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/vector_strategic_oversight/unified_strategic_oversight/analyzer_orchestrator.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/vector_strategic_oversight/unified_strategic_oversight/enums.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/vector_strategic_oversight/unified_strategic_oversight/factory_methods.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/vector_strategic_oversight/unified_strategic_oversight/models.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/vector_strategic_oversight/unified_strategic_oversight/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/vector_strategic_oversight/unified_strategic_oversight/extended_models.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/vector_strategic_oversight/unified_strategic_oversight/analyzers/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/vector_strategic_oversight/unified_strategic_oversight/analyzers/swarm_analyzer.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/vector_strategic_oversight/unified_strategic_oversight/analyzers/prediction_analyzer.py",
+          "domain": "core"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 15
+    },
+    {
+      "batch_id": "core_batch_21",
+      "domain": "core",
+      "total_files": 15,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/core/vector_strategic_oversight/unified_strategic_oversight/factories/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/vector_strategic_oversight/unified_strategic_oversight/factories/metrics_factory.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/vector_strategic_oversight/unified_strategic_oversight/factories/mission_factory.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/vector_strategic_oversight/unified_strategic_oversight/factories/report_factory.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/common/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/common/base_engine.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/shared_utilities/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/shared_utilities/base_utility.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/shared_utilities/cleanup_manager.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/shared_utilities/configuration_manager_util.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/shared_utilities/error_handler.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/shared_utilities/factory_functions.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/shared_utilities/initialization_manager.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/shared_utilities/logging_manager.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/shared_utilities/result_manager.py",
+          "domain": "core"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 15
+    },
+    {
+      "batch_id": "core_batch_22",
+      "domain": "core",
+      "total_files": 15,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/core/shared_utilities/status_manager.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/shared_utilities/validation_manager.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/stress_testing/message_generator.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/stress_testing/metrics_collector.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/stress_testing/stress_runner.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/stress_testing/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/stress_testing/mock_messaging_core.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/stress_testing/real_messaging_core_adapter.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/deployment/deployment_coordinator.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/message_queue_processor/core/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/message_queue_processor/core/processor.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/message_queue_processor/processing/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/message_queue_processor/processing/message_validator.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/message_queue_processor/processing/message_router.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/message_queue_processor/processing/delivery_core.py",
+          "domain": "core"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 15
+    },
+    {
+      "batch_id": "core_batch_23",
+      "domain": "core",
+      "total_files": 15,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/core/message_queue_processor/processing/delivery_inbox.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/message_queue_processor/processing/message_parser.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/message_queue_processor/handlers/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/message_queue_processor/handlers/error_handler.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/message_queue_processor/handlers/retry_handler.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/message_queue_processor/utils/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/message_queue_processor/utils/queue_utilities.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/message_queue/core/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/message_queue/core/processor.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/message_queue/processing/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/message_queue/processing/message_parser.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/message_queue/processing/message_validator.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/message_queue/processing/message_router.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/message_queue/handlers/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/message_queue/handlers/error_handler.py",
+          "domain": "core"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 15
+    },
+    {
+      "batch_id": "core_batch_24",
+      "domain": "core",
+      "total_files": 15,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/core/message_queue/handlers/retry_handler.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/message_queue/utils/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/message_queue/utils/queue_utilities.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/gas_pipeline/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/gas_pipeline/core/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/gas_pipeline/core/models.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/gas_pipeline/core/pipeline_config.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/gas_pipeline/core/pipeline.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/gas_pipeline/core/optimizer.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/gas_pipeline/core/integration.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/gas_pipeline/stages/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/gas_pipeline/stages/progress_monitor.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/gas_pipeline/stages/gas_decision.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/gas_pipeline/stages/gas_delivery.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/core/gas_pipeline/handlers/__init__.py",
+          "domain": "core"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 15
+    },
+    {
+      "batch_id": "core_batch_25",
+      "domain": "core",
+      "total_files": 15,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/core/gas_pipeline/handlers/error_handler.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/domain/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/domain/domain_events.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/domain/entities/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/domain/entities/agent.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/domain/ports/clock.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/domain/ports/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/domain/ports/browser.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/domain/ports/message_bus.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/domain/value_objects/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/domain/value_objects/ids.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/features/flags.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/features/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/gaming/gaming_integration_core.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/gaming/integration/core.py",
+          "domain": "core"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 15
+    },
+    {
+      "batch_id": "core_batch_26",
+      "domain": "core",
+      "total_files": 15,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/gui/app.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/gui/ui_builders.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/gui/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/gui/utils.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/gui/components/agent_card.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/gui/components/status_panel.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/gui/components/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/gui/controllers/base.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/gui/styles/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/gui/styles/themes.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/integrations/jarvis/conversation_engine.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/integrations/jarvis/conversation_pattern_data.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/integrations/jarvis/conversation_patterns.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/integrations/jarvis/memory_database.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/integrations/jarvis/__init__.py",
+          "domain": "core"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 15
+    },
+    {
+      "batch_id": "core_batch_27",
+      "domain": "core",
+      "total_files": 15,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/integrations/jarvis/memory_system.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/integrations/jarvis/ollama_integration.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/integrations/osrs/osrs_agent_activities.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/integrations/osrs/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/integrations/osrs/gaming_integration_core.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/integrations/osrs/osrs_agent_core.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/message_task/dedupe.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/message_task/emitters.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/message_task/fsm_bridge.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/message_task/ingestion_pipeline.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/message_task/router.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/message_task/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/message_task/schemas.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/message_task/parsers/ai_parser.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/message_task/parsers/fallback_regex.py",
+          "domain": "core"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 15
+    },
+    {
+      "batch_id": "core_batch_28",
+      "domain": "core",
+      "total_files": 15,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/message_task/parsers/structured_parser.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/message_task/parsers/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/obs/metrics.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/obs/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/obs/caption_listener.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/opensource/contribution_tracker.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/opensource/oss_cli.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/opensource/portfolio_builder.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/opensource/setup_oss.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/opensource/task_integration.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/opensource/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/opensource/project_manager.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/orchestrators/overnight/cli.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/orchestrators/overnight/orchestrator_execution.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/orchestrators/overnight/recovery_escalation.py",
+          "domain": "core"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 15
+    },
+    {
+      "batch_id": "core_batch_29",
+      "domain": "core",
+      "total_files": 15,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/orchestrators/overnight/recovery_handlers.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/orchestrators/overnight/scheduler_helpers.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/orchestrators/overnight/fsm_updates_processor.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/orchestrators/overnight/inbox_consumer.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/orchestrators/overnight/integration_example.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/orchestrators/overnight/message_plans.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/orchestrators/overnight/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/orchestrators/overnight/enhanced_agent_activity_detector.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/orchestrators/overnight/fsm_bridge.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/orchestrators/overnight/listener.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/orchestrators/overnight/orchestrator.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/orchestrators/overnight/recovery.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/orchestrators/overnight/recovery_state.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/orchestrators/overnight/scheduler.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/orchestrators/overnight/scheduler_integration.py",
+          "domain": "core"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 15
+    },
+    {
+      "batch_id": "core_batch_30",
+      "domain": "core",
+      "total_files": 15,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/orchestrators/overnight/scheduler_models.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/orchestrators/overnight/scheduler_queue.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/orchestrators/overnight/scheduler_tracking.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/quality/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/repositories/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/runtime/reports/cleanup_20250906-190746.md",
+          "domain": "core"
+        },
+        {
+          "file": "src/runtime/reports/cleanup_20250906-191009.md",
+          "domain": "core"
+        },
+        {
+          "file": "src/runtime/reports/src_cleanup_completion_report.md",
+          "domain": "core"
+        },
+        {
+          "file": "src/shared_utils/api_client.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/shared_utils/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/templates/onboarding_roles.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/templates/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/tools/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/trading_robot/core/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/trading_robot/core/dependency_injection.py",
+          "domain": "core"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 15
+    },
+    {
+      "batch_id": "core_batch_31",
+      "domain": "core",
+      "total_files": 15,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/trading_robot/core/unified_logging_system.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/trading_robot/core/unified_validation_system.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/utils/backup.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/utils/scanner_registry.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/utils/unified_file_utils.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/utils/unified_utilities.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/utils/agent_queue_status.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/utils/file_scanner.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/utils/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/utils/confirm.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/utils/file_utils.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/utils/inbox_utility.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/utils/config_core/fsm_config.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/utils/config_core/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/utils/file_operations/backup_operations.py",
+          "domain": "core"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 15
+    },
+    {
+      "batch_id": "core_batch_32",
+      "domain": "core",
+      "total_files": 15,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/utils/file_operations/directory_operations.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/utils/file_operations/file_metadata.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/utils/file_operations/file_serialization.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/utils/file_operations/scanner_operations.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/utils/file_operations/validation_operations.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/utils/file_operations/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/dashboard-alerts.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/dashboard-charts.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/dashboard-communication.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/dashboard-data-manager.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/dashboard-data-operations.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/dashboard-initializer.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/dashboard-loading-manager.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/dashboard-socket-manager.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/dashboard-state-manager.js",
+          "domain": "core"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 15
+    },
+    {
+      "batch_id": "core_batch_33",
+      "domain": "core",
+      "total_files": 15,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/web/static/js/dashboard-view-overview.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/dashboard-views.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/system-integration-core.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/dashboard-view-activity.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/dashboard-view-messages.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/dashboard-view-queue.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/dashboard-navigation.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/dashboard-ui-helpers.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/dashboard-utils.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/dashboard-view-engine-discovery.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/dashboard-view-renderer.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/unified-frontend-utilities.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/dashboard-time.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/core/agent-8-ssot-integration.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/core/dependency-analyzer.js",
+          "domain": "core"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 15
+    },
+    {
+      "batch_id": "core_batch_34",
+      "domain": "core",
+      "total_files": 15,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/web/static/js/core/dependency-container.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/core/unified-configuration-system.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/core/unified-logging-system.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/dashboard/css-class-management-module.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/dashboard/date-utils.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/dashboard/element-creation-module.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/dashboard/element-visibility-module.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/dashboard/style-utils.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/dashboard/cache-management-module.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/dashboard/element-selection-module.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/framework_new/components.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/framework_new/forms.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/framework_new/layout.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/framework_new/modal.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/framework_new/ui-components.js",
+          "domain": "core"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 15
+    },
+    {
+      "batch_id": "core_batch_35",
+      "domain": "core",
+      "total_files": 15,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/web/static/js/repositories/dashboard-repository.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/services/coordination-core-module.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/utilities/__init__.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/validation/data-validation-module.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/validation/field-validation-module.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/validation/form-validation-module.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/validation/unified-validation-system.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/vector-database/__init__.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/vector-database/analytics.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/vector-database/core.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/vector-database/manager.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/vector-database/search.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/vector-database/ui-common.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/web/static/js/vector-database/ui-optimized.js",
+          "domain": "core"
+        },
+        {
+          "file": "src/workflows/autonomous_strategy.py",
+          "domain": "core"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 15
+    },
+    {
+      "batch_id": "core_batch_36",
+      "domain": "core",
+      "total_files": 15,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/workflows/steps.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/workflows/strategies.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/workflows/gpt_integration.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/workflows/__init__.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/workflows/cli.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/workflows/engine.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/workflows/models.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/control_plane/adapters/base.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/control_plane/adapters/loader.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/control_plane/adapters/hostinger/ariajet_adapter.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/control_plane/adapters/hostinger/dadudekc_adapter.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/control_plane/adapters/hostinger/freeride_adapter.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/control_plane/adapters/hostinger/prismblossom_adapter.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/control_plane/adapters/hostinger/southwestsecret_adapter.py",
+          "domain": "core"
+        },
+        {
+          "file": "src/cli/__init__.py",
+          "domain": "core"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 15
+    },
+    {
+      "batch_id": "trading_robot_batch_1",
+      "domain": "trading_robot",
+      "total_files": 15,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/trading_robot/repositories/__init__.py",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/trading_robot/repositories/trading_repository.py",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/trading_robot/repositories/implementations/in_memory_query_operations.py",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/trading_robot/repositories/implementations/in_memory_trading_repository.py",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/trading_robot/repositories/implementations/in_memory_write_operations.py",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/trading_robot/repositories/implementations/trading_query_operations.py",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/trading_robot/repositories/implementations/trading_repository_impl.py",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/trading_robot/repositories/implementations/trading_write_operations.py",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/trading_robot/repositories/implementations/__init__.py",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/trading_robot/repositories/interfaces/position_repository_interface.py",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/trading_robot/repositories/interfaces/trading_repository_interface.py",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/trading_robot/repositories/interfaces/__init__.py",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/trading_robot/repositories/interfaces/portfolio_repository_interface.py",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/trading_robot/repositories/models/trading_models.py",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/trading_robot/repositories/models/__init__.py",
+          "domain": "trading_robot"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 15
+    },
+    {
+      "batch_id": "trading_robot_batch_2",
+      "domain": "trading_robot",
+      "total_files": 15,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/trading_robot/repositories/models/portfolio.py",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/trading_robot/repositories/models/position.py",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/trading_robot/repositories/models/trade.py",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/web/static/js/trading-robot/app-management-modules.js",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/web/static/js/trading-robot/chart-calculation-modules.js",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/web/static/js/trading-robot/chart-controls-module.js",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/web/static/js/trading-robot/chart-data-module.js",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/web/static/js/trading-robot/chart-drawing-modules.js",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/web/static/js/trading-robot/chart-events.js",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/web/static/js/trading-robot/chart-navigation-module.js",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/web/static/js/trading-robot/chart-renderer.js",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/web/static/js/trading-robot/chart-state-module.js",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/web/static/js/trading-robot/order-form-modules.js",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/web/static/js/trading-robot/order-processing-modules.js",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/web/static/js/trading-robot/portfolio-management-modules.js",
+          "domain": "trading_robot"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 15
+    },
+    {
+      "batch_id": "trading_robot_batch_3",
+      "domain": "trading_robot",
+      "total_files": 15,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/web/static/js/trading-robot/trading-chart-manager.js",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/web/static/js/trading-robot/trading-dashboard.js",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/web/static/js/trading-robot/trading-order-manager.js",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/web/static/js/trading-robot/trading-portfolio-manager.js",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/web/static/js/trading-robot/trading-robot-main.js",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/web/static/js/trading-robot/trading-websocket-manager.js",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/web/static/js/trading-robot/websocket-callback-manager-module.js",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/web/static/js/trading-robot/websocket-connection-callbacks.js",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/web/static/js/trading-robot/websocket-connection-module.js",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/web/static/js/trading-robot/websocket-market-data-callbacks.js",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/web/static/js/trading-robot/websocket-message-handler-module.js",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/web/static/js/trading-robot/websocket-order-portfolio-callbacks.js",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/web/static/js/trading-robot/websocket-subscription-optimized.js",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/web/static/js/trading-robot/chart-validation/__init__.js",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/web/static/js/trading-robot/chart-validation/module.js",
+          "domain": "trading_robot"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 15
+    },
+    {
+      "batch_id": "messaging_complete",
+      "domain": "messaging",
+      "total_files": 8,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/discord_commander/messaging_controller_modals.py",
+          "domain": "messaging"
+        },
+        {
+          "file": "src/discord_commander/messaging_commands.py",
+          "domain": "messaging"
+        },
+        {
+          "file": "src/discord_commander/controllers/messaging_controller_view.py",
+          "domain": "messaging"
+        },
+        {
+          "file": "src/discord_commander/views/agent_messaging_view.py",
+          "domain": "messaging"
+        },
+        {
+          "file": "src/discord_commander/commands/bot_messaging_commands.py",
+          "domain": "messaging"
+        },
+        {
+          "file": "src/integrations/osrs/osrs_agent_messaging.py",
+          "domain": "messaging"
+        },
+        {
+          "file": "src/message_task/messaging_integration.py",
+          "domain": "messaging"
+        },
+        {
+          "file": "src/orchestrators/overnight/recovery_messaging.py",
+          "domain": "messaging"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 8
+    },
+    {
+      "batch_id": "architecture_complete",
+      "domain": "architecture",
+      "total_files": 6,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/web/static/js/architecture/architecture-pattern-coordinator.js",
+          "domain": "architecture"
+        },
+        {
+          "file": "src/web/static/js/architecture/dependency-injection-framework.js",
+          "domain": "architecture"
+        },
+        {
+          "file": "src/web/static/js/architecture/di-container-module.js",
+          "domain": "architecture"
+        },
+        {
+          "file": "src/web/static/js/architecture/di-decorators-module.js",
+          "domain": "architecture"
+        },
+        {
+          "file": "src/web/static/js/architecture/di-framework-orchestrator.js",
+          "domain": "architecture"
+        },
+        {
+          "file": "src/web/static/js/architecture/web-service-registry-module.js",
+          "domain": "architecture"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 6
+    },
+    {
+      "batch_id": "trading_robot_batch_4",
+      "domain": "trading_robot",
+      "total_files": 2,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/web/static/js/trading-robot/chart-validation/rules.js",
+          "domain": "trading_robot"
+        },
+        {
+          "file": "src/control_plane/adapters/hostinger/tradingrobotplug_adapter.py",
+          "domain": "trading_robot"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 2
+    },
+    {
+      "batch_id": "infrastructure_complete",
+      "domain": "infrastructure",
+      "total_files": 1,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/infrastructure/logging/REFACTORING_REPORT_ROI.md",
+          "domain": "infrastructure"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 1
+    },
+    {
+      "batch_id": "deployment_complete",
+      "domain": "deployment",
+      "total_files": 1,
+      "needs_work": false,
+      "already_tagged": [
+        {
+          "file": "src/web/static/js/repositories/deployment-repository.js",
+          "domain": "deployment"
+        }
+      ],
+      "missing_files": [],
+      "work_count": 0,
+      "tagged_count": 1
+    }
+  ],
+  "summary": {
+    "total_batches_scanned": 44,
+    "batches_needing_work": 0,
+    "batches_complete": 44,
+    "total_files_needing_work": 0,
+    "total_files_already_tagged": 603,
+    "completion_rate": 100.0
+  }
+}

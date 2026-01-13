@@ -26,6 +26,7 @@ from typing import TYPE_CHECKING
 project_root = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(project_root))
 
+<<<<<<< HEAD
 # Load environment variables from .env files
 try:
     from dotenv import load_dotenv
@@ -34,15 +35,24 @@ try:
     # Then load Discord-specific configuration
     load_dotenv('.env.discord')
     print("✅ Environment variables loaded from .env and .env.discord")
+=======
+# Load environment variables from .env file
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 except ImportError:
     print("⚠️  python-dotenv not installed. Install with: pip install python-dotenv")
     print("⚠️  Continuing without .env support...")
 
 # Discord imports
+<<<<<<< HEAD
 import warnings
 # Suppress the audioop deprecation warning from discord.py
 warnings.filterwarnings("ignore", message="'audioop' is deprecated", category=DeprecationWarning)
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 try:
     import discord
     from discord.ext import commands
@@ -69,6 +79,7 @@ logger = logging.getLogger(__name__)
 class UnifiedDiscordBot(commands.Bot):
     """Single unified Discord bot - backward compatibility shim."""
 
+<<<<<<< HEAD
     def __init__(self, token: str, channel_id: int | None = None, dry_run: bool = False):
         """Initialize unified Discord bot with modular components."""
         # Initialize logger first
@@ -83,12 +94,26 @@ class UnifiedDiscordBot(commands.Bot):
         # Validate intents configuration
         self._validate_intents(intents)
 
+=======
+    def __init__(self, token: str, channel_id: int | None = None):
+        """Initialize unified Discord bot with modular components."""
+        intents = discord.Intents.default()
+        intents.message_content = True
+        intents.guilds = True
+        intents.members = True
+        intents.voice_states = True
+
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
         super().__init__(command_prefix="!", intents=intents, help_command=None)
 
         # Store basic configuration
         self.token = token
         self.channel_id = channel_id
+<<<<<<< HEAD
         self.dry_run = dry_run
+=======
+        self.logger = logging.getLogger(__name__)
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
         # Initialize core services
         self.messaging_service = UnifiedMessagingService()
@@ -108,6 +133,7 @@ class UnifiedDiscordBot(commands.Bot):
         self.discord_user_map = self.config.discord_user_map
         self.thea_min_interval_minutes = self.services.thea_min_interval_minutes
 
+<<<<<<< HEAD
     def _validate_intents(self, intents: discord.Intents):
         """Validate Discord intents configuration and warn about privileged intents."""
         privileged_intents = []
@@ -156,6 +182,8 @@ class UnifiedDiscordBot(commands.Bot):
             self.logger.error(f"❌ Discord connection validation failed: {e}")
             return False
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     # Event handler delegations
     async def on_ready(self):
         """Handle bot ready event."""
@@ -217,6 +245,7 @@ class UnifiedDiscordBot(commands.Bot):
         return self.config.discord_user_map
 
 
+<<<<<<< HEAD
 # Main entry point for unified Discord bot
 def main():
     """Main entry point for the unified Discord bot."""
@@ -253,3 +282,17 @@ def main():
 
 if __name__ == "__main__":
     main()
+=======
+# Main entry point moved to bot_runner.py for V2 compliance
+if __name__ == "__main__":
+    from src.discord_commander.bot_runner import main
+    import asyncio
+    import sys
+    
+    if not DISCORD_AVAILABLE:
+        print("❌ discord.py not available. Install with: pip install discord.py")
+        sys.exit(1)
+    
+    exit_code = asyncio.run(main())
+    sys.exit(exit_code if exit_code is not None else 0)
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console

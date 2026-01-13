@@ -1,5 +1,6 @@
 ﻿# Websites Findings
 
+<<<<<<< HEAD
 Generated: 2026-01-12 19:36:41
 
 | Name | Type | Status | Notes |
@@ -47,3 +48,20 @@ Generated: 2026-01-12 19:36:41
 - PASS: 15
 - WARN: 21
 - FAIL: 0
+=======
+Generated: 2025-12-27 04:28:20
+
+| Name | Type | Status | Notes |
+|---|---|---|---|
+| nextend-facebook-connect | static | FAIL | index.html is empty |
+| ariajet.site | static | WARN | missing meta description | has title tag |
+| southwestsecret.com | static | PASS | has title tag |
+| games | static | WARN | missing meta description | has title tag |
+
+## Summary
+
+- Total sites: 4
+- PASS: 
+- WARN: 2
+- FAIL: 
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console

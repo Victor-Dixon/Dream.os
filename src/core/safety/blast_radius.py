@@ -140,6 +140,7 @@ class BlastRadiusLimiter:
         }
     
     def _load_configuration(self):
+<<<<<<< HEAD
         """Load custom limits from configuration files or environment variables."""
         self._load_from_environment_variables()
         self._load_from_config_file()
@@ -230,6 +231,11 @@ class BlastRadiusLimiter:
 
             except (ValueError, TypeError) as e:
                 logger.warning(f"Invalid resource type in config: {resource_name} ({e})")
+=======
+        """Load custom limits from configuration."""
+        # TODO: Load from config file or environment variables
+        pass
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     
     def check_limit(
         self,

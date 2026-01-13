@@ -12,6 +12,7 @@ Date: 2025-01-27
 """
 
 import logging
+<<<<<<< HEAD
 import warnings
 from pathlib import Path
 from typing import Optional
@@ -19,6 +20,11 @@ from typing import Optional
 # Suppress the audioop deprecation warning from discord.py
 warnings.filterwarnings("ignore", message="'audioop' is deprecated", category=DeprecationWarning)
 
+=======
+from pathlib import Path
+from typing import Optional
+
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 import discord
 from discord.ext import commands
 

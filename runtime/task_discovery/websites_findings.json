@@ -1,12 +1,26 @@
 ﻿[
     {
+<<<<<<< HEAD
         "name":  "ariajet.site",
         "type":  "static",
         "path":  "D:\\websites\\sites\\production\\websites\\ariajet.site",
+=======
+        "name":  "nextend-facebook-connect",
+        "type":  "static",
+        "path":  "D:\\websites\\FreeRideInvestor\\plugins\\nextend-facebook-connect",
+        "status":  "FAIL",
+        "notes":  "index.html is empty"
+    },
+    {
+        "name":  "ariajet.site",
+        "type":  "static",
+        "path":  "D:\\websites\\websites\\ariajet.site",
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
         "status":  "WARN",
         "notes":  "missing meta description | has title tag"
     },
     {
+<<<<<<< HEAD
         "name":  "freerideinvestor.com",
         "type":  "wordpress",
         "path":  "D:\\websites\\sites\\production\\websites\\freerideinvestor.com",
@@ -24,12 +38,18 @@
         "name":  "southwestsecret.com",
         "type":  "static",
         "path":  "D:\\websites\\sites\\production\\websites\\southwestsecret.com",
+=======
+        "name":  "southwestsecret.com",
+        "type":  "static",
+        "path":  "D:\\websites\\websites\\southwestsecret.com",
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
         "status":  "PASS",
         "notes":  "has title tag"
     },
     {
         "name":  "games",
         "type":  "static",
+<<<<<<< HEAD
         "path":  "D:\\websites\\sites\\production\\websites\\ariajet.site\\games",
         "status":  "WARN",
         "notes":  "missing meta description | has title tag"
@@ -250,5 +270,10 @@
         "path":  "D:\\websites\\packages\\event-services-theme",
         "status":  "WARN",
         "notes":  "node_modules missing (needs install) | no build script detected"
+=======
+        "path":  "D:\\websites\\websites\\ariajet.site\\games",
+        "status":  "WARN",
+        "notes":  "missing meta description | has title tag"
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     }
 ]

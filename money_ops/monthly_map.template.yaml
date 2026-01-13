@@ -1,0 +1,138 @@
+# Monthly Money Map Template v1.0
+# Copy this to monthly_map_YYYY-MM.yaml each month and fill with actual numbers
+
+month: "YYYY-MM"  # Replace with actual month (e.g., "2025-12")
+year: 2025
+last_updated: "YYYY-MM-DD"
+
+# Income Streams
+income_streams:
+  trading:
+    projected: 0.00
+    actual: 0.00  # Fill in at end of month
+    notes: "Options trading income"
+  
+  other:
+    - name: "Stream Name"
+      projected: 0.00
+      actual: 0.00
+      notes: "Description"
+    # Add more income streams as needed
+
+total_income_projected: 0.00
+total_income_actual: 0.00
+
+# Fixed Costs (Must pay every month)
+fixed_costs:
+  rent_mortgage:
+    amount: 0.00
+    due_date: 1  # Day of month
+    notes: ""
+  
+  utilities:
+    amount: 0.00
+    due_date: 15
+    notes: ""
+  
+  transport:
+    amount: 0.00
+    due_date: 1
+    notes: "Car payment, insurance, etc."
+  
+  obligations:
+    - name: "HOA"
+      amount: 0.00
+      due_date: 1
+      notes: ""
+    # Add more obligations as needed
+
+total_fixed_costs: 0.00
+
+# Variable Costs (Can adjust)
+variable_costs:
+  groceries:
+    budget: 0.00
+    actual: 0.00  # Fill in at end of month
+    notes: ""
+  
+  gas:
+    budget: 0.00
+    actual: 0.00
+    notes: ""
+  
+  fun:
+    budget: 0.00
+    actual: 0.00
+    notes: "Entertainment, discretionary"
+  
+  aria_experiences:
+    budget: 0.00
+    actual: 0.00
+    notes: "Special experiences with Aria"
+  
+  other:
+    - name: "Category"
+      budget: 0.00
+      actual: 0.00
+      notes: ""
+    # Add more variable categories as needed
+
+total_variable_costs_budget: 0.00
+total_variable_costs_actual: 0.00
+
+# Money Buckets (Where money goes after expenses)
+buckets:
+  essentials:
+    target: 0.00  # Minimum for survival
+    actual: 0.00
+  
+  debt_paydown:
+    target: 0.00
+    actual: 0.00
+    notes: "Credit cards, loans, etc."
+  
+  savings_investing:
+    target: 0.00
+    actual: 0.00
+    notes: "Emergency fund, investments"
+  
+  aria_experiences:
+    target: 0.00
+    actual: 0.00
+    notes: "Special experiences bucket"
+
+total_buckets_target: 0.00
+total_buckets_actual: 0.00
+
+# Financial Targets
+targets:
+  break_even: 0.00  # Total fixed + variable costs
+  surplus_target: 0.00  # Desired surplus after all costs
+  minimum_surplus: 0.00  # Minimum acceptable surplus
+
+# Monthly Summary (calculate at end of month)
+monthly_summary:
+  total_income: 0.00
+  total_expenses: 0.00
+  net_income: 0.00
+  surplus_deficit: 0.00
+  on_track: false  # true if meeting targets
+  
+  # Spending vs Budget
+  variable_spending_vs_budget: 0.00
+  over_budget_categories: []
+  
+  # Review Notes
+  review_notes: ""
+  adjustments_needed: []
+
+# Review Cycle
+review_cycle:
+  frequency: "monthly"  # Full review monthly
+  weekly_check: true  # Quick check once per week
+  last_full_review: null
+  last_weekly_check: null
+
+
+
+

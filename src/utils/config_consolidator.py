@@ -4,8 +4,11 @@ import logging
 logger = logging.getLogger(__name__)
 """
 
+<<<<<<< HEAD
 <!-- SSOT Domain: core -->
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 Configuration Consolidator - V2 Compliance Module
 ================================================
 

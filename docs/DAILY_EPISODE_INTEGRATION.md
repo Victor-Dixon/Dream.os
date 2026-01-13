@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 <!-- SSOT Domain: documentation -->
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 # Daily Episode Integration Summary
 
 **Date**: 2025-12-22  

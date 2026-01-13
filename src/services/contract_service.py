@@ -174,6 +174,7 @@ class ContractService(BaseService):
         ) ->bool:
         """Save contract data using injected storage."""
         if self.storage:
+<<<<<<< HEAD
             # Use interface-compliant method if available
             if hasattr(self.storage, 'save_contract_data'):
                 return self.storage.save_contract_data(agent_id, contract_data)
@@ -181,11 +182,15 @@ class ContractService(BaseService):
                 # Fallback to legacy method (for backward compatibility)
                 logger.warning("⚠️ Using legacy storage method - consider upgrading to interface-compliant storage")
                 return self.storage.save_contract(agent_id, contract_data)
+=======
+            return self.storage.save_contract(agent_id, contract_data)
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
         return True
 
     def load_contract(self, agent_id: str) ->(dict[str, Any] | None):
         """Load contract data using injected storage."""
         if self.storage:
+<<<<<<< HEAD
             # Use interface-compliant method if available
             if hasattr(self.storage, 'load_contract_data'):
                 return self.storage.load_contract_data(agent_id)
@@ -193,6 +198,9 @@ class ContractService(BaseService):
                 # Fallback to legacy method (for backward compatibility)
                 logger.warning("⚠️ Using legacy storage method - consider upgrading to interface-compliant storage")
                 return self.storage.load_contract(agent_id)
+=======
+            return self.storage.load_contract(agent_id)
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
         return self.get_contract(agent_id)
 
     def list_all_contracts(self) ->dict[str, dict[str, Any]]:

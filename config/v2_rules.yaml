@@ -1,0 +1,48 @@
+# V2 Compliance Rules Configuration
+# ==================================
+#
+# V2 Coding Standards for Agent Cellphone V2
+# Author: Agent-2 (Architecture & Design Specialist)
+# Date: 2025-12-11
+
+# File size guidelines (clean code principles take precedence)
+# These are guidelines to encourage clean, maintainable code, not hard limits
+file_limits:
+  max_lines: 400  # Guideline, not hard limit - prioritize clean code
+  max_class_lines: 200  # Guideline - prioritize single responsibility
+  max_function_lines: 30  # Guideline - prioritize clarity and maintainability
+
+# Code quality standards
+quality:
+  max_cyclomatic_complexity: 10
+  max_nesting_depth: 3
+  max_parameters: 5
+
+# Module organization
+organization:
+  prefer_functional_components: true
+  use_dependency_injection: true
+  avoid_circular_dependencies: true
+
+# Naming conventions
+naming:
+  database_fields: snake_case
+  python_classes: PascalCase
+  python_functions: snake_case
+  constants: UPPER_SNAKE_CASE
+  react_components: PascalCase
+
+# Formatting
+formatting:
+  max_line_length: 100
+  python_indentation: 4
+  javascript_indentation: 2
+
+# Documentation
+documentation:
+  require_jsdoc: true
+  require_type_hints: true
+  require_usage_examples: true
+
+
+

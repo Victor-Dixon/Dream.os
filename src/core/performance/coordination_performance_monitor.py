@@ -2,23 +2,38 @@
 """
 Coordination & Communication Performance Monitor - Agent Cellphone V2
 
+<<<<<<< HEAD
 V2 Consolidated: Uses SSOT base classes for standardized patterns
 Author: Agent-8 (SSOT Maintenance & System Integration Specialist)
 SSOT Migration: Agent-8 (System Integration)
 Date: 2026-01-12
 License: MIT
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 <!-- SSOT Domain: infrastructure -->
 
 ==================================================================
 
 Main performance monitoring system for coordination and communication.
+<<<<<<< HEAD
 """
 
 # SSOT Import Standardization - eliminates redundant typing imports
 from src.core.base.import_standardization import (
     time, threading, timedelta, Dict, Any
 )
+=======
+
+Author: Agent-8 (SSOT Maintenance & System Integration Specialist)
+License: MIT
+"""
+
+import time
+import threading
+from datetime import timedelta
+from typing import Dict, Any
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 try:
     from src.core.config.timeout_constants import TimeoutConstants
 except ImportError:

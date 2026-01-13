@@ -69,6 +69,7 @@ class BotLifecycleManager:
                 AgentManagementCommands,
                 ProfileCommands,
                 PlaceholderCommands,
+<<<<<<< HEAD
                 MessagingCommands,
             )
             
@@ -82,10 +83,24 @@ class BotLifecycleManager:
             await self.bot.add_cog(MessagingCommands(self.bot, self.bot.gui_controller))
             
             # Verify gui and control commands are registered
+=======
+            )
+            
+            await self.bot.add_cog(CoreMessagingCommands(self.bot, self.bot.gui_controller))
+            await self.bot.add_cog(SystemControlCommands(self.bot, self.bot.gui_controller))
+            await self.bot.add_cog(OnboardingCommands(self.bot, self.bot.gui_controller))
+            await self.bot.add_cog(UtilityCommands(self.bot, self.bot.gui_controller))
+            await self.bot.add_cog(AgentManagementCommands(self.bot, self.bot.gui_controller))
+            await self.bot.add_cog(ProfileCommands(self.bot, self.bot.gui_controller))
+            await self.bot.add_cog(PlaceholderCommands(self.bot, self.bot.gui_controller))
+            
+            # Verify gui command is registered
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
             gui_command = self.bot.get_command("gui")
             if gui_command:
                 self.logger.info(f"✅ GUI command registered: {gui_command.name}")
             else:
+<<<<<<< HEAD
                 self.logger.warning("⚠️ GUI command not found after loading messaging commands")
 
             control_command = self.bot.get_command("control")
@@ -93,6 +108,9 @@ class BotLifecycleManager:
                 self.logger.info(f"✅ Control command registered: {control_command.name}")
             else:
                 self.logger.warning("⚠️ Control command not found after loading messaging commands")
+=======
+                self.logger.warning("⚠️ GUI command not found after loading CoreMessagingCommands")
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
             
             self.logger.info("✅ All messaging command cogs loaded (V2 compliant modules)")
         except Exception as e:

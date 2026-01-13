@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿[
     {
         "name":  "ariajet.site",
@@ -251,4 +252,35 @@
         "entrypoints":  "package.json",
         "scripts":  null
     }
+=======
+[
+  {
+    "name": "nextend-facebook-connect",
+    "path": "D:\\websites\\FreeRideInvestor\\plugins\\nextend-facebook-connect",
+    "type": "static",
+    "entrypoints": "index.html",
+    "scripts": null
+  },
+  {
+    "name": "ariajet.site",
+    "path": "D:\\websites\\websites\\ariajet.site",
+    "type": "static",
+    "entrypoints": "index.html",
+    "scripts": null
+  },
+  {
+    "name": "southwestsecret.com",
+    "path": "D:\\websites\\websites\\southwestsecret.com",
+    "type": "static",
+    "entrypoints": "index.html",
+    "scripts": null
+  },
+  {
+    "name": "games",
+    "path": "D:\\websites\\websites\\ariajet.site\\games",
+    "type": "static",
+    "entrypoints": "index.html",
+    "scripts": null
+  }
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 ]

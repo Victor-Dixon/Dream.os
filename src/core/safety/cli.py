@@ -2,8 +2,11 @@
 Safety Foundation CLI
 =====================
 
+<<<<<<< HEAD
 <!-- SSOT Domain: safety -->
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 Command-line interface for managing safety components.
 
 Usage:

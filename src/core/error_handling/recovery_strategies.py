@@ -6,6 +6,7 @@ Recovery Strategies Module
 
 Concrete recovery strategy implementations extracted for V2 compliance.
 
+<<<<<<< HEAD
 V2 Consolidated: Uses SSOT base classes for standardized patterns
 Author: Agent-2 - Architecture & Design Specialist (V2 Refactor)
 SSOT Migration: Agent-8 (System Integration)
@@ -22,6 +23,20 @@ from src.core.base.service_base import BaseService
 from src.core.base.error_handling import ErrorHandler, error_context
 
 # Initialize standardized logger through SSOT base
+=======
+Author: Agent-2 - Architecture & Design Specialist (V2 Refactor)
+License: MIT
+"""
+
+import logging
+from collections.abc import Callable
+from datetime import datetime, timedelta
+
+from .error_handling_core import ErrorContext, ErrorSeverity
+from typing import Dict, List, Callable, Any, Optional, Union, Tuple, Set
+
+
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 logger = logging.getLogger(__name__)
 
 

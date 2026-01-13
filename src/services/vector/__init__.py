@@ -13,6 +13,7 @@ V2 Compliance | Author: Agent-1 | Date: 2025-12-14
 
 from __future__ import annotations
 
+<<<<<<< HEAD
 # Lazy imports for vector database functionality to prevent system initialization
 import importlib
 
@@ -54,6 +55,13 @@ def get_vector_database_service():
     if VectorDatabaseService:
         return VectorDatabaseService()
     return None
+=======
+# Integration Layer
+from .vector_database_integration import LocalVectorStore
+
+# Service Core
+from .vector_database_service import VectorDatabaseService
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
 # Helpers
 from .vector_database_helpers import (

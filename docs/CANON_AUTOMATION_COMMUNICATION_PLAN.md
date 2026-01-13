@@ -1,8 +1,14 @@
+<<<<<<< HEAD
 <!-- SSOT Domain: documentation -->
 
 # Canon Automation: Communication Plan
 
 **Date**: 2025-12-22
+=======
+# Canon Automation: Communication Plan
+
+**Date**: 2025-12-22  
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 **Purpose**: How swarm members will learn about the canon automation system
 
 ---

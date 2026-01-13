@@ -734,6 +734,7 @@ body {
 }
 
 /* ================================
+<<<<<<< HEAD
    ACCESSIBILITY ENHANCEMENTS - PHASE 3
    ================================ */
 
@@ -756,6 +757,11 @@ body {
 }
 
 /* Screen reader only content */
+=======
+   ACCESSIBILITY
+   ================================ */
+
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 .sr-only {
     position: absolute;
     width: 1px;
@@ -768,6 +774,7 @@ body {
     border: 0;
 }
 
+<<<<<<< HEAD
 .sr-only-focusable:focus,
 .sr-only-focusable:active {
     position: static;
@@ -1016,6 +1023,14 @@ aside[role="complementary"] {
     .btn:hover, .card:hover {
         transform: none;
     }
+=======
+/* Focus styles for keyboard navigation */
+.btn:focus,
+.form-control:focus,
+.form-check-input:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 }
 
 /* ================================

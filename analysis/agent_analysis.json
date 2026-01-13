@@ -1,0 +1,110 @@
+{
+  "Agent-1": {
+    "agent_id": "Agent-1",
+    "files": [
+      {
+        "path": "agent_workspaces\\Agent-1\\__init__.py",
+        "functions": [],
+        "function_count": 0,
+        "classes": [],
+        "class_count": 0,
+        "complexity": 0,
+        "language": ".py"
+      },
+      {
+        "path": "Agent_Cellphone_V2_Repository_restore\\agent_workspaces\\Agent-1\\__init__.py",
+        "functions": [],
+        "function_count": 0,
+        "classes": [],
+        "class_count": 0,
+        "complexity": 0,
+        "language": ".py"
+      }
+    ],
+    "total_functions": 0,
+    "total_classes": 0,
+    "total_complexity": 0,
+    "key_files": []
+  },
+  "Agent-3": {
+    "agent_id": "Agent-3",
+    "files": [
+      {
+        "path": "agent_workspaces\\Agent-3\\__init__.py",
+        "functions": [],
+        "function_count": 0,
+        "classes": [],
+        "class_count": 0,
+        "complexity": 0,
+        "language": ".py"
+      },
+      {
+        "path": "Agent_Cellphone_V2_Repository_restore\\agent_workspaces\\Agent-3\\__init__.py",
+        "functions": [],
+        "function_count": 0,
+        "classes": [],
+        "class_count": 0,
+        "complexity": 0,
+        "language": ".py"
+      }
+    ],
+    "total_functions": 0,
+    "total_classes": 0,
+    "total_complexity": 0,
+    "key_files": []
+  },
+  "Agent-7": {
+    "agent_id": "Agent-7",
+    "files": [
+      {
+        "path": "agent_workspaces\\Agent-7\\__init__.py",
+        "functions": [],
+        "function_count": 0,
+        "classes": [],
+        "class_count": 0,
+        "complexity": 0,
+        "language": ".py"
+      },
+      {
+        "path": "Agent_Cellphone_V2_Repository_restore\\agent_workspaces\\Agent-7\\__init__.py",
+        "functions": [],
+        "function_count": 0,
+        "classes": [],
+        "class_count": 0,
+        "complexity": 0,
+        "language": ".py"
+      }
+    ],
+    "total_functions": 0,
+    "total_classes": 0,
+    "total_complexity": 0,
+    "key_files": []
+  },
+  "Agent-8": {
+    "agent_id": "Agent-8",
+    "files": [
+      {
+        "path": "agent_workspaces\\Agent-8\\__init__.py",
+        "functions": [],
+        "function_count": 0,
+        "classes": [],
+        "class_count": 0,
+        "complexity": 0,
+        "language": ".py"
+      },
+      {
+        "path": "Agent_Cellphone_V2_Repository_restore\\agent_workspaces\\Agent-8\\__init__.py",
+        "functions": [],
+        "function_count": 0,
+        "classes": [],
+        "class_count": 0,
+        "complexity": 0,
+        "language": ".py"
+      }
+    ],
+    "total_functions": 0,
+    "total_classes": 0,
+    "total_complexity": 0,
+    "key_files": []
+  }
+}

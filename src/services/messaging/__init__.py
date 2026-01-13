@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
 """
+<<<<<<< HEAD
 A2A Coordination Protocol - Single Source of Truth
+=======
+Messaging Module - Public API Exports
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 ======================================
 
 <!-- SSOT Domain: integration -->
 
+<<<<<<< HEAD
 ⚠️  DEPRECATION NOTICE: Legacy messaging functions are deprecated.
    Use A2A coordination protocol for all agent-to-agent communication:
    python -m src.services.messaging_cli --agent Agent-X --category a2a --sender Agent-Y --message "..."
@@ -15,13 +20,22 @@ Legacy messaging systems archived to: archive/legacy_messaging_systems/
 
 V2 Compliance | Author: Agent-1 | Date: 2025-12-14
 Updated: Agent-1 | A2A SSOT Consolidation | Date: 2026-01-11
+=======
+Public API exports for messaging infrastructure.
+Extracted from messaging_infrastructure.py for V2 compliance.
+
+V2 Compliance | Author: Agent-1 | Date: 2025-12-14
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 """
 
 from __future__ import annotations
 
+<<<<<<< HEAD
 import logging
 from typing import Any
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 # CLI Parser
 from .cli_parser import create_messaging_parser
 
@@ -47,6 +61,7 @@ from .coordination_handlers import (
     MessageCoordinator,
 )
 
+<<<<<<< HEAD
 # Service Adapters - Define locally to avoid circular imports
 class ConsolidatedMessagingService:
     """Consolidated messaging service for backward compatibility."""
@@ -111,11 +126,22 @@ def broadcast_discord_message(message: str, priority: str = "regular") -> dict[s
         return {"success": True, "message": "Discord broadcast sent (placeholder)"}
     except Exception as e:
         return {"success": False, "error": str(e)}
+=======
+# Service Adapters
+from .service_adapters import (
+    ConsolidatedMessagingService,
+    send_discord_message,
+    broadcast_discord_message,
+)
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
 # CLI Handlers
 from .cli_handlers import (
     handle_cycle_v2_message,
+<<<<<<< HEAD
     handle_delivery_status,
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     handle_message,
     handle_survey,
     handle_consolidation,
@@ -123,7 +149,10 @@ from .cli_handlers import (
     handle_start_agents,
     handle_save,
     handle_leaderboard,
+<<<<<<< HEAD
     handle_robinhood_stats,
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 )
 
 __all__ = [
@@ -142,13 +171,20 @@ __all__ = [
     "send_message_to_onboarding_coords",
     # Coordination Handlers
     "MessageCoordinator",
+<<<<<<< HEAD
     # Service Adapters - Minimal backward compatibility
+=======
+    # Service Adapters
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     "ConsolidatedMessagingService",
     "send_discord_message",
     "broadcast_discord_message",
     # CLI Handlers
     "handle_cycle_v2_message",
+<<<<<<< HEAD
     "handle_delivery_status",
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     "handle_message",
     "handle_survey",
     "handle_consolidation",

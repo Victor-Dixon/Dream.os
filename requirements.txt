@@ -8,11 +8,16 @@ pydantic>=2.0.0
 pydantic-settings>=2.0.0
 requests>=2.31.0
 aiohttp>=3.8.0
+<<<<<<< HEAD
 fastapi>=0.100.0
 uvicorn[standard]>=0.23.0
 discord.py>=2.3.0
 pyautogui>=0.9.54
 pyperclip>=1.8.0
+=======
+discord.py>=2.3.0
+pyautogui>=0.9.54
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
 # Code formatting and linting
 black>=23.0.0

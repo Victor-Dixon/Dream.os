@@ -10,6 +10,10 @@ Author: Agent-3 (Infrastructure & DevOps) - V2 Refactoring
 License: MIT
 """
 
+<<<<<<< HEAD
+=======
+import json
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 import logging
 from pathlib import Path
 from typing import Any
@@ -23,6 +27,7 @@ class TheaBrowserUtils:
     def __init__(self, thea_config: Any):
         """Initialize utilities with Thea configuration."""
         self.thea_config = thea_config
+<<<<<<< HEAD
         self._secure_cookie_manager = None
 
     def _get_secure_cookie_manager(self):
@@ -145,6 +150,44 @@ class TheaBrowserUtils:
             logger.info("✅ Cookies saved to legacy storage")
         except Exception as e:
             logger.debug(f"Legacy cookie save failed: {e}")
+=======
+
+    def cookie_file(self) -> Path:
+        """Get cookie file path."""
+        return Path(self.thea_config.cookie_file)
+
+    def load_cookies(self, driver: Any, base_url: str) -> None:
+        """Load cookies from file into browser driver."""
+        try:
+            cookie_path = self.cookie_file()
+            if not cookie_path.exists():
+                return
+            with open(cookie_path, "r", encoding="utf-8") as f:
+                cookies = json.load(f)
+            driver.get(base_url)
+            for cookie in cookies:
+                # Selenium/uc requires domain stripped when adding after navigation
+                cookie.pop("domain", None)
+                try:
+                    driver.add_cookie(cookie)
+                except Exception:
+                    continue
+            logger.info("✅ Cookies loaded")
+        except Exception as e:
+            logger.debug(f"Cookie load skipped: {e}")
+
+    def save_cookies(self, driver: Any) -> None:
+        """Save cookies from browser driver to file."""
+        try:
+            cookies = driver.get_cookies()
+            cookie_path = self.cookie_file()
+            cookie_path.parent.mkdir(parents=True, exist_ok=True)
+            with open(cookie_path, "w", encoding="utf-8") as f:
+                json.dump(cookies, f, indent=2)
+            logger.info("✅ Cookies saved")
+        except Exception as e:
+            logger.debug(f"Cookie save skipped: {e}")
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
     def get_selector_cache_file(self) -> Path:
         """Get selector success cache file path."""

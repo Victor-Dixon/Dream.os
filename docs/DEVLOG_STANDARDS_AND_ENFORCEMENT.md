@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 <!-- SSOT Domain: documentation -->
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 # Devlog Standards & Enforcement Protocol
 
 **Effective:** 2025-12-26  

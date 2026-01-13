@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿# Websites Inventory (D:\websites)
 
 | Name | Type | Entrypoints | Path |
@@ -38,3 +39,13 @@
 | houston-sip-theme | node | package.json | D:\websites\packages\houston-sip-theme |
 | swarm-core-theme | node | package.json | D:\websites\packages\swarm-core-theme |
 | event-services-theme | node | package.json | D:\websites\packages\event-services-theme |
+=======
+# Websites Inventory (D:\websites)
+
+| Name | Type | Entrypoints | Path |
+|---|---|---|---|
+| nextend-facebook-connect | static | index.html | D:\websites\FreeRideInvestor\plugins\nextend-facebook-connect |
+| ariajet.site | static | index.html | D:\websites\websites\ariajet.site |
+| southwestsecret.com | static | index.html | D:\websites\websites\southwestsecret.com |
+| games | static | index.html | D:\websites\websites\ariajet.site\games |
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console

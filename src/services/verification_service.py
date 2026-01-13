@@ -33,9 +33,13 @@ License: MIT
 import logging
 import requests
 import subprocess
+<<<<<<< HEAD
 import json
 import yaml
 from typing import Dict, Any, List, Optional, Callable
+=======
+from typing import Dict, Any, List, Optional
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 from pathlib import Path
 from src.core.base.base_service import BaseService
 
@@ -44,6 +48,7 @@ logger = logging.getLogger(__name__)
 class VerificationService(BaseService):
     """
     Automated verification harness for validating system claims.
+<<<<<<< HEAD
 
     Enhanced with 'existence vs functionality' testing methodology.
     """
@@ -121,13 +126,19 @@ class VerificationService(BaseService):
         return (has_html or has_doctype) and (has_body or has_closing_tags)
     """
     Automated verification harness for validating system claims.
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     """
 
     def __init__(self):
         super().__init__("VerificationService")
 
     def verify_url_status(self, url: str, expected_status: int = 200, timeout: int = 10) -> Dict[str, Any]:
+<<<<<<< HEAD
         """Verify a URL returns the expected status code (legacy method - use verify_url_functional for comprehensive checks)."""
+=======
+        """Verify a URL returns the expected status code."""
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
         try:
             response = requests.get(url, timeout=timeout)
             success = response.status_code == expected_status
@@ -146,6 +157,7 @@ class VerificationService(BaseService):
                 "error": str(e)
             }
 
+<<<<<<< HEAD
     def verify_url_functional(self, url: str, expected_status: int = 200, timeout: int = 10,
                              check_content=True, min_content_length=100) -> Dict[str, Any]:
         """
@@ -226,6 +238,8 @@ class VerificationService(BaseService):
             result["error"] = f"Verification failed: {e}"
             return result
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     def verify_text_in_page(self, url: str, text: str, timeout: int = 10) -> Dict[str, Any]:
         """Verify specific text exists in the page content."""
         try:
@@ -269,6 +283,7 @@ class VerificationService(BaseService):
             return {"success": False, "path": test_path, "error": str(e)}
 
     def verify_file_exists(self, path: str) -> Dict[str, Any]:
+<<<<<<< HEAD
         """Verify a local file exists (legacy method - use verify_file_functional for comprehensive checks)."""
         exists = Path(path).exists()
         return {"success": exists, "path": path}
@@ -476,3 +491,18 @@ class VerificationService(BaseService):
             result["error"] = f"Unexpected error during Lighthouse audit: {e}"
 
         return result
+=======
+        """Verify a local file exists."""
+        exists = Path(path).exists()
+        return {"success": exists, "path": path}
+
+    def run_lighthouse_audit(self, url: str) -> Dict[str, Any]:
+        """Run lighthouse audit (stub)."""
+        # TODO: Implement actual lighthouse integration
+        # Requires 'npm install -g lighthouse' and subprocess call
+        return {
+            "success": False, 
+            "url": url, 
+            "error": "Lighthouse integration not yet implemented. Requires 'npm install -g lighthouse'."
+        }
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console

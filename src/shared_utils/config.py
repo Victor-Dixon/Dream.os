@@ -1,7 +1,10 @@
 """Configuration utilities for the unified workspace.
 
+<<<<<<< HEAD
 <!-- SSOT Domain: core -->
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 This module loads environment variables and provides helper
 functions for accessing workspace settings.
 """

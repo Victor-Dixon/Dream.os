@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 <!-- SSOT Domain: documentation -->
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 # Git Repository Sync Audit Report
 
 **Date:** 2025-12-22  

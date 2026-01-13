@@ -22,12 +22,16 @@ from src.core.messaging_models_core import (
 from src.core.messaging_core import send_message
 from src.core.base.base_service import BaseService
 from src.core.agent_mode_manager import get_mode_manager, get_active_agents
+<<<<<<< HEAD
 from src.obs import InterpretedCaption
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 import asyncio
 import logging
 from pathlib import Path
 from typing import Optional, List
 
+<<<<<<< HEAD
 # Import extracted coordinators - V2 MODULARIZATION ENABLED
 from .chat_config_manager import ChatConfigManager
 from .twitch_coordinator import TwitchCoordinator
@@ -38,6 +42,49 @@ from .agent_coordinator import AgentCoordinator
 from .twitch_bridge import TwitchChatBridge
 from .quote_generator import get_random_quote, format_quote_for_chat
 
+=======
+# Use unified logging system
+from src.core.unified_logging_system import get_logger, configure_logging
+
+from .agent_personality import format_chat_message, get_personality
+from .chat_scheduler import ChatScheduler
+from .message_interpreter import MessageInterpreter
+from .status_reader import AgentStatusReader
+from .twitch_bridge import TwitchChatBridge
+from .quote_generator import get_random_quote, format_quote_for_chat
+
+# Configure logging for chat_presence with file handler
+log_dir = Path(__file__).parent.parent.parent.parent / "logs"
+log_dir.mkdir(parents=True, exist_ok=True)
+log_file = log_dir / "chat_presence_orchestrator.log"
+configure_logging(level="DEBUG", log_file=log_file)
+
+logger = get_logger(__name__)
+# OBS imports (optional - bot can run without OBS)
+try:
+    from src.obs.caption_interpreter import CaptionInterpreter, InterpretedCaption
+    from src.obs.caption_listener import OBSCaptionListener
+    from src.obs.speech_log_manager import SpeechLogManager
+    OBS_AVAILABLE = True
+except ImportError:
+    OBS_AVAILABLE = False
+    # Create stub classes for when OBS is not available
+
+    class CaptionInterpreter:
+        def __init__(self):
+            pass
+
+    class InterpretedCaption:
+        pass
+
+    class OBSCaptionListener:
+        pass
+
+    class SpeechLogManager:
+        def __init__(self):
+            pass
+
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 logger = logging.getLogger(__name__)
 
 
@@ -58,6 +105,7 @@ class ChatPresenceOrchestrator(BaseService):
         obs_config: Optional[dict] = None,
     ):
         """
+<<<<<<< HEAD
         Initialize chat presence orchestrator - V2 MODULAR ARCHITECTURE.
 
         Uses coordinator pattern for clean separation of concerns.
@@ -82,6 +130,19 @@ class ChatPresenceOrchestrator(BaseService):
         self.obs_config = obs_config or {}
 
         # Legacy components for backward compatibility
+=======
+        Initialize chat presence orchestrator.
+
+        Args:
+            twitch_config: Twitch configuration dict
+            obs_config: OBS configuration dict
+        """
+        super().__init__("ChatPresenceOrchestrator")
+        self.twitch_config = twitch_config or {}
+        self.obs_config = obs_config or {}
+
+        # Initialize components
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
         self.message_interpreter = MessageInterpreter()
         self.chat_scheduler = ChatScheduler()
         self.status_reader = AgentStatusReader()
@@ -93,7 +154,11 @@ class ChatPresenceOrchestrator(BaseService):
             self.caption_interpreter = None
             self.speech_log_manager = None
 
+<<<<<<< HEAD
         # Bridges (initialized on start) - LEGACY
+=======
+        # Bridges (initialized on start)
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
         self.twitch_bridge: Optional[TwitchChatBridge] = None
         self.obs_listener: Optional[OBSCaptionListener] = None
 
@@ -113,6 +178,7 @@ class ChatPresenceOrchestrator(BaseService):
                           for a in admin_list.split(",") if a.strip()]
         self.admin_users.update(admin_list)
 
+<<<<<<< HEAD
     def _load_twitch_config_from_env(self) -> dict:
         """
         Load Twitch configuration from environment variables with URL parsing.
@@ -168,10 +234,16 @@ class ChatPresenceOrchestrator(BaseService):
         Start chat presence system - V2 MODULAR ARCHITECTURE.
 
         Uses coordinators for clean separation of concerns.
+=======
+    async def start(self) -> bool:
+        """
+        Start chat presence system.
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
         Returns:
             True if started successfully
         """
+<<<<<<< HEAD
         logger.info("🚀 Starting Chat Presence Orchestrator (V2)...")
 
         # V2 MODULAR STARTUP: Start coordinators
@@ -211,6 +283,26 @@ class ChatPresenceOrchestrator(BaseService):
 
         # Start periodic status updates using coordinators
         if self.twitch_coordinator.is_healthy():
+=======
+        logger.info("🚀 Starting Chat Presence Orchestrator...")
+
+        # Start Twitch bridge
+        if self.twitch_config:
+            success = await self._start_twitch()
+            if not success:
+                logger.warning("⚠️ Twitch bridge failed to start")
+
+        # Start OBS listener
+        if self.obs_config:
+            success = await self._start_obs()
+            if not success:
+                logger.warning("⚠️ OBS listener failed to start")
+
+        self.running = True
+
+        # Start periodic status updates (every 5 minutes)
+        if self.twitch_bridge:
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
             self._status_update_task = asyncio.create_task(
                 self._periodic_status_updates()
             )
@@ -817,8 +909,13 @@ class ChatPresenceOrchestrator(BaseService):
                 await asyncio.sleep(60)  # Wait 1 minute before retry
 
     async def stop(self) -> None:
+<<<<<<< HEAD
         """Stop chat presence system - V2 MODULAR ARCHITECTURE."""
         logger.info("🛑 Stopping Chat Presence Orchestrator (V2)...")
+=======
+        """Stop chat presence system."""
+        logger.info("🛑 Stopping Chat Presence Orchestrator...")
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
         self.running = False
 
         # Cancel periodic status updates
@@ -829,19 +926,26 @@ class ChatPresenceOrchestrator(BaseService):
             except asyncio.CancelledError:
                 pass
 
+<<<<<<< HEAD
         # V2 MODULAR SHUTDOWN: Stop coordinators
         await self.twitch_coordinator.stop()
         await self.obs_coordinator.stop()
         await self.agent_coordinator.stop()
 
         # LEGACY SUPPORT: Stop old bridges
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
         if self.twitch_bridge:
             self.twitch_bridge.stop()
 
         if self.obs_listener:
             await self.obs_listener.disconnect()
 
+<<<<<<< HEAD
         logger.info("✅ Chat Presence Orchestrator stopped (V2)")
+=======
+        logger.info("✅ Chat Presence Orchestrator stopped")
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
 
 __all__ = ["ChatPresenceOrchestrator"]

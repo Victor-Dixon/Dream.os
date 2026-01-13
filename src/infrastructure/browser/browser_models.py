@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 """
 Browser Models - Unified Browser Service
 =========================================
@@ -101,6 +102,8 @@ class RateLimitStatus:
     reset_time: float | None = None
     is_rate_limited: bool = False
 =======
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 """
 Browser Models - Unified Browser Service
 =========================================
@@ -135,7 +138,10 @@ warnings.warn(
 
 
 import time
+<<<<<<< HEAD
 from typing import Optional
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 from dataclasses import dataclass, field
 
 try:
@@ -171,7 +177,10 @@ class BrowserConfig:
 
 
 @dataclass
+<<<<<<< HEAD
 @dataclass
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 class TheaConfig:
     """Configuration for Thea Manager interactions with enhanced config integration."""
 
@@ -179,8 +188,11 @@ class TheaConfig:
         "https://chatgpt.com/g/g-68fd74b31d84819190eb2588b5c649f6-swarm-commander-thea"
     )
     cookie_file: str = "data/thea_cookies.json"
+<<<<<<< HEAD
     encrypted_cookie_file: Optional[str] = None
     key_file: Optional[str] = None
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     auto_save_cookies: bool = True
     rate_limit_requests_per_minute: int = 10
     rate_limit_burst_limit: int = 5
@@ -206,4 +218,7 @@ class RateLimitStatus:
     requests_remaining: int
     reset_time: float | None = None
     is_rate_limited: bool = False
+<<<<<<< HEAD
 >>>>>>> rescue/dreamos-down-
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console

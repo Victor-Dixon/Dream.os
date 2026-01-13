@@ -52,8 +52,11 @@ from datetime import datetime, timedelta
 from dataclasses import dataclass
 from abc import ABC, abstractmethod
 
+<<<<<<< HEAD
 from ..core.logging_mixin import LoggingMixin
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 logger = logging.getLogger(__name__)
 
 
@@ -136,7 +139,11 @@ class HistoricalSimulationCalculator(RiskCalculatorBase):
         return cvar_value
 
 
+<<<<<<< HEAD
 class RiskCalculatorService(LoggingMixin):
+=======
+class RiskCalculatorService:
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     """Main risk calculator service implementing all risk metrics."""
 
     def __init__(self, risk_free_rate: float = 0.045):  # 4.5% default (approx 10-year Treasury)
@@ -248,6 +255,7 @@ class RiskCalculatorService(LoggingMixin):
         equity_curve: np.ndarray,
         benchmark_returns: Optional[np.ndarray] = None
     ) -> RiskMetrics:
+<<<<<<< HEAD
         """
         Calculate all comprehensive risk metrics with enhanced validation and error handling.
 
@@ -380,6 +388,45 @@ class RiskCalculatorService(LoggingMixin):
                 errors.append("benchmark_returns contains non-finite values")
 
         return errors
+=======
+        """Calculate all comprehensive risk metrics."""
+        if len(returns) < 30:
+            logger.warning(f"Insufficient data for risk calculations: {len(returns)} returns")
+            return self._create_empty_metrics()
+
+        # Calculate VaR and CVaR
+        var_95 = self.var_calculator.calculate_var(returns)
+        cvar_95 = self.var_calculator.calculate_cvar(returns, var_95)
+
+        # Calculate Sharpe Ratio
+        sharpe_ratio = self.calculate_sharpe_ratio(returns)
+
+        # Calculate Maximum Drawdown
+        max_drawdown = self.calculate_max_drawdown(equity_curve)
+
+        # Calculate Sortino Ratio
+        sortino_ratio = self.calculate_sortino_ratio(returns)
+
+        # Calculate Calmar Ratio
+        calmar_ratio = self.calculate_calmar_ratio(returns, max_drawdown)
+
+        # Calculate Information Ratio (if benchmark provided)
+        if benchmark_returns is not None:
+            information_ratio = self.calculate_information_ratio(returns, benchmark_returns)
+        else:
+            information_ratio = 0.0
+
+        return RiskMetrics(
+            var_95=var_95,
+            cvar_95=cvar_95,
+            sharpe_ratio=sharpe_ratio,
+            max_drawdown=max_drawdown,
+            calmar_ratio=calmar_ratio,
+            sortino_ratio=sortino_ratio,
+            information_ratio=information_ratio,
+            calculation_date=datetime.now()
+        )
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
     def _create_empty_metrics(self) -> RiskMetrics:
         """Create empty risk metrics for insufficient data cases."""
@@ -394,6 +441,7 @@ class RiskCalculatorService(LoggingMixin):
             calculation_date=datetime.now()
         )
 
+<<<<<<< HEAD
     def check_risk_thresholds(self, metrics: RiskMetrics, thresholds: Dict[str, float],
                             user_id: int = 0, strategy_id: Optional[str] = None) -> List[RiskAlert]:
         """Check risk metrics against predefined thresholds and generate alerts with enhanced validation."""
@@ -503,6 +551,45 @@ class RiskCalculatorService(LoggingMixin):
             logger.error(f"Error in risk threshold checking: {e}")
 
         logger.info(f"Generated {len(alerts)} risk alerts for user {user_id}")
+=======
+    def check_risk_thresholds(self, metrics: RiskMetrics, thresholds: Dict[str, float]) -> List[RiskAlert]:
+        """Check risk metrics against predefined thresholds and generate alerts."""
+        alerts = []
+
+        # VaR Alert
+        if 'var_95' in thresholds and metrics.var_95 > thresholds['var_95']:
+            alerts.append(RiskAlert(
+                alert_type='var_threshold',
+                threshold_value=thresholds['var_95'],
+                current_value=metrics.var_95,
+                severity='high',
+                message=f'VaR (95%) of {metrics.var_95:.2%} exceeds threshold of {thresholds["var_95"]:.2%}',
+                user_id=0  # To be set by caller
+            ))
+
+        # Maximum Drawdown Alert
+        if 'max_drawdown' in thresholds and metrics.max_drawdown > thresholds['max_drawdown']:
+            alerts.append(RiskAlert(
+                alert_type='drawdown_threshold',
+                threshold_value=thresholds['max_drawdown'],
+                current_value=metrics.max_drawdown,
+                severity='critical',
+                message=f'Maximum drawdown of {metrics.max_drawdown:.2%} exceeds threshold of {thresholds["max_drawdown"]:.2%}',
+                user_id=0  # To be set by caller
+            ))
+
+        # Sharpe Ratio Alert (low Sharpe is concerning)
+        if 'sharpe_ratio_min' in thresholds and metrics.sharpe_ratio < thresholds['sharpe_ratio_min']:
+            alerts.append(RiskAlert(
+                alert_type='sharpe_ratio_low',
+                threshold_value=thresholds['sharpe_ratio_min'],
+                current_value=metrics.sharpe_ratio,
+                severity='medium',
+                message=f'Sharpe ratio of {metrics.sharpe_ratio:.2f} below minimum threshold of {thresholds["sharpe_ratio_min"]:.2f}',
+                user_id=0  # To be set by caller
+            ))
+
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
         return alerts
 
 

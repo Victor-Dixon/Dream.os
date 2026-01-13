@@ -129,6 +129,7 @@ class PyAutoGUIOperationsService:
         
         x, y = coordinates
         
+<<<<<<< HEAD
         # Click to focus window and input field at coordinates
         logger.debug(f"🖱️ Clicking to focus input field at {coordinates}")
         self.pyautogui.click(x, y)
@@ -136,6 +137,15 @@ class PyAutoGUIOperationsService:
 
         # Click again to ensure input field is active
         self.pyautogui.click(x, y)
+=======
+        # Click to focus window and input field
+        logger.debug("🖱️ Clicking to focus input field")
+        self.pyautogui.click()
+        time.sleep(0.5)  # Wait for initial focus
+        
+        # Click again to ensure input field is active
+        self.pyautogui.click()
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
         time.sleep(0.5)  # Wait for input field to be ready
         
         return True

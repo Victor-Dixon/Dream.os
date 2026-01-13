@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 ## 🤖 CONSOLIDATION COMPLETE
 
@@ -21,6 +22,8 @@
 
 ---
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 <!-- SSOT Domain: discord -->
 # 🤖 Discord GUI Controller - Complete Documentation
 

@@ -51,6 +51,7 @@ def health_check():
     return jsonify({"status": "ok", "service": "coordination"}), 200
 
 
+<<<<<<< HEAD
 # REAL-TIME AGENT PROGRESS TRACKING (Agent-6 Coordination Integration)
 @coordination_bp.route("/realtime/agent-progress/<agent_id>", methods=["POST"])
 def update_agent_progress(agent_id):
@@ -229,4 +230,6 @@ def _get_leaderboard_broadcaster_status():
             "coordination_ready": False
         }
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 

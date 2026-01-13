@@ -1,0 +1,214 @@
+{
+  "version": "1.0.0",
+  "created": "2025-12-02T05:33:34.817833",
+  "last_updated": "2025-12-10T12:05:37.845399",
+  "sessions": {
+    "test-trade-001": {
+      "session_id": "test-trade-001",
+      "session_type": "trade",
+      "timestamp": "2025-12-02T03:00:00Z",
+      "agent_id": "Agent-1",
+      "registered": "2025-12-02T05:33:34.817833",
+      "artifacts": [
+        "test-trade-001_trade_journal",
+        "test-trade-001_social_post",
+        "test-trade-001_trade_journal",
+        "test-trade-001_social_post"
+      ]
+    },
+    "test-build-001": {
+      "session_id": "test-build-001",
+      "session_type": "build",
+      "timestamp": "2025-12-02T03:00:00Z",
+      "agent_id": "Agent-1",
+      "registered": "2025-12-02T05:33:36.305738",
+      "artifacts": [
+        "test-build-001_readme",
+        "test-build-001_build_log",
+        "test-build-001_social_post",
+        "test-build-001_readme",
+        "test-build-001_build_log",
+        "test-build-001_social_post",
+        "test-build-001_build_log",
+        "test-build-001_readme",
+        "test-build-001_build_log",
+        "test-build-001_social_post",
+        "test-build-001_readme",
+        "test-build-001_build_log",
+        "test-build-001_readme",
+        "test-build-001_build_log",
+        "test-build-001_readme",
+        "test-build-001_build_log",
+        "test-build-001_readme",
+        "test-build-001_build_log",
+        "test-build-001_social_post"
+      ]
+    },
+    "00000000-0000-0000-0000-000000000001": {
+      "session_id": "00000000-0000-0000-0000-000000000001",
+      "session_type": "build",
+      "timestamp": "2025-12-02T03:30:00Z",
+      "agent_id": "Agent-1",
+      "registered": "2025-12-02T05:33:48.582920",
+      "artifacts": [
+        "00000000-0000-0000-0000-000000000001_readme",
+        "00000000-0000-0000-0000-000000000001_build_log",
+        "00000000-0000-0000-0000-000000000001_social_post"
+      ]
+    }
+  },
+  "artifacts": {
+    "test-trade-001_trade_journal": {
+      "artifact_id": "test-trade-001_trade_journal",
+      "session_id": "test-trade-001",
+      "artifact_type": "trade_journal",
+      "artifact_path": "systems\\output_flywheel\\outputs\\artifacts\\trade\\trade_journal_test-trade-001.md",
+      "artifact_hash": "1f7460faecd2fe39ff9773f6a808dd7260d8a77e7124f4202852d9c3fffcee0a",
+      "registered": "2025-12-02T19:13:15.403786",
+      "status": "ready"
+    },
+    "test-trade-001_social_post": {
+      "artifact_id": "test-trade-001_social_post",
+      "session_id": "test-trade-001",
+      "artifact_type": "social_post",
+      "artifact_path": "systems\\output_flywheel\\outputs\\artifacts\\trade\\trade_social_test-trade-001.md",
+      "artifact_hash": "41d844a253c877326d765090e07d3e5a27b7be146014153e4973d3c417803d1b",
+      "registered": "2025-12-02T19:13:15.561933",
+      "status": "ready"
+    },
+    "test-build-001_readme": {
+      "artifact_id": "test-build-001_readme",
+      "session_id": "test-build-001",
+      "artifact_type": "readme",
+      "artifact_path": "systems\\output_flywheel\\outputs\\artifacts\\build\\Agent_Cellphone_V2_Repository\\README.generated.md",
+      "artifact_hash": "a9f3b89aa37e3f54db4073fab8b672ca67d01569e88c6fd2d50ba775440851d0",
+      "registered": "2025-12-10T12:05:37.696262",
+      "status": "ready"
+    },
+    "test-build-001_build_log": {
+      "artifact_id": "test-build-001_build_log",
+      "session_id": "test-build-001",
+      "artifact_type": "build_log",
+      "artifact_path": "systems\\output_flywheel\\outputs\\artifacts\\build\\Agent_Cellphone_V2_Repository\\build_log_test-build-001.md",
+      "artifact_hash": "6c7e973a012376f6b5ed0e0adfd9db527df8131bc307464aa6b27324d4c26349",
+      "registered": "2025-12-10T12:05:37.756317",
+      "status": "ready"
+    },
+    "test-build-001_social_post": {
+      "artifact_id": "test-build-001_social_post",
+      "session_id": "test-build-001",
+      "artifact_type": "social_post",
+      "artifact_path": "systems\\output_flywheel\\outputs\\artifacts\\build\\Agent_Cellphone_V2_Repository\\social\\social_post_test-build-001.md",
+      "artifact_hash": "8330393f8b572ea93d4245c5c1299c5e62d2231fe6ce27fdc06c0b1d2e51bcef",
+      "registered": "2025-12-10T12:05:37.845399",
+      "status": "ready"
+    },
+    "00000000-0000-0000-0000-000000000001_readme": {
+      "artifact_id": "00000000-0000-0000-0000-000000000001_readme",
+      "session_id": "00000000-0000-0000-0000-000000000001",
+      "artifact_type": "readme",
+      "artifact_path": "systems\\output_flywheel\\outputs\\artifacts\\build\\Agent_Cellphone_V2_Repository\\README.generated.md",
+      "artifact_hash": "defaf73d08163d95d6e40a8b2970ebfc8d96ad5a8f46d1125dcaf1f12cedf580",
+      "registered": "2025-12-02T05:38:01.958173",
+      "status": "ready"
+    },
+    "00000000-0000-0000-0000-000000000001_build_log": {
+      "artifact_id": "00000000-0000-0000-0000-000000000001_build_log",
+      "session_id": "00000000-0000-0000-0000-000000000001",
+      "artifact_type": "build_log",
+      "artifact_path": "systems\\output_flywheel\\outputs\\artifacts\\build\\Agent_Cellphone_V2_Repository\\build_log_00000000-0000-0000-0000-000000000001.md",
+      "artifact_hash": "7c9915fae97aef5b92a090120960fe601c80c79d99e5d0e174d631941988b0ac",
+      "registered": "2025-12-02T05:38:01.996221",
+      "status": "ready"
+    },
+    "00000000-0000-0000-0000-000000000001_social_post": {
+      "artifact_id": "00000000-0000-0000-0000-000000000001_social_post",
+      "session_id": "00000000-0000-0000-0000-000000000001",
+      "artifact_type": "social_post",
+      "artifact_path": "systems\\output_flywheel\\outputs\\artifacts\\build\\Agent_Cellphone_V2_Repository\\social\\social_post_00000000-0000-0000-0000-000000000001.md",
+      "artifact_hash": "7195b7972880578474c21f81c7c861864af763415fae5517b4a39ec5117a41b2",
+      "registered": "2025-12-02T05:38:02.028281",
+      "status": "ready"
+    }
+  },
+  "artifact_index": {
+    "993dc7d3a9970299f11e3a95a0da0801a44283f12bf014e067910f31065fbca7": [
+      "test-trade-001_trade_journal"
+    ],
+    "e620ed9d3153310f0504e30c83a6b6153be3edc4737b91a6ef63a3d178fccdbc": [
+      "test-trade-001_social_post"
+    ],
+    "1480c883071dda15fb6c46dbce5ce93ad837ef3fd430e885dfb2432b90b355b0": [
+      "test-build-001_readme"
+    ],
+    "fed8c0783041b0fb76fd45809bc2fe74a30c349e9bb59e0c77afcb1191e8b286": [
+      "test-build-001_build_log"
+    ],
+    "501478dc65ec9331dfb620a8ff179b9bbc3ad3eb0b4844e006adb73dab5503ac": [
+      "test-build-001_social_post"
+    ],
+    "defaf73d08163d95d6e40a8b2970ebfc8d96ad5a8f46d1125dcaf1f12cedf580": [
+      "00000000-0000-0000-0000-000000000001_readme"
+    ],
+    "7c9915fae97aef5b92a090120960fe601c80c79d99e5d0e174d631941988b0ac": [
+      "00000000-0000-0000-0000-000000000001_build_log"
+    ],
+    "7195b7972880578474c21f81c7c861864af763415fae5517b4a39ec5117a41b2": [
+      "00000000-0000-0000-0000-000000000001_social_post"
+    ],
+    "77bf07bdb5886b2b73427ac5e71c825cdfb174ca1afed04da988fef018d83b49": [
+      "test-build-001_readme"
+    ],
+    "b0f9be00622265a4576c17450bf73af2bcee46aa139ba510c26e3930cfaacb8b": [
+      "test-build-001_build_log"
+    ],
+    "74619d5bedeb1ef96f4e6d444f76eff84c812c63c9f3c1e4e76093e1e685adb0": [
+      "test-build-001_social_post"
+    ],
+    "c02a55f716befb20bbe5e5038c9dfdd648585a942f6c0de22b5f9b8447ddb45e": [
+      "test-build-001_build_log"
+    ],
+    "9d30d2a79fcd54ac05ded5b0e34ddbd67b7582eddfc6d40ae5407d60b2b3ad68": [
+      "test-build-001_readme"
+    ],
+    "4af637109995968dfd6d528eef268cc4f9e1ae281b8b6a8be2c6f52f6884ba65": [
+      "test-build-001_build_log"
+    ],
+    "f4bf3693d8f8f5af3473ca50585052bcc090bff07f636c747ea5949e9d232b7f": [
+      "test-build-001_social_post"
+    ],
+    "1f7460faecd2fe39ff9773f6a808dd7260d8a77e7124f4202852d9c3fffcee0a": [
+      "test-trade-001_trade_journal"
+    ],
+    "41d844a253c877326d765090e07d3e5a27b7be146014153e4973d3c417803d1b": [
+      "test-trade-001_social_post"
+    ],
+    "a3c8d2c72d189ef0bbf1c3bc785905d36e513d764a24de39e0f52cfc8df2d558": [
+      "test-build-001_readme"
+    ],
+    "1c096f532e1d7fbbf88f7de6ce3243dc4fd3c0775249e4b588bcfd0fdc6aa280": [
+      "test-build-001_build_log"
+    ],
+    "5ae1b8ece057d7e76c93e9978a641f0453815a92e9837b18a6be3add06cba064": [
+      "test-build-001_readme"
+    ],
+    "eccbf3623e2b94a68a56d79e52cb0f0e7b7de7efb05f633bc3586c8766fd7e14": [
+      "test-build-001_build_log"
+    ],
+    "54263210e78107fa5b88f8c62b12d5de07173428983c1ad10f3b000b1d893aff": [
+      "test-build-001_readme"
+    ],
+    "82b0e0966572e159d9fd5f0627b564f353e25a34da6e84b2493c3513bb5dcb65": [
+      "test-build-001_build_log"
+    ],
+    "a9f3b89aa37e3f54db4073fab8b672ca67d01569e88c6fd2d50ba775440851d0": [
+      "test-build-001_readme"
+    ],
+    "6c7e973a012376f6b5ed0e0adfd9db527df8131bc307464aa6b27324d4c26349": [
+      "test-build-001_build_log"
+    ],
+    "8330393f8b572ea93d4245c5c1299c5e62d2231fe6ce27fdc06c0b1d2e51bcef": [
+      "test-build-001_social_post"
+    ]
+  }
+}

@@ -238,6 +238,7 @@ class MessageFormattingService:
         )
         
         if is_templated_message:
+<<<<<<< HEAD
             # Check if message already has template header
             if content_has_template_header:
                 # Message already has template applied - use content as-is
@@ -325,6 +326,29 @@ class MessageFormattingService:
                         priority=message.priority.value,
                         sender=sender
                     )
+=======
+            # Message already has template applied - use content as-is
+            content_to_use = message.content
+            
+            # If content has both prefix AND template header, extract template part
+            if "[HEADER]" in content_to_use and not content_to_use.startswith("[HEADER]"):
+                header_index = content_to_use.find("[HEADER]")
+                if header_index > 0:
+                    original_length = len(content_to_use)
+                    content_to_use = content_to_use[header_index:]
+                    logger.info(
+                        f"🔧 Extracted template content: removed {header_index} chars prefix, "
+                        f"template length: {len(content_to_use)} (was {original_length})"
+                    )
+            
+            # Don't add any prefix - template is complete as-is
+            msg_content = content_to_use
+            logger.info(
+                f"✅ Using pre-rendered template content "
+                f"(category: {category_value}, has_header: {content_has_template_header}, "
+                f"final_length: {len(msg_content)})"
+            )
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
         else:
             # No template header - format with prefix
             logger.info(

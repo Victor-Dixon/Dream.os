@@ -36,11 +36,14 @@ except ImportError:
         makedirs = os.makedirs
 
     def get_unified_utility():
+<<<<<<< HEAD
         """Get a unified utility instance for Discord agent communication.
 
         Returns:
             _Utility: A utility instance with common helper methods.
         """
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
         return _Utility()
 
 

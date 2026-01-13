@@ -1,0 +1,122 @@
+{
+  "project_structure": {
+    "Agent_Cellphone_V2_Repository_restore": {
+      "file_count": 197,
+      "functions": 0,
+      "classes": 0,
+      "complexity": 0
+    },
+    "agent_workspaces": {
+      "file_count": 4,
+      "functions": 0,
+      "classes": 0,
+      "complexity": 0
+    },
+    "docs": {
+      "file_count": 1,
+      "functions": 0,
+      "classes": 0,
+      "complexity": 0
+    },
+    "examples": {
+      "file_count": 2,
+      "functions": 0,
+      "classes": 0,
+      "complexity": 0
+    },
+    "mcp_servers": {
+      "file_count": 1,
+      "functions": 0,
+      "classes": 0,
+      "complexity": 0
+    },
+    "root": {
+      "file_count": 1,
+      "functions": 0,
+      "classes": 0,
+      "complexity": 0
+    },
+    "scripts": {
+      "file_count": 4,
+      "functions": 0,
+      "classes": 0,
+      "complexity": 0
+    },
+    "src": {
+      "file_count": 160,
+      "functions": 0,
+      "classes": 0,
+      "complexity": 0
+    },
+    "swarm_brain": {
+      "file_count": 2,
+      "functions": 0,
+      "classes": 0,
+      "complexity": 0
+    },
+    "temp_repos": {
+      "file_count": 120,
+      "functions": 0,
+      "classes": 0,
+      "complexity": 0
+    },
+    "tests": {
+      "file_count": 7,
+      "functions": 0,
+      "classes": 0,
+      "complexity": 0
+    },
+    "tools": {
+      "file_count": 15,
+      "functions": 15,
+      "classes": 1,
+      "complexity": 25
+    },
+    "tools": {
+      "file_count": 6,
+      "functions": 0,
+      "classes": 0,
+      "complexity": 0
+    },
+    "trading_robot": {
+      "file_count": 8,
+      "functions": 0,
+      "classes": 0,
+      "complexity": 0
+    }
+  },
+  "key_components": [
+    {
+      "name": "src",
+      "file_count": 160,
+      "complexity": 0,
+      "functions": 0,
+      "classes": 0
+    },
+    {
+      "name": "temp_repos",
+      "file_count": 120,
+      "complexity": 0,
+      "functions": 0,
+      "classes": 0
+    },
+    {
+      "name": "Agent_Cellphone_V2_Repository_restore",
+      "file_count": 197,
+      "complexity": 0,
+      "functions": 0,
+      "classes": 0
+    }
+  ],
+  "architecture_patterns": [],
+  "code_metrics": {
+    "total_files": 528,
+    "total_functions": 15,
+    "total_classes": 1,
+    "total_complexity": 25,
+    "languages_used": [
+      ".py"
+    ]
+  },
+  "recommendations": []
+}

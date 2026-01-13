@@ -1,7 +1,10 @@
 """
 
+<<<<<<< HEAD
 <!-- SSOT Domain: orchestrators -->
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 Monitor Discord Alerts - Discord Router Integration
 ===================================================
 

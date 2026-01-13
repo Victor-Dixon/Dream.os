@@ -37,8 +37,11 @@ from pathlib import Path
 
 from src.core.base.base_service import BaseService
 
+<<<<<<< HEAD
 # Global conversation store to persist across service instances
 _global_conversations = {}
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
 @dataclass
 class Message:
@@ -82,6 +85,7 @@ class AIService(BaseService):
         """Initialize AI service."""
         super().__init__("AIService")
         self.repository = repository
+<<<<<<< HEAD
         # Use global conversation store for persistence across requests
         global _global_conversations
         self.conversations = _global_conversations
@@ -144,6 +148,11 @@ class AIService(BaseService):
             }
             for msg in history
         ]
+=======
+        self.conversations: Dict[str, Conversation] = {}
+        self.context_data: Dict[str, Any] = {}
+        self.logger.info("AI Service initialized")
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     
     def process_message(
         self, 

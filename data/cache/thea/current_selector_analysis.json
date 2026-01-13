@@ -1,0 +1,1599 @@
+{
+  "url": "https://chat.openai.com",
+  "cookie_path": "data/thea_cookies.json",
+  "timestamp": "2025-12-10T11:23:29.287193",
+  "input_elements": [
+    {
+      "selector": "textarea:nth-of-type(1)",
+      "tag_name": "textarea",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "height": 40,
+        "width": 768
+      },
+      "attributes": {
+        "class": "wcDTda_fallbackTextarea",
+        "name": "prompt-textarea",
+        "type": "textarea",
+        "placeholder": "Ask anything"
+      },
+      "text_content": "",
+      "css_cursor": "text",
+      "css_pointer_events": "auto",
+      "relevance_score": 25
+    },
+    {
+      "selector": "div[contenteditable='true']:nth-of-type(1)",
+      "tag_name": "div",
+      "visible": true,
+      "enabled": true,
+      "location": {
+        "x": 758,
+        "y": 896
+      },
+      "size": {
+        "height": 40,
+        "width": 622
+      },
+      "attributes": {
+        "id": "prompt-textarea",
+        "class": "ProseMirror",
+        "contenteditable": "true"
+      },
+      "text_content": "",
+      "css_cursor": "text",
+      "css_pointer_events": "auto",
+      "relevance_score": 25
+    }
+  ],
+  "button_elements": [
+    {
+      "selector": "button:nth-of-type(1)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 8,
+        "y": 8
+      },
+      "size": {
+        "height": 36,
+        "width": 36
+      },
+      "attributes": {
+        "class": "text-token-text-primary no-draggable hover:bg-token-surface-hover keyboard-focused:bg-token-surface-hover touch:h-10 touch:w-10 flex h-9 w-9 items-center justify-center rounded-lg focus:outline-none disabled:opacity-50 mx-2 cursor-e-resize rtl:cursor-w-resize",
+        "type": "submit",
+        "aria-label": "Open sidebar"
+      },
+      "text_content": "",
+      "css_cursor": "e-resize",
+      "css_pointer_events": "none",
+      "relevance_score": 10
+    },
+    {
+      "selector": "button:nth-of-type(2)",
+      "tag_name": "button",
+      "visible": true,
+      "enabled": true,
+      "location": {
+        "x": 201,
+        "y": 8
+      },
+      "size": {
+        "height": 36,
+        "width": 36
+      },
+      "attributes": {
+        "class": "text-token-text-tertiary no-draggable hover:bg-token-surface-hover keyboard-focused:bg-token-surface-hover touch:h-10 touch:w-10 flex h-9 w-9 items-center justify-center rounded-lg focus:outline-none disabled:opacity-50 no-draggable cursor-w-resize rtl:cursor-e-resize",
+        "type": "submit",
+        "aria-label": "Close sidebar",
+        "data-testid": "close-sidebar-button"
+      },
+      "text_content": "",
+      "css_cursor": "w-resize",
+      "css_pointer_events": "auto",
+      "relevance_score": 10
+    },
+    {
+      "selector": "button:nth-of-type(3)",
+      "tag_name": "button",
+      "visible": true,
+      "enabled": true,
+      "location": {
+        "x": 0,
+        "y": 216
+      },
+      "size": {
+        "height": 36,
+        "width": 245
+      },
+      "attributes": {
+        "class": "text-token-text-tertiary flex w-full items-center justify-start gap-0.5 px-4 py-1.5",
+        "type": "submit"
+      },
+      "text_content": "GPTs",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 15
+    },
+    {
+      "selector": "button:nth-of-type(4)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 0,
+        "y": 285
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_v_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 0
+    },
+    {
+      "selector": "button:nth-of-type(5)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 0,
+        "y": 321
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_11_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 0
+    },
+    {
+      "selector": "button:nth-of-type(6)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 0,
+        "y": 357
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_13_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 0
+    },
+    {
+      "selector": "button:nth-of-type(7)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 0,
+        "y": 393
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_15_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 0
+    },
+    {
+      "selector": "button:nth-of-type(8)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 0,
+        "y": 429
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_17_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 0
+    },
+    {
+      "selector": "button:nth-of-type(9)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 0,
+        "y": 465
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_19_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 0
+    },
+    {
+      "selector": "button:nth-of-type(10)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 0,
+        "y": 501
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_1b_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 5
+    },
+    {
+      "selector": "button:nth-of-type(11)",
+      "tag_name": "button",
+      "visible": true,
+      "enabled": true,
+      "location": {
+        "x": 0,
+        "y": 560
+      },
+      "size": {
+        "height": 36,
+        "width": 245
+      },
+      "attributes": {
+        "class": "text-token-text-tertiary flex w-full items-center justify-start gap-0.5 px-4 py-1.5",
+        "type": "submit"
+      },
+      "text_content": "Projects",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 20
+    },
+    {
+      "selector": "button:nth-of-type(12)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 0,
+        "y": 629
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_4_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 5
+    },
+    {
+      "selector": "button:nth-of-type(13)",
+      "tag_name": "button",
+      "visible": true,
+      "enabled": true,
+      "location": {
+        "x": 16,
+        "y": 676
+      },
+      "size": {
+        "height": 20,
+        "width": 20
+      },
+      "attributes": {
+        "class": "icon",
+        "type": "submit"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 15
+    },
+    {
+      "selector": "button:nth-of-type(14)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 0,
+        "y": 665
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_6_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 5
+    },
+    {
+      "selector": "button:nth-of-type(15)",
+      "tag_name": "button",
+      "visible": true,
+      "enabled": true,
+      "location": {
+        "x": 16,
+        "y": 712
+      },
+      "size": {
+        "height": 20,
+        "width": 20
+      },
+      "attributes": {
+        "class": "icon",
+        "type": "submit"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 15
+    },
+    {
+      "selector": "button:nth-of-type(16)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 0,
+        "y": 701
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_8_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 5
+    },
+    {
+      "selector": "button:nth-of-type(17)",
+      "tag_name": "button",
+      "visible": true,
+      "enabled": true,
+      "location": {
+        "x": 16,
+        "y": 748
+      },
+      "size": {
+        "height": 20,
+        "width": 20
+      },
+      "attributes": {
+        "class": "icon",
+        "type": "submit"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 15
+    },
+    {
+      "selector": "button:nth-of-type(18)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 0,
+        "y": 737
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_a_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 5
+    },
+    {
+      "selector": "button:nth-of-type(19)",
+      "tag_name": "button",
+      "visible": true,
+      "enabled": true,
+      "location": {
+        "x": 16,
+        "y": 784
+      },
+      "size": {
+        "height": 20,
+        "width": 20
+      },
+      "attributes": {
+        "class": "icon",
+        "type": "submit"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 15
+    },
+    {
+      "selector": "button:nth-of-type(20)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 0,
+        "y": 773
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_c_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 5
+    },
+    {
+      "selector": "button:nth-of-type(21)",
+      "tag_name": "button",
+      "visible": true,
+      "enabled": true,
+      "location": {
+        "x": 0,
+        "y": 868
+      },
+      "size": {
+        "height": 36,
+        "width": 245
+      },
+      "attributes": {
+        "class": "text-token-text-tertiary flex w-full items-center justify-start gap-0.5 px-4 py-1.5",
+        "type": "submit"
+      },
+      "text_content": "Your chats",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 20
+    },
+    {
+      "selector": "button:nth-of-type(22)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 214,
+        "y": 901
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_7v_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button",
+        "aria-label": "Open conversation options",
+        "data-testid": "history-item-0-options"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 5
+    },
+    {
+      "selector": "button:nth-of-type(23)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 214,
+        "y": 937
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_81_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button",
+        "aria-label": "Open conversation options",
+        "data-testid": "history-item-1-options"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 5
+    },
+    {
+      "selector": "button:nth-of-type(24)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 214,
+        "y": 973
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_83_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button",
+        "aria-label": "Open conversation options",
+        "data-testid": "history-item-2-options"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 5
+    },
+    {
+      "selector": "button:nth-of-type(25)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 214,
+        "y": 1009
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_85_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button",
+        "aria-label": "Open conversation options",
+        "data-testid": "history-item-3-options"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 5
+    },
+    {
+      "selector": "button:nth-of-type(26)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 214,
+        "y": 1045
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_87_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button",
+        "aria-label": "Open conversation options",
+        "data-testid": "history-item-4-options"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 5
+    },
+    {
+      "selector": "button:nth-of-type(27)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 214,
+        "y": 1081
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_89_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button",
+        "aria-label": "Open conversation options",
+        "data-testid": "history-item-5-options"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 5
+    },
+    {
+      "selector": "button:nth-of-type(28)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 214,
+        "y": 1117
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_8b_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button",
+        "aria-label": "Open conversation options",
+        "data-testid": "history-item-6-options"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 5
+    },
+    {
+      "selector": "button:nth-of-type(29)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 214,
+        "y": 1153
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_8d_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button",
+        "aria-label": "Open conversation options",
+        "data-testid": "history-item-7-options"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 5
+    },
+    {
+      "selector": "button:nth-of-type(30)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 214,
+        "y": 1189
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_8f_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button",
+        "aria-label": "Open conversation options",
+        "data-testid": "history-item-8-options"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 5
+    },
+    {
+      "selector": "button:nth-of-type(31)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 214,
+        "y": 1225
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_8h_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button",
+        "aria-label": "Open conversation options",
+        "data-testid": "history-item-9-options"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 5
+    },
+    {
+      "selector": "button:nth-of-type(32)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 214,
+        "y": 1261
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_8j_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button",
+        "aria-label": "Open conversation options",
+        "data-testid": "history-item-10-options"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 5
+    },
+    {
+      "selector": "button:nth-of-type(33)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 214,
+        "y": 1297
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_8l_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button",
+        "aria-label": "Open conversation options",
+        "data-testid": "history-item-11-options"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 5
+    },
+    {
+      "selector": "button:nth-of-type(34)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 214,
+        "y": 1333
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_8n_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button",
+        "aria-label": "Open conversation options",
+        "data-testid": "history-item-12-options"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 5
+    },
+    {
+      "selector": "button:nth-of-type(35)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 214,
+        "y": 1369
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_8p_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button",
+        "aria-label": "Open conversation options",
+        "data-testid": "history-item-13-options"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 5
+    },
+    {
+      "selector": "button:nth-of-type(36)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 214,
+        "y": 1405
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_8r_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button",
+        "aria-label": "Open conversation options",
+        "data-testid": "history-item-14-options"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 5
+    },
+    {
+      "selector": "button:nth-of-type(37)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 214,
+        "y": 1441
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_8t_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button",
+        "aria-label": "Open conversation options",
+        "data-testid": "history-item-15-options"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 5
+    },
+    {
+      "selector": "button:nth-of-type(38)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 214,
+        "y": 1477
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_8v_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button",
+        "aria-label": "Open conversation options",
+        "data-testid": "history-item-16-options"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 5
+    },
+    {
+      "selector": "button:nth-of-type(39)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 214,
+        "y": 1513
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_91_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button",
+        "aria-label": "Open conversation options",
+        "data-testid": "history-item-17-options"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 5
+    },
+    {
+      "selector": "button:nth-of-type(40)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 214,
+        "y": 1549
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_93_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button",
+        "aria-label": "Open conversation options",
+        "data-testid": "history-item-18-options"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 5
+    },
+    {
+      "selector": "button:nth-of-type(41)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 214,
+        "y": 1585
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_95_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button",
+        "aria-label": "Open conversation options",
+        "data-testid": "history-item-19-options"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 5
+    },
+    {
+      "selector": "button:nth-of-type(42)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 214,
+        "y": 1621
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_97_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button",
+        "aria-label": "Open conversation options",
+        "data-testid": "history-item-20-options"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 5
+    },
+    {
+      "selector": "button:nth-of-type(43)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 214,
+        "y": 1657
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_99_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button",
+        "aria-label": "Open conversation options",
+        "data-testid": "history-item-21-options"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 5
+    },
+    {
+      "selector": "button:nth-of-type(44)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 214,
+        "y": 1693
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_9b_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button",
+        "aria-label": "Open conversation options",
+        "data-testid": "history-item-22-options"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 5
+    },
+    {
+      "selector": "button:nth-of-type(45)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 214,
+        "y": 1729
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_9d_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button",
+        "aria-label": "Open conversation options",
+        "data-testid": "history-item-23-options"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 5
+    },
+    {
+      "selector": "button:nth-of-type(46)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 214,
+        "y": 1765
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_9f_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button",
+        "aria-label": "Open conversation options",
+        "data-testid": "history-item-24-options"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 5
+    },
+    {
+      "selector": "button:nth-of-type(47)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 214,
+        "y": 1801
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_9h_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button",
+        "aria-label": "Open conversation options",
+        "data-testid": "history-item-25-options"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 5
+    },
+    {
+      "selector": "button:nth-of-type(48)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 214,
+        "y": 1837
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_9j_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button",
+        "aria-label": "Open conversation options",
+        "data-testid": "history-item-26-options"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 5
+    },
+    {
+      "selector": "button:nth-of-type(49)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 214,
+        "y": 1873
+      },
+      "size": {
+        "height": 36,
+        "width": 38
+      },
+      "attributes": {
+        "id": "radix-_r_9l_",
+        "class": "__menu-item-trailing-btn",
+        "type": "button",
+        "aria-label": "Open conversation options",
+        "data-testid": "history-item-27-options"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 5
+    },
+    {
+      "selector": "button:nth-of-type(50)",
+      "tag_name": "button",
+      "visible": true,
+      "enabled": true,
+      "location": {
+        "x": 746,
+        "y": 520
+      },
+      "size": {
+        "height": 98,
+        "width": 160
+      },
+      "attributes": {
+        "class": "border-token-border-default shadow-xxs enabled:hover:bg-token-main-surface-secondary relative flex w-40 flex-col gap-2 rounded-2xl border px-3 pt-3 pb-4 text-start align-top text-[15px] transition disabled:cursor-not-allowed",
+        "type": "submit"
+      },
+      "text_content": "Architect the data layer for 100K files, 8 agents, and 85%+ tests",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 20
+    },
+    {
+      "selector": "button:nth-of-type(51)",
+      "tag_name": "button",
+      "visible": true,
+      "enabled": true,
+      "location": {
+        "x": 922,
+        "y": 520
+      },
+      "size": {
+        "height": 98,
+        "width": 160
+      },
+      "attributes": {
+        "class": "border-token-border-default shadow-xxs enabled:hover:bg-token-main-surface-secondary relative flex w-40 flex-col gap-2 rounded-2xl border px-3 pt-3 pb-4 text-start align-top text-[15px] transition disabled:cursor-not-allowed",
+        "type": "submit"
+      },
+      "text_content": "Coordinate agents for a 2-week refactor without stalling",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 20
+    },
+    {
+      "selector": "button:nth-of-type(52)",
+      "tag_name": "button",
+      "visible": true,
+      "enabled": true,
+      "location": {
+        "x": 1098,
+        "y": 520
+      },
+      "size": {
+        "height": 98,
+        "width": 160
+      },
+      "attributes": {
+        "class": "border-token-border-default shadow-xxs enabled:hover:bg-token-main-surface-secondary relative flex w-40 flex-col gap-2 rounded-2xl border px-3 pt-3 pb-4 text-start align-top text-[15px] transition disabled:cursor-not-allowed",
+        "type": "submit"
+      },
+      "text_content": "Prioritize technical debt items for maximal ROI this week",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 20
+    },
+    {
+      "selector": "button:nth-of-type(53)",
+      "tag_name": "button",
+      "visible": true,
+      "enabled": true,
+      "location": {
+        "x": 1274,
+        "y": 520
+      },
+      "size": {
+        "height": 98,
+        "width": 160
+      },
+      "attributes": {
+        "class": "border-token-border-default shadow-xxs enabled:hover:bg-token-main-surface-secondary relative flex w-40 flex-col gap-2 rounded-2xl border px-3 pt-3 pb-4 text-start align-top text-[15px] transition disabled:cursor-not-allowed",
+        "type": "submit"
+      },
+      "text_content": "Crisis: agents stalled on CI; resolve and prevent recurrence",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 20
+    },
+    {
+      "selector": "button:nth-of-type(54)",
+      "tag_name": "button",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 1090,
+        "y": 881
+      },
+      "size": {
+        "height": 0,
+        "width": 0
+      },
+      "attributes": {
+        "class": "invisible absolute self-center",
+        "name": "context-connector-pasted-link-popover-trigger",
+        "type": "button"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 5
+    },
+    {
+      "selector": "button:nth-of-type(55)",
+      "tag_name": "button",
+      "visible": true,
+      "enabled": true,
+      "location": {
+        "x": 716,
+        "y": 891
+      },
+      "size": {
+        "height": 36,
+        "width": 36
+      },
+      "attributes": {
+        "id": "composer-plus-btn",
+        "class": "composer-btn",
+        "type": "button",
+        "aria-label": "Add files and more",
+        "data-testid": "composer-plus-btn"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 5
+    },
+    {
+      "selector": "button:nth-of-type(56)",
+      "tag_name": "button",
+      "visible": true,
+      "enabled": true,
+      "location": {
+        "x": 1386,
+        "y": 891
+      },
+      "size": {
+        "height": 36,
+        "width": 36
+      },
+      "attributes": {
+        "class": "composer-btn",
+        "type": "button",
+        "aria-label": "Dictate button"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 5
+    },
+    {
+      "selector": "button:nth-of-type(57)",
+      "tag_name": "button",
+      "visible": true,
+      "enabled": true,
+      "location": {
+        "x": 1428,
+        "y": 891
+      },
+      "size": {
+        "height": 36,
+        "width": 36
+      },
+      "attributes": {
+        "class": "relative flex h-9 items-center justify-center rounded-full disabled:text-gray-50 disabled:opacity-30 w-9 composer-secondary-button-color hover:opacity-80",
+        "type": "submit",
+        "aria-label": "Start voice mode",
+        "data-testid": "composer-speech-button"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 15
+    },
+    {
+      "selector": "[role='button']:nth-of-type(1)",
+      "tag_name": "div",
+      "visible": false,
+      "enabled": true,
+      "location": {
+        "x": 6,
+        "y": 903
+      },
+      "size": {
+        "height": 40,
+        "width": 40
+      },
+      "attributes": {
+        "id": "radix-_R_1j5ccek9l35_",
+        "class": "group __menu-item hoverable gap-2 p-2",
+        "type": "button",
+        "role": "button",
+        "aria-label": "Open profile menu",
+        "data-testid": "accounts-profile-button"
+      },
+      "text_content": "",
+      "css_cursor": "pointer",
+      "css_pointer_events": "none",
+      "relevance_score": 5
+    },
+    {
+      "selector": "[role='button']:nth-of-type(2)",
+      "tag_name": "div",
+      "visible": true,
+      "enabled": true,
+      "location": {
+        "x": 6,
+        "y": 896
+      },
+      "size": {
+        "height": 51,
+        "width": 233
+      },
+      "attributes": {
+        "id": "radix-_R_3kl5ccek9l35_",
+        "class": "group __menu-item hoverable gap-2",
+        "type": "button",
+        "role": "button",
+        "aria-label": "Open profile menu",
+        "data-testid": "accounts-profile-button"
+      },
+      "text_content": "Victor Dixon\nPersonal account",
+      "css_cursor": "pointer",
+      "css_pointer_events": "auto",
+      "relevance_score": 10
+    }
+  ],
+  "suggested_input_selectors": [
+    {
+      "selector": "textarea:nth-of-type(1)",
+      "score": 25,
+      "tag_name": "textarea",
+      "attributes": {
+        "class": "wcDTda_fallbackTextarea",
+        "name": "prompt-textarea",
+        "type": "textarea",
+        "placeholder": "Ask anything"
+      },
+      "location": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "height": 40,
+        "width": 768
+      }
+    },
+    {
+      "selector": "div[contenteditable='true']:nth-of-type(1)",
+      "score": 25,
+      "tag_name": "div",
+      "attributes": {
+        "id": "prompt-textarea",
+        "class": "ProseMirror",
+        "contenteditable": "true"
+      },
+      "location": {
+        "x": 758,
+        "y": 896
+      },
+      "size": {
+        "height": 40,
+        "width": 622
+      }
+    }
+  ],
+  "suggested_button_selectors": [
+    {
+      "selector": "button:nth-of-type(11)",
+      "score": 20,
+      "tag_name": "button",
+      "attributes": {
+        "class": "text-token-text-tertiary flex w-full items-center justify-start gap-0.5 px-4 py-1.5",
+        "type": "submit"
+      },
+      "location": {
+        "x": 0,
+        "y": 560
+      },
+      "size": {
+        "height": 36,
+        "width": 245
+      }
+    },
+    {
+      "selector": "button:nth-of-type(21)",
+      "score": 20,
+      "tag_name": "button",
+      "attributes": {
+        "class": "text-token-text-tertiary flex w-full items-center justify-start gap-0.5 px-4 py-1.5",
+        "type": "submit"
+      },
+      "location": {
+        "x": 0,
+        "y": 868
+      },
+      "size": {
+        "height": 36,
+        "width": 245
+      }
+    },
+    {
+      "selector": "button:nth-of-type(50)",
+      "score": 20,
+      "tag_name": "button",
+      "attributes": {
+        "class": "border-token-border-default shadow-xxs enabled:hover:bg-token-main-surface-secondary relative flex w-40 flex-col gap-2 rounded-2xl border px-3 pt-3 pb-4 text-start align-top text-[15px] transition disabled:cursor-not-allowed",
+        "type": "submit"
+      },
+      "location": {
+        "x": 746,
+        "y": 520
+      },
+      "size": {
+        "height": 98,
+        "width": 160
+      }
+    },
+    {
+      "selector": "button:nth-of-type(51)",
+      "score": 20,
+      "tag_name": "button",
+      "attributes": {
+        "class": "border-token-border-default shadow-xxs enabled:hover:bg-token-main-surface-secondary relative flex w-40 flex-col gap-2 rounded-2xl border px-3 pt-3 pb-4 text-start align-top text-[15px] transition disabled:cursor-not-allowed",
+        "type": "submit"
+      },
+      "location": {
+        "x": 922,
+        "y": 520
+      },
+      "size": {
+        "height": 98,
+        "width": 160
+      }
+    },
+    {
+      "selector": "button:nth-of-type(52)",
+      "score": 20,
+      "tag_name": "button",
+      "attributes": {
+        "class": "border-token-border-default shadow-xxs enabled:hover:bg-token-main-surface-secondary relative flex w-40 flex-col gap-2 rounded-2xl border px-3 pt-3 pb-4 text-start align-top text-[15px] transition disabled:cursor-not-allowed",
+        "type": "submit"
+      },
+      "location": {
+        "x": 1098,
+        "y": 520
+      },
+      "size": {
+        "height": 98,
+        "width": 160
+      }
+    }
+  ],
+  "recommendations": [
+    "Try input selector: 'textarea:nth-of-type(1)' (score: 25)",
+    "Try button selector: 'button:nth-of-type(11)' (score: 20)",
+    "Multiple input candidates found - test each selector systematically"
+  ]
+}

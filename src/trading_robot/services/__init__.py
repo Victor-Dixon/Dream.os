@@ -3,7 +3,15 @@
 # DO NOT EDIT MANUALLY - changes may be overwritten
 
 from . import trading_bi_analytics
+<<<<<<< HEAD
 
 __all__ = [
     'trading_bi_analytics',
+=======
+from . import trading_service
+
+__all__ = [
+    'trading_bi_analytics',
+    'trading_service',
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 ]

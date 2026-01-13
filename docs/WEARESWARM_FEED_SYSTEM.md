@@ -44,7 +44,11 @@ python tools/sync_feed_to_weareswarm.py --dry-run
 
 ```bash
 # Deploy front-page.php and plugin updates
+<<<<<<< HEAD
 python mcp_servers/deployment_server.py
+=======
+python tools/deploy_weareswarm_feed_system.py
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 ```
 
 ## Feed Format

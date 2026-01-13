@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 <!-- SSOT Domain: documentation -->
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 # Daily Episode Workflow
 
 **Purpose**: Automate the generation of Digital Dreamscape daily episodes from agent cycle accomplishments

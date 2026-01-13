@@ -2,8 +2,11 @@
 State Snapshot Manager - AGI-26
 ================================
 
+<<<<<<< HEAD
 <!-- SSOT Domain: safety -->
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 Automated state snapshots for rollback capability.
 Captures system state hourly to enable < 5 minute rollback.
 
@@ -246,6 +249,7 @@ class StateSnapshotManager:
                     return True
             
             elif self.config.db_type == "postgres":
+<<<<<<< HEAD
                 return self._create_postgres_dump(snapshot_path)
             
             return False
@@ -309,6 +313,17 @@ class StateSnapshotManager:
             text=True,
             timeout=300
         )
+=======
+                # TODO: Implement postgres dump
+                logger.warning("Postgres snapshot not yet implemented")
+                return False
+            
+            return False
+        
+        except Exception as e:
+            logger.error(f"Database snapshot failed: {e}")
+            return False
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     
     def _snapshot_files(self, snapshot_path: Path) -> bool:
         """Snapshot file system state."""

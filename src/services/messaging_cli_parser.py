@@ -21,6 +21,7 @@ python -m src.services.messaging_cli --message "SWARM ALERT!" --broadcast
 python -m src.services.messaging_cli --message "URGENT: Fix issue" \\
     --agent Agent-2 --priority urgent --tags bug critical
 
+<<<<<<< HEAD
 # V3 Enhanced Features
 python -m src.services.messaging_cli --verify-delivery    # Check all deliveries
 python -m src.services.messaging_cli --clean-queue        # Remove system messages
@@ -36,6 +37,8 @@ python -m src.services.messaging_cli --swarm-profile --agent Agent-3 --duration 
 python -m src.services.messaging_cli --swarm-prove --claim "SSOT compliance achieved" --level comprehensive
 python -m src.services.messaging_cli --swarm-patterns --type communication --window "7 days"
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 🐝 WE. ARE. SWARM - COORDINATE THROUGH PYAUTOGUI!
 """
 
@@ -110,6 +113,7 @@ def create_messaging_parser() -> argparse.ArgumentParser:
         help="Start agents (1-8, e.g., --start 1 2 3) - sends to onboarding coordinates",
     )
 
+<<<<<<< HEAD
     # V3 Enhanced Features
     parser.add_argument(
         "--verify-delivery",
@@ -154,6 +158,8 @@ def create_messaging_parser() -> argparse.ArgumentParser:
         help="Archive messages older than DAYS (default: 30)",
     )
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     parser.add_argument(
         "--save",
         action="store_true",
@@ -218,6 +224,7 @@ def create_messaging_parser() -> argparse.ArgumentParser:
         help="Dry run mode - show what would be done without executing",
     )
 
+<<<<<<< HEAD
     # SWARM INTELLIGENCE COMMANDS
     parser.add_argument(
         "--swarm-vote",
@@ -323,4 +330,6 @@ def create_messaging_parser() -> argparse.ArgumentParser:
         help="Specific focus areas for pattern analysis",
     )
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     return parser

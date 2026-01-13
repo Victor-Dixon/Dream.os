@@ -1,0 +1,3705 @@
+{
+  "imports_by_module": {},
+  "most_imported_modules": {},
+  "circular_dependencies": [],
+  "external_dependencies": [],
+  "internal_dependencies": {
+    "__init__": {
+      "file_path": "__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.__init__": {
+      "file_path": "src\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.swarm_pulse.__init__": {
+      "file_path": "src\\swarm_pulse\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.discord_commander.__init__": {
+      "file_path": "src\\discord_commander\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.discord_commander.controllers.__init__": {
+      "file_path": "src\\discord_commander\\controllers\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.ai_automation.__init__": {
+      "file_path": "src\\ai_automation\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.ai_automation.utils.__init__": {
+      "file_path": "src\\ai_automation\\utils\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.ai_training.dreamvault.__init__": {
+      "file_path": "src\\ai_training\\dreamvault\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.ai_training.dreamvault.scrapers.__init__": {
+      "file_path": "src\\ai_training\\dreamvault\\scrapers\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.application.use_cases.__init__": {
+      "file_path": "src\\application\\use_cases\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.architecture.__init__": {
+      "file_path": "src\\architecture\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.automation.__init__": {
+      "file_path": "src\\automation\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.config.__init__": {
+      "file_path": "src\\config\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.__init__": {
+      "file_path": "src\\core\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.analytics.coordinators.__init__": {
+      "file_path": "src\\core\\analytics\\coordinators\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.analytics.engines.__init__": {
+      "file_path": "src\\core\\analytics\\engines\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.analytics.framework.__init__": {
+      "file_path": "src\\core\\analytics\\framework\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.analytics.intelligence.__init__": {
+      "file_path": "src\\core\\analytics\\intelligence\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.analytics.intelligence.pattern_analysis.__init__": {
+      "file_path": "src\\core\\analytics\\intelligence\\pattern_analysis\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.analytics.models.__init__": {
+      "file_path": "src\\core\\analytics\\models\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.analytics.orchestrators.__init__": {
+      "file_path": "src\\core\\analytics\\orchestrators\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.analytics.prediction.__init__": {
+      "file_path": "src\\core\\analytics\\prediction\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.analytics.processors.__init__": {
+      "file_path": "src\\core\\analytics\\processors\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.analytics.processors.prediction.__init__": {
+      "file_path": "src\\core\\analytics\\processors\\prediction\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.config.__init__": {
+      "file_path": "src\\core\\config\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.consolidation.__init__": {
+      "file_path": "src\\core\\consolidation\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.consolidation.utility_consolidation.__init__": {
+      "file_path": "src\\core\\consolidation\\utility_consolidation\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.constants.__init__": {
+      "file_path": "src\\core\\constants\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.constants.fsm.__init__": {
+      "file_path": "src\\core\\constants\\fsm\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.coordination.__init__": {
+      "file_path": "src\\core\\coordination\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.coordination.swarm.__init__": {
+      "file_path": "src\\core\\coordination\\swarm\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.coordination.swarm.engines.__init__": {
+      "file_path": "src\\core\\coordination\\swarm\\engines\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.coordination.swarm.orchestrators.__init__": {
+      "file_path": "src\\core\\coordination\\swarm\\orchestrators\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.data_optimization.__init__": {
+      "file_path": "src\\core\\data_optimization\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.deployment.__init__": {
+      "file_path": "src\\core\\deployment\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.deployment.coordinators.__init__": {
+      "file_path": "src\\core\\deployment\\coordinators\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.deployment.engines.__init__": {
+      "file_path": "src\\core\\deployment\\engines\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.deployment.models.__init__": {
+      "file_path": "src\\core\\deployment\\models\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.dry_eliminator.__init__": {
+      "file_path": "src\\core\\dry_eliminator\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.dry_eliminator.engines.__init__": {
+      "file_path": "src\\core\\dry_eliminator\\engines\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.dry_eliminator.orchestrators.__init__": {
+      "file_path": "src\\core\\dry_eliminator\\orchestrators\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.emergency_intervention.unified_emergency.__init__": {
+      "file_path": "src\\core\\emergency_intervention\\unified_emergency\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.emergency_intervention.unified_emergency.engines.__init__": {
+      "file_path": "src\\core\\emergency_intervention\\unified_emergency\\engines\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.emergency_intervention.unified_emergency.handlers.__init__": {
+      "file_path": "src\\core\\emergency_intervention\\unified_emergency\\handlers\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.emergency_intervention.unified_emergency.orchestrators.__init__": {
+      "file_path": "src\\core\\emergency_intervention\\unified_emergency\\orchestrators\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.engines.__init__": {
+      "file_path": "src\\core\\engines\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.enhanced_integration.coordinators.__init__": {
+      "file_path": "src\\core\\enhanced_integration\\coordinators\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.enhanced_integration.engines.__init__": {
+      "file_path": "src\\core\\enhanced_integration\\engines\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.enhanced_integration.orchestrators.__init__": {
+      "file_path": "src\\core\\enhanced_integration\\orchestrators\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.error_handling.__init__": {
+      "file_path": "src\\core\\error_handling\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.error_handling.archive_c055.__init__": {
+      "file_path": "src\\core\\error_handling\\archive_c055\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.error_handling.circuit_breaker.__init__": {
+      "file_path": "src\\core\\error_handling\\circuit_breaker\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.error_handling.metrics.__init__": {
+      "file_path": "src\\core\\error_handling\\metrics\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.file_locking.operations.__init__": {
+      "file_path": "src\\core\\file_locking\\operations\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.gamification.__init__": {
+      "file_path": "src\\core\\gamification\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.file_locking.__init__": {
+      "file_path": "src\\core\\file_locking\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.import_system.__init__": {
+      "file_path": "src\\core\\import_system\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.integration.analytics.__init__": {
+      "file_path": "src\\core\\integration\\analytics\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.integration.models.__init__": {
+      "file_path": "src\\core\\integration\\models\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.integration_coordinators.__init__": {
+      "file_path": "src\\core\\integration_coordinators\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.integration_coordinators.unified_integration.models.__init__": {
+      "file_path": "src\\core\\integration_coordinators\\unified_integration\\models\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.integration_coordinators.unified_integration.monitors.__init__": {
+      "file_path": "src\\core\\integration_coordinators\\unified_integration\\monitors\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.integration_coordinators.unified_integration.__init__": {
+      "file_path": "src\\core\\integration_coordinators\\unified_integration\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.integration_coordinators.unified_integration.coordinators.__init__": {
+      "file_path": "src\\core\\integration_coordinators\\unified_integration\\coordinators\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.intelligent_context.__init__": {
+      "file_path": "src\\core\\intelligent_context\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.intelligent_context.core.__init__": {
+      "file_path": "src\\core\\intelligent_context\\core\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.intelligent_context.engines.__init__": {
+      "file_path": "src\\core\\intelligent_context\\engines\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.intelligent_context.unified_intelligent_context.__init__": {
+      "file_path": "src\\core\\intelligent_context\\unified_intelligent_context\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.managers.__init__": {
+      "file_path": "src\\core\\managers\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.managers.results.__init__": {
+      "file_path": "src\\core\\managers\\results\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.managers.execution.__init__": {
+      "file_path": "src\\core\\managers\\execution\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.managers.monitoring.__init__": {
+      "file_path": "src\\core\\managers\\monitoring\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.orchestration.__init__": {
+      "file_path": "src\\core\\orchestration\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.pattern_analysis.unified_pattern_analysis.__init__": {
+      "file_path": "src\\core\\pattern_analysis\\unified_pattern_analysis\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.performance.__init__": {
+      "file_path": "src\\core\\performance\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.performance.metrics.__init__": {
+      "file_path": "src\\core\\performance\\metrics\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.pattern_analysis.__init__": {
+      "file_path": "src\\core\\pattern_analysis\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.performance.unified_dashboard.__init__": {
+      "file_path": "src\\core\\performance\\unified_dashboard\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.refactoring.__init__": {
+      "file_path": "src\\core\\refactoring\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.refactoring.metrics.__init__": {
+      "file_path": "src\\core\\refactoring\\metrics\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.refactoring.tools.__init__": {
+      "file_path": "src\\core\\refactoring\\tools\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.session.__init__": {
+      "file_path": "src\\core\\session\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.ssot.__init__": {
+      "file_path": "src\\core\\ssot\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.ssot.unified_ssot.__init__": {
+      "file_path": "src\\core\\ssot\\unified_ssot\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.ssot.unified_ssot.execution.__init__": {
+      "file_path": "src\\core\\ssot\\unified_ssot\\execution\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.ssot.unified_ssot.validators.__init__": {
+      "file_path": "src\\core\\ssot\\unified_ssot\\validators\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.utilities.__init__": {
+      "file_path": "src\\core\\utilities\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.utils.__init__": {
+      "file_path": "src\\core\\utils\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.validation.__init__": {
+      "file_path": "src\\core\\validation\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.validation.performance_benchmark.__init__": {
+      "file_path": "src\\core\\validation\\performance_benchmark\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.vector_strategic_oversight.__init__": {
+      "file_path": "src\\core\\vector_strategic_oversight\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.vector_strategic_oversight.unified_strategic_oversight.__init__": {
+      "file_path": "src\\core\\vector_strategic_oversight\\unified_strategic_oversight\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.vector_strategic_oversight.unified_strategic_oversight.analyzers.__init__": {
+      "file_path": "src\\core\\vector_strategic_oversight\\unified_strategic_oversight\\analyzers\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.core.vector_strategic_oversight.unified_strategic_oversight.factories.__init__": {
+      "file_path": "src\\core\\vector_strategic_oversight\\unified_strategic_oversight\\factories\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.domain.__init__": {
+      "file_path": "src\\domain\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.domain.entities.__init__": {
+      "file_path": "src\\domain\\entities\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.domain.ports.__init__": {
+      "file_path": "src\\domain\\ports\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.domain.services.__init__": {
+      "file_path": "src\\domain\\services\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.domain.value_objects.__init__": {
+      "file_path": "src\\domain\\value_objects\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.features.__init__": {
+      "file_path": "src\\features\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.gaming.__init__": {
+      "file_path": "src\\gaming\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.gaming.dreamos.__init__": {
+      "file_path": "src\\gaming\\dreamos\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.gaming.dreamos.resumer_v2.__init__": {
+      "file_path": "src\\gaming\\dreamos\\resumer_v2\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.gaming.handlers.__init__": {
+      "file_path": "src\\gaming\\handlers\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.gaming.integration.__init__": {
+      "file_path": "src\\gaming\\integration\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.gaming.models.__init__": {
+      "file_path": "src\\gaming\\models\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.gaming.utils.__init__": {
+      "file_path": "src\\gaming\\utils\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.gui.__init__": {
+      "file_path": "src\\gui\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.gui.components.__init__": {
+      "file_path": "src\\gui\\components\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.gui.controllers.__init__": {
+      "file_path": "src\\gui\\controllers\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.gui.styles.__init__": {
+      "file_path": "src\\gui\\styles\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.infrastructure.__init__": {
+      "file_path": "src\\infrastructure\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.infrastructure.browser.__init__": {
+      "file_path": "src\\infrastructure\\browser\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.infrastructure.browser.unified.__init__": {
+      "file_path": "src\\infrastructure\\browser\\unified\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.infrastructure.browser_backup.__init__": {
+      "file_path": "src\\infrastructure\\browser_backup\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.infrastructure.browser_backup.thea_modules.__init__": {
+      "file_path": "src\\infrastructure\\browser_backup\\thea_modules\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.infrastructure.logging.__init__": {
+      "file_path": "src\\infrastructure\\logging\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.infrastructure.persistence.__init__": {
+      "file_path": "src\\infrastructure\\persistence\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.infrastructure.time.__init__": {
+      "file_path": "src\\infrastructure\\time\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.integrations.jarvis.__init__": {
+      "file_path": "src\\integrations\\jarvis\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.integrations.osrs.__init__": {
+      "file_path": "src\\integrations\\osrs\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.message_task.__init__": {
+      "file_path": "src\\message_task\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.message_task.parsers.__init__": {
+      "file_path": "src\\message_task\\parsers\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.obs.__init__": {
+      "file_path": "src\\obs\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.opensource.__init__": {
+      "file_path": "src\\opensource\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.orchestrators.overnight.__init__": {
+      "file_path": "src\\orchestrators\\overnight\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.quality.__init__": {
+      "file_path": "src\\quality\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.repositories.__init__": {
+      "file_path": "src\\repositories\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.services.__init__": {
+      "file_path": "src\\services\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.services.chatgpt.__init__": {
+      "file_path": "src\\services\\chatgpt\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.services.contract_system.__init__": {
+      "file_path": "src\\services\\contract_system\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.services.coordination.__init__": {
+      "file_path": "src\\services\\coordination\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.services.handlers.__init__": {
+      "file_path": "src\\services\\handlers\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.services.helpers.__init__": {
+      "file_path": "src\\services\\helpers\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.services.messaging.__init__": {
+      "file_path": "src\\services\\messaging\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.services.messaging_cli_coordinate_management.__init__": {
+      "file_path": "src\\services\\messaging_cli_coordinate_management\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.services.models.__init__": {
+      "file_path": "src\\services\\models\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.services.protocol.routers.__init__": {
+      "file_path": "src\\services\\protocol\\routers\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.services.publishers.__init__": {
+      "file_path": "src\\services\\publishers\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.services.thea.__init__": {
+      "file_path": "src\\services\\thea\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.services.utils.__init__": {
+      "file_path": "src\\services\\utils\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.shared_utils.__init__": {
+      "file_path": "src\\shared_utils\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.swarm_brain.__init__": {
+      "file_path": "src\\swarm_brain\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.templates.__init__": {
+      "file_path": "src\\templates\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.tools.__init__": {
+      "file_path": "src\\tools\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.tools.duplicate_detection.__init__": {
+      "file_path": "src\\tools\\duplicate_detection\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.trading_robot.core.__init__": {
+      "file_path": "src\\trading_robot\\core\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.trading_robot.repositories.implementations.__init__": {
+      "file_path": "src\\trading_robot\\repositories\\implementations\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.trading_robot.repositories.__init__": {
+      "file_path": "src\\trading_robot\\repositories\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.trading_robot.repositories.interfaces.__init__": {
+      "file_path": "src\\trading_robot\\repositories\\interfaces\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.trading_robot.repositories.models.__init__": {
+      "file_path": "src\\trading_robot\\repositories\\models\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.trading_robot.services.__init__": {
+      "file_path": "src\\trading_robot\\services\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.trading_robot.services.analytics.__init__": {
+      "file_path": "src\\trading_robot\\services\\analytics\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.utils.__init__": {
+      "file_path": "src\\utils\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.utils.config_core.__init__": {
+      "file_path": "src\\utils\\config_core\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.utils.file_operations.__init__": {
+      "file_path": "src\\utils\\file_operations\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.vision.analyzers.__init__": {
+      "file_path": "src\\vision\\analyzers\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.vision.__init__": {
+      "file_path": "src\\vision\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.web.frontend.__init__": {
+      "file_path": "src\\web\\frontend\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.web.vector_database.__init__": {
+      "file_path": "src\\web\\vector_database\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "src.workflows.__init__": {
+      "file_path": "src\\workflows\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "agent_workspaces.Agent-7.__init__": {
+      "file_path": "agent_workspaces\\Agent-7\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "agent_workspaces.Agent-8.__init__": {
+      "file_path": "agent_workspaces\\Agent-8\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "agent_workspaces.Agent-3.__init__": {
+      "file_path": "agent_workspaces\\Agent-3\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "docs.examples.__init__": {
+      "file_path": "docs\\examples\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "agent_workspaces.Agent-1.__init__": {
+      "file_path": "agent_workspaces\\Agent-1\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.__init__": {
+      "file_path": "temp_repos\\Thea\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.demos.__init__": {
+      "file_path": "temp_repos\\Thea\\demos\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.demos.advanced_demos.__init__": {
+      "file_path": "temp_repos\\Thea\\demos\\advanced_demos\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.demos.advanced_scraping.__init__": {
+      "file_path": "temp_repos\\Thea\\demos\\advanced_scraping\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.demos.advanced_search.__init__": {
+      "file_path": "temp_repos\\Thea\\demos\\advanced_search\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.demos.agent_training.__init__": {
+      "file_path": "temp_repos\\Thea\\demos\\agent_training\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.demos.analytics.__init__": {
+      "file_path": "temp_repos\\Thea\\demos\\analytics\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.demos.api_integration.__init__": {
+      "file_path": "temp_repos\\Thea\\demos\\api_integration\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.demos.content_generation.__init__": {
+      "file_path": "temp_repos\\Thea\\demos\\content_generation\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.demos.context_management.__init__": {
+      "file_path": "temp_repos\\Thea\\demos\\context_management\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.demos.developer_tools.__init__": {
+      "file_path": "temp_repos\\Thea\\demos\\developer_tools\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.demos.discord_integration.__init__": {
+      "file_path": "temp_repos\\Thea\\demos\\discord_integration\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.demos.gui_components.__init__": {
+      "file_path": "temp_repos\\Thea\\demos\\gui_components\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.demos.integration_demo.__init__": {
+      "file_path": "temp_repos\\Thea\\demos\\integration_demo\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.demos.memory_management.__init__": {
+      "file_path": "temp_repos\\Thea\\demos\\memory_management\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.demos.mmorpg_engine.__init__": {
+      "file_path": "temp_repos\\Thea\\demos\\mmorpg_engine\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.demos.multimodal_content.__init__": {
+      "file_path": "temp_repos\\Thea\\demos\\multimodal_content\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.demos.showcase.__init__": {
+      "file_path": "temp_repos\\Thea\\demos\\showcase\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.demos.training_data_extraction.__init__": {
+      "file_path": "temp_repos\\Thea\\demos\\training_data_extraction\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.demos.workflow_automation.__init__": {
+      "file_path": "temp_repos\\Thea\\demos\\workflow_automation\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.examples.__init__": {
+      "file_path": "temp_repos\\Thea\\examples\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.scripts.workflows.__init__": {
+      "file_path": "temp_repos\\Thea\\scripts\\workflows\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.scripts.__init__": {
+      "file_path": "temp_repos\\Thea\\scripts\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.agents.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\agents\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.analytics.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\analytics\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.analytics.expanded.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\analytics\\expanded\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.analytics.unified.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\analytics\\unified\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.analytics.unified.content.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\analytics\\unified\\content\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.analytics.unified.core.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\analytics\\unified\\core\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.analytics.unified.templates.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\analytics\\unified\\templates\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.content.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\content\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.discord.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\discord\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.discord.commands.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\discord\\commands\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.discord.events.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\discord\\events\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.discord.management.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\discord\\management\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.file_ingestion.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\file_ingestion\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.file_ingestion.analyzers.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\file_ingestion\\analyzers\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.file_ingestion.config.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\file_ingestion\\config\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.file_ingestion.models.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\file_ingestion\\models\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.file_ingestion.processors.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\file_ingestion\\processors\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.file_ingestion.storage.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\file_ingestion\\storage\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.gamification.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\gamification\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.intelligence.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\intelligence\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.intelligence.analysis.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\intelligence\\analysis\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.intelligence.config.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\intelligence\\config\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.intelligence.models.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\intelligence\\models\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.intelligence.quests.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\intelligence\\quests\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.legacy.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\legacy\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.memory.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\memory\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.memory.api.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\memory\\api\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.memory.models.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\memory\\models\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.memory.processing.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\memory\\processing\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.memory.search.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\memory\\search\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.memory.storage.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\memory\\storage\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.memory.weaponization.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\memory\\weaponization\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.mmorpg.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\mmorpg\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.mmorpg.analysis.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\mmorpg\\analysis\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.mmorpg.core.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\mmorpg\\core\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.mmorpg.engine.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\mmorpg\\engine\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.mmorpg.models.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\mmorpg\\models\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.mmorpg.progress.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\mmorpg\\progress\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.mmorpg.resume.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\mmorpg\\resume\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.mmorpg.skills.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\mmorpg\\skills\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.mmorpg.systems.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\mmorpg\\systems\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.mmorpg.tracking.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\mmorpg\\tracking\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.templates.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\templates\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.templates.analytics.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\templates\\analytics\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.templates.engine.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\templates\\engine\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.templates.models.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\templates\\models\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.templates.runners.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\templates\\runners\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.utils.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\utils\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.workflow.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\workflow\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.workflow.config.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\workflow\\config\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.workflow.models.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\workflow\\models\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.workflow.pipelines.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\workflow\\pipelines\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.core.workflow.processors.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\core\\workflow\\processors\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.gui.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.gui.components.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\components\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.gui.controllers.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\controllers\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.gui.main_window_components.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\main_window_components\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.gui.panels.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.gui.panels.ai_studio.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\ai_studio\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.gui.panels.archive.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\archive\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.gui.panels.base.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\base\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.gui.panels.modular.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\modular\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.gui.panels.settings.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\panels\\settings\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.mmorpg.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\mmorpg\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.mobile.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\mobile\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.gui.viewmodels.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\gui\\viewmodels\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.integrations.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\integrations\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.parsers.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\parsers\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.scrapers.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\scrapers\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.scrapers.scrolling.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\scrapers\\scrolling\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.tools_db.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\tools_db\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.scrapers.base.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\scrapers\\base\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.scrapers.conversation.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\scrapers\\conversation\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.tools.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\tools\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.src.dreamscape.services.__init__": {
+      "file_path": "temp_repos\\Thea\\src\\dreamscape\\services\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.tests.__init__": {
+      "file_path": "temp_repos\\Thea\\tests\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.tests.context.__init__": {
+      "file_path": "temp_repos\\Thea\\tests\\context\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.tests.e2e.__init__": {
+      "file_path": "temp_repos\\Thea\\tests\\e2e\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.tests.discord.__init__": {
+      "file_path": "temp_repos\\Thea\\tests\\discord\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.tests.integration.__init__": {
+      "file_path": "temp_repos\\Thea\\tests\\integration\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.tests.testing.__init__": {
+      "file_path": "temp_repos\\Thea\\tests\\testing\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.Thea.tests.unit.__init__": {
+      "file_path": "temp_repos\\Thea\\tests\\unit\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.temp_repos.contract-leads.__init__": {
+      "file_path": "temp_repos\\temp_repos\\contract-leads\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.temp_repos.contract-leads.extra_sources.__init__": {
+      "file_path": "temp_repos\\temp_repos\\contract-leads\\extra_sources\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.temp_repos.contract-leads.scrapers.__init__": {
+      "file_path": "temp_repos\\temp_repos\\contract-leads\\scrapers\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.temp_repos.contract-leads.scripts.__init__": {
+      "file_path": "temp_repos\\temp_repos\\contract-leads\\scripts\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.temp_repos.contract-leads.tests.__init__": {
+      "file_path": "temp_repos\\temp_repos\\contract-leads\\tests\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.agentproject.__init__": {
+      "file_path": "temp_repos\\agentproject\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.agentproject.Agents.__init__": {
+      "file_path": "temp_repos\\agentproject\\Agents\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.agentproject.Agents.core.__init__": {
+      "file_path": "temp_repos\\agentproject\\Agents\\core\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.agentproject.GUI.__init__": {
+      "file_path": "temp_repos\\agentproject\\GUI\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.agentproject.trading.__init__": {
+      "file_path": "temp_repos\\agentproject\\trading\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.agentproject.utils.__init__": {
+      "file_path": "temp_repos\\agentproject\\utils\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.agentproject.utils.Debuggers.__init__": {
+      "file_path": "temp_repos\\agentproject\\utils\\Debuggers\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.agentproject.utils.Debuggers.plugins.__init__": {
+      "file_path": "temp_repos\\agentproject\\utils\\Debuggers\\plugins\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "temp_repos.agentproject.utils.plugins.__init__": {
+      "file_path": "temp_repos\\agentproject\\utils\\plugins\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "tools.__init__": {
+      "file_path": "tools\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "tools.devlog_auto_poster": {
+      "file_path": "tools\\devlog_auto_poster.py",
+      "function_count": 3,
+      "class_count": 0,
+      "complexity": 3,
+      "language": ".py"
+    },
+    "tools.post_devlog_to_discord": {
+      "file_path": "tools\\post_devlog_to_discord.py",
+      "function_count": 2,
+      "class_count": 0,
+      "complexity": 2,
+      "language": ".py"
+    },
+    "tools.projectscanner_modular_reports": {
+      "file_path": "tools\\projectscanner_modular_reports.py",
+      "function_count": 10,
+      "class_count": 1,
+      "complexity": 20,
+      "language": ".py"
+    },
+    "tools.autonomous.__init__": {
+      "file_path": "tools\\autonomous\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "tools.codemods.__init__": {
+      "file_path": "tools\\codemods\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "tools.toolbelt.executors.__init__": {
+      "file_path": "tools\\toolbelt\\executors\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "tools.analysis.__init__": {
+      "file_path": "tools\\analysis\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "tools.thea.__init__": {
+      "file_path": "tools\\thea\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "tools.consolidation.__init__": {
+      "file_path": "tools\\consolidation\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "tools.cleanup.__init__": {
+      "file_path": "tools\\cleanup\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "tools.fixes.__init__": {
+      "file_path": "tools\\fixes\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "tools.discord.__init__": {
+      "file_path": "tools\\discord\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "tools.coordination.__init__": {
+      "file_path": "tools\\coordination\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "tools.deprecated.__init__": {
+      "file_path": "tools\\deprecated\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "tools.__init__": {
+      "file_path": "tools_v2\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "tools.categories.__init__": {
+      "file_path": "tools_v2\\categories\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "tools.adapters.__init__": {
+      "file_path": "tools_v2\\adapters\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "tools.core.__init__": {
+      "file_path": "tools_v2\\core\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "tools.tests.__init__": {
+      "file_path": "tools_v2\\tests\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "tools.utils.__init__": {
+      "file_path": "tools_v2\\utils\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.agent_workspaces.Agent-1.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\agent_workspaces\\Agent-1\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.agent_workspaces.Agent-7.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\agent_workspaces\\Agent-7\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.agent_workspaces.Agent-3.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\agent_workspaces\\Agent-3\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.agent_workspaces.Agent-8.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\agent_workspaces\\Agent-8\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.docs.examples.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\docs\\examples\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.examples.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\examples\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.examples.quickstart_demo.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\examples\\quickstart_demo\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.mcp_servers.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\mcp_servers\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.scripts.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\scripts\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.scripts.execution.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\scripts\\execution\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.scripts.hooks.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\scripts\\hooks\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.scripts.utilities.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\scripts\\utilities\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.ai_automation.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\ai_automation\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.ai_automation.utils.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\ai_automation\\utils\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.ai_training.dreamvault.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\ai_training\\dreamvault\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.ai_training.dreamvault.scrapers.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\ai_training\\dreamvault\\scrapers\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.application.use_cases.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\application\\use_cases\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.architecture.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\architecture\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.automation.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\automation\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.config.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\config\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.analytics.coordinators.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\analytics\\coordinators\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.analytics.engines.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\analytics\\engines\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.analytics.framework.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\analytics\\framework\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.analytics.intelligence.pattern_analysis.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\analytics\\intelligence\\pattern_analysis\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.analytics.intelligence.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\analytics\\intelligence\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.analytics.models.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\analytics\\models\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.analytics.orchestrators.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\analytics\\orchestrators\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.analytics.prediction.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\analytics\\prediction\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.analytics.processors.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\analytics\\processors\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.analytics.processors.prediction.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\analytics\\processors\\prediction\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.config.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\config\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.consolidation.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\consolidation\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.consolidation.utility_consolidation.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\consolidation\\utility_consolidation\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.data_optimization.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\data_optimization\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.deployment.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\deployment\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.deployment.coordinators.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\deployment\\coordinators\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.constants.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\constants\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.constants.fsm.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\constants\\fsm\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.coordination.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\coordination\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.coordination.swarm.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\coordination\\swarm\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.deployment.engines.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\deployment\\engines\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.coordination.swarm.engines.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\coordination\\swarm\\engines\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.dry_eliminator.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\dry_eliminator\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.deployment.models.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\deployment\\models\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.coordination.swarm.orchestrators.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\coordination\\swarm\\orchestrators\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.dry_eliminator.engines.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\dry_eliminator\\engines\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.dry_eliminator.orchestrators.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\dry_eliminator\\orchestrators\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.emergency_intervention.unified_emergency.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\emergency_intervention\\unified_emergency\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.emergency_intervention.unified_emergency.engines.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\emergency_intervention\\unified_emergency\\engines\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.emergency_intervention.unified_emergency.handlers.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\emergency_intervention\\unified_emergency\\handlers\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.emergency_intervention.unified_emergency.orchestrators.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\emergency_intervention\\unified_emergency\\orchestrators\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.engines.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\engines\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.enhanced_integration.engines.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\enhanced_integration\\engines\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.enhanced_integration.coordinators.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\enhanced_integration\\coordinators\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.enhanced_integration.orchestrators.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\enhanced_integration\\orchestrators\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.error_handling.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\error_handling\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.error_handling.archive_c055.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\error_handling\\archive_c055\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.error_handling.metrics.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\error_handling\\metrics\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.error_handling.circuit_breaker.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\error_handling\\circuit_breaker\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.import_system.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\import_system\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.file_locking.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\file_locking\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.gamification.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\gamification\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.file_locking.operations.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\file_locking\\operations\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.integration.analytics.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\integration\\analytics\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.integration.models.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\integration\\models\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.integration_coordinators.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\integration_coordinators\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.integration_coordinators.unified_integration.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\integration_coordinators\\unified_integration\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.integration_coordinators.unified_integration.coordinators.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\integration_coordinators\\unified_integration\\coordinators\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.integration_coordinators.unified_integration.models.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\integration_coordinators\\unified_integration\\models\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.integration_coordinators.unified_integration.monitors.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\integration_coordinators\\unified_integration\\monitors\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.intelligent_context.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\intelligent_context\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.intelligent_context.core.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\intelligent_context\\core\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.intelligent_context.engines.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\intelligent_context\\engines\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.intelligent_context.unified_intelligent_context.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\intelligent_context\\unified_intelligent_context\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.managers.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\managers\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.managers.execution.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\managers\\execution\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.managers.monitoring.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\managers\\monitoring\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.managers.results.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\managers\\results\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.orchestration.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\orchestration\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.pattern_analysis.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\pattern_analysis\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.pattern_analysis.unified_pattern_analysis.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\pattern_analysis\\unified_pattern_analysis\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.performance.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\performance\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.performance.metrics.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\performance\\metrics\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.performance.unified_dashboard.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\performance\\unified_dashboard\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.refactoring.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\refactoring\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.refactoring.metrics.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\refactoring\\metrics\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.refactoring.tools.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\refactoring\\tools\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.session.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\session\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.ssot.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\ssot\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.ssot.unified_ssot.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\ssot\\unified_ssot\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.ssot.unified_ssot.execution.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\ssot\\unified_ssot\\execution\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.ssot.unified_ssot.validators.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\ssot\\unified_ssot\\validators\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.utilities.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\utilities\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.utils.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\utils\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.validation.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\validation\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.validation.performance_benchmark.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\validation\\performance_benchmark\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.vector_strategic_oversight.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\vector_strategic_oversight\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.vector_strategic_oversight.unified_strategic_oversight.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\vector_strategic_oversight\\unified_strategic_oversight\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.vector_strategic_oversight.unified_strategic_oversight.analyzers.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\vector_strategic_oversight\\unified_strategic_oversight\\analyzers\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.core.vector_strategic_oversight.unified_strategic_oversight.factories.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\core\\vector_strategic_oversight\\unified_strategic_oversight\\factories\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.discord_commander.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\discord_commander\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.domain.entities.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\domain\\entities\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.domain.services.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\domain\\services\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.domain.ports.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\domain\\ports\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.domain.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\domain\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.domain.value_objects.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\domain\\value_objects\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.features.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\features\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.gaming.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\gaming\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.gaming.dreamos.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\gaming\\dreamos\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.gaming.utils.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\gaming\\utils\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.gaming.handlers.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\gaming\\handlers\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.gui.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\gui\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.gaming.integration.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\gaming\\integration\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.gaming.dreamos.resumer_v2.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\gaming\\dreamos\\resumer_v2\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.gui.components.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\gui\\components\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.gaming.models.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\gaming\\models\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.gui.controllers.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\gui\\controllers\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.gui.styles.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\gui\\styles\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.infrastructure.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\infrastructure\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.infrastructure.browser.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\infrastructure\\browser\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.infrastructure.browser.unified.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\infrastructure\\browser\\unified\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.infrastructure.browser_backup.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\infrastructure\\browser_backup\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.infrastructure.browser_backup.thea_modules.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\infrastructure\\browser_backup\\thea_modules\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.infrastructure.logging.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\infrastructure\\logging\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.infrastructure.persistence.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\infrastructure\\persistence\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.integrations.jarvis.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\integrations\\jarvis\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.infrastructure.time.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\infrastructure\\time\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.message_task.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\message_task\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.integrations.osrs.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\integrations\\osrs\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.message_task.parsers.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\message_task\\parsers\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.obs.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\obs\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.opensource.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\opensource\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.orchestrators.overnight.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\orchestrators\\overnight\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.quality.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\quality\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.repositories.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\repositories\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.services.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\services\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.services.chatgpt.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\services\\chatgpt\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.services.contract_system.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\services\\contract_system\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.services.coordination.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\services\\coordination\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.services.handlers.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\services\\handlers\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.services.helpers.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\services\\helpers\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.services.models.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\services\\models\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.services.messaging.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\services\\messaging\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.services.messaging_cli_coordinate_management.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\services\\messaging_cli_coordinate_management\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.services.protocol.routers.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\services\\protocol\\routers\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.services.publishers.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\services\\publishers\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.services.thea.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\services\\thea\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.services.utils.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\services\\utils\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.shared_utils.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\shared_utils\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.swarm_brain.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\swarm_brain\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.templates.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\templates\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.tools.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\tools\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.tools.duplicate_detection.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\tools\\duplicate_detection\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.trading_robot.core.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\trading_robot\\core\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.trading_robot.repositories.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\trading_robot\\repositories\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.trading_robot.repositories.implementations.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\trading_robot\\repositories\\implementations\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.trading_robot.repositories.interfaces.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\trading_robot\\repositories\\interfaces\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.trading_robot.repositories.models.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\trading_robot\\repositories\\models\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.trading_robot.services.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\trading_robot\\services\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.trading_robot.services.analytics.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\trading_robot\\services\\analytics\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.utils.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\utils\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.utils.config_core.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\utils\\config_core\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.utils.file_operations.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\utils\\file_operations\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.vision.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\vision\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.vision.analyzers.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\vision\\analyzers\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.web.frontend.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\web\\frontend\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.web.vector_database.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\web\\vector_database\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.src.workflows.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\src\\workflows\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.swarm_brain.agent_field_manual.automation.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\swarm_brain\\agent_field_manual\\automation\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.swarm_brain.procedures.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\swarm_brain\\procedures\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.tests.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\tests\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.tests.browser.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\tests\\browser\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.tests.discord.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\tests\\discord\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.tests.integration.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\tests\\integration\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.tests.infrastructure.browser.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\tests\\infrastructure\\browser\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.tests.unit.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\tests\\unit\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.tests.unit.core.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\tests\\unit\\core\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.tools.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\tools\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.tools.autonomous.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\tools\\autonomous\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.tools.codemods.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\tools\\codemods\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.tools.toolbelt.executors.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\tools\\toolbelt\\executors\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.tools.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\tools_v2\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.tools.adapters.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\tools_v2\\adapters\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.tools.categories.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\tools_v2\\categories\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.tools.core.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\tools_v2\\core\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.tools.tests.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\tools_v2\\tests\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.trading_robot.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\trading_robot\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.trading_robot.backtesting.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\trading_robot\\backtesting\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.trading_robot.core.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\trading_robot\\core\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.trading_robot.execution.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\trading_robot\\execution\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.trading_robot.strategies.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\trading_robot\\strategies\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.trading_robot.config.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\trading_robot\\config\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "examples.__init__": {
+      "file_path": "examples\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.trading_robot.tests.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\trading_robot\\tests\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "Agent_Cellphone_V2_Repository_restore.trading_robot.web.__init__": {
+      "file_path": "Agent_Cellphone_V2_Repository_restore\\trading_robot\\web\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "examples.quickstart_demo.__init__": {
+      "file_path": "examples\\quickstart_demo\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "mcp_servers.__init__": {
+      "file_path": "mcp_servers\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "scripts.__init__": {
+      "file_path": "scripts\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "scripts.execution.__init__": {
+      "file_path": "scripts\\execution\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "scripts.hooks.__init__": {
+      "file_path": "scripts\\hooks\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "scripts.utilities.__init__": {
+      "file_path": "scripts\\utilities\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "swarm_brain.agent_field_manual.automation.__init__": {
+      "file_path": "swarm_brain\\agent_field_manual\\automation\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "swarm_brain.procedures.__init__": {
+      "file_path": "swarm_brain\\procedures\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "tests.__init__": {
+      "file_path": "tests\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "tests.browser.__init__": {
+      "file_path": "tests\\browser\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "tests.discord.__init__": {
+      "file_path": "tests\\discord\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "tests.infrastructure.browser.__init__": {
+      "file_path": "tests\\infrastructure\\browser\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "tests.integration.__init__": {
+      "file_path": "tests\\integration\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "tests.unit.__init__": {
+      "file_path": "tests\\unit\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "tests.unit.core.__init__": {
+      "file_path": "tests\\unit\\core\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "trading_robot.__init__": {
+      "file_path": "trading_robot\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "trading_robot.backtesting.__init__": {
+      "file_path": "trading_robot\\backtesting\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "trading_robot.config.__init__": {
+      "file_path": "trading_robot\\config\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "trading_robot.core.__init__": {
+      "file_path": "trading_robot\\core\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "trading_robot.execution.__init__": {
+      "file_path": "trading_robot\\execution\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "trading_robot.strategies.__init__": {
+      "file_path": "trading_robot\\strategies\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "trading_robot.tests.__init__": {
+      "file_path": "trading_robot\\tests\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    },
+    "trading_robot.web.__init__": {
+      "file_path": "trading_robot\\web\\__init__.py",
+      "function_count": 0,
+      "class_count": 0,
+      "complexity": 0,
+      "language": ".py"
+    }
+  },
+  "module_summary": {}
+}

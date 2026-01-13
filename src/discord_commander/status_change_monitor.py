@@ -32,11 +32,14 @@ from pathlib import Path
 from typing import Dict, Optional, List, Any
 from datetime import datetime
 
+<<<<<<< HEAD
 from src.core.error_handling import (
     ErrorHandler, ErrorSeverity, ErrorCategory, ErrorContext,
     handle_errors, error_context, safe_dict_access, safe_list_access
 )
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 try:
     import discord
     from discord.ext import tasks
@@ -69,6 +72,7 @@ class StatusChangeMonitor:
         self.last_modified: Dict[str, float] = {}
         self.last_status: Dict[str, dict] = {}
         self.check_interval = 15
+<<<<<<< HEAD
 
         # Error handling
         self.error_handler = ErrorHandler("StatusChangeMonitor")
@@ -77,6 +81,13 @@ class StatusChangeMonitor:
         self.pending_updates: Dict[str, dict] = {}  # agent_id -> {status, changes, timestamp}
         self.debounce_seconds = 5
 
+=======
+        
+        # Debouncing
+        self.pending_updates: Dict[str, dict] = {}  # agent_id -> {status, changes, timestamp}
+        self.debounce_seconds = 5
+        
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
         # Dashboard
         self.dashboard_message: Optional[discord.Message] = None
         self.dashboard_channel_id: Optional[int] = None
@@ -126,12 +137,16 @@ class StatusChangeMonitor:
                 await self._run_inactivity_checks()
 
         except Exception as e:
+<<<<<<< HEAD
             context = ErrorContext(
                 component="StatusChangeMonitor",
                 operation="monitor_status_changes",
                 metadata={"loop_iteration": getattr(self, '_loop_count', 0)}
             )
             self.error_handler.log_error(e, context, ErrorSeverity.HIGH, ErrorCategory.RUNTIME)
+=======
+            logger.error(f"❌ Error in status monitoring loop: {e}", exc_info=True)
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
     async def _check_files(self):
         """Check all agent status files for changes."""
@@ -167,6 +182,7 @@ class StatusChangeMonitor:
                     
                     self.last_modified[agent_id] = current_mtime
                     self.last_status[agent_id] = new_status.copy()
+<<<<<<< HEAD
             except Exception as e:
                 context = ErrorContext(
                     component="StatusChangeMonitor",
@@ -175,6 +191,11 @@ class StatusChangeMonitor:
                     metadata={"status_file": str(status_file)}
                 )
                 self.error_handler.log_error(e, context, ErrorSeverity.MEDIUM, ErrorCategory.RUNTIME)
+=======
+
+            except Exception as e:
+                logger.error(f"Error checking file for {agent_id}: {e}")
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
     async def _read_json_with_retry(self, file_path: Path, retries=3) -> Optional[dict]:
         """Read JSON file with retry logic."""
@@ -200,6 +221,7 @@ class StatusChangeMonitor:
         to_remove = []
 
         for agent_id, data in self.pending_updates.items():
+<<<<<<< HEAD
             if not data:  # Skip if data is None or empty
                 to_remove.append(agent_id)
                 continue
@@ -214,6 +236,12 @@ class StatusChangeMonitor:
                 status = safe_dict_access(data, "status", {})
                 changes = safe_dict_access(data, "changes", {})
                 await self._post_status_update(agent_id, status, changes)
+=======
+            timestamp = data["timestamp"]
+            if (now - timestamp).total_seconds() >= self.debounce_seconds:
+                # Send update
+                await self._post_status_update(agent_id, data["status"], data["changes"])
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
                 to_remove.append(agent_id)
         
         for agent_id in to_remove:
@@ -268,6 +296,7 @@ class StatusChangeMonitor:
         """Detect significant status changes."""
         changes = {}
         fields = ["status", "current_phase", "current_mission", "points_earned"]
+<<<<<<< HEAD
 
         for field in fields:
             old_val = safe_dict_access(old_status, field)
@@ -310,6 +339,19 @@ class StatusChangeMonitor:
 
             old_set = set(old_items)
             new_set = set(new_items)
+=======
+        
+        for field in fields:
+            old_val = old_status.get(field)
+            new_val = new_status.get(field)
+            if old_val != new_val:
+                changes[field.replace("current_", "")] = {"old": old_val, "new": new_val}
+
+        # Lists (diffs)
+        for list_field in ["completed_tasks", "current_tasks"]:
+            old_set = set(old_status.get(list_field, []))
+            new_set = set(new_status.get(list_field, []))
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
             added = new_set - old_set
             if added:
                 changes[list_field] = list(added)
@@ -325,6 +367,7 @@ class StatusChangeMonitor:
         logger.info("✅ Status monitor initialized baselines")
 
 def setup_status_monitor(bot, channel_id: Optional[int] = None, scheduler=None) -> StatusChangeMonitor:
+<<<<<<< HEAD
     """Set up and initialize a status change monitor.
 
     Args:
@@ -335,6 +378,8 @@ def setup_status_monitor(bot, channel_id: Optional[int] = None, scheduler=None) 
     Returns:
         StatusChangeMonitor: Configured and started monitor instance.
     """
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     monitor = StatusChangeMonitor(bot, channel_id, scheduler=scheduler)
     monitor.start_monitoring()
     return monitor

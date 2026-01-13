@@ -13,6 +13,7 @@ V2 Compliance | Author: Agent-1 | Date: 2025-12-14
 
 from __future__ import annotations
 
+<<<<<<< HEAD
 # Temporarily disable imports to avoid circular import issues
 # TODO: Re-enable these imports once circular import is resolved
 # from .messaging import (
@@ -160,6 +161,39 @@ class ConsolidatedMessagingService:
         except Exception as e:
             self.logger.error(f"Failed to broadcast message: {e}")
             return {"success": False, "error": str(e)}
+=======
+# Import all public APIs from messaging module for backward compatibility
+from .messaging import (
+    # CLI Parser
+    create_messaging_parser,
+    # Message Formatters
+    _apply_template,
+    _format_multi_agent_request_message,
+    _format_normal_message_with_instructions,
+    _is_ack_text,
+    _load_last_inbound_categories,
+    _map_category_from_type,
+    _save_last_inbound_categories,
+    # Delivery Handlers
+    send_message_pyautogui,
+    send_message_to_onboarding_coords,
+    # Coordination Handlers
+    MessageCoordinator,
+    # Service Adapters
+    ConsolidatedMessagingService,
+    send_discord_message,
+    broadcast_discord_message,
+    # CLI Handlers
+    handle_cycle_v2_message,
+    handle_message,
+    handle_survey,
+    handle_consolidation,
+    handle_coordinates,
+    handle_start_agents,
+    handle_save,
+    handle_leaderboard,
+)
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
 # Message templates (kept for backward compatibility)
 from src.core.constants.agent_constants import AGENT_LIST as SWARM_AGENTS
@@ -244,10 +278,19 @@ __all__ = [
     # Delivery Handlers
     "send_message_pyautogui",
     "send_message_to_onboarding_coords",
+<<<<<<< HEAD
     # Coordination Handlers - Lazy import to avoid circular imports
     "_get_message_coordinator",
     # Service Adapters
     "ConsolidatedMessagingService",
+=======
+    # Coordination Handlers
+    "MessageCoordinator",
+    # Service Adapters
+    "ConsolidatedMessagingService",
+    "send_discord_message",
+    "broadcast_discord_message",
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     # CLI Handlers
     "handle_cycle_v2_message",
     "handle_message",

@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 <!-- SSOT Domain: documentation -->
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 # Deployment Protocol - No Coordination Required
 
 ## Core Principle
@@ -22,6 +25,7 @@ Deployment is a technical operation, not a coordination bottleneck. If code is r
 
 ## Deployment Tools
 
+<<<<<<< HEAD
 ### Primary Tool: `deployment_server.py`
 Location: `mcp_servers/deployment_server.py`
 
@@ -29,6 +33,14 @@ Location: `mcp_servers/deployment_server.py`
 ```python
 # Use MCP deployment server
 from mcp_servers.deployment_server import deploy_wordpress_file, deploy_wordpress_theme
+=======
+### Primary Tool: `simple_wordpress_deployer.py`
+Location: `ops/deployment/simple_wordpress_deployer.py`
+
+**Usage:**
+```python
+from ops.deployment.simple_wordpress_deployer import SimpleWordPressDeployer, load_site_configs
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
 configs = load_site_configs()
 deployer = SimpleWordPressDeployer("tradingrobotplug.com", configs)
@@ -106,8 +118,12 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 sys.path.insert(0, str(Path(__file__).parent.parent / "websites"))
 
+<<<<<<< HEAD
 # Use MCP deployment server instead
 from mcp_servers.deployment_server import deploy_wordpress_file
+=======
+from ops.deployment.simple_wordpress_deployer import SimpleWordPressDeployer, load_site_configs
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
 def main():
     site_key = "[site].com"
@@ -142,7 +158,11 @@ This protocol is **MANDATORY** for all agents:
 
 ## References
 
+<<<<<<< HEAD
 - Deployment Tool: `mcp_servers/deployment_server.py`
+=======
+- Deployment Tool: `ops/deployment/simple_wordpress_deployer.py`
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 - Site Configs: `websites/configs/site_configs.json`
 - Example Script: `tools/deploy_tradingrobotplug_now.py`
 

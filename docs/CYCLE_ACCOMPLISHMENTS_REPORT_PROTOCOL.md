@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 <!-- SSOT Domain: documentation -->
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 # Cycle Accomplishments Report Protocol
 
 **Protocol ID:** CYCLE_ACCOMPLISHMENTS_REPORT_GENERATION  

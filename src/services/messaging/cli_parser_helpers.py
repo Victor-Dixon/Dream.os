@@ -81,6 +81,7 @@ def add_utility_flags(parser: argparse.ArgumentParser) -> None:
     )
     parser.add_argument("--leaderboard", action="store_true",
                         help="Display the autonomous competition leaderboard")
+<<<<<<< HEAD
     parser.add_argument("--delivery-status", action="store_true",
                         help="Check delivery status of queued messages")
     parser.add_argument("--robinhood-stats", action="store_true",
@@ -101,6 +102,8 @@ def add_utility_flags(parser: argparse.ArgumentParser) -> None:
                         help="Process all agent workspaces for cleanup (V3)")
     parser.add_argument("--archive-old", type=int, metavar="DAYS",
                         help="Archive messages older than DAYS (default: 30) (V3)")
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
 
 def add_task_system_flags(parser: argparse.ArgumentParser) -> None:

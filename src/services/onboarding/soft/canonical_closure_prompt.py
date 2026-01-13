@@ -82,6 +82,7 @@ MANDATORY CLOSURE TASKS
    - Validation fails if these artifacts are absent when triggers matched
 
 5. Publish Devlog (Internal / Discord)
+<<<<<<< HEAD
    - Post to Discord using: `python tools/devlog_poster.py --agent {AGENT_ID} --file <devlog_path>`
    - HARD REQUIREMENT: Fails loudly if `DISCORD_WEBHOOK_AGENT_{N}` env var missing (where N is agent number)
    - Command automatically routes to agent's dedicated `#agent-{n}-devlogs` channel
@@ -97,6 +98,12 @@ MANDATORY CLOSURE TASKS
    - Required output: "Cycle accomplishment logged — tasks=X, issues=Y, consolidations=Z, points=P"
 
 6. Blog to Website (CONDITIONAL BUT ENFORCED)
+=======
+   - Post to Discord using: `python tools/devlog_poster.py --agent Agent-X --file <devlog_path>`
+   - This represents the internal build record and public-facing update
+
+5. Blog to Website (CONDITIONAL BUT ENFORCED)
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
    - REQUIRED if work affected:
      - User-facing behavior
      - Dashboards
@@ -107,6 +114,7 @@ MANDATORY CLOSURE TASKS
    - If not applicable:
      - Explicitly state: "No website blogging required — internal-only change"
 
+<<<<<<< HEAD
 7. Update Swarm Brain Database
    - Include exact command used OR
    - "Verified — no update required"
@@ -151,6 +159,17 @@ MANDATORY CLOSURE TASKS
     b) Define ONE protocol (≤10 lines)
     c) Improve documentation quality (delete, merge, deduplicate)
     d) Explicitly skip with: "Skipped — no actionable gap identified"
+=======
+6. Update Swarm Brain Database
+   - Include exact command used OR
+   - "Verified — no update required"
+
+7. Closure Improvement (CHOOSE EXACTLY ONE)
+   a) Create ONE small utility tool (≤150 lines)
+   b) Define ONE protocol (≤10 lines)
+   c) Improve documentation quality (delete, merge, deduplicate)
+   d) Explicitly skip with: "Skipped — no actionable gap identified"
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
 ────────────────────────────────────────
 HARD RULES (NON-NEGOTIABLE)
@@ -165,6 +184,7 @@ HARD RULES (NON-NEGOTIABLE)
 - git restore .
 - rm -rf on repo paths
 
+<<<<<<< HEAD
 ❌ WORKSPACE CLEANUP SAFETY (MANDATORY)
 - NEVER delete files - move to archive directories instead
 - NEVER clean shared directories (src/, tools/, docs/, root files)
@@ -172,6 +192,8 @@ HARD RULES (NON-NEGOTIABLE)
 - VERIFY ownership before any cleanup operation
 - If unsure about file ownership → Status MUST be 🟡 Blocked
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 When in doubt, choose NON-DESTRUCTIVE verification over cleanup.
 ────────────────────────────────────────
 
@@ -217,9 +239,12 @@ OUTPUT CONTRACT (STRICT - A++ FORMAT)
 - **Website Blogging:**
   [Blog post URL if published, or "Not published" if not applicable]
 
+<<<<<<< HEAD
 - **Workspace Cleanup:**
   [Cleanup status: "Agent workspace cleanup completed — X files archived" or "No cleanup needed"]
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 - **Status:**
   ✅ Ready
   OR
@@ -251,7 +276,11 @@ Do NOT:
 
 Until:
 - Status = ✅ Ready
+<<<<<<< HEAD
 - All 12 mandatory tasks are verified
+=======
+- All mandatory tasks are verified
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 - Public Build Signal is present
 
 This closure must stand alone.

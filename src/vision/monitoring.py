@@ -1,7 +1,10 @@
 """
 
+<<<<<<< HEAD
 <!-- SSOT Domain: vision -->
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 Vision Monitoring
 ================
 

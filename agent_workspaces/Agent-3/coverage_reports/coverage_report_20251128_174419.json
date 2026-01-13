@@ -1,0 +1,1654 @@
+{
+  "timestamp": "2025-11-28T17:44:19.267612",
+  "overall_analysis": {
+    "timestamp": "2025-11-28T17:44:19.116468",
+    "total_test_files": 322,
+    "total_tests": 5095,
+    "test_files": [
+      {
+        "file": "tests\\test_analytics_framework.py",
+        "test_count": 3,
+        "exists": true
+      },
+      {
+        "file": "tests\\test_chatgpt_integration.py",
+        "test_count": 9,
+        "exists": true
+      },
+      {
+        "file": "tests\\test_compliance_dashboard.py",
+        "test_count": 6,
+        "exists": true
+      },
+      {
+        "file": "tests\\test_concurrent_messaging.py",
+        "test_count": 3,
+        "exists": true
+      },
+      {
+        "file": "tests\\test_config_core.py",
+        "test_count": 11,
+        "exists": true
+      },
+      {
+        "file": "tests\\test_config_ssot_validation.py",
+        "test_count": 21,
+        "exists": true
+      },
+      {
+        "file": "tests\\test_error_handling_smoke.py",
+        "test_count": 3,
+        "exists": true
+      },
+      {
+        "file": "tests\\test_fixtures_browser.py",
+        "test_count": 0,
+        "exists": true
+      },
+      {
+        "file": "tests\\test_fixtures_compliance.py",
+        "test_count": 0,
+        "exists": true
+      },
+      {
+        "file": "tests\\test_message_task_integration.py",
+        "test_count": 17,
+        "exists": true
+      },
+      {
+        "file": "tests\\test_messaging_flags_fixes.py",
+        "test_count": 7,
+        "exists": true
+      },
+      {
+        "file": "tests\\test_messaging_smoke.py",
+        "test_count": 3,
+        "exists": true
+      },
+      {
+        "file": "tests\\test_msg_task_smoke.py",
+        "test_count": 6,
+        "exists": true
+      },
+      {
+        "file": "tests\\test_opensource_system.py",
+        "test_count": 10,
+        "exists": true
+      },
+      {
+        "file": "tests\\test_oss_cli_smoke.py",
+        "test_count": 5,
+        "exists": true
+      },
+      {
+        "file": "tests\\test_overnight_runner.py",
+        "test_count": 12,
+        "exists": true
+      },
+      {
+        "file": "tests\\test_toolbelt.py",
+        "test_count": 20,
+        "exists": true
+      },
+      {
+        "file": "tests\\test_toolbelt_min.py",
+        "test_count": 2,
+        "exists": true
+      },
+      {
+        "file": "tests\\test_v2_refactoring_validation.py",
+        "test_count": 4,
+        "exists": true
+      },
+      {
+        "file": "tests\\test_vision.py",
+        "test_count": 11,
+        "exists": true
+      },
+      {
+        "file": "tests\\test_workflows.py",
+        "test_count": 12,
+        "exists": true
+      },
+      {
+        "file": "tests\\test_config_consolidation.py",
+        "test_count": 0,
+        "exists": true
+      },
+      {
+        "file": "tests\\test_cookie_check.py",
+        "test_count": 0,
+        "exists": true
+      },
+      {
+        "file": "tests\\test_cookie_loading.py",
+        "test_count": 1,
+        "exists": true
+      },
+      {
+        "file": "tests\\test_discord_bot_c057.py",
+        "test_count": 0,
+        "exists": true
+      },
+      {
+        "file": "tests\\test_discord_integration.py",
+        "test_count": 3,
+        "exists": true
+      },
+      {
+        "file": "tests\\test_discord_simple.py",
+        "test_count": 0,
+        "exists": true
+      },
+      {
+        "file": "tests\\test_thea_v2_working.py",
+        "test_count": 1,
+        "exists": true
+      },
+      {
+        "file": "tests\\test_unified_system.py",
+        "test_count": 5,
+        "exists": true
+      },
+      {
+        "file": "tests\\browser\\test_browser_core.py",
+        "test_count": 4,
+        "exists": true
+      },
+      {
+        "file": "tests\\browser\\test_browser_operations.py",
+        "test_count": 5,
+        "exists": true
+      },
+      {
+        "file": "tests\\browser\\test_browser_session.py",
+        "test_count": 4,
+        "exists": true
+      },
+      {
+        "file": "tests\\browser\\test_browser_unified_deprecated.py",
+        "test_count": 13,
+        "exists": true
+      },
+      {
+        "file": "tests\\discord\\test_swarm_showcase_commands.py",
+        "test_count": 29,
+        "exists": true
+      },
+      {
+        "file": "tests\\discord\\test_unified_discord_bot.py",
+        "test_count": 37,
+        "exists": true
+      },
+      {
+        "file": "tests\\discord\\test_discord_service.py",
+        "test_count": 22,
+        "exists": true
+      },
+      {
+        "file": "tests\\discord\\test_discord_models.py",
+        "test_count": 4,
+        "exists": true
+      },
+      {
+        "file": "tests\\discord\\test_discord_embeds.py",
+        "test_count": 3,
+        "exists": true
+      },
+      {
+        "file": "tests\\discord\\test_discord_gui_views.py",
+        "test_count": 3,
+        "exists": true
+      },
+      {
+        "file": "tests\\discord\\test_discord_gui_modals.py",
+        "test_count": 3,
+        "exists": true
+      },
+      {
+        "file": "tests\\discord\\test_discord_gui_controller.py",
+        "test_count": 16,
+        "exists": true
+      },
+      {
+        "file": "tests\\discord\\test_discord_agent_communication.py",
+        "test_count": 37,
+        "exists": true
+      },
+      {
+        "file": "tests\\discord\\test_messaging_discord.py",
+        "test_count": 10,
+        "exists": true
+      },
+      {
+        "file": "tests\\discord\\test_debate_discord_integration.py",
+        "test_count": 38,
+        "exists": true
+      },
+      {
+        "file": "tests\\discord\\test_discord_template_collection.py",
+        "test_count": 3,
+        "exists": true
+      },
+      {
+        "file": "tests\\discord\\test_discord_publisher.py",
+        "test_count": 37,
+        "exists": true
+      },
+      {
+        "file": "tests\\discord\\test_monitor_discord_alerts.py",
+        "test_count": 3,
+        "exists": true
+      },
+      {
+        "file": "tests\\discord\\test_messaging_commands.py",
+        "test_count": 17,
+        "exists": true
+      },
+      {
+        "file": "tests\\discord\\test_approval_commands.py",
+        "test_count": 3,
+        "exists": true
+      },
+      {
+        "file": "tests\\discord\\test_contract_notifications.py",
+        "test_count": 33,
+        "exists": true
+      },
+      {
+        "file": "tests\\discord\\test_webhook_commands.py",
+        "test_count": 43,
+        "exists": true
+      },
+      {
+        "file": "tests\\discord\\test_trading_commands.py",
+        "test_count": 11,
+        "exists": true
+      },
+      {
+        "file": "tests\\discord\\test_status_reader.py",
+        "test_count": 3,
+        "exists": true
+      },
+      {
+        "file": "tests\\discord\\test_github_book_viewer.py",
+        "test_count": 3,
+        "exists": true
+      },
+      {
+        "file": "tests\\discord\\test_discord_core.py",
+        "test_count": 3,
+        "exists": true
+      },
+      {
+        "file": "tests\\discord\\test_messaging_controller.py",
+        "test_count": 13,
+        "exists": true
+      },
+      {
+        "file": "tests\\discord\\test_messaging_controller_views.py",
+        "test_count": 12,
+        "exists": true
+      },
+      {
+        "file": "tests\\discord\\test_messaging_controller_modals.py",
+        "test_count": 3,
+        "exists": true
+      },
+      {
+        "file": "tests\\discord\\test_messaging_controller_refactored.py",
+        "test_count": 3,
+        "exists": true
+      },
+      {
+        "file": "tests\\discord\\test_trading_data_service.py",
+        "test_count": 3,
+        "exists": true
+      },
+      {
+        "file": "tests\\discord\\test_enhanced_bot.py",
+        "test_count": 3,
+        "exists": true
+      },
+      {
+        "file": "tests\\discord\\test_broadcast_controller_view.py",
+        "test_count": 7,
+        "exists": true
+      },
+      {
+        "file": "tests\\discord\\test_message_chunking.py",
+        "test_count": 7,
+        "exists": true
+      },
+      {
+        "file": "tests\\discord\\test_broadcast_templates_view.py",
+        "test_count": 4,
+        "exists": true
+      },
+      {
+        "file": "tests\\discord\\test_messaging_controller_view.py",
+        "test_count": 4,
+        "exists": true
+      },
+      {
+        "file": "tests\\discord\\test_status_controller_view.py",
+        "test_count": 5,
+        "exists": true
+      },
+      {
+        "file": "tests\\discord\\test_swarm_tasks_controller_view.py",
+        "test_count": 6,
+        "exists": true
+      },
+      {
+        "file": "tests\\discord\\test_agent_messaging_view.py",
+        "test_count": 4,
+        "exists": true
+      },
+      {
+        "file": "tests\\discord\\test_help_view.py",
+        "test_count": 5,
+        "exists": true
+      },
+      {
+        "file": "tests\\discord\\test_main_control_panel_view.py",
+        "test_count": 5,
+        "exists": true
+      },
+      {
+        "file": "tests\\discord\\test_swarm_status_view.py",
+        "test_count": 4,
+        "exists": true
+      },
+      {
+        "file": "tests\\discord\\test_discord_gui_views_comprehensive.py",
+        "test_count": 15,
+        "exists": true
+      },
+      {
+        "file": "tests\\infrastructure\\browser\\test_unified_cookie_manager.py",
+        "test_count": 22,
+        "exists": true
+      },
+      {
+        "file": "tests\\integration\\test_dream_os_integration.py",
+        "test_count": 17,
+        "exists": true
+      },
+      {
+        "file": "tests\\integration\\test_dreamvault_integration.py",
+        "test_count": 29,
+        "exists": true
+      },
+      {
+        "file": "tests\\integration\\test_monitoring_integration.py",
+        "test_count": 4,
+        "exists": true
+      },
+      {
+        "file": "tests\\integration\\test_message_queue_processor_integration.py",
+        "test_count": 20,
+        "exists": true
+      },
+      {
+        "file": "tests\\integration\\test_phase2_web_routes.py",
+        "test_count": 5,
+        "exists": true
+      },
+      {
+        "file": "tests\\integration\\test_phase2_services.py",
+        "test_count": 5,
+        "exists": true
+      },
+      {
+        "file": "tests\\integration\\test_phase2_config_migration.py",
+        "test_count": 7,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\test_basic_validator.py",
+        "test_count": 34,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\test_messaging_protocol_models.py",
+        "test_count": 19,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\test_standard_validator.py",
+        "test_count": 27,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\test_strict_validator.py",
+        "test_count": 32,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\test_business_intelligence_engine.py",
+        "test_count": 15,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\test_batch_analytics_engine.py",
+        "test_count": 20,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\test_coordination_analytics_engine.py",
+        "test_count": 10,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\test_analysis_core_engine.py",
+        "test_count": 23,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\test_prediction_analyzer.py",
+        "test_count": 15,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\test_swarm_analyzer.py",
+        "test_count": 16,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\test_performance_analyzer.py",
+        "test_count": 23,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\core\\test_messaging_pyautogui_formatter.py",
+        "test_count": 11,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\core\\test_prediction_analyzer.py",
+        "test_count": 7,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\core\\test_swarm_analyzer.py",
+        "test_count": 10,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\core\\test_prediction_analyzer_simple.py",
+        "test_count": 4,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\core\\test_swarm_analyzer_simple.py",
+        "test_count": 5,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\core\\test_config_core.py",
+        "test_count": 16,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\core\\test_config_ssot.py",
+        "test_count": 24,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\core\\test_unified_config.py",
+        "test_count": 10,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\core\\test_config_manager.py",
+        "test_count": 15,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\core\\test_ssot_models.py",
+        "test_count": 3,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\core\\test_unified_validation_system.py",
+        "test_count": 3,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\core\\test_execution_manager.py",
+        "test_count": 6,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\core\\test_task_executor.py",
+        "test_count": 2,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\core\\test_basic_validator.py",
+        "test_count": 4,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\core\\test_standard_validator.py",
+        "test_count": 2,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\core\\test_strict_validator.py",
+        "test_count": 2,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\core\\test_validation_coordinator.py",
+        "test_count": 5,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\core\\test_coordination_validator.py",
+        "test_count": 4,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\core\\test_unified_validation_orchestrator.py",
+        "test_count": 2,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\core\\test_ssot_enums.py",
+        "test_count": 5,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\core\\test_ssot_unified_models.py",
+        "test_count": 6,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\core\\test_config_dataclasses.py",
+        "test_count": 7,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\core\\test_config_enums.py",
+        "test_count": 2,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\core\\test_message_queue.py",
+        "test_count": 25,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\core\\test_config_accessors.py",
+        "test_count": 13,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\core\\test_onboarding_service.py",
+        "test_count": 13,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\core\\test_message_queue_persistence.py",
+        "test_count": 14,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\core\\test_message_queue_statistics.py",
+        "test_count": 18,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\core\\test_config_browser.py",
+        "test_count": 5,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\core\\test_config_thresholds.py",
+        "test_count": 6,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_unified_messaging_service.py",
+        "test_count": 20,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_portfolio_service.py",
+        "test_count": 8,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_ai_service.py",
+        "test_count": 7,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_messaging_infrastructure.py",
+        "test_count": 44,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_contract_service.py",
+        "test_count": 20,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_messaging_handlers.py",
+        "test_count": 17,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_message_batching_service.py",
+        "test_count": 30,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_coordinator.py",
+        "test_count": 6,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_overnight_command_handler.py",
+        "test_count": 6,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_messaging_cli_handlers.py",
+        "test_count": 24,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_soft_onboarding_service.py",
+        "test_count": 27,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_hard_onboarding_service.py",
+        "test_count": 35,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_agent_management.py",
+        "test_count": 22,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_compliance_validator.py",
+        "test_count": 21,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_onboarding_template_loader.py",
+        "test_count": 21,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_role_command_handler.py",
+        "test_count": 9,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_message_identity_clarification.py",
+        "test_count": 12,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_status_embedding_indexer.py",
+        "test_count": 72,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_messaging_cli_parser.py",
+        "test_count": 33,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_messaging_cli.py",
+        "test_count": 15,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_swarm_intelligence_manager.py",
+        "test_count": 22,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_agent_vector_utils.py",
+        "test_count": 18,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_constants.py",
+        "test_count": 10,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_architectural_models.py",
+        "test_count": 19,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_architectural_principles.py",
+        "test_count": 13,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_architectural_principles_data.py",
+        "test_count": 17,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_cursor_db.py",
+        "test_count": 13,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_onboarding_constants.py",
+        "test_count": 21,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_agent_utils_registry.py",
+        "test_count": 15,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_messaging_templates.py",
+        "test_count": 17,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_vector_config_utils.py",
+        "test_count": 22,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_vector_integration_helpers.py",
+        "test_count": 38,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_coordinate_utilities.py",
+        "test_count": 12,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_chat_presence_orchestrator.py",
+        "test_count": 4,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_message_interpreter.py",
+        "test_count": 9,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_contract_manager.py",
+        "test_count": 16,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_chat_scheduler.py",
+        "test_count": 4,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_agent_personality.py",
+        "test_count": 8,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_contract_storage.py",
+        "test_count": 21,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_coordination_services.py",
+        "test_count": 7,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_vector_services.py",
+        "test_count": 5,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_performance_analyzer.py",
+        "test_count": 2,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_recommendation_engine.py",
+        "test_count": 2,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_messaging_discord.py",
+        "test_count": 14,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_messaging_cli_formatters.py",
+        "test_count": 14,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_unified_onboarding_service.py",
+        "test_count": 9,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_config.py",
+        "test_count": 9,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_learning_recommender.py",
+        "test_count": 19,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_work_indexer.py",
+        "test_count": 99,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_vector_database_service_unified.py",
+        "test_count": 156,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_batch_message_handler.py",
+        "test_count": 27,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_vector_integration_unified.py",
+        "test_count": 8,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_vector_models_embedding_unified.py",
+        "test_count": 9,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_task_repo_loader.py",
+        "test_count": 28,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_publishers_base.py",
+        "test_count": 34,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_vector_models.py",
+        "test_count": 28,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_coordinate_handler.py",
+        "test_count": 21,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_onboarding_handler.py",
+        "test_count": 19,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_soft_onboarding_handler.py",
+        "test_count": 26,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_hard_onboarding_handler.py",
+        "test_count": 14,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_contract_models.py",
+        "test_count": 20,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_contract_notifications_integration.py",
+        "test_count": 20,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_messaging_service_legacy.py",
+        "test_count": 11,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_messaging_infrastructure_expanded.py",
+        "test_count": 35,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_messaging_handlers_expanded.py",
+        "test_count": 9,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_unified_messaging_service_expanded.py",
+        "test_count": 8,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_messaging_service_legacy_expanded.py",
+        "test_count": 15,
+        "exists": true
+      },
+      {
+        "file": "tests\\unit\\services\\test_messaging_infrastructure_batch10.py",
+        "test_count": 37,
+        "exists": true
+      },
+      {
+        "file": "tests\\tools\\test_merge_duplicate_file_functionality.py",
+        "test_count": 5,
+        "exists": true
+      },
+      {
+        "file": "tests\\tools\\test_detect_venv_files.py",
+        "test_count": 4,
+        "exists": true
+      },
+      {
+        "file": "tests\\tools\\test_detect_duplicate_files.py",
+        "test_count": 4,
+        "exists": true
+      },
+      {
+        "file": "tests\\tools\\test_analyze_repo_duplicates.py",
+        "test_count": 5,
+        "exists": true
+      },
+      {
+        "file": "tests\\tools\\test_execute_streamertools_duplicate_resolution.py",
+        "test_count": 5,
+        "exists": true
+      },
+      {
+        "file": "tests\\tools\\test_verify_merged_repo_cicd_enhanced.py",
+        "test_count": 5,
+        "exists": true
+      },
+      {
+        "file": "tests\\tools\\test_batch2_ssot_verifier.py",
+        "test_count": 13,
+        "exists": true
+      },
+      {
+        "file": "tests\\tools\\test_resolve_master_list_duplicates.py",
+        "test_count": 12,
+        "exists": true
+      },
+      {
+        "file": "tests\\tools\\test_disk_space_cleanup.py",
+        "test_count": 15,
+        "exists": true
+      },
+      {
+        "file": "tests\\tools\\test_check_integration_issues.py",
+        "test_count": 20,
+        "exists": true
+      },
+      {
+        "file": "tests\\tools\\test_verify_archived_repos.py",
+        "test_count": 15,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_message_queue.py",
+        "test_count": 11,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_message_queue_processor.py",
+        "test_count": 29,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_message_queue_helpers.py",
+        "test_count": 21,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_message_queue_interfaces.py",
+        "test_count": 8,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_message_queue_persistence.py",
+        "test_count": 18,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_message_queue_statistics.py",
+        "test_count": 34,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_messaging_models_core.py",
+        "test_count": 26,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_message_formatters.py",
+        "test_count": 22,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_agent_activity_tracker.py",
+        "test_count": 26,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_message_queue_async_processor.py",
+        "test_count": 14,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_messaging_pyautogui.py",
+        "test_count": 33,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_command_execution_wrapper.py",
+        "test_count": 23,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_task_completion_detector.py",
+        "test_count": 6,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_messaging_protocol_models.py",
+        "test_count": 5,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_messaging_process_lock.py",
+        "test_count": 5,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_messaging_inbox_rotation.py",
+        "test_count": 5,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_workspace_agent_registry.py",
+        "test_count": 23,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_coordinate_loader.py",
+        "test_count": 5,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_shared_utilities.py",
+        "test_count": 6,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_messaging_core.py",
+        "test_count": 43,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_performance_monitoring_system.py",
+        "test_count": 27,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_performance_collector.py",
+        "test_count": 25,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_performance_decorators.py",
+        "test_count": 12,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_coordination_performance_monitor.py",
+        "test_count": 14,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_unified_dashboard_metric_manager.py",
+        "test_count": 17,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_unified_dashboard_engine.py",
+        "test_count": 22,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_performance_dashboard.py",
+        "test_count": 6,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_orchestration_core_orchestrator.py",
+        "test_count": 12,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_orchestration_orchestrator_utilities.py",
+        "test_count": 10,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_orchestration_orchestrator_components.py",
+        "test_count": 12,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_orchestration_orchestrator_lifecycle.py",
+        "test_count": 9,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_orchestration_orchestrator_events.py",
+        "test_count": 14,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_orchestration_service_orchestrator.py",
+        "test_count": 14,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_orchestration_integration_orchestrator.py",
+        "test_count": 10,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_orchestration_base_orchestrator.py",
+        "test_count": 26,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_managers_core_execution_manager.py",
+        "test_count": 18,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_managers_core_monitoring_manager.py",
+        "test_count": 28,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_managers_core_service_manager.py",
+        "test_count": 16,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_managers_core_results_manager.py",
+        "test_count": 20,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_managers_core_configuration_manager.py",
+        "test_count": 15,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_managers_core_resource_manager.py",
+        "test_count": 16,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_agent_lifecycle.py",
+        "test_count": 12,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_coordinator_models.py",
+        "test_count": 40,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_coordinator_interfaces.py",
+        "test_count": 15,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_message_queue_processor_captain.py",
+        "test_count": 26,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_refactoring_engine.py",
+        "test_count": 17,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_consolidation_base.py",
+        "test_count": 11,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_coordination_agent_strategies.py",
+        "test_count": 27,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_utility_consolidator.py",
+        "test_count": 18,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_coordinator_registry.py",
+        "test_count": 21,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_coordinator_status_parser.py",
+        "test_count": 20,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_pattern_analyzer.py",
+        "test_count": 13,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_ssot_models.py",
+        "test_count": 22,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_consolidation_orchestrator.py",
+        "test_count": 23,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_consolidation_validator.py",
+        "test_count": 11,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_managers_task_executor.py",
+        "test_count": 20,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_consolidation_analyzer.py",
+        "test_count": 14,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_utilities_logging_manager.py",
+        "test_count": 19,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_refactoring_validator.py",
+        "test_count": 11,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_pattern_matcher.py",
+        "test_count": 11,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_managers_core_workflow_manager.py",
+        "test_count": 1,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_managers_core_scheduler_manager.py",
+        "test_count": 1,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_managers_core_cache_manager.py",
+        "test_count": 1,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_message_queue_helpers_captain.py",
+        "test_count": 19,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_keyboard_control_lock.py",
+        "test_count": 33,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_pattern_code_detector.py",
+        "test_count": 11,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_message_queue_interfaces_captain.py",
+        "test_count": 33,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_pattern_reporter.py",
+        "test_count": 10,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_refactoring_analyzer.py",
+        "test_count": 18,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_consolidation_reporter.py",
+        "test_count": 14,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_workflow_orchestrator.py",
+        "test_count": 14,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_message_queue_processor_captain_expanded.py",
+        "test_count": 31,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_consolidation_strategy.py",
+        "test_count": 14,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_consolidation_executor.py",
+        "test_count": 12,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_refactoring_strategy.py",
+        "test_count": 11,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_refactoring_executor.py",
+        "test_count": 13,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_task_orchestrator.py",
+        "test_count": 18,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_keyboard_control_lock_captain.py",
+        "test_count": 22,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_coordinate_loader_captain.py",
+        "test_count": 19,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_shared_utilities_captain.py",
+        "test_count": 47,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_message_queue_statistics_captain.py",
+        "test_count": 38,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_message_queue_persistence_captain.py",
+        "test_count": 30,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_messaging_core_expanded.py",
+        "test_count": 32,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_message_queue_async_processor_captain.py",
+        "test_count": 21,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_messaging_models_core_captain.py",
+        "test_count": 31,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_messaging_core_batch10.py",
+        "test_count": 23,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_message_formatters_captain.py",
+        "test_count": 28,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_analytics_metrics_engine.py",
+        "test_count": 38,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_analytics_realtime_engine.py",
+        "test_count": 24,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_analytics_predictive_modeling_engine.py",
+        "test_count": 33,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_analytics_pattern_analysis_engine.py",
+        "test_count": 20,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_analytics_caching_engine.py",
+        "test_count": 24,
+        "exists": true
+      },
+      {
+        "file": "tests\\core\\test_analytics_anomaly_detection_engine.py",
+        "test_count": 22,
+        "exists": true
+      },
+      {
+        "file": "tests\\repositories\\test_contract_repository.py",
+        "test_count": 11,
+        "exists": true
+      },
+      {
+        "file": "tests\\repositories\\test_message_repository.py",
+        "test_count": 5,
+        "exists": true
+      },
+      {
+        "file": "tests\\services\\test_performance_analyzer.py",
+        "test_count": 5,
+        "exists": true
+      },
+      {
+        "file": "tests\\services\\test_coordination_strategy.py",
+        "test_count": 30,
+        "exists": true
+      },
+      {
+        "file": "tests\\services\\test_coordination_bulk.py",
+        "test_count": 15,
+        "exists": true
+      },
+      {
+        "file": "tests\\services\\test_coordination_stats_tracker.py",
+        "test_count": 20,
+        "exists": true
+      },
+      {
+        "file": "tests\\services\\test_coordinator_service.py",
+        "test_count": 9,
+        "exists": true
+      },
+      {
+        "file": "tests\\services\\test_message_batching_service.py",
+        "test_count": 29,
+        "exists": true
+      },
+      {
+        "file": "tests\\services\\test_messaging_cli_formatters.py",
+        "test_count": 15,
+        "exists": true
+      },
+      {
+        "file": "tests\\services\\test_messaging_cli_handlers.py",
+        "test_count": 29,
+        "exists": true
+      },
+      {
+        "file": "tests\\services\\test_message_identity_clarification.py",
+        "test_count": 13,
+        "exists": true
+      },
+      {
+        "file": "tests\\services\\test_overnight_command_handler.py",
+        "test_count": 9,
+        "exists": true
+      },
+      {
+        "file": "tests\\services\\test_role_command_handler.py",
+        "test_count": 12,
+        "exists": true
+      },
+      {
+        "file": "tests\\services\\test_constants.py",
+        "test_count": 7,
+        "exists": true
+      },
+      {
+        "file": "tests\\services\\test_messaging_cli_parser.py",
+        "test_count": 40,
+        "exists": true
+      },
+      {
+        "file": "tests\\services\\test_messaging_infrastructure.py",
+        "test_count": 49,
+        "exists": true
+      },
+      {
+        "file": "tests\\services\\test_protocol_message_router.py",
+        "test_count": 13,
+        "exists": true
+      },
+      {
+        "file": "tests\\services\\test_protocol_route_manager.py",
+        "test_count": 18,
+        "exists": true
+      },
+      {
+        "file": "tests\\services\\test_messaging_policy_enforcer.py",
+        "test_count": 16,
+        "exists": true
+      },
+      {
+        "file": "tests\\services\\test_messaging_protocol_validator.py",
+        "test_count": 21,
+        "exists": true
+      },
+      {
+        "file": "tests\\services\\protocol\\test_route_analyzer.py",
+        "test_count": 24,
+        "exists": true
+      },
+      {
+        "file": "tests\\services\\protocol\\test_message_router.py",
+        "test_count": 11,
+        "exists": true
+      },
+      {
+        "file": "tests\\services\\protocol\\test_route_manager.py",
+        "test_count": 13,
+        "exists": true
+      },
+      {
+        "file": "tests\\services\\protocol\\test_policy_enforcer.py",
+        "test_count": 10,
+        "exists": true
+      },
+      {
+        "file": "tests\\services\\protocol\\test_protocol_validator.py",
+        "test_count": 16,
+        "exists": true
+      },
+      {
+        "file": "tests\\services\\messaging\\test_policy_loader.py",
+        "test_count": 28,
+        "exists": true
+      },
+      {
+        "file": "tests\\integrations\\test_osrs_swarm_coordinator.py",
+        "test_count": 22,
+        "exists": true
+      },
+      {
+        "file": "tests\\utils\\test_swarm_time.py",
+        "test_count": 20,
+        "exists": true
+      },
+      {
+        "file": "tests\\utils\\test_inbox_utility.py",
+        "test_count": 9,
+        "exists": true
+      }
+    ],
+    "target_coverage": 85.0
+  },
+  "infrastructure_files": {
+    "src/core/managers/core_monitoring_manager.py": {
+      "test_file": null,
+      "test_count": 0,
+      "status": "no_tests"
+    },
+    "src/core/managers/core_results_manager.py": {
+      "test_file": null,
+      "test_count": 0,
+      "status": "no_tests"
+    },
+    "src/core/message_queue_statistics.py": {
+      "test_file": "tests\\unit\\core\\test_message_queue_statistics.py",
+      "test_count": 18,
+      "status": "has_tests"
+    },
+    "src/core/message_queue_helpers.py": {
+      "test_file": "tests\\core\\test_message_queue_helpers.py",
+      "test_count": 21,
+      "status": "has_tests"
+    },
+    "src/core/message_queue_async_processor.py": {
+      "test_file": "tests\\core\\test_message_queue_async_processor.py",
+      "test_count": 14,
+      "status": "has_tests"
+    }
+  },
+  "summary": {
+    "total_test_files": 322,
+    "total_tests": 5095,
+    "infrastructure_files_checked": 5,
+    "infrastructure_files_with_tests": 3
+  }
+}

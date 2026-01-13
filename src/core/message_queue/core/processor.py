@@ -15,9 +15,14 @@ import logging
 import time
 from typing import Any, Optional
 
+<<<<<<< HEAD
 # Use registry pattern to avoid circular imports
 from ...message_queue_registry import get_component
 
+=======
+from ....core.message_queue import MessageQueue, QueueConfig
+from ....core.message_queue_persistence import QueueEntry
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 from ..processing.message_parser import parse_message_data
 from ..processing.message_validator import validate_message_data
 from ..processing.message_router import route_message_delivery
@@ -53,6 +58,7 @@ class MessageQueueProcessor:
 
     def __init__(
         self,
+<<<<<<< HEAD
         queue: Optional[Any] = None,  # MessageQueue
         message_repository: Optional[Any] = None,
         config: Optional[Any] = None,  # QueueConfig
@@ -72,6 +78,16 @@ class MessageQueueProcessor:
         else:
             self.queue = queue
 
+=======
+        queue: Optional[MessageQueue] = None,
+        message_repository: Optional[Any] = None,
+        config: Optional[QueueConfig] = None,
+        messaging_core: Optional[Any] = None,
+    ) -> None:
+        """Initialize message queue processor."""
+        self.config = config or QueueConfig()
+        self.queue = queue or MessageQueue(config=self.config)
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
         self.message_repository = message_repository
         self.messaging_core = messaging_core
         self.running = False

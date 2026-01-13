@@ -7,6 +7,7 @@ Minimal unified logging system stub for trading_robot tests.
 import logging
 
 
+<<<<<<< HEAD
 class UnifiedLoggingSystem:
     """Unified logging system for trading robot components."""
 
@@ -25,6 +26,13 @@ def get_logger(name: str = __name__) -> logging.Logger:
 
 
 __all__ = ["UnifiedLoggingSystem", "get_logger"]
+=======
+def get_logger(name: str = __name__) -> logging.Logger:
+    return logging.getLogger(name)
+
+
+__all__ = ["get_logger"]
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
 
 

@@ -241,6 +241,7 @@ class TestWebSocketIntegration:
         except (ConnectionRefusedError, OSError) as e:
             pytest.skip(f"WebSocket server not available: {e}")
     
+<<<<<<< HEAD
     @pytest.mark.asyncio
     async def test_real_time_market_data(self):
         """Test real-time market data streaming"""
@@ -289,6 +290,13 @@ class TestWebSocketIntegration:
 
         except (ConnectionRefusedError, OSError) as e:
             pytest.skip(f"WebSocket server not available: {e}")
+=======
+    @pytest.mark.skip(reason="Requires MarketDataStreamer integration")
+    async def test_real_time_market_data(self):
+        """Test real-time market data streaming"""
+        # TODO: Implement when MarketDataStreamer integration complete
+        pass
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
 
 class TestDatabaseIntegration:

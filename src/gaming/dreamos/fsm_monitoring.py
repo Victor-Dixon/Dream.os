@@ -1,7 +1,11 @@
 """FSM Monitoring Helper - Extracted for C-056 | Agent-5
 
+<<<<<<< HEAD
 <!-- SSOT Domain: gaming -->
 """""
+=======
+""""""
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
 import logging
 import threading

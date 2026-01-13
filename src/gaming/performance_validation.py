@@ -2,14 +2,22 @@
 
 """Gaming Performance Validation.
 
+<<<<<<< HEAD
 <!-- SSOT Domain: gaming -->
 
+=======
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 Performance validation script for refactored gaming infrastructure components.
 Integrates with Agent-1 performance benchmarking suite.
 
 Author: Agent-3 - Infrastructure & DevOps Specialist
 Mission: V2 Compliance Implementation - Performance Validation
+<<<<<<< HEAD
 """""
+=======
+
+""""""
+>>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
 from datetime import datetime
 
