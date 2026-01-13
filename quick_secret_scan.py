@@ -11,9 +11,9 @@ def scan_for_secrets():
     print("🔍 Scanning for exposed secrets...")
 
     known_secrets = [
-        "***REMOVED***",  # Discord token
-        "c82SH0WZOsabOXGP2sxqcj34FxkvfnWRZBKlBjFS",  # Robinhood key
-        "***REMOVED***",  # GitHub token
+        "<REDACTED_DISCORD_BOT_TOKEN>",  # Discord token
+        "<REDACTED_ROBINHOOD_CLIENT_ID>",  # Robinhood key
+        "<REDACTED_GITHUB_TOKEN>",  # GitHub token
     ]
 
     found_secrets = []
@@ -48,9 +48,9 @@ def replace_secrets():
     print("🔄 Replacing secrets with placeholders...")
 
     replacements = {
-        "***REMOVED***": "<REDACTED_DISCORD_BOT_TOKEN>",
-        "c82SH0WZOsabOXGP2sxqcj34FxkvfnWRZBKlBjFS": "<REDACTED_ROBINHOOD_CLIENT_ID>",
-        "***REMOVED***": "<REDACTED_GITHUB_TOKEN>",
+        "<REDACTED_DISCORD_BOT_TOKEN>": "<REDACTED_DISCORD_BOT_TOKEN>",
+        "<REDACTED_ROBINHOOD_CLIENT_ID>": "<REDACTED_ROBINHOOD_CLIENT_ID>",
+        "<REDACTED_GITHUB_TOKEN>": "<REDACTED_GITHUB_TOKEN>",
     }
 
     replaced_files = []

@@ -101,7 +101,7 @@ class RobinhoodBroker:
 
             # Prepare login payload
             login_data = {
-                "client_id": "c82SH0WZOsabOXGP2sxqcj34FxkvfnWRZBKlBjFS",
+                "client_id": "<REDACTED_ROBINHOOD_CLIENT_ID>",
                 "expires_in": 86400,
                 "grant_type": "password",
                 "password": password,
@@ -170,7 +170,7 @@ class RobinhoodBroker:
                 revoke_url = "https://api.robinhood.com/oauth2/revoke_token/"
 
                 revoke_data = {
-                    "client_id": "c82SH0WZOsabOXGP2sxqcj34FxkvfnWRZBKlBjFS",
+                    "client_id": "<REDACTED_ROBINHOOD_CLIENT_ID>",
                     "token": self.access_token
                 }
 
@@ -191,7 +191,7 @@ class RobinhoodBroker:
                 # Also revoke refresh token if available
                 if self.refresh_token:
                     revoke_refresh_data = {
-                        "client_id": "c82SH0WZOsabOXGP2sxqcj34FxkvfnWRZBKlBjFS",
+                        "client_id": "<REDACTED_ROBINHOOD_CLIENT_ID>",
                         "token": self.refresh_token
                     }
 

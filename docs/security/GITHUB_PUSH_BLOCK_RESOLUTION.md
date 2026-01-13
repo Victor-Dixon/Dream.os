@@ -11,14 +11,14 @@
 ### Root Cause
 GitHub's push protection has detected exposed secrets in the repository's git commit history:
 
-1. **Discord Bot Token:** `***REMOVED***`
+1. **Discord Bot Token:** `<REDACTED_DISCORD_BOT_TOKEN>`
    - Location: `DISCORD_BOT_MISSION_BRIEFING.md`
    - Status: Exposed in git history
 
-2. **GitHub Personal Access Token:** `***REMOVED***`
+2. **GitHub Personal Access Token:** `<REDACTED_GITHUB_TOKEN>`
    - Status: Exposed in git history
 
-3. **Robinhood API Client ID:** `c82SH0WZOsabOXGP2sxqcj34FxkvfnWRZBKlBjFS`
+3. **Robinhood API Client ID:** `<REDACTED_ROBINHOOD_CLIENT_ID>`
    - Location: Multiple trading robot files
    - Status: Exposed in git history
 

@@ -137,7 +137,7 @@ Each agent (Agent-1 through Agent-8) has:
 
 ```bash
 # Bot Identity
-DISCORD_BOT_TOKEN=***REMOVED***
+DISCORD_BOT_TOKEN=<REDACTED_DISCORD_BOT_TOKEN>
 
 # Main Coordination
 DISCORD_CHANNEL_ID=1387221819966230528

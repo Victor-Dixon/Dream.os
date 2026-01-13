@@ -29,13 +29,13 @@ class GitSecretsCleaner:
         self.repo_path = Path(repo_path).absolute()
         self.known_secrets = {
             "discord_tokens": [
-                "***REMOVED***",  # Known exposed token
+                "<REDACTED_DISCORD_BOT_TOKEN>",  # Known exposed token
             ],
             "github_tokens": [
-                "***REMOVED***",  # Known PAT
+                "<REDACTED_GITHUB_TOKEN>",  # Known PAT
             ],
             "robinhood_keys": [
-                "c82SH0WZOsabOXGP2sxqcj34FxkvfnWRZBKlBjFS",  # Robinhood client_id
+                "<REDACTED_ROBINHOOD_CLIENT_ID>",  # Robinhood client_id
             ]
         }
 

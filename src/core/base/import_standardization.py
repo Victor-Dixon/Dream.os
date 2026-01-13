@@ -43,6 +43,7 @@ import logging
 import asyncio
 import threading
 import time
+import shutil
 from pathlib import Path
 from datetime import datetime, timedelta
 from collections import defaultdict
@@ -319,7 +320,7 @@ __all__ = [
     "PathType", "dataclass", "field",
     # Re-export common modules
     "os", "json", "logging", "asyncio", "Path",
-    "datetime", "time", "defaultdict", "wraps", "lru_cache",
+    "datetime", "time", "defaultdict", "wraps", "lru_cache", "shutil",
     # Optional dependencies
     "aiohttp", "requests", "discord", "commands",
     "np", "pd",

@@ -146,7 +146,7 @@ class RobinhoodAdapter(BrokerInterface):
                 "password": self.password,
                 "grant_type": "password",
                 "scope": "read",  # Read-only scope only
-                "client_id": "c82SH0WZOsabOXGP2sxqcj34FxkvfnWRZBKlBjFS",
+                "client_id": "<REDACTED_ROBINHOOD_CLIENT_ID>",
                 "expires_in": 86400  # 24 hours
             }
 
