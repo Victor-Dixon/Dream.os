@@ -1,0 +1,46 @@
+{
+  "wave_b_plan": {
+    "name": "Code Consolidation Wave",
+    "description": "Move duplicate code to SSOT canonical locations",
+    "batches": [
+      {
+        "batch_id": "B1",
+        "name": "General Consolidation",
+        "description": "Consolidate 3 duplicate groups in general",
+        "functional_group": "general",
+        "duplicate_groups": 3,
+        "estimated_files": 6,
+        "estimated_savings_kb": 0,
+        "risk_level": "LOW",
+        "consolidation_steps": [
+          "1. Identify canonical location: src/core/common/",
+          "2. Analyze 3 duplicate groups for consolidation",
+          "3. Extract common functionality to canonical location",
+          "4. Update imports in all duplicate files to use canonical",
+          "5. Run tests to ensure functionality preserved",
+          "6. Remove duplicate implementations",
+          "7. Update documentation references"
+        ]
+      },
+      {
+        "batch_id": "B2",
+        "name": "Utilities Consolidation",
+        "description": "Consolidate 1 duplicate groups in utilities",
+        "functional_group": "utilities",
+        "duplicate_groups": 1,
+        "estimated_files": 2,
+        "estimated_savings_kb": 0,
+        "risk_level": "LOW",
+        "consolidation_steps": [
+          "1. Identify canonical location: src/core/utils/",
+          "2. Analyze 1 duplicate groups for consolidation",
+          "3. Extract common functionality to canonical location",
+          "4. Update imports in all duplicate files to use canonical",
+          "5. Run tests to ensure functionality preserved",
+          "6. Remove duplicate implementations",
+          "7. Update documentation references"
+        ]
+      }
+    ]
+  }
+}

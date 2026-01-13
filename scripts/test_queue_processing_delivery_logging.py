@@ -20,7 +20,7 @@ project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
 from src.core.message_queue import MessageQueue, QueueConfig
-from src.core.message_queue_processor import MessageQueueProcessor
+# from src.core.message_queue.core.processor import MessageQueueProcessor  # Temporarily disabled during consolidation
 from src.repositories.message_repository import MessageRepository
 
 

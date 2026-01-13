@@ -33,13 +33,19 @@ from typing import Dict, Optional, List, Any
 from datetime import datetime
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/build-tsla-morning-report-system
 from src.core.error_handling import (
     ErrorHandler, ErrorSeverity, ErrorCategory, ErrorContext,
     handle_errors, error_context, safe_dict_access, safe_list_access
 )
 
+<<<<<<< HEAD
 =======
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/build-tsla-morning-report-system
 try:
     import discord
     from discord.ext import tasks
@@ -73,10 +79,14 @@ class StatusChangeMonitor:
         self.last_status: Dict[str, dict] = {}
         self.check_interval = 15
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/build-tsla-morning-report-system
 
         # Error handling
         self.error_handler = ErrorHandler("StatusChangeMonitor")
 
+<<<<<<< HEAD
         # Debouncing
         self.pending_updates: Dict[str, dict] = {}  # agent_id -> {status, changes, timestamp}
         self.debounce_seconds = 5
@@ -88,6 +98,12 @@ class StatusChangeMonitor:
         self.debounce_seconds = 5
         
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+        # Debouncing
+        self.pending_updates: Dict[str, dict] = {}  # agent_id -> {status, changes, timestamp}
+        self.debounce_seconds = 5
+
+>>>>>>> origin/codex/build-tsla-morning-report-system
         # Dashboard
         self.dashboard_message: Optional[discord.Message] = None
         self.dashboard_channel_id: Optional[int] = None
@@ -138,15 +154,21 @@ class StatusChangeMonitor:
 
         except Exception as e:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/build-tsla-morning-report-system
             context = ErrorContext(
                 component="StatusChangeMonitor",
                 operation="monitor_status_changes",
                 metadata={"loop_iteration": getattr(self, '_loop_count', 0)}
             )
             self.error_handler.log_error(e, context, ErrorSeverity.HIGH, ErrorCategory.RUNTIME)
+<<<<<<< HEAD
 =======
             logger.error(f"❌ Error in status monitoring loop: {e}", exc_info=True)
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/build-tsla-morning-report-system
 
     async def _check_files(self):
         """Check all agent status files for changes."""
@@ -183,6 +205,7 @@ class StatusChangeMonitor:
                     self.last_modified[agent_id] = current_mtime
                     self.last_status[agent_id] = new_status.copy()
 <<<<<<< HEAD
+<<<<<<< HEAD
             except Exception as e:
                 context = ErrorContext(
                     component="StatusChangeMonitor",
@@ -196,6 +219,16 @@ class StatusChangeMonitor:
             except Exception as e:
                 logger.error(f"Error checking file for {agent_id}: {e}")
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+            except Exception as e:
+                context = ErrorContext(
+                    component="StatusChangeMonitor",
+                    operation="_check_files",
+                    agent_id=agent_id,
+                    metadata={"status_file": str(status_file)}
+                )
+                self.error_handler.log_error(e, context, ErrorSeverity.MEDIUM, ErrorCategory.RUNTIME)
+>>>>>>> origin/codex/build-tsla-morning-report-system
 
     async def _read_json_with_retry(self, file_path: Path, retries=3) -> Optional[dict]:
         """Read JSON file with retry logic."""
@@ -222,6 +255,9 @@ class StatusChangeMonitor:
 
         for agent_id, data in self.pending_updates.items():
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/build-tsla-morning-report-system
             if not data:  # Skip if data is None or empty
                 to_remove.append(agent_id)
                 continue
@@ -231,6 +267,7 @@ class StatusChangeMonitor:
                 to_remove.append(agent_id)
                 continue
 
+<<<<<<< HEAD
             if (now - timestamp).total_seconds() >= self.debounce_seconds:
                 # Send update
                 status = safe_dict_access(data, "status", {})
@@ -242,6 +279,13 @@ class StatusChangeMonitor:
                 # Send update
                 await self._post_status_update(agent_id, data["status"], data["changes"])
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+            if (now - timestamp).total_seconds() >= self.debounce_seconds:
+                # Send update
+                status = safe_dict_access(data, "status", {})
+                changes = safe_dict_access(data, "changes", {})
+                await self._post_status_update(agent_id, status, changes)
+>>>>>>> origin/codex/build-tsla-morning-report-system
                 to_remove.append(agent_id)
         
         for agent_id in to_remove:
@@ -297,6 +341,7 @@ class StatusChangeMonitor:
         changes = {}
         fields = ["status", "current_phase", "current_mission", "points_earned"]
 <<<<<<< HEAD
+<<<<<<< HEAD
 
         for field in fields:
             old_val = safe_dict_access(old_status, field)
@@ -341,17 +386,56 @@ class StatusChangeMonitor:
             new_set = set(new_items)
 =======
         
+=======
+
+>>>>>>> origin/codex/build-tsla-morning-report-system
         for field in fields:
-            old_val = old_status.get(field)
-            new_val = new_status.get(field)
+            old_val = safe_dict_access(old_status, field)
+            new_val = safe_dict_access(new_status, field)
+
+            # Convert dict values to strings to prevent unhashable type errors
+            if isinstance(old_val, dict):
+                old_val = str(old_val)
+            if isinstance(new_val, dict):
+                new_val = str(new_val)
+
             if old_val != new_val:
                 changes[field.replace("current_", "")] = {"old": old_val, "new": new_val}
 
-        # Lists (diffs)
+        # Lists (diffs) - safely handle list fields
         for list_field in ["completed_tasks", "current_tasks"]:
+<<<<<<< HEAD
             old_set = set(old_status.get(list_field, []))
             new_set = set(new_status.get(list_field, []))
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+            old_list = safe_dict_access(old_status, list_field, [])
+            new_list = safe_dict_access(new_status, list_field, [])
+
+            # Ensure we have lists, convert if necessary
+            if not isinstance(old_list, list):
+                old_list = []
+            if not isinstance(new_list, list):
+                new_list = []
+
+            # Convert list items to strings if they're dicts to prevent unhashable errors
+            old_items = []
+            for item in old_list:
+                if isinstance(item, dict):
+                    old_items.append(str(item))
+                else:
+                    old_items.append(item)
+
+            new_items = []
+            for item in new_list:
+                if isinstance(item, dict):
+                    new_items.append(str(item))
+                else:
+                    new_items.append(item)
+
+            old_set = set(old_items)
+            new_set = set(new_items)
+>>>>>>> origin/codex/build-tsla-morning-report-system
             added = new_set - old_set
             if added:
                 changes[list_field] = list(added)

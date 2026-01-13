@@ -20,9 +20,12 @@
         // Mobile menu toggle
         initMobileMenu();
 
+<<<<<<< HEAD
         // Menu highlighting
         initMenuHighlighting();
 
+=======
+>>>>>>> origin/codex/build-tsla-morning-report-system
         // Smooth scrolling for anchor links
         initSmoothScroll();
 
@@ -43,6 +46,7 @@
     }
 
     /**
+<<<<<<< HEAD
      * Menu highlighting for active navigation items
      */
     function initMenuHighlighting() {
@@ -67,6 +71,8 @@
     }
 
     /**
+=======
+>>>>>>> origin/codex/build-tsla-morning-report-system
      * Mobile menu functionality
      */
     function initMobileMenu() {

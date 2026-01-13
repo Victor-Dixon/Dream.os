@@ -115,7 +115,7 @@ def wait_for_rate_limit(max_wait: int = 3600) -> bool:
 def main():
     """Main execution function."""
     import argparse
-from src.core.config.timeout_constants import TimeoutConstants
+    from src.core.config.timeout_constants import TimeoutConstants
     
     parser = argparse.ArgumentParser(
         description="Archive source repos after PRs merged"

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Pre-commit hooks for code quality
 # Install with: pre-commit install
 # Run manually: pre-commit run --all-files
@@ -100,3 +101,87 @@ repos:
         pass_filenames: true
         stages: [commit]
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+# Pre-commit hooks for technical debt prevention
+# See https://pre-commit.com for more information
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+      - id: check-merge-conflict
+      - id: debug-statements
+
+  - repo: https://github.com/psf/black
+    rev: 23.7.0
+    hooks:
+      - id: black
+        language_version: python3
+
+  - repo: https://github.com/pycqa/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+        args: ["--profile", "black"]
+
+  - repo: local
+    hooks:
+      # Technical debt prevention hooks
+      - id: syntax-validation
+        name: Python Syntax Validation
+        entry: python
+        language: system
+        files: \.py$
+        args: [-m, py_compile]
+        pass_filenames: true
+
+      - id: ssot-compliance
+        name: SSOT Compliance Check
+        entry: python
+        language: system
+        files: \.(py|md|js)$
+        args: [scripts/ssot_linter.py]
+        pass_filenames: false
+
+      - id: duplication-gate
+        name: Duplication Prevention
+        entry: python
+        language: system
+        files: \.(py|md|js|ts)$
+        args: [scripts/ci_duplication_gate.py]
+        pass_filenames: false
+
+      - id: deprecated-files-check
+        name: Deprecated Files Usage Check
+        entry: python
+        language: system
+        files: \.(py|md|js)$
+        args: [scripts/ci_check_deprecated_files.py]
+        pass_filenames: false
+
+      - id: project-scan-validation
+        name: Project Scan Validation
+        entry: python
+        language: system
+        files: \.py$
+        args: [main.py, --scan-project]
+        pass_filenames: false
+        stages: [commit]
+
+# Configuration for technical debt hooks
+ci:
+  autofix_commit_msg: |
+    [pre-commit.ci] auto fixes from pre-commit hooks
+
+    for more information, see https://pre-commit.ci
+  autofix_prs: true
+  autoupdate_branch: ''
+  autoupdate_commit_msg: '[pre-commit.ci] pre-commit autoupdate'
+  autoupdate_schedule: weekly
+  skip: []
+  submodules: false
+>>>>>>> origin/codex/build-tsla-morning-report-system

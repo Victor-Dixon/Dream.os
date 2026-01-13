@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/codex/build-tsla-morning-report-system
 # V2 Compliance Error Handling Framework
 # ======================================
 #
@@ -31,6 +34,7 @@ except ImportError:
     ICircuitBreaker = None
     CircuitBreakerProvider = None
 
+<<<<<<< HEAD
 # SSOT Domain: core
 # V2 Error Handling Framework
 
@@ -77,17 +81,13 @@ from . import component_management
 from .circuit_breaker.implementation import CircuitBreaker
 from .circuit_breaker.protocol import ICircuitBreaker
 from .circuit_breaker.provider import CircuitBreakerProvider
+=======
+>>>>>>> origin/codex/build-tsla-morning-report-system
 # SSOT Domain: core
-# AUTO-GENERATED __init__.py
-# DO NOT EDIT MANUALLY - changes may be overwritten
-
-# Use provider pattern to avoid circular imports
-
-# Export CircuitBreaker from directory (file/directory conflict resolved)
-# Import from directory, not file
-# coordination_error_handler merged into component_management
+# V2 Error Handling Framework
 
 __all__ = [
+<<<<<<< HEAD
     'CircuitBreakerProvider',
     'ICircuitBreaker',
     'CircuitBreaker',  # Backward compatibility via lazy import
@@ -116,4 +116,21 @@ __all__ = [
     'retry_safety_engine',
     'specialized_handlers',
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+    # Core classes
+    'ErrorHandler', 'ErrorSeverity', 'ErrorCategory', 'ErrorContext', 'ErrorReport',
+
+    # Global functions
+    'get_error_handler',
+
+    # Decorators and context managers
+    'handle_errors', 'error_context',
+
+    # Utility functions
+    'safe_dict_access', 'safe_list_access', 'validate_json_data',
+    'validate_python_syntax', 'validate_project_syntax',
+
+    # Circuit breaker (backward compatibility)
+    'CircuitBreaker', 'ICircuitBreaker', 'CircuitBreakerProvider',
+>>>>>>> origin/codex/build-tsla-morning-report-system
 ]

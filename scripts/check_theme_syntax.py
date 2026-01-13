@@ -208,7 +208,7 @@ def check_theme(theme_path: Path) -> dict:
 def main():
     """CLI entry point."""
     import argparse
-from src.core.config.timeout_constants import TimeoutConstants
+    from src.core.config.timeout_constants import TimeoutConstants
     
     parser = argparse.ArgumentParser(
         description="Check theme files for syntax errors"

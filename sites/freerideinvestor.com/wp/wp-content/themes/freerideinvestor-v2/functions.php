@@ -80,7 +80,10 @@ function freerideinvestor_scripts() {
     wp_localize_script('freerideinvestor-script', 'freerideinvestor_ajax', array(
         'ajax_url' => admin_url('admin-ajax.php'),
         'nonce'    => wp_create_nonce('freerideinvestor_ajax_nonce'),
+<<<<<<< HEAD
         'home_url' => home_url('/'),
+=======
+>>>>>>> origin/codex/build-tsla-morning-report-system
     ));
 }
 add_action('wp_enqueue_scripts', 'freerideinvestor_scripts');
@@ -316,6 +319,7 @@ function freerideinvestor_login_logo() {
 }
 add_action('login_enqueue_scripts', 'freerideinvestor_login_logo');
 
+<<<<<<< HEAD
 /**
  * Add Google Analytics 4 and Facebook Pixel tracking codes
  * Generated for FreeRide Investor deployment
@@ -366,3 +370,5 @@ function add_analytics_tracking_codes() {
     }
 }
 add_action('wp_head', 'add_analytics_tracking_codes', 99);
+=======
+>>>>>>> origin/codex/build-tsla-morning-report-system

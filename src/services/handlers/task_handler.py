@@ -650,6 +650,7 @@ class TaskHandler(BaseService):
             print("=" * 60 + "\n")
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             result = {
                 'success': True,
                 'task_id': task.id,
@@ -658,6 +659,8 @@ class TaskHandler(BaseService):
                 'completed_at': task.completed_at.isoformat()
             }
 
+=======
+>>>>>>> origin/codex/build-tsla-morning-report-system
             # 🔗 INTEGRATION: Trigger Output Flywheel for completed tasks
             try:
                 from systems.output_flywheel.integration.agent_session_hooks import end_of_session_hook
@@ -692,6 +695,7 @@ class TaskHandler(BaseService):
                         for artifact_type, artifact_path in generated_artifacts.items():
                             print(f"   📄 Generated {artifact_type}: {artifact_path}")
                         print(f"   ✅ Artifacts published to publication queue")
+<<<<<<< HEAD
                         result['output_flywheel'] = {
                             'triggered': True,
                             'artifacts': generated_artifacts,
@@ -710,10 +714,17 @@ class TaskHandler(BaseService):
                         'triggered': False,
                         'reason': 'session_in_progress'
                     }
+=======
+                    else:
+                        print(f"   ⚠️  No artifacts generated (may still be processing)")
+                else:
+                    print(f"   ⚠️  Output Flywheel integration skipped (session may be in progress)")
+>>>>>>> origin/codex/build-tsla-morning-report-system
 
             except ImportError as e:
                 logger.warning(f"⚠️ Output Flywheel not available: {e}")
                 print(f"   💡 Output Flywheel integration requires systems/output_flywheel")
+<<<<<<< HEAD
                 result['output_flywheel'] = {
                     'triggered': False,
                     'error': str(e),
@@ -732,6 +743,12 @@ class TaskHandler(BaseService):
             self.exit_code = 0
             return result
 =======
+=======
+            except Exception as e:
+                logger.error(f"❌ Output Flywheel integration failed: {e}")
+                print(f"   ⚠️  Output Flywheel integration failed, but task completion succeeded")
+
+>>>>>>> origin/codex/build-tsla-morning-report-system
             logger.info(f"✅ Task {task_id} completed by {agent_id}")
             self.exit_code = 0
             return True

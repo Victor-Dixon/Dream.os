@@ -16,6 +16,7 @@ import time
 from typing import Any, Optional
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Use registry pattern to avoid circular imports
 from ...message_queue_registry import get_component
 
@@ -23,6 +24,11 @@ from ...message_queue_registry import get_component
 from ....core.message_queue import MessageQueue, QueueConfig
 from ....core.message_queue_persistence import QueueEntry
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+# Use registry pattern to avoid circular imports
+from ...message_queue_registry import get_component
+
+>>>>>>> origin/codex/build-tsla-morning-report-system
 from ..processing.message_parser import parse_message_data
 from ..processing.message_validator import validate_message_data
 from ..processing.message_router import route_message_delivery
@@ -59,6 +65,7 @@ class MessageQueueProcessor:
     def __init__(
         self,
 <<<<<<< HEAD
+<<<<<<< HEAD
         queue: Optional[Any] = None,  # MessageQueue
         message_repository: Optional[Any] = None,
         config: Optional[Any] = None,  # QueueConfig
@@ -80,14 +87,33 @@ class MessageQueueProcessor:
 
 =======
         queue: Optional[MessageQueue] = None,
+=======
+        queue: Optional[Any] = None,  # MessageQueue
+>>>>>>> origin/codex/build-tsla-morning-report-system
         message_repository: Optional[Any] = None,
-        config: Optional[QueueConfig] = None,
+        config: Optional[Any] = None,  # QueueConfig
         messaging_core: Optional[Any] = None,
     ) -> None:
         """Initialize message queue processor."""
+<<<<<<< HEAD
         self.config = config or QueueConfig()
         self.queue = queue or MessageQueue(config=self.config)
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+        # Use registry to get components if not provided
+        if config is None:
+            QueueConfig = get_component('QueueConfig')
+            self.config = QueueConfig()
+        else:
+            self.config = config
+
+        if queue is None:
+            MessageQueue = get_component('MessageQueue')
+            self.queue = MessageQueue(config=self.config)
+        else:
+            self.queue = queue
+
+>>>>>>> origin/codex/build-tsla-morning-report-system
         self.message_repository = message_repository
         self.messaging_core = messaging_core
         self.running = False

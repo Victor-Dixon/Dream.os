@@ -333,6 +333,7 @@ def detect_command_completion(output: str) -> Tuple[bool, Optional[str]]:
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   return detector.detect_output_completion(output)
 
@@ -340,3 +341,5 @@ def detect_command_completion(output: str) -> Tuple[bool, Optional[str]]:
 
 
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+>>>>>>> origin/codex/build-tsla-morning-report-system

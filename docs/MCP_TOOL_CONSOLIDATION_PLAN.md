@@ -40,10 +40,14 @@ Tools are scattered across the codebase:
 #### 3. Website & WordPress Tools
 - `tools/categories/web_tools.py`
 <<<<<<< HEAD
+<<<<<<< HEAD
 - `mcp_servers/wp_cli_manager_server.py` (canonical replacement)
 =======
 - `tools/unified_wordpress_manager.py`
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+- `mcp_servers/wp_cli_manager_server.py` (canonical replacement)
+>>>>>>> origin/codex/build-tsla-morning-report-system
 - `tools/create_icp_definitions.py`
 - `tools/deploy_*.py` scripts
 - **Target:** Enhance `website-manager` server

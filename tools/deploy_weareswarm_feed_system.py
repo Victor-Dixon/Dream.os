@@ -1,5 +1,18 @@
 #!/usr/bin/env python3
-"""Deploy weareswarm.online dynamic feed system."""
+"""
+⚠️ DEPRECATED - DO NOT USE
+
+This file is deprecated as part of the SSOT consolidation effort.
+
+REPLACEMENT: mcp_servers/deployment_server.py
+MIGRATION: Use deploy_wordpress_file() function instead
+DEADLINE: 2026-02-01
+
+For new code, use: mcp_servers/deployment_server.py::deploy_wordpress_file()
+
+Original docstring:
+Deploy weareswarm.online dynamic feed system.
+"""
 import sys
 from pathlib import Path
 

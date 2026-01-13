@@ -64,8 +64,12 @@ class ScraperWorker(QThread):
     def run(self):
         try:
             if self.login_mode == "credentials":
+<<<<<<< HEAD
                 scraper = ChatGPTScraper(
                     username=self.username, password=self.password)
+=======
+                scraper = ChatGPTScraper(username=self.username, password=self.password)
+>>>>>>> origin/codex/build-tsla-morning-report-system
 
                 def progress_callback(current, total, message):
                     self.progress_updated.emit(current, total, message)
@@ -254,15 +258,25 @@ class ScraperPanel(QWidget):
                 "Active": 0,
                 "Completed": 0
             }
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> origin/codex/build-tsla-morning-report-system
             stats_widget = components.create_statistics_grid(
                 stats_data=stats_data,
                 title="scraper_panel Statistics",
                 style="modern"
             )
+<<<<<<< HEAD
 
             return stats_widget
 
+=======
+            
+            return stats_widget
+            
+>>>>>>> origin/codex/build-tsla-morning-report-system
         except Exception as e:
             logger.error(f"Error creating statistics grid: {e}")
             return QWidget()  # Fallback widget
@@ -300,8 +314,12 @@ class ScraperPanel(QWidget):
             config=ComponentConfig(style=ComponentStyle.INFO)
         )
         self.conv_list = self.conv_list_group.findChild(QListWidget)
+<<<<<<< HEAD
         self.conv_list.itemSelectionChanged.connect(
             self._on_conversation_selected)
+=======
+        self.conv_list.itemSelectionChanged.connect(self._on_conversation_selected)
+>>>>>>> origin/codex/build-tsla-morning-report-system
         left_layout.addWidget(self.conv_list_group)
         splitter.addWidget(left_widget)
         # Right side - conversation content and interaction
@@ -374,8 +392,12 @@ class ScraperPanel(QWidget):
         """Send a prompt to the selected conversation."""
         current_item = self.conv_list.currentItem()
         if not current_item:
+<<<<<<< HEAD
             QMessageBox.warning(
                 self, "Warning", "Please select a conversation first.")
+=======
+            QMessageBox.warning(self, "Warning", "Please select a conversation first.")
+>>>>>>> origin/codex/build-tsla-morning-report-system
             return
 
         prompt = self.prompt_edit.text().strip()
@@ -399,6 +421,7 @@ class ScraperPanel(QWidget):
             )
             self._disable_controls()
 
+<<<<<<< HEAD
             # Integrate with actual Thea service
             try:
                 from src.services.thea.di_container import TheaDIContainer
@@ -434,6 +457,16 @@ class ScraperPanel(QWidget):
                     ScrapingResult(
                         success=False, message=f"Failed to initialize Thea service: {str(e)}")
                 )
+=======
+            # This would integrate with the actual scraper
+            # For now, just simulate the operation
+            QTimer.singleShot(
+                2000,
+                lambda: self._handle_send_prompt_result(
+                    ScrapingResult(success=True, message="Prompt sent successfully")
+                ),
+            )
+>>>>>>> origin/codex/build-tsla-morning-report-system
 
         except Exception as e:
             self._handle_send_prompt_result(
@@ -445,8 +478,12 @@ class ScraperPanel(QWidget):
         """Regenerate response for the selected conversation."""
         current_item = self.conv_list.currentItem()
         if not current_item:
+<<<<<<< HEAD
             QMessageBox.warning(
                 self, "Warning", "Please select a conversation first.")
+=======
+            QMessageBox.warning(self, "Warning", "Please select a conversation first.")
+>>>>>>> origin/codex/build-tsla-morning-report-system
             return
 
         conversation_title = current_item.text()
@@ -465,6 +502,7 @@ class ScraperPanel(QWidget):
             )
             self._disable_controls()
 
+<<<<<<< HEAD
             # Integrate with actual Thea service for regeneration
             try:
                 from src.services.thea.di_container import TheaDIContainer
@@ -501,6 +539,18 @@ class ScraperPanel(QWidget):
                     ScrapingResult(
                         success=False, message=f"Failed to initialize Thea service: {str(e)}")
                 )
+=======
+            # This would integrate with the actual scraper
+            # For now, just simulate the operation
+            QTimer.singleShot(
+                2000,
+                lambda: self._handle_regenerate_response_result(
+                    ScrapingResult(
+                        success=True, message="Response regenerated successfully"
+                    )
+                ),
+            )
+>>>>>>> origin/codex/build-tsla-morning-report-system
 
         except Exception as e:
             self._handle_regenerate_response_result(
@@ -513,8 +563,12 @@ class ScraperPanel(QWidget):
         self._enable_controls()
         if result.success:
             self._update_status("Prompt sent successfully", result.message)
+<<<<<<< HEAD
             QMessageBox.information(
                 self, "Success", "Prompt sent successfully!")
+=======
+            QMessageBox.information(self, "Success", "Prompt sent successfully!")
+>>>>>>> origin/codex/build-tsla-morning-report-system
         else:
             self._update_status("Failed to send prompt", result.message)
             QMessageBox.critical(
@@ -526,14 +580,22 @@ class ScraperPanel(QWidget):
         """Handle regenerate response result."""
         self._enable_controls()
         if result.success:
+<<<<<<< HEAD
             self._update_status(
                 "Response regenerated successfully", result.message)
+=======
+            self._update_status("Response regenerated successfully", result.message)
+>>>>>>> origin/codex/build-tsla-morning-report-system
             QMessageBox.information(
                 self, "Success", "Response regenerated successfully!"
             )
         else:
+<<<<<<< HEAD
             self._update_status(
                 "Failed to regenerate response", result.message)
+=======
+            self._update_status("Failed to regenerate response", result.message)
+>>>>>>> origin/codex/build-tsla-morning-report-system
             QMessageBox.critical(
                 self, "Error", f"Failed to regenerate response: {result.message}"
             )
@@ -575,15 +637,23 @@ class ScraperPanel(QWidget):
         """Handle extract conversations result."""
         self._enable_controls()
         if result.success:
+<<<<<<< HEAD
             self._update_status(
                 "Conversations extracted successfully", result.message)
+=======
+            self._update_status("Conversations extracted successfully", result.message)
+>>>>>>> origin/codex/build-tsla-morning-report-system
             self._update_results_table()
             QMessageBox.information(
                 self, "Success", "Conversations extracted successfully!"
             )
         else:
+<<<<<<< HEAD
             self._update_status(
                 "Failed to extract conversations", result.message)
+=======
+            self._update_status("Failed to extract conversations", result.message)
+>>>>>>> origin/codex/build-tsla-morning-report-system
             QMessageBox.critical(
                 self, "Error", f"Failed to extract conversations: {result.message}"
             )
@@ -592,11 +662,17 @@ class ScraperPanel(QWidget):
         """Handle extract content result."""
         self._enable_controls()
         if result.success:
+<<<<<<< HEAD
             self._update_status(
                 "Content extracted successfully", result.message)
             self._update_results_table()
             QMessageBox.information(
                 self, "Success", "Content extracted successfully!")
+=======
+            self._update_status("Content extracted successfully", result.message)
+            self._update_results_table()
+            QMessageBox.information(self, "Success", "Content extracted successfully!")
+>>>>>>> origin/codex/build-tsla-morning-report-system
         else:
             self._update_status("Failed to extract content", result.message)
             QMessageBox.critical(
@@ -609,6 +685,7 @@ class ScraperPanel(QWidget):
         self.results_table.setRowCount(len(self.conversations))
 
         for i, conv in enumerate(self.conversations):
+<<<<<<< HEAD
             self.results_table.setItem(
                 i, 0, QTableWidgetItem(conv.get("title", "")))
             self.results_table.setItem(
@@ -620,6 +697,15 @@ class ScraperPanel(QWidget):
                 i, 3, QTableWidgetItem(conv.get("status", "")))
             self.results_table.setItem(
                 i, 4, QTableWidgetItem(conv.get("url", "")))
+=======
+            self.results_table.setItem(i, 0, QTableWidgetItem(conv.get("title", "")))
+            self.results_table.setItem(
+                i, 1, QTableWidgetItem(str(conv.get("message_count", 0)))
+            )
+            self.results_table.setItem(i, 2, QTableWidgetItem(conv.get("model", "")))
+            self.results_table.setItem(i, 3, QTableWidgetItem(conv.get("status", "")))
+            self.results_table.setItem(i, 4, QTableWidgetItem(conv.get("url", "")))
+>>>>>>> origin/codex/build-tsla-morning-report-system
 
         # Update conversation list
         self.conv_list.clear()
@@ -638,15 +724,25 @@ class ScraperPanel(QWidget):
                 "Active": 0,
                 "Completed": 0
             }
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> origin/codex/build-tsla-morning-report-system
             stats_widget = components.create_statistics_grid(
                 stats_data=stats_data,
                 title="scraper_panel Statistics",
                 style="modern"
             )
+<<<<<<< HEAD
 
             return stats_widget
 
+=======
+            
+            return stats_widget
+            
+>>>>>>> origin/codex/build-tsla-morning-report-system
         except Exception as e:
             logger.error(f"Error creating statistics grid: {e}")
             return QWidget()  # Fallback widget
@@ -718,12 +814,19 @@ class ScraperPanel(QWidget):
             return
         cookie_file = self.cookie_file_edit.text().strip()
         if not cookie_file:
+<<<<<<< HEAD
             QMessageBox.warning(
                 self, "Warning", "Please enter a cookie file path.")
             return
         try:
             self._update_status(
                 "Logging in...", "Attempting to login with cookies...")
+=======
+            QMessageBox.warning(self, "Warning", "Please enter a cookie file path.")
+            return
+        try:
+            self._update_status("Logging in...", "Attempting to login with cookies...")
+>>>>>>> origin/codex/build-tsla-morning-report-system
             self._disable_controls()
             # EDIT START: Use ScraperWorker for real cookie login with progress
             self.progress_bar.setVisible(True)
@@ -817,8 +920,12 @@ class ScraperPanel(QWidget):
 
         output_file = self.output_file_edit.text().strip()
         if not output_file:
+<<<<<<< HEAD
             QMessageBox.warning(
                 self, "Warning", "Please enter an output file path.")
+=======
+            QMessageBox.warning(self, "Warning", "Please enter an output file path.")
+>>>>>>> origin/codex/build-tsla-morning-report-system
             return
 
         try:
@@ -826,12 +933,19 @@ class ScraperPanel(QWidget):
             with open(output_file, "w", encoding="utf-8") as f:
                 json.dump(self.conversations, f, indent=2, ensure_ascii=False)
 
+<<<<<<< HEAD
             QMessageBox.information(
                 self, "Success", f"Results saved to {output_file}")
 
         except Exception as e:
             QMessageBox.critical(
                 self, "Error", f"Failed to save results: {str(e)}")
+=======
+            QMessageBox.information(self, "Success", f"Results saved to {output_file}")
+
+        except Exception as e:
+            QMessageBox.critical(self, "Error", f"Failed to save results: {str(e)}")
+>>>>>>> origin/codex/build-tsla-morning-report-system
 
     def on_destroy(self):
         """Cleanup when panel is destroyed."""

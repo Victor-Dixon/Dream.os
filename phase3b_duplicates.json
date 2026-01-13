@@ -1,0 +1,2795 @@
+{
+  "scan_timestamp": "2026-01-01T20:39:54.427378",
+  "total_groups": 275,
+  "total_files": 588,
+  "duplicate_groups": [
+    {
+      "hash": "71075bb8aa2c409805239f198e5b3e8a9ad606866c64560cd69c7f4b550ebf82",
+      "count": 2,
+      "size_bytes": 5784,
+      "extension": ".json",
+      "files": [
+        "CURSOR_MCP_CONFIG.json",
+        "config\\mcp"
+      ]
+    },
+    {
+      "hash": "2d77f19c3ab7c748e764b5e094d289f565de58c1994c7b17725574f51a165c8a",
+      "count": 3,
+      "size_bytes": 16465,
+      "extension": ".coverage_analyzer; print('✅ Both modules import successfully')",
+      "files": [
+        ".unified_verifier; import tools.coverage_analyzer; print('✅ Both modules import successfully')",
+        "sages for batch consolidation - Batches 5, 6 SSOT verification and parallel execution coordination",
+        "sages - stall recovery round 3 (4 messages Agents 1,2,3,7) + Batch 1 comprehensive status reply to Agent-4"
+      ]
+    },
+    {
+      "hash": "0cb18f8eee7e7bda8a64180222d9bf110fad807ef1f49799c08f6440c54ae3d4",
+      "count": 2,
+      "size_bytes": 3894,
+      "extension": ".py",
+      "files": [
+        "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\src\\dreamscape\\core\\refresh_chatgpt_cookies.py",
+        "phase3b_backup\\archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\refresh_chatgpt_cookies.py"
+      ]
+    },
+    {
+      "hash": "32f76c81f276ed5bdbd75743035566bc8d72a7bf3dab54cc844c4fea0121efb1",
+      "count": 2,
+      "size_bytes": 4759,
+      "extension": ".py",
+      "files": [
+        "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\src\\dreamscape\\core\\legacy\\ingest_chatgpt_json.py",
+        "phase3b_backup\\archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\legacy\\ingest_chatgpt_json.py"
+      ]
+    },
+    {
+      "hash": "7b11f330fadedcb263a65bc47f4ef18bd607bff3b52f5e212d033b9532483b95",
+      "count": 2,
+      "size_bytes": 4505,
+      "extension": ".py",
+      "files": [
+        "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\src\\dreamscape\\core\\legacy\\ingest_conversation_files.py",
+        "phase3b_backup\\archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\legacy\\ingest_conversation_files.py"
+      ]
+    },
+    {
+      "hash": "86d9ed57a4f3e11e17a670ab389974e908f0a744b33b6cd32d182572ac4a8e3d",
+      "count": 2,
+      "size_bytes": 5530,
+      "extension": ".py",
+      "files": [
+        "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\src\\dreamscape\\core\\legacy\\process_all_conversations_demo.py",
+        "phase3b_backup\\archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\legacy\\process_all_conversations_demo.py"
+      ]
+    },
+    {
+      "hash": "032389a5c0af3313c80a1ec714d654eb734ff4a92d40318461840ca1b57c5bec",
+      "count": 2,
+      "size_bytes": 19003,
+      "extension": ".py",
+      "files": [
+        "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\src\\dreamscape\\core\\legacy\\unified_conversation_manager.py",
+        "phase3b_backup\\archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\legacy\\unified_conversation_manager.py"
+      ]
+    },
+    {
+      "hash": "aad1ccd1145ea09cf72815f8787e4c7fd1692ee352c83eb78f099d54fcf10db3",
+      "count": 2,
+      "size_bytes": 3744,
+      "extension": ".py",
+      "files": [
+        "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\src\\dreamscape\\core\\legacy\\update_conversation_stats.py",
+        "phase3b_backup\\archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\legacy\\update_conversation_stats.py"
+      ]
+    },
+    {
+      "hash": "b7aee0927e5512bfe920e5ab9db6ed6abc150490631378a3e08ea04bfd8b95d6",
+      "count": 3,
+      "size_bytes": 3109,
+      "extension": ".py",
+      "files": [
+        "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\src\\dreamscape\\core\\memory\\api\\conversation_api.py",
+        "phase3b_backup\\archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\memory\\api\\conversation_api.py",
+        "phase3b_backup\\systems\\memory\\memory\\api\\conversation_api.py"
+      ]
+    },
+    {
+      "hash": "377478deedcb1cc72c81c74029408e720fc588e1c80c935e7b6991a68218ae0b",
+      "count": 3,
+      "size_bytes": 9439,
+      "extension": ".py",
+      "files": [
+        "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\src\\dreamscape\\core\\memory\\storage\\conversation_operations.py",
+        "phase3b_backup\\archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\memory\\storage\\conversation_operations.py",
+        "phase3b_backup\\systems\\memory\\memory\\storage\\conversation_operations.py"
+      ]
+    },
+    {
+      "hash": "42dc161ba52e1d624260b17cfbdda5914906488e47934cfff6e98b1c9affc291",
+      "count": 2,
+      "size_bytes": 10931,
+      "extension": ".py",
+      "files": [
+        "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\src\\dreamscape\\core\\utils\\chat_navigation.py",
+        "phase3b_backup\\archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\utils\\chat_navigation.py"
+      ]
+    },
+    {
+      "hash": "3e0c810059c8e5dfa39c292db5ac5aa68c17186ebbfc33480669884d578b0ded",
+      "count": 3,
+      "size_bytes": 8354,
+      "extension": ".py",
+      "files": [
+        "agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\conversation\\src\\dreamscape\\gui\\panels\\ai_studio\\conversational_ai_component.py",
+        "phase3b_backup\\archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\panels\\ai_studio\\conversational_ai_component.py",
+        "phase3b_backup\\agent_workspaces\\Agent-2\\extracted_logic\\ai_framework\\models\\src\\dreamscape\\gui\\panels\\ai_studio\\conversational_ai_component.py"
+      ]
+    },
+    {
+      "hash": "f1ad8a341d04c6dd6ec16f57d88abd74576a4e224c141a1d25a04a26840f96bc",
+      "count": 2,
+      "size_bytes": 13711,
+      "extension": ".md",
+      "files": [
+        "agent_workspaces\\Agent-1\\extracted_patterns\\templates\\project_journal_template.md",
+        "phase3b_backup\\archive\\auto_blogger_project\\Auto_Blogger\\Prompts\\project entry template prompt.md"
+      ]
+    },
+    {
+      "hash": "4fb46391dcca27bd4f7f09ea1f308ba29a63b39ba92bf1f3a7a50a285f9bcc60",
+      "count": 2,
+      "size_bytes": 698,
+      "extension": ".js",
+      "files": [
+        "agent_workspaces\\Agent-1\\extracted_patterns\\testing_patterns\\jest.teardown.js",
+        "archive\\auto_blogger_project\\Auto_Blogger\\tests\\jest.teardown.js"
+      ]
+    },
+    {
+      "hash": "2170f23a6ed09e4d0aee99f4d7717ee66b014fb2f597fabcf0616ea7b79e69aa",
+      "count": 2,
+      "size_bytes": 18512,
+      "extension": ".py",
+      "files": [
+        "agent_workspaces\\Agent-1\\extracted_patterns\\utilities\\project_scanner.py",
+        "archive\\auto_blogger_project\\Auto_Blogger\\project_scanner.py"
+      ]
+    },
+    {
+      "hash": "d082780380a7d43816708de187eccdb434eda0d5288088fbdcc9ddc398267c7a",
+      "count": 2,
+      "size_bytes": 7002,
+      "extension": ".md",
+      "files": [
+        "phase3b_backup\\archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\MIGRATION_GUIDE.md",
+        "systems\\scrapers\\scrapers\\MIGRATION_GUIDE.md"
+      ]
+    },
+    {
+      "hash": "fb33e3d5be1a94c2ca2a7aede51dd287dd06437ff3025ca824300b39134eafea",
+      "count": 2,
+      "size_bytes": 6384,
+      "extension": ".md",
+      "files": [
+        "phase3b_backup\\archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\SCRAPER_CONSOLIDATION_GUIDE.md",
+        "systems\\scrapers\\scrapers\\SCRAPER_CONSOLIDATION_GUIDE.md"
+      ]
+    },
+    {
+      "hash": "073915212937bca30a05e5a23e931a65d0660af128dd2eb565bb53d25e8b9a6c",
+      "count": 3,
+      "size_bytes": 1543,
+      "extension": ".txt",
+      "files": [
+        "phase3b_backup\\archive\\dreamscape_project\\Thea\\outputs\\data\\templates\\chatgpt_sent_template_20250711_151139.txt",
+        "phase3b_backup\\archive\\dreamscape_project\\Thea\\outputs\\data\\templates\\chatgpt_sent_template_20250711_151356.txt",
+        "archive\\dreamscape_project\\Thea\\outputs\\data\\templates\\chatgpt_sent_template_20250711_150816.txt"
+      ]
+    },
+    {
+      "hash": "d1108079e1a4cecef78b9aa555294970da97f5d5b4bc81a3f3441d3f2e980109",
+      "count": 2,
+      "size_bytes": 995,
+      "extension": ".txt",
+      "files": [
+        "phase3b_backup\\archive\\dreamscape_project\\Thea\\outputs\\data\\templates\\context_sent_template_20250711_153258.txt",
+        "archive\\dreamscape_project\\Thea\\outputs\\data\\templates\\context_sent_template_20250711_152714.txt"
+      ]
+    },
+    {
+      "hash": "3b45c01c0249192c4f5dc8f74a8a65675875526a6c7d9dd1785d387ae9656f7a",
+      "count": 3,
+      "size_bytes": 1543,
+      "extension": ".txt",
+      "files": [
+        "phase3b_backup\\archive\\dreamscape_project\\Thea\\outputs\\data\\templates\\working_demo_template_20250711_035629.txt",
+        "phase3b_backup\\archive\\dreamscape_project\\Thea\\outputs\\data\\templates\\working_demo_template_20250711_150643.txt",
+        "archive\\dreamscape_project\\Thea\\outputs\\data\\templates\\simple_sent_template_20250711_152323.txt"
+      ]
+    },
+    {
+      "hash": "bad650f5b22da4bd21a0bea5db61482a176d7fd13a20a8c50505fb4bbc8fa4a0",
+      "count": 6,
+      "size_bytes": 4933,
+      "extension": ".png",
+      "files": [
+        "phase3b_backup\\temp\\discord_images\\mermaid_33137.png",
+        "phase3b_backup\\temp\\discord_images\\mermaid_32451.png",
+        "phase3b_backup\\temp\\discord_images\\mermaid_9448.png",
+        "phase3b_backup\\temp\\discord_images\\mermaid_80916.png",
+        "phase3b_backup\\temp\\discord_images\\mermaid_85848.png",
+        "temp\\discord_images\\mermaid_46872.png"
+      ]
+    },
+    {
+      "hash": "9c28a83690b8fc6015bb21b820735507402d8869a7bae78c3133bcaad8622433",
+      "count": 30,
+      "size_bytes": 10,
+      "extension": ".md",
+      "files": [
+        "phase3b_backup\\artifacts\\2025-12-12_agent-5_analytics-security-audit.md",
+        "phase3b_backup\\artifacts\\2025-12-12_agent-5_analytics-ssot-coverage-analysis.md",
+        "phase3b_backup\\artifacts\\2025-12-12_agent-5_analytics-ssot-verification-complete.md",
+        "phase3b_backup\\artifacts\\2025-12-12_agent-5_analytics-validation-approach.md",
+        "phase3b_backup\\artifacts\\2025-12-12_agent-5_audit-artifact-index.md",
+        "phase3b_backup\\artifacts\\2025-12-12_agent-5_audit-completion-certificate.md",
+        "phase3b_backup\\artifacts\\2025-12-12_agent-5_audit-comprehensive-final-report.md",
+        "phase3b_backup\\artifacts\\2025-12-12_agent-5_audit-delegation-summary.md",
+        "phase3b_backup\\artifacts\\2025-12-12_agent-5_audit-executive-summary.md",
+        "phase3b_backup\\artifacts\\2025-12-12_agent-5_audit-final-status.md",
+        "phase3b_backup\\artifacts\\2025-12-12_agent-5_audit-metrics-impact.md",
+        "phase3b_backup\\artifacts\\2025-12-12_agent-5_bilateral-coordination-activation.md",
+        "phase3b_backup\\artifacts\\2025-12-12_agent-5_ci-workflow-validation.md",
+        "phase3b_backup\\artifacts\\2025-12-12_agent-5_cleanup-summary-final.md",
+        "phase3b_backup\\artifacts\\2025-12-12_agent-5_code-comment-review-response.md",
+        "phase3b_backup\\artifacts\\2025-12-12_agent-5_coordination-metrics-summary.md",
+        "phase3b_backup\\artifacts\\2025-12-12_agent-5_data-processing-security-scan.md",
+        "phase3b_backup\\artifacts\\2025-12-12_agent-5_discord-bot-diagnostic.md",
+        "phase3b_backup\\artifacts\\2025-12-12_agent-5_documentation-cleanup-analysis.md",
+        "phase3b_backup\\artifacts\\2025-12-12_agent-5_import-structure-delegation.md",
+        "phase3b_backup\\artifacts\\2025-12-12_agent-5_message-queue-health-check.md",
+        "phase3b_backup\\artifacts\\2025-12-12_agent-5_other-domains-assessment.md",
+        "phase3b_backup\\artifacts\\2025-12-12_agent-5_pre-public-audit-final-report.md",
+        "phase3b_backup\\artifacts\\2025-12-12_agent-5_pre-public-audit-plan.md",
+        "phase3b_backup\\artifacts\\2025-12-12_agent-5_session-summary.md",
+        "phase3b_backup\\artifacts\\2025-12-13_agent-5_daily-coordination-summary.md",
+        "phase3b_backup\\artifacts\\2025-12-13_agent-5_discord-bot-diagnostic-validation.md",
+        "phase3b_backup\\artifacts\\2025-12-13_agent-5_session-progress-summary.md",
+        "phase3b_backup\\scripts\\extract_freeride_error.py",
+        "artifacts\\2025-12-12_agent-5_analytics-import-validation-results.md"
+      ]
+    },
+    {
+      "hash": "b55dc3f1e666e2ad3e509baa6d84de8db3b35179cf78ec4b43fad0a1d1d7ae65",
+      "count": 2,
+      "size_bytes": 312,
+      "extension": ".py",
+      "files": [
+        "tools\\lead_harvesting\\scrapers\\__init__.py",
+        "archive\\lead_harvester\\contract-leads\\scrapers\\__init__.py"
+      ]
+    },
+    {
+      "hash": "498b1ad0343ffa24e0a1d72a37534e5a2da8e9953cacadcd53a90ff017fea1ab",
+      "count": 2,
+      "size_bytes": 578,
+      "extension": ".py",
+      "files": [
+        "tools\\lead_harvesting\\scrapers\\base.py",
+        "archive\\lead_harvester\\contract-leads\\scrapers\\base.py"
+      ]
+    },
+    {
+      "hash": "93b9131c4df37a9559b119f01acdb3ccb7392ca620d77fbf0af6e3062b8281c9",
+      "count": 2,
+      "size_bytes": 1386,
+      "extension": ".py",
+      "files": [
+        "tools\\lead_harvesting\\scrapers\\craigslist.py",
+        "archive\\lead_harvester\\contract-leads\\scrapers\\craigslist.py"
+      ]
+    },
+    {
+      "hash": "845fd09271835f463b3805e9ea6ffd10a7546622fbebff5a1bbd6152e769e8c0",
+      "count": 2,
+      "size_bytes": 1174,
+      "extension": ".py",
+      "files": [
+        "tools\\lead_harvesting\\scrapers\\reddit.py",
+        "archive\\lead_harvester\\contract-leads\\scrapers\\reddit.py"
+      ]
+    },
+    {
+      "hash": "9c5498bb89903ae2727cff33fa293dd4f4233d0d3dc6122a4855bfcb9f03e6ca",
+      "count": 2,
+      "size_bytes": 1150,
+      "extension": ".py",
+      "files": [
+        "tools\\lead_harvesting\\scrapers\\remoteok.py",
+        "archive\\lead_harvester\\contract-leads\\scrapers\\remoteok.py"
+      ]
+    },
+    {
+      "hash": "9437dda0106b6984de5eec3776e7d9d8fb953a76725f860c44d3bb8c0abcd51f",
+      "count": 2,
+      "size_bytes": 1398,
+      "extension": ".py",
+      "files": [
+        "tools\\lead_harvesting\\scrapers\\weworkremotely.py",
+        "archive\\lead_harvester\\contract-leads\\scrapers\\weworkremotely.py"
+      ]
+    },
+    {
+      "hash": "311761572f10e9952ef6fb67af8b34ce1d40cca0c4874640d02a27a8acd76955",
+      "count": 2,
+      "size_bytes": 1533,
+      "extension": ".py",
+      "files": [
+        "tools\\lead_exports\\outputs.py",
+        "archive\\lead_harvester\\contract-leads\\outputs.py"
+      ]
+    },
+    {
+      "hash": "f094c147b1aff641c7901aac4e27265322f9bd10afd19f8210102b44aa3a0eb7",
+      "count": 2,
+      "size_bytes": 3590,
+      "extension": ".py",
+      "files": [
+        "tools\\code_analysis\\Agents\\AIAgent.py",
+        "archive\\agent_refactor_project\\agentproject\\Agents\\AIAgent.py"
+      ]
+    },
+    {
+      "hash": "608916982cffc8d81f78de2a94b147bd45588bc42331c1a82db6ae7f50cb84ba",
+      "count": 2,
+      "size_bytes": 7828,
+      "extension": ".py",
+      "files": [
+        "tools\\code_analysis\\Agents\\AIAgentWithMemory.py",
+        "archive\\agent_refactor_project\\agentproject\\Agents\\AIAgentWithMemory.py"
+      ]
+    },
+    {
+      "hash": "e7a6ff665993ec5a4a9704e4d6ec896bff89857e2c6bb2aae10f5b8132cb7f26",
+      "count": 2,
+      "size_bytes": 518,
+      "extension": ".py",
+      "files": [
+        "tools\\code_analysis\\Agents\\AIModel.py",
+        "archive\\agent_refactor_project\\agentproject\\Agents\\AIModel.py"
+      ]
+    },
+    {
+      "hash": "2e989f4e7a5cb86a479b2b4f031a170f3bf16de07072fec46723ae16c2d00652",
+      "count": 2,
+      "size_bytes": 7583,
+      "extension": ".py",
+      "files": [
+        "tools\\code_analysis\\Agents\\AgentActor.py",
+        "archive\\agent_refactor_project\\agentproject\\Agents\\AgentActor.py"
+      ]
+    },
+    {
+      "hash": "93263745e7eba8fcb1245ae2c4e7289abb37df8940f433616571e095ddaa314b",
+      "count": 2,
+      "size_bytes": 10003,
+      "extension": ".py",
+      "files": [
+        "tools\\code_analysis\\Agents\\AgentGUI.py",
+        "archive\\agent_refactor_project\\agentproject\\Agents\\AgentGUI.py"
+      ]
+    },
+    {
+      "hash": "beb18a20778afcb26ca919a6747aefedf5c80cbfc0e58d86c2f5a8c6fbab4703",
+      "count": 2,
+      "size_bytes": 5460,
+      "extension": ".py",
+      "files": [
+        "tools\\code_analysis\\Agents\\AgentRegistry.py",
+        "archive\\agent_refactor_project\\agentproject\\Agents\\AgentRegistry.py"
+      ]
+    },
+    {
+      "hash": "2929a323135e120effab50dfa8e7680a97a42819c3bf86f57d295299fa494100",
+      "count": 2,
+      "size_bytes": 3995,
+      "extension": ".py",
+      "files": [
+        "tools\\code_analysis\\Agents\\ContextManager.py",
+        "archive\\agent_refactor_project\\agentproject\\Agents\\ContextManager.py"
+      ]
+    },
+    {
+      "hash": "880f9e307d28c384de498e133c815d4bc65f29039f1632dfd3721f91a9ee777c",
+      "count": 2,
+      "size_bytes": 5616,
+      "extension": ".py",
+      "files": [
+        "tools\\code_analysis\\Agents\\CustomAgent.py",
+        "archive\\agent_refactor_project\\agentproject\\Agents\\CustomAgent.py"
+      ]
+    },
+    {
+      "hash": "5bdc731b110f1413d102887effb41cd784f98268b5923b163e09e4c570b95a04",
+      "count": 2,
+      "size_bytes": 12855,
+      "extension": ".py",
+      "files": [
+        "tools\\code_analysis\\Agents\\DebugAgent.py",
+        "archive\\agent_refactor_project\\agentproject\\Agents\\DebugAgent.py"
+      ]
+    },
+    {
+      "hash": "c7b3ce50684b2a564f74184d3727c866b2c11e5941a051721ff1f898c980350e",
+      "count": 2,
+      "size_bytes": 8568,
+      "extension": ".py",
+      "files": [
+        "tools\\code_analysis\\Agents\\DeepSeekModel.py",
+        "archive\\agent_refactor_project\\agentproject\\Agents\\DeepSeekModel.py"
+      ]
+    },
+    {
+      "hash": "303acc8eeeb6845908df5e5a202848d05c3cc605f111051470fc70caa6ca054f",
+      "count": 2,
+      "size_bytes": 6843,
+      "extension": ".py",
+      "files": [
+        "tools\\code_analysis\\Agents\\ErrorDetector.py",
+        "archive\\agent_refactor_project\\agentproject\\Agents\\ErrorDetector.py"
+      ]
+    },
+    {
+      "hash": "b7680d41ecae9bcf5ef2c3bfeec2a54a93c247ae8513da01e5e2361dd9aad9b2",
+      "count": 2,
+      "size_bytes": 5043,
+      "extension": ".py",
+      "files": [
+        "tools\\code_analysis\\Agents\\JournalAgent.py",
+        "archive\\agent_refactor_project\\agentproject\\Agents\\JournalAgent.py"
+      ]
+    },
+    {
+      "hash": "7743cb2aa6720bcc40f8bee78b01347e996022225205481cc033565289a0ac21",
+      "count": 2,
+      "size_bytes": 341,
+      "extension": ".py",
+      "files": [
+        "tools\\code_analysis\\Agents\\MistralModel.py",
+        "archive\\agent_refactor_project\\agentproject\\Agents\\MistralModel.py"
+      ]
+    },
+    {
+      "hash": "a6d38323fbbf8322d5bf4ae74de0e4fb1bfc3979d217f55ab0eadbb67db67c9e",
+      "count": 2,
+      "size_bytes": 1251,
+      "extension": ".py",
+      "files": [
+        "tools\\code_analysis\\Agents\\MyAIModel.py",
+        "archive\\agent_refactor_project\\agentproject\\Agents\\MyAIModel.py"
+      ]
+    },
+    {
+      "hash": "6f3130b0881ee11e1de2e7928f9314d5d76d9ad4ab899cc6da096af9497a1b4b",
+      "count": 2,
+      "size_bytes": 979,
+      "extension": ".py",
+      "files": [
+        "tools\\code_analysis\\Agents\\OllamaModel.py",
+        "archive\\agent_refactor_project\\agentproject\\Agents\\OllamaModel.py"
+      ]
+    },
+    {
+      "hash": "641a47d61eb05db569220eae7146f0adb3c6df61b664b01c9ea75180c9c0de3e",
+      "count": 2,
+      "size_bytes": 6726,
+      "extension": ".py",
+      "files": [
+        "tools\\code_analysis\\Agents\\OpenAIModel.py",
+        "archive\\agent_refactor_project\\agentproject\\Agents\\OpenAIModel.py"
+      ]
+    },
+    {
+      "hash": "65f9ed65f948ab6f5b137f07df1fec9af4e69879caaa581a5f228124d37d882b",
+      "count": 2,
+      "size_bytes": 2241,
+      "extension": ".py",
+      "files": [
+        "tools\\code_analysis\\Agents\\SubprocessAIModel.py",
+        "archive\\agent_refactor_project\\agentproject\\Agents\\SubprocessAIModel.py"
+      ]
+    },
+    {
+      "hash": "c2f2bc9c3765366553cb735e2b8dbe70f2177b0c9e92e59b5f170bf7ccec8109",
+      "count": 2,
+      "size_bytes": 918,
+      "extension": ".py",
+      "files": [
+        "tools\\code_analysis\\Agents\\__init__.py",
+        "archive\\agent_refactor_project\\agentproject\\Agents\\__init__.py"
+      ]
+    },
+    {
+      "hash": "8129b2a07ca81a3795c388c2e2f2df5adb93f326e6bcfed09fba47fa80cafe49",
+      "count": 2,
+      "size_bytes": 8323,
+      "extension": ".py",
+      "files": [
+        "tools\\code_analysis\\Agents\\core\\AIClient.py",
+        "archive\\agent_refactor_project\\agentproject\\Agents\\core\\AIClient.py"
+      ]
+    },
+    {
+      "hash": "eb5bca33ae17c4e4ac0cc0c1f7a6e3b1df5bf47f21548176e12705dbb0b10d28",
+      "count": 2,
+      "size_bytes": 18472,
+      "extension": ".py",
+      "files": [
+        "tools\\code_analysis\\Agents\\core\\AgentBase.py",
+        "archive\\agent_refactor_project\\agentproject\\Agents\\core\\AgentBase.py"
+      ]
+    },
+    {
+      "hash": "dfbd27616ed68d5f262f21296da2614b568b7b666dc30e114f1e8a78e5ff88ac",
+      "count": 2,
+      "size_bytes": 3502,
+      "extension": ".py",
+      "files": [
+        "tools\\code_analysis\\Agents\\core\\AgentPlanner.py",
+        "archive\\agent_refactor_project\\agentproject\\Agents\\core\\AgentPlanner.py"
+      ]
+    },
+    {
+      "hash": "9b8e4195d411913babeb9ff30c180b73789a270dab599dadb146fed849252e17",
+      "count": 2,
+      "size_bytes": 3060,
+      "extension": ".py",
+      "files": [
+        "tools\\code_analysis\\Agents\\core\\ExternalAIAdapter.py",
+        "archive\\agent_refactor_project\\agentproject\\Agents\\core\\ExternalAIAdapter.py"
+      ]
+    },
+    {
+      "hash": "93f5a7e3ab9062eead8eead14d1a04a2059a98f586c1daa6de0b65045909c7ec",
+      "count": 2,
+      "size_bytes": 295,
+      "extension": ".py",
+      "files": [
+        "tools\\code_analysis\\Agents\\core\\__init__.py",
+        "archive\\agent_refactor_project\\agentproject\\Agents\\core\\__init__.py"
+      ]
+    },
+    {
+      "hash": "9dca3e5f09c3276a27acc6aca17d2ebd4121dbb192de90eaaeedaa1ec7c38819",
+      "count": 2,
+      "size_bytes": 732,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\__init__.py"
+      ]
+    },
+    {
+      "hash": "edcac55aa738a09f74cb701ea09c9a190e06afedbbb46f6d890d34b7500ef3de",
+      "count": 2,
+      "size_bytes": 10524,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\engine.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\engine.py"
+      ]
+    },
+    {
+      "hash": "0a6f3dca36a9a8747bab1257cb8eea57e4a4f22e04d1f0a843590fe409726ede",
+      "count": 2,
+      "size_bytes": 21382,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\enhanced_progress_system.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\enhanced_progress_system.py"
+      ]
+    },
+    {
+      "hash": "39378a1a63e6b3c1d0f169d1f1eb12cd8ad7b0126b5b70d5fa09cf2547d0c01e",
+      "count": 2,
+      "size_bytes": 47344,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\enhanced_skill_resume_system.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\enhanced_skill_resume_system.py"
+      ]
+    },
+    {
+      "hash": "c40489ee121abedf42c7181f54bc385da5ff848d009a7ab7d0e36dfa50de03f7",
+      "count": 2,
+      "size_bytes": 45217,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\llm_summarization_pipeline.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\llm_summarization_pipeline.py"
+      ]
+    },
+    {
+      "hash": "ed959dfad64521674f16ade93b9476681509834a7d5471733279ebc32aa6eb6b",
+      "count": 2,
+      "size_bytes": 36247,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\mmorpg_engine.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\mmorpg_engine.py"
+      ]
+    },
+    {
+      "hash": "ff804b97d5bd6c3d0473427fab4f453c27ce47362246f5e21bb669ab8062c545",
+      "count": 2,
+      "size_bytes": 88694,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\mmorpg_system.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\mmorpg_system.py"
+      ]
+    },
+    {
+      "hash": "d5c685c4a5d7c9f3d19267c2bb473ce628a9920e24e78557b899c29b18aee187",
+      "count": 2,
+      "size_bytes": 15622,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\mmorpg_system_refactored.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\mmorpg_system_refactored.py"
+      ]
+    },
+    {
+      "hash": "d1ec483a3c64f48d7f3cbe7abe2c724e14ab7f7ac66611e7b559770809d8c38c",
+      "count": 2,
+      "size_bytes": 9437,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\models.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\models.py"
+      ]
+    },
+    {
+      "hash": "f2c6ef9ad55a59c8e3676e49819a99a6c70af458f10fc66a64364f7dffc5583c",
+      "count": 2,
+      "size_bytes": 348,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\resume_tracker.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\resume_tracker.py"
+      ]
+    },
+    {
+      "hash": "9e2028231cf6bca8d03cd1020129fd6fbd8aa19bc06c167b299e4e8b067b7ded",
+      "count": 2,
+      "size_bytes": 34049,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\resume_weaponizer.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\resume_weaponizer.py"
+      ]
+    },
+    {
+      "hash": "5be9da386a4b106bec936fa9bf35bb2547971c4e088e77fa44f7f4b65f4ab54c",
+      "count": 2,
+      "size_bytes": 12166,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\skills.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\skills.py"
+      ]
+    },
+    {
+      "hash": "f4ef052990136387b9a8f36b6c92a4ffcce44b38c7598f4453eba0834093c13d",
+      "count": 2,
+      "size_bytes": 174,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\analysis\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\analysis\\__init__.py"
+      ]
+    },
+    {
+      "hash": "9981728f6b2056462d478fa4ceb41afb5d6682a1a69e366d5132df3b988ba12b",
+      "count": 2,
+      "size_bytes": 1542,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\analysis\\knowledge_graph_backend.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\analysis\\knowledge_graph_backend.py"
+      ]
+    },
+    {
+      "hash": "9b253dd230322146a37c236943b193fb8a3cc05e4681a992f4f0f059e483dc60",
+      "count": 2,
+      "size_bytes": 299,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\core\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\core\\__init__.py"
+      ]
+    },
+    {
+      "hash": "eadae42f8c5734dc54457f5473ccce5c77688a0986e0fcf82c3dbdede0205b9d",
+      "count": 2,
+      "size_bytes": 6565,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\core\\base_system.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\core\\base_system.py"
+      ]
+    },
+    {
+      "hash": "2bdfc94fc4450a11bd9295d1364cc81b737991567159a77d7870814a68173968",
+      "count": 2,
+      "size_bytes": 8794,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\core\\game_state.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\core\\game_state.py"
+      ]
+    },
+    {
+      "hash": "8367e4614c18b5d84cb857d9771b7db190146a866f7bad0201dc46911b26d622",
+      "count": 2,
+      "size_bytes": 19937,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\core\\mmorpg_engine.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\core\\mmorpg_engine.py"
+      ]
+    },
+    {
+      "hash": "9f4aff912e9837fc1619c648eb43004638601b2a627ceabe5a5a6a4e67064f21",
+      "count": 2,
+      "size_bytes": 11903,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\core\\player_manager.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\core\\player_manager.py"
+      ]
+    },
+    {
+      "hash": "02df857e37a691f5d6be932b8746d01ef24a278ea08bcc2b0e537e756ad85966",
+      "count": 2,
+      "size_bytes": 366,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\engine\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\engine\\__init__.py"
+      ]
+    },
+    {
+      "hash": "dc0c28dded89b25eb69922144a50617105539de3318c553e7db4b64b6ecf50a7",
+      "count": 2,
+      "size_bytes": 8665,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\engine\\game_engine.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\engine\\game_engine.py"
+      ]
+    },
+    {
+      "hash": "a2acbe619540280fcea958d3ffbe732320f98fa5513c983ff4e82d870ed14950",
+      "count": 2,
+      "size_bytes": 14479,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\engine\\infinite_progression.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\engine\\infinite_progression.py"
+      ]
+    },
+    {
+      "hash": "6294af1a2cb5a35cc9df3be143d468b3141ad0ba47804ec6d1c0e52d7f7e03bc",
+      "count": 2,
+      "size_bytes": 15238,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\engine\\progress_system.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\engine\\progress_system.py"
+      ]
+    },
+    {
+      "hash": "d9d74fa7450e2e9d2d0abd4f6d347434f4e5b91f903849cbb0a716706e0239db",
+      "count": 2,
+      "size_bytes": 10610,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\engine\\progression.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\engine\\progression.py"
+      ]
+    },
+    {
+      "hash": "51970e0d1e2fffb9ed7dc697dcf587c0ed93d9c0940ab3a5ff8d9262615b7680",
+      "count": 2,
+      "size_bytes": 16665,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\engine\\skill_system.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\engine\\skill_system.py"
+      ]
+    },
+    {
+      "hash": "61896d0620e0c2d99ff2fa2028d5fbbc9aee60b54468e8a342612ff271727de0",
+      "count": 2,
+      "size_bytes": 386,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\models\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\models\\__init__.py"
+      ]
+    },
+    {
+      "hash": "43a25d9735cbf29bd195d757477bf2d34960471e18f8a8fc351dbf1327cdb23c",
+      "count": 2,
+      "size_bytes": 10476,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\models\\achievement.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\models\\achievement.py"
+      ]
+    },
+    {
+      "hash": "713c9145178b839716c2681663e353fb3d66dbb6d743cfc98cd0474ad2814158",
+      "count": 2,
+      "size_bytes": 1768,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\models\\enums.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\models\\enums.py"
+      ]
+    },
+    {
+      "hash": "55026cfee82dcac411ab0f3793d52126e0cd1a2bedf634a22d61e04a054e9c1e",
+      "count": 2,
+      "size_bytes": 553,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\models\\knowledge.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\models\\knowledge.py"
+      ]
+    },
+    {
+      "hash": "81afeadc7f30843b2f34b967346ebb40c556de91b1ef3f3891ad83a3b356f2c4",
+      "count": 2,
+      "size_bytes": 9640,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\models\\mmorpg_models.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\models\\mmorpg_models.py"
+      ]
+    },
+    {
+      "hash": "80d25e2b13e98fca603cab5c89ee034edfb9ed1c5dedb52156fd5c5da7c810db",
+      "count": 2,
+      "size_bytes": 8202,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\models\\player.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\models\\player.py"
+      ]
+    },
+    {
+      "hash": "62a1aa77b26c735a9e0f392b5b5956291a8464b12a2393240c3727421a4d82b9",
+      "count": 2,
+      "size_bytes": 3764,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\models\\quest.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\models\\quest.py"
+      ]
+    },
+    {
+      "hash": "2092f570267f6c3aabd291197e6a84f9161b007244e2e2b6d66c48108ebd8a38",
+      "count": 2,
+      "size_bytes": 4237,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\models\\skill.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\models\\skill.py"
+      ]
+    },
+    {
+      "hash": "3d292153df96a8fae5d32cb9ac4cf621e7e7cb0d7c81307dba78dad9ccc7562e",
+      "count": 2,
+      "size_bytes": 215,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\progress\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\progress\\__init__.py"
+      ]
+    },
+    {
+      "hash": "5debffb8af16321cb7fc607783ca94b5985b7ac0eea14481931ef315ee1b0a2d",
+      "count": 2,
+      "size_bytes": 20753,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\progress\\progress_tracker.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\progress\\progress_tracker.py"
+      ]
+    },
+    {
+      "hash": "fff3c0c0cdcf0f1e573d239887aca8557beeb7daa78a6e06d05cc94d41926312",
+      "count": 2,
+      "size_bytes": 323,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\resume\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\resume\\__init__.py"
+      ]
+    },
+    {
+      "hash": "51a222b3ae69d73e7e0e88ed8d83802c8014a6db935eb80f6d3c482123e40af6",
+      "count": 2,
+      "size_bytes": 9791,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\resume\\resume_generator.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\resume\\resume_generator.py"
+      ]
+    },
+    {
+      "hash": "03d83ee671c3030eef6269e6949c88ba200ee85adaa7ccd7415725453108119c",
+      "count": 2,
+      "size_bytes": 34865,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\resume\\resume_system.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\resume\\resume_system.py"
+      ]
+    },
+    {
+      "hash": "e53d458f563619c33cd0385960892ed564130120a5ce93c6278f8b00f1c8e391",
+      "count": 2,
+      "size_bytes": 9816,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\resume\\resume_tracker.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\resume\\resume_tracker.py"
+      ]
+    },
+    {
+      "hash": "be0d86faa21b44244580d4a14b1a322b36b18ed8e766c61c75a825470986b6cb",
+      "count": 2,
+      "size_bytes": 19481,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\resume\\resume_weaponizer.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\resume\\resume_weaponizer.py"
+      ]
+    },
+    {
+      "hash": "b9eeeba0aff5e44dd7d57a2f38bc935c9f61239699d1b6220f588c21fcdd3554",
+      "count": 2,
+      "size_bytes": 329,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\skills\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\skills\\__init__.py"
+      ]
+    },
+    {
+      "hash": "27a2cef22d296749eb44fb4f503a8e4128337e11ae80867419499492a301d950",
+      "count": 2,
+      "size_bytes": 17587,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\skills\\enhanced_skill_resume.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\skills\\enhanced_skill_resume.py"
+      ]
+    },
+    {
+      "hash": "973e049ef4d0d0515d9d080d47b9aab3fcf7c511730fd73696cfd153aa0f0c03",
+      "count": 2,
+      "size_bytes": 1180,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\skills\\skill_calculator.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\skills\\skill_calculator.py"
+      ]
+    },
+    {
+      "hash": "4b0b8f3673854e9c88f7297a64bb20fedbe640cea7aae5b83cf996155d9d0a59",
+      "count": 2,
+      "size_bytes": 15106,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\skills\\skill_manager.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\skills\\skill_manager.py"
+      ]
+    },
+    {
+      "hash": "6a9c8f120e9431692bf7b7ce9a2e493192607f1663c4c2a364fcc1eb3402c0a0",
+      "count": 2,
+      "size_bytes": 1227,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\skills\\skill_tracker.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\skills\\skill_tracker.py"
+      ]
+    },
+    {
+      "hash": "9103e90a9f74b1cc7e96332d553fed0a58a756a379ebccbe4ca134dcf4a5500d",
+      "count": 2,
+      "size_bytes": 425,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\systems\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\systems\\__init__.py"
+      ]
+    },
+    {
+      "hash": "ae35632f7bda492eb961353e1fc6aa8f4d496b467314adc5aab997b6d06bb37e",
+      "count": 2,
+      "size_bytes": 11181,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\systems\\achievement_system.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\systems\\achievement_system.py"
+      ]
+    },
+    {
+      "hash": "ded05bbc3f90e6db35e916284fbac50efa461dc54b2c805443a8dcb03bdd5594",
+      "count": 2,
+      "size_bytes": 22602,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\systems\\character_system.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\systems\\character_system.py"
+      ]
+    },
+    {
+      "hash": "12b774d9a40e090fac7e7814c2269ad750d369c222b2837e715dc3963a5d8a2f",
+      "count": 2,
+      "size_bytes": 568,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\systems\\equipment_system.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\systems\\equipment_system.py"
+      ]
+    },
+    {
+      "hash": "6ce478a58bec945aa737ca326116dc2c63015f5859af03e052d9d067629013eb",
+      "count": 2,
+      "size_bytes": 58,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\systems\\quest_system.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\systems\\quest_system.py"
+      ]
+    },
+    {
+      "hash": "2a23f53badced76bc839e00aeba16a72feee85f687abd438658a9a15bed61805",
+      "count": 2,
+      "size_bytes": 16398,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\systems\\skill_system.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\systems\\skill_system.py"
+      ]
+    },
+    {
+      "hash": "584938e588236227b5f362c3323d56811363c487ea9aa9f3f207a23f16bd968e",
+      "count": 2,
+      "size_bytes": 22185,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\systems\\world_system.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\systems\\world_system.py"
+      ]
+    },
+    {
+      "hash": "0b51f582bec43832438a845631480683a1228779e932e96720bdd188723e2935",
+      "count": 2,
+      "size_bytes": 160,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\tracking\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\tracking\\__init__.py"
+      ]
+    },
+    {
+      "hash": "4b68c55f8bbccd6a1671ba799e8f23598d5c6c5da5d9c3e194487cdb9e31a3e0",
+      "count": 2,
+      "size_bytes": 19610,
+      "extension": ".py",
+      "files": [
+        "systems\\gamification\\mmorpg\\tracking\\progress_tracker.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\mmorpg\\tracking\\progress_tracker.py"
+      ]
+    },
+    {
+      "hash": "ab4656970769e7034f575e68e3883e3f0c3c29febf43a968890c830ad5dfb0ef",
+      "count": 2,
+      "size_bytes": 189,
+      "extension": ".py",
+      "files": [
+        "systems\\memory\\memory\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\memory\\__init__.py"
+      ]
+    },
+    {
+      "hash": "f4e62e5e1bfc60e52078e8d46c9c5f50cd2af2be509ec81098db5f858f64f5d8",
+      "count": 2,
+      "size_bytes": 2511,
+      "extension": ".py",
+      "files": [
+        "systems\\memory\\memory\\convenience.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\memory\\convenience.py"
+      ]
+    },
+    {
+      "hash": "abf1502e7830174f91bf479b5d3cf005574c203225031b105d38502a10100ac1",
+      "count": 2,
+      "size_bytes": 293,
+      "extension": ".py",
+      "files": [
+        "systems\\memory\\memory\\api\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\memory\\api\\__init__.py"
+      ]
+    },
+    {
+      "hash": "c082c6c6d462233b70661226997763ababd66cd70d8d16db3877a0260eb522a4",
+      "count": 2,
+      "size_bytes": 987,
+      "extension": ".py",
+      "files": [
+        "systems\\memory\\memory\\api\\agent_api.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\memory\\api\\agent_api.py"
+      ]
+    },
+    {
+      "hash": "e9c77f17387e2876b62b6f11a416fd1f485dd2a63f6ab6af5d8b21cb80a0eebc",
+      "count": 2,
+      "size_bytes": 6369,
+      "extension": ".py",
+      "files": [
+        "systems\\memory\\memory\\api\\memory_api.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\memory\\api\\memory_api.py"
+      ]
+    },
+    {
+      "hash": "510663a5805ee2079734dd1187a86ddd52073c9f2fd73de71a73f8f7b8abfc6b",
+      "count": 2,
+      "size_bytes": 1687,
+      "extension": ".py",
+      "files": [
+        "systems\\memory\\memory\\api\\prompt_api.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\memory\\api\\prompt_api.py"
+      ]
+    },
+    {
+      "hash": "c8409a4eb25f08c9b3a0ccb18ec4efc42b50d1dff399e8fb803343f029474ecd",
+      "count": 2,
+      "size_bytes": 211,
+      "extension": ".py",
+      "files": [
+        "systems\\memory\\memory\\models\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\memory\\models\\__init__.py"
+      ]
+    },
+    {
+      "hash": "43d6c9e4900109ddbb6d3f647c71a734515103536e22e7e299b238785065b4f3",
+      "count": 2,
+      "size_bytes": 10652,
+      "extension": ".py",
+      "files": [
+        "systems\\memory\\memory\\models\\dreamscape_memory.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\memory\\models\\dreamscape_memory.py"
+      ]
+    },
+    {
+      "hash": "925985193ee2c85814a06abfef96db01e922c81b83747e2fd3ccd46d14e62cca",
+      "count": 2,
+      "size_bytes": 506,
+      "extension": ".py",
+      "files": [
+        "systems\\memory\\memory\\models\\memory_chunk.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\memory\\models\\memory_chunk.py"
+      ]
+    },
+    {
+      "hash": "440e6759013962ae037130220bd51dfbf6d8f4b0ac8f0899ccfdb2baac7974e9",
+      "count": 2,
+      "size_bytes": 219,
+      "extension": ".py",
+      "files": [
+        "systems\\memory\\memory\\processing\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\memory\\processing\\__init__.py"
+      ]
+    },
+    {
+      "hash": "0ccc75b81a507223c566beef5ae06e5da3f016aaf571c496cfe89649073a60c5",
+      "count": 2,
+      "size_bytes": 3624,
+      "extension": ".py",
+      "files": [
+        "systems\\memory\\memory\\processing\\content_processor.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\memory\\processing\\content_processor.py"
+      ]
+    },
+    {
+      "hash": "f121f7a1a298a1f8dbc0c338519f0103e97f70340e78776ba995dd7cae7d5cf6",
+      "count": 2,
+      "size_bytes": 1624,
+      "extension": ".py",
+      "files": [
+        "systems\\memory\\memory\\processing\\prompt_processor.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\memory\\processing\\prompt_processor.py"
+      ]
+    },
+    {
+      "hash": "258a2cd49d705588cccc14f01d9ba2eaee5d95ed2b5da705e459cb625aec736b",
+      "count": 2,
+      "size_bytes": 207,
+      "extension": ".py",
+      "files": [
+        "systems\\memory\\memory\\search\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\memory\\search\\__init__.py"
+      ]
+    },
+    {
+      "hash": "930c8c8960d0f63dcac71bb2669ff3a1f49a539fcda316c503e4550142436121",
+      "count": 2,
+      "size_bytes": 2991,
+      "extension": ".py",
+      "files": [
+        "systems\\memory\\memory\\search\\search_storage.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\memory\\search\\search_storage.py"
+      ]
+    },
+    {
+      "hash": "80feba7e912ae97781fff2acf104000b7bf541515ff6d77a254359d1a6e0fdc5",
+      "count": 2,
+      "size_bytes": 1950,
+      "extension": ".py",
+      "files": [
+        "systems\\memory\\memory\\search\\vector_search.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\memory\\search\\vector_search.py"
+      ]
+    },
+    {
+      "hash": "abe3c48e64a35eb3f92b0236544d73502b6c8edab4aeae1b0e55f93ea7e89b42",
+      "count": 2,
+      "size_bytes": 498,
+      "extension": ".py",
+      "files": [
+        "systems\\memory\\memory\\storage\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\memory\\storage\\__init__.py"
+      ]
+    },
+    {
+      "hash": "be7e4b8fb470099c397a44bb198cd2dd8557cde147c3c024bc99c70b347dec69",
+      "count": 2,
+      "size_bytes": 8821,
+      "extension": ".py",
+      "files": [
+        "systems\\memory\\memory\\storage\\database.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\memory\\storage\\database.py"
+      ]
+    },
+    {
+      "hash": "6029e1aa05d8b2ebb73b4a1e1513907c16c9aa0a3a0b2009bbd8cb4c02c30475",
+      "count": 2,
+      "size_bytes": 9424,
+      "extension": ".py",
+      "files": [
+        "systems\\memory\\memory\\storage\\index_operations.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\memory\\storage\\index_operations.py"
+      ]
+    },
+    {
+      "hash": "e4d7e732fbda3e0aa07d2b4c3181c21c3f50d4f836e0305d3e9f9260de20da2c",
+      "count": 2,
+      "size_bytes": 8366,
+      "extension": ".py",
+      "files": [
+        "systems\\memory\\memory\\storage\\message_operations.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\memory\\storage\\message_operations.py"
+      ]
+    },
+    {
+      "hash": "3511eb446d1c1547ef4a0f745fa5abd9b7da0eb04781e3ecd1d1a8e4f05f67a3",
+      "count": 2,
+      "size_bytes": 8457,
+      "extension": ".py",
+      "files": [
+        "systems\\memory\\memory\\storage\\prompt_operations.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\memory\\storage\\prompt_operations.py"
+      ]
+    },
+    {
+      "hash": "a735c7047c82db83ae28c65c58350c15e5ea44e551a5bfd62c4aca111d585de9",
+      "count": 2,
+      "size_bytes": 6307,
+      "extension": ".py",
+      "files": [
+        "systems\\memory\\memory\\storage\\schema_manager.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\memory\\storage\\schema_manager.py"
+      ]
+    },
+    {
+      "hash": "93c470b28eae4f4de02735d339c4ae7da11b5ccfacb98be55941fc8c3bbb46f0",
+      "count": 2,
+      "size_bytes": 5170,
+      "extension": ".py",
+      "files": [
+        "systems\\memory\\memory\\storage\\thread_safe_db.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\memory\\storage\\thread_safe_db.py"
+      ]
+    },
+    {
+      "hash": "4b3c90d455985005816780665cad589c06ca2cc0275ab10533835ff8b98b8882",
+      "count": 2,
+      "size_bytes": 497,
+      "extension": ".py",
+      "files": [
+        "systems\\memory\\memory\\weaponization\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\memory\\weaponization\\__init__.py"
+      ]
+    },
+    {
+      "hash": "7e2c36c8954718c3446d3f104ce1f351cfd4a0c1c188554851d83042c8b017f6",
+      "count": 2,
+      "size_bytes": 6298,
+      "extension": ".py",
+      "files": [
+        "systems\\memory\\memory\\weaponization\\analytics_helpers.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\memory\\weaponization\\analytics_helpers.py"
+      ]
+    },
+    {
+      "hash": "67010a52848fd91cdaa584314deb316fbafb19656bdf3ab1b0219007eafee884",
+      "count": 2,
+      "size_bytes": 3753,
+      "extension": ".py",
+      "files": [
+        "systems\\memory\\memory\\weaponization\\api_helpers.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\memory\\weaponization\\api_helpers.py"
+      ]
+    },
+    {
+      "hash": "bb768d95b68e36ec690c8378e6293ed728640de8e8fe3f1bb3f5882571a9bb46",
+      "count": 2,
+      "size_bytes": 694,
+      "extension": ".py",
+      "files": [
+        "systems\\memory\\memory\\weaponization\\config.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\memory\\weaponization\\config.py"
+      ]
+    },
+    {
+      "hash": "38fef641eaa07b41e937e6fbddd362be4098c6d4a9566bbbfa759441d5c869f0",
+      "count": 2,
+      "size_bytes": 3008,
+      "extension": ".py",
+      "files": [
+        "systems\\memory\\memory\\weaponization\\content_helpers.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\memory\\weaponization\\content_helpers.py"
+      ]
+    },
+    {
+      "hash": "fa1dbacc96fa84f2c3fdc24cfd9ef1110216074f0d104c9274e2f0d503fd46cb",
+      "count": 2,
+      "size_bytes": 9341,
+      "extension": ".py",
+      "files": [
+        "systems\\memory\\memory\\weaponization\\data_extractor.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\memory\\weaponization\\data_extractor.py"
+      ]
+    },
+    {
+      "hash": "3eb5bbe0bd9d1d515cbc550942c5df483571292b494ddedc7022d3181c35feee",
+      "count": 2,
+      "size_bytes": 9934,
+      "extension": ".py",
+      "files": [
+        "systems\\memory\\memory\\weaponization\\episode_generator.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\memory\\weaponization\\episode_generator.py"
+      ]
+    },
+    {
+      "hash": "daeb022dc97c1aa744ea5e7c5f44ee9f7dcaa9d758d95cf02bb5b92242cba460",
+      "count": 2,
+      "size_bytes": 887,
+      "extension": ".py",
+      "files": [
+        "systems\\memory\\memory\\weaponization\\helpers.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\memory\\weaponization\\helpers.py"
+      ]
+    },
+    {
+      "hash": "cda8de556d1b7c16c3e490882e985f6e17a44b41eb64ef017deefe94601603b0",
+      "count": 2,
+      "size_bytes": 9471,
+      "extension": ".py",
+      "files": [
+        "systems\\memory\\memory\\weaponization\\weaponizer.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\memory\\weaponization\\weaponizer.py"
+      ]
+    },
+    {
+      "hash": "8d3b570281c652872c20dfdb11b946a9ded4ab9c8acf335685334433c4f382dc",
+      "count": 2,
+      "size_bytes": 565,
+      "extension": ".py",
+      "files": [
+        "systems\\templates\\templates\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\templates\\__init__.py"
+      ]
+    },
+    {
+      "hash": "437f37f1d78c2c84bfdc9cbf135b5a67db8c19535ef597ef338239dd8612bf32",
+      "count": 2,
+      "size_bytes": 12158,
+      "extension": ".py",
+      "files": [
+        "systems\\templates\\templates\\prompt_deployer.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\templates\\prompt_deployer.py"
+      ]
+    },
+    {
+      "hash": "90a24fa187103fd7848a22bd8651d42d0d7e49d3bf636ba0b92b5084a3eb286d",
+      "count": 2,
+      "size_bytes": 7964,
+      "extension": ".py",
+      "files": [
+        "systems\\templates\\templates\\prompt_orchestrator.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\templates\\prompt_orchestrator.py"
+      ]
+    },
+    {
+      "hash": "c8de59d4443613944196fbd059a17119bf62b87303a909d69ffa28d477dcaefe",
+      "count": 2,
+      "size_bytes": 12823,
+      "extension": ".py",
+      "files": [
+        "systems\\templates\\templates\\template_engine.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\templates\\template_engine.py"
+      ]
+    },
+    {
+      "hash": "ad422a355565cd8e450f6d76c462e0c559765ad397ce77076db06726cd4255b1",
+      "count": 2,
+      "size_bytes": 20145,
+      "extension": ".py",
+      "files": [
+        "systems\\templates\\templates\\template_manager.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\templates\\template_manager.py"
+      ]
+    },
+    {
+      "hash": "4a0babbdfcfac216a242660937f82a4b835e96aa6a9ccfaaac0c8aa22b4e1b9d",
+      "count": 2,
+      "size_bytes": 7509,
+      "extension": ".py",
+      "files": [
+        "systems\\templates\\templates\\template_models.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\templates\\template_models.py"
+      ]
+    },
+    {
+      "hash": "05853e6be483ed823e4a6b6ee403529ce85d799d9ff27b3d02d5b3af6819379d",
+      "count": 2,
+      "size_bytes": 28379,
+      "extension": ".py",
+      "files": [
+        "systems\\templates\\templates\\template_processors.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\templates\\template_processors.py"
+      ]
+    },
+    {
+      "hash": "acfc9237f0d6bb1f6d4a055cf0849973d260904d0a5ad015cbd2ce31d9cab9e8",
+      "count": 2,
+      "size_bytes": 13811,
+      "extension": ".py",
+      "files": [
+        "systems\\templates\\templates\\template_system.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\templates\\template_system.py"
+      ]
+    },
+    {
+      "hash": "50672c6bdd01f713755821e2f15d7cbb6cc008101653e3aea0188052e9794b31",
+      "count": 2,
+      "size_bytes": 162,
+      "extension": ".py",
+      "files": [
+        "systems\\templates\\templates\\analytics\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\templates\\analytics\\__init__.py"
+      ]
+    },
+    {
+      "hash": "0fd0544ffc39b7bd07600c281fe13d3888c94a80b5fece1ea346c9183f1fb96c",
+      "count": 2,
+      "size_bytes": 158,
+      "extension": ".py",
+      "files": [
+        "systems\\templates\\templates\\engine\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\templates\\engine\\__init__.py"
+      ]
+    },
+    {
+      "hash": "cb6759be38e1fed6005debbe413f5702d5239b9f59b3dad9c86b8f2e5ed7ed42",
+      "count": 2,
+      "size_bytes": 144,
+      "extension": ".py",
+      "files": [
+        "systems\\templates\\templates\\models\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\templates\\models\\__init__.py"
+      ]
+    },
+    {
+      "hash": "2f1d5513f604edd95d8e514e9c70c39bc41fa433d14c8e2b691b06c58a3a4daa",
+      "count": 2,
+      "size_bytes": 617,
+      "extension": ".py",
+      "files": [
+        "systems\\templates\\templates\\models\\template.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\templates\\models\\template.py"
+      ]
+    },
+    {
+      "hash": "26ff04dea393768871c316cc71ad26cc155def1c8ed6e7140aa8628865f749e2",
+      "count": 2,
+      "size_bytes": 158,
+      "extension": ".py",
+      "files": [
+        "systems\\templates\\templates\\runners\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\templates\\runners\\__init__.py"
+      ]
+    },
+    {
+      "hash": "6746c4edf93eef8ab4630a61bab770243f7d259b953876f1a59537a948028789",
+      "count": 2,
+      "size_bytes": 280,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\__init__.py"
+      ]
+    },
+    {
+      "hash": "683dd6a91f0b65f1a3bbfd4bf30479c8ac48191ff5eca19665a7955511bd9593",
+      "count": 2,
+      "size_bytes": 12797,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\debug_handler.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\debug_handler.py"
+      ]
+    },
+    {
+      "hash": "27d3371f638fb54252b404734e4f926e2262d21ba58b8221b84d4914ac74fa73",
+      "count": 2,
+      "size_bytes": 14238,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\main_window.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\main_window.py"
+      ]
+    },
+    {
+      "hash": "2ba2e724cb6163743d3fa4a1f7e6492eb339ec5bfd9e659da234856aa06417c6",
+      "count": 2,
+      "size_bytes": 75808,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\main_window_original_backup.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\main_window_original_backup.py"
+      ]
+    },
+    {
+      "hash": "0b1e64475cadbab8f91dd3f6e23709ab2b2af8c17896d0f0d19b7bfd35d73bbb",
+      "count": 2,
+      "size_bytes": 1339,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\components\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\components\\__init__.py"
+      ]
+    },
+    {
+      "hash": "dd0eaa847e7e552ff90f3f00268ce78565c44eeafef895b65dac07c04c61840a",
+      "count": 2,
+      "size_bytes": 24083,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\components\\advanced_error_recovery.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\components\\advanced_error_recovery.py"
+      ]
+    },
+    {
+      "hash": "e26da9a497272675f88aed339641fe38865d17e218fcd0ab6899b9fdba139585",
+      "count": 2,
+      "size_bytes": 22836,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\components\\content_analytics_widget.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\components\\content_analytics_widget.py"
+      ]
+    },
+    {
+      "hash": "91af07d3a8db1350ca0d4a77b58edc522725f8c80db04dcf61354a2713fe75bd",
+      "count": 2,
+      "size_bytes": 20423,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\components\\conversation_labeling_ui.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\components\\conversation_labeling_ui.py"
+      ]
+    },
+    {
+      "hash": "276efe4dfcb7797ee5ea1ae790b2eb4da889368a64c78ef84b880fe2247d061e",
+      "count": 2,
+      "size_bytes": 1412,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\components\\data_loader.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\components\\data_loader.py"
+      ]
+    },
+    {
+      "hash": "a0690901677d8d9e8a6a4ed5800f7e2cb670fcefcecdf98c10b2c6cb39aaaf9a",
+      "count": 2,
+      "size_bytes": 17360,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\components\\enhanced_dashboard_cards.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\components\\enhanced_dashboard_cards.py"
+      ]
+    },
+    {
+      "hash": "af6b2da207a63272f8d4642f605d048e5c8e518726ef1b819dcc0f72d5394a5d",
+      "count": 2,
+      "size_bytes": 5652,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\components\\ftue_welcome_modal.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\components\\ftue_welcome_modal.py"
+      ]
+    },
+    {
+      "hash": "d3715d43a68e1d352e6f15832ae301c3894d6e8fc8a5db43415497b4d2571b4a",
+      "count": 2,
+      "size_bytes": 24632,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\components\\global_refresh_manager.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\components\\global_refresh_manager.py"
+      ]
+    },
+    {
+      "hash": "e4d769e8839a95d2feb7fdd4fd63f83263669e6b42e5201344aed9c93c590611",
+      "count": 2,
+      "size_bytes": 6369,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\components\\loading_screen.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\components\\loading_screen.py"
+      ]
+    },
+    {
+      "hash": "2f5115a8c1b1da3f6b2a31fa400c7a52629ea574d0e819a19be2a02045588c7c",
+      "count": 2,
+      "size_bytes": 1207,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\components\\menu_bar.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\components\\menu_bar.py"
+      ]
+    },
+    {
+      "hash": "4bb0ad799730364101d80297d1e959ddba2e7f5d13f5d2a20c90cd338462acd2",
+      "count": 2,
+      "size_bytes": 31723,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\components\\real_time_debug_dashboard.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\components\\real_time_debug_dashboard.py"
+      ]
+    },
+    {
+      "hash": "214909a3e4bfbe610a4d90d9539314e5ecb100d0ea05bdf2d5a2ef6ab254ab57",
+      "count": 2,
+      "size_bytes": 24663,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\components\\refresh_integration_manager.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\components\\refresh_integration_manager.py"
+      ]
+    },
+    {
+      "hash": "0f0ec19142567d6ab9eb70cffaa9c4853e199f5822d6fa6b4ba26a3a1d2499a3",
+      "count": 2,
+      "size_bytes": 417,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\components\\refresh_types.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\components\\refresh_types.py"
+      ]
+    },
+    {
+      "hash": "8ce47aefe770fb56df2ed7770fae288d07b22936b38296584ef325b1949efba1",
+      "count": 2,
+      "size_bytes": 41959,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\components\\shared_components.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\components\\shared_components.py"
+      ]
+    },
+    {
+      "hash": "a3d0821e4eb60f118a2897ccad870df03332b98ecc8f1b60639d7f4ee1703c24",
+      "count": 2,
+      "size_bytes": 419,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\components\\status_bar.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\components\\status_bar.py"
+      ]
+    },
+    {
+      "hash": "9a796a58cee3cad76c56ce21de230eb495d3dfc2a1597052cc4b3e36a9c43106",
+      "count": 2,
+      "size_bytes": 22666,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\components\\time_series_chart_widget.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\components\\time_series_chart_widget.py"
+      ]
+    },
+    {
+      "hash": "11790a7fe58f0ccef80b0c8980a5493d0cd717bb5ec144d02853f2e0833ace7f",
+      "count": 2,
+      "size_bytes": 851,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\components\\toolbar.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\components\\toolbar.py"
+      ]
+    },
+    {
+      "hash": "36e596c1895a44f786180ba4846af92f0e23410039c1578d0640bc49967221ca",
+      "count": 2,
+      "size_bytes": 17841,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\components\\topic_cloud_widget.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\components\\topic_cloud_widget.py"
+      ]
+    },
+    {
+      "hash": "e981a25549be0f4ffada773def52f574f41f3a76aa4fab15d1efbb2575bf7227",
+      "count": 2,
+      "size_bytes": 32773,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\components\\unified_data_loader.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\components\\unified_data_loader.py"
+      ]
+    },
+    {
+      "hash": "0e62e6aeb0541834b208351e0fd7b7d65ef3cd25319d933478246f6a6955231b",
+      "count": 2,
+      "size_bytes": 25051,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\components\\unified_export_center.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\components\\unified_export_center.py"
+      ]
+    },
+    {
+      "hash": "3150dfb911d24f5925ce98ef805d268787a35f0475d5d172812cf55825d80d94",
+      "count": 2,
+      "size_bytes": 16896,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\components\\unified_load_button.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\components\\unified_load_button.py"
+      ]
+    },
+    {
+      "hash": "f14e4a117e8ea241093b70c8d4cade3a42671a233d590fb77ff64b61b83cec5a",
+      "count": 2,
+      "size_bytes": 394,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\controllers\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\controllers\\__init__.py"
+      ]
+    },
+    {
+      "hash": "527dcf405da35613fc6cb2e71457fb741b80aa16c50175827cd8d062360bc300",
+      "count": 2,
+      "size_bytes": 703,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\controllers\\event_controller.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\controllers\\event_controller.py"
+      ]
+    },
+    {
+      "hash": "ae6db48868449e8a8f96f8cf23223c10322873d7c6d1bc25080470ed808ebf89",
+      "count": 2,
+      "size_bytes": 1517,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\controllers\\main_controller.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\controllers\\main_controller.py"
+      ]
+    },
+    {
+      "hash": "b3fc2c21420eacdbcc420ed69fe7dce8ec6d22797b1310fe1b913c42a82730e6",
+      "count": 2,
+      "size_bytes": 14434,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\controllers\\panel_controller.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\controllers\\panel_controller.py"
+      ]
+    },
+    {
+      "hash": "8e07b4b0c231de0c12cc7cbab2aed2ebe9f60d1b15d9fd9718ee8787d4f39635",
+      "count": 2,
+      "size_bytes": 10159,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\controllers\\status_controller.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\controllers\\status_controller.py"
+      ]
+    },
+    {
+      "hash": "99ae551a4b4fa0aeabb154f56ee987783204369834f31078456e9642175362e9",
+      "count": 2,
+      "size_bytes": 11838,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\controllers\\workflow_controller.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\controllers\\workflow_controller.py"
+      ]
+    },
+    {
+      "hash": "ada6424396e16ac9767a7b7ea02c87dc0fa05578c6fdae866dc735bc554843d3",
+      "count": 2,
+      "size_bytes": 209,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\main_window_components\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\main_window_components\\__init__.py"
+      ]
+    },
+    {
+      "hash": "d81c7280d1b4437ac54309e410177a0d5a71cbdf632cfe57ff6827d8c1febad8",
+      "count": 2,
+      "size_bytes": 16225,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\main_window_components\\system_initializer.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\main_window_components\\system_initializer.py"
+      ]
+    },
+    {
+      "hash": "f94f68995d65d3bc09e5028b6c0463b4489f5994c0880752ec48555a2b1ec626",
+      "count": 2,
+      "size_bytes": 1822,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\panels\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\panels\\__init__.py"
+      ]
+    },
+    {
+      "hash": "b415f1a1bee3b092114be9e112ce7e0c4603735c87b2ed1fb53ab9d8775c00dc",
+      "count": 2,
+      "size_bytes": 17277,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\panels\\combat_engine_panel.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\panels\\combat_engine_panel.py"
+      ]
+    },
+    {
+      "hash": "9897914d1a0f1413886451599ebd3f6f8688e803e9bfd36e703fa54d5acfd31e",
+      "count": 2,
+      "size_bytes": 25892,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\panels\\conversational_ai_panel.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\panels\\conversational_ai_panel.py"
+      ]
+    },
+    {
+      "hash": "b0e9a155b269bac2247c77230a2917bb8214cccf4ff595a2cee346fce8f87e9d",
+      "count": 2,
+      "size_bytes": 10801,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\panels\\quest_log_panel.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\panels\\quest_log_panel.py"
+      ]
+    },
+    {
+      "hash": "db27d2a330907450d3a98b39a6e709879672b1b0c5f1cdf0672392bbc598807e",
+      "count": 2,
+      "size_bytes": 626,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\panels\\ai_studio\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\panels\\ai_studio\\__init__.py"
+      ]
+    },
+    {
+      "hash": "a898943cb25641ab4dc220f7916559fc35a191567323cb8088e80cd27d4928fd",
+      "count": 2,
+      "size_bytes": 29313,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\panels\\archive\\devlog_panel_old.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\panels\\archive\\devlog_panel_old.py"
+      ]
+    },
+    {
+      "hash": "f7208673fc3a3727349d32c4669ea9851eb6fae6f55ebc9989bab3c7b1618108",
+      "count": 2,
+      "size_bytes": 160,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\panels\\archive\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\panels\\archive\\__init__.py"
+      ]
+    },
+    {
+      "hash": "971daeb7ace71d6ef96b0cfbfd359399a2c328f1a9702e31902ce3e62550630e",
+      "count": 2,
+      "size_bytes": 419,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\panels\\base\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\panels\\base\\__init__.py"
+      ]
+    },
+    {
+      "hash": "02cfe37c274405b4a954c7e9d08eeb8d8c42535c1d1b3df034b0130827fdf36d",
+      "count": 2,
+      "size_bytes": 17082,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\panels\\base\\ai_studio_base.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\panels\\base\\ai_studio_base.py"
+      ]
+    },
+    {
+      "hash": "17266d6389a8f50e617cc171821d787e0f332e0ce40e0833cae5e30077c20b39",
+      "count": 2,
+      "size_bytes": 11275,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\panels\\base\\analytics_base.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\panels\\base\\analytics_base.py"
+      ]
+    },
+    {
+      "hash": "4be289a6d5861c73ce6cd444e2b98553e457caefebcf7d4a1040e094e3e03cd1",
+      "count": 2,
+      "size_bytes": 8591,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\panels\\base\\base_panel.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\panels\\base\\base_panel.py"
+      ]
+    },
+    {
+      "hash": "7329cd015262da7d1379a4a1176e7e4c66a688123c879bcf1f14f40ded20a558",
+      "count": 2,
+      "size_bytes": 16206,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\panels\\base\\data_panel_base.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\panels\\base\\data_panel_base.py"
+      ]
+    },
+    {
+      "hash": "aa06e9c356032b2334ad385608e4afcb387cd01f05fc0abf86f4157e6693e249",
+      "count": 2,
+      "size_bytes": 16881,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\panels\\base\\export_panel_base.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\panels\\base\\export_panel_base.py"
+      ]
+    },
+    {
+      "hash": "e19028ca16e09fbc47d5d3c1b9de5367d4a52c187ce57895ed93e074bf315337",
+      "count": 2,
+      "size_bytes": 18818,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\panels\\base\\workflow_base.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\panels\\base\\workflow_base.py"
+      ]
+    },
+    {
+      "hash": "120953258454c6a50621e2d06fcfd0ca6e1d639437181d04493bf278ef0a9731",
+      "count": 2,
+      "size_bytes": 909,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\panels\\modular\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\panels\\modular\\__init__.py"
+      ]
+    },
+    {
+      "hash": "e9de3c069e9da59efd7160296f2944d2573fba33bb6c09f9335292d2bdddc308",
+      "count": 2,
+      "size_bytes": 1840,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\panels\\modular\\community_templates_panel_refactored.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\panels\\modular\\community_templates_panel_refactored.py"
+      ]
+    },
+    {
+      "hash": "e60d1375a79426c5f72458ca95d84c30329a76cf3253f4792af21bda0e6e0f9b",
+      "count": 2,
+      "size_bytes": 1506,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\panels\\modular\\consolidated_memory_weaponization_panel_refactored.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\panels\\modular\\consolidated_memory_weaponization_panel_refactored.py"
+      ]
+    },
+    {
+      "hash": "e4257e1ceb3dbe8025ae94641b1e3e50a5a6b87a0bc83babd93bc8df06effbb2",
+      "count": 2,
+      "size_bytes": 1425,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\panels\\modular\\content_analytics_panel_refactored.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\panels\\modular\\content_analytics_panel_refactored.py"
+      ]
+    },
+    {
+      "hash": "71b95fe97a8665c624d829f33396e770b96fa0254d75e6e57da13ea7696dbf1d",
+      "count": 2,
+      "size_bytes": 1276,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\panels\\modular\\enhanced_analytics_panel_refactored.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\panels\\modular\\enhanced_analytics_panel_refactored.py"
+      ]
+    },
+    {
+      "hash": "3dba7f5481ad6c09f90d4123d84d50be8f62e48b17af6d65db4a1ef27f489ee4",
+      "count": 2,
+      "size_bytes": 1456,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\panels\\modular\\enhanced_devlog_panel_refactored.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\panels\\modular\\enhanced_devlog_panel_refactored.py"
+      ]
+    },
+    {
+      "hash": "d93a58e2745d16c54f57870a052929225ea1e005d21086d5c69a0f86bbd17518",
+      "count": 2,
+      "size_bytes": 1440,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\panels\\modular\\voice_modeling_panel_refactored.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\panels\\modular\\voice_modeling_panel_refactored.py"
+      ]
+    },
+    {
+      "hash": "799df9cda4516ba214857dfd8fd8ac3edeb437c3f2b7e3a04a301bc46da78d77",
+      "count": 2,
+      "size_bytes": 1224,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\panels\\settings\\accessibility_settings.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\panels\\settings\\accessibility_settings.py"
+      ]
+    },
+    {
+      "hash": "73470753b903a9649b5ce8f1d40e0e7afce02bccd08b2c27896dc74fa72f4497",
+      "count": 2,
+      "size_bytes": 5547,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\panels\\settings\\api_settings.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\panels\\settings\\api_settings.py"
+      ]
+    },
+    {
+      "hash": "f6ccf80032bda72a5b2a8506bbfa751fa3cc2e45006b8d82362ffae1ae6c562b",
+      "count": 2,
+      "size_bytes": 4571,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\panels\\settings\\general_settings.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\panels\\settings\\general_settings.py"
+      ]
+    },
+    {
+      "hash": "12a8a928dd029a76a876241486c0ea83c79337beb2f0f17193c0dfb88256e057",
+      "count": 2,
+      "size_bytes": 4005,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\panels\\settings\\memory_settings.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\panels\\settings\\memory_settings.py"
+      ]
+    },
+    {
+      "hash": "bcd79f80760c11b4088397d8a01f7f3e666da4f60d15fa520448d6c1ad69a80b",
+      "count": 2,
+      "size_bytes": 333,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\panels\\settings\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\panels\\settings\\__init__.py"
+      ]
+    },
+    {
+      "hash": "d5243b7bbbc23eb748f0041471d1d8d5ee5f0e29fc75b016ec2412a054e3b713",
+      "count": 2,
+      "size_bytes": 213,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\viewmodels\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\viewmodels\\__init__.py"
+      ]
+    },
+    {
+      "hash": "d42277fce91028549942311e7d58f833e42c8e2dbe4bd9c4c8096e72cb4ac981",
+      "count": 2,
+      "size_bytes": 325,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\viewmodels\\main_viewmodel.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\viewmodels\\main_viewmodel.py"
+      ]
+    },
+    {
+      "hash": "13a91839d9224d9d3d5d36e59a5ca780d873d4854c7fbbac30313f4d0c1ed9f9",
+      "count": 2,
+      "size_bytes": 400,
+      "extension": ".py",
+      "files": [
+        "systems\\gui\\gui\\viewmodels\\panel_viewmodels.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\gui\\viewmodels\\panel_viewmodels.py"
+      ]
+    },
+    {
+      "hash": "6e2de989f3a0394a31ef6dfc130167c26bbd61d5bfb677614dffadd947234e26",
+      "count": 2,
+      "size_bytes": 1852,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\__init__.py"
+      ]
+    },
+    {
+      "hash": "42bbbdc0b468b8e7d54cebda8db2c2c83af91d4e1fabcb4a601cfed63bcb1c1f",
+      "count": 2,
+      "size_bytes": 4948,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\blog_generator.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\blog_generator.py"
+      ]
+    },
+    {
+      "hash": "cb332859f5288aaea86bf968510f2f70424d8bb71f91f460b2280a78f96378e5",
+      "count": 2,
+      "size_bytes": 5181,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\browser_manager.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\browser_manager.py"
+      ]
+    },
+    {
+      "hash": "8951fb431556455569dc04f04d16635b3db2cf0729551c026eae50a11b6e5767",
+      "count": 2,
+      "size_bytes": 12353,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\chatgpt_scraper.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\chatgpt_scraper.py"
+      ]
+    },
+    {
+      "hash": "ab5916f340fcde3cce16fda6a8dd75cb702fcf0200f81de916c9468b5919e08a",
+      "count": 2,
+      "size_bytes": 2628,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\cli_handler.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\cli_handler.py"
+      ]
+    },
+    {
+      "hash": "1d4349aecffd8453c65fd6506b1146ffa8eeaf4aa915fa9d009d0576b0108f5f",
+      "count": 2,
+      "size_bytes": 10182,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\content_extractor.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\content_extractor.py"
+      ]
+    },
+    {
+      "hash": "8d4b6735aa2e3032d7bb51b71b2bc37b627ecf61c75c78785a61b669624cf01a",
+      "count": 2,
+      "size_bytes": 3286,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\content_processor.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\content_processor.py"
+      ]
+    },
+    {
+      "hash": "50a3521bd5796422b5e7f5ba2759a1208d695212dfd2f17b0fbba6856dfd8f03",
+      "count": 2,
+      "size_bytes": 4174,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\conversation_extractor.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\conversation_extractor.py"
+      ]
+    },
+    {
+      "hash": "c317d62e1bd747b0bdb6a95f522632ca3816929a08a5c16484fed225ed6fe98b",
+      "count": 2,
+      "size_bytes": 7667,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\conversation_extractor_legacy.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\conversation_extractor_legacy.py"
+      ]
+    },
+    {
+      "hash": "eff976d130cd4d14551d43012740db08417962bc3a4d056e43f905d889897cc4",
+      "count": 2,
+      "size_bytes": 2456,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\conversation_fetcher.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\conversation_fetcher.py"
+      ]
+    },
+    {
+      "hash": "916af461dcc4f7883d32bcd19cf36483537ec0600bfc038a1cf3cc281e787bcc",
+      "count": 2,
+      "size_bytes": 12370,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\conversation_list_manager.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\conversation_list_manager.py"
+      ]
+    },
+    {
+      "hash": "82960e6ed8a945d062443644817c464e625c2ba751a067c47481d520c1023f1c",
+      "count": 2,
+      "size_bytes": 6664,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\cookie_manager.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\cookie_manager.py"
+      ]
+    },
+    {
+      "hash": "2738917e8b43e385cf146fe7cc0e99ed0fbec94f456c19658fe0f80fd8cb6732",
+      "count": 2,
+      "size_bytes": 10759,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\credential_login.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\credential_login.py"
+      ]
+    },
+    {
+      "hash": "805da0defe470687867bdb2d56841912c3fc8f3b02c2c470ed1fafa1acfe322c",
+      "count": 2,
+      "size_bytes": 2683,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\demo_conversations.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\demo_conversations.py"
+      ]
+    },
+    {
+      "hash": "5c0fe59cc78b9b449c421e16af248d4c8c33f0769bd96385a25f3f46b3b35199",
+      "count": 2,
+      "size_bytes": 7590,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\devlog_generator.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\devlog_generator.py"
+      ]
+    },
+    {
+      "hash": "bdf40b1785cca5e6f83e102b5d6f72ed878f13753517e7011b6635a69fe128a5",
+      "count": 2,
+      "size_bytes": 8880,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\driver_config.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\driver_config.py"
+      ]
+    },
+    {
+      "hash": "15621650c0991124625a6c573f5b944f0a13ffe7c3435dbc2a5cb638b9e0cde4",
+      "count": 2,
+      "size_bytes": 5132,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\driver_creator.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\driver_creator.py"
+      ]
+    },
+    {
+      "hash": "2442a42f5c990ea81b1bc9071ec94802a019d5142445e8a2f2ea026e5aac4813",
+      "count": 2,
+      "size_bytes": 4730,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\final_working_scraper.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\final_working_scraper.py"
+      ]
+    },
+    {
+      "hash": "ec2bb8812e4b1031b4d2de4dcc7c0814757337a4e0a06ca3ec498061bf3e00da",
+      "count": 2,
+      "size_bytes": 12323,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\improved_conversation_scraper.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\improved_conversation_scraper.py"
+      ]
+    },
+    {
+      "hash": "6c17faee1ae3016b814687ca292190d9862838bbe741cb236a328e3fd59331fc",
+      "count": 2,
+      "size_bytes": 6982,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\login_handler.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\login_handler.py"
+      ]
+    },
+    {
+      "hash": "c3be28905b059bcd5aeb0d94aada8bdd2747b1af6ffddbacadd558f657e92664",
+      "count": 2,
+      "size_bytes": 6260,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\login_status.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\login_status.py"
+      ]
+    },
+    {
+      "hash": "632a68e3ad3192691aafe62d121144d74c0635ff93c1cce96a2828e65b6ab941",
+      "count": 2,
+      "size_bytes": 3549,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\login_utils.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\login_utils.py"
+      ]
+    },
+    {
+      "hash": "1191efec481bb94df44ab9d4ecc0424a26f1c9ab59797a9b378994334c613231",
+      "count": 2,
+      "size_bytes": 5076,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\process_manager.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\process_manager.py"
+      ]
+    },
+    {
+      "hash": "86b131e9190ca09bed8b8ba2ffc4bec24cec857cc315c62d96f421768bc8aaf5",
+      "count": 2,
+      "size_bytes": 26954,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\prompt_interactor.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\prompt_interactor.py"
+      ]
+    },
+    {
+      "hash": "b6f9c1491ec390e99a125d79b3cea0978a0d3c369095b556fa7c7405d6d12c02",
+      "count": 2,
+      "size_bytes": 12560,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\smart_scraper_with_fallback.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\smart_scraper_with_fallback.py"
+      ]
+    },
+    {
+      "hash": "76667d6aa665fe3c9fbc51ec1b6a3ea939a8f6096191479ae1a30e694292fdf2",
+      "count": 2,
+      "size_bytes": 2772,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\social_content_generator.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\social_content_generator.py"
+      ]
+    },
+    {
+      "hash": "e75043a5a02c6478dc3db6685855f28046d3da2bcf10d0fb5f5cad6b5ff8fa45",
+      "count": 2,
+      "size_bytes": 3467,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\system_utils.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\system_utils.py"
+      ]
+    },
+    {
+      "hash": "207288872a799226abb57c1dd753a0aff6cb7b024ab6f9c77729c582509acc9e",
+      "count": 2,
+      "size_bytes": 14185,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\targeted_scroll_scraper.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\targeted_scroll_scraper.py"
+      ]
+    },
+    {
+      "hash": "cb32b292a6fea74bb5fdf04eeb49fd2f35a4e20b6e09e43f37151dc5c14d8e5a",
+      "count": 2,
+      "size_bytes": 2372,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\templated_prompts.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\templated_prompts.py"
+      ]
+    },
+    {
+      "hash": "4bbb9da18c7360e0ffd58bcc6b03a8feb91830bdb001059d41357ede7e9afc47",
+      "count": 2,
+      "size_bytes": 6772,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\two_factor_auth.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\two_factor_auth.py"
+      ]
+    },
+    {
+      "hash": "3f27aba59fe0a81365fa346d3ff5a704c20fc6473cc35a4ae200256da3f69463",
+      "count": 2,
+      "size_bytes": 199,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\base\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\base\\__init__.py"
+      ]
+    },
+    {
+      "hash": "d283e6ba0b1d66a6df51ba8be3c645b977889e2d21135f894d9691438cdd026c",
+      "count": 2,
+      "size_bytes": 10291,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\base\\base_scraper.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\base\\base_scraper.py"
+      ]
+    },
+    {
+      "hash": "6c1613ae5b3e92ed5b6b4d62f18d0778d6152dd8912fcc703856dcf31fc49306",
+      "count": 2,
+      "size_bytes": 3551,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\base\\login_utils.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\base\\login_utils.py"
+      ]
+    },
+    {
+      "hash": "3b8fc56911a93abf9a60d96f8c5fffee0f34b448ef332c5a6aee0cbd4bc2eb1e",
+      "count": 2,
+      "size_bytes": 249,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\conversation\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\conversation\\__init__.py"
+      ]
+    },
+    {
+      "hash": "a7ace28c905c0ecc2377533e3a6961ea8317d48767131b88a14cc6f89b51048d",
+      "count": 2,
+      "size_bytes": 14846,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\conversation\\conversation_scraper.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\conversation\\conversation_scraper.py"
+      ]
+    },
+    {
+      "hash": "f167e2861fd93c0c0bc49cd3ae6d83a575b0e5539e0162926a0ef88ab223faf2",
+      "count": 2,
+      "size_bytes": 23609,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\conversation\\unified_conversation_scraper.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\conversation\\unified_conversation_scraper.py"
+      ]
+    },
+    {
+      "hash": "58000271f2c7566af455fcbdca5aaad44aed93447c17bca6a449a5305b91a8e4",
+      "count": 2,
+      "size_bytes": 284,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\scrolling\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\scrolling\\__init__.py"
+      ]
+    },
+    {
+      "hash": "480002027937c21f9aba7a7a3b03c69a7400042ead38606da25da3b30cc1dee8",
+      "count": 2,
+      "size_bytes": 16524,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\scrolling\\jquery_scroll_improved.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\scrolling\\jquery_scroll_improved.py"
+      ]
+    },
+    {
+      "hash": "8a58276270810031b582231ffb06dbf00f37e188fb718d729a520fa1dd33404e",
+      "count": 2,
+      "size_bytes": 833,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\scrolling\\scroll_manager.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\scrolling\\scroll_manager.py"
+      ]
+    },
+    {
+      "hash": "0f51b841412554f757d4dba4c6f0c42fbba1fcc9dd9b1a843570098a8f8f7f32",
+      "count": 2,
+      "size_bytes": 277,
+      "extension": ".py",
+      "files": [
+        "systems\\scrapers\\scrapers\\scrolling\\scroll_strategies.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\scrapers\\scrolling\\scroll_strategies.py"
+      ]
+    },
+    {
+      "hash": "f9284ab95de2b53066dc42e676000bebe3f792bdbaee68ad960ccb4e7ca6f2b6",
+      "count": 2,
+      "size_bytes": 497,
+      "extension": ".py",
+      "files": [
+        "systems\\analytics\\analytics\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\analytics\\__init__.py"
+      ]
+    },
+    {
+      "hash": "64f579829411bd5280da0dba8693de24b635cdfd116493d0cc4eb6cc8da79cc5",
+      "count": 2,
+      "size_bytes": 18257,
+      "extension": ".py",
+      "files": [
+        "systems\\analytics\\analytics\\analytics_optimizer.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\analytics\\analytics_optimizer.py"
+      ]
+    },
+    {
+      "hash": "a597c1534ee8290dbcd9cf54d3133f559e154cf81e7872e2b6b452044c79a93e",
+      "count": 2,
+      "size_bytes": 37719,
+      "extension": ".py",
+      "files": [
+        "systems\\analytics\\analytics\\analytics_system.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\analytics\\analytics_system.py"
+      ]
+    },
+    {
+      "hash": "1958e1881d21e79137cbcf546230844a25a40db6510ee53266095171db9c7a1b",
+      "count": 2,
+      "size_bytes": 7831,
+      "extension": ".py",
+      "files": [
+        "systems\\analytics\\analytics\\analyze_conversations_ai.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\analytics\\analyze_conversations_ai.py"
+      ]
+    },
+    {
+      "hash": "d44bfea2f8169e98e63d27272ac215bf7ff35917f71f8f610c7a769787fb18b9",
+      "count": 2,
+      "size_bytes": 33421,
+      "extension": ".py",
+      "files": [
+        "systems\\analytics\\analytics\\content_analytics_integration.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\analytics\\content_analytics_integration.py"
+      ]
+    },
+    {
+      "hash": "a022675a7e3057f888590054897ffc650b07f4dcc88dbe59a33ea9771b1e4801",
+      "count": 2,
+      "size_bytes": 20246,
+      "extension": ".py",
+      "files": [
+        "systems\\analytics\\analytics\\time_series_analyzer.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\analytics\\time_series_analyzer.py"
+      ]
+    },
+    {
+      "hash": "3c07a86e71f8ac24bd98341ed63e73a0d0e421323774cc6dbd3b00c7c09a78cb",
+      "count": 2,
+      "size_bytes": 13758,
+      "extension": ".py",
+      "files": [
+        "systems\\analytics\\analytics\\topic_analyzer.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\analytics\\topic_analyzer.py"
+      ]
+    },
+    {
+      "hash": "aa0cf9b5adaaab499973957cda65c947264052372d6bbbac70ba59ba81731fa1",
+      "count": 2,
+      "size_bytes": 487,
+      "extension": ".py",
+      "files": [
+        "systems\\analytics\\analytics\\expanded\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\analytics\\expanded\\__init__.py"
+      ]
+    },
+    {
+      "hash": "998e90b7b784a199cc6c1d115ae530874f524c45ebd23302bdd480e5c10dc30c",
+      "count": 2,
+      "size_bytes": 23807,
+      "extension": ".py",
+      "files": [
+        "systems\\analytics\\analytics\\expanded\\analytics_database.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\analytics\\expanded\\analytics_database.py"
+      ]
+    },
+    {
+      "hash": "f29eb363023c260f4b38bf33741101f308b7c2e9383a8255e6678a7db0cdd25b",
+      "count": 2,
+      "size_bytes": 14836,
+      "extension": ".py",
+      "files": [
+        "systems\\analytics\\analytics\\expanded\\analytics_models.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\analytics\\expanded\\analytics_models.py"
+      ]
+    },
+    {
+      "hash": "fb39e184e80a29a22f8d3b79c789cdfcab8f61445b2e04799896ceae6bb1b7e1",
+      "count": 2,
+      "size_bytes": 23457,
+      "extension": ".py",
+      "files": [
+        "systems\\analytics\\analytics\\expanded\\dashboard_manager.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\analytics\\expanded\\dashboard_manager.py"
+      ]
+    },
+    {
+      "hash": "50e17ae569d638d686338fd39320ee5a6dc8b874958fd944ce566194b0e03085",
+      "count": 2,
+      "size_bytes": 16586,
+      "extension": ".py",
+      "files": [
+        "systems\\analytics\\analytics\\expanded\\expanded_analytics_system_refactored.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\analytics\\expanded\\expanded_analytics_system_refactored.py"
+      ]
+    },
+    {
+      "hash": "8009b0341a490ad1e81c9baa4d9238e4e9eeb0cf9e84b6b8bf928fdd6f70cc39",
+      "count": 2,
+      "size_bytes": 21497,
+      "extension": ".py",
+      "files": [
+        "systems\\analytics\\analytics\\expanded\\export_manager.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\analytics\\expanded\\export_manager.py"
+      ]
+    },
+    {
+      "hash": "d6ee12d5ca94c0ecc8b05d5b29f7726b2758c824f0b81090dde9d63da4b75e88",
+      "count": 2,
+      "size_bytes": 22370,
+      "extension": ".py",
+      "files": [
+        "systems\\analytics\\analytics\\expanded\\report_generator.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\analytics\\expanded\\report_generator.py"
+      ]
+    },
+    {
+      "hash": "0cfc2c0c9f63cf356ab4eaf05e7824bd0948f8b8c1a2458399458c94e45f05a0",
+      "count": 2,
+      "size_bytes": 219,
+      "extension": ".py",
+      "files": [
+        "systems\\analytics\\analytics\\unified\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\analytics\\unified\\__init__.py"
+      ]
+    },
+    {
+      "hash": "d243f3bebeaeb6b94f7a19dfe89a8ae79acd86e6cbf7eb519017f6c81a9cf108",
+      "count": 2,
+      "size_bytes": 24054,
+      "extension": ".py",
+      "files": [
+        "systems\\analytics\\analytics\\unified\\migration.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\analytics\\unified\\migration.py"
+      ]
+    },
+    {
+      "hash": "fd659ca7fbae03e5a8cc94abe25c3a9f8b70ca32723a983d996d9848d5faf574",
+      "count": 2,
+      "size_bytes": 20226,
+      "extension": ".py",
+      "files": [
+        "systems\\analytics\\analytics\\unified\\unified_analytics_system.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\analytics\\unified\\unified_analytics_system.py"
+      ]
+    },
+    {
+      "hash": "ea2c0c659d98d8b77f474e1e7b424e732d0aad2acdd1ee514b9bbd3e343c3e81",
+      "count": 2,
+      "size_bytes": 26453,
+      "extension": ".py",
+      "files": [
+        "systems\\analytics\\analytics\\unified\\content\\content_analytics.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\analytics\\unified\\content\\content_analytics.py"
+      ]
+    },
+    {
+      "hash": "01a728b4c508cfdbeb077faf228d92785cef7d4a86941b8fd389f44870a8a51b",
+      "count": 2,
+      "size_bytes": 162,
+      "extension": ".py",
+      "files": [
+        "systems\\analytics\\analytics\\unified\\content\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\analytics\\unified\\content\\__init__.py"
+      ]
+    },
+    {
+      "hash": "a229388870a344856752239bba29de2dc67f10bef160c592f49755686423d417",
+      "count": 2,
+      "size_bytes": 23409,
+      "extension": ".py",
+      "files": [
+        "systems\\analytics\\analytics\\unified\\core\\analytics_engine.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\analytics\\unified\\core\\analytics_engine.py"
+      ]
+    },
+    {
+      "hash": "fdf6462f1679163e73f629e4807facd1c68900020e5e510d6853c6f5c9fc9531",
+      "count": 2,
+      "size_bytes": 160,
+      "extension": ".py",
+      "files": [
+        "systems\\analytics\\analytics\\unified\\core\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\analytics\\unified\\core\\__init__.py"
+      ]
+    },
+    {
+      "hash": "698612e4edb7f1512dabd4807a94dfdbd522942021299823c86c42b7152def13",
+      "count": 2,
+      "size_bytes": 29030,
+      "extension": ".py",
+      "files": [
+        "systems\\analytics\\analytics\\unified\\templates\\template_analytics.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\analytics\\unified\\templates\\template_analytics.py"
+      ]
+    },
+    {
+      "hash": "1640ed0a94d2878524f9a60e72327280edf5f34d6314b1dd93e5538482c1920a",
+      "count": 2,
+      "size_bytes": 164,
+      "extension": ".py",
+      "files": [
+        "systems\\analytics\\analytics\\unified\\templates\\__init__.py",
+        "archive\\dreamscape_project\\Thea\\src\\dreamscape\\core\\analytics\\unified\\templates\\__init__.py"
+      ]
+    }
+  ]
+}

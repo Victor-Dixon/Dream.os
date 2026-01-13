@@ -26,6 +26,7 @@ Deployment is a technical operation, not a coordination bottleneck. If code is r
 ## Deployment Tools
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ### Primary Tool: `deployment_server.py`
 Location: `mcp_servers/deployment_server.py`
 
@@ -41,6 +42,15 @@ Location: `ops/deployment/simple_wordpress_deployer.py`
 ```python
 from ops.deployment.simple_wordpress_deployer import SimpleWordPressDeployer, load_site_configs
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+### Primary Tool: `deployment_server.py`
+Location: `mcp_servers/deployment_server.py`
+
+**Usage:**
+```python
+# Use MCP deployment server
+from mcp_servers.deployment_server import deploy_wordpress_file, deploy_wordpress_theme
+>>>>>>> origin/codex/build-tsla-morning-report-system
 
 configs = load_site_configs()
 deployer = SimpleWordPressDeployer("tradingrobotplug.com", configs)
@@ -119,11 +129,16 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 sys.path.insert(0, str(Path(__file__).parent.parent / "websites"))
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Use MCP deployment server instead
 from mcp_servers.deployment_server import deploy_wordpress_file
 =======
 from ops.deployment.simple_wordpress_deployer import SimpleWordPressDeployer, load_site_configs
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+# Use MCP deployment server instead
+from mcp_servers.deployment_server import deploy_wordpress_file
+>>>>>>> origin/codex/build-tsla-morning-report-system
 
 def main():
     site_key = "[site].com"
@@ -159,10 +174,14 @@ This protocol is **MANDATORY** for all agents:
 ## References
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 - Deployment Tool: `mcp_servers/deployment_server.py`
 =======
 - Deployment Tool: `ops/deployment/simple_wordpress_deployer.py`
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+- Deployment Tool: `mcp_servers/deployment_server.py`
+>>>>>>> origin/codex/build-tsla-morning-report-system
 - Site Configs: `websites/configs/site_configs.json`
 - Example Script: `tools/deploy_tradingrobotplug_now.py`
 

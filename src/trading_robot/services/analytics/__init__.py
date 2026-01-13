@@ -7,6 +7,7 @@ from . import performance_metrics_engine
 from . import risk_analysis_engine
 from . import trading_bi_models
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 # Import orchestrator directly to avoid circular import issues
 try:
@@ -29,12 +30,21 @@ from .trading_bi_models import (
 =======
 from . import trading_bi_orchestrator
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+
+# Import orchestrator directly to avoid circular import issues
+try:
+    from .trading_bi_orchestrator import TradingBiAnalyticsOrchestrator
+except ImportError:
+    TradingBiAnalyticsOrchestrator = None
+>>>>>>> origin/codex/build-tsla-morning-report-system
 
 __all__ = [
     'market_trend_engine',
     'performance_metrics_engine',
     'risk_analysis_engine',
     'trading_bi_models',
+<<<<<<< HEAD
 <<<<<<< HEAD
     'TradingBiAnalyticsOrchestrator',
     'create_trading_bi_analytics_orchestrator',
@@ -49,4 +59,7 @@ __all__ = [
 =======
     'trading_bi_orchestrator',
 >>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+=======
+    'TradingBiAnalyticsOrchestrator',
+>>>>>>> origin/codex/build-tsla-morning-report-system
 ]

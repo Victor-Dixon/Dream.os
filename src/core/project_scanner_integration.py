@@ -3,8 +3,11 @@
 Project Scanner Integration
 ===========================
 
+<<<<<<< HEAD
 <!-- SSOT Domain: core -->
 
+=======
+>>>>>>> origin/codex/build-tsla-morning-report-system
 Integrates the universal project scanner into the agent operating cycle.
 
 Features:
@@ -48,7 +51,11 @@ class ProjectScannerIntegration:
         self.project_scanner = self._import_project_scanner()
 
     def _import_project_scanner(self):
+<<<<<<< HEAD
         """Import the project scanner from temp_repos or use simple fallback."""
+=======
+        """Import the project scanner from temp_repos."""
+>>>>>>> origin/codex/build-tsla-morning-report-system
         try:
             # Try the main project scanner first
             scanner_path = self.project_root / "temp_repos" / "Auto_Blogger" / "project_scanner.py"
@@ -57,6 +64,7 @@ class ProjectScannerIntegration:
                 sys.path.insert(0, str(scanner_path.parent))
 
                 from project_scanner import ProjectScanner
+<<<<<<< HEAD
                 logger.info("✅ Advanced project scanner imported successfully")
                 return ProjectScanner
             else:
@@ -69,6 +77,13 @@ class ProjectScannerIntegration:
                 from simple_project_scanner import SimpleProjectScanner
                 logger.info("✅ Simple project scanner imported successfully")
                 return SimpleProjectScanner
+=======
+                logger.info("✅ Project scanner imported successfully")
+                return ProjectScanner
+            else:
+                logger.warning("⚠️ Project scanner not found in temp_repos")
+                return None
+>>>>>>> origin/codex/build-tsla-morning-report-system
 
         except ImportError as e:
             logger.warning(f"⚠️ Could not import project scanner: {e}")
@@ -299,6 +314,7 @@ class ProjectScannerIntegration:
                 ]
             }
 
+<<<<<<< HEAD
             logger.info("📝 Getting Thea guidance from project scan")
 
             # Implement actual Thea integration
@@ -312,6 +328,12 @@ class ProjectScannerIntegration:
             else:
                 guidance["guidance_source"] = "fallback_generated"
                 logger.warning("⚠️ Thea guidance unavailable, using fallback recommendations")
+=======
+            logger.info("📝 Generated Thea-style guidance from project scan")
+
+            # TODO: Replace with actual Thea integration
+            # This would send the prompt to Thea and get real guidance
+>>>>>>> origin/codex/build-tsla-morning-report-system
 
             return guidance
 
@@ -319,6 +341,7 @@ class ProjectScannerIntegration:
             logger.error(f"Error getting Thea guidance: {e}")
             return {"error": str(e), "status": "guidance_failed"}
 
+<<<<<<< HEAD
     def _get_thea_guidance_sync(self, scan_results: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         """Get Thea guidance for project scan results (synchronous version)."""
         try:
@@ -455,6 +478,8 @@ class ProjectScannerIntegration:
 
         return prompt.strip()
 
+=======
+>>>>>>> origin/codex/build-tsla-morning-report-system
     def _get_cached_scan_results(self, project_path: Path) -> Optional[Dict[str, Any]]:
         """Get cached scan results if they exist and are recent."""
         try:
