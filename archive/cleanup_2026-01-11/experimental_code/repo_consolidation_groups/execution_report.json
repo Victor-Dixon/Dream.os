@@ -1,0 +1,111 @@
+{
+  "timestamp": "2026-01-09T00:55:20.293793",
+  "analysis": {
+    "total_groups": 8,
+    "ready_for_execution": [
+      {
+        "status": "ready",
+        "reason": "",
+        "action_required": "execute",
+        "target_repo": "dreamvault",
+        "group_name": "dream_projects",
+        "group_dir": "repo_consolidation_groups\\dream_projects"
+      },
+      {
+        "status": "ready",
+        "reason": "",
+        "action_required": "execute",
+        "target_repo": "gpt-automation",
+        "group_name": "gpt_automation",
+        "group_dir": "repo_consolidation_groups\\gpt_automation"
+      }
+    ],
+    "cancelled_groups": [
+      {
+        "status": "cancelled",
+        "reason": "",
+        "action_required": "archive",
+        "group_name": "dadudekc_projects",
+        "group_dir": "repo_consolidation_groups\\dadudekc_projects"
+      }
+    ],
+    "pending_groups": [
+      {
+        "status": "pending",
+        "reason": "",
+        "action_required": "",
+        "target_repo": "none",
+        "group_name": "duplicate_analyses",
+        "group_dir": "repo_consolidation_groups\\duplicate_analyses"
+      },
+      {
+        "status": "pending",
+        "reason": "",
+        "action_required": "",
+        "target_repo": "machinelearningmodelmaker",
+        "group_name": "ml_models",
+        "group_dir": "repo_consolidation_groups\\ml_models"
+      },
+      {
+        "status": "pending",
+        "reason": "",
+        "action_required": "",
+        "target_repo": "my-resume",
+        "group_name": "resume_templates",
+        "group_dir": "repo_consolidation_groups\\resume_templates"
+      },
+      {
+        "status": "pending",
+        "reason": "",
+        "action_required": "",
+        "target_repo": "streamertools",
+        "group_name": "streaming_tools",
+        "group_dir": "repo_consolidation_groups\\streaming_tools"
+      },
+      {
+        "status": "pending",
+        "reason": "",
+        "action_required": "",
+        "target_repo": "trading-leads-bot",
+        "group_name": "trading_bots",
+        "group_dir": "repo_consolidation_groups\\trading_bots"
+      }
+    ],
+    "completed_groups": []
+  },
+  "executed_actions": [
+    {
+      "action": "archived",
+      "group": "dadudekc_projects",
+      "result": {
+        "group_name": "dadudekc_projects",
+        "action": "archived",
+        "archive_path": "archive\\consolidated_repos\\dadudekc_projects_archived_20260109",
+        "status": "success",
+        "files_archived": 5
+      }
+    },
+    {
+      "action": "pending_github",
+      "group": "dream_projects",
+      "reason": "Requires GitHub access for repository merging",
+      "status": "documented"
+    },
+    {
+      "action": "pending_github",
+      "group": "gpt_automation",
+      "reason": "Requires GitHub access for repository merging",
+      "status": "documented"
+    }
+  ],
+  "archived_groups": [
+    {
+      "group_name": "dadudekc_projects",
+      "action": "archived",
+      "archive_path": "archive\\consolidated_repos\\dadudekc_projects_archived_20260109",
+      "status": "success",
+      "files_archived": 5
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,62 @@
+{
+  "last_updated": "2026-01-09T02:52:43.921816",
+  "total_space_saved_mb": 38.12,
+  "total_files_removed": 285,
+  "active_operations": 0,
+  "completed_operations": 10,
+  "error_rate": 0.5,
+  "performance_trend": [
+    94.8,
+    100,
+    92.5,
+    100,
+    100,
+    100,
+    98.4,
+    94.6,
+    100,
+    100
+  ],
+  "agent_performance": {
+    "Agent-7": {
+      "total_operations": 2,
+      "avg_performance": 490.15,
+      "total_space_saved": 6.27,
+      "total_files_removed": 52
+    },
+    "Agent-3": {
+      "total_operations": 4,
+      "avg_performance": 245.075,
+      "total_space_saved": 6.65,
+      "total_files_removed": 133
+    },
+    "Agent-8": {
+      "total_operations": 2,
+      "avg_performance": 490.15,
+      "total_space_saved": 9.56,
+      "total_files_removed": 59
+    },
+    "Agent-1": {
+      "total_operations": 2,
+      "avg_performance": 490.15,
+      "total_space_saved": 15.64,
+      "total_files_removed": 41
+    }
+  },
+  "phase_progress": {
+    "phase1": {
+      "total_operations": 10,
+      "completed_operations": 10,
+      "total_space_saved": 38.120000000000005,
+      "avg_performance": 98.03
+    }
+  },
+  "alerts": [
+    "High error rate detected: 50.0%",
+    "Low space savings detected"
+  ],
+  "recommendations": [
+    "Review error patterns and improve operation reliability",
+    "Verify consolidation operations are running correctly"
+  ]
+}

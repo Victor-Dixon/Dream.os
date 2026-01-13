@@ -94,61 +94,65 @@ class CacheCleanup:
             category_size = 0
 
             for pattern in config["patterns"]:
-                if "*" in pattern:
-                    # Glob pattern
-                    for file_path in self.repository_path.rglob(pattern):
-                        if file_path.is_file():
-                            try:
-                                size = file_path.stat().st_size
-                                category_files.append({
-                                    "path": str(file_path.relative_to(self.repository_path)),
-                                    "size_bytes": size,
-                                    "category": category
-                                })
-                                category_size += size
-                                analysis["total_files"] += 1
-                                analysis["total_size_mb"] += size / 1024 / 1024
-
-                                # Track large files
-                                if size > 10 * 1024 * 1024:  # Over 10MB
-                                    analysis["large_files"].append({
+                try:
+                    if "*" in pattern:
+                        # Glob pattern for files
+                        for file_path in self.repository_path.rglob(pattern):
+                            if file_path.is_file():
+                                try:
+                                    size = file_path.stat().st_size
+                                    category_files.append({
                                         "path": str(file_path.relative_to(self.repository_path)),
-                                        "size_mb": size / 1024 / 1024,
+                                        "size_bytes": size,
                                         "category": category
                                     })
+                                    category_size += size
+                                    analysis["total_files"] += 1
+                                    analysis["total_size_mb"] += size / 1024 / 1024
 
-                            except (OSError, IOError):
-                                continue
-                else:
-                    # Directory pattern
-                    for dir_path in self.repository_path.rglob(pattern):
-                        if dir_path.is_dir():
-                            try:
-                                # Calculate directory size
-                                total_size = 0
-                                file_count = 0
-                                for root, dirs, files in os.walk(dir_path):
-                                    for file in files:
-                                        try:
-                                            total_size += os.path.getsize(os.path.join(root, file))
-                                            file_count += 1
-                                        except (OSError, IOError):
-                                            continue
+                                    # Track large files
+                                    if size > 10 * 1024 * 1024:  # Over 10MB
+                                        analysis["large_files"].append({
+                                            "path": str(file_path.relative_to(self.repository_path)),
+                                            "size_mb": size / 1024 / 1024,
+                                            "category": category
+                                        })
 
-                                if total_size > 0:
-                                    category_files.append({
-                                        "path": str(dir_path.relative_to(self.repository_path)),
-                                        "size_bytes": total_size,
-                                        "file_count": file_count,
-                                        "category": category,
-                                        "is_directory": True
-                                    })
-                                    category_size += total_size
-                                    analysis["total_files"] += file_count
-                                    analysis["total_size_mb"] += total_size / 1024 / 1024
+                                except (OSError, IOError):
+                                    continue
+                    else:
+                        # Directory pattern
+                        for dir_path in self.repository_path.rglob(pattern):
+                            if dir_path.is_dir():
+                                try:
+                                    # Calculate directory size
+                                    total_size = 0
+                                    file_count = 0
+                                    for root, dirs, files in os.walk(dir_path):
+                                        for file in files:
+                                            try:
+                                                total_size += os.path.getsize(os.path.join(root, file))
+                                                file_count += 1
+                                            except (OSError, IOError):
+                                                continue
 
-                            except (OSError, IOError):
-                                continue
+                                    if total_size > 0:
+                                        category_files.append({
+                                            "path": str(dir_path.relative_to(self.repository_path)),
+                                            "size_bytes": total_size,
+                                            "file_count": file_count,
+                                            "category": category,
+                                            "is_directory": True
+                                        })
+                                        category_size += total_size
+                                        analysis["total_files"] += file_count
+                                        analysis["total_size_mb"] += total_size / 1024 / 1024
+
+                                except (OSError, IOError):
+                                    continue
+                except Exception as e:
+                    # Skip patterns that cause errors (missing directories, etc.)
+                    continue
 
             analysis["categories"][category] = {
                 "files": category_files,

@@ -529,11 +529,19 @@ class SessionManager(LoggingMixin):
                 FROM context_sessions
             """)
 
+<<<<<<< HEAD
         stats_dict = self.stats.copy()
         if db_stats:
             stats_dict.update(dict(db_stats))
         stats_dict["timestamp"] = datetime.now().isoformat()
         return stats_dict
+=======
+        result = dict(self.stats)
+        if db_stats:
+            result.update(db_stats)
+        result["timestamp"] = datetime.now().isoformat()
+        return result
+>>>>>>> rescue/dreamos-down-
 
     # Private helper methods
 

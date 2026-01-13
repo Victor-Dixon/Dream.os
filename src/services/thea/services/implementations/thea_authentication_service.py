@@ -92,7 +92,7 @@ class TheaAuthenticationService(IAuthenticationService):
 
     def validate_current_session(self, target_url: str) -> bool:
         """
-        Validate that the current session is still authenticated.
+        Validate that the current session is still authenticated using robust patterns from working monolithic version.
 
         Args:
             target_url: URL to validate authentication for
@@ -101,45 +101,133 @@ class TheaAuthenticationService(IAuthenticationService):
             True if session is valid, False otherwise
         """
         try:
-            # Check if we have valid cookies
+            print("🔍 Validating current session...")
+
+            # Check if we have valid cookies (secure validation)
             if not self.cookie_repo.has_valid_cookies():
+                print("❌ No valid cookies found")
                 return False
 
-            # Navigate to the target URL
-            if not self.browser_repo.navigate_to_url(target_url):
+            # SIMPLIFIED NAVIGATION: Always use basic ChatGPT for validation (from working monolithic)
+            chatgpt_main_url = "https://chatgpt.com"
+            print(f"🔍 Step 1: Navigating to base domain: {chatgpt_main_url}")
+            if not self.browser_repo.navigate_to_url(chatgpt_main_url):
                 return False
+            time.sleep(3)
 
-            # Wait for page to be ready
-            if not self.browser_repo.is_page_ready():
-                time.sleep(3)  # Give it a moment
-                if not self.browser_repo.is_page_ready():
+            # Load cookies on base domain (critical step from working monolithic)
+            cookies = self.cookie_repo.load_cookies()
+            if cookies and cookies.cookies:
+                print("🍪 Step 2: Loading cookies on base domain...")
+                success = self.browser_repo.load_cookies(cookies.cookies)
+                if not success:
+                    print("⚠️ Step 2 result: Cookie load failed")
                     return False
+                print("✅ Step 2 result: Cookies loaded successfully")
 
-            # Check if we're still on a login/auth page
+                current_cookies = self.browser_repo.get_cookies()
+                print(f"🔍 Step 2 result: Browser has {len(current_cookies)} cookies after loading")
+
+            # Refresh to apply cookies
+            self.browser_repo.navigate_to_url(chatgpt_main_url)
+            time.sleep(2)
+
+            # Now validate on the target URL (Thea GPT or basic ChatGPT)
+            print(f"🔍 Step 3: Navigating to target: {target_url}")
+            if target_url != chatgpt_main_url:
+                if not self.browser_repo.navigate_to_url(target_url):
+                    print("⚠️ Target navigation failed, trying basic ChatGPT fallback")
+                    target_url = chatgpt_main_url  # Fallback to basic ChatGPT
+
+            # Check if Thea GPT loads properly (from working monolithic)
             current_url = self.browser_repo.get_current_url()
-            if current_url and any(auth_indicator in current_url.lower()
-                                 for auth_indicator in ['login', 'auth', 'signin']):
+            page_title = self.browser_repo.get_page_title()
+            print(f"📍 Step 4 result: Current URL = {current_url}")
+            print(f"📍 Step 4 result: Page title = '{page_title}'")
+
+            # If redirected to login/auth page, cookies failed
+            if "login" in (current_url or "").lower() or "auth" in (current_url or "").lower():
+                print("⚠️ Redirected to login page - cookies invalid")
                 return False
 
-            # Check for authentication indicators on the page
-            page_title = self.browser_repo.get_page_title()
-            if page_title and 'chatgpt' in page_title.lower():
-                return True
+            # Check if page loads properly with comprehensive checks (from working monolithic)
+            print("🔍 Step 5: Checking if interface loaded...")
+            login_result = self._is_logged_in()
+            print(f"🔍 Step 5 result: Interface check = {login_result}")
 
-            # Check for presence of chat interface elements
-            input_element = self.browser_repo.find_input_element('textarea')
-            if input_element:
+            if login_result:
+                # CRITICAL: Check if elements are actually interactable (from working monolithic)
+                print("🔍 Step 6: Testing element interactability...")
+                interactable_result = self.browser_repo.test_element_interactability()
+                print(f"🔍 Step 6 result: Elements interactable = {interactable_result}")
+
+                if interactable_result:
+                    print("✅ ===== SESSION VALIDATION SUCCESSFUL =====")
+                    return True
+                else:
+                    print("⚠️ Elements exist but not interactable - likely stale cookies")
+                    return False
+            else:
+                print("⚠️ ===== SESSION VALIDATION FAILED - NOT LOGGED IN =====")
+                return False
+
+        except Exception as e:
+            print(f"❌ ===== SESSION VALIDATION ERROR: {e} =====")
+            return False
+
+    def _is_logged_in(self) -> bool:
+        """
+        Check if logged in by verifying page has proper ChatGPT interface (from working monolithic version).
+        """
+        try:
+            current_url = self.browser_repo.get_current_url()
+            page_title = self.browser_repo.get_page_title()
+
+            # Check for obvious login/auth pages
+            if "auth" in (current_url or "").lower() or "login" in (current_url or "").lower():
+                return False
+
+            # Check if we're on ChatGPT domain
+            if "chatgpt.com" not in (current_url or ""):
+                return False
+
+            # Check page title - should be "ChatGPT" or contain GPT info
+            if not page_title or "chatgpt" not in page_title.lower():
+                return False
+
+            # Check for ChatGPT-specific elements that indicate proper login
+            indicators = [
+                "textarea",  # Input area
+                "[contenteditable]",  # Alternative input
+                "[role='textbox']",  # ARIA textbox role
+                ".composer",  # Composer area
+                "[data-testid*='model']",  # Model selector
+                "[data-testid*='new-chat']",  # New chat button
+                "[data-testid*='regenerate']",  # Regenerate button
+            ]
+
+            found_indicators = 0
+            for indicator in indicators:
+                try:
+                    elements = self.browser_repo.execute_script(f"return document.querySelectorAll('{indicator}').length")
+                    if elements and elements > 0:
+                        found_indicators += 1
+                except:
+                    pass
+
+            # Require at least 2 different types of indicators for a valid page
+            if found_indicators >= 2:
                 return True
 
             return False
 
         except Exception as e:
-            print(f"❌ Session validation failed: {e}")
+            print(f"🔍 Login check error: {e}")
             return False
 
     def refresh_authentication(self, target_url: str) -> bool:
         """
-        Force refresh of authentication credentials.
+        Force refresh of authentication credentials using manual login approach from working monolithic version.
 
         Args:
             target_url: URL to refresh authentication for
@@ -147,40 +235,116 @@ class TheaAuthenticationService(IAuthenticationService):
         Returns:
             True if refresh successful, False otherwise
         """
-        try:
-            print("🔄 Refreshing authentication...")
+        print("🔄 Refreshing cookies...")
 
-            # Navigate to main ChatGPT site first
-            main_url = "https://chatgpt.com"
-            if not self.browser_repo.navigate_to_url(main_url):
+        if not self.browser_repo.is_browser_operational():
+            if not self.browser_repo.start_browser():
                 return False
 
-            # Load cookies if available
+        try:
+            # Navigate to main ChatGPT site first (from working monolithic)
+            chatgpt_main_url = "https://chatgpt.com"
+            print(f"🏠 Going to main ChatGPT site: {chatgpt_main_url}")
+            if not self.browser_repo.navigate_to_url(chatgpt_main_url):
+                return False
+            time.sleep(3)
+
+            # Load existing cookies if available
             cookies = self.cookie_repo.load_cookies()
-            if cookies:
+            if cookies and cookies.cookies:
                 self.browser_repo.load_cookies(cookies.cookies)
 
-            # Check if we're already logged in
-            if self.validate_current_session(main_url):
-                # Save the current session cookies
-                current_cookies = self.browser_repo.get_cookies()
-                if current_cookies:
-                    from ...domain.models import CookieData
-                    cookie_data = CookieData(
-                        cookies=current_cookies,
-                        domain="chatgpt.com"
-                    )
-                    self.cookie_repo.save_cookies(cookie_data)
+            # Check if already logged in (comprehensive check from working monolithic)
+            if self._is_logged_in():
+                # CRITICAL: Check if elements are actually interactable
+                if self.browser_repo.test_element_interactability():
+                    # Save cookies using secure cookie manager
+                    current_cookies = self.browser_repo.get_cookies()
+                    if current_cookies:
+                        from ...domain.models import CookieData
+                        cookie_data = CookieData(
+                            cookies=current_cookies,
+                            domain="chatgpt.com"
+                        )
+                        self.cookie_repo.save_cookies(cookie_data)
+                        print("✅ Cookies refreshed securely" if self.cookie_repo.__class__.__name__ == 'SecureCookieRepository' else "✅ Cookies refreshed (legacy)")
+                        return True
+                else:
+                    print("⚠️ Elements not interactable despite login check - continuing to manual login")
 
-                print("✅ Authentication refreshed with existing session")
-                return True
+            # Manual login required - guide user through the process (from working monolithic)
+            print("🔐 ===== MANUAL LOGIN REQUIRED =====")
+            print("📋 INSTRUCTIONS:")
+            print("   1. Browser window should be open with ChatGPT")
+            print("   2. Click 'Log in' or 'Sign in' button")
+            print("   3. Complete login process (email/password or Google/Apple)")
+            print("   4. Wait for ChatGPT interface to load fully")
+            print("   5. Return to this terminal when ready")
+            print("")
+            print("⏳ Waiting for you to complete login... (press Enter when done)")
 
-            # If not logged in, we need manual login
-            print("⚠️ Manual login required to refresh authentication")
-            return self._perform_manual_login(main_url)
+            # Wait for user input instead of fixed timeout
+            try:
+                input("Press Enter when login is complete...")
+                print("✅ User indicated login is complete")
+            except KeyboardInterrupt:
+                print("⏹️ Login process interrupted by user")
+                return False
+
+            # Give page time to fully load after login
+            print("⏳ Allowing time for page to stabilize after login...")
+            time.sleep(5)
+
+            # Verify login was successful with comprehensive checks
+            print("🔍 Verifying login success...")
+
+            # Check 1: Basic login detection
+            login_check = self._is_logged_in()
+            print(f"   Basic login check: {login_check}")
+
+            if not login_check:
+                print("❌ Basic login check failed")
+                return False
+
+            # Check 2: Element interactability (critical for stale cookie detection)
+            interactable_check = self.browser_repo.test_element_interactability()
+            print(f"   Element interactability check: {interactable_check}")
+
+            if not interactable_check:
+                print("❌ Elements not interactable - login may have failed")
+                print("💡 Try logging in again, or check if ChatGPT is blocking automation")
+                return False
+
+            # Check 3: Ensure we're on the right page
+            current_url = self.browser_repo.get_current_url()
+            if "chatgpt.com" not in (current_url or ""):
+                print(f"❌ Not on ChatGPT page: {current_url}")
+                return False
+
+            print("✅ All login verification checks passed")
+
+            # Save cookies using secure cookie manager
+            current_cookies = self.browser_repo.get_cookies()
+            if current_cookies:
+                from ...domain.models import CookieData
+                cookie_data = CookieData(
+                    cookies=current_cookies,
+                    domain="chatgpt.com"
+                )
+                success = self.cookie_repo.save_cookies(cookie_data)
+                if success:
+                    print("✅ Cookies saved securely after manual login" if self.cookie_repo.__class__.__name__ == 'SecureCookieRepository' else "✅ Cookies saved after manual login (legacy)")
+                    print("🎉 ===== LOGIN PROCESS COMPLETE =====")
+                    return True
+                else:
+                    print("❌ Cookie save failed after manual login - secure storage required")
+                    return False
+            else:
+                print("❌ No cookies to save after manual login")
+                return False
 
         except Exception as e:
-            print(f"❌ Authentication refresh failed: {e}")
+            print(f"❌ Cookie refresh error: {e}")
             return False
 
     def perform_login_flow(self, target_url: str) -> bool:

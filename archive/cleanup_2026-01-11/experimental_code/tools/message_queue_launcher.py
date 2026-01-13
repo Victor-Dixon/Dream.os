@@ -77,7 +77,11 @@ def main():
 
         with open(error_log, 'w') as err_file:
             process = subprocess.Popen(
+<<<<<<< HEAD:archive/cleanup_2026-01-11/experimental_code/tools/message_queue_launcher.py
                 [sys.executable, "-c", "from src.core.message_queue_processor.core.processor import main; main()"],
+=======
+                [sys.executable, "-m", "src.core.message_queue_processor.core.processor"],
+>>>>>>> rescue/dreamos-down-:tools/message_queue_launcher.py
                 env=env,
                 stdout=subprocess.DEVNULL,  # Suppress stdout to avoid clutter
                 stderr=err_file,           # Log errors to file

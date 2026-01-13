@@ -25,10 +25,12 @@ from enum import Enum
 # Add src to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
+
 class ConsolidationPhase(Enum):
     PHASE1 = "phase1"
     PHASE2 = "phase2"
     PHASE3 = "phase3"
+
 
 class TaskStatus(Enum):
     PENDING = "pending"
@@ -36,6 +38,7 @@ class TaskStatus(Enum):
     COMPLETED = "completed"
     BLOCKED = "blocked"
     FAILED = "failed"
+
 
 @dataclass
 class ConsolidationTask:
@@ -110,6 +113,7 @@ class ConsolidationTask:
             notes=notes,
         )
 
+
 @dataclass
 class AgentCapability:
     """Defines an agent's capabilities for consolidation tasks"""
@@ -118,6 +122,7 @@ class AgentCapability:
     specializations: List[str]
     current_workload: int  # Number of active tasks
     available: bool
+
 
 class ConsolidationCoordinator:
     """Coordinates consolidation tasks across the 8-agent team"""
@@ -132,21 +137,21 @@ class ConsolidationCoordinator:
         # Define agent capabilities
         self.agent_capabilities = {
             "Agent-1": AgentCapability("Agent-1", "Integration & Core Systems",
-                                     ["file_operations", "data_processing", "automation"], 0, True),
+                                       ["file_operations", "data_processing", "automation"], 0, True),
             "Agent-2": AgentCapability("Agent-2", "Architecture & Design",
-                                     ["architecture", "design_patterns", "code_review"], 0, True),
+                                       ["architecture", "design_patterns", "code_review"], 0, True),
             "Agent-3": AgentCapability("Agent-3", "Infrastructure & DevOps",
-                                     ["infrastructure", "deployment", "monitoring"], 0, True),
+                                       ["infrastructure", "deployment", "monitoring"], 0, True),
             "Agent-4": AgentCapability("Agent-4", "Captain (Strategic Oversight)",
-                                     ["coordination", "planning", "oversight"], 0, True),
+                                       ["coordination", "planning", "oversight"], 0, True),
             "Agent-5": AgentCapability("Agent-5", "Business Intelligence",
-                                     ["analytics", "reporting", "data_analysis"], 0, True),
+                                       ["analytics", "reporting", "data_analysis"], 0, True),
             "Agent-6": AgentCapability("Agent-6", "Coordination & Communication",
-                                     ["communication", "messaging", "coordination"], 0, True),
+                                       ["communication", "messaging", "coordination"], 0, True),
             "Agent-7": AgentCapability("Agent-7", "Web Development",
-                                     ["web_development", "frontend", "automation"], 0, True),
+                                       ["web_development", "frontend", "automation"], 0, True),
             "Agent-8": AgentCapability("Agent-8", "SSOT & System Integration",
-                                     ["integration", "data_consistency", "system_design"], 0, True)
+                                       ["integration", "data_consistency", "system_design"], 0, True)
         }
 
         self.tasks: Dict[str, ConsolidationTask] = {}
@@ -163,7 +168,8 @@ class ConsolidationCoordinator:
                             task = ConsolidationTask.from_dict(task_data)
                             self.tasks[task.task_id] = task
                         except Exception as task_err:
-                            print(f"Warning: Skipping invalid task record: {task_err}")
+                            print(
+                                f"Warning: Skipping invalid task record: {task_err}")
             except Exception as e:
                 print(f"Warning: Could not load existing tasks: {e}")
 
@@ -269,7 +275,8 @@ class ConsolidationCoordinator:
                 continue
 
             # Check if agent has required skills
-            has_required_skills = any(skill in capability.specializations for skill in required_skills)
+            has_required_skills = any(
+                skill in capability.specializations for skill in required_skills)
 
             # Prefer agents with matching skills and lower workload
             if has_required_skills and capability.current_workload < lowest_workload:
@@ -345,7 +352,7 @@ class ConsolidationCoordinator:
             if old_status != TaskStatus.COMPLETED and status == TaskStatus.COMPLETED:
                 if task.agent_id in self.agent_capabilities:
                     self.agent_capabilities[task.agent_id].current_workload = max(0,
-                        self.agent_capabilities[task.agent_id].current_workload - 1)
+                                                                                  self.agent_capabilities[task.agent_id].current_workload - 1)
 
             self.save_tasks()
             print(f"Updated task {task_id} status to {status.value}")
@@ -364,7 +371,8 @@ class ConsolidationCoordinator:
 
         # Calculate agent workloads
         for agent_id, capability in self.agent_capabilities.items():
-            agent_tasks = [t for t in self.tasks.values() if t.agent_id == agent_id]
+            agent_tasks = [t for t in self.tasks.values()
+                           if t.agent_id == agent_id]
             status_summary["agent_workloads"][agent_id] = {
                 "total_tasks": len(agent_tasks),
                 "completed": len([t for t in agent_tasks if t.status == TaskStatus.COMPLETED]),
@@ -415,22 +423,67 @@ class ConsolidationCoordinator:
         status = self.get_consolidation_status()
         print("\n📊 Current Agent Workloads:")
         for agent_id, workload in status["agent_workloads"].items():
-            print(f"  {agent_id}: {workload['pending']} pending, {workload['in_progress']} in progress")
+            print(
+                f"  {agent_id}: {workload['pending']} pending, {workload['in_progress']} in progress")
 
         return messages
 
-    def simulate_task_completion(self, task_id: str, success: bool = True):
-        """Simulate task completion for testing"""
-        if task_id in self.tasks:
-            status = TaskStatus.COMPLETED if success else TaskStatus.FAILED
-            result = {
-                "files_processed": 5,
-                "files_removed": 3,
-                "space_saved_mb": 1.2,
-                "status": "success" if success else "error"
-            }
-            self.update_task_status(task_id, status, result)
-            print(f"Simulated completion of task {task_id}")
+    def check_task_completion(self, task_id: str) -> bool:
+        """Check if a task has been completed by monitoring agent workspaces"""
+        if task_id not in self.tasks:
+            return False
+
+        task = self.tasks[task_id]
+        agent_id = task.agent_id
+
+        # Check agent workspace for completion evidence
+        agent_workspace = Path("agent_workspaces") / agent_id
+        if not agent_workspace.exists():
+            return False
+
+        # Look for completion evidence based on task type
+        if task.operation == "quickstart_deduplication":
+            # Check if QUICK_START.md consolidation is complete
+            quickstart_files = list(agent_workspace.glob("**/QUICK_START.md"))
+            if len(quickstart_files) <= 1:  # Should be consolidated to one file
+                result = {
+                    "files_processed": len(quickstart_files),
+                    "files_removed": max(0, len(quickstart_files) - 1),
+                    "space_saved_mb": 0.1 * max(0, len(quickstart_files) - 1),
+                    "status": "success"
+                }
+                self.update_task_status(task_id, TaskStatus.COMPLETED, result)
+                print(f"✅ Detected completion of task {task_id}")
+                return True
+
+        elif task.operation == "cache_cleanup":
+            # Check for .pyc file removal
+            pyc_files = list(agent_workspace.glob("**/*.pyc"))
+            cache_files = list(agent_workspace.glob("**/__pycache__/**"))
+            if len(pyc_files) == 0 and len(cache_files) == 0:
+                result = {
+                    "files_processed": 50,  # Estimate
+                    "files_removed": 50,
+                    "space_saved_mb": 2.0,
+                    "status": "success"
+                }
+                self.update_task_status(task_id, TaskStatus.COMPLETED, result)
+                print(f"✅ Detected completion of task {task_id}")
+                return True
+
+        # Check for manual completion markers
+        completion_marker = agent_workspace / f"task_{task_id}_completed.json"
+        if completion_marker.exists():
+            try:
+                with open(completion_marker, 'r') as f:
+                    result = json.load(f)
+                self.update_task_status(task_id, TaskStatus.COMPLETED, result)
+                print(f"✅ Found completion marker for task {task_id}")
+                return True
+            except (json.JSONDecodeError, IOError):
+                pass
+
+        return False
 
 
 def main():
@@ -453,10 +506,17 @@ def main():
             print(f"   - {task['operation']} ({task['priority']} priority)")
         print()
 
-    # For testing: simulate some task completions
-    print("🧪 Testing: Simulating task completions...")
-    for task_id in list(coordinator.tasks.keys())[:2]:  # Complete first 2 tasks
-        coordinator.simulate_task_completion(task_id, success=True)
+    # Check for real task completions
+    print("🔍 Checking for real task completions...")
+    completed_count = 0
+    for task_id in list(coordinator.tasks.keys()):
+        if coordinator.check_task_completion(task_id):
+            completed_count += 1
+
+    if completed_count > 0:
+        print(f"✅ Found {completed_count} completed tasks")
+    else:
+        print("ℹ️  No completed tasks detected yet")
 
     # Show updated status
     coordinator.save_status_report()

@@ -305,6 +305,20 @@ class RobinhoodAdapter(BrokerInterface):
 
         except Exception as e:
             logger.error(f"Account info retrieval failed: {e}")
+<<<<<<< HEAD
+=======
+            return {
+                "error": str(e),
+                "currency": "USD",
+                "last_updated": datetime.now().isoformat()
+            }
+
+            logger.info(f"Account balance retrieved: ${account_data['balance']:.2f}")
+            return account_data
+
+        except Exception as e:
+            logger.error(f"Account info retrieval failed: {e}")
+>>>>>>> rescue/dreamos-down-
             return {"error": str(e)}
 
     def get_options_positions(self) -> List[Dict[str, Any]]:

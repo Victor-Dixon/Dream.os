@@ -147,14 +147,20 @@ class StartHandler:
         """Verify that a service actually started and is healthy."""
         import time
 
-        for _ in range(timeout):
-            status = self.service_manager.get_service_status(service_name)
-            if status == 'running':
-                # Additional health checks could go here
-                return True
-            time.sleep(1)
+        try:
+            for attempt in range(timeout):
+                status = self.service_manager.get_service_status(service_name)
+                if status == 'running':
+                    # Additional health checks could go here
+                    return True
+                time.sleep(1)
 
-        return False
+            return False
+
+        except KeyboardInterrupt:
+            # Handle KeyboardInterrupt gracefully - user wants to abort
+            print(f"\n⚠️  Service verification interrupted for {service_name}")
+            return False
 
     def _perform_final_health_check(self, services: List[str]) -> None:
         """Perform a final health check on all started services."""

@@ -1,0 +1,224 @@
+# reorg/migration_manifest.yml
+version: "1.0"
+repo: "Agent_Cellphone_V2_Repository"
+policy:
+  create_symlink_bridges: true          # keep old paths working temporarily
+  bridge_ttl_days: 14                   # remove after stabilization window
+  preserve_git_history: true            # use git mv where possible
+  external_mounts:
+    windows:
+      websites_root: "D:/websites"
+    linux:
+      websites_root: "/mnt/websites"
+  protect_paths:
+    - ".git"
+    - ".github"
+    - "src"
+    - "docs"
+    - "pyproject.toml"
+    - "requirements.txt"
+    - "README.md"
+targets:
+  top_level:
+    - src
+    - config
+    - data
+    - docs
+    - tools
+    - ops
+    - tests
+    - web
+    - archive
+    - external
+    - .github
+moves:
+  # PHASE 1: LOW RISK (Safe archive and logging moves)
+  # --- CONFIG CONSOLIDATION ---
+  - from: "schemas"
+    to: "config/schemas"
+    risk: "low"
+    phase: 1
+    notes: ["Schemas are config-adjacent; update any references."]
+  - from: "fsm_data"
+    to: "config/fsm_data"
+    risk: "low"
+    phase: 1
+    notes: ["If used at runtime as data, move later into data/persistent instead. Keep as config only if static."]
+
+  - from: "nginx"
+    to: "config/infrastructure/nginx"
+    risk: "medium"
+    phase: 2
+    optional: true
+  - from: "ssl"
+    to: "config/infrastructure/ssl"
+    risk: "medium"
+    phase: 2
+    optional: true
+  - from: "pids"
+    to: "ops/runtime/pids"
+    risk: "low"
+    phase: 1
+
+  # --- DATA CONSOLIDATION ---
+  - from: "database"
+    to: "data/persistent/database"
+    risk: "medium"
+    phase: 2
+    optional: true
+  - from: "chroma_db"
+    to: "data/models/chroma_db"
+    risk: "medium"
+    phase: 2
+    optional: true
+  - from: "swarm_brain"
+    to: "data/models/swarm_brain"
+    risk: "medium"
+    phase: 2
+    optional: true
+  - from: "cache"
+    to: "data/cache"
+    risk: "low"
+    phase: 1
+    optional: true
+
+  # --- TOOLS & SCRIPTS ---
+  - from: "scripts"
+    to: "tools/automation/scripts"
+    risk: "low"
+    phase: 3
+    optional: true
+    notes: ["If you want to keep scripts/ at top-level, skip this move."]
+  - from: "extensions"
+    to: "tools/development/extensions"
+    risk: "low"
+    phase: 3
+    optional: true
+  - from: "templates"
+    to: "tools/utilities/templates"
+    risk: "low"
+    phase: 3
+    optional: true
+  - from: "mcp_servers"
+    to: "tools/development/mcp_servers"
+    risk: "medium"
+    phase: 3
+    optional: true
+  - from: "autonomous_config_reports"
+    to: "tools/analysis/autonomous_config_reports"
+    risk: "low"
+    phase: 3
+    optional: true
+
+  # --- OPS ---
+  - from: "runtime"
+    to: "ops/runtime"
+    risk: "medium"
+    phase: 2
+    optional: true
+  - from: "logs"
+    to: "ops/monitoring/logs"
+    risk: "low"
+    phase: 1
+    optional: true
+  - from: "message_queue"
+    to: "ops/messaging/message_queue"
+    risk: "medium"
+    phase: 2
+    optional: true
+  - from: "stress_test_analysis_results"
+    to: "ops/monitoring/stress_test_analysis_results"
+    risk: "low"
+    phase: 1
+    optional: true
+
+  # --- TESTS ---
+  - from: "test"
+    to: "tests/legacy_test"
+    risk: "medium"
+    phase: 3
+    optional: true
+  - from: "test_chroma"
+    to: "tests/integration/test_chroma"
+    risk: "medium"
+    phase: 3
+    optional: true
+  - from: "validation_results"
+    to: "tests/validation_results"
+    risk: "low"
+    phase: 3
+    optional: true
+
+  # --- WEB (EXTERNALIZED) ---
+  - from: "sites"
+    to: "EXTERNAL:D/websites"
+    risk: "low"
+    phase: 1
+    optional: true
+    notes:
+      - "Already migrated; do NOT git mv"
+      - "Repo should only reference via config.paths.WEBSITES_ROOT"
+  - from: "site_posts"
+    to: "EXTERNAL:D/websites/site_posts"
+    risk: "low"
+    phase: 1
+    optional: true
+  - from: "website_data"
+    to: "EXTERNAL:D/websites/website_data"
+    risk: "low"
+    phase: 1
+    optional: true
+  - from: "assets"
+    to: "web/assets"
+    risk: "low"
+    phase: 1
+    optional: true
+
+  # --- ARCHIVE ---
+  - from: "archives"
+    to: "archive/temp"
+    risk: "low"
+    phase: 1
+    optional: true
+  - from: "backups"
+    to: "archive/repositories"
+    risk: "low"
+    phase: 1
+    optional: true
+  - from: "phase3b_backup"
+    to: "archive/repositories/phase3b_backup"
+    risk: "low"
+    phase: 1
+    optional: true
+  - from: "temp"
+    to: "archive/temp"
+    risk: "low"
+    phase: 1
+    optional: true
+  - from: "quarantine"
+    to: "archive/temp/quarantine"
+    risk: "low"
+    phase: 1
+    optional: true
+  - from: "migration_package"
+    to: "archive/deployments/migration_package"
+    risk: "low"
+    phase: 1
+    optional: true
+
+  # --- EXTERNAL ---
+  - from: "contracts"
+    to: "external/contracts"
+    risk: "low"
+    phase: 1
+    optional: true
+  - from: "money_ops"
+    to: "external/services/money_ops"
+    risk: "medium"
+    phase: 2
+    optional: true
+  - from: "systems"
+    to: "external/services/systems"
+    risk: "medium"
+    phase: 2
+    optional: true
