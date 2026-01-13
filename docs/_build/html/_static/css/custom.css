@@ -1,0 +1,142 @@
+/* Custom CSS for Agent Cellphone V2 Documentation */
+
+/* Swarm theme colors */
+:root {
+    --swarm-primary: #FFD700;
+    --swarm-secondary: #FF6B35;
+    --swarm-accent: #8338EC;
+    --swarm-text: #2D3748;
+    --swarm-bg: #FFFFFF;
+    --swarm-code-bg: #F7FAFC;
+}
+
+/* Override theme colors */
+.wy-nav-top {
+    background: linear-gradient(135deg, var(--swarm-primary), var(--swarm-secondary));
+}
+
+.wy-nav-side {
+    background: var(--swarm-bg);
+}
+
+.wy-menu-vertical a:hover {
+    background-color: rgba(255, 215, 0, 0.1);
+}
+
+.wy-menu-vertical a.active {
+    background-color: var(--swarm-primary);
+    color: var(--swarm-text);
+}
+
+/* Code blocks */
+.highlight {
+    background: var(--swarm-code-bg);
+    border-left: 4px solid var(--swarm-primary);
+}
+
+/* Headers */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--swarm-text);
+    font-weight: 600;
+}
+
+/* Links */
+a {
+    color: var(--swarm-accent);
+}
+
+a:hover {
+    color: var(--swarm-secondary);
+}
+
+/* Swarm badges */
+.swarm-badge {
+    background: linear-gradient(135deg, var(--swarm-primary), var(--swarm-secondary));
+    color: var(--swarm-text);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8em;
+    font-weight: bold;
+    display: inline-block;
+    margin: 2px;
+}
+
+/* Warning boxes */
+.admonition.warning {
+    border-color: var(--swarm-secondary);
+}
+
+.admonition.warning .admonition-title {
+    background-color: rgba(255, 107, 53, 0.1);
+    color: var(--swarm-secondary);
+}
+
+/* Note boxes */
+.admonition.note {
+    border-color: var(--swarm-accent);
+}
+
+.admonition.note .admonition-title {
+    background-color: rgba(131, 56, 236, 0.1);
+    color: var(--swarm-accent);
+}
+
+/* Custom swarm icons */
+.swarm-icon:before {
+    content: "🐝";
+    margin-right: 8px;
+}
+
+.lightning-icon:before {
+    content: "⚡️";
+    margin-right: 8px;
+}
+
+.fire-icon:before {
+    content: "🔥";
+    margin-right: 8px;
+}
+
+/* Function signature styling */
+.sig {
+    background: var(--swarm-code-bg);
+    padding: 8px 12px;
+    border-radius: 4px;
+    border-left: 4px solid var(--swarm-primary);
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+}
+
+/* Parameter tables */
+.field-list {
+    border-left: 4px solid var(--swarm-accent);
+    background: rgba(131, 56, 236, 0.05);
+    padding: 12px;
+    margin: 12px 0;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .wy-nav-side {
+        width: 300px;
+    }
+
+    .wy-nav-content-wrap {
+        margin-left: 0;
+    }
+}
+
+/* Print styles */
+@media print {
+    .wy-nav-side,
+    .wy-nav-top {
+        display: none;
+    }
+
+    .wy-nav-content-wrap {
+        margin-left: 0;
+    }
+
+    body {
+        font-size: 12pt;
+    }
+}

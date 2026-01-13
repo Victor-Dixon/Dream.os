@@ -1,105 +1,129 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 """
-Agent Cellphone V2 - Python Package Setup
-=========================================
-
-Standard setuptools-based package installation.
-
-Usage:
-    pip install -e .           # Development install
-    pip install .              # Production install
-    python setup.py develop    # Alternative dev install
+Setup script for Agent Cellphone V2 - Swarm AI Coordination Framework
 """
 
 from setuptools import setup, find_packages
-import os
 from pathlib import Path
 
-# Read version from version file
-def read_version():
-    version_file = Path(__file__).parent / "src" / "agent_cellphone_v2" / "__version__.py"
-    if version_file.exists():
-        exec(version_file.read_text())
-        return locals()["__version__"]
-    return "2.0.0"
-
 # Read README
-def read_readme():
-    readme_file = Path(__file__).parent / "README.md"
-    if readme_file.exists():
-        return readme_file.read_text()
-    return "Agent Cellphone V2 - Multi-Agent Coordination System"
+this_directory = Path(__file__).parent
+long_description = (this_directory / "PYPI_PACKAGE_README.md").read_text()
+
+# Read version from package
+def get_version():
+    """Extract version from __init__.py"""
+    init_file = this_directory / "src" / "__init__.py"
+    if init_file.exists():
+        content = init_file.read_text()
+        for line in content.split('\n'):
+            if line.startswith('__version__'):
+                return line.split('=')[1].strip().strip('"\'')
+
+    # Fallback version
+    return "2.0.0"
 
 setup(
     name="agent-cellphone-v2",
-    version=read_version(),
-    description="Agent Cellphone V2 - Multi-Agent Coordination System",
-    long_description=read_readme(),
+    version=get_version(),
+    author="Agent Cellphone Development Team",
+    author_email="team@agent-cellphone-v2.com",
+    description="Swarm AI Coordination Framework for Multi-Agent Collaboration",
+    long_description=long_description,
     long_description_content_type="text/markdown",
-    author="DadudeCK",
-    author_email="dadudekc@gmail.com",
-    url="https://github.com/dadudekc/agent-cellphone-v2",
-    packages=find_packages(where="src"),
-    package_dir={"": "src"},
-    include_package_data=True,
-    python_requires=">=3.11",
-    install_requires=[
-        # Runtime dependencies
-        "python-dotenv>=1.0.0",
-        "pyyaml>=6.0.0",
-        "pydantic>=2.0.0",
-        "pydantic-settings>=2.0.0",
-        "requests>=2.31.0",
-        "aiohttp>=3.8.0",
-        "fastapi>=0.100.0",
-        "uvicorn[standard]>=0.23.0",
-        "discord.py>=2.3.0",
-        "pyautogui>=0.9.54",
-        "pyperclip>=1.8.0",
-    ],
-    extras_require={
-        "dev": [
-            "black>=23.0.0",
-            "flake8>=6.0.0",
-            "isort>=5.12.0",
-            "mypy>=1.0.0",
-            "pre-commit>=3.0.0",
-            "pylint>=2.17.0",
-        ],
-        "test": [
-            "pytest>=7.0.0",
-            "pytest-cov>=4.0.0",
-            "pytest-asyncio>=0.21.0",
-            "pytest-xdist>=3.0.0",
-            "pytest-timeout>=2.0.0",
-        ],
-        "docs": [
-            "sphinx>=5.0.0",
-            "sphinx-rtd-theme>=1.2.0",
-        ],
-    },
-    entry_points={
-        "console_scripts": [
-            "agent-cellphone=main:main",
-            "ac2-messaging=src.services.messaging_cli:main",
-            "ac2-status=src.services.status_cli:main",
-        ],
+    url="https://github.com/your-org/agent-cellphone-v2",
+    project_urls={
+        "Documentation": "https://docs.agent-cellphone-v2.com",
+        "Source": "https://github.com/your-org/agent-cellphone-v2",
+        "Tracker": "https://github.com/your-org/agent-cellphone-v2/issues",
+        "Changelog": "https://github.com/your-org/agent-cellphone-v2/blob/main/CHANGELOG.md",
     },
     classifiers=[
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
+        "Intended Audience :: Science/Research",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
         "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
+        "Topic :: Scientific/Engineering :: Artificial Intelligence",
         "Topic :: Software Development :: Libraries :: Python Modules",
         "Topic :: System :: Distributed Computing",
     ],
-    keywords="agents automation swarm coordination ai",
-    project_urls={
-        "Bug Reports": "https://github.com/dadudekc/agent-cellphone-v2/issues",
-        "Source": "https://github.com/dadudekc/agent-cellphone-v2",
-        "Documentation": "https://agent-cellphone-v2.readthedocs.io/",
+    keywords=[
+        "ai", "swarm", "agents", "coordination", "collaboration",
+        "multi-agent", "artificial-intelligence", "distributed-systems",
+        "machine-learning", "automation"
+    ],
+    packages=find_packages(where="src"),
+    package_dir={"": "src"},
+    python_requires=">=3.8",
+    install_requires=[
+        # Core dependencies (none required for basic functionality)
+    ],
+    extras_require={
+        "dev": [
+            "pytest>=7.0.0",
+            "pytest-cov>=4.0.0",
+            "black>=22.0.0",
+            "flake8>=5.0.0",
+            "mypy>=1.0.0",
+            "sphinx>=5.0.0",
+            "sphinx-rtd-theme>=1.2.0",
+            "pre-commit>=3.0.0",
+        ],
+        "monitoring": [
+            "prometheus-client>=0.16.0",
+            "grafana-api>=1.0.3",
+        ],
+        "security": [
+            "cryptography>=41.0.0",
+            "pyjwt>=2.0.0",
+        ],
+        "web": [
+            "fastapi>=0.100.0",
+            "uvicorn>=0.23.0",
+            "websockets>=11.0.0",
+        ],
+        "all": [
+            "pytest>=7.0.0",
+            "pytest-cov>=4.0.0",
+            "black>=22.0.0",
+            "flake8>=5.0.0",
+            "mypy>=1.0.0",
+            "sphinx>=5.0.0",
+            "sphinx-rtd-theme>=1.2.0",
+            "pre-commit>=3.0.0",
+            "prometheus-client>=0.16.0",
+            "grafana-api>=1.0.3",
+            "cryptography>=41.0.0",
+            "pyjwt>=2.0.0",
+            "fastapi>=0.100.0",
+            "uvicorn>=0.23.0",
+            "websockets>=11.0.0",
+        ],
     },
-)
+    entry_points={
+        "console_scripts": [
+            "agent-cellphone=agent_cellphone.cli:main",
+            "agent-cellphone-monitor=agent_cellphone.cli:monitor",
+            "agent-cellphone-status=agent_cellphone.cli:status",
+            "agent-cellphone-coordinate=agent_cellphone.cli:coordinate",
+            "agent-cellphone-dashboard=agent_cellphone.cli:dashboard",
+            "agent-cellphone-metrics=agent_cellphone.cli:metrics",
+            "agent-cellphone-health=agent_cellphone.cli:health",
+        ],
+    },
+    include_package_data=True,
+    zip_safe=False,
+    test_suite="tests",
+    tests_require=[
+        "pytest>=7.0.0",
+        "pytest-cov>=4.0.0",
+    ],
+)</content>
+</xai:function_call<parameter name="path">D:\Agent_Cellphone_V2_Repository\setup.py

@@ -1,35 +1,40 @@
-# Include additional files in package distribution
-
-# Include configuration files
-include .env.example
-include pytest.ini
-
 # Include documentation
+include PYPI_PACKAGE_README.md
 include README.md
 include CHANGELOG.md
+include CONTRIBUTING.md
 include LICENSE
 
-# Include Docker files
-include Dockerfile
-include docker-compose.yml
+# Include configuration files
+include pyproject.toml
+include setup.cfg
+include tox.ini
 
-# Include scripts
-include main.py
+# Include examples and docs
+recursive-include docs *.md
+recursive-include docs *.rst
+recursive-include examples *.py
+recursive-include examples *.md
+
+# Include tests
+recursive-include tests *.py
+recursive-include tests *.json
+recursive-include tests *.yaml
 
 # Exclude development files
-exclude .env
-exclude .env.backup
-exclude .git*
-exclude __pycache__
-exclude *.pyc
-exclude .pytest_cache
-exclude htmlcov
-exclude .coverage
-exclude .mypy_cache
+exclude .gitignore
+exclude .gitattributes
+exclude .pre-commit-config.yaml
+exclude .github/
+exclude .vscode/
+exclude .cursor/
 
-# Recursive excludes
-recursive-exclude __pycache__ *
-recursive-exclude *.egg-info *
-recursive-exclude .git *
-recursive-exclude tests *.pyc
-recursive-exclude docs/_build *
+# Global excludes
+global-exclude *.pyc
+global-exclude *.pyo
+global-exclude __pycache__/
+global-exclude .DS_Store
+global-exclude .coverage
+global-exclude .tox/
+global-exclude .pytest_cache/</content>
+</xai:function_call<parameter name="path">D:\Agent_Cellphone_V2_Repository\MANIFEST.in

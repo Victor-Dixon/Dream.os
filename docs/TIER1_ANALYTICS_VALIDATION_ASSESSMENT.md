@@ -54,7 +54,7 @@ Agent-6 completed comprehensive Tier 1 analytics validation assessment. **Status
 ### ✅ Completed Improvements
 
 1. **Validation Script Updates**
-   - Corrected website directory path from `websites/sites/` to `../../websites/`
+   - Corrected website directory path from `[OLD_WEBSITES_PATH]/sites/` to `../../websites/`
    - Updated to read `wp-config-analytics.php` files instead of `wp-config.php`
    - Enhanced error handling and reporting
 
@@ -290,7 +290,7 @@ python -m src.tools.analytics.analytics_validation_scheduler --accessibility-tes
 python -m src.tools.analytics.configuration_sync_checker --site [sitename]
 
 # Update configuration file manually
-# Edit: websites/[sitename]/wp-config-analytics.php
+# Edit: [WEBSITES_ROOT]/[sitename]/wp-config-analytics.php
 # Replace placeholder values with real IDs
 ```
 
@@ -321,7 +321,7 @@ python -m src.tools.analytics.analytics_validation_scheduler --quick-check
 python -m src.tools.analytics.automated_p0_analytics_validation --emergency-report
 
 # Validate single configuration file
-python -m src.tools.analytics.configuration_sync_checker --file websites/freerideinvestor.com/wp-config-analytics.php
+python -m src.tools.analytics.configuration_sync_checker --file [WEBSITES_ROOT]/freerideinvestor.com/wp-config-analytics.php
 ```
 
 ---

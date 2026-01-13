@@ -470,6 +470,107 @@ class DiscordManager:
 
         return True
 
+    async def setup_devlog_channels(self) -> bool:
+        """Create agent-specific devlog channels and webhooks"""
+        if not self.guild:
+            print("❌ No guild information available.")
+            return False
+
+        print("\n📝 SETTING UP AGENT DEVLOG CHANNELS")
+        print("=" * 50)
+
+        try:
+            # Create Devlogs category if it doesn't exist
+            devlogs_category = None
+            for category in self.guild.categories:
+                if "devlog" in category.name.lower() or "dev-log" in category.name.lower():
+                    devlogs_category = category
+                    break
+
+            if not devlogs_category:
+                devlogs_category = await self.guild.create_text_channel("🤖 Agent Devlogs")
+                print("✅ Created '🤖 Agent Devlogs' category")
+            else:
+                print(f"✅ Found existing devlogs category: {devlogs_category.name}")
+
+            # Create devlog channels for each agent
+            devlog_webhooks = {}
+
+            for i in range(1, 9):  # Agents 1-8
+                agent_num = i
+                channel_name = f"agent-{agent_num}-devlogs"
+
+                # Check if channel already exists
+                existing_channel = None
+                for channel in self.guild.channels:
+                    if isinstance(channel, discord.TextChannel) and channel.name == channel_name:
+                        existing_channel = channel
+                        break
+
+                if not existing_channel:
+                    # Create new channel in devlogs category
+                    existing_channel = await self.guild.create_text_channel(channel_name, category=devlogs_category)
+                    print(f"✅ Created devlog channel: {channel_name}")
+                else:
+                    print(f"✅ Found existing devlog channel: {channel_name}")
+
+                # Create/update webhook for this channel
+                try:
+                    # Check for existing webhook
+                    existing_webhooks = await existing_channel.webhooks()
+                    webhook_name = f"Agent-{agent_num}-Devlogs-Webhook"
+
+                    existing_webhook = None
+                    for webhook in existing_webhooks:
+                        if webhook.name == webhook_name:
+                            existing_webhook = webhook
+                            break
+
+                    if not existing_webhook:
+                        webhook = await existing_channel.create_webhook(name=webhook_name)
+                        devlog_webhooks[f'AGENT_{agent_num}'] = webhook.url
+                        print(f"✅ Created webhook for Agent-{agent_num} devlogs")
+                    else:
+                        devlog_webhooks[f'AGENT_{agent_num}'] = existing_webhook.url
+                        print(f"✅ Found existing webhook for Agent-{agent_num} devlogs")
+
+                except Exception as e:
+                    print(f"❌ Failed to setup webhook for Agent-{agent_num}: {e}")
+
+            # Generate environment configuration for devlog webhooks
+            self.generate_devlog_env_config(devlog_webhooks)
+
+            print("\n🎉 DEVLOG CHANNELS SETUP COMPLETE!")
+            print(f"✅ Created 8 agent devlog channels in '{devlogs_category.name}' category")
+            print(f"✅ Created 8 webhooks for agent devlog delivery")
+            print("✅ Generated environment configuration")
+            return True
+
+        except Exception as e:
+            print(f"❌ Failed to setup devlog channels: {e}")
+            return False
+
+    def generate_devlog_env_config(self, webhooks: Dict[str, str]):
+        """Generate environment configuration for devlog webhooks"""
+        env_content = "\n# Agent Devlog Webhooks - Auto-generated\n"
+        env_content += "# Copy these to your main .env file\n\n"
+
+        for agent_key, webhook_url in webhooks.items():
+            env_var = f"DISCORD_WEBHOOK_{agent_key}"
+            env_content += f'{env_var}="{webhook_url}"\n'
+
+        # Save to file
+        with open('.env.devlogs', 'w') as f:
+            f.write(env_content)
+
+        print("\n📄 DEVLOG WEBHOOK CONFIGURATION:")
+        print("   Add these variables to your .env file:")
+        for agent_key, webhook_url in webhooks.items():
+            env_var = f"DISCORD_WEBHOOK_{agent_key}"
+            print(f"   {env_var}=[webhook_url]")
+
+        print("\n💾 Configuration saved to .env.devlogs")
+        print("   Copy the variables above to your main .env file")
     async def view_channels_only(self) -> bool:
         """View current Discord channel structure without making changes"""
         print("👀 DISCORD CHANNEL VIEWER")
@@ -567,6 +668,7 @@ def main():
     parser.add_argument("--view-guild", action="store_true", help="View Discord server information")
     parser.add_argument("--analyze-channels", action="store_true", help="Analyze channel usage and provide organization recommendations")
     parser.add_argument("--organize-channels", action="store_true", help="Automatically organize channels into logical categories")
+    parser.add_argument("--setup-devlog-channels", action="store_true", help="Create agent-specific devlog channels and webhooks")
 
     args = parser.parse_args()
 
@@ -621,6 +723,18 @@ def main():
         # Organize channels automatically
         asyncio.run(manager.organize_channels())
 
+    elif args.setup_devlog_channels:
+        # Setup agent-specific devlog channels and webhooks
+        success = asyncio.run(manager.setup_devlog_channels())
+        if success:
+            print("\n🎯 DEVLOG SETUP COMPLETE!")
+            print("📋 Next steps:")
+            print("   1. Copy webhook variables from .env.devlogs to your .env file")
+            print("   2. Test devlog posting: python tools/devlog_poster.py --agent Agent-1 --file [devlog_file]")
+            print("   3. Verify messages appear in agent-specific devlog channels")
+        else:
+            print("❌ Devlog setup failed")
+
     elif args.setup:
         # Run automated setup
         asyncio.run(manager.setup_discord_integration())
@@ -636,6 +750,7 @@ def main():
         print("  python discord_manager.py --view-guild              # View server info + channels")
         print("  python discord_manager.py --analyze-channels        # Analyze usage & recommendations")
         print("  python discord_manager.py --organize-channels       # Get organization guide")
+        print("  python discord_manager.py --setup-devlog-channels   # Create agent devlog channels")
         print("  python discord_manager.py --token YOUR_TOKEN --setup # Setup with specific token")
         print("\nEnsure your bot token has these permissions:")
         print("  • Manage Channels")

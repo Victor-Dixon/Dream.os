@@ -6,10 +6,12 @@ Base Service Classes - Agent Cellphone V2
 Standardized service architecture to eliminate duplicate patterns
 across service implementations.
 
-<!-- SSOT Domain: core -->
-
+V2 Consolidated: Uses SSOT base classes for standardized patterns
 Author: Agent-1 (Integration & Core Systems)
-Date: 2026-01-11
+SSOT Migration: Agent-8 (System Integration)
+Date: 2026-01-12
+
+<!-- SSOT Domain: core -->
 
 Usage:
     # Replace service boilerplate with standardized base classes
@@ -28,15 +30,15 @@ Usage:
         # Inherits standard health_check(), logging, error handling
 """
 
-import asyncio
-import time
-from abc import ABC, abstractmethod
-from datetime import datetime, timedelta
-from typing import Any, Dict, List, Optional, Union
-from dataclasses import dataclass, field
-
+# SSOT Import Standardization - eliminates redundant typing imports
+from src.core.base.import_standardization import (
+    asyncio, time, ABC, abstractmethod, datetime, timedelta,
+    Any, Dict, List, Optional, Union, dataclass, field
+)
 from .logging_utils import get_logger, create_service_logger
 from .error_handling import ErrorHandler, handle_errors
+from src.core.base.service_base import BaseService as SSOTBaseService
+from src.core.base.error_handling import ErrorHandler as SSOTErrorHandler, error_context
 
 
 @dataclass

@@ -17,17 +17,17 @@ import logging
 import discord
 from discord.ext import commands
 
+from ...core.base.common_command_base import CommonCommandBase
+
 logger = logging.getLogger(__name__)
 
 
-class ProfileCommands(commands.Cog):
+class ProfileCommands(CommonCommandBase):
     """Profile display commands for team members."""
 
     def __init__(self, bot):
         """Initialize profile commands."""
-        super().__init__()
-        self.bot = bot
-        self.logger = logging.getLogger(__name__)
+        super().__init__(bot)  # Uses CommonCommandBase for standardized initialization
 
     @commands.command(name="aria", description="✨ View Aria's interactive profile!")
     async def aria_profile(self, ctx: commands.Context):

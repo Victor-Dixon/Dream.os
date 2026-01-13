@@ -26,10 +26,14 @@ from typing import TYPE_CHECKING
 project_root = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(project_root))
 
-# Load environment variables from .env file
+# Load environment variables from .env files
 try:
     from dotenv import load_dotenv
+    # Load main .env file first
     load_dotenv()
+    # Then load Discord-specific configuration
+    load_dotenv('.env.discord')
+    print("✅ Environment variables loaded from .env and .env.discord")
 except ImportError:
     print("⚠️  python-dotenv not installed. Install with: pip install python-dotenv")
     print("⚠️  Continuing without .env support...")

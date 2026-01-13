@@ -15,18 +15,23 @@ Features:
 - Swarm Brain integration
 - Discord status reporting
 
-V2 Compliance: <400 lines, SOLID principles, comprehensive error handling
+V2 Consolidated: Uses SSOT base classes for standardized patterns
 Author: Agent-3 (Infrastructure & DevOps Specialist)
+SSOT Migration: Agent-8 (System Integration)
+Date: 2026-01-12
+V2 Compliance: <400 lines, SOLID principles, comprehensive error handling
 """
 
-import logging
-import time
-import threading
-from datetime import datetime, timedelta
-from pathlib import Path
-from typing import Dict, Any, List, Optional
-import json
-import os
+# SSOT Import Standardization - eliminates redundant typing imports
+from src.core.base.import_standardization import (
+    logging, time, threading, datetime, timedelta, Path, json, os,
+    Dict, Any, List, Optional
+)
+from src.core.base.service_base import BaseService
+from src.core.base.error_handling import ErrorHandler, error_context
+
+# Initialize standardized logger through SSOT base
+logger = logging.getLogger(__name__)
 
 from .agent_status.aggregator import SwarmStateAggregator
 from .unified_service_base import UnifiedServiceBase

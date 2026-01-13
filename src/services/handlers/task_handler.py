@@ -18,18 +18,17 @@ import os
 from datetime import datetime
 from pathlib import Path
 
-from ...core.base.unified_handler import UnifiedHandler
+from ...core.base.common_command_base import CommonHandlerBase
 
 logger = logging.getLogger(__name__)
 
 
-class TaskHandler(UnifiedHandler):
+class TaskHandler(CommonHandlerBase):
     """Handles task system commands for messaging CLI."""
 
     def __init__(self):
         """Initialize task handler."""
-        super().__init__("TaskHandler")
-        self.exit_code = 0
+        super().__init__("TaskHandler")  # Uses CommonHandlerBase for standardized initialization
         self._ensure_data_dir()
 
     def _ensure_data_dir(self) -> None:

@@ -29,6 +29,13 @@ python -m src.services.messaging_cli --queue-stats        # Show statistics
 python -m src.services.messaging_cli --health-check       # System health check
 python -m src.services.messaging_cli --process-workspaces # Clean all workspaces
 
+# Swarm Intelligence Features
+python -m src.services.messaging_cli --swarm-vote --topic "Next sprint focus" --options "AI integration,Technical debt,New features"
+python -m src.services.messaging_cli --swarm-conflict --agent Agent-1 --agent Agent-2 --issue "Architecture disagreement"
+python -m src.services.messaging_cli --swarm-profile --agent Agent-3 --duration "1 hour"
+python -m src.services.messaging_cli --swarm-prove --claim "SSOT compliance achieved" --level comprehensive
+python -m src.services.messaging_cli --swarm-patterns --type communication --window "7 days"
+
 🐝 WE. ARE. SWARM - COORDINATE THROUGH PYAUTOGUI!
 """
 

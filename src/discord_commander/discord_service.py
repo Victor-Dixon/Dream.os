@@ -190,11 +190,23 @@ class DiscordService:
         )
 
     async def _notify_agents_of_devlog(self, devlog_data: dict[str, Any]):
-        """Notify relevant agents about the devlog."""
+        """Notify relevant agents about the devlog using proper D2A template."""
         try:
-            message = f"""🚨 DISCORD DEVLOG ALERT
+            from datetime import datetime, timezone
 
-**New DevLog Activity Detected:**
+            # Format as proper D2A message
+            timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
+            message = f"""[D2A] All Agents
+
+**Priority**: REGULAR
+**Status**: DEVLOG_MONITOR_ALERT
+**Source**: Discord DevLog Monitor
+**Timestamp**: {timestamp}
+
+🐝 **DISCORD DEVLOG MONITORING ALERT**
+Automated DevLog monitoring has detected new activity requiring swarm awareness.
+
+**DevLog Activity Detected:**
 • **Title:** {devlog_data['title']}
 • **Category:** {devlog_data['category'].title()}
 • **Agent:** {devlog_data['agent']}
@@ -203,8 +215,10 @@ class DiscordService:
 **DevLog monitoring is active and Discord notifications are enabled.**
 **WE ARE SWARM - Stay coordinated!**
 
+🐝 WE. ARE. SWARM. ⚡🔥
+
 ---
-*Automated DevLog Monitor*
+*Automated DevLog Monitor - D2A Template Compliant*
 """
             result = await self.agent_engine.broadcast_to_all_agents(
                 message, sender="Discord_DevLog_Monitor"
@@ -383,6 +397,10 @@ async def start_discord_devlog_monitoring(webhook_url: str | None = None, check_
 if __name__ == "__main__":
 
     async def main():
+        """Main entry point for Discord service testing.
+
+        Creates a Discord service instance and runs integration tests.
+        """
         service = DiscordService()
         await service.test_integration()
 

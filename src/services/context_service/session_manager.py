@@ -43,11 +43,12 @@ from .models import (
     PERFORMANCE_INDEXES_SQL, CREATE_ALL_TABLES_SQL
 )
 from src.core.infrastructure.event_bus import EventBus
+from src.core.logging_mixin import LoggingMixin
 
 logger = logging.getLogger(__name__)
 
 
-class SessionManager:
+class SessionManager(LoggingMixin):
     """
     Manages context sessions with database persistence and Redis caching.
 

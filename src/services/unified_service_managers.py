@@ -29,11 +29,12 @@ from datetime import datetime
 from typing import Any, Optional
 
 from ..core.base.base_service import BaseService
+from ..core.logging_mixin import LoggingMixin
 
 logger = logging.getLogger(__name__)
 
 
-class UnifiedContractManager(BaseService):
+class UnifiedContractManager(BaseService, LoggingMixin):
     """Unified contract manager for contract operations and task assignments.
 
     PHASE 4 CONSOLIDATION: Migrated from contract_system/manager.py

@@ -26,6 +26,13 @@ A professional multi-agent coordination system for automated task management, re
 
 ### Installation
 
+#### Option 1: Install from PyPI (Recommended)
+```bash
+pip install agent-cellphone-v2
+```
+
+#### Option 2: Install from Source
+
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/dadudekc/agent-cellphone-v2.git
@@ -70,6 +77,67 @@ Or use Docker Compose:
 
 ```bash
 docker-compose up -d
+```
+
+## CLI Usage
+
+The Agent Cellphone V2 provides powerful command-line interfaces for swarm coordination and management:
+
+### Messaging CLI
+Send messages between agents and manage the swarm:
+
+```bash
+# Send a message to a specific agent
+ac2-messaging --agent Agent-1 --message "Task completed successfully"
+
+# Send a broadcast message to all agents
+ac2-messaging --broadcast --message "System maintenance in 5 minutes"
+
+# Send with priority and tags
+ac2-messaging --agent Agent-2 --message "URGENT: Server down" --priority urgent --tags critical,incident
+
+# View queue statistics
+ac2-messaging --queue-stats
+
+# Clean up old messages
+ac2-messaging --clean-queue
+```
+
+### Status CLI
+Monitor system health and agent status:
+
+```bash
+# Check overall system health
+ac2-status --health
+
+# View detailed agent information
+ac2-status --agents
+
+# Check coordination metrics
+ac2-status --coordination
+
+# Get complete system status
+ac2-status --all
+```
+
+### Swarm Intelligence Commands
+Advanced swarm coordination features:
+
+```bash
+# Initiate consensus voting
+ac2-messaging --swarm-vote --topic "Next sprint focus" --options "AI integration,Technical debt,New features"
+
+# Start conflict resolution
+ac2-messaging --swarm-conflict --agent Agent-1 --agent Agent-2 --issue "Architecture disagreement"
+
+# Request performance profiling
+ac2-messaging --swarm-profile --agent Agent-3 --duration "1 hour"
+
+# Initiate validation protocol
+ac2-messaging --swarm-prove --claim "SSOT compliance achieved" --level comprehensive
+
+# Run pattern analysis
+ac2-messaging --swarm-patterns --type communication --window "7 days"
 ```
 
 ## Configuration

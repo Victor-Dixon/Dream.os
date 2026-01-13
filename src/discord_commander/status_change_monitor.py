@@ -325,6 +325,16 @@ class StatusChangeMonitor:
         logger.info("✅ Status monitor initialized baselines")
 
 def setup_status_monitor(bot, channel_id: Optional[int] = None, scheduler=None) -> StatusChangeMonitor:
+    """Set up and initialize a status change monitor.
+
+    Args:
+        bot: The Discord bot instance to monitor.
+        channel_id: Optional channel ID for status notifications.
+        scheduler: Optional scheduler for automated tasks.
+
+    Returns:
+        StatusChangeMonitor: Configured and started monitor instance.
+    """
     monitor = StatusChangeMonitor(bot, channel_id, scheduler=scheduler)
     monitor.start_monitoring()
     return monitor

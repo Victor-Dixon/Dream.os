@@ -50,6 +50,17 @@ venv.bak/
 *.swo
 *~
 
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/settings.json
+.vscode/launch.json
+
 # OS
 .DS_Store
 .DS_Store?
@@ -58,6 +69,17 @@ venv.bak/
 .Trashes
 ehthumbs.db
 Thumbs.db
+.fseventsd/
+.DocumentRevisions-V100/
+.TemporaryItems/
+.AppleDouble/
+.LSOverride/
+Icon
+.Spotlight-V100
+.Trashes
+*.swp
+*.swo
+*~
 
 # Logs
 logs/

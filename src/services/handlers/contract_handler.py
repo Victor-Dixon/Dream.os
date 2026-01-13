@@ -16,12 +16,12 @@ Author: Agent-4 - Strategic Oversight & Emergency Intervention Manager
 License: MIT
 """
 from typing import Any
-from ...core.base.base_service import BaseService
+from ...core.base.common_command_base import CommonHandlerBase
 from ..unified_service_managers import UnifiedContractManager
 from ..contract_system.storage import ContractStorage
 
 
-class ContractHandler(BaseService):
+class ContractHandler(CommonHandlerBase):
     """Handles contract-related commands for messaging CLI.
 
     Manages contract operations like task assignment and status checking.
@@ -39,7 +39,7 @@ class ContractHandler(BaseService):
 
     def __init__(self):
         """Initialize contract handler."""
-        super().__init__("ContractHandler")
+        super().__init__("ContractHandler")  # Uses CommonHandlerBase for standardized initialization
         try:
             from ..unified_service_managers import UnifiedContractManager
             self.manager = UnifiedContractManager()

@@ -27,6 +27,7 @@ from .message_processing_helpers import (
     create_unified_message,
     handle_message_result,
 )
+from ..discord_event_bridge import get_discord_event_bridge
 
 logger = logging.getLogger(__name__)
 
@@ -38,6 +39,7 @@ class DiscordEventHandlers:
         """Initialize event handlers."""
         self.bot = bot
         self.logger = logging.getLogger(__name__)
+        self.event_bridge = get_discord_event_bridge(bot)
 
     async def handle_on_ready(self) -> None:
         """Handle bot ready event."""
@@ -85,6 +87,15 @@ class DiscordEventHandlers:
                         self.logger.error(
                             f"❌ Error ensuring Thea session: {e}", exc_info=True)
                         # Continue startup even if Thea session fails
+
+                # Initialize event bridge
+                try:
+                    await self.event_bridge.initialize()
+                    self.logger.info("✅ Discord event bridge initialized")
+                except Exception as e:
+                    self.logger.error(
+                        f"❌ Error initializing event bridge: {e}", exc_info=True)
+                    # Continue startup even if event bridge fails
 
                 # Send startup message with control panel (only once)
                 try:
@@ -142,6 +153,32 @@ class DiscordEventHandlers:
         # Don't process bot's own messages
         if message.author == self.bot.user:
             return
+
+        # Publish message to event bus first
+        try:
+            metadata = {
+                'channel_id': str(message.channel.id),
+                'channel_name': getattr(message.channel, 'name', 'unknown'),
+                'author_id': str(message.author.id),
+                'author_name': message.author.display_name,
+                'guild_id': str(message.guild.id) if message.guild else None,
+                'guild_name': message.guild.name if message.guild else None,
+                'timestamp': message.created_at.isoformat(),
+                'has_attachments': len(message.attachments) > 0,
+                'is_reply': message.reference is not None
+            }
+
+            # Publish to event bridge
+            await self.event_bridge.process_incoming_discord_message(
+                message_content=message.content,
+                author=message.author.display_name,
+                channel=getattr(message.channel, 'name', str(message.channel.id)),
+                message_id=str(message.id)
+            )
+
+        except Exception as e:
+            self.logger.error(f"Error publishing message to event bridge: {e}")
+            # Continue processing even if event bridge fails
 
         # Handle !music(song title) format before command processing
         content = message.content.strip()

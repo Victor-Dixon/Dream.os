@@ -241,11 +241,54 @@ class TestWebSocketIntegration:
         except (ConnectionRefusedError, OSError) as e:
             pytest.skip(f"WebSocket server not available: {e}")
     
-    @pytest.mark.skip(reason="Requires MarketDataStreamer integration")
+    @pytest.mark.asyncio
     async def test_real_time_market_data(self):
         """Test real-time market data streaming"""
-        # TODO: Implement when MarketDataStreamer integration complete
-        pass
+        try:
+            async with websockets.connect(FASTAPI_WS_URL) as websocket:
+                # Subscribe to market data
+                await websocket.send(json.dumps({
+                    "type": "subscribe",
+                    "channels": ["market_data"]
+                }))
+
+                # Wait for subscription confirmation
+                try:
+                    response = await asyncio.wait_for(websocket.recv(), timeout=5.0)
+                    message = json.loads(response)
+                    assert message.get("type") == "subscription.status"
+                    assert message.get("status") == "success"
+                except asyncio.TimeoutError:
+                    pytest.skip("WebSocket subscription not responding")
+
+                # Wait for market data messages (should receive within 10 seconds)
+                market_data_received = False
+                timeout = asyncio.get_event_loop().time() + 10.0
+
+                while asyncio.get_event_loop().time() < timeout:
+                    try:
+                        response = await asyncio.wait_for(websocket.recv(), timeout=1.0)
+                        message = json.loads(response)
+
+                        # Check for market data message
+                        if message.get("type") == "market_data":
+                            # Validate market data structure
+                            data = message.get("data", {})
+                            assert "symbol" in data
+                            assert "price" in data
+                            assert "timestamp" in data
+                            assert isinstance(data["price"], (int, float))
+                            assert data["symbol"] in TEST_SYMBOLS
+                            market_data_received = True
+                            break
+
+                    except asyncio.TimeoutError:
+                        continue
+
+                assert market_data_received, "No market data received within timeout period"
+
+        except (ConnectionRefusedError, OSError) as e:
+            pytest.skip(f"WebSocket server not available: {e}")
 
 
 class TestDatabaseIntegration:

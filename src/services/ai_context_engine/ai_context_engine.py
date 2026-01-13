@@ -45,6 +45,7 @@ from typing import Dict, List, Any, Optional
 from dataclasses import asdict
 
 from src.core.base.base_service import BaseService
+from src.core.logging_mixin import LoggingMixin
 
 # Extracted modules for V2 compliance
 from .models import ContextSession, ContextSuggestion
@@ -57,7 +58,7 @@ from .session_manager import SessionManager
 logger = logging.getLogger(__name__)
 
 
-class AIContextEngine(BaseService):
+class AIContextEngine(BaseService, LoggingMixin):
     """
     AI-powered context processing engine for real-time collaboration.
 
@@ -92,7 +93,7 @@ class AIContextEngine(BaseService):
         logger.info("🧠 AI Context Engine initialized (V2 Compliant)")
 
     def _init_context_processors(self) -> Dict[str, ContextProcessor]:
-        """Initialize context processors with error handling."""
+        """Initialize context processors with enhanced error handling and monitoring."""
         processors = {}
         processor_classes = {
             'trading': TradingContextProcessor,
@@ -102,9 +103,12 @@ class AIContextEngine(BaseService):
             'ux': UXContextProcessor
         }
 
+        successful_init = 0
         for name, processor_class in processor_classes.items():
             try:
-                processors[name] = processor_class()
+                processor = processor_class()
+                processors[name] = processor
+                successful_init += 1
                 logger.debug(f"✅ Initialized context processor: {name}")
             except Exception as e:
                 logger.error(f"❌ Failed to initialize context processor {name}: {e}")
@@ -112,7 +116,9 @@ class AIContextEngine(BaseService):
                 continue
 
         if not processors:
-            logger.warning("⚠️ No context processors could be initialized")
+            logger.warning("⚠️ No context processors could be initialized - system will be limited")
+        else:
+            logger.info(f"🧠 Initialized {successful_init}/{len(processor_classes)} context processors")
 
         return processors
 
@@ -270,6 +276,10 @@ class AIContextEngine(BaseService):
 
             logger.info(f"✅ Updated context for session {session_id}: {len(validated_updates)} updates, {len(valid_suggestions)} suggestions")
 
+            # Update performance stats
+            self.performance_stats['total_context_updates'] += 1
+            self.performance_stats['total_suggestions_generated'] += len(valid_suggestions)
+
             return {
                 'session_id': session_id,
                 'updated_context': session.context_data,
@@ -279,6 +289,7 @@ class AIContextEngine(BaseService):
 
         except Exception as e:
             logger.error(f"Failed to update session context {session_id}: {e}")
+            self.performance_stats['errors_encountered'] += 1
             return {
                 'error': str(e),
                 'session_id': session_id
@@ -423,6 +434,117 @@ class AIContextEngine(BaseService):
             logger.error(f"Context processing failed for {context_type}: {e}")
             return []
 
+
+    def get_performance_stats(self) -> Dict[str, Any]:
+        """
+        Get comprehensive performance statistics.
+
+        Navigation:
+        ├── Returns: Engine performance metrics, session stats, processor health
+        └── Related: Monitoring and observability requirements
+        """
+        try:
+            # Get session manager stats
+            session_stats = self.session_manager.get_system_stats()
+
+            # Get processor health
+            processor_health = {}
+            for name, processor in self.context_processors.items():
+                try:
+                    # Basic health check - processor exists and is callable
+                    health_status = "healthy" if hasattr(processor, 'process') else "unhealthy"
+                    processor_health[name] = health_status
+                except Exception as e:
+                    processor_health[name] = f"error: {str(e)}"
+
+            # Calculate uptime
+            uptime_seconds = time.time() - getattr(self, '_start_time', time.time())
+            self._start_time = getattr(self, '_start_time', time.time())
+
+            comprehensive_stats = {
+                **self.performance_stats,
+                'session_stats': session_stats,
+                'processor_health': processor_health,
+                'uptime_seconds': uptime_seconds,
+                'healthy_processors': sum(1 for status in processor_health.values() if status == "healthy"),
+                'total_processors': len(processor_health),
+                'engine_health': "healthy" if len(self.context_processors) > 0 else "degraded",
+                'timestamp': time.time()
+            }
+
+            return comprehensive_stats
+
+        except Exception as e:
+            logger.error(f"Error getting performance stats: {e}")
+            return {
+                'error': str(e),
+                'engine_health': 'error',
+                'timestamp': time.time()
+            }
+
+    def health_check(self) -> Dict[str, Any]:
+        """
+        Perform comprehensive health check of the AI Context Engine.
+
+        Returns:
+            Health check results with status and details
+        """
+        try:
+            health_results = {
+                'overall_status': 'unknown',
+                'checks': {},
+                'timestamp': time.time()
+            }
+
+            # Check session manager
+            try:
+                session_stats = self.session_manager.get_system_stats()
+                health_results['checks']['session_manager'] = {
+                    'status': 'healthy',
+                    'active_sessions': session_stats.get('active_sessions', 0)
+                }
+            except Exception as e:
+                health_results['checks']['session_manager'] = {
+                    'status': 'unhealthy',
+                    'error': str(e)
+                }
+
+            # Check context processors
+            processor_statuses = []
+            for name, processor in self.context_processors.items():
+                try:
+                    if hasattr(processor, 'process') and callable(getattr(processor, 'process')):
+                        status = 'healthy'
+                    else:
+                        status = 'degraded'
+                    processor_statuses.append(status)
+                    health_results['checks'][f'processor_{name}'] = {'status': status}
+                except Exception as e:
+                    processor_statuses.append('unhealthy')
+                    health_results['checks'][f'processor_{name}'] = {
+                        'status': 'unhealthy',
+                        'error': str(e)
+                    }
+
+            # Determine overall status
+            if all(status == 'healthy' for status in processor_statuses) and \
+               health_results['checks']['session_manager']['status'] == 'healthy':
+                health_results['overall_status'] = 'healthy'
+            elif len([s for s in processor_statuses if s == 'healthy']) > 0:
+                health_results['overall_status'] = 'degraded'
+            else:
+                health_results['overall_status'] = 'unhealthy'
+
+            logger.info(f"🩺 Health check completed: {health_results['overall_status']}")
+            return health_results
+
+        except Exception as e:
+            logger.error(f"Health check failed: {e}")
+            return {
+                'overall_status': 'error',
+                'error': str(e),
+                'timestamp': time.time()
+            }
 
     def get_performance_stats(self) -> Dict[str, Any]:
         """

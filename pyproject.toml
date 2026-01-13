@@ -1,83 +1,179 @@
 [build-system]
-requires = ["setuptools>=45", "wheel"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "agent-cellphone-v2"
-version = "2.1.0"
-description = "Agent Cellphone V2 - Multi-Agent Coordination System"
-readme = "README.md"
-requires-python = ">=3.11"
+version = "2.0.0"
+description = "Swarm AI Coordination Framework for Multi-Agent Collaboration"
+readme = "PYPI_PACKAGE_README.md"
 license = {text = "MIT"}
 authors = [
-    {name = "DadudeCK", email = "dadudekc@gmail.com"}
+    {name = "Agent Cellphone Development Team", email = "team@agent-cellphone-v2.com"}
 ]
-keywords = ["agents", "automation", "swarm", "coordination"]
+keywords = [
+    "ai", "swarm", "agents", "coordination", "collaboration",
+    "multi-agent", "artificial-intelligence", "distributed-systems",
+    "machine-learning", "automation"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: System :: Distributed Computing",
+]
+requires-python = ">=3.8"
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/your-org/agent-cellphone-v2"
+Documentation = "https://docs.agent-cellphone-v2.com"
+Repository = "https://github.com/your-org/agent-cellphone-v2"
+Issues = "https://github.com/your-org/agent-cellphone-v2/issues"
+Changelog = "https://github.com/your-org/agent-cellphone-v2/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
-test = [
+dev = [
     "pytest>=7.0.0",
     "pytest-cov>=4.0.0",
-    "pytest-asyncio>=0.21.0",
-    "pytest-xdist>=3.0.0",
-    "pytest-timeout>=2.0.0",
+    "black>=22.0.0",
+    "flake8>=5.0.0",
+    "mypy>=1.0.0",
+    "sphinx>=5.0.0",
+    "sphinx-rtd-theme>=1.2.0",
+    "pre-commit>=3.0.0",
 ]
-dev = [
-    "black",
-    "isort",
-    "mypy",
-    "flake8",
+monitoring = [
+    "prometheus-client>=0.16.0",
+    "grafana-api>=1.0.3",
+]
+security = [
+    "cryptography>=41.0.0",
+    "pyjwt>=2.0.0",
+]
+web = [
+    "fastapi>=0.100.0",
+    "uvicorn>=0.23.0",
+    "websockets>=11.0.0",
+]
+all = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=22.0.0",
+    "flake8>=5.0.0",
+    "mypy>=1.0.0",
+    "sphinx>=5.0.0",
+    "sphinx-rtd-theme>=1.2.0",
+    "pre-commit>=3.0.0",
+    "prometheus-client>=0.16.0",
+    "grafana-api>=1.0.3",
+    "cryptography>=41.0.0",
+    "pyjwt>=2.0.0",
+    "fastapi>=0.100.0",
+    "uvicorn>=0.23.0",
+    "websockets>=11.0.0",
 ]
 
-[tool.pytest.ini_options]
-# Additional pytest configuration (complements pytest.ini)
-asyncio_mode = "auto"
+[project.scripts]
+agent-cellphone = "agent_cellphone.cli:main"
+agent-cellphone-monitor = "agent_cellphone.cli:monitor_cmd"
+agent-cellphone-status = "agent_cellphone.cli:status_cmd"
+agent-cellphone-coordinate = "agent_cellphone.cli:coordinate_cmd"
+agent-cellphone-dashboard = "agent_cellphone.cli:dashboard_cmd"
+agent-cellphone-metrics = "agent_cellphone.cli:metrics_cmd"
+agent-cellphone-health = "agent_cellphone.cli:health_cmd"
 
-[tool.coverage.run]
-source = ["src"]
-branch = true
-omit = [
-    "*/tests/*",
-    "*/__pycache__/*",
-    "*/venv/*",
-    "*/site-packages/*",
-]
+[tool.setuptools]
+package-dir = {"" = "src"}
 
-[tool.coverage.report]
-fail_under = 0
-show_missing = true
-skip_empty = true
-exclude_lines = [
-    "pragma: no cover",
-    "def __repr__",
-    "raise NotImplementedError",
-    "if __name__ == .__main__.:",
-    "if TYPE_CHECKING:",
-    "@abstractmethod",
-]
+[tool.setuptools.packages.find]
+where = ["src"]
 
-[tool.coverage.html]
-directory = "coverage_html_report"
-title = "Agent Cellphone V2 Coverage Report"
+[tool.setuptools.package-data]
+"*" = ["*.json", "*.yaml", "*.md"]
 
 [tool.black]
-line-length = 100
-target-version = ['py311']
+line-length = 88
+target-version = ['py38', 'py39', 'py310', 'py311', 'py312']
 include = '\.pyi?$'
-exclude = '''
+extend-exclude = '''
 /(
-    \.git
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
   | \.venv
-  | venv
-  | __pycache__
-  | temp_repos
-  | archive
-  | dream
+  | _build
+  | buck-out
+  | build
+  | dist
 )/
 '''
 
-[tool.isort]
-profile = "black"
-line_length = 100
-skip = [".git", ".venv", "venv", "__pycache__", "temp_repos", "archive", "dream"]
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
 
+[[tool.mypy.overrides]]
+module = [
+    "cryptography.*",
+    "fastapi.*",
+    "uvicorn.*",
+    "websockets.*",
+    "prometheus_client.*",
+    "grafana_api.*",
+]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra -q --strict-markers --strict-config"
+testpaths = ["tests"]
+python_files = "test_*.py"
+python_classes = "Test*"
+python_functions = "test_*"
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+    "unit: marks tests as unit tests",
+]
+
+[tool.coverage.run]
+source = ["src"]
+omit = [
+    "*/tests/*",
+    "*/test_*.py",
+    "setup.py",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+]</content>
+</xai:function_call<parameter name="path">D:\Agent_Cellphone_V2_Repository\pyproject.toml

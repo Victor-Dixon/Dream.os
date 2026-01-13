@@ -59,6 +59,7 @@ class CommandRegistry:
             "src.discord_commander.commands.messaging_monitor_commands",
             "src.discord_commander.commands.bot_messaging_commands",
             "src.discord_commander.commands.thea_commands",
+            "src.discord_commander.commands.event_driven_commands",
         ]
 
     async def discover_and_register_all(self) -> Dict[str, bool]:

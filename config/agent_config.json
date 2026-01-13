@@ -1,0 +1,63 @@
+{
+  "agent_modes": {
+    "current_mode": "8-agent",
+    "modes": {
+      "4-agent": {
+        "active_agents": [
+          "Agent-1",
+          "Agent-2",
+          "Agent-3",
+          "Agent-4"
+        ],
+        "processing_order": [
+          "Agent-1",
+          "Agent-2",
+          "Agent-3",
+          "Agent-4"
+        ],
+        "monitor_setup": "single"
+      },
+      "8-agent": {
+        "active_agents": [
+          "Agent-1",
+          "Agent-2",
+          "Agent-3",
+          "Agent-4",
+          "Agent-5",
+          "Agent-6",
+          "Agent-7",
+          "Agent-8"
+        ],
+        "processing_order": [
+          "Agent-1",
+          "Agent-2",
+          "Agent-3",
+          "Agent-5",
+          "Agent-6",
+          "Agent-7",
+          "Agent-8",
+          "Agent-4"
+        ],
+        "monitor_setup": "dual"
+      }
+    }
+  },
+  "coordination_cache": {
+    "description": "Message timestamp cache for agent coordination",
+    "location": "config/coordination_cache.json",
+    "last_updated": "2026-01-12",
+    "purpose": "Track inter-agent message timestamps"
+  },
+  "session_handover": {
+    "description": "Session state and handoff information",
+    "location": "config/session_handover.json",
+    "last_session": {
+      "completed_task": "WordPress plugin security vulnerability fix",
+      "decisions": [
+        "Identified and fixed nextend-facebook-connect plugin security issue",
+        "Implemented proper HTML index.html content",
+        "Updated task tracking and swarm coordination"
+      ]
+    }
+  }
+}

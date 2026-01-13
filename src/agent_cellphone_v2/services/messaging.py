@@ -12,6 +12,8 @@ from typing import Dict, Any, Optional, List
 
 from ..config import Settings
 
+logger = logging.getLogger(__name__)
+
 # Import unified messaging components
 UNIFIED_COMPONENTS_AVAILABLE = False
 try:
@@ -30,8 +32,6 @@ try:
     UNIFIED_COMPONENTS_AVAILABLE = True
 except ImportError as e:
     logger.warning(f"Unified messaging components not available ({e}), using fallback implementation")
-
-logger = logging.getLogger(__name__)
 
 
 class MessagingService:

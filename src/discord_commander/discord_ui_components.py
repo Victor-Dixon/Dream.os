@@ -227,6 +227,11 @@ class ModalHandler:
                 super().__init__(title=f"Jump to Page (1-{max_pages})")
 
             async def on_submit(self, interaction: discord.Interaction):
+                """Handle page jump submission and validation.
+
+                Args:
+                    interaction: The Discord interaction event.
+                """
                 try:
                     page_num = int(self.page_input.value)
                     if 1 <= page_num <= max_pages:
@@ -261,6 +266,11 @@ class ModalHandler:
                 super().__init__(title="Search Repositories")
 
             async def on_submit(self, interaction: discord.Interaction):
+                """Handle repository search submission and processing.
+
+                Args:
+                    interaction: The Discord interaction event.
+                """
                 query = self.search_input.value.strip()
                 if query:
                     await callback_function(interaction, query)

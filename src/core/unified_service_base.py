@@ -17,17 +17,23 @@ Features:
 - Consolidated error handling
 - Health monitoring interface
 
-V2 Compliance: <400 lines
+V2 Consolidated: Uses SSOT base classes for standardized patterns
 Author: Agent-2 (Architecture & Design) - Phase 4 Consolidation 2026-01-06
+SSOT Migration: Agent-8 (System Integration)
+Date: 2026-01-12
+V2 Compliance: <400 lines
 <!-- SSOT Domain: core -->
 """
 
-import logging
-import os
-import json
-import time
-import threading
-import psutil
+# SSOT Import Standardization - eliminates redundant typing imports
+from src.core.base.import_standardization import (
+    logging, os, json, time, threading, psutil
+)
+from src.core.base.service_base import BaseService
+from src.core.base.error_handling import ErrorHandler, error_context
+
+# Initialize standardized logger through SSOT base
+logger = logging.getLogger(__name__)
 from abc import ABC, abstractmethod
 from pathlib import Path
 from typing import Any, Dict, Optional, Callable

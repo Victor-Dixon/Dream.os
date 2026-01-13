@@ -52,6 +52,8 @@ from datetime import datetime, timedelta
 from dataclasses import dataclass
 from abc import ABC, abstractmethod
 
+from ..core.logging_mixin import LoggingMixin
+
 logger = logging.getLogger(__name__)
 
 
@@ -134,7 +136,7 @@ class HistoricalSimulationCalculator(RiskCalculatorBase):
         return cvar_value
 
 
-class RiskCalculatorService:
+class RiskCalculatorService(LoggingMixin):
     """Main risk calculator service implementing all risk metrics."""
 
     def __init__(self, risk_free_rate: float = 0.045):  # 4.5% default (approx 10-year Treasury)
@@ -247,7 +249,7 @@ class RiskCalculatorService:
         benchmark_returns: Optional[np.ndarray] = None
     ) -> RiskMetrics:
         """
-        Calculate all comprehensive risk metrics.
+        Calculate all comprehensive risk metrics with enhanced validation and error handling.
 
         Navigation References:
         ├── Risk Metrics → See RiskMetrics dataclass above for output structure
@@ -266,42 +268,118 @@ class RiskCalculatorService:
         6. Calmar ratio combining return and drawdown
         7. Information ratio vs benchmark (if provided)
         """
-        if len(returns) < 30:
-            logger.warning(f"Insufficient data for risk calculations: {len(returns)} returns")
+        try:
+            # Validate inputs
+            validation_errors = self._validate_calculation_inputs(returns, equity_curve, benchmark_returns)
+            if validation_errors:
+                logger.warning(f"Risk calculation input validation failed: {', '.join(validation_errors)}")
+                return self._create_empty_metrics()
+
+            # Calculate VaR and CVaR with error handling
+            try:
+                var_95 = self.var_calculator.calculate_var(returns)
+                cvar_95 = self.var_calculator.calculate_cvar(returns, var_95)
+            except Exception as e:
+                logger.error(f"VaR/CVaR calculation failed: {e}")
+                var_95 = cvar_95 = 0.0
+
+            # Calculate Sharpe Ratio with error handling
+            try:
+                sharpe_ratio = self.calculate_sharpe_ratio(returns)
+            except Exception as e:
+                logger.error(f"Sharpe ratio calculation failed: {e}")
+                sharpe_ratio = 0.0
+
+            # Calculate Maximum Drawdown with error handling
+            try:
+                max_drawdown = self.calculate_max_drawdown(equity_curve)
+            except Exception as e:
+                logger.error(f"Maximum drawdown calculation failed: {e}")
+                max_drawdown = 0.0
+
+            # Calculate Sortino Ratio with error handling
+            try:
+                sortino_ratio = self.calculate_sortino_ratio(returns)
+            except Exception as e:
+                logger.error(f"Sortino ratio calculation failed: {e}")
+                sortino_ratio = 0.0
+
+            # Calculate Calmar Ratio with error handling
+            try:
+                calmar_ratio = self.calculate_calmar_ratio(returns, max_drawdown)
+            except Exception as e:
+                logger.error(f"Calmar ratio calculation failed: {e}")
+                calmar_ratio = 0.0
+
+            # Calculate Information Ratio (if benchmark provided) with error handling
+            information_ratio = 0.0
+            if benchmark_returns is not None:
+                try:
+                    information_ratio = self.calculate_information_ratio(returns, benchmark_returns)
+                except Exception as e:
+                    logger.error(f"Information ratio calculation failed: {e}")
+
+            metrics = RiskMetrics(
+                var_95=var_95,
+                cvar_95=cvar_95,
+                sharpe_ratio=sharpe_ratio,
+                max_drawdown=max_drawdown,
+                calmar_ratio=calmar_ratio,
+                sortino_ratio=sortino_ratio,
+                information_ratio=information_ratio,
+                calculation_date=datetime.now()
+            )
+
+            logger.info(f"Successfully calculated comprehensive risk metrics: VaR={var_95:.3f}, Sharpe={sharpe_ratio:.2f}")
+            return metrics
+
+        except Exception as e:
+            logger.error(f"Comprehensive risk calculation failed: {e}")
             return self._create_empty_metrics()
 
-        # Calculate VaR and CVaR
-        var_95 = self.var_calculator.calculate_var(returns)
-        cvar_95 = self.var_calculator.calculate_cvar(returns, var_95)
+    def _validate_calculation_inputs(self, returns: np.ndarray, equity_curve: np.ndarray,
+                                   benchmark_returns: Optional[np.ndarray]) -> List[str]:
+        """
+        Validate inputs for comprehensive risk calculations.
 
-        # Calculate Sharpe Ratio
-        sharpe_ratio = self.calculate_sharpe_ratio(returns)
+        Args:
+            returns: Array of returns
+            equity_curve: Array of equity values
+            benchmark_returns: Optional array of benchmark returns
 
-        # Calculate Maximum Drawdown
-        max_drawdown = self.calculate_max_drawdown(equity_curve)
+        Returns:
+            List of validation error messages (empty if valid)
+        """
+        errors = []
 
-        # Calculate Sortino Ratio
-        sortino_ratio = self.calculate_sortino_ratio(returns)
+        # Validate returns
+        if not isinstance(returns, np.ndarray):
+            errors.append("returns must be a numpy array")
+        elif len(returns) < 30:
+            errors.append(f"insufficient returns data: {len(returns)} (minimum 30)")
+        elif not np.isfinite(returns).all():
+            errors.append("returns contains non-finite values")
 
-        # Calculate Calmar Ratio
-        calmar_ratio = self.calculate_calmar_ratio(returns, max_drawdown)
+        # Validate equity curve
+        if not isinstance(equity_curve, np.ndarray):
+            errors.append("equity_curve must be a numpy array")
+        elif len(equity_curve) < 2:
+            errors.append(f"insufficient equity data: {len(equity_curve)} (minimum 2)")
+        elif not np.isfinite(equity_curve).all():
+            errors.append("equity_curve contains non-finite values")
+        elif np.any(equity_curve <= 0):
+            errors.append("equity_curve contains non-positive values")
 
-        # Calculate Information Ratio (if benchmark provided)
+        # Validate benchmark returns if provided
         if benchmark_returns is not None:
-            information_ratio = self.calculate_information_ratio(returns, benchmark_returns)
-        else:
-            information_ratio = 0.0
+            if not isinstance(benchmark_returns, np.ndarray):
+                errors.append("benchmark_returns must be a numpy array")
+            elif len(benchmark_returns) != len(returns):
+                errors.append(f"benchmark_returns length mismatch: {len(benchmark_returns)} vs {len(returns)}")
+            elif not np.isfinite(benchmark_returns).all():
+                errors.append("benchmark_returns contains non-finite values")
 
-        return RiskMetrics(
-            var_95=var_95,
-            cvar_95=cvar_95,
-            sharpe_ratio=sharpe_ratio,
-            max_drawdown=max_drawdown,
-            calmar_ratio=calmar_ratio,
-            sortino_ratio=sortino_ratio,
-            information_ratio=information_ratio,
-            calculation_date=datetime.now()
-        )
+        return errors
 
     def _create_empty_metrics(self) -> RiskMetrics:
         """Create empty risk metrics for insufficient data cases."""
@@ -316,43 +394,115 @@ class RiskCalculatorService:
             calculation_date=datetime.now()
         )
 
-    def check_risk_thresholds(self, metrics: RiskMetrics, thresholds: Dict[str, float]) -> List[RiskAlert]:
-        """Check risk metrics against predefined thresholds and generate alerts."""
+    def check_risk_thresholds(self, metrics: RiskMetrics, thresholds: Dict[str, float],
+                            user_id: int = 0, strategy_id: Optional[str] = None) -> List[RiskAlert]:
+        """Check risk metrics against predefined thresholds and generate alerts with enhanced validation."""
         alerts = []
 
-        # VaR Alert
-        if 'var_95' in thresholds and metrics.var_95 > thresholds['var_95']:
-            alerts.append(RiskAlert(
-                alert_type='var_threshold',
-                threshold_value=thresholds['var_95'],
-                current_value=metrics.var_95,
-                severity='high',
-                message=f'VaR (95%) of {metrics.var_95:.2%} exceeds threshold of {thresholds["var_95"]:.2%}',
-                user_id=0  # To be set by caller
-            ))
+        try:
+            # Validate inputs
+            if not isinstance(metrics, RiskMetrics):
+                logger.error("Invalid metrics object provided to check_risk_thresholds")
+                return alerts
 
-        # Maximum Drawdown Alert
-        if 'max_drawdown' in thresholds and metrics.max_drawdown > thresholds['max_drawdown']:
-            alerts.append(RiskAlert(
-                alert_type='drawdown_threshold',
-                threshold_value=thresholds['max_drawdown'],
-                current_value=metrics.max_drawdown,
-                severity='critical',
-                message=f'Maximum drawdown of {metrics.max_drawdown:.2%} exceeds threshold of {thresholds["max_drawdown"]:.2%}',
-                user_id=0  # To be set by caller
-            ))
+            if not isinstance(thresholds, dict):
+                logger.error("Invalid thresholds format provided to check_risk_thresholds")
+                return alerts
 
-        # Sharpe Ratio Alert (low Sharpe is concerning)
-        if 'sharpe_ratio_min' in thresholds and metrics.sharpe_ratio < thresholds['sharpe_ratio_min']:
-            alerts.append(RiskAlert(
-                alert_type='sharpe_ratio_low',
-                threshold_value=thresholds['sharpe_ratio_min'],
-                current_value=metrics.sharpe_ratio,
-                severity='medium',
-                message=f'Sharpe ratio of {metrics.sharpe_ratio:.2f} below minimum threshold of {thresholds["sharpe_ratio_min"]:.2f}',
-                user_id=0  # To be set by caller
-            ))
+            # VaR Alert with validation
+            if 'var_95' in thresholds and isinstance(thresholds['var_95'], (int, float)):
+                try:
+                    threshold = float(thresholds['var_95'])
+                    if metrics.var_95 > threshold:
+                        alerts.append(RiskAlert(
+                            alert_type='var_threshold',
+                            threshold_value=threshold,
+                            current_value=metrics.var_95,
+                            severity='high',
+                            message=f'VaR (95%) of {metrics.var_95:.2%} exceeds threshold of {threshold:.2%}',
+                            user_id=user_id,
+                            strategy_id=strategy_id
+                        ))
+                        logger.info(f"Generated VaR alert for user {user_id}: {metrics.var_95:.3f} > {threshold:.3f}")
+                except (ValueError, TypeError) as e:
+                    logger.warning(f"Error processing VaR threshold: {e}")
 
+            # Maximum Drawdown Alert with validation
+            if 'max_drawdown' in thresholds and isinstance(thresholds['max_drawdown'], (int, float)):
+                try:
+                    threshold = float(thresholds['max_drawdown'])
+                    if metrics.max_drawdown > threshold:
+                        alerts.append(RiskAlert(
+                            alert_type='drawdown_threshold',
+                            threshold_value=threshold,
+                            current_value=metrics.max_drawdown,
+                            severity='critical',
+                            message=f'Maximum drawdown of {metrics.max_drawdown:.2%} exceeds threshold of {threshold:.2%}',
+                            user_id=user_id,
+                            strategy_id=strategy_id
+                        ))
+                        logger.info(f"Generated drawdown alert for user {user_id}: {metrics.max_drawdown:.3f} > {threshold:.3f}")
+                except (ValueError, TypeError) as e:
+                    logger.warning(f"Error processing drawdown threshold: {e}")
+
+            # Sharpe Ratio Alert (low Sharpe is concerning) with validation
+            if 'sharpe_ratio_min' in thresholds and isinstance(thresholds['sharpe_ratio_min'], (int, float)):
+                try:
+                    threshold = float(thresholds['sharpe_ratio_min'])
+                    if metrics.sharpe_ratio < threshold:
+                        alerts.append(RiskAlert(
+                            alert_type='sharpe_ratio_low',
+                            threshold_value=threshold,
+                            current_value=metrics.sharpe_ratio,
+                            severity='medium',
+                            message=f'Sharpe ratio of {metrics.sharpe_ratio:.2f} below minimum threshold of {threshold:.2f}',
+                            user_id=user_id,
+                            strategy_id=strategy_id
+                        ))
+                        logger.info(f"Generated Sharpe ratio alert for user {user_id}: {metrics.sharpe_ratio:.2f} < {threshold:.2f}")
+                except (ValueError, TypeError) as e:
+                    logger.warning(f"Error processing Sharpe ratio threshold: {e}")
+
+            # Sortino Ratio Alert with validation
+            if 'sortino_ratio_min' in thresholds and isinstance(thresholds['sortino_ratio_min'], (int, float)):
+                try:
+                    threshold = float(thresholds['sortino_ratio_min'])
+                    if metrics.sortino_ratio < threshold and metrics.sortino_ratio != float('inf'):
+                        alerts.append(RiskAlert(
+                            alert_type='sortino_ratio_low',
+                            threshold_value=threshold,
+                            current_value=metrics.sortino_ratio,
+                            severity='medium',
+                            message=f'Sortino ratio of {metrics.sortino_ratio:.2f} below minimum threshold of {threshold:.2f}',
+                            user_id=user_id,
+                            strategy_id=strategy_id
+                        ))
+                        logger.info(f"Generated Sortino ratio alert for user {user_id}: {metrics.sortino_ratio:.2f} < {threshold:.2f}")
+                except (ValueError, TypeError) as e:
+                    logger.warning(f"Error processing Sortino ratio threshold: {e}")
+
+            # CVaR Alert with validation
+            if 'cvar_95' in thresholds and isinstance(thresholds['cvar_95'], (int, float)):
+                try:
+                    threshold = float(thresholds['cvar_95'])
+                    if metrics.cvar_95 > threshold:
+                        alerts.append(RiskAlert(
+                            alert_type='cvar_threshold',
+                            threshold_value=threshold,
+                            current_value=metrics.cvar_95,
+                            severity='high',
+                            message=f'CVaR (95%) of {metrics.cvar_95:.2%} exceeds threshold of {threshold:.2%}',
+                            user_id=user_id,
+                            strategy_id=strategy_id
+                        ))
+                        logger.info(f"Generated CVaR alert for user {user_id}: {metrics.cvar_95:.3f} > {threshold:.3f}")
+                except (ValueError, TypeError) as e:
+                    logger.warning(f"Error processing CVaR threshold: {e}")
+
+        except Exception as e:
+            logger.error(f"Error in risk threshold checking: {e}")
+
+        logger.info(f"Generated {len(alerts)} risk alerts for user {user_id}")
         return alerts
 
 

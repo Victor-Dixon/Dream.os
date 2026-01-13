@@ -35,3 +35,4 @@ set DISCORD_WEBHOOK_AGENT_7=https://discordapp.com/api/webhooks/1423942538536157
 set DISCORD_WEBHOOK_AGENT_8=https://discordapp.com/api/webhooks/1423942673940611072/D1o0bEdKYUaONrnHSuCoFdprRYC2I2SX2t_dhJEVtdNACOTqssH8vdO2b9oEJhykP0oT
 
 echo Environment variables set successfully from .env lines 175-220
+

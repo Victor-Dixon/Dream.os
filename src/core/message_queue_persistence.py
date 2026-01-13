@@ -6,17 +6,20 @@ Message Queue Persistence - V2 Compliance Module
 
 Handles queue persistence operations following SRP.
 
+V2 Consolidated: Uses SSOT base classes for standardized patterns
 Author: Agent-1 (System Recovery Specialist)
+SSOT Migration: Agent-8 (System Integration)
+Date: 2026-01-12
 License: MIT
 """
 
-import json
-import time
-import shutil
-from pathlib import Path
-from typing import Any, Dict, List, Optional, Callable
-
+# SSOT Import Standardization - eliminates redundant typing imports
+from src.core.base.import_standardization import (
+    json, time, shutil, Path, Any, Dict, List, Optional, Callable
+)
 from .message_queue_interfaces import IQueuePersistence, IQueueEntry
+from src.core.base.service_base import BaseService
+from src.core.base.error_handling import ErrorHandler, error_context
 
 
 class FileQueuePersistence(IQueuePersistence):

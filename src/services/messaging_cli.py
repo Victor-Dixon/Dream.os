@@ -43,6 +43,11 @@ try:
         handle_health_check,
         handle_process_workspaces,
         handle_archive_old,
+        handle_swarm_vote,
+        handle_swarm_conflict,
+        handle_swarm_profile,
+        handle_swarm_prove,
+        handle_swarm_patterns,
     )
     V3_HANDLERS_AVAILABLE = True
 except ImportError:
@@ -334,6 +339,19 @@ class MessagingCLI:
                 return handle_process_workspaces(parsed_args)
             elif parsed_args.archive_old:
                 return handle_archive_old(parsed_args)
+
+            # SWARM INTELLIGENCE COMMANDS
+            elif parsed_args.swarm_vote:
+                return handle_swarm_vote(parsed_args)
+            elif parsed_args.swarm_conflict:
+                return handle_swarm_conflict(parsed_args)
+            elif parsed_args.swarm_profile:
+                return handle_swarm_profile(parsed_args)
+            elif parsed_args.swarm_prove:
+                return handle_swarm_prove(parsed_args)
+            elif parsed_args.swarm_patterns:
+                return handle_swarm_patterns(parsed_args)
+
             else:
                 self.parser.print_help()
                 return 0

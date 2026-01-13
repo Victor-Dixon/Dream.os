@@ -647,3 +647,4 @@ try:
 except Exception as e:
     logger.error(f"Failed to initialize messaging system: {e}")
     # Don't raise exception during import - allow system to continue
+

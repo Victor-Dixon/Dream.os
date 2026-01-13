@@ -1,0 +1,103 @@
+{
+  "audit_timestamp": "2026-01-12T14:00:00Z",
+  "detection_method": "file_size_comparison_and_import_analysis",
+  "duplicate_clusters": [
+    {
+      "cluster_id": "cli_handlers_duplication",
+      "description": "CLI command handlers duplicated in two locations",
+      "duplicate_pairs": [
+        {
+          "file1": "src/cli/commands/cleanup_handler.py",
+          "file2": "src/cli/commands/handlers/cleanup_handler.py",
+          "similarity": "duplicate_functionality",
+          "canonical_location": "src/cli/commands/handlers/cleanup_handler.py",
+          "obsolete_location": "src/cli/commands/cleanup_handler.py",
+          "evidence": "command_router.py imports from handlers/ only"
+        },
+        {
+          "file1": "src/cli/commands/start_handler.py",
+          "file2": "src/cli/commands/handlers/start_handler.py",
+          "similarity": "duplicate_functionality",
+          "canonical_location": "src/cli/commands/handlers/start_handler.py",
+          "obsolete_location": "src/cli/commands/start_handler.py",
+          "evidence": "command_router.py imports from handlers/ only"
+        },
+        {
+          "file1": "src/cli/commands/status_handler.py",
+          "file2": "src/cli/commands/handlers/status_handler.py",
+          "similarity": "duplicate_functionality",
+          "canonical_location": "src/cli/commands/handlers/status_handler.py",
+          "obsolete_location": "src/cli/commands/status_handler.py",
+          "evidence": "command_router.py imports from handlers/ only"
+        },
+        {
+          "file1": "src/cli/commands/stop_handler.py",
+          "file2": "src/cli/commands/handlers/stop_handler.py",
+          "similarity": "duplicate_functionality",
+          "canonical_location": "src/cli/commands/handlers/stop_handler.py",
+          "obsolete_location": "src/cli/commands/stop_handler.py",
+          "evidence": "command_router.py imports from handlers/ only"
+        },
+        {
+          "file1": "src/cli/commands/validation_handler.py",
+          "file2": "src/cli/commands/handlers/validation_handler.py",
+          "similarity": "duplicate_functionality",
+          "canonical_location": "src/cli/commands/handlers/validation_handler.py",
+          "obsolete_location": "src/cli/commands/validation_handler.py",
+          "evidence": "command_router.py imports from handlers/ only"
+        }
+      ],
+      "total_duplicate_lines": 890,
+      "action_recommended": "delete_obsolete_locations"
+    },
+    {
+      "cluster_id": "messaging_service_duplication",
+      "description": "Multiple competing messaging service implementations",
+      "files_involved": [
+        "src/core/messaging_core.py",
+        "src/core/messaging_models.py",
+        "src/core/messaging_models_core.py",
+        "src/services/messaging/",
+        "src/services/messaging_cli.py",
+        "src/services/messaging_cli_handlers.py",
+        "src/services/messaging_cli_parser.py",
+        "src/services/unified_messaging_service.py",
+        "src/services/unified_messaging_handlers.py"
+      ],
+      "estimated_total_lines": 8500,
+      "similarity_type": "competing_implementations",
+      "action_recommended": "consolidate_into_single_service",
+      "consolidation_complexity": "HIGH"
+    },
+    {
+      "cluster_id": "vector_database_duplication",
+      "description": "Four competing vector database service implementations",
+      "files_involved": [
+        "src/services/vector/",
+        "src/services/vector_database/",
+        "src/services/vector_database_service_unified.py",
+        "src/services/vector_database.py"
+      ],
+      "estimated_total_lines": 2400,
+      "similarity_type": "competing_implementations",
+      "action_recommended": "merge_into_unified_service",
+      "consolidation_complexity": "HIGH"
+    },
+    {
+      "cluster_id": "utility_directory_triplication",
+      "description": "Three utility directories with overlapping functionality",
+      "files_involved": [
+        "src/core/shared_utilities/",
+        "src/core/utilities/",
+        "src/core/utils/"
+      ],
+      "estimated_total_lines": 1800,
+      "similarity_type": "overlapping_functionality",
+      "action_recommended": "consolidate_into_single_directory",
+      "consolidation_complexity": "MEDIUM"
+    }
+  ],
+  "total_clusters": 4,
+  "total_duplicate_lines": 12590,
+  "captain_review_required": true
+}

@@ -7,17 +7,23 @@ When debate concludes:
 Decision stored → S2A debate-cycle messages generated → GAS delivery → Execution tracked
 
 <!-- SSOT Domain: integration -->
+V2 Consolidated: Uses SSOT base classes for logger setup and error handling
+Author: Agent-8 (SSOT & System Integration)
+SSOT Migration: Agent-8 (System Integration)
+Date: 2026-01-12
 """
 from __future__ import annotations
-from datetime import datetime
-from typing import Dict, List, Optional
 
-import json
-import logging
-from datetime import datetime, timezone
-from pathlib import Path
-from typing import Any, Dict, List, Optional
+# SSOT Import Standardization - eliminates redundant typing imports
+from src.core.base.import_standardization import (
+    Any, Dict, List, Optional, datetime, timezone, Path, json
+)
+from src.core.base.service_base import BaseService
+from src.core.base.error_handling import (
+    ErrorHandler, error_context, BusinessLogicError, ErrorContext
+)
 
+# Initialize standardized logger through SSOT base
 logger = logging.getLogger(__name__)
 
 

@@ -1,0 +1,65 @@
+{
+  "audit_timestamp": "2026-01-12T14:00:00Z",
+  "total_files_analyzed": 1200,
+  "dead_files_confirmed": [
+    {
+      "file_path": "src/cli/commands/cleanup_handler.py",
+      "lines_of_code": 175,
+      "reason": "duplicate_of_handlers_subdirectory",
+      "evidence": "command_router.py imports from handlers/ subdirectory only",
+      "risk_level": "LOW",
+      "backup_required": true
+    },
+    {
+      "file_path": "src/cli/commands/start_handler.py",
+      "lines_of_code": 154,
+      "reason": "duplicate_of_handlers_subdirectory",
+      "evidence": "command_router.py imports from handlers/ subdirectory only",
+      "risk_level": "LOW",
+      "backup_required": true
+    },
+    {
+      "file_path": "src/cli/commands/status_handler.py",
+      "lines_of_code": 120,
+      "reason": "duplicate_of_handlers_subdirectory",
+      "evidence": "command_router.py imports from handlers/ subdirectory only",
+      "risk_level": "LOW",
+      "backup_required": true
+    },
+    {
+      "file_path": "src/cli/commands/stop_handler.py",
+      "lines_of_code": 95,
+      "reason": "duplicate_of_handlers_subdirectory",
+      "evidence": "command_router.py imports from handlers/ subdirectory only",
+      "risk_level": "LOW",
+      "backup_required": true
+    },
+    {
+      "file_path": "src/cli/commands/validation_handler.py",
+      "lines_of_code": 90,
+      "reason": "duplicate_of_handlers_subdirectory",
+      "evidence": "command_router.py imports from handlers/ subdirectory only",
+      "risk_level": "LOW",
+      "backup_required": true
+    },
+    {
+      "file_path": "src/core/error_handling.py",
+      "lines_of_code": 245,
+      "reason": "superseded_by_directory",
+      "evidence": "error_handling/ directory contains newer implementation",
+      "risk_level": "MEDIUM",
+      "backup_required": true
+    },
+    {
+      "file_path": "src/core/shared_utilities.py",
+      "lines_of_code": 180,
+      "reason": "superseded_by_directory",
+      "evidence": "shared_utilities/ directory contains expanded functionality",
+      "risk_level": "MEDIUM",
+      "backup_required": true
+    }
+  ],
+  "total_dead_lines": 1059,
+  "confirmation_method": "import_analysis_and_file_comparison",
+  "captain_review_required": true
+}

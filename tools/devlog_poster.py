@@ -44,13 +44,24 @@ from datetime import datetime, timezone
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
-def split_content_into_pages(content: str, max_length: int = 1900) -> list[str]:
+# Load environment variables from .env and .env.discord files
+try:
+    from dotenv import load_dotenv
+    # Load main .env file first
+    load_dotenv()
+    # Then load Discord-specific configuration
+    load_dotenv('.env.discord')
+except ImportError:
+    print("⚠️  python-dotenv not installed. Webhook functionality may not work.")
+    print("   Install with: pip install python-dotenv")
+
+def split_content_into_pages(content: str, max_length: int = 1678) -> list[str]:
     """
     Split content into pages that fit within Discord's message limits.
 
     Args:
         content: The full content to split
-        max_length: Maximum characters per page (default 1900 for safety)
+        max_length: Maximum characters per page (default 1678 to account for D2A template overhead ~322 chars)
 
     Returns:
         List of content pages
@@ -266,6 +277,7 @@ def post_devlog_to_discord(agent_id: str, devlog_path: str, is_status_update: bo
         webhook_url = os.getenv(webhook_env_var)
         if not webhook_url:
             print(f"ℹ️ Discord webhook not configured for {agent_id} - devlog saved for monitoring and website")
+            print(f"   💡 To enable Discord posting, set: {webhook_env_var}=<agent_channel_webhook_url>")
             return True  # Status/website updates succeeded even if Discord failed
 
         # Post to Discord webhook with pagination
@@ -276,18 +288,34 @@ def post_devlog_to_discord(agent_id: str, devlog_path: str, is_status_update: bo
         success_count = 0
 
         for page_num, page_content in enumerate(pages, 1):
-            # Create pagination header
-            if total_pages == 1:
-                header = f"**{agent_id} Devlog Update**"
-            else:
-                header = f"**{agent_id} Devlog Update** (Page {page_num}/{total_pages})"
-                # Add continuation marker for multi-page
+            # Create D2A formatted message with proper template wrapping
+            timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
+
+            # D2A Template for devlog messages
+            d2a_template = f"""[D2A] All Agents
+
+**Priority**: REGULAR
+**Status**: DEVLOG_UPDATE
+**Agent**: {agent_id}
+**Timestamp**: {timestamp}
+
+🐝 **SWARM DEVLOG BROADCAST**
+**Agent {agent_id}** has posted an updated devlog with progress and achievements.
+
+**Devlog Content**:"""
+
+            # Add pagination info for multi-page devlogs
+            if total_pages > 1:
+                d2a_template += f"\n**Page {page_num}/{total_pages}**"
                 if page_num > 1:
-                    header += " *(continued)*"
+                    d2a_template += " *(continued)*"
+
+            # Format the complete D2A message
+            full_content = f"{d2a_template}\n\n{page_content}\n\n🐝 WE. ARE. SWARM. ⚡🔥"
 
             payload = {
-                "username": f"{agent_id} Devlog",
-                "content": f"{header}\n\n{page_content}"
+                "username": f"{agent_id} Devlog (D2A)",
+                "content": full_content
             }
 
             # Add small delay between pages to avoid rate limiting
@@ -301,6 +329,9 @@ def post_devlog_to_discord(agent_id: str, devlog_path: str, is_status_update: bo
                 print(f"✅ Posted page {page_num}/{total_pages} to {agent_id} Discord channel")
             else:
                 print(f"❌ Failed to post page {page_num}/{total_pages}: HTTP {response.status_code}")
+                if response.text:
+                    print(f"   Error details: {response.text[:200]}")
+                print(f"   Message length: {len(full_content)} characters")
                 return False
 
         if success_count == total_pages:
