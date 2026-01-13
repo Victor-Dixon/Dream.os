@@ -74,7 +74,12 @@ class StartHandler:
         for service_name in start_order:
             print(f"   Starting {service_name}...", end=' ')
             try:
-                result = self.service_manager.start_service(service_name, background=background)
+                # Long-running services should always run in background mode
+                # to prevent blocking the startup process
+                long_running_services = ['message_queue', 'twitch', 'fastapi']
+                service_background = background or (service_name in long_running_services)
+
+                result = self.service_manager.start_service(service_name, background=service_background)
 
                 if result:  # start_service returns True/False
                     print("✅")
@@ -116,8 +121,46 @@ class StartHandler:
             print("   • Check .env file for required configuration")
             print("   • Try starting services individually")
         else:
-            print("\n✅ All services started successfully!")
-            print("💡 Check status with: python main.py --status")
+            # Check if we're in foreground mode (not background)
+            if not background:
+                print("\n✅ All services started successfully!")
+                print("💡 Services running in foreground mode")
+                print("   Press Ctrl+C to stop all services")
+                print()
+
+                try:
+                    running_check_count = 0
+
+                    while True:
+                        time.sleep(5)  # Check every 5 seconds
+
+                        # Periodic health check
+                        all_status = self.service_manager.get_all_status()
+                        running_count = sum(1 for status in all_status.values() if status == "running")
+
+                        running_check_count += 1
+                        if running_check_count % 6 == 0:  # Every 30 seconds
+                            print(f"📊 Health check: {running_count}/{len(services_to_start)} services running")
+
+                        if running_count == 0:
+                            print("⚠️ All services have stopped unexpectedly")
+                            break
+
+                except KeyboardInterrupt:
+                    print("\n🛑 Received shutdown signal...")
+                    print("👋 Stopping all services gracefully...")
+
+                # Always attempt clean shutdown
+                shutdown_success = self.service_manager.stop_all_services(force=False)
+                if shutdown_success:
+                    print("✅ All services stopped successfully. Goodbye! 👋")
+                else:
+                    print("⚠️ Some services may not have stopped cleanly.")
+                    print("   Force kill if needed: python main.py --kill")
+            else:
+                print("\n✅ All services started successfully!")
+                print("💡 Services running in background")
+                print("💡 Check status with: python main.py --status")
 
     def _get_all_services(self) -> List[str]:
         """Get list of all configured services."""
@@ -145,7 +188,6 @@ class StartHandler:
 
     def _verify_service_started(self, service_name: str, timeout: int = 10) -> bool:
         """Verify that a service actually started and is healthy."""
-        import time
 
         try:
             for attempt in range(timeout):

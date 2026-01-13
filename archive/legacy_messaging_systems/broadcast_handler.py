@@ -40,6 +40,7 @@ def broadcast_to_all(
     priority=UnifiedMessagePriority.REGULAR,
     stalled: bool = False,
     queue_repository=None,
+    use_pyautogui: bool = True,
 ) -> int:
     """
     Broadcast message to all agents via message queue.
@@ -65,7 +66,7 @@ def broadcast_to_all(
 
         validator = get_multi_agent_validator()
         return execute_broadcast_delivery(
-            queue_repository, message, priority, stalled, validator
+            queue_repository, message, priority, stalled, validator, use_pyautogui
         )
     except Exception as e:
         logger.error(f"Error broadcasting message: {e}")

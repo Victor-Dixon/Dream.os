@@ -56,11 +56,11 @@ def validate_agent_for_broadcast(
     )
 
 
-def build_broadcast_metadata(stalled: bool) -> Dict[str, Any]:
+def build_broadcast_metadata(stalled: bool, use_pyautogui: bool = True) -> Dict[str, Any]:
     """Build metadata for broadcast message."""
     return {
         "stalled": stalled,
-        "use_pyautogui": True,
+        "use_pyautogui": use_pyautogui,
         "inter_agent_delay": INTER_AGENT_DELAY_BROADCAST,  # Include delay in metadata for queue processor
     }
 
@@ -189,6 +189,7 @@ def execute_broadcast_delivery(
     priority: UnifiedMessagePriority,
     stalled: bool,
     validator: Any,
+    use_pyautogui: bool = True,
 ) -> int:
     """
     Execute broadcast delivery via queue or fallback.
@@ -198,7 +199,7 @@ def execute_broadcast_delivery(
     """
     if queue:
         try:
-            metadata = build_broadcast_metadata(stalled)
+            metadata = build_broadcast_metadata(stalled, use_pyautogui)
             priority_value = priority.value if hasattr(
                 priority, "value") else str(priority)
             from .message_formatters import _format_normal_message_with_instructions

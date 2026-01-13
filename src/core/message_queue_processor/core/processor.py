@@ -23,7 +23,7 @@ from systems.output_flywheel.integration.status_json_integration import (
 )
 from ..processing.message_parser import parse_message_data
 from ..processing.message_validator import validate_message_data
-from ...message_queue.processing.message_router import route_message_delivery
+from ..processing.message_router import route_message_delivery
 from ..processing.delivery_inbox import deliver_fallback_inbox
 from ..processing.delivery_core import deliver_via_core
 from ..handlers.error_handler import handle_delivery_error
@@ -108,33 +108,21 @@ class MessageQueueProcessor:
         try:
             while self.running:
                 self._maybe_trigger_output_flywheel()
-                # Dequeue batch of entries using MessageQueue interface
-                try:
-                    entries = self.queue.dequeue(batch_size)
-                    if not entries:
-                        # Fallback: try to load directly from persistence if queue interface fails
-                        try:
-                            all_entries = self.queue.persistence.load_entries()
-                            pending_entries = [e for e in all_entries if getattr(e, 'status', '') == 'PENDING']
-                            if pending_entries:
-                                # Sort by priority (highest first) and take batch
-                                pending_entries.sort(key=lambda x: getattr(x, 'priority_score', 0.5), reverse=True)
-                                entries = pending_entries[:batch_size]
-                                logger.info(f"Fallback dequeue: found {len(entries)} pending entries")
-                        except Exception as fallback_e:
-                            logger.warning(f"Fallback dequeue also failed: {fallback_e}")
-
-                        if not entries:
-                            if max_messages is None:
-                                time.sleep(interval)
-                                continue
-                            break
-                except Exception as e:
-                    logger.error(f"Failed to dequeue messages: {e}")
+                # Dequeue up to batch_size entries
+                entries = []
+                for _ in range(batch_size):
+                    entry = safe_dequeue(self.queue)
+                    if entry is None:
+                        break
+                    entries.append(entry)
+                if not entries:
+                    logger.debug(f"📭 No messages in queue, sleeping for {interval}s")
                     if max_messages is None:
                         time.sleep(interval)
                         continue
                     break
+
+                logger.info(f"📬 Processing {len(entries)} message(s) from queue")
 
                 for entry in entries:
                     if max_messages and processed >= max_messages:
@@ -150,16 +138,41 @@ class MessageQueueProcessor:
                     is_broadcast = message_type == 'broadcast'
                     delay_seconds = INTER_AGENT_DELAY_BROADCAST if is_broadcast else (INTER_AGENT_DELAY_SUCCESS if ok else INTER_AGENT_DELAY_FAILURE)
 
+                    # #region agent log
+                    import json
+                    from pathlib import Path
+                    log_path = Path("d:\\Agent_Cellphone_V2_Repository\\.cursor\\debug.log")
+                    delay_start = time.time()
+                    try:
+                        with open(log_path, 'a', encoding='utf-8') as f:
+                            f.write(json.dumps({"sessionId": "debug-session", "runId": "run1", "hypothesisId": "A", "location": "processor.py:107", "message": "Before inter-agent delay", "data": {"recipient": recipient, "success": ok, "is_broadcast": is_broadcast, "delay_seconds": delay_seconds}, "timestamp": int(time.time() * 1000)}) + "\n")
+                    except: pass
+                    # #endregion
+
                     if ok:
                         # Extended pause after successful delivery to prevent routing race conditions
                         # Use broadcast delay for broadcast messages, otherwise use standard delay
                         time.sleep(delay_seconds)
-                        # Production: Debug logging removed for performance
+                        # #region agent log
+                        delay_end = time.time()
+                        actual_delay = delay_end - delay_start
+                        try:
+                            with open(log_path, 'a', encoding='utf-8') as f:
+                                f.write(json.dumps({"sessionId": "debug-session", "runId": "run1", "hypothesisId": "A", "location": "processor.py:121", "message": "After inter-agent delay (success)", "data": {"recipient": recipient, "is_broadcast": is_broadcast, "expected_delay": delay_seconds, "actual_delay": round(actual_delay, 2)}, "timestamp": int(time.time() * 1000)}) + "\n")
+                        except: pass
+                        # #endregion
                         logger.debug(
                             f"✅ Delivery complete for {recipient}, waiting {delay_seconds}s before next agent{' (BROADCAST)' if is_broadcast else ''}")
                     else:
                         time.sleep(delay_seconds)  # Extended pause after failed delivery
-                        # Production: Debug logging removed for performance
+                        # #region agent log
+                        delay_end = time.time()
+                        actual_delay = delay_end - delay_start
+                        try:
+                            with open(log_path, 'a', encoding='utf-8') as f:
+                                f.write(json.dumps({"sessionId": "debug-session", "runId": "run1", "hypothesisId": "B", "location": "processor.py:133", "message": "After inter-agent delay (failure)", "data": {"recipient": recipient, "is_broadcast": is_broadcast, "expected_delay": delay_seconds, "actual_delay": round(actual_delay, 2)}, "timestamp": int(time.time() * 1000)}) + "\n")
+                        except: pass
+                        # #endregion
                         logger.debug(
                             f"⚠️ Delivery failed, waiting {delay_seconds}s for recovery before next agent{' (BROADCAST)' if is_broadcast else ''}")
 
@@ -254,11 +267,14 @@ class MessageQueueProcessor:
             message_type_str = parsed["message_type_str"]
             sender = parsed["sender"]
             priority_str = parsed["priority_str"]
+
+            logger.debug(f"📨 Processing message: {queue_id} -> {recipient} (type: {message_type_str})")
             tags_list = parsed["tags_list"]
             metadata = parsed["metadata"]
 
             # Validate message data
-            is_valid, error_msg = validate_message_data(parsed)
+            is_valid, error_msg = validate_message_data(
+                queue_id, recipient, content, tracker)
             if not is_valid:
                 self.queue.mark_failed(queue_id, error_msg)
                 return False
@@ -270,7 +286,7 @@ class MessageQueueProcessor:
             success = route_message_delivery(
                 recipient, content, metadata, message_type_str, sender, priority_str, tags_list,
                 lambda r, c, m, mt, s, p, t: deliver_via_core(
-                    r, c, m, mt, s, p, t),
+                    r, c, m, mt, s, p, t, self.messaging_core),
                 deliver_fallback_inbox,
             )
 
@@ -280,6 +296,8 @@ class MessageQueueProcessor:
                 use_pyautogui = metadata.get("use_pyautogui", True)
             elif hasattr(entry, 'metadata') and isinstance(entry.metadata, dict):
                 use_pyautogui = entry.metadata.get("use_pyautogui", True)
+
+            logger.debug(f"🎯 Delivery method for {recipient}: {'PyAutoGUI' if use_pyautogui else 'Inbox'} (use_pyautogui={use_pyautogui})")
 
             # Record performance metrics
             if self.performance_metrics and delivery_start_time:
@@ -330,73 +348,10 @@ class MessageQueueProcessor:
                 if isinstance(metadata, dict):
                     use_pyautogui = metadata.get("use_pyautogui", True)
 
-            # Enhanced error handling with specific error messages
-            error_details = {
-                'KeyError': 'Missing required message field (likely message_type_str)',
-                'AttributeError': 'Agent coordinate or window issue',
-                'TimeoutError': 'PyAutoGUI operation timed out',
-                'Exception': f'General delivery error: {str(e)}'
-            }.get(type(e).__name__, f'Unexpected error: {str(e)}')
-
-            # Update metadata with error details
-            entry_metadata = getattr(entry, 'metadata', {})
-            entry_metadata.update({
-                'error_message': error_details,
-                'error_type': type(e).__name__,
-                'delivery_attempt': entry_metadata.get('delivery_attempts', 0) + 1,
-                'last_error_time': time.time()
-            })
-
             handle_delivery_error(
                 queue_id, e, self.queue, tracker, recipient,
                 self.performance_metrics, delivery_start_time, use_pyautogui, content
             )
-            return False
-
-    def process_message(self, message: Any) -> bool:
-        """
-        Process a single message (smoke test compatibility method).
-
-        This method provides compatibility with smoke tests that expect
-        individual message processing capability.
-        """
-        try:
-            # Create a queue entry from the message
-            entry = QueueEntry(
-                queue_id="smoke_test",
-                message={"content": message, "type": "smoke_test"},
-                priority="normal",
-                status="pending"
-            )
-
-            # Use the existing delivery logic
-            return self._deliver_entry(entry)
-        except Exception as e:
-            logger.error(f"Failed to process message: {e}")
-            return False
-
-    def enqueue_message(self, message: Any, priority: str = "normal") -> bool:
-        """
-        Enqueue a single message (smoke test compatibility method).
-
-        This method provides compatibility with smoke tests that expect
-        individual message enqueueing capability.
-        """
-        try:
-            # Create a queue entry
-            entry = QueueEntry(
-                queue_id="smoke_test",
-                message={"content": message, "type": "smoke_test"},
-                priority=priority,
-                status="pending"
-            )
-
-            # Add to queue
-            self.queue.enqueue(entry)
-            logger.info(f"Enqueued message with priority {priority}")
-            return True
-        except Exception as e:
-            logger.error(f"Failed to enqueue message: {e}")
             return False
 
 

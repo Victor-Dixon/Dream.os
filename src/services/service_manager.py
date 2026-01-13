@@ -462,25 +462,51 @@ class ServiceManager:
         use_launcher = service_config.get('use_launcher', False)
 
         try:
+            # Always use launcher for services configured with use_launcher=True
             if use_launcher:
                 # Use launcher script - it manages its own PID file
                 import subprocess
                 logger.info(f"Starting {service_name} using launcher: {script_path}")
-                cmd = [sys.executable, script_path]
-                result = subprocess.run(
-                    cmd,
-                    capture_output=True,
-                    text=True,
-                    cwd=os.getcwd()
-                )
-                if result.returncode == 0:
-                    logger.info(f"Launcher started {service_name} successfully")
-                    # Don't write PID - launcher does this
-                    self.services[service_name]['status'] = 'running'
-                    return True
+
+                # For services that run indefinitely (like message processors), use Popen
+                long_running_services = ['message_queue', 'twitch', 'fastapi']
+                if service_name in long_running_services:
+                    # Use Popen for long-running services
+                    cmd = [sys.executable, script_path]
+                    try:
+                        env = os.environ.copy()
+                        env['PYTHONPATH'] = os.getcwd()
+                        process = subprocess.Popen(
+                            cmd,
+                            env=env,
+                            stdout=subprocess.DEVNULL,
+                            stderr=subprocess.DEVNULL,
+                            cwd=os.getcwd()
+                        )
+                        logger.info(f"Launcher started {service_name} as background process (PID: {process.pid})")
+                        # Don't write PID - launcher manages it
+                        self.services[service_name]['status'] = 'running'
+                        return True
+                    except Exception as e:
+                        logger.error(f"Launcher failed for {service_name}: {e}")
+                        return False
                 else:
-                    logger.error(f"Launcher failed for {service_name}: {result.stderr}")
-                    return False
+                    # Use run for short-lived launcher scripts
+                    cmd = [sys.executable, script_path]
+                    result = subprocess.run(
+                        cmd,
+                        capture_output=True,
+                        text=True,
+                        cwd=os.getcwd()
+                    )
+                    if result.returncode == 0:
+                        logger.info(f"Launcher started {service_name} successfully")
+                        # Don't write PID - launcher does this
+                        self.services[service_name]['status'] = 'running'
+                        return True
+                    else:
+                        logger.error(f"Launcher failed for {service_name}: {result.stderr}")
+                        return False
             elif background:
                 # Start in background with PID management
                 import subprocess
@@ -506,29 +532,45 @@ class ServiceManager:
             return False
 
     def _run_service_foreground(self, service_name: str):
-        """Run a service in foreground mode."""
-        # Import the service module dynamically
-        if service_name == 'message_queue':
-            from src.core.message_queue_processor.core.processor import main
-            main()
-        elif service_name == 'twitch':
-            from src.services.chat_presence.twitch_eventsub_server import main
-            main()
-        elif service_name == 'discord':
-            from src.discord_bot import main
-            main()
-        elif service_name == 'fastapi':
-            # Import from local FastAPI application
+        """Run a service in foreground mode using threads for long-running services."""
+        import threading
+
+        def run_service():
             try:
-                from src.web.fastapi_app import app
-                import uvicorn
-                uvicorn.run(app, host="0.0.0.0", port=8001)
-            except ImportError as e:
-                logger.error(f"FastAPI service failed to import from local web module: {e}")
-                logger.error("Ensure FastAPI components are properly configured")
-                raise
-        else:
-            raise ValueError(f"Unknown service: {service_name}")
+                # Import the service module dynamically
+                if service_name == 'message_queue':
+                    from src.core.message_queue_processor.core.processor import main
+                    main()
+                elif service_name == 'twitch':
+                    from src.services.chat_presence.twitch_eventsub_server import main
+                    main()
+                elif service_name == 'discord':
+                    from src.discord_bot import main
+                    main()
+                elif service_name == 'fastapi':
+                    # Import from local FastAPI application
+                    try:
+                        from src.web.fastapi_app import app
+                        import uvicorn
+                        uvicorn.run(app, host="0.0.0.0", port=8001)
+                    except ImportError as e:
+                        logger.error(f"FastAPI service failed to import from local web module: {e}")
+                        logger.error("Ensure FastAPI components are properly configured")
+                        raise
+                else:
+                    raise ValueError(f"Unknown service: {service_name}")
+            except Exception as e:
+                logger.error(f"Service {service_name} failed: {e}")
+
+        # Start service in background thread so main process can continue
+        service_thread = threading.Thread(target=run_service, daemon=True)
+        service_thread.start()
+
+        # Give service time to start
+        import time
+        time.sleep(2)
+
+        logger.info(f"✅ {service_name} started in foreground thread")
 
     def stop_service(self, service_name: str, force: bool = False) -> bool:
         """Stop a specific service."""

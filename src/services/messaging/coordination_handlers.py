@@ -252,7 +252,7 @@ class MessageCoordinator:
 
     @staticmethod
     def broadcast_to_all(
-        message: str, priority=UnifiedMessagePriority.REGULAR, stalled: bool = False
+        message: str, priority=UnifiedMessagePriority.REGULAR, stalled: bool = False, use_pyautogui: bool = True
     ):
         """
         Broadcast message to all agents via message queue.
@@ -265,6 +265,7 @@ class MessageCoordinator:
             priority=priority,
             stalled=stalled,
             queue_repository=queue_repository,
+            use_pyautogui=use_pyautogui,
         )
 
     @staticmethod
