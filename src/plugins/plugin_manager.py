@@ -17,8 +17,8 @@ from pathlib import Path
 from typing import Dict, Any, Optional, List
 from dataclasses import dataclass
 
-from .plugin_interface import PluginInterface, PluginInfo, PluginStatus, PluginContext
-from .plugin_registry import PluginRegistry
+from src.plugins.plugin_interface import PluginInterface, PluginInfo, PluginStatus, PluginContext
+from src.plugins.plugin_registry import PluginRegistry
 
 
 logger = logging.getLogger(__name__)

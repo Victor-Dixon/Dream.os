@@ -12,6 +12,11 @@
 !.env.example
 !.env.template
 
+# Environment setup scripts with secrets
+set_env_vars.bat
+set_env_vars.ps1
+set_env_variables.ps1
+
 # Python
 __pycache__/
 *.py[cod]

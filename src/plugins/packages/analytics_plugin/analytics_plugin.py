@@ -17,7 +17,7 @@ from typing import Any, Dict, List, Optional
 from datetime import datetime, timedelta
 from dataclasses import dataclass, field
 
-from ..plugin_interface import (
+from src.plugins.plugin_interface import (
     PluginInterface,
     PluginInfo,
     PluginCategory,
