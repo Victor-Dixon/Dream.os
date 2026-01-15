@@ -1,6 +1,5 @@
 {
   "name": "autodream-os",
-<<<<<<< HEAD
   "type": "module",
   "version": "2.0.0",
   "description": "V2 Compliant Autonomous Development System",
@@ -17,9 +16,9 @@
     "test:v2": "node scripts/test-v2-compliance.js"
   },
   "devDependencies": {
-    "eslint": "^8.57.0",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
-    "@typescript-eslint/parser": "^6.21.0"
+    "@typescript-eslint/parser": "^6.21.0",
+    "eslint": "^8.57.0"
   },
   "engines": {
     "node": ">=18.0.0"
@@ -37,7 +36,4 @@
   ],
   "author": "Swarm Intelligence",
   "license": "MIT"
-=======
-  "type": "module"
->>>>>>> origin/codex/catalog-functions-in-utils-directories
 }
